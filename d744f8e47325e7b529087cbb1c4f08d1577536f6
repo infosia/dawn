@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff3fd1eb_6e5090cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-10T22:53:29Z",
+      "side": 1,
+      "message": "LGTM with some dead code that should probably be removed.",
+      "revId": "d744f8e47325e7b529087cbb1c4f08d1577536f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdfbe4e4_8bdb52aa",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2818,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-10T22:53:29Z",
+      "side": 1,
+      "message": "This check looks redundant now? AFAICT there are no tests for it.",
+      "range": {
+        "startLine": 2813,
+        "startChar": 0,
+        "endLine": 2818,
+        "endChar": 5
+      },
+      "revId": "d744f8e47325e7b529087cbb1c4f08d1577536f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86bb710c_2c3fe7f7",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2845,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-10T22:53:29Z",
+      "side": 1,
+      "message": "This check looks redundant now?",
+      "range": {
+        "startLine": 2842,
+        "startChar": 0,
+        "endLine": 2845,
+        "endChar": 5
+      },
+      "revId": "d744f8e47325e7b529087cbb1c4f08d1577536f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
