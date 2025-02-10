@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "835aad5f_ccb8a163",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 0,
+      "message": "This seems wrong to remove, how can we evaluate this if we don\u0027t have a result?",
+      "revId": "70491780563fe7585e824676f636f04054f1cddc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98254598_1532bbed",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 0,
+      "message": "Is this no longer true, why remove the comment?",
+      "revId": "70491780563fe7585e824676f636f04054f1cddc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49c3eae9_e06b101e",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 0,
+      "message": "Why remove the check? Is it implicitly done by `CalculateOverride`? It seems a bit clearer to handle it here as it isn\u0027t an override to be calculated.",
+      "revId": "70491780563fe7585e824676f636f04054f1cddc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

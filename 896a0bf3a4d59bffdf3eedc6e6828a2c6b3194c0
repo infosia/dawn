@@ -1,0 +1,529 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae41b409_123e317d",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "How does this happen? How do we evalulate the element if we don\u0027t have a Value? Can you add a `eval` test which shows the issue?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6246aae_ea384696",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Creates a const-expression if instruction\n```",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d0f1dee_6f138bae",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "These should no longer be necessary, correct?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04f119f7_5dfb9fb0",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b931721_bcc96e29",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "Should this be an `ICE`? We\u0027re trying to get a constant arg from a non-constant, which seems wrong?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c13ea17_6f0c9b11",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "This seems unrelated? Can it be fixed in a separate CL?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63a0f377_b0400934",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "Why is this check needed for this one specifically?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e05fbb3b_272d6e2c",
+        "filename": "src/tint/lang/core/ir/constexpr_if.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ad286e0_35b76898",
+        "filename": "src/tint/lang/core/ir/constexpr_if.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ded7d172_76097127",
+        "filename": "src/tint/lang/core/ir/constexpr_if.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "```suggestion\n/// A `constexpr-if` is an `if` instruction which will always be evaluated during\n/// const-eval processing. The `condition` must be a `const` or `override`\n/// expression.\n```",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 3
+      },
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d860f69d_75600922",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "This only evals the terminator? What about the rest of the content of the block? Do we not need to evaluate the entire block?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6eb23eb_a2fdd98e",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "This can be removed now, yea?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a279f4d1_be4a19d7",
+        "filename": "src/tint/lang/core/ir/if.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "Can\u0027t this stay as `private`? The subclass can work through the accessors?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa3ddcf9_b93f8668",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "Why switch to setting the initializer instead of doing the replacement?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d0e81f3_b8f19593",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "```suggestion\n            if (auto* replacement \u003d override-\u003eInitializer()-\u003eAs\u003ccore::ir::Constant\u003e()) {\n```",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 30
+      },
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d642c84a_c2f8742f",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "```suggestion\n        // When `overrides` are evaluated, only the `override` is checked, and any instructions back up the block. This means, if we have a `constexpr-if` we may hit an override in the part of the `constexpr-if` which should be ignored (because we had a `false \u0026\u0026 a_override / 0` or something similar). If we evalulate `a_override` before we evaluate the `constexpr-if` that represents the `\u0026\u0026` then we\u0027ll produce an incorrect compile error. Instead evaluate the `constexpr-if` constructs early to remove them all and remove any blocks which should not be evaluated.\n```",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 35
+      },
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ed3fe0_d58b6455",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "Why iterate and pop instead of just:\n```suggestion\n        for (auto* override : override_complex_init) {\n```",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 57
+      },
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f8321b8_570c4882",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "why not range based for? then don\u0027t need to do the `reverse`",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6191b3ad_9450d995",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "```suggestion\n            if (!constexpr_if-\u003eAlive()) {\n               continue;\n            }\n```",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4eb5f0bf_074c4862",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "```suggestion\n                if (res !\u003d Success) {\n                   return res.Failure();\n                }\n```",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ceb8bd2_27eb3913",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "What does it mean if this fails?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "468d43ea_8f91248b",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "A block must have a terminator by definition.",
+      "fixSuggestions": [
+        {
+          "fixId": "92c97804_01afa589",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+              "range": {
+                "startLine": 243,
+                "startChar": 0,
+                "endLine": 244,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97c516f8_f1ae8f7d",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "Why isn\u0027t this just done by the ir validator directly?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94b1afe5_6642f7e4",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "The override isn\u0027t used in the `subgroupShuffle`, should it be?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee4e6e7d_e79b0dbe",
+        "filename": "src/tint/lang/wgsl/ast/builder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "Why did this change?",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "737266ae_d9a6330c",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "```suggestion\n                        auto* one \u003d is_unsigned ? builder_.Constant(1_u)\n                                                   : builder_.Constant(1_i);\n                        ir_func-\u003eSetWorkgroupSize(\n                            value_x,\n                            attr-\u003ey ? EmitValueExpression(attr-\u003ey) : one,\n                            attr-\u003ez ? EmitValueExpression(attr-\u003ez) : one);\n```",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 81
+      },
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a3843aa_e7bcc543",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1144,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-10T15:50:37Z",
+      "side": 1,
+      "message": "Extra `()`s not needed?",
+      "fixSuggestions": [
+        {
+          "fixId": "6841b8f5_e6a29a68",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+              "range": {
+                "startLine": 1144,
+                "startChar": 0,
+                "endLine": 1146,
+                "endChar": 0
+              },
+              "replacement": "                        if (e-\u003eop \u003d\u003d core::BinaryOp::kLogicalAnd ||\n                            e-\u003eop \u003d\u003d core::BinaryOp::kLogicalOr) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
