@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "951fda6a_188df195",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-10T10:28:51Z",
+      "side": 1,
+      "message": "Passing \u0027RenderPipeline\u0027 and \u0027ComputePipeline\u0027 here because we need to call `ToBackend(Pipeline)-\u003eGetVKLayout()`.\nSo maybe we should store pipeline in each backend implementation instead of storing in base class?",
+      "parentUuid": "7915462b_6aa99f85",
+      "revId": "20779c5894fd532f1570b33b1abe2b8f34f6690e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "970ada1c_19fafca1",
         "filename": "src/dawn/native/ImmediateConstantsTracker.h",
         "patchSetId": 23
