@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6a1bf053_be47afd7",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-10T11:43:03Z",
+      "side": 1,
+      "message": "I agree that some form of linear types would be nice but we don\u0027t have that :/\n\nWhat do you think of instead calling `EnforceLimitSpecInvariants` for both PhysicalDevice inid and Device init. This would allow removing unrelated code in backends that don\u0027t care as done in https://dawn-review.googlesource.com/c/dawn/+/224414\n\nAnyway, either way is fine and I don\u0027t mean to block this CL.",
+      "parentUuid": "aa971439_ad8bc045",
+      "revId": "41c7266130ac4bf66fd5518a07be72e1e874cae8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2a75fe50_088f82f6",
         "filename": "src/dawn/native/Limits.cpp",
         "patchSetId": 5
