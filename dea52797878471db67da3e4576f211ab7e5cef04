@@ -16,6 +16,23 @@
       "message": "Brandon PTAL as well!",
       "revId": "dea52797878471db67da3e4576f211ab7e5cef04",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac46dfa0_b1b996cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-02-10T20:42:53Z",
+      "side": 1,
+      "message": "LGTM, thanks for addressing Corentin\u0027s feedback!",
+      "revId": "dea52797878471db67da3e4576f211ab7e5cef04",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
