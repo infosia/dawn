@@ -125,6 +125,9 @@ struct State {
                 case spirv::BuiltinFn::kBitFieldInsert:
                     BitFieldInsert(builtin);
                     break;
+                case spirv::BuiltinFn::kBitFieldSExtract:
+                    BitFieldSExtract(builtin);
+                    break;
                 default:
                     TINT_UNREACHABLE() << "unknown spirv builtin: " << builtin->Func();
             }
@@ -377,6 +380,24 @@ struct State {
             }
             b.CallWithResult(call->DetachResult(), core::BuiltinFn::kInsertBits, e, newbits, offset,
                              count);
+        });
+        call->Destroy();
+    }
+
+    void BitFieldSExtract(spirv::ir::BuiltinCall* call) {
+        const auto& args = call->Args();
+        auto* e = args[0];
+        auto* offset = args[1];
+        auto* count = args[2];
+
+        b.InsertBefore(call, [&] {
+            if (offset->Type()->IsSignedIntegerScalar()) {
+                offset = b.Bitcast(ty.u32(), offset)->Result(0);
+            }
+            if (count->Type()->IsSignedIntegerScalar()) {
+                count = b.Bitcast(ty.u32(), count)->Result(0);
+            }
+            b.CallWithResult(call->DetachResult(), core::BuiltinFn::kExtractBits, e, offset, count);
         });
         call->Destroy();
     }
