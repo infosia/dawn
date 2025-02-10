@@ -30,6 +30,7 @@
 #include <algorithm>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/GPUInfo.h"
@@ -437,6 +438,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
             // Subgroups without extended type support (f16).
             EnableFeature(Feature::Subgroups);
         }
+    }
+
+    if (mDeviceInfo.HasExt(DeviceExt::CooperativeMatrix)) {
+        EnableFeature(Feature::ChromiumExperimentalSubgroupMatrix);
     }
 
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryHost) &&
@@ -1138,6 +1143,73 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) c
     }
     if (auto* vkProperties = info.Get<AdapterPropertiesVk>()) {
         vkProperties->driverVersion = mDeviceInfo.properties.driverVersion;
+    }
+    if (auto* subgroupMatrixConfigs = info.Get<AdapterPropertiesSubgroupMatrixConfigs>()) {
+        uint32_t configCount = 0;
+        const VulkanFunctions& fn = GetVulkanInstance()->GetFunctions();
+        DAWN_ASSERT(fn.GetPhysicalDeviceCooperativeMatrixPropertiesKHR(
+                        mVkPhysicalDevice, &configCount, nullptr) == VK_SUCCESS);
+
+        auto* configs = new SubgroupMatrixConfig[configCount];
+        subgroupMatrixConfigs->configs = configs;
+
+        std::vector<VkCooperativeMatrixPropertiesKHR> properties(configCount);
+        DAWN_ASSERT(fn.GetPhysicalDeviceCooperativeMatrixPropertiesKHR(
+                        mVkPhysicalDevice, &configCount, properties.data()) == VK_SUCCESS);
+
+        uint32_t validConfigs = 0;
+        for (uint32_t i = 0; i < configCount; i++) {
+            VkCooperativeMatrixPropertiesKHR& p = properties[i];
+
+            // Filter out configurations that we do not support.
+            if (p.AType != p.BType || p.CType != p.ResultType || p.scope != VK_SCOPE_SUBGROUP_KHR ||
+                p.saturatingAccumulation) {
+                continue;
+            }
+
+            configs[validConfigs].M = p.MSize;
+            configs[validConfigs].N = p.NSize;
+            configs[validConfigs].K = p.KSize;
+            switch (p.AType) {
+                case VK_COMPONENT_TYPE_FLOAT32_KHR:
+                    configs[validConfigs].componentType = wgpu::SubgroupMatrixComponentType::F32;
+                    break;
+                case VK_COMPONENT_TYPE_FLOAT16_KHR:
+                    configs[validConfigs].componentType = wgpu::SubgroupMatrixComponentType::F16;
+                    break;
+                case VK_COMPONENT_TYPE_UINT32_KHR:
+                    configs[validConfigs].componentType = wgpu::SubgroupMatrixComponentType::U32;
+                    break;
+                case VK_COMPONENT_TYPE_SINT32_KHR:
+                    configs[validConfigs].componentType = wgpu::SubgroupMatrixComponentType::I32;
+                    break;
+                default:
+                    continue;
+            }
+            switch (p.ResultType) {
+                case VK_COMPONENT_TYPE_FLOAT32_KHR:
+                    configs[validConfigs].resultComponentType =
+                        wgpu::SubgroupMatrixComponentType::F32;
+                    break;
+                case VK_COMPONENT_TYPE_FLOAT16_KHR:
+                    configs[validConfigs].resultComponentType =
+                        wgpu::SubgroupMatrixComponentType::F16;
+                    break;
+                case VK_COMPONENT_TYPE_UINT32_KHR:
+                    configs[validConfigs].resultComponentType =
+                        wgpu::SubgroupMatrixComponentType::U32;
+                    break;
+                case VK_COMPONENT_TYPE_SINT32_KHR:
+                    configs[validConfigs].resultComponentType =
+                        wgpu::SubgroupMatrixComponentType::I32;
+                    break;
+                default:
+                    continue;
+            }
+
+            validConfigs++;
+        }
+        subgroupMatrixConfigs->configCount = validConfigs;
     }
 }
 
