@@ -2803,6 +2803,13 @@ void Validator::CheckBitcastTypes(const Bitcast* bitcast) {
 }
 
 void Validator::CheckBuiltinCall(const BuiltinCall* call) {
+    // This check cannot be more precise, since until intrinsic lookup below, it is unknown what
+    // number of results and operands are expected, but still need to enforce things are in scope,
+    // have types, etc.
+    if (!CheckResults(call) || !CheckOperands(call)) {
+        return;
+    }
+
     auto args =
         Transform<8>(call->Args(), [&](const ir::Value* v) { return v ? v->Type() : nullptr; });
     if (args.Any([&](const core::type::Type* ty) { return ty == nullptr; })) {
