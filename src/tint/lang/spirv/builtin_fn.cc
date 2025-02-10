@@ -148,6 +148,8 @@ const char* str(BuiltinFn i) {
             return "frexp";
         case BuiltinFn::kBitCount:
             return "bit_count";
+        case BuiltinFn::kBitFieldInsert:
+            return "bit_field_insert";
         case BuiltinFn::kSdot:
             return "sdot";
         case BuiltinFn::kUdot:
