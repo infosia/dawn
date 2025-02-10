@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-02-03 08:22:49AM
+# Last rolled: 2025-02-10 05:06:58AM
 
 # conflicts_allowed: true
 
@@ -25364,7 +25364,6 @@ crbug.com/368241687 [ android-pixel-6 arm ] webgpu:shader,execution,expression,c
 crbug.com/368241687 [ android-pixel-6 arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_array_2d_coords:format="rgba8unorm-srgb";filt="nearest";modeU="m";modeV="m";offset=true [ Failure ]
 crbug.com/368241687 [ android-pixel-6 arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_array_2d_coords:format="rgba8unorm-srgb";filt="nearest";modeU="m";modeV="r";offset=true [ Failure ]
 crbug.com/368241687 [ android-pixel-6 arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_array_2d_coords:format="rgba8unorm-srgb";filt="nearest";modeU="r";modeV="m";offset=true [ Failure ]
-
 
 # limits:const_array_elements failures
 # also failing on Vulkan Pixel 6 (Core) and NVidia GL ES Compat
