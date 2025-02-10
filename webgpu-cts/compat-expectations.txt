@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-02-03 08:22:49AM
+# Last rolled: 2025-02-10 07:50:17AM
 
 # conflicts_allowed: true
 
@@ -25365,7 +25365,6 @@ crbug.com/368241687 [ android-pixel-6 arm ] webgpu:shader,execution,expression,c
 crbug.com/368241687 [ android-pixel-6 arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_array_2d_coords:format="rgba8unorm-srgb";filt="nearest";modeU="m";modeV="r";offset=true [ Failure ]
 crbug.com/368241687 [ android-pixel-6 arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_array_2d_coords:format="rgba8unorm-srgb";filt="nearest";modeU="r";modeV="m";offset=true [ Failure ]
 
-
 # limits:const_array_elements failures
 # also failing on Vulkan Pixel 6 (Core) and NVidia GL ES Compat
 crbug.com/dawn/0000 [ linux nvidia-0x2184 ] webgpu:shader,execution,limits:const_array_elements: [ Failure ]
@@ -27985,6 +27984,12 @@ crbug.com/0000 [ linux nvidia ] webgpu:api,validation,createTexture:sampleCount,
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,createTexture:sampleCount,various_sampleCount_with_all_formats:dimension="_undef_";format="rgba16float" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,createTexture:sampleCount,various_sampleCount_with_all_formats:dimension="_undef_";format="rgba16float" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,createTexture:sampleCount,various_sampleCount_with_all_formats:dimension="_undef_";format="rgba16float" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,cmds,render,dynamic_state:setViewport,exceeds_attachment_size: [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,cmds,render,dynamic_state:setViewport,exceeds_attachment_size: [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,cmds,render,dynamic_state:setViewport,exceeds_attachment_size: [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,encoding,cmds,render,dynamic_state:setViewport,xy_rect_contained_in_bounds: [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,validation,encoding,cmds,render,dynamic_state:setViewport,xy_rect_contained_in_bounds: [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,validation,encoding,cmds,render,dynamic_state:setViewport,xy_rect_contained_in_bounds: [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,gpu_external_texture_expiration:import_and_use_in_different_microtask:sourceType="VideoElement" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,gpu_external_texture_expiration:import_and_use_in_different_microtask:sourceType="VideoFrame" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,gpu_external_texture_expiration:import_and_use_in_different_task:sourceType="VideoElement" [ Failure ]
@@ -27992,6 +27997,18 @@ crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,gpu_external_texture_ex
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,gpu_external_texture_expiration:import_multiple_times_in_same_task_scope:sourceType="VideoElement" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,queue,destroyed,buffer:setIndexBuffer: [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:queue,copyExternalImageToTexture,canvas:canvasType="offscreen";contextType="webgl";awaitLost=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:idl,javascript:method_replacement:type="gpu" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:idl,javascript:method_replacement:type="gpu" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:idl,javascript:method_replacement:type="gpu" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:idl,javascript:obj,Object_keys:type="gpu" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:idl,javascript:obj,Object_keys:type="gpu" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:idl,javascript:obj,Object_keys:type="gpu" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:idl,javascript:obj,getOwnPropertyDescriptors:type="gpu" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:idl,javascript:obj,getOwnPropertyDescriptors:type="gpu" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:idl,javascript:obj,getOwnPropertyDescriptors:type="gpu" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:idl,javascript:obj,spread:type="gpu" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:idl,javascript:obj,spread:type="gpu" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:idl,javascript:obj,spread:type="gpu" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,dpdx:f32:vectorize="_undef_";non_uniform_discard=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,dpdx:f32:vectorize="_undef_";non_uniform_discard=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,dpdx:f32:vectorize=2;non_uniform_discard=false [ Failure ]
