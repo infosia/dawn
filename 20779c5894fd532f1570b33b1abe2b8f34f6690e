@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cc4bd86_ef6bf38f",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-10T10:32:01Z",
+      "side": 1,
+      "message": "Where do we get the Vulkan layout in this file? I don\u0027t see it. Ah yes we use that member in the backend as well. Mmmmh ok let\u0027s leave as is then.",
+      "parentUuid": "951fda6a_188df195",
+      "revId": "20779c5894fd532f1570b33b1abe2b8f34f6690e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "970ada1c_19fafca1",
