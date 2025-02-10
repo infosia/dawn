@@ -1932,7 +1932,9 @@ DAWN_INSTANTIATE_TEST(BufferMapExtendedUsagesTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      // User defined labels are needed for VVL errors to be
+                      // associated with a native device.
+                      VulkanBackend({"use_user_defined_labels_in_backend"}));
 
 }  // anonymous namespace
 }  // namespace dawn
