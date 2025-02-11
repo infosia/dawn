@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a4e451e8_299493de",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-02-11T13:14:19Z",
+      "side": 1,
+      "message": "This function is only available since Win10. Does Dawn support older Win versions? I don\u0027t see any specific requirement in the `building.md` doc.",
+      "parentUuid": "128f92bd_e8e93030",
+      "revId": "c324e14d58dccbb262500165deafdb6d57569ff8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "27f276b7_ce63966d",
         "filename": "src/dawn/native/d3d11/SharedFenceD3D11.cpp",
         "patchSetId": 7
