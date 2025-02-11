@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ccb74dcf_51f5991c",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T22:58:58Z",
+      "side": 1,
+      "message": "Ah the obj_val here is the value used to do range checking\nThe test OverrideArrayAccessAndFailure in IR_SubstituteOverridesTest tests this. I can add that to the evaluator tests.\n\nWhy extend the evaluation like this? It is because we have to evaluate access of const values not simply the types of them.\n\nHere is the cts example\n\u003e override x : i32;\n\u003e     fn y() -\u003e u32 {\n\u003e       let tmp \u003d array(1,2,3)[x];\n\u003e       return 0;\n\u003e    }\n\nIR looks like this\n[0] $B1: {  # root\n[0]   %x:i32 \u003d override @id(0)\n[0] }\n[0] \n[0] %y \u003d func():u32 {\n[0]   $B2: {\n[0]     %3:i32 \u003d access array\u003ci32, 3\u003e(1i, 2i, 3i), %x\n[0]     %tmp:i32 \u003d let %3\n[0]     ret 0u\n[0]   }\n[0] }\n[0] %main \u003d @compute @workgroup_size(1i, 1i, 1i) func():void {\n[0]   $B3: {\n[0]     %6:u32 \u003d call %y\n[0]     ret\n[0]   }\n[0] }\n[0] $B1: {  # root\n[0]   %x:i32 \u003d override @id(0)\n[0] }\n[0] \n[0] %y \u003d func():u32 {\n[0]   $B2: {\n[0]     %3:i32 \u003d access array\u003ci32, 3\u003e(1i, 2i, 3i), %x\n[0]     %tmp:i32 \u003d let %3\n[0]     ret 0u\n[0]   }\n[0] }\n[0] %main \u003d @compute @workgroup_size(1i, 1i, 1i) func():void {\n[0]   $B3: {\n[0]     %6:u32 \u003d call %y\n[0]     ret\n[0]   }\n[0] }",
+      "parentUuid": "22258eed_8eacc022",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c6246aae_ea384696",
         "filename": "src/tint/lang/core/ir/builder.h",
         "patchSetId": 12
@@ -580,6 +598,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aaeb9ba8_d13d6b20",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T22:58:58Z",
+      "side": 1,
+      "message": "Right but a legitimate question is can this happen in a const eval context? Do we allow expressions that mutate parameters to const evaluated?\n\nOr more simply is all constant evaluation pure functional\n\nI actually dont know the answer here. I would guess wgsl would not allow for this but you could do anything you want in a transform.",
+      "parentUuid": "b5e1721e_46c59f32",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6eb23eb_a2fdd98e",
         "filename": "src/tint/lang/core/ir/evaluator.cc",
         "patchSetId": 12
@@ -627,6 +663,24 @@
       "side": 1,
       "message": "We should assert on it, instead of trying to handle it. We should not have logical \u0026\u0026 or || in the IR, so this should never happen.",
       "parentUuid": "c8d8d1df_bb3c4ea2",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ad382fa_ef3a90e6",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T22:58:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cdce94b_5d077794",
       "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -894,6 +948,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ede9675_a523b761",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T22:58:58Z",
+      "side": 1,
+      "message": "I debate this as well but I not sure what is more clear.",
+      "parentUuid": "6191b3ad_9450d995",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4eb5f0bf_074c4862",
@@ -907,6 +979,24 @@
       "writtenOn": "2025-02-10T15:50:37Z",
       "side": 1,
       "message": "```suggestion\n                if (res !\u003d Success) {\n                   return res.Failure();\n                }\n```",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5305077a_43583444",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T22:58:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eb5f0bf_074c4862",
       "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -960,6 +1050,24 @@
       "side": 1,
       "message": "But how can we have a compiler error where we didnt\u0027 fail on the `Success` check above?",
       "parentUuid": "c0b50e7a_705ec69f",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b4c16a1_bbd9f9c4",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T22:58:58Z",
+      "side": 1,
+      "message": "Success means this did not generate a failure (which here we would propagate to the user). The result only exists if we were able to evaluate it. This had better work or otherwise this was not in the override stage to begin with(and/or an internal compiler bug)",
+      "parentUuid": "0dcd8b3c_aa7aa006",
       "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -1037,6 +1145,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2909f318_11740c1f",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T22:58:58Z",
+      "side": 1,
+      "message": "I thought asserts goto ICE which goes to internal compiler error which terminates the process.",
+      "parentUuid": "ee14b913_b57370c0",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "97c516f8_f1ae8f7d",
         "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
         "patchSetId": 12
@@ -1084,6 +1210,24 @@
       "side": 1,
       "message": "Why? We can do constant validation at any stage can we not? Wouldn\u0027t it catch the case where we accidentally create a const-validation error in a later transform?",
       "parentUuid": "b46e08c4_b173adcb",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8724a3e9_be78b70d",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T22:58:58Z",
+      "side": 1,
+      "message": "The const eval is for generating user facing errors that we could not generate due to Overrides.\n\nThere are many transforms that we could do that would no longer follow the compile time rules of wgsl so should not generate user errors. However the results should also be valid IR (well formed).\n\nAn example might be\n\u003e var a \u003d 0.0;\n\u003e var b \u003d 1.0/a;\n \n We might choose to transform this such that we are doing divide(1.0, 0.0) in IR but we cannot fail on this and we certainly cannot forward the error to the user.",
+      "parentUuid": "6b3d14f3_c4cfd3d2",
       "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

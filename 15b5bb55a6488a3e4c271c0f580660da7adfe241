@@ -200,6 +200,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "934f59f4_e96edd83",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T22:58:58Z",
+      "side": 1,
+      "message": "I added it to CTS but I can also add a unit test.",
+      "parentUuid": "59006a52_563515db",
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be3585f3_2e117d04",
         "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
         "patchSetId": 15
