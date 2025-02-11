@@ -56,7 +56,7 @@ namespace tint::core::ir {
 ///                    ▼
 ///                   out
 /// ```
-class If final : public Castable<If, ControlInstruction> {
+class If : public Castable<If, ControlInstruction> {
   public:
     /// The index of the condition operand
     static constexpr size_t kConditionOperandOffset = 0;
@@ -109,7 +109,7 @@ class If final : public Castable<If, ControlInstruction> {
     /// @returns the friendly name for the instruction
     std::string FriendlyName() const override { return "if"; }
 
-  private:
+  protected:
     ConstPropagatingPtr<ir::Block> true_;
     ConstPropagatingPtr<ir::Block> false_;
 };
