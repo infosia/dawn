@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "421f0482_dded553d",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T17:40:22Z",
+      "side": 1,
+      "message": "Are there invariants that we should test on the returned configs? (Like power of two, number of elements larger than the subgroup size? or others?)\n\nNo need to do it in this CL even if we need the new test.",
+      "revId": "54b99d2620a8172fc0810a6d35db58b77c02b7ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
