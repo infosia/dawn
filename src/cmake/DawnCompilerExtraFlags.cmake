@@ -48,6 +48,10 @@ function(common_compile_options target)
       target_compile_options(${target}
         PRIVATE "-Werror")
     endif ()
+    if (COMPILER_IS_CLANG)
+      target_compile_options(${target}
+        PRIVATE "-Wno-deprecated-declarations")
+    endif()
   endif ()
 
   if (MSVC)
