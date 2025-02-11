@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83e3ad8a_6fed6075",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-02-11T15:56:59Z",
+      "side": 1,
+      "message": "I opted to make this function mandatory as Corentin suggested since chrome and skia only support Win10+. If external devs build dawn and run on older win versions, at least it will throw an error.",
+      "parentUuid": "3ddec5eb_d30e80da",
+      "revId": "c324e14d58dccbb262500165deafdb6d57569ff8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27f276b7_ce63966d",
@@ -102,6 +120,24 @@
       "writtenOn": "2025-02-11T12:59:19Z",
       "side": 1,
       "message": "[1] This is just ` return ToBackend(device)-\u003eGetFunctions()-\u003ecompareObjectHandles(handle, other)`",
+      "revId": "c324e14d58dccbb262500165deafdb6d57569ff8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04448c4e_dfb0f3cf",
+        "filename": "src/dawn/native/d3d11/SharedFenceD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-02-11T15:56:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27f276b7_ce63966d",
       "revId": "c324e14d58dccbb262500165deafdb6d57569ff8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
