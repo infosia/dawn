@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "128f92bd_e8e93030",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T12:59:19Z",
+      "side": 1,
+      "message": "Are there cases where these functions will not be present? It seems like Windows just wouldn\u0027t work without them. We could remove the if at [1] as well.",
+      "revId": "c324e14d58dccbb262500165deafdb6d57569ff8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27f276b7_ce63966d",
+        "filename": "src/dawn/native/d3d11/SharedFenceD3D11.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T12:59:19Z",
+      "side": 1,
+      "message": "[1] This is just ` return ToBackend(device)-\u003eGetFunctions()-\u003ecompareObjectHandles(handle, other)`",
+      "revId": "c324e14d58dccbb262500165deafdb6d57569ff8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
