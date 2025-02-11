@@ -34,6 +34,24 @@
       ],
       "revId": "01c91bc7e5530f8a16959b9162baa54573bcd27e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dca9913_fcce6f78",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-02-11T16:02:38Z",
+      "side": 1,
+      "message": "Done (not sure if you meant for the AI fix to also log this warning when there is no backend validation enabled but I assumed no).",
+      "parentUuid": "993c95c2_477cb7d7",
+      "revId": "01c91bc7e5530f8a16959b9162baa54573bcd27e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

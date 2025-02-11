@@ -105,6 +105,24 @@
       "parentUuid": "c7c81252_75ba71bb",
       "revId": "2acbf990918fba37f781636816d3954aaeaf4641",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "451e346d_19910d7b",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-02-11T16:02:38Z",
+      "side": 0,
+      "message": "\u003e In the latest upstream version it is a WARNING that would be caught by [1] but it seems that the version on the bots return an error incorrectly.\n\nThat explains why it doesn\u0027t repro locally where it\u0027s presumably a newer driver.\n\n\u003e (my slight preference)\n\nDone.\n\n\u003e I guess my question is, given the cost we saw from setting the label, do we know if there are other hidden costs from enabling the debug callback code? I guess we could benchmark with it enabled/fully disabled to see if any exist.\n\nvmiura@ was the one who found setting the labels were slow. I\u0027d hope there is only a cost to having the debug callbacks if the driver is logging warnings/errors but I\u0027m not sure. Let\u0027s continue this discussion in https://crbug.com/394635413 so it\u0027s not lost? I\u0027ll close the thread here.",
+      "parentUuid": "6bc6ad4a_2a9cd140",
+      "revId": "2acbf990918fba37f781636816d3954aaeaf4641",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
