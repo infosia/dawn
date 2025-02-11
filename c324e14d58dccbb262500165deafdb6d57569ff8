@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bb384b1_991eaa00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-11T15:12:46Z",
+      "side": 1,
+      "message": "Still LGTM!",
+      "revId": "c324e14d58dccbb262500165deafdb6d57569ff8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "128f92bd_e8e93030",
@@ -50,6 +67,24 @@
       "side": 1,
       "message": "Interesting, it seemed so core that I thought it would date from NT. Chromium (and also Skia) only supports Win 10 and above so we can assume that and see if anyone yells at us.",
       "parentUuid": "a4e451e8_299493de",
+      "revId": "c324e14d58dccbb262500165deafdb6d57569ff8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ddec5eb_d30e80da",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-11T15:12:46Z",
+      "side": 1,
+      "message": "How about making this condition like the others (a series of `!load() || !load()...` and just log the error instead of returning it. It will at least give us something in logs to help diagnose problems.",
+      "parentUuid": "78ed5722_42ac341d",
       "revId": "c324e14d58dccbb262500165deafdb6d57569ff8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
