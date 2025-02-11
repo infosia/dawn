@@ -566,16 +566,22 @@ class Parser {
                     EmitCompositeExtract(inst);
                     break;
                 case spv::Op::OpFAdd:
-                case spv::Op::OpIAdd:
                     EmitBinary(inst, core::BinaryOp::kAdd);
                     break;
-                case spv::Op::OpFDiv:
+                case spv::Op::OpIAdd:
+                    EmitSpirvExplicitBuiltinCall(inst, spirv::BuiltinFn::kAdd);
+                    break;
                 case spv::Op::OpSDiv:
+                    EmitSpirvExplicitBuiltinCall(inst, spirv::BuiltinFn::kDiv);
+                    break;
+                case spv::Op::OpFDiv:
                 case spv::Op::OpUDiv:
                     EmitBinary(inst, core::BinaryOp::kDivide);
                     break;
-                case spv::Op::OpFMul:
                 case spv::Op::OpIMul:
+                    EmitSpirvExplicitBuiltinCall(inst, spirv::BuiltinFn::kMul);
+                    break;
+                case spv::Op::OpFMul:
                 case spv::Op::OpVectorTimesScalar:
                 case spv::Op::OpMatrixTimesScalar:
                 case spv::Op::OpVectorTimesMatrix:
@@ -585,13 +591,17 @@ class Parser {
                     break;
                 case spv::Op::OpFRem:
                 case spv::Op::OpUMod:
-                case spv::Op::OpSMod:
-                case spv::Op::OpSRem:
                     EmitBinary(inst, core::BinaryOp::kModulo);
                     break;
+                case spv::Op::OpSMod:
+                case spv::Op::OpSRem:
+                    EmitSpirvExplicitBuiltinCall(inst, spirv::BuiltinFn::kMod);
+                    break;
                 case spv::Op::OpFSub:
-                case spv::Op::OpISub:
                     EmitBinary(inst, core::BinaryOp::kSubtract);
+                    break;
+                case spv::Op::OpISub:
+                    EmitSpirvExplicitBuiltinCall(inst, spirv::BuiltinFn::kSub);
                     break;
                 case spv::Op::OpFunctionCall:
                     EmitFunctionCall(inst);
@@ -687,6 +697,14 @@ class Parser {
 
     void EmitBuiltinCall(const spvtools::opt::Instruction& inst, core::BuiltinFn fn) {
         Emit(b_.Call(Type(inst.type_id()), fn, Args(inst, 2)), inst.result_id());
+    }
+
+    void EmitSpirvExplicitBuiltinCall(const spvtools::opt::Instruction& inst, spirv::BuiltinFn fn) {
+        Emit(b_.CallExplicit<spirv::ir::BuiltinCall>(
+                 Type(inst.type_id()), fn,
+                 Vector<const core::type::Type*, 1>{Type(inst.type_id())->DeepestElement()},
+                 Args(inst, 2)),
+             inst.result_id());
     }
 
     void EmitSpirvBuiltinCall(const spvtools::opt::Instruction& inst, spirv::BuiltinFn fn) {

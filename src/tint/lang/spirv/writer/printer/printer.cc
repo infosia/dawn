@@ -1509,6 +1509,21 @@ class Printer {
             case spirv::BuiltinFn::kBitFieldUExtract:
                 op = spv::Op::OpBitFieldUExtract;
                 break;
+            case BuiltinFn::kAdd:
+                op = spv::Op::OpIAdd;
+                break;
+            case BuiltinFn::kSub:
+                op = spv::Op::OpIAdd;
+                break;
+            case BuiltinFn::kMul:
+                op = spv::Op::OpIMul;
+                break;
+            case BuiltinFn::kDiv:
+                op = spv::Op::OpSDiv;
+                break;
+            case BuiltinFn::kMod:
+                op = spv::Op::OpSMod;
+                break;
             case spirv::BuiltinFn::kNone:
                 TINT_ICE() << "undefined spirv ir function";
         }
