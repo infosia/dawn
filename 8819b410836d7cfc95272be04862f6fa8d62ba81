@@ -16,6 +16,24 @@
       "message": "Just checking the extension isn\u0027t enough. The extension being available just means the Features object is available. You also need to get the features and check the `cooperativeMatrix` flag.\n\nhttps://registry.khronos.org/vulkan/specs/latest/man/html/VkPhysicalDeviceCooperativeMatrixFeaturesKHR.html",
       "revId": "8819b410836d7cfc95272be04862f6fa8d62ba81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69ecdd63_183b8443",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T21:26:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a83b2364_c51d5d19",
+      "revId": "8819b410836d7cfc95272be04862f6fa8d62ba81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
