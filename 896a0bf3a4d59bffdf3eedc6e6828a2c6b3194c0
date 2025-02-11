@@ -339,6 +339,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7d664c63_868707d0",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T21:34:33Z",
+      "side": 1,
+      "message": "You mean the friction of creating a new CL? Mostly it\u0027s in case this gets reverted for some reason we don\u0027t lose track of it, as it\u0027s unrelated to the CL in general. Just seems cleaner.",
+      "parentUuid": "14d7d241_d8c9b2e2",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "63a0f377_b0400934",
         "filename": "src/tint/lang/core/ir/const_param_validator.cc",
         "patchSetId": 12
