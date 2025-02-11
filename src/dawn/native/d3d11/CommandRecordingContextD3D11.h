@@ -100,6 +100,7 @@ class CommandRecordingContext {
 
     bool mIsOpen = false;
     ComPtr<ID3D11Device> mD3D11Device;
+    ComPtr<IDXGIDevice2> mDXGIDevice;
     ComPtr<ID3DDeviceContextState> mD3D11DeviceContextState;
     ComPtr<ID3D11DeviceContext4> mD3D11DeviceContext4;
     ComPtr<ID3D11Multithread> mD3D11Multithread;
@@ -161,7 +162,11 @@ class ScopedCommandRecordingContext : public CommandRecordingContext::Guard {
     void Unmap(ID3D11Resource* pResource, UINT Subresource) const;
     HRESULT Signal(ID3D11Fence* pFence, UINT64 Value) const;
     HRESULT Wait(ID3D11Fence* pFence, UINT64 Value) const;
+    HRESULT GetData(ID3D11Query* pQuery, void* pResult, UINT size, UINT flags) const;
+    void End(ID3D11Query* pQuery) const;
     void Flush1(D3D11_CONTEXT_TYPE ContextType, HANDLE hEvent) const;
+    void EnqueueSetEvent(HANDLE hEvent) const;
+    void Flush() const;
 
     // Write the built-in variable value to the uniform buffer.
     void WriteUniformBuffer(uint32_t offset, uint32_t element) const;
