@@ -3,6 +3,139 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7556bf1b_f966f6bc",
+        "filename": "src/tint/lang/core/ir/constexpr_if.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T22:45:37Z",
+      "side": 1,
+      "message": "Nit: both unneeded",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 35
+      },
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80d341df_6363d2ea",
+        "filename": "src/tint/lang/core/ir/constexpr_if.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T22:45:37Z",
+      "side": 1,
+      "message": "Nit: unneeded?",
+      "fixSuggestions": [
+        {
+          "fixId": "3c028601_12870997",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/constexpr_if.h",
+              "range": {
+                "startLine": 34,
+                "startChar": 0,
+                "endLine": 35,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "240c9a06_78f8698f",
+        "filename": "src/tint/lang/core/ir/constexpr_if.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T22:45:37Z",
+      "side": 1,
+      "message": "Nit: Unneeded?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8f1410b_944af6d2",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T22:45:37Z",
+      "side": 1,
+      "message": "Nit: could just use `if_-\u003eFriendlyName()`",
+      "fixSuggestions": [
+        {
+          "fixId": "73bb36d6_1ac90603",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/disassembler.cc",
+              "range": {
+                "startLine": 697,
+                "startChar": 0,
+                "endLine": 702,
+                "endChar": 0
+              },
+              "replacement": "    out_ \u003c\u003c StyleInstruction(if_-\u003eFriendlyName()) \u003c\u003c \" \";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0661d1a_41c520b2",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T22:45:37Z",
+      "side": 1,
+      "message": "Nit: could use `FriendlyName()` again",
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bffaae0c_1bd8552c",
         "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
         "patchSetId": 15
@@ -44,6 +177,40 @@
         "endLine": 123,
         "endChar": 49
       },
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59006a52_563515db",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T22:45:37Z",
+      "side": 1,
+      "message": "Can you add a unit test that has a nested constexpr_if instruction? I didn\u0027t see one.",
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be3585f3_2e117d04",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T22:45:37Z",
+      "side": 1,
+      "message": "How does that happen, I don\u0027t see it?",
       "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
