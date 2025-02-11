@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "766bf6c0_39604590",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-11T09:36:02Z",
+      "side": 1,
+      "message": "Sry, upload this file by accident. It doesn\u0027t do anything...",
+      "parentUuid": "572960d9_46c23fbc",
+      "revId": "20779c5894fd532f1570b33b1abe2b8f34f6690e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4db18f61_2430a6e5",
         "filename": "src/dawn/native/ImmediateConstantsLayout.h",
         "patchSetId": 23
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-10T10:20:59Z",
       "side": 1,
       "message": "This is still hard to understand. What about:\n\nReturns the offset of the member in the packed immediates of the pipeline.\n\nThe pointer-to-member is a pointer into the structure containing all the potential immediates. However pipelines don\u0027t need all of them and use a compacted layout with immediates in the same order, just some of them skipped.\n\nFor example the pipeline mask 11001111, representing \"userConstants: 4 | trivial_constants: 0 (2 at most)|clamp_frag:2\", maps to pipeline immediate constant layout: \"userConstants:4 | clamp_frag:2\".",
+      "revId": "20779c5894fd532f1570b33b1abe2b8f34f6690e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85ad9f62_89d58ada",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-11T09:36:02Z",
+      "side": 1,
+      "message": "Thanks. It seems much clear now. Done.",
+      "parentUuid": "4db18f61_2430a6e5",
       "revId": "20779c5894fd532f1570b33b1abe2b8f34f6690e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -101,6 +137,24 @@
       "writtenOn": "2025-02-10T10:20:59Z",
       "side": 1,
       "message": "Let\u0027s move the previous TODO here to not lose that we can do the prefix optimization.",
+      "revId": "20779c5894fd532f1570b33b1abe2b8f34f6690e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a87f7f9_1275f3bd",
+        "filename": "src/dawn/native/ImmediateConstantsTracker.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-11T09:36:02Z",
+      "side": 1,
+      "message": "Sry but which TODO? The compatible layout we talked as TODO in previous has been addressed, I think? Because we always update dirty bits to pipeline mask when setting pipeline. So it works like:\npipeline0 1111011 --\u003e dirty 1111011\n...\npipeline1 1110011 -\u003e dirty 1110011\nIn this mode, compatible has been achieved?",
+      "parentUuid": "970ada1c_19fafca1",
       "revId": "20779c5894fd532f1570b33b1abe2b8f34f6690e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
