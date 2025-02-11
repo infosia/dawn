@@ -57,6 +57,7 @@ struct DAWN_NATIVE_EXPORT SharedTextureMemoryD3D11Texture2DDescriptor : wgpu::Ch
     // This ID3D11Texture2D object must be created from the same ID3D11Device used in the
     // WGPUDevice.
     Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
+    bool alwaysHasAccess = false;
 };
 
 }  // namespace dawn::native::d3d11

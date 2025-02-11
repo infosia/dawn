@@ -1852,7 +1852,8 @@
         "members": [
             {"name": "usage", "type": "texture usage"},
             {"name": "size", "type": "extent 3D"},
-            {"name": "format", "type": "texture format"}
+            {"name": "format", "type": "texture format"},
+            {"name": "always has access", "type": "bool", "default": "false"}
         ]
     },
     "shared texture memory a hardware buffer properties": {

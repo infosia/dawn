@@ -138,6 +138,8 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     DAWN_TRY_ASSIGN(properties, PropertiesFromD3D11Texture(device, descriptor->texture.Get(),
                                                            /*isSharedWithHandle=*/false));
 
+    properties.alwaysHasAccess = descriptor->alwaysHasAccess;
+
     auto result =
         AcquireRef(new SharedTextureMemory(device, label, properties, std::move(d3d11Resource)));
     result->Initialize();

@@ -122,6 +122,7 @@ MaybeError SharedTextureMemoryBase::GetProperties(SharedTextureMemoryProperties*
     properties->usage = mProperties.usage;
     properties->size = mProperties.size;
     properties->format = mProperties.format;
+    properties->alwaysHasAccess = mProperties.alwaysHasAccess;
 
     UnpackedPtr<SharedTextureMemoryProperties> unpacked;
     DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(properties));
@@ -197,8 +198,13 @@ ResultOrError<Ref<TextureBase>> SharedTextureMemoryBase::CreateTexture(
 
     Ref<TextureBase> texture;
     DAWN_TRY_ASSIGN(texture, CreateTextureImpl(descriptor));
-    // Access is started on memory.BeginAccess.
-    texture->OnEndAccess();
+    if (mProperties.alwaysHasAccess) {
+        texture->SetInitialized(true);
+    }
+    else {
+        // Access is started on memory.BeginAccess.
+        texture->OnEndAccess();
+    }
     return texture;
 }
 
