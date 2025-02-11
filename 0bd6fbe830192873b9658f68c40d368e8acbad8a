@@ -16,6 +16,24 @@
       "message": "Why is this an `else if` instead of an `if`? Can we not have `AdapterPropertiesMemoryHeaps` and `AdapterPropertiesSubgroupMatrixConfigs` at the same time?",
       "revId": "0bd6fbe830192873b9658f68c40d368e8acbad8a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56e8d015_4be257ab",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T16:57:43Z",
+      "side": 1,
+      "message": "Good catch. I thought this was iterating over a chained extension structure list, but it isn\u0027t.",
+      "parentUuid": "9c3c8959_39f5b439",
+      "revId": "0bd6fbe830192873b9658f68c40d368e8acbad8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
