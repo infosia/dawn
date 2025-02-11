@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "22258eed_8eacc022",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "Wait, I think I\u0027m mis-reading the comment. So the issue is we don\u0027t have a n `obj_ty`, not that we don\u0027t have an `obj_val`? Like, this code didn\u0027t use `obj_val` here before, so is it that the type is missing? The code later already checked if `obj_val` existed.",
+      "parentUuid": "1e207c3b_c0fbe66a",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c6246aae_ea384696",
         "filename": "src/tint/lang/core/ir/builder.h",
         "patchSetId": 12
@@ -194,6 +212,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae736a92_0d8349bd",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4f5f7ad6_2bace11d",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3c13ea17_6f0c9b11",
@@ -231,6 +267,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "57a9ac7a_78fea4f7",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "Why does fixing smoothstep require the rest of the substitute overrides cl?",
+      "parentUuid": "65103ac0_07ba5aa0",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "63a0f377_b0400934",
         "filename": "src/tint/lang/core/ir/const_param_validator.cc",
         "patchSetId": 12
@@ -260,6 +314,24 @@
       "side": 1,
       "message": "afaik this is the only possible error case for the divide. The LHS doesnt matter.",
       "parentUuid": "63a0f377_b0400934",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cd5bcb4_e5b2e153",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c20c091b_48474b48",
       "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -418,6 +490,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5e1721e_46c59f32",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "I think this is Ok for now, but we might want to put a comment that if we expand this to non-logical \u0026\u0026 or || then we may need to do more here. Like, the block could have a call with side-effects which is not involved in the terminator calculation. That can\u0027t happen with the logicals, so it shoudln\u0027t be an issue yet.",
+      "parentUuid": "d01a2cf9_10ab13e8",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6eb23eb_a2fdd98e",
         "filename": "src/tint/lang/core/ir/evaluator.cc",
         "patchSetId": 12
@@ -447,6 +537,24 @@
       "side": 1,
       "message": "Do you think there is risk in leaving this in?",
       "parentUuid": "d6eb23eb_a2fdd98e",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cdce94b_5d077794",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "We should assert on it, instead of trying to handle it. We should not have logical \u0026\u0026 or || in the IR, so this should never happen.",
+      "parentUuid": "c8d8d1df_bb3c4ea2",
       "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -499,6 +607,24 @@
       "side": 1,
       "message": "Reduced code repetition. All overrides will have an initializer at line 102",
       "parentUuid": "aa3ddcf9_b93f8668",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe84d3c5_583b627c",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "915afe8d_f67dd1fb",
       "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -750,6 +876,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0dcd8b3c_aa7aa006",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "But how can we have a compiler error where we didnt\u0027 fail on the `Success` check above?",
+      "parentUuid": "c0b50e7a_705ec69f",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "468d43ea_8f91248b",
         "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
         "patchSetId": 12
@@ -803,6 +947,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ee14b913_b57370c0",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "ASSERTS only fire in Debug, I think, and in Debug we run the validator. The validator should bail out if there is a missing terminator as the IR is incorrect.",
+      "parentUuid": "0ac0542b_cfb0091e",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "97c516f8_f1ae8f7d",
         "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
         "patchSetId": 12
@@ -832,6 +994,24 @@
       "side": 1,
       "message": "Validation of the constant params should actually only be done at this specific stage. This is a special validation which is only required because we do overrides (IR).",
       "parentUuid": "97c516f8_f1ae8f7d",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b3d14f3_c4cfd3d2",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "Why? We can do constant validation at any stage can we not? Wouldn\u0027t it catch the case where we accidentally create a const-validation error in a later transform?",
+      "parentUuid": "b46e08c4_b173adcb",
       "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -906,6 +1086,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e451f4a2_3800fa21",
+        "filename": "src/tint/lang/wgsl/ast/builder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "73378ff9_2f281a93",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "737266ae_d9a6330c",
@@ -943,6 +1141,30 @@
       "side": 1,
       "message": "This code is different. This will always create a constant 1 even if we do not need it. I am not sure it matters much.",
       "parentUuid": "737266ae_d9a6330c",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 81
+      },
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4f6f8d8_c0dff31e",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T18:26:03Z",
+      "side": 1,
+      "message": "It shouldn\u0027t matter, the constant will get added to the constant manager and never emitted, so the output is the same (but the code is easier to read I think)",
+      "parentUuid": "5512151e_658b5fcc",
       "range": {
         "startLine": 293,
         "startChar": 0,
