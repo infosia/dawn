@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fabce93_7cefe903",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-02-11T03:13:13Z",
+      "side": 0,
+      "message": "For OOM errors even with backend validation disabled this seems problematic. OnDebugUtilsCallback() fires and deviceDebugPrefix() fails to get a prefix since the label was never set. [BufferTests.BufferMappedAtCreationOOM was failing](ttps://ci.chromium.org/ui/p/chromium/builders/try/linux-dawn-rel/42549/test-results?q\u003dExactID%3Aninja%3A%2F%2Fthird_party%2Fdawn%2Fsrc%2Fdawn%2Ftests%3Adawn_end2end_tests%2FBufferTests.BufferMappedAtCreationOOM%2FVulkan_Intel_R__UHD_Graphics_630__CML_GT2+VHash%3Ace0b4599f36caca3) with this assert as a result. It\u0027s not clear to me if this function is supposed to fire with backend validation turned off?",
+      "revId": "2acbf990918fba37f781636816d3954aaeaf4641",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
