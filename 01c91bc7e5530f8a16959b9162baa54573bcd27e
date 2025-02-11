@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "993c95c2_477cb7d7",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T13:24:01Z",
+      "side": 1,
+      "message": "Could we make tihs just a warning?",
+      "fixSuggestions": [
+        {
+          "fixId": "ad492858_d1441b16",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/vulkan/DeviceVk.cpp",
+              "range": {
+                "startLine": 98,
+                "startChar": 0,
+                "endLine": 102,
+                "endChar": 0
+              },
+              "replacement": "    if (!IsToggleEnabled(Toggle::UseUserDefinedLabelsInBackend)) {\n        EmitLog(WGPULoggingType_Warning,\n                 \"Backend object labels are required to map Vulkan backend errors to a device.\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "01c91bc7e5530f8a16959b9162baa54573bcd27e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

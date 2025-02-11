@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b49694d2_151cb8db",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T13:24:01Z",
+      "side": 0,
+      "message": "[1]",
+      "revId": "2acbf990918fba37f781636816d3954aaeaf4641",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fabce93_7cefe903",
@@ -14,6 +31,24 @@
       "writtenOn": "2025-02-11T03:13:13Z",
       "side": 0,
       "message": "For OOM errors even with backend validation disabled this seems problematic. OnDebugUtilsCallback() fires and deviceDebugPrefix() fails to get a prefix since the label was never set. [BufferTests.BufferMappedAtCreationOOM was failing](ttps://ci.chromium.org/ui/p/chromium/builders/try/linux-dawn-rel/42549/test-results?q\u003dExactID%3Aninja%3A%2F%2Fthird_party%2Fdawn%2Fsrc%2Fdawn%2Ftests%3Adawn_end2end_tests%2FBufferTests.BufferMappedAtCreationOOM%2FVulkan_Intel_R__UHD_Graphics_630__CML_GT2+VHash%3Ace0b4599f36caca3) with this assert as a result. It\u0027s not clear to me if this function is supposed to fire with backend validation turned off?",
+      "revId": "2acbf990918fba37f781636816d3954aaeaf4641",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61e9168a_8bd0875f",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T13:24:01Z",
+      "side": 0,
+      "message": "This error is returned helpfully by Mesa when it fails to allocate memory. In the [latest upstream version](https://gitlab.freedesktop.org/mesa/mesa/-/blob/main/src/vulkan/runtime/vk_log.c#L293) it is a WARNING that would be caught by [1] but it seems that the version on the bots return an error incorrectly. Fixes could be to either:\n\n - Register the debug callback only when backend validation is enabled.\n - Use `instance` in this function to just LogCallbackData if the backend validation is not enabled.\n - (my slight preference) replace the assert with `DAWN_CHECK(!(messageTypes \u0026 VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT))` to only crash on VVL messages.",
+      "parentUuid": "6fabce93_7cefe903",
       "revId": "2acbf990918fba37f781636816d3954aaeaf4641",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
