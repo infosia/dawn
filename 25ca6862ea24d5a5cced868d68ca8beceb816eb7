@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "430b7dbd_84ef5286",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T10:17:04Z",
+      "side": 1,
+      "message": "Don\u0027t we also require the Vulkan memory model?",
+      "revId": "25ca6862ea24d5a5cced868d68ca8beceb816eb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f6c99e3a_5f49b8b1",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
         "patchSetId": 7
