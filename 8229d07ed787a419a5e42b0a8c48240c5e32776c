@@ -69,6 +69,24 @@
       "parentUuid": "07b2785e_708748b8",
       "revId": "8229d07ed787a419a5e42b0a8c48240c5e32776c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f85ce9b_58987bed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-11T05:39:41Z",
+      "side": 1,
+      "message": "It is mainly because:\n\n1. We don\u0027t need to track the staging memory size on D3D11 and OpenGL, so we can just add the logic to the backend it is actually needed.\n2. `mStagingMemorySizeToRelease` needs to be set to 0 after pending command context is submitted, while `SubmitPendingCommands()` is a pure virtual function, so I have to put that reset in the `SubmitPendingCommands()` in each backend.",
+      "parentUuid": "087ecabe_f5c6c568",
+      "revId": "8229d07ed787a419a5e42b0a8c48240c5e32776c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
