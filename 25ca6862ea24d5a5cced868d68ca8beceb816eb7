@@ -35,6 +35,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e71ace4_acba4c60",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T16:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd757e3b_f0f9925d",
+      "revId": "25ca6862ea24d5a5cced868d68ca8beceb816eb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b30caa7e_4df79a44",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T16:57:55Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "430b7dbd_84ef5286",
+      "revId": "25ca6862ea24d5a5cced868d68ca8beceb816eb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f6c99e3a_5f49b8b1",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-02-11T09:59:19Z",
       "side": 1,
       "message": "These would be able to turn into `CheckVkSuccess`.",
+      "revId": "25ca6862ea24d5a5cced868d68ca8beceb816eb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35d4b9d0_ae1be958",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T16:57:55Z",
+      "side": 1,
+      "message": "`InitializeSupportedFeaturesImpl()` returns `void` so I think we still have to `DAWN_ASSERT`? Unless I minsunderstanding how Dawn error checking works...",
+      "parentUuid": "f6c99e3a_5f49b8b1",
       "revId": "25ca6862ea24d5a5cced868d68ca8beceb816eb7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
