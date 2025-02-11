@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b54c254b_827a154c",
+        "filename": "src/tint/lang/core/ir/builder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T16:54:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6246aae_ea384696",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d0f1dee_6f138bae",
@@ -621,6 +639,24 @@
       "writtenOn": "2025-02-10T15:50:37Z",
       "side": 1,
       "message": "why not range based for? then don\u0027t need to do the `reverse`",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf6a5384_0df41e22",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T16:54:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f8321b8_570c4882",
       "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
