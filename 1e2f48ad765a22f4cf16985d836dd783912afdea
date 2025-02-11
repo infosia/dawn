@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d96971d0_de73d408",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T09:52:55Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "1e2f48ad765a22f4cf16985d836dd783912afdea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4930cfee_5d83e3b9",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 4300,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T09:52:55Z",
+      "side": 1,
+      "message": "Did we mean to also have u8 and i8?",
+      "revId": "1e2f48ad765a22f4cf16985d836dd783912afdea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c2b00ef_07d33b19",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 4309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T09:52:55Z",
+      "side": 1,
+      "message": "uint32_t is definitely enough ^^",
+      "range": {
+        "startLine": 4309,
+        "startChar": 35,
+        "endLine": 4309,
+        "endChar": 43
+      },
+      "revId": "1e2f48ad765a22f4cf16985d836dd783912afdea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f692b43_91d6f812",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T09:52:55Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "1e2f48ad765a22f4cf16985d836dd783912afdea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "100725bf_425e0028",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T09:52:55Z",
+      "side": 1,
+      "message": "nit: To test that we get an error when requesting the info without the extension we can make a second fixture that doesn\u0027t override GetRequiredFeatures and a single test that uses it to check for the error. Even though we tend to do validation tests in unittest/validation in a way that doesn\u0027t require starting the backends, in this case I think it is ok to do it here since there are basically only 2 things to check for validation.",
+      "revId": "1e2f48ad765a22f4cf16985d836dd783912afdea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
