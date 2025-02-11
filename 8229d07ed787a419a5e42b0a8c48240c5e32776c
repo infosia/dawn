@@ -87,6 +87,24 @@
       "parentUuid": "087ecabe_f5c6c568",
       "revId": "8229d07ed787a419a5e42b0a8c48240c5e32776c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19d3c424_006a5ab3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T13:44:44Z",
+      "side": 1,
+      "message": "1) that means duplicating logic with zero perf cost in the multiple backends, the tradeoff is not worth it IMHO.\n2) the dynamicuploader can just reset the count when it asks to trigger the submit no need to put that in the backends.",
+      "parentUuid": "0f85ce9b_58987bed",
+      "revId": "8229d07ed787a419a5e42b0a8c48240c5e32776c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
