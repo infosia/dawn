@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "bd2ce461ba4781d4ed3f3e1954fea5e95fa27bf2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "289ed652_f5a09140",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-11T00:56:10Z",
+      "side": 1,
+      "message": "Is this a fixed postion for gen_struct_info.py in Emsripten 4.0.3 or user could set their own place to set this file.",
+      "revId": "bd2ce461ba4781d4ed3f3e1954fea5e95fa27bf2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
