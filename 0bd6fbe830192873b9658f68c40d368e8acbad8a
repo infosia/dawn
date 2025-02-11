@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c3c8959_39f5b439",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 950,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T13:36:40Z",
+      "side": 1,
+      "message": "Why is this an `else if` instead of an `if`? Can we not have `AdapterPropertiesMemoryHeaps` and `AdapterPropertiesSubgroupMatrixConfigs` at the same time?",
+      "revId": "0bd6fbe830192873b9658f68c40d368e8acbad8a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
