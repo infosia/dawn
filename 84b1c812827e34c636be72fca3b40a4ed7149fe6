@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6b0d954_38666f21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-11T23:11:11Z",
+      "side": 1,
+      "message": "The `this` pointer value passed to `emwgpuDelete()` function is incorrect when `RefCounted` is not the first base class in multi inherience. For example, `WGPUBufferImpl` class.\n\nIn the current implementation, there will be 8 bytes offset for the `this` pointer passed to `emwgpuDelete()` so that buffer objects will never be removed from JavaScript\u0027s `WebGPU.Internals.jsObjects`.",
+      "revId": "84b1c812827e34c636be72fca3b40a4ed7149fe6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
