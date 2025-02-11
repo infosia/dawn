@@ -87,6 +87,24 @@
       "parentUuid": "f99f7c96_fae44bda",
       "revId": "2acbf990918fba37f781636816d3954aaeaf4641",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bc6ad4a_2a9cd140",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T13:53:34Z",
+      "side": 0,
+      "message": "I guess my question is, given the cost we saw from setting the label, do we know if there are other hidden costs from enabling the debug callback code? I guess we could benchmark with it enabled/fully disabled to see if any exist.",
+      "parentUuid": "c7c81252_75ba71bb",
+      "revId": "2acbf990918fba37f781636816d3954aaeaf4641",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
