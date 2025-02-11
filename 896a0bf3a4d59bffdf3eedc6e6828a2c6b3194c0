@@ -321,6 +321,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "14d7d241_d8c9b2e2",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T19:14:15Z",
+      "side": 1,
+      "message": "Not sure if the friction justifies it. Partially because this code isnt even active so its not like I am fixing an active bug.",
+      "parentUuid": "0217e5b7_d62b5de8",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "63a0f377_b0400934",
         "filename": "src/tint/lang/core/ir/const_param_validator.cc",
         "patchSetId": 12
@@ -1201,6 +1219,30 @@
       "side": 1,
       "message": "It shouldn\u0027t matter, the constant will get added to the constant manager and never emitted, so the output is the same (but the code is easier to read I think)",
       "parentUuid": "5512151e_658b5fcc",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 300,
+        "endChar": 81
+      },
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "428356a2_ab8399c9",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T19:14:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4f6f8d8_c0dff31e",
       "range": {
         "startLine": 293,
         "startChar": 0,

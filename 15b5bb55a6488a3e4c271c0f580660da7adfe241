@@ -22,6 +22,30 @@
       },
       "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5828d84c_dd74a74a",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T19:14:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bffaae0c_1bd8552c",
+      "range": {
+        "startLine": 123,
+        "startChar": 40,
+        "endLine": 123,
+        "endChar": 49
+      },
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
