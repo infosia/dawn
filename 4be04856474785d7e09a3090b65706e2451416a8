@@ -51,6 +51,24 @@
       "parentUuid": "74cf534d_3da2e511",
       "revId": "4be04856474785d7e09a3090b65706e2451416a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fa62409_6618731c",
+        "filename": "src/dawn/native/d3d11/SharedFenceD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-02-11T00:13:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1135bf3a_25126730",
+      "revId": "4be04856474785d7e09a3090b65706e2451416a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
