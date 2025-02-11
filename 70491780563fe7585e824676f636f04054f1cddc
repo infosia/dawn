@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "67c5195e_690fb19a",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T16:45:17Z",
+      "side": 0,
+      "message": "This is intentional. We cannot actually evaluate the access (to a value) but we still want to do the bounds checking below. \n\nThis is because Eval is doing 2 things. It is evaluating to a value and also generating failure messages.",
+      "parentUuid": "835aad5f_ccb8a163",
+      "revId": "70491780563fe7585e824676f636f04054f1cddc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98254598_1532bbed",
         "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
         "patchSetId": 12
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-10T15:50:37Z",
       "side": 0,
       "message": "Is this no longer true, why remove the comment?",
+      "revId": "70491780563fe7585e824676f636f04054f1cddc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5008cd7e_5252218f",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T16:45:17Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "98254598_1532bbed",
       "revId": "70491780563fe7585e824676f636f04054f1cddc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -48,6 +84,24 @@
       "writtenOn": "2025-02-10T15:50:37Z",
       "side": 0,
       "message": "Why remove the check? Is it implicitly done by `CalculateOverride`? It seems a bit clearer to handle it here as it isn\u0027t an override to be calculated.",
+      "revId": "70491780563fe7585e824676f636f04054f1cddc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7309dd3_7ce1e4b6",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-11T16:45:17Z",
+      "side": 0,
+      "message": "This is just simpler. If it is a constant it will be evaluated as such.",
+      "parentUuid": "49c3eae9_e06b101e",
       "revId": "70491780563fe7585e824676f636f04054f1cddc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
