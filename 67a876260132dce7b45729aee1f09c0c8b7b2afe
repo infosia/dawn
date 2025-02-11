@@ -16,6 +16,98 @@
       "message": "PTAL.",
       "revId": "67a876260132dce7b45729aee1f09c0c8b7b2afe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fc3f6c9_8d395df6",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T22:29:11Z",
+      "side": 1,
+      "message": "If `div` is actually supposed to mean `sdiv`, then shouldn\u0027t this be always casting the arguments to signed integers? The helper looks like it would just match the LHS type.",
+      "revId": "67a876260132dce7b45729aee1f09c0c8b7b2afe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b48f13c1_349e071c",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T22:29:11Z",
+      "side": 1,
+      "message": "BTW, for these inline vector constructors I think you can drop the template args and just use `Vector{...}`.",
+      "revId": "67a876260132dce7b45729aee1f09c0c8b7b2afe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d80a4943_5e73150d",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T22:29:11Z",
+      "side": 1,
+      "message": "I\u0027d recommend naming these `sdiv` and `smod` to capture the fact that the signedness requirement is independent of the operands. Related to the comment about what I think is a bug in the transform code.",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 410,
+        "endChar": 53
+      },
+      "revId": "67a876260132dce7b45729aee1f09c0c8b7b2afe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6ceebf7_df3eff7c",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-11T22:29:11Z",
+      "side": 1,
+      "message": "ISub",
+      "fixSuggestions": [
+        {
+          "fixId": "0de5d44c_cb54f9c7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/printer/printer.cc",
+              "range": {
+                "startLine": 1516,
+                "startChar": 0,
+                "endLine": 1517,
+                "endChar": 0
+              },
+              "replacement": "                op \u003d spv::Op::OpISub;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "67a876260132dce7b45729aee1f09c0c8b7b2afe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
