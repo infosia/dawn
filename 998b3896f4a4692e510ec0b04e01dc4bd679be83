@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9c3d2d7_339ab6b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T13:26:29Z",
+      "side": 1,
+      "message": "I don\u0027t think we should turn this off globally. At most, we should wrap the offending piece of code specifically so we don\u0027t lose the warning for the rest of the code base. \n\nIt would be preferrable to fix the deprecation, but it\u0027s an annoying one to actually fixup nicely.",
+      "revId": "998b3896f4a4692e510ec0b04e01dc4bd679be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
