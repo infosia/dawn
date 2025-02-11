@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd757e3b_f0f9925d",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T09:59:19Z",
+      "side": 1,
+      "message": "Can we enable the extension only if there is at least one config that we can represent using the WebGPU extension? It would require gathering and caching the configs here instead of doing it on demand when wgpu::Adapter::GetInfo is called.",
+      "revId": "25ca6862ea24d5a5cced868d68ca8beceb816eb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6c99e3a_5f49b8b1",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T09:59:19Z",
+      "side": 1,
+      "message": "These would be able to turn into `CheckVkSuccess`.",
+      "revId": "25ca6862ea24d5a5cced868d68ca8beceb816eb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
