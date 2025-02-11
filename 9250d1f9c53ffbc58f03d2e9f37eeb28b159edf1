@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c995b17a_32979ae3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-11T06:40:05Z",
+      "side": 1,
+      "message": "I think this is due to have two seperated commit in local? We could do git commit --amend always for modification and use `git cl upload`. Gerrit will use Change-Id and helps create patch set automatically.",
+      "revId": "9250d1f9c53ffbc58f03d2e9f37eeb28b159edf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7c466d89_fce9df61",
         "filename": "src/cmake/DawnCompilerExtraFlags.cmake",
         "patchSetId": 2
