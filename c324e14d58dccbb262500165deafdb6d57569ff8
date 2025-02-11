@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "78ed5722_42ac341d",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-11T13:27:14Z",
+      "side": 1,
+      "message": "Interesting, it seemed so core that I thought it would date from NT. Chromium (and also Skia) only supports Win 10 and above so we can assume that and see if anyone yells at us.",
+      "parentUuid": "a4e451e8_299493de",
+      "revId": "c324e14d58dccbb262500165deafdb6d57569ff8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "27f276b7_ce63966d",
         "filename": "src/dawn/native/d3d11/SharedFenceD3D11.cpp",
         "patchSetId": 7
