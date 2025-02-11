@@ -51,6 +51,24 @@
       "parentUuid": "6fabce93_7cefe903",
       "revId": "2acbf990918fba37f781636816d3954aaeaf4641",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f99f7c96_fae44bda",
+        "filename": "src/dawn/native/vulkan/BackendVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T13:42:21Z",
+      "side": 0,
+      "message": "In the case where backend validatin is not enabled, why do we hookup the debug callback?",
+      "parentUuid": "61e9168a_8bd0875f",
+      "revId": "2acbf990918fba37f781636816d3954aaeaf4641",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
