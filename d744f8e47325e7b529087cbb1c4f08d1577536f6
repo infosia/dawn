@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb488c32_0ee9835f",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2818,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-11T04:54:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdfbe4e4_8bdb52aa",
+      "range": {
+        "startLine": 2813,
+        "startChar": 0,
+        "endLine": 2818,
+        "endChar": 5
+      },
+      "revId": "d744f8e47325e7b529087cbb1c4f08d1577536f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "86bb710c_2c3fe7f7",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-02-10T22:53:29Z",
       "side": 1,
       "message": "This check looks redundant now?",
+      "range": {
+        "startLine": 2842,
+        "startChar": 0,
+        "endLine": 2845,
+        "endChar": 5
+      },
+      "revId": "d744f8e47325e7b529087cbb1c4f08d1577536f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d45f4ddc_653ed3cc",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2845,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-11T04:54:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86bb710c_2c3fe7f7",
       "range": {
         "startLine": 2842,
         "startChar": 0,
