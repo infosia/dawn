@@ -616,6 +616,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a8449b95_b086fb9a",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T23:21:36Z",
+      "side": 1,
+      "message": "I don\u0027t know the answer, hence the suggestion to just add a comment so we know this may need to modified if wgsl gets a full const-eval construct.",
+      "parentUuid": "aaeb9ba8_d13d6b20",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d6eb23eb_a2fdd98e",
         "filename": "src/tint/lang/core/ir/evaluator.cc",
         "patchSetId": 12
@@ -1072,6 +1090,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea4aa74a_8080de13",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T23:21:36Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4b4c16a1_bbd9f9c4",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "468d43ea_8f91248b",
@@ -1228,6 +1264,24 @@
       "side": 1,
       "message": "The const eval is for generating user facing errors that we could not generate due to Overrides.\n\nThere are many transforms that we could do that would no longer follow the compile time rules of wgsl so should not generate user errors. However the results should also be valid IR (well formed).\n\nAn example might be\n\u003e var a \u003d 0.0;\n\u003e var b \u003d 1.0/a;\n \n We might choose to transform this such that we are doing divide(1.0, 0.0) in IR but we cannot fail on this and we certainly cannot forward the error to the user.",
       "parentUuid": "6b3d14f3_c4cfd3d2",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "597eb0b3_b2a829c3",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T23:21:36Z",
+      "side": 1,
+      "message": "We will need to run this outside of substitue overrides, the spir-v reader going to IR should probably run const-eval to fold away any constants so we\u0027d want this validation to happen.\n\nIf a transform injects an invalid const construct we\u0027d also want to fail (it should never happen, and we only validation in debug for that reason). In the cases where we decide to violate the usual WGSL rules, we add capabilities so I\u0027d see us doing the same here.\n\nFor the example given, we\u0027d have to const-eval with runtime semantics given they\u0027re `var`\u0027s so it woudln\u0027t generate an error as that would const-eval.",
+      "parentUuid": "8724a3e9_be78b70d",
       "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
