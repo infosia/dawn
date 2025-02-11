@@ -303,6 +303,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0217e5b7_d62b5de8",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-11T19:05:55Z",
+      "side": 1,
+      "message": "Right, so it should be trivial to pull the smoothstep out to it\u0027s own CL and then rebase this one on top of that?",
+      "parentUuid": "ba63d1fe_3ec0c496",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "63a0f377_b0400934",
         "filename": "src/tint/lang/core/ir/const_param_validator.cc",
         "patchSetId": 12
