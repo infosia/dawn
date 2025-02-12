@@ -1035,12 +1035,22 @@ struct State {
         b.InsertBefore(builtin, [&] {
             // SPIR-V only provides a multiply-accumulate instruction, so construct a zero-valued
             // matrix to accumulate into.
+            auto* result_ty = builtin->Result(0)->Type()->As<core::type::SubgroupMatrix>();
             auto* left = builtin->Args()[0];
             auto* right = builtin->Args()[1];
-            auto* acc = b.Construct(builtin->Result(0)->Type());
+            auto* acc = b.Construct(result_ty);
+            uint32_t operands = SpvCooperativeMatrixOperandsMaskNone;
+            if (left->Type()->As<core::type::SubgroupMatrix>()->Type()->IsSignedIntegerScalar()) {
+                operands |= SpvCooperativeMatrixOperandsMatrixASignedComponentsKHRMask;
+                operands |= SpvCooperativeMatrixOperandsMatrixBSignedComponentsKHRMask;
+            }
+            if (result_ty->Type()->IsSignedIntegerScalar()) {
+                operands |= SpvCooperativeMatrixOperandsMatrixCSignedComponentsKHRMask;
+                operands |= SpvCooperativeMatrixOperandsMatrixResultSignedComponentsKHRMask;
+            }
             b.CallWithResult<spirv::ir::BuiltinCall>(builtin->DetachResult(),
                                                      spirv::BuiltinFn::kCooperativeMatrixMulAdd,
-                                                     left, right, acc);
+                                                     left, right, acc, Literal(u32(operands)));
         });
         builtin->Destroy();
     }
@@ -1052,9 +1062,18 @@ struct State {
             auto* left = builtin->Args()[0];
             auto* right = builtin->Args()[1];
             auto* acc = builtin->Args()[2];
+            uint32_t operands = SpvCooperativeMatrixOperandsMaskNone;
+            if (left->Type()->As<core::type::SubgroupMatrix>()->Type()->IsSignedIntegerScalar()) {
+                operands |= SpvCooperativeMatrixOperandsMatrixASignedComponentsKHRMask;
+                operands |= SpvCooperativeMatrixOperandsMatrixBSignedComponentsKHRMask;
+            }
+            if (acc->Type()->As<core::type::SubgroupMatrix>()->Type()->IsSignedIntegerScalar()) {
+                operands |= SpvCooperativeMatrixOperandsMatrixCSignedComponentsKHRMask;
+                operands |= SpvCooperativeMatrixOperandsMatrixResultSignedComponentsKHRMask;
+            }
             b.CallWithResult<spirv::ir::BuiltinCall>(builtin->DetachResult(),
                                                      spirv::BuiltinFn::kCooperativeMatrixMulAdd,
-                                                     left, right, acc);
+                                                     left, right, acc, Literal(u32(operands)));
         });
         builtin->Destroy();
     }
