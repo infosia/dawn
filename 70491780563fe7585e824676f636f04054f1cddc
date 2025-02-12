@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2887ebfc_ac5c49f0",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T15:55:58Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "67c5195e_690fb19a",
+      "revId": "70491780563fe7585e824676f636f04054f1cddc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98254598_1532bbed",
@@ -102,6 +120,24 @@
       "side": 0,
       "message": "This is just simpler. If it is a constant it will be evaluated as such.",
       "parentUuid": "49c3eae9_e06b101e",
+      "revId": "70491780563fe7585e824676f636f04054f1cddc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56874aa9_fe2ceea3",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T15:55:58Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b7309dd3_7ce1e4b6",
       "revId": "70491780563fe7585e824676f636f04054f1cddc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

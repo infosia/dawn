@@ -1215,6 +1215,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "55bcd1be_b3cc70a5",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T15:55:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2909f318_11740c1f",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97c516f8_f1ae8f7d",
