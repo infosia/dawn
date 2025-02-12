@@ -52,7 +52,6 @@ class Queue final : public QueueBase {
 
     CommandRecordingContext* GetPendingRecordingContext(SubmitMode submitMode = SubmitMode::Normal);
     MaybeError SplitRecordingContext(CommandRecordingContext* recordingContext);
-    MaybeError SubmitPendingCommands() override;
 
     void RecycleCompletedCommands(ExecutionSerial completedSerial);
 
@@ -71,6 +70,8 @@ class Queue final : public QueueBase {
     void ForceEventualFlushOfCommands() override;
     MaybeError WaitForIdleForDestruction() override;
     void DestroyImpl() override;
+
+    MaybeError SubmitPendingCommandsImpl() override;
 
     // Dawn API
     void SetLabelImpl() override;

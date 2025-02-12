@@ -108,6 +108,10 @@ class QueueBase : public ApiObjectBase, public ExecutionQueueBase {
     void Tick(ExecutionSerial finishedSerial);
     void HandleDeviceLoss();
 
+    MaybeError SubmitPendingCommands() override;
+
+    bool InQueueSubmit() const;
+
   protected:
     QueueBase(DeviceBase* device, const QueueDescriptor* descriptor);
     QueueBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
@@ -147,8 +151,11 @@ class QueueBase : public ApiObjectBase, public ExecutionQueueBase {
                                     const TexelCopyBufferLayout& dataLayout,
                                     const Extent3D* writeSize) const;
 
+    virtual MaybeError SubmitPendingCommandsImpl() = 0;
+
     MaybeError SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands);
 
+    bool mInSubmit = false;
     MutexProtected<SerialMap<ExecutionSerial, std::unique_ptr<TrackTaskCallback>>> mTasksInFlight;
 };
 
