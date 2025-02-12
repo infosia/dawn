@@ -39,9 +39,11 @@ load("@bazel_skylib//lib:selects.bzl", "selects")
 cc_library(
   name = "parser",
   srcs = [
+    "namer.cc",
     "parser.cc",
   ],
   hdrs = [
+    "namer.h",
     "parser.h",
   ],
   deps = [
@@ -91,6 +93,7 @@ cc_library(
     "import_test.cc",
     "memory_test.cc",
     "misc_test.cc",
+    "namer_test.cc",
     "struct_test.cc",
     "var_test.cc",
   ],

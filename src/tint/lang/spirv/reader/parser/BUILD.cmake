@@ -41,6 +41,8 @@ if(TINT_BUILD_SPV_READER)
 # Condition: TINT_BUILD_SPV_READER
 ################################################################################
 tint_add_target(tint_lang_spirv_reader_parser lib
+  lang/spirv/reader/parser/namer.cc
+  lang/spirv/reader/parser/namer.h
   lang/spirv/reader/parser/parser.cc
   lang/spirv/reader/parser/parser.h
 )
@@ -100,6 +102,7 @@ tint_add_target(tint_lang_spirv_reader_parser_test test
   lang/spirv/reader/parser/import_test.cc
   lang/spirv/reader/parser/memory_test.cc
   lang/spirv/reader/parser/misc_test.cc
+  lang/spirv/reader/parser/namer_test.cc
   lang/spirv/reader/parser/struct_test.cc
   lang/spirv/reader/parser/var_test.cc
 )

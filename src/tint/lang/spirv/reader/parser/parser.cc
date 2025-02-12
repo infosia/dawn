@@ -51,6 +51,7 @@ TINT_END_DISABLE_WARNING(NEWLINE_EOF);
 #include "src/tint/lang/core/type/builtin_structs.h"
 #include "src/tint/lang/spirv/builtin_fn.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
+#include "src/tint/lang/spirv/reader/parser/namer.h"
 #include "src/tint/lang/spirv/validate/validate.h"
 
 using namespace tint::core::number_suffixes;  // NOLINT
@@ -112,13 +113,39 @@ class Parser {
             EmitModuleScopeVariables();
         }
 
+        RegisterNames();
+
         EmitFunctions();
         EmitEntryPointAttributes();
 
         // TODO(crbug.com/tint/1907): Handle annotation instructions.
-        // TODO(crbug.com/tint/1907): Handle names.
 
         return std::move(ir_);
+    }
+
+    void RegisterNames() {
+        // Register names from OpName and OpMemberName
+        for (const auto& inst : spirv_context_->debugs2()) {
+            switch (inst.opcode()) {
+                case spv::Op::OpName: {
+                    const auto name = inst.GetInOperand(1).AsString();
+                    if (!name.empty()) {
+                        namer_.RegisterSanitizedName(inst.GetSingleWordInOperand(0), name);
+                    }
+                    break;
+                }
+                case spv::Op::OpMemberName: {
+                    const auto name = inst.GetInOperand(2).AsString();
+                    if (!name.empty()) {
+                        namer_.RegisterSanitizedMemberName(inst.GetSingleWordInOperand(0),
+                                                           inst.GetSingleWordInOperand(1), name);
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
     }
 
     /// @param sc a SPIR-V storage class
@@ -437,6 +464,10 @@ class Parser {
         current_block_->Append(inst);
         TINT_ASSERT(inst->Results().Length() == 1u);
         AddValue(result_id, inst->Result(0));
+
+        if (namer_.HasName(result_id)) {
+            ir_.SetName(inst, namer_.GetName(result_id));
+        }
     }
 
     /// Emit an instruction to the current block.
@@ -1191,6 +1222,9 @@ class Parser {
     // The set of IDs of imports that are ignored. For example, any "NonSemanticInfo." import is
     // ignored.
     std::unordered_set<uint32_t> ignored_imports_;
+
+    // Utility class to work with names from the SPIR-V module.
+    Namer namer_;
 };
 
 }  // namespace
