@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf8f7662_70d6b593",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-12T14:04:10Z",
+      "side": 1,
+      "message": "Ultimately the upload handle seems that it is only used so that we hide the call to the `DynamicUploader` here, that would just be needed in `UnmapImpl`. The one in `DestroyImpl` wouldn\u0027t be needed because in the backends we should know that the staging buffer has never been used and can be freed immediately. (It would just require looking at the value of the last serial).",
+      "revId": "d9e8576141858402fb1f88d312c2af698a0695e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88a20e56_93293f17",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-12T14:04:10Z",
+      "side": 1,
+      "message": "Can we also use this for memory that\u0027s transiently allocated?",
+      "revId": "d9e8576141858402fb1f88d312c2af698a0695e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b6f7dc5_b018257a",
+        "filename": "src/dawn/native/Queue.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-12T14:04:10Z",
+      "side": 1,
+      "message": "So the problem is reentrancy of `SubmitPendingCommands` in `ExecutionQueueBase`? We could handle it entirely there with an `mInSubmit` flag updated in `SubmitPendingCommands` that would call the (renamed in the backends) `SubmitPendingCommandsImpl`. That flag would also need to be set in Queue::SubmitInternal.",
+      "revId": "d9e8576141858402fb1f88d312c2af698a0695e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
