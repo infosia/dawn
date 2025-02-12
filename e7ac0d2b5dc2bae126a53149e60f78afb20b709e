@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20abb553_6999267c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-12T11:59:57Z",
+      "side": 1,
+      "message": "Please take a look, thanks! This is a preparing CL for https://dawn-review.googlesource.com/c/dawn/+/226074.\n\nBy the way, my account doesn\u0027t have dry-run access, could you please assign me corresponding access? Thanks!",
+      "revId": "e7ac0d2b5dc2bae126a53149e60f78afb20b709e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
