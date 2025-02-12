@@ -373,6 +373,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c023a6a9_a1640783",
+        "filename": "src/tint/lang/core/ir/const_param_validator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T16:10:22Z",
+      "side": 1,
+      "message": "I will experiement with chained CLs in future changes. I dont work with them much so there is more friction for me than for others whom it is a more common workflow.",
+      "parentUuid": "7d664c63_868707d0",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63a0f377_b0400934",
