@@ -632,6 +632,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "725abdde_7d325c00",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T16:09:23Z",
+      "side": 1,
+      "message": "Sg.",
+      "parentUuid": "a8449b95_b086fb9a",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6eb23eb_a2fdd98e",
