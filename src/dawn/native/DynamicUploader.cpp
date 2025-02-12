@@ -36,12 +36,17 @@
 
 namespace dawn::native {
 
-UploadHandle::UploadHandle(uint64_t startOffset, Ref<BufferBase> stagingBuffer)
-    : mStartOffset(startOffset), mStagingBuffer(std::move(stagingBuffer)) {}
+UploadHandle::UploadHandle(uint64_t startOffset,
+                           Ref<BufferBase> stagingBuffer,
+                           bool isSubAllocation)
+    : mStartOffset(startOffset),
+      mStagingBuffer(std::move(stagingBuffer)),
+      mIsSubAllocation(isSubAllocation) {}
 
 UploadHandle& UploadHandle::operator=(UploadHandle&& other) {
     mStartOffset = other.mStartOffset;
     mStagingBuffer = std::move(other.mStagingBuffer);
+    mIsSubAllocation = other.mIsSubAllocation;
     return *this;
 }
 
@@ -54,7 +59,16 @@ bool UploadHandle::IsEmpty() const {
 }
 
 void UploadHandle::Release() {
-    mStagingBuffer = nullptr;
+    if (!mIsSubAllocation && !IsEmpty()) {
+        DeviceBase* device = mStagingBuffer->GetDevice();
+        uint64_t stagingMemory = mStagingBuffer->GetAllocatedSize();
+        mStagingBuffer = nullptr;
+        MaybeError maybeError =
+            device->GetDynamicUploader()->TrackStagingMemorySizeToRelease(stagingMemory);
+        [[maybe_unused]] bool hadError = device->ConsumedError(std::move(maybeError));
+    } else {
+        mStagingBuffer = nullptr;
+    }
 }
 
 uint64_t UploadHandle::GetStartOffset() const {
@@ -127,7 +141,7 @@ ResultOrError<UploadHandle> DynamicUploader::AllocateTransient(uint64_t allocati
 
     DAWN_ASSERT(targetRingBuffer->mStagingBuffer != nullptr);
 
-    return UploadHandle(startOffset, targetRingBuffer->mStagingBuffer);
+    return UploadHandle(startOffset, targetRingBuffer->mStagingBuffer, /*isSubAllocation=*/true);
 }
 
 ResultOrError<UploadHandle> DynamicUploader::AllocatePersistent(uint64_t allocationSize,
@@ -147,7 +161,7 @@ ResultOrError<UploadHandle> DynamicUploader::AllocatePersistent(uint64_t allocat
         DAWN_TRY_ASSIGN(stagingBuffer, mDevice->CreateBuffer(&bufferDesc));
     }
 
-    return UploadHandle(0, std::move(stagingBuffer));
+    return UploadHandle(0, std::move(stagingBuffer), /*isSubAllocation=*/false);
 }
 
 void DynamicUploader::Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll) {
@@ -180,6 +194,30 @@ ResultOrError<UploadHandle> DynamicUploader::Allocate(uint64_t allocationSize,
     }
 
     return AllocateTransient(allocationSize, serial, offsetAlignment);
+}
+
+MaybeError DynamicUploader::TrackStagingMemorySizeToRelease(uint64_t stagingMemorySizeToRelease) {
+    if (!mDevice->GetQueue()->CanTrackStagingMemoryToRelease()) {
+        return {};
+    }
+
+    constexpr uint64_t kStagingMemoryToReleaseThreshold = 16 * 1024 * 1024;
+
+    mStagingMemorySizeToRelease += stagingMemorySizeToRelease;
+    if (mStagingMemorySizeToRelease >= kStagingMemoryToReleaseThreshold) {
+        // `mStagingMemorySizeToRelease` will be reset to 0 in `EnsureCommandsFlushed()` when the
+        // pending commands are successfully submitted to the queue.
+        MaybeError maybeError = mDevice->GetQueue()->EnsureCommandsFlushed(
+            mDevice->GetQueue()->GetPendingCommandSerial());
+        DAWN_ASSERT(mStagingMemorySizeToRelease == 0);
+        return maybeError;
+    }
+
+    return {};
+}
+
+void DynamicUploader::ResetStagingMemorySizeToRelease() {
+    mStagingMemorySizeToRelease = 0;
 }
 
 }  // namespace dawn::native

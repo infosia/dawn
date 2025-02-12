@@ -55,6 +55,7 @@ class Queue final : public d3d::Queue {
     ResultOrError<Ref<d3d::SharedFence>> GetOrCreateSharedFence() override;
     ID3D12SharingContract* GetSharingContract() const;
     MaybeError SubmitPendingCommands() override;
+    bool CanTrackStagingMemoryToRelease() const override;
 
   private:
     using d3d::Queue::Queue;
@@ -100,6 +101,8 @@ class Queue final : public d3d::Queue {
     std::bitset<kMaxCommandAllocators> mFreeAllocators;
     uint32_t mLastAllocatorUsed = kNoCommandAllocator;
     SerialQueue<ExecutionSerial, uint32_t> mInFlightCommandAllocators;
+
+    bool mRecordingCommandsInQueueSubmit = false;
 };
 
 }  // namespace dawn::native::d3d12

@@ -113,9 +113,11 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
 
     TRACE_EVENT_BEGIN1(GetDevice()->GetPlatform(), Recording, "CommandBufferD3D12::RecordCommands",
                        "serial", uint64_t(pendingSerial));
+    mRecordingCommandsInQueueSubmit = true;
     for (uint32_t i = 0; i < commandCount; ++i) {
         DAWN_TRY(ToBackend(commands[i])->RecordCommands(commandContext));
     }
+    mRecordingCommandsInQueueSubmit = false;
     TRACE_EVENT_END1(GetDevice()->GetPlatform(), Recording, "CommandBufferD3D12::RecordCommands",
                      "serial", uint64_t(pendingSerial));
 
@@ -132,6 +134,8 @@ MaybeError Queue::SubmitPendingCommands() {
 
     DAWN_TRY(mPendingCommands.ExecuteCommandList(device, mCommandQueue.Get()));
     RecycleLastCommandListAfter(GetPendingCommandSerial());
+
+    device->GetDynamicUploader()->ResetStagingMemorySizeToRelease();
 
     // Immediately reopen the command recording context so it is always available.
     DAWN_TRY(NextSerial());
@@ -280,6 +284,10 @@ MaybeError Queue::RecycleUnusedCommandLists() {
     mInFlightCommandAllocators.ClearUpTo(completedSerial);
 
     return {};
+}
+
+bool Queue::CanTrackStagingMemoryToRelease() const {
+    return !mRecordingCommandsInQueueSubmit;
 }
 
 }  // namespace dawn::native::d3d12

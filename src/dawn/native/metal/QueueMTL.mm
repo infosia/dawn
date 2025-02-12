@@ -190,6 +190,8 @@ MaybeError Queue::SubmitPendingCommandBuffer() {
 
     [*pendingCommands commit];
 
+    GetDevice()->GetDynamicUploader()->ResetStagingMemorySizeToRelease();
+
     return mCommandContext.PrepareNextCommandBuffer(*mCommandQueue);
 }
 
@@ -211,9 +213,11 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
         CommandRecordingContext* commandContext = GetPendingCommandContext();
 
         TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferMTL::FillCommands");
+        mRecordingCommandsInQueueSubmit = true;
         for (uint32_t i = 0; i < commandCount; ++i) {
             DAWN_TRY(ToBackend(commands[i])->FillCommands(commandContext));
         }
+        mRecordingCommandsInQueueSubmit = false;
         TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferMTL::FillCommands");
 
         DAWN_TRY(SubmitPendingCommandBuffer());
@@ -279,6 +283,10 @@ ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanosecond
     std::array<std::pair<const dawn::native::SystemEventReceiver&, bool*>, 1> events{
         {{event->GetOrCreateSystemEventReceiver(), &ready}}};
     return WaitAnySystemEvent(events.begin(), events.end(), timeout);
+}
+
+bool Queue::CanTrackStagingMemoryToRelease() const {
+    return !mRecordingCommandsInQueueSubmit;
 }
 
 }  // namespace dawn::native::metal

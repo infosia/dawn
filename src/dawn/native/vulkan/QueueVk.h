@@ -71,6 +71,7 @@ class Queue final : public QueueBase {
     void ForceEventualFlushOfCommands() override;
     MaybeError WaitForIdleForDestruction() override;
     void DestroyImpl() override;
+    bool CanTrackStagingMemoryToRelease() const override;
 
     // Dawn API
     void SetLabelImpl() override;
@@ -96,6 +97,8 @@ class Queue final : public QueueBase {
 
     uint32_t mQueueFamily = 0;
     VkQueue mQueue = VK_NULL_HANDLE;
+
+    bool mRecordingCommandsInQueueSubmit = false;
 };
 
 }  // namespace dawn::native::vulkan

@@ -48,7 +48,7 @@ class BufferBase;
 class UploadHandle : public NonCopyable {
   public:
     UploadHandle() = default;
-    UploadHandle(uint64_t startOffset, Ref<BufferBase> stagingBuffer);
+    UploadHandle(uint64_t startOffset, Ref<BufferBase> stagingBuffer, bool isSubAllocation);
 
     UploadHandle(UploadHandle&& other) = default;
     UploadHandle& operator=(UploadHandle&& other);
@@ -65,6 +65,7 @@ class UploadHandle : public NonCopyable {
   private:
     uint64_t mStartOffset = 0;
     Ref<BufferBase> mStagingBuffer;
+    bool mIsSubAllocation = false;
 };
 
 class DynamicUploader {
@@ -80,6 +81,9 @@ class DynamicUploader {
                                                    bool ignoreLazyClear);
     void Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll = false);
 
+    MaybeError TrackStagingMemorySizeToRelease(uint64_t stagingMemorySize);
+    void ResetStagingMemorySizeToRelease();
+
   private:
     static constexpr uint64_t kRingBufferSize = 4 * 1024 * 1024;
 
@@ -94,6 +98,7 @@ class DynamicUploader {
 
     std::vector<std::unique_ptr<RingBuffer>> mRingBuffers;
     raw_ptr<DeviceBase> mDevice;
+    uint64_t mStagingMemorySizeToRelease = 0;
 };
 }  // namespace dawn::native
 

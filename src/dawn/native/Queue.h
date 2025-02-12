@@ -108,6 +108,11 @@ class QueueBase : public ApiObjectBase, public ExecutionQueueBase {
     void Tick(ExecutionSerial finishedSerial);
     void HandleDeviceLoss();
 
+    // Return false when we don't need to track the pending staging memory to release or we are
+    // handling pending command context in Queue::Submit(). At this time we shouldn't track the
+    // persistent staging memory because it may break the recoding of the remaining commands.
+    virtual bool CanTrackStagingMemoryToRelease() const;
+
   protected:
     QueueBase(DeviceBase* device, const QueueDescriptor* descriptor);
     QueueBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);

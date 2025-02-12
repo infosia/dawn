@@ -99,9 +99,11 @@ MaybeError Queue::Initialize() {
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
     TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferVk::RecordCommands");
     CommandRecordingContext* recordingContext = GetPendingRecordingContext();
+    mRecordingCommandsInQueueSubmit = true;
     for (uint32_t i = 0; i < commandCount; ++i) {
         DAWN_TRY(ToBackend(commands[i])->RecordCommands(recordingContext));
     }
+    mRecordingCommandsInQueueSubmit = false;
     TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferVk::RecordCommands");
 
     DAWN_TRY(SubmitPendingCommands());
@@ -404,6 +406,8 @@ MaybeError Queue::SubmitPendingCommands() {
         });
     TRACE_EVENT_END0(device->GetPlatform(), Recording, "vkQueueSubmit");
 
+    device->GetDynamicUploader()->ResetStagingMemorySizeToRelease();
+
     // Enqueue the semaphores before incrementing the serial, so that they can be deleted as
     // soon as the current submission is finished.
     for (VkSemaphore semaphore : mRecordingContext.waitSemaphores) {
@@ -569,6 +573,10 @@ ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanosecond
         DAWN_TRY(CheckVkSuccess(::VkResult(waitResult), "vkWaitForFences"));
         return true;
     }
+}
+
+bool Queue::CanTrackStagingMemoryToRelease() const {
+    return !mRecordingCommandsInQueueSubmit;
 }
 
 }  // namespace dawn::native::vulkan

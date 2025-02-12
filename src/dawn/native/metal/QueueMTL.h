@@ -55,6 +55,7 @@ class Queue final : public QueueBase {
 
     Ref<SystemEvent> CreateWorkDoneSystemEvent(ExecutionSerial serial);
     ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
+    bool CanTrackStagingMemoryToRelease() const override;
 
   private:
     Queue(Device* device, const QueueDescriptor* descriptor);
@@ -95,6 +96,8 @@ class Queue final : public QueueBase {
     NSPRef<id> mMtlSharedEvent;
     // The shared event wrapped as a SharedFence object.
     Ref<SharedFence> mSharedFence;
+
+    bool mRecordingCommandsInQueueSubmit = false;
 };
 
 }  // namespace dawn::native::metal

@@ -631,4 +631,8 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
     return {};
 }
 
+bool QueueBase::CanTrackStagingMemoryToRelease() const {
+    return false;
+}
+
 }  // namespace dawn::native
