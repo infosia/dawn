@@ -119,6 +119,16 @@ TEST_F(IR_EvaluatorTest, ConstructArray_Access) {
     EXPECT_EQ(2, c->Value()->ValueAs<int32_t>());
 }
 
+TEST_F(IR_EvaluatorTest, RuntimeArray_OutOfBoundsAccess) {
+    auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32>()));
+    auto* inst = b.Access(ty.ptr<storage, u32>(), arr, -1_i);
+    auto res = Eval(b, inst);
+
+    ASSERT_NE(res, Success);
+
+    EXPECT_EQ(res.Failure().reason.Str(), R"(error: index -1 out of bounds)");
+}
+
 TEST_F(IR_EvaluatorTest, ConstructStruct_Access) {
     auto* S = ty.Struct(mod.symbols.New("S"),
                         {{mod.symbols.New("a"), ty.i32()}, {mod.symbols.New("b"), ty.f32()}});
