@@ -3478,13 +3478,14 @@ TEST_F(MslWriter_BuiltinPolyfillTest, SubgroupMatrixMultiply_F32) {
     func->SetParams({left, right});
     b.Append(func->Block(), [&] {
         auto* call = b.Call(result, core::BuiltinFn::kSubgroupMatrixMultiply, left, right);
+        call->SetExplicitTemplateParams(Vector{ty.f32()});
         b.Return(func, call);
     });
 
     auto* src = R"(
 %foo = func(%left:subgroup_matrix_left<f32, 4, 8>, %right:subgroup_matrix_right<f32, 8, 4>):subgroup_matrix_result<f32, 8, 8> {
   $B1: {
-    %4:subgroup_matrix_result<f32, 8, 8> = subgroupMatrixMultiply %left, %right
+    %4:subgroup_matrix_result<f32, 8, 8> = subgroupMatrixMultiply<f32> %left, %right
     ret %4
   }
 }
@@ -3516,13 +3517,14 @@ TEST_F(MslWriter_BuiltinPolyfillTest, SubgroupMatrixMultiply_F16) {
     func->SetParams({left, right});
     b.Append(func->Block(), [&] {
         auto* call = b.Call(result, core::BuiltinFn::kSubgroupMatrixMultiply, left, right);
+        call->SetExplicitTemplateParams(Vector{ty.f16()});
         b.Return(func, call);
     });
 
     auto* src = R"(
 %foo = func(%left:subgroup_matrix_left<f16, 8, 4>, %right:subgroup_matrix_right<f16, 2, 8>):subgroup_matrix_result<f16, 2, 4> {
   $B1: {
-    %4:subgroup_matrix_result<f16, 2, 4> = subgroupMatrixMultiply %left, %right
+    %4:subgroup_matrix_result<f16, 2, 4> = subgroupMatrixMultiply<f16> %left, %right
     ret %4
   }
 }
