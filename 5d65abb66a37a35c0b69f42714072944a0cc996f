@@ -16,6 +16,24 @@
       "message": "Hey Brian, do you know what I\u0027m missing for the expectations tag? After adding the compat-min-es31 tag, the suppressions aren\u0027t picked up correctly. (see linux-dawn-rel)",
       "revId": "5d65abb66a37a35c0b69f42714072944a0cc996f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ec623cb_e64c35f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-02-12T22:58:37Z",
+      "side": 1,
+      "message": "The tag isn\u0027t being generated, and it looks like that\u0027s due to a typo that both of us missed with your Chromium-side CL.\n\nYou look for --use-dawn-features https://source.chromium.org/chromium/chromium/src/+/main:content/test/gpu/gpu_tests/webgpu_compat_cts_integration_test.py;l\u003d64 but the correct flag is --enable-dawn-features.",
+      "parentUuid": "33408a8a_cff017ef",
+      "revId": "5d65abb66a37a35c0b69f42714072944a0cc996f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
