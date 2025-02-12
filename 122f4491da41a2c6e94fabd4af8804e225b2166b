@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59032a63_ebbb033b",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3481,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-12T20:26:44Z",
+      "side": 1,
+      "message": "```suggestion\n        auto* call \u003d b.CallExplicit(result, core::BuiltinFn::kSubgroupMatrixMultiply, Vector{ty.f32()} left, right);\n```",
+      "range": {
+        "startLine": 3480,
+        "startChar": 0,
+        "endLine": 3481,
+        "endChar": 58
+      },
+      "revId": "122f4491da41a2c6e94fabd4af8804e225b2166b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b72c5730_7ec4339d",
+        "filename": "src/tint/lang/msl/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3520,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-12T20:26:44Z",
+      "side": 1,
+      "message": "```suggestion\n        auto* call \u003d b.Call(result, core::BuiltinFn::kSubgroupMatrixMultiply, Vector{ty.f16()}, left, right);\n```",
+      "range": {
+        "startLine": 3519,
+        "startChar": 0,
+        "endLine": 3520,
+        "endChar": 58
+      },
+      "revId": "122f4491da41a2c6e94fabd4af8804e225b2166b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97b023ae_1d9ede45",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3363,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-12T20:26:44Z",
+      "side": 1,
+      "message": "ditto others ...",
+      "revId": "122f4491da41a2c6e94fabd4af8804e225b2166b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
