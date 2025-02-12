@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22735793_3590b3c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-12T04:20:04Z",
+      "side": 1,
+      "message": "lgtm. We can figure out if we want to move the validation out to the validator when I get to needing it with the ir reader.\n\nWill leave to James to approve when he\u0027s happy.",
+      "revId": "79fd31fcfe6b254bc7914bf2a998490b3732dcf8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
