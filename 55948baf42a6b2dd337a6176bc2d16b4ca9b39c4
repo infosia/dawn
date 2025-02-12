@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d946cbbe_8a99dd25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-12T12:00:26Z",
+      "side": 1,
+      "message": "Please take a look, thanks!\nBy the way, my account doesn\u0027t have dry-run access, could you please assign me corresponding access? Thanks!",
+      "revId": "55948baf42a6b2dd337a6176bc2d16b4ca9b39c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
