@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "90e42aeb_840a2880",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-12T03:31:48Z",
+      "side": 1,
+      "message": "Good catch. Missed that when going through the old tests. Done.",
+      "parentUuid": "5fc3f6c9_8d395df6",
+      "revId": "67a876260132dce7b45729aee1f09c0c8b7b2afe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b48f13c1_349e071c",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cd86d22_70a103d9",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-12T03:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b48f13c1_349e071c",
+      "revId": "67a876260132dce7b45729aee1f09c0c8b7b2afe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d80a4943_5e73150d",
@@ -65,6 +101,30 @@
       "writtenOn": "2025-02-11T22:29:11Z",
       "side": 1,
       "message": "I\u0027d recommend naming these `sdiv` and `smod` to capture the fact that the signedness requirement is independent of the operands. Related to the comment about what I think is a bug in the transform code.",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 410,
+        "endChar": 53
+      },
+      "revId": "67a876260132dce7b45729aee1f09c0c8b7b2afe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e89dbdb2_546c745b",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-12T03:31:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d80a4943_5e73150d",
       "range": {
         "startLine": 409,
         "startChar": 0,
@@ -106,6 +166,24 @@
           ]
         }
       ],
+      "revId": "67a876260132dce7b45729aee1f09c0c8b7b2afe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00dfdc13_f2559d3f",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-12T03:31:48Z",
+      "side": 1,
+      "message": "Subtractions just addition with negative numbers ..... or something, heh.\n\nfixed.",
+      "parentUuid": "e6ceebf7_df3eff7c",
       "revId": "67a876260132dce7b45729aee1f09c0c8b7b2afe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
