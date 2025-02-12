@@ -182623,6 +182623,14 @@ webgpu:shader,validation,expression,binary,short_circuiting_and_or:invalid_array
 webgpu:shader,validation,expression,binary,short_circuiting_and_or:invalid_array_count_on_rhs:op="%7C%7C";rhs="sqrt_neg1";control=false
 webgpu:shader,validation,expression,binary,short_circuiting_and_or:invalid_array_count_on_rhs:op="%7C%7C";rhs="nested";control=true
 webgpu:shader,validation,expression,binary,short_circuiting_and_or:invalid_array_count_on_rhs:op="%7C%7C";rhs="nested";control=false
+webgpu:shader,validation,expression,binary,short_circuiting_and_or:array_override:op="%26%26";a_val=0;b_val=0
+webgpu:shader,validation,expression,binary,short_circuiting_and_or:array_override:op="%26%26";a_val=0;b_val=1
+webgpu:shader,validation,expression,binary,short_circuiting_and_or:array_override:op="%26%26";a_val=1;b_val=0
+webgpu:shader,validation,expression,binary,short_circuiting_and_or:array_override:op="%26%26";a_val=1;b_val=1
+webgpu:shader,validation,expression,binary,short_circuiting_and_or:array_override:op="%7C%7C";a_val=0;b_val=0
+webgpu:shader,validation,expression,binary,short_circuiting_and_or:array_override:op="%7C%7C";a_val=0;b_val=1
+webgpu:shader,validation,expression,binary,short_circuiting_and_or:array_override:op="%7C%7C";a_val=1;b_val=0
+webgpu:shader,validation,expression,binary,short_circuiting_and_or:array_override:op="%7C%7C";a_val=1;b_val=1
 webgpu:shader,validation,expression,call,builtin,abs:values:stage="constant";type="abstract-int"
 webgpu:shader,validation,expression,call,builtin,abs:values:stage="constant";type="abstract-float"
 webgpu:shader,validation,expression,call,builtin,abs:values:stage="constant";type="f32"
