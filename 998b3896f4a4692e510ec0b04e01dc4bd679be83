@@ -52,6 +52,24 @@
       "parentUuid": "6065230b_a7bcf865",
       "revId": "998b3896f4a4692e510ec0b04e01dc4bd679be83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5205e55b_ba84ac33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3466141
+      },
+      "writtenOn": "2025-02-12T09:33:01Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Updated and local tested, no warnings about deprecated API in new MacOS version.",
+      "parentUuid": "1b6b893f_901af5ac",
+      "revId": "998b3896f4a4692e510ec0b04e01dc4bd679be83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
