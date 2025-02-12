@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "812a97b8_fe2a0cb7",
+        "filename": "src/tint/lang/core/ir/constexpr_if.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T04:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7556bf1b_f966f6bc",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 35
+      },
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80d341df_6363d2ea",
@@ -59,6 +83,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a587fb33_ce4f453f",
+        "filename": "src/tint/lang/core/ir/constexpr_if.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T04:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80d341df_6363d2ea",
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "240c9a06_78f8698f",
@@ -72,6 +114,30 @@
       "writtenOn": "2025-02-11T22:45:37Z",
       "side": 1,
       "message": "Nit: Unneeded?",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a2f91d6_9f42cd75",
+        "filename": "src/tint/lang/core/ir/constexpr_if.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T04:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "240c9a06_78f8698f",
       "range": {
         "startLine": 36,
         "startChar": 0,
@@ -117,6 +183,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41a4a12b_1da133fa",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T04:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8f1410b_944af6d2",
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0661d1a_41c520b2",
@@ -130,6 +214,24 @@
       "writtenOn": "2025-02-11T22:45:37Z",
       "side": 1,
       "message": "Nit: could use `FriendlyName()` again",
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c306d38f_0a9de650",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T04:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0661d1a_41c520b2",
       "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
