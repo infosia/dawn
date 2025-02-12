@@ -46,7 +46,7 @@ class Queue : public d3d::Queue {
     ScopedCommandRecordingContext GetScopedPendingCommandContext(SubmitMode submitMode);
     ScopedSwapStateCommandRecordingContext GetScopedSwapStatePendingCommandContext(
         SubmitMode submitMode);
-    MaybeError SubmitPendingCommands() override;
+    MaybeError SubmitPendingCommandsImpl() override;
     virtual MaybeError NextSerial() = 0;
 
     // Separated from creation because it creates resources, which is not valid before the

@@ -54,7 +54,6 @@ class Queue final : public d3d::Queue {
     ID3D12CommandQueue* GetCommandQueue() const;
     ResultOrError<Ref<d3d::SharedFence>> GetOrCreateSharedFence() override;
     ID3D12SharingContract* GetSharingContract() const;
-    MaybeError SubmitPendingCommands() override;
 
   private:
     using d3d::Queue::Queue;
@@ -74,6 +73,8 @@ class Queue final : public d3d::Queue {
     MaybeError OpenPendingCommands();
     void RecycleLastCommandListAfter(ExecutionSerial serial);
     MaybeError RecycleUnusedCommandLists();
+
+    MaybeError SubmitPendingCommandsImpl() override;
 
     // Dawn API
     void SetLabelImpl() override;

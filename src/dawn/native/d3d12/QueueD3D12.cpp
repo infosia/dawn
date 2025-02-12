@@ -122,7 +122,7 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
     return SubmitPendingCommands();
 }
 
-MaybeError Queue::SubmitPendingCommands() {
+MaybeError Queue::SubmitPendingCommandsImpl() {
     Device* device = ToBackend(GetDevice());
     DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
 
