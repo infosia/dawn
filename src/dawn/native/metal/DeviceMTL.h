@@ -136,6 +136,9 @@ class Device final : public DeviceBase {
     ResultOrError<Ref<SharedFenceBase>> ImportSharedFenceImpl(
         const SharedFenceDescriptor* descriptor) override;
 
+    void StartCapture();
+    void StopCapture();
+
     void DestroyImpl() override;
 
     NSPRef<id<MTLDevice>> mMtlDevice;
@@ -156,6 +159,8 @@ class Device final : public DeviceBase {
     // vertex/fragement stage
     bool mCounterSamplingAtStageBoundary;
     NSPRef<id<MTLBuffer>> mMockBlitMtlBuffer;
+    // True if capture in progress, so we know if we need to stop it.
+    bool mCaptureInProgress = false;
 };
 
 }  // namespace dawn::native::metal
