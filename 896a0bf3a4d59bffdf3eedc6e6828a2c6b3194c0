@@ -1304,6 +1304,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "40db0664_9e908dbf",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T15:55:17Z",
+      "side": 1,
+      "message": "Discussed in person. Put in in as is. Worst case we will move it later.",
+      "parentUuid": "597eb0b3_b2a829c3",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "94b1afe5_6642f7e4",

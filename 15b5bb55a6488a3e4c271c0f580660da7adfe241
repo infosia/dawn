@@ -318,6 +318,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddbc3532_be26aec0",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T15:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "934f59f4_e96edd83",
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be3585f3_2e117d04",
@@ -331,6 +349,24 @@
       "writtenOn": "2025-02-11T22:45:37Z",
       "side": 1,
       "message": "How does that happen, I don\u0027t see it?",
+      "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ab56031_a997c9e9",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T15:55:17Z",
+      "side": 1,
+      "message": "This condition (the not alive ConstExprIf instruction) will happen if an outer ConstExprIf gets destroyed. I have tested this in unit tests and this condition is indeed hit.",
+      "parentUuid": "be3585f3_2e117d04",
       "revId": "15b5bb55a6488a3e4c271c0f580660da7adfe241",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
