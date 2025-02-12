@@ -50,6 +50,24 @@
       "message": "Can\u0027t the `ScopedTintICEHandler` be in the `DAWN_TRY_LOAD_OR_RUN`? Ditto in other backends.",
       "revId": "e7ac0d2b5dc2bae126a53149e60f78afb20b709e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "254af0a6_56fc4e82",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-12T18:27:58Z",
+      "side": 1,
+      "message": "+1 on this, otherwise LGTM.",
+      "parentUuid": "47589f36_c8d4b9bb",
+      "revId": "e7ac0d2b5dc2bae126a53149e60f78afb20b709e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
