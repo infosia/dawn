@@ -132,6 +132,7 @@ ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
         Ref<Device> device = AcquireRef(new Device(adapter, std::move(mtlDevice), descriptor,
                                                    deviceToggles, std::move(lostEvent)));
         DAWN_TRY(device->Initialize(descriptor));
+
         return device;
     }
 }
@@ -154,10 +155,15 @@ Device::Device(AdapterBase* adapter,
 }
 
 Device::~Device() {
+    StopCapture();
     Destroy();
 }
 
 MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
+    // Note: this has to happen before the queue is created otherwise the queue
+    // itself is not captured.
+    StartCapture();
+
     Ref<Queue> queue;
     DAWN_TRY_ASSIGN(queue, Queue::Create(this, &descriptor->defaultQueue));
 
@@ -411,6 +417,73 @@ id<MTLBuffer> Device::GetMockBlitMtlBuffer() {
     }
 
     return mMockBlitMtlBuffer.Get();
+}
+
+void Device::StartCapture() {
+    assert(!mCaptureInProgress);
+
+    static int s_count = 0;
+    const char* captureNameBase = std::getenv("DAWN_TRACE_FILE_BASE");
+    const char* captureFilter = std::getenv("DAWN_TRACE_FILTER");
+
+    // If capture name is not set skip
+    if (captureNameBase == nullptr || captureNameBase[0] == 0) {
+        return;
+    }
+
+    NSLog(@"Label: %@", [NSString stringWithUTF8String:GetLabel().c_str()]);
+
+    // If a filter was specified, only capture if the filter is found
+    if (captureFilter != nullptr && GetLabel().find(captureFilter) == std::string::npos) {
+        return;
+    }
+
+    MTLCaptureManager* captureManager = [MTLCaptureManager sharedCaptureManager];
+    MTLCaptureDescriptor* captureDescriptor = [[MTLCaptureDescriptor alloc] init];
+    captureDescriptor.captureObject = *mMtlDevice;
+    captureDescriptor.destination = MTLCaptureDestinationGPUTraceDocument;
+
+    /*
+    The reason to put the date is Metal will not overwrite an existing trace.
+    Deleting a trace is problematic as a trace is a folder and dawn shouldn't
+    be deleting folders. So, adding the date means when you re-run your program
+    you'll get a trace that doesn't clash with your last trace. The count is
+    there because if you're running something that makes makes more than one
+    device, if they are created within the same second they'd have the same
+    name and metal would fail to capture.
+    */
+
+    std::time_t now = std::time(0);
+    std::tm tm(*std::localtime(&now));
+    std::string captureName(absl::StrFormat(
+        "%s-%04d-%02d-%02dT%02d-%02d-%02d-c%03d.gputrace", captureNameBase, tm.tm_year + 1900,
+        tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, s_count++));
+    NSString* nsCaptureName = [NSString stringWithUTF8String:captureName.c_str()];
+    NSURL* traceURL = [NSURL fileURLWithPath:nsCaptureName];
+    captureDescriptor.outputURL = traceURL;
+
+    if ([captureManager supportsDestination:MTLCaptureDestinationGPUTraceDocument]) {
+        NSError* error = nil;
+        if ([captureManager startCaptureWithDescriptor:captureDescriptor error:&error]) {
+            NSLog(@"Metal trace will be saved to to: %@", traceURL);
+            mCaptureInProgress = true;
+        } else {
+            NSLog(@"Error starting Metal capture: %@", error);
+        }
+    } else {
+        NSLog(@"GPU trace file capture is not supported.");
+    }
+}
+
+void Device::StopCapture() {
+    if (!mCaptureInProgress) {
+        return;
+    }
+
+    mCaptureInProgress = false;
+    MTLCaptureManager* captureManager = [MTLCaptureManager sharedCaptureManager];
+    [captureManager stopCapture];
+    NSLog(@"Metal trace saved");
 }
 
 }  // namespace dawn::native::metal
