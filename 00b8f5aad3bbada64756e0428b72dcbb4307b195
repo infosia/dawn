@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5556ddc_ecde671b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-12T14:37:25Z",
+      "side": 1,
+      "message": "This may need to be rebased. There have been some build config changes landing, and the error looks like it can\u0027t find `\u003cstring\u003e` which seems unrelated to this CL. (and it\u0027s a windows bot ...)",
+      "revId": "00b8f5aad3bbada64756e0428b72dcbb4307b195",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
