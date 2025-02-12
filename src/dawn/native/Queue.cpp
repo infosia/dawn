@@ -159,12 +159,14 @@ class ErrorQueue : public QueueBase {
     explicit ErrorQueue(DeviceBase* device, StringView label)
         : QueueBase(device, ObjectBase::kError, label) {}
 
+    MaybeError SubmitPendingCommands() override { DAWN_UNREACHABLE(); }
+
   private:
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override {
         DAWN_UNREACHABLE();
     }
     bool HasPendingCommands() const override { DAWN_UNREACHABLE(); }
-    MaybeError SubmitPendingCommands() override { DAWN_UNREACHABLE(); }
+    MaybeError SubmitPendingCommandsImpl() override { DAWN_UNREACHABLE(); }
     ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override { DAWN_UNREACHABLE(); }
     void ForceEventualFlushOfCommands() override { DAWN_UNREACHABLE(); }
     ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override {
@@ -629,6 +631,19 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
     DAWN_TRY(device->Tick());
 
     return {};
+}
+
+MaybeError QueueBase::SubmitPendingCommands() {
+    if (mInSubmit) {
+        return {};
+    }
+
+    mInSubmit = true;
+    MaybeError maybeError = SubmitPendingCommandsImpl();
+    GetDevice()->GetDynamicUploader()->ResetStagingMemorySizeToRelease();
+    mInSubmit = false;
+
+    return maybeError;
 }
 
 }  // namespace dawn::native

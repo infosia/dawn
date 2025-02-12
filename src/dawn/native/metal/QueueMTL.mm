@@ -216,7 +216,7 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
         }
         TRACE_EVENT_END0(GetDevice()->GetPlatform(), Recording, "CommandBufferMTL::FillCommands");
 
-        DAWN_TRY(SubmitPendingCommandBuffer());
+        DAWN_TRY(SubmitPendingCommands());
 
         return {};
     }
@@ -226,7 +226,7 @@ bool Queue::HasPendingCommands() const {
     return mCommandContext.NeedsSubmit();
 }
 
-MaybeError Queue::SubmitPendingCommands() {
+MaybeError Queue::SubmitPendingCommandsImpl() {
     return SubmitPendingCommandBuffer();
 }
 

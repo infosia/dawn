@@ -319,7 +319,7 @@ void Queue::RecycleCompletedCommands(ExecutionSerial completedSerial) {
     mCommandsInFlight.ClearUpTo(completedSerial);
 }
 
-MaybeError Queue::SubmitPendingCommands() {
+MaybeError Queue::SubmitPendingCommandsImpl() {
     if (!mRecordingContext.needsSubmit) {
         return {};
     }
