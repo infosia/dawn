@@ -90,6 +90,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8084d503_84323442",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-12T21:01:08Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ccb74dcf_51f5991c",
+      "revId": "896a0bf3a4d59bffdf3eedc6e6828a2c6b3194c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6246aae_ea384696",
