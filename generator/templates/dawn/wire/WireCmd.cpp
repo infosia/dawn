@@ -36,6 +36,7 @@
 #include <algorithm>
 #include <cstring>
 #include <limits>
+#include <unordered_set>
 
 #if defined(__GNUC__) || defined(__clang__)
 // error: 'offsetof' within non-standard-layout type 'wgpu::XXX' is conditionally-supported
@@ -168,6 +169,16 @@
         static_assert(offsetof({{Return}}{{name}}Transfer, chain) == 0);
     {% endif %}
 
+    {% if record.extensible %}
+        static std::unordered_set<WGPUSType> k{{name}}ValidExtensions = {
+            {% for extension in record.extensions %}
+                {{as_cEnum(types["s type"].name, extension.name)}},
+            {% endfor %}
+            // Always allow the invalid extension.
+            WGPUSType_DawnWireInvalidExtension
+        };
+    {% endif %}
+
     //* Returns the required transfer size for `record` in addition to the transfer structure.
     [[maybe_unused]] size_t {{Return}}{{name}}GetExtraRequiredSize([[maybe_unused]] const {{Return}}{{name}}{{Cmd}}& record) {
         size_t result = 0;
@@ -175,7 +186,7 @@
         //* Gather how much space will be needed for the extension chain.
         {% if record.extensible %}
             if (record.nextInChain != nullptr) {
-                result += GetChainedStructExtraRequiredSize(record.nextInChain);
+                result += GetChainedStructExtraRequiredSize(record.nextInChain, k{{name}}ValidExtensions);
             }
         {% endif %}
         //* Gather space needed for pointer members.
@@ -232,7 +243,7 @@
         {% if record.extensible %}
             if (record.nextInChain != nullptr) {
                 transfer->hasNextInChain = true;
-                WIRE_TRY(SerializeChainedStruct(record.nextInChain, buffer, provider));
+                WIRE_TRY(SerializeChainedStruct(record.nextInChain, buffer, provider, k{{name}}ValidExtensions));
             } else {
                 transfer->hasNextInChain = false;
             }
@@ -302,10 +313,11 @@
         {{Return}}{{name}}{{Cmd}}* record,
         const volatile {{Return}}{{name}}Transfer* transfer,
         DeserializeBuffer* deserializeBuffer,
-        [[maybe_unused]] DeserializeAllocator* allocator
+        [[maybe_unused]] DeserializeAllocator* allocator,
         {%- if record.may_have_dawn_object -%}
-            , const ObjectIdResolver& resolver
+            const ObjectIdResolver& resolver,
         {%- endif -%}
+        std::unordered_set<WGPUSType>* seenSTypes = nullptr
     ) {
         {% if is_cmd %}
             DAWN_ASSERT(transfer->commandId == {{Return}}WireCmd::{{name}});
@@ -317,7 +329,14 @@
         {% if record.extensible %}
             record->nextInChain = nullptr;
             if (transfer->hasNextInChain) {
-                WIRE_TRY(DeserializeChainedStruct(&record->nextInChain, deserializeBuffer, allocator, resolver));
+                std::unordered_set<WGPUSType> seenSTypesStack = {};
+                seenSTypes = seenSTypes ? seenSTypes : &seenSTypesStack;
+                WIRE_TRY(DeserializeChainedStruct(&record->nextInChain,
+                                                  deserializeBuffer,
+                                                  allocator,
+                                                  resolver,
+                                                  k{{name}}ValidExtensions,
+                                                  seenSTypes));
             }
         {% endif %}
         {% if record.chained %}
@@ -505,14 +524,18 @@ struct WGPUChainedStructTransfer {
     bool hasNext;
 };
 
-size_t GetChainedStructExtraRequiredSize(WGPUChainedStruct* chainedStruct);
+size_t GetChainedStructExtraRequiredSize(WGPUChainedStruct* chainedStruct,
+                                         const std::unordered_set<WGPUSType>& validSTypes);
 [[nodiscard]] WireResult SerializeChainedStruct(WGPUChainedStruct* chainedStruct,
                                                 SerializeBuffer* buffer,
-                                                const ObjectIdProvider& provider);
+                                                const ObjectIdProvider& provider,
+                                                const std::unordered_set<WGPUSType>& validSTypes);
 WireResult DeserializeChainedStruct(WGPUChainedStruct** outChainNext,
                                     DeserializeBuffer* deserializeBuffer,
                                     DeserializeAllocator* allocator,
-                                    const ObjectIdResolver& resolver);
+                                    const ObjectIdResolver& resolver,
+                                    const std::unordered_set<WGPUSType>& validSTypes,
+                                    std::unordered_set<WGPUSType>* seenSTypes);
 
 // Manually define serialization and deserialization for WGPUStringView because
 // it has a special encoding where:
@@ -618,12 +641,19 @@ WireResult WGPUStringViewDeserialize(
     {% do sTypes.append(sType) %}
 {% endfor %}
 
-size_t GetChainedStructExtraRequiredSize(WGPUChainedStruct* chainedStruct) {
+size_t GetChainedStructExtraRequiredSize(WGPUChainedStruct* chainedStruct, const std::unordered_set<WGPUSType>& validSTypes) {
     DAWN_ASSERT(chainedStruct != nullptr);
     size_t result = 0;
     while (chainedStruct != nullptr) {
         uint32_t sType_as_uint;
         std::memcpy(&sType_as_uint, &(chainedStruct->sType), sizeof(uint32_t));
+
+        if (!validSTypes.count(chainedStruct->sType)) {
+            result += WireAlignSizeof<WGPUDawnWireInvalidExtensionTransfer>();
+            chainedStruct = chainedStruct->next;
+            continue;
+        }
+
         switch (sType_as_uint) {
             {% for sType in sTypes %}
                 case {{as_cEnum(types["s type"].name, sType.name)}}: {
@@ -635,10 +665,7 @@ size_t GetChainedStructExtraRequiredSize(WGPUChainedStruct* chainedStruct) {
                 }
             {% endfor %}
             default:
-                // Invalid enum. Reserve space just for the transfer header (sType and hasNext).
-                result += WireAlignSizeof<WGPUChainedStructTransfer>();
-                chainedStruct = chainedStruct->next;
-                break;
+                DAWN_UNREACHABLE();
         }
     }
     return result;
@@ -646,12 +673,27 @@ size_t GetChainedStructExtraRequiredSize(WGPUChainedStruct* chainedStruct) {
 
 [[nodiscard]] WireResult SerializeChainedStruct(WGPUChainedStruct* chainedStruct,
                                                 SerializeBuffer* buffer,
-                                                const ObjectIdProvider& provider) {
+                                                const ObjectIdProvider& provider,
+                                                const std::unordered_set<WGPUSType>& validSTypes) {
     DAWN_ASSERT(chainedStruct != nullptr);
     DAWN_ASSERT(buffer != nullptr);
     do {
         uint32_t sType_as_uint;
         std::memcpy(&sType_as_uint, &(chainedStruct->sType), sizeof(uint32_t));
+
+        if (!validSTypes.count(chainedStruct->sType)) {
+            // Invalid enum. Serialize just the invalid sType for validation purposes.
+            dawn::WarningLog() << "Unknown sType " << sType_as_uint << " discarded.";
+
+            WGPUDawnWireInvalidExtensionTransfer* transfer;
+            WIRE_TRY(buffer->Next(&transfer));
+            transfer->chain.sType = WGPUSType_DawnWireInvalidExtension;
+            transfer->chain.hasNext = chainedStruct->next != nullptr;
+            transfer->invalidSType = chainedStruct->sType;
+            chainedStruct = chainedStruct->next;
+            continue;
+        }
+
         switch (sType_as_uint) {
             {% for sType in sTypes %}
                 {% set CType = as_cType(sType.name) %}
@@ -670,22 +712,8 @@ size_t GetChainedStructExtraRequiredSize(WGPUChainedStruct* chainedStruct) {
                     chainedStruct = chainedStruct->next;
                 } break;
             {% endfor %}
-            default: {
-                // Invalid enum. Serialize just the transfer header with Invalid as the sType.
-                // TODO(crbug.com/dawn/369): Unknown sTypes are silently discarded.
-                if (sType_as_uint != 0u) {
-                    dawn::WarningLog() << "Unknown sType " << sType_as_uint << " discarded.";
-                }
-
-                WGPUChainedStructTransfer* transfer;
-                WIRE_TRY(buffer->Next(&transfer));
-                transfer->sType = WGPUSType(0);
-                transfer->hasNext = chainedStruct->next != nullptr;
-
-                // Still move on in case there are valid structs after this.
-                chainedStruct = chainedStruct->next;
-                break;
-            }
+            default:
+                return WireResult::FatalError;
         }
     } while (chainedStruct != nullptr);
     return WireResult::Success;
@@ -694,12 +722,23 @@ size_t GetChainedStructExtraRequiredSize(WGPUChainedStruct* chainedStruct) {
 WireResult DeserializeChainedStruct(WGPUChainedStruct** outChainNext,
                                     DeserializeBuffer* deserializeBuffer,
                                     DeserializeAllocator* allocator,
-                                    const ObjectIdResolver& resolver) {
+                                    const ObjectIdResolver& resolver,
+                                    const std::unordered_set<WGPUSType>& validSTypes,
+                                    std::unordered_set<WGPUSType>* seenSTypes) {
     bool hasNext;
     do {
         const volatile WGPUChainedStructTransfer* header;
         WIRE_TRY(deserializeBuffer->Peek(&header));
         WGPUSType sType = header->sType;
+
+        if (seenSTypes->count(sType)) {
+            // If we have seen the same sType in the chain, there is a recursive structure
+            // and deserialization is no longer valid since this could lead to infinite or
+            // extremely deep recursion and stack overflow.
+            return WireResult::FatalError;
+        }
+        seenSTypes->insert(sType);
+
         switch (sType) {
             {% for sType in sTypes %}
                 {% set CType = as_cType(sType.name) %}
@@ -707,43 +746,50 @@ WireResult DeserializeChainedStruct(WGPUChainedStruct** outChainNext,
                     const volatile {{CType}}Transfer* transfer;
                     WIRE_TRY(deserializeBuffer->Read(&transfer));
 
-                    {{CType}}* outStruct;
-                    WIRE_TRY(GetSpace(allocator, 1u, &outStruct));
-                    outStruct->chain.sType = sType;
-                    outStruct->chain.next = nullptr;
+                    WGPUChainedStruct* outStruct;
+                    if (validSTypes.count(sType)) {
+                        {{CType}}* typedOutStruct;
+                        WIRE_TRY(GetSpace(allocator, 1u, &typedOutStruct));
+                        typedOutStruct->chain.sType = sType;
+                        typedOutStruct->chain.next = nullptr;
+                        WIRE_TRY({{CType}}Deserialize(typedOutStruct, transfer, deserializeBuffer, allocator,
+                            {%- if types[sType.name.get()].may_have_dawn_object -%}
+                                resolver,
+                            {%- endif -%}
+                            seenSTypes
+                        ));
+                        outStruct = &typedOutStruct->chain;
+                    } else {
+                        // For invalid sTypes, we still need to deserialize the data, but we can
+                        // discard the results and replace it with an invalid sType struct.
+                        WGPUDawnWireInvalidExtension* typedOutStruct;
+                        WIRE_TRY(GetSpace(allocator, 1u, &typedOutStruct));
+                        typedOutStruct->chain.sType = WGPUSType_DawnWireInvalidExtension;
+                        typedOutStruct->chain.next = nullptr;
+                        typedOutStruct->invalidSType = sType;
+                        outStruct = &typedOutStruct->chain;
 
-                    *outChainNext = &outStruct->chain;
-                    outChainNext = &outStruct->chain.next;
-
-                    WIRE_TRY({{CType}}Deserialize(outStruct, transfer, deserializeBuffer, allocator
-                        {%- if types[sType.name.get()].may_have_dawn_object -%}
-                            , resolver
-                        {%- endif -%}
-                    ));
-
+                        // Still deserialize the data since it's a known type and we need to move
+                        // the buffer pointer forwards appropriately.
+                        {{CType}} outStructStack;
+                        WIRE_TRY({{CType}}Deserialize(&outStructStack, transfer, deserializeBuffer, allocator,
+                            {%- if types[sType.name.get()].may_have_dawn_object -%}
+                                resolver,
+                            {%- endif -%}
+                            seenSTypes
+                        ));
+                    }
+                    *outChainNext = outStruct;
+                    outChainNext = &outStruct->next;
                     hasNext = transfer->chain.hasNext;
                 } break;
             {% endfor %}
             default: {
-                // Invalid enum. Deserialize just the transfer header with Invalid as the sType.
-                // TODO(crbug.com/dawn/369): Unknown sTypes are silently discarded.
-                if (sType != WGPUSType(0)) {
-                    dawn::WarningLog() << "Unknown sType " << sType << " discarded.";
-                }
-
-                const volatile WGPUChainedStructTransfer* transfer;
-                WIRE_TRY(deserializeBuffer->Read(&transfer));
-
-                WGPUChainedStruct* outStruct;
-                WIRE_TRY(GetSpace(allocator, 1u, &outStruct));
-                outStruct->sType = WGPUSType(0);
-                outStruct->next = nullptr;
-
-                // Still move on in case there are valid structs after this.
-                *outChainNext = outStruct;
-                outChainNext = &outStruct->next;
-                hasNext = transfer->hasNext;
-                break;
+                // If we see an invalid enum, we cannot recover because there is no way for
+                // us to identify how far ahead we need to seek in the buffer. This therefore
+                // becomes a fatal error.
+                dawn::WarningLog() << "Unknown sType " << sType << " discarded.";
+                return WireResult::FatalError;
             }
         }
     } while (hasNext);
