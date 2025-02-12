@@ -119,6 +119,7 @@ group("default") {
 if (current_toolchain == default_toolchain) {
   import("//build/gn_logs.gni")
 
+  # noop change for testing infra
   # Write debug logs to gn_logs.txt.
   _lines = [
              "Generated during 'gn gen' by //BUILD.gn.",
