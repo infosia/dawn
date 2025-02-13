@@ -179,7 +179,6 @@ ShaderModule::ShaderModule(Device* device,
 
 MaybeError ShaderModule::Initialize(ShaderModuleParseResult* parseResult,
                                     OwnedCompilationMessages* compilationMessages) {
-    ScopedTintICEHandler scopedICEHandler(GetDevice());
     return InitializeBase(parseResult, compilationMessages);
 }
 
@@ -199,6 +198,7 @@ ShaderModule::~ShaderModule() = default;
     X(std::optional<tint::ast::transform::SubstituteOverride::Config>, substituteOverrideConfig) \
     X(LimitsForCompilationRequest, limits)                                                       \
     X(CacheKey::UnsafeUnkeyedValue<const AdapterBase*>, adapter)                                 \
+    X(CacheKey::UnsafeUnkeyedValue<DeviceBase*>, device)                                         \
     X(std::string_view, entryPointName)                                                          \
     X(tint::spirv::writer::Options, tintOptions)                                                 \
     X(CacheKey::UnsafeUnkeyedValue<dawn::platform::Platform*>, platform)
@@ -215,8 +215,6 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     bool clampFragDepth,
     bool emitPointSize) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
-
-    ScopedTintICEHandler scopedICEHandler(GetDevice());
 
     // Check to see if we have the handle and spirv cached already
     // TODO(chromium:345359083): Improve the computation of the cache key. For example, it isn't
@@ -386,6 +384,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     const CombinedLimits& limits = GetDevice()->GetLimits();
     req.limits = LimitsForCompilationRequest::Create(limits.v1);
     req.adapter = UnsafeUnkeyedValue(static_cast<const AdapterBase*>(GetDevice()->GetAdapter()));
+    req.device = UnsafeUnkeyedValue(GetDevice());
 
     CacheResult<CompiledSpirv> compilation;
     DAWN_TRY_LOAD_OR_RUN(
@@ -409,6 +408,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
 
             tint::Program program;
             tint::ast::transform::DataMap transformOutputs;
+            ScopedTintICEHandler scopedICEHandler(r.device.UnsafeGetValue());
             {
                 TRACE_EVENT0(r.platform.UnsafeGetValue(), General, "RunTransforms");
                 DAWN_TRY_ASSIGN(program,

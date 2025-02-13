@@ -77,6 +77,7 @@ using InterStageShaderVariablesMask = std::bitset<tint::hlsl::writer::kMaxInterS
     X(std::optional<tint::ast::transform::SubstituteOverride::Config>, substituteOverrideConfig) \
     X(LimitsForCompilationRequest, limits)                                                       \
     X(CacheKey::UnsafeUnkeyedValue<const AdapterBase*>, adapter)                                 \
+    X(CacheKey::UnsafeUnkeyedValue<DeviceBase*>, device)                                         \
     X(bool, disableSymbolRenaming)                                                               \
     X(bool, dumpShaders)                                                                         \
     X(bool, useTintIR)
