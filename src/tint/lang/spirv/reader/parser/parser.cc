@@ -53,6 +53,7 @@ TINT_END_DISABLE_WARNING(NEWLINE_EOF);
 #include "src/tint/lang/spirv/builtin_fn.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
 #include "src/tint/lang/spirv/validate/validate.h"
+#include "src/tint/utils/containers/scope_stack.h"
 
 using namespace tint::core::number_suffixes;  // NOLINT
 using namespace tint::core::fluent_types;     // NOLINT
@@ -108,6 +109,7 @@ class Parser {
             }
         }
 
+        block_stack_.push_back({ir_.root_block, {}});
         {
             TINT_SCOPED_ASSIGNMENT(current_block_, ir_.root_block);
             EmitModuleScopeVariables();
@@ -119,6 +121,7 @@ class Parser {
         EmitEntryPointAttributes();
 
         // TODO(crbug.com/tint/1907): Handle annotation instructions.
+        block_stack_.pop_back();
 
         return std::move(ir_);
     }
@@ -416,15 +419,99 @@ class Parser {
         return functions_.GetOrAdd(id, [&] { return b_.Function(ty_.void_()); });
     }
 
+    core::ir::Value* Propagate(uint32_t id, core::ir::Value* src) {
+        auto* src_res = src->As<core::ir::InstructionResult>();
+        TINT_ASSERT(src_res);
+
+        auto* src_inst = src_res->Instruction();
+
+        // Find the path from this block back to the function block
+        auto* ctrl_inst = src_inst;
+        std::vector<core::ir::Block*> path;
+        while (ctrl_inst) {
+            path.push_back(ctrl_inst->Block());
+            ctrl_inst = ctrl_inst->Block()->Parent();
+        }
+        // Flip the path around so it goes from the function, same order as the block_stack
+        std::reverse(std::begin(path), std::end(path));
+
+        // The path should be at the function block. This ends up being the _second_ entry in the
+        // block stack because we push an entry for the root block.
+        TINT_ASSERT(block_stack_.size() > 1);
+        TINT_ASSERT(path[0] == block_stack_[1].block);
+
+        size_t last_matched_block = 1;
+        for (; last_matched_block < path.size(); ++last_matched_block) {
+            TINT_ASSERT(last_matched_block < block_stack_.size());
+
+            if (path[last_matched_block] != block_stack_[last_matched_block].block) {
+                --last_matched_block;
+                break;
+            }
+        }
+
+        // We now have the location of last block where the path and block_stack match. We need to
+        // propagate from the end of path down to the given `i` block.
+        auto* blk = src_inst->Block();
+        while (blk) {
+            if (blk == path[last_matched_block]) {
+                block_stack_[last_matched_block].ids.insert(id);
+                break;
+            }
+
+            auto* ctrl = blk->Parent();
+
+            // Add ourselves as part of the terminator return value
+            blk->Terminator()->PushOperand(src);
+            // Add a new result to the control instruction
+            ctrl->AddResult(b_.InstructionResult(src->Type()));
+            // The source instruction is now the control result we just inserted
+            src = ctrl->Results().Back();
+            // The SPIR-V ID now refers to the propagated value.
+            values_.Replace(id, src);
+
+            blk = ctrl->Block();
+        }
+        return src;
+    }
+
+    bool IdIsInScope(uint32_t id) {
+        for (auto iter = block_stack_.rbegin(); iter != block_stack_.rend(); ++iter) {
+            if (iter->ids.count(id) > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /// @param id a SPIR-V result ID
     /// @returns a Tint value object
     core::ir::Value* Value(uint32_t id) {
-        return values_.GetOrAdd(id, [&]() -> core::ir::Value* {
-            if (auto* c = spirv_context_->get_constant_mgr()->FindDeclaredConstant(id)) {
-                return b_.Constant(Constant(c));
+        auto v = values_.Get(id);
+        if (v) {
+            if (!(*v)->Is<core::ir::InstructionResult>()) {
+                return *v;
             }
-            TINT_UNREACHABLE() << "missing value for result ID " << id;
-        });
+            if (IdIsInScope(id)) {
+                return *v;
+            }
+
+            // The Value is not in scope, so we need to find the originating Value, and then
+            // propagate it up through the control instructions. That will then change the
+            // `Value` which is returned so, set it into the values map as the new "Value" and
+            // return it.
+
+            auto* new_v = Propagate(id, *v);
+            values_.Replace(id, new_v);
+            return new_v;
+        }
+
+        if (auto* c = spirv_context_->get_constant_mgr()->FindDeclaredConstant(id)) {
+            auto* val = b_.Constant(Constant(c));
+            values_.Add(id, val);
+            return val;
+        }
+        TINT_UNREACHABLE() << "missing value for result ID " << id;
     }
 
     /// @param constant a SPIR-V constant object
@@ -491,7 +578,10 @@ class Parser {
     /// Register an IR value for a SPIR-V result ID.
     /// @param result_id the SPIR-V result ID
     /// @param value the IR value
-    void AddValue(uint32_t result_id, core::ir::Value* value) { values_.Add(result_id, value); }
+    void AddValue(uint32_t result_id, core::ir::Value* value) {
+        block_stack_.back().ids.insert(result_id);
+        values_.Add(result_id, value);
+    }
 
     /// Emit an instruction to the current block and associates the result to
     /// the spirv result id.
@@ -543,6 +633,8 @@ class Parser {
         for (auto& func : *spirv_context_->module()) {
             current_spirv_function_ = &func;
 
+            id_scopes_.Push();
+
             Vector<core::ir::FunctionParam*, 4> params;
             func.ForEachParam([&](spvtools::opt::Instruction* spirv_param) {
                 auto* param = b_.FunctionParam(Type(spirv_param->type_id()));
@@ -567,6 +659,8 @@ class Parser {
 
             functions_.Add(func.result_id(), current_function_);
             EmitBlock(current_function_->Block(), *func.entry());
+
+            id_scopes_.Pop();
         }
         current_spirv_function_ = nullptr;
     }
@@ -624,6 +718,8 @@ class Parser {
     /// @param dst the Tint IR block to append to
     /// @param src the SPIR-V block to emit
     void EmitBlock(core::ir::Block* dst, const spvtools::opt::BasicBlock& src) {
+        block_stack_.push_back({dst, {}});
+
         TINT_SCOPED_ASSIGNMENT(current_block_, dst);
         for (auto& inst : src) {
             switch (inst.opcode()) {
@@ -777,6 +873,8 @@ class Parser {
                         << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
             }
         }
+
+        block_stack_.pop_back();
     }
 
     void HandleSelectionMerge(const spvtools::opt::Instruction& inst,
@@ -813,16 +911,24 @@ class Parser {
         EmitWithoutResult(if_);
 
         if (true_id != merge_id) {
+            id_scopes_.Push();
+
             const auto& bb_true = current_spirv_function_->FindBlock(true_id);
             EmitBlock(if_->True(), *bb_true);
+
+            id_scopes_.Pop();
         }
         if (!if_->True()->Terminator()) {
             if_->True()->Append(b_.ExitIf(if_));
         }
 
         if (false_id != merge_id) {
+            id_scopes_.Push();
+
             const auto& bb_false = current_spirv_function_->FindBlock(false_id);
             EmitBlock(if_->False(), *bb_false);
+
+            id_scopes_.Pop();
         }
         if (!if_->False()->Terminator()) {
             if_->False()->Append(b_.ExitIf(if_));
@@ -1354,6 +1460,19 @@ class Parser {
 
     // Stack of merge blocks
     std::vector<MergeInfo> merge_stack_;
+    // Scope stack for variables, this is just ID -> true, to get the actula value it must be
+    // retrieved from the `values_` hash. The reason for this is we need to be able to access
+    // values which are out of "scope" in order to bring them into scope.
+    ScopeStack<uint32_t, bool> id_scopes_;
+
+    // The data used by the block stack to track the block and the id's declared in that block.
+    struct BlockData {
+        core::ir::Block* block;
+        std::unordered_set<uint32_t> ids;
+    };
+
+    // Stack of blocks which have currently been entered
+    std::vector<BlockData> block_stack_;
 };
 
 }  // namespace
