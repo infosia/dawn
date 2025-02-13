@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d73622f5_450cf1a6",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2533,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-13T20:14:25Z",
+      "side": 1,
+      "message": "Are macros required?",
+      "range": {
+        "startLine": 2533,
+        "startChar": 8,
+        "endLine": 2533,
+        "endChar": 27
+      },
+      "revId": "6ecdd775e3bd7c255492bc843e3aef28b2fed1de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
