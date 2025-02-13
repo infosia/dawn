@@ -27,10 +27,6 @@
 
 #include "src/tint/lang/core/type/builtin_structs.h"
 
-#include <algorithm>
-#include <string>
-#include <utility>
-
 #include "src/tint/lang/core/builtin_type.h"
 #include "src/tint/lang/core/type/abstract_float.h"
 #include "src/tint/lang/core/type/abstract_int.h"
@@ -74,8 +70,8 @@ Struct* CreateModfResult(Manager& types, SymbolTable& symbols, const Type* ty) {
         if (auto* existing = types.Find<type::Struct>(symbol)) {
             return existing;
         }
-        return types.Struct(symbol,
-                            {{symbols.Register("fract"), t}, {symbols.Register("whole"), t}});
+        return types.InternalStruct(
+            symbol, {{symbols.Register("fract"), t}, {symbols.Register("whole"), t}});
     };
     return Switch(
         ty,  //
@@ -135,7 +131,7 @@ Struct* CreateFrexpResult(Manager& types, SymbolTable& symbols, const Type* ty) 
         if (auto* existing = types.Find<type::Struct>(symbol)) {
             return existing;
         }
-        return types.Struct(
+        return types.InternalStruct(
             symbol, {{symbols.Register("fract"), fract_ty}, {symbols.Register("exp"), exp_ty}});
     };
     return Switch(
@@ -183,10 +179,10 @@ Struct* CreateAtomicCompareExchangeResult(Manager& types, SymbolTable& symbols, 
         if (auto* existing = types.Find<type::Struct>(symbol)) {
             return existing;
         }
-        return types.Struct(symbol, {
-                                        {symbols.Register("old_value"), ty},
-                                        {symbols.Register("exchanged"), types.bool_()},
-                                    });
+        return types.InternalStruct(symbol, {
+                                                {symbols.Register("old_value"), ty},
+                                                {symbols.Register("exchanged"), types.bool_()},
+                                            });
     };
     return Switch(
         ty,  //

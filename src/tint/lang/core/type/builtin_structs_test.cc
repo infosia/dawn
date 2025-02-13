@@ -94,6 +94,7 @@ class BuiltinFrexpResultStructTest : public BuiltinStructsTest<FrexpCase> {
         auto* str = As<Struct>(result);
         ASSERT_NE(str, nullptr);
         ASSERT_EQ(str->Members().Length(), 2u);
+        EXPECT_TRUE(str->IsInternal());
         EXPECT_EQ(str->Members()[0]->Name().Name(), "fract");
         EXPECT_EQ(str->Members()[0]->Type(), fract_type);
         EXPECT_EQ(str->Members()[1]->Name().Name(), "exp");
@@ -129,6 +130,7 @@ class BuiltinModfResultStructTest : public BuiltinStructsTest<ElementType> {
 
         auto* str = As<Struct>(result);
         ASSERT_NE(str, nullptr);
+        EXPECT_TRUE(str->IsInternal());
         ASSERT_EQ(str->Members().Length(), 2u);
         EXPECT_EQ(str->Members()[0]->Name().Name(), "fract");
         EXPECT_EQ(str->Members()[0]->Type(), type);
@@ -159,6 +161,7 @@ class BuiltinAtomicCompareExchangeResultStructTest : public BuiltinStructsTest<E
 
         auto* str = As<Struct>(result);
         ASSERT_NE(str, nullptr);
+        EXPECT_TRUE(str->IsInternal());
         ASSERT_EQ(str->Members().Length(), 2u);
         EXPECT_EQ(str->Members()[0]->Name().Name(), "old_value");
         EXPECT_EQ(str->Members()[0]->Type(), type);

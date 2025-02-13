@@ -30,13 +30,11 @@
 #include <cmath>
 #include <iomanip>
 #include <string>
-#include <string_view>
 #include <utility>
 
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/utils/math/hash.h"
 #include "src/tint/utils/symbol/symbol_table.h"
-#include "src/tint/utils/text/string_stream.h"
 #include "src/tint/utils/text/styled_text.h"
 #include "src/tint/utils/text/text_style.h"
 
@@ -80,13 +78,15 @@ Struct::Struct(Symbol name,
                VectorRef<const StructMember*> members,
                uint32_t align,
                uint32_t size,
-               uint32_t size_no_padding)
+               uint32_t size_no_padding,
+               bool is_internal)
     : Base(Hash(tint::TypeCode::Of<Struct>().bits, name), FlagsFrom(members)),
       name_(name),
       members_(std::move(members)),
       align_(align),
       size_(size),
-      size_no_padding_(size_no_padding) {}
+      size_no_padding_(size_no_padding),
+      is_internal_(is_internal) {}
 
 Struct::~Struct() = default;
 
@@ -215,7 +215,7 @@ Struct* Struct::Clone(CloneContext& ctx) const {
     for (const auto& mem : members_) {
         members.Push(mem->Clone(ctx));
     }
-    return ctx.dst.mgr->Get<Struct>(sym, members, align_, size_, size_no_padding_);
+    return ctx.dst.mgr->Get<Struct>(sym, members, align_, size_, size_no_padding_, is_internal_);
 }
 
 StructMember::StructMember(Symbol name,
