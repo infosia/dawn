@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "669ceba3bd9def8abb555f57fb0b556e937639c8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b0a3a9a_8f0b609b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2025-02-13T22:45:04Z",
+      "side": 1,
+      "message": "I think these usages of `last_matched_block` with block_stack_ are off by one because the block_stack got shifted to accomidate the the root block.",
+      "revId": "669ceba3bd9def8abb555f57fb0b556e937639c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
