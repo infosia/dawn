@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/spirv/reader/lower/lower.h"
 
+#include "src/tint/lang/core/ir/transform/remove_terminator_args.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/spirv/reader/lower/builtins.h"
 #include "src/tint/lang/spirv/reader/lower/shader_io.h"
@@ -46,6 +47,10 @@ Result<SuccessType> Lower(core::ir::Module& mod) {
     RUN_TRANSFORM(lower::VectorElementPointer, mod);
     RUN_TRANSFORM(lower::ShaderIO, mod);
     RUN_TRANSFORM(lower::Builtins, mod);
+
+    // Without this, we hit issues in IRToProgram when hoisting. Probably IrToProgram should be
+    // running remove terminator args, but this works for now.
+    RUN_TRANSFORM(core::ir::transform::RemoveTerminatorArgs, mod);
 
     if (auto res = core::ir::ValidateAndDumpIfNeeded(mod, "spirv.Lower"); res != Success) {
         return res.Failure();
