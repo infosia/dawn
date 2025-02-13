@@ -41,6 +41,48 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a89ff7c2_7b3639b3",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2533,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-13T21:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc057634_3cb2ef73",
+      "revId": "6ecdd775e3bd7c255492bc843e3aef28b2fed1de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90314806_11b2d052",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2533,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-13T21:00:43Z",
+      "side": 1,
+      "message": "Technically not, I lean towards using a function/macro to make the code more fluent here.\n\nI find something like `result +\u003d static_cast\u003cint8_t\u003e((packed_int8_vec4_1 \u003e\u003e (i * n)) \u0026 0xff) * static_cast\u003cint8_t\u003e((packed_int8_vec4_2 \u003e\u003e (i * n)) \u0026 0xff)` can take a bit to parse and understand if I am not currently in the mental mode of writing bitbanging code.",
+      "parentUuid": "d73622f5_450cf1a6",
+      "range": {
+        "startLine": 2533,
+        "startChar": 8,
+        "endLine": 2533,
+        "endChar": 27
+      },
+      "revId": "6ecdd775e3bd7c255492bc843e3aef28b2fed1de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "47980cec_ec55ed05",
@@ -54,6 +96,30 @@
       "writtenOn": "2025-02-13T20:14:56Z",
       "side": 1,
       "message": "this is just a loop?",
+      "range": {
+        "startLine": 2561,
+        "startChar": 3,
+        "endLine": 2568,
+        "endChar": 60
+      },
+      "revId": "6ecdd775e3bd7c255492bc843e3aef28b2fed1de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6569f09_c86c911d",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2568,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-13T21:00:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47980cec_ec55ed05",
       "range": {
         "startLine": 2561,
         "startChar": 3,
