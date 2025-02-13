@@ -79,6 +79,14 @@ class stream::Stream<T, std::enable_if_t<tint::HasReflection<T>>> {
     }
 };
 
+#define WITH_SCOPED_TINT_ICE_HANDLER(DEVICE, EXPR) \
+    {                                              \
+        ScopedTintICEHandler handler(DEVICE);      \
+        EXPR;                                      \
+    }                                              \
+    for (;;)                                       \
+    break
+
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_TINTUTILS_H_
