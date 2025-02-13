@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fb7d0d82_971ddc02",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-02-13T23:39:01Z",
+      "side": 1,
+      "message": "So I tried to have Start/Stop in DeviceBase and StartImpl/StartImpl in backends. Unfortunately, at least where Start needs to be called in metal, it seems like it can only be called from the backend, which kind of defeats the purpose of adding it to DeviceBase.\n\nSo, for now, I just put the env reading code in DeviceBase and use it from the Metal backend.\n\nHappy to change it if you have better ideas.",
+      "parentUuid": "0d0c5b59_28b96975",
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dff51140_84abfb73",
         "filename": "src/dawn/native/metal/DeviceMTL.mm",
         "patchSetId": 5
@@ -31,6 +49,30 @@
       "writtenOn": "2025-02-13T11:40:52Z",
       "side": 1,
       "message": "It needs to be an atomic int for thread safety when creating multiple devices.",
+      "range": {
+        "startLine": 425,
+        "startChar": 11,
+        "endLine": 425,
+        "endChar": 14
+      },
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3e15169_f7ef5c49",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-02-13T23:39:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dff51140_84abfb73",
       "range": {
         "startLine": 425,
         "startChar": 11,
@@ -75,6 +117,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bffed2de_920c8669",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-02-13T23:39:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b4a8164_e3f14188",
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bedc8c4_ec3a25cc",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-02-13T23:39:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eddb0626_c9fec455",
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "47c984fd_a250b53f",
@@ -98,6 +176,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8775b1a6_362da14d",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-02-13T23:39:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47c984fd_a250b53f",
+      "range": {
+        "startLine": 427,
+        "startChar": 45,
+        "endLine": 427,
+        "endChar": 62
+      },
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d63920c1_44e84c5e",
@@ -111,6 +213,24 @@
       "writtenOn": "2025-02-13T11:40:52Z",
       "side": 1,
       "message": "Can you check the refcounting of these objects? I think we are leaking them. We have `NSRef` to make them RAII.",
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50e635d7_a9f862ec",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-02-13T23:39:01Z",
+      "side": 1,
+      "message": "I randomly added NSRefs I have no idea about NSRef, when it\u0027s needed, when it isn\u0027t. I\u0027d think that objective-c (.mm) files would handle that kind of stuff, no?\n\nIn any case, PTAL. or tell me how to test.",
+      "parentUuid": "d63920c1_44e84c5e",
       "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
