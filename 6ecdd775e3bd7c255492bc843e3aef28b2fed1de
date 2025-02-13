@@ -107,6 +107,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb43a031_eb9ad7af",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2533,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-13T21:17:14Z",
+      "side": 1,
+      "message": "ah, sorry for the confusion, I was thinking you were suggesting inlining it.\n\nI agree about not over using macros, my tendency to put functional code in macros is a bad habit from programming grody C bitd that I occasionally fall back into 😊",
+      "parentUuid": "f26d89fe_a2cc6063",
+      "range": {
+        "startLine": 2533,
+        "startChar": 8,
+        "endLine": 2533,
+        "endChar": 27
+      },
+      "revId": "6ecdd775e3bd7c255492bc843e3aef28b2fed1de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "47980cec_ec55ed05",
