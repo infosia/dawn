@@ -33,6 +33,24 @@
       "message": "```suggestion\n// Test that a user declared structure cannot be used as the result type for a atomic_comapre_exchange_weak builtin, even\n```",
       "revId": "48836d11b17138c926da259eba44455e411e925f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "029e255e_ea90575d",
+        "filename": "src/tint/lang/core/ir/validator_call_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-13T21:30:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf3f71cc_5039d6fc",
+      "revId": "48836d11b17138c926da259eba44455e411e925f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
