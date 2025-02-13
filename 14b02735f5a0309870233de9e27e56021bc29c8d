@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d0c5b59_28b96975",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T11:40:52Z",
+      "side": 1,
+      "message": "Could this be in DestroyImpl so that it happens on `Device::Destroy` as well?\n\nI wonder if eventually we could move the envvar logic in the frontend and have per backend hooks to start/stop.",
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dff51140_84abfb73",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T11:40:52Z",
+      "side": 1,
+      "message": "It needs to be an atomic int for thread safety when creating multiple devices.",
+      "range": {
+        "startLine": 425,
+        "startChar": 11,
+        "endLine": 425,
+        "endChar": 14
+      },
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b4a8164_e3f14188",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T11:40:52Z",
+      "side": 1,
+      "message": "nit: we have this https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/SystemUtils.h;drc\u003dcc2516ac15ebeb6c3c07a427a76d6b57832d3154;l\u003d42",
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eddb0626_c9fec455",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T11:40:52Z",
+      "side": 1,
+      "message": "Please document these somewhere in docs/ so it\u0027s not obscure knowledge that the env var exists",
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47c984fd_a250b53f",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T11:40:52Z",
+      "side": 1,
+      "message": "`DAWN_TRACE_DEVICE_FILTER` maybe?",
+      "range": {
+        "startLine": 427,
+        "startChar": 45,
+        "endLine": 427,
+        "endChar": 62
+      },
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d63920c1_44e84c5e",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T11:40:52Z",
+      "side": 1,
+      "message": "Can you check the refcounting of these objects? I think we are leaking them. We have `NSRef` to make them RAII.",
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
