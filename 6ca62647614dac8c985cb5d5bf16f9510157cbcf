@@ -16,6 +16,24 @@
       "message": "Now that I look at this again I realize that we should be using `Register` instead of `New`. `New` adds prefixes if the name has been used for something else, which shouldn\u0027t be happening in the SPIR-V frontend. The backends (inc. WGSL) all run `RenameConflicts` to deal with name conflicts that actually matter.\n\nCould be done as a separate CL since it affects struct/member naming too.",
       "revId": "6ca62647614dac8c985cb5d5bf16f9510157cbcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfa63e76_f587d4fa",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-13T14:57:30Z",
+      "side": 1,
+      "message": "K, i\u0027ll do a followup and change then throughout this file.",
+      "parentUuid": "e7090741_9ef0595e",
+      "revId": "6ca62647614dac8c985cb5d5bf16f9510157cbcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
