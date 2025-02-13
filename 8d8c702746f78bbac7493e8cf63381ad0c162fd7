@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "874861c3_448ca605",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-02-13T01:40:28Z",
+      "side": 1,
+      "message": "ptal\n\nI wasn\u0027t sure if EmitCompilationLog is still needed, and if its count is still needed. AFAICT it will only emit warnings. Errors are reported through `GPUValidationError.message`",
+      "revId": "8d8c702746f78bbac7493e8cf63381ad0c162fd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
