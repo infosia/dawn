@@ -1,0 +1,100 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e04d2ccf_70e2f38b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T13:01:32Z",
+      "side": 1,
+      "message": "I started reviewing this, got concerned about the cost of unordered_set lookups everywhere and then got confused as to why we need this.\n\nHow can the fuzzer produce recursive chains? The wire format doesn\u0027t support doing that IIRC because each member of the chain is written one after the other. The chaining is implicit so loops shouldn\u0027t happen.",
+      "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46c8ba44_9d16c50e",
+        "filename": "generator/templates/dawn/native/ChainUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T13:01:32Z",
+      "side": 1,
+      "message": "Will the two types be merged in the C++ bindings?",
+      "fixSuggestions": [
+        {
+          "fixId": "ad7431d4_58042545",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/dawn/native/ChainUtils.cpp",
+              "range": {
+                "startLine": 155,
+                "startChar": 0,
+                "endLine": 155,
+                "endChar": 0
+              },
+              "replacement": "                        // TODO(https://dawn.googlesource.com/dawn/+/refs/heads/main/issues/1001):\n                        // Remove this cast once the C++ bindings are updated to use the same\n                        // SType for in/out parameters.\n"
+            },
+            {
+              "path": "generator/templates/dawn/native/ChainUtils.cpp",
+              "range": {
+                "startLine": 156,
+                "startChar": 0,
+                "endLine": 158,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed90819e_bf52b991",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T13:01:32Z",
+      "side": 1,
+      "message": "Chromium doesn\u0027t allow static constructors/destructors and this unfortunately is one.",
+      "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e8ed297_38ea82ab",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2472,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T13:01:32Z",
+      "side": 1,
+      "message": "nit: Document what this is used for and how to use it somewhere.\n\nAlso it isn\u0027t specific to the wire so it could be `dawn injected invalid s type`. Also can we have minimal tests that dawn::native handles it correctly? I only see dawn::wire tests here.",
+      "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
