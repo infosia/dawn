@@ -381,8 +381,11 @@ class Parser {
             Symbol name;
             if (member_names && member_names->size() > i) {
                 auto n = (*member_names)[i];
-                name = ir_.symbols.New(n);
-            } else {
+                if (!n.empty()) {
+                    name = ir_.symbols.Register(n);
+                }
+            }
+            if (!name.IsValid()) {
                 name = ir_.symbols.New();
             }
 
@@ -402,7 +405,7 @@ class Parser {
     Symbol GetSymbolFor(uint32_t id) {
         auto iter = id_to_name_.find(id);
         if (iter != id_to_name_.end()) {
-            return ir_.symbols.New(iter->second);
+            return ir_.symbols.Register(iter->second);
         }
         return Symbol{};
     }

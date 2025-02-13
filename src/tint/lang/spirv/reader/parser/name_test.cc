@@ -111,7 +111,7 @@ TEST_F(SpirvParserTest, Name_Duplicate) {
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
     %vanilla:i32 = let 1i
-    %vanilla_1:i32 = let 2i
+    %vanilla_1:i32 = let 2i  # %vanilla_1: 'vanilla'
     ret
   }
 }
