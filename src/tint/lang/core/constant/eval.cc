@@ -62,8 +62,6 @@
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
 
-TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
-
 namespace tint::core::constant {
 namespace {
 
@@ -2532,33 +2530,43 @@ Eval::Result Eval::dot(const core::type::Type*,
     return r;
 }
 
+#define GET_NTH_SIGNED_BYTE(num, n) static_cast<int8_t>((num >> (8 * n)) & 0xff)
 Eval::Result Eval::dot4I8Packed(const core::type::Type* ty,
                                 VectorRef<const Value*> args,
                                 const Source& source) {
     uint32_t packed_int8_vec4_1 = args[0]->ValueAs<u32>();
     uint32_t packed_int8_vec4_2 = args[1]->ValueAs<u32>();
 
-    int8_t* int8_vec4_1 = reinterpret_cast<int8_t*>(&packed_int8_vec4_1);
-    int8_t* int8_vec4_2 = reinterpret_cast<int8_t*>(&packed_int8_vec4_2);
     int32_t result = 0;
-    for (uint8_t i = 0; i < 4; ++i) {
-        result += int8_vec4_1[i] * int8_vec4_2[i];
-    }
+    result +=
+        GET_NTH_SIGNED_BYTE(packed_int8_vec4_1, 0) * GET_NTH_SIGNED_BYTE(packed_int8_vec4_2, 0);
+    result +=
+        GET_NTH_SIGNED_BYTE(packed_int8_vec4_1, 1) * GET_NTH_SIGNED_BYTE(packed_int8_vec4_2, 1);
+    result +=
+        GET_NTH_SIGNED_BYTE(packed_int8_vec4_1, 2) * GET_NTH_SIGNED_BYTE(packed_int8_vec4_2, 2);
+    result +=
+        GET_NTH_SIGNED_BYTE(packed_int8_vec4_1, 3) * GET_NTH_SIGNED_BYTE(packed_int8_vec4_2, 3);
+
     return CreateScalar(source, ty, i32(result));
 }
 
+#define GET_NTH_UNSIGNED_BYTE(num, n) static_cast<uint8_t>((num >> (8 * n)) & 0xff)
 Eval::Result Eval::dot4U8Packed(const core::type::Type* ty,
                                 VectorRef<const Value*> args,
                                 const Source& source) {
     uint32_t packed_uint8_vec4_1 = args[0]->ValueAs<u32>();
     uint32_t packed_uint8_vec4_2 = args[1]->ValueAs<u32>();
 
-    uint8_t* uint8_vec4_1 = reinterpret_cast<uint8_t*>(&packed_uint8_vec4_1);
-    uint8_t* uint8_vec4_2 = reinterpret_cast<uint8_t*>(&packed_uint8_vec4_2);
     uint32_t result = 0;
-    for (uint8_t i = 0; i < 4; ++i) {
-        result += uint8_vec4_1[i] * uint8_vec4_2[i];
-    }
+    result += GET_NTH_UNSIGNED_BYTE(packed_uint8_vec4_1, 0) *
+              GET_NTH_UNSIGNED_BYTE(packed_uint8_vec4_2, 0);
+    result += GET_NTH_UNSIGNED_BYTE(packed_uint8_vec4_1, 1) *
+              GET_NTH_UNSIGNED_BYTE(packed_uint8_vec4_2, 1);
+    result += GET_NTH_UNSIGNED_BYTE(packed_uint8_vec4_1, 2) *
+              GET_NTH_UNSIGNED_BYTE(packed_uint8_vec4_2, 2);
+    result += GET_NTH_UNSIGNED_BYTE(packed_uint8_vec4_1, 3) *
+              GET_NTH_UNSIGNED_BYTE(packed_uint8_vec4_2, 3);
+
     return CreateScalar(source, ty, u32(result));
 }
 
@@ -4030,5 +4038,3 @@ diag::Diagnostic& Eval::AddNote(const Source& source) const {
 }
 
 }  // namespace tint::core::constant
-
-TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
