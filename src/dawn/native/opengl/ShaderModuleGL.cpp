@@ -295,8 +295,6 @@ ShaderModule::ShaderModule(Device* device,
 
 MaybeError ShaderModule::Initialize(ShaderModuleParseResult* parseResult,
                                     OwnedCompilationMessages* compilationMessages) {
-    ScopedTintICEHandler scopedICEHandler(GetDevice());
-
     DAWN_TRY(InitializeBase(parseResult, compilationMessages));
 
     return {};
@@ -516,6 +514,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
 
             tint::Program program;
             tint::ast::transform::DataMap transformOutputs;
+            ScopedTintICEHandler scopedICEHandler(GetDevice());
             DAWN_TRY_ASSIGN(program, RunTransforms(&transformManager, r.inputProgram,
                                                    transformInputs, &transformOutputs, nullptr));
 

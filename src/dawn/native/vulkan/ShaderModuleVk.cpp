@@ -179,7 +179,6 @@ ShaderModule::ShaderModule(Device* device,
 
 MaybeError ShaderModule::Initialize(ShaderModuleParseResult* parseResult,
                                     OwnedCompilationMessages* compilationMessages) {
-    ScopedTintICEHandler scopedICEHandler(GetDevice());
     return InitializeBase(parseResult, compilationMessages);
 }
 
@@ -215,8 +214,6 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
     bool clampFragDepth,
     bool emitPointSize) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "ShaderModuleVk::GetHandleAndSpirv");
-
-    ScopedTintICEHandler scopedICEHandler(GetDevice());
 
     // Check to see if we have the handle and spirv cached already
     // TODO(chromium:345359083): Improve the computation of the cache key. For example, it isn't
@@ -409,6 +406,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
 
             tint::Program program;
             tint::ast::transform::DataMap transformOutputs;
+            ScopedTintICEHandler scopedICEHandler(GetDevice());
             {
                 TRACE_EVENT0(r.platform.UnsafeGetValue(), General, "RunTransforms");
                 DAWN_TRY_ASSIGN(program,

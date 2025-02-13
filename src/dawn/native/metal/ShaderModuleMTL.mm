@@ -110,7 +110,6 @@ ShaderModule::~ShaderModule() = default;
 
 MaybeError ShaderModule::Initialize(ShaderModuleParseResult* parseResult,
                                     OwnedCompilationMessages* compilationMessages) {
-    ScopedTintICEHandler scopedICEHandler(GetDevice());
     return InitializeBase(parseResult, compilationMessages);
 }
 
@@ -213,7 +212,6 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     uint32_t sampleMask,
     const RenderPipeline* renderPipeline,
     const BindingInfoArray& moduleBindingInfo) {
-    ScopedTintICEHandler scopedICEHandler(device);
 
     std::ostringstream errorStream;
     errorStream << "Tint MSL failure:\n";
@@ -321,6 +319,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
 
             tint::Program program;
             tint::ast::transform::DataMap transformOutputs;
+            ScopedTintICEHandler scopedICEHandler(device);
             {
                 TRACE_EVENT0(r.platform.UnsafeGetValue(), General, "RunTransforms");
                 DAWN_TRY_ASSIGN(program,
