@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "src/tint/lang/core/builtin_fn.h"
+#include "src/tint/lang/core/builtin_type.h"
 #include "src/tint/lang/core/builtin_value.h"
 #include "src/tint/lang/core/constant/composite.h"
 #include "src/tint/lang/core/constant/scalar.h"
@@ -550,6 +551,55 @@ struct Encoder {
     //        subgroup_matrix_out.set_columns(subgroup_matrix_in->Columns());
     //        subgroup_matrix_out.set_rows(subgroup_matrix_in->Rows());
     //    }
+
+    void TypeBuitinStruct(pb::Type& builtin_struct_out,
+                          const core::type::Struct* builtin_struct_in) {
+        auto name = builtin_struct_in->Name().NameView();
+        if (name == ToString(BuiltinType::kAtomicCompareExchangeResultI32)) {
+            builtin_struct_out.set_builtin_struct(
+                pb::TypeBuiltinStruct::AtomicCompareExchangeResultI32);
+        } else if (name == ToString(BuiltinType::kAtomicCompareExchangeResultI32)) {
+            builtin_struct_out.set_builtin_struct(
+                pb::TypeBuiltinStruct::AtomicCompareExchangeResultI32);
+        } else if (name == ToString(BuiltinType::kAtomicCompareExchangeResultU32)) {
+            builtin_struct_out.set_builtin_struct(
+                pb::TypeBuiltinStruct::AtomicCompareExchangeResultU32);
+        } else if (name == ToString(BuiltinType::kFrexpResultF16)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::FrexpResultF16);
+        } else if (name == ToString(BuiltinType::kFrexpResultF32)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::FrexpResultF32);
+        } else if (name == ToString(BuiltinType::kFrexpResultVec2F16)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::FrexpResultVec2F16);
+        } else if (name == ToString(BuiltinType::kFrexpResultVec2F32)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::FrexpResultVec2F32);
+        } else if (name == ToString(BuiltinType::kFrexpResultVec3F16)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::FrexpResultVec3F16);
+        } else if (name == ToString(BuiltinType::kFrexpResultVec3F32)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::FrexpResultVec3F32);
+        } else if (name == ToString(BuiltinType::kFrexpResultVec4F16)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::FrexpResultVec4F16);
+        } else if (name == ToString(BuiltinType::kFrexpResultVec4F32)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::FrexpResultVec4F32);
+        } else if (name == ToString(BuiltinType::kModfResultF16)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::ModfResultF16);
+        } else if (name == ToString(BuiltinType::kModfResultF32)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::ModfResultF32);
+        } else if (name == ToString(BuiltinType::kModfResultVec2F16)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::ModfResultVec2F16);
+        } else if (name == ToString(BuiltinType::kModfResultVec2F32)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::ModfResultVec2F32);
+        } else if (name == ToString(BuiltinType::kModfResultVec3F16)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::ModfResultVec3F16);
+        } else if (name == ToString(BuiltinType::kModfResultVec3F32)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::ModfResultVec3F32);
+        } else if (name == ToString(BuiltinType::kModfResultVec4F16)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::ModfResultVec4F16);
+        } else if (name == ToString(BuiltinType::kModfResultVec4F32)) {
+            builtin_struct_out.set_builtin_struct(pb::TypeBuiltinStruct::ModfResultVec4F32);
+        } else {
+            TINT_ICE() << "unhandled builtin struct " << name;
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////////
     // Values
