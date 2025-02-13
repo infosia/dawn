@@ -32,6 +32,7 @@
 #include <utility>
 #include <vector>
 
+#include "dawn/native/TintUtils.h"
 #include "dawn/native/d3d/BlobD3D.h"
 #include "dawn/native/d3d/D3DCompilationRequest.h"
 #include "dawn/native/d3d/D3DError.h"
@@ -245,6 +246,7 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
 
     tint::Program transformedProgram;
     tint::ast::transform::DataMap transformOutputs;
+    ScopedTintICEHandler scopedICEHandler(r.device.UnsafeGetValue());
     {
         TRACE_EVENT0(tracePlatform.UnsafeGetValue(), General, "RunTransforms");
         DAWN_TRY_ASSIGN(transformedProgram,

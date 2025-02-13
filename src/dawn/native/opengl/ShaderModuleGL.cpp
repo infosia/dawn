@@ -95,6 +95,7 @@ using InterstageLocationAndName = std::pair<uint32_t, std::string>;
     X(std::optional<tint::ast::transform::SubstituteOverride::Config>, substituteOverrideConfig) \
     X(LimitsForCompilationRequest, limits)                                                       \
     X(CacheKey::UnsafeUnkeyedValue<const AdapterBase*>, adapter)                                 \
+    X(CacheKey::UnsafeUnkeyedValue<DeviceBase*>, device)                                         \
     X(bool, disableSymbolRenaming)                                                               \
     X(std::vector<InterstageLocationAndName>, interstageVariables)                               \
     X(tint::glsl::writer::Options, tintOptions)                                                  \
@@ -295,8 +296,6 @@ ShaderModule::ShaderModule(Device* device,
 
 MaybeError ShaderModule::Initialize(ShaderModuleParseResult* parseResult,
                                     OwnedCompilationMessages* compilationMessages) {
-    ScopedTintICEHandler scopedICEHandler(GetDevice());
-
     DAWN_TRY(InitializeBase(parseResult, compilationMessages));
 
     return {};
@@ -454,6 +453,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     req.substituteOverrideConfig = std::move(substituteOverrideConfig);
     req.limits = LimitsForCompilationRequest::Create(limits.v1);
     req.adapter = UnsafeUnkeyedValue(static_cast<const AdapterBase*>(GetDevice()->GetAdapter()));
+    req.device = UnsafeUnkeyedValue(GetDevice());
 
     req.platform = UnsafeUnkeyedValue(GetDevice()->GetPlatform());
 
@@ -516,6 +516,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
 
             tint::Program program;
             tint::ast::transform::DataMap transformOutputs;
+            ScopedTintICEHandler scopedICEHandler(r.device.UnsafeGetValue());
             DAWN_TRY_ASSIGN(program, RunTransforms(&transformManager, r.inputProgram,
                                                    transformInputs, &transformOutputs, nullptr));
 

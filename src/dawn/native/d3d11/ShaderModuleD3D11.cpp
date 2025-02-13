@@ -71,7 +71,6 @@ ShaderModule::ShaderModule(Device* device,
 
 MaybeError ShaderModule::Initialize(ShaderModuleParseResult* parseResult,
                                     OwnedCompilationMessages* compilationMessages) {
-    ScopedTintICEHandler scopedICEHandler(GetDevice());
     return InitializeBase(parseResult, compilationMessages);
 }
 
@@ -86,7 +85,6 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     TRACE_EVENT0(device->GetPlatform(), General, "ShaderModuleD3D11::Compile");
     DAWN_ASSERT(!IsError());
 
-    ScopedTintICEHandler scopedICEHandler(device);
     const EntryPointMetadata& entryPoint = GetEntryPoint(programmableStage.entryPoint);
     const bool useTintIR = device->IsToggleEnabled(Toggle::UseTintIR);
 
@@ -220,6 +218,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     const CombinedLimits& limits = device->GetLimits();
     req.hlsl.limits = LimitsForCompilationRequest::Create(limits.v1);
     req.hlsl.adapter = UnsafeUnkeyedValue(static_cast<const AdapterBase*>(device->GetAdapter()));
+    req.hlsl.device = UnsafeUnkeyedValue(GetDevice());
 
     req.hlsl.tintOptions.disable_robustness = !device->IsRobustnessEnabled();
     req.hlsl.tintOptions.disable_workgroup_init =
