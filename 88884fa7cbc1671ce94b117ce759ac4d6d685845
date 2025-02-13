@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dd8a183_8f64abd9",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1679,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T11:54:56Z",
+      "side": 1,
+      "message": "nit: this comment seems a bit useless given the name of the function that makes it clear what we do. Maybe explain that we use the external ref being dropped as a signal that the application will not use the ShaderModule anymore so we can free the memory for the parsed module.",
+      "revId": "88884fa7cbc1671ce94b117ce759ac4d6d685845",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67e7bf0b_9e6eaebf",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-13T11:54:56Z",
+      "side": 1,
+      "message": "nit: move ForTesting things at the bottom so that readers see important stuff first.",
+      "revId": "88884fa7cbc1671ce94b117ce759ac4d6d685845",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
