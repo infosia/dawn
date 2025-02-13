@@ -26,6 +26,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dc057634_3cb2ef73",
+        "filename": "src/tint/lang/core/constant/eval.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2533,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-13T20:15:34Z",
+      "side": 1,
+      "message": "This can be `constexpr` method, no?\n\n```\nconstexpr int8_t GetNthSignedByte(int32_t num, int32_t n) {\n   return static_cast\u003cint8_t\u003e((num \u003e\u003e (8 * n)) \u0026 0xff);\n}\n```",
+      "revId": "6ecdd775e3bd7c255492bc843e3aef28b2fed1de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "47980cec_ec55ed05",
         "filename": "src/tint/lang/core/constant/eval.cc",
         "patchSetId": 1
