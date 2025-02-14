@@ -16,6 +16,24 @@
       "message": "This is the one place where duplicate names are *not* allowed in Tint IR land (as per the recent invesigation from that IR fuzzing issue), so we will need some extra logic and probably a hashset of struct names to deal with that.",
       "revId": "4cf2798593e980607d9c45a768445ab7402a4702",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57388ffc_f5a60631",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-14T20:16:37Z",
+      "side": 1,
+      "message": "Just changed to use `.New` instead of `.Register` in this case. Added a test as well, the structs have to have differnet shape, otherwise we merge them, but if they have a different shape the names will be unique.",
+      "parentUuid": "90b9bd81_b9a3b457",
+      "revId": "4cf2798593e980607d9c45a768445ab7402a4702",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
