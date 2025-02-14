@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f17bd2b1_698485d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-14T23:28:49Z",
+      "side": 1,
+      "message": "Thanks, I missed the comment. Can you move the smaller description into the commit description so that it\u0027s a bit easier to see?",
+      "parentUuid": "f7380efb_f463899c",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "a71b64907d8631f78a46f65a420a9261f23c24d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "0814178d_446496d9",
