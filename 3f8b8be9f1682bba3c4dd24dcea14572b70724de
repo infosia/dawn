@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14485e7b_92cda544",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-14T05:12:14Z",
+      "side": 1,
+      "message": "Should this happens before delete value?",
+      "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
