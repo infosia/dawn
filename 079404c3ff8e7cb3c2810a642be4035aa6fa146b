@@ -16,6 +16,24 @@
       "message": "Ah that makes sense now why it wasn\u0027t in the request struct. We purposefully avoided putting the device in them because we want at a type level to make sure that the function passed in them only uses data from the key to produce the output. Having the device here is an issue because it makes it super easy to start using its getters in the future, in a way that will bypass the key and cause hard to debug incorrect caching issues.\n\nThe adapter being here is also a problem for the same reason. We should remove it. See https://issues.chromium.org/issues/396323236\n\nSorry for the back and forth, can we go back to PS1? I\u0027d love to not add the extra indentation so maybe we can add a \"Reset\" method on the Tint ICE scoper?",
       "revId": "079404c3ff8e7cb3c2810a642be4035aa6fa146b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "331e38f0_bd2e73c1",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-14T07:26:29Z",
+      "side": 1,
+      "message": "Got back to previous patch. However I am concerning that adding a `Reset` may break the scoped semmentic, which is intended to do resetting during destruction.\n\nI try making a macro `WITH_SCOPED_TINT_ICE_HANDLER` instead of explicitly adding extra indentation, would that be better?",
+      "parentUuid": "4b655896_cc987ad9",
+      "revId": "079404c3ff8e7cb3c2810a642be4035aa6fa146b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
