@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d27c8df5_8d8bfb80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-14T21:50:45Z",
+      "side": 1,
+      "message": "Can you add more context to this please? It would help to know what the problem you were seeing with it and why this fixes it.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4d3ccbda_81c07973",
@@ -49,6 +72,24 @@
       "side": 1,
       "message": "Acknowledged",
       "parentUuid": "14485e7b_92cda544",
+      "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25553f18_2a05e558",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-14T21:50:45Z",
+      "side": 1,
+      "message": "It doesn\u0027t actually matter because `emwgpuDelete` is calling back into JS where the pointer is just used as a hash key.",
+      "parentUuid": "f5cee08a_ae36c2b3",
       "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
