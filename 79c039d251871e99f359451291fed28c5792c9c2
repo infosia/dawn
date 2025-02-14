@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36193e4e_2fc8a477",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-14T22:13:03Z",
+      "side": 1,
+      "message": "Not a full review yet, but there\u0027s something that doesn\u0027t quite work right when the same block is emitted multiple times (due to the way that certain blocks are inlined).\n\nFor example, this function doesn\u0027t produce valid IR:\n```\n       %main \u003d OpFunction %void None %ep_type\n %main_start \u003d OpLabel\n          %1 \u003d OpCopyObject %i32 %one\n               OpBranchConditional %true %bb_true %bb_true\n    %bb_true \u003d OpLabel\n          %2 \u003d OpCopyObject %i32 %two\n         %22 \u003d OpCopyObject %i32 %2\n               OpReturn\n               OpFunctionEnd\n```\n\nIR:\n```\nFailed to parse SPIR-V: :12:22 error: let: %3 is not in scope\n        %6:i32 \u003d let %3\n                     ^^\n\n:10:7 note: in block\n      $B3: {  # false\n      ^^^\n\n:6:9 note: %3 declared here\n        %3:i32 \u003d let 2i\n        ^^^^^^\n\nnote: # Disassembly\n%main \u003d @compute @workgroup_size(1u, 1u, 1u) func():void {\n  $B1: {\n    %2:i32 \u003d let 1i\n    if true [t: $B2, f: $B3] {  # if_1\n      $B2: {  # true\n        %3:i32 \u003d let 2i\n        %4:i32 \u003d let %3\n        ret\n      }\n      $B3: {  # false\n        %5:i32 \u003d let 2i\n        %6:i32 \u003d let %3\n        ret\n      }\n    }\n    unreachable\n  }\n}\n```",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db986c5a_f8fd468a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-14T22:13:03Z",
+      "side": 1,
+      "message": "Unneeded if you remove the `ScopeStack`.",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d3a0963_03848d07",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-14T22:13:03Z",
+      "side": 1,
+      "message": "Why not just keep the root block at the root of the block stack, since it\u0027s always in scope?",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcd659ef_32e41d7d",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-14T22:13:03Z",
+      "side": 1,
+      "message": "If the block_stack was a `UniqueVector`, you could simply check if `block_stack_.Contains(ctrl_inst-\u003eBlock())` inside this loop to find the first matching block. Then you wouldn\u0027t need to store the whole path and try to match it later on.",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c4f8b66_c364b03c",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-14T22:13:03Z",
+      "side": 1,
+      "message": "The comment doesn\u0027t match the assertion here? Although it would if you did in fact push an entry for the root block.",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 451,
+        "endChar": 54
+      },
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
