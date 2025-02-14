@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "77e3f7d4_c219213a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-14T19:55:38Z",
+      "side": 1,
+      "message": "This doesn\u0027t always work, the block doesn\u0027t have to end in a `Branch` it could end in a `BranchConditional` in which case we end up with a missing terminator. (This happens in the test `SpirvParserTest.BranchConditional_Nested` where the first `if` is terminated with a second `if` and the second if is what branches to the merge. So, the first if is missing a terminator on it\u0027s block.\n\nI\u0027m going to not put this here so we make sure we put it in the right places so we don\u0027t miss cases like that.",
+      "parentUuid": "ea212910_989cc826",
+      "revId": "fa8eaa6dc7b06394f302efbdcb04b18c95469552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "db9221b3_6713d36a",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 3
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-14T19:14:34Z",
       "side": 1,
       "message": "This isn\u0027t required by the SPIR-V prior to SPIR-V 1.6, and when it happens you don\u0027t need the `OpSelectionMerge` either (so `merge_stack_` might be empty in that case), so maybe add a TODO to handle that case in the future?",
+      "revId": "fa8eaa6dc7b06394f302efbdcb04b18c95469552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acc7cee6_df1e2af9",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-14T19:55:38Z",
+      "side": 1,
+      "message": "I just removed the `ASSERT` as it\u0027s technically not needed. We\u0027ll just emit the block twice which is fine.\n\nAdded a test for `true_id \u003d\u003d false_id` and the needed code to handle the lack of merge entry.",
+      "parentUuid": "db9221b3_6713d36a",
       "revId": "fa8eaa6dc7b06394f302efbdcb04b18c95469552",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
