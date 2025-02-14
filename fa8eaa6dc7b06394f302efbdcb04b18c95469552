@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07b9f541_299ef6bf",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-14T21:28:06Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "77e3f7d4_c219213a",
+      "revId": "fa8eaa6dc7b06394f302efbdcb04b18c95469552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db9221b3_6713d36a",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "I just removed the `ASSERT` as it\u0027s technically not needed. We\u0027ll just emit the block twice which is fine.\n\nAdded a test for `true_id \u003d\u003d false_id` and the needed code to handle the lack of merge entry.",
       "parentUuid": "db9221b3_6713d36a",
+      "revId": "fa8eaa6dc7b06394f302efbdcb04b18c95469552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "639165c6_10b1c2ca",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-14T21:28:06Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "acc7cee6_df1e2af9",
       "revId": "fa8eaa6dc7b06394f302efbdcb04b18c95469552",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
