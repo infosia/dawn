@@ -95,7 +95,7 @@ using InterstageLocationAndName = std::pair<uint32_t, std::string>;
     X(SingleShaderStage, stage)                                                                  \
     X(std::optional<tint::ast::transform::SubstituteOverride::Config>, substituteOverrideConfig) \
     X(LimitsForCompilationRequest, limits)                                                       \
-    X(CacheKey::UnsafeUnkeyedValue<const AdapterBase*>, adapter)                                 \
+    X(LimitsForCompilationRequest, adapterSupportedLimits)                                       \
     X(bool, disableSymbolRenaming)                                                               \
     X(std::vector<InterstageLocationAndName>, interstageVariables)                               \
     X(tint::glsl::writer::Options, tintOptions)                                                  \
@@ -446,13 +446,12 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
         substituteOverrideConfig = BuildSubstituteOverridesTransformConfig(programmableStage);
     }
 
-    const CombinedLimits& limits = GetDevice()->GetLimits();
-
     req.stage = stage;
     req.entryPointName = programmableStage.entryPoint;
     req.substituteOverrideConfig = std::move(substituteOverrideConfig);
-    req.limits = LimitsForCompilationRequest::Create(limits.v1);
-    req.adapter = UnsafeUnkeyedValue(static_cast<const AdapterBase*>(GetDevice()->GetAdapter()));
+    req.limits = LimitsForCompilationRequest::Create(GetDevice()->GetLimits().v1);
+    req.adapterSupportedLimits =
+        LimitsForCompilationRequest::Create(GetDevice()->GetAdapter()->GetLimits().v1);
 
     req.platform = UnsafeUnkeyedValue(GetDevice()->GetPlatform());
 
@@ -555,7 +554,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
                         _, ValidateComputeStageWorkgroupSize(
                                result->workgroup_info.x, result->workgroup_info.y,
                                result->workgroup_info.z, result->workgroup_info.storage_size,
-                               r.limits, r.adapter.UnsafeGetValue()));
+                               r.limits, r.adapterSupportedLimits));
                 }
 
                 return GLSLCompilation{{std::move(result->glsl)}};
