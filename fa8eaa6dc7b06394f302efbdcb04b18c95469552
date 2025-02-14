@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea212910_989cc826",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-14T19:14:34Z",
+      "side": 1,
+      "message": "Could do `EmitWithoutResult(b.Exit(current_block_-\u003eParent()));` here, and then you don\u0027t need to fixup the terminators in the if/switch/loop handling code.",
+      "revId": "fa8eaa6dc7b06394f302efbdcb04b18c95469552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db9221b3_6713d36a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-14T19:14:34Z",
+      "side": 1,
+      "message": "This isn\u0027t required by the SPIR-V prior to SPIR-V 1.6, and when it happens you don\u0027t need the `OpSelectionMerge` either (so `merge_stack_` might be empty in that case), so maybe add a TODO to handle that case in the future?",
+      "revId": "fa8eaa6dc7b06394f302efbdcb04b18c95469552",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
