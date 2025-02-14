@@ -223,6 +223,9 @@ DAWN_NATIVE_EXPORT bool IsTextureSubresourceInitialized(
     uint32_t layerCount,
     WGPUTextureAspect aspect = WGPUTextureAspect_All);
 
+// Mark a texture as initialized to force Dawn to skip the lazy initialization on this texuture.
+DAWN_NATIVE_EXPORT void SetTextureInitialized(WGPUTexture texture, bool initialized);
+
 // Backdoor to get the order of the ProcMap for testing
 DAWN_NATIVE_EXPORT std::vector<std::string_view> GetProcMapNamesForTesting();
 
