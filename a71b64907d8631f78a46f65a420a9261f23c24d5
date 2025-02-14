@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9b36de6_945a9533",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-14T23:22:49Z",
+      "side": 1,
+      "message": "In Dawn\u0027s native implementation, class `BufferBase`\u0027s inheriance chain is:\nBufferBase -\u003e SharedResource -\u003e ApiObjectBase -\u003e ObjectBase -\u003e ErrorMonad -\u003e RefCounted.\n\nIn `ApiObjectBase::DeleteThis()`, `Destroy()` is called:\n\n```\n// src\\dawn\\native\\ObjectBase.cpp\nvoid ApiObjectBase::DeleteThis() {\n    Destroy();\n    RefCounted::DeleteThis();\n}\n\n```\n\n`DeleteThis()` is called in `RefCounted::Release`:\n```\n// src\\dawn\\common\\RefCounted.cpp\nvoid RefCounted::Release() {\n    if (mRefCount.Decrement()) {\n        DeleteThis();\n    }\n}\n\n```\n\nEmWgpu\u0027s implementation does not have this. And the call to `Destroy()` is never happened unless user explicitly call `buffer.destroy()`. In JavaScript webgpu API, only `device` and `buffer` exposes `destroy` to users.\n\nEmWgpu\u0027s implementation of device also have refcount problem, but I will not discuss about it since this PR is for buffer.",
+      "parentUuid": "f7380efb_f463899c",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "a71b64907d8631f78a46f65a420a9261f23c24d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "0814178d_446496d9",
