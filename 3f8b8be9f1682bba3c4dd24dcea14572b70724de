@@ -16,6 +16,23 @@
       "message": "Should this happens before delete value?",
       "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "446d240a_e92bf8b3",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-14T05:47:11Z",
+      "side": 1,
+      "message": "Can we move this to the last line of destructor defined in https://dawn-review.googlesource.com/c/dawn/+/226315",
+      "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
