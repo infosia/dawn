@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0814178d_446496d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-14T06:23:31Z",
+      "side": 1,
+      "message": "In native implementation, `wgpuBufferRelease` will trigger the buffer destroy (if refcount decreased to 0). But in emwgpu implementation, the buffer destroy won\u0027t happen.\n\nThis change fixes the bug.",
+      "revId": "a71b64907d8631f78a46f65a420a9261f23c24d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
