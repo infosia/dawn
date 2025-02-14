@@ -74,8 +74,8 @@ MaybeError ValidateRenderBundleEncoderDescriptor(DeviceBase* device,
     DAWN_INVALID_IF(descriptor->colorFormatCount > maxColorAttachments,
                     "Color formats count (%u) exceeds maximum number of color attachments (%u).%s",
                     descriptor->colorFormatCount, maxColorAttachments,
-                    DAWN_INCREASE_LIMIT_MESSAGE(device->GetAdapter(), maxColorAttachments,
-                                                descriptor->colorFormatCount));
+                    DAWN_INCREASE_LIMIT_MESSAGE_WITH_ADAPTER(
+                        device->GetAdapter(), maxColorAttachments, descriptor->colorFormatCount));
 
     bool allColorFormatsUndefined = true;
     ColorAttachmentFormats colorAttachmentFormats;

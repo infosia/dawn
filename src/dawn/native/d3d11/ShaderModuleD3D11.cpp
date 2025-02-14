@@ -219,7 +219,10 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
 
     const CombinedLimits& limits = device->GetLimits();
     req.hlsl.limits = LimitsForCompilationRequest::Create(limits.v1);
-    req.hlsl.adapter = UnsafeUnkeyedValue(static_cast<const AdapterBase*>(device->GetAdapter()));
+    SupportedLimits adapterLimits;
+    wgpu::Status status = device->GetAdapter()->APIGetLimits(&adapterLimits);
+    DAWN_ASSERT(status == wgpu::Status::Success);
+    req.hlsl.adapterSupportedLimits = LimitsForCompilationRequest::Create(adapterLimits.limits);
 
     req.hlsl.tintOptions.disable_robustness = !device->IsRobustnessEnabled();
     req.hlsl.tintOptions.disable_workgroup_init =

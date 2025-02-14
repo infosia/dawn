@@ -258,14 +258,14 @@ void RenderPassEncoder::APISetViewport(float x,
                 DAWN_INVALID_IF(width > maxViewportSize,
                                 "Viewport width (%f) exceeds the maximum (%u).%s", width,
                                 maxViewportSize,
-                                DAWN_INCREASE_LIMIT_MESSAGE(GetDevice()->GetAdapter(),
-                                                            maxTextureDimension2D, width));
+                                DAWN_INCREASE_LIMIT_MESSAGE_WITH_ADAPTER(
+                                    GetDevice()->GetAdapter(), maxTextureDimension2D, width));
 
                 DAWN_INVALID_IF(height > maxViewportSize,
                                 "Viewport size height (%f) exceeds the maximum (%u).%s", height,
                                 maxViewportSize,
-                                DAWN_INCREASE_LIMIT_MESSAGE(GetDevice()->GetAdapter(),
-                                                            maxTextureDimension2D, height));
+                                DAWN_INCREASE_LIMIT_MESSAGE_WITH_ADAPTER(
+                                    GetDevice()->GetAdapter(), maxTextureDimension2D, height));
 
                 DAWN_INVALID_IF(x < -maxViewportBounds || y < -maxViewportBounds,
                                 "Viewport offset (x: %f, y: %f) is less than the minimum "

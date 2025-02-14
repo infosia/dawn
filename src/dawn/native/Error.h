@@ -159,7 +159,7 @@ std::string MakeIncreaseLimitMessage(std::string_view limitName, T adapterLimitV
         limitName, adapterLimitValue);
 }
 
-#define DAWN_INCREASE_LIMIT_MESSAGE(adapter, limitName, limitValue)                      \
+#define DAWN_INCREASE_LIMIT_MESSAGE_WITH_ADAPTER(adapter, limitName, limitValue)         \
     [&]() -> std::string {                                                               \
         ::dawn::native::SupportedLimits adapterLimits;                                   \
         wgpu::Status status = adapter->APIGetLimits(&adapterLimits);                     \
@@ -169,6 +169,14 @@ std::string MakeIncreaseLimitMessage(std::string_view limitName, T adapterLimitV
         }                                                                                \
         return ::dawn::native::MakeIncreaseLimitMessage(#limitName,                      \
                                                         adapterLimits.limits.limitName); \
+    }()
+
+#define DAWN_INCREASE_LIMIT_MESSAGE_WITH_LIMITS(limits, limitName, limitValue)         \
+    [&]() -> std::string {                                                             \
+        if (limitValue > limits.limitName) {                                           \
+            return "";                                                                 \
+        }                                                                              \
+        return ::dawn::native::MakeIncreaseLimitMessage(#limitName, limits.limitName); \
     }()
 
 #define DAWN_CONCAT1(x, y) x##y

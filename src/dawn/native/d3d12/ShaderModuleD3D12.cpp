@@ -384,7 +384,10 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
 
     const CombinedLimits& limits = device->GetLimits();
     req.hlsl.limits = LimitsForCompilationRequest::Create(limits.v1);
-    req.hlsl.adapter = UnsafeUnkeyedValue(static_cast<const AdapterBase*>(device->GetAdapter()));
+    SupportedLimits adapterLimits;
+    wgpu::Status status = device->GetAdapter()->APIGetLimits(&adapterLimits);
+    DAWN_ASSERT(status == wgpu::Status::Success);
+    req.hlsl.adapterSupportedLimits = LimitsForCompilationRequest::Create(adapterLimits.limits);
 
     CacheResult<d3d::CompiledShader> compiledShader;
     DAWN_TRY_LOAD_OR_RUN(compiledShader, device, std::move(req), d3d::CompiledShader::FromBlob,

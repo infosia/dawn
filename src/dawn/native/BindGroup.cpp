@@ -135,8 +135,8 @@ MaybeError ValidateBufferBinding(const DeviceBase* device,
                             "Binding size (%u) of %s is larger than the maximum uniform buffer "
                             "binding size (%u).%s",
                             bindingSize, entry.buffer, maxUniformBufferBindingSize,
-                            DAWN_INCREASE_LIMIT_MESSAGE(device->GetAdapter(),
-                                                        maxUniformBufferBindingSize, bindingSize));
+                            DAWN_INCREASE_LIMIT_MESSAGE_WITH_ADAPTER(
+                                device->GetAdapter(), maxUniformBufferBindingSize, bindingSize));
             break;
         case wgpu::BufferBindingType::Storage:
         case wgpu::BufferBindingType::ReadOnlyStorage:
@@ -146,8 +146,8 @@ MaybeError ValidateBufferBinding(const DeviceBase* device,
                             "Binding size (%u) of %s is larger than the maximum storage buffer "
                             "binding size (%u).%s",
                             bindingSize, entry.buffer, maxStorageBufferBindingSize,
-                            DAWN_INCREASE_LIMIT_MESSAGE(device->GetAdapter(),
-                                                        maxStorageBufferBindingSize, bindingSize));
+                            DAWN_INCREASE_LIMIT_MESSAGE_WITH_ADAPTER(
+                                device->GetAdapter(), maxStorageBufferBindingSize, bindingSize));
             break;
         case wgpu::BufferBindingType::BindingNotUsed:
         case wgpu::BufferBindingType::Undefined:

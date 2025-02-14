@@ -754,8 +754,8 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
         descriptor->colorAttachmentCount > maxColorAttachments,
         "Color attachment count (%u) exceeds the maximum number of color attachments (%u).%s",
         descriptor->colorAttachmentCount, maxColorAttachments,
-        DAWN_INCREASE_LIMIT_MESSAGE(device->GetAdapter(), maxColorAttachments,
-                                    descriptor->colorAttachmentCount));
+        DAWN_INCREASE_LIMIT_MESSAGE_WITH_ADAPTER(device->GetAdapter(), maxColorAttachments,
+                                                 descriptor->colorAttachmentCount));
 
     auto colorAttachments = ityp::SpanFromUntyped<ColorAttachmentIndex>(
         descriptor->colorAttachments, descriptor->colorAttachmentCount);

@@ -216,29 +216,29 @@ void ComputePassEncoder::APIDispatchWorkgroups(uint32_t workgroupCountX,
                 uint32_t maxComputeWorkgroupsPerDimension =
                     GetDevice()->GetLimits().v1.maxComputeWorkgroupsPerDimension;
 
-                DAWN_INVALID_IF(
-                    workgroupCountX > maxComputeWorkgroupsPerDimension,
-                    "Dispatch workgroup count X (%u) exceeds max compute "
-                    "workgroups per dimension (%u).%s",
-                    workgroupCountX, maxComputeWorkgroupsPerDimension,
-                    DAWN_INCREASE_LIMIT_MESSAGE(GetDevice()->GetAdapter(),
-                                                maxComputeWorkgroupsPerDimension, workgroupCountX));
+                DAWN_INVALID_IF(workgroupCountX > maxComputeWorkgroupsPerDimension,
+                                "Dispatch workgroup count X (%u) exceeds max compute "
+                                "workgroups per dimension (%u).%s",
+                                workgroupCountX, maxComputeWorkgroupsPerDimension,
+                                DAWN_INCREASE_LIMIT_MESSAGE_WITH_ADAPTER(
+                                    GetDevice()->GetAdapter(), maxComputeWorkgroupsPerDimension,
+                                    workgroupCountX));
 
-                DAWN_INVALID_IF(
-                    workgroupCountY > maxComputeWorkgroupsPerDimension,
-                    "Dispatch workgroup count Y (%u) exceeds max compute "
-                    "workgroups per dimension (%u).%s",
-                    workgroupCountY, maxComputeWorkgroupsPerDimension,
-                    DAWN_INCREASE_LIMIT_MESSAGE(GetDevice()->GetAdapter(),
-                                                maxComputeWorkgroupsPerDimension, workgroupCountY));
+                DAWN_INVALID_IF(workgroupCountY > maxComputeWorkgroupsPerDimension,
+                                "Dispatch workgroup count Y (%u) exceeds max compute "
+                                "workgroups per dimension (%u).%s",
+                                workgroupCountY, maxComputeWorkgroupsPerDimension,
+                                DAWN_INCREASE_LIMIT_MESSAGE_WITH_ADAPTER(
+                                    GetDevice()->GetAdapter(), maxComputeWorkgroupsPerDimension,
+                                    workgroupCountY));
 
-                DAWN_INVALID_IF(
-                    workgroupCountZ > maxComputeWorkgroupsPerDimension,
-                    "Dispatch workgroup count Z (%u) exceeds max compute "
-                    "workgroups per dimension (%u).%s",
-                    workgroupCountZ, maxComputeWorkgroupsPerDimension,
-                    DAWN_INCREASE_LIMIT_MESSAGE(GetDevice()->GetAdapter(),
-                                                maxComputeWorkgroupsPerDimension, workgroupCountZ));
+                DAWN_INVALID_IF(workgroupCountZ > maxComputeWorkgroupsPerDimension,
+                                "Dispatch workgroup count Z (%u) exceeds max compute "
+                                "workgroups per dimension (%u).%s",
+                                workgroupCountZ, maxComputeWorkgroupsPerDimension,
+                                DAWN_INCREASE_LIMIT_MESSAGE_WITH_ADAPTER(
+                                    GetDevice()->GetAdapter(), maxComputeWorkgroupsPerDimension,
+                                    workgroupCountZ));
 
                 if (!GetDevice()->HasFlexibleTextureViews()) {
                     DAWN_TRY(mCommandBufferState.ValidateNoDifferentTextureViewsOnSameTexture());
