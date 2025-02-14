@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "069472ac_106af265",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-02-14T19:27:11Z",
+      "side": 1,
+      "message": "Loko, can you please RS this merge? Thanks!",
+      "revId": "599b46544e74518f1f6ca7d22b2f9829bfc5fa74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
