@@ -1119,10 +1119,11 @@ MaybeError ReflectShaderUsingTint(const DeviceBase* device,
 }
 }  // anonymous namespace
 
-ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(const tint::Program& program,
-                                                          const char* entryPointName,
-                                                          const LimitsForCompilationRequest& limits,
-                                                          const AdapterBase* adapter) {
+ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
+    const tint::Program& program,
+    const char* entryPointName,
+    const LimitsForCompilationRequest& limits,
+    const LimitsForCompilationRequest& adaterSupportedlimits) {
     tint::inspector::Inspector inspector(program);
 
     // At this point the entry point must exist and must have workgroup size values.
@@ -1131,15 +1132,17 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(const tint::Program& p
     const tint::inspector::WorkgroupSize& workgroup_size = entryPoint.workgroup_size.value();
 
     return ValidateComputeStageWorkgroupSize(workgroup_size.x, workgroup_size.y, workgroup_size.z,
-                                             entryPoint.workgroup_storage_size, limits, adapter);
+                                             entryPoint.workgroup_storage_size, limits,
+                                             adaterSupportedlimits);
 }
 
-ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(uint32_t x,
-                                                          uint32_t y,
-                                                          uint32_t z,
-                                                          size_t workgroupStorageSize,
-                                                          const LimitsForCompilationRequest& limits,
-                                                          const AdapterBase* adapter) {
+ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
+    uint32_t x,
+    uint32_t y,
+    uint32_t z,
+    size_t workgroupStorageSize,
+    const LimitsForCompilationRequest& limits,
+    const LimitsForCompilationRequest& adaterSupportedlimits) {
     DAWN_INVALID_IF(x < 1 || y < 1 || z < 1,
                     "Entry-point uses workgroup_size(%u, %u, %u) that are below the "
                     "minimum allowed (1, 1, 1).",
@@ -1147,16 +1150,12 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(uint32_t x,
 
     if (DAWN_UNLIKELY(x > limits.maxComputeWorkgroupSizeX || y > limits.maxComputeWorkgroupSizeY ||
                       z > limits.maxComputeWorkgroupSizeZ)) {
-        SupportedLimits adapterLimits;
-        wgpu::Status status = adapter->APIGetLimits(&adapterLimits);
-        DAWN_ASSERT(status == wgpu::Status::Success);
-
         uint32_t maxComputeWorkgroupSizeXAdapterLimit =
-            adapterLimits.limits.maxComputeWorkgroupSizeX;
+            adaterSupportedlimits.maxComputeWorkgroupSizeX;
         uint32_t maxComputeWorkgroupSizeYAdapterLimit =
-            adapterLimits.limits.maxComputeWorkgroupSizeY;
+            adaterSupportedlimits.maxComputeWorkgroupSizeY;
         uint32_t maxComputeWorkgroupSizeZAdapterLimit =
-            adapterLimits.limits.maxComputeWorkgroupSizeZ;
+            adaterSupportedlimits.maxComputeWorkgroupSizeZ;
         std::string increaseLimitAdvice =
             (x <= maxComputeWorkgroupSizeXAdapterLimit &&
              y <= maxComputeWorkgroupSizeYAdapterLimit && z <= maxComputeWorkgroupSizeZAdapterLimit)
@@ -1182,7 +1181,7 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(uint32_t x,
                     "The total number of workgroup invocations (%u) exceeds the "
                     "maximum allowed (%u).%s",
                     numInvocations, maxComputeInvocationsPerWorkgroup,
-                    DAWN_INCREASE_LIMIT_MESSAGE(adapter->GetLimits().v1,
+                    DAWN_INCREASE_LIMIT_MESSAGE(adaterSupportedlimits,
                                                 maxComputeInvocationsPerWorkgroup, numInvocations));
 
     uint32_t maxComputeWorkgroupStorageSize = limits.maxComputeWorkgroupStorageSize;
@@ -1191,7 +1190,7 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(uint32_t x,
         "The total use of workgroup storage (%u bytes) is larger than "
         "the maximum allowed (%u bytes).%s",
         workgroupStorageSize, maxComputeWorkgroupStorageSize,
-        DAWN_INCREASE_LIMIT_MESSAGE(adapter->GetLimits().v1, maxComputeWorkgroupStorageSize,
+        DAWN_INCREASE_LIMIT_MESSAGE(adaterSupportedlimits, maxComputeWorkgroupStorageSize,
                                     workgroupStorageSize));
 
     return Extent3D{x, y, z};

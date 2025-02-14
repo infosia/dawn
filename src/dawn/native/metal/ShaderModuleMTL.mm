@@ -62,7 +62,7 @@ using OptionalVertexPullingTransformConfig = std::optional<tint::VertexPullingCo
     X(const tint::Program*, inputProgram)                                                        \
     X(std::optional<tint::ast::transform::SubstituteOverride::Config>, substituteOverrideConfig) \
     X(LimitsForCompilationRequest, limits)                                                       \
-    X(CacheKey::UnsafeUnkeyedValue<const AdapterBase*>, adapter)                                 \
+    X(LimitsForCompilationRequest, adapterSupportedLimits)                                       \
     X(std::string, entryPointName)                                                               \
     X(bool, disableSymbolRenaming)                                                               \
     X(tint::msl::writer::Options, tintOptions)                                                   \
@@ -294,9 +294,9 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
         device->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
     req.tintOptions.vertex_pulling_config = std::move(vertexPullingTransformConfig);
 
-    const CombinedLimits& limits = device->GetLimits();
-    req.limits = LimitsForCompilationRequest::Create(limits.v1);
-    req.adapter = UnsafeUnkeyedValue(static_cast<const AdapterBase*>(device->GetAdapter()));
+    req.limits = LimitsForCompilationRequest::Create(device->GetLimits().v1);
+    req.adapterSupportedLimits =
+        LimitsForCompilationRequest::Create(device->GetAdapter()->GetLimits().v1);
 
     CacheResult<MslCompilation> mslCompilation;
     DAWN_TRY_LOAD_OR_RUN(
@@ -350,7 +350,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
                                 ValidateComputeStageWorkgroupSize(
                                     result->workgroup_info.x, result->workgroup_info.y,
                                     result->workgroup_info.z, result->workgroup_info.storage_size,
-                                    r.limits, r.adapter.UnsafeGetValue()));
+                                    r.limits, r.adapterSupportedLimits));
             }
 
             // Metal uses Clang to compile the shader as C++14. Disable everything in the -Wall
