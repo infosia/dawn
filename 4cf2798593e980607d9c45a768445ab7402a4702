@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90b9bd81_b9a3b457",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-14T19:17:34Z",
+      "side": 1,
+      "message": "This is the one place where duplicate names are *not* allowed in Tint IR land (as per the recent invesigation from that IR fuzzing issue), so we will need some extra logic and probably a hashset of struct names to deal with that.",
+      "revId": "4cf2798593e980607d9c45a768445ab7402a4702",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
