@@ -33,6 +33,24 @@
       "message": "I think these usages of `last_matched_block` with block_stack_ are off by one because the block_stack got shifted to accomidate the the root block.",
       "revId": "669ceba3bd9def8abb555f57fb0b556e937639c8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a170d47_78947c97",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-14T03:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b0a3a9a_8f0b609b",
+      "revId": "669ceba3bd9def8abb555f57fb0b556e937639c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
