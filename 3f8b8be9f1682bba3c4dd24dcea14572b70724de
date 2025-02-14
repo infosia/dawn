@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e0be132_dd843993",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-14T23:06:44Z",
+      "side": 1,
+      "message": "The problem is explained in this issue: https://issues.chromium.org/issues/395920244",
+      "parentUuid": "d27c8df5_8d8bfb80",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4d3ccbda_81c07973",
@@ -94,6 +118,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e5a6efb_9cd1b977",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-14T23:06:44Z",
+      "side": 1,
+      "message": "Sometimes (eg. https://dawn-review.googlesource.com/c/dawn/+/226315) the destructor needs the info stored in `WebGPU.Internals.jsObjects`. so remove the pointer (object address) from `jsObjects` need to be the last step.",
+      "parentUuid": "f5cee08a_ae36c2b3",
+      "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "446d240a_e92bf8b3",
@@ -107,6 +149,24 @@
       "writtenOn": "2025-02-14T05:47:11Z",
       "side": 1,
       "message": "Can we move this to the last line of destructor defined in https://dawn-review.googlesource.com/c/dawn/+/226315",
+      "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc29c3cb_cc1eab90",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-14T23:06:44Z",
+      "side": 1,
+      "message": "Every WebGPU object type (as described in macro `WGPU_OBJECTS`) has `wgpu{Type}Release` but the destructor I defined is only for `Buffer`.",
+      "parentUuid": "446d240a_e92bf8b3",
       "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
