@@ -27,6 +27,7 @@
 
 #include "src/dawn/node/binding/GPUAdapterInfo.h"
 
+#include <cctype>
 #include <iomanip>
 #include <sstream>
 
@@ -76,12 +77,31 @@ struct GPUSubgroupMatrixConfig : public interop::GPUSubgroupMatrixConfig {
     uint32_t getN(Napi::Env) override { return N; }
     uint32_t getK(Napi::Env) override { return K; }
 };
+
+// Normalize according to https://gpuweb.github.io/gpuweb/#normalized-identifier-string
+std::string NormalizeIdentifierString(wgpu::StringView s) {
+    std::ostringstream o;
+
+    bool lastWasCaret = false;
+    for (char c : std::string_view(s)) {
+        lastWasCaret = false;
+        if (std::isalnum(c)) {
+            o << std::tolower(c);
+        } else if (!lastWasCaret) {
+            o << '-';
+            lastWasCaret = true;
+        }
+    }
+
+    return o.str();
+}
+
 }  // namespace
 
 GPUAdapterInfo::GPUAdapterInfo(const wgpu::AdapterInfo& info)
-    : vendor_(info.vendor),
-      architecture_(info.architecture),
-      device_(info.device),
+    : vendor_(NormalizeIdentifierString(info.vendor)),
+      architecture_(NormalizeIdentifierString(info.architecture)),
+      device_(NormalizeIdentifierString(info.device)),
       description_(info.description),
       subgroup_min_size_(info.subgroupMinSize),
       subgroup_max_size_(info.subgroupMaxSize) {
