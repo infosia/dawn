@@ -16,6 +16,23 @@
       "message": "Please take a look if this is not duplicated, thanks!",
       "revId": "145e0f974b877b0157e32ec3b983ee074a401937",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a7dd879_c1ea3bf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-14T21:35:39Z",
+      "side": 1,
+      "message": "Hey Zhaoming, thanks for the changes! I have some limit changes in flight to catch up the upstream headers here: https://dawn-review.googlesource.com/c/dawn/+/225294 that I am hoping to land soon-ish, but am waiting on some rolls for all our dependencies to include changes I sent out with the ifdef. Would it be possible to rebase off of that change? (Otherwise, these changes will need to be updated again once that lands and/or I will need to update those changes)\n\nAlso, I\u0027m thinking that maybe we should have an internal non-API function on the `AdapterBase` to get a const reference to a `Limit` struct for the error messages? Calling `APIGetLimits` everytime everywhere seems a bit wasteful, and if we have that on the `AdapterBase`, the macro can actually just expect the `Limit` struct directly instead of needing to get it.",
+      "revId": "145e0f974b877b0157e32ec3b983ee074a401937",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
