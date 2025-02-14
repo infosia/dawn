@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9cb4699_5fe92e62",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1679,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-14T08:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dd8a183_8f64abd9",
+      "revId": "88884fa7cbc1671ce94b117ce759ac4d6d685845",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67e7bf0b_9e6eaebf",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-13T11:54:56Z",
       "side": 1,
       "message": "nit: move ForTesting things at the bottom so that readers see important stuff first.",
+      "revId": "88884fa7cbc1671ce94b117ce759ac4d6d685845",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b15cea58_0c0e2c3a",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-14T08:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67e7bf0b_9e6eaebf",
       "revId": "88884fa7cbc1671ce94b117ce759ac4d6d685845",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
