@@ -216,6 +216,10 @@ bool IsTextureSubresourceInitialized(WGPUTexture texture,
     return textureBase->IsSubresourceContentInitialized(range);
 }
 
+void SetTextureInitialized(WGPUTexture texture, bool initialized) {
+    FromAPI(texture)->SetInitialized(initialized);
+}
+
 std::vector<std::string_view> GetProcMapNamesForTestingInternal();
 
 std::vector<std::string_view> GetProcMapNamesForTesting() {
