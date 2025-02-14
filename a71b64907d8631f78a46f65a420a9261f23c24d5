@@ -16,6 +16,23 @@
       "message": "In native implementation, `wgpuBufferRelease` will trigger the buffer destroy (if refcount decreased to 0). But in emwgpu implementation, the buffer destroy won\u0027t happen.\n\nThis change fixes the bug.",
       "revId": "a71b64907d8631f78a46f65a420a9261f23c24d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a333b34c_0f217e3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-14T06:34:36Z",
+      "side": 1,
+      "message": "It solves problem about c++ implementation doesn\u0027t invoke js buffer.destroy() correctly. PTAL, Thanks.",
+      "revId": "a71b64907d8631f78a46f65a420a9261f23c24d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
