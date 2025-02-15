@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b607d7bd_a8039aae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-15T02:45:51Z",
+      "side": 1,
+      "message": "Sigh, the same true/false block is annoying. We can endup seeing the same SPIR-V ID multiple times, which goes to different values. So, probalby I just need to make it update the SPIR-V ID, although that in itself is kinda weird.\n\nI wonder if the better solution to same true/false block is to just, change it to something like:\n\n```\nif (true || \u003coriginal condition\u003e) {\n   \u003cemit block\u003e\n}\n```\n\nSo we still have a usage of original condition, but we always force it down the true block and only emit once.",
+      "parentUuid": "36193e4e_2fc8a477",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "db986c5a_f8fd468a",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
@@ -54,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "beae933d_0eb16241",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-15T02:45:51Z",
+      "side": 1,
+      "message": "Because it throws off the indexing in the later Propagate method. Currently propagate, when walking up to create the list, will have the same start point of a function. If we include the root block in the block stack, then it\u0027s offset from the blocks we walk to find the function which is just annoying.",
+      "parentUuid": "7d3a0963_03848d07",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dcd659ef_32e41d7d",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
@@ -71,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b9e0c2c6_40d2448a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-15T02:45:51Z",
+      "side": 1,
+      "message": "Not sure I\u0027m following, the source instruction block may not be in the block stack. If it\u0027s in a block we\u0027ve already popped from the stack, then it wouldn\u0027t be found.\n\nThis is the path from the source instruction up to the function.\n\nSomething like:\n\n```\nfn a() {\n  if (b) {\n    %1 \u003d 4;\n  }\n  \n  %2 \u003d %1\n}\n```\n\nThe block containing %1 isn\u0027t on the block stack anymore because we\u0027ve exited it, but we still need to look it up to hoist.",
+      "parentUuid": "dcd659ef_32e41d7d",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c4f8b66_c364b03c",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
@@ -82,6 +136,30 @@
       "writtenOn": "2025-02-14T22:13:03Z",
       "side": 1,
       "message": "The comment doesn\u0027t match the assertion here? Although it would if you did in fact push an entry for the root block.",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 451,
+        "endChar": 54
+      },
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb01ee73_507ef279",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-15T02:45:51Z",
+      "side": 1,
+      "message": "Right, I removed the root block from the stack, but forgot to update the comment. Will fix.",
+      "parentUuid": "5c4f8b66_c364b03c",
       "range": {
         "startLine": 449,
         "startChar": 0,
