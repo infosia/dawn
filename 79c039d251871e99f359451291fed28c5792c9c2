@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "24f72040_d62ddc78",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-15T12:26:05Z",
+      "side": 1,
+      "message": "The problem isn\u0027t specific to the same true/false block situation though. I can reproduce it when you have two separate `OpBranch` instructions that branch to same block, as you have the same problem of the same IDs being seen twice.",
+      "parentUuid": "b607d7bd_a8039aae",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "db986c5a_f8fd468a",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
