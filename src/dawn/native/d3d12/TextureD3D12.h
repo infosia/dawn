@@ -64,10 +64,6 @@ class Texture final : public d3d::Texture {
         SharedTextureMemory* memory,
         const UnpackedPtr<TextureDescriptor>& descriptor);
 
-    // For external textures, returns the Device internal fence's value associated with the last
-    // ExecuteCommandLists that used this texture. If nullopt is returned, the texture wasn't used.
-    ResultOrError<ExecutionSerial> EndAccess() override;
-
     DXGI_FORMAT GetD3D12Format() const;
     ID3D12Resource* GetD3D12Resource() const;
     DXGI_FORMAT GetD3D12CopyableSubresourceFormat(Aspect aspect) const;
