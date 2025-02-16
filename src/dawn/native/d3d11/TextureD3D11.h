@@ -99,7 +99,6 @@ class Texture final : public d3d::Texture {
     static MaybeError Copy(const ScopedCommandRecordingContext* commandContext,
                            CopyTextureToTextureCmd* copy);
 
-    ResultOrError<ExecutionSerial> EndAccess() override;
 
     // As D3D11 SRV doesn't support 'Shader4ComponentMapping' for depth-stencil textures, we can't
     // sample the stencil component directly. As a workaround we create an internal R8Uint texture,
