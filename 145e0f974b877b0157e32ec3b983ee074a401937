@@ -51,6 +51,40 @@
       "parentUuid": "2a7dd879_c1ea3bf8",
       "revId": "145e0f974b877b0157e32ec3b983ee074a401937",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e6d81eb_a58f2656",
+        "filename": "src/dawn/native/Error.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:36:21Z",
+      "side": 1,
+      "message": "This could become defined to: `DAWN_INCREASE_LIMIT_MESSAGE_WITH_LIMITS(adapter-\u003eGetLimits(), limitName, limitValue)` ... Or with `GetLimits` on the Adapter we can keep the single macro and add a `-\u003eGetLimits` in all the existing callsites. Actually this seems much better.",
+      "revId": "145e0f974b877b0157e32ec3b983ee074a401937",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93ab1f3f_235ee0dd",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:36:21Z",
+      "side": 1,
+      "message": "It would be marginally better with a `CombinedLimits` object on the Adapter as well that\u0027s built early during its creation so that we don\u0027t need to call the API reentrantly but can get the full object directly. Feel free to do that in a follow-up or push back if it is too much.",
+      "revId": "145e0f974b877b0157e32ec3b983ee074a401937",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
