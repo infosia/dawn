@@ -44,10 +44,10 @@ namespace dawn::native {
 
 class BufferBase;
 
-struct UploadHandle {
-    raw_ptr<uint8_t> mappedBuffer = nullptr;
-    uint64_t startOffset = 0;
-    Ref<BufferBase> stagingBuffer;
+struct UploadReservation {
+    void* mappedPointer = nullptr;
+    uint64_t offsetInBuffer = 0;
+    Ref<BufferBase> buffer;
 };
 
 class DynamicUploader {
@@ -55,9 +55,15 @@ class DynamicUploader {
     explicit DynamicUploader(DeviceBase* device);
     ~DynamicUploader() = default;
 
-    ResultOrError<UploadHandle> Allocate(uint64_t allocationSize,
-                                         ExecutionSerial serial,
-                                         uint64_t offsetAlignment);
+    template <typename F>
+    MaybeError WithUploadReservation(uint64_t size, uint64_t offsetAlignment, F&& f) {
+        UploadReservation reservation;
+        DAWN_TRY_ASSIGN(reservation, Reserve(size, offsetAlignment));
+        DAWN_TRY(f(reservation));
+        // TODO
+        return {};
+    }
+
     void Deallocate(ExecutionSerial lastCompletedSerial, bool freeAll = false);
 
     bool ShouldFlush() const;
@@ -71,9 +77,7 @@ class DynamicUploader {
         RingBufferAllocator mAllocator;
     };
 
-    ResultOrError<UploadHandle> AllocateInternal(uint64_t allocationSize,
-                                                 ExecutionSerial serial,
-                                                 uint64_t offsetAlignment);
+    ResultOrError<UploadReservation> Reserve(uint64_t size, uint64_t offsetAlignment);
 
     std::vector<std::unique_ptr<RingBuffer>> mRingBuffers;
     raw_ptr<DeviceBase> mDevice;
