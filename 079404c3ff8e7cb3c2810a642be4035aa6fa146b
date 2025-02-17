@@ -34,6 +34,24 @@
       "parentUuid": "4b655896_cc987ad9",
       "revId": "079404c3ff8e7cb3c2810a642be4035aa6fa146b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "943fd5f1_add8c3fd",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T13:57:42Z",
+      "side": 1,
+      "message": "IDK, it doesn\u0027t help get rid of the extra indentation. Sorry but it seems PS3 was the best one after all. Thank you for the iterations though as it made some existing issues apparent.",
+      "parentUuid": "331e38f0_bd2e73c1",
+      "revId": "079404c3ff8e7cb3c2810a642be4035aa6fa146b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
