@@ -136,7 +136,7 @@ func (c *cmd) runServer(
 		cmd := exec.CommandContext(ctx, c.flags.Node, args...)
 
 		writer := io.Writer(testCaseLog)
-		if c.flags.Verbose {
+		if !c.flags.Verbose {
 			pw := &utils.PrefixWriter{
 				Prefix: fmt.Sprintf("[%d] ", id),
 				Writer: os.Stdout,

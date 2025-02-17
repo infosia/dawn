@@ -133,7 +133,7 @@ func StreamResults(
 		}
 		numByExpectedStatus[exStatus] = numByExpectedStatus[exStatus] + 1
 		name := res.TestCase
-		if verbose ||
+		if (verbose && exStatus.status != Pass) ||
 			res.Error != nil ||
 			(exStatus.status != Pass && exStatus.status != Skip && !exStatus.expected) {
 			buf := &bytes.Buffer{}

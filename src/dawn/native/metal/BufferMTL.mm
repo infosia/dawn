@@ -37,6 +37,8 @@
 #include "dawn/native/metal/QueueMTL.h"
 #include "dawn/native/metal/UtilsMetal.h"
 
+#include "dawn/common/Log.h"
+
 #include <limits>
 
 namespace dawn::native::metal {
@@ -201,6 +203,7 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
 }
 
 void* Buffer::GetMappedPointer() {
+    DAWN_DEBUG();
     return [*mMtlBuffer contents];
 }
 

@@ -256,7 +256,6 @@ void Queue::ForceEventualFlushOfCommands() {
 Ref<SystemEvent> Queue::CreateWorkDoneSystemEvent(ExecutionSerial serial) {
     Ref<SystemEvent> completionEvent = AcquireRef(new SystemEvent());
     mWaitingEvents.Use([&](auto events) {
-        SystemEventReceiver receiver;
         // Now that we hold the lock, check against mCompletedSerial before inserting.
         // This serial may have just completed. If it did, mark the event complete.
         // Also check for device loss. Otherwise, we could enqueue the event
