@@ -86,6 +86,24 @@
       "message": "So the problem is reentrancy of `SubmitPendingCommands` in `ExecutionQueueBase`? We could handle it entirely there with an `mInSubmit` flag updated in `SubmitPendingCommands` that would call the (renamed in the backends) `SubmitPendingCommandsImpl`. That flag would also need to be set in Queue::SubmitInternal.",
       "revId": "d9e8576141858402fb1f88d312c2af698a0695e9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cfb733a_8dded28d",
+        "filename": "src/dawn/native/Queue.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-17T13:22:01Z",
+      "side": 1,
+      "message": "`Queue::SubmitInternal` will call `SubmitPendingCommands` in D3D12, Metal and Vulkan backends so we cannot set `mInSubmit` on both `Queue::SubmitInternal` and `SubmitPendingCommands`.",
+      "parentUuid": "8b6f7dc5_b018257a",
+      "revId": "d9e8576141858402fb1f88d312c2af698a0695e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
