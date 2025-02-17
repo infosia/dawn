@@ -182,6 +182,10 @@ struct State {
                             worklist.Push(builtin);
                         }
                         break;
+                    case core::BuiltinFn::kDpdxCoarse:
+                    case core::BuiltinFn::kDpdx: {
+                        builtin->SetFunc(core::BuiltinFn::kDpdxFine);
+                    } break;
                     default:
                         break;
                 }
