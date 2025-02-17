@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ae351660_51656cf9",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-17T12:23:19Z",
+      "side": 1,
+      "message": "\u003e The one in DestroyImpl wouldn\u0027t be needed because in the backends we should know that the staging buffer has never been used and can be freed immediately. (It would just require looking at the value of the last serial).\n\nNo the upload handle is also used in BufferBase::UploadData() (https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Buffer.cpp;l\u003d795, called by WriteBuffer and WriteTexture), where the staging buffer may not be freed immediately.",
+      "parentUuid": "bf8f7662_70d6b593",
+      "revId": "d9e8576141858402fb1f88d312c2af698a0695e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "88a20e56_93293f17",
         "filename": "src/dawn/native/DynamicUploader.cpp",
         "patchSetId": 10
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-12T14:04:10Z",
       "side": 1,
       "message": "Can we also use this for memory that\u0027s transiently allocated?",
+      "revId": "d9e8576141858402fb1f88d312c2af698a0695e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80407969_d70fa1c3",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-17T12:23:19Z",
+      "side": 1,
+      "message": "It may be more complicated as transient buffers can be shared with multiple upload handlers. Can we do it in the next patch?",
+      "parentUuid": "88a20e56_93293f17",
       "revId": "d9e8576141858402fb1f88d312c2af698a0695e9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
