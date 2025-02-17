@@ -1,0 +1,232 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9821d91_110e6539",
+        "filename": "src/dawn/dawn_wire.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:27:40Z",
+      "side": 1,
+      "message": "Ah it\u0027s mildly annoying that we need three times the same command, almost.",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbd840cc_00eb269d",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:27:40Z",
+      "side": 1,
+      "message": "This is no longer used and can be removed.",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2cd90f0_5a0eb480",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:27:40Z",
+      "side": 1,
+      "message": "nit `byteOffset`, or IMHO just `offset` and we can change it in dawn.json as well",
+      "range": {
+        "startLine": 119,
+        "startChar": 55,
+        "endLine": 119,
+        "endChar": 84
+      },
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b063d7df_267196f6",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:27:40Z",
+      "side": 1,
+      "message": "Let\u0027s split the checks to make the message more clear. It should be just as fast in the success case. Also in the error messages we put the actual values of variables inside parenthesis. Finally the name of the function is already added to the context in [1] so we can remove it.\n\nOne of the error messages would be: \"offset (%u) is not a multiple of 4.\"",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3819ce2d_70a75000",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:27:40Z",
+      "side": 1,
+      "message": "```suggestion\n                    offset \u003e maxImmediateDataRangeByteSize ||\n                        size \u003e maxImmediateDataRangeByteSize - offset,\n                    \"offset (%u) + size: (%u) is larger than  maxImmediateDataRangeByteSize (%u).\"\n```",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 1
+      },
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6293bb1_72bfd585",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:27:40Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b51905ac_9cfa17c3",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:27:40Z",
+      "side": 1,
+      "message": "nit: unused for now.",
+      "fixSuggestions": [
+        {
+          "fixId": "566d5ce3_45521977",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+              "range": {
+                "startLine": 35,
+                "startChar": 0,
+                "endLine": 36,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "222509e7_5e594c09",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:27:40Z",
+      "side": 1,
+      "message": "That should always be ok if the `ChromiumExperimentalImmediateData` extension is present.",
+      "fixSuggestions": [
+        {
+          "fixId": "b109d701_762b33bf",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+              "range": {
+                "startLine": 115,
+                "startChar": 0,
+                "endLine": 116,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+              "range": {
+                "startLine": 153,
+                "startChar": 0,
+                "endLine": 154,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a5b9194_e472438e",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:27:40Z",
+      "side": 1,
+      "message": "When testing non-alignment validation, we need to test at least a success case that\u0027s exactly the required alignment (so 4 in this case, 0 is not enough because it is aligned to everything), and error case that\u0027s for the next smaller power of two, so 2 in this case. (no need to use sizeof since the spec will directly spell out 4, the literal 2 is fine)",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "025e7702_1d5d5ec6",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:27:40Z",
+      "side": 1,
+      "message": "The success cases need to be both for size and offset at the limit to test the condition correctly. So both (0, max) and (max, 0), and maybe (max - 4, 4) Error cases are good though.",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
