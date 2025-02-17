@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a0303e8_4fc4e1f9",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-02-17T16:55:03Z",
+      "side": 1,
+      "message": "It sounds like we need to merge all of this to \"properties\" above?\nOld code didn\u0027t use reclient for MSVC, but if we\u0027re going to use Siso for MSVC, then there should be no difference between the builders?",
+      "range": {
+        "startLine": 381,
+        "startChar": 0,
+        "endLine": 390,
+        "endChar": 0
+      },
+      "revId": "00a321ac4b091092dac7d92372da3618c4f61a22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
