@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8822f9d_fd023e66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-02-17T09:06:17Z",
+      "side": 1,
+      "message": "This is only meant for `SharedTextureMemoryD3D11Texture2D` where the ID3D11Texture2D is imported into Dawn unlike `SharedTextureMemoryDXGISharedHandle`.\nThat  ID3D11Texture2D is only used by single D3D device. It makes no sense to use fences. Note: even if you deferred contexts, fences are also useless. Fences cannot be used by deferred contexts anw. Deferred contexts has to be inserted to the main context\u0027s stream. Hence Begin/EndAccess makes no sense for `SharedTextureMemoryD3D11Texture2D` and it makes it unnecessariyl complicated to book keeping the accesses.\n\nWe are planning to make small optimization for `SharedTextureMemoryD3D11Texture2D` in chrome. fine-grained Begin/EndAccess is still used for `SharedTextureMemoryDXGISharedHandle`",
+      "parentUuid": "264834b4_44312220",
+      "revId": "f263ec69dbf4414a971071a6efa3aeff5106f9c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c16deca0_480814e8",
