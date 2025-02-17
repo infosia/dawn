@@ -59,22 +59,28 @@
       "submitRequirement": {
         "name": "Code-Review",
         "description": {
-          "value": "At least one maximum vote for label \u0027Code-Review\u0027 is required"
+          "value": "If the author is a Dawn committer, code review is required from one other committer (see https://dawn.googlesource.com/dawn/+/HEAD/docs/becoming-committer.md). Otherwise, code review is required from two committers."
         },
-        "applicabilityExpression": {},
+        "applicabilityExpression": {
+          "value": {
+            "expressionString": "-branch:refs/meta/config"
+          }
+        },
         "submittabilityExpression": {
-          "expressionString": "label:Code-Review\u003dMAX,user\u003dnon_uploader AND -label:Code-Review\u003dMIN"
+          "expressionString": "((uploaderin:cria/project-dawn-committers AND label:Code-Review\u003dMAX,user\u003dnon_uploader) OR label:Code-Review\u003dMAX,count\u003e\u003d2) AND -label:Code-Review\u003dMIN"
         },
         "overrideExpression": {
           "value": {
             "expressionString": "label:Bot-Commit\u003d+1 AND -label:Code-Review\u003dMIN"
           }
         },
-        "allowOverrideInChildProjects": true
+        "allowOverrideInChildProjects": false
       },
-      "applicabilityExpressionResult": {},
+      "applicabilityExpressionResult": {
+        "value": {"expression":{"expressionString":"-branch:refs/meta/config"},"status":"PASS","errorMessage":{"value":null},"passingAtoms":[],"failingAtoms":["branch:refs/meta/config"]}
+      },
       "submittabilityExpressionResult": {
-        "value": {"expression":{"expressionString":"label:Code-Review=MAX,user=non_uploader AND -label:Code-Review=MIN"},"status":"FAIL","errorMessage":{"value":null},"passingAtoms":[],"failingAtoms":["label:Code-Review=MAX,user=non_uploader","label:Code-Review=MIN"]}
+        "value": {"expression":{"expressionString":"((uploaderin:cria/project-dawn-committers AND label:Code-Review=MAX,user=non_uploader) OR label:Code-Review=MAX,count>=2) AND -label:Code-Review=MIN"},"status":"FAIL","errorMessage":{"value":null},"passingAtoms":["uploaderin:cria/project-dawn-committers"],"failingAtoms":["label:Code-Review=MIN","label:Code-Review=MAX,user=non_uploader","label:Code-Review=MAX,count>=2"]}
       },
       "overrideExpressionResult": {
         "value": {"expression":{"expressionString":"label:Bot-Commit=+1 AND -label:Code-Review=MIN"},"status":"FAIL","errorMessage":{"value":null},"passingAtoms":[],"failingAtoms":["label:Bot-Commit=+1","label:Code-Review=MIN"]}
@@ -90,7 +96,7 @@
       "submitRequirement": {
         "name": "No-Unresolved-Comments",
         "description": {
-          "value": "Changes that have unresolved comments are not submittable. Unless overridden with Unresolved-Comment-Reason: \u003creason\u003e line in change message."
+          "value": "Changes that have unresolved comments are not submittable. Unless overridden with \"Unresolved-Comment-Reason: \u003creason\u003e\" line in change message."
         },
         "applicabilityExpression": {
           "value": {
