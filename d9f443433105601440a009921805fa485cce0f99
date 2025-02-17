@@ -51,6 +51,24 @@
       "parentUuid": "90054042_3729617a",
       "revId": "d9f443433105601440a009921805fa485cce0f99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b631931_7371387a",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-17T13:01:59Z",
+      "side": 1,
+      "message": "Here my code is also incorrect and I should fix it later - I should create empty BGLs with the given compatibility token for null bind group slots in PipelineLayoutBase::CreateDefault().",
+      "parentUuid": "0629aa7c_873eb041",
+      "revId": "d9f443433105601440a009921805fa485cce0f99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
