@@ -33,6 +33,24 @@
       "message": "Hey Zhaoming, thanks for the changes! I have some limit changes in flight to catch up the upstream headers here: https://dawn-review.googlesource.com/c/dawn/+/225294 that I am hoping to land soon-ish, but am waiting on some rolls for all our dependencies to include changes I sent out with the ifdef. Would it be possible to rebase off of that change? (Otherwise, these changes will need to be updated again once that lands and/or I will need to update those changes)\n\nAlso, I\u0027m thinking that maybe we should have an internal non-API function on the `AdapterBase` to get a const reference to a `Limit` struct for the error messages? Calling `APIGetLimits` everytime everywhere seems a bit wasteful, and if we have that on the `AdapterBase`, the macro can actually just expect the `Limit` struct directly instead of needing to get it.",
       "revId": "145e0f974b877b0157e32ec3b983ee074a401937",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1228573_d4c7dd2e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-17T07:11:42Z",
+      "side": 1,
+      "message": "Thanks for reviewing, please let me know when your CL is ready!\n\n\u003e maybe we should have an internal non-API function on the AdapterBase to get a const reference to a Limit struct\n\nCurrently we only store the `CombinedLimits` (including `Limits v1` member together with others) within `PhysicalDevice`, so in the `AdapterBase::APIGetLimits` we actually call `mPhysicalDevice-\u003eGetLimits()` to get a const ref to that multiple times.\n\nThe problem I concern is that adapter might modify the limit values (namely `ApplyLimitTiers`) based on adapter options (`mUseTieredLimits`)([1]). As a result `APIGetLimits` may result in different adapters sharing the same physical device and get the same cont ref when calling `mPhysicalDevice-\u003eGetLimits()`.\n\nIn this case if we want a internal non-API function `AdapterBase::GetLimits()` to return the limit values for a adapter (and the API function can become its wrapper), I think we have to either: \n1) Store a normalized `CombinedLimits` within each adapter, and we can retrun the const reference of it by `const CombinedLimits\u0026 AdapterBase::GetLimits() const`, but at the cost of larger `AdapterBase` objects. Or, \n2) Just do the necessary normalization work every time we call `CombinedLimits AdapterBase::GetLimits() const` and return the new created `CombinedLimits` object instead of a reference, the overhead would be close to calling `APIGetLimits` although we don\u0027t need to construct a input or check result success.\n\n[1]:https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Adapter.cpp;l\u003d99",
+      "parentUuid": "2a7dd879_c1ea3bf8",
+      "revId": "145e0f974b877b0157e32ec3b983ee074a401937",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
