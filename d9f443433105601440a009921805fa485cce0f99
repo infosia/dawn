@@ -33,6 +33,24 @@
       "message": "Maybe we could move this defaulting at the BGL creation at [1] to avoid the check in hotter parts of the code.",
       "revId": "d9f443433105601440a009921805fa485cce0f99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0629aa7c_873eb041",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-17T11:13:07Z",
+      "side": 1,
+      "message": "Oh we cannot use GetDevice()-\u003eGetEmptyBindGroupLayout() in [1] as the compatibility token for GetDevice()-\u003eGetEmptyBindGroupLayout() is 0 while in [1] the bind group layout created with \u0027auto\u0027 pipeline layout should always have a non-zero compatibility token.",
+      "parentUuid": "90054042_3729617a",
+      "revId": "d9f443433105601440a009921805fa485cce0f99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
