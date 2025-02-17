@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "264834b4_44312220",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T08:58:17Z",
+      "side": 1,
+      "message": "Do you have a reference for the decision to keep the STM open all the time on D3D11 for Graphit? Do we have a conclusive resolution that it is the only way to minimize submits? It might happen to work on this exact configuration but in all the other backends it would cause a bunch of issues. When/if we switch to D3D11 Deferred contexts for multi threading it will also stop working etc.\n\nAlso exposing a \"public\", backend-agnostic API to set the initialized state of any texture makes it seem like this will always be supported and safe to call, when it isn\u0027t (some backends have it semi-tied to the barrier state).",
+      "revId": "f263ec69dbf4414a971071a6efa3aeff5106f9c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c16deca0_480814e8",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T08:58:17Z",
+      "side": 1,
+      "message": "Note: we should remove this API usage in Chromium and use `SharedTextureMemoryEndAccessState::initialized`.",
+      "revId": "f263ec69dbf4414a971071a6efa3aeff5106f9c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
