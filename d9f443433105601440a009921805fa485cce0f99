@@ -69,6 +69,24 @@
       "parentUuid": "0629aa7c_873eb041",
       "revId": "d9f443433105601440a009921805fa485cce0f99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "958fe6e7_aa4e7fef",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T13:51:19Z",
+      "side": 1,
+      "message": "Ah makes sense. We can fix both at the same time then!",
+      "parentUuid": "5b631931_7371387a",
+      "revId": "d9f443433105601440a009921805fa485cce0f99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
