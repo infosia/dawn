@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "969a42a5_c05d15d4",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T08:03:57Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "d9f443433105601440a009921805fa485cce0f99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90054042_3729617a",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T08:03:57Z",
+      "side": 1,
+      "message": "Maybe we could move this defaulting at the BGL creation at [1] to avoid the check in hotter parts of the code.",
+      "revId": "d9f443433105601440a009921805fa485cce0f99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
