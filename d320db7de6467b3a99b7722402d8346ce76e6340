@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2c0604a_fced6cf3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-02-17T18:54:50Z",
+      "side": 1,
+      "message": "Looks like there was no need to revert this.\nThe original change https://dawn-review.googlesource.com/c/dawn/+/225475 first ran in\nhttps://ci.chromium.org/ui/p/chromium/builders/ci/Dawn%20Android%20arm64%20Release%20(Pixel%206)/16051/blamelist without any issues.\n\nFailures started in https://ci.chromium.org/ui/p/chromium/builders/ci/Dawn%20Android%20arm64%20Release%20(Pixel%206)/16104/overview in a different test suite, webgpu_cts_compat_min_es31_tests and this was fixed by removing it in https://chromium-review.googlesource.com/c/chromium/src/+/6264365.\n\nNot a big deal, I can just run UPF again.\nWas confirming that UPF works correctly.",
+      "revId": "d320db7de6467b3a99b7722402d8346ce76e6340",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
