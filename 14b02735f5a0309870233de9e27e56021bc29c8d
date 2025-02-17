@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ac2c324_c4419bd7",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:55:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fb7d0d82_971ddc02",
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dff51140_84abfb73",
@@ -231,6 +249,24 @@
       "side": 1,
       "message": "I randomly added NSRefs I have no idea about NSRef, when it\u0027s needed, when it isn\u0027t. I\u0027d think that objective-c (.mm) files would handle that kind of stuff, no?\n\nIn any case, PTAL. or tell me how to test.",
       "parentUuid": "d63920c1_44e84c5e",
+      "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6254eb9_fadd5509",
+        "filename": "src/dawn/native/metal/DeviceMTL.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:55:20Z",
+      "side": 1,
+      "message": "With the ARC (Automatic Ref Counting) ObjC feature enabled we don\u0027t need the refs, but Dawn doesn\u0027t enable it at the moment (and IDK if we will at some point)",
+      "parentUuid": "50e635d7_a9f862ec",
       "revId": "14b02735f5a0309870233de9e27e56021bc29c8d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
