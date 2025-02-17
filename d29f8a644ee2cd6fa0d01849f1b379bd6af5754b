@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfa5fe8c_e15eb5e7",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:03:10Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "d29f8a644ee2cd6fa0d01849f1b379bd6af5754b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a4e42ee_66d74406",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T09:03:10Z",
+      "side": 1,
+      "message": "Could we have this test split to its own test to make it more standalone instead of in the middle of something more complicated? You can copy paste [1].",
+      "revId": "d29f8a644ee2cd6fa0d01849f1b379bd6af5754b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
