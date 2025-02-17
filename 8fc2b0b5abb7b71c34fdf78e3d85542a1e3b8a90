@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8e0e60bb_490b9f2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-17T14:49:46Z",
+      "side": 1,
+      "message": "Ah thanks, that makes sense, and we can\u0027t really make the recursion into a loop because we need to deserialize the rest of the extensible structure as well.\n\nHowever the problem seems to be caused by the fact that the support for chained structs in the wire can handle any chained struct in any extension chain. However we now have info about what can be chained where with the \"chain roots\", and can force a validation error on the server when the client sees an unexpected sType (with `DawnWireInvalidExtension`). So WDYT of making wire code for each extension struct handle only what we know it is a chained struct for? I don\u0027t see a case today or in the future where this more precise recursion could stack overflow.\n\n(only maybe on the client if in the future we add S-\u003eC WGSL reflection maybe?)",
+      "parentUuid": "9f096b66_ce06a81a",
+      "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "46c8ba44_9d16c50e",
         "filename": "generator/templates/dawn/native/ChainUtils.cpp",
         "patchSetId": 1
