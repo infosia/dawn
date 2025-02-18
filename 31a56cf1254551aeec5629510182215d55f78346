@@ -16,6 +16,80 @@
       "message": "PTAL, thanks!",
       "revId": "31a56cf1254551aeec5629510182215d55f78346",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d734885_208bb01b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-18T09:35:41Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "31a56cf1254551aeec5629510182215d55f78346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad4b956c_605a3697",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-18T09:35:41Z",
+      "side": 1,
+      "message": "Maybe comment here that the spec says that unspecified or null BGLs are set to the empty one since it is the first place we handle this logic.",
+      "revId": "31a56cf1254551aeec5629510182215d55f78346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "441355b5_d8cd1ecb",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-18T09:35:41Z",
+      "side": 1,
+      "message": "It was a bit difficult to follow what\u0027s happening here. What about:\n\n```\n// Keep the default empty BGL for nullptr BGLs\nif (bgl \u003d\u003d nullptr) {\n  continue;\n}\n\n// Set the BGL even if it is empty, to copy over empty BGLs that have a pipeline compatibility token.\nmBindGroupLayouts[group] \u003d bgl;\nmMask.set(group, !bgl-\u003eIsEmpty());\n```",
+      "revId": "31a56cf1254551aeec5629510182215d55f78346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c103bd7a_17625931",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-18T09:35:41Z",
+      "side": 1,
+      "message": "```suggestion\n        AccumulateBindingCounts(\n            \u0026bindingCounts, mBindGroupLayouts[i]-\u003eGetInternalBindGroupLayout()-\u003eGetBindingCountInfo());\n    }\n```\n\nor did I miss something?",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 178,
+        "endChar": 1
+      },
+      "revId": "31a56cf1254551aeec5629510182215d55f78346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
