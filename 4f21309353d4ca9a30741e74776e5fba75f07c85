@@ -16,6 +16,23 @@
       "message": "Please take a look, thanks!",
       "revId": "4f21309353d4ca9a30741e74776e5fba75f07c85",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfcc99a4_5b63743a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-18T07:02:13Z",
+      "side": 1,
+      "message": "This CL should wait for Loko\u0027s CL https://dawn-review.googlesource.com/c/dawn/+/225294.",
+      "revId": "4f21309353d4ca9a30741e74776e5fba75f07c85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
