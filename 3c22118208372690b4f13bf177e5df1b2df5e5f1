@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8439ac2_827e3d98",
+        "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-18T20:22:41Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m wondering whether we should still keep these limits as `Unkeyed`... Maybe they aren\u0027t `Unsafe`, but I think we don\u0027t actually want them in the `Key` since they are only really used for error messages.\n\nIt might also be better to use `const LimitsForCompilationRequest*` here so (1) we can defer initialization in the struct, and (2) we don\u0027t make a copy of it unnecessarily.",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "3c22118208372690b4f13bf177e5df1b2df5e5f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
