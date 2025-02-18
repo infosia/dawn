@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1da9f9b2_4ce33850",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-18T03:15:34Z",
+      "side": 1,
+      "message": "I can fix this in two ways that I can think of.\n\n1. I can disallow duplicate blocks, so if we emit it twice that\u0027s an error.\n\n2. I can `Replace` the value in the hash map, so the second emission of that %2 ends up storing correctly and the example works:\n\n```\n%main \u003d @compute @workgroup_size(1u, 1u, 1u) func():void {\n  $B1: {\n    %2:i32 \u003d let 1i\n    if true [t: $B2, f: $B3] {  # if_1\n      $B2: {  # true\n        %3:i32 \u003d let 2i\n        %4:i32 \u003d let %3\n        ret\n      }\n      $B3: {  # false\n        %5:i32 \u003d let 2i\n        %6:i32 \u003d let %5\n        ret\n      }\n    }\n    unreachable\n  }\n}\n```\n\nbut, I\"m not sure if that solution has other issues with block ordering, hoisting and dominance.",
+      "parentUuid": "24f72040_d62ddc78",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "db986c5a_f8fd468a",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
