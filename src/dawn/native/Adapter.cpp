@@ -62,12 +62,16 @@ AdapterBase::AdapterBase(InstanceBase* instance,
     // Cache the supported features of this adapter. Note that with device toggles overriding, a
     // device created by this adapter may support features not in this set and vice versa.
     mSupportedFeatures = mPhysicalDevice->GetSupportedFeatures(mTogglesState);
+    // Cache the limits of this adapter. UpdateLimits should be called when the adapter's
+    // limits-related status changes, e.g. SetUseTieredLimits.
+    UpdateLimits();
 }
 
 AdapterBase::~AdapterBase() = default;
 
 void AdapterBase::SetUseTieredLimits(bool useTieredLimits) {
     mUseTieredLimits = useTieredLimits;
+    UpdateLimits();
 }
 
 PhysicalDeviceBase* AdapterBase::GetPhysicalDevice() {
@@ -89,6 +93,27 @@ InstanceBase* AdapterBase::APIGetInstance() const {
     return instance;
 }
 
+void AdapterBase::UpdateLimits() {
+    mLimits = mPhysicalDevice->GetLimits();
+
+    // Apply the tiered limits if needed.
+    if (mUseTieredLimits) {
+        mLimits.v1 = ApplyLimitTiers(mLimits.v1);
+    }
+
+    // TODO(crbug.com/382520104): Remove DawnExperimentalSubgroupLimits.
+    // Apply the D3D12RelaxMinSubgroupSizeTo8 toggle if enabled.
+    if (mPhysicalDevice->GetBackendType() == wgpu::BackendType::D3D12 &&
+        mTogglesState.IsEnabled(Toggle::D3D12RelaxMinSubgroupSizeTo8)) {
+        mLimits.experimentalSubgroupLimits.minSubgroupSize =
+            std::max(8u, mLimits.experimentalSubgroupLimits.minSubgroupSize);
+    }
+}
+
+const CombinedLimits& AdapterBase::GetLimits() const {
+    return mLimits;
+}
+
 wgpu::Status AdapterBase::APIGetLimits(SupportedLimits* limits) const {
     DAWN_ASSERT(limits != nullptr);
     UnpackedPtr<SupportedLimits> unpacked;
@@ -96,11 +121,7 @@ wgpu::Status AdapterBase::APIGetLimits(SupportedLimits* limits) const {
         return wgpu::Status::Error;
     }
 
-    if (mUseTieredLimits) {
-        limits->limits = ApplyLimitTiers(mPhysicalDevice->GetLimits().v1);
-    } else {
-        limits->limits = mPhysicalDevice->GetLimits().v1;
-    }
+    limits->limits = mLimits.v1;
 
     // TODO(crbug.com/382520104): Remove DawnExperimentalSubgroupLimits.
     if (auto* subgroupLimits = unpacked.Get<DawnExperimentalSubgroupLimits>()) {
@@ -115,12 +136,7 @@ wgpu::Status AdapterBase::APIGetLimits(SupportedLimits* limits) const {
             *subgroupLimits = DawnExperimentalSubgroupLimits{};
         } else {
             // If adapter supports subgroups features, always return the valid subgroup limits.
-            *subgroupLimits = mPhysicalDevice->GetLimits().experimentalSubgroupLimits;
-            if (mPhysicalDevice->GetBackendType() == wgpu::BackendType::D3D12 &&
-                mTogglesState.IsEnabled(Toggle::D3D12RelaxMinSubgroupSizeTo8)) {
-                subgroupLimits->minSubgroupSize =
-                    subgroupLimits->minSubgroupSize > 8 ? 8 : subgroupLimits->minSubgroupSize;
-            }
+            *subgroupLimits = mLimits.experimentalSubgroupLimits;
         }
 
         // Recover origin chain.
@@ -137,7 +153,7 @@ wgpu::Status AdapterBase::APIGetLimits(SupportedLimits* limits) const {
         } else {
             // If adapter supports immediate data features, always return the valid immediate data
             // limits.
-            *immediateDataLimits = mPhysicalDevice->GetLimits().experimentalImmediateDataLimits;
+            *immediateDataLimits = mLimits.experimentalImmediateDataLimits;
         }
 
         // Recover origin chain.
@@ -152,8 +168,7 @@ wgpu::Status AdapterBase::APIGetLimits(SupportedLimits* limits) const {
             // to WGPU_LIMIT_U32_UNDEFINED.
             *texelCopyBufferRowAlignmentLimits = DawnTexelCopyBufferRowAlignmentLimits{};
         } else {
-            *texelCopyBufferRowAlignmentLimits =
-                mPhysicalDevice->GetLimits().texelCopyBufferRowAlignmentLimits;
+            *texelCopyBufferRowAlignmentLimits = mLimits.texelCopyBufferRowAlignmentLimits;
         }
 
         // Recover origin chain.
