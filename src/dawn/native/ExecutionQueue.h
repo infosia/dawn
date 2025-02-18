@@ -63,6 +63,9 @@ class ExecutionQueueBase {
     // Ensures that all commands which were recorded are flushed upto the given serial.
     MaybeError EnsureCommandsFlushed(ExecutionSerial serial);
 
+    // Submit any pending commands that are enqueued.
+    MaybeError SubmitPendingCommands();
+
     // During shut down of device, some operations might have been started since the last submit
     // and waiting on a serial that doesn't have a corresponding fence enqueued. Fake serials to
     // make all commands look completed.
@@ -86,6 +89,12 @@ class ExecutionQueueBase {
     // example, until the client has explictly issued a submission.
     enum class SubmitMode { Normal, Passive };
 
+  protected:
+    // Tracks whether we are in a submit to avoid submit reentrancy.
+    // TODO(42240396): Move all handling of Submit(command buffers) in this class as well, at which
+    // point this member can be private.
+    bool mInSubmit = false;
+
   private:
     // Each backend should implement to check their passed fences if there are any and return a
     // completed serial. Return 0 should indicate no fences to check.
@@ -101,7 +110,7 @@ class ExecutionQueueBase {
     virtual bool HasPendingCommands() const = 0;
 
     // Submit any pending commands that are enqueued.
-    virtual MaybeError SubmitPendingCommands() = 0;
+    virtual MaybeError SubmitPendingCommandsImpl() = 0;
 };
 
 }  // namespace dawn::native
