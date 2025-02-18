@@ -52,6 +52,24 @@
       "parentUuid": "ab7883a7_cc912ab8",
       "revId": "a3ffac94ffc234181d5b27087c9ec6c824bb5ee7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2b91968_61fb0a2f",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-18T20:41:29Z",
+      "side": 1,
+      "message": "I mean the test is incorrect as the override is signed and it should not be passed in as a signed value.\n\nBut yes there is room for an additional error check in substitute overrides",
+      "parentUuid": "e1d81ddc_3beb1268",
+      "revId": "a3ffac94ffc234181d5b27087c9ec6c824bb5ee7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
