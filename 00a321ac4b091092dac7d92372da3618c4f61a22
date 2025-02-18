@@ -22,6 +22,30 @@
       },
       "revId": "00a321ac4b091092dac7d92372da3618c4f61a22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3120af6_10fb8c5a",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1003366
+      },
+      "writtenOn": "2025-02-18T00:49:13Z",
+      "side": 1,
+      "message": "Using Siso doesn\u0027t mean using remote execution. `$build/reclient` and `remote_jobs` in `$build/siso` is necessary only when remote execution is used. \nNote that I will remove `$build/reclient` once the dawn builders migrates to Siso. (IIUC, that\u0027s the goal.)",
+      "parentUuid": "7a0303e8_4fc4e1f9",
+      "range": {
+        "startLine": 381,
+        "startChar": 0,
+        "endLine": 390,
+        "endChar": 0
+      },
+      "revId": "00a321ac4b091092dac7d92372da3618c4f61a22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
