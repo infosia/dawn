@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e059f8c_10104dee",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-18T14:17:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db986c5a_f8fd468a",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d3a0963_03848d07",
@@ -196,6 +214,30 @@
       "side": 1,
       "message": "Right, I removed the root block from the stack, but forgot to update the comment. Will fix.",
       "parentUuid": "5c4f8b66_c364b03c",
+      "range": {
+        "startLine": 449,
+        "startChar": 0,
+        "endLine": 451,
+        "endChar": 54
+      },
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da3b49fa_bb6a01aa",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-18T14:17:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb01ee73_507ef279",
       "range": {
         "startLine": 449,
         "startChar": 0,
