@@ -88,6 +88,24 @@
       "parentUuid": "d2b91968_61fb0a2f",
       "revId": "a3ffac94ffc234181d5b27087c9ec6c824bb5ee7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0acd29d8_76899af7",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-18T20:50:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ba4df1a3_693c227a",
+      "revId": "a3ffac94ffc234181d5b27087c9ec6c824bb5ee7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
