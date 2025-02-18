@@ -33,6 +33,7 @@
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/core_builtin_call.h"
 #include "src/tint/lang/core/ir/load.h"
+#include "src/tint/lang/core/ir/transform/remove_terminator_args.h"
 #include "src/tint/lang/core/ir/transform/rename_conflicts.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/wgsl/builtin_fn.h"
@@ -280,7 +281,9 @@ Result<SuccessType> Raise(core::ir::Module& mod) {
     if (auto result = raise::PtrToRef(mod); result != Success) {
         return result.Failure();
     }
-
+    if (auto result = core::ir::transform::RemoveTerminatorArgs(mod); result != Success) {
+        return result.Failure();
+    }
     return Success;
 }
 
