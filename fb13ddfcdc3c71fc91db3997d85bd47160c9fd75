@@ -33,6 +33,24 @@
       "message": "```suggestion\n                    \"offset (%u) + size: (%u) is larger than maxImmediateDataRangeByteSize (%u).\",\n```",
       "revId": "fb13ddfcdc3c71fc91db3997d85bd47160c9fd75",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b51013b_cf9aeb87",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-18T10:18:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1935139_ce611ec2",
+      "revId": "fb13ddfcdc3c71fc91db3997d85bd47160c9fd75",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
