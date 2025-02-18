@@ -494,6 +494,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (mDeviceInfo.HasExt(DeviceExt::ImageDrmFormatModifier)) {
         EnableFeature(Feature::DawnDrmFormatCapabilities);
     }
+
+    EnableFeature(Feature::ChromiumExperimentalImmediateData);
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
@@ -691,6 +693,13 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
     limits->experimentalSubgroupLimits.maxSubgroupSize =
         mDeviceInfo.subgroupSizeControlProperties.maxSubgroupSize;
 
+    // Require more than 16 byte maxPushConstantsSize in vulkan device to support
+    // customer immediate datas.
+    if (vkLimits.maxPushConstantsSize > 16) {
+        limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize = 16;
+    } else {
+        limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize = 0;
+    }
     return {};
 }
 
