@@ -270,6 +270,24 @@
       "parentUuid": "446d240a_e92bf8b3",
       "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4890a79_919bc9cd",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-18T01:55:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "dc29c3cb_cc1eab90",
+      "revId": "3f8b8be9f1682bba3c4dd24dcea14572b70724de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
