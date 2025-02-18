@@ -108,6 +108,8 @@ void AdapterBase::UpdateLimits() {
         mLimits.experimentalSubgroupLimits.minSubgroupSize =
             std::max(8u, mLimits.experimentalSubgroupLimits.minSubgroupSize);
     }
+
+    NormalizeExperimentalLimits(&mLimits);
 }
 
 const CombinedLimits& AdapterBase::GetLimits() const {
