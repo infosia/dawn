@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eeb7f747_56c59552",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-18T16:19:29Z",
+      "side": 1,
+      "message": "Here\u0027s the case with two blocks branching to the same pre-merge block:\n```\n               OpCapability Shader\n               OpMemoryModel Logical GLSL450\n               OpEntryPoint GLCompute %main \"main\"\n               OpExecutionMode %main LocalSize 1 1 1\n       %void \u003d OpTypeVoid\n        %i32 \u003d OpTypeInt 32 1\n       %bool \u003d OpTypeBool\n        %one \u003d OpConstant %i32 1\n       %true \u003d OpConstantTrue %bool\n    %ep_type \u003d OpTypeFunction %void\n       %main \u003d OpFunction %void None %ep_type\n %main_start \u003d OpLabel\n               OpSelectionMerge %merge None\n               OpBranchConditional %true %bb_true %bb_false\n    %bb_true \u003d OpLabel\n               OpBranch %premerge\n   %bb_false \u003d OpLabel\n               OpBranch %premerge\n   %premerge \u003d OpLabel\n          %1 \u003d OpCopyObject %i32 %one\n         %1_ \u003d OpCopyObject %i32 %1\n               OpBranch %merge\n      %merge \u003d OpLabel\n               OpReturn\n               OpFunctionEnd\n```\n\nThe AST SPIR-V reader generates this:\n```\nfn main_1() {\n  if (true) {\n  }\n  if (true) {\n    let x_1 \u003d 1i;\n    let x_16 \u003d x_1;\n  }\n  return;\n}\n```",
+      "parentUuid": "1da9f9b2_4ce33850",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "db986c5a_f8fd468a",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
