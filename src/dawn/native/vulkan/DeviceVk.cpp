@@ -125,6 +125,19 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
 
         DAWN_TRY(functions->LoadDeviceProcs(mVkDevice, mDeviceInfo));
 
+        // TODO(crbug.com/397448368): This should be queried in LoadDeviceProcs() instead, but Mali
+        // drivers seem to only provide a non-null function pointer via the instance query.
+        if (mDeviceInfo.HasExt(DeviceExt::CooperativeMatrix)) {
+            functions->GetPhysicalDeviceCooperativeMatrixPropertiesKHR =
+                reinterpret_cast<PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR>(
+                    functions->GetInstanceProcAddr(
+                        GetVkInstance(), "vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR"));
+            if (functions->GetPhysicalDeviceCooperativeMatrixPropertiesKHR == nullptr) {
+                return DAWN_INTERNAL_ERROR(std::string(
+                    "Couldn't get proc vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR"));
+            }
+        }
+
         mDeleter = std::make_unique<MutexProtected<FencedDeleter>>(this);
     }
 

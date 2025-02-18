@@ -420,10 +420,6 @@ MaybeError VulkanFunctions::LoadDeviceProcs(VkDevice device, const VulkanDeviceI
     }
 #endif  // DAWN_PLATFORM_IS(ANDROID)
 
-    if (deviceInfo.HasExt(DeviceExt::CooperativeMatrix)) {
-        GET_DEVICE_PROC(GetPhysicalDeviceCooperativeMatrixPropertiesKHR);
-    }
-
     return {};
 }
 
