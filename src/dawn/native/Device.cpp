@@ -2327,19 +2327,6 @@ uint64_t DeviceBase::GetBufferCopyOffsetAlignmentForDepthStencil() const {
     return 4u;
 }
 
-MaybeError DeviceBase::CopyFromStagingToBuffer(BufferBase* source,
-                                               uint64_t sourceOffset,
-                                               BufferBase* destination,
-                                               uint64_t destinationOffset,
-                                               uint64_t size) {
-    DAWN_TRY(
-        CopyFromStagingToBufferImpl(source, sourceOffset, destination, destinationOffset, size));
-    if (GetDynamicUploader()->ShouldFlush()) {
-        mQueue->ForceEventualFlushOfCommands();
-    }
-    return {};
-}
-
 MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
                                                 const TexelCopyBufferLayout& src,
                                                 const TextureCopy& dst,
@@ -2359,9 +2346,6 @@ MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
         DAWN_TRY(CopyFromStagingToTextureImpl(source, src, dst, copySizePixels));
     }
 
-    if (GetDynamicUploader()->ShouldFlush()) {
-        mQueue->ForceEventualFlushOfCommands();
-    }
     return {};
 }
 
