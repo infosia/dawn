@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ad62e3c_483c8aa3",
+        "filename": "src/dawn/dawn_wire.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-18T09:16:32Z",
+      "side": 1,
+      "message": "Yeah they cannot do that, and given that C doesn\u0027t have any notion of inheritance, I don\u0027t think we\u0027ll ever be able to fix it.",
+      "parentUuid": "1d7cbd3d_735feb6c",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbd840cc_00eb269d",
