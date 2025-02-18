@@ -23,6 +23,17 @@
 #include <utility>
 #include <vector>
 
+#ifndef NDEBUG
+#include <cstdio>
+#define DEBUG_LOG(s) fprintf(stderr, s)
+#else
+#define DEBUG_LOG(s)
+#endif
+
+#if !defined(ASYNCIFY) || !((ASYNCIFY) == 0 || (ASYNCIFY) == 1 || (ASYNCIFY) == 2)
+#    error "The ASYNCIFY macro must be set to 0, 1, or 2 (pass -DASYNCIFY=)"
+#endif
+
 using FutureID = uint64_t;
 static constexpr FutureID kNullFutureId = 0;
 using InstanceID = uint64_t;
@@ -35,11 +46,14 @@ extern "C" {
 void emwgpuDelete(void* ptr);
 void emwgpuSetLabel(void* ptr, const char* data, size_t length);
 
-// Note that for the JS entry points, we pass uint64_t as pointer and decode it
-// on the other side.
+// Note that for the JS entry points, we pass uint64_t as pointer and deref it
+// in JS on the other side.
+#if ASYNCIFY // TODO: Better way to detect this than for user to have to use add_compile_definitions?
 double emwgpuWaitAny(FutureID const* futurePtr,
                      size_t futureCount,
                      uint64_t const* timeoutNSPtr);
+#endif
+
 WGPUTextureFormat emwgpuGetPreferredFormat();
 
 // Device functions, i.e. creation functions to create JS backing objects given
@@ -376,6 +390,24 @@ class EventSource {
   const InstanceID mInstanceId = 0;
 };
 
+// Instance is specially implemented in order to handle Futures implementation.
+struct WGPUInstanceImpl final : public EventSource, public RefCounted {
+ public:
+  WGPUInstanceImpl(const WGPUInstanceDescriptor* desc);
+  ~WGPUInstanceImpl();
+
+  const WGPUInstanceCapabilities& GetCapabilities() { return capabilities; }
+  void ProcessEvents();
+  WGPUWaitStatus WaitAny(size_t count,
+                         WGPUFutureWaitInfo* infos,
+                         uint64_t timeoutNS);
+
+ private:
+  static InstanceID GetNextInstanceId();
+
+  WGPUInstanceCapabilities capabilities = {};
+};
+
 // Thread-safe EventManager class that tracks all events.
 //
 // Note that there is a single global EventManager that should be accessed via
@@ -454,11 +486,12 @@ class EventManager : NonMovable {
     }
   }
 
-  WGPUWaitStatus WaitAny(InstanceID instance,
+  WGPUWaitStatus WaitAny(WGPUInstance instance,
                          size_t count,
                          WGPUFutureWaitInfo* infos,
                          uint64_t timeoutNS) {
     assert(instance);
+    InstanceID instanceId = instance->GetInstanceId();
 
     if (count == 0) {
       return WGPUWaitStatus_Success;
@@ -466,53 +499,61 @@ class EventManager : NonMovable {
 
     // To handle timeouts, use Asyncify and proxy back into JS.
     if (timeoutNS > 0) {
-      // Cannot handle timeouts if we are not using Asyncify.
-      if (!emscripten_has_asyncify()) {
+      if (instance->GetCapabilities().timedWaitAnyEnable) {
+#if ASYNCIFY
+        std::vector<FutureID> futures;
+        std::unordered_map<FutureID, WGPUFutureWaitInfo*> futureIdToInfo;
+        for (size_t i = 0; i < count; ++i) {
+          futures.push_back(infos[i].future.id);
+          futureIdToInfo.emplace(infos[i].future.id, &infos[i]);
+        }
+
+        bool hasTimeout = timeoutNS != UINT64_MAX;
+        FutureID completedId = static_cast<FutureID>(emwgpuWaitAny(
+            futures.data(), count, hasTimeout ? &timeoutNS : nullptr));
+        if (completedId == kNullFutureId) {
+          return WGPUWaitStatus_TimedOut;
+        }
+        futureIdToInfo[completedId]->completed = true;
+
+        std::unique_ptr<TrackedEvent> completed;
+        {
+          std::unique_lock<std::mutex> lock(mMutex);
+          auto eventIt = mEvents.find(completedId);
+          if (eventIt == mEvents.end()) {
+            return WGPUWaitStatus_Success;
+          }
+
+          completed = std::move(eventIt->second);
+          mEvents.erase(eventIt);
+          if (auto instanceIt = mPerInstanceEvents.find(instance->GetInstanceId());
+              instanceIt != mPerInstanceEvents.end()) {
+            instanceIt->second.erase(completedId);
+          }
+        }
+
+        if (completed) {
+          completed->Complete(completedId, EventCompletionType::Ready);
+        }
+        return WGPUWaitStatus_Success;
+#else // ASYNCIFY
+        // Cannot handle timeouts if we are not using Asyncify.
+        // Should never happen because should wgpuCreateInstance should have disallowed it.
+        assert(false);
+        return WGPUWaitStatus_Error;
+#endif // ASYNCIFY
+      } else {
+        // Timed wait not valid unless enabled on the instance.
+        DEBUG_LOG("WaitAny timeout>0, but timedWaitAnyEnable not enabled at wgpuCreateInstance\n");
         return WGPUWaitStatus_Error;
       }
-
-      std::vector<FutureID> futures;
-      std::unordered_map<FutureID, WGPUFutureWaitInfo*> futureIdToInfo;
-      for (size_t i = 0; i < count; ++i) {
-        futures.push_back(infos[i].future.id);
-        futureIdToInfo.emplace(infos[i].future.id, &infos[i]);
-      }
-
-      bool hasTimeout = timeoutNS != UINT64_MAX;
-      FutureID completedId = static_cast<FutureID>(emwgpuWaitAny(
-          futures.data(), count, hasTimeout ? &timeoutNS : nullptr));
-      if (completedId == kNullFutureId) {
-        return WGPUWaitStatus_TimedOut;
-      }
-      futureIdToInfo[completedId]->completed = true;
-
-      std::unique_ptr<TrackedEvent> completed;
-      {
-        std::unique_lock<std::mutex> lock(mMutex);
-        auto eventIt = mEvents.find(completedId);
-        if (eventIt == mEvents.end()) {
-          return WGPUWaitStatus_Success;
-        }
-
-        completed = std::move(eventIt->second);
-        mEvents.erase(eventIt);
-        if (auto instanceIt = mPerInstanceEvents.find(instance);
-            instanceIt != mPerInstanceEvents.end()) {
-          instanceIt->second.erase(completedId);
-        }
-      }
-
-      if (completed) {
-        completed->Complete(completedId, EventCompletionType::Ready);
-      }
-      return WGPUWaitStatus_Success;
     }
 
     std::map<FutureID, std::unique_ptr<TrackedEvent>> completable;
     bool anyCompleted = false;
     {
       std::unique_lock<std::mutex> lock(mMutex);
-      auto instanceIt = mPerInstanceEvents.find(instance);
+      auto instanceIt = mPerInstanceEvents.find(instanceId);
       assert(instanceIt != mPerInstanceEvents.end());
       auto& instanceFutureIds = instanceIt->second;
 
@@ -525,7 +566,7 @@ class EventManager : NonMovable {
         }
 
         auto& event = eventIt->second;
-        assert(event->mInstanceId == instance);
+        assert(event->mInstanceId == instanceId);
         infos[i].completed = event->mIsReady;
         if (event->mIsReady) {
           anyCompleted = true;
@@ -702,21 +743,6 @@ struct WGPUDeviceImpl final : public EventSource,
   WGPUUncapturedErrorCallbackInfo mUncapturedErrorCallbackInfo =
       WGPU_UNCAPTURED_ERROR_CALLBACK_INFO_INIT;
   FutureID mDeviceLostFutureId = kNullFutureId;
-};
-
-// Instance is specially implemented in order to handle Futures implementation.
-struct WGPUInstanceImpl final : public EventSource, public RefCounted {
- public:
-  WGPUInstanceImpl();
-  ~WGPUInstanceImpl();
-
-  void ProcessEvents();
-  WGPUWaitStatus WaitAny(size_t count,
-                         WGPUFutureWaitInfo* infos,
-                         uint64_t timeoutNS);
-
- private:
-  static InstanceID GetNextInstanceId();
 };
 
 struct WGPUShaderModuleImpl final : public EventSource, public RefCounted {
@@ -1423,7 +1449,13 @@ void WGPUDeviceImpl::WillDropLastExternalRef() {
 // WGPUInstanceImpl implementations.
 // ----------------------------------------------------------------------------
 
-WGPUInstanceImpl::WGPUInstanceImpl() : EventSource(GetNextInstanceId()) {
+WGPUInstanceImpl::WGPUInstanceImpl(const WGPUInstanceDescriptor* desc) : EventSource(GetNextInstanceId()) {
+  if (desc) {
+    this->capabilities = desc->capabilities;
+    if (this->capabilities.timedWaitAnyMaxCount < 64) {
+      this->capabilities.timedWaitAnyMaxCount = 64;
+    }
+  }
   GetEventManager().RegisterInstance(GetInstanceId());
 }
 WGPUInstanceImpl::~WGPUInstanceImpl() {
@@ -1437,7 +1469,7 @@ void WGPUInstanceImpl::ProcessEvents() {
 WGPUWaitStatus WGPUInstanceImpl::WaitAny(size_t count,
                                          WGPUFutureWaitInfo* infos,
                                          uint64_t timeoutNS) {
-  return GetEventManager().WaitAny(GetInstanceId(), count, infos, timeoutNS);
+  return GetEventManager().WaitAny(this, count, infos, timeoutNS);
 }
 
 InstanceID WGPUInstanceImpl::GetNextInstanceId() {
@@ -1536,10 +1568,22 @@ void wgpuSurfaceCapabilitiesFreeMembers(WGPUSurfaceCapabilities) {
 // Standalone (non-method) functions
 // ----------------------------------------------------------------------------
 
+bool ValidateInstanceDescriptor(const WGPUInstanceDescriptor* descriptor) {
+  if (descriptor) {
+#if !ASYNCIFY
+    if (descriptor->capabilities.timedWaitAnyEnable) return false;
+#endif
+  }
+  return true;
+}
+
 WGPUInstance wgpuCreateInstance(
     [[maybe_unused]] const WGPUInstanceDescriptor* descriptor) {
-  // TODO: descriptor not implemented yet.
-  return new WGPUInstanceImpl();
+  if (!ValidateInstanceDescriptor(descriptor)) {
+    assert(false);
+    return nullptr;
+  }
+  return new WGPUInstanceImpl(descriptor);
 }
 
 // ----------------------------------------------------------------------------
@@ -1718,6 +1762,7 @@ WGPUFuture wgpuInstanceRequestAdapter(
     WGPUInstance instance,
     WGPURequestAdapterOptions const* options,
     WGPURequestAdapterCallbackInfo callbackInfo) {
+  assert(instance);
   auto [futureId, tracked] =
       GetEventManager().TrackEvent(std::make_unique<RequestAdapterEvent>(
           instance->GetInstanceId(), callbackInfo));

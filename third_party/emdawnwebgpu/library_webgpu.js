@@ -605,9 +605,10 @@ var LibraryWebGPU = {
   },
 
   // Returns a FutureID that was resolved, or kNullFutureId if timed out.
+  // Only defined for ASYNCIFY; otherwise webgpu.cpp doesn't use it.
+#if ASYNCIFY
   emwgpuWaitAny__i53abi: false,
   emwgpuWaitAny__sig: 'jppp',
-#if ASYNCIFY
   emwgpuWaitAny__async: true,
   emwgpuWaitAny: (futurePtr, futureCount, timeoutNSPtr) => Asyncify.handleAsync(async () => {
     var promises = [];
@@ -632,10 +633,6 @@ var LibraryWebGPU = {
     delete WebGPU.Internals.futures[firstResolvedFuture];
     return firstResolvedFuture;
   }),
-#else
-  emwgpuWaitAny: () => {
-    abort('TODO: Implement asyncify-free WaitAny for timeout=0');
-  },
 #endif
 
   emwgpuGetPreferredFormat__sig: 'i',
