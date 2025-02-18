@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6c62087_d68bca81",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-18T18:24:59Z",
+      "side": 1,
+      "message": "The map is `OverrideId, double` so -133 shouldn\u0027t be outside the range?",
+      "revId": "a3ffac94ffc234181d5b27087c9ec6c824bb5ee7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
