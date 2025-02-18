@@ -16,6 +16,24 @@
       "message": "The map is `OverrideId, double` so -133 shouldn\u0027t be outside the range?",
       "revId": "a3ffac94ffc234181d5b27087c9ec6c824bb5ee7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab7883a7_cc912ab8",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-18T19:29:52Z",
+      "side": 1,
+      "message": "The failure is here\n/b/s/w/ir/cache/uncached/dawn/src/tint/lang/core/number.h:163:49: runtime error: -133 is outside the range of representable values of type \u0027unsigned int\u0027\n    #0 0x5a0d986c617d in tint::core::ir::transform::(anonymous namespace)::State::Process() substitute_overrides.cc\n    \n    \nThis is not about the double here in source but the conversion later.\n    https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/core/number.h;l\u003d163?q\u003dtint%2Flang%2Fcore%2Fnumber.h:163",
+      "parentUuid": "c6c62087_d68bca81",
+      "revId": "a3ffac94ffc234181d5b27087c9ec6c824bb5ee7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
