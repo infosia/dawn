@@ -1444,6 +1444,14 @@ MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
                         "doesn't use a `pixel local` block.");
     }
 
+    // Validate that immediate data used by programmable state are smaller than pipelineLayout
+    // immediate data range bytes.
+    DAWN_INVALID_IF(entryPoint.immediateDataRangeByteSize > layout->GetImmediateDataRangeByteSize(),
+                    "Total immediate data bytes (%u) in stage %s exceeds the maximum (%u) in "
+                    "pipeline layout %s.",
+                    entryPoint.immediateDataRangeByteSize, entryPoint.stage,
+                    layout->GetImmediateDataRangeByteSize(), layout);
+
     return {};
 }
 
