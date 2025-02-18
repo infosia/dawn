@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c4dc29d_c27406ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-18T07:01:48Z",
+      "side": 1,
+      "message": "Going to solution 1.",
+      "parentUuid": "b1228573_d4c7dd2e",
+      "revId": "145e0f974b877b0157e32ec3b983ee074a401937",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e6d81eb_a58f2656",
@@ -70,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "207d7c09_f582c6c3",
+        "filename": "src/dawn/native/Error.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-18T07:01:48Z",
+      "side": 1,
+      "message": "Done with https://dawn-review.googlesource.com/c/dawn/+/226495, now we can do `DAWN_INCREASE_LIMIT_MESSAGE(adapter-\u003eGetLimits().v1, ...)`",
+      "parentUuid": "2e6d81eb_a58f2656",
+      "revId": "145e0f974b877b0157e32ec3b983ee074a401937",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93ab1f3f_235ee0dd",
@@ -83,6 +119,24 @@
       "writtenOn": "2025-02-17T09:36:21Z",
       "side": 1,
       "message": "It would be marginally better with a `CombinedLimits` object on the Adapter as well that\u0027s built early during its creation so that we don\u0027t need to call the API reentrantly but can get the full object directly. Feel free to do that in a follow-up or push back if it is too much.",
+      "revId": "145e0f974b877b0157e32ec3b983ee074a401937",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1e1d1ff_29f1038a",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-18T07:01:48Z",
+      "side": 1,
+      "message": "Done in https://dawn-review.googlesource.com/c/dawn/+/226495",
+      "parentUuid": "93ab1f3f_235ee0dd",
       "revId": "145e0f974b877b0157e32ec3b983ee074a401937",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
