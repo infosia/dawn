@@ -1641,7 +1641,7 @@ MaybeError ImportedTextureBase::EndAccess(ExternalSemaphoreHandle* handle,
         Queue* queue = ToBackend(GetDevice()->GetQueue());
         CommandRecordingContext* recordingContext = queue->GetPendingRecordingContext();
         recordingContext->specialSyncTextures.insert(this);
-        DAWN_TRY(queue->SubmitPendingCommands());
+        DAWN_TRY(queue->SubmitPendingCommandsImpl());
 
         currentLayout = targetLayout;
     }

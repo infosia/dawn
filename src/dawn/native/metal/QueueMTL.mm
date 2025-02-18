@@ -225,7 +225,7 @@ bool Queue::HasPendingCommands() const {
     return mCommandContext.NeedsSubmit();
 }
 
-MaybeError Queue::SubmitPendingCommands() {
+MaybeError Queue::SubmitPendingCommandsImpl() {
     return SubmitPendingCommandBuffer();
 }
 

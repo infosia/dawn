@@ -427,7 +427,7 @@ MaybeError SwapChain::PresentImpl() {
     VkSemaphore currentSemaphore = mImages[mLastImageIndex].renderingDoneSemaphore.Get();
     recordingContext->signalSemaphores.push_back(currentSemaphore);
 
-    DAWN_TRY(queue->SubmitPendingCommands());
+    DAWN_TRY(queue->SubmitPendingCommandsImpl());
 
     VkPresentInfoKHR presentInfo;
     presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
