@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d7cbd3d_735feb6c",
+        "filename": "src/dawn/dawn_wire.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-18T03:31:12Z",
+      "side": 1,
+      "message": "Yes! I\u0027m thinking about whether we could align with webgpu spec, which defines https://www.w3.org/TR/webgpu/#gpucommandsmixin already. But it seems current dawn.json and related generated scripts needs to enhance?",
+      "parentUuid": "b9821d91_110e6539",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cbd840cc_00eb269d",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-17T09:27:40Z",
       "side": 1,
       "message": "This is no longer used and can be removed.",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50078d84_9988b215",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-18T03:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd840cc_00eb269d",
       "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42c323ce_a107fd7f",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-18T03:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2cd90f0_5a0eb480",
+      "range": {
+        "startLine": 119,
+        "startChar": 55,
+        "endLine": 119,
+        "endChar": 84
+      },
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b063d7df_267196f6",
@@ -75,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "019a0572_5efc7d05",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-18T03:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b063d7df_267196f6",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3819ce2d_70a75000",
@@ -88,6 +166,30 @@
       "writtenOn": "2025-02-17T09:27:40Z",
       "side": 1,
       "message": "```suggestion\n                    offset \u003e maxImmediateDataRangeByteSize ||\n                        size \u003e maxImmediateDataRangeByteSize - offset,\n                    \"offset (%u) + size: (%u) is larger than  maxImmediateDataRangeByteSize (%u).\"\n```",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 1
+      },
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "affb3db4_f581a661",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-18T03:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3819ce2d_70a75000",
       "range": {
         "startLine": 141,
         "startChar": 0,
@@ -150,6 +252,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ad177b7_8c32aa6c",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-18T03:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b51905ac_9cfa17c3",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "222509e7_5e594c09",
@@ -195,6 +315,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "055c3303_f3f061de",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-18T03:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "222509e7_5e594c09",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4a5b9194_e472438e",
@@ -212,6 +350,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3053545f_03460678",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-18T03:31:12Z",
+      "side": 1,
+      "message": "Done. Thanks for explaining the rules",
+      "parentUuid": "4a5b9194_e472438e",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "025e7702_1d5d5ec6",
@@ -225,6 +381,24 @@
       "writtenOn": "2025-02-17T09:27:40Z",
       "side": 1,
       "message": "The success cases need to be both for size and offset at the limit to test the condition correctly. So both (0, max) and (max, 0), and maybe (max - 4, 4) Error cases are good though.",
+      "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae17957e_7783b644",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-18T03:31:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "025e7702_1d5d5ec6",
       "revId": "f263a8769a6bf6201c446cc5b85fc39b64bc5d27",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
