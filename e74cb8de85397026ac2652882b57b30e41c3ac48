@@ -16,6 +16,23 @@
       "message": "Still LGTM",
       "revId": "e74cb8de85397026ac2652882b57b30e41c3ac48",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac8d76f8_b3550179",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-18T02:24:07Z",
+      "side": 1,
+      "message": "Thanks for reviewing! This CL have to be landed after https://dawn-review.googlesource.com/c/dawn/+/226056.",
+      "revId": "e74cb8de85397026ac2652882b57b30e41c3ac48",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
