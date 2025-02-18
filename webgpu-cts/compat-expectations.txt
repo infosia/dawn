@@ -84,7 +84,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-02-10 07:50:17AM
+# Last rolled: 2025-02-18 07:58:59AM
 
 # conflicts_allowed: true
 
@@ -28058,8 +28058,8 @@ crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,f
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=3;non_uniform_discard=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=true [ Failure ]
-crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:format="depth32float";modeU="r";modeV="c";offset=false [ Failure ]
 crbug.com/0000 [ linux nvidia nvidia_lt_535.183.01 ] webgpu:shader,execution,expression,call,builtin,textureDimensions:external: [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:format="depth32float";modeU="r";modeV="c";offset=false [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:stage="f";textureType="texture_external";filt="linear";modeU="r";modeV="m" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:arrayed_2d_coords:format="astc-8x5-unorm";filt="nearest";modeU="c";modeV="r";offset=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:arrayed_2d_coords:format="astc-8x5-unorm-srgb";filt="nearest";modeU="r";modeV="c";offset=false [ Failure ]
