@@ -533,5 +533,374 @@ TEST_F(SpirvParserTest, BranchConditional_DuplicateTrue_UsedValue) {
 )");
 }
 
+TEST_F(SpirvParserTest, Switch) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+       %bool = OpTypeBool
+        %one = OpConstant %i32 1
+        %two = OpConstant %i32 2
+      %three = OpConstant %i32 3
+       %true = OpConstantTrue %bool
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+         %10 = OpLabel
+               OpSelectionMerge %99 None
+               OpSwitch %two %98 20 %20
+         %20 = OpLabel
+         %21 = OpIAdd %i32 %one %two
+               OpBranch %99
+         %98 = OpLabel
+         %22 = OpIAdd %i32 %two %two
+               OpBranch %99
+         %99 = OpLabel
+         %23 = OpIAdd %i32 %three %two
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    switch 2i [c: (default, $B2), c: (20i, $B3)] {  # switch_1
+      $B2: {  # case
+        %2:i32 = spirv.add<i32> 2i, 2i
+        exit_switch  # switch_1
+      }
+      $B3: {  # case
+        %3:i32 = spirv.add<i32> 1i, 2i
+        exit_switch  # switch_1
+      }
+    }
+    %4:i32 = spirv.add<i32> 3i, 2i
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Switch_DefaultIsMerge) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+       %bool = OpTypeBool
+        %two = OpConstant %i32 2
+       %true = OpConstantTrue %bool
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+         %10 = OpLabel
+               OpSelectionMerge %99 None
+               OpSwitch %two %99 20 %20
+         %20 = OpLabel
+         %21 = OpIAdd %i32 %two %two
+               OpBranch %99
+         %99 = OpLabel
+         %98 = OpIAdd %i32 %two %two
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    switch 2i [c: (default, $B2), c: (20i, $B3)] {  # switch_1
+      $B2: {  # case
+        exit_switch  # switch_1
+      }
+      $B3: {  # case
+        %2:i32 = spirv.add<i32> 2i, 2i
+        exit_switch  # switch_1
+      }
+    }
+    %3:i32 = spirv.add<i32> 2i, 2i
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Switch_DefaultIsCase) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+       %bool = OpTypeBool
+        %two = OpConstant %i32 2
+       %true = OpConstantTrue %bool
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+         %10 = OpLabel
+               OpSelectionMerge %99 None
+               OpSwitch %two %20 20 %20
+         %20 = OpLabel
+         %21 = OpIAdd %i32 %two %two
+               OpBranch %99
+         %99 = OpLabel
+         %98 = OpIAdd %i32 %two %two
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    switch 2i [c: (default, $B2), c: (20i, $B3)] {  # switch_1
+      $B2: {  # case
+        %2:i32 = spirv.add<i32> 2i, 2i
+        exit_switch  # switch_1
+      }
+      $B3: {  # case
+        %3:i32 = spirv.add<i32> 2i, 2i
+        exit_switch  # switch_1
+      }
+    }
+    %4:i32 = spirv.add<i32> 2i, 2i
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Switch_Fallthrough) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+       %bool = OpTypeBool
+        %one = OpConstant %i32 1
+        %two = OpConstant %i32 2
+      %three = OpConstant %i32 3
+       %true = OpConstantTrue %bool
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+         %10 = OpLabel
+               OpSelectionMerge %99 None
+               OpSwitch %two %80 20 %20 30 %30
+         %20 = OpLabel
+         %50 = OpIAdd %i32 %one %two
+               OpBranch %30 ; fall through
+         %30 = OpLabel
+         %51 = OpIAdd %i32 %two %two
+               OpBranch %99
+         %80 = OpLabel
+         %52 = OpIAdd %i32 %three %two
+               OpBranch %99
+         %99 = OpLabel
+         %53 = OpIAdd %i32 %one %three
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    switch 2i [c: (default, $B2), c: (20i, $B3), c: (30i, $B4)] {  # switch_1
+      $B2: {  # case
+        %2:i32 = spirv.add<i32> 3i, 2i
+        exit_switch  # switch_1
+      }
+      $B3: {  # case
+        %3:i32 = spirv.add<i32> 1i, 2i
+        %4:i32 = spirv.add<i32> 2i, 2i
+        exit_switch  # switch_1
+      }
+      $B4: {  # case
+        %5:i32 = spirv.add<i32> 2i, 2i
+        exit_switch  # switch_1
+      }
+    }
+    %6:i32 = spirv.add<i32> 1i, 3i
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Switch_OnlyDefault) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+       %bool = OpTypeBool
+        %one = OpConstant %i32 1
+        %two = OpConstant %i32 2
+      %three = OpConstant %i32 3
+       %true = OpConstantTrue %bool
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+         %10 = OpLabel
+               OpSelectionMerge %99 None
+               OpSwitch %two %20
+         %20 = OpLabel
+         %51 = OpIAdd %i32 %one %two
+               OpBranch %99
+         %99 = OpLabel
+         %52 = OpIAdd %i32 %two %two
+               OpReturn
+               OpFunctionEnd
+  )",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    switch 2i [c: (default, $B2)] {  # switch_1
+      $B2: {  # case
+        %2:i32 = spirv.add<i32> 1i, 2i
+        exit_switch  # switch_1
+      }
+    }
+    %3:i32 = spirv.add<i32> 2i, 2i
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Switch_IfBreak) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %u32 = OpTypeInt 32 0
+       %bool = OpTypeBool
+        %one = OpConstant %u32 1
+        %two = OpConstant %u32 2
+      %three = OpConstant %u32 3
+       %true = OpConstantTrue %bool
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+         %10 = OpLabel
+               OpSelectionMerge %99 None
+               OpSwitch %two %50 20 %20 50 %50
+         %99 = OpLabel
+               OpReturn
+         %20 = OpLabel
+               OpSelectionMerge %49 None
+               OpBranchConditional %true %99 %40 ; break-if
+         %40 = OpLabel
+               OpBranch %49
+         %49 = OpLabel
+               OpBranch %99
+         %50 = OpLabel
+               OpSelectionMerge %79 None
+               OpBranchConditional %true %60 %99 ; break-unless
+         %60 = OpLabel
+               OpBranch %79
+         %79 = OpLabel ; dominated by 60, so must follow 60
+               OpBranch %99
+               OpFunctionEnd
+  )",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    switch 2u [c: (default, $B2), c: (20u, $B3), c: (50u, $B4)] {  # switch_1
+      $B2: {  # case
+        if true [t: $B5, f: $B6] {  # if_1
+          $B5: {  # true
+            exit_if  # if_1
+          }
+          $B6: {  # false
+            ret
+          }
+        }
+        exit_switch  # switch_1
+      }
+      $B3: {  # case
+        if true [t: $B7, f: $B8] {  # if_2
+          $B7: {  # true
+            ret
+          }
+          $B8: {  # false
+            exit_if  # if_2
+          }
+        }
+        exit_switch  # switch_1
+      }
+      $B4: {  # case
+        if true [t: $B9, f: $B10] {  # if_3
+          $B9: {  # true
+            exit_if  # if_3
+          }
+          $B10: {  # false
+            ret
+          }
+        }
+        exit_switch  # switch_1
+      }
+    }
+    ret
+  }
+}
+)");
+}
+
+/*
+
+
+TEST_F(SpvParserCFGTest, ComputeBlockOrder_Nest_If_In_SwitchCase) {
+    auto assembly = CommonTypes() + R"(
+     %100 = OpFunction %void None %voidfn
+
+     %10 = OpLabel
+     OpSelectionMerge %99 None
+     OpSwitch %selector %50 20 %20 50 %50
+
+     %99 = OpLabel
+     OpReturn
+
+     %20 = OpLabel
+     OpSelectionMerge %49 None
+     OpBranchConditional %cond %30 %40
+
+     %49 = OpLabel
+     OpBranch %99
+
+     %30 = OpLabel
+     OpBranch %49
+
+     %40 = OpLabel
+     OpBranch %49
+
+     %50 = OpLabel
+     OpSelectionMerge %79 None
+     OpBranchConditional %cond %60 %70
+
+     %79 = OpLabel
+     OpBranch %99
+
+     %60 = OpLabel
+     OpBranch %79
+
+     %70 = OpLabel
+     OpBranch %79
+
+     OpFunctionEnd
+  )";
+    auto p = parser(test::Assemble(assembly));
+    ASSERT_TRUE(p->BuildAndParseInternalModuleExceptFunctions()) << p->error();
+    auto fe = p->function_emitter(100);
+    fe.RegisterBasicBlocks();
+    fe.ComputeBlockOrderAndPositions();
+
+    EXPECT_THAT(fe.block_order(), ElementsAre(10, 20, 30, 40, 49, 50, 60, 70, 79, 99)) <<
+assembly;
+}
+
+*/
+
 }  // namespace
 }  // namespace tint::spirv::reader

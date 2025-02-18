@@ -739,6 +739,9 @@ class Parser {
                 case spv::Op::OpBranchConditional:
                     EmitBranchConditional(inst);
                     break;
+                case spv::Op::OpSwitch:
+                    EmitSwitch(inst);
+                    break;
                 case spv::Op::OpSelectionMerge:
                     HandleSelectionMerge(inst, src);
                     break;
@@ -899,6 +902,60 @@ class Parser {
         const auto& bb = current_spirv_function_->FindBlock(dest_id);
 
         EmitBlock(current_block_, *bb);
+    }
+
+    void EmitSwitch(const spvtools::opt::Instruction& inst) {
+        auto* selector = Value(inst.GetSingleWordInOperand(0));
+        auto default_id = inst.GetSingleWordInOperand(1);
+
+        TINT_ASSERT(!merge_stack_.empty());
+        auto merge_id = merge_stack_.back().id;
+
+        auto* switch_ = b_.Switch(selector);
+        EmitWithoutResult(switch_);
+
+        auto* default_blk = b_.DefaultCase(switch_);
+        if (default_id != merge_id) {
+            id_scopes_.Push();
+
+            const auto& bb_default = current_spirv_function_->FindBlock(default_id);
+            EmitBlock(default_blk, *bb_default);
+
+            id_scopes_.Pop();
+        }
+        if (!default_blk->Terminator()) {
+            default_blk->Append(b_.ExitSwitch(switch_));
+        }
+        // For each selector.
+        for (uint32_t i = 2; i < inst.NumInOperandWords(); i += 2) {
+            auto literal = inst.GetSingleWordInOperand(i);
+            auto blk_id = inst.GetSingleWordInOperand(i + 1);
+
+            core::ir::Block* blk = nullptr;
+            if (selector->Type()->Is<core::type::I32>()) {
+                blk = b_.Case(switch_, Vector{b_.Constant(i32(literal))});
+            } else {
+                blk = b_.Case(switch_, Vector{b_.Constant(u32(literal))});
+            }
+
+            if (blk_id != merge_id) {
+                id_scopes_.Push();
+
+                const auto& bb = current_spirv_function_->FindBlock(blk_id);
+                EmitBlock(blk, *bb);
+
+                id_scopes_.Pop();
+            }
+            if (!blk->Terminator()) {
+                blk->Append(b_.ExitSwitch(switch_));
+            }
+        }
+
+        if (&inst == merge_stack_.back().merge_inst) {
+            merge_stack_.pop_back();
+            const auto& bb_merge = current_spirv_function_->FindBlock(merge_id);
+            EmitBlock(current_block_, *bb_merge);
+        }
     }
 
     void EmitBranchConditional(const spvtools::opt::Instruction& inst) {
