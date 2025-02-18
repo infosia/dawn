@@ -190,7 +190,7 @@ MaybeError Device::TickImpl() {
     // Check for debug layer messages before executing the command context in case we encounter an
     // error during execution and early out as a result.
     DAWN_TRY(CheckDebugLayerAndGenerateErrors());
-    DAWN_TRY(ToBackend(GetQueue())->SubmitPendingCommands());
+    DAWN_TRY(ToBackend(GetQueue())->SubmitPendingCommandsImpl());
     return {};
 }
 
@@ -326,11 +326,11 @@ ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
     }
 }
 
-MaybeError Device::CopyFromStagingToBufferImpl(BufferBase* source,
-                                               uint64_t sourceOffset,
-                                               BufferBase* destination,
-                                               uint64_t destinationOffset,
-                                               uint64_t size) {
+MaybeError Device::CopyFromStagingToBuffer(BufferBase* source,
+                                           uint64_t sourceOffset,
+                                           BufferBase* destination,
+                                           uint64_t destinationOffset,
+                                           uint64_t size) {
     // D3D11 requires that buffers are unmapped before being used in a copy.
     DAWN_TRY(source->Unmap());
 
