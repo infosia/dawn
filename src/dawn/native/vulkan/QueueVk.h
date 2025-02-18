@@ -52,7 +52,7 @@ class Queue final : public QueueBase {
 
     CommandRecordingContext* GetPendingRecordingContext(SubmitMode submitMode = SubmitMode::Normal);
     MaybeError SplitRecordingContext(CommandRecordingContext* recordingContext);
-    MaybeError SubmitPendingCommands() override;
+    MaybeError SubmitPendingCommandsImpl() override;
 
     void RecycleCompletedCommands(ExecutionSerial completedSerial);
 
