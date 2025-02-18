@@ -136,6 +136,9 @@ crbug.com/dawn/2168 [ android arm ] webgpu:api,validation,error_scope:simple:err
 crbug.com/dawn/2168 [ android arm ] webgpu:api,validation,error_scope:simple:errorType="out-of-memory";errorFilter="validation" [ Skip ]
 crbug.com/dawn/2168 [ android arm ] webgpu:api,validation,error_scope:simple:errorType="validation";errorFilter="out-of-memory" [ Skip ]
 
+# Integer multisampling issues
+crbug.com/397451807 webgpu:shader,execution,expression,call,builtin,textureNumSamples:sampled: [ Failure ]
+
 # COMBINED_SHADER_OUTPUT_RESOURCES issue
 crbug.com/42241064 webgpu:api,validation,capability_checks,limits,maxStorageBuffersPerShaderStage:* [ Skip ]
 crbug.com/42241064 webgpu:api,validation,capability_checks,limits,maxStorageTexturesPerShaderStage:* [ Skip ]
