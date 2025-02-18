@@ -33,6 +33,40 @@
       "message": "This CL should wait for Loko\u0027s CL https://dawn-review.googlesource.com/c/dawn/+/225294.",
       "revId": "4f21309353d4ca9a30741e74776e5fba75f07c85",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ef409d0_3e6d03e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-18T09:47:34Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "4f21309353d4ca9a30741e74776e5fba75f07c85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17b47e19_f99497bc",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-18T09:47:34Z",
+      "side": 1,
+      "message": "Mmmh I wonder why this is a backdoor API and not a toggle. If it were a toggle could avoid the need to call `UpdateLimits` since we\u0027d know at creation whether to tier the limits. Can you open an issue and make a TODO? (no need to look at it any time soon)",
+      "revId": "4f21309353d4ca9a30741e74776e5fba75f07c85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
