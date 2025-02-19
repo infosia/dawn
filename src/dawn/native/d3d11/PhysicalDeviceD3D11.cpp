@@ -146,6 +146,9 @@ MaybeError PhysicalDevice::InitializeImpl() {
 }
 
 void PhysicalDevice::InitializeSupportedFeaturesImpl() {
+    if (mFeatureLevel >= D3D_FEATURE_LEVEL_11_1) {
+        EnableFeature(Feature::CoreFeaturesAndLimits);
+    }
     EnableFeature(Feature::Depth32FloatStencil8);
     EnableFeature(Feature::DepthClipControl);
     EnableFeature(Feature::TextureCompressionBC);
