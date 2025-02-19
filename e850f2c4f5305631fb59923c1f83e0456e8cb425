@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc6a8854_059dbf98",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-19T01:16:58Z",
+      "side": 1,
+      "message": "We cannot call `queue-\u003eEnsureCommandsFlushed(pendingSerial)` in the call of `Queue::Submit()` (this happens when UploadReservation is used in initializing buffers or textures to zero in the recording of commands into backend command lists), otherwise the remaining commands will not be able to be submitted together in one command list.",
+      "revId": "e850f2c4f5305631fb59923c1f83e0456e8cb425",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
