@@ -85,6 +85,24 @@
       "parentUuid": "17b47e19_f99497bc",
       "revId": "4f21309353d4ca9a30741e74776e5fba75f07c85",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "018350b4_99a23399",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-19T11:19:20Z",
+      "side": 1,
+      "message": "Yeah but no need to do it now. Filing the issue is enough to remember the potential cleanup.",
+      "parentUuid": "7d0d7fbe_c2009a0a",
+      "revId": "4f21309353d4ca9a30741e74776e5fba75f07c85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
