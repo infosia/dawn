@@ -119,8 +119,7 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         VkPhysicalDevice vkPhysicalDevice = ToBackend(GetPhysicalDevice())->GetVkPhysicalDevice();
 
         VulkanDeviceKnobs usedDeviceKnobs = {};
-        DAWN_TRY_ASSIGN(usedDeviceKnobs,
-                        CreateDevice(GetAdapter()->GetFeatureLevel(), vkPhysicalDevice));
+        DAWN_TRY_ASSIGN(usedDeviceKnobs, CreateDevice(vkPhysicalDevice));
         *static_cast<VulkanDeviceKnobs*>(&mDeviceInfo) = usedDeviceKnobs;
 
         DAWN_TRY(functions->LoadDeviceProcs(GetVkInstance(), mVkDevice, mDeviceInfo));
@@ -398,8 +397,7 @@ void Device::EnqueueDeferredDeallocation(DescriptorSetAllocator* allocator) {
                                                       GetQueue()->GetPendingCommandSerial());
 }
 
-ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(wgpu::FeatureLevel featureLevel,
-                                                      VkPhysicalDevice vkPhysicalDevice) {
+ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysicalDevice) {
     VulkanDeviceKnobs usedKnobs = {};
 
     // Default to asking for all available known extensions.
@@ -427,6 +425,9 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(wgpu::FeatureLevel feature
     PNextChainBuilder featuresChain(&features2);
 
     // Required for core WebGPU features.
+    auto featureLevel = HasFeature(Feature::CoreFeaturesAndLimits)
+                            ? wgpu::FeatureLevel::Core
+                            : wgpu::FeatureLevel::Compatibility;
     if (featureLevel == wgpu::FeatureLevel::Core) {
         usedKnobs.features.depthBiasClamp = VK_TRUE;
         usedKnobs.features.imageCubeArray = VK_TRUE;
