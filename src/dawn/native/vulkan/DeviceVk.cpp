@@ -119,8 +119,7 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         VkPhysicalDevice vkPhysicalDevice = ToBackend(GetPhysicalDevice())->GetVkPhysicalDevice();
 
         VulkanDeviceKnobs usedDeviceKnobs = {};
-        DAWN_TRY_ASSIGN(usedDeviceKnobs,
-                        CreateDevice(GetAdapter()->GetFeatureLevel(), vkPhysicalDevice));
+        DAWN_TRY_ASSIGN(usedDeviceKnobs, CreateDevice(GetFeatureLevel(), vkPhysicalDevice));
         *static_cast<VulkanDeviceKnobs*>(&mDeviceInfo) = usedDeviceKnobs;
 
         DAWN_TRY(functions->LoadDeviceProcs(mVkDevice, mDeviceInfo));

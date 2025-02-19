@@ -449,6 +449,8 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     // and if so, what filename to save the trace under.
     std::pair<std::string, bool> GetTraceInfo();
 
+    wgpu::FeatureLevel GetFeatureLevel();
+
   private:
     void WillDropLastExternalRef() override;
 
@@ -508,7 +510,8 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     virtual void InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event);
     virtual void InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsyncEvent> event);
 
-    void ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescriptor);
+    void ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescriptor,
+                       wgpu::FeatureLevel level);
 
     void SetWGSLExtensionAllowList();
 
