@@ -139,6 +139,7 @@ option(DAWN_ENABLE_TSAN "Enable thread sanitizer" OFF)
 option(DAWN_ENABLE_MSAN "Enable memory sanitizer" OFF)
 option(DAWN_ENABLE_UBSAN "Enable undefined behaviour sanitizer" OFF)
 
+option(DAWN_ENABLE_EMSCRIPTEN "Enable Emscripten/WASM compilation" ${ENABLE_EMSCRIPTEN})
 option(DAWN_ENABLE_D3D11 "Enable compilation of the D3D11 backend" ${ENABLE_D3D11})
 option(DAWN_ENABLE_D3D12 "Enable compilation of the D3D12 backend" ${ENABLE_D3D12})
 option(DAWN_ENABLE_METAL "Enable compilation of the Metal backend" ${ENABLE_METAL})
