@@ -22,6 +22,30 @@
       },
       "revId": "3c22118208372690b4f13bf177e5df1b2df5e5f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27ec3872_4b65da75",
+        "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-19T09:27:22Z",
+      "side": 1,
+      "message": "Don\u0027t we want to cache the error message on disk if there is an error? It would depend on the `adapterSupportedLimits`.",
+      "parentUuid": "b8439ac2_827e3d98",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "3c22118208372690b4f13bf177e5df1b2df5e5f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
