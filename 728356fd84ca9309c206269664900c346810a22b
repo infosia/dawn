@@ -16,6 +16,23 @@
       "message": "Oh, it needs 2 votes.",
       "revId": "728356fd84ca9309c206269664900c346810a22b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "479be96a_6e06be42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-02-19T13:25:42Z",
+      "side": 1,
+      "message": "Maybe it needs two +2 votes?\nANGLE\u0027s project had such a bug.",
+      "revId": "728356fd84ca9309c206269664900c346810a22b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
