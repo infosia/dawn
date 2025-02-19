@@ -33,6 +33,24 @@
       "message": "Could we have this test split to its own test to make it more standalone instead of in the middle of something more complicated? You can copy paste [1].",
       "revId": "d29f8a644ee2cd6fa0d01849f1b379bd6af5754b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8d2ed45_dc81b868",
+        "filename": "src/dawn/tests/unittests/wire/WireAdapterTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1003787
+      },
+      "writtenOn": "2025-02-19T09:25:27Z",
+      "side": 1,
+      "message": "Added `RequestDeviceWireHandle` test. Modeled it after `RequestDeviceAdapterDestroyedBeforeCallback`, since we do need a successful device to be passed to the client callback.",
+      "parentUuid": "4a4e42ee_66d74406",
+      "revId": "d29f8a644ee2cd6fa0d01849f1b379bd6af5754b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
