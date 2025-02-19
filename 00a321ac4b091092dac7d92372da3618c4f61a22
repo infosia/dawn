@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bde9885_b3d545b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003366
+      },
+      "writtenOn": "2025-02-19T02:27:44Z",
+      "side": 1,
+      "message": "Hmm, why do I need 2 votes for this?\nFor https://dawn-review.googlesource.com/c/dawn/+/225614, Ryan\u0027s vote was sufficient.\n\nAdding some more owners to get another vote.",
+      "revId": "00a321ac4b091092dac7d92372da3618c4f61a22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a0303e8_4fc4e1f9",
