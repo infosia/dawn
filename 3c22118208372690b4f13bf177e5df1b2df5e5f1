@@ -70,6 +70,30 @@
       },
       "revId": "3c22118208372690b4f13bf177e5df1b2df5e5f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af5e090e_1d2e9294",
+        "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-19T11:22:15Z",
+      "side": 1,
+      "message": "A pointer wouldn\u0027t be cached, so even if it is safe to assume that the Adapter stays alive, we could want the limits data to be used in the key (even if we do async in the future, the Device would cancel tasks when destroyed, and also keep the adapter alive).\n\nThe disk cache is basically per-adapter.",
+      "parentUuid": "1dce2b01_af7b42a3",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "3c22118208372690b4f13bf177e5df1b2df5e5f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
