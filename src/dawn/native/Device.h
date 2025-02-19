@@ -449,6 +449,8 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     // and if so, what filename to save the trace under.
     std::pair<std::string, bool> GetTraceInfo();
 
+    wgpu::FeatureLevel GetFeatureLevel();
+
   private:
     void WillDropLastExternalRef() override;
 

@@ -359,10 +359,9 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
     mBlobCache = std::make_unique<BlobCache>(cacheDesc);
 
     if (descriptor->requiredLimits != nullptr) {
-        mLimits.v1 =
-            ReifyDefaultLimits(descriptor->requiredLimits->limits, adapter->GetFeatureLevel());
+        mLimits.v1 = ReifyDefaultLimits(descriptor->requiredLimits->limits, GetFeatureLevel());
     } else {
-        GetDefaultLimits(&mLimits.v1, adapter->GetFeatureLevel());
+        GetDefaultLimits(&mLimits.v1, GetFeatureLevel());
     }
     // Get experimentalSubgroupLimits from physical device
     // TODO(crbug.com/382520104): Remove this since these are now exposed as
@@ -460,7 +459,7 @@ MaybeError DeviceBase::Initialize(Ref<QueueBase> defaultQueue) {
         mMutex = nullptr;
     }
 
-    EnforceLimitSpecInvariants(&mLimits.v1, mAdapter->GetFeatureLevel());
+    EnforceLimitSpecInvariants(&mLimits.v1, GetFeatureLevel());
 
     mAdapter->GetInstance()->AddDevice(this);
 
@@ -1687,7 +1686,7 @@ bool DeviceBase::IsRobustnessEnabled() const {
 }
 
 bool DeviceBase::IsCompatibilityMode() const {
-    return mAdapter != nullptr && mAdapter->GetFeatureLevel() == wgpu::FeatureLevel::Compatibility;
+    return !mEnabledFeatures.IsEnabled(Feature::CoreFeaturesAndLimits);
 }
 
 bool DeviceBase::IsImmediateErrorHandlingEnabled() const {
@@ -2475,6 +2474,12 @@ std::pair<std::string, bool> DeviceBase::GetTraceInfo() {
                                           tm.tm_min, tm.tm_sec, count));
 
     return {traceName, true};
+}
+
+wgpu::FeatureLevel DeviceBase::GetFeatureLevel() {
+    return mEnabledFeatures.IsEnabled(Feature::CoreFeaturesAndLimits)
+               ? wgpu::FeatureLevel::Core
+               : wgpu::FeatureLevel::Compatibility;
 }
 
 }  // namespace dawn::native
