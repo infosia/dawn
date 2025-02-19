@@ -46,6 +46,30 @@
       },
       "revId": "3c22118208372690b4f13bf177e5df1b2df5e5f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dce2b01_af7b42a3",
+        "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-19T10:12:41Z",
+      "side": 1,
+      "message": "As we construct the `LimitsForCompilationRequest adapterSupportedLimits` inplace when assigning to request, we must ensure that it is still alive when we use `const LimitsForCompilationRequest*` to it (for generating error message in this case). In this aspect it is indeed `Unsafe`?\n\nAssuming that we are not going to make `DAWN_TRY_LOAD_OR_RUN(compiledShader, ..., std::move(req), ...)` async (so the request will get used immedietely instead of get stored somewhere and used later out of current scope), we can ensure that.\n\n\u003e Don\u0027t we want to cache the error message on disk if there is an error? It would depend on the adapterSupportedLimits.\n\nIIRC the cache is per-device? Can we ensure that we always get the cached result from the same adapter (i.e. will get the same error message)?",
+      "parentUuid": "b8439ac2_827e3d98",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "3c22118208372690b4f13bf177e5df1b2df5e5f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
