@@ -331,6 +331,17 @@ ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
     for (uint32_t i = 0; i < descriptor->requiredFeatureCount; ++i) {
         requiredFeatureSet.insert(descriptor->requiredFeatures[i]);
     }
+
+    wgpu::FeatureLevel deviceFeatureLevel = wgpu::FeatureLevel::Core;
+    if (GetFeatureLevel() == wgpu::FeatureLevel::Core) {
+        // Core-defaulting adapters always support the "core-features-and-limits" feature.
+        // It is automatically enabled on devices created from such adapters.
+        requiredFeatureSet.insert(wgpu::Feature::CoreFeaturesAndLimits);
+    } else if (requiredFeatureSet.count(wgpu::FeatureName::CoreFeaturesAndLimits) == 0) {
+        DAWN_ASSERT(GetFeatureLevel() == wgpu::FeatureLevel::Compatibility);
+        deviceFeatureLevel = wgpu::FeatureLevel::Compatibility;
+    }
+
     // Validate all required features are supported by the adapter and suitable under device
     // toggles. Note that certain toggles in device toggles state may be overridden by user and
     // different from the adapter toggles state, and in this case a device may support features
@@ -365,7 +376,7 @@ ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
         wgpu::Status status = APIGetLimits(&supportedLimits);
         DAWN_ASSERT(status == wgpu::Status::Success);
 
-        DAWN_TRY_CONTEXT(ValidateLimits(GetFeatureLevel(), supportedLimits.limits,
+        DAWN_TRY_CONTEXT(ValidateLimits(deviceFeatureLevel, supportedLimits.limits,
                                         descriptor->requiredLimits->limits),
                          "validating required limits");
     }
