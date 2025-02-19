@@ -508,7 +508,8 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
     virtual void InitializeComputePipelineAsyncImpl(Ref<CreateComputePipelineAsyncEvent> event);
     virtual void InitializeRenderPipelineAsyncImpl(Ref<CreateRenderPipelineAsyncEvent> event);
 
-    void ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescriptor);
+    void ApplyFeatures(const UnpackedPtr<DeviceDescriptor>& deviceDescriptor,
+                       wgpu::FeatureLevel level);
 
     void SetWGSLExtensionAllowList();
 
@@ -594,6 +595,12 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
 
     // This pointer is non-null if Feature::ImplicitDeviceSynchronization is turned on.
     Ref<Mutex> mMutex = nullptr;
+
+    // Helper state storing feature level of the device,
+    // Equivalent to (HasFeature(wgpu::FeatureName::CoreFeaturesAndLimits) ?
+    // wgpu::FeatureLevel::Core : wgpu::FeatureLevel::Compatibility) Initialized in ApplyFeatures in
+    // DeviceBase constructor.
+    wgpu::FeatureLevel mEffectiveFeatureLevel = wgpu::FeatureLevel::Core;
 };
 
 ResultOrError<Ref<PipelineLayoutBase>> ValidateLayoutAndGetComputePipelineDescriptorWithDefaults(
