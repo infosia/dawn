@@ -16,6 +16,24 @@
       "message": "I was thinking about doing a `GET_INSTANCE_PROC` here with a comment explaining why but that means passing in the VkInstance as well.",
       "revId": "de4e7453ebdb9f8de33f9086caa3beba2bba157b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26532ceb_f700fd27",
+        "filename": "src/dawn/native/vulkan/VulkanFunctions.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-19T15:57:06Z",
+      "side": 0,
+      "message": "I\u0027ve done that now.",
+      "parentUuid": "ff5ecee7_529caf86",
+      "revId": "de4e7453ebdb9f8de33f9086caa3beba2bba157b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
