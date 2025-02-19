@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab3852f4_7bf92076",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-19T09:34:23Z",
+      "side": 1,
+      "message": "This is still missing +2!",
+      "revId": "d7091e66dd92dc9cb3a8c7fd08de74b180915971",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6916fe09_bca19e02",
@@ -18,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d61b5ed5_435fbdd9",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-19T09:34:23Z",
+      "side": 1,
+      "message": "No, like in the original discussion about the service graph etc it wasn\u0027t clear if just notifying was better. After your tries and looking at the single spot that\u0027s doing a minor violation of conceptual boundaries, it seems better. I apologize again for all the back and forth on this.\n\nhttps://dawn-review.googlesource.com/c/dawn/+/226596/1/src/dawn/native/Buffer.cpp for the 1 call site.",
+      "parentUuid": "6916fe09_bca19e02",
+      "revId": "d7091e66dd92dc9cb3a8c7fd08de74b180915971",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea07fd20_427099bc",
@@ -31,6 +66,30 @@
       "writtenOn": "2025-02-18T20:25:05Z",
       "side": 1,
       "message": "Is there any plans to defer this or is the callback purely to support the pattern of Reservation creation?",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 30
+      },
+      "revId": "d7091e66dd92dc9cb3a8c7fd08de74b180915971",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87ea98cc_996a1ebf",
+        "filename": "src/dawn/native/DynamicUploader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-19T09:34:23Z",
+      "side": 1,
+      "message": "There wouldn\u0027t be any deferring because this is for the use case of WriteBuffer and friends. In a multithreaded future this pattern would also take care of the locking etc.",
+      "parentUuid": "ea07fd20_427099bc",
       "range": {
         "startLine": 63,
         "startChar": 8,
