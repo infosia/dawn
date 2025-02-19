@@ -2200,6 +2200,7 @@
             {"value": 12, "name": "float32 blendable", "jsrepr": "'float32-blendable'"},
             {"value": 13, "name": "subgroups"},
             {"value": 14, "name": "subgroups f16"},
+            {"value": 15, "name": "core features and limits", "jsrepr": "'core-features-and-limits'"},
 
             {"value": 0, "name": "dawn internal usages", "tags": ["dawn"]},
             {"value": 1, "name": "dawn multi planar formats", "tags": ["dawn"]},
