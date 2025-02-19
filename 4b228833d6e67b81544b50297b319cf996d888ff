@@ -16,6 +16,24 @@
       "message": "new compat failures for format multisample validation:\neither group suppress, or wait for validation impl change\nbug ticket: https://g-issues.chromium.org/issues/397451807",
       "revId": "4b228833d6e67b81544b50297b319cf996d888ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3b3378b_af0ba144",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-19T18:10:35Z",
+      "side": 1,
+      "message": "Mark as unresolved",
+      "parentUuid": "b63d6e08_39e5a790",
+      "revId": "4b228833d6e67b81544b50297b319cf996d888ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
