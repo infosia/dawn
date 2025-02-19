@@ -16,6 +16,24 @@
       "message": "@cwallez@chromium.org Can you please submit this CL when you get a chance? I do not have permissions to submit in Dawn. Thank you!",
       "revId": "3de2f7687fd837c27cbfea55c9e812e8f9bec918",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "195b83ce_865b0d82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-19T19:29:15Z",
+      "side": 1,
+      "message": "You should have permission now!",
+      "parentUuid": "bfcd3a6e_8fbe6f98",
+      "revId": "3de2f7687fd837c27cbfea55c9e812e8f9bec918",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
