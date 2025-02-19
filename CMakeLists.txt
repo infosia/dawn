@@ -132,6 +132,7 @@ option(DAWN_ENABLE_TSAN "Enable thread sanitizer" OFF)
 option(DAWN_ENABLE_MSAN "Enable memory sanitizer" OFF)
 option(DAWN_ENABLE_UBSAN "Enable undefined behaviour sanitizer" OFF)
 
+option(DAWN_ENABLE_EMSCRIPTEN "Enable Emscripten/WASM compilation" ${ENABLE_EMSCRIPTEN})
 option(DAWN_ENABLE_D3D11 "Enable compilation of the D3D11 backend" ${ENABLE_D3D11})
 option(DAWN_ENABLE_D3D12 "Enable compilation of the D3D12 backend" ${ENABLE_D3D12})
 option(DAWN_ENABLE_METAL "Enable compilation of the Metal backend" ${ENABLE_METAL})
@@ -140,13 +141,6 @@ option(DAWN_ENABLE_DESKTOP_GL "Enable compilation of the OpenGL backend" ${ENABL
 option(DAWN_ENABLE_OPENGLES "Enable compilation of the OpenGL ES backend" ${ENABLE_OPENGLES})
 option(DAWN_ENABLE_VULKAN "Enable compilation of the Vulkan backend" ${ENABLE_VULKAN})
 option(DAWN_ENABLE_SPIRV_VALIDATION "Enable validation of SPIR-V" ${ENABLE_SPIRV_VALIDATION})
-
-# Optional path to Emscripten toolchain to allow for building WASM.
-option(DAWN_EMSCRIPTEN_TOOLCHAIN "Directory in which to find Emscripten toolchain" "")
-set(DAWN_ENABLE_EMSCRIPTEN OFF)
-if (NOT ${DAWN_EMSCRIPTEN_TOOLCHAIN} STREQUAL "" AND ENABLE_EMSCRIPTEN)
-    set(DAWN_ENABLE_EMSCRIPTEN ON)
-endif()
 
 message(STATUS "Dawn build D3D11 backend: ${DAWN_ENABLE_D3D11}")
 message(STATUS "Dawn build D3D12 backend: ${DAWN_ENABLE_D3D12}")
@@ -340,11 +334,7 @@ message(STATUS "Dawn build monolithic library: ${DAWN_BUILD_MONOLITHIC_LIBRARY}"
 message(STATUS "")
 
 # Optional path to Emscripten toolchain to allow for building WASM.
-set_if_not_defined(DAWN_EMSCRIPTEN_TOOLCHAIN "" "Directory in which to find Emscripten toolchain")
-set(DAWN_ENABLE_EMSCRIPTEN OFF)
-if (NOT ${DAWN_EMSCRIPTEN_TOOLCHAIN} STREQUAL "" AND ENABLE_EMSCRIPTEN)
-    set(DAWN_ENABLE_EMSCRIPTEN ON)
-endif()
+set_if_not_defined(DAWN_EMSCRIPTEN_TOOLCHAIN "${DAWN_THIRD_PARTY_DIR}/emsdk/upstream/emscripten" "Directory in which to find Emscripten toolchain")
 
 message(STATUS "Dawn Emscripten toolchain: ${DAWN_EMSCRIPTEN_TOOLCHAIN}")
 message(STATUS "")
