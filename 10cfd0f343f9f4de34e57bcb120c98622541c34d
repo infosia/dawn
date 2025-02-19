@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b70ce00e_5d88ad50",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-19T20:30:26Z",
+      "side": 1,
+      "message": "Hmm, what do you think about putting this validation stuff in `WGPUInstanceImpl::WaitAny` instead of here? That way we would have direct access to the capabilities instead of needing to forward/get them in here?\n\nMight also not be a bad idea to move some of the other validation at the top here into that function instead, i.e. `count \u003d\u003d 0` check.",
+      "range": {
+        "startLine": 499,
+        "startChar": 6,
+        "endLine": 517,
+        "endChar": 69
+      },
+      "revId": "10cfd0f343f9f4de34e57bcb120c98622541c34d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
