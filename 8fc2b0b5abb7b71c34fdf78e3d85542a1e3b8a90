@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6493a3f8_a236f192",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-19T14:11:19Z",
+      "side": 1,
+      "message": "We can discuss it later today, but don\u0027t we need to have the validation in both the `wire::server` and `native` already? Given that the validation will be automatically updated with `dawn.json` changes, it doesn\u0027t seem like a huge cost to check for things that we don\u0027t know about in `wire::client` as well. Plus this CL already does that.\u003d\n\nI\u0027m not sure I got the part about the \"context\" for the errors: these would be API usage errors basically, so just saying \"we cannot support this structure in one of the chains\" should be sufficient. We could try to print labels etc but the marginal value seems extremely tiny.",
+      "parentUuid": "014cb6a1_97c03bf7",
+      "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "46c8ba44_9d16c50e",
         "filename": "generator/templates/dawn/native/ChainUtils.cpp",
         "patchSetId": 1
