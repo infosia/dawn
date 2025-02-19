@@ -94,6 +94,30 @@
       },
       "revId": "3c22118208372690b4f13bf177e5df1b2df5e5f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89b48301_2bce53ff",
+        "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-19T18:51:33Z",
+      "side": 1,
+      "message": "Hmm I don\u0027t think we cache the error message on disk at the moment, and I\u0027m not fully convinced that we should do that. Caching error messages means that transient errors won\u0027t really allow a retry. We could probably introduce logic to figure out if an error is transient or not, i.e. validation errors are probably not transient, and something like OOM might be?, but I feel like it\u0027s not necessary to optimize for the error cases.\n\nThat said, I think that `DAWN_TRY_LOAD_OR_RUN` probably won\u0027t be async at any point, so it should be safe to assume that the request will be immediately used. If we needed it to be \"async\" we could just call it from another thread entirely.",
+      "parentUuid": "af5e090e_1d2e9294",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "3c22118208372690b4f13bf177e5df1b2df5e5f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
