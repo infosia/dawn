@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6916fe09_bca19e02",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-19T01:24:02Z",
+      "side": 1,
+      "message": "So you decide not to use UploadReservation as the staging buffer for mappedAtCreation?",
+      "revId": "d7091e66dd92dc9cb3a8c7fd08de74b180915971",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ea07fd20_427099bc",
         "filename": "src/dawn/native/DynamicUploader.h",
         "patchSetId": 4
