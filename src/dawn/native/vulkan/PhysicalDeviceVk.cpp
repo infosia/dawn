@@ -219,6 +219,7 @@ MaybeError PhysicalDevice::InitializeImpl() {
 }
 
 void PhysicalDevice::InitializeSupportedFeaturesImpl() {
+    EnableFeature(Feature::CoreFeaturesAndLimits);
     EnableFeature(Feature::AdapterPropertiesMemoryHeaps);
     EnableFeature(Feature::StaticSamplers);
     EnableFeature(Feature::FlexibleTextureViews);
