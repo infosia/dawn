@@ -492,10 +492,11 @@ MaybeError ValidateCompatibilityOfSingleBindingWithLayout(const DeviceBase* devi
                     "Binding type in the shader (%s) doesn't match the type in the layout (%s).",
                     shaderBindingType, bindingLayoutType);
 
-    ExternalTextureBindingExpansionMap expansions = layout->GetExternalTextureBindingExpansionMap();
-    DAWN_INVALID_IF(expansions.find(bindingNumber) != expansions.end(),
-                    "Binding type (buffer vs. texture vs. sampler vs. external) doesn't "
-                    "match the type in the layout.");
+    // ExternalTextureBindingExpansionMap expansions =
+    // layout->GetExternalTextureBindingExpansionMap();
+    // DAWN_INVALID_IF(expansions.find(bindingNumber) != expansions.end(),
+    //                 "Binding type (buffer vs. texture vs. sampler vs. external) doesn't "
+    //                 "match the type in the layout.");
 
     DAWN_INVALID_IF((layoutInfo.visibility & StageBit(entryPointStage)) == 0,
                     "Entry point's stage (%s) is not in the binding visibility in the layout (%s).",

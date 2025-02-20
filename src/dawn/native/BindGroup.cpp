@@ -31,6 +31,7 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "dawn/common/Assert.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/ityp_bitset.h"
@@ -244,6 +245,39 @@ MaybeError ValidateSampledTextureBinding(DeviceBase* device,
     return {};
 }
 
+MaybeError ValidateTextureViewBinding(DeviceBase* device,
+                                      const BindGroupEntry& entry,
+                                      const TextureBindingInfo& layout) {
+    DAWN_TRY(ValidateTextureBindGroupEntry(device, entry));
+
+    TextureViewBase* view = entry.textureView;
+    TextureBase* texture = view->GetTexture();
+    Format format = texture->GetFormat();
+
+    DAWN_INVALID_IF(format.aspects != Aspect::Color, "The format (%s) is not a color format.",
+                    format.format);
+
+    DAWN_INVALID_IF(
+        !IsSubset(SampleTypeBit::Float, format.GetAspectInfo(Aspect::Color).supportedSampleTypes),
+        "The format (%s) is not filterable float.", format.format);
+
+    DAWN_INVALID_IF((view->GetUsage() & wgpu::TextureUsage::TextureBinding) == 0,
+                    "The texture view (%s) usage (%s) doesn't include the required usage (%s)",
+                    view, view->GetUsage(), wgpu::TextureUsage::TextureBinding);
+
+    DAWN_INVALID_IF(view->GetDimension() != wgpu::TextureViewDimension::e2D,
+                    "The texture view (%s) dimension (%s) is not 2D.", view, view->GetDimension());
+
+    DAWN_INVALID_IF(view->GetLevelCount() > 1,
+                    "The texture view (%s) mip level count (%u) is not 1.", view,
+                    view->GetLevelCount());
+
+    DAWN_INVALID_IF(texture->GetSampleCount() != 1,
+                    "The texture view (%s) sample count (%u) is not one.", view,
+                    texture->GetSampleCount());
+    return {};
+}
+
 MaybeError ValidateStorageTextureBinding(DeviceBase* device,
                                          const BindGroupEntry& entry,
                                          const StorageTextureBindingInfo& layout,
@@ -449,6 +483,8 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
 
         bindingsSet.set(bindingIndex);
 
+        const BindingInfo& bindingInfo = layout->GetBindingInfo(bindingIndex);
+
         // Below this block we validate entries based on the bind group layout, in which
         // external textures have been expanded into their underlying contents. For this reason
         // we must identify external texture binding entries by checking the bind group entry
@@ -456,22 +492,28 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
         // TODO(dawn:1293): Store external textures in
         // BindGroupLayoutBase::BindingDataPointers::bindings so checking external textures can
         // be moved in the switch below.
-        UnpackedPtr<BindGroupEntry> unpacked;
-        DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(&entry));
-        if (auto* externalTextureBindingEntry = unpacked.Get<ExternalTextureBindingEntry>()) {
-            DAWN_TRY(
-                ValidateExternalTextureBinding(device, entry, externalTextureBindingEntry,
-                                               layout->GetExternalTextureBindingExpansionMap()));
-            continue;
-        } else {
-            DAWN_INVALID_IF(
-                layout->GetExternalTextureBindingExpansionMap().count(BindingNumber(entry.binding)),
-                "entries[%u] is not an ExternalTexture when the layout contains an "
-                "ExternalTexture entry.",
+        if (layout->GetExternalTextureBindingExpansionMap().count(BindingNumber(entry.binding))) {
+            UnpackedPtr<BindGroupEntry> unpacked;
+            DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(&entry));
+            if (auto* externalTextureBindingEntry = unpacked.Get<ExternalTextureBindingEntry>()) {
+                DAWN_TRY(ValidateExternalTextureBinding(
+                    device, entry, externalTextureBindingEntry,
+                    layout->GetExternalTextureBindingExpansionMap()));
+                continue;
+            } else if (std::holds_alternative<TextureBindingInfo>(bindingInfo.bindingLayout)) {
+                const TextureBindingInfo& textureLayout =
+                    std::get<TextureBindingInfo>(bindingInfo.bindingLayout);
+                DAWN_TRY_CONTEXT(ValidateTextureViewBinding(device, entry, textureLayout),
+                                 "validating entries[%u] as a TextureView."
+                                 "\nExpected entry layout: %s",
+                                 i, layout);
+                continue;
+            }
+            return DAWN_VALIDATION_ERROR(
+                "entries[%u] is neither an ExternalTexture nor a TextureView when the layout "
+                "contains an ExternalTexture entry.",
                 i);
         }
-
-        const BindingInfo& bindingInfo = layout->GetBindingInfo(bindingIndex);
 
         // Perform binding-type specific validation.
         DAWN_TRY(MatchVariant(
@@ -575,9 +617,20 @@ BindGroupBase::BindGroupBase(DeviceBase* device,
         }
 
         if (entry->textureView != nullptr) {
-            DAWN_ASSERT(mBindingData.bindings[bindingIndex] == nullptr);
-            mBindingData.bindings[bindingIndex] = entry->textureView;
-            continue;
+            dawn::InfoLog() << "entry->textureView " << entry->textureView->GetLabel();
+            // Here we unpack external texture bindings into multiple additional bindings for the
+            // external texture's contents. New binding locations previously determined in the bind
+            // group layout are created in this bind group and filled with the external texture's
+            // underlying resources.
+            if (auto* externalTextureBindingEntry = entry.Get<ExternalTextureBindingEntry>()) {
+                SetTextureViewForExternalTextureBinding(externalTextureBindingEntry, layout,
+                                                        entry->binding);
+                continue;
+            } else {
+                DAWN_ASSERT(mBindingData.bindings[bindingIndex] == nullptr);
+                mBindingData.bindings[bindingIndex] = entry->textureView;
+                continue;
+            }
         }
 
         if (entry->sampler != nullptr) {
@@ -729,6 +782,48 @@ const std::vector<Ref<ExternalTextureBase>>& BindGroupBase::GetBoundExternalText
 void BindGroupBase::ForEachUnverifiedBufferBindingIndex(
     std::function<void(BindingIndex, uint32_t)> fn) const {
     ForEachUnverifiedBufferBindingIndexImpl(GetLayout(), fn);
+}
+
+void BindGroupBase::SetTextureViewForExternalTextureBinding(
+    const ExternalTextureBindingEntry* externalTextureBindingEntry,
+    BindGroupLayoutInternalBase* layout,
+    uint32_t entryBinding) {
+    dawn::InfoLog() << "externalTextureBindingEntry";
+    mBoundExternalTextures.push_back(externalTextureBindingEntry->externalTexture);
+
+    ExternalTextureBindingExpansionMap expansions = layout->GetExternalTextureBindingExpansionMap();
+    ExternalTextureBindingExpansionMap::iterator it = expansions.find(BindingNumber(entryBinding));
+
+    DAWN_ASSERT(it != expansions.end());
+
+    BindingIndex plane0BindingIndex = layout->GetBindingIndex(it->second.plane0);
+    BindingIndex plane1BindingIndex = layout->GetBindingIndex(it->second.plane1);
+    BindingIndex paramsBindingIndex = layout->GetBindingIndex(it->second.params);
+
+    DAWN_ASSERT(mBindingData.bindings[plane0BindingIndex] == nullptr);
+
+    mBindingData.bindings[plane0BindingIndex] =
+        externalTextureBindingEntry->externalTexture->GetTextureViews()[0];
+
+    DAWN_ASSERT(mBindingData.bindings[plane1BindingIndex] == nullptr);
+    mBindingData.bindings[plane1BindingIndex] =
+        externalTextureBindingEntry->externalTexture->GetTextureViews()[1];
+
+    DAWN_ASSERT(mBindingData.bindings[paramsBindingIndex] == nullptr);
+
+    // Ref<BufferBase> paramsBuffer;
+    // // We must create a buffer to store parameters needed by a shader that operates on this
+    // // external texture.
+    // BufferDescriptor bufferDesc;
+    // bufferDesc.size = sizeof(ExternalTextureParams);
+    // bufferDesc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
+    // bufferDesc.label = "Dawn_External_Texture_Params_Buffer";
+
+    // DAWN_TRY_ASSIGN(paramsBuffer, device->CreateBuffer(&bufferDesc));
+
+    mBindingData.bindings[paramsBindingIndex] = nullptr;  // paramsBuffer;
+    mBindingData.bufferData[paramsBindingIndex].offset = 0;
+    mBindingData.bufferData[paramsBindingIndex].size = sizeof(dawn::native::ExternalTextureParams);
 }
 
 }  // namespace dawn::native
