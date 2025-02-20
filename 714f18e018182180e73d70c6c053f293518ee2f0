@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd5b0bdf_4d7c79a3",
+        "filename": "tools/activate-emsdk",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001001
+      },
+      "writtenOn": "2025-02-20T23:39:42Z",
+      "side": 1,
+      "message": "Nit: you should use `argparse` in new Python code if you can, `optparse` is old-school :).",
+      "revId": "714f18e018182180e73d70c6c053f293518ee2f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3e06952_14008670",
+        "filename": "tools/activate-emsdk",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001001
+      },
+      "writtenOn": "2025-02-20T23:39:42Z",
+      "side": 1,
+      "message": "You don\u0027t want to print anything out or return an error code?",
+      "revId": "714f18e018182180e73d70c6c053f293518ee2f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
