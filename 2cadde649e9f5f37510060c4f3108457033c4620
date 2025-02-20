@@ -34,6 +34,24 @@
       "parentUuid": "9f459fbb_3e6735b0",
       "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecec5974_99808600",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-20T22:06:03Z",
+      "side": 1,
+      "message": "Thank you for the explaination.\n\nIn my understanding, (1) is easy to resolve;\n\nI didn\u0027t realize problem (2) because I was expecting the buffer will be destroyed in the example. In my understanding, the example is ill-written and will cause problem. It\u0027s totally normal that C API requires users to manually manage the lifecycle of the resources. I think the C++ API (webgpu_cpp.h) also implemented in a way to avoid the happening of (2), because a `wgpu::BindGroupEntry` contains a `wgpu::Buffer`, and a `wgpu::Buffer` handling `wgpuBufferAddRef` correctly.\n\nI don\u0027t know yet how do you want to deal with (2) if you want to consider cross referencing, especially if you consider the existance of `importJs*` and `getJsObject`. Sounds like a little bit chanllenge to design.",
+      "parentUuid": "a657332c_6937412d",
+      "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
