@@ -16,6 +16,24 @@
       "message": "Thanks for reviewing! Should we continue waiting for https://dawn-review.googlesource.com/c/dawn/+/225294?",
       "revId": "313e3d08a860432ec18027ef8be824ce474c11c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4984c457_c024f336",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-20T19:40:34Z",
+      "side": 1,
+      "message": "If possible that would be ideal! I\u0027m still blocked on Skia changes to land and roll into Chromium before I can start landing that change. The last change was finally reviewed today, and is in the process of landing. If we are lucky, it should be rolled in by tomorrow.",
+      "parentUuid": "c33e01a0_d09c6f8e",
+      "revId": "313e3d08a860432ec18027ef8be824ce474c11c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
