@@ -33,6 +33,24 @@
       "message": "```suggestion\n                    override-\u003eResult(0)-\u003eType(),  //\n                      [\u0026](const core::type::Bool*) { return true; },\n```",
       "revId": "848407efa2ec1b27a7f1b9bc8f3bfe573e779656",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b5868c3_7a62226d",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-20T20:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9226e9a7_a86608f4",
+      "revId": "848407efa2ec1b27a7f1b9bc8f3bfe573e779656",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
