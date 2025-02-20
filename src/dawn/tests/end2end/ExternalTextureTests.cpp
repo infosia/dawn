@@ -301,6 +301,127 @@ TEST_P(ExternalTextureTests, SampleExternalTexture) {
     EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kGreen, renderTexture, 0, 0);
 }
 
+TEST_P(ExternalTextureTests, SampleTextureView) {
+    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
+
+    wgpu::Texture sampledTexture =
+        Create2DTexture(device, kWidth, kHeight, kFormat,
+                        wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment);
+    wgpu::Texture renderTexture =
+        Create2DTexture(device, kWidth, kHeight, kFormat,
+                        wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::RenderAttachment);
+
+    // Initialize texture with green to ensure it is sampled from later.
+    {
+        utils::ComboRenderPassDescriptor renderPass({sampledTexture.CreateView()}, nullptr);
+        renderPass.cColorAttachments[0].clearValue = {0.0f, 1.0f, 0.0f, 1.0f};
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+    }
+
+    // Pipeline Creation
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vsModule;
+    descriptor.cFragment.module = fsSampleExternalTextureModule;
+    descriptor.cTargets[0].format = kFormat;
+    wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&descriptor);
+
+    wgpu::TextureView textureView = sampledTexture.CreateView();
+
+    // Create a sampler and bind group
+    wgpu::Sampler sampler = device.CreateSampler();
+
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {{0, sampler}, {1, textureView}});
+
+    // Run the shader, which should sample from the texture view and draw a triangle into the
+    // upper left corner of the render texture.
+    wgpu::TextureView renderView = renderTexture.CreateView();
+    utils::ComboRenderPassDescriptor renderPass({renderView});
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+    {
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.Draw(3);
+        pass.End();
+    }
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kGreen, renderTexture, 0, 0);
+}
+
+TEST_P(ExternalTextureTests, TextureDimensionsWithTextureView) {
+    // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
+    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
+
+    wgpu::TextureDescriptor descriptor;
+    descriptor.size = {kWidth, kHeight, 1};
+    descriptor.mipLevelCount = 2;
+    descriptor.dimension = wgpu::TextureDimension::e2D;
+    descriptor.format = wgpu::TextureFormat::RGBA8Unorm;
+    descriptor.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment;
+    wgpu::Texture texture = device.CreateTexture(&descriptor);
+
+    for (const auto& mipLevel : {0, 1}) {
+        wgpu::TextureViewDescriptor textureViewDesc;
+        textureViewDesc.dimension = wgpu::TextureViewDimension::e2D;
+        textureViewDesc.mipLevelCount = 1;
+        textureViewDesc.baseMipLevel = mipLevel;
+        wgpu::TextureView textureView = texture.CreateView(&textureViewDesc);
+
+        // Create buffer that will store texture dimensions
+        std::vector<uint32_t> data(2);
+        std::vector<uint32_t> expected(2);
+        if (mipLevel == 0) {
+            expected = {kWidth, kHeight};
+        } else {
+            expected = {kWidth / 2, kHeight / 2};
+        }
+        uint64_t bufferSize = static_cast<uint64_t>(data.size() * sizeof(uint32_t));
+        wgpu::Buffer buffer =
+            utils::CreateBufferFromData(device, data.data(), bufferSize,
+                                        wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc);
+
+        wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
+        @group(0) @binding(0) var texture : texture_external;
+        @group(0) @binding(1) var<storage, read_write> buffer: vec2u;
+
+        @compute @workgroup_size(1) fn main() {
+            buffer = textureDimensions(texture);
+        })");
+
+        // Pipeline Creation
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = module;
+        wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+        // Set up bind group
+        wgpu::BindGroup bindGroup = utils::MakeBindGroup(
+            device, pipeline.GetBindGroupLayout(0), {{0, textureView}, {1, buffer, 0, bufferSize}});
+
+        // Issue dispatch
+        wgpu::CommandBuffer commands;
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(1, 1, 1);
+        pass.End();
+        commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), buffer, 0, 2);
+    }
+}
+
 // https://crbug.com/1515439
 TEST_P(ExternalTextureTests, SampleExternalTextureDifferingGroup) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
