@@ -157,6 +157,24 @@
       "parentUuid": "23660fff_433a24ef",
       "revId": "6715a229397d32df1d1b3f24207e5929bf73d659",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84535ec0_1fc8b47a",
+        "filename": "src/tint/lang/wgsl/reader/parser/unary_expression_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-20T13:37:28Z",
+      "side": 1,
+      "message": "I see your point, thanks!",
+      "parentUuid": "3ff93b9f_b7d0963f",
+      "revId": "6715a229397d32df1d1b3f24207e5929bf73d659",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
