@@ -33,6 +33,24 @@
       "message": "übernit: This is identical to `EmitBinaryWithSignedArgs` except for the `ty.u32()`, so you could just pass that part in as a parameter and reuse the same function.",
       "revId": "fe654b935fb1fc094f30de8ed845e6d8352ee981",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8be7fb90_4385fc74",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-20T22:18:26Z",
+      "side": 1,
+      "message": "Yea I thougth of that, but I also get annoyed as we keep make the signatures longer and the code less readable. I also thought you could do it as a template, but again, more \"signature\" less readable.\n\nSo, I went with duplicatedf or now and we\u0027ll see if I get more annoyed at that then longer signatures ....",
+      "parentUuid": "4fe85790_d5c8a5c3",
+      "revId": "fe654b935fb1fc094f30de8ed845e6d8352ee981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
