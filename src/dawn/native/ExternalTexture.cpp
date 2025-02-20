@@ -35,6 +35,7 @@
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/Texture.h"
+#include "dawn/native/utils/WGPUHelpers.h"
 
 #include "dawn/native/dawn_platform.h"
 
@@ -138,52 +139,7 @@ MaybeError ValidateExternalTextureDescriptor(const DeviceBase* device,
     return {};
 }
 
-// static
-ResultOrError<Ref<ExternalTextureBase>> ExternalTextureBase::Create(
-    DeviceBase* device,
-    const ExternalTextureDescriptor* descriptor) {
-    Ref<ExternalTextureBase> externalTexture =
-        AcquireRef(new ExternalTextureBase(device, descriptor));
-    DAWN_TRY(externalTexture->Initialize(device, descriptor));
-    return std::move(externalTexture);
-}
-
-ExternalTextureBase::ExternalTextureBase(DeviceBase* device,
-                                         const ExternalTextureDescriptor* descriptor)
-    : ApiObjectBase(device, descriptor->label),
-      mState(ExternalTextureState::Active) {
-    GetObjectTrackingList()->Track(this);
-}
-
-// Error external texture cannot be used in bind group.
-ExternalTextureBase::ExternalTextureBase(DeviceBase* device,
-                                         ObjectBase::ErrorTag tag,
-                                         StringView label)
-    : ApiObjectBase(device, tag, label), mState(ExternalTextureState::Destroyed) {}
-
-ExternalTextureBase::~ExternalTextureBase() = default;
-
-MaybeError ExternalTextureBase::Initialize(DeviceBase* device,
-                                           const ExternalTextureDescriptor* descriptor) {
-    // Store any passed in TextureViews associated with individual planes.
-    mTextureViews[0] = descriptor->plane0;
-
-    if (descriptor->plane1) {
-        mTextureViews[1] = descriptor->plane1;
-    } else {
-        DAWN_TRY_ASSIGN(mTextureViews[1],
-                        device->GetOrCreatePlaceholderTextureViewForExternalTexture());
-    }
-
-    // We must create a buffer to store parameters needed by a shader that operates on this
-    // external texture.
-    BufferDescriptor bufferDesc;
-    bufferDesc.size = sizeof(ExternalTextureParams);
-    bufferDesc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
-    bufferDesc.label = "Dawn_External_Texture_Params_Buffer";
-
-    DAWN_TRY_ASSIGN(mParamsBuffer, device->CreateBuffer(&bufferDesc));
-
+ExternalTextureParams GetExternalTextureParams(const ExternalTextureDescriptor* descriptor) {
     ExternalTextureParams params;
     params.numPlanes = descriptor->plane1 == nullptr ? 1 : 2;
 
@@ -365,6 +321,75 @@ MaybeError ExternalTextureBase::Initialize(DeviceBase* device,
     params.plane1CoordFactor = Div(plane1Size, plane0Size);
     params.apparentSize = loadBounds;
 
+    return params;
+}
+
+ResultOrError<Ref<BufferBase>> MakeParamsBufferForSimpleView(DeviceBase* device,
+                                                             Ref<TextureViewBase> textureView) {
+    const Extent3D textureSize = textureView->GetSingleSubresourceVirtualSize();
+    std::array<float, 12> placeholderConstantArray;
+
+    ExternalTextureDescriptor desc = {};
+    desc.plane0 = textureView.Get();
+    desc.cropOrigin = {0, 0};
+    desc.cropSize = {textureSize.width, textureSize.height};
+    desc.apparentSize = {textureSize.width, textureSize.height};
+    desc.doYuvToRgbConversionOnly = true;
+    desc.srcTransferFunctionParameters = placeholderConstantArray.data();
+    desc.dstTransferFunctionParameters = placeholderConstantArray.data();
+    desc.gamutConversionMatrix = placeholderConstantArray.data();
+
+    ExternalTextureParams params = GetExternalTextureParams(&desc);
+    return utils::CreateBufferFromData(
+        device, wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst, {params});
+}
+
+// static
+ResultOrError<Ref<ExternalTextureBase>> ExternalTextureBase::Create(
+    DeviceBase* device,
+    const ExternalTextureDescriptor* descriptor) {
+    Ref<ExternalTextureBase> externalTexture =
+        AcquireRef(new ExternalTextureBase(device, descriptor));
+    DAWN_TRY(externalTexture->Initialize(device, descriptor));
+    return std::move(externalTexture);
+}
+
+ExternalTextureBase::ExternalTextureBase(DeviceBase* device,
+                                         const ExternalTextureDescriptor* descriptor)
+    : ApiObjectBase(device, descriptor->label), mState(ExternalTextureState::Active) {
+    GetObjectTrackingList()->Track(this);
+}
+
+// Error external texture cannot be used in bind group.
+ExternalTextureBase::ExternalTextureBase(DeviceBase* device,
+                                         ObjectBase::ErrorTag tag,
+                                         StringView label)
+    : ApiObjectBase(device, tag, label), mState(ExternalTextureState::Destroyed) {}
+
+ExternalTextureBase::~ExternalTextureBase() = default;
+
+MaybeError ExternalTextureBase::Initialize(DeviceBase* device,
+                                           const ExternalTextureDescriptor* descriptor) {
+    // Store any passed in TextureViews associated with individual planes.
+    mTextureViews[0] = descriptor->plane0;
+
+    if (descriptor->plane1) {
+        mTextureViews[1] = descriptor->plane1;
+    } else {
+        DAWN_TRY_ASSIGN(mTextureViews[1],
+                        device->GetOrCreatePlaceholderTextureViewForExternalTexture());
+    }
+
+    // We must create a buffer to store parameters needed by a shader that operates on this
+    // external texture.
+    BufferDescriptor bufferDesc;
+    bufferDesc.size = sizeof(ExternalTextureParams);
+    bufferDesc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
+    bufferDesc.label = "Dawn_External_Texture_Params_Buffer";
+
+    DAWN_TRY_ASSIGN(mParamsBuffer, device->CreateBuffer(&bufferDesc));
+
+    ExternalTextureParams params = GetExternalTextureParams(descriptor);
     DAWN_TRY(device->GetQueue()->WriteBuffer(mParamsBuffer.Get(), 0, &params,
                                              sizeof(ExternalTextureParams)));
 
