@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "fe654b935fb1fc094f30de8ed845e6d8352ee981",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fe85790_d5c8a5c3",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-20T21:14:51Z",
+      "side": 1,
+      "message": "übernit: This is identical to `EmitBinaryWithSignedArgs` except for the `ty.u32()`, so you could just pass that part in as a parameter and reuse the same function.",
+      "revId": "fe654b935fb1fc094f30de8ed845e6d8352ee981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
