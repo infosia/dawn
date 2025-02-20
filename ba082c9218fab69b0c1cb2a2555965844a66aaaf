@@ -16,6 +16,24 @@
       "message": "How does this cause the bot to fail? It should have failed in either case if the condition was triggered, no?",
       "revId": "ba082c9218fab69b0c1cb2a2555965844a66aaaf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a46555e6_8bf816a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-02-20T18:27:39Z",
+      "side": 1,
+      "message": "Also what is the failing test(s) you\u0027re seeing that are relevant to this CL? I looked at a couple failures on Dawn Linux x64 Release (Intel UHD 770) and didn\u0027t see this assertion firing.",
+      "parentUuid": "a558eddf_6953800b",
+      "revId": "ba082c9218fab69b0c1cb2a2555965844a66aaaf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
