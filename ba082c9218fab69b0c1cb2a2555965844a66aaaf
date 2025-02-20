@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a558eddf_6953800b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-20T18:10:29Z",
+      "side": 1,
+      "message": "How does this cause the bot to fail? It should have failed in either case if the condition was triggered, no?",
+      "revId": "ba082c9218fab69b0c1cb2a2555965844a66aaaf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
