@@ -52,6 +52,24 @@
       "parentUuid": "a657332c_6937412d",
       "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "978c3195_3d8fd692",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-20T23:28:08Z",
+      "side": 1,
+      "message": "(1) I think Loko will probably take care of because he has access to examples that use `importJS*`.\n\n(2) We defined the semantics of the C API such that the user doesn\u0027t need to keep their external ref to the object alive, we will hold an internal ref for them. (This extends to the C++ API because it is implemented on top of the C API, except RAII makes memory management automatic. wgpu::BindGroupEntry for example is only an input to the CreateBindGroup function, it doesn\u0027t live beyond that.)\n\nKeeping these internal refs makes it easier to use the api without causing use-after-free bugs, because it can be hard to know when the implementation is _really_ done with the object you passed it. In Vulkan for example you need a whole subsystem for tracking when the GPU is done with objects so you can free them.\n\nRight now in emdawnwebgpu we don\u0027t actually track internal refs because they\u0027re just for the wrapper objects - not the browser\u0027s native objects. However if we want to call destroy() in the constructor to clean up the underlying allocation, then we need to start tracking internal refs first. I _would_ like to do this, we just can\u0027t right now.\n\nBTW, I\u0027m curious your motivation for this fix. Anything in particular that is difficult to do at the application side? Did you run into memory leak issues when porting from native to wasm?",
+      "parentUuid": "ecec5974_99808600",
+      "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
