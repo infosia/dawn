@@ -672,6 +672,7 @@ void AddSubstituteOverrides(std::unordered_map<tint::OverrideId, double> values,
     tint::ast::transform::SubstituteOverride::Config cfg;
     cfg.map = std::move(values);
 
+    printf("AddSubstituteOverrides \n");
     transform_inputs.Add<tint::ast::transform::SubstituteOverride::Config>(cfg);
     transform_manager.Add<tint::ast::transform::SubstituteOverride>();
 }
