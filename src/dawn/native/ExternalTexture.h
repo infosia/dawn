@@ -64,6 +64,9 @@ struct ExternalTextureParams {
 MaybeError ValidateExternalTextureDescriptor(const DeviceBase* device,
                                              const ExternalTextureDescriptor* descriptor);
 
+ResultOrError<Ref<BufferBase>> MakeParamsBufferForSimpleView(DeviceBase* device,
+                                                             Ref<TextureViewBase> textureView);
+
 class ExternalTextureBase : public ApiObjectBase {
   public:
     static ResultOrError<Ref<ExternalTextureBase>> Create(
