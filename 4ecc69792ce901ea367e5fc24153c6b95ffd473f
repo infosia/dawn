@@ -16,6 +16,24 @@
       "message": "I don\u0027t think lastWasCaret can ever be true here given it\u0027s set above to be false.\n\nAlso, what is this code trying to do. The spec seems to say the first character must be alnum and all characters after than are either alnum or \u0027-\u0027? What\u0027s the \"caret\"?",
       "revId": "4ecc69792ce901ea367e5fc24153c6b95ffd473f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57c8ed31_8bb00f90",
+        "filename": "src/dawn/node/binding/GPUAdapterInfo.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-20T13:45:10Z",
+      "side": 1,
+      "message": "I thought caret and dash were the same thing ^^ done",
+      "parentUuid": "b3c6e2bb_dc743cbb",
+      "revId": "4ecc69792ce901ea367e5fc24153c6b95ffd473f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
