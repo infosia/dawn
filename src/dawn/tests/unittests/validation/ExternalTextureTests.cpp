@@ -609,9 +609,14 @@ TEST_F(ExternalTextureTest, BindGroupDoesNotMatchLayout) {
     }
 }
 
+class ExternalTextureTestSafe : public ExternalTextureTest {
+  protected:
+    bool AllowUnsafeAPIs() override { return false; }
+};
+
 // Regression test for crbug.com/1343099 where BindGroup validation let other binding types be used
 // for external texture bindings.
-TEST_F(ExternalTextureTest, TextureViewBindingDoesntMatch) {
+TEST_F(ExternalTextureTestSafe, TextureViewBindingDoesntMatch) {
     wgpu::BindGroupLayout bgl = utils::MakeBindGroupLayout(
         device, {{0, wgpu::ShaderStage::Fragment, &utils::kExternalTextureBindingLayout}});
 

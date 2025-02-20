@@ -108,6 +108,9 @@ class BindGroupBase : public ApiObjectBase {
     BindGroupBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
     void DeleteThis() override;
 
+    ResultOrError<Ref<BufferBase>> CreateParamsBufferForExternalTexture(
+        Ref<TextureViewBase> textureView);
+
     Ref<BindGroupLayoutBase> mLayout;
     BindGroupLayoutInternalBase::BindingDataPointers mBindingData;
 
