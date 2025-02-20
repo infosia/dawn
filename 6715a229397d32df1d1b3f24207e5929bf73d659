@@ -68,6 +68,24 @@
       "parentUuid": "bc4fac42_d0834026",
       "revId": "6715a229397d32df1d1b3f24207e5929bf73d659",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6be105ef_bc6c9d6a",
+        "filename": "src/tint/lang/wgsl/reader/parser/unary_expression_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-20T13:21:58Z",
+      "side": 1,
+      "message": "The problem I have is the error message becomes a _lot_ more vague. Instead of pointing out that `++` is the issue, it just says the right hande side is wrong.\n\nThere is no valid parse of a `++` prefix operator at this point (even if you split the `+`, `+`), so I think it\u0027s safe to catch here and return a better error.",
+      "parentUuid": "fc4f7ef0_bffbabf6",
+      "revId": "6715a229397d32df1d1b3f24207e5929bf73d659",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
