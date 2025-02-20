@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c33e01a0_d09c6f8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-20T10:09:45Z",
+      "side": 1,
+      "message": "Thanks for reviewing! Should we continue waiting for https://dawn-review.googlesource.com/c/dawn/+/225294?",
+      "revId": "313e3d08a860432ec18027ef8be824ce474c11c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
