@@ -16,6 +16,24 @@
       "message": "Hi Kai, could you share me the reproduce step for the crash?",
       "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a657332c_6937412d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-20T19:37:53Z",
+      "side": 1,
+      "message": "There\u0027s two situations we ran into there:\n\n1) We have an internal use case that is using `importJsBuffer` to import a JS buffer into WASM, doing some stuff with the buffer, then dropping the WASM reference which is causing `Destroy` to happen. But then in JS land, we want to continue using the JS object (which is now destroyed). We talked about this and will likely fix the `importJs*` functions to tag the objects to not clean the JS side up, i.e. not call `Destroy` on `Buffer` and `Device`.\n\n2) Cross referencing is also a problem if say, in a single scope, we create a buffer, use it to create a bind group, and then return that bind group. The buffer that the bind group references gets destroyed now before we can use the bind group because we don\u0027t have cross referencing, i.e. the bind group does not keep a reference to the buffer and so the buffer calls `Destroy`.",
+      "parentUuid": "9f459fbb_3e6735b0",
+      "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
