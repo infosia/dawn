@@ -34,6 +34,7 @@
 #include "dawn/common/WeakRef.h"
 #include "dawn/common/ityp_array.h"
 #include "dawn/common/ityp_bitset.h"
+#include "dawn/native/Buffer.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Format.h"
 #include "dawn/native/Forward.h"
@@ -164,6 +165,9 @@ class TextureBase : public SharedResource {
 
     uint64_t ComputeEstimatedByteSize() const;
 
+    void SetParamsBuffer(Ref<BufferBase> buffer);
+    BufferBase* GetParamsBuffer() const;
+
     // Dawn API
     TextureViewBase* APICreateView(const TextureViewDescriptor* descriptor = nullptr);
     TextureViewBase* APICreateErrorView(const TextureViewDescriptor* descriptor = nullptr);
@@ -221,6 +225,9 @@ class TextureBase : public SharedResource {
 
     // TODO(crbug.com/dawn/845): Use a more optimized data structure to save space
     std::vector<bool> mIsSubresourceContentInitializedAtIndex;
+
+    // TODO
+    Ref<BufferBase> mParamsBuffer;
 };
 
 class TextureViewBase : public ApiObjectBase {

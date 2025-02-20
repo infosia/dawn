@@ -29,6 +29,7 @@
 
 #include <utility>
 
+#include "dawn/common/Log.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/BindGroup.h"
 #include "dawn/native/Buffer.h"
@@ -139,8 +140,11 @@ void SyncScopeUsageTracker::AddBindGroup(BindGroupBase* group) {
                                           bindingInfo.visibility);
                         break;
                     default:
-                        TextureViewUsedAs(view, wgpu::TextureUsage::TextureBinding,
-                                          bindingInfo.visibility);
+                        // FIXME
+                        if (view) {
+                            TextureViewUsedAs(view, wgpu::TextureUsage::TextureBinding,
+                                              bindingInfo.visibility);
+                        }
                         break;
                 }
             },

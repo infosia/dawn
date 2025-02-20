@@ -2197,6 +2197,18 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
     TextureViewDescriptor desc;
     DAWN_TRY_ASSIGN(desc, GetTextureViewDescriptorWithDefaults(texture, descriptorOrig));
 
+    Ref<BufferBase> paramsBuffer;
+    DAWN_TRY_ASSIGN(paramsBuffer, GetOrCreateTemporaryUniformBuffer(sizeof(ExternalTextureParams)));
+    paramsBuffer->SetLabel("Internal_FIXME");
+
+    ExternalTextureParams params;
+    params.numPlanes = 1;
+    // FIXME
+
+    DAWN_TRY(
+        GetQueue()->WriteBuffer(paramsBuffer.Get(), 0, &params, sizeof(ExternalTextureParams)));
+    texture->SetParamsBuffer(std::move(paramsBuffer));
+
     UnpackedPtr<TextureViewDescriptor> descriptor;
     if (IsValidationEnabled()) {
         DAWN_TRY_ASSIGN_CONTEXT(descriptor, ValidateAndUnpack(&desc), "validating %s.", &desc);

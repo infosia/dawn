@@ -1377,6 +1377,14 @@ uint64_t TextureBase::ComputeEstimatedByteSize() const {
     return byteSize;
 }
 
+void TextureBase::SetParamsBuffer(Ref<BufferBase> buffer) {
+    mParamsBuffer = std::move(buffer);
+}
+
+BufferBase* TextureBase::GetParamsBuffer() const {
+    return mParamsBuffer.Get();
+}
+
 void TextureBase::APIDestroy() {
     Destroy();
 }
