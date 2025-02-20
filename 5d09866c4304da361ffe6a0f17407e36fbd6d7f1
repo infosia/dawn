@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82cf6db8_74c400df",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-20T15:51:42Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be `bufferData` (pointer to start of array) rather than `\u0026bufferData` (pointer to pointer to start of array, I think)?",
+      "range": {
+        "startLine": 587,
+        "startChar": 65,
+        "endLine": 587,
+        "endChar": 76
+      },
+      "revId": "5d09866c4304da361ffe6a0f17407e36fbd6d7f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
