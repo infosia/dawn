@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79be706e_66a51162",
+        "filename": "src/tint/lang/wgsl/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2665,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-20T12:49:22Z",
+      "side": 0,
+      "message": "Why was `kPlusPlus` changed? I don\u0027t think it should have any different behaviour. The meaning of `a++++1` is stilling going to be an error.",
+      "revId": "3ee36f03fbf93accf7fbb6bb7b541a78ee6810b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

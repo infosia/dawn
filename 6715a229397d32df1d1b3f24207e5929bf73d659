@@ -16,6 +16,40 @@
       "message": "Please take a look, thanks!",
       "revId": "6715a229397d32df1d1b3f24207e5929bf73d659",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1ac225b_1bd6ad97",
+        "filename": "src/tint/lang/wgsl/reader/parser/assignment_stmt_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-20T12:49:22Z",
+      "side": 1,
+      "message": "I don\u0027t think this result should have changed as this is `++` not `--`.",
+      "revId": "6715a229397d32df1d1b3f24207e5929bf73d659",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc4fac42_d0834026",
+        "filename": "src/tint/lang/wgsl/reader/parser/unary_expression_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-20T12:49:22Z",
+      "side": 1,
+      "message": "Why is this not an error? `++a` has no meaning in WGSL.",
+      "revId": "6715a229397d32df1d1b3f24207e5929bf73d659",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
