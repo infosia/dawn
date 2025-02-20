@@ -2662,15 +2662,20 @@ Maybe<const ast::Expression*> Parser::unary_expression() {
     MultiTokenSource source(this);
 
     auto& t = peek();
-    if (match(Token::Type::kPlusPlus) || match(Token::Type::kMinusMinus)) {
-        AddError(source,
-                 "prefix increment and decrement operators are reserved for a "
-                 "future WGSL version");
-        return Failure::kErrored;
-    }
 
+    // Note that an valid unary Negation expression starts with MINUS can be nested by another
+    // Negation unary expression, results in the form of (--e). The two MINUS might be tokenized as
+    // a single kMinusMinus, while kMinusMinus should only be used in a variable updating statement.
+    // The token should be split and the expression should be parsed as (-(-e)). We don't support
+    // unary expression (+e) so (++e) is not a valid unary expression and kPlusPlus is not expected
+    // here.
     core::UnaryOp op;
-    if (match(Token::Type::kMinus)) {
+    if (t.Is(Token::Type::kMinusMinus)) {
+        // Split the kMinusMinus token into two kMinus tokens.
+        next();
+        split_token(Token::Type::kMinus, Token::Type::kMinus);
+        op = core::UnaryOp::kNegation;
+    } else if (match(Token::Type::kMinus)) {
         op = core::UnaryOp::kNegation;
     } else if (match(Token::Type::kBang)) {
         op = core::UnaryOp::kNot;

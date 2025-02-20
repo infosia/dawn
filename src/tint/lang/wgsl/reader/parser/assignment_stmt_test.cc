@@ -159,9 +159,7 @@ TEST_F(WGSLParserTest, AssignmentStmt_Phony_EqualIncrementFails) {
     EXPECT_TRUE(e.errored);
     EXPECT_TRUE(p->has_error());
     EXPECT_EQ(e.value, nullptr);
-    EXPECT_EQ(
-        p->error(),
-        "1:5: prefix increment and decrement operators are reserved for a future WGSL version");
+    EXPECT_EQ(p->error(), "1:5: unable to parse right side of assignment");
 }
 
 struct CompoundData {
