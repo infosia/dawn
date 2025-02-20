@@ -33,6 +33,24 @@
       "message": "I opted to do this here because it\u0027s a single instruction addition and I didn\u0027t think it was worth going through the process of adding a spirv intrinsic and a builtin conversion.",
       "revId": "5d31a7d4a232f5e540e3363a08b9dad64dd238e0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27765961_7f222bbd",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-20T16:51:57Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1597fd3e_eeb20182",
+      "revId": "5d31a7d4a232f5e540e3363a08b9dad64dd238e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
