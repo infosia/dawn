@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d42127bd_90d56342",
+        "filename": "src/dawn/native/d3d12/QueueD3D12.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-21T15:00:41Z",
+      "side": 1,
+      "message": "Make this and the ones in other backends private.",
+      "revId": "5e2bb10e96f73a45dbf7f212497b60998d2ce949",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
