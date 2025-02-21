@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "242de819_bdd62ff5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-21T18:10:47Z",
+      "side": 1,
+      "message": "I should have thought about that in the previous review for the feature ^^\u0027",
+      "revId": "ef73e35f3ab823bcdb248d14fc4ae2cebee30aa7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
