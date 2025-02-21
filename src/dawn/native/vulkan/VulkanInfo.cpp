@@ -355,6 +355,19 @@ ResultOrError<VulkanDeviceInfo> GatherDeviceInfo(const PhysicalDevice& device) {
         vkFunctions.GetPhysicalDeviceFeatures(vkPhysicalDevice, &info.features);
     }
 
+    if (info.extensions[DeviceExt::CooperativeMatrix]) {
+        uint32_t count = 0;
+        DAWN_TRY(CheckVkSuccess(vkFunctions.GetPhysicalDeviceCooperativeMatrixPropertiesKHR(
+                                    vkPhysicalDevice, &count, nullptr),
+                                "vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR"));
+
+        info.cooperativeMatrixProperties.resize(count);
+        DAWN_TRY(
+            CheckVkSuccess(vkFunctions.GetPhysicalDeviceCooperativeMatrixPropertiesKHR(
+                               vkPhysicalDevice, &count, info.cooperativeMatrixProperties.data()),
+                           "vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR"));
+    }
+
     // TODO(cwallez@chromium.org): gather info about formats
 
     return std::move(info);
