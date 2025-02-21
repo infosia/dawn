@@ -142,7 +142,7 @@ option(DAWN_ENABLE_VULKAN "Enable compilation of the Vulkan backend" ${ENABLE_VU
 option(DAWN_ENABLE_SPIRV_VALIDATION "Enable validation of SPIR-V" ${ENABLE_SPIRV_VALIDATION})
 
 # Optional path to Emscripten toolchain to allow for building WASM.
-option(DAWN_EMSCRIPTEN_TOOLCHAIN "Directory in which to find Emscripten toolchain" "")
+set(DAWN_EMSCRIPTEN_TOOLCHAIN "" CACHE PATH "Directory in which to find Emscripten toolchain")
 set(DAWN_ENABLE_EMSCRIPTEN OFF)
 if (NOT ${DAWN_EMSCRIPTEN_TOOLCHAIN} STREQUAL "" AND ENABLE_EMSCRIPTEN)
     set(DAWN_ENABLE_EMSCRIPTEN ON)
