@@ -22,6 +22,30 @@
       },
       "revId": "8f24e82d6071bdbb13223dcca95fa24bae1483ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68b6612d_306f1635",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1466,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-21T23:20:37Z",
+      "side": 1,
+      "message": "It\u0027s just the string `\"llu\"` usually - it\u0027s whatever printf symbol is needed to print `uint64_t`, which is usually a typedef for `unsigned long long int` but could be something different.",
+      "parentUuid": "9234a7e0_18d6c9f5",
+      "range": {
+        "startLine": 1466,
+        "startChar": 33,
+        "endLine": 1466,
+        "endChar": 39
+      },
+      "revId": "8f24e82d6071bdbb13223dcca95fa24bae1483ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
