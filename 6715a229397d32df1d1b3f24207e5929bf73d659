@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0fa93a99_1cdb41a3",
+        "filename": "src/tint/lang/wgsl/reader/parser/assignment_stmt_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-21T08:57:21Z",
+      "side": 1,
+      "message": "Done, add more unittests for variable updating statement, including `a++`, `a--`, `++a`, `--a`, `_ \u003d ++a`, `_ \u003d --a`, `_ \u003d a++`, and `_ \u003d a--`.\n`a++` and `a--` should be valid variable updating statements, `++a` and `--a` would result in helpful error messages with this CL (previously will result in a nomatched but no error), and the tests for four strange phony assignment results in different behavior. Please take a look, thanks!",
+      "parentUuid": "b1ac225b_1bd6ad97",
+      "revId": "6715a229397d32df1d1b3f24207e5929bf73d659",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bc4fac42_d0834026",
         "filename": "src/tint/lang/wgsl/reader/parser/unary_expression_test.cc",
         "patchSetId": 1
@@ -173,6 +191,24 @@
       "side": 1,
       "message": "I see your point, thanks!",
       "parentUuid": "3ff93b9f_b7d0963f",
+      "revId": "6715a229397d32df1d1b3f24207e5929bf73d659",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f54645a_ab3cb639",
+        "filename": "src/tint/lang/wgsl/reader/parser/unary_expression_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-21T08:57:21Z",
+      "side": 1,
+      "message": "Done adding back special casing for leading kPlusPlus in unary expression.",
+      "parentUuid": "84535ec0_1fc8b47a",
       "revId": "6715a229397d32df1d1b3f24207e5929bf73d659",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

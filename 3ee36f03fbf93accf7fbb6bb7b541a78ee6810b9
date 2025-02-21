@@ -16,6 +16,24 @@
       "message": "Why was `kPlusPlus` changed? I don\u0027t think it should have any different behaviour. The meaning of `a++++1` is stilling going to be an error.",
       "revId": "3ee36f03fbf93accf7fbb6bb7b541a78ee6810b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b3e3d72_9c26f667",
+        "filename": "src/tint/lang/wgsl/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2665,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-02-21T08:57:21Z",
+      "side": 0,
+      "message": "Add back special casing for kPlusPlus, and also do special casing in `variable_updating_statement()` to generate better error messages.",
+      "parentUuid": "79be706e_66a51162",
+      "revId": "3ee36f03fbf93accf7fbb6bb7b541a78ee6810b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
