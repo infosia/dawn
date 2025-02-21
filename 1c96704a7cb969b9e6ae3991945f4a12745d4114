@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76736947_b4063330",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-21T09:39:39Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "1c96704a7cb969b9e6ae3991945f4a12745d4114",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23f67839_b7c87b2c",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-21T09:39:39Z",
+      "side": 1,
+      "message": "Additions to this file are a bit suspiscious, is it flakes that were seen by the roller script?",
+      "revId": "1c96704a7cb969b9e6ae3991945f4a12745d4114",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
