@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f5ad488_e6782b2c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000248
+      },
+      "writtenOn": "2025-02-21T18:23:42Z",
+      "side": 1,
+      "message": "Could you point me to the line in SRM that does this? I\u0027m having trouble finding it.",
+      "revId": "d967ca745074541630fee1add5ad20de3cebdb39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
