@@ -1193,12 +1193,18 @@ void PhysicalDevice::PopulateSubgroupMatrixConfigs() {
     // Query the full list of configurations supported by the Vulkan device.
     uint32_t configCount = 0;
     const VulkanFunctions& fn = GetVulkanInstance()->GetFunctions();
-    DAWN_ASSERT(fn.GetPhysicalDeviceCooperativeMatrixPropertiesKHR(mVkPhysicalDevice, &configCount,
-                                                                   nullptr) == VK_SUCCESS);
+    if (!fn.GetPhysicalDeviceCooperativeMatrixPropertiesKHR ||
+        fn.GetPhysicalDeviceCooperativeMatrixPropertiesKHR(mVkPhysicalDevice, &configCount,
+                                                           nullptr) != VK_SUCCESS) {
+        return;
+    }
 
     std::vector<VkCooperativeMatrixPropertiesKHR> properties(configCount);
-    DAWN_ASSERT(fn.GetPhysicalDeviceCooperativeMatrixPropertiesKHR(
-                    mVkPhysicalDevice, &configCount, properties.data()) == VK_SUCCESS);
+    if (!fn.GetPhysicalDeviceCooperativeMatrixPropertiesKHR ||
+        fn.GetPhysicalDeviceCooperativeMatrixPropertiesKHR(mVkPhysicalDevice, &configCount,
+                                                           properties.data()) != VK_SUCCESS) {
+        return;
+    }
 
     mSubgroupMatrixConfigs.reserve(configCount);
     for (uint32_t i = 0; i < configCount; i++) {
