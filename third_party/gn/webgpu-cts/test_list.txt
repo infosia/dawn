@@ -748,7 +748,12 @@ webgpu:api,operation,command_buffer,copyTextureToTexture:copy_depth_stencil:form
 webgpu:api,operation,command_buffer,copyTextureToTexture:copy_depth_stencil:format="depth24plus-stencil8"
 webgpu:api,operation,command_buffer,copyTextureToTexture:copy_depth_stencil:format="depth32float-stencil8"
 webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_color:
-webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_depth:
+webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_depth:format="depth16unorm"
+webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_depth:format="depth32float"
+webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_depth:format="depth24plus"
+webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_depth:format="depth24plus-stencil8"
+webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_depth:format="depth32float-stencil8"
+webgpu:api,operation,command_buffer,copyTextureToTexture:copy_multisampled_stencil:
 webgpu:api,operation,command_buffer,image_copy:rowsPerImage_and_bytesPerRow:initMethod="WriteTexture";checkMethod="FullCopyT2B";format="r8unorm";dimension="1d"
 webgpu:api,operation,command_buffer,image_copy:rowsPerImage_and_bytesPerRow:initMethod="WriteTexture";checkMethod="FullCopyT2B";format="r8unorm";dimension="2d"
 webgpu:api,operation,command_buffer,image_copy:rowsPerImage_and_bytesPerRow:initMethod="WriteTexture";checkMethod="FullCopyT2B";format="r8unorm";dimension="3d"
@@ -16941,6 +16946,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8unorm";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8unorm";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8unorm";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8unorm";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8snorm";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8snorm";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8snorm";resourceFormat="rgba8uint"
@@ -16957,6 +16963,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8snorm";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8snorm";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8snorm";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8snorm";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8uint";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8uint";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8uint";resourceFormat="rgba8uint"
@@ -16973,6 +16980,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8uint";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8uint";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8uint";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8uint";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8sint";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8sint";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8sint";resourceFormat="rgba8uint"
@@ -16989,6 +16997,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8sint";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8sint";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8sint";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba8sint";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16uint";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16uint";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16uint";resourceFormat="rgba8uint"
@@ -17005,6 +17014,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16uint";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16uint";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16uint";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16uint";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16sint";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16sint";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16sint";resourceFormat="rgba8uint"
@@ -17021,6 +17031,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16sint";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16sint";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16sint";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16sint";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16float";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16float";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16float";resourceFormat="rgba8uint"
@@ -17037,6 +17048,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16float";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16float";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16float";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba16float";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32uint";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32uint";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32uint";resourceFormat="rgba8uint"
@@ -17053,6 +17065,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32uint";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32uint";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32uint";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32uint";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32sint";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32sint";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32sint";resourceFormat="rgba8uint"
@@ -17069,6 +17082,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32sint";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32sint";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32sint";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32sint";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32float";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32float";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32float";resourceFormat="rgba8uint"
@@ -17085,6 +17099,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32float";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32float";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32float";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="r32float";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32uint";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32uint";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32uint";resourceFormat="rgba8uint"
@@ -17101,6 +17116,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32uint";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32uint";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32uint";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32uint";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32sint";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32sint";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32sint";resourceFormat="rgba8uint"
@@ -17117,6 +17133,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32sint";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32sint";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32sint";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32sint";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32float";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32float";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32float";resourceFormat="rgba8uint"
@@ -17133,6 +17150,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32float";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32float";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32float";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rg32float";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32uint";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32uint";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32uint";resourceFormat="rgba8uint"
@@ -17149,6 +17167,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32uint";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32uint";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32uint";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32uint";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32sint";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32sint";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32sint";resourceFormat="rgba8uint"
@@ -17165,6 +17184,7 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32sint";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32sint";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32sint";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32sint";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32float";resourceFormat="rgba8unorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32float";resourceFormat="rgba8snorm"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32float";resourceFormat="rgba8uint"
@@ -17181,6 +17201,24 @@ webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureForma
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32float";resourceFormat="rgba32uint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32float";resourceFormat="rgba32sint"
 webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32float";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="rgba32float";resourceFormat="bgra8unorm"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rgba8unorm"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rgba8snorm"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rgba8uint"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rgba8sint"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rgba16uint"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rgba16sint"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rgba16float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="r32uint"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="r32sint"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="r32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rg32uint"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rg32sint"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rg32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rgba32uint"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rgba32sint"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="rgba32float"
+webgpu:api,validation,createBindGroup:storage_texture,format:storageTextureFormat="bgra8unorm";resourceFormat="bgra8unorm"
 webgpu:api,validation,createBindGroup:sampler,device_mismatch:
 webgpu:api,validation,createBindGroup:sampler,compare_function_with_binding_type:bgType="filtering"
 webgpu:api,validation,createBindGroup:sampler,compare_function_with_binding_type:bgType="non-filtering"
@@ -21435,18 +21473,27 @@ webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textu
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=1;textureUsage1=2
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=1;textureUsage1=4
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=1;textureUsage1=8
+webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=1;textureUsage1=16
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=2;textureUsage1=1
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=2;textureUsage1=2
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=2;textureUsage1=4
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=2;textureUsage1=8
+webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=2;textureUsage1=16
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=4;textureUsage1=1
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=4;textureUsage1=2
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=4;textureUsage1=4
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=4;textureUsage1=8
+webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=4;textureUsage1=16
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=8;textureUsage1=1
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=8;textureUsage1=2
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=8;textureUsage1=4
 webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=8;textureUsage1=8
+webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=8;textureUsage1=16
+webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=16;textureUsage1=1
+webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=16;textureUsage1=2
+webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=16;textureUsage1=4
+webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=16;textureUsage1=8
+webgpu:api,validation,createView:texture_view_usage:format="rg11b10ufloat";textureUsage0=16;textureUsage1=16
 webgpu:api,validation,createView:texture_view_usage:format="rgb9e5ufloat";textureUsage0=1;textureUsage1=1
 webgpu:api,validation,createView:texture_view_usage:format="rgb9e5ufloat";textureUsage0=1;textureUsage1=2
 webgpu:api,validation,createView:texture_view_usage:format="rgb9e5ufloat";textureUsage0=1;textureUsage1=4
