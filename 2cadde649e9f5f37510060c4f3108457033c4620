@@ -70,6 +70,24 @@
       "parentUuid": "ecec5974_99808600",
       "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd1ddd92_05fe1218",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-21T02:31:53Z",
+      "side": 1,
+      "message": "Yes I am working on porting native code to wasm for [ONNX Runtime](https://github.com/microsoft/onnxruntime). The current code works as expected in native, but in wasm the buffers are never destroyed. This is the initial motivation for the fixes.\n\nI debugged the code of Dawn and explained my finding in https://dawn-review.googlesource.com/c/dawn/+/226315/comment/e7ad357e_01ac015b/",
+      "parentUuid": "978c3195_3d8fd692",
+      "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
