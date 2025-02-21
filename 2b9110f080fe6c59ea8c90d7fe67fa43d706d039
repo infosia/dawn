@@ -1,0 +1,66 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3271754_c329e09e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-21T10:00:22Z",
+      "side": 1,
+      "message": "LGTM :)",
+      "revId": "2b9110f080fe6c59ea8c90d7fe67fa43d706d039",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d1df3a5_334140b9",
+        "filename": "src/dawn/wire/SupportedFeatures.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-21T10:00:22Z",
+      "side": 1,
+      "message": "u-nit, can we group this with friends above? (the AI got it right this time xD)",
+      "fixSuggestions": [
+        {
+          "fixId": "d21a1157_5d4da328",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/wire/SupportedFeatures.cpp",
+              "range": {
+                "startLine": 67,
+                "startChar": 0,
+                "endLine": 67,
+                "endChar": 0
+              },
+              "replacement": "        case WGPUFeatureName_SharedFenceEGLSync:\n"
+            },
+            {
+              "path": "src/dawn/wire/SupportedFeatures.cpp",
+              "range": {
+                "startLine": 118,
+                "startChar": 0,
+                "endLine": 119,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "2b9110f080fe6c59ea8c90d7fe67fa43d706d039",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
