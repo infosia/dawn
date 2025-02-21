@@ -33,6 +33,41 @@
       "message": "LGTM, Geoff FYI",
       "revId": "c871a753fce41222e603dfaab49ae2969414c37a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6d45c1f_b728afdf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-02-21T14:14:17Z",
+      "side": 1,
+      "message": "Is there any documentation on the dawn caching in general? I\u0027m trying to understand it better and I know there is ContentLessaObjectCache vs BlobCache but some concepts kinda bleed between them I don\u0027t totally get.",
+      "parentUuid": "d7411d35_4a2c0c2c",
+      "revId": "c871a753fce41222e603dfaab49ae2969414c37a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ac2e230_908684c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-02-21T14:14:17Z",
+      "side": 1,
+      "message": "Thanks for the quick review.",
+      "revId": "c871a753fce41222e603dfaab49ae2969414c37a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
