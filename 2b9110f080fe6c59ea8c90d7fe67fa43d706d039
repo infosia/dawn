@@ -61,6 +61,24 @@
       ],
       "revId": "2b9110f080fe6c59ea8c90d7fe67fa43d706d039",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b33a98a1_25a0801b",
+        "filename": "src/dawn/wire/SupportedFeatures.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-21T14:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d1df3a5_334140b9",
+      "revId": "2b9110f080fe6c59ea8c90d7fe67fa43d706d039",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
