@@ -22,6 +22,30 @@
       },
       "revId": "10cfd0f343f9f4de34e57bcb120c98622541c34d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36630fa2_9c8f8989",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-21T19:39:02Z",
+      "side": 1,
+      "message": "SGTM. Left count\u003d\u003d0 here because it\u0027s just an optimization, and actually we need to make sure it happens after validation anyway (I missed this before)",
+      "parentUuid": "b70ce00e_5d88ad50",
+      "range": {
+        "startLine": 499,
+        "startChar": 6,
+        "endLine": 517,
+        "endChar": 69
+      },
+      "revId": "10cfd0f343f9f4de34e57bcb120c98622541c34d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
