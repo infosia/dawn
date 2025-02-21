@@ -1829,6 +1829,7 @@ MaybeError ExternalVkImageTexture::ExportExternalTexture(VkImageLayout desiredLa
 MaybeError ExternalVkImageTexture::OnBeforeSubmit(CommandRecordingContext* context) {
     context->waitSemaphores.insert(context->waitSemaphores.end(), mWaitRequirements.begin(),
                                    mWaitRequirements.end());
+    //mWaitRequirements.clear();
     return ImportedTextureBase::OnBeforeSubmit(context);
 }
 

@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "dawn/common/DynamicLib.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/vulkan/VulkanInfo.h"
 
 namespace dawn::native::vulkan {
@@ -424,9 +425,13 @@ MaybeError VulkanFunctions::LoadDeviceProcs(VkInstance instance,
 
     // TODO(crbug.com/397448368): This should be queried with GET_DEVICE_PROC instead, but Mali and
     // Intel drivers seem to only provide a non-null function pointer via the instance query.
+        DAWN_DEBUG();
     if (deviceInfo.HasExt(DeviceExt::CooperativeMatrix)) {
+        DAWN_DEBUG();
         GET_INSTANCE_PROC(GetPhysicalDeviceCooperativeMatrixPropertiesKHR);
+        DAWN_DEBUG();
     }
+        DAWN_DEBUG();
 
     return {};
 }
