@@ -68,6 +68,23 @@
       "message": "Thanks for the quick review.",
       "revId": "c871a753fce41222e603dfaab49ae2969414c37a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d50ec722_ca6b81f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-02-21T19:21:07Z",
+      "side": 1,
+      "message": "Looks like one of the votes got removed so it\u0027s not submitable.",
+      "revId": "c871a753fce41222e603dfaab49ae2969414c37a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
