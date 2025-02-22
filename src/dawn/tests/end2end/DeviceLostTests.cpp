@@ -294,15 +294,53 @@ TEST_P(DeviceLostTest, BufferUnmapAfterDeviceLost) {
     buffer.Unmap();
 }
 
-// Test that mappedAtCreation fails after device is lost
-TEST_P(DeviceLostTest, CreateBufferMappedAtCreationFails) {
-    wgpu::BufferDescriptor bufferDescriptor;
-    bufferDescriptor.size = sizeof(float);
-    bufferDescriptor.usage = wgpu::BufferUsage::MapWrite;
-    bufferDescriptor.mappedAtCreation = true;
-
+// Test CreateBuffer behavior after device is lost or destroyed
+TEST_P(DeviceLostTest, CreateBuffer) {
+    uint64_t kStupidLarge = uint64_t(1) << uint64_t(63);
     LoseDeviceForTesting();
-    ExpectObjectIsError(device.CreateBuffer(&bufferDescriptor));
+
+    auto Test = [&](bool expectNull, wgpu::BufferDescriptor* desc) {
+        wgpu::Buffer buffer = device.CreateBuffer(desc);
+        if (expectNull) {
+            EXPECT_EQ(nullptr, buffer.Get());
+        } else {
+            ExpectObjectIsError(buffer);
+            if (desc->mappedAtCreation) {
+                // FIXME: Chrome runs into a case where the buffer is non-null on the client
+                // but null on the server. I thought this shouldn't happen because mappedAtCreation
+                // should be getting wiped in the wire server before creating the buffer.
+                // Anyway, need to figure out how to test this. This check isn't catching it.
+                EXPECT_NE(nullptr, buffer.GetMappedRange());
+            }
+        }
+    };
+
+    auto Tests = [&]() {
+        for (auto usage : {wgpu::BufferUsage::MapWrite, wgpu::BufferUsage::CopyDst}) {
+            wgpu::BufferDescriptor bufferDescriptor;
+            bufferDescriptor.usage = usage;
+
+            bufferDescriptor.size = 4;
+            bufferDescriptor.mappedAtCreation = false;
+            Test(false, &bufferDescriptor);
+
+            bufferDescriptor.size = kStupidLarge;
+            bufferDescriptor.mappedAtCreation = false;
+            Test(false, &bufferDescriptor);
+
+            bufferDescriptor.size = 4;
+            bufferDescriptor.mappedAtCreation = true;
+            Test(false, &bufferDescriptor);
+
+            bufferDescriptor.size = kStupidLarge;
+            bufferDescriptor.mappedAtCreation = true;
+            Test(true, &bufferDescriptor);
+        }
+    };
+
+    Tests();
+    device.Destroy();
+    Tests();
 }
 
 // Test that BufferMapAsync for reading fails after device is lost
