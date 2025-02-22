@@ -257,7 +257,7 @@ class DeviceBase : public ErrorSink,
     SamplerBase* APICreateSampler(const SamplerDescriptor* descriptor);
     ShaderModuleBase* APICreateShaderModule(const ShaderModuleDescriptor* descriptor);
     ShaderModuleBase* APICreateErrorShaderModule(const ShaderModuleDescriptor* descriptor,
-                                                  StringView errorMessage);
+                                                 StringView errorMessage);
     TextureBase* APICreateTexture(const TextureDescriptor* descriptor);
 
     InternalPipelineStore* GetInternalPipelineStore();
@@ -503,6 +503,15 @@ class DeviceBase : public ErrorSink,
 
     ResultOrError<Ref<BindGroupLayoutBase>> CreateEmptyBindGroupLayout();
     ResultOrError<Ref<PipelineLayoutBase>> CreateEmptyPipelineLayout();
+
+    // Create a buffer, and MapAtCreation if needed. If mappedAtCreation=true and this returns
+    // a buffer, the buffer will always be mapped (even if the buffer is an error for any reason,
+    // including device loss). Otherwise this returns a null Ref.
+    //
+    // If isAPICreateBuffer=true, this never returns ErrorData. Instead, it falls back to an error
+    // buffer, and attempts to map that (again returning a null Ref if that fails).
+    ResultOrError<Ref<BufferBase>> CreateBufferInternal(const BufferDescriptor* rawDescriptor,
+                                                        bool isAPICreateBuffer);
 
     Ref<ComputePipelineBase> GetCachedComputePipeline(
         ComputePipelineBase* uninitializedComputePipeline);
