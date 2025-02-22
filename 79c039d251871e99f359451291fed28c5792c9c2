@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "03e29bab_0953f9ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-22T04:11:08Z",
+      "side": 1,
+      "message": "K, I\u0027ve fixed the true/false go to the same block by turning it into a `cond || true` without an if block. I also added in code to determine if there is a premerge and handle it as the old ast path does by wrapping it into an if(true) to make sure reconvergence is the same.",
+      "parentUuid": "eeb7f747_56c59552",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "db986c5a_f8fd468a",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
