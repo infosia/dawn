@@ -234,7 +234,7 @@ class DeviceBase : public ErrorSink,
     // Implementation of API object creation methods. DO NOT use them in a reentrant manner.
     BindGroupBase* APICreateBindGroup(const BindGroupDescriptor* descriptor);
     BindGroupLayoutBase* APICreateBindGroupLayout(const BindGroupLayoutDescriptor* descriptor);
-    BufferBase* APICreateBuffer(const BufferDescriptor* descriptor);
+    BufferBase* APICreateBuffer(const BufferDescriptor* rawDescriptor);
     CommandEncoder* APICreateCommandEncoder(const CommandEncoderDescriptor* descriptor);
     ComputePipelineBase* APICreateComputePipeline(const ComputePipelineDescriptor* descriptor);
     PipelineLayoutBase* APICreatePipelineLayout(const PipelineLayoutDescriptor* descriptor);
@@ -257,7 +257,7 @@ class DeviceBase : public ErrorSink,
     SamplerBase* APICreateSampler(const SamplerDescriptor* descriptor);
     ShaderModuleBase* APICreateShaderModule(const ShaderModuleDescriptor* descriptor);
     ShaderModuleBase* APICreateErrorShaderModule(const ShaderModuleDescriptor* descriptor,
-                                                  StringView errorMessage);
+                                                 StringView errorMessage);
     TextureBase* APICreateTexture(const TextureDescriptor* descriptor);
 
     InternalPipelineStore* GetInternalPipelineStore();
@@ -503,6 +503,9 @@ class DeviceBase : public ErrorSink,
 
     ResultOrError<Ref<BindGroupLayoutBase>> CreateEmptyBindGroupLayout();
     ResultOrError<Ref<PipelineLayoutBase>> CreateEmptyPipelineLayout();
+
+    ResultOrError<UnpackedPtr<BufferDescriptor>> UnpackBufferDescriptor(
+        const BufferDescriptor* rawDescriptor);
 
     Ref<ComputePipelineBase> GetCachedComputePipeline(
         ComputePipelineBase* uninitializedComputePipeline);
