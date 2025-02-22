@@ -50,7 +50,7 @@ struct CopyTextureToBufferCmd;
 
 enum class MapType : uint32_t;
 
-ResultOrError<UnpackedPtr<BufferDescriptor>> ValidateBufferDescriptor(
+ResultOrError<UnpackedPtr<BufferDescriptor>> MaybeValidateBufferDescriptor(
     DeviceBase* device,
     const BufferDescriptor* descriptor);
 
