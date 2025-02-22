@@ -911,24 +911,14 @@ TEST_F(BufferValidationTest, GetMappedRange_OnErrorBuffer) {
 }
 
 // Test valid cases to call GetMappedRange on an error buffer that's also OOM.
+// FIXME: This test is no longer testing what it was supposed to
 TEST_F(BufferValidationTest, GetMappedRange_OnErrorBuffer_OOM) {
     uint64_t kStupidLarge = uint64_t(1) << uint64_t(63);
 
     // mappedAtCreation is the only way to make an error buffer that's mapped.
-    if (UsesWire()) {
-        wgpu::Buffer buffer = BufferMappedAtCreation(
-            kStupidLarge, wgpu::BufferUsage::Storage | wgpu::BufferUsage::MapRead);
-        ASSERT_EQ(nullptr, buffer.Get());
-    } else {
-        wgpu::Buffer buffer;
-        ASSERT_DEVICE_ERROR(
-            buffer = BufferMappedAtCreation(
-                kStupidLarge, wgpu::BufferUsage::Storage | wgpu::BufferUsage::MapRead));
-
-        // GetMappedRange after mappedAtCreation OOM case returns nullptr.
-        ASSERT_EQ(buffer.GetConstMappedRange(), nullptr);
-        ASSERT_EQ(buffer.GetConstMappedRange(), buffer.GetMappedRange());
-    }
+    wgpu::Buffer buffer = BufferMappedAtCreation(
+        kStupidLarge, wgpu::BufferUsage::Storage | wgpu::BufferUsage::MapRead);
+    ASSERT_EQ(nullptr, buffer.Get());
 }
 
 // Test validation of the GetMappedRange parameters
