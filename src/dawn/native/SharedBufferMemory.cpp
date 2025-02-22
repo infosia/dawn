@@ -123,25 +123,29 @@ ResultOrError<Ref<BufferBase>> SharedBufferMemoryBase::CreateBuffer(
     const BufferDescriptor* rawDescriptor) {
     DAWN_TRY(GetDevice()->ValidateIsAlive());
     DAWN_TRY(GetDevice()->ValidateObject(this));
-    // Validate the buffer descriptor.
+
     UnpackedPtr<BufferDescriptor> descriptor;
-    DAWN_TRY_ASSIGN(descriptor, ValidateBufferDescriptor(GetDevice(), rawDescriptor));
+    DAWN_TRY_ASSIGN(descriptor, MaybeValidateBufferDescriptor(GetDevice(), rawDescriptor));
 
-    // Emit a specific error message if the user attempts to create a buffer with Uniform usage.
-    DAWN_INVALID_IF(descriptor->usage & wgpu::BufferUsage::Uniform,
-                    "The buffer usage (%s) contains (%s), which is not allowed on buffers created "
-                    "from SharedBufferMemory.",
-                    descriptor->usage, wgpu::BufferUsage::Uniform);
+    if (GetDevice()->IsValidationEnabled()) {
+        // Emit a specific error message if the user attempts to create a buffer with Uniform usage.
+        DAWN_INVALID_IF(
+            descriptor->usage & wgpu::BufferUsage::Uniform,
+            "The buffer usage (%s) contains (%s), which is not allowed on buffers created "
+            "from SharedBufferMemory.",
+            descriptor->usage, wgpu::BufferUsage::Uniform);
 
-    // Ensure the buffer descriptor usage is a subset of the shared buffer memory's usage.
-    DAWN_INVALID_IF(!IsSubset(descriptor->usage, mProperties.usage),
-                    "The buffer usage (%s) is incompatible with the SharedBufferMemory usage (%s).",
-                    descriptor->usage, mProperties.usage);
+        // Ensure the buffer descriptor usage is a subset of the shared buffer memory's usage.
+        DAWN_INVALID_IF(
+            !IsSubset(descriptor->usage, mProperties.usage),
+            "The buffer usage (%s) is incompatible with the SharedBufferMemory usage (%s).",
+            descriptor->usage, mProperties.usage);
 
-    // Validate that the buffer size exactly matches the shared buffer memory's size.
-    DAWN_INVALID_IF(descriptor->size != mProperties.size,
-                    "SharedBufferMemory size (%u) doesn't match descriptor size (%u).",
-                    mProperties.size, descriptor->size);
+        // Validate that the buffer size exactly matches the shared buffer memory's size.
+        DAWN_INVALID_IF(descriptor->size != mProperties.size,
+                        "SharedBufferMemory size (%u) doesn't match descriptor size (%u).",
+                        mProperties.size, descriptor->size);
+    }
 
     Ref<BufferBase> buffer;
     DAWN_TRY_ASSIGN(buffer, CreateBufferImpl(descriptor));
