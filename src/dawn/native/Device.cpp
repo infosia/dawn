@@ -1225,6 +1225,15 @@ BufferBase* DeviceBase::APICreateBuffer(const BufferDescriptor* descriptor) {
         DAWN_ASSERT(result == nullptr);
         result = BufferBase::MakeError(this, descriptor);
     }
+
+    if (result && descriptor->mappedAtCreation) {
+        // If mappedAtCreation=true and we return a buffer, it will always be mapped
+        // (unless the device is lost).
+
+        // FIXME: This assert is failing during DeviceLostTest. Confused because
+        // I thought it was working.
+        //DAWN_ASSERT(IsLost() ^ (result->APIGetMapState() == wgpu::BufferMapState::Mapped));
+    }
     return ReturnToAPI(std::move(result));
 }
 
@@ -1939,6 +1948,10 @@ ResultOrError<Ref<BindGroupLayoutBase>> DeviceBase::CreateBindGroupLayout(
 
 ResultOrError<Ref<BufferBase>> DeviceBase::CreateBuffer(const BufferDescriptor* rawDescriptor) {
     DAWN_TRY(ValidateIsAlive());
+    if (rawDescriptor->mappedAtCreation && rawDescriptor->size > GetLimits().v1.maxBufferSize) {
+        return Ref<BufferBase>{};
+    }
+
     UnpackedPtr<BufferDescriptor> descriptor;
     if (IsValidationEnabled()) {
         DAWN_TRY_ASSIGN(descriptor, ValidateBufferDescriptor(this, rawDescriptor));
@@ -1950,7 +1963,17 @@ ResultOrError<Ref<BufferBase>> DeviceBase::CreateBuffer(const BufferDescriptor* 
     DAWN_TRY_ASSIGN(buffer, CreateBufferImpl(descriptor));
 
     if (descriptor->mappedAtCreation) {
-        DAWN_TRY(buffer->MapAtCreation());
+        MaybeError result = buffer->MapAtCreation();
+        // If we couldn't map at creation, return nullptr with implementation-defined logging.
+        if (result.IsError()) {
+            // FIXME: make a test that hits this, and make sure the log prints
+            DAWN_ASSERT(false);
+            EmitLog(WGPULoggingType_Info,
+                    absl::StrFormat(
+                        "Failed to allocate memory to map buffer at creation, for %s (size=%llu).",
+                        buffer.Get(), descriptor->size));
+            return Ref<BufferBase>{};
+        }
     }
 
     return std::move(buffer);
