@@ -1220,6 +1220,11 @@ BufferBase* DeviceBase::APICreateBuffer(const BufferDescriptor* descriptor) {
         DAWN_ASSERT(result == nullptr);
         result = BufferBase::MakeError(this, descriptor);
     }
+
+    if (result && descriptor->mappedAtCreation) {
+        // If mappedAtCreation=true and we return a buffer, it will always be mapped.
+        DAWN_ASSERT(result->APIGetMapState() == wgpu::BufferMapState::Mapped);
+    }
     return ReturnToAPI(std::move(result));
 }
 
@@ -1923,6 +1928,10 @@ ResultOrError<Ref<BindGroupLayoutBase>> DeviceBase::CreateBindGroupLayout(
 
 ResultOrError<Ref<BufferBase>> DeviceBase::CreateBuffer(const BufferDescriptor* rawDescriptor) {
     DAWN_TRY(ValidateIsAlive());
+    if (rawDescriptor->mappedAtCreation && rawDescriptor->size > GetLimits().v1.maxBufferSize) {
+        return Ref<BufferBase>{};
+    }
+
     UnpackedPtr<BufferDescriptor> descriptor;
     if (IsValidationEnabled()) {
         DAWN_TRY_ASSIGN(descriptor, ValidateBufferDescriptor(this, rawDescriptor));
@@ -1934,7 +1943,11 @@ ResultOrError<Ref<BufferBase>> DeviceBase::CreateBuffer(const BufferDescriptor* 
     DAWN_TRY_ASSIGN(buffer, CreateBufferImpl(descriptor));
 
     if (descriptor->mappedAtCreation) {
-        DAWN_TRY(buffer->MapAtCreation());
+        MaybeError result = buffer->MapAtCreation();
+        // If we couldn't map, return nullptr, instead of an unmapped error buffer.
+        if (result.IsError()) {
+            return Ref<BufferBase>{};
+        }
     }
 
     return std::move(buffer);

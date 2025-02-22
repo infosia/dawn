@@ -913,26 +913,11 @@ TEST_F(BufferValidationTest, GetMappedRange_OnErrorBuffer) {
 
 // Test valid cases to call GetMappedRange on an error buffer that's also OOM.
 TEST_F(BufferValidationTest, GetMappedRange_OnErrorBuffer_OOM) {
-    // TODO(crbug.com/dawn/1506): new (std::nothrow) crashes on OOM on Mac ARM64 because libunwind
-    // doesn't see the previous catchall try-catch.
-    DAWN_SKIP_TEST_IF(DAWN_PLATFORM_IS(MACOS) && DAWN_PLATFORM_IS(ARM64));
-
     uint64_t kStupidLarge = uint64_t(1) << uint64_t(63);
 
-    if (UsesWire()) {
-        wgpu::Buffer buffer = BufferMappedAtCreation(
-            kStupidLarge, wgpu::BufferUsage::Storage | wgpu::BufferUsage::MapRead);
-        ASSERT_EQ(nullptr, buffer.Get());
-    } else {
-        wgpu::Buffer buffer;
-        ASSERT_DEVICE_ERROR(
-            buffer = BufferMappedAtCreation(
-                kStupidLarge, wgpu::BufferUsage::Storage | wgpu::BufferUsage::MapRead));
-
-        // GetMappedRange after mappedAtCreation OOM case returns nullptr.
-        ASSERT_EQ(buffer.GetConstMappedRange(), nullptr);
-        ASSERT_EQ(buffer.GetConstMappedRange(), buffer.GetMappedRange());
-    }
+    wgpu::Buffer buffer = BufferMappedAtCreation(
+        kStupidLarge, wgpu::BufferUsage::Storage | wgpu::BufferUsage::MapRead);
+    ASSERT_EQ(nullptr, buffer.Get());
 }
 
 // Test validation of the GetMappedRange parameters
