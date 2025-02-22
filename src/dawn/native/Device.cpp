@@ -1216,16 +1216,37 @@ BufferBase* DeviceBase::APICreateBuffer(const BufferDescriptor* descriptor) {
     }
 
     auto deviceLock(GetScopedLock());
+
     if (!hasHostMapped) {
         resultOrError = CreateBuffer(descriptor);
     }
-    Ref<BufferBase> result;
-    if (ConsumedError(std::move(*resultOrError), &result, InternalErrorType::OutOfMemory,
+    Ref<BufferBase> buffer;
+    if (ConsumedError(std::move(*resultOrError), &buffer, InternalErrorType::OutOfMemory,
                       "calling %s.CreateBuffer(%s).", this, descriptor)) {
-        DAWN_ASSERT(result == nullptr);
-        result = BufferBase::MakeError(this, descriptor);
+        DAWN_ASSERT(buffer == nullptr);
+        buffer = BufferBase::MakeError(this, descriptor);
     }
-    return ReturnToAPI(std::move(result));
+    DAWN_ASSERT(buffer);
+
+    if (descriptor->mappedAtCreation) {
+        MaybeError mapResult = buffer->MapAtCreation();
+        // If we couldn't map at creation, return null with implementation-defined logging.
+        if (DAWN_UNLIKELY(mapResult.IsError())) {
+            auto error = mapResult.AcquireError();
+            error->AppendContext("allocating memory to map %s (size=%u) at creation.", buffer.Get(),
+                                 descriptor->size);
+            EmitLog(WGPULoggingType_Info, error->GetFormattedMessage());
+            return nullptr;
+        }
+
+        // If mappedAtCreation=true and we return a buffer, it will always be mapped
+        // (even if the device is lost).
+        DAWN_ASSERT(buffer->APIGetMapState() == wgpu::BufferMapState::Mapped);
+    } else {
+        DAWN_ASSERT(buffer->APIGetMapState() == wgpu::BufferMapState::Unmapped);
+    }
+
+    return ReturnToAPI(std::move(buffer));
 }
 
 CommandEncoder* DeviceBase::APICreateCommandEncoder(const CommandEncoderDescriptor* descriptor) {
@@ -1946,14 +1967,7 @@ ResultOrError<Ref<BufferBase>> DeviceBase::CreateBuffer(const BufferDescriptor* 
         descriptor = Unpack(rawDescriptor);
     }
 
-    Ref<BufferBase> buffer;
-    DAWN_TRY_ASSIGN(buffer, CreateBufferImpl(descriptor));
-
-    if (descriptor->mappedAtCreation) {
-        DAWN_TRY(buffer->MapAtCreation());
-    }
-
-    return std::move(buffer);
+    return CreateBufferImpl(descriptor);
 }
 
 ResultOrError<Ref<ComputePipelineBase>> DeviceBase::CreateComputePipeline(
