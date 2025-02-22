@@ -491,8 +491,9 @@ MaybeError BufferBase::MapAtCreationInternal() {
         if (IsCPUWritableAtCreation()) {
             DAWN_TRY(MapAtCreationImpl());
         } else {
-            // If any of these fail, the buffer will be deleted and replaced with an error
-            // buffer. The staging buffer is used to return mappable data to initialize the
+            // If any of these fail, CreateBuffer will return nullptr (unlike a
+            // validation error, which returns an error buffer).
+            // The staging buffer is used to return mappable data to initialize the
             // buffer contents. Allocate one as large as the real buffer size so that every byte
             // is initialized.
             // TODO(crbug.com/dawn/828): Suballocate and reuse memory from a larger staging

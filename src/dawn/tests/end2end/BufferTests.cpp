@@ -1082,21 +1082,11 @@ TEST_P(BufferTests, BufferMappedAtCreationOOM) {
 
         // Test an enormous buffer fails
         descriptor.size = std::numeric_limits<uint64_t>::max();
-        if (UsesWire()) {
-            wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
-            ASSERT_EQ(nullptr, buffer.Get());
-        } else {
-            ASSERT_DEVICE_ERROR(device.CreateBuffer(&descriptor));
-        }
+        ASSERT_EQ(nullptr, device.CreateBuffer(&descriptor).Get());
 
         // UINT64_MAX may be special cased. Test a smaller, but really large buffer also fails
         descriptor.size = 1ull << 50;
-        if (UsesWire()) {
-            wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
-            ASSERT_EQ(nullptr, buffer.Get());
-        } else {
-            ASSERT_DEVICE_ERROR(device.CreateBuffer(&descriptor));
-        }
+        ASSERT_EQ(nullptr, device.CreateBuffer(&descriptor).Get());
     }
 }
 
