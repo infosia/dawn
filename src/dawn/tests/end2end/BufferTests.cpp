@@ -1013,6 +1013,7 @@ TEST_P(BufferMappedAtCreationTests, ZeroSizedErrorBuffer) {
     ASSERT_DEVICE_ERROR(buffer = device.CreateBuffer(&descriptor));
 
     ASSERT_NE(nullptr, buffer.GetMappedRange());
+    buffer.Unmap();
 }
 
 // Test the result of GetMappedRange when mapped at creation.
@@ -1108,25 +1109,19 @@ TEST_P(BufferTests, BufferMappedAtCreationOOM) {
         descriptor.mappedAtCreation = true;
 
         // Control: test a small buffer works.
-        device.CreateBuffer(&descriptor);
+        wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
+        ASSERT_NE(nullptr, buffer.Get());
+        buffer.Unmap();
 
         // Test an enormous buffer fails
         descriptor.size = std::numeric_limits<uint64_t>::max();
-        if (UsesWire()) {
-            wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
-            ASSERT_EQ(nullptr, buffer.Get());
-        } else {
-            ASSERT_DEVICE_ERROR(device.CreateBuffer(&descriptor));
-        }
+        buffer = device.CreateBuffer(&descriptor);
+        ASSERT_EQ(nullptr, buffer.Get());
 
         // UINT64_MAX may be special cased. Test a smaller, but really large buffer also fails
         descriptor.size = 1ull << 50;
-        if (UsesWire()) {
-            wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
-            ASSERT_EQ(nullptr, buffer.Get());
-        } else {
-            ASSERT_DEVICE_ERROR(device.CreateBuffer(&descriptor));
-        }
+        buffer = device.CreateBuffer(&descriptor);
+        ASSERT_EQ(nullptr, buffer.Get());
     }
 }
 
