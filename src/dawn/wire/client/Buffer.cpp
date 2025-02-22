@@ -186,10 +186,24 @@ class Buffer::MapAsyncEvent : public TrackedEvent {
 WGPUBuffer Buffer::Create(Device* device, const WGPUBufferDescriptor* descriptor) {
     Client* wireClient = device->GetClient();
 
+    bool fakeOOMAtWireClientMap = false;
+    for (const auto* chain = descriptor->nextInChain; chain != nullptr; chain = chain->next) {
+        switch (chain->sType) {
+            case WGPUSType_DawnFakeBufferOOMForTesting: {
+                auto oomForTesting =
+                    reinterpret_cast<const WGPUDawnFakeBufferOOMForTesting*>(chain);
+                fakeOOMAtWireClientMap = oomForTesting->fakeOOMAtWireClientMap;
+            } break;
+            default:
+                break;
+        }
+    }
+
     bool mappable =
         (descriptor->usage & (WGPUBufferUsage_MapRead | WGPUBufferUsage_MapWrite)) != 0 ||
         descriptor->mappedAtCreation;
-    if (mappable && descriptor->size >= std::numeric_limits<size_t>::max()) {
+    if (mappable &&
+        (descriptor->size >= std::numeric_limits<size_t>::max() || fakeOOMAtWireClientMap)) {
         return CreateErrorBufferOOMAtClient(device, descriptor);
     }
 
