@@ -1108,24 +1108,23 @@ TEST_P(BufferTests, BufferMappedAtCreationOOM) {
         descriptor.mappedAtCreation = true;
 
         // Control: test a small buffer works.
-        device.CreateBuffer(&descriptor);
+        {
+            wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
+            ASSERT_NE(nullptr, buffer.Get());
+        }
 
         // Test an enormous buffer fails
-        descriptor.size = std::numeric_limits<uint64_t>::max();
-        if (UsesWire()) {
+        {
+            descriptor.size = std::numeric_limits<uint64_t>::max();
             wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
             ASSERT_EQ(nullptr, buffer.Get());
-        } else {
-            ASSERT_DEVICE_ERROR(device.CreateBuffer(&descriptor));
         }
 
         // UINT64_MAX may be special cased. Test a smaller, but really large buffer also fails
-        descriptor.size = 1ull << 50;
-        if (UsesWire()) {
+        {
+            descriptor.size = 1ull << 50;
             wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
             ASSERT_EQ(nullptr, buffer.Get());
-        } else {
-            ASSERT_DEVICE_ERROR(device.CreateBuffer(&descriptor));
         }
     }
 }
