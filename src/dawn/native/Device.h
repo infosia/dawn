@@ -499,6 +499,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
 
     ResultOrError<Ref<BindGroupLayoutBase>> CreateEmptyBindGroupLayout();
     ResultOrError<Ref<PipelineLayoutBase>> CreateEmptyPipelineLayout();
+    ResultOrError<Ref<BufferBase>> CreateBufferInternal(const BufferDescriptor* rawDescriptor);
 
     Ref<ComputePipelineBase> GetCachedComputePipeline(
         ComputePipelineBase* uninitializedComputePipeline);

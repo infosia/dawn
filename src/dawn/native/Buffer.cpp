@@ -64,27 +64,36 @@ class ErrorBuffer final : public BufferBase {
   public:
     ErrorBuffer(DeviceBase* device, const BufferDescriptor* descriptor)
         : BufferBase(device, descriptor, ObjectBase::kError) {
+        mAllocatedSize = descriptor->size;
         if (descriptor->mappedAtCreation) {
-            // Check that the size can be used to allocate an mFakeMappedData. A malloc(0)
-            // is invalid, and on 32bit systems we should avoid a narrowing conversion that
-            // would make size = 1 << 32 + 1 allocate one byte.
-            bool isValidSize = descriptor->size != 0 &&
-                               descriptor->size < uint64_t(std::numeric_limits<size_t>::max());
-
-            if (isValidSize) {
-                mFakeMappedData =
-                    std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(descriptor->size));
-            }
-            // Since error buffers in this case may allocate memory, we need to track them
-            // for destruction on the device.
+            // Track the ErrorBuffer for destruction so it can be unmapped on destruction.
             GetObjectTrackingList()->Track(this);
         }
     }
 
   private:
-    bool IsCPUWritableAtCreation() const override { DAWN_UNREACHABLE(); }
+    bool IsCPUWritableAtCreation() const override { return true; }
 
-    MaybeError MapAtCreationImpl() override { DAWN_UNREACHABLE(); }
+    MaybeError MapAtCreationImpl() override {
+        DAWN_ASSERT(mFakeMappedData == nullptr);
+
+        // Check that the size can be used to allocate an mFakeMappedData. A malloc(0)
+        // is invalid, and on 32bit systems we should avoid a narrowing conversion that
+        // would make size = 1 << 32 + 1 allocate one byte.
+        uint64_t size = GetSize();
+        bool isValidSize = size != 0 && size < uint64_t(std::numeric_limits<size_t>::max());
+
+        if (isValidSize) {
+            mFakeMappedData = std::unique_ptr<uint8_t[]>(AllocNoThrow<uint8_t>(size));
+        }
+
+        if (mFakeMappedData == nullptr) {
+            return DAWN_OUT_OF_MEMORY_ERROR(
+                "Failed to allocate memory to map ErrorBuffer at creation.");
+        }
+
+        return {};
+    }
 
     MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) override {
         DAWN_UNREACHABLE();
@@ -341,6 +350,7 @@ BufferBase::BufferBase(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& 
       mUsage(descriptor->usage),
       mInternalUsage(AddInternalUsages(device, descriptor->usage)),
       mState(descriptor.Get<BufferHostMappedPointer>() ? BufferState::HostMappedPersistent
+             : descriptor->mappedAtCreation            ? BufferState::NeedsMapAtCreation
                                                        : BufferState::Unmapped) {
     GetObjectTrackingList()->Track(this);
 }
@@ -352,7 +362,8 @@ BufferBase::BufferBase(DeviceBase* device,
       mSize(descriptor->size),
       mUsage(descriptor->usage),
       mInternalUsage(descriptor->usage),
-      mState(descriptor->mappedAtCreation ? BufferState::MappedAtCreation : BufferState::Unmapped) {
+      mState(descriptor->mappedAtCreation ? BufferState::NeedsMapAtCreation
+                                          : BufferState::Unmapped) {
     if (descriptor->mappedAtCreation) {
         mMapOffset = 0;
         mMapSize = mSize;
@@ -396,12 +407,10 @@ ObjectType BufferBase::GetType() const {
 }
 
 uint64_t BufferBase::GetSize() const {
-    DAWN_ASSERT(!IsError());
     return mSize;
 }
 
 uint64_t BufferBase::GetAllocatedSize() const {
-    DAWN_ASSERT(!IsError());
     // The backend must initialize this value.
     DAWN_ASSERT(mAllocatedSize != 0);
     return mAllocatedSize;
@@ -432,9 +441,9 @@ wgpu::BufferMapState BufferBase::APIGetMapState() const {
         case BufferState::Destroyed:
         case BufferState::SharedMemoryNoAccess:
             return wgpu::BufferMapState::Unmapped;
-        default:
+        case BufferState::NeedsMapAtCreation:
+        case BufferState::HostMappedPersistent:
             DAWN_UNREACHABLE();
-            return wgpu::BufferMapState::Unmapped;
     }
 }
 
@@ -479,7 +488,6 @@ MaybeError BufferBase::MapAtCreation() {
 }
 
 MaybeError BufferBase::MapAtCreationInternal() {
-    DAWN_ASSERT(!IsError());
     mMapOffset = 0;
     mMapSize = mSize;
 
@@ -506,9 +514,10 @@ MaybeError BufferBase::MapAtCreationInternal() {
         }
     }
 
-    // Only set the state to mapped at creation if we did no fail any point in this helper.
-    // Otherwise, if we override the default unmapped state before succeeding to create a
+    // Only set the state to mapped at creation if we did not fail at any point in this helper.
+    // Otherwise, if we override the state before succeeding to create a
     // staging buffer, we will have issues when we try to destroy the buffer.
+    DAWN_ASSERT(mState == BufferState::NeedsMapAtCreation);
     mState = BufferState::MappedAtCreation;
     return {};
 }
@@ -529,6 +538,8 @@ MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
         case BufferState::HostMappedPersistent:
         case BufferState::Unmapped:
             return {};
+        case BufferState::NeedsMapAtCreation:
+            break;
     }
     DAWN_UNREACHABLE();
 }
@@ -614,6 +625,8 @@ wgpu::Status BufferBase::APIReadMappedRange(size_t offset, void* data, size_t si
 }
 
 void* BufferBase::GetMappedRange(size_t offset, size_t size, bool writable) {
+    DAWN_ASSERT(mState != BufferState::NeedsMapAtCreation);
+
     if (!CanGetMappedRange(writable, offset, size)) {
         return nullptr;
     }
@@ -670,19 +683,30 @@ MaybeError BufferBase::Unmap() {
 
 void BufferBase::UnmapInternal(WGPUMapAsyncStatus status, std::string_view message) {
     // Unmaps resources on the backend.
-    if (mState == BufferState::PendingMap) {
-        // TODO(crbug.com/dawn/831): in order to be thread safe, mutation of the
-        // state and pending map event needs to be atomic w.r.t. MapAsyncEvent::Complete.
-        Ref<MapAsyncEvent> pendingMapEvent = std::move(mPendingMapEvent);
-        pendingMapEvent->UnmapEarly(status, message);
-        GetInstance()->GetEventManager()->SetFutureReady(pendingMapEvent.Get());
-        UnmapImpl();
-    } else if (mState == BufferState::Mapped) {
-        UnmapImpl();
-    } else if (mState == BufferState::MappedAtCreation) {
-        if (!IsError() && mSize != 0 && IsCPUWritableAtCreation()) {
+    switch (mState) {
+        case BufferState::PendingMap: {
+            // TODO(crbug.com/dawn/831): in order to be thread safe, mutation of the
+            // state and pending map event needs to be atomic w.r.t. MapAsyncEvent::Complete.
+            Ref<MapAsyncEvent> pendingMapEvent = std::move(mPendingMapEvent);
+            pendingMapEvent->UnmapEarly(status, message);
+            GetInstance()->GetEventManager()->SetFutureReady(pendingMapEvent.Get());
             UnmapImpl();
-        }
+        } break;
+        case BufferState::Mapped:
+            UnmapImpl();
+            break;
+        case BufferState::MappedAtCreation:
+            if (mSize != 0 && IsCPUWritableAtCreation()) {
+                UnmapImpl();
+            }
+            break;
+        case BufferState::Unmapped:
+        case BufferState::NeedsMapAtCreation:
+        case BufferState::HostMappedPersistent:
+        case BufferState::SharedMemoryNoAccess:
+            break;
+        case BufferState::Destroyed:
+            DAWN_UNREACHABLE();
     }
 
     mState = BufferState::Unmapped;
@@ -722,6 +746,8 @@ MaybeError BufferBase::ValidateMapAsync(wgpu::MapMode mode,
             return DAWN_VALIDATION_ERROR("%s used without shared memory access.", this);
         case BufferState::Unmapped:
             break;
+        case BufferState::NeedsMapAtCreation:
+            DAWN_UNREACHABLE();
     }
 
     bool isReadMode = mode & wgpu::MapMode::Read;
@@ -788,6 +814,9 @@ bool BufferBase::CanGetMappedRange(bool writable, size_t offset, size_t size) co
         case BufferState::SharedMemoryNoAccess:
         case BufferState::Destroyed:
             return false;
+
+        case BufferState::NeedsMapAtCreation:
+            break;
     }
     DAWN_UNREACHABLE();
 }
