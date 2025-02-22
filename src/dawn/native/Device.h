@@ -197,6 +197,7 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
         const BindGroupLayoutDescriptor* descriptor,
         bool allowInternalBinding = false);
     ResultOrError<Ref<BufferBase>> CreateBuffer(const BufferDescriptor* rawDescriptor);
+    ResultOrError<Ref<BufferBase>> CreateErrorBuffer(const BufferDescriptor* descriptor);
     ResultOrError<Ref<CommandEncoder>> CreateCommandEncoder(
         const CommandEncoderDescriptor* descriptor = nullptr);
     ResultOrError<Ref<ComputePipelineBase>> CreateComputePipeline(

@@ -76,6 +76,7 @@ class BufferBase : public SharedResource {
         PendingMap,
         Mapped,
         MappedAtCreation,
+        NeedsMapAtCreation,
         HostMappedPersistent,
         SharedMemoryNoAccess,
         Destroyed,
