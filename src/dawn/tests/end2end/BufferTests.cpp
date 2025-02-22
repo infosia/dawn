@@ -1056,10 +1056,6 @@ TEST_P(BufferTests, CreateBufferOOM) {
 
 // Test that a very large buffer mappedAtCreation fails gracefully.
 TEST_P(BufferTests, BufferMappedAtCreationOOM) {
-    // TODO(crbug.com/dawn/1506): new (std::nothrow) crashes on OOM on Mac ARM64 because libunwind
-    // doesn't see the previous catchall try-catch.
-    DAWN_SUPPRESS_TEST_IF(DAWN_PLATFORM_IS(MACOS) && DAWN_PLATFORM_IS(ARM64));
-
     // TODO(crbug.com/346377856): fails on ANGLE/D3D11, but is likely a Dawn/GL bug that only
     // repros on Windows for some reason
     DAWN_TEST_UNSUPPORTED_IF(IsOpenGLES() && IsANGLED3D11());
@@ -1069,11 +1065,14 @@ TEST_P(BufferTests, BufferMappedAtCreationOOM) {
     DAWN_TEST_UNSUPPORTED_IF(IsAsan());
     DAWN_TEST_UNSUPPORTED_IF(IsTsan());
 
-    // Test non-mappable buffer
-    {
+    for (wgpu::BufferUsage usage : {
+             wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::None,
+             wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite,
+             wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead,
+         }) {
         wgpu::BufferDescriptor descriptor;
         descriptor.size = 4;
-        descriptor.usage = wgpu::BufferUsage::CopyDst;
+        descriptor.usage = usage;
         descriptor.mappedAtCreation = true;
 
         // Control: test a small buffer works.
@@ -1081,50 +1080,11 @@ TEST_P(BufferTests, BufferMappedAtCreationOOM) {
 
         // Test an enormous buffer fails
         descriptor.size = std::numeric_limits<uint64_t>::max();
-        if (UsesWire()) {
-            wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
-            ASSERT_EQ(nullptr, buffer.Get());
-        } else {
-            ASSERT_DEVICE_ERROR(device.CreateBuffer(&descriptor));
-        }
+        ASSERT_EQ(nullptr, device.CreateBuffer(&descriptor).Get());
 
         // UINT64_MAX may be special cased. Test a smaller, but really large buffer also fails
         descriptor.size = 1ull << 50;
-        if (UsesWire()) {
-            wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
-            ASSERT_EQ(nullptr, buffer.Get());
-        } else {
-            ASSERT_DEVICE_ERROR(device.CreateBuffer(&descriptor));
-        }
-    }
-
-    // Test mappable buffer
-    {
-        wgpu::BufferDescriptor descriptor;
-        descriptor.size = 4;
-        descriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
-        descriptor.mappedAtCreation = true;
-
-        // Control: test a small buffer works.
-        device.CreateBuffer(&descriptor);
-
-        // Test an enormous buffer fails
-        descriptor.size = std::numeric_limits<uint64_t>::max();
-        if (UsesWire()) {
-            wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
-            ASSERT_EQ(nullptr, buffer.Get());
-        } else {
-            ASSERT_DEVICE_ERROR(device.CreateBuffer(&descriptor));
-        }
-
-        // UINT64_MAX may be special cased. Test a smaller, but really large buffer also fails
-        descriptor.size = 1ull << 50;
-        if (UsesWire()) {
-            wgpu::Buffer buffer = device.CreateBuffer(&descriptor);
-            ASSERT_EQ(nullptr, buffer.Get());
-        } else {
-            ASSERT_DEVICE_ERROR(device.CreateBuffer(&descriptor));
-        }
+        ASSERT_EQ(nullptr, device.CreateBuffer(&descriptor).Get());
     }
 }
 
@@ -1144,8 +1104,10 @@ TEST_P(BufferTests, CreateBufferOOMMapAsync) {
         ASSERT_DEVICE_ERROR(buffer = device.CreateBuffer(&descriptor));
 
         bool done = false;
-        ASSERT_DEVICE_ERROR(buffer.MapAsync(wgpu::MapMode::Write, 0, 4,
-                                            wgpu::CallbackMode::AllowProcessEvents,
+        ASSERT_DEVICE_ERROR(buffer.MapAsync((descriptor.usage & wgpu::BufferUsage::MapRead)
+                                                ? wgpu::MapMode::Read
+                                                : wgpu::MapMode::Write,
+                                            0, 4, wgpu::CallbackMode::AllowProcessEvents,
                                             [&done](wgpu::MapAsyncStatus status, wgpu::StringView) {
                                                 EXPECT_EQ(wgpu::MapAsyncStatus::Error, status);
                                                 done = true;
@@ -1156,16 +1118,21 @@ TEST_P(BufferTests, CreateBufferOOMMapAsync) {
         }
     };
 
-    wgpu::BufferDescriptor descriptor;
-    descriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
+    for (wgpu::BufferUsage usage : {
+             wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite,
+             wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead,
+         }) {
+        wgpu::BufferDescriptor descriptor;
+        descriptor.usage = usage;
 
-    // Test an enormous buffer
-    descriptor.size = std::numeric_limits<uint64_t>::max();
-    RunTest(descriptor);
+        // Test an enormous buffer
+        descriptor.size = std::numeric_limits<uint64_t>::max();
+        RunTest(descriptor);
 
-    // UINT64_MAX may be special cased. Test a smaller, but really large buffer also fails
-    descriptor.size = 1ull << 50;
-    RunTest(descriptor);
+        // UINT64_MAX may be special cased. Test a smaller, but really large buffer also fails
+        descriptor.size = 1ull << 50;
+        RunTest(descriptor);
+    }
 }
 
 DAWN_INSTANTIATE_TEST(BufferTests,

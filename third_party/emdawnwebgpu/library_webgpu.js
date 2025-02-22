@@ -1485,6 +1485,18 @@ var LibraryWebGPU = {
     };
 
     var device = WebGPU.getJsObject(devicePtr);
+    var buffer;
+    try {
+      buffer = device.createBuffer(desc);
+    } catch (ex) {
+      if (ex instanceof RangeError) {
+        // This should only happen if mapping-at-creation ran out of memory.
+        {{{ gpu.makeCheck('mappedAtCreation') }}}
+        return {{{ gpu.NULLPTR }}};
+      } else {
+        throw;
+      }
+    }
     WebGPU.Internals.jsObjectInsert(bufferPtr, device.createBuffer(desc));
     if (mappedAtCreation) {
       WebGPU.Internals.bufferOnUnmaps[bufferPtr] = [];
