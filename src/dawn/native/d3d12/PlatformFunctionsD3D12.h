@@ -89,8 +89,8 @@ class PlatformFunctions final : public d3d::PlatformFunctions {
     MaybeError LoadD3D11();
     void LoadPIXRuntime();
     void LoadDXCLibraries();
-    void LoadDXIL(const std::string& baseWindowsSDKPath);
-    void LoadDXCompiler(const std::string& baseWindowsSDKPath);
+    void LoadDXIL();
+    void LoadDXCompiler();
 
     DynamicLib mD3D12Lib;
     DynamicLib mD3D11Lib;
