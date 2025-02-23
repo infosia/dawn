@@ -1458,7 +1458,8 @@ $B1: {  # root
 
     auto result = RunWithFailure(SubstituteOverrides, cfg);
     ASSERT_NE(result, Success);
-    EXPECT_EQ(result.Failure().reason.Str(), R"(error: index 10 out of bounds [0..3])");
+    EXPECT_EQ(result.Failure().reason.Str(),
+              R"(error: index 10 out of bounds  [0..3] is obj value = array<u32, 4>  u32)");
 }
 
 TEST_F(IR_SubstituteOverridesTest, OverrideRuntimeSizedArrayFailure) {
@@ -1500,7 +1501,7 @@ $B1: {  # root
 
     auto result = RunWithFailure(SubstituteOverrides, cfg);
     ASSERT_NE(result, Success);
-    EXPECT_EQ(result.Failure().reason.Str(), R"(error: index -10 out of bounds)");
+    EXPECT_EQ(result.Failure().reason.Str(), R"(error: index -10 out of bounds )");
 }
 
 TEST_F(IR_SubstituteOverridesTest, OverrideConstruct) {

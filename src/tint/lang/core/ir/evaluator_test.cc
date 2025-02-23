@@ -126,7 +126,7 @@ TEST_F(IR_EvaluatorTest, RuntimeArray_OutOfBoundsAccess) {
 
     ASSERT_NE(res, Success);
 
-    EXPECT_EQ(res.Failure().reason.Str(), R"(error: index -1 out of bounds)");
+    EXPECT_EQ(res.Failure().reason.Str(), R"(error: index -1 out of bounds )");
 }
 
 TEST_F(IR_EvaluatorTest, ConstructStruct_Access) {

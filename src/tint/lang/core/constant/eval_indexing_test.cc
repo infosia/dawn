@@ -53,7 +53,8 @@ TEST_F(ConstEvalTest, Vec3_Index_OOB_High) {
     WrapInFunction(expr);
 
     EXPECT_FALSE(r()->Resolve()) << r()->error();
-    EXPECT_EQ(r()->error(), "12:34 error: index 3 out of bounds [0..2]");
+    EXPECT_EQ(r()->error(),
+              "12:34 error: index 3 out of bounds  [0..2] is obj value = vec3<i32>  i32");
 }
 
 TEST_F(ConstEvalTest, Vec3_Index_OOB_Low) {
@@ -61,7 +62,8 @@ TEST_F(ConstEvalTest, Vec3_Index_OOB_Low) {
     WrapInFunction(expr);
 
     EXPECT_FALSE(r()->Resolve()) << r()->error();
-    EXPECT_EQ(r()->error(), "12:34 error: index -3 out of bounds [0..2]");
+    EXPECT_EQ(r()->error(),
+              "12:34 error: index -3 out of bounds  [0..2] is obj value = vec3<i32>  i32");
 }
 
 TEST_F(ConstEvalTest, Vec3_Index_Via_Ptr_OOB_High) {
@@ -71,7 +73,9 @@ TEST_F(ConstEvalTest, Vec3_Index_Via_Ptr_OOB_High) {
     WrapInFunction(a, p, expr);
 
     EXPECT_FALSE(r()->Resolve()) << r()->error();
-    EXPECT_EQ(r()->error(), "12:34 error: index 12 out of bounds [0..2]");
+    EXPECT_EQ(r()->error(),
+              "12:34 error: index 12 out of bounds  [0..2] is type value = ptr<function, "
+              "vec3<i32>, read_write>  i32");
 }
 
 TEST_F(ConstEvalTest, Vec3_Index_Via_Ptr_OOB_Low) {
@@ -81,7 +85,9 @@ TEST_F(ConstEvalTest, Vec3_Index_Via_Ptr_OOB_Low) {
     WrapInFunction(a, p, expr);
 
     EXPECT_FALSE(r()->Resolve()) << r()->error();
-    EXPECT_EQ(r()->error(), "12:34 error: index -3 out of bounds [0..2]");
+    EXPECT_EQ(r()->error(),
+              "12:34 error: index -3 out of bounds  [0..2] is type value = ptr<function, "
+              "vec3<i32>, read_write>  i32");
 }
 
 namespace Swizzle {
@@ -243,7 +249,8 @@ TEST_F(ConstEvalTest, Mat3x2_Index_OOB_High) {
     WrapInFunction(expr);
 
     EXPECT_FALSE(r()->Resolve()) << r()->error();
-    EXPECT_EQ(r()->error(), "12:34 error: index 3 out of bounds [0..2]");
+    EXPECT_EQ(r()->error(),
+              "12:34 error: index 3 out of bounds  [0..2] is obj value = mat3x2<f32>  vec2<f32>");
 }
 
 TEST_F(ConstEvalTest, Mat3x2_Index_OOB_Low) {
@@ -254,7 +261,8 @@ TEST_F(ConstEvalTest, Mat3x2_Index_OOB_Low) {
     WrapInFunction(expr);
 
     EXPECT_FALSE(r()->Resolve()) << r()->error();
-    EXPECT_EQ(r()->error(), "12:34 error: index -3 out of bounds [0..2]");
+    EXPECT_EQ(r()->error(),
+              "12:34 error: index -3 out of bounds  [0..2] is obj value = mat3x2<f32>  vec2<f32>");
 }
 
 TEST_F(ConstEvalTest, Array_vec3_f32_Index) {
@@ -295,7 +303,9 @@ TEST_F(ConstEvalTest, Array_vec3_f32_Index_OOB_High) {
     WrapInFunction(expr);
 
     EXPECT_FALSE(r()->Resolve()) << r()->error();
-    EXPECT_EQ(r()->error(), "12:34 error: index 2 out of bounds [0..1]");
+    EXPECT_EQ(
+        r()->error(),
+        "12:34 error: index 2 out of bounds  [0..1] is obj value = array<vec3<f32>, 2>  vec3<f32>");
 }
 
 TEST_F(ConstEvalTest, Array_vec3_f32_Index_OOB_Low) {
@@ -306,7 +316,9 @@ TEST_F(ConstEvalTest, Array_vec3_f32_Index_OOB_Low) {
     WrapInFunction(expr);
 
     EXPECT_FALSE(r()->Resolve()) << r()->error();
-    EXPECT_EQ(r()->error(), "12:34 error: index -2 out of bounds [0..1]");
+    EXPECT_EQ(r()->error(),
+              "12:34 error: index -2 out of bounds  [0..1] is obj value = array<vec3<f32>, 2>  "
+              "vec3<f32>");
 }
 
 TEST_F(ConstEvalTest, RuntimeArray_vec3_f32_Index_OOB_Low) {
@@ -316,7 +328,7 @@ TEST_F(ConstEvalTest, RuntimeArray_vec3_f32_Index_OOB_Low) {
     WrapInFunction(expr);
 
     EXPECT_FALSE(r()->Resolve()) << r()->error();
-    EXPECT_EQ(r()->error(), "12:34 error: index -2 out of bounds");
+    EXPECT_EQ(r()->error(), "12:34 error: index -2 out of bounds ");
 }
 
 TEST_F(ConstEvalTest, ChainedIndex) {

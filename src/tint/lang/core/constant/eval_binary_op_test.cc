@@ -1780,7 +1780,8 @@ TEST_F(ConstEvalTest, NonShortCircuit_And_Invalid_Index) {
     GlobalConst("result", binary);
 
     EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(r()->error(), "12:34 error: index 3 out of bounds [0..2]");
+    EXPECT_EQ(r()->error(),
+              "12:34 error: index 3 out of bounds  [0..2] is obj value = array<i32, 3>  i32");
 }
 
 TEST_F(ConstEvalTest, ShortCircuit_And_Error_Index) {
@@ -1839,7 +1840,8 @@ TEST_F(ConstEvalTest, NonShortCircuit_Or_Invalid_Index) {
     GlobalConst("result", binary);
 
     EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(r()->error(), "12:34 error: index 3 out of bounds [0..2]");
+    EXPECT_EQ(r()->error(),
+              "12:34 error: index 3 out of bounds  [0..2] is obj value = array<i32, 3>  i32");
 }
 
 TEST_F(ConstEvalTest, ShortCircuit_Or_Error_Index) {

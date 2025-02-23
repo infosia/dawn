@@ -1413,9 +1413,16 @@ Eval::Result Eval::Index(const Value* obj_val,
 
     AInt idx = idx_val->ValueAs<AInt>();
     if (idx < 0 || (el.count > 0 && idx >= el.count)) {
-        auto& err = AddError(idx_source) << "index " << idx << " out of bounds";
+        auto& err = AddError(idx_source) << "index " << idx << " out of bounds ";
         if (el.count > 0) {
             err << " [0.." + std::to_string(el.count - 1) + "]";
+            if (obj_val) {
+                err << " is obj value = " << obj_val->Type()->FriendlyName() << "  "
+                    << obj_val->Type()->Elements().type->FriendlyName();
+            } else {
+                err << " is type value = " << obj_ty->FriendlyName() << "  "
+                    << obj_ty->UnwrapPtrOrRef()->Elements().type->FriendlyName();
+            }
         }
 
         if (use_runtime_semantics_) {
