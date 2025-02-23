@@ -138,7 +138,7 @@ Evaluator::EvalResult Evaluator::EvalAccess(core::ir::Access* a) {
         }
         TINT_ASSERT(val.Get()->Is<core::constant::Value>());
 
-        auto res = const_eval_.Index(obj, a->Result(0)->Type(), val.Get(), SourceOf(a));
+        auto res = const_eval_.Index(obj, a->Object()->Type(), val.Get(), SourceOf(a));
         if (res != Success) {
             return Failure();
         }
