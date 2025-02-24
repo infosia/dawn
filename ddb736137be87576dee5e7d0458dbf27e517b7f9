@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3011f4bc_4c225bae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-24T20:22:46Z",
+      "side": 1,
+      "message": "oops, I forgot that since https://dawn-review.googlesource.com/c/dawn/+/196174 even these tags would affect Dawn compilation. Fixed.",
+      "revId": "ddb736137be87576dee5e7d0458dbf27e517b7f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
