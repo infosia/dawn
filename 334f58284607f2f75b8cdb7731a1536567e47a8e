@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95c071de_471c9019",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-24T11:07:07Z",
+      "side": 1,
+      "message": "nit: `immediates` is shorter and imho makes the code more clear. Ditto in other places.",
+      "range": {
+        "startLine": 1086,
+        "startChar": 67,
+        "endLine": 1086,
+        "endChar": 98
+      },
+      "revId": "334f58284607f2f75b8cdb7731a1536567e47a8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b11bc4e3_156ca5e3",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-24T11:07:07Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "334f58284607f2f75b8cdb7731a1536567e47a8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2cbf541_64ed6433",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1574,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-24T11:07:07Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "334f58284607f2f75b8cdb7731a1536567e47a8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a728a66b_fe03582a",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1607,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-24T11:07:07Z",
+      "side": 1,
+      "message": "This should live at [1] if we want to support immediates in render bundles.\n\nAlso we need to clarify with the group what happens on RenderBundle start/end because at the moment no \"bindings\" state is inherited in render bundles. So let\u0027s start discussing there and add a TODO in [2] to revisit once the group has made a decision. The who options I see is that either immediates are inherited, or that they are cleared to 0.",
+      "revId": "334f58284607f2f75b8cdb7731a1536567e47a8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ad260c9_020e9b63",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-24T11:07:07Z",
+      "side": 1,
+      "message": "Can we skip the command in the frontend if size is 0 instead? Ditto for compute.",
+      "revId": "334f58284607f2f75b8cdb7731a1536567e47a8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "396584a8_e123e83a",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-24T11:07:07Z",
+      "side": 1,
+      "message": "The max number of immediates is hardcoded in some frontend data structures so we can put this logic in the frontend like kMaxBindGroups. https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Limits.cpp;drc\u003da04b6a4f5e0447f04513cfd2305b6460345972e0;l\u003d338\n\nThe Vulkan limits are guaranteed to be much bigger at 128. So here we can hardcode that it is kMaxImmediateBytes, and have checks like these with comments explaining that if they break, we are using too many push constants in the worst case.\n\n```\nconstexpr uint32_t kMinVulkanPushConstants \u003d 128;\nDAWN_ASSERT(vkLimits.maxPushConstantsSize \u003e\u003d kMinVulkanPushConstants);\nstatic_assert(kMinVulkanPushConstants  \u003e\u003d sizeof(RenderImmediateConstants));\n// same for compute\n```",
+      "revId": "334f58284607f2f75b8cdb7731a1536567e47a8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cb2424f_47d98c5a",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-24T11:07:07Z",
+      "side": 1,
+      "message": "We also need validation tests for the compatibity of `PipelineLayout::immediateDataByteSize` and the shader in `third_party/dawn/src/dawn/tests/unittests/validation/ImmediateDataTests.cpp` as well as tests that we check that value against the limit. Also that the defaulted pipeline layouts check against that limit.",
+      "revId": "334f58284607f2f75b8cdb7731a1536567e47a8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fac6946_db8e698c",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-24T11:07:07Z",
+      "side": 1,
+      "message": "If the feature is enabled then the limit is always `kMaxImmediates` from `Constants.h` unless we request a higher limit (but that can be tested in the CTS)",
+      "revId": "334f58284607f2f75b8cdb7731a1536567e47a8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81ee443d_51af90df",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-24T11:07:07Z",
+      "side": 1,
+      "message": "Can we have TODOs for a lot more tests? Calling SetImmediate multiple times, at an offset, changing pipelines, including for example between using frag_depth or not because we know it needs special handling in Vulkan (and Metal in the future). That the values start at 0, etc.",
+      "revId": "334f58284607f2f75b8cdb7731a1536567e47a8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
