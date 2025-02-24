@@ -32,9 +32,15 @@
 namespace dawn::native::metal {
 
 BindGroup::BindGroup(Device* device, const BindGroupDescriptor* descriptor)
-    : BindGroupBase(this, device, descriptor) {}
+    : BindGroupBase(this, device, descriptor) {
+    (void)BindGroupBase::Initialize(descriptor);
+}
 
 BindGroup::~BindGroup() = default;
+
+MaybeError BindGroup::InitializeImpl() {
+    return {};
+}
 
 void BindGroup::DestroyImpl() {
     BindGroupBase::DestroyImpl();
