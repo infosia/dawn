@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6b714d0_b610dfcc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000248
+      },
+      "writtenOn": "2025-02-24T17:57:36Z",
+      "side": 1,
+      "message": "Okay. I see that when the SRM is not accessed, then the pending fences will be moved to `fenceList` at [1] - however I don\u0027t see where those fences are being waited on. It looks like the fences would be just copied directly to the output state.\n\n`lastUsageSerial` would be `kBeginningOfGPUTime` if SRM was never accessed and [2] will not be taken. \n\nThe contents of `fenceList` will be moved to the output state in the next block [3].\n\nAm I missing something?\n\n[1] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/SharedResourceMemory.cpp;l\u003d281\n[2] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/SharedResourceMemory.cpp;l\u003d292\n[3] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/SharedResourceMemory.cpp;l\u003d303",
+      "parentUuid": "99684c05_34f762fa",
+      "revId": "d967ca745074541630fee1add5ad20de3cebdb39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "152132c9_4c7cd0b7",
