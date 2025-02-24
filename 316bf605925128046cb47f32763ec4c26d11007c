@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29c766fa_dbde86ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-02-24T08:05:27Z",
+      "side": 1,
+      "message": "This CL implements SetImmediateData() in vulkan backend. PTAL, thanks!",
+      "revId": "316bf605925128046cb47f32763ec4c26d11007c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
