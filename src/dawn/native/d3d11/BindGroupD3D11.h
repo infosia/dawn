@@ -45,6 +45,8 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
     BindGroup(Device* device, const BindGroupDescriptor* descriptor);
     ~BindGroup() override;
 
+    MaybeError InitializeImpl() override;
+
     void DestroyImpl() override;
 };
 
