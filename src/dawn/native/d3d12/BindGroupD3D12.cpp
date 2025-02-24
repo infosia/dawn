@@ -54,13 +54,18 @@ BindGroup::BindGroup(Device* device,
                      const BindGroupDescriptor* descriptor,
                      uint32_t viewSizeIncrement,
                      const CPUDescriptorHeapAllocation& viewAllocation)
-    : BindGroupBase(this, device, descriptor) {
-    BindGroupLayout* bgl = ToBackend(GetLayout());
+    : BindGroupBase(this, device, descriptor), mCPUViewAllocation(viewAllocation) {
+    (void)BindGroupBase::Initialize(descriptor);
+}
 
-    mCPUViewAllocation = viewAllocation;
+BindGroup::~BindGroup() = default;
+
+MaybeError BindGroup::InitializeImpl() {
+    BindGroupLayout* bgl = ToBackend(GetLayout());
 
     const auto& descriptorHeapOffsets = bgl->GetDescriptorHeapOffsets();
 
+    Device* device = ToBackend(GetDevice());
     ID3D12Device* d3d12Device = device->GetD3D12Device();
 
     // It's not necessary to create descriptors in the descriptor heap for dynamic resources.
@@ -217,9 +222,9 @@ BindGroup::BindGroup(Device* device,
                 GetBindingAsBufferBinding(bindingIndex).size;
         }
     }
-}
 
-BindGroup::~BindGroup() = default;
+    return {};
+}
 
 void BindGroup::DestroyImpl() {
     BindGroupBase::DestroyImpl();
