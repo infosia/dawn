@@ -59,10 +59,6 @@ class BindGroupLayout final : public BindGroupLayoutInternalBase {
                                                     const BindGroupDescriptor* descriptor);
     void DeallocateBindGroup(BindGroup* bindGroup, CPUDescriptorHeapAllocation* viewAllocation);
 
-    // The offset (in descriptor count) into the corresponding descriptor heap. Not valid for
-    // dynamic binding indexes.
-    ityp::span<BindingIndex, const uint32_t> GetDescriptorHeapOffsets() const;
-
     // The D3D shader register that the Dawn binding index is mapped to by this bind group
     // layout.
     uint32_t GetShaderRegister(BindingIndex bindingIndex) const;

@@ -52,174 +52,14 @@ ResultOrError<Ref<BindGroup>> BindGroup::Create(Device* device,
 
 BindGroup::BindGroup(Device* device,
                      const BindGroupDescriptor* descriptor,
-                     uint32_t viewSizeIncrement,
                      const CPUDescriptorHeapAllocation& viewAllocation)
-    : BindGroupBase(this, device, descriptor) {
-    BindGroupLayout* bgl = ToBackend(GetLayout());
-
-    mCPUViewAllocation = viewAllocation;
-
-    const auto& descriptorHeapOffsets = bgl->GetDescriptorHeapOffsets();
-
-    ID3D12Device* d3d12Device = device->GetD3D12Device();
-
-    // It's not necessary to create descriptors in the descriptor heap for dynamic resources.
-    // This is because they are created as root descriptors which are never heap allocated.
-    // Since dynamic buffers are packed in the front, we can skip over these bindings by
-    // starting from the dynamic buffer count.
-    for (BindingIndex bindingIndex : Range(bgl->GetDynamicBufferCount(), bgl->GetBindingCount())) {
-        const BindingInfo& bindingInfo = bgl->GetBindingInfo(bindingIndex);
-
-        // Increment size does not need to be stored and is only used to get a handle
-        // local to the allocation with OffsetFrom().
-        MatchVariant(
-            bindingInfo.bindingLayout,
-            [&](const BufferBindingInfo& layout) {
-                BufferBinding binding = GetBindingAsBufferBinding(bindingIndex);
-
-                ID3D12Resource* resource = ToBackend(binding.buffer)->GetD3D12Resource();
-                if (resource == nullptr) {
-                    // The Buffer was destroyed. Skip creating buffer views since there is no
-                    // resource. This bind group won't be used as it is an error to submit a
-                    // command buffer that references destroyed resources.
-                    return;
-                }
-
-                switch (layout.type) {
-                    case wgpu::BufferBindingType::Uniform: {
-                        D3D12_CONSTANT_BUFFER_VIEW_DESC desc;
-                        desc.SizeInBytes =
-                            Align(binding.size, D3D12_CONSTANT_BUFFER_DATA_PLACEMENT_ALIGNMENT);
-                        desc.BufferLocation = ToBackend(binding.buffer)->GetVA() + binding.offset;
-
-                        d3d12Device->CreateConstantBufferView(
-                            &desc, viewAllocation.OffsetFrom(viewSizeIncrement,
-                                                             descriptorHeapOffsets[bindingIndex]));
-                        break;
-                    }
-                    case wgpu::BufferBindingType::Storage:
-                    case kInternalStorageBufferBinding: {
-                        // Since Tint outputs HLSL shaders with RWByteAddressBuffer,
-                        // we must use D3D12_BUFFER_UAV_FLAG_RAW when making the
-                        // UNORDERED_ACCESS_VIEW_DESC. Using D3D12_BUFFER_UAV_FLAG_RAW requires
-                        // that we use DXGI_FORMAT_R32_TYPELESS as the format of the view.
-                        // DXGI_FORMAT_R32_TYPELESS requires that the element size be 4
-                        // byte aligned. Since binding.size and binding.offset are in bytes,
-                        // we need to divide by 4 to obtain the element size.
-                        D3D12_UNORDERED_ACCESS_VIEW_DESC desc;
-                        desc.Buffer.NumElements = binding.size / 4;
-                        desc.Format = DXGI_FORMAT_R32_TYPELESS;
-                        desc.ViewDimension = D3D12_UAV_DIMENSION_BUFFER;
-                        desc.Buffer.FirstElement = binding.offset / 4;
-                        desc.Buffer.StructureByteStride = 0;
-                        desc.Buffer.CounterOffsetInBytes = 0;
-                        desc.Buffer.Flags = D3D12_BUFFER_UAV_FLAG_RAW;
-
-                        d3d12Device->CreateUnorderedAccessView(
-                            resource, nullptr, &desc,
-                            viewAllocation.OffsetFrom(viewSizeIncrement,
-                                                      descriptorHeapOffsets[bindingIndex]));
-                        break;
-                    }
-                    case wgpu::BufferBindingType::ReadOnlyStorage: {
-                        // Like StorageBuffer, Tint outputs HLSL shaders for readonly
-                        // storage buffer with ByteAddressBuffer. So we must use
-                        // D3D12_BUFFER_SRV_FLAG_RAW when making the SRV descriptor. And it has
-                        // similar requirement for format, element size, etc.
-                        D3D12_SHADER_RESOURCE_VIEW_DESC desc;
-                        desc.Format = DXGI_FORMAT_R32_TYPELESS;
-                        desc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
-                        desc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-                        desc.Buffer.FirstElement = binding.offset / 4;
-                        desc.Buffer.NumElements = binding.size / 4;
-                        desc.Buffer.StructureByteStride = 0;
-                        desc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_RAW;
-                        d3d12Device->CreateShaderResourceView(
-                            resource, &desc,
-                            viewAllocation.OffsetFrom(viewSizeIncrement,
-                                                      descriptorHeapOffsets[bindingIndex]));
-                        break;
-                    }
-                    case wgpu::BufferBindingType::BindingNotUsed:
-                    case wgpu::BufferBindingType::Undefined:
-                        DAWN_UNREACHABLE();
-                }
-            },
-            [&](const TextureBindingInfo&) {
-                auto* view = ToBackend(GetBindingAsTextureView(bindingIndex));
-                auto& srv = view->GetSRVDescriptor();
-
-                ID3D12Resource* resource = ToBackend(view->GetTexture())->GetD3D12Resource();
-                if (resource == nullptr) {
-                    // The Texture was destroyed. Skip creating the SRV since there is no
-                    // resource. This bind group won't be used as it is an error to submit a
-                    // command buffer that references destroyed resources.
-                    return;
-                }
-
-                d3d12Device->CreateShaderResourceView(
-                    resource, &srv,
-                    viewAllocation.OffsetFrom(viewSizeIncrement,
-                                              descriptorHeapOffsets[bindingIndex]));
-            },
-            [&](const StorageTextureBindingInfo& layout) {
-                TextureView* view = ToBackend(GetBindingAsTextureView(bindingIndex));
-
-                ID3D12Resource* resource = ToBackend(view->GetTexture())->GetD3D12Resource();
-                if (resource == nullptr) {
-                    // The Texture was destroyed. Skip creating the SRV/UAV since there is no
-                    // resource. This bind group won't be used as it is an error to submit a
-                    // command buffer that references destroyed resources.
-                    return;
-                }
-
-                switch (layout.access) {
-                    case wgpu::StorageTextureAccess::WriteOnly:
-                    case wgpu::StorageTextureAccess::ReadWrite: {
-                        D3D12_UNORDERED_ACCESS_VIEW_DESC uav = view->GetUAVDescriptor();
-                        d3d12Device->CreateUnorderedAccessView(
-                            resource, nullptr, &uav,
-                            viewAllocation.OffsetFrom(viewSizeIncrement,
-                                                      descriptorHeapOffsets[bindingIndex]));
-                        break;
-                    }
-                    case wgpu::StorageTextureAccess::ReadOnly: {
-                        D3D12_SHADER_RESOURCE_VIEW_DESC srv = view->GetSRVDescriptor();
-                        d3d12Device->CreateShaderResourceView(
-                            resource, &srv,
-                            viewAllocation.OffsetFrom(viewSizeIncrement,
-                                                      descriptorHeapOffsets[bindingIndex]));
-                        break;
-                    }
-                    case wgpu::StorageTextureAccess::BindingNotUsed:
-                    case wgpu::StorageTextureAccess::Undefined:
-                        DAWN_UNREACHABLE();
-                }
-            },
-            [](const StaticSamplerBindingInfo&) {
-                // Static samplers are already initialized in the pipeline layout.
-            },
-            // No-op as samplers will be later initialized by CreateSamplers().
-            [](const SamplerBindingInfo&) {},
-            [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
-    }
-
-    // Loop through the dynamic storage buffers and build a flat map from the index of the
-    // dynamic storage buffer to its binding size. The index |dynamicStorageBufferIndex|
-    // means that it is the i'th buffer that is both dynamic and storage, in increasing order
-    // of BindingNumber.
-    mDynamicStorageBufferLengths.resize(bgl->GetBindingCountInfo().dynamicStorageBufferCount);
-    uint32_t dynamicStorageBufferIndex = 0;
-    for (BindingIndex bindingIndex(0); bindingIndex < bgl->GetDynamicBufferCount();
-         ++bindingIndex) {
-        if (bgl->IsStorageBufferBinding(bindingIndex)) {
-            mDynamicStorageBufferLengths[dynamicStorageBufferIndex++] =
-                GetBindingAsBufferBinding(bindingIndex).size;
-        }
-    }
-}
+    : BindGroupBase(this, device, descriptor), mCPUViewAllocation(viewAllocation) {}
 
 BindGroup::~BindGroup() = default;
+
+MaybeError BindGroup::InitializeImpl() {
+    return {};
+}
 
 void BindGroup::DestroyImpl() {
     BindGroupBase::DestroyImpl();
@@ -275,6 +115,11 @@ bool BindGroup::PopulateSamplers(
 
 void BindGroup::SetSamplerAllocationEntry(Ref<SamplerHeapCacheEntry> entry) {
     mSamplerAllocationEntry = std::move(entry);
+}
+
+void BindGroup::SetDynamicStorageBufferLengths(
+    BindGroup::DynamicStorageBufferLengths dynamicStorageBufferLengths) {
+    mDynamicStorageBufferLengths = dynamicStorageBufferLengths;
 }
 
 const BindGroup::DynamicStorageBufferLengths& BindGroup::GetDynamicStorageBufferLengths() const {

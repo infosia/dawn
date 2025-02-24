@@ -49,7 +49,6 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
 
     BindGroup(Device* device,
               const BindGroupDescriptor* descriptor,
-              uint32_t viewSizeIncrement,
               const CPUDescriptorHeapAllocation& viewAllocation);
 
     // Returns true if the BindGroup was successfully populated.
@@ -62,10 +61,13 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
     void SetSamplerAllocationEntry(Ref<SamplerHeapCacheEntry> entry);
 
     using DynamicStorageBufferLengths = ityp::stack_vec<uint32_t, uint32_t, 4u>;
+    void SetDynamicStorageBufferLengths(DynamicStorageBufferLengths dynamicStorageBufferLengths);
     const DynamicStorageBufferLengths& GetDynamicStorageBufferLengths() const;
 
   private:
     ~BindGroup() override;
+
+    MaybeError InitializeImpl() override;
 
     void DestroyImpl() override;
 
