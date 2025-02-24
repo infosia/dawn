@@ -546,6 +546,10 @@ BindGroupBase::BindGroupBase(DeviceBase* device,
     : ApiObjectBase(device, descriptor->label),
       mLayout(descriptor->layout),
       mBindingData(GetLayout()->ComputeBindingDataPointers(bindingDataStart)) {
+    (void)Initialize(descriptor);
+}
+
+MaybeError BindGroupBase::Initialize(const BindGroupDescriptor* descriptor) {
     BindGroupLayoutInternalBase* layout = GetLayout();
 
     for (BindingIndex i{0}; i < layout->GetBindingCount(); ++i) {
@@ -631,9 +635,17 @@ BindGroupBase::BindGroupBase(DeviceBase* device,
                                             });
 
     GetObjectTrackingList()->Track(this);
+
+    DAWN_TRY_CONTEXT(InitializeImpl(), "initializing bind group");
+
+    return {};
 }
 
 BindGroupBase::~BindGroupBase() = default;
+
+MaybeError BindGroupBase::InitializeImpl() {
+    return {};
+}
 
 void BindGroupBase::DestroyImpl() {
     if (mLayout != nullptr) {

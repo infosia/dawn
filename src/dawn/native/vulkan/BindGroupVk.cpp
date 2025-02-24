@@ -196,6 +196,10 @@ BindGroup::BindGroup(Device* device,
 
 BindGroup::~BindGroup() = default;
 
+MaybeError BindGroup::InitializeImpl() {
+    return {};
+}
+
 void BindGroup::DestroyImpl() {
     BindGroupBase::DestroyImpl();
     ToBackend(GetLayout())->DeallocateBindGroup(this, &mDescriptorSetAllocation);
