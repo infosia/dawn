@@ -352,6 +352,10 @@ BindGroup::BindGroup(DeviceBase* device, const BindGroupDescriptor* descriptor)
     : BindGroupDataHolder(descriptor->layout->GetInternalBindGroupLayout()->GetBindingDataSize()),
       BindGroupBase(device, descriptor, mBindingDataAllocation) {}
 
+MaybeError BindGroup::InitializeImpl() {
+    return {};
+}
+
 // BindGroupLayout
 
 BindGroupLayout::BindGroupLayout(DeviceBase* device, const BindGroupLayoutDescriptor* descriptor)

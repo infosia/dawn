@@ -92,6 +92,7 @@ class BindGroupLayout final : public BindGroupLayoutInternalBase {
 
     uint32_t mCbvUavSrvDescriptorCount;
     uint32_t mSamplerDescriptorCount;
+    uint32_t mViewSizeIncrement;
 
     std::vector<D3D12_DESCRIPTOR_RANGE1> mCbvUavSrvDescriptorRanges;
     std::vector<D3D12_DESCRIPTOR_RANGE1> mSamplerDescriptorRanges;
