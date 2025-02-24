@@ -33,6 +33,24 @@
       "message": "Do we need to check if the function is `nullptr` before using it, since we no longer do that check when loading the function pointer? Or is a segfault in that case just as good as `DAWN_INTERNAL_ERROR`?",
       "revId": "ef73e35f3ab823bcdb248d14fc4ae2cebee30aa7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6752c0dc_04bd0567",
+        "filename": "src/dawn/native/vulkan/VulkanInfo.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-24T11:40:23Z",
+      "side": 1,
+      "message": "Ah yes, we could have a Vulkan loader that doesn\u0027t know about this extension but still lets the device advertise the extension, causing a crash. Added logic for that.",
+      "parentUuid": "40ad2029_9f493124",
+      "revId": "ef73e35f3ab823bcdb248d14fc4ae2cebee30aa7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
