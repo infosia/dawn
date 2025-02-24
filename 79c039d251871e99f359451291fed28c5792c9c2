@@ -180,6 +180,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "adb51230_64a382af",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-24T22:51:45Z",
+      "side": 1,
+      "message": "If you remove the list indexing as per my UniqueVector suggestion, maybe this isn\u0027t an issue any more and you can push it into the stack?",
+      "parentUuid": "beae933d_0eb16241",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dcd659ef_32e41d7d",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
@@ -209,6 +227,24 @@
       "side": 1,
       "message": "Not sure I\u0027m following, the source instruction block may not be in the block stack. If it\u0027s in a block we\u0027ve already popped from the stack, then it wouldn\u0027t be found.\n\nThis is the path from the source instruction up to the function.\n\nSomething like:\n\n```\nfn a() {\n  if (b) {\n    %1 \u003d 4;\n  }\n  \n  %2 \u003d %1\n}\n```\n\nThe block containing %1 isn\u0027t on the block stack anymore because we\u0027ve exited it, but we still need to look it up to hoist.",
       "parentUuid": "dcd659ef_32e41d7d",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c36da6b_b20b198d",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-24T22:51:45Z",
+      "side": 1,
+      "message": "Sure, you still need to walk up the blocks from the source instruction (%1) with that loop. I\u0027m saying that if the block stack was a UniqueVector, you could just check each one as you\u0027re walking against the block stack that contains the use (%2). You don\u0027t need to build the lists and compare them against each other.",
+      "parentUuid": "b9e0c2c6_40d2448a",
       "revId": "79c039d251871e99f359451291fed28c5792c9c2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

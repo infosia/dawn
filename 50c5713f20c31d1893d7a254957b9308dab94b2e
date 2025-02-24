@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adf74fce_03fafa70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-24T22:51:45Z",
+      "side": 1,
+      "message": "Still reviewing the control flow logic, sorry...",
+      "revId": "50c5713f20c31d1893d7a254957b9308dab94b2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27b41360_cd06b0e0",
+        "filename": "src/tint/lang/spirv/reader/lower/lower.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-24T22:51:45Z",
+      "side": 1,
+      "message": "Replace \"hoist\" with which component was the problem one.",
+      "range": {
+        "startLine": 53,
+        "startChar": 34,
+        "endLine": 53,
+        "endChar": 39
+      },
+      "revId": "50c5713f20c31d1893d7a254957b9308dab94b2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a61eae77_8fc9502e",
+        "filename": "src/tint/lang/spirv/reader/lower/lower.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-24T22:51:45Z",
+      "side": 1,
+      "message": "I can live with this for now, but if we start fuzzing IR-\u003eWGSL we\u0027ll still need to do it in `wgsl::raise`.",
+      "revId": "50c5713f20c31d1893d7a254957b9308dab94b2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3994174_163b4fbe",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-24T22:51:45Z",
+      "side": 1,
+      "message": "Conditions must be scalar.",
+      "revId": "50c5713f20c31d1893d7a254957b9308dab94b2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
