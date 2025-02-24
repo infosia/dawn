@@ -16,6 +16,24 @@
       "message": "PTAL again, looking at this CL on a machine with Vulkan, the VVLs complained about a missind sType/pNext.",
       "revId": "165e98ee4451f7400f5049f8e4e422fe4f3cb9c3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd0ee758_592ac6ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-24T15:32:51Z",
+      "side": 1,
+      "message": "LGTM.",
+      "parentUuid": "11a820b1_f277dd3b",
+      "revId": "165e98ee4451f7400f5049f8e4e422fe4f3cb9c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
