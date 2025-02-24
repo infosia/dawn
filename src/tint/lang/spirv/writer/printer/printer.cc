@@ -507,7 +507,17 @@ class Printer {
     uint32_t ConstantNull(const core::type::Type* type) {
         return constant_nulls_.GetOrAdd(type, [&] {
             auto id = module_.NextId();
-            module_.PushType(spv::Op::OpConstantNull, {Type(type), id});
+
+            if (auto* sm = type->As<core::type::SubgroupMatrix>()) {
+                // The Mesa driver does not yet support OpConstantNull for CooperativeMatrix types,
+                // so use OpConstantComposite instead.
+                // See https://gitlab.freedesktop.org/mesa/mesa/-/issues/12679
+                module_.PushType(spv::Op::OpConstantComposite,
+                                 {Type(type), id, Constant(b_.Zero(sm->Type()))});
+            } else {
+                module_.PushType(spv::Op::OpConstantNull, {Type(type), id});
+            }
+
             return id;
         });
     }
