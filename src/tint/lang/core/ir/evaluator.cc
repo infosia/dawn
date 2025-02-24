@@ -126,7 +126,7 @@ Evaluator::EvalResult Evaluator::EvalAccess(core::ir::Access* a) {
     }
 
     auto* obj = obj_res.Get();
-
+    auto* access_obj_type = a->Object()->Type();
     for (auto* idx : a->Indices()) {
         auto val = EvalValue(idx);
         if (val != Success) {
@@ -137,10 +137,13 @@ Evaluator::EvalResult Evaluator::EvalAccess(core::ir::Access* a) {
             return nullptr;
         }
         TINT_ASSERT(val.Get()->Is<core::constant::Value>());
-
-        auto res = const_eval_.Index(obj, a->Result(0)->Type(), val.Get(), SourceOf(a));
+        auto res = const_eval_.Index(obj, access_obj_type, val.Get(), SourceOf(a));
         if (res != Success) {
             return Failure();
+        }
+        if (access_obj_type) {
+            // If we have a type see if we can get the element so we can support type nested access.
+            access_obj_type = access_obj_type->UnwrapPtrOrRef()->Elements().type;
         }
         obj = res.Get();
     }

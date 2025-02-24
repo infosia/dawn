@@ -32,6 +32,7 @@
 #include "src/tint/lang/core/ir/evaluator.h"
 #include "src/tint/lang/core/ir/instruction.h"
 #include "src/tint/lang/core/ir/ir_helper_test.h"
+#include "src/tint/lang/core/type/u32.h"
 
 using namespace tint::core::number_suffixes;  // NOLINT
 using namespace tint::core::fluent_types;     // NOLINT
@@ -127,6 +128,46 @@ TEST_F(IR_EvaluatorTest, RuntimeArray_OutOfBoundsAccess) {
     ASSERT_NE(res, Success);
 
     EXPECT_EQ(res.Failure().reason.Str(), R"(error: index -1 out of bounds)");
+}
+
+TEST_F(IR_EvaluatorTest, RuntimeArray_OverflowBoundsAccess) {
+    auto* arr = b.Var("arr", ty.ptr(storage, ty.array<u32, 3>()));
+    auto* inst = b.Access(ty.ptr<storage, u32>(), arr, 3_i);
+    auto res = Eval(b, inst);
+
+    ASSERT_NE(res, Success);
+
+    EXPECT_EQ(res.Failure().reason.Str(), R"(error: index 3 out of bounds [0..2])");
+}
+
+TEST_F(IR_EvaluatorTest, RuntimeArray_NestedOverflowBoundsAccess) {
+    auto* arr = b.Var("arr", ty.ptr(storage, ty.array<array<u32, 3>, 5>()));
+    auto* inst = b.Access(ty.ptr<storage, u32>(), arr, 3_i, 3_i);
+    auto res = Eval(b, inst);
+
+    ASSERT_NE(res, Success);
+
+    EXPECT_EQ(res.Failure().reason.Str(), R"(error: index 3 out of bounds [0..2])");
+}
+
+TEST_F(IR_EvaluatorTest, RuntimeArray_DoubleNestedOverflowBoundsAccess) {
+    auto* arr = b.Var("arr", ty.ptr(storage, ty.array<array<array<u32, 3>, 5>, 7>()));
+    auto* inst = b.Access(ty.ptr<storage, u32>(), arr, 3_i, 3_i, 3_i);
+    auto res = Eval(b, inst);
+
+    ASSERT_NE(res, Success);
+
+    EXPECT_EQ(res.Failure().reason.Str(), R"(error: index 3 out of bounds [0..2])");
+}
+
+TEST_F(IR_EvaluatorTest, RuntimeArray_NestedVecOverflowBoundsAccess) {
+    auto* arr = b.Var("arr", ty.ptr(storage, ty.array<vec3<u32>, 7>()));
+    auto* inst = b.Access(ty.ptr<storage, u32>(), arr, 3_i, 3_i);
+    auto res = Eval(b, inst);
+
+    ASSERT_NE(res, Success);
+
+    EXPECT_EQ(res.Failure().reason.Str(), R"(error: index 3 out of bounds [0..2])");
 }
 
 TEST_F(IR_EvaluatorTest, ConstructStruct_Access) {
