@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dd6bee6f_84a2fb3c",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-24T20:08:54Z",
+      "side": 1,
+      "message": "No, it\u0027s poorly named but the difference is makeCheckDescriptor asserts that `nextInChain` is `nullptr`, but here we\u0027re allowing exactly one item in the chain.",
+      "parentUuid": "4efd1d46_4dd91bc3",
+      "range": {
+        "startLine": 1112,
+        "startChar": 6,
+        "endLine": 1112,
+        "endChar": 41
+      },
+      "revId": "05a70941c0ac7eef787b8f8d933d1c448d6766f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1822f234_3a12d127",
         "filename": "third_party/emdawnwebgpu/library_webgpu.js",
         "patchSetId": 2
