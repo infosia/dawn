@@ -53,7 +53,11 @@ ResultOrError<Ref<BindGroup>> BindGroup::Create(Device* device,
 BindGroup::BindGroup(Device* device,
                      const BindGroupDescriptor* descriptor,
                      DescriptorSetAllocation descriptorSetAllocation)
-    : BindGroupBase(this, device, descriptor), mDescriptorSetAllocation(descriptorSetAllocation) {
+    : BindGroupBase(this, device, descriptor), mDescriptorSetAllocation(descriptorSetAllocation) {}
+
+BindGroup::~BindGroup() = default;
+
+MaybeError BindGroup::InitializeImpl() {
     // Now do a write of a single descriptor set with all possible chained data allocated on the
     // stack.
     const uint32_t bindingCount = static_cast<uint32_t>((GetLayout()->GetBindingCount()));
@@ -188,13 +192,14 @@ BindGroup::BindGroup(Device* device,
         }
     }
 
+    Device* device = ToBackend(GetDevice());
     // TODO(crbug.com/dawn/855): Batch these updates
     device->fn.UpdateDescriptorSets(device->GetVkDevice(), numWrites, writes.data(), 0, nullptr);
 
     SetLabelImpl();
-}
 
-BindGroup::~BindGroup() = default;
+    return {};
+}
 
 void BindGroup::DestroyImpl() {
     BindGroupBase::DestroyImpl();

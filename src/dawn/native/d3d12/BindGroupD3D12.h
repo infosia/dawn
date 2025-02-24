@@ -67,10 +67,13 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
   private:
     ~BindGroup() override;
 
+    MaybeError InitializeImpl() override;
+
     void DestroyImpl() override;
 
     Ref<SamplerHeapCacheEntry> mSamplerAllocationEntry;
 
+    unint32_t mViewSizeIncrement;
     GPUDescriptorHeapAllocation mGPUViewAllocation;
     CPUDescriptorHeapAllocation mCPUViewAllocation;
 
