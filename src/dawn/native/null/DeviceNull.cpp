@@ -196,7 +196,9 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
 
 ResultOrError<Ref<BindGroupBase>> Device::CreateBindGroupImpl(
     const BindGroupDescriptor* descriptor) {
-    return AcquireRef(new BindGroup(this, descriptor));
+    Ref<BindGroupBase> bindGroup = AcquireRef(new BindGroup(this, descriptor));
+    DAWN_TRY(bindGroup->Initialize(descriptor));
+    return bindGroup;
 }
 ResultOrError<Ref<BindGroupLayoutInternalBase>> Device::CreateBindGroupLayoutImpl(
     const BindGroupLayoutDescriptor* descriptor) {
@@ -351,6 +353,10 @@ BindGroupDataHolder::~BindGroupDataHolder() {
 BindGroup::BindGroup(DeviceBase* device, const BindGroupDescriptor* descriptor)
     : BindGroupDataHolder(descriptor->layout->GetInternalBindGroupLayout()->GetBindingDataSize()),
       BindGroupBase(device, descriptor, mBindingDataAllocation) {}
+
+MaybeError BindGroup::InitializeImpl() {
+    return {};
+}
 
 // BindGroupLayout
 
