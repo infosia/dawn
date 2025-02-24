@@ -36,6 +36,10 @@ BindGroup::BindGroup(Device* device, const BindGroupDescriptor* descriptor)
 
 BindGroup::~BindGroup() = default;
 
+MaybeError BindGroup::InitializeImpl() {
+    return {};
+}
+
 void BindGroup::DestroyImpl() {
     BindGroupBase::DestroyImpl();
     ToBackend(GetLayout())->DeallocateBindGroup(this);

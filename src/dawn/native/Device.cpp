@@ -1901,7 +1901,12 @@ ResultOrError<Ref<BindGroupBase>> DeviceBase::CreateBindGroup(const BindGroupDes
         DAWN_TRY_CONTEXT(ValidateBindGroupDescriptor(this, descriptor, mode),
                          "validating %s against %s", descriptor, descriptor->layout);
     }
-    return CreateBindGroupImpl(descriptor);
+
+    Ref<BindGroupBase> bindGroup;
+    DAWN_TRY_ASSIGN(bindGroup, CreateBindGroupImpl(descriptor));
+    DAWN_TRY(bindGroup->Initialize(descriptor));
+
+    return bindGroup;
 }
 
 ResultOrError<Ref<BindGroupLayoutBase>> DeviceBase::CreateBindGroupLayout(
