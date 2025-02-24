@@ -70,6 +70,7 @@ class BindGroupLayout final : public BindGroupLayoutInternalBase {
     // Counts of descriptors in the descriptor tables.
     uint32_t GetCbvUavSrvDescriptorCount() const;
     uint32_t GetSamplerDescriptorCount() const;
+    uint32_t GetViewSizeIncrement() const;
 
     const std::vector<D3D12_DESCRIPTOR_RANGE1>& GetCbvUavSrvDescriptorRanges() const;
     const std::vector<D3D12_DESCRIPTOR_RANGE1>& GetSamplerDescriptorRanges() const;
@@ -92,6 +93,7 @@ class BindGroupLayout final : public BindGroupLayoutInternalBase {
 
     uint32_t mCbvUavSrvDescriptorCount;
     uint32_t mSamplerDescriptorCount;
+    uint32_t mViewSizeIncrement;
 
     std::vector<D3D12_DESCRIPTOR_RANGE1> mCbvUavSrvDescriptorRanges;
     std::vector<D3D12_DESCRIPTOR_RANGE1> mSamplerDescriptorRanges;
