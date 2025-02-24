@@ -216,7 +216,7 @@ BindGroupLayout::BindGroupLayout(Device* device, const BindGroupLayoutDescriptor
 ResultOrError<Ref<BindGroup>> BindGroupLayout::AllocateBindGroup(
     Device* device,
     const BindGroupDescriptor* descriptor) {
-    uint32_t viewSizeIncrement = 0;
+    mViewSizeIncrement = 0;
     CPUDescriptorHeapAllocation viewAllocation;
     if (GetCbvUavSrvDescriptorCount() > 0) {
         auto* viewAllocator =
@@ -224,13 +224,13 @@ ResultOrError<Ref<BindGroup>> BindGroupLayout::AllocateBindGroup(
         DAWN_ASSERT(viewAllocator != nullptr);
         DAWN_TRY((*viewAllocator).Use([&](auto viewAllocator) -> MaybeError {
             DAWN_TRY_ASSIGN(viewAllocation, viewAllocator->AllocateCPUDescriptors());
-            viewSizeIncrement = viewAllocator->GetSizeIncrement();
+            mViewSizeIncrement = viewAllocator->GetSizeIncrement();
             return {};
         }));
     }
 
-    Ref<BindGroup> bindGroup = AcquireRef<BindGroup>(
-        mBindGroupAllocator->Allocate(device, descriptor, viewSizeIncrement, viewAllocation));
+    Ref<BindGroup> bindGroup =
+        AcquireRef<BindGroup>(mBindGroupAllocator->Allocate(device, descriptor, viewAllocation));
 
     if (GetSamplerDescriptorCount() > 0) {
         Ref<SamplerHeapCacheEntry> samplerHeapCacheEntry;
@@ -268,6 +268,10 @@ uint32_t BindGroupLayout::GetCbvUavSrvDescriptorCount() const {
 
 uint32_t BindGroupLayout::GetSamplerDescriptorCount() const {
     return mSamplerDescriptorCount;
+}
+
+uint32_t BindGroupLayout::GetViewSizeIncrement() const {
+    return mViewSizeIncrement;
 }
 
 const std::vector<D3D12_DESCRIPTOR_RANGE1>& BindGroupLayout::GetCbvUavSrvDescriptorRanges() const {
