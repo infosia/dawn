@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "10d64861_38e0b430",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-25T18:21:37Z",
+      "side": 1,
+      "message": "CQ failures probably fixed by adding another case to `ConstructableTypes()` in `renamer_test.cc`.",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "243db31a_43943190",
         "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
         "patchSetId": 7
@@ -48,6 +65,23 @@
       "writtenOn": "2025-02-25T15:28:15Z",
       "side": 1,
       "message": "What does the `*` mean at the end of `binding_array`?",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fab89533_e3ca5006",
+        "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-25T18:21:37Z",
+      "side": 1,
+      "message": "WGSL spec says:\n\n\"\"\"\nIf a pointer type appears in the program source, it must also be valid to declare a variable, somewhere in the program, with the pointer type’s address space, store type, and access mode.\n\"\"\"\n\nSo this should actually be rejected. You can do this in `ApplyAddressSpaceUsageToType()` (I recently added the equivalent check for subgroup matrices).",
       "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
