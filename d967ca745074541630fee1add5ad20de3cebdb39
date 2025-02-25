@@ -110,6 +110,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "3acd3c4e_9b277f80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000248
+      },
+      "writtenOn": "2025-02-25T18:25:37Z",
+      "side": 1,
+      "message": "Thanks! I wasn\u0027t sure if the functional change was intentional or not. LGTM.",
+      "parentUuid": "002ee4fb_6d699514",
+      "revId": "d967ca745074541630fee1add5ad20de3cebdb39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "152132c9_4c7cd0b7",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
