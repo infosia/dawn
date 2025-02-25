@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0165a42f_94cec16f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-25T14:23:34Z",
+      "side": 1,
+      "message": "```suggestion\nsort `c.selectors` directly, since it is const in the Disassembler, and\n```",
+      "revId": "bd6c7894eeb38a74cda747684115997e319d154c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a32c74c0_0725c02e",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-25T14:23:34Z",
+      "side": 1,
+      "message": "Instead of the second `Any` loop, why not just set a flag when you iterate the first time in the `for` above?",
+      "revId": "bd6c7894eeb38a74cda747684115997e319d154c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
