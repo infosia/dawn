@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1716e43a_2a8c829b",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-25T15:11:49Z",
+      "side": 1,
+      "message": "I could use ternary operator",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 9
+      },
+      "revId": "f7507bd6a4bc605226295b5c0058692c71b366c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8d609153_3d154648",
         "filename": "src/tint/lang/core/ir/evaluator_test.cc",
         "patchSetId": 3
