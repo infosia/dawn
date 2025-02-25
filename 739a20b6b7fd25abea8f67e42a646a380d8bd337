@@ -20,6 +20,74 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "17d4ecff_49608dc0",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T12:42:18Z",
+      "side": 1,
+      "message": "```suggestion\n                    \"The texture view (%s) sample count (%u) is not 1.\", view,\n```",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a2d64aa_316654dd",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T12:42:18Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21d6a3ed_e2fb5485",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T12:42:18Z",
+      "side": 1,
+      "message": "If we get here we should validate that there are no extension structs, otherwise we lose coverage of the `ValidateAndUnpack` above in the original code.",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "867c9318_8eaf49d6",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T12:42:18Z",
+      "side": 1,
+      "message": "Can we have a TODO to eventually make this fast by having a MatchVariant that contains the ExternalTextureInfo? Similar to the comment at [1] with the issue number updated.",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ac6ca707_71c2e4cd",
         "filename": "src/dawn/native/BindGroup.cpp",
         "patchSetId": 7
@@ -31,6 +99,30 @@
       "writtenOn": "2025-02-25T11:14:17Z",
       "side": 1,
       "message": "Shall I use `mBindingData.bindings[paramsBindingIndex]` size?",
+      "range": {
+        "startLine": 655,
+        "startChar": 67,
+        "endLine": 655,
+        "endChar": 97
+      },
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bf1174d_ec56b87b",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T12:42:18Z",
+      "side": 1,
+      "message": "You can use `paramsBuffer-\u003eGetSize()` here.",
+      "parentUuid": "ac6ca707_71c2e4cd",
       "range": {
         "startLine": 655,
         "startChar": 67,
@@ -66,6 +158,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4b05a4d9_a122340b",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T12:42:18Z",
+      "side": 1,
+      "message": "You can see [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/wgsl/ast/transform/multiplanar_external_texture_test.cc;drc\u003d9e9ed676f7ee71883c35dab8b591abad07fdd84f;l\u003d391) how the params in the buffer are used. Let\u0027s not create an ExternalTextureDescriptor here but do it in ExternalTexture.cpp. Then set this to `true` https://source.chromium.org/chromium/chromium/src/+/main:out/ios-Debug/gen/third_party/dawn/src/dawn/native/wgpu_structs_autogen.h;drc\u003ddc114e325ccc0ff6f60ace999a0b1b6809dbf2f8;l\u003d1709 which causes all the transfer stuff to be ignored (so we can just point at 0s).",
+      "parentUuid": "f7059246_6e0ac68f",
+      "range": {
+        "startLine": 829,
+        "startChar": 0,
+        "endLine": 847,
+        "endChar": 0
+      },
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "adb2a3e8_8ba4340d",
         "filename": "src/dawn/native/BindGroup.cpp",
         "patchSetId": 7
@@ -77,6 +193,41 @@
       "writtenOn": "2025-02-25T11:14:17Z",
       "side": 1,
       "message": "Shall I use `mappedAtCreation \u003d true;` and cie instead of `WriteBuffer` as in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlitBufferToDepthStencil.cpp;l\u003d414;drc\u003dddf744c3326de9291039d88f207981f205c7704a?",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b32d721_3cf206b5",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T12:42:18Z",
+      "side": 1,
+      "message": "You can use https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/utils/WGPUHelpers.h;drc\u003d46945b66ba6424b8d6b28422228d005d60648507;l\u003d59",
+      "parentUuid": "adb2a3e8_8ba4340d",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc05476d_6f8cfb54",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T12:42:18Z",
+      "side": 1,
+      "message": "Could have a `MakeParamsBufferForSimpleView` kind of thing so that the code in BindGroup doesn\u0027t need to have any notion of what\u0027s in there?",
       "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
