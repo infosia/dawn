@@ -151,7 +151,7 @@ TEST_P(SubgroupMatrix_MatrixMatrixArithmeticTest, MatrixMultiply) {
 @compute @workgroup_size(N, M)
 fn main() {
     let lhs = subgroupMatrixLoad<subgroup_matrix_left<ComponentType, K, M>>(&inputs,  0, false, M);
-    let rhs = subgroupMatrixLoad<subgroup_matrix_right<ComponentType, N, K>>(&inputs, K*M, false, K);
+    let rhs = subgroupMatrixLoad<subgroup_matrix_right<ComponentType, N, K>>(&inputs, K*M, true, K);
 )";
         switch (op) {
             case MatrixMultiply:
@@ -165,7 +165,7 @@ fn main() {
                 break;
         }
         shader << R"(
-    subgroupMatrixStore(&output, 0, result, false, M);
+    subgroupMatrixStore(&output, 0, result, false, N);
 })";
 
         wgpu::ComputePipelineDescriptor csDesc;
