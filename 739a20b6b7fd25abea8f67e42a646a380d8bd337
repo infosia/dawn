@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "247cfb18_1b7ffc3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T11:14:17Z",
+      "side": 1,
+      "message": "PTAL. Tests are missing yet but I\u0027d love your early review if that\u0027s okay,",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac6ca707_71c2e4cd",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T11:14:17Z",
+      "side": 1,
+      "message": "Shall I use `mBindingData.bindings[paramsBindingIndex]` size?",
+      "range": {
+        "startLine": 655,
+        "startChar": 67,
+        "endLine": 655,
+        "endChar": 97
+      },
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7059246_6e0ac68f",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T11:14:17Z",
+      "side": 1,
+      "message": "I have no idea what those values mean. Shall we put them in `src/dawn/native/ExternalTexture.cpp`? If so, in which forms would you expose them?",
+      "range": {
+        "startLine": 829,
+        "startChar": 0,
+        "endLine": 847,
+        "endChar": 0
+      },
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adb2a3e8_8ba4340d",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T11:14:17Z",
+      "side": 1,
+      "message": "Shall I use `mappedAtCreation \u003d true;` and cie instead of `WriteBuffer` as in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlitBufferToDepthStencil.cpp;l\u003d414;drc\u003dddf744c3326de9291039d88f207981f205c7704a?",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
