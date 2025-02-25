@@ -83,6 +83,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ccbc7c4_a70850e3",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-25T18:16:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e64d2ce6_3d95ac49",
+      "revId": "f7507bd6a4bc605226295b5c0058692c71b366c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1716e43a_2a8c829b",
@@ -96,6 +114,30 @@
       "writtenOn": "2025-02-25T15:11:49Z",
       "side": 1,
       "message": "I could use ternary operator",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 9
+      },
+      "revId": "f7507bd6a4bc605226295b5c0058692c71b366c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e6e5c1f_423fd8c1",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-25T18:16:26Z",
+      "side": 1,
+      "message": "I think this is probably clearer.",
+      "parentUuid": "1716e43a_2a8c829b",
       "range": {
         "startLine": 144,
         "startChar": 7,
