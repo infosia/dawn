@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1574c544_3154ddf1",
+        "filename": "src/tint/lang/core/ir/validator_value_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-25T20:39:29Z",
+      "side": 1,
+      "message": "Not displaying all of the operands is a KI, https://issues.chromium.org/issues/399124608",
+      "revId": "952334c5cb69abb896d30103d6830e52b813405e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
