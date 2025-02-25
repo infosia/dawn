@@ -83,7 +83,7 @@
 
 #if DAWN_COMPILER_IS(MSVC)
 #define DAWN_ASSERT_CALLSITE_HELPER(file, func, line, condition) __assume(condition)
-#elif DAWN_COMPILER_IS(CLANG) && defined(__builtin_assume)
+#elif DAWN_COMPILER_IS(CLANG) && __has_builtin(__builtin_assume)
 #define DAWN_ASSERT_CALLSITE_HELPER(file, func, line, condition) __builtin_assume(condition)
 #else  // DAWN_COMPILER_IS(*)
 #define DAWN_ASSERT_CALLSITE_HELPER(file, func, line, condition) \
