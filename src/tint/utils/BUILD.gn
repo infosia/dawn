@@ -51,8 +51,6 @@ libtint_source_set("utils") {
     "reflection.cc",
     "reflection.h",
     "rwmutex.h",
-    "socket.cc",
-    "socket.h",
     "text_generator.cc",
     "text_generator.h",
   ]
@@ -68,10 +66,6 @@ libtint_source_set("utils") {
     "${tint_src_dir}/utils/rtti",
     "${tint_src_dir}/utils/text",
   ]
-
-  if (tint_build_is_win) {
-    deps += [ "${tint_src_dir}:winsock" ]
-  }
 }
 if (tint_build_unittests) {
   tint_unittests_source_set("unittests") {

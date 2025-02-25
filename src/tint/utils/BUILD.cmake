@@ -62,8 +62,6 @@ tint_add_target(tint_utils lib
   utils/reflection.cc
   utils/reflection.h
   utils/rwmutex.h
-  utils/socket.cc
-  utils/socket.h
   utils/text_generator.cc
   utils/text_generator.h
 )
@@ -83,12 +81,6 @@ tint_target_add_dependencies(tint_utils lib
 tint_target_add_external_dependencies(tint_utils lib
   "src_utils"
 )
-
-if(TINT_BUILD_IS_WIN)
-  tint_target_add_external_dependencies(tint_utils lib
-    "winsock"
-  )
-endif(TINT_BUILD_IS_WIN)
 
 ################################################################################
 # Target:    tint_utils_test

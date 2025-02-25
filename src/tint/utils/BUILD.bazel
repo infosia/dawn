@@ -41,7 +41,6 @@ cc_library(
   srcs = [
     "generation_id.cc",
     "reflection.cc",
-    "socket.cc",
     "text_generator.cc",
   ],
   hdrs = [
@@ -49,7 +48,6 @@ cc_library(
     "internal_limits.h",
     "reflection.h",
     "rwmutex.h",
-    "socket.h",
     "text_generator.h",
   ],
   deps = [
@@ -63,12 +61,7 @@ cc_library(
     "//src/tint/utils/rtti",
     "//src/tint/utils/text",
     "//src/utils",
-  ] + select({
-    ":tint_build_is_win": [
-      
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
@@ -94,10 +87,5 @@ cc_library(
   ],
   copts = COPTS,
   visibility = ["//visibility:public"],
-)
-
-alias(
-  name = "tint_build_is_win",
-  actual = "//src/tint:tint_build_is_win_true",
 )
 
