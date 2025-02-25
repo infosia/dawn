@@ -34,6 +34,24 @@
       "parentUuid": "052ad86c_a53382cf",
       "revId": "d769d5062dbf756ab9f49bccfde9008974cd439d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08cab936_e51b5c76",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T09:52:38Z",
+      "side": 1,
+      "message": "Look at how it is done in other objects: we have an ErrorFoo that imlements UNREACHABLE for these methods.",
+      "parentUuid": "bcb4ebdc_1891d06f",
+      "revId": "d769d5062dbf756ab9f49bccfde9008974cd439d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
