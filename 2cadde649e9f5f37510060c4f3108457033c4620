@@ -106,6 +106,24 @@
       "parentUuid": "bd1ddd92_05fe1218",
       "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62f17bca_ed203ccf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-25T07:10:08Z",
+      "side": 1,
+      "message": "My current code relies on `wgpuBufferRelease` to trigger buffer destroy. It works in native and I want to keep the code clean. So I am currently keeping the reverted change as a patch.",
+      "parentUuid": "0d83f87a_64acda7e",
+      "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
