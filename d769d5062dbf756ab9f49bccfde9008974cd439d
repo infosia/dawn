@@ -106,6 +106,24 @@
       "parentUuid": "efdbe8e3_84eb114f",
       "revId": "d769d5062dbf756ab9f49bccfde9008974cd439d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd8b3b2a_7ee5967b",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T14:55:47Z",
+      "side": 1,
+      "message": "Yes but the unittests are using the null backend so that makes sense. Do you see the same issue when runnind the end2end tests on Metal? Since the code changes are basically the same in both.",
+      "parentUuid": "fbc06fc2_13c515e3",
+      "revId": "d769d5062dbf756ab9f49bccfde9008974cd439d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
