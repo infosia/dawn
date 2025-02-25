@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1869f1b_e6c889fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-25T15:28:15Z",
+      "side": 1,
+      "message": "binding_array",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "60c154a7_a01de26e",
@@ -14,6 +31,63 @@
       "writtenOn": "2025-02-25T14:49:27Z",
       "side": 1,
       "message": "Dan PTAL, but also do you have an idea of how to handle `binding_array` being a reserved keyword at the moment, but no longer after this feature? Do I put a condition in `Parser::expect_ident` for the feature?",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "243db31a_43943190",
+        "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-25T15:28:15Z",
+      "side": 1,
+      "message": "What does the `*` mean at the end of `binding_array`?",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "443b7b88_bbef3fec",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-25T15:28:15Z",
+      "side": 1,
+      "message": "```suggestion\n        AddError(source) \u003c\u003c \"use of \" \u003c\u003c style::Type(\"binding_array*\") \u003c\u003c \" requires enabling extension \"\n                         \u003c\u003c style::Code(\"sized_binding_array\");\n```",
+      "range": {
+        "startLine": 511,
+        "startChar": 1,
+        "endLine": 512,
+        "endChar": 77
+      },
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "559665a2_d9e951f5",
+        "filename": "src/tint/lang/wgsl/resolver/validator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-25T15:28:15Z",
+      "side": 1,
+      "message": "```suggestion\n    /// @param source the source of the binding_array type\n```",
       "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
