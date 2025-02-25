@@ -16,6 +16,24 @@
       "message": "You can\u0027t call virtual functions in the constructors. This needs to be a separate step in all backends.",
       "revId": "7ae855f6511a129d293934f98d28bdc8b2b0b868",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a925216_1f04acab",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T15:43:04Z",
+      "side": 1,
+      "message": "What do you mean by \"separate step\"?  Where shall I call `InitializeImpl()`?",
+      "parentUuid": "9d423e5b_ea6d496d",
+      "revId": "7ae855f6511a129d293934f98d28bdc8b2b0b868",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
