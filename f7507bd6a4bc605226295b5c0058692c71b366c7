@@ -67,6 +67,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e64d2ce6_3d95ac49",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-25T16:29:47Z",
+      "side": 1,
+      "message": "I think we only want to go down 1 level of nesting each iteration not all the way to the bottom.",
+      "parentUuid": "7d1c0dc6_576f3fb1",
+      "revId": "f7507bd6a4bc605226295b5c0058692c71b366c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1716e43a_2a8c829b",
         "filename": "src/tint/lang/core/ir/evaluator.cc",
         "patchSetId": 3
