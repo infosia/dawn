@@ -52,6 +52,24 @@
       "parentUuid": "bcb4ebdc_1891d06f",
       "revId": "d769d5062dbf756ab9f49bccfde9008974cd439d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29192e32_ebe92c48",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T13:11:07Z",
+      "side": 1,
+      "message": "Thanks for the suggestion! It looks like there\u0027s still one place where the virtual `InitializeImpl()` function is called but i can\u0027t figure out why. I thought the null backend was supposed to handle when there was no backend.\n```\n[ RUN      ] CommandBufferEncodingTests.ComputePassEncoderIndirectDispatchStateRestoration\nlibc++abi: Pure virtual function called!\nReceived signal 6\n0   libbase.dylib                       0x0000000109588a30 base::debug::CollectStackTrace(base::span\u003cvoid const*, 18446744073709551615ul, void const**\u003e) + 84\n1   libbase.dylib                       0x0000000109531bdc base::debug::StackTrace::StackTrace(unsigned long) + 156\n2   libbase.dylib                       0x0000000109531c84 base::debug::StackTrace::StackTrace(unsigned long) + 36\n3   libbase.dylib                       0x0000000109531c50 base::debug::StackTrace::StackTrace() + 40\n4   libbase.dylib                       0x000000010958888c base::debug::(anonymous namespace)::StackDumpSignalHandler(int, __siginfo*, void*) + 1352\n5   libsystem_platform.dylib            0x000000018e33ade4 _sigtramp + 56\n6   libsystem_pthread.dylib             0x000000018e303f70 pthread_kill + 288\n7   libsystem_c.dylib                   0x000000018e210908 abort + 128\n8   libc++_chrome.dylib                 0x000000010a908d54 __cxa_bad_cast + 0\n9   libc++_chrome.dylib                 0x000000010a90cc34 __cxa_deleted_virtual + 0\n10  dawn_unittests                      0x00000001011ca934 dawn::native::BindGroupBase::Initialize(dawn::native::BindGroupDescriptor const*) + 3780\n11  dawn_unittests                      0x00000001011c9968 dawn::native::BindGroupBase::BindGroupBase(dawn::native::DeviceBase*, dawn::native::BindGroupDescriptor const*, void*) + 172\n12  dawn_unittests                      0x00000001015a18a8 dawn::native::null::BindGroup::BindGroup(dawn::native::DeviceBase*, dawn::native::BindGroupDescriptor const*) + 132\n13  dawn_unittests                      0x000000010159f798 dawn::native::null::BindGroup::BindGroup(dawn::native::DeviceBase*, dawn::native::BindGroupDescriptor const*) + 44\n14  dawn_unittests                      0x000000010159f690 dawn::native::null::Device::CreateBindGroupImpl(dawn::native::BindGroupDescriptor const*) + 76\n15  dawn_unittests                      0x00000001012d7ba4 dawn::native::DeviceBase::CreateBindGroup(dawn::native::BindGroupDescriptor const*, dawn::native::UsageValidationMode) + 576\n16  dawn_unittests                      0x00000001012d77b8 dawn::native::DeviceBase::APICreateBindGroup(dawn::native::BindGroupDescriptor const*) + 100\n17  dawn_unittests                      0x000000010112bbcc dawn::native::NativeDeviceCreateBindGroup(WGPUDeviceImpl*, WGPUBindGroupDescriptor const*) + 104\n18  libdawn_proc.dylib                  0x000000010783a1c8 wgpuDeviceCreateBindGroup + 44\n19  dawn_unittests                      0x000000010093d754 wgpu::Device::CreateBindGroup(wgpu::BindGroupDescriptor const*) const + 44\n20  dawn_unittests                      0x0000000102177188 dawn::utils::MakeBindGroup(wgpu::Device const\u0026, wgpu::BindGroupLayout const\u0026, std::initializer_list\u003cdawn::utils::BindingInitializationHelper\u003e) + 388\n21  dawn_unittests                      0x0000000100925444 dawn::native::(anonymous namespace)::CommandBufferEncodingTests_ComputePassEncoderIndirectDispatchStateRestoration_Test::TestBody() + 1212\n22  dawn_unittests                      0x00000001017af298 void testing::internal::HandleSehExceptionsInMethodIfSupported\u003ctesting::Test, void\u003e(testing::Test*, void (testing::Test::*)(), char const*) + 140\n23  dawn_unittests                      0x000000010177dea0 void testing::internal::HandleExceptionsInMethodIfSupported\u003ctesting::Test, void\u003e(testing::Test*, void (testing::Test::*)(), char const*) + 96\n24  dawn_unittests                      0x000000010177ddf0 testing::Test::Run() + 192\n```",
+      "parentUuid": "08cab936_e51b5c76",
+      "revId": "d769d5062dbf756ab9f49bccfde9008974cd439d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
