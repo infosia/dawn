@@ -22,6 +22,29 @@
       },
       "revId": "83244314b5185e0a12d8197c1bbbdd2491071e93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d6b42a5_4f42e021",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-25T18:37:58Z",
+      "side": 1,
+      "message": "I think this needs to be updated in `webgpu.cpp` also / instead of here. We probably need to pass something back cause we won\u0027t be returning `nullptr` to the caller in this case. We would end up returning a pointer to an invalid `GPUBuffer` object instead.",
+      "range": {
+        "startLine": 1516,
+        "startChar": 4,
+        "endLine": 1525,
+        "endChar": 55
+      },
+      "revId": "83244314b5185e0a12d8197c1bbbdd2491071e93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
