@@ -16,6 +16,40 @@
       "message": "Thanks, pleasse take a look!",
       "revId": "34360e2418acc40e5d7a42cf96462932f6ff2681",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cea9e630_c152c853",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-02-25T17:59:24Z",
+      "side": 1,
+      "message": "This is very nice.  Thank you!",
+      "revId": "34360e2418acc40e5d7a42cf96462932f6ff2681",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "020370a9_58e27da5",
+        "filename": "test/tint/bug/chromium/380168990.wgsl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-02-25T17:59:24Z",
+      "side": 1,
+      "message": "These are nice test cases!",
+      "revId": "34360e2418acc40e5d7a42cf96462932f6ff2681",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
