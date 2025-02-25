@@ -88,6 +88,24 @@
       "parentUuid": "29192e32_ebe92c48",
       "revId": "d769d5062dbf756ab9f49bccfde9008974cd439d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbc06fc2_13c515e3",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T14:54:29Z",
+      "side": 1,
+      "message": "Yes. This is what I\u0027m seeing locally on Metal when running \n```\n$ ./out/Debug/dawn_unittests --gtest_filter\u003d*CommandBufferEncodingTests.ComputePassEncoderIndirectDispatchStateRestoration*\n```",
+      "parentUuid": "efdbe8e3_84eb114f",
+      "revId": "d769d5062dbf756ab9f49bccfde9008974cd439d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
