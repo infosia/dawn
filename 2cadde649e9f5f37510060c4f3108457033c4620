@@ -142,6 +142,24 @@
       "parentUuid": "62f17bca_ed203ccf",
       "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39ca83f9_418027f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-25T19:29:03Z",
+      "side": 1,
+      "message": "OK, sorry for the extra maintanence burden but glad you have a solution for now. Filed https://crbug.com/399153008",
+      "parentUuid": "835b867e_8a9f3f1b",
+      "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
