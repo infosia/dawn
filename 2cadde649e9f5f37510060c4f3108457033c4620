@@ -160,6 +160,24 @@
       "parentUuid": "835b867e_8a9f3f1b",
       "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f60991d_09ba166a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-25T19:33:34Z",
+      "side": 1,
+      "message": "I\u0027m working on a fix for this right now, will hopefully send out soon-ish. (Not doing the whole cross-ref right now), but with the fix, it should help if you are not doing any `importJs*` stuff, and just using the API directly.",
+      "parentUuid": "39ca83f9_418027f0",
+      "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
