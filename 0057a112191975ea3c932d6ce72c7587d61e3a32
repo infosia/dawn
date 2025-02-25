@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "158357d1_d4cf3055",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-25T18:17:14Z",
+      "side": 1,
+      "message": "This was due to structure access. This has been resolved by using element() rather than elements()",
+      "parentUuid": "60788908_83e24aa5",
+      "revId": "0057a112191975ea3c932d6ce72c7587d61e3a32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dfbd032c_c9fabed0",

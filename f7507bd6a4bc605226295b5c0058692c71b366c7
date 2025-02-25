@@ -148,6 +148,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bde46147_65ff5ec1",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-25T18:17:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7e6e5c1f_423fd8c1",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 9
+      },
+      "revId": "f7507bd6a4bc605226295b5c0058692c71b366c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d609153_3d154648",
