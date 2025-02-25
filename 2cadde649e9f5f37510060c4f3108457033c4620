@@ -124,6 +124,24 @@
       "parentUuid": "0d83f87a_64acda7e",
       "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "835b867e_8a9f3f1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-25T07:58:03Z",
+      "side": 1,
+      "message": "I understand the risk and limitation as discussed above. ONNX runtime is a special case that there is a BufferManager class which ensures the buffer will never go out of reference when any valid bind group is active. So the change is safe to me.",
+      "parentUuid": "62f17bca_ed203ccf",
+      "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
