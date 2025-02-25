@@ -160,6 +160,24 @@
       "parentUuid": "b61e65b3_ca76b26e",
       "revId": "d769d5062dbf756ab9f49bccfde9008974cd439d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0032a24d_79127d92",
+        "filename": "src/dawn/native/BindGroup.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T16:01:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62a2c8e0_0be01060",
+      "revId": "d769d5062dbf756ab9f49bccfde9008974cd439d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
