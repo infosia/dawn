@@ -251,6 +251,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "58ac81b5_2afb1fb7",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-25T03:08:04Z",
+      "side": 1,
+      "message": "I compare them because I need to find where they diverge. The divergence point is where I need to hoist the variable too. So, just knowing %1 is in the block doesn\u0027t help me I also need to know where %2 and %1 match up like with:\n\n```\nfn a() {\n  if (b) {\n    %1 \u003d 4;\n  }\n  if (c) {\n    %2 \u003d %1\n  }\n}\n```\n\nI have to find that the matching block is the function block, so I walk the two paths to find where they converge.",
+      "parentUuid": "1c36da6b_b20b198d",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5c4f8b66_c364b03c",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
