@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25de40e0_d682151b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-25T17:50:20Z",
+      "side": 1,
+      "message": "PTAL again, I accidentally cleared the CR when attempting to revise the previous CL.",
+      "revId": "abe63c7219a67042d0b66d2f611d42f03bd7d0e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
