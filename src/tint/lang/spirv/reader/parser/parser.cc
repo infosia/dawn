@@ -28,6 +28,7 @@
 #include "src/tint/lang/spirv/reader/parser/parser.h"
 
 #include <algorithm>
+#include <list>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -108,10 +109,15 @@ class Parser {
             }
         }
 
+        block_stack_.push_back({ir_.root_block, {}});
         {
             TINT_SCOPED_ASSIGNMENT(current_block_, ir_.root_block);
             EmitModuleScopeVariables();
         }
+        // Keep the Ids, but clear out the root block from the stack so it always starts from
+        // functions.
+        root_ids_ = std::move(block_stack_.back().ids);
+        block_stack_.pop_back();
 
         RegisterNames();
 
@@ -424,15 +430,100 @@ class Parser {
         return functions_.GetOrAdd(id, [&] { return b_.Function(ty_.void_()); });
     }
 
+    core::ir::Value* Propagate(uint32_t id, core::ir::Value* src) {
+        auto* src_res = src->As<core::ir::InstructionResult>();
+        TINT_ASSERT(src_res);
+
+        auto* src_inst = src_res->Instruction();
+
+        // Find the path from this block back to the function block
+        auto* ctrl_inst = src_inst;
+        std::vector<core::ir::Block*> path;
+        while (ctrl_inst) {
+            path.push_back(ctrl_inst->Block());
+            ctrl_inst = ctrl_inst->Block()->Parent();
+        }
+        // Flip the path around so it goes from the function, same order as the block_stack
+        std::reverse(std::begin(path), std::end(path));
+
+        // The path should be at the function block. The block stack also starts with the function
+        // block as we've removed the root block earlier.
+        TINT_ASSERT(path[0] == block_stack_[0].block);
+
+        size_t last_matched_block = 1;
+        for (; last_matched_block < path.size(); ++last_matched_block) {
+            TINT_ASSERT(last_matched_block < block_stack_.size());
+
+            if (path[last_matched_block] != block_stack_[last_matched_block].block) {
+                --last_matched_block;
+                break;
+            }
+        }
+
+        // We now have the location of last block where the path and block_stack match. We need to
+        // propagate from the end of path down to the given `i` block.
+        auto* blk = src_inst->Block();
+        while (blk) {
+            if (blk == path[last_matched_block]) {
+                block_stack_[last_matched_block].ids.insert(id);
+                break;
+            }
+
+            auto* ctrl = blk->Parent();
+
+            TINT_ASSERT(blk->Terminator());
+
+            // Add ourselves as part of the terminator return value
+            blk->Terminator()->PushOperand(src);
+            // Add a new result to the control instruction
+            ctrl->AddResult(b_.InstructionResult(src->Type()));
+            // The source instruction is now the control result we just inserted
+            src = ctrl->Results().Back();
+            // The SPIR-V ID now refers to the propagated value.
+            values_.Replace(id, src);
+
+            blk = ctrl->Block();
+        }
+        return src;
+    }
+
+    bool IdIsInScope(uint32_t id) {
+        for (auto iter = block_stack_.rbegin(); iter != block_stack_.rend(); ++iter) {
+            if (iter->ids.count(id) > 0) {
+                return true;
+            }
+        }
+        return root_ids_.count(id) > 0;
+    }
+
     /// @param id a SPIR-V result ID
     /// @returns a Tint value object
     core::ir::Value* Value(uint32_t id) {
-        return values_.GetOrAdd(id, [&]() -> core::ir::Value* {
-            if (auto* c = spirv_context_->get_constant_mgr()->FindDeclaredConstant(id)) {
-                return b_.Constant(Constant(c));
+        auto v = values_.Get(id);
+        if (v) {
+            if (!(*v)->Is<core::ir::InstructionResult>()) {
+                return *v;
             }
-            TINT_UNREACHABLE() << "missing value for result ID " << id;
-        });
+            if (IdIsInScope(id)) {
+                return *v;
+            }
+
+            // The Value is not in scope, so we need to find the originating Value, and then
+            // propagate it up through the control instructions. That will then change the
+            // `Value` which is returned so, set it into the values map as the new "Value" and
+            // return it.
+
+            auto* new_v = Propagate(id, *v);
+            values_.Replace(id, new_v);
+            return new_v;
+        }
+
+        if (auto* c = spirv_context_->get_constant_mgr()->FindDeclaredConstant(id)) {
+            auto* val = b_.Constant(Constant(c));
+            values_.Add(id, val);
+            return val;
+        }
+        TINT_UNREACHABLE() << "missing value for result ID " << id;
     }
 
     /// @param constant a SPIR-V constant object
@@ -499,7 +590,10 @@ class Parser {
     /// Register an IR value for a SPIR-V result ID.
     /// @param result_id the SPIR-V result ID
     /// @param value the IR value
-    void AddValue(uint32_t result_id, core::ir::Value* value) { values_.Add(result_id, value); }
+    void AddValue(uint32_t result_id, core::ir::Value* value) {
+        block_stack_.back().ids.insert(result_id);
+        values_.Replace(result_id, value);
+    }
 
     /// Emit an instruction to the current block and associates the result to
     /// the spirv result id.
@@ -632,6 +726,8 @@ class Parser {
     /// @param dst the Tint IR block to append to
     /// @param src the SPIR-V block to emit
     void EmitBlock(core::ir::Block* dst, const spvtools::opt::BasicBlock& src) {
+        block_stack_.push_back({dst, {}});
+
         TINT_SCOPED_ASSIGNMENT(current_block_, dst);
         for (auto& inst : src) {
             switch (inst.opcode()) {
@@ -888,6 +984,8 @@ class Parser {
                         << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
             }
         }
+
+        block_stack_.pop_back();
     }
 
     void HandleSelectionMerge(const spvtools::opt::Instruction& inst,
@@ -909,6 +1007,52 @@ class Parser {
         EmitBlock(current_block_, *bb);
     }
 
+    // Given a true and false branch find if there is a common convergence point before the merge
+    // block.
+    std::optional<uint32_t> FindPremergeId(uint32_t true_id,
+                                           uint32_t false_id,
+                                           std::optional<uint32_t> merge_id) {
+        auto* cfg = spirv_context_->cfg();
+
+        // We need a merge block, the true and false to be unique and the true and false to not be
+        // the merge.
+        if (!merge_id || true_id == false_id || true_id == merge_id || false_id == merge_id) {
+            return std::nullopt;
+        }
+
+        // Get the list of blocks from the true branch to the merge
+        std::list<spvtools::opt::BasicBlock*> true_blocks;
+        cfg->ComputeStructuredOrder(
+            current_spirv_function_, &*(current_spirv_function_->FindBlock(true_id)),
+            &*(current_spirv_function_->FindBlock(merge_id.value())), &true_blocks);
+
+        // Get the list of blocks from the false branch to the merge
+        std::list<spvtools::opt::BasicBlock*> false_blocks;
+        cfg->ComputeStructuredOrder(
+            current_spirv_function_, &*(current_spirv_function_->FindBlock(false_id)),
+            &*(current_spirv_function_->FindBlock(merge_id.value())), &false_blocks);
+
+        // It's possible one of the blocks returns, so bail early if they don't both end at the
+        // merge.
+        if (true_blocks.back()->id() != merge_id || false_blocks.back()->id() != merge_id) {
+            return std::nullopt;
+        }
+
+        std::optional<uint32_t> id = std::nullopt;
+        while (!true_blocks.empty() && !false_blocks.empty()) {
+            auto* tb = true_blocks.back();
+            if (tb != false_blocks.back()) {
+                break;
+            }
+
+            id = tb->id();
+
+            true_blocks.pop_back();
+            false_blocks.pop_back();
+        }
+        return id;
+    }
+
     void EmitBranchConditional(const spvtools::opt::Instruction& inst) {
         auto cond = Value(inst.GetSingleWordInOperand(0));
         auto true_id = inst.GetSingleWordInOperand(1);
@@ -921,6 +1065,25 @@ class Parser {
 
         TINT_ASSERT(current_spirv_function_);
 
+        // If the true and false block are the same, then we change the condition into
+        // `cond || true` so that we always take the true block, the false block will be marked
+        // unreachable.
+        if (true_id == false_id) {
+            auto* binary = b_.Binary(core::BinaryOp::kOr, cond->Type(), cond, b_.Constant(true));
+            EmitWithoutSpvResult(binary);
+
+            cond = binary->Result(0);
+        }
+
+        // Determine if there is a premerge block to handle
+        std::optional<uint32_t> premerge_start_id = FindPremergeId(true_id, false_id, merge_id);
+
+        // If we found the start of a premerge, push it onto the merge stack so this ends up being a
+        // temporary merge block for the if branches.
+        if (premerge_start_id.has_value()) {
+            merge_stack_.push_back({premerge_start_id.value(), nullptr});
+        }
+
         auto* if_ = b_.If(cond);
         EmitWithoutResult(if_);
 
@@ -932,14 +1095,37 @@ class Parser {
             if_->True()->Append(b_.ExitIf(if_));
         }
 
-        if (false_id != merge_id) {
+        // Pre-SPIRV 1.6 the true and false blocks could be the same. If that's the case then we
+        // will have changed the condition and the false block is now unreachable.
+        if (false_id == true_id) {
+            if_->False()->Append(b_.Unreachable());
+        } else if (false_id != merge_id) {
             const auto& bb_false = current_spirv_function_->FindBlock(false_id);
             EmitBlock(if_->False(), *bb_false);
-        }
-        if (!if_->False()->Terminator()) {
-            if_->False()->Append(b_.ExitIf(if_));
+            if (!if_->False()->Terminator()) {
+                if_->False()->Append(b_.ExitIf(if_));
+            }
         }
 
+        // There was a premerge, remove it from the merge stack and then emit the premerge into an
+        // `if true` block in order to maintain re-convergence guarantees. The premerge will contain
+        // all the blocks up to the merge block.
+        if (premerge_start_id.has_value()) {
+            merge_stack_.pop_back();
+
+            auto* premerge_if_ = b_.If(b_.Constant(true));
+            EmitWithoutResult(premerge_if_);
+
+            const auto& bb_premerge = current_spirv_function_->FindBlock(premerge_start_id.value());
+            EmitBlock(premerge_if_->True(), *bb_premerge);
+            if (!premerge_if_->True()->Terminator()) {
+                premerge_if_->True()->Append(b_.ExitIf(premerge_if_));
+            }
+
+            premerge_if_->False()->Append(b_.Unreachable());
+        }
+
+        // Emit the merge block if it exists.
         if (merge_id.has_value()) {
             if (&inst == merge_stack_.back().merge_inst) {
                 merge_stack_.pop_back();
@@ -1490,6 +1676,16 @@ class Parser {
 
     // Stack of merge blocks
     std::vector<MergeInfo> merge_stack_;
+
+    // The data used by the block stack to track the block and the id's declared in that block.
+    struct BlockData {
+        core::ir::Block* block;
+        std::unordered_set<uint32_t> ids;
+    };
+
+    // Stack of blocks which have currently been entered
+    std::vector<BlockData> block_stack_;
+    std::unordered_set<uint32_t> root_ids_;
 };
 
 }  // namespace
