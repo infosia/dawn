@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab58c9bf_77ccb68f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1951,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T08:43:38Z",
+      "side": 1,
+      "message": "```suggestion\n        if (device-\u003eConsumedError(buffer-\u003eMapAtCreation())) {\n            return Ref\u003cBufferBase\u003e{};\n        }\n```",
+      "range": {
+        "startLine": 1949,
+        "startChar": 0,
+        "endLine": 1951,
+        "endChar": 9
+      },
+      "revId": "83244314b5185e0a12d8197c1bbbdd2491071e93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
