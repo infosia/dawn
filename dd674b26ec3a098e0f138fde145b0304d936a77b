@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60c154a7_a01de26e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T14:49:27Z",
+      "side": 1,
+      "message": "Dan PTAL, but also do you have an idea of how to handle `binding_array` being a reserved keyword at the moment, but no longer after this feature? Do I put a condition in `Parser::expect_ident` for the feature?",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
