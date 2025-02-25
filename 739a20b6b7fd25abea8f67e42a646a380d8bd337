@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3286b1f7_73844e35",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T14:53:59Z",
+      "side": 1,
+      "message": "Can you also update the bug number here?",
+      "parentUuid": "b4eec894_3da3f817",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "21d6a3ed_e2fb5485",
         "filename": "src/dawn/native/BindGroup.cpp",
         "patchSetId": 7
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "How would you do that?",
       "parentUuid": "21d6a3ed_e2fb5485",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be32d747_0cddda31",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T14:53:59Z",
+      "side": 1,
+      "message": "Check the value of nextInChain directly?",
+      "parentUuid": "97369df5_39ab694b",
       "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -219,6 +255,30 @@
       "side": 1,
       "message": "Let\u0027s do that then. Note that I had to introduce `paramsBuffer` there.",
       "parentUuid": "6bf1174d_ec56b87b",
+      "range": {
+        "startLine": 655,
+        "startChar": 67,
+        "endLine": 655,
+        "endChar": 97
+      },
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc1b5ab4_00b795e2",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T14:53:59Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ee264661_f787601d",
       "range": {
         "startLine": 655,
         "startChar": 67,

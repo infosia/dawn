@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a848b0db_4cdcd029",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T14:53:59Z",
+      "side": 1,
+      "message": "It looks fine now, you can start the review when you feel ready (and have tests) but we\u0027ll still need to do the pre-refactor.",
+      "revId": "d93dba2ff84e88ee51586fd8dfd302539a7221db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0e3b093_5151a689",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T14:53:59Z",
+      "side": 1,
+      "message": "u-nit: Move declaraiont above the setting of `desc` so it\u0027s marginally more readable / consistent.",
+      "revId": "d93dba2ff84e88ee51586fd8dfd302539a7221db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "468efea7_3500a8b3",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-25T14:53:59Z",
+      "side": 1,
+      "message": "```suggestion\n    return utils::CreateBufferFromData(device, wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst, {params}));\n```",
+      "range": {
+        "startLine": 342,
+        "startChar": 0,
+        "endLine": 347,
+        "endChar": 24
+      },
+      "revId": "d93dba2ff84e88ee51586fd8dfd302539a7221db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
