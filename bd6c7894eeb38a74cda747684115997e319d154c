@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84c44717_97e95913",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-25T15:36:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0165a42f_94cec16f",
+      "revId": "bd6c7894eeb38a74cda747684115997e319d154c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a32c74c0_0725c02e",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-25T14:23:34Z",
       "side": 1,
       "message": "Instead of the second `Any` loop, why not just set a flag when you iterate the first time in the `for` above?",
+      "revId": "bd6c7894eeb38a74cda747684115997e319d154c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a007bce1_70db5068",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-25T15:36:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a32c74c0_0725c02e",
       "revId": "bd6c7894eeb38a74cda747684115997e319d154c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
