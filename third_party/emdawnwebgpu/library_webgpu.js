@@ -127,7 +127,12 @@ var LibraryWebGPU = {
     // second argument is a "parent" object that's needed in order to handle
     // WGPUFutures when using in non-AllowSpontaneous mode. For most objects,
     // a WGPUDevice would suffice as a parent. For a WGPUDevice, either a
-    // WGPUAdapter or WGPUInstance would be valid.
+    // WGPUAdapter or WGPUInstance would be valid. Also note that imported
+    // objects are not cleaned up as objects created natively via the APIs
+    // because importing is not a "move" into the API, rather just a "copy".
+    // This particularly applies for objects that would otherwise normally
+    // have Destroy called when the last reference is dropped like
+    // WGPUBuffers and WGPUDevices.
     getJsObject: (ptr) => {
       if (!ptr) return undefined;
 #if ASSERTIONS
@@ -138,7 +143,14 @@ var LibraryWebGPU = {
     {{{ gpu.makeImportJsObject('Adapter') }}}
     {{{ gpu.makeImportJsObject('BindGroup') }}}
     {{{ gpu.makeImportJsObject('BindGroupLayout') }}}
-    {{{ gpu.makeImportJsObject('Buffer') }}}
+    importJsBuffer__deps: ['emwgpuCreateBuffer'],
+    importJsBuffer: (buffer, parentPtr = 0) => {
+      // At the moment, only allow importing unmapped buffers.
+      assert(buffer.mappedState == "unmapped");
+      var bufferPtr = _emwgpuCreateBuffer(parentPtr);
+      WebGPU.Internals.jsObjectInsert(bufferPtr, buffer);
+      return bufferPtr;
+    },
     {{{ gpu.makeImportJsObject('CommandBuffer') }}}
     {{{ gpu.makeImportJsObject('CommandEncoder') }}}
     {{{ gpu.makeImportJsObject('ComputePassEncoder') }}}
@@ -733,7 +745,7 @@ var LibraryWebGPU = {
     return adapter.features.has(WebGPU.FeatureName[featureEnumValue]);
   },
 
-  emwgpuAdapterRequestDevice__deps: ['emwgpuCreateQueue', 'emwgpuOnDeviceLostCompleted', 'emwgpuOnRequestDeviceCompleted', 'emwgpuOnUncapturedError'],
+  emwgpuAdapterRequestDevice__deps: ['emwgpuOnDeviceLostCompleted', 'emwgpuOnRequestDeviceCompleted', 'emwgpuOnUncapturedError'],
   emwgpuAdapterRequestDevice__sig: 'vpjjppp',
   emwgpuAdapterRequestDevice: (adapterPtr, futureId, deviceLostFutureId, devicePtr, queuePtr, descriptor) => {
     var adapter = WebGPU.getJsObject(adapterPtr);
