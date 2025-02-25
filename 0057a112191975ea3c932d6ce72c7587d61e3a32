@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60788908_83e24aa5",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-25T16:37:35Z",
+      "side": 1,
+      "message": "Please check if this can actually happen, and make sure we have test coverage if it can.",
+      "revId": "0057a112191975ea3c932d6ce72c7587d61e3a32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfbd032c_c9fabed0",
+        "filename": "src/tint/lang/core/ir/evaluator_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-25T16:37:35Z",
+      "side": 1,
+      "message": "Nit: These next three are fixed size arrays, not runtime arrays.",
+      "revId": "0057a112191975ea3c932d6ce72c7587d61e3a32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
