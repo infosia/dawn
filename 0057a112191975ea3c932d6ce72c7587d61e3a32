@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d86325f8_1ebd4af5",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-25T20:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4089357a_61f46400",
+      "revId": "0057a112191975ea3c932d6ce72c7587d61e3a32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dfbd032c_c9fabed0",
@@ -103,6 +121,24 @@
       "side": 1,
       "message": "The address space is uninteresting. What you\u0027re testing is the bounds check, which is dependent on the size (or lack thereof).",
       "parentUuid": "d8c08cec_f3e7d7a9",
+      "revId": "0057a112191975ea3c932d6ce72c7587d61e3a32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44b1cca4_d868b20b",
+        "filename": "src/tint/lang/core/ir/evaluator_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-02-25T20:29:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bed09012_557b7e8f",
       "revId": "0057a112191975ea3c932d6ce72c7587d61e3a32",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
