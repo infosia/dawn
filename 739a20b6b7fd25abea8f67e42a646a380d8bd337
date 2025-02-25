@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee348b23_f8fc5f23",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T15:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3286b1f7_73844e35",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21d6a3ed_e2fb5485",
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "Check the value of nextInChain directly?",
       "parentUuid": "97369df5_39ab694b",
+      "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "081ec8cc_db2551c9",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T15:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be32d747_0cddda31",
       "revId": "739a20b6b7fd25abea8f67e42a646a380d8bd337",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

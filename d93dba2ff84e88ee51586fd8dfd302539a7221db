@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adf4e01b_afc65f59",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T15:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0e3b093_5151a689",
+      "revId": "d93dba2ff84e88ee51586fd8dfd302539a7221db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "468efea7_3500a8b3",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-02-25T14:53:59Z",
       "side": 1,
       "message": "```suggestion\n    return utils::CreateBufferFromData(device, wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst, {params}));\n```",
+      "range": {
+        "startLine": 342,
+        "startChar": 0,
+        "endLine": 347,
+        "endChar": 24
+      },
+      "revId": "d93dba2ff84e88ee51586fd8dfd302539a7221db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64a5adb7_d99ce366",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-25T15:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "468efea7_3500a8b3",
       "range": {
         "startLine": 342,
         "startChar": 0,
