@@ -16,6 +16,24 @@
       "message": "Looks like this was the only use of this header too, can we remove that as well?",
       "revId": "4184c585c9ba6b8fac728c26ddbc373506f82d3e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2cf1972_2e34856e",
+        "filename": "src/tint/utils/socket.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-02-25T17:49:22Z",
+      "side": 0,
+      "message": "Done, thanks for catching this.",
+      "parentUuid": "04864460_7271d0b2",
+      "revId": "4184c585c9ba6b8fac728c26ddbc373506f82d3e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
