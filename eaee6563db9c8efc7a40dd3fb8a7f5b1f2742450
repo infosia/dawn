@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "9698e85f_ad65c2a6",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-26T22:24:16Z",
+      "side": 1,
+      "message": "Seems still referenced?\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Limits.cpp;l\u003d231;drc\u003d1c06e0576884e703f3534bce8455c9e97dfdae9b",
+      "parentUuid": "9bad2797_e829b639",
+      "range": {
+        "startLine": 379,
+        "startChar": 40,
+        "endLine": 379,
+        "endChar": 58
+      },
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b748e989_c859d79d",
@@ -112,6 +136,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a05ba050_5884a66b",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2491,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-26T22:24:16Z",
+      "side": 1,
+      "message": "Done\n- `DeviceBase::GetFeatureLevel` -\u003e `use a private field mEffectiveFeatureLevel`\n\nI keep `IsCompatibilityMode` as is",
+      "parentUuid": "783ee5d8_5df1c938",
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea795e63_cd9e5d57",
@@ -129,6 +171,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5890b517_f333d1c4",
+        "filename": "src/dawn/native/PhysicalDevice.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-26T22:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea795e63_cd9e5d57",
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6bf16260_95f99a0c",
@@ -142,6 +202,30 @@
       "writtenOn": "2025-02-26T05:37:53Z",
       "side": 1,
       "message": "nit: Use something like `SupportsFeatureLevel(wgpu::FeatureLevel::Core, nullptr)` so that our logic for this check is centralized in one place",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c61c407_77c0a006",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-26T22:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bf16260_95f99a0c",
       "range": {
         "startLine": 149,
         "startChar": 8,
@@ -175,6 +259,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57232396_5d36e095",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-26T22:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beb22cb3_a4e2e58e",
+      "range": {
+        "startLine": 122,
+        "startChar": 54,
+        "endLine": 122,
+        "endChar": 71
+      },
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "457d0dfd_58889f68",
@@ -188,6 +296,24 @@
       "writtenOn": "2025-02-26T05:37:53Z",
       "side": 1,
       "message": "Vulkan doesn\u0027t always support core: https://dawn-review.googlesource.com/c/dawn/+/222117",
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "071f7ed8_a8466cf7",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-02-26T22:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457d0dfd_58889f68",
       "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
