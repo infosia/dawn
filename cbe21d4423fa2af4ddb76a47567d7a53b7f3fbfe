@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7860c63_fcc1895a",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-26T20:22:12Z",
+      "side": 1,
+      "message": "Could we move this check and hte emission of \u0027 \u0027  directly into `EmitOperandList` so these call sites just call it and let it figure it out?",
+      "revId": "cbe21d4423fa2af4ddb76a47567d7a53b7f3fbfe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
