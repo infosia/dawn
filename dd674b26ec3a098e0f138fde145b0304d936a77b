@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "037370d5_41839d9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-26T14:50:29Z",
+      "side": 1,
+      "message": "You need to remove it from `is_reserved` a the top of the wgsl parser.cc file. That makes it no longer a reserved word.",
+      "parentUuid": "8d007996_e8491604",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "243db31a_43943190",
         "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
         "patchSetId": 7
@@ -213,6 +231,30 @@
       "side": 1,
       "message": "This is a language feature and not an extension so I feel like the current wording makes it more clear that the feature is enabled for you or you\u0027re out of luck. WDYT?",
       "parentUuid": "443b7b88_bbef3fec",
+      "range": {
+        "startLine": 511,
+        "startChar": 1,
+        "endLine": 512,
+        "endChar": 77
+      },
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1432fa6a_a0ff560c",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-26T14:50:29Z",
+      "side": 1,
+      "message": "In that case, lets follow PointerCompositeAccess style:\n\n```\n                \u003c\u003c \"pointer composite access requires the pointer_composite_access language \"\n                   \"feature, which is not allowed in the current environment\";\n```",
+      "parentUuid": "e7f19b0c_bc87a111",
       "range": {
         "startLine": 511,
         "startChar": 1,
