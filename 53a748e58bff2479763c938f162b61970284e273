@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "53a748e58bff2479763c938f162b61970284e273",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40a06b81_80d58ad8",
+        "filename": "src/tint/lang/spirv/reader/parser/bit_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-26T21:18:07Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these be in some other file?",
+      "revId": "53a748e58bff2479763c938f162b61970284e273",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
