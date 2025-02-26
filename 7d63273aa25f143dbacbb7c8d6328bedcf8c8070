@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11ae5f2c_8a080ccb",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3815249
+      },
+      "writtenOn": "2025-02-26T07:54:29Z",
+      "side": 1,
+      "message": "because it makes an error with this lambda:\n error: invalid user-defined conversion from ‘main(int, char**)::\u003clambda(WGPURequestAdapterStatus, WGPUAdapter, const char*, void*)\u003e’ to ‘wgpu::RequestAdapterCallback’ {aka ‘void (*)",
+      "parentUuid": "738c38cf_59e24d29",
+      "revId": "7d63273aa25f143dbacbb7c8d6328bedcf8c8070",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1370ed37_6f86558f",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a25698a8_421d4da2",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3815249
+      },
+      "writtenOn": "2025-02-26T07:54:29Z",
+      "side": 1,
+      "message": "OK!\nI\u0027ll remove it.",
+      "parentUuid": "1370ed37_6f86558f",
+      "range": {
+        "startLine": 76,
+        "startChar": 69,
+        "endLine": 76,
+        "endChar": 70
+      },
+      "revId": "7d63273aa25f143dbacbb7c8d6328bedcf8c8070",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f66ff3f5_492162d9",
@@ -54,6 +96,30 @@
       "writtenOn": "2025-01-06T15:38:38Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nAnalyzer Description: Validates that changes do not have prohibited expressions in them.\nOwner: ayeaye-team@google.com\n\nPlease remove the trailing whitespace.",
+      "range": {
+        "startLine": 77,
+        "startChar": 76,
+        "endLine": 77,
+        "endChar": 77
+      },
+      "revId": "7d63273aa25f143dbacbb7c8d6328bedcf8c8070",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96a2bdd1_31524282",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3815249
+      },
+      "writtenOn": "2025-02-26T07:54:29Z",
+      "side": 1,
+      "message": "OK!\nI\u0027ll remove it.",
+      "parentUuid": "f66ff3f5_492162d9",
       "range": {
         "startLine": 77,
         "startChar": 76,
