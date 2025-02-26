@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "769b4dbb_40d42bdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-26T23:33:41Z",
+      "side": 1,
+      "message": "Sorry it took a while to get back to this. Updated as we talked about in the meeting.\n\nI\u0027m concerned that without the `unordered_set` to track \"seen sTypes\" during deserialization though, we may still run into the recursion issue... This is mostly because of the best-effort deserialize code. Maybe we could talk about it sometime again if needed? But if we don\u0027t keep the best-effort deserialzation code, then we would just need to error out as soon as we see a bad struct because of the way the buffer is structured.\n\nSome thoughts:\n- Maybe we could add a `size` argument in `WGPUChainedStructTransfer` type? That would allow us to just seek ahead the number of bytes of all the members in the chained struct without actually trying to deserialize stuff, so we could \"recover\"? Mainly this is an issue when one of the chained structs has variable size, i.e. it has a string or array or something. Not sure how safe this is \"security\" wise because I haven\u0027t thought through that too much...",
+      "parentUuid": "6493a3f8_a236f192",
+      "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "46c8ba44_9d16c50e",
         "filename": "generator/templates/dawn/native/ChainUtils.cpp",
         "patchSetId": 1
@@ -153,6 +171,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffda29e6_02995b5b",
+        "filename": "generator/templates/dawn/native/ChainUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-26T23:33:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6c6066a_e08f9c62",
+      "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed90819e_bf52b991",
@@ -166,6 +202,24 @@
       "writtenOn": "2025-02-13T13:01:32Z",
       "side": 1,
       "message": "Chromium doesn\u0027t allow static constructors/destructors and this unfortunately is one.",
+      "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f86ddbaa_5389387d",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-26T23:33:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed90819e_bf52b991",
       "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
