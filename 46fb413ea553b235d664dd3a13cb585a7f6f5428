@@ -16,6 +16,92 @@
       "message": "Thank you very much for the offline vocal message! It really helped me.",
       "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "981b6dab_6112486d",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T11:13:03Z",
+      "side": 1,
+      "message": "IMHO we don\u0027t need context here as errors should basically only happen because of a device loss or OOM. We don\u0027t exactly need more info for the devs if that happens.",
+      "fixSuggestions": [
+        {
+          "fixId": "7ecd30a3_7cc00021",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/BindGroup.cpp",
+              "range": {
+                "startLine": 637,
+                "startChar": 0,
+                "endLine": 638,
+                "endChar": 0
+              },
+              "replacement": "    DAWN_TRY(InitializeImpl());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dd7c5d7_5fb4a0d0",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T11:13:03Z",
+      "side": 1,
+      "message": "Uh, we never define the class inline in the function anywhere in Dawn. It\u0027s kind nice so I\u0027ll let another reviewer ok this as well before we make a precedent.",
+      "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0d6885c_474cbd0f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T11:13:03Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned about making the backends return partially initialized BGs because creating them from the frontend data is solely their responsibility, and the backend BG/BGLs need to know that the creation is done entirely in this scope and not potentially deferred to later.\n\nIn D3D12 the init would be called in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/BindGroupD3D12.cpp;drc\u003d20799f4c32d950ce93d495f44eec648400f38a19;l\u003d49\n\nIn Vulkan in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BindGroupVk.cpp;drc\u003dc40228e6fc111f23b96cfb0be7672e47b64e9168;l\u003d47\n\nIn Metal we\u0027d introduce a similar function here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/BindGroupMTL.mm;drc\u003dcc2516ac15ebeb6c3c07a427a76d6b57832d3154;l\u003d34\n\netc. This would also match how all the other objects are handled in the backends.",
+      "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f309605_84241a88",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T11:13:03Z",
+      "side": 1,
+      "message": "Let\u0027s cache that in the backend BGL instead as that\u0027s basically a per-device constant. This way we avoid duplicating the data for every BG.",
+      "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
