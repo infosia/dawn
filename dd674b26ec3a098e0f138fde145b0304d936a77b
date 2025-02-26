@@ -216,6 +216,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7ccb76d0_26eae7e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-26T16:03:47Z",
+      "side": 1,
+      "message": "David says we should just remove it from the spec so it is no longer reserved.",
+      "parentUuid": "c1d1db40_51d8b7c9",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "243db31a_43943190",
         "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
         "patchSetId": 7
