@@ -124,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "923fe47d_17f3f10a",
+        "filename": "src/tint/lang/spirv/reader/lower/lower.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-26T02:38:35Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8fd1a81a_69c6b3ce",
+      "revId": "50c5713f20c31d1893d7a254957b9308dab94b2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d3994174_163b4fbe",

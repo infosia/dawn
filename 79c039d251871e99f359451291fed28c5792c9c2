@@ -196,6 +196,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "43bb5a41_f241a34c",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-26T02:38:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adb51230_64a382af",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dcd659ef_32e41d7d",
@@ -263,6 +281,24 @@
       "side": 1,
       "message": "I compare them because I need to find where they diverge. The divergence point is where I need to hoist the variable too. So, just knowing %1 is in the block doesn\u0027t help me I also need to know where %2 and %1 match up like with:\n\n```\nfn a() {\n  if (b) {\n    %1 \u003d 4;\n  }\n  if (c) {\n    %2 \u003d %1\n  }\n}\n```\n\nI have to find that the matching block is the function block, so I walk the two paths to find where they converge.",
       "parentUuid": "1c36da6b_b20b198d",
+      "revId": "79c039d251871e99f359451291fed28c5792c9c2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf24d30f_77fe4b9d",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-26T02:38:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58ac81b5_2afb1fb7",
       "revId": "79c039d251871e99f359451291fed28c5792c9c2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
