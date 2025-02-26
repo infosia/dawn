@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bcb0386_7ff2f1d8",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-26T11:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "981b6dab_6112486d",
+      "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1dd7c5d7_5fb4a0d0",
@@ -100,6 +118,24 @@
       "writtenOn": "2025-02-26T11:13:03Z",
       "side": 1,
       "message": "Let\u0027s cache that in the backend BGL instead as that\u0027s basically a per-device constant. This way we avoid duplicating the data for every BG.",
+      "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f14e735_6922b015",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-26T11:48:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f309605_84241a88",
       "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
