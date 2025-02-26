@@ -497,10 +497,10 @@ void Disassembler::EmitInstruction(const Instruction* inst) {
         [&](const Discard* d) { EmitInstructionName(d); },
         [&](const Store* s) {
             EmitInstructionName(s);
-            out_ << " ";
-            EmitOperand(s, Store::kToOperandOffset);
-            out_ << ", ";
-            EmitOperand(s, Store::kFromOperandOffset);
+            if (s->Operands().Length() > 0) {
+                out_ << " ";
+                EmitOperandList(s);
+            }
         },
         [&](const StoreVectorElement* s) {
             EmitInstructionName(s);
@@ -513,12 +513,10 @@ void Disassembler::EmitInstruction(const Instruction* inst) {
             EmitValueWithType(uc);
             out_ << " = ";
             EmitInstructionName(uc);
-            out_ << " ";
-            EmitOperand(uc, UserCall::kFunctionOperandOffset);
-            if (!uc->Args().IsEmpty()) {
-                out_ << ", ";
+            if (uc->Operands().Length() > 0) {
+                out_ << " ";
+                EmitOperandList(uc);
             }
-            EmitOperandList(uc, UserCall::kArgsOperandOffset);
         },
         [&](const BuiltinCall* c) {
             EmitValueWithType(c);
@@ -557,9 +555,9 @@ void Disassembler::EmitInstruction(const Instruction* inst) {
             EmitValueWithType(o);
             out_ << " = ";
             EmitInstructionName(o);
-            if (o->Initializer()) {
-                out_ << ", ";
-                EmitOperand(o, Var::kInitializerOperandOffset);
+            if (o->Operands().Length() > 0) {
+                out_ << " ";
+                EmitOperandList(o);
             }
             out_ << " @id(" << o->OverrideId().value << ")";
         },
