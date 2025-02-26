@@ -16,6 +16,24 @@
       "message": "I\u0027ve added some validation tests in latest patchset.\nI\u0027m now trying to see where end2end tests would fall into, and what to test exactly. Ideally, it would be something similar to ExternalTexture but it\u0027s hard for me to tell which parts yet. Any suggestions?",
       "revId": "a3eb759efc85ce3a6663cbb0119332ed7a3fbc03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b68a33c6_f64291fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T14:41:09Z",
+      "side": 1,
+      "message": "IMHO end2end tests fit in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/ExternalTextureTests.cpp;l\u003d219?q\u003dExternalTextureTest\u0026sq\u003d with basic tests for binding a texture view and that sampling, loading and textureDimensions work. (the latter at a mip level as well).\n\nThe rest can be done in more details in the CTS IMHO.",
+      "parentUuid": "aefe89a2_7ac7c3f1",
+      "revId": "a3eb759efc85ce3a6663cbb0119332ed7a3fbc03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
