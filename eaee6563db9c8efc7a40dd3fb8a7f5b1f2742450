@@ -60,6 +60,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "06faa643_41c0092e",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2491,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-02-26T18:00:46Z",
+      "side": 1,
+      "message": "\u003e Once you have a device, all that matters is the features and limits of the device.\n\nThat doesn\u0027t seem true. A compat device has compat validation. a core device doesn\u0027t. The difference is not just features and limits. I\u0027m I mis-understanding?",
+      "parentUuid": "2ceef1f7_ca3b60d9",
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ea795e63_cd9e5d57",
         "filename": "src/dawn/native/PhysicalDevice.cpp",
         "patchSetId": 10
