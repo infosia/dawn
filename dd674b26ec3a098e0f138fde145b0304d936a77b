@@ -144,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d258f1e2_3df9820a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-26T15:00:55Z",
+      "side": 1,
+      "message": "Woudn\u0027t it just change how the error is reported, which is fine? Instead of saying `binding_array` is a reserved word it would say `binding_array` isn\u0027t enabled, which seems ok? Either way, `binding_array` is an error.\n\nOr do we want to keep it still saying reserved word?",
+      "parentUuid": "edeede98_667c85a1",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "243db31a_43943190",
         "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
         "patchSetId": 7
