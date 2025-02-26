@@ -3,6 +3,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5432bb9e_487134ea",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T10:55:31Z",
+      "side": 1,
+      "message": "I\u0027m surprised that this change is needed: other repos use the `webgpu/` version without issues. https://github.com/beaufortfrancois/webgpu-cross-platform-app/blob/main/main.cpp",
+      "fixSuggestions": [
+        {
+          "fixId": "4c4d49cd_6e98ff4e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/quickstart-cmake.md",
+              "range": {
+                "startLine": 65,
+                "startChar": 0,
+                "endLine": 67,
+                "endChar": 0
+              },
+              "replacement": "#include \u003cwebgpu/webgpu_cpp.h\u003e\n#include \u003cwebgpu/webgpu_cpp_print.h\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7d63273aa25f143dbacbb7c8d6328bedcf8c8070",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "738c38cf_59e24d29",
         "filename": "docs/quickstart-cmake.md",
         "patchSetId": 3
@@ -32,6 +67,24 @@
       "side": 1,
       "message": "because it makes an error with this lambda:\n error: invalid user-defined conversion from ‘main(int, char**)::\u003clambda(WGPURequestAdapterStatus, WGPUAdapter, const char*, void*)\u003e’ to ‘wgpu::RequestAdapterCallback’ {aka ‘void (*)",
       "parentUuid": "738c38cf_59e24d29",
+      "revId": "7d63273aa25f143dbacbb7c8d6328bedcf8c8070",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9962d6b_6d6c0af6",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T10:55:31Z",
+      "side": 1,
+      "message": "The way to do this now is to pass the lambda directly in the `RequestAdapter` call. See how it is done here for example https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/samples/ManualSurfaceTest.cpp;drc\u003d04c2ec3144a0e617a738a81bab86f8def60baaf8;l\u003d425\n\nThis way we also keep all types C++.",
+      "parentUuid": "11ae5f2c_8a080ccb",
       "revId": "7d63273aa25f143dbacbb7c8d6328bedcf8c8070",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
