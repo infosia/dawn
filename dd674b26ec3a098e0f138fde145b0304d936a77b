@@ -162,6 +162,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "01b4101b_e79c13d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T15:05:36Z",
+      "side": 1,
+      "message": "Won\u0027t it let you use `binding_array` as an identifier name like a variable or function name? That wouldn\u0027t be up to spec.",
+      "parentUuid": "d258f1e2_3df9820a",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "243db31a_43943190",
         "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
         "patchSetId": 7
