@@ -198,6 +198,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c1d1db40_51d8b7c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-26T15:43:37Z",
+      "side": 1,
+      "message": "Discussed briefly with Dan in our standup - we probably want to just stop reserving `binding_array` in WGSL altogether since it\u0027s a type name. We already stopped reserving anything that would be type names but this one probably got missed. Will confirm with David that we can make the WGSL spec change.",
+      "parentUuid": "3f06679f_62be2302",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "243db31a_43943190",
         "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
         "patchSetId": 7
