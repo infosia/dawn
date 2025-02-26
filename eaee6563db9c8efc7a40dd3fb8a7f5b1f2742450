@@ -41,6 +41,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5844fe33_759bc52e",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1695,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-26T18:08:32Z",
+      "side": 1,
+      "message": "or as suggested in other thread, just rename to something like EnforcesCompatibilityMode or HasCompatibilityModeValidation",
+      "parentUuid": "b748e989_c859d79d",
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2ceef1f7_ca3b60d9",
@@ -72,6 +90,24 @@
       "side": 1,
       "message": "\u003e Once you have a device, all that matters is the features and limits of the device.\n\nThat doesn\u0027t seem true. A compat device has compat validation. a core device doesn\u0027t. The difference is not just features and limits. I\u0027m I mis-understanding?",
       "parentUuid": "2ceef1f7_ca3b60d9",
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "783ee5d8_5df1c938",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2491,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-26T18:08:32Z",
+      "side": 1,
+      "message": "I think that instead of `if (IsCompatibilityMode())` we could do `if (!HasFeature(Feature::CoreFeaturesAndLimits))`.\n\nThough I suppose internally we probably want to keep `IsCompatibilityMode` for convienience/clarity. Maybe I would rename it as `EnforcesCompatibilityMode` or `HasCompatibilityModeValidation`?",
+      "parentUuid": "06faa643_41c0092e",
       "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
