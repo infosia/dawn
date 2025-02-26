@@ -180,6 +180,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3f06679f_62be2302",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-26T15:09:34Z",
+      "side": 1,
+      "message": "In that case, allow it in reserved words in the parser, but in the resolver, for `Resolver::Identifer` can we put in a special case which checks allowed featuers and errors if the feature is off and the `ident-\u003esymbol.NameView()` is `binding_array` ?",
+      "parentUuid": "01b4101b_e79c13d2",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "243db31a_43943190",
         "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
         "patchSetId": 7
