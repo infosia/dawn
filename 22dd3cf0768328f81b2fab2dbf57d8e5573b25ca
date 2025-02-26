@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01050cb8_c41359f4",
+        "filename": "src/dawn/native/opengl/UtilsGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-26T18:09:46Z",
+      "side": 1,
+      "message": "ClearErrors just logs but this one does a couple things based on the return value and returns the message in the error. I found that refactoring to have this loop in just one place ended up being more complex.",
+      "parentUuid": "844f5189_84cccc72",
+      "revId": "22dd3cf0768328f81b2fab2dbf57d8e5573b25ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45141f3a_1901db44",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-02-26T17:21:29Z",
       "side": 1,
       "message": "Are there cases where we need to handle a return value? (that would require this comma operator trick) Otherwise we can do a `do { stuff } while (false)`.",
+      "revId": "22dd3cf0768328f81b2fab2dbf57d8e5573b25ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68151edf_80a2a94f",
+        "filename": "src/dawn/native/opengl/UtilsGL.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-26T18:09:46Z",
+      "side": 1,
+      "message": "Yea, functions like glCreateProgram/glCreateShader are stupdily different than the regular glGen functions and we need to check the return values.",
+      "parentUuid": "45141f3a_1901db44",
       "revId": "22dd3cf0768328f81b2fab2dbf57d8e5573b25ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
