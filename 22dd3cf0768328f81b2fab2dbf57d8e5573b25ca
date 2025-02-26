@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41023f05_0c7d268b",
+        "filename": "src/dawn/native/opengl/UtilsGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T18:14:46Z",
+      "side": 1,
+      "message": "Ah yes, sorry I meant the getError loop with break on context loss.",
+      "parentUuid": "01050cb8_c41359f4",
+      "revId": "22dd3cf0768328f81b2fab2dbf57d8e5573b25ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45141f3a_1901db44",
