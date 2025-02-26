@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "378098c1_67739417",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T14:41:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1869f1b_e6c889fc",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "60c154a7_a01de26e",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 7
@@ -54,6 +72,42 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8d007996_e8491604",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T14:41:29Z",
+      "side": 1,
+      "message": "[1] @James",
+      "parentUuid": "60c154a7_a01de26e",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4726e194_c43c8ffc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T14:41:29Z",
+      "side": 1,
+      "message": "It helped but wasn\u0027t sufficient for `RenamerBuiltinIdentifierTest`. See comment thread at [1].",
+      "parentUuid": "10d64861_38e0b430",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "243db31a_43943190",
         "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
         "patchSetId": 7
@@ -65,6 +119,24 @@
       "writtenOn": "2025-02-25T15:28:15Z",
       "side": 1,
       "message": "What does the `*` mean at the end of `binding_array`?",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "272487f3_1a915b90",
+        "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T14:41:29Z",
+      "side": 1,
+      "message": "It was meant to represent any template argument but wasn\u0027t very clear. Done.",
+      "parentUuid": "243db31a_43943190",
       "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -82,6 +154,24 @@
       "writtenOn": "2025-02-25T18:21:37Z",
       "side": 1,
       "message": "WGSL spec says:\n\n\"\"\"\nIf a pointer type appears in the program source, it must also be valid to declare a variable, somewhere in the program, with the pointer type’s address space, store type, and access mode.\n\"\"\"\n\nSo this should actually be rejected. You can do this in `ApplyAddressSpaceUsageToType()` (I recently added the equivalent check for subgroup matrices).",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5b35df6_26185066",
+        "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T14:41:29Z",
+      "side": 1,
+      "message": "I found another solution when trying to do check how texture is handled, see latest patchset.",
+      "parentUuid": "fab89533_e3ca5006",
       "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -111,6 +201,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e7f19b0c_bc87a111",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T14:41:29Z",
+      "side": 1,
+      "message": "This is a language feature and not an extension so I feel like the current wording makes it more clear that the feature is enabled for you or you\u0027re out of luck. WDYT?",
+      "parentUuid": "443b7b88_bbef3fec",
+      "range": {
+        "startLine": 511,
+        "startChar": 1,
+        "endLine": 512,
+        "endChar": 77
+      },
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "559665a2_d9e951f5",
         "filename": "src/tint/lang/wgsl/resolver/validator.h",
         "patchSetId": 7
@@ -122,6 +236,24 @@
       "writtenOn": "2025-02-25T15:28:15Z",
       "side": 1,
       "message": "```suggestion\n    /// @param source the source of the binding_array type\n```",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc6c0aa1_544c7353",
+        "filename": "src/tint/lang/wgsl/resolver/validator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T14:41:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "559665a2_d9e951f5",
       "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
