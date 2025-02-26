@@ -41,7 +41,7 @@ or if your project uses CMake you can link to it as a CMake subproject.
 
 ### Using Dawn as a CMake subproject (bindings only)
 
-TODO(crbug.com/371024051): Write a sample!
+See [samples/using_dawn_as_subproject/](samples/using_dawn_as_subproject/).
 
 ### Using pre-built emdawnwebgpu bindings via CMake (bindings only)
 
