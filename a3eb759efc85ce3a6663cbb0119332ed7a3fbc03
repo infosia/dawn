@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aefe89a2_7ac7c3f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-26T14:38:00Z",
+      "side": 1,
+      "message": "I\u0027ve added some validation tests in latest patchset.\nI\u0027m now trying to see where end2end tests would fall into, and what to test exactly. Ideally, it would be something similar to ExternalTexture but it\u0027s hard for me to tell which parts yet. Any suggestions?",
+      "revId": "a3eb759efc85ce3a6663cbb0119332ed7a3fbc03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
