@@ -126,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "edeede98_667c85a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T14:58:31Z",
+      "side": 1,
+      "message": "But then Tint will be no longer conformant with the current WGSL version, until `binding_array` is merged in the spec. I\u0027d like to find a way to make it conditional on the feature somehow. Would that be ok?",
+      "parentUuid": "037370d5_41839d9d",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "243db31a_43943190",
         "filename": "src/tint/lang/wgsl/resolver/binding_array_test.cc",
         "patchSetId": 7
