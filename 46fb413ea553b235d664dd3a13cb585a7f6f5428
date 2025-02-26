@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afc2e768_116d29ca",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-26T18:43:36Z",
+      "side": 1,
+      "message": "No complaints.",
+      "parentUuid": "1dd7c5d7_5fb4a0d0",
+      "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0d6885c_474cbd0f",
@@ -101,6 +119,24 @@
       "writtenOn": "2025-02-26T11:13:03Z",
       "side": 1,
       "message": "I\u0027m a bit concerned about making the backends return partially initialized BGs because creating them from the frontend data is solely their responsibility, and the backend BG/BGLs need to know that the creation is done entirely in this scope and not potentially deferred to later.\n\nIn D3D12 the init would be called in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/BindGroupD3D12.cpp;drc\u003d20799f4c32d950ce93d495f44eec648400f38a19;l\u003d49\n\nIn Vulkan in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BindGroupVk.cpp;drc\u003dc40228e6fc111f23b96cfb0be7672e47b64e9168;l\u003d47\n\nIn Metal we\u0027d introduce a similar function here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/BindGroupMTL.mm;drc\u003dcc2516ac15ebeb6c3c07a427a76d6b57832d3154;l\u003d34\n\netc. This would also match how all the other objects are handled in the backends.",
+      "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b64f3ca_880076fd",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-26T18:43:36Z",
+      "side": 1,
+      "message": "I think I agree. Initialize should probably be called in the backend creation code. It\u0027s a bit more code duplication but it has this guarentee that the object is fully functional by the time it gets to the frontend.\n\nAt that point, it also doesn\u0027t need to be virtual too.\n\nI haven\u0027t seen how this refactor is used to know if Initialize will be called from new spots though.",
+      "parentUuid": "d0d6885c_474cbd0f",
       "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
