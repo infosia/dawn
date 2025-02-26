@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bad2797_e829b639",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-26T05:37:53Z",
+      "side": 1,
+      "message": "I don\u0027t think this argument is actually used anymore? It seems like it became unused in https://dawn-review.googlesource.com/c/dawn/+/223860.",
+      "range": {
+        "startLine": 379,
+        "startChar": 40,
+        "endLine": 379,
+        "endChar": 58
+      },
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b748e989_c859d79d",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1695,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-26T05:37:53Z",
+      "side": 1,
+      "message": "followup work: I wonder if we could get rid of this in favor of checking for the feature directly?",
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ceef1f7_ca3b60d9",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2491,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-26T05:37:53Z",
+      "side": 1,
+      "message": "I\u0027d like if possible to avoid the idea that \"a device has a feature level\" after initialization, even though it\u0027s very useful during initialization. (In the JS API feature levels are only relevant during initialization - after requestAdapter and before requestDevice. Once you have a device, all that matters is the features and limits of the device.)\n\nPerhaps in `DeviceBase::DeviceBase` we could have a local variable `wgpu::FeatureLevel effectiveFeatureLevel` and use that instead?",
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea795e63_cd9e5d57",
+        "filename": "src/dawn/native/PhysicalDevice.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-26T05:37:53Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like it should be enabled unconditionally?",
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bf16260_95f99a0c",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-26T05:37:53Z",
+      "side": 1,
+      "message": "nit: Use something like `SupportsFeatureLevel(wgpu::FeatureLevel::Core, nullptr)` so that our logic for this check is centralized in one place",
+      "range": {
+        "startLine": 149,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "beb22cb3_a4e2e58e",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-26T05:37:53Z",
+      "side": 1,
+      "message": "I think CreateDevice could use `HasFeature(Feature::CoreFeaturesAndLimits)` and then it wouldn\u0027t need this argument.",
+      "range": {
+        "startLine": 122,
+        "startChar": 54,
+        "endLine": 122,
+        "endChar": 71
+      },
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "457d0dfd_58889f68",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-26T05:37:53Z",
+      "side": 1,
+      "message": "Vulkan doesn\u0027t always support core: https://dawn-review.googlesource.com/c/dawn/+/222117",
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
