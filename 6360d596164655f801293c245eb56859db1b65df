@@ -74,6 +74,24 @@
       "parentUuid": "7fc62f90_3fb01a99",
       "revId": "6360d596164655f801293c245eb56859db1b65df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f8f18fd_1654d6d9",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-26T02:48:50Z",
+      "side": 1,
+      "message": "True, I also forgot I could just look at `DeviceBase::WillDropLastExternalRef`, which does indeed destroy the device.\n\nWhy would it never happen though? I would have thought if you drop all of the references to all of the objects that came from that device, its internal ref count could eventually reach zero, but I\u0027m not sure. Not that that\u0027s very practical to rely on.\n\nAnyway I filed https://github.com/webgpu-native/webgpu-headers/issues/514 about documenting this, because I don\u0027t see anything about it in the device or ownership docs.",
+      "parentUuid": "1cb8f471_9069d0e7",
+      "revId": "6360d596164655f801293c245eb56859db1b65df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
