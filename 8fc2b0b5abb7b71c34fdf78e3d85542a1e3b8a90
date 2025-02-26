@@ -239,6 +239,24 @@
       "message": "nit: Document what this is used for and how to use it somewhere.\n\nAlso it isn\u0027t specific to the wire so it could be `dawn injected invalid s type`. Also can we have minimal tests that dawn::native handles it correctly? I only see dawn::wire tests here.",
       "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "769a2a3f_95170077",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 2472,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-26T23:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e8ed297_38ea82ab",
+      "revId": "8fc2b0b5abb7b71c34fdf78e3d85542a1e3b8a90",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
