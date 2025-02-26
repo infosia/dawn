@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76dc2f4e_6415aef1",
+        "filename": "src/dawn/native/opengl/UtilsGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-26T18:17:26Z",
+      "side": 1,
+      "message": "Ah,sure. Both are equivalent. I\u0027ll rewrite one.",
+      "parentUuid": "41023f05_0c7d268b",
+      "revId": "22dd3cf0768328f81b2fab2dbf57d8e5573b25ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "45141f3a_1901db44",
