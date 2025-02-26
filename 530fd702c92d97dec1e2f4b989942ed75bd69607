@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "530fd702c92d97dec1e2f4b989942ed75bd69607",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d06143dc_c46c55ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T14:16:30Z",
+      "side": 1,
+      "message": "I think I remember a discussion around this need for a bitmask in previous CLs do you have a link to it? It\u0027s not super clear why we need this and how it will be used at the moment.",
+      "revId": "530fd702c92d97dec1e2f4b989942ed75bd69607",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
