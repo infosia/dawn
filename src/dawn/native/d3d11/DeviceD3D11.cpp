@@ -72,6 +72,7 @@ bool SkipDebugMessage(const D3D11_MESSAGE& message) {
     switch (message.Severity) {
         case D3D11_MESSAGE_SEVERITY_INFO:
         case D3D11_MESSAGE_SEVERITY_MESSAGE:
+        case D3D11_MESSAGE_SEVERITY_WARNING:
             return true;
         default:
             break;
