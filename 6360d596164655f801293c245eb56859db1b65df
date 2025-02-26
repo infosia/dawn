@@ -56,6 +56,24 @@
       "message": "I\u0027d forgotten we destroy() here already. Is this also true in Dawn? If we want to destroy on dropping the last *external* ref to the device we probably are missing that info in the upstream docs and need to file an issue to document it. I can\u0027t remember if we discussed this, might have.",
       "revId": "6360d596164655f801293c245eb56859db1b65df",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cb8f471_9069d0e7",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1514,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-26T00:01:18Z",
+      "side": 1,
+      "message": "This has to be true in Dawn because otherwise Device Lost would never happen, unless you explicitly call `Destroy`.",
+      "parentUuid": "7fc62f90_3fb01a99",
+      "revId": "6360d596164655f801293c245eb56859db1b65df",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
