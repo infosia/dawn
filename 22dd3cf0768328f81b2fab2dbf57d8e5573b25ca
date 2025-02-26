@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a45b09b_90a2fd1c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T17:21:29Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "22dd3cf0768328f81b2fab2dbf57d8e5573b25ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "844f5189_84cccc72",
+        "filename": "src/dawn/native/opengl/UtilsGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T17:21:29Z",
+      "side": 1,
+      "message": "This code is different from the one in `ClearErrors` but I can\u0027t spot the functional difference.",
+      "revId": "22dd3cf0768328f81b2fab2dbf57d8e5573b25ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45141f3a_1901db44",
+        "filename": "src/dawn/native/opengl/UtilsGL.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-26T17:21:29Z",
+      "side": 1,
+      "message": "Are there cases where we need to handle a return value? (that would require this comma operator trick) Otherwise we can do a `do { stuff } while (false)`.",
+      "revId": "22dd3cf0768328f81b2fab2dbf57d8e5573b25ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
