@@ -94,7 +94,7 @@ TestAdapterProperties::TestAdapterProperties(const wgpu::AdapterInfo& info, bool
       driverDescription(info.description),
       adapterType(info.adapterType),
       backendType(info.backendType),
-      compatibilityMode(info.compatibilityMode),
+      //   compatibilityMode(info.compatibilityMode),
       selected(selected) {}
 
 std::string TestAdapterProperties::ParamName() const {
