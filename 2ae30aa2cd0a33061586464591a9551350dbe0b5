@@ -16,6 +16,103 @@
       "message": "Comment removed by: Kai Ninomiya; Reason: spam",
       "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "816c58fc_395d98ce",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:33:56Z",
+      "side": 1,
+      "message": "This is mostly used for the ordering for webgpu.h. If the issue is the order in which function are defined in WireCmd.h then we can add emission of prototypes and then emit the function definitions. It would also let us emit the functions for DawnInjectedInvalidSType whenever and remove that special casing.",
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ac55071_df35b289",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:33:56Z",
+      "side": 1,
+      "message": "We should be able to do the following to remove the `WGPUSType_DawnInjetedInvalidSType` case\n\n```\n{% set extensions \u003d record.extensions + [\u0027dawn injected invalid s type\u0027] %}\n{% for extension in extensions if extension.name.CamelCase() not in client_side_structures %}\n```",
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "080e5a87_a80f342b",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:33:56Z",
+      "side": 1,
+      "message": "We could also decide to just `return WireResult::FatalError` in this case because the client is bugged or compromised if it sends us an sType that we don\u0027t know of. It allows removing `DeserializeInvalidChainedStruct`. We don\u0027t need to try to recover from malformed commands.",
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1723a61a_2641a024",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2521,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:33:56Z",
+      "side": 1,
+      "message": "```suggestion\n    \"dawn injected invalid s type\": {\n```",
+      "range": {
+        "startLine": 2521,
+        "startChar": 10,
+        "endLine": 2521,
+        "endChar": 17
+      },
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ff66a41_b32b7e04",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3830,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:33:56Z",
+      "side": 1,
+      "message": "```suggestion\n            {\"value\": 63, \"name\": \"dawn injected invalid s type\", \"tags\": [\"dawn\"]}\n```",
+      "range": {
+        "startLine": 3830,
+        "startChar": 40,
+        "endLine": 3830,
+        "endChar": 47
+      },
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
