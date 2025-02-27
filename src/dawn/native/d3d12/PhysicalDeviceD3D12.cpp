@@ -491,10 +491,10 @@ MaybeError PhysicalDevice::InitializeDebugLayerFilters() {
         // get rejected and generate a debug error. Then, we request 0 to get the allowed
         // allowed alignment.
         D3D12_MESSAGE_ID_CREATERESOURCE_INVALIDALIGNMENT,
-#if D3D12_SDK_VERSION >= 612
-        // This message id for small resource alignment was introduced in SDK 10.0.26100.0.
-        D3D12_MESSAGE_ID_CREATERESOURCE_INVALIDALIGNMENT_SMALLRESOURCE,
-#endif
+        // The D3D12_MESSAGE_ID_CREATERESOURCE_INVALIDALIGNMENT_SMALLRESOURCE(1380) was introduced
+        // in SDK 10.0.26100.0 for small resource alignment. Adding this message id by the value
+        // allows Dawn to be compiled on SDK 10.0.22621.0 and run on SDK 10.0.26100.0.
+        D3D12_MESSAGE_ID(1380),
 
         // WebGPU allows OOB vertex buffer access and relies on D3D12's robust buffer access
         // behavior.
