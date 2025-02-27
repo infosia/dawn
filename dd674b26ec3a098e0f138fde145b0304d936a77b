@@ -232,6 +232,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "410eacdb_6f7501ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:58:22Z",
+      "side": 1,
+      "message": "Great, thanks for advising on this, I\u0027ll make a pre-CL that removes from reserved words.",
+      "parentUuid": "7ccb76d0_26eae7e7",
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "243db31a_43943190",
@@ -363,6 +381,30 @@
       "side": 1,
       "message": "In that case, lets follow PointerCompositeAccess style:\n\n```\n                \u003c\u003c \"pointer composite access requires the pointer_composite_access language \"\n                   \"feature, which is not allowed in the current environment\";\n```",
       "parentUuid": "e7f19b0c_bc87a111",
+      "range": {
+        "startLine": 511,
+        "startChar": 1,
+        "endLine": 512,
+        "endChar": 77
+      },
+      "revId": "dd674b26ec3a098e0f138fde145b0304d936a77b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "682a8d12_632dfa23",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:58:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1432fa6a_a0ff560c",
       "range": {
         "startLine": 511,
         "startChar": 1,
