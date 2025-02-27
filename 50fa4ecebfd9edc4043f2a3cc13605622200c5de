@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7db92a8d_21149c2e",
+        "filename": "src/tint/lang/spirv/reader/parser/branch_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-27T17:23:53Z",
+      "side": 1,
+      "message": "Maybe add some coverage to show that hoisting works for a value defined in a case construct?",
+      "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4c109e9_53d35367",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-27T17:23:53Z",
+      "side": 1,
+      "message": "Nit: IIUC, SPIR-V doesn\u0027t allow a merge block to be used as the merge target for multiple control flow constructs, so the IDs should all be unique. So you could just `for (auto\u0026 entry : merge_stack_)`.",
+      "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c792e53a_eea65b7c",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-27T17:23:53Z",
+      "side": 1,
+      "message": "Doesn\u0027t this need to contain the default block too? Missing test coverage if so.",
+      "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7bd88e0_ca8e5296",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-27T17:23:53Z",
+      "side": 1,
+      "message": "I think you need to not do this if `blk_id \u003d\u003d merge_id`, since that\u0027s not a fallthrough and should be allowed. Or you could move the `MergeInfoFor()` check in `EmitBranch` to before the fallthrough check.\n\nMissing test coverage if so.",
+      "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ad30a26_1555f7f4",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-27T17:23:53Z",
+      "side": 1,
+      "message": "Need to add this case to `block_id_to_case` if it\u0027s a new block. Missing test coverage for two different (non-default) cases that use the same block.",
+      "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
