@@ -16,6 +16,24 @@
       "message": "And this one too is from a different CL",
       "revId": "7337f4085897abc7bdb8778f11f6b8bfe67f87a5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f210e733_2c9fdfe3",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-27T17:08:26Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "36a99776_47b8a028",
+      "revId": "7337f4085897abc7bdb8778f11f6b8bfe67f87a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
