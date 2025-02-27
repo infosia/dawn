@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2d685a6_e35c63af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-27T15:01:03Z",
+      "side": 1,
+      "message": "Should this depend on https://github.com/gpuweb/gpuweb/issues/5088 being completed first?",
+      "revId": "33b2b2194c443ce2dde106b39e6b78a7fd7d8952",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
