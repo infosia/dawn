@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d565490_94820a47",
+        "filename": "src/tint/lang/spirv/reader/parser/branch_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-27T20:15:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7db92a8d_21149c2e",
+      "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4c109e9_53d35367",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-27T17:23:53Z",
       "side": 1,
       "message": "Nit: IIUC, SPIR-V doesn\u0027t allow a merge block to be used as the merge target for multiple control flow constructs, so the IDs should all be unique. So you could just `for (auto\u0026 entry : merge_stack_)`.",
+      "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e9c177b_02e32228",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-27T20:15:07Z",
+      "side": 1,
+      "message": "Yea, I was trying to be smart and walking backwards to make it have to walk less. But, probably there are only a handlful of blocks and it doesn\u0027t matter.\n\nDone.",
+      "parentUuid": "d4c109e9_53d35367",
       "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "27a62771_9023bb02",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-27T20:15:07Z",
+      "side": 1,
+      "message": "Added `default`. Technically, all the coverage for this is missing because the `fallthrough` test is `DISABLED` as we don\u0027t actually have a way to return errors from the parser at the moment.",
+      "parentUuid": "c792e53a_eea65b7c",
+      "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a7bd88e0_ca8e5296",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 8
@@ -65,6 +119,24 @@
       "writtenOn": "2025-02-27T17:23:53Z",
       "side": 1,
       "message": "I think you need to not do this if `blk_id \u003d\u003d merge_id`, since that\u0027s not a fallthrough and should be allowed. Or you could move the `MergeInfoFor()` check in `EmitBranch` to before the fallthrough check.\n\nMissing test coverage if so.",
+      "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb1846da_795e9d58",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-27T20:15:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7bd88e0_ca8e5296",
       "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -82,6 +154,24 @@
       "writtenOn": "2025-02-27T17:23:53Z",
       "side": 1,
       "message": "Need to add this case to `block_id_to_case` if it\u0027s a new block. Missing test coverage for two different (non-default) cases that use the same block.",
+      "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d51057f_fd00e0a3",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-27T20:15:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ad30a26_1555f7f4",
       "revId": "50fa4ecebfd9edc4043f2a3cc13605622200c5de",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
