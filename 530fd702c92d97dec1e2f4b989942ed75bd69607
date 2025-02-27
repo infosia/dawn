@@ -51,6 +51,46 @@
       "parentUuid": "d06143dc_c46c55ef",
       "revId": "530fd702c92d97dec1e2f4b989942ed75bd69607",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4578b741_ec273d69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T16:12:24Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "530fd702c92d97dec1e2f4b989942ed75bd69607",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c91d5a43_3137072f",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T16:12:24Z",
+      "side": 1,
+      "message": "nit: Opaque is !Linear so we don\u0027t need to list it.",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "530fd702c92d97dec1e2f4b989942ed75bd69607",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
