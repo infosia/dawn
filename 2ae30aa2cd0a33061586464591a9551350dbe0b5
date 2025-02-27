@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d14798d_b229c571",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3916010
+      },
+      "writtenOn": "2025-02-27T09:26:11Z",
+      "side": 1,
+      "message": "Comment removed by: Kai Ninomiya; Reason: spam",
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
