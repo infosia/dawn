@@ -80,7 +80,6 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
                 gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex, usesFragDepth,
                 bgraSwizzleAttributes, &combinedSamplers[stage], layout, &needsPlaceholderSampler,
                 &mNeedsTextureBuiltinUniformBuffer, &mBindingPointEmulatedBuiltins));
-        // XXX transform to flip some attributes from RGBA to BGRA
         gl.AttachShader(mProgram, shader);
         glShaders.push_back(shader);
     }
