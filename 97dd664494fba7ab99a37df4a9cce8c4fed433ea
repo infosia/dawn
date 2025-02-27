@@ -33,6 +33,24 @@
       "message": "Initialize isn\u0027t called here, that\u0027s where the crash comes from because bindings are all null.",
       "revId": "97dd664494fba7ab99a37df4a9cce8c4fed433ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9194d36_91313435",
+        "filename": "src/dawn/native/opengl/BindGroupGL.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-27T15:11:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "dca2e91a_b3116b62",
+      "revId": "97dd664494fba7ab99a37df4a9cce8c4fed433ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
