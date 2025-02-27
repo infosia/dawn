@@ -33,6 +33,24 @@
       "message": "I think I remember a discussion around this need for a bitmask in previous CLs do you have a link to it? It\u0027s not super clear why we need this and how it will be used at the moment.",
       "revId": "530fd702c92d97dec1e2f4b989942ed75bd69607",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1612a0ae_107d7fd0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-27T01:49:05Z",
+      "side": 1,
+      "message": "It is requested from your comments in\nhttps://dawn-review.googlesource.com/c/dawn/+/220518 (on Jan 15 in Patchset 2):\n\n\u003e This memory heap is not necessarily used right now. We need to update https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;drc\u003dff2449f5f5baaf56a34babaec640e9519a530623;l\u003d237 and https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp;drc\u003d21fb99445f32855d3f3f213f2bcd1fa1baca1f59;l\u003d273 as well because buffers are no longer just \"HostLinear\", \"LinearReadMappable\", \"LinearWriteMappable\" but also \"HostMappable\" and \"LinearMappable\". So we could use a general refactor of that enum, to maybe be a bitset (MapRead|MapWrite|Host|LazilyAllocated|Opaque/Linear).\n\nI do this refactor for the implementation of `BufferMapExtendedUsage` on Vulkan. In the next patch I need to add a new memory kind `Device` and use (MapRead|MapWrite|Device) for (Storage | MapRead | MapWrite).",
+      "parentUuid": "d06143dc_c46c55ef",
+      "revId": "530fd702c92d97dec1e2f4b989942ed75bd69607",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
