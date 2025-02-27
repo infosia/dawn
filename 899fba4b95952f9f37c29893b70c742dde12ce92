@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1977979_a19b19f6",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-27T17:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c164ab9_9ac73fbf",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1caba6f7_bfb738af",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-02-27T14:08:38Z",
       "side": 1,
       "message": "optional nit: The pointer output here is a bit awkward. The D3D12 backend uses ResultOrError\u003cbool\u003e which seems marginally better I guess.",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddad4991_8e8fc326",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-27T17:03:21Z",
+      "side": 1,
+      "message": "I originally did that but only one of the call sites actually checks the result so all the others ended up needing a temp bool and a void cast to avoid unused variable warnings. Up to you if that\u0027s better.",
+      "parentUuid": "1caba6f7_bfb738af",
       "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -87,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b55f021_ab9a5f4e",
+        "filename": "src/dawn/native/opengl/ComputePipelineGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-27T17:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eb09ce5_3c974300",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b15f7d2_c37202e0",
@@ -100,6 +154,24 @@
       "writtenOn": "2025-02-27T14:08:38Z",
       "side": 1,
       "message": "Same as [1]",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f700d4e_1054bb9c",
+        "filename": "src/dawn/native/opengl/PersistentPipelineStateGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-27T17:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b15f7d2_c37202e0",
       "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -121,6 +193,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4280fe16_4372878d",
+        "filename": "src/dawn/native/opengl/PersistentPipelineStateGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-27T17:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78329fd6_307245c0",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3df115d2_8152f1bf",
@@ -134,6 +224,24 @@
       "writtenOn": "2025-02-27T14:08:38Z",
       "side": 1,
       "message": "Same as [1]",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ad28f2e_efab062e",
+        "filename": "src/dawn/native/opengl/PersistentPipelineStateGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-27T17:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3df115d2_8152f1bf",
       "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -190,6 +298,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c33c8a14_0c1c9b81",
+        "filename": "src/dawn/native/opengl/QueueGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-27T17:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6bbce05_fa98240b",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a014ad0f_b48fba90",
@@ -203,6 +329,24 @@
       "writtenOn": "2025-02-27T14:08:38Z",
       "side": 1,
       "message": "Same as [1]",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6777273_d835c2a6",
+        "filename": "src/dawn/native/opengl/RenderPipelineGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-27T17:03:21Z",
+      "side": 1,
+      "message": "Skipped this one for aesthetics :)",
+      "parentUuid": "a014ad0f_b48fba90",
       "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -242,6 +386,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5eab2df6_53c4c48e",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-27T17:03:21Z",
+      "side": 1,
+      "message": "Ugh, yes.",
+      "parentUuid": "44625d7c_4f6b6407",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8c91f8e_b1f19d2b",
@@ -255,6 +417,30 @@
       "writtenOn": "2025-02-27T14:08:38Z",
       "side": 1,
       "message": "[1] optionally this can be\n\n```suggestion\n    return FramebufferTextureHelper(gl, textarget, target, attachment, textureHandle, mipLevel,\n                                    arrayLayer);\n```",
+      "range": {
+        "startLine": 706,
+        "startChar": 0,
+        "endLine": 708,
+        "endChar": 0
+      },
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0fde025_bde1c028",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-02-27T17:03:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8c91f8e_b1f19d2b",
       "range": {
         "startLine": 706,
         "startChar": 0,
