@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03d4eee3_789c43ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-27T18:43:02Z",
+      "side": 1,
+      "message": "```suggestion\nin sem::Function, so that we can check it when validating pipeline\n```",
+      "revId": "ab6c7b386e0277dc9bd2b6a94be3aa5395b0191b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41351d51_497e91d2",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3165,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-27T18:43:02Z",
+      "side": 1,
+      "message": "If we\u0027re in a function, wouldn\u0027t the code below for `var` or `type` handle this already?",
+      "revId": "ab6c7b386e0277dc9bd2b6a94be3aa5395b0191b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "969b4d50_f766d291",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-27T18:43:02Z",
+      "side": 1,
+      "message": "This name is a bit confusing as I assumed it would be things under `SubgroupMatrix`, but that\u0027s not really it as it contains structs and arrays if they contain subgroup matrices.\n\n`subgroup_matrix_references_`? `subgroup_matrix_uses_`?",
+      "revId": "ab6c7b386e0277dc9bd2b6a94be3aa5395b0191b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b423a8b_87a1b7aa",
+        "filename": "src/tint/lang/wgsl/sem/function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-02-27T18:43:02Z",
+      "side": 1,
+      "message": "std::optional\u003cconst Source*\u003e directly_used_subgroup_matrix_ \u003d std::nullopt",
+      "revId": "ab6c7b386e0277dc9bd2b6a94be3aa5395b0191b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
