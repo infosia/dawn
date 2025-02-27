@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01529617_6f623a65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-27T01:35:33Z",
+      "side": 1,
+      "message": "Hmm quick question, why introduce another sample when maybe we could just get the Dawn samples to build with the subproject instead? The sample could also be a test instead so that we can get more utility from it?",
+      "revId": "b6ebe30cd103c87c62ed3eb2c19c297dae474890",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
