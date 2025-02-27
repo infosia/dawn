@@ -16,6 +16,24 @@
       "message": "Hmm quick question, why introduce another sample when maybe we could just get the Dawn samples to build with the subproject instead? The sample could also be a test instead so that we can get more utility from it?",
       "revId": "b6ebe30cd103c87c62ed3eb2c19c297dae474890",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b59330ab_dc3f63ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-27T22:22:09Z",
+      "side": 1,
+      "message": "I could maybe point it at a source file for an existing sample, but the build files are separate because it needs to be a toplevel project that includes dawn as a subproject - though it\u0027s also a bit weird to do that since it\u0027s a subdirectory of dawn. Maybe I should put this sample outside dawn (maybe just in my existing sample, maybe in Dusk) instead, and point to that? It\u0027ll also make the add_subdirectory call less weird. So I think I\u0027ll do that.\n\nAs for making it more useful, I just took the minimal code from my existing sample because the thing I\u0027m really trying to demo is the build config.",
+      "parentUuid": "01529617_6f623a65",
+      "revId": "b6ebe30cd103c87c62ed3eb2c19c297dae474890",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
