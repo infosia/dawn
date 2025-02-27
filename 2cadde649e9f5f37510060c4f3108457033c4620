@@ -178,6 +178,24 @@
       "parentUuid": "39ca83f9_418027f0",
       "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96c0aa58_ecb3f057",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-02-27T07:13:56Z",
+      "side": 1,
+      "message": "Thank you for the fix!\n\nUnfortunately in my current use case, I do need to use `importJsBuffer` and `getJsObject` to deal with \"external\" buffers. The expected behavior in my understanding is:\n- for buffers created in C/C++, it should follow the same behavior of native. If any call to `getJsObject` is called on the buffer, it\u0027s the caller\u0027s responsibility to ensure calling `wgpuBufferRelease` on the bufferPtr after use instead of calling `destroy()` on the JS buffer object (which causes memleak), otherwise it\u0027s considered undefined behavior.\n- for external buffers (created in JS) imported by `importJsBuffer`, C++ code should not `destroy` it; but `wgpuBufferRelease` should correctly call delete on `WGPUBufferImpl` and `Internals.jsObjects` to ensure no memleak happens.\n- there will be no cross-ref and no mapped/pending buffer in my use case. So skip this part.",
+      "parentUuid": "8f60991d_09ba166a",
+      "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
