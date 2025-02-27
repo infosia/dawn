@@ -180,6 +180,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "47f508e0_52c203e9",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2491,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-27T19:38:55Z",
+      "side": 1,
+      "message": "Making this private is better, but I think it would be better as a private helper method so that the state can\u0027t get out of sync.\n\nI had been imaging a local variable, but somehow I didn\u0027t realize it would be needed in two different functions. Do you know why `EnforceLimitSpecInvariants` is in `Initialize` instead of the constructor, though? It\u0027s not fallible, and it seems like it can\u0027t hurt to do earlier....\n\nIf that can be moved then perhaps it can be a local variable like I imagined.",
+      "parentUuid": "a05ba050_5884a66b",
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ea795e63_cd9e5d57",
         "filename": "src/dawn/native/PhysicalDevice.cpp",
         "patchSetId": 10

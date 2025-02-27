@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0572c95_7650aad9",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-27T19:38:55Z",
+      "side": 1,
+      "message": "Could this be simply:\n\n\n```suggestion\n    if (HasFeature(Feature::CoreFeaturesAndLimits)) {\n```",
+      "range": {
+        "startLine": 428,
+        "startChar": 0,
+        "endLine": 431,
+        "endChar": 51
+      },
+      "revId": "2fe645aa830173d2bfbc33c688a54e35e016b92f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
