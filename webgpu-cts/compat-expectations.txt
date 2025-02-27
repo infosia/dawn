@@ -19375,12 +19375,6 @@ crbug.com/0000 [ android ] webgpu:shader,execution,expression,call,builtin,textu
 # This section represents things that are probably fixable in Dawn.
 ################################################################################
 
-# Temporary Failures due to the support of null bind group layouts in the creation of pipeline layout
-crbug.com/377836524 webgpu:api,validation,encoding,programmable,pipeline_bind_group_compat:default_bind_group_layouts_never_match,compute_pass:* [ Failure ]
-crbug.com/377836524 webgpu:api,validation,encoding,programmable,pipeline_bind_group_compat:default_bind_group_layouts_never_match,render_pass:* [ Failure ]
-crbug.com/377836524 webgpu:api,validation,getBindGroupLayout:index_range,auto_layout:* [ Failure ]
-crbug.com/377836524 webgpu:api,validation,getBindGroupLayout:index_range,explicit_layout:* [ Failure ]
-
 # error_scope validation tests with errorType="out-of-memory" are failing on all platforms
 # On NVidia, crashes in PartitionAlloc due to the NV GL driver malloc()ing 2GB+ blocks
 crbug.com/dawn/2168 [ linux ] webgpu:api,validation,error_scope:current_scope:errorFilter="out-of-memory";stackDepth=1 [ Failure ]
