@@ -178,6 +178,17 @@ crbug.com/374218148 [ android-Pixel-6 arm ] webgpu:shader,execution,expression,c
 # Buffer already has an outstanding map pending
 crbug.com/391414855 [ android-Pixel-6 arm ] webgpu:api,validation,buffer,mapping:getMappedRange,state,mappingPending:* [ Skip ]
 
+crbug.com/393558555 webgpu:shader,validation,parse,identifiers:alias_name:ident="binding_array" [ Failure ]
+crbug.com/393558555 webgpu:shader,validation,parse,identifiers:function_const_name:ident="binding_array" [ Failure ]
+crbug.com/393558555 webgpu:shader,validation,parse,identifiers:function_let_name:ident="binding_array" [ Failure ]
+crbug.com/393558555 webgpu:shader,validation,parse,identifiers:function_name:ident="binding_array" [ Failure ]
+crbug.com/393558555 webgpu:shader,validation,parse,identifiers:function_param_name:ident="binding_array" [ Failure ]
+crbug.com/393558555 webgpu:shader,validation,parse,identifiers:function_var_name:ident="binding_array" [ Failure ]
+crbug.com/393558555 webgpu:shader,validation,parse,identifiers:module_const_name:ident="binding_array" [ Failure ]
+crbug.com/393558555 webgpu:shader,validation,parse,identifiers:module_var_name:ident="binding_array" [ Failure ]
+crbug.com/393558555 webgpu:shader,validation,parse,identifiers:override_name:ident="binding_array" [ Failure ]
+crbug.com/393558555 webgpu:shader,validation,parse,identifiers:struct_name:ident="binding_array" [ Failure ]
+
 # Offset broken on android arm
 crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_2d_coords:stage="c";format="bgra8unorm";filt="linear";modeU="c";modeV="c";offset=true [ Skip ]
 crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_2d_coords:stage="c";format="bgra8unorm";filt="linear";modeU="c";modeV="r";offset=true [ Skip ]
