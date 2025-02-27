@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ecda47d_b7c7c359",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-27T19:28:13Z",
+      "side": 1,
+      "message": "`ValidateLimits` uses it to call `GetDefaultLimits`, but as far as I can tell the result of `GetDefaultLimits` isn\u0027t used anymore. (Which makes sense - I wouldn\u0027t expect ValidateLimits to depend on the feature level anymore.)",
+      "parentUuid": "9698e85f_ad65c2a6",
+      "range": {
+        "startLine": 379,
+        "startChar": 40,
+        "endLine": 379,
+        "endChar": 58
+      },
+      "revId": "eaee6563db9c8efc7a40dd3fb8a7f5b1f2742450",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b748e989_c859d79d",
