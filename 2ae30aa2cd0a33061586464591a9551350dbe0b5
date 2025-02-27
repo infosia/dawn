@@ -71,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "21d5277e_b03e2273",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-27T23:04:34Z",
+      "side": 1,
+      "message": "Hmm, the downside of doing this is that we won\u0027t get a validation error, we would just crash the wire in this case... Maybe that\u0027s fine? But it would look very different than in native.",
+      "parentUuid": "080e5a87_a80f342b",
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1723a61a_2641a024",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 2
