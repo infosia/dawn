@@ -161,6 +161,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9bb5e0b3_afaa5b88",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-27T13:07:05Z",
+      "side": 1,
+      "message": "I get plenty of trybots failing with `Step(\u0027Run the Dawn end2end tests with ANGLE/SwiftShader on gles 3.1 and no extensions\u0027) (retcode: -11)`. I can\u0027t debug this locally sadly at the moment. Any idea where I\u0027ve messed up?\nI\u0027d assume it would be in `src/dawn/native/opengl/BindGroupGL.cpp` but I can\u0027t see it ;(",
+      "parentUuid": "5e048e9e_8caaed22",
+      "revId": "46fb413ea553b235d664dd3a13cb585a7f6f5428",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f309605_84241a88",
         "filename": "src/dawn/native/d3d12/BindGroupD3D12.h",
         "patchSetId": 12
