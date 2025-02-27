@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81ea958d_43175ee7",
+        "filename": "src/dawn/native/d3d12/BindGroupLayoutD3D12.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-02-27T16:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6531e1f8_ecb50621",
+      "revId": "97dd664494fba7ab99a37df4a9cce8c4fed433ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dca2e91a_b3116b62",
