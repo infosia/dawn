@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "61b4de5f_37f05130",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-27T23:07:20Z",
+      "side": 1,
+      "message": "Yea, I considered adding prototypes... That might be a larger change because of how the templates are macro-ed right now. (i.e. it would probably cause a lot of duplicate code or need a substantial amount of refactoring atm...)\n\nI was gonna talk to Kai about this change also to see if it would make sense to make it upstream as well. I think it should be fine upstream also since topologically it makes sense to have all the dependent structs listed first (especially since we know then explicitly now.)",
+      "parentUuid": "816c58fc_395d98ce",
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7ac55071_df35b289",
         "filename": "generator/templates/dawn/wire/WireCmd.cpp",
         "patchSetId": 2
