@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72ca9aa1_659db738",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c164ab9_9ac73fbf",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "This seems from an unrelated CL?",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1caba6f7_bfb738af",
+        "filename": "src/dawn/native/opengl/BufferGL.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "optional nit: The pointer output here is a bit awkward. The D3D12 backend uses ResultOrError\u003cbool\u003e which seems marginally better I guess.",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5eb09ce5_3c974300",
+        "filename": "src/dawn/native/opengl/ComputePipelineGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "Same as [1]",
+      "fixSuggestions": [
+        {
+          "fixId": "03fa6d1b_bac2408e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/opengl/ComputePipelineGL.cpp",
+              "range": {
+                "startLine": 56,
+                "startChar": 0,
+                "endLine": 57,
+                "endChar": 0
+              },
+              "replacement": "    DAWN_TRY(PipelineGL::ApplyNow(ToBackend(GetDevice())-\u003eGetGL(), GetProgram()));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b15f7d2_c37202e0",
+        "filename": "src/dawn/native/opengl/PersistentPipelineStateGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "Same as [1]",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78329fd6_307245c0",
+        "filename": "src/dawn/native/opengl/PersistentPipelineStateGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "Same as [1]",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3df115d2_8152f1bf",
+        "filename": "src/dawn/native/opengl/PersistentPipelineStateGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "Same as [1]",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c6798fe_b7b1759b",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "Did I commit the code with that XXX? I must have forgotten to upload a patchset. I\u0027ll make a CL to remove it.",
+      "fixSuggestions": [
+        {
+          "fixId": "d479ac47_1554c6db",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/opengl/PipelineGL.cpp",
+              "range": {
+                "startLine": 84,
+                "startChar": 0,
+                "endLine": 85,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6bbce05_fa98240b",
+        "filename": "src/dawn/native/opengl/QueueGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "Same as [1]",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a014ad0f_b48fba90",
+        "filename": "src/dawn/native/opengl/RenderPipelineGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "Same as [1]",
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44625d7c_4f6b6407",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the allocation functions use `DAWN_GL_TRY_ALWAYS_CHECK` to handle OOM?",
+      "fixSuggestions": [
+        {
+          "fixId": "ee105e7c_b7a208cd",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/opengl/TextureGL.cpp",
+              "range": {
+                "startLine": 131,
+                "startChar": 0,
+                "endLine": 131,
+                "endChar": 0
+              },
+              "replacement": "// Allocate the texture using glTexStorage*D or glTexImage*D.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8c91f8e_b1f19d2b",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-02-27T14:08:38Z",
+      "side": 1,
+      "message": "[1] optionally this can be\n\n```suggestion\n    return FramebufferTextureHelper(gl, textarget, target, attachment, textureHandle, mipLevel,\n                                    arrayLayer);\n```",
+      "range": {
+        "startLine": 706,
+        "startChar": 0,
+        "endLine": 708,
+        "endChar": 0
+      },
+      "revId": "899fba4b95952f9f37c29893b70c742dde12ce92",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
