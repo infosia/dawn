@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1c254c1f_bffb98bf",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-27T23:23:46Z",
+      "side": 1,
+      "message": "The official order doesn\u0027t really matter as long as it compiles. That only requires the definition of A to come before any (non-pointer) members of type A. I don\u0027t really have an opinion beyond that.",
+      "parentUuid": "61b4de5f_37f05130",
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7ac55071_df35b289",
         "filename": "generator/templates/dawn/wire/WireCmd.cpp",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Hmm, the downside of doing this is that we won\u0027t get a validation error, we would just crash the wire in this case... Maybe that\u0027s fine? But it would look very different than in native.",
       "parentUuid": "080e5a87_a80f342b",
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d48ee4d2_fe9ba564",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-27T23:23:46Z",
+      "side": 1,
+      "message": "I agree with Corentin, if this can only happen by stuffing garbage into the wire, and not by normal wire client API calls (which will have validated this out already), then it should be FatalError.",
+      "parentUuid": "21d5277e_b03e2273",
       "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
