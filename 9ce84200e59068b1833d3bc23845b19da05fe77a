@@ -81,6 +81,24 @@
       "parentUuid": "5f977187_fda5f108",
       "revId": "9ce84200e59068b1833d3bc23845b19da05fe77a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d24b680_c57e17f2",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-28T04:51:02Z",
+      "side": 1,
+      "message": "for maps after import, we could sprinkle some asserts around the code that check that the GPUBuffer state and the bindings state are in sync (both mapped or both unmapped), so that buffers either have to be mapped+unmapped both from inside wasm, or mapped+unmapped from outside wasm before emscripten has a chance to notice it\u0027s desynced.\n\nfor importing a buffer while it\u0027s mapped, I think just:\n```\nif (buffer.mapState !\u003d \"unmapped\") {\n  WebGPU.Internals.bufferOnUnmaps[bufferPtr] \u003d [];\n}\n```\nwould work since that\u0027s all we do in MapAsync and on mappedAtCreation.",
+      "parentUuid": "1cae9b93_c8d3746b",
+      "revId": "9ce84200e59068b1833d3bc23845b19da05fe77a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
