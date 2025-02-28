@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c20ab87e_3c5ac1d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-28T22:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03d4eee3_789c43ec",
+      "revId": "ab6c7b386e0277dc9bd2b6a94be3aa5395b0191b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41351d51_497e91d2",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-27T18:43:02Z",
       "side": 1,
       "message": "If we\u0027re in a function, wouldn\u0027t the code below for `var` or `type` handle this already?",
+      "revId": "ab6c7b386e0277dc9bd2b6a94be3aa5395b0191b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb0b2b8f_074f3e42",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3165,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-28T22:07:20Z",
+      "side": 1,
+      "message": "No, the cases below are for references to global variables and user type declarations (alias, struct).",
+      "parentUuid": "41351d51_497e91d2",
       "revId": "ab6c7b386e0277dc9bd2b6a94be3aa5395b0191b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30310bb5_362b7257",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-28T22:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "969b4d50_f766d291",
+      "revId": "ab6c7b386e0277dc9bd2b6a94be3aa5395b0191b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4b423a8b_87a1b7aa",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-02-27T18:43:02Z",
       "side": 1,
       "message": "std::optional\u003cconst Source*\u003e directly_used_subgroup_matrix_ \u003d std::nullopt",
+      "revId": "ab6c7b386e0277dc9bd2b6a94be3aa5395b0191b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5e0e0de_02572a2e",
+        "filename": "src/tint/lang/wgsl/sem/function.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-28T22:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b423a8b_87a1b7aa",
       "revId": "ab6c7b386e0277dc9bd2b6a94be3aa5395b0191b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
