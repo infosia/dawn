@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49d48e57_5a6791e4",
+        "filename": "scripts/standalone-with-wasm.gclient",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-28T23:04:49Z",
+      "side": 1,
+      "message": "I added this to make it easier to set up via script in webgpu-cross-platform-demo.",
+      "revId": "3a0ee678c58f06727764a5cc256fb4647a08283f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8452137e_b4f2225d",
+        "filename": "tools/activate-emsdk",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-28T23:04:49Z",
+      "side": 1,
+      "message": "I added this (I use it in webgpu-cross-platform-demo because dawn\u0027s LLVM is missing a binary that emscripten needs).",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 71
+      },
+      "revId": "3a0ee678c58f06727764a5cc256fb4647a08283f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
