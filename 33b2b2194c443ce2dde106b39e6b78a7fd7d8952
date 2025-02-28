@@ -16,6 +16,24 @@
       "message": "Should this depend on https://github.com/gpuweb/gpuweb/issues/5088 being completed first?",
       "revId": "33b2b2194c443ce2dde106b39e6b78a7fd7d8952",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "305e25b3_49c05a69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-02-28T02:14:22Z",
+      "side": 1,
+      "message": "Looks like it needs the CTS to be updated in order to land.",
+      "parentUuid": "c2d685a6_e35c63af",
+      "revId": "33b2b2194c443ce2dde106b39e6b78a7fd7d8952",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
