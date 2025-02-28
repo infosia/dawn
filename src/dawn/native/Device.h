@@ -172,12 +172,6 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
 
     ResultOrError<Ref<SamplerBase>> GetOrCreateSampler(const SamplerDescriptor* descriptor);
 
-    ResultOrError<Ref<ShaderModuleBase>> GetOrCreateShaderModule(
-        const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
-        const std::vector<tint::wgsl::Extension>& internalExtensions,
-        ShaderModuleParseResult* parseResult,
-        std::unique_ptr<OwnedCompilationMessages>* compilationMessages);
-
     Ref<AttachmentState> GetOrCreateAttachmentState(AttachmentState* blueprint);
     Ref<AttachmentState> GetOrCreateAttachmentState(
         const RenderBundleEncoderDescriptor* descriptor);
@@ -216,10 +210,9 @@ class DeviceBase : public ErrorSink, public RefCountedWithExternalCount<RefCount
         const RenderPipelineDescriptor* descriptor,
         bool allowInternalBinding = false);
     ResultOrError<Ref<SamplerBase>> CreateSampler(const SamplerDescriptor* descriptor = nullptr);
-    ResultOrError<Ref<ShaderModuleBase>> CreateShaderModule(
+    WithMaybeError<Ref<ShaderModuleBase>> CreateShaderModule(
         const ShaderModuleDescriptor* descriptor,
-        const std::vector<tint::wgsl::Extension>& internalExtensions = {},
-        std::unique_ptr<OwnedCompilationMessages>* compilationMessages = nullptr);
+        const std::vector<tint::wgsl::Extension>& internalExtensions = {});
     ResultOrError<Ref<SwapChainBase>> CreateSwapChain(Surface* surface,
                                                       SwapChainBase* previousSwapChain,
                                                       const SurfaceConfiguration* config);
