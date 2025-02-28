@@ -129,6 +129,7 @@ endif()
 
 option(DAWN_ENABLE_ASAN "Enable address sanitizer" OFF)
 option(DAWN_ENABLE_INSTALL "Enable install step for Dawn libraries" OFF)
+option(DAWN_ENABLE_INSTALL_EMDAWNWEBGPU "Enable install step for emdawnwebgpu" OFF)
 option(DAWN_ENABLE_TSAN "Enable thread sanitizer" OFF)
 option(DAWN_ENABLE_MSAN "Enable memory sanitizer" OFF)
 option(DAWN_ENABLE_UBSAN "Enable undefined behaviour sanitizer" OFF)
