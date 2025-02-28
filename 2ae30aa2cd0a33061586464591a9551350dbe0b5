@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e23abb30_6d4d374f",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-28T00:33:38Z",
+      "side": 1,
+      "message": "Hmm, keeping as is for now since it\u0027s a bit simpler. Lmk if we feel strongly about updating the templates to emit prototypes instead of this.",
+      "parentUuid": "1c254c1f_bffb98bf",
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ac55071_df35b289",
@@ -84,6 +102,24 @@
       "writtenOn": "2025-02-27T14:33:56Z",
       "side": 1,
       "message": "We should be able to do the following to remove the `WGPUSType_DawnInjetedInvalidSType` case\n\n```\n{% set extensions \u003d record.extensions + [\u0027dawn injected invalid s type\u0027] %}\n{% for extension in extensions if extension.name.CamelCase() not in client_side_structures %}\n```",
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75d001d4_68289c49",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-28T00:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac55071_df35b289",
       "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -141,6 +177,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f29ade6a_159a664a",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-28T00:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d48ee4d2_fe9ba564",
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1723a61a_2641a024",
@@ -164,6 +218,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8f153ad_07566e24",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2521,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-28T00:33:38Z",
+      "side": 1,
+      "message": "Heh... lol",
+      "parentUuid": "1723a61a_2641a024",
+      "range": {
+        "startLine": 2521,
+        "startChar": 10,
+        "endLine": 2521,
+        "endChar": 17
+      },
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ff66a41_b32b7e04",
@@ -177,6 +255,30 @@
       "writtenOn": "2025-02-27T14:33:56Z",
       "side": 1,
       "message": "```suggestion\n            {\"value\": 63, \"name\": \"dawn injected invalid s type\", \"tags\": [\"dawn\"]}\n```",
+      "range": {
+        "startLine": 3830,
+        "startChar": 40,
+        "endLine": 3830,
+        "endChar": 47
+      },
+      "revId": "2ae30aa2cd0a33061586464591a9551350dbe0b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3025bc6b_6f2c575d",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3830,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-28T00:33:38Z",
+      "side": 1,
+      "message": "Heh... lol",
+      "parentUuid": "0ff66a41_b32b7e04",
       "range": {
         "startLine": 3830,
         "startChar": 40,
