@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f15536a_f8d99331",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-28T04:40:21Z",
+      "side": 1,
+      "message": "outdated?",
+      "range": {
+        "startLine": 12,
+        "startChar": 30,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92744397_7ebcde73",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-28T04:40:21Z",
+      "side": 1,
+      "message": "nit: could this be done just by modifying its \"depth\"? Might be a little less complex to keep it out of the template file.",
+      "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8463d9f_55297326",
+        "filename": "src/dawn/tests/unittests/wire/WireExtensionTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-28T04:40:21Z",
+      "side": 1,
+      "message": "maybe it would make sense for the client to stop iterating once it finds one invalid chain struct? otherwise it seems like S-\u003eInvalid1-\u003eInvalid2 could translate into S-\u003eInjectedInvalidSType-\u003eInjectedInvalidSType which has multiple copies of the same chain struct. (though I\u0027m not sure whether it actually does that, and I\u0027m not sure whether multiple copies is a \"problem\" - do we validate it in the frontend?)\n\nAnd that could be chained many times, but at least I think that won\u0027t stack overflow anymore because you\u0027ve replaced the recursion with iteration?",
+      "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
