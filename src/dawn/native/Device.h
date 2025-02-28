@@ -175,12 +175,6 @@ class DeviceBase : public ErrorSink,
 
     ResultOrError<Ref<SamplerBase>> GetOrCreateSampler(const SamplerDescriptor* descriptor);
 
-    ResultOrError<Ref<ShaderModuleBase>> GetOrCreateShaderModule(
-        const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
-        const std::vector<tint::wgsl::Extension>& internalExtensions,
-        ShaderModuleParseResult* parseResult,
-        std::unique_ptr<OwnedCompilationMessages>* compilationMessages);
-
     Ref<AttachmentState> GetOrCreateAttachmentState(AttachmentState* blueprint);
     Ref<AttachmentState> GetOrCreateAttachmentState(
         const RenderBundleEncoderDescriptor* descriptor);
@@ -219,10 +213,24 @@ class DeviceBase : public ErrorSink,
         const RenderPipelineDescriptor* descriptor,
         bool allowInternalBinding = false);
     ResultOrError<Ref<SamplerBase>> CreateSampler(const SamplerDescriptor* descriptor = nullptr);
-    ResultOrError<Ref<ShaderModuleBase>> CreateShaderModule(
+    // CreateShaderModule returns a reference to shader module, valid or invalid, and a MaybeError
+    // indicates whether the shader module is created successfully and valid.
+    // There might be three cases:
+    //   1. The shader module descriptor (including the shader code) is valid, and no error occurs
+    //   during shader module creation. In this case, the returned reference point to a valid
+    //   shader module, and the MaybeError is empty. The valid shader module should be added to /
+    //   returned from shader cache.
+    //   2. The shader code is invalid, but in spite of that shader module descriptor is valid and
+    //   no error occurs during invalid shader module creation. In this case, the returned
+    //   reference point to a invalid shader module holding valid compilation messages, and the
+    //   MaybeError contains corresponding shader parsing error. The invalid shader module should
+    //   also be added to / returned from shader cache.
+    //   3. Any error other than invalid shader code occurs during the shader module creation. In
+    //   this case the return shader module is invalid and empty, and the MaybeError contains the
+    //   error occurred.
+    std::pair<Ref<ShaderModuleBase>, MaybeError> CreateShaderModule(
         const ShaderModuleDescriptor* descriptor,
-        const std::vector<tint::wgsl::Extension>& internalExtensions = {},
-        std::unique_ptr<OwnedCompilationMessages>* compilationMessages = nullptr);
+        const std::vector<tint::wgsl::Extension>& internalExtensions = {});
     ResultOrError<Ref<SwapChainBase>> CreateSwapChain(Surface* surface,
                                                       SwapChainBase* previousSwapChain,
                                                       const SurfaceConfiguration* config);
