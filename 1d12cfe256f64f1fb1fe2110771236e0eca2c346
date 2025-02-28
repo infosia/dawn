@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3078a94_55768867",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-28T21:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f15536a_f8d99331",
+      "range": {
+        "startLine": 12,
+        "startChar": 30,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92744397_7ebcde73",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25bbd78e_3dd08fc6",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-28T21:45:28Z",
+      "side": 1,
+      "message": "I tried this but it seems like I would need to hard-code this type somewhere either here or in the Python generator. I left it here because this is only really important here and it seems a bit messy to put it in the Python generator.\n\nThe other option would be to list every single extensible struct in this structs `chain_roots` field, but that seems hard to keep up to date? (I think this would also break some of the `ChainUtils` logic, so not sure if that\u0027s a good idea?)",
+      "parentUuid": "92744397_7ebcde73",
+      "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8463d9f_55297326",
@@ -54,6 +96,24 @@
       "writtenOn": "2025-02-28T04:40:21Z",
       "side": 1,
       "message": "maybe it would make sense for the client to stop iterating once it finds one invalid chain struct? otherwise it seems like S-\u003eInvalid1-\u003eInvalid2 could translate into S-\u003eInjectedInvalidSType-\u003eInjectedInvalidSType which has multiple copies of the same chain struct. (though I\u0027m not sure whether it actually does that, and I\u0027m not sure whether multiple copies is a \"problem\" - do we validate it in the frontend?)\n\nAnd that could be chained many times, but at least I think that won\u0027t stack overflow anymore because you\u0027ve replaced the recursion with iteration?",
+      "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "053df202_073db269",
+        "filename": "src/dawn/tests/unittests/wire/WireExtensionTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-28T21:45:28Z",
+      "side": 1,
+      "message": "Yea, it\u0027s possible to have a really long chain of just repeatig structs. But if a client specifies that its sort of a user error? But yea, this ensures we won\u0027t recurse in those cases anymore though, so it would just take a long time?",
+      "parentUuid": "b8463d9f_55297326",
       "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
