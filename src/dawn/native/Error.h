@@ -54,6 +54,43 @@ using MaybeError = Result<void, ErrorData>;
 template <typename T>
 using ResultOrError = Result<T, ErrorData>;
 
+template <typename T>
+class WithMaybeError {
+  public:
+    WithMaybeError(T&& value, MaybeError&& maybeError)
+        : mValue(std::move(value)), mMaybeError(std::move(maybeError)) {}
+    WithMaybeError(WithMaybeError<T>&& other)
+        : mValue(std::move(other.mValue)), mMaybeError(std::move(other.mMaybeError)) {}
+
+    bool IsError() const { return mMaybeError.IsError(); }
+    bool NoError() const { return mMaybeError.IsSuccess(); }
+    const MaybeError& GetMaybeError() const { return mMaybeError; }
+    MaybeError AcquireMaybeError() { return std::move(mMaybeError); }
+
+    const T& GetValue() const { return mValue; }
+    T AcquireValue() { return std::move(mValue); }
+
+    // AcquireSuccess and AcquireError is defined so that WithMaybeError<T> might be possible to
+    // replace ResultorError<T> when using macros like DAWN_TRY_ASSIGN.
+    T AcquireSuccess() { return std::move(mValue); }
+    std::unique_ptr<ErrorData> AcquireError() {
+        DAWN_ASSERT(mMaybeError.IsError());
+        return mMaybeError.AcquireError();
+    }
+    ResultOrError<T> ToResultOrError() {
+        if (mMaybeError.IsError()) {
+            return ResultOrError<T>(mMaybeError.AcquireError());
+        } else {
+            return ResultOrError<T>(std::move(mValue));
+        }
+    }
+
+  private:
+    T mValue;
+    MaybeError mMaybeError;
+};
+// = std::pair<T, MaybeError>;
+
 namespace detail {
 
 template <typename T>
