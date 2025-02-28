@@ -940,8 +940,8 @@ ResultOrError<Ref<ComputePipelineBase>> GetOrCreateTextureToBufferPipeline(
 
     wgslDesc.code = shader.c_str();
 
-    Ref<ShaderModuleBase> shaderModule;
-    DAWN_TRY_ASSIGN(shaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    auto [shaderModule, creationResult] = device->CreateShaderModule(&shaderModuleDesc);
+    DAWN_TRY(std::move(creationResult));
 
     Ref<BindGroupLayoutBase> bindGroupLayout0;
     DAWN_TRY_ASSIGN(bindGroupLayout0,
