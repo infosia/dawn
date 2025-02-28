@@ -91,6 +91,30 @@
       },
       "revId": "530fd702c92d97dec1e2f4b989942ed75bd69607",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9058761f_fb89e57e",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-02-28T04:50:50Z",
+      "side": 1,
+      "message": "But we still need to have a MemoryKind value for textures. So in this patchset I decide to introduce MemoryKind::DeviceLocal for all non-mappable memory (including buffers and textures), which is needed in the next CL to implement `BufferMapExtendedUsage` on Vulkan.\n\nWhat do you think?",
+      "parentUuid": "c91d5a43_3137072f",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "530fd702c92d97dec1e2f4b989942ed75bd69607",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
