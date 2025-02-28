@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d6c71ac6_338da0fa",
+        "filename": "tools/activate-emsdk",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-28T23:23:27Z",
+      "side": 1,
+      "message": "Not new code since it\u0027s copied from skia, but best to keep it up to date anyway. Applied in https://dawn-review.googlesource.com/c/dawn/+/228554",
+      "parentUuid": "fd5b0bdf_4d7c79a3",
+      "revId": "714f18e018182180e73d70c6c053f293518ee2f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c3e06952_14008670",
         "filename": "tools/activate-emsdk",
         "patchSetId": 1
@@ -31,6 +49,24 @@
       "writtenOn": "2025-02-20T23:39:42Z",
       "side": 1,
       "message": "You don\u0027t want to print anything out or return an error code?",
+      "revId": "714f18e018182180e73d70c6c053f293518ee2f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82222509_b9d190ce",
+        "filename": "tools/activate-emsdk",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-28T23:23:27Z",
+      "side": 1,
+      "message": "This looks obsolete. This isn\u0027t a permalink so I can\u0027t tell what they were linking to, but probably something like: https://github.com/emscripten-core/emsdk/blob/54308666727717d0d3fbd60cded1a2fc43d98bc7/emscripten-releases-tags.json#L5\n\nNow it just says `\"latest-arm64-linux\": \"latest\"` so it seems like it\u0027s been fixed. I\u0027m removing the check in https://dawn-review.googlesource.com/c/dawn/+/228554",
+      "parentUuid": "c3e06952_14008670",
       "revId": "714f18e018182180e73d70c6c053f293518ee2f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
