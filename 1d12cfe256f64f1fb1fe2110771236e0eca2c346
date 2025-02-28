@@ -83,6 +83,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bf40a70_923166a6",
+        "filename": "generator/templates/dawn/wire/WireCmd.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-28T23:46:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "25bbd78e_3dd08fc6",
+      "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8463d9f_55297326",
@@ -114,6 +132,24 @@
       "side": 1,
       "message": "Yea, it\u0027s possible to have a really long chain of just repeatig structs. But if a client specifies that its sort of a user error? But yea, this ensures we won\u0027t recurse in those cases anymore though, so it would just take a long time?",
       "parentUuid": "b8463d9f_55297326",
+      "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea76789e_c6f89304",
+        "filename": "src/dawn/tests/unittests/wire/WireExtensionTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-28T23:46:26Z",
+      "side": 1,
+      "message": "Actually, does anything in the wire client catch it if it\u0027s actually recursive? Just pointing at itself?\n\n(I don\u0027t know if anything in dawn native catches this either)",
+      "parentUuid": "053df202_073db269",
       "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
