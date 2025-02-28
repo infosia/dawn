@@ -55,7 +55,7 @@ ResultOrError<Ref<ShaderModuleBase>> CreateShaderModule(
     wgslDesc.code = source;
     ShaderModuleDescriptor descriptor;
     descriptor.nextInChain = &wgslDesc;
-    return device->CreateShaderModule(&descriptor, internalExtensions);
+    return device->CreateShaderModule(&descriptor, internalExtensions).ToResultOrError();
 }
 
 ResultOrError<Ref<BufferBase>> CreateBufferFromData(DeviceBase* device,
