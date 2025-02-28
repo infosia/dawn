@@ -143,6 +143,9 @@ var LibraryWebGPU = {
     importJsBuffer__deps: ['emwgpuCreateBuffer'],
     importJsBuffer: (buffer, parentPtr = 0) => {
       // At the moment, only allow importing unmapped buffers.
+      if (buffer.mappedState == "unmapped") {
+        buffer.unmap();
+      }
       assert(buffer.mappedState == "unmapped");
       var bufferPtr = _emwgpuCreateBuffer(parentPtr);
       WebGPU.Internals.jsObjectInsert(bufferPtr, buffer);
