@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfa32fe3_b7e97c36",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-28T02:55:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53b4ed02_14e4a407",
+      "range": {
+        "startLine": 146,
+        "startChar": 29,
+        "endLine": 146,
+        "endChar": 31
+      },
+      "revId": "9ce84200e59068b1833d3bc23845b19da05fe77a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f977187_fda5f108",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-02-28T02:11:33Z",
       "side": 1,
       "message": "This would silence the error but it also seems like it could introduce surprising crashes into applications. Is there anything we would need to do to import a mapped buffer other than `WebGPU.Internals.bufferOnUnmaps[bufferPtr] \u003d []`?\n\nThat said, it does make me realize that any map/unmap operation happening in JS even _after_ import is going to mess up emscripten\u0027s state...",
+      "revId": "9ce84200e59068b1833d3bc23845b19da05fe77a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cae9b93_c8d3746b",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-02-28T02:55:02Z",
+      "side": 1,
+      "message": "Yea, the state is the issue here. If we are already mapped, we might not be able to `GetMappedRange` on certain stuff. And if we do stuff with the buffer in JS, we can\u0027t reflect the state in WASM. I\u0027m not sure how to make it work for this atm...",
+      "parentUuid": "5f977187_fda5f108",
       "revId": "9ce84200e59068b1833d3bc23845b19da05fe77a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
