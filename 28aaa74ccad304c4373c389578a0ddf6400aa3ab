@@ -33,6 +33,23 @@
       "message": "Kai, can you do a +2? Gregg cannot as he\u0027s not an owner.",
       "revId": "28aaa74ccad304c4373c389578a0ddf6400aa3ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c233281c_33cf2025",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-02-28T23:47:18Z",
+      "side": 1,
+      "message": "I keep forgetting that the \"+1 for first review\" convention doesn\u0027t work anymore because of the 2-committer policy.",
+      "revId": "28aaa74ccad304c4373c389578a0ddf6400aa3ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
