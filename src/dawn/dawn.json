@@ -3003,10 +3003,6 @@
             {"name": "timestamp writes", "type": "pass timestamp writes", "annotation": "const*", "optional": true}
         ]
     },
-    "render pass descriptor max draw count": {
-        "category": "typedef",
-        "type": "render pass max draw count"
-    },
     "render pass max draw count": {
         "category": "structure",
         "chained": "in",
@@ -3444,10 +3440,6 @@
             {"name": "label", "type": "string view", "optional": true}
         ]
     },
-    "shader module SPIRV descriptor": {
-        "category": "typedef",
-        "type": "shader source SPIRV"
-    },
     "shader source SPIRV": {
         "category": "structure",
         "chained": "in",
@@ -3456,10 +3448,6 @@
             {"name": "code size", "type": "uint32_t"},
             {"name": "code", "type": "uint32_t", "annotation": "const*", "length": "code size"}
         ]
-    },
-    "shader module WGSL descriptor": {
-        "category": "typedef",
-        "type": "shader source WGSL"
     },
     "shader source WGSL": {
         "category": "structure",
@@ -3572,11 +3560,6 @@
             {"name": "label", "type": "string view", "optional": true}
         ]
     },
-    "surface descriptor from android native window": {
-        "category": "typedef",
-        "type": "surface source android native window",
-        "tags": ["art", "native"]
-    },
     "surface source android native window": {
         "category": "structure",
         "chained": "in",
@@ -3595,11 +3578,6 @@
             {"name": "selector", "type": "string view"}
         ]
     },
-    "surface descriptor from metal layer": {
-        "category": "typedef",
-        "type": "surface source metal layer",
-        "tags": ["native"]
-    },
     "surface source metal layer": {
         "category": "structure",
         "chained": "in",
@@ -3608,11 +3586,6 @@
         "members": [
             {"name": "layer", "type": "void", "annotation": "*"}
         ]
-    },
-    "surface descriptor from windows HWND": {
-        "category": "typedef",
-        "type": "surface source windows HWND",
-        "tags": ["native"]
     },
     "surface source windows HWND": {
         "category": "structure",
@@ -3624,11 +3597,6 @@
             {"name": "hwnd", "type": "void", "annotation": "*"}
         ]
     },
-    "surface descriptor from xcb window": {
-        "category": "typedef",
-        "type": "surface source XCB window",
-        "tags": ["native"]
-    },
     "surface source XCB window": {
         "category": "structure",
         "chained": "in",
@@ -3638,11 +3606,6 @@
             {"name": "connection", "type": "void", "annotation": "*"},
             {"name": "window", "type": "uint32_t"}
         ]
-    },
-    "surface descriptor from xlib window": {
-        "category": "typedef",
-        "type": "surface source xlib window",
-        "tags": ["native"]
     },
     "surface source xlib window": {
         "category": "structure",
@@ -3654,11 +3617,6 @@
             {"name": "window", "type": "uint64_t"}
         ]
     },
-    "surface descriptor from wayland surface": {
-        "category": "typedef",
-        "type": "surface source wayland surface",
-        "tags": ["native"]
-    },
     "surface source wayland surface": {
         "category": "structure",
         "chained": "in",
@@ -3669,7 +3627,7 @@
             {"name": "surface", "type": "void", "annotation": "*"}
         ]
     },
-    "surface descriptor from windows core window": {
+    "surface source windows core window": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -3678,7 +3636,7 @@
             {"name": "core window", "type": "void", "annotation": "*"}
         ]
     },
-    "surface descriptor from windows swap chain panel": {
+    "surface source windows swap chain panel": {
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
@@ -3742,10 +3700,10 @@
 
             {"value": 0, "name": "emscripten surface source canvas HTML selector", "tags": ["emscripten"]},
 
-            {"value": 0, "name": "surface descriptor from windows core window", "tags": ["dawn"]},
+            {"value": 0, "name": "surface source windows core window", "tags": ["dawn"]},
             {"value": 1, "name": "external texture binding entry", "tags": ["dawn"]},
             {"value": 2, "name": "external texture binding layout", "tags": ["dawn"]},
-            {"value": 3, "name": "surface descriptor from windows swap chain panel", "tags": ["dawn"]},
+            {"value": 3, "name": "surface source windows swap chain panel", "tags": ["dawn"]},
             {"value": 4, "name": "dawn texture internal usage descriptor", "tags": ["dawn"]},
             {"value": 5, "name": "dawn encoder internal usage descriptor", "tags": ["dawn"]},
             {"value": 6, "name": "dawn instance descriptor", "tags": ["dawn", "native"]},
