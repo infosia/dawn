@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72bbb0ba_55abddd3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-01T10:11:10Z",
+      "side": 1,
+      "message": "This is making me further unsure about using llvm-build instead of emsdk\u0027s llvm. (But we don\u0027t have to abandon this path yet. CL is still ready for review.)",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 37
+      },
+      "revId": "317737cb2f07e20e36945449b6213228904f4d82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
