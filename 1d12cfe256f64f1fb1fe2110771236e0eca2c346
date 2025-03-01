@@ -170,6 +170,24 @@
       "parentUuid": "ea76789e_c6f89304",
       "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64482364_51f2c0dc",
+        "filename": "src/dawn/tests/unittests/wire/WireExtensionTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-01T10:07:50Z",
+      "side": 1,
+      "message": "IIRC webgpu.h technically says that is considered a chain error so the function should error out. I suspect that dawn-wire will currently do an infinite loop. Probably not a huge deal but I\u0027m not sure what will happen to the fuzzers.",
+      "parentUuid": "808dccb6_122ab680",
+      "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
