@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-02-26 02:17:49PM
+# Last rolled: 2025-03-02 05:04:44AM
 
 # conflicts_allowed: true
 
@@ -19096,7 +19096,6 @@ crbug.com/341327472 [ intel-0x4680 linux ] webgpu:api,validation,state,device_lo
 # Driver crash with multisample texture load on pixel-6
 crbug.com/373670502 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureLoad:multisampled:* [ Skip ]
 
-
 crbug.com/0000 [ android ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:format="depth16unorm";modeU="c";modeV="c";offset=false [ Failure ]
 crbug.com/0000 [ android ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:format="depth16unorm";modeU="m";modeV="r";offset=false [ Failure ]
 crbug.com/0000 [ android ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:format="depth16unorm";modeU="r";modeV="m";offset=false [ Failure ]
@@ -19109,7 +19108,6 @@ crbug.com/0000 [ android ] webgpu:shader,execution,expression,call,builtin,textu
 crbug.com/0000 [ android ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:format="depth32float";modeU="r";modeV="r";offset=false [ Failure ]
 crbug.com/0000 [ android ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_3d_coords:format="depth24plus-stencil8";viewDimension="cube";mode="c" [ Failure ]
 crbug.com/0000 [ android ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_3d_coords:format="depth24plus";viewDimension="cube";mode="m" [ Failure ]
-
 
 ################################################################################
 # This section represents things that are probably fixable in Dawn.
