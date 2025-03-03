@@ -118,6 +118,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98adbd62_0a6c4d1e",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-03T21:49:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b10e0e2a_91839e40",
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28006425_db9fb9e8",
@@ -184,6 +202,24 @@
       "side": 1,
       "message": "I\u0027ve asked Alan why it wasn\u0027t included, maybe just an oversight. I\u0027m sure it\u0027s correct to remove regardless (since the layout doesn\u0027t matter if it\u0027s not host-shareable).",
       "parentUuid": "e8cede88_344d0525",
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7144e354_816c147e",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-03T21:49:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "acfef56c_a710b4c7",
       "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
