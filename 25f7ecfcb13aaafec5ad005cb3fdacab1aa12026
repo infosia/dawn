@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36d69583_cf41768a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-03T20:36:27Z",
+      "side": 1,
+      "message": "```suggestion\ndecorations before emitting any instructions, so that we can add the\nlayout decorations when the types are emitted.\n```",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9991c41_4c61cff9",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-03T20:36:27Z",
+      "side": 1,
+      "message": "```suggestion\n    Hashset\u003cconst core::type::Type*, 16\u003e requires_layout_decorations_;\n```\n\nSeems to match better with the intent?  (although, see below where I suggest a different name based on other things )",
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2a77090_bb846ac6",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-03T20:36:27Z",
+      "side": 1,
+      "message": "Maybe `HostShareable` instead of `Explicit` ? (I\u0027m strugging with names in this CL, heh)\n\nIf the method is renamed, then maybe `host_shareable_types_` would be a better name for the variable? Though, that isn\u0027t quite right either. Maybe the `requires_layout_decoration_` is the better name?",
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28006425_db9fb9e8",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-03T20:36:27Z",
+      "side": 1,
+      "message": "```suggestion\n                if (!core::IsHostShareable(ptr-\u003eAddressSpace())) {\n                        continue;\n                }\n```",
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8cede88_344d0525",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-03T20:36:27Z",
+      "side": 1,
+      "message": "This isn\u0027t one of the elements mentioned in the validation issue. Is it correct ot remove it in this case regardless?",
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
