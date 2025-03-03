@@ -224,6 +224,24 @@
       "parentUuid": "9081a4ef_d59c5ebb",
       "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffb3f65d_f526364c",
+        "filename": "src/dawn/tests/unittests/wire/WireExtensionTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-03T19:42:29Z",
+      "side": 1,
+      "message": "ah right, of course, forgot about that.",
+      "parentUuid": "80708479_060465f9",
+      "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
