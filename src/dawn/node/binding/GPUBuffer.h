@@ -40,6 +40,7 @@
 #include "src/dawn/node/interop/WebGPU.h"
 
 namespace wgpu::binding {
+class MappableBufferTracker;
 
 // GPUBuffer is an implementation of interop::GPUBuffer that wraps a wgpu::Buffer.
 class GPUBuffer final : public interop::GPUBuffer {
@@ -47,7 +48,11 @@ class GPUBuffer final : public interop::GPUBuffer {
     GPUBuffer(wgpu::Buffer buffer,
               wgpu::BufferDescriptor desc,
               wgpu::Device device,
+              uint64_t serial,
+              std::shared_ptr<MappableBufferTracker> mappable_tracker,
               std::shared_ptr<AsyncRunner> async);
+
+    ~GPUBuffer();
 
     // Desc() returns the wgpu::BufferDescriptor used to construct the buffer
     const wgpu::BufferDescriptor& Desc() const { return desc_; }
@@ -98,6 +103,8 @@ class GPUBuffer final : public interop::GPUBuffer {
     bool mapped_;
     std::optional<interop::Promise<void>> pending_map_;
     std::string label_;
+    uint64_t serial_;
+    std::shared_ptr<MappableBufferTracker> mappable_tracker_;
 };
 
 }  // namespace wgpu::binding

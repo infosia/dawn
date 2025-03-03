@@ -32,12 +32,15 @@
 
 #include <memory>
 #include <string>
+#include <unordered_set>
 
 #include "src/dawn/node/binding/AsyncRunner.h"
 #include "src/dawn/node/interop/NodeAPI.h"
 #include "src/dawn/node/interop/WebGPU.h"
 
 namespace wgpu::binding {
+class GPUBuffer;
+
 // GPUDeviceLostInfo is an implementation of interop::GPUDeviceLostInfo that wraps the members.
 class GPUDeviceLostInfo final : public interop::GPUDeviceLostInfo {
   public:
@@ -49,6 +52,19 @@ class GPUDeviceLostInfo final : public interop::GPUDeviceLostInfo {
   private:
     interop::GPUDeviceLostReason reason_;
     std::string message_;
+};
+
+class MappableBufferTracker {
+  public:
+    void Add(uint64_t serial, const interop::Interface<interop::GPUBuffer>& buffer);
+    void Remove(uint64_t serial);
+    void UnmapAll(Napi::Env env);
+
+  private:
+    // Keep track of the mappable buffers to unmap them on device destroy. We have to keep a map
+    // serial -> reference because we cannot recreate the same napi_ref given the same GPUBuffer.
+    std::unordered_map<uint64_t, Napi::Reference<interop::Interface<interop::GPUBuffer>>>
+        buffer_refs_;
 };
 
 // GPUDevice is an implementation of interop::GPUDevice that wraps a wgpu::Device.
@@ -139,6 +155,9 @@ class GPUDevice final : public interop::GPUDevice {
     Napi::Env env_;
     wgpu::Device device_;
     std::shared_ptr<AsyncRunner> async_;
+
+    uint64_t buffer_serial_ = 0;
+    std::shared_ptr<MappableBufferTracker> mappable_buffers_;
 
     // This promise's JS object lives as long as the device because it is stored in .lost
     // of the wrapper JS object.
