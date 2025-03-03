@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d7ff2669_cbadfa6e",
+        "filename": "src/dawn/node/binding/GPUShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-03T23:30:38Z",
+      "side": 1,
+      "message": "Ah I see. We could assert `lineNum \u003d\u003d 0 || gotUtf16` I think? But that would just be a minor sanity check.\n(Perhaps it would be nice for Dawn to always provide DawnCompilationMessageUtf16 so applications don\u0027t have to worry about this, but also not that important.)",
+      "parentUuid": "7c414dc8_1135ea26",
+      "revId": "e53c0336b89e9e6e87838461f8b62d3ed8858cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6992dc2d_307969ad",
         "filename": "src/dawn/node/binding/GPUShaderModule.cpp",
         "patchSetId": 4
