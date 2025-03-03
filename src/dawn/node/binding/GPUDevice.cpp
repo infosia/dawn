@@ -137,6 +137,30 @@ std::string GPUDeviceLostInfo::getMessage(Napi::Env) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// wgpu::bindings::MappableBufferTracker
+////////////////////////////////////////////////////////////////////////////////
+
+void MappableBufferTracker::Add(uint64_t serial,
+                                const interop::Interface<interop::GPUBuffer>& buffer) {
+    buffer_refs_.insert(
+        {serial, Napi::Reference<interop::Interface<interop::GPUBuffer>>::New(buffer)});
+}
+
+void MappableBufferTracker::Remove(uint64_t serial) {
+    buffer_refs_.erase(serial);
+}
+
+void MappableBufferTracker::UnmapAll(Napi::Env env) {
+    // Unmap all mapped buffers as required by the spec.
+    for (auto& [_, bufferRef] : buffer_refs_) {
+        interop::Interface<interop::GPUBuffer> buffer = bufferRef.Value();
+        if (!buffer.IsEmpty()) {
+            buffer.As<GPUBuffer>()->unmap(env);
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // wgpu::bindings::GPUDevice
 ////////////////////////////////////////////////////////////////////////////////
 GPUDevice::GPUDevice(Napi::Env env,
@@ -147,6 +171,7 @@ GPUDevice::GPUDevice(Napi::Env env,
     : env_(env),
       device_(device),
       async_(async),
+      mappable_buffers_(std::make_shared<MappableBufferTracker>()),
       lost_promise_(lost_promise),
       label_(CopyLabel(desc.label)) {
     device_.SetLoggingCallback([](wgpu::LoggingType type, wgpu::StringView message) {
@@ -219,6 +244,7 @@ void GPUDevice::destroy(Napi::Env env) {
             env_, interop::GPUDeviceLostReason::kDestroyed, "device was destroyed"));
     }
     device_.Destroy();
+    mappable_buffers_->UnmapAll(env);
     destroyed_ = true;
 }
 
@@ -244,8 +270,16 @@ interop::Interface<interop::GPUBuffer> GPUDevice::createBuffer(
         return {};
     }
 
-    return interop::GPUBuffer::Create<GPUBuffer>(env, device_.CreateBuffer(&desc), desc, device_,
-                                                 async_);
+    uint64_t serial = buffer_serial_++;
+    auto buffer = interop::GPUBuffer::Create<GPUBuffer>(env, dawnBuffer, desc, device_, serial,
+                                                        mappable_buffers_, async_);
+
+    if (desc.mappedAtCreation ||
+        (desc.usage & (wgpu::BufferUsage::MapRead | wgpu::BufferUsage::MapWrite))) {
+        mappable_buffers_->Add(serial, buffer);
+    }
+
+    return buffer;
 }
 
 interop::Interface<interop::GPUTexture> GPUDevice::createTexture(
