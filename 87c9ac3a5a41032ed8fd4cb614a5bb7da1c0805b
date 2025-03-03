@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bff5b89f_d537e79f",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-03T10:25:17Z",
+      "side": 1,
+      "message": "(note that in the future we can use the same payload mechanism as https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/RefCounted.h;drc\u003dc3a2680a91a288f301559ea37043287073bef669;l\u003d41) to avoid using 4/8 additional bytes per object.",
+      "revId": "87c9ac3a5a41032ed8fd4cb614a5bb7da1c0805b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
