@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68d45b32_1964ee74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-03T23:40:27Z",
+      "side": 1,
+      "message": "FYI I\u0027ve landed https://dawn-review.googlesource.com/c/dawn/+/228554, so this CL can be rebased and it\u0027ll shrink.",
+      "revId": "714f18e018182180e73d70c6c053f293518ee2f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fd5b0bdf_4d7c79a3",
