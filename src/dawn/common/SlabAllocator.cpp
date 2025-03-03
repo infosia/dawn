@@ -172,6 +172,24 @@ void SlabAllocatorImpl::Slab::Splice() {
     next = nullptr;
 }
 
+uint32_t SlabAllocatorImpl::CountAllocatedSlabs() const {
+    auto countSlabs = [](const SentinelSlab& sentinel) {
+        int count = 0;
+        for (Slab* slab = sentinel.next; slab;) {
+            ++count;
+            slab = slab->next;
+        }
+        return count;
+    };
+
+    return countSlabs(mAvailableSlabs) + countSlabs(mRecycledSlabs) + countSlabs(mFullSlabs);
+}
+
+void SlabAllocatorImpl::DeleteEmptySlabs() {
+    DeleteEmptySlabFromList(mRecycledSlabs);
+    DeleteEmptySlabFromList(mAvailableSlabs);
+}
+
 void* SlabAllocatorImpl::Allocate() {
     if (mAvailableSlabs.next == nullptr) {
         GetNewSlab();
@@ -241,6 +259,27 @@ void SlabAllocatorImpl::GetNewSlab() {
     lastNode->nextIndex = kInvalidIndex;
 
     mAvailableSlabs.Prepend(new (alignedPtr) Slab(alignedPtr, node));
+}
+
+void SlabAllocatorImpl::DeleteEmptySlabFromList(SentinelSlab& sentinal) {
+    for (Slab* current = sentinal.next; current;) {
+        if (current->blocksInUse == 0) {
+            // Update list pointers before deleting the slab to avoid dangling.
+            Slab* prev = current->prev;
+            Slab* next = current->next;
+            prev->next = next;
+            if (next) {
+                next->prev = prev;
+            }
+
+            current->~Slab();
+            AlignedFree(current->allocation);
+
+            current = next;
+        } else {
+            current = current->next;
+        }
+    }
 }
 
 }  // namespace dawn
