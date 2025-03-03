@@ -79,6 +79,11 @@ class SlabAllocatorImpl {
 
     SlabAllocatorImpl(SlabAllocatorImpl&& rhs);
 
+    uint32_t CountAllocatedSlabs() const;
+
+    // Deletes any slabs that have zero allocations.
+    void DeleteEmptySlabs();
+
   protected:
     // This is essentially a singly linked list using indices instead of pointers,
     // so we store the index of "this" in |this->index|.
@@ -88,6 +93,8 @@ class SlabAllocatorImpl {
         const Index index;  // The index of this block in the slab.
         Index nextIndex;    // The index of the next available block. kInvalidIndex, if none.
     };
+    // IndexLinkNode destructor is not invoked.
+    static_assert(std::is_trivially_destructible_v<IndexLinkNode>);
 
     struct Slab : PlacementAllocated {
         // A slab is placement-allocated into an aligned pointer from a separate allocation.
@@ -118,6 +125,15 @@ class SlabAllocatorImpl {
     void Deallocate(void* ptr);
 
   private:
+    struct SentinelSlab : Slab {
+        SentinelSlab();
+        ~SentinelSlab();
+
+        SentinelSlab(SentinelSlab&& rhs);
+
+        void Prepend(Slab* slab);
+    };
+
     // The maximum value is reserved to indicate the end of the list.
     static Index kInvalidIndex;
 
@@ -142,6 +158,8 @@ class SlabAllocatorImpl {
     // will be a little slower to get allocations from.
     void GetNewSlab();
 
+    void DeleteEmptySlabFromList(SentinelSlab& sentinel);
+
     const uint32_t mAllocationAlignment;
 
     // | Slab | pad | Obj | pad | Node | pad | Obj | pad | Node | pad | ....
@@ -164,15 +182,6 @@ class SlabAllocatorImpl {
     const Index mBlocksPerSlab;  // The total number of blocks in a slab.
 
     const size_t mTotalAllocationSize;
-
-    struct SentinelSlab : Slab {
-        SentinelSlab();
-        ~SentinelSlab();
-
-        SentinelSlab(SentinelSlab&& rhs);
-
-        void Prepend(Slab* slab);
-    };
 
     SentinelSlab mAvailableSlabs;  // Available slabs to service allocations.
     SentinelSlab mFullSlabs;       // Full slabs. Stored here so we can skip checking them.
