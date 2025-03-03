@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b306b7b2_b48e1863",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-03T21:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36d69583_cf41768a",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9991c41_4c61cff9",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-03-03T20:36:27Z",
       "side": 1,
       "message": "```suggestion\n    Hashset\u003cconst core::type::Type*, 16\u003e requires_layout_decorations_;\n```\n\nSeems to match better with the intent?  (although, see below where I suggest a different name based on other things )",
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95e72892_ac103e3e",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-03T21:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9991c41_4c61cff9",
       "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -60,6 +102,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b10e0e2a_91839e40",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-03T21:45:02Z",
+      "side": 1,
+      "message": "Rename, PTAL.",
+      "parentUuid": "a2a77090_bb846ac6",
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "28006425_db9fb9e8",
         "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
         "patchSetId": 1
@@ -71,6 +131,24 @@
       "writtenOn": "2025-03-03T20:36:27Z",
       "side": 1,
       "message": "```suggestion\n                if (!core::IsHostShareable(ptr-\u003eAddressSpace())) {\n                        continue;\n                }\n```",
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de397e1d_dec0bcdf",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-03T21:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28006425_db9fb9e8",
       "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -88,6 +166,24 @@
       "writtenOn": "2025-03-03T20:36:27Z",
       "side": 1,
       "message": "This isn\u0027t one of the elements mentioned in the validation issue. Is it correct ot remove it in this case regardless?",
+      "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "acfef56c_a710b4c7",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-03T21:45:02Z",
+      "side": 1,
+      "message": "I\u0027ve asked Alan why it wasn\u0027t included, maybe just an oversight. I\u0027m sure it\u0027s correct to remove regardless (since the layout doesn\u0027t matter if it\u0027s not host-shareable).",
+      "parentUuid": "e8cede88_344d0525",
       "revId": "25f7ecfcb13aaafec5ad005cb3fdacab1aa12026",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
