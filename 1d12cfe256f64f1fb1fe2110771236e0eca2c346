@@ -188,6 +188,24 @@
       "parentUuid": "808dccb6_122ab680",
       "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9081a4ef_d59c5ebb",
+        "filename": "src/dawn/tests/unittests/wire/WireExtensionTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-03T10:32:37Z",
+      "side": 1,
+      "message": "Fuzzers don\u0027t test the wire client so we\u0027re ok there. If in the future we need to generate a chain error for recursive things, we can do that with a local bitfield in the serialization method, it wouldn\u0027t be too invasive.",
+      "parentUuid": "64482364_51f2c0dc",
+      "revId": "1d12cfe256f64f1fb1fe2110771236e0eca2c346",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
