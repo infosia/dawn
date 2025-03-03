@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2446b673_89ec1df6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-03T19:43:21Z",
+      "side": 1,
+      "message": "Should be `42250968`",
+      "revId": "42336709defc3c638e40fab0126017a255aa8f8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "942ad4b5_bb37d5e4",
@@ -14,6 +31,23 @@
       "writtenOn": "2025-03-03T19:02:40Z",
       "side": 1,
       "message": "Hello James, Dan \nCould you review this CL? Thanks!",
+      "revId": "42336709defc3c638e40fab0126017a255aa8f8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65be85ed_a0c39b7c",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-03T19:43:21Z",
+      "side": 1,
+      "message": "The message looks good.\n\nFor readability, I\u0027d suggest we avoid the nested ternary operators, so could you pull the `is_null()` check out to its `if ()` statement please?\n\nAlso, please add a new test case for the BOM error message to `lexer_test.cc`.",
       "revId": "42336709defc3c638e40fab0126017a255aa8f8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
