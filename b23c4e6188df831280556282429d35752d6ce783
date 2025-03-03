@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "861f0ea2_e4d19281",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-03T11:20:10Z",
+      "side": 1,
+      "message": "Could we test the condition at the limit, so using `SubgroupMaxSize/2`? It\u0027s ok if we only match part of the error message. Maybe also note that the other side of the condition is tested in `MatrixMultiply`",
+      "revId": "b23c4e6188df831280556282429d35752d6ce783",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
