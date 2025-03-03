@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "908fa087_9222cad1",
+        "filename": "src/dawn/node/binding/GPUShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-03T21:33:45Z",
+      "side": 1,
+      "message": "I think we should assert we get UTF-16 from dawn, falling back to UTF-8 should be unnecessary (and will be incorrect for some strings).",
+      "revId": "e53c0336b89e9e6e87838461f8b62d3ed8858cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6992dc2d_307969ad",
+        "filename": "src/dawn/node/binding/GPUShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-03T21:33:45Z",
+      "side": 1,
+      "message": "Ideally we should do a loop to traverse the chain. I\u0027m not sure if we have any helpers for that which are accessible here, but writing the chain manually is not bad, something like\n```\nfor (auto* chain \u003d m.nextInChain; chain !\u003d nullptr; chain \u003d chain.nextInChain) {\n  if (chain-\u003esType \u003d\u003d ...) {\n```",
+      "revId": "e53c0336b89e9e6e87838461f8b62d3ed8858cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
