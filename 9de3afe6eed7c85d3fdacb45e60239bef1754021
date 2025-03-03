@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fe2e4bc_7e8902cf",
+        "filename": "src/dawn/native/d3d12/BindGroupLayoutD3D12.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-03T08:52:49Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org It seems like this may cause `win-dawn-rel` try bots to fail. Any idea why the GPU process crashed?",
+      "revId": "9de3afe6eed7c85d3fdacb45e60239bef1754021",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
