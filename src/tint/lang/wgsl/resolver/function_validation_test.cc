@@ -452,7 +452,9 @@ TEST_F(ResolverFunctionValidationTest, CannotCallFunctionAtModuleScope) {
     GlobalVar("x", Call(Source{{12, 34}}, "F"), core::AddressSpace::kPrivate);
 
     EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(r()->error(), R"(12:34 error: functions cannot be called at module-scope)");
+    EXPECT_EQ(
+        r()->error(),
+        R"(12:34 error: function calls at module scope are restricted. You can only call built-in constant functions here. Calls to user-defiend (non-built-in) functions are not permitted in module-scope attributes or global variable initializers.)");
 }
 
 TEST_F(ResolverFunctionValidationTest, PipelineStage_MustBeUnique_Fail) {
