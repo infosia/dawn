@@ -29,6 +29,7 @@
 #define SRC_DAWN_COMMON_SLABALLOCATOR_H_
 
 #include <cstdint>
+#include <limits>
 #include <type_traits>
 #include <utility>
 
@@ -77,7 +78,15 @@ class SlabAllocatorImpl {
     // TODO(crbug.com/dawn/825): Is uint8_t sufficient?
     using Index = uint16_t;
 
+    // The maximum value is reserved to indicate the end of the list.
+    static constexpr Index kInvalidIndex = std::numeric_limits<SlabAllocatorImpl::Index>::max();
+
     SlabAllocatorImpl(SlabAllocatorImpl&& rhs);
+
+    uint32_t CountAllocatedSlabs() const;
+
+    // Deletes any slabs that have zero allocations.
+    void DeleteEmptySlabs();
 
   protected:
     // This is essentially a singly linked list using indices instead of pointers,
@@ -88,6 +97,8 @@ class SlabAllocatorImpl {
         const Index index;  // The index of this block in the slab.
         Index nextIndex;    // The index of the next available block. kInvalidIndex, if none.
     };
+    // IndexLinkNode destructor is not invoked.
+    static_assert(std::is_trivially_destructible_v<IndexLinkNode>);
 
     struct Slab : PlacementAllocated {
         // A slab is placement-allocated into an aligned pointer from a separate allocation.
@@ -118,8 +129,14 @@ class SlabAllocatorImpl {
     void Deallocate(void* ptr);
 
   private:
-    // The maximum value is reserved to indicate the end of the list.
-    static Index kInvalidIndex;
+    struct SentinelSlab : Slab {
+        SentinelSlab();
+        ~SentinelSlab();
+
+        SentinelSlab(SentinelSlab&& rhs);
+
+        void Prepend(Slab* slab);
+    };
 
     // Get the IndexLinkNode |offset| slots away.
     IndexLinkNode* OffsetFrom(IndexLinkNode* node, std::make_signed_t<Index> offset) const;
@@ -141,6 +158,8 @@ class SlabAllocatorImpl {
     // Both slabs may still be used for for allocation/deallocation, but older slabs
     // will be a little slower to get allocations from.
     void GetNewSlab();
+
+    void DeleteEmptySlabsFromList(SentinelSlab& sentinel);
 
     const uint32_t mAllocationAlignment;
 
@@ -164,15 +183,6 @@ class SlabAllocatorImpl {
     const Index mBlocksPerSlab;  // The total number of blocks in a slab.
 
     const size_t mTotalAllocationSize;
-
-    struct SentinelSlab : Slab {
-        SentinelSlab();
-        ~SentinelSlab();
-
-        SentinelSlab(SentinelSlab&& rhs);
-
-        void Prepend(Slab* slab);
-    };
 
     SentinelSlab mAvailableSlabs;  // Available slabs to service allocations.
     SentinelSlab mFullSlabs;       // Full slabs. Stored here so we can skip checking them.
