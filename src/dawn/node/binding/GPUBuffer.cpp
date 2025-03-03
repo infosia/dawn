@@ -33,6 +33,7 @@
 
 #include "src/dawn/node/binding/Converter.h"
 #include "src/dawn/node/binding/Errors.h"
+#include "src/dawn/node/binding/GPUDevice.h"
 
 namespace wgpu::binding {
 
@@ -42,13 +43,21 @@ namespace wgpu::binding {
 GPUBuffer::GPUBuffer(wgpu::Buffer buffer,
                      wgpu::BufferDescriptor desc,
                      wgpu::Device device,
+                     uint64_t serial,
+                     std::shared_ptr<MappableBufferTracker> mappable_tracker,
                      std::shared_ptr<AsyncRunner> async)
     : buffer_(std::move(buffer)),
       desc_(desc),
       device_(std::move(device)),
       async_(std::move(async)),
       mapped_(desc.mappedAtCreation),
-      label_(CopyLabel(desc.label)) {}
+      label_(CopyLabel(desc.label)),
+      serial_(serial),
+      mappable_tracker_(mappable_tracker) {}
+
+GPUBuffer::~GPUBuffer() {
+    mappable_tracker_->Remove(serial_);
+}
 
 interop::Promise<void> GPUBuffer::mapAsync(Napi::Env env,
                                            interop::GPUMapModeFlags modeIn,
@@ -142,6 +151,7 @@ void GPUBuffer::unmap(Napi::Env env) {
 void GPUBuffer::destroy(Napi::Env env) {
     DetachMappings(env);
     buffer_.Destroy();
+    mappable_tracker_->Remove(serial_);
 }
 
 interop::GPUSize64Out GPUBuffer::getSize(Napi::Env) {

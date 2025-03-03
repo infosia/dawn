@@ -164,6 +164,10 @@ class Interface {
     // The JS object must have been created with a call to T::Bind().
     explicit inline Interface(Napi::Object o) : object(o) {}
 
+    // Constructs an Interface from raw NAPI objects. This is used to in Napi::Reference<Interface>
+    explicit inline Interface(Napi::Env env, napi_value v) : object(env, v) {}
+    explicit inline Interface(Napi::Env, std::nullptr_t) {}
+
     // Implicit conversion operators to Napi objects.
     inline operator napi_value() const { return object; }
     inline operator const Napi::Value&() const { return object; }
@@ -179,6 +183,10 @@ class Interface {
     inline IMPL* As() const {
         return static_cast<IMPL*>(T::Unwrap(object));
     }
+
+    // Passthroughs for useful methods on the underlying object.
+    bool IsEmpty() const { return object.IsEmpty(); }
+    Napi::Env Env() const { return object.Env(); }
 
   private:
     Napi::Object object;
