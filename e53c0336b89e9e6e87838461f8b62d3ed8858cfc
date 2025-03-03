@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c414dc8_1135ea26",
+        "filename": "src/dawn/node/binding/GPUShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-03T21:41:21Z",
+      "side": 1,
+      "message": "My concern are for error shader modules which can generate errors that don\u0027t actually have the chain / utf-16 values, see example here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.cpp;l\u003d1438;drc\u003de71cafaddfaa5850b906bf4c78b5289a2fa2d81a;bpv\u003d1;bpt\u003d1\n\nTo make those work as they did before, it would just be setting them to the utf-8 values.",
+      "parentUuid": "908fa087_9222cad1",
+      "revId": "e53c0336b89e9e6e87838461f8b62d3ed8858cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6992dc2d_307969ad",
         "filename": "src/dawn/node/binding/GPUShaderModule.cpp",
         "patchSetId": 4
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-03T21:33:45Z",
       "side": 1,
       "message": "Ideally we should do a loop to traverse the chain. I\u0027m not sure if we have any helpers for that which are accessible here, but writing the chain manually is not bad, something like\n```\nfor (auto* chain \u003d m.nextInChain; chain !\u003d nullptr; chain \u003d chain.nextInChain) {\n  if (chain-\u003esType \u003d\u003d ...) {\n```",
+      "revId": "e53c0336b89e9e6e87838461f8b62d3ed8858cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d3e18f4_1b81ab98",
+        "filename": "src/dawn/node/binding/GPUShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-03T21:41:21Z",
+      "side": 1,
+      "message": "Done, unforutnately the helpers are not accessible from here atm.",
+      "parentUuid": "6992dc2d_307969ad",
       "revId": "e53c0336b89e9e6e87838461f8b62d3ed8858cfc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
