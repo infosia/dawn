@@ -138,6 +138,24 @@
       "message": "Landing this CL now. I think EMEA folks will be online in a few hours",
       "revId": "1da94598cebf68e67e8813e14e738064f4b6a48c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e27cebd9_03fb7886",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003366
+      },
+      "writtenOn": "2025-03-03T02:15:41Z",
+      "side": 1,
+      "message": "(This is a stale comment. NVM.)",
+      "parentUuid": "0f6db6e7_1b03fb8f",
+      "revId": "1da94598cebf68e67e8813e14e738064f4b6a48c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
