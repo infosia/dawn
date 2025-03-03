@@ -121,6 +121,23 @@
       "message": "I forgot to CQ this in the morning.\nLet\u0027s try now.\nHopefully it goes well 🤞",
       "revId": "1da94598cebf68e67e8813e14e738064f4b6a48c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f6db6e7_1b03fb8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003366
+      },
+      "writtenOn": "2025-03-03T02:14:59Z",
+      "side": 1,
+      "message": "Landing this CL now. I think EMEA folks will be online in a few hours",
+      "revId": "1da94598cebf68e67e8813e14e738064f4b6a48c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [

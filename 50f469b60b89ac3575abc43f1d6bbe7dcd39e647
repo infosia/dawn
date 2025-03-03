@@ -16,6 +16,24 @@
       "message": "Checked https://ci.chromium.org/ui/p/dawn/g/ci/builders today, looks like this went well, I think we are ready to try https://chromium-review.googlesource.com/c/chromium/tools/build/+/6281965 again?",
       "revId": "50f469b60b89ac3575abc43f1d6bbe7dcd39e647",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "662e1410_e14fbf3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003366
+      },
+      "writtenOn": "2025-03-03T02:14:59Z",
+      "side": 1,
+      "message": "Yeah,I think so. Let me test it again with a win clang builder.",
+      "parentUuid": "6bdba1ed_3a5f72ad",
+      "revId": "50f469b60b89ac3575abc43f1d6bbe7dcd39e647",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
