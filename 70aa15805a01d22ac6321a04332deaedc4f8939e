@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "096e1fa9_8f871df4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-03T10:36:22Z",
+      "side": 1,
+      "message": "Also `dawn.node`, though that can be handled in this CL.",
+      "revId": "70aa15805a01d22ac6321a04332deaedc4f8939e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "fa0e7f8a_94f3d53d",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -12,6 +29,23 @@
         "id": 1000014
       },
       "writtenOn": "2025-02-28T23:43:53Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "70aa15805a01d22ac6321a04332deaedc4f8939e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8df55a66_f160f400",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-03T10:36:22Z",
       "side": 1,
       "message": "LGTM",
       "revId": "70aa15805a01d22ac6321a04332deaedc4f8939e",
