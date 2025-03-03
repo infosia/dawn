@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b600421_f4842aac",
+        "filename": "src/dawn/native/PhysicalDevice.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-03T10:55:09Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "fbe37c15226180b3cda9f1e8b2abbedc20949334",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4915fc0a_f6f09fb8",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-03T10:55:09Z",
+      "side": 1,
+      "message": "Are these needed in the backends given [1]?",
+      "revId": "fbe37c15226180b3cda9f1e8b2abbedc20949334",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
