@@ -16,6 +16,24 @@
       "message": "Sorry but my point was that the logic in src/dawn/native/PhysicalDevice.cpp tagged with [1] in https://dawn-review.googlesource.com/c/dawn/+/226954 means that we don\u0027t need to check in any backend if we need to enable this extension because it is alraedy done automatically in the frontend. So unless I am missing something, we have duplicated logic at the moment.",
       "revId": "9e6de7232b79bdf8bf1e7abef9e370e26ce16d48",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7ff122a_7c080f95",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-03-04T18:06:20Z",
+      "side": 1,
+      "message": "You are right. Thanks for catching that. The frontend logic is added in a second pass to fix a test and I didn\u0027t gave it a second thought.",
+      "parentUuid": "66016e87_a4bfea9f",
+      "revId": "9e6de7232b79bdf8bf1e7abef9e370e26ce16d48",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
