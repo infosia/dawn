@@ -118,6 +118,30 @@
       },
       "revId": "3c22118208372690b4f13bf177e5df1b2df5e5f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e30dad9_845d6208",
+        "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-03-04T09:50:27Z",
+      "side": 1,
+      "message": "Done making it `CacheKey::UnsafeUnkeyedValue\u003cLimitsForCompilationRequest\u003e`.",
+      "parentUuid": "89b48301_2bce53ff",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "3c22118208372690b4f13bf177e5df1b2df5e5f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
