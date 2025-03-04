@@ -16,6 +16,24 @@
       "message": "Creating the reland, but will wait until ML code has been rolled forwards.",
       "revId": "33b11fca0208102fd0e9e44257477df74feedf2c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4724385c_fd3f3fd5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-04T22:27:19Z",
+      "side": 1,
+      "message": "Roll has landed in Chromium in https://chromium-review.googlesource.com/c/chromium/src/+/6324389",
+      "parentUuid": "4d2a93a6_80af2d2c",
+      "revId": "33b11fca0208102fd0e9e44257477df74feedf2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
