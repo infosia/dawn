@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b1acb57_8094b195",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1966,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T10:12:30Z",
+      "side": 1,
+      "message": "Ah for this we could use https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Instance.h;drc\u003df99a80819ca8f07e1bbf6257b1c15c4260240e8e;l\u003d97 even if it\u0027s a bit weird to go on the instance for handling of an error.",
+      "revId": "63cb600fd7f165a092fe748dc924e9d01c1edca7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
