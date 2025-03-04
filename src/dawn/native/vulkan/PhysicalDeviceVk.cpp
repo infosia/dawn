@@ -473,6 +473,19 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::SharedTextureMemoryOpaqueFD);
     }
 
+    // On Vulkan the memory type of the mappable buffers with extended usages must have all below
+    // memory property flags.
+    constexpr VkMemoryPropertyFlags kMapExtendedUsageMemoryPropertyFlags =
+        VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+        VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT;
+    for (const auto& memoryType : mDeviceInfo.memoryTypes) {
+        if ((memoryType.propertyFlags & kMapExtendedUsageMemoryPropertyFlags) ==
+            kMapExtendedUsageMemoryPropertyFlags) {
+            EnableFeature(Feature::BufferMapExtendedUsages);
+            break;
+        }
+    }
+
 #if DAWN_PLATFORM_IS(ANDROID)
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryAndroidHardwareBuffer)) {
         if (GetOrLoadAHBFunctions()->IsValid()) {

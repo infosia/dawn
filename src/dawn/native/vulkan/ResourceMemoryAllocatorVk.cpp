@@ -286,6 +286,12 @@ int ResourceMemoryAllocator::FindBestTypeIndex(VkMemoryRequirements requirements
             continue;
         }
 
+        // HOST_CACHED_BIT must be set when MemoryKind::HostCached is required.
+        if ((kind & MemoryKind::HostCached) &&
+            (info.memoryTypes[i].propertyFlags & VK_MEMORY_PROPERTY_HOST_CACHED_BIT) == 0) {
+            continue;
+        }
+
         // Found the first candidate memory type
         if (bestType == -1) {
             bestType = static_cast<int>(i);
