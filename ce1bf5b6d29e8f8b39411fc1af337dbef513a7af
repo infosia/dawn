@@ -34,6 +34,24 @@
       "parentUuid": "ab7bfb71_6e538063",
       "revId": "ce1bf5b6d29e8f8b39411fc1af337dbef513a7af",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe3b3e09_f241579b",
+        "filename": "src/dawn/common/SlabAllocator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-04T16:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "626a2b84_26ec4d04",
+      "revId": "ce1bf5b6d29e8f8b39411fc1af337dbef513a7af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
