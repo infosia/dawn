@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c44c9619_b515f1b8",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-04T11:07:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b6e429f_1482d676",
+      "revId": "3cf1c465fc1b3b2c4cdb7bbff58bfad96669b01d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d84e05f7_3f0776cf",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-03-04T10:17:01Z",
       "side": 1,
       "message": "... because we need to look at the contents of the bind group to deduplicate the sampler heap allocation.",
+      "revId": "3cf1c465fc1b3b2c4cdb7bbff58bfad96669b01d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42dcdce0_8dfa59f1",
+        "filename": "src/dawn/native/d3d12/BindGroupLayoutD3D12.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-04T11:07:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d84e05f7_3f0776cf",
       "revId": "3cf1c465fc1b3b2c4cdb7bbff58bfad96669b01d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
