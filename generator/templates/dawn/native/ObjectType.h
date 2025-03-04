@@ -41,10 +41,14 @@ namespace {{native_namespace}} {
         {% for type in by_category["object"] %}
             {{type.name.CamelCase()}},
         {% endfor %}
+
+        BindGroupLayoutInternal,
     };
 
+    constexpr size_t kExtraObjectTypes = 1;
+
     template <typename T>
-    using PerObjectType = ityp::array<ObjectType, T, {{len(by_category["object"])}}>;
+    using PerObjectType = ityp::array<ObjectType, T, {{len(by_category["object"])}} + kExtraObjectTypes>;
 
     const char* ObjectTypeAsString(ObjectType type);
 
