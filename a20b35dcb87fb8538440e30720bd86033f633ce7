@@ -33,6 +33,23 @@
       "message": "lgtm",
       "revId": "a20b35dcb87fb8538440e30720bd86033f633ce7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da8c2d63_9b0b3f86",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-04T21:42:47Z",
+      "side": 1,
+      "message": "This is not called by the destructor. Should it be? I\u0027m not sure when the destructor gets triggered.",
+      "revId": "a20b35dcb87fb8538440e30720bd86033f633ce7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
