@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "ef6e880686bde2a2cb937d7477b1db7f0fd66c8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c3c1c8f_c369cb07",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T15:02:06Z",
+      "side": 1,
+      "message": "This condition is impressively hard to read, I have looked at it for 3 minutes and still can\u0027t parse it. Can we split it off in various partial computation that are named to explain the semantic of the condition?",
+      "revId": "ef6e880686bde2a2cb937d7477b1db7f0fd66c8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
