@@ -55,16 +55,11 @@ GPUShaderModule::getCompilationInfo(Napi::Env env) {
 
         explicit GPUCompilationMessage(const wgpu::CompilationMessage& m)
             : lineNum(m.lineNum),
-              linePos(m.linePos),
-              offset(m.offset),
-              length(m.length),
               message(m.message) {
-            // If possible, we always want to take the UTF-16 values, otherwise, by default we take
-            // the UTF-8 ones specified in wgpu::CompilationMessage;
             for (const auto* chain = m.nextInChain; chain != nullptr; chain = chain->nextInChain) {
                 if (chain->sType == wgpu::SType::DawnCompilationMessageUtf16) {
                     const auto* utf16 =
-                        reinterpret_cast<const wgpu::DawnCompilationMessageUtf16*>(m.nextInChain);
+                        reinterpret_cast<const wgpu::DawnCompilationMessageUtf16*>(chain);
                     linePos = utf16->linePos;
                     offset = utf16->offset;
                     length = utf16->length;
