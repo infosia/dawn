@@ -218,10 +218,13 @@ Token Lexer::next() {
         return std::move(t.value());
     }
 
-    return {
-        Token::Type::kError, begin_source(),
-        (is_null() ? "null character found"
-                   : (is_bom() ? "invalid character (\\uFEFF) found" : "invalid character found"))};
+    if (is_null()) {
+        return {Token::Type::kError, begin_source(), "null character found"};
+    }
+    if (is_bom()) {
+        return {Token::Type::kError, begin_source(), "invalid character (\\uFEFF) found"};
+    }
+    return {Token::Type::kError, begin_source(), "invalid character found"};
 }
 
 Source Lexer::begin_source() const {
