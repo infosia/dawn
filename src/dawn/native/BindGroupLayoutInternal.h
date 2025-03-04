@@ -85,6 +85,10 @@ class BindGroupLayoutInternalBase : public ApiObjectBase,
     bool HasBinding(BindingNumber bindingNumber) const;
     BindingIndex GetBindingIndex(BindingNumber bindingNumber) const;
 
+    // Called from the device when it's an appropriate time to perform expensive operations that
+    // reduce usage.
+    virtual void ReduceMemoryUsage();
+
     // Functions necessary for the unordered_set<BGLBase*>-based cache.
     size_t ComputeContentHash() override;
 

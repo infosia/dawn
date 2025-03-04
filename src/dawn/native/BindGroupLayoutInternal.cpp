@@ -676,7 +676,7 @@ void BindGroupLayoutInternalBase::DestroyImpl() {
 }
 
 ObjectType BindGroupLayoutInternalBase::GetType() const {
-    return ObjectType::BindGroupLayout;
+    return ObjectType::BindGroupLayoutInternal;
 }
 
 const BindingInfo& BindGroupLayoutInternalBase::GetBindingInfo(BindingIndex bindingIndex) const {
@@ -700,6 +700,8 @@ BindingIndex BindGroupLayoutInternalBase::GetBindingIndex(BindingNumber bindingN
     DAWN_ASSERT(it != mBindingMap.end());
     return it->second;
 }
+
+void BindGroupLayoutInternalBase::ReduceMemoryUsage() {}
 
 size_t BindGroupLayoutInternalBase::ComputeContentHash() {
     ObjectContentHasher recorder;

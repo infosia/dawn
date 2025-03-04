@@ -539,27 +539,28 @@ void DeviceBase::DestroyObjects() {
     // can destroy the frontend cache.
 
     // clang-format off
-        static constexpr std::array<ObjectType, 20> kObjectTypeDependencyOrder = {
-            ObjectType::ComputePassEncoder,
-            ObjectType::RenderPassEncoder,
-            ObjectType::RenderBundleEncoder,
-            ObjectType::RenderBundle,
-            ObjectType::CommandEncoder,
-            ObjectType::CommandBuffer,
-            ObjectType::RenderPipeline,
-            ObjectType::ComputePipeline,
-            ObjectType::PipelineLayout,
-            ObjectType::BindGroup,
-            ObjectType::BindGroupLayout,
-            ObjectType::ShaderModule,
-            ObjectType::SharedTextureMemory,
-            ObjectType::SharedFence,
-            ObjectType::ExternalTexture,
-            ObjectType::Texture,  // Note that Textures own the TextureViews.
-            ObjectType::QuerySet,
-            ObjectType::Sampler,
-            ObjectType::Buffer,
-        };
+    static constexpr std::array<ObjectType, 21> kObjectTypeDependencyOrder = {
+        ObjectType::ComputePassEncoder,
+        ObjectType::RenderPassEncoder,
+        ObjectType::RenderBundleEncoder,
+        ObjectType::RenderBundle,
+        ObjectType::CommandEncoder,
+        ObjectType::CommandBuffer,
+        ObjectType::RenderPipeline,
+        ObjectType::ComputePipeline,
+        ObjectType::PipelineLayout,
+        ObjectType::BindGroup,
+        ObjectType::BindGroupLayout,
+        ObjectType::BindGroupLayoutInternal,
+        ObjectType::ShaderModule,
+        ObjectType::SharedTextureMemory,
+        ObjectType::SharedFence,
+        ObjectType::ExternalTexture,
+        ObjectType::Texture,  // Note that Textures own the TextureViews.
+        ObjectType::QuerySet,
+        ObjectType::Sampler,
+        ObjectType::Buffer,
+    };
     // clang-format on
 
     for (ObjectType type : kObjectTypeDependencyOrder) {
@@ -2429,6 +2430,12 @@ void DeviceBase::ReduceMemoryUsage() {
     GetDynamicUploader()->Deallocate(GetQueue()->GetCompletedCommandSerial(), /*freeAll=*/true);
     mInternalPipelineStore->ResetScratchBuffers();
     mTemporaryUniformBuffer = nullptr;
+
+    // BindGroupLayouts usually hold SlabAllocator<BindGroup>. This will trigger deletion of empty
+    // slabs.
+    GetObjectTrackingList(ObjectType::BindGroupLayoutInternal)->ForEach([](ApiObjectBase* object) {
+        static_cast<BindGroupLayoutInternalBase*>(object)->ReduceMemoryUsage();
+    });
 }
 
 void DeviceBase::PerformIdleTasks() {
