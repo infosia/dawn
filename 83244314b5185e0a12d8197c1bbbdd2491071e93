@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "887cead0_a8990fbe",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1951,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-04T03:12:35Z",
+      "side": 1,
+      "message": "Sorry for the delay. This would forward the error to the error scope, right? I don\u0027t think we should do that - the JS spec doesn\u0027t produce an error scope error in this case: `Set b.[[mapping]] to ? initialize an active buffer mapping`.\n\nHowever I realize that webgpu.h should probably specify implementation-defined logging when this happens. https://github.com/webgpu-native/webgpu-headers/pull/477#issuecomment-2696044224\n\nAlso while looking at adding a log, I stumbled upon the fact that we have code to produce an error buffer when there\u0027s a client OOM even though that seems not to be used anymore (`CreateErrorBufferOOMAtClient`), so I\u0027ll take care of that too.",
+      "parentUuid": "ab58c9bf_77ccb68f",
+      "range": {
+        "startLine": 1949,
+        "startChar": 0,
+        "endLine": 1951,
+        "endChar": 9
+      },
+      "revId": "83244314b5185e0a12d8197c1bbbdd2491071e93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3d6b42a5_4f42e021",
         "filename": "third_party/emdawnwebgpu/library_webgpu.js",
         "patchSetId": 5
