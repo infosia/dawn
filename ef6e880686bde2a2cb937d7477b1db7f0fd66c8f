@@ -33,6 +33,29 @@
       "message": "This condition is impressively hard to read, I have looked at it for 3 minutes and still can\u0027t parse it. Can we split it off in various partial computation that are named to explain the semantic of the condition?",
       "revId": "ef6e880686bde2a2cb937d7477b1db7f0fd66c8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eae419f1_c2eb206b",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-04T20:10:23Z",
+      "side": 1,
+      "message": "Drive by: I think we should use the virtual method `PreferNotUsingMappableOrUniformBufferAsStorage` for this purpose, instead of adding another condition check here.\nIf a backend doesn\u0027t support mappable storable buffers, its `PreferNotUsingMappableOrUniformBufferAsStorage` implementation should return true.\n\nThe virtual method was originally created for this, but it\u0027s only implemented in D3D11 backend atm.\n\nIMO it also doesn\u0027t make sense to check whether the `BufferMapExtendedUsages` feature is enabled here. A backend might support it natively but the user just doesn\u0027t enable it. In that case, it\u0027s still ok to create a mappable buffer with the internal storage usage.",
+      "range": {
+        "startLine": 140,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 71
+      },
+      "revId": "ef6e880686bde2a2cb937d7477b1db7f0fd66c8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
