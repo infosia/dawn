@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13f1a4e7_7d4d4b42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-04T08:13:15Z",
+      "side": 1,
+      "message": "I\u0027ve fixed Windows D3D12 backend. Please have another look.",
+      "revId": "3cf1c465fc1b3b2c4cdb7bbff58bfad96669b01d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
