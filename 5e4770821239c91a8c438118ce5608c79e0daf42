@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de20e4e8_2c411723",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T11:34:59Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd0a504d_58d216f7",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T11:34:59Z",
+      "side": 1,
+      "message": "Can we have comments explaining the semi-magic that we do here? Also IDK that Chromium will be super happy with destructor happening on thread stop. If the roll fails we\u0027ll have to find another solution.",
+      "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edce9675_c8a20b1f",
+        "filename": "src/dawn/common/ThreadLocal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T11:34:59Z",
+      "side": 1,
+      "message": "Can we be more clear that this is not a PID?",
+      "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48d39178_95687708",
+        "filename": "src/dawn/common/ThreadLocal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T11:34:59Z",
+      "side": 1,
+      "message": "```suggestion\n// Returns true if the thread associated with the ID is still running.\n```",
+      "range": {
+        "startLine": 40,
+        "startChar": 47,
+        "endLine": 40,
+        "endChar": 53
+      },
+      "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "895b01d9_90a23084",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T11:34:59Z",
+      "side": 1,
+      "message": "This should be protected by a mutex in case multiple errors happen at the same time and insert new stacks.",
+      "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
