@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "5809cfe5_59416774",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-04T04:09:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2446b673_89ec1df6",
+      "revId": "42336709defc3c638e40fab0126017a255aa8f8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "942ad4b5_bb37d5e4",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-03T19:43:21Z",
       "side": 1,
       "message": "The message looks good.\n\nFor readability, I\u0027d suggest we avoid the nested ternary operators, so could you pull the `is_null()` check out to its `if ()` statement please?\n\nAlso, please add a new test case for the BOM error message to `lexer_test.cc`.",
+      "revId": "42336709defc3c638e40fab0126017a255aa8f8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cb2e362_36aeda2b",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-04T04:09:12Z",
+      "side": 1,
+      "message": "Thought since we are pulling is_null anyway might as well pull is_bom.",
+      "parentUuid": "65be85ed_a0c39b7c",
       "revId": "42336709defc3c638e40fab0126017a255aa8f8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
