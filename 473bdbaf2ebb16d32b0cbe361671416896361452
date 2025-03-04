@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6b4907a_68beaa1f",
+        "filename": "src/dawn/node/binding/GPUShaderModule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-04T23:58:29Z",
+      "side": 1,
+      "message": "nit: Assert somehow that we actually found the extension, just in case",
+      "revId": "473bdbaf2ebb16d32b0cbe361671416896361452",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
