@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "38ac5726_69c26dfe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-03-04T17:21:49Z",
+      "side": 1,
+      "message": "Or we should try to keep storing valid plus invalid `ShaderModule` as long as no non-code related validation error occurred. That could avoid duplicated shader module creation.",
+      "parentUuid": "983399c9_3c152c48",
+      "revId": "5e5adaa03a3a290cf3194922fe18705b397e1a5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2fc650a2_def975d9",
