@@ -135,9 +135,9 @@ wgpu::BufferUsage AddInternalUsages(const DeviceBase* device, wgpu::BufferUsage 
             device->IsToggleEnabled(Toggle::UseBlitForFloat32TextureCopy) ||
             device->IsToggleEnabled(Toggle::UseBlitForT2B);
         if (useComputeForT2B) {
-            if (!(usage & (kMappableBufferUsages | wgpu::BufferUsage::Uniform)) ||
+            if (!(usage & (kMappableBufferUsages | wgpu::BufferUsage::Uniform)) &&
                 !device->PreferNotUsingMappableOrUniformBufferAsStorage()) {
-                // If buffer doesn't have mapping nor Uniform usage, or backend is ok with using
+                // If buffer doesn't have mapping nor Uniform usage, and backend is ok with using
                 // this kind of buffer as storage buffer, we can add Storage usage in order to write
                 // to it in compute shader.
                 usage |= kInternalStorageBuffer;
