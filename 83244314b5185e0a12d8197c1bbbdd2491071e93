@@ -117,6 +117,30 @@
       },
       "revId": "83244314b5185e0a12d8197c1bbbdd2491071e93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "733c5776_9b4d0488",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-04T19:17:33Z",
+      "side": 1,
+      "message": "This still needs to be fixed? This JS function shouldn\u0027t actually return anything. The implementing `wgpuDeviceCreateBuffer` in `webgpu.cpp` is the one that returns. Right now, I think in the exception case, we are returning a `WGPUBuffer` that is not backed.",
+      "parentUuid": "3d6b42a5_4f42e021",
+      "range": {
+        "startLine": 1516,
+        "startChar": 4,
+        "endLine": 1525,
+        "endChar": 55
+      },
+      "revId": "83244314b5185e0a12d8197c1bbbdd2491071e93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
