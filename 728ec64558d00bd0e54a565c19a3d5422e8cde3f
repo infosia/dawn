@@ -3,6 +3,69 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e6681740_7b658a9a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T16:07:12Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "728ec64558d00bd0e54a565c19a3d5422e8cde3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff829e55_f706e602",
+        "filename": "src/dawn/common/SlabAllocator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T16:07:12Z",
+      "side": 1,
+      "message": "Some nits for consistency\n\n```suggestion\n    auto CountSlabs \u003d [](const SentinelSlab\u0026 sentinel) {\n        int count \u003d 0;\n        for (Slab* slab \u003d sentinel.next; slab !\u003d nullptr;) {\n            ++count;\n            slab \u003d slab-\u003enext;\n        }\n        return count;\n    };\n\n    return CountSlabs(mAvailableSlabs) + CountSlabs(mRecycledSlabs) + CountSlabs(mFullSlabs);\n```",
+      "range": {
+        "startLine": 173,
+        "startChar": 1,
+        "endLine": 182,
+        "endChar": 10
+      },
+      "revId": "728ec64558d00bd0e54a565c19a3d5422e8cde3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c192307a_11661fed",
+        "filename": "src/dawn/common/SlabAllocator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T16:07:12Z",
+      "side": 1,
+      "message": "Some nits for consistency.\n\n```suggestion\n    auto DeleteEmptyFromList \u003d [](const SentinelSlab\u0026 sentinel) {\n        for (Slab* current \u003d sentinel.next; current !\u003d nullptr;) {\n            if (current-\u003eblocksInUse \u003d\u003d 0) {\n                Slab* next \u003d current-\u003enext;\n\n                // Remove from list and then delete to avoid dangling pointers.\n                current-\u003eSplice();\n                char* allocation \u003d current-\u003eallocation;\n                current-\u003e~Slab();\n                AlignedFree(allocation);\n\n                current \u003d next;\n            } else {\n                current \u003d current-\u003enext;\n            }\n        }\n    };\n    DeleteEmptyFromList(mRecycledSlabs);\n    DeleteEmptyFromList(mAvailableSlabs);\n```",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 41
+      },
+      "revId": "728ec64558d00bd0e54a565c19a3d5422e8cde3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "e55fb374_ffc953f6",
         "filename": "src/dawn/common/SlabAllocator.h",
         "patchSetId": 7
@@ -14,6 +77,24 @@
       "writtenOn": "2025-03-04T15:39:20Z",
       "side": 1,
       "message": "If `Index` is public then `kInvalidIndex` should probably also be? Also made it constexpr since it shouldn\u0027t change.",
+      "revId": "728ec64558d00bd0e54a565c19a3d5422e8cde3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1d94e92_a9951bed",
+        "filename": "src/dawn/common/SlabAllocator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T16:07:12Z",
+      "side": 1,
+      "message": "Can both be made private? It\u0027s an implementation detail so it would be ideal if it were not accessible.",
+      "parentUuid": "e55fb374_ffc953f6",
       "revId": "728ec64558d00bd0e54a565c19a3d5422e8cde3f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
