@@ -16,6 +16,24 @@
       "message": "The error message doesn\u0027t match the characters checked. The `is_bom` is correctly checking for a UTF-8 BOM, but the error mesasges is for a UTF-16 BOM. Should we just say something like `invalid character (UTF-8 BOM) found` to make it clear what was found?",
       "revId": "3e6ac408052e1844b3765cec9200ed32a1c951bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec55dfb3_e51d5e84",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-04T16:58:49Z",
+      "side": 1,
+      "message": "I\u0027ll update the error message, should i also add a another function so we cover both UTF-8 and UTF-16 BOMs?",
+      "parentUuid": "8c1ed200_e004a762",
+      "revId": "3e6ac408052e1844b3765cec9200ed32a1c951bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
