@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "00cbb3ab_2a5e7a4e",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-04T20:43:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd0a504d_58d216f7",
+      "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edce9675_c8a20b1f",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-04T11:34:59Z",
       "side": 1,
       "message": "Can we be more clear that this is not a PID?",
+      "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce3008c0_3380b5fe",
+        "filename": "src/dawn/common/ThreadLocal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-04T20:43:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edce9675_c8a20b1f",
       "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e523214b_adc1224a",
+        "filename": "src/dawn/common/ThreadLocal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-04T20:43:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48d39178_95687708",
+      "range": {
+        "startLine": 40,
+        "startChar": 47,
+        "endLine": 40,
+        "endChar": 53
+      },
+      "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "895b01d9_90a23084",
@@ -88,6 +148,24 @@
       "writtenOn": "2025-03-04T11:34:59Z",
       "side": 1,
       "message": "This should be protected by a mutex in case multiple errors happen at the same time and insert new stacks.",
+      "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d5990a0_64c2e845",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-04T20:43:09Z",
+      "side": 1,
+      "message": "I didn\u0027t do that atm because I think the device-level lock already makes this thread-safe. (Otherwise it wouldn\u0027t have worked before either?) I didn\u0027t want to add additional thread stuff in this change since we probably want to do that in a follow up when we try to make Dawn more thread-safe in general.",
+      "parentUuid": "895b01d9_90a23084",
       "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
