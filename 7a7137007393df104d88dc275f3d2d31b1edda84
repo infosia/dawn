@@ -16,6 +16,23 @@
       "message": "Please take a look, thanks!\nThe latest patchset slightly touch the subgroup-matrix related validation, so also + @jrprice@google.com. Thanks!",
       "revId": "7a7137007393df104d88dc275f3d2d31b1edda84",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1b3dbc4_c5f05ebf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T11:22:19Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "7a7137007393df104d88dc275f3d2d31b1edda84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
