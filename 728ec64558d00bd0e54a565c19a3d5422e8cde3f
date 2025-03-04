@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e55fb374_ffc953f6",
+        "filename": "src/dawn/common/SlabAllocator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-04T15:39:20Z",
+      "side": 1,
+      "message": "If `Index` is public then `kInvalidIndex` should probably also be? Also made it constexpr since it shouldn\u0027t change.",
+      "revId": "728ec64558d00bd0e54a565c19a3d5422e8cde3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
