@@ -307,6 +307,8 @@ if (is_win || is_linux || is_chromeos || is_mac || is_fuchsia || is_android ||
       "StringViewUtils.h",
       "SystemUtils.cpp",
       "SystemUtils.h",
+      "ThreadLocal.cpp",
+      "ThreadLocal.h",
       "TypeTraits.h",
       "TypedInteger.h",
       "UnderlyingType.h",

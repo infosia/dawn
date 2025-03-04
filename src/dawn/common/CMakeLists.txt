@@ -92,6 +92,7 @@ set(private_headers
     "StackAllocated.h"
     "StringViewUtils.h"
     "SystemUtils.h"
+    "ThreadLocal.h"
     "TypedInteger.h"
     "TypeTraits.h"
     "UnderlyingType.h"
@@ -117,6 +118,7 @@ set(sources
     "SlabAllocator.cpp"
     "StringViewUtils.cpp"
     "SystemUtils.cpp"
+    "ThreadLocal.cpp"
     "WeakRefSupport.cpp"
 )
 
