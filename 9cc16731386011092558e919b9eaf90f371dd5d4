@@ -33,6 +33,24 @@
       "message": "I don\u0027t know if it\u0027s worth adding a comment that these extra objects are internal objects not exposed in the public native API. Up to you.",
       "revId": "9cc16731386011092558e919b9eaf90f371dd5d4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c53c9446_7ad21875",
+        "filename": "generator/templates/dawn/native/ObjectType.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T17:39:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70c425f3_a1618eae",
+      "revId": "9cc16731386011092558e919b9eaf90f371dd5d4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
