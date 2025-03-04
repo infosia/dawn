@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "983399c9_3c152c48",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-03-04T17:19:05Z",
+      "side": 1,
+      "message": "Yes this is a little complicated... But I am thinking that the pattern of \"issuing a validation error and return an invalid object\" are frequently used in the WebGPU spec, although IIRC most of those invalid object doesn\u0027t contain meaningful information (like compilation messages for invalid shader module) and can\u0027t be further used?\n\n\u003e Is the intent here to store the validation states and compilation messages in the cache?\n\nI would like to do that, but currently (even with this patchset) the cache missed createFn will return `ResultOrError` and in case of any validation error there will be no cache update. So we don\u0027t have error/invalid shader modules stored within cache now, they just get re-parsed everytime.\n\nI think with further investigation we can split the validation to shader-code related and non-code related validation, and cache the successed/falied result for parsing yes. In this case maybe we are not going to cache `ShaderModule` but something of \"parsing result\" like you suggested.",
+      "parentUuid": "13d6f8c4_d7b5bdcd",
+      "revId": "5e5adaa03a3a290cf3194922fe18705b397e1a5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2fc650a2_def975d9",
