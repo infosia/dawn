@@ -16,6 +16,57 @@
       "message": "I\u0027ve fixed Windows D3D12 backend. Please have another look.",
       "revId": "3cf1c465fc1b3b2c4cdb7bbff58bfad96669b01d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1426c396_4f9ce672",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T10:17:01Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "3cf1c465fc1b3b2c4cdb7bbff58bfad96669b01d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b6e429f_1482d676",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T10:17:01Z",
+      "side": 1,
+      "message": "nit: no need for a return after an UNREACHABLE",
+      "revId": "3cf1c465fc1b3b2c4cdb7bbff58bfad96669b01d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d84e05f7_3f0776cf",
+        "filename": "src/dawn/native/d3d12/BindGroupLayoutD3D12.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T10:17:01Z",
+      "side": 1,
+      "message": "... because we need to look at the contents of the bind group to deduplicate the sampler heap allocation.",
+      "revId": "3cf1c465fc1b3b2c4cdb7bbff58bfad96669b01d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
