@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "13d6f8c4_d7b5bdcd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-04T15:52:51Z",
+      "side": 1,
+      "message": "Is the intent here to store the validation states and compilation messages in the cache? Overall the approach seems too complicated, esp with WithMaybeError etc.\n\nWDYT of doing:\n\n - Change ValidateAndParse, to ValidateShaderModuleDescriptor (without parsing) just to check the members are correctly set etc.\n - Use that to call `ParseWGSL` that returns a `ShaderModuleParseResult` which contains the eventual tint::Program if not loaded from the cache, diagnostics and has a method that is \"HasErrors()\" or something.\n - Make `ParseWGSL` load from the cache if needed.\n - Use the result of `ParseWGSL` to generate an error or / and new ShaderModule in the device.",
+      "revId": "5e5adaa03a3a290cf3194922fe18705b397e1a5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2fc650a2_def975d9",
