@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fc650a2_def975d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-03-04T10:07:56Z",
+      "side": 1,
+      "message": "Hi, this is a PoC for making shader module creation 1) don\u0027t parse the WGSL until checking cache missed, and 2) return an error (invalid) shader module (with valid compilation message) **together** with Dawn error.\nPlease take a look, thanks!",
+      "revId": "5e5adaa03a3a290cf3194922fe18705b397e1a5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
