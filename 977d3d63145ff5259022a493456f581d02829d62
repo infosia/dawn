@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93b72eea_2f8f7cce",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-04T00:15:53Z",
+      "side": 1,
+      "message": "I should also include a readme. One of the specific things in the readme should be that the C++ bindings are NOT stable, but that it SHOULD (mostly) be possible to use older C++ bindings with newer C headers.",
+      "revId": "977d3d63145ff5259022a493456f581d02829d62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
