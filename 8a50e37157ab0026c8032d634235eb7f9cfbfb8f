@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "8a50e37157ab0026c8032d634235eb7f9cfbfb8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1eb84bdb_6521c085",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T10:14:05Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "8a50e37157ab0026c8032d634235eb7f9cfbfb8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c5af75b_fcf32147",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T10:14:05Z",
+      "side": 1,
+      "message": "Can we centralize all the logic wrt to memory properties in one place so `src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp`? Here is could be a helper function `bool SupportsBufferMapExtendedUsages(const VulkanDeviceInfo\u0026)`.",
+      "revId": "8a50e37157ab0026c8032d634235eb7f9cfbfb8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
