@@ -16,6 +16,23 @@
       "message": "lgtm. Leaving for James to approve.",
       "revId": "dd4a6f18725bf324a293f3dc3dbed3e97411a68d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1de7a9a_ada57f7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-05T16:03:36Z",
+      "side": 1,
+      "message": "LGTM, thanks for doing this!",
+      "revId": "dd4a6f18725bf324a293f3dc3dbed3e97411a68d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
