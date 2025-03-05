@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "438cc032_48fdd7e0",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T21:55:46Z",
+      "side": 1,
+      "message": "Just FYI I tried adding a static (non-thread-local) destructor to see what would catch it. It\u0027s caught by clang itself:\n`error: declaration requires a global destructor [-Werror,-Wglobal-constructors]`\nSo hopefully that means the roll won\u0027t hit errors that we don\u0027t hit.",
+      "parentUuid": "00cbb3ab_2a5e7a4e",
+      "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edce9675_c8a20b1f",
