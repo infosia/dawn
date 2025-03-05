@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f446b29_8faf5a3d",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-03-05T08:11:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0c3c1c8f_c369cb07",
+      "revId": "ef6e880686bde2a2cb937d7477b1db7f0fd66c8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eae419f1_c2eb206b",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-03-04T20:10:23Z",
       "side": 1,
       "message": "Drive by: I think we should use the virtual method `PreferNotUsingMappableOrUniformBufferAsStorage` for this purpose, instead of adding another condition check here.\nIf a backend doesn\u0027t support mappable storable buffers, its `PreferNotUsingMappableOrUniformBufferAsStorage` implementation should return true.\n\nThe virtual method was originally created for this, but it\u0027s only implemented in D3D11 backend atm.\n\nIMO it also doesn\u0027t make sense to check whether the `BufferMapExtendedUsages` feature is enabled here. A backend might support it natively but the user just doesn\u0027t enable it. In that case, it\u0027s still ok to create a mappable buffer with the internal storage usage.",
+      "range": {
+        "startLine": 140,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 71
+      },
+      "revId": "ef6e880686bde2a2cb937d7477b1db7f0fd66c8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8c8da0e_abaf791c",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-03-05T08:11:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae419f1_c2eb206b",
       "range": {
         "startLine": 140,
         "startChar": 17,
