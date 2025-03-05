@@ -67,6 +67,13 @@ static constexpr wgpu::BufferUsage kIndirectBufferForBackendResourceTracking =
 static constexpr wgpu::BufferUsage kIndirectBufferForFrontendValidation =
     wgpu::BufferUsage::Indirect;
 
+// Define `kDeviceLocalBufferUsages` that covers all the buffer usages that require the memory type
+// of the buffer must have `VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT`.
+static constexpr wgpu::BufferUsage kDeviceLocalBufferUsages =
+    wgpu::BufferUsage::Index | wgpu::BufferUsage::QueryResolve | wgpu::BufferUsage::Storage |
+    wgpu::BufferUsage::Uniform | wgpu::BufferUsage::Vertex | kInternalStorageBuffer |
+    kReadOnlyStorageBuffer | kIndirectBufferForBackendResourceTracking;
+
 // Extra texture usages
 // Usage to denote an extra tag value used in system specific ways.
 //  - Used to store that attachments are used more than once in PassResourceUsageTracker.
