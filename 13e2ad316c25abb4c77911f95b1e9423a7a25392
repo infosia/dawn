@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20644846_b21f8ae9",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T01:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea617cc3_17f123fd",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 61
+      },
+      "revId": "13e2ad316c25abb4c77911f95b1e9423a7a25392",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bb2d36ee_591dafe2",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-03-05T01:34:00Z",
       "side": 1,
       "message": "```suggestion\n    // This ThreadRef is initialized the first time GetThreadUniqueId is called for each thread (see\n    // https://stackoverflow.com/a/49821006), and destroyed when the thread terminates.\n```",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 86
+      },
+      "revId": "13e2ad316c25abb4c77911f95b1e9423a7a25392",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf7d289d_a9d9ebe1",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T01:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb2d36ee_591dafe2",
       "range": {
         "startLine": 64,
         "startChar": 0,
