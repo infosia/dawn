@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1dc89a7_2164cc38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T09:54:04Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "0caa31abb4c3de4096b4194e57a0fd004d6729ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "853d9f6c_d8cf6b78",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T09:54:04Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "0caa31abb4c3de4096b4194e57a0fd004d6729ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5169c942_14ce29c8",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T09:54:04Z",
+      "side": 1,
+      "message": "The doc doesn\u0027t say that this produces an error on the device or instance, so we could just do:\n```\nif (!GetCurrentDevice()-\u003eIsAlive()) {\n    TextureDescriptor textureDesc \u003d GetSwapChainBaseTextureDescriptor(mSwapChain.Get());\n    surfaceTexture-\u003estatus \u003d wgpu::SurfaceGetCurrentTextureStatus::SuccessOptimal;\n    surfaceTexture-\u003etexture \u003d ReturnToAPI(TextureBase::MakeError(GetCurrentDevice(), \u0026textureDesc));\n    return {};\n}\n```",
+      "revId": "0caa31abb4c3de4096b4194e57a0fd004d6729ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9503b17a_4842791e",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T09:54:04Z",
+      "side": 1,
+      "message": "This is now redundant with [1] so we could remove it and move the comment there.",
+      "revId": "0caa31abb4c3de4096b4194e57a0fd004d6729ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
