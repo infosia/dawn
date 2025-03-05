@@ -53,7 +53,7 @@ class Lexer {
 
     /// Advances past blankspace and comments, if present at the current position.
     /// @returns error token, EOF, or uninitialized
-    bool Lexer::check_bom();
+    bool check_bom();
     // skips if the first character is BOM
     std::optional<Token> skip_blankspace_and_comments();
     /// Advances past a comment at the current position, if one exists.
