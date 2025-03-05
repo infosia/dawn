@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2edd693_9bf2d236",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T22:05:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5169c942_14ce29c8",
+      "revId": "0caa31abb4c3de4096b4194e57a0fd004d6729ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9503b17a_4842791e",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-03-05T09:54:04Z",
       "side": 1,
       "message": "This is now redundant with [1] so we could remove it and move the comment there.",
+      "revId": "0caa31abb4c3de4096b4194e57a0fd004d6729ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9a6a763_2b634dae",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T22:05:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9503b17a_4842791e",
       "revId": "0caa31abb4c3de4096b4194e57a0fd004d6729ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
