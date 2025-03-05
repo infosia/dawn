@@ -42,6 +42,7 @@
 namespace dawn::native::vulkan {
 
 class Device;
+struct VulkanDeviceInfo;
 
 // Each bit of MemoryKind represents a kind of memory that influence the result of the allocation.
 // For example, to take into account mappability and Vulkan's bufferImageGranularity.
@@ -52,6 +53,8 @@ enum class MemoryKind : uint8_t {
     ReadMappable = 8,
     WriteMappable = 16,
 };
+
+bool SupportsBufferMapExtendedUsages(const VulkanDeviceInfo& deviceInfo);
 
 class ResourceMemoryAllocator {
   public:
