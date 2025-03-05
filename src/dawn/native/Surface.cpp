@@ -36,6 +36,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/SwapChain.h"
+#include "dawn/native/Texture.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 
@@ -516,14 +517,19 @@ void APISurfaceCapabilitiesFreeMembers(WGPUSurfaceCapabilities capabilities) {
 
 MaybeError Surface::GetCurrentTexture(SurfaceTexture* surfaceTexture) const {
     surfaceTexture->texture = nullptr;
-    surfaceTexture->suboptimal = false;
 
     surfaceTexture->status = wgpu::SurfaceGetCurrentTextureStatus::Error;
     DAWN_INVALID_IF(IsError(), "%s is invalid.", this);
     DAWN_INVALID_IF(!mSwapChain.Get(), "%s is not configured.", this);
 
-    surfaceTexture->status = wgpu::SurfaceGetCurrentTextureStatus::DeviceLost;
-    DAWN_TRY(GetCurrentDevice()->ValidateIsAlive());
+    MaybeError maybeError = GetCurrentDevice()->ValidateIsAlive();
+    if (maybeError.IsError()) {
+        TextureDescriptor textureDesc = GetSwapChainBaseTextureDescriptor(mSwapChain.Get());
+        surfaceTexture->status = wgpu::SurfaceGetCurrentTextureStatus::SuccessOptimal;
+        surfaceTexture->texture =
+            ReturnToAPI(TextureBase::MakeError(GetCurrentDevice(), &textureDesc));
+        DAWN_TRY(std::move(maybeError));
+    }
 
     // Set an error status that will be overwritten if there is a success or some other more
     // specific error.
