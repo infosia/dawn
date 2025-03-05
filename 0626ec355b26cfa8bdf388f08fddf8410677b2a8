@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4815f3d2_7b3501c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3664799
+      },
+      "writtenOn": "2025-03-05T02:44:11Z",
+      "side": 1,
+      "message": "thanks that makes sense now, I ran the tint_unittests and all passed.",
+      "parentUuid": "04349aec_5242ebc1",
+      "revId": "0626ec355b26cfa8bdf388f08fddf8410677b2a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "730b3676_7e081b23",
         "filename": "src/tint/lang/wgsl/resolver/function_validation_test.cc",
         "patchSetId": 1
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-03T20:02:57Z",
       "side": 1,
       "message": "Thanks for working on this! There\u0027s a lot of detail in this message, perhaps more than needed for most users. We try to keep messages relatively concise while still containing the important bits (which can be a challenge).\n\nI\u0027d suggest just `error: user-declared functions cannot be called at module-scope` in this case, which should be enough.",
+      "revId": "0626ec355b26cfa8bdf388f08fddf8410677b2a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67dc75cb_31fab8a0",
+        "filename": "src/tint/lang/wgsl/resolver/function_validation_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 3664799
+      },
+      "writtenOn": "2025-03-05T02:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "730b3676_7e081b23",
       "revId": "0626ec355b26cfa8bdf388f08fddf8410677b2a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
