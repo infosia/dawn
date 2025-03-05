@@ -92,6 +92,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76ae122d_acbe1557",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T01:07:52Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "457f92be_278a3d85",
@@ -123,6 +140,24 @@
       "side": 1,
       "message": "Yea, I considered making `DeviceBase::GetErrorScopeStack()` iterate the whole map and remove entries that are no longer backed by a thread, but felt that it was sort of hiding too much details in the call. Alternatively, could stick it in `Tick()` I guess?",
       "parentUuid": "457f92be_278a3d85",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "358bf2d2_ad28ab3d",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2420,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T01:07:52Z",
+      "side": 1,
+      "message": "Loko and I discussed further offline: Definitely feels too heavy to do _every_ time GetErrorScopeStack is called (though really this should only be when there\u0027s either an error or a PushErrorScope, so it would be fine). But there\u0027s also already a one-time allocation in GetErrorScopeStack() [1], so we can cleanup previous allocations there. That way we always keep the size of the list bounded (by ~the maximum number of threads that exist at any given time), even if it could have a few unused allocations in it temporarily.",
+      "parentUuid": "67ec0042_273fcbf6",
       "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
