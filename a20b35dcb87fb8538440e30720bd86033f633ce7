@@ -85,6 +85,24 @@
       "parentUuid": "da8c2d63_9b0b3f86",
       "revId": "a20b35dcb87fb8538440e30720bd86033f633ce7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ffef24b_b5a06f6a",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T19:22:44Z",
+      "side": 1,
+      "message": "We call `device_.Destroy()` here too though. Does that detach the ArrayBuffers? If so then seems like we don\u0027t need to UnmapAll here either.",
+      "parentUuid": "9f505ca9_f1d30689",
+      "revId": "a20b35dcb87fb8538440e30720bd86033f633ce7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
