@@ -219,7 +219,9 @@ Token Lexer::next() {
     }
 
     return {Token::Type::kError, begin_source(),
-            (is_null() ? "null character found" : "invalid character found")};
+            (is_null()     ? "null character found"
+             : check_bom() ? "invalid character (\\uFEFF) found"
+                           : "invalid character found haha")};
 }
 
 Source Lexer::begin_source() const {
@@ -258,7 +260,13 @@ bool Lexer::matches(uint32_t pos, char ch) {
     }
     return line()[pos] == ch;
 }
-
+bool Lexer::check_bom() {
+    if (pos() == 0 && (unsigned char)line()[pos()] == 0xEF &&
+        (unsigned char)line()[pos() + 1] == 0xBB && (unsigned char)line()[pos() + 2] == 0xBF) {
+        return true;
+    }
+    return false;
+}
 std::optional<Token> Lexer::skip_blankspace_and_comments() {
     for (;;) {
         auto loc = location_;
