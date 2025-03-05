@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1d8cae7_d9342b97",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-05T22:04:19Z",
+      "side": 0,
+      "message": "This is definitely better! I\u0027d suggest saying `user-declared functions` just to be super clear.",
+      "revId": "826c22e22a6c91c04f7728d5d5b57aed6475b3b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
