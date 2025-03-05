@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "823fc923_49d450c0",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T00:24:14Z",
+      "side": 1,
+      "message": "nit: not really a `k`onstant - perhaps `sThreadIds` for `s`tatic? I\u0027m not sure if we use that style of hungarian notation in Dawn normally but I think it\u0027s reasonably conventional.\n\nI was going to ask why make this a local variable instead of a global, but I guess it\u0027s so that it won\u0027t get initialized until the first time GetAliveThreads is called? If so, comment that.",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26a49247_05be5f63",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T00:24:14Z",
+      "side": 1,
+      "message": "nit: also `s`",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e472d3c_e788e4f9",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T00:24:14Z",
+      "side": 1,
+      "message": "nit: also `s`",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8a086ec_5f06bf4d",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T00:24:14Z",
+      "side": 1,
+      "message": "nit: Comment that this gets initialized the first time GetThreadId is called. (according to https://stackoverflow.com/a/49821006)",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89fb7acc_293e5506",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T00:24:14Z",
+      "side": 1,
+      "message": "nit: I think you can use `contains`",
+      "range": {
+        "startLine": 774,
+        "startChar": 27,
+        "endLine": 774,
+        "endChar": 32
+      },
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "457f92be_278a3d85",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2420,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T00:24:14Z",
+      "side": 1,
+      "message": "aside: This seems to only ever be called in Graphite. Technically orthogonal to this CL but if we never call this, and there\u0027s any dynamic thread creation (I\u0027m not sure if there is), we\u0027ll end up leaking.",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

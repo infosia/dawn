@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ae2e434c_6064119f",
+        "filename": "src/dawn/common/ThreadLocal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T00:24:14Z",
+      "side": 1,
+      "message": "I think we should make the naming clearer too. Maybe we can call it something like ThreadSerial or ThreadUniqueId",
+      "parentUuid": "ce3008c0_3380b5fe",
+      "revId": "5e4770821239c91a8c438118ce5608c79e0daf42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "48d39178_95687708",
         "filename": "src/dawn/common/ThreadLocal.h",
         "patchSetId": 1
