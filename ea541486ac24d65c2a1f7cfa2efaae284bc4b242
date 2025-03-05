@@ -16,6 +16,97 @@
       "message": "PTAL, thanks!",
       "revId": "ea541486ac24d65c2a1f7cfa2efaae284bc4b242",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21f996ea_d35202c6",
+        "filename": "src/dawn/native/dawn_platform.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T10:22:40Z",
+      "side": 1,
+      "message": "That seems very Vulkan specific to be defined in the frontend. We also define collection of usages in the frontend `Buffer.h`. Though then I\u0027d suggest not mentioning Vulkan and calling it something like `kGPUBufferUsages` (not 100% sure of the name).\n\nBut at least in this CL it can just be in BufferVk.cpp as it looks used nowhere else.",
+      "revId": "ea541486ac24d65c2a1f7cfa2efaae284bc4b242",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1414ef49_1b818977",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T10:22:40Z",
+      "side": 1,
+      "message": "```suggestion\nMemoryKind GetMemoryKindFor(wgpu::BufferUsage bufferUsage) {\n```",
+      "range": {
+        "startLine": 160,
+        "startChar": 11,
+        "endLine": 160,
+        "endChar": 34
+      },
+      "revId": "ea541486ac24d65c2a1f7cfa2efaae284bc4b242",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3014e24_0cb92d5d",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T10:22:40Z",
+      "side": 1,
+      "message": "Is it ever allowed to map without any map mode? It seems like we should have a validation error in that case.",
+      "revId": "ea541486ac24d65c2a1f7cfa2efaae284bc4b242",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23a3d593_089103f3",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T10:22:40Z",
+      "side": 1,
+      "message": "Have you checked in details that the barrier logic already supports map extended? The logic is very non-trivial so some corner case could break with this change.",
+      "revId": "ea541486ac24d65c2a1f7cfa2efaae284bc4b242",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fba7ceec_212aeba8",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T10:22:40Z",
+      "side": 1,
+      "message": "At this point we can compute the set of required flags once at the top and do a single comparison instead of 4.",
+      "revId": "ea541486ac24d65c2a1f7cfa2efaae284bc4b242",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
