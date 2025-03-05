@@ -16,6 +16,24 @@
       "message": "nit: Assert somehow that we actually found the extension, just in case",
       "revId": "473bdbaf2ebb16d32b0cbe361671416896361452",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70d7ee5d_686fad62",
+        "filename": "src/dawn/node/binding/GPUShaderModule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T00:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6b4907a_68beaa1f",
+      "revId": "473bdbaf2ebb16d32b0cbe361671416896361452",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
