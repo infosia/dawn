@@ -107,6 +107,24 @@
       "message": "aside: This seems to only ever be called in Graphite. Technically orthogonal to this CL but if we never call this, and there\u0027s any dynamic thread creation (I\u0027m not sure if there is), we\u0027ll end up leaking.",
       "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67ec0042_273fcbf6",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2420,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T00:30:00Z",
+      "side": 1,
+      "message": "Yea, I considered making `DeviceBase::GetErrorScopeStack()` iterate the whole map and remove entries that are no longer backed by a thread, but felt that it was sort of hiding too much details in the call. Alternatively, could stick it in `Tick()` I guess?",
+      "parentUuid": "457f92be_278a3d85",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
