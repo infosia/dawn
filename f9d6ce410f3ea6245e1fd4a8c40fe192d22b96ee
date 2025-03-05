@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fa2792a_6bbeb6fc",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T01:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "823fc923_49d450c0",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26a49247_05be5f63",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-05T00:24:14Z",
       "side": 1,
       "message": "nit: also `s`",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7afc6945_48afdbc1",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T01:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26a49247_05be5f63",
       "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1eb813d_fe4b7ab2",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T01:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8a086ec_5f06bf4d",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65902b8d_87aeec77",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T01:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e472d3c_e788e4f9",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "89fb7acc_293e5506",
@@ -82,6 +154,30 @@
       "writtenOn": "2025-03-05T00:24:14Z",
       "side": 1,
       "message": "nit: I think you can use `contains`",
+      "range": {
+        "startLine": 774,
+        "startChar": 27,
+        "endLine": 774,
+        "endChar": 32
+      },
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf8f3467_846b821c",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T01:20:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89fb7acc_293e5506",
       "range": {
         "startLine": 774,
         "startChar": 27,
@@ -157,6 +253,24 @@
       "writtenOn": "2025-03-05T01:07:52Z",
       "side": 1,
       "message": "Loko and I discussed further offline: Definitely feels too heavy to do _every_ time GetErrorScopeStack is called (though really this should only be when there\u0027s either an error or a PushErrorScope, so it would be fine). But there\u0027s also already a one-time allocation in GetErrorScopeStack() [1], so we can cleanup previous allocations there. That way we always keep the size of the list bounded (by ~the maximum number of threads that exist at any given time), even if it could have a few unused allocations in it temporarily.",
+      "parentUuid": "67ec0042_273fcbf6",
+      "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbcdba6a_d1766ca5",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2420,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T01:20:16Z",
+      "side": 1,
+      "message": "Added some cleanup in `GetErrorScopeStack` as we spoke about this offline.",
       "parentUuid": "67ec0042_273fcbf6",
       "revId": "f9d6ce410f3ea6245e1fd4a8c40fe192d22b96ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
