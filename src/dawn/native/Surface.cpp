@@ -516,14 +516,10 @@ void APISurfaceCapabilitiesFreeMembers(WGPUSurfaceCapabilities capabilities) {
 
 MaybeError Surface::GetCurrentTexture(SurfaceTexture* surfaceTexture) const {
     surfaceTexture->texture = nullptr;
-    surfaceTexture->suboptimal = false;
 
     surfaceTexture->status = wgpu::SurfaceGetCurrentTextureStatus::Error;
     DAWN_INVALID_IF(IsError(), "%s is invalid.", this);
     DAWN_INVALID_IF(!mSwapChain.Get(), "%s is not configured.", this);
-
-    surfaceTexture->status = wgpu::SurfaceGetCurrentTextureStatus::DeviceLost;
-    DAWN_TRY(GetCurrentDevice()->ValidateIsAlive());
 
     // Set an error status that will be overwritten if there is a success or some other more
     // specific error.
