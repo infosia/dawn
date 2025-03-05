@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65e46f39_676ba28a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-05T22:01:23Z",
+      "side": 1,
+      "message": "Whenever changes are made to code, we expect there to be test changes too. In this case, there should be a new unit test in `lexer_test.cc` to cover the new error condition.\n\nFYI, another student has already landed a patch for this starter bug, which you can see here for reference:\nhttps://dawn-review.googlesource.com/c/dawn/+/228794\n\nI\u0027m happy to continue review your patches anyway, if you are finding the feedback useful.",
+      "revId": "826c22e22a6c91c04f7728d5d5b57aed6475b3b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73eb6933_7dd68395",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-05T22:01:23Z",
+      "side": 1,
+      "message": "There\u0027s lots of unnecessary whitespace changes in this file. Please make sure you check for this sort of thing before uploading patches.",
+      "revId": "826c22e22a6c91c04f7728d5d5b57aed6475b3b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26212d5c_21804be6",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-05T22:01:23Z",
+      "side": 1,
+      "message": "Drop the `haha`, lets keep our error messages sensible please :-)",
+      "revId": "826c22e22a6c91c04f7728d5d5b57aed6475b3b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e0e2a20_55179c81",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-05T22:01:23Z",
+      "side": 1,
+      "message": "We should check if `pos() + 2 \u003e\u003d length()`, to avoid accessing invalid memory locations if there aren\u0027t enough characters in the stream.\n\nIn C++ we also use `static_cast\u003cunsigned_char\u003e()` instead of the C-style casts.",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 5
+      },
+      "revId": "826c22e22a6c91c04f7728d5d5b57aed6475b3b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8bdd832_fc5ecaf3",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-05T22:01:23Z",
+      "side": 1,
+      "message": "We add comments *before* the code that the comment applies to, not after.\n\nThe function does not skip if the character is a BOM, it just checks if it *is* a BOM, so your comment is not accurate.\n\nAlso, I\u0027d suggest putting this declaration next to the other `is_*` methods down below (e.g. `is_null`, `is_eol`, etc), and calling is `is_bom()`.",
+      "revId": "826c22e22a6c91c04f7728d5d5b57aed6475b3b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
