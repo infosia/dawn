@@ -217,9 +217,13 @@ Token Lexer::next() {
     if (auto t = try_punctuation(); t.has_value() && !t->IsUninitialized()) {
         return std::move(t.value());
     }
-
-    return {Token::Type::kError, begin_source(),
-            (is_null() ? "null character found" : "invalid character found")};
+    if(is_null()){
+        return {Token::Type::kError, begin_source(), "null character found"};
+    }
+    if(is_bom()){
+        return {Token::Type::kError, begin_source(), "invalid character (\\uFEFF) found"};
+    }
+    return {Token::Type::kError, begin_source(), "invalid character found"};
 }
 
 Source Lexer::begin_source() const {
@@ -232,6 +236,14 @@ Source Lexer::begin_source() const {
 
 void Lexer::end_source(Source& src) const {
     src.range.end = location_;
+}
+
+bool Lexer::is_bom() const {
+    if (pos()==0 && length() > 2 && (static_cast<unsigned char>(line()[pos()])) == 0xEF &&
+        (static_cast<unsigned char>(line()[pos() + 1])) == 0xBB && (static_cast<unsigned char>(line()[pos() + 2])) == 0xBF) {
+        return true;
+    }
+    return false;
 }
 
 bool Lexer::is_null() const {
