@@ -1,3 +1,4 @@
+
 // Copyright 2020 The Dawn & Tint Authors
 //
 // Redistribution and use in source and binary forms, with or without
@@ -24,9 +25,7 @@
 // CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 #include "src/tint/lang/wgsl/reader/parser/lexer.h"
-
 #include <cctype>
 #include <charconv>
 #include <cmath>
@@ -37,65 +36,51 @@
 #include <system_error>
 #include <tuple>
 #include <utility>
-
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/number.h"
 #include "src/tint/utils/ice/ice.h"
 #include "src/tint/utils/strconv/parse_num.h"
 #include "src/tint/utils/text/unicode.h"
-
 using namespace tint::core::fluent_types;  // NOLINT
-
 TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
-
 namespace tint::wgsl::reader {
 namespace {
-
 // Unicode parsing code assumes that the size of a single std::string element is
 // 1 byte.
 static_assert(sizeof(decltype(tint::Source::FileContent::data[0])) == sizeof(uint8_t),
               "tint::wgsl::reader requires the size of a std::string element "
               "to be a single byte");
-
 // A token is ~80bytes. The 4k here comes from looking at the number of tokens in the benchmark
 // programs and being a bit bigger then those need (atan2-const-eval is the outlier here).
 static constexpr size_t kDefaultListSize = 4092;
-
 bool read_blankspace(std::string_view str,
                      size_t i,
                      bool* is_blankspace,
                      uint32_t* blankspace_size) {
     // See https://www.w3.org/TR/WGSL/#blankspace
-
     auto* utf8 = reinterpret_cast<const uint8_t*>(&str[i]);
     auto [cp, n] = tint::utf8::Decode(utf8, str.size() - i);
-
     if (n == 0) {
         return false;
     }
-
     static const auto kSpace = tint::CodePoint(0x0020);  // space
     static const auto kHTab = tint::CodePoint(0x0009);   // horizontal tab
     static const auto kL2R = tint::CodePoint(0x200E);    // left-to-right mark
     static const auto kR2L = tint::CodePoint(0x200F);    // right-to-left mark
-
     if (cp == kSpace || cp == kHTab || cp == kL2R || cp == kR2L) {
         *is_blankspace = true;
         *blankspace_size = static_cast<uint32_t>(n);
         return true;
     }
-
     *is_blankspace = false;
     return true;
 }
-
 uint32_t dec_value(char c) {
     if (c >= '0' && c <= '9') {
         return static_cast<uint32_t>(c - '0');
     }
     return 0;
 }
-
 uint32_t hex_value(char c) {
     if (c >= '0' && c <= '9') {
         return static_cast<uint32_t>(c - '0');
@@ -108,23 +93,17 @@ uint32_t hex_value(char c) {
     }
     return 0;
 }
-
 }  // namespace
-
 Lexer::Lexer(const Source::File* file) : file_(file), location_{1, 1} {}
-
 Lexer::~Lexer() = default;
-
 std::vector<Token> Lexer::Lex() {
     std::vector<Token> tokens;
     tokens.reserve(kDefaultListSize);
-
     while (true) {
         tokens.emplace_back(next());
         if (tokens.back().IsEof() || tokens.back().IsError()) {
             break;
         }
-
         // If the token can be split, we insert a placeholder element(s) into the stream to hold the
         // split character.
         size_t num_placeholders = tokens.back().NumPlaceholders();
@@ -136,7 +115,6 @@ std::vector<Token> Lexer::Lex() {
     }
     return tokens;
 }
-
 std::string_view Lexer::line() const {
     if (file_->content.lines.size() == 0) {
         static const char* empty_string = "";
@@ -144,15 +122,12 @@ std::string_view Lexer::line() const {
     }
     return file_->content.lines[location_.line - 1];
 }
-
 uint32_t Lexer::pos() const {
     return location_.column - 1;
 }
-
 uint32_t Lexer::length() const {
     return static_cast<uint32_t>(line().size());
 }
-
 const char& Lexer::at(uint32_t pos) const {
     auto l = line();
     // Unlike for std::string, if pos == l.size(), indexing `l[pos]` is UB for
@@ -163,65 +138,52 @@ const char& Lexer::at(uint32_t pos) const {
     }
     return l[pos];
 }
-
 std::string_view Lexer::substr(uint32_t offset, uint32_t count) {
     return line().substr(offset, count);
 }
-
 void Lexer::advance(uint32_t offset) {
     location_.column += offset;
 }
-
 void Lexer::set_pos(uint32_t pos) {
     location_.column = pos + 1;
 }
-
 void Lexer::advance_line() {
     location_.line++;
     location_.column = 1;
 }
-
 bool Lexer::is_eof() const {
     return location_.line >= file_->content.lines.size() && pos() >= length();
 }
-
 bool Lexer::is_eol() const {
     return pos() >= length();
 }
-
 Token Lexer::next() {
     if (auto t = skip_blankspace_and_comments(); t.has_value() && !t->IsUninitialized()) {
         return std::move(t.value());
     }
-
     if (auto t = try_hex_float(); t.has_value() && !t->IsUninitialized()) {
         return std::move(t.value());
     }
-
     if (auto t = try_hex_integer(); t.has_value() && !t->IsUninitialized()) {
         return std::move(t.value());
     }
-
     if (auto t = try_float(); t.has_value() && !t->IsUninitialized()) {
         return std::move(t.value());
     }
-
     if (auto t = try_integer(); t.has_value() && !t->IsUninitialized()) {
         return std::move(t.value());
     }
-
     if (auto t = try_ident(); t.has_value() && !t->IsUninitialized()) {
         return std::move(t.value());
     }
-
     if (auto t = try_punctuation(); t.has_value() && !t->IsUninitialized()) {
         return std::move(t.value());
     }
-
     return {Token::Type::kError, begin_source(),
-            (is_null() ? "null character found" : "invalid character found")};
+            (is_null()     ? "null character found"
+             : check_bom() ? "invalid character (\\uFEFF) found"
+                           : "invalid character found haha")};
 }
-
 Source Lexer::begin_source() const {
     Source src{};
     src.file = file_;
@@ -229,36 +191,37 @@ Source Lexer::begin_source() const {
     src.range.end = location_;
     return src;
 }
-
 void Lexer::end_source(Source& src) const {
     src.range.end = location_;
 }
-
 bool Lexer::is_null() const {
     return (pos() < length()) && (at(pos()) == 0);
 }
-
 bool Lexer::is_digit(char ch) const {
     return std::isdigit(static_cast<unsigned char>(ch));
 }
 bool Lexer::is_hex(char ch) const {
     return std::isxdigit(static_cast<unsigned char>(ch));
 }
-
 bool Lexer::matches(uint32_t pos, std::string_view sub_string) {
     if (pos >= length()) {
         return false;
     }
     return substr(pos, static_cast<uint32_t>(sub_string.size())) == sub_string;
 }
-
 bool Lexer::matches(uint32_t pos, char ch) {
     if (pos >= length()) {
         return false;
     }
     return line()[pos] == ch;
 }
-
+bool Lexer::check_bom() {
+    if (pos() == 0 && (unsigned char)line()[pos()] == 0xEF &&
+        (unsigned char)line()[pos() + 1] == 0xBB && (unsigned char)line()[pos() + 2] == 0xBF) {
+        return true;
+    }
+    return false;
+}
 std::optional<Token> Lexer::skip_blankspace_and_comments() {
     for (;;) {
         auto loc = location_;
@@ -267,7 +230,6 @@ std::optional<Token> Lexer::skip_blankspace_and_comments() {
                 advance_line();
                 continue;
             }
-
             bool is_blankspace;
             uint32_t blankspace_size;
             if (!read_blankspace(line(), pos(), &is_blankspace, &blankspace_size)) {
@@ -276,15 +238,12 @@ std::optional<Token> Lexer::skip_blankspace_and_comments() {
             if (!is_blankspace) {
                 break;
             }
-
             advance(blankspace_size);
         }
-
         auto t = skip_comment();
         if (t.has_value() && !t->IsUninitialized()) {
             return t;
         }
-
         // If the cursor didn't advance we didn't remove any blankspace
         // so we're done.
         if (loc == location_) {
@@ -294,10 +253,8 @@ std::optional<Token> Lexer::skip_blankspace_and_comments() {
     if (is_eof()) {
         return Token{Token::Type::kEOF, begin_source()};
     }
-
     return {};
 }
-
 std::optional<Token> Lexer::skip_comment() {
     if (matches(pos(), "//")) {
         // Line comment: ignore everything until the end of line.
@@ -309,16 +266,12 @@ std::optional<Token> Lexer::skip_comment() {
         }
         return {};
     }
-
     if (matches(pos(), "/*")) {
         // Block comment: ignore everything until the closing '*/' token.
-
         // Record source location of the initial '/*'
         auto source = begin_source();
         source.range.end.column += 1;
-
         advance(2);
-
         int depth = 1;
         while (!is_eof() && depth > 0) {
             if (matches(pos(), "/*")) {
@@ -345,30 +298,24 @@ std::optional<Token> Lexer::skip_comment() {
     }
     return {};
 }
-
 std::optional<Token> Lexer::try_float() {
     auto start = pos();
     auto end = pos();
-
     auto source = begin_source();
     bool has_mantissa_digits = false;
-
     std::optional<size_t> first_significant_digit_position;
     while (end < length() && is_digit(at(end))) {
         if (!first_significant_digit_position.has_value() && (at(end) != '0')) {
             first_significant_digit_position = end;
         }
-
         has_mantissa_digits = true;
         end++;
     }
-
     std::optional<size_t> dot_position;
     if (end < length() && matches(end, '.')) {
         dot_position = end;
         end++;
     }
-
     size_t zeros_before_digit = 0;
     while (end < length() && is_digit(at(end))) {
         if (!first_significant_digit_position.has_value()) {
@@ -378,15 +325,12 @@ std::optional<Token> Lexer::try_float() {
                 first_significant_digit_position = end;
             }
         }
-
         has_mantissa_digits = true;
         end++;
     }
-
     if (!has_mantissa_digits) {
         return {};
     }
-
     // Parse the exponent if one exists
     std::optional<uint32_t> exponent_value_position;
     bool negative_exponent = false;
@@ -397,13 +341,11 @@ std::optional<Token> Lexer::try_float() {
             end++;
         }
         exponent_value_position = end;
-
         bool has_digits = false;
         while (end < length() && isdigit(at(end))) {
             has_digits = true;
             end++;
         }
-
         // If an 'e' or 'E' was present, then the number part must also be present.
         if (!has_digits) {
             const auto str = std::string{substr(start, end - start)};
@@ -411,7 +353,6 @@ std::optional<Token> Lexer::try_float() {
                          "incomplete exponent for floating point literal: " + str};
         }
     }
-
     bool has_f_suffix = false;
     bool has_h_suffix = false;
     if (end < length() && matches(end, 'f')) {
@@ -419,13 +360,11 @@ std::optional<Token> Lexer::try_float() {
     } else if (end < length() && matches(end, 'h')) {
         has_h_suffix = true;
     }
-
     if (!dot_position.has_value() && !exponent_value_position.has_value() && !has_f_suffix &&
         !has_h_suffix) {
         // If it only has digits then it's an integer.
         return {};
     }
-
     // Note, the `at` method will return a static `0` if the provided position is >= length. We
     // actually need the end pointer to point to the correct memory location to use `from_chars`.
     // So, handle the case where we point past the length specially.
@@ -433,12 +372,10 @@ std::optional<Token> Lexer::try_float() {
     if (end >= length()) {
         end_ptr = &at(length() - 1) + 1;
     }
-
     auto ret = tint::strconv::ParseDouble(std::string_view(&at(start), end - start));
     double value = ret == Success ? ret.Get() : 0.0;
     bool overflow =
         ret != Success && ret.Failure() == tint::strconv::ParseNumberError::kResultOutOfRange;
-
     // If the value didn't fit in a double, check for underflow as that is 0.0 in WGSL and not an
     // error.
     if (overflow) {
@@ -455,7 +392,6 @@ std::optional<Token> Lexer::try_float() {
                 auto exp_end_ptr = end_ptr - (has_f_suffix || has_h_suffix ? 1 : 0);
                 auto exp_ret = std::from_chars(&at(exponent_value_position.value()), exp_end_ptr,
                                                exp_value, 10);
-
                 if (exp_ret.ec != std::errc{}) {
                     exp_conversion_succeeded = false;
                 }
@@ -467,9 +403,7 @@ std::optional<Token> Lexer::try_float() {
             }
         }
     }
-
     advance(end - start);
-
     if (has_f_suffix) {
         auto f = core::CheckedConvert<f32>(AFloat(value));
         if (!overflow && f == Success) {
@@ -479,7 +413,6 @@ std::optional<Token> Lexer::try_float() {
         }
         return Token{Token::Type::kError, source, "value cannot be represented as 'f32'"};
     }
-
     if (has_h_suffix) {
         auto f = core::CheckedConvert<f16>(AFloat(value));
         if (!overflow && f == Success) {
@@ -489,9 +422,7 @@ std::optional<Token> Lexer::try_float() {
         }
         return Token{Token::Type::kError, source, "value cannot be represented as 'f16'"};
     }
-
     end_source(source);
-
     TINT_BEGIN_DISABLE_WARNING(FLOAT_EQUAL);
     if (overflow || value == HUGE_VAL || -value == HUGE_VAL) {
         return Token{Token::Type::kError, source,
@@ -501,7 +432,6 @@ std::optional<Token> Lexer::try_float() {
     }
     TINT_END_DISABLE_WARNING(FLOAT_EQUAL);
 }
-
 std::optional<Token> Lexer::try_hex_float() {
     constexpr uint64_t kExponentBits = 11;
     constexpr uint64_t kMantissaBits = 52;
@@ -514,24 +444,18 @@ std::optional<Token> Lexer::try_hex_float() {
     constexpr int64_t kExponentMax = kExponentMask;  // Including NaN / inf
     constexpr uint64_t kExponentLeftShift = kMantissaBits;
     constexpr uint64_t kOne = 1;
-
     auto start = pos();
     auto end = pos();
-
     auto source = begin_source();
-
     // 0[xX]([0-9a-fA-F]*.?[0-9a-fA-F]+ | [0-9a-fA-F]+.[0-9a-fA-F]*)(p|P)(+|-)?[0-9]+  // NOLINT
-
     // 0[xX]
     if (matches(end, '0') && (matches(end + 1, 'x') || matches(end + 1, 'X'))) {
         end += 2;
     } else {
         return {};
     }
-
     uint64_t mantissa = 0;
     uint64_t exponent = 0;
-
     // TODO(dneto): Values in the normal range for the format do not explicitly
     // store the most significant bit.  The algorithm here works hard to eliminate
     // that bit in the representation during parsing, and then it backtracks
@@ -539,7 +463,6 @@ std::optional<Token> Lexer::try_hex_float() {
     // when it sees the number is sub-normal (i.e. the exponent underflows).
     // I suspect the logic can be clarified by storing it during parsing, and
     // then removing it later only when needed.
-
     // `set_next_mantissa_bit_to` sets next `mantissa` bit starting from msb to
     // lsb to value 1 if `set` is true, 0 otherwise. Returns true on success, i.e.
     // when the bit can be accommodated in the available space.
@@ -560,32 +483,27 @@ std::optional<Token> Lexer::try_hex_float() {
         --mantissa_next_bit;
         return true;
     };
-
     // Collect integer range (if any)
     auto integer_range = std::make_pair(end, end);
     while (end < length() && is_hex(at(end))) {
         integer_range.second = ++end;
     }
-
     // .?
     bool hex_point = false;
     if (matches(end, '.')) {
         hex_point = true;
         end++;
     }
-
     // Collect fractional range (if any)
     auto fractional_range = std::make_pair(end, end);
     while (end < length() && is_hex(at(end))) {
         fractional_range.second = ++end;
     }
-
     // Must have at least an integer or fractional part
     if ((integer_range.first == integer_range.second) &&
         (fractional_range.first == fractional_range.second)) {
         return {};
     }
-
     // Is the binary exponent present?  It's optional.
     const bool has_exponent = (matches(end, 'p') || matches(end, 'P'));
     if (has_exponent) {
@@ -595,13 +513,10 @@ std::optional<Token> Lexer::try_hex_float() {
         // It's not a hex float. At best it's a hex integer.
         return {};
     }
-
     // At this point, we know for sure our token is a hex float value,
     // or an invalid token.
-
     // Parse integer part
     // [0-9a-fA-F]*
-
     bool has_zero_integer = true;
     // The magnitude is zero if and only if seen_prior_one_bits is false.
     bool seen_prior_one_bits = false;
@@ -610,10 +525,8 @@ std::optional<Token> Lexer::try_hex_float() {
         if (nibble != 0) {
             has_zero_integer = false;
         }
-
         for (int bit = 3; bit >= 0; --bit) {
             auto v = 1 & (nibble >> bit);
-
             // Skip leading 0s and the first 1
             if (seen_prior_one_bits) {
                 if (!set_next_mantissa_bit_to(v != 0, true)) {
@@ -628,18 +541,15 @@ std::optional<Token> Lexer::try_hex_float() {
             }
         }
     }
-
     // Parse fractional part
     // [0-9a-fA-F]*
     for (auto i = fractional_range.first; i < fractional_range.second; ++i) {
         auto nibble = hex_value(at(i));
         for (int bit = 3; bit >= 0; --bit) {
             auto v = 1 & (nibble >> bit);
-
             if (v == 1) {
                 seen_prior_one_bits = true;
             }
-
             // If integer part is 0, we only start writing bits to the
             // mantissa once we have a non-zero fractional bit. While the fractional
             // values are 0, we adjust the exponent to avoid overflowing `mantissa`.
@@ -653,13 +563,11 @@ std::optional<Token> Lexer::try_hex_float() {
             }
         }
     }
-
     // Determine if the value of the mantissa is zero.
     // Note: it's not enough to check mantissa == 0 as we drop the initial bit,
     // whether it's in the integer part or the fractional part.
     const bool is_zero = !seen_prior_one_bits;
     TINT_ASSERT(!is_zero || mantissa == 0);
-
     // Parse the optional exponent.
     // ((p|P)(\+|-)?[0-9]+)?
     uint64_t input_exponent = 0;  // Defaults to 0 if not present
@@ -676,7 +584,6 @@ std::optional<Token> Lexer::try_hex_float() {
             exponent_sign = -1;
             end++;
         }
-
         // Parse exponent from input
         // [0-9]+
         // Allow overflow (in uint64_t) when the floating point value magnitude is
@@ -693,7 +600,6 @@ std::optional<Token> Lexer::try_hex_float() {
             }
             end++;
         }
-
         // Parse optional 'f' or 'h' suffix.  For a hex float, it can only exist
         // when the exponent is present. Otherwise it will look like
         // one of the mantissa digits.
@@ -704,15 +610,12 @@ std::optional<Token> Lexer::try_hex_float() {
             has_h_suffix = true;
             end++;
         }
-
         if (!has_exponent_digits) {
             return Token{Token::Type::kError, source, "expected an exponent value for hex float"};
         }
     }
-
     advance(end - start);
     end_source(source);
-
     if (is_zero) {
         // If value is zero, then ignore the exponent and produce a zero
         exponent = 0;
@@ -724,14 +627,11 @@ std::optional<Token> Lexer::try_hex_float() {
         if (input_exponent > kMaxInputExponent) {
             return Token{Token::Type::kError, source, "exponent is too large for hex float"};
         }
-
         // Compute exponent so far
         exponent += static_cast<uint64_t>(static_cast<int64_t>(input_exponent) * exponent_sign);
-
         // Bias exponent if non-zero
         // After this, if exponent is <= 0, our value is a denormal
         exponent += kExponentBias;
-
         // We know the number is not zero.  The MSB is 1 (by construction), and
         // should be eliminated because it becomes the implicit 1 that isn't
         // explicitly represented in the binary32 format.  We'll bring it back
@@ -742,14 +642,11 @@ std::optional<Token> Lexer::try_hex_float() {
             --exponent;
         }
     }
-
     // We can now safely work with exponent as a signed quantity, as there's no
     // chance to overflow
     int64_t signed_exponent = static_cast<int64_t>(exponent);
-
     // Shift mantissa to occupy the low 23 bits
     mantissa >>= kMantissaShiftRight;
-
     // If denormal, shift mantissa until our exponent is zero
     if (!is_zero) {
         // Denorm has exponent 0 and non-zero mantissa. We set the top bit here,
@@ -758,32 +655,26 @@ std::optional<Token> Lexer::try_hex_float() {
             mantissa >>= 1;
             mantissa |= (kOne << kMantissaMsb);
         }
-
         while (signed_exponent < 0) {
             mantissa >>= 1;
             ++signed_exponent;
-
             // If underflow, clamp to zero
             if (mantissa == 0) {
                 signed_exponent = 0;
             }
         }
     }
-
     if (signed_exponent >= kExponentMax || (signed_exponent == kExponentMax && mantissa != 0)) {
         std::string type = has_f_suffix ? "f32" : (has_h_suffix ? "f16" : "abstract-float");
         return Token{Token::Type::kError, source, "value cannot be represented as '" + type + "'"};
     }
-
     // Combine sign, mantissa, and exponent
     uint64_t result_u64 = 0;
     result_u64 |= mantissa;
     result_u64 |= (static_cast<uint64_t>(signed_exponent) & kExponentMask) << kExponentLeftShift;
-
     // Reinterpret as f16 and return
     double result_f64;
     std::memcpy(&result_f64, &result_u64, 8);
-
     if (has_f_suffix) {
         // Check value fits in f32
         if (result_f64 < static_cast<double>(f32::kLowestValue) ||
@@ -819,7 +710,6 @@ std::optional<Token> Lexer::try_hex_float() {
             // ...
             // 2^-147 > v >= 2^-148, binary32 s_00000000_0000000000000000000001x, 1 arbitrary bit.
             // 2^-148 > v >= 2^-149, binary32 s_00000000_00000000000000000000001, 0 arbitrary bit.
-
             // signed_exponent must be in range -149 + 1023 = 874 to -127 + 1023 = 896, inclusive
             TINT_ASSERT((874 <= signed_exponent) && (signed_exponent <= 896));
             int unbiased_exponent =
@@ -872,7 +762,6 @@ std::optional<Token> Lexer::try_hex_float() {
             // ...
             // 2^-22 > v >= 2^-23, binary16 s_00000_000000001x, 1 arbitrary bits.
             // 2^-23 > v >= 2^-24, binary16 s_00000_0000000001, 0 arbitrary bits.
-
             // signed_exponent must be in range -24 + 1023 = 999 to -15 + 1023 = 1008, inclusive
             TINT_ASSERT((999 <= signed_exponent) && (signed_exponent <= 1008));
             int unbiased_exponent =
@@ -893,10 +782,8 @@ std::optional<Token> Lexer::try_hex_float() {
         }
         return Token{Token::Type::kFloatLiteral_H, source, result_f64};
     }
-
     return Token{Token::Type::kFloatLiteral, source, result_f64};
 }
-
 Token Lexer::build_token_from_int_if_possible(Source source,
                                               uint32_t start,
                                               uint32_t prefix_count,
@@ -908,12 +795,10 @@ Token Lexer::build_token_from_int_if_possible(Source source,
     // We then calculate the count based off the provided end pointer and the start pointer. The
     // extra `prefix_count` is to handle a `0x` which is not included in the `start` value.
     const char* end_ptr = &at(length() - 1) + 1;
-
     int64_t value = 0;
     auto res = std::from_chars(start_ptr, end_ptr, value, base);
     const bool overflow = res.ec != std::errc();
     advance(static_cast<uint32_t>(res.ptr - start_ptr) + prefix_count);
-
     if (matches(pos(), 'u')) {
         if (!overflow && core::CheckedConvert<u32>(AInt(value)) == Success) {
             advance(1);
@@ -922,7 +807,6 @@ Token Lexer::build_token_from_int_if_possible(Source source,
         }
         return {Token::Type::kError, source, "value cannot be represented as 'u32'"};
     }
-
     if (matches(pos(), 'i')) {
         if (!overflow && core::CheckedConvert<i32>(AInt(value)) == Success) {
             advance(1);
@@ -931,46 +815,35 @@ Token Lexer::build_token_from_int_if_possible(Source source,
         }
         return {Token::Type::kError, source, "value cannot be represented as 'i32'"};
     }
-
     // Check this last in order to get the more specific sized error messages
     if (overflow) {
         return {Token::Type::kError, source, "value cannot be represented as 'abstract-int'"};
     }
-
     end_source(source);
     return {Token::Type::kIntLiteral, source, value};
 }
-
 std::optional<Token> Lexer::try_hex_integer() {
     auto start = pos();
     auto curr = start;
-
     auto source = begin_source();
-
     if (matches(curr, '0') && (matches(curr + 1, 'x') || matches(curr + 1, 'X'))) {
         curr += 2;
     } else {
         return {};
     }
-
     if (!is_hex(at(curr))) {
         return Token{Token::Type::kError, source,
                      "integer or float hex literal has no significant digits"};
     }
-
     return build_token_from_int_if_possible(source, curr, curr - start, 16);
 }
-
 std::optional<Token> Lexer::try_integer() {
     auto start = pos();
     auto curr = start;
-
     auto source = begin_source();
-
     if (curr >= length() || !is_digit(at(curr))) {
         return {};
     }
-
     // If the first digit is a zero this must only be zero as leading zeros
     // are not allowed.
     if (auto next = curr + 1; next < length()) {
@@ -978,14 +851,11 @@ std::optional<Token> Lexer::try_integer() {
             return Token{Token::Type::kError, source, "integer literal cannot have leading 0s"};
         }
     }
-
     return build_token_from_int_if_possible(source, start, 0, 10);
 }
-
 std::optional<Token> Lexer::try_ident() {
     auto source = begin_source();
     auto start = pos();
-
     // Must begin with an XID_Source unicode character, or underscore
     {
         auto* utf8 = reinterpret_cast<const uint8_t*>(&at(pos()));
@@ -1000,7 +870,6 @@ std::optional<Token> Lexer::try_ident() {
         // Consume start codepoint
         advance(static_cast<uint32_t>(n));
     }
-
     while (!is_eol()) {
         // Must continue with an XID_Continue unicode character
         auto* utf8 = reinterpret_cast<const uint8_t*>(&at(pos()));
@@ -1012,31 +881,24 @@ std::optional<Token> Lexer::try_ident() {
         if (!code_point.IsXIDContinue()) {
             break;
         }
-
         // Consume continuing codepoint
         advance(static_cast<uint32_t>(n));
     }
-
     auto str = substr(start, pos() - start);
     end_source(source);
-
     if (str.length() > 1 && substr(start, 2) == "__") {
         // Identifiers prefixed with two or more underscores are not allowed.
         return Token{Token::Type::kError, source,
                      "identifiers must not start with two or more underscores"};
     }
-
     if (auto t = parse_keyword(str); t.has_value()) {
         return Token{t.value(), source, str};
     }
-
     return Token{Token::Type::kIdentifier, source, str};
 }
-
 std::optional<Token> Lexer::try_punctuation() {
     auto source = begin_source();
     auto type = Token::Type::kUninitialized;
-
     if (matches(pos(), '@')) {
         type = Token::Type::kAttr;
         advance(1);
@@ -1206,12 +1068,9 @@ std::optional<Token> Lexer::try_punctuation() {
     } else {
         return {};
     }
-
     end_source(source);
-
     return Token{type, source};
 }
-
 std::optional<Token::Type> Lexer::parse_keyword(std::string_view str) {
     if (str == "alias") {
         return Token::Type::kAlias;
@@ -1299,7 +1158,5 @@ std::optional<Token::Type> Lexer::parse_keyword(std::string_view str) {
     }
     return std::nullopt;
 }
-
 }  // namespace tint::wgsl::reader
-
 TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
