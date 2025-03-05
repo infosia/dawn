@@ -32,6 +32,7 @@
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/referenced_module_vars.h"
 #include "src/tint/lang/core/ir/validator.h"
+#include "src/tint/lang/core/type/binding_array.h"
 
 namespace tint::msl::writer::raise {
 namespace {
@@ -88,7 +89,7 @@ struct State {
             ProcessFunction(*func);
         }
 
-        // Replace uses of each module-scope variable with values extracted from the structure.
+        // Replace uses of each module-scope variable.
         uint32_t index = 0;
         for (auto& var : module_vars) {
             Vector<core::ir::Instruction*, 16> to_destroy;
@@ -96,16 +97,37 @@ struct State {
             var->Result(0)->ForEachUseUnsorted([&](core::ir::Usage use) {  //
                 auto* extracted_variable = GetVariableFromStruct(var, use.instruction, index);
 
-                // We drop the pointer from handle variables and store them in the struct by value
-                // instead, so remove any load instructions for the handle address space.
-                if (use.instruction->Is<core::ir::Load>() &&
-                    ptr->AddressSpace() == core::AddressSpace::kHandle) {
-                    use.instruction->Result(0)->ReplaceAllUsesWith(extracted_variable);
-                    to_destroy.Push(use.instruction);
+                // Everything but handles are just replaced with values from the structure.
+                if (ptr->AddressSpace() != core::AddressSpace::kHandle) {
+                    use.instruction->SetOperand(use.operand_index, extracted_variable);
                     return;
                 }
 
-                use.instruction->SetOperand(use.operand_index, extracted_variable);
+                Switch(
+                    use.instruction,
+                    // Loads are replaced with a direct access to the variable.
+                    [&](core::ir::Load* load) {
+                        load->Result(0)->ReplaceAllUsesWith(extracted_variable);
+                        to_destroy.Push(load);
+                    },
+                    // Accesses are replaced with accesses of the extracted variable but the loads
+                    // of the result of the access also need to be replaced to use the access
+                    // directly.
+                    [&](core::ir::Access* access) {
+                        auto* elem_type =
+                            ptr->StoreType()->As<core::type::BindingArray>()->ElemType();
+                        auto new_indices = Vector<core::ir::Value*, 1>(access->Indices());
+                        auto* new_access = b.Access(elem_type, extracted_variable, new_indices);
+                        new_access->InsertAfter(access);
+                        to_destroy.Push(access);
+
+                        access->Result(0)->ForEachUseUnsorted([&](core::ir::Usage access_use) {
+                            access_use.instruction->Result(0)->ReplaceAllUsesWith(
+                                new_access->Result(0));
+                            to_destroy.Push(access_use.instruction);
+                        });
+                    },
+                    TINT_ICE_ON_NO_MATCH);
             });
             var->Destroy();
             index++;
