@@ -16,6 +16,23 @@
       "message": "Please take a look.",
       "revId": "c1516edd973d4c343dc9646d6a3634113f972acf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "394b2e71_a1a04674",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-05T19:44:47Z",
+      "side": 1,
+      "message": "Could we have a minimal test in src/dawn/tests/unittests/native/StreamTests.cpp for this?",
+      "revId": "c1516edd973d4c343dc9646d6a3634113f972acf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
