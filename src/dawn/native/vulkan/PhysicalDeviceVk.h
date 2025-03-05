@@ -73,6 +73,8 @@ class PhysicalDevice : public PhysicalDeviceBase {
         const Surface* surface) const override;
     const AHBFunctions* GetOrLoadAHBFunctions();
 
+    bool CheckBufferMapExtendedUsagesSupport() const;
+
   private:
     MaybeError InitializeImpl() override;
     void InitializeSupportedFeaturesImpl() override;
