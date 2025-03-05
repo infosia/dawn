@@ -2429,6 +2429,10 @@ void DeviceBase::ReduceMemoryUsage() {
     GetDynamicUploader()->Deallocate(GetQueue()->GetCompletedCommandSerial(), /*freeAll=*/true);
     mInternalPipelineStore->ResetScratchBuffers();
     mTemporaryUniformBuffer = nullptr;
+
+    GetObjectTrackingList(ObjectType::BindGroupLayoutInternal)->ForEach([](ApiObjectBase* object) {
+        static_cast<BindGroupLayoutInternalBase*>(object)->ReduceMemoryUsage();
+    });
 }
 
 void DeviceBase::PerformIdleTasks() {
