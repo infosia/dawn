@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56a5b806_f97d809d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T01:34:00Z",
+      "side": 1,
+      "message": "Nice find with NoDestructor!\n\nLGTM, Corentin should probably rereview though.",
+      "revId": "13e2ad316c25abb4c77911f95b1e9423a7a25392",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea617cc3_17f123fd",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T01:34:00Z",
+      "side": 1,
+      "message": "nit: Don\u0027t refer to internal docs. You could refer to the documentation for NoDestructor if you want, as it also explains the problem: https://github.com/abseil/abseil-cpp/blob/35211d98d684e01ea21956a5ee1ea20f1e4dc1e1/absl/base/no_destructor.h#L24-L30",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 61
+      },
+      "revId": "13e2ad316c25abb4c77911f95b1e9423a7a25392",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb2d36ee_591dafe2",
+        "filename": "src/dawn/common/ThreadLocal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-05T01:34:00Z",
+      "side": 1,
+      "message": "```suggestion\n    // This ThreadRef is initialized the first time GetThreadUniqueId is called for each thread (see\n    // https://stackoverflow.com/a/49821006), and destroyed when the thread terminates.\n```",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 86
+      },
+      "revId": "13e2ad316c25abb4c77911f95b1e9423a7a25392",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
