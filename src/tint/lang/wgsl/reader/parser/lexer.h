@@ -108,6 +108,8 @@ class Lexer {
     /// @returns true if there is another character on the input and
     /// it is not null.
     bool is_null() const;
+    // true if the first character is BOM
+    bool is_bom() const;
     /// @param ch a character
     /// @returns true if 'ch' is a decimal digit
     bool is_digit(char ch) const;
