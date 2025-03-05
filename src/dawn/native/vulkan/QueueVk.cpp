@@ -119,6 +119,12 @@ bool Queue::HasPendingCommands() const {
     return mRecordingContext.needsSubmit;
 }
 
+ExecutionSerial Queue::GetPendingOrUnsubmittedCommandSerial() const {
+    return mRecordingContext.needsSubmit || mRecordingContext.used
+               ? GetPendingCommandSerial()
+               : GetLastSubmittedCommandSerial();
+}
+
 VkQueue Queue::GetVkQueue() const {
     return mQueue;
 }

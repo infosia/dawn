@@ -63,6 +63,8 @@ class FencedDeleter {
     void Tick(ExecutionSerial completedSerial);
 
   private:
+    ExecutionSerial GetDeletionSerial(const char* function) const;
+
     raw_ptr<Device> mDevice = nullptr;
     SerialQueue<ExecutionSerial, VkBuffer> mBuffersToDelete;
     SerialQueue<ExecutionSerial, VkDescriptorPool> mDescriptorPoolsToDelete;
