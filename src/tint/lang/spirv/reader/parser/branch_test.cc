@@ -132,12 +132,14 @@ TEST_F(SpirvParserTest, DISABLED_BranchConditional_Empty) {
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpSelectionMerge %99 None
-               OpBranchConditional %cond %99 %99
+               OpBranchConditional %true %99 %99
          %99 = OpLabel
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, BranchConditional_TrueToMerge) {
@@ -402,7 +404,7 @@ TEST_F(SpirvParserTest, DISABLED_BranchConditional_TrueBranchesToFalse) {
        %main = OpFunction %void None %ep_type
          %20 = OpLabel
                OpSelectionMerge %99 None
-               OpBranchConditional %cond %20 %30
+               OpBranchConditional %true %20 %30
          %30 = OpLabel
                OpReturn
          %20 = OpLabel
@@ -411,7 +413,9 @@ TEST_F(SpirvParserTest, DISABLED_BranchConditional_TrueBranchesToFalse) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, BranchConditional_Hoisting) {
@@ -1189,7 +1193,9 @@ TEST_F(SpirvParserTest, DISABLED_Switch_Fallthrough) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Switch_IfBreakInCase) {
@@ -1214,21 +1220,23 @@ TEST_F(SpirvParserTest, DISABLED_Switch_IfBreakInCase) {
                OpReturn
          %20 = OpLabel
                OpSelectionMerge %49 None
-               OpBranchConditional %cond %99 %40 ; break-if
+               OpBranchConditional %true %99 %40 ; break-if
          %40 = OpLabel
                OpBranch %49
          %49 = OpLabel
                OpBranch %99
          %50 = OpLabel
                OpSelectionMerge %79 None
-               OpBranchConditional %cond %60 %99 ; break-unless
+               OpBranchConditional %true %60 %99 ; break-unless
          %60 = OpLabel
                OpBranch %79
          %79 = OpLabel ; dominated by 60, so must follow 60
                OpBranch %99
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Switch_CaseCanBeMerge) {
@@ -1255,10 +1263,12 @@ TEST_F(SpirvParserTest, DISABLED_Switch_CaseCanBeMerge) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Loop) {
+TEST_F(SpirvParserTest, Loop) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -1276,16 +1286,40 @@ TEST_F(SpirvParserTest, DISABLED_Loop) {
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
+          %1 = OpIAdd %i32 %one %two
                OpLoopMerge %99 %20 None
                OpBranchConditional %true %20 %99
          %99 = OpLabel
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    loop [b: $B2, c: $B3] {  # loop_1
+      $B2: {  # body
+        %2:i32 = spirv.add<i32> 1i, 2i
+        if true [t: $B4, f: $B5] {  # if_1
+          $B4: {  # true
+            continue  # -> $B3
+          }
+          $B5: {  # false
+            exit_loop  # loop_1
+          }
+        }
+        continue  # -> $B3
+      }
+      $B3: {  # continuing
+        next_iteration  # -> $B2
+      }
+    }
+    ret
+  }
+}
+)");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Loop_Infinite_Branch) {
+TEST_F(SpirvParserTest, Loop_Infinite_Branch) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -1309,10 +1343,24 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Infinite_Branch) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    loop [b: $B2, c: $B3] {  # loop_1
+      $B2: {  # body
+        continue  # -> $B3
+      }
+      $B3: {  # continuing
+        next_iteration  # -> $B2
+      }
+    }
+    ret
+  }
+}
+)");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Loop_Infinite_BranchConditional) {
+TEST_F(SpirvParserTest, Loop_Infinite_BranchConditional) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -1331,15 +1379,38 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Infinite_BranchConditional) {
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %20 None
-               OpBranchConditional %cond %20 %20
+               OpBranchConditional %true %20 %20
          %99 = OpLabel
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    loop [b: $B2, c: $B3] {  # loop_1
+      $B2: {  # body
+        %2:bool = or true, true
+        if %2 [t: $B4, f: $B5] {  # if_1
+          $B4: {  # true
+            continue  # -> $B3
+          }
+          $B5: {  # false
+            unreachable
+          }
+        }
+        continue  # -> $B3
+      }
+      $B3: {  # continuing
+        next_iteration  # -> $B2
+      }
+    }
+    ret
+  }
+}
+)");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Loop_BranchConditional) {
+TEST_F(SpirvParserTest, Loop_BranchConditional) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -1367,10 +1438,32 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BranchConditional) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    loop [b: $B2, c: $B3] {  # loop_1
+      $B2: {  # body
+        if true [t: $B4, f: $B5] {  # if_1
+          $B4: {  # true
+            continue  # -> $B3
+          }
+          $B5: {  # false
+            exit_loop  # loop_1
+          }
+        }
+        continue  # -> $B3
+      }
+      $B3: {  # continuing
+        next_iteration  # -> $B2
+      }
+    }
+    ret
+  }
+}
+)");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Loop_Branch) {
+TEST_F(SpirvParserTest, Loop_Branch) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -1391,17 +1484,39 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Branch) {
                OpLoopMerge %99 %40 None
                OpBranch %30
          %30 = OpLabel
-               OpBranchConditional %cond %40 %99
+               OpBranchConditional %true %40 %99
          %40 = OpLabel
                OpBranch %20
          %99 = OpLabel
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    loop [b: $B2, c: $B3] {  # loop_1
+      $B2: {  # body
+        if true [t: $B4, f: $B5] {  # if_1
+          $B4: {  # true
+            continue  # -> $B3
+          }
+          $B5: {  # false
+            exit_loop  # loop_1
+          }
+        }
+        continue  # -> $B3
+      }
+      $B3: {  # continuing
+        next_iteration  # -> $B2
+      }
+    }
+    ret
+  }
+}
+)");
 }
 
-TEST_F(SpirvParserTest, DISABLED_Loop_ContinueIsHeader) {
+TEST_F(SpirvParserTest, Loop_BranchMergeOrContinue) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -1417,47 +1532,43 @@ TEST_F(SpirvParserTest, DISABLED_Loop_ContinueIsHeader) {
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
+         %30 = OpIAdd %i32 %one %two
                OpBranch %20
          %20 = OpLabel
+         %31 = OpIAdd %i32 %two %three
                OpLoopMerge %99 %20 None
-               OpBranch %40
-         %40 = OpLabel
-               OpBranch %20
+               OpBranchConditional %true %99 %20
          %99 = OpLabel
+         %32 = OpIAdd %i32 %two %three
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:i32 = spirv.add<i32> 1i, 2i
+    loop [b: $B2, c: $B3] {  # loop_1
+      $B2: {  # body
+        %3:i32 = spirv.add<i32> 2i, 3i
+        if true [t: $B4, f: $B5] {  # if_1
+          $B4: {  # true
+            exit_loop  # loop_1
+          }
+          $B5: {  # false
+            continue  # -> $B3
+          }
+        }
+        continue  # -> $B3
+      }
+      $B3: {  # continuing
+        next_iteration  # -> $B2
+      }
+    }
+    %4:i32 = spirv.add<i32> 2i, 3i
+    ret
+  }
 }
-
-TEST_F(SpirvParserTest, DISABLED_Loop_BranchMergeOrContinue) {
-    EXPECT_IR(R"(
-               OpCapability Shader
-               OpMemoryModel Logical GLSL450
-               OpEntryPoint GLCompute %main "main"
-               OpExecutionMode %main LocalSize 1 1 1
-       %void = OpTypeVoid
-        %i32 = OpTypeInt 32 1
-       %bool = OpTypeBool
-        %one = OpConstant %i32 1
-        %two = OpConstant %i32 2
-      %three = OpConstant %i32 3
-       %true = OpConstantTrue %bool
-    %ep_type = OpTypeFunction %void
-       %main = OpFunction %void None %ep_type
-         %10 = OpLabel
-               OpStore %var %uint_0
-               OpBranch %20
-         %20 = OpLabel
-               OpStore %var %uint_1
-               OpLoopMerge %99 %20 None
-               OpBranchConditional %cond %99 %20
-         %99 = OpLabel
-               OpStore %var %999
-               OpReturn
-               OpFunctionEnd
-)",
-              R"(UNIMPLEMENTED)");
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_HeaderHasBreakIf) {
@@ -1479,7 +1590,7 @@ TEST_F(SpirvParserTest, DISABLED_Loop_HeaderHasBreakIf) {
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99 ; like While
+               OpBranchConditional %true %30 %99 ; like While
          %30 = OpLabel ; trivial body
                OpBranch %50
          %50 = OpLabel
@@ -1488,7 +1599,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_HeaderHasBreakIf) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_HeaderHasBreakUnless) {
@@ -1510,7 +1623,7 @@ TEST_F(SpirvParserTest, DISABLED_Loop_HeaderHasBreakUnless) {
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %99 %30 ; has break-unless
+               OpBranchConditional %true %99 %30 ; has break-unless
          %30 = OpLabel ; trivial body
                OpBranch %50
          %50 = OpLabel
@@ -1519,7 +1632,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_HeaderHasBreakUnless) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasBreak) {
@@ -1541,7 +1656,7 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasBreak) {
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpBranch %99 ; break
          %50 = OpLabel
@@ -1550,7 +1665,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasBreak) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasBreakIf) {
@@ -1566,15 +1683,16 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasBreakIf) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
-               OpBranchConditional %cond2 %99 %40 ; break-if
+               OpBranchConditional %false %99 %40 ; break-if
          %40 = OpLabel
                OpBranch %50
          %50 = OpLabel
@@ -1583,7 +1701,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasBreakIf) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasBreakUnless) {
@@ -1599,15 +1719,16 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasBreakUnless) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
-               OpBranchConditional %cond2 %40 %99 ; break-unless
+               OpBranchConditional %false %40 %99 ; break-unless
          %40 = OpLabel
                OpBranch %50
          %50 = OpLabel
@@ -1616,7 +1737,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasBreakUnless) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_BodyIf) {
@@ -1632,16 +1755,17 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyIf) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpSelectionMerge %49 None
-               OpBranchConditional %cond2 %40 %45 ; nested if
+               OpBranchConditional %false %40 %45 ; nested if
          %40 = OpLabel
                OpBranch %49
          %45 = OpLabel
@@ -1654,7 +1778,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyIf) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_BodyIfBreak) {
@@ -1670,16 +1796,17 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyIfBreak) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpSelectionMerge %49 None
-               OpBranchConditional %cond2 %40 %49 ; nested if
+               OpBranchConditional %false %40 %49 ; nested if
          %40 = OpLabel
                OpBranch %99   ; break from nested if
          %49 = OpLabel
@@ -1690,7 +1817,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyIfBreak) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasContinueIf) {
@@ -1706,15 +1835,16 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasContinueIf) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
-               OpBranchConditional %cond2 %50 %40 ; continue-if
+               OpBranchConditional %false %50 %40 ; continue-if
          %40 = OpLabel
                OpBranch %50
          %50 = OpLabel
@@ -1723,7 +1853,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasContinueIf) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasContinueUnless) {
@@ -1739,15 +1871,16 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasContinueUnless) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
-               OpBranchConditional %cond2 %40 %50 ; continue-unless
+               OpBranchConditional %false %40 %50 ; continue-unless
          %40 = OpLabel
                OpBranch %50
          %50 = OpLabel
@@ -1756,7 +1889,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_BodyHasContinueUnless) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_Body_If_Continue) {
@@ -1772,16 +1907,17 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Body_If_Continue) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpSelectionMerge %49 None
-               OpBranchConditional %cond2 %40 %49 ; nested if
+               OpBranchConditional %false %40 %49 ; nested if
          %40 = OpLabel
                OpBranch %50   ; continue from nested if
          %49 = OpLabel
@@ -1792,7 +1928,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Body_If_Continue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_Body_Switch) {
@@ -1808,13 +1946,14 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Body_Switch) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpSelectionMerge %49 None
                OpSwitch %selector %49 40 %40 45 %45 ; fully nested switch
@@ -1830,7 +1969,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Body_Switch) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_Body_Switch_CaseContinues) {
@@ -1852,7 +1993,7 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Body_Switch_CaseContinues) {
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpSelectionMerge %49 None
                OpSwitch %selector %49 40 %40 45 %45
@@ -1868,7 +2009,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Body_Switch_CaseContinues) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_Continue_Sequence) {
@@ -1890,7 +2033,7 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Continue_Sequence) {
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpBranch %50
          %50 = OpLabel
@@ -1901,7 +2044,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Continue_Sequence) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_Continue_ContainsIf) {
@@ -1917,18 +2062,19 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Continue_ContainsIf) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpBranch %50
          %50 = OpLabel
                OpSelectionMerge %89 None
-               OpBranchConditional %cond2 %60 %70
+               OpBranchConditional %true %60 %70
          %89 = OpLabel
                OpBranch %20 ; backedge
          %60 = OpLabel
@@ -1939,7 +2085,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Continue_ContainsIf) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_Continue_HasBreakIf) {
@@ -1955,22 +2103,25 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Continue_HasBreakIf) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpBranch %50
          %50 = OpLabel
-               OpBranchConditional %cond2 %99 %20
+               OpBranchConditional %false %99 %20
          %99 = OpLabel
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_Continue_HasBreakUnless) {
@@ -1986,22 +2137,25 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Continue_HasBreakUnless) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpBranch %50
          %50 = OpLabel
-               OpBranchConditional %cond2 %20 %99
+               OpBranchConditional %false %20 %99
          %99 = OpLabel
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_Loop) {
@@ -2017,16 +2171,17 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Loop) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpLoopMerge %49 %40 None
-               OpBranchConditional %cond2 %35 %49
+               OpBranchConditional %false %35 %49
          %35 = OpLabel
                OpBranch %37
          %37 = OpLabel
@@ -2041,7 +2196,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Loop) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_Loop_InnerBreak) {
@@ -2057,18 +2214,19 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Loop_InnerBreak) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpLoopMerge %49 %40 None
-               OpBranchConditional %cond2 %35 %49
+               OpBranchConditional %false %35 %49
          %35 = OpLabel
-               OpBranchConditional %cond3 %49 %37 ; break to inner merge
+               OpBranchConditional %true %49 %37 ; break to inner merge
          %37 = OpLabel
                OpBranch %40
          %40 = OpLabel ; inner loop's continue
@@ -2081,7 +2239,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Loop_InnerBreak) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_Loop_InnerContinue) {
@@ -2097,18 +2257,19 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Loop_InnerContinue) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpLoopMerge %49 %40 None
-               OpBranchConditional %cond2 %35 %49
+               OpBranchConditional %false %35 %49
          %35 = OpLabel
-               OpBranchConditional %cond3 %37 %49 ; continue to inner continue target
+               OpBranchConditional %true %37 %49 ; continue to inner continue target
          %37 = OpLabel
                OpBranch %40
          %40 = OpLabel ; inner loop's continue
@@ -2121,7 +2282,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Loop_InnerContinue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_Loop_InnerContinueBreaks) {
@@ -2137,22 +2300,23 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Loop_InnerContinueBreaks) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpLoopMerge %49 %40 None
-               OpBranchConditional %cond2 %35 %49
+               OpBranchConditional %false %35 %49
          %35 = OpLabel
                OpBranch %37
          %37 = OpLabel
                OpBranch %40
          %40 = OpLabel ; inner loop's continue
-               OpBranchConditional %cond3 %30 %49 ; backedge and inner break
+               OpBranchConditional %true %30 %49 ; backedge and inner break
          %49 = OpLabel ; inner loop's merge
                OpBranch %50
          %50 = OpLabel ; outer loop's continue
@@ -2161,7 +2325,9 @@ TEST_F(SpirvParserTest, DISABLED_Loop_Loop_InnerContinueBreaks) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_MergeBlockIsLoop) {
@@ -2181,19 +2347,21 @@ TEST_F(SpirvParserTest, DISABLED_Loop_MergeBlockIsLoop) {
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpSelectionMerge %50 None
-               OpBranchConditional %cond %20 %50
+               OpBranchConditional %true %20 %50
          %20 = OpLabel
                OpBranch %50
          ; %50 is the merge block for the selection starting at 10,
          ; and its own continue target.
          %50 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %50 %99
+               OpBranchConditional %true %50 %99
          %99 = OpLabel
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_MergeIsAlsoMultiBlockLoopHeader) {
@@ -2213,21 +2381,23 @@ TEST_F(SpirvParserTest, DISABLED_MergeIsAlsoMultiBlockLoopHeader) {
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpSelectionMerge %50 None
-               OpBranchConditional %cond %20 %50
+               OpBranchConditional %true %20 %50
          %20 = OpLabel
                OpBranch %50
          ; %50 is the merge block for the selection starting at 10,
          ; and a loop block header but not its own continue target.
          %50 = OpLabel
                OpLoopMerge %99 %60 None
-               OpBranchConditional %cond %60 %99
+               OpBranchConditional %true %60 %99
          %60 = OpLabel
                OpBranch %50
          %99 = OpLabel
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 // Exercises the hard case where we a single OpBranchConditional has both
@@ -2245,27 +2415,30 @@ TEST_F(SpirvParserTest, DISABLED_IfBreak_FromThen_ForwardWithinThen) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
-               OpStore %var %uint_1
+         %34 = OpIAdd %i32 %one %two
                OpSelectionMerge %99 None
-               OpBranchConditional %cond %20 %50
+               OpBranchConditional %true %20 %50
          %20 = OpLabel
-               OpStore %var %uint_2
-               OpBranchConditional %cond2 %99 %30 ; kIfBreak with kForward
+         %35 = OpIAdd %i32 %two %three
+               OpBranchConditional %false %99 %30 ; kIfBreak with kForward
          %30 = OpLabel ; still in then clause
-               OpStore %var %uint_3
+         %36 = OpIAdd %i32 %one %three
                OpBranch %99
          %50 = OpLabel ; else clause
-               OpStore %var %uint_4
+         %37 = OpIAdd %i32 %three %one
                OpBranch %99
          %99 = OpLabel
-               OpStore %var %uint_5
+         %38 = OpIAdd %i32 %three %two
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     // var guard10 = true;
     // if (false) {
@@ -2302,27 +2475,30 @@ TEST_F(SpirvParserTest, DISABLED_IfBreak_FromElse_ForwardWithinElse) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
-               OpStore %var %uint_1
+         %35 = OpIAdd %i32 %one %one
                OpSelectionMerge %99 None
-               OpBranchConditional %cond %20 %50
+               OpBranchConditional %true %20 %50
          %20 = OpLabel
-               OpStore %var %uint_2
+         %36 = OpIAdd %i32 %two %two
                OpBranch %99
          %50 = OpLabel ; else clause
-               OpStore %var %uint_3
-               OpBranchConditional %cond2 %99 %80 ; kIfBreak with kForward
+         %37 = OpIAdd %i32 %three %three
+               OpBranchConditional %false %99 %80 ; kIfBreak with kForward
          %80 = OpLabel ; still in then clause
-               OpStore %var %uint_4
+         %38 = OpIAdd %i32 %one %two
                OpBranch %99
          %99 = OpLabel
-               OpStore %var %uint_5
+         %39 = OpIAdd %i32 %two %three
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 // This is a combination of the previous two, but also adding a premerge.
@@ -2342,36 +2518,39 @@ TEST_F(SpirvParserTest, DISABLED_IfBreak_FromThenAndElseWithForward_Premerge) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
-               OpStore %var %uint_1
+         %35 = OpIAdd %i32 %one %one
                OpSelectionMerge %99 None
-               OpBranchConditional %cond %20 %50
+               OpBranchConditional %true %20 %50
          %20 = OpLabel ; then
-               OpStore %var %uint_2
-               OpBranchConditional %cond2 %21 %99 ; kForward and kIfBreak
+         %36 = OpIAdd %i32 %two %two
+               OpBranchConditional %false %21 %99 ; kForward and kIfBreak
          %21 = OpLabel ; still in then clause
-               OpStore %var %uint_3
+         %37 = OpIAdd %i32 %three %three
                OpBranch %80 ; to premerge
          %50 = OpLabel ; else clause
-               OpStore %var %uint_4
-               OpBranchConditional %cond2 %99 %51 ; kIfBreak with kForward
+         %38 = OpIAdd %i32 %one %two
+               OpBranchConditional %false %99 %51 ; kIfBreak with kForward
          %51 = OpLabel ; still in else clause
-               OpStore %var %uint_5
+         %39 = OpIAdd %i32 %two %three
                OpBranch %80 ; to premerge
          %80 = OpLabel ; premerge
-               OpStore %var %uint_6
-               OpBranchConditional %cond3 %81 %99
+         %41 = OpIAdd %i32 %three %two
+               OpBranchConditional %true %81 %99
          %81 = OpLabel ; premerge
-               OpStore %var %uint_7
+         %42 = OpIAdd %i32 %threed %one
                OpBranch %99
          %99 = OpLabel
-               OpStore %var %uint_8
+         %43 = OpIAdd %i32 %two %one
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 }
 
 TEST_F(SpirvParserTest, DISABLED_Loop_SingleBlock_BothBackedge) {
@@ -2390,18 +2569,20 @@ TEST_F(SpirvParserTest, DISABLED_Loop_SingleBlock_BothBackedge) {
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
-               OpStore %var %uint_0
+         %35 = OpIAdd %i32 %one %one
                OpBranch %20
          %20 = OpLabel
-               OpStore %var %uint_1
+         %36 = OpIAdd %i32 %two %two
                OpLoopMerge %99 %20 None
-               OpBranchConditional %cond %20 %20
+               OpBranchConditional %true %20 %20
          %99 = OpLabel
-               OpStore %var %999
+         %37 = OpIAdd %i32 %three %three
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //    auto* expect = R"(var_1 = 0u;
     // loop {
@@ -2427,18 +2608,20 @@ TEST_F(SpirvParserTest, DISABLED__Loop_SingleBlock_UnconditionalBackege) {
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
-               OpStore %var %uint_0
+         %35 = OpIAdd %i32 %one %one
                OpBranch %20
          %20 = OpLabel
-               OpStore %var %uint_1
+         %36 = OpIAdd %i32 %two %two
                OpLoopMerge %99 %20 None
                OpBranch %20
          %99 = OpLabel
-               OpStore %var %999
+         %37 = OpIAdd %i32 %three %three
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -2464,24 +2647,26 @@ TEST_F(SpirvParserTest, DISABLED__Loop_Unconditional_Body_SingleBlockContinue) {
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
-               OpStore %var %uint_0
+         %35 = OpIAdd %i32 %one %one
                OpBranch %20
          %20 = OpLabel
-               OpStore %var %uint_1
+         %36 = OpIAdd %i32 %two %two
                OpLoopMerge %99 %50 None
                OpBranch %30
          %30 = OpLabel
-               OpStore %var %uint_2
+         %37 = OpIAdd %i32 %three %three
                OpBranch %50
          %50 = OpLabel
-               OpStore %var %uint_3
+         %38 = OpIAdd %i32 %one %two
                OpBranch %20
          %99 = OpLabel
-               OpStore %var %999
+         %39 = OpIAdd %i32 %two %three
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -2532,7 +2717,9 @@ TEST_F(SpirvParserTest, DISABLED__Loop_Unconditional_Body_MultiBlockContinue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -2561,6 +2748,7 @@ TEST_F(SpirvParserTest, DISABLED__Loop_Unconditional_Body_ContinueNestIf) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
@@ -2576,7 +2764,7 @@ TEST_F(SpirvParserTest, DISABLED__Loop_Unconditional_Body_ContinueNestIf) {
          %50 = OpLabel ; continue target; also if-header
                OpStore %var %uint_3
                OpSelectionMerge %80 None
-               OpBranchConditional %cond2 %60 %80
+               OpBranchConditional %false %60 %80
          %60 = OpLabel
                OpStore %var %uint_4
                OpBranch %80
@@ -2588,7 +2776,9 @@ TEST_F(SpirvParserTest, DISABLED__Loop_Unconditional_Body_ContinueNestIf) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -2628,7 +2818,7 @@ TEST_F(SpirvParserTest, DISABLED__Loop_Never) {
          %20 = OpLabel
                OpStore %var %uint_1
                OpLoopMerge %99 %80 None
-               OpBranchConditional %cond %99 %99
+               OpBranchConditional %true %99 %99
          %80 = OpLabel ; continue target
                OpStore %var %uint_2
                OpBranch %20
@@ -2637,7 +2827,9 @@ TEST_F(SpirvParserTest, DISABLED__Loop_Never) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   var_1 = 1u;
@@ -2671,7 +2863,7 @@ TEST_F(SpirvParserTest, DISABLED__Loop_TrueToBody_FalseBreaks) {
          %20 = OpLabel
                OpStore %var %uint_1
                OpLoopMerge %99 %80 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpStore %var %uint_2
                OpBranch %80
@@ -2683,7 +2875,9 @@ TEST_F(SpirvParserTest, DISABLED__Loop_TrueToBody_FalseBreaks) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   var_1 = 1u;
@@ -2721,7 +2915,7 @@ TEST_F(SpirvParserTest, DISABLED__Loop_FalseToBody_TrueBreaks) {
          %20 = OpLabel
                OpStore %var %uint_1
                OpLoopMerge %99 %80 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpStore %var %uint_2
                OpBranch %80
@@ -2733,7 +2927,9 @@ TEST_F(SpirvParserTest, DISABLED__Loop_FalseToBody_TrueBreaks) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   var_1 = 1u;
@@ -2774,7 +2970,7 @@ TEST_F(SpirvParserTest, DISABLED__Loop_NestedIfContinue) {
                OpBranch %30
          %30 = OpLabel
                OpSelectionMerge %50 None
-               OpBranchConditional %cond %40 %50
+               OpBranchConditional %true %40 %50
          %40 = OpLabel
                OpStore %var %uint_1
                OpBranch %80 ; continue edge
@@ -2788,7 +2984,9 @@ TEST_F(SpirvParserTest, DISABLED__Loop_NestedIfContinue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   if (false) {
@@ -2834,7 +3032,9 @@ TEST_F(SpirvParserTest, DISABLED__Loop_BodyAlwaysBreaks) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   var_1 = 1u;
@@ -2871,7 +3071,7 @@ TEST_F(SpirvParserTest, DISABLED__Loop_BodyConditionallyBreaks_FromTrue) {
                OpBranch %30
          %30 = OpLabel
                OpStore %var %uint_1
-               OpBranchConditional %cond %99 %80
+               OpBranchConditional %true %99 %80
          %80 = OpLabel
                OpStore %var %uint_2
                OpBranch %20 ; backedge
@@ -2879,7 +3079,9 @@ TEST_F(SpirvParserTest, DISABLED__Loop_BodyConditionallyBreaks_FromTrue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   var_1 = 1u;
@@ -2918,7 +3120,7 @@ TEST_F(SpirvParserTest, DISABLED__Loop_BodyConditionallyBreaks_FromFalse) {
                OpBranch %30
          %30 = OpLabel
                OpStore %var %uint_1
-               OpBranchConditional %cond %80 %99
+               OpBranchConditional %true %80 %99
          %80 = OpLabel
                OpStore %var %uint_2
                OpBranch %20 ; backedge
@@ -2926,7 +3128,9 @@ TEST_F(SpirvParserTest, DISABLED__Loop_BodyConditionallyBreaks_FromFalse) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   var_1 = 1u;
@@ -2964,7 +3168,7 @@ TEST_F(SpirvParserTest, DISABLED__Loop_BodyConditionallyBreaks_FromTrue_Early) {
                OpBranch %30
          %30 = OpLabel
                OpStore %var %uint_1
-               OpBranchConditional %cond %99 %70
+               OpBranchConditional %true %99 %70
          %70 = OpLabel
                OpStore %var %uint_3
                OpBranch %80
@@ -2975,7 +3179,9 @@ TEST_F(SpirvParserTest, DISABLED__Loop_BodyConditionallyBreaks_FromTrue_Early) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   var_1 = 1u;
@@ -3013,7 +3219,7 @@ TEST_F(SpirvParserTest, DISABLED__Loop_BodyConditionallyBreaks_FromFalse_Early) 
                OpBranch %30
          %30 = OpLabel
                OpStore %var %uint_1
-               OpBranchConditional %cond %70 %99
+               OpBranchConditional %true %70 %99
          %70 = OpLabel
                OpStore %var %uint_3
                OpBranch %80
@@ -3024,7 +3230,9 @@ TEST_F(SpirvParserTest, DISABLED__Loop_BodyConditionallyBreaks_FromFalse_Early) 
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   var_1 = 1u;
@@ -3075,7 +3283,9 @@ TEST_F(SpirvParserTest, DISABLED__Switch_Case_SintValue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 1u;
     // switch(42i) {
@@ -3128,7 +3338,9 @@ TEST_F(SpirvParserTest, DISABLED__Switch_Case_UintValue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 1u;
     // switch(42u) {
@@ -3171,7 +3383,7 @@ TEST_F(SpirvParserTest, DISABLED__Branch_SwitchBreak_NotLastInCase) {
          %20 = OpLabel
                OpStore %var %uint_20
                OpSelectionMerge %50 None
-               OpBranchConditional %cond %40 %50
+               OpBranchConditional %true %40 %50
          %40 = OpLabel
                OpStore %var %uint_40
                OpBranch %99 ; branch to merge. Not last in case
@@ -3183,7 +3395,9 @@ TEST_F(SpirvParserTest, DISABLED__Branch_SwitchBreak_NotLastInCase) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 1u;
     // switch(42u) {
@@ -3232,7 +3446,9 @@ TEST_F(SpirvParserTest, DISABLED__Branch_LoopBreak_MultiBlockLoop_FromBody) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   var_1 = 1u;
@@ -3268,12 +3484,14 @@ TEST_F(SpirvParserTest,
                OpBranch %80
          %80 = OpLabel ; continue target
                OpStore %var %uint_1
-               OpBranchConditional %cond %99 %20  ; exit, and backedge
+               OpBranchConditional %true %99 %20  ; exit, and backedge
          %99 = OpLabel
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //
@@ -3308,12 +3526,14 @@ TEST_F(SpirvParserTest,
                OpBranch %80
          %80 = OpLabel ; continue target
                OpStore %var %uint_1
-               OpBranchConditional %cond %20 %99  ; backedge, and exit
+               OpBranchConditional %true %20 %99  ; backedge, and exit
          %99 = OpLabel
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //
@@ -3344,18 +3564,20 @@ TEST_F(SpirvParserTest, DISABLED__Branch_LoopBreak_FromContinueConstructTail) {
                OpBranch %20
          %20 = OpLabel
                OpLoopMerge %99 %50 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpBranch %50
          %50 = OpLabel
                OpBranch %60
          %60 = OpLabel
-               OpBranchConditional %cond %20 %99
+               OpBranchConditional %true %20 %99
          %99 = OpLabel
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   if (false) {
@@ -3400,7 +3622,9 @@ TEST_F(SpirvParserTest, DISABLED__Branch_LoopContinue_LastInLoopConstruct) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   var_1 = 1u;
@@ -3435,7 +3659,7 @@ TEST_F(SpirvParserTest, DISABLED__Branch_LoopContinue_BeforeLast) {
                OpBranch %30
          %30 = OpLabel
                OpSelectionMerge %50 None
-               OpBranchConditional %cond %40 %50
+               OpBranchConditional %true %40 %50
          %40 = OpLabel
                OpStore %var %uint_1
                OpBranch %80 ; continue edge
@@ -3449,7 +3673,9 @@ TEST_F(SpirvParserTest, DISABLED__Branch_LoopContinue_BeforeLast) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   if (false) {
@@ -3505,7 +3731,9 @@ TEST_F(SpirvParserTest, DISABLED__Branch_LoopContinue_FromSwitch) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 1u;
     // loop {
@@ -3547,7 +3775,7 @@ TEST_F(SpirvParserTest, DISABLED__Branch_IfBreak_FromThen) {
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpSelectionMerge %99 None
-               OpBranchConditional %cond %30 %99
+               OpBranchConditional %true %30 %99
          %30 = OpLabel
                OpStore %var %uint_1
                OpBranch %99
@@ -3556,7 +3784,9 @@ TEST_F(SpirvParserTest, DISABLED__Branch_IfBreak_FromThen) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //    auto* expect = R"(if (false) {
     //  var_1 = 1u;
@@ -3583,7 +3813,7 @@ TEST_F(SpirvParserTest, DISABLED__Branch_IfBreak_FromElse) {
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpSelectionMerge %99 None
-               OpBranchConditional %cond %99 %30
+               OpBranchConditional %true %99 %30
          %30 = OpLabel
                OpStore %var %uint_1
                OpBranch %99
@@ -3592,7 +3822,9 @@ TEST_F(SpirvParserTest, DISABLED__Branch_IfBreak_FromElse) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(if (false) {
     // } else {
@@ -3623,13 +3855,15 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Back_SingleBlock_LoopBreak_O
          %20 = OpLabel
                OpStore %var %uint_1
                OpLoopMerge %99 %20 None
-               OpBranchConditional %cond %99 %20
+               OpBranchConditional %true %99 %20
          %99 = OpLabel
                OpStore %var %uint_5
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -3663,13 +3897,15 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Back_SingleBlock_LoopBreak_O
          %20 = OpLabel
                OpStore %var %uint_1
                OpLoopMerge %99 %20 None
-               OpBranchConditional %cond %20 %99
+               OpBranchConditional %true %20 %99
          %99 = OpLabel
                OpStore %var %uint_5
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //    auto* expect = R"(var_1 = 0u;
     // loop {
@@ -3706,13 +3942,15 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Back_MultiBlock_LoopBreak_On
                OpLoopMerge %99 %80 None
                OpBranch %80
          %80 = OpLabel
-               OpBranchConditional %cond %99 %20
+               OpBranchConditional %true %99 %20
          %99 = OpLabel
                OpStore %var %uint_5
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -3749,13 +3987,15 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Back_MultiBlock_LoopBreak_On
                OpLoopMerge %99 %80 None
                OpBranch %80
          %80 = OpLabel
-               OpBranchConditional %cond %20 %99
+               OpBranchConditional %true %20 %99
          %99 = OpLabel
                OpStore %var %uint_5
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -3783,6 +4023,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_SwitchBreak_SwitchBreak_NotL
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
@@ -3792,10 +4033,10 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_SwitchBreak_SwitchBreak_NotL
          %20 = OpLabel
                OpStore %var %uint_20
                OpSelectionMerge %50 None
-               OpBranchConditional %cond %40 %50
+               OpBranchConditional %true %40 %50
          %40 = OpLabel
                OpStore %var %uint_40
-               OpBranchConditional %cond2 %99 %99 ; branch to merge. Not last in case
+               OpBranchConditional %false %99 %99 ; branch to merge. Not last in case
          %50 = OpLabel ; inner merge
                OpStore %var %uint_50
                OpBranch %99
@@ -3804,7 +4045,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_SwitchBreak_SwitchBreak_NotL
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 1u;
     // switch(42u) {
@@ -3851,7 +4094,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_SwitchBreak_Continue_OnTrue)
                OpSwitch %selector %79 40 %40
          %40 = OpLabel
                OpStore %var %uint_40
-               OpBranchConditional %cond %80 %79 ; break; continue on true
+               OpBranchConditional %true %80 %79 ; break; continue on true
          %79 = OpLabel
                OpStore %var %uint_6
                OpBranch %80
@@ -3863,7 +4106,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_SwitchBreak_Continue_OnTrue)
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //    auto* expect = R"(var_1 = 1u;
     // loop {
@@ -3917,7 +4162,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_SwitchBreak_Continue_OnFalse
                OpSwitch %selector %79 40 %40
          %40 = OpLabel
                OpStore %var %uint_40
-               OpBranchConditional %cond %79 %80 ; break; continue on false
+               OpBranchConditional %true %79 %80 ; break; continue on false
          %79 = OpLabel
                OpStore %var %uint_6
                OpBranch %80
@@ -3929,7 +4174,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_SwitchBreak_Continue_OnFalse
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 1u;
     // loop {
@@ -3977,7 +4224,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_SwitchBreak_Forward_OnTrue) 
                OpSwitch %selector %99 20 %20
          %20 = OpLabel
                OpStore %var %uint_20
-               OpBranchConditional %cond %30 %99 ; break; forward on true
+               OpBranchConditional %true %30 %99 ; break; forward on true
          %30 = OpLabel
                OpStore %var %uint_30
                OpBranch %99
@@ -3986,7 +4233,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_SwitchBreak_Forward_OnTrue) 
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 1u;
     // switch(42u) {
@@ -4026,7 +4275,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_SwitchBreak_Forward_OnFalse)
                OpSwitch %selector %99 20 %20
          %20 = OpLabel
                OpStore %var %uint_20
-               OpBranchConditional %cond %99 %30 ; break; forward on false
+               OpBranchConditional %true %99 %30 ; break; forward on false
          %30 = OpLabel
                OpStore %var %uint_30
                OpBranch %99
@@ -4035,7 +4284,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_SwitchBreak_Forward_OnFalse)
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 1u;
     // switch(42u) {
@@ -4074,7 +4325,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_SingleBlock_LoopBr
          %20 = OpLabel
                OpStore %var %uint_1
                OpLoopMerge %99 %80 None
-               OpBranchConditional %cond %99 %99
+               OpBranchConditional %true %99 %99
          %80 = OpLabel ; continue target
                OpStore %var %uint_4
                OpBranch %20
@@ -4083,7 +4334,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_SingleBlock_LoopBr
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4122,7 +4375,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_MultiBlock_LoopBre
                OpBranch %30
          %30 = OpLabel
                OpStore %var %uint_2
-               OpBranchConditional %cond %99 %99
+               OpBranchConditional %true %99 %99
          %80 = OpLabel ; continue target
                OpStore %var %uint_4
                OpBranch %20
@@ -4131,7 +4384,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_MultiBlock_LoopBre
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4160,6 +4415,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_Continue_OnTrue) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
@@ -4174,11 +4430,11 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_Continue_OnTrue) {
          ; statement to exist.
          %25 = OpLabel
                OpSelectionMerge %40 None
-               OpBranchConditional %cond2 %30 %40
+               OpBranchConditional %false %30 %40
          %30 = OpLabel
                OpStore %var %uint_2
                ; break; continue on true
-               OpBranchConditional %cond %80 %99
+               OpBranchConditional %false %80 %99
          %40 = OpLabel
                OpStore %var %uint_3
                OpBranch %80
@@ -4190,7 +4446,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_Continue_OnTrue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4226,6 +4484,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_Continue_OnFalse) 
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
@@ -4240,11 +4499,11 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_Continue_OnFalse) 
          ; statement to exist.
          %25 = OpLabel
                OpSelectionMerge %40 None
-               OpBranchConditional %cond2 %30 %40
+               OpBranchConditional %false %30 %40
          %30 = OpLabel
                OpStore %var %uint_2
                ; break; continue on false
-               OpBranchConditional %cond %99 %80
+               OpBranchConditional %true %99 %80
          %40 = OpLabel
                OpStore %var %uint_3
                OpBranch %80
@@ -4256,7 +4515,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_Continue_OnFalse) 
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4304,7 +4565,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_Forward_OnTrue) {
          %30 = OpLabel
                OpStore %var %uint_2
                ; break; forward on true
-               OpBranchConditional %cond %40 %99
+               OpBranchConditional %true %40 %99
          %40 = OpLabel
                OpStore %var %uint_3
                OpBranch %80
@@ -4316,7 +4577,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_Forward_OnTrue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4361,7 +4624,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_Forward_OnFalse) {
          %30 = OpLabel
                OpStore %var %uint_2
                ; break; forward on false
-               OpBranchConditional %cond %99 %40
+               OpBranchConditional %true %99 %40
          %40 = OpLabel
                OpStore %var %uint_3
                OpBranch %80
@@ -4373,7 +4636,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopBreak_Forward_OnFalse) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4413,7 +4678,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_Continue_FromHeader
          %20 = OpLabel
                OpStore %var %uint_1
                OpLoopMerge %99 %80 None
-               OpBranchConditional %cond %80 %80 ; to continue
+               OpBranchConditional %true %80 %80 ; to continue
          %80 = OpLabel ; continue target
                OpStore %var %uint_4
                OpBranch %20
@@ -4422,7 +4687,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_Continue_FromHeader
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4460,7 +4727,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_Continue_AfterHeade
                OpBranch %30
          %30 = OpLabel
                OpStore %var %uint_2
-               OpBranchConditional %cond %80 %80 ; to continue
+               OpBranchConditional %true %80 %80 ; to continue
          %80 = OpLabel ; continue target
                OpStore %var %uint_4
                OpBranch %20
@@ -4469,7 +4736,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_Continue_AfterHeade
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4498,6 +4767,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_Continue_AfterHeade
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
@@ -4510,10 +4780,10 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_Continue_AfterHeade
          %30 = OpLabel
                OpStore %var %uint_2
                OpSelectionMerge %50 None
-               OpBranchConditional %cond2 %40 %50
+               OpBranchConditional %false %40 %50
          %40 = OpLabel
                OpStore %var %uint_3
-               OpBranchConditional %cond3 %80 %80 ; to continue
+               OpBranchConditional %true %80 %80 ; to continue
          %50 = OpLabel ; merge for selection
                OpStore %var %uint_4
                OpBranch %80
@@ -4525,7 +4795,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_Continue_AfterHeade
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4560,6 +4832,7 @@ TEST_F(SpirvParserTest,
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
@@ -4572,10 +4845,10 @@ TEST_F(SpirvParserTest,
          %30 = OpLabel
                OpStore %var %uint_2
                OpSelectionMerge %50 None
-               OpBranchConditional %cond2 %40 %50
+               OpBranchConditional %false %40 %50
          %40 = OpLabel
                OpStore %var %uint_3
-               OpBranchConditional %cond3 %80 %80 ; to continue
+               OpBranchConditional %false %80 %80 ; to continue
          %50 = OpLabel ; merge for selection
                OpStore %var %uint_4
                OpBranch %80
@@ -4587,7 +4860,9 @@ TEST_F(SpirvParserTest,
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4616,6 +4891,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopContinue_FromSwitch) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
@@ -4631,7 +4907,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopContinue_FromSwitch) {
                OpSwitch %selector %79 40 %40
          %40 = OpLabel
                OpStore %var %uint_4
-               OpBranchConditional %cond2 %80 %80; dup continue edge
+               OpBranchConditional %false %80 %80; dup continue edge
          %79 = OpLabel ; switch merge
                OpStore %var %uint_5
                OpBranch %80
@@ -4643,7 +4919,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_LoopContinue_FromSwitch) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 1u;
     // loop {
@@ -4680,6 +4958,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_IfBreak_OnTrue) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
@@ -4692,11 +4971,11 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_IfBreak_OnTrue) {
          %30 = OpLabel
                OpStore %var %uint_2
                OpSelectionMerge %50 None
-               OpBranchConditional %cond2 %40 %50
+               OpBranchConditional %false %40 %50
          %40 = OpLabel
                OpStore %var %uint_3
                ; true to if's merge;  false to continue
-               OpBranchConditional %cond3 %50 %80
+               OpBranchConditional %true %50 %80
          %50 = OpLabel ; merge for selection
                OpStore %var %uint_4
                OpBranch %80
@@ -4708,7 +4987,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_IfBreak_OnTrue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //    auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4744,6 +5025,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_IfBreak_OnFalse) {
         %two = OpConstant %i32 2
       %three = OpConstant %i32 3
        %true = OpConstantTrue %bool
+      %false = OpConstantFalse %bool
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
@@ -4756,11 +5038,11 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_IfBreak_OnFalse) {
          %30 = OpLabel
                OpStore %var %uint_2
                OpSelectionMerge %50 None
-               OpBranchConditional %cond2 %40 %50
+               OpBranchConditional %false %40 %50
          %40 = OpLabel
                OpStore %var %uint_3
                ; false to if's merge;  true to continue
-               OpBranchConditional %cond3 %80 %50
+               OpBranchConditional %true %80 %50
          %50 = OpLabel ; merge for selection
                OpStore %var %uint_4
                OpBranch %80
@@ -4772,7 +5054,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_IfBreak_OnFalse) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //    auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4819,7 +5103,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_Forward_OnTrue) {
          %30 = OpLabel
                OpStore %var %uint_2
                ; continue; forward on true
-               OpBranchConditional %cond %40 %80
+               OpBranchConditional %true %40 %80
          %40 = OpLabel
                OpStore %var %uint_3
                OpBranch %80
@@ -4831,7 +5115,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_Forward_OnTrue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4876,7 +5162,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_Forward_OnFalse) {
          %30 = OpLabel
                OpStore %var %uint_2
                ; continue; forward on true
-               OpBranchConditional %cond %80 %40
+               OpBranchConditional %true %80 %40
          %40 = OpLabel
                OpStore %var %uint_3
                OpBranch %80
@@ -4888,7 +5174,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Continue_Forward_OnFalse) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // loop {
@@ -4925,7 +5213,7 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_IfBreak_IfBreak_Same) {
          %10 = OpLabel
                OpStore %var %uint_0
                OpSelectionMerge %99 None
-               OpBranchConditional %cond %99 %99
+               OpBranchConditional %true %99 %99
          %20 = OpLabel ; dead
                OpStore %var %uint_1
                OpBranch %99
@@ -4934,7 +5222,9 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_IfBreak_IfBreak_Same) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 0u;
     // if (false) {
@@ -4960,13 +5250,15 @@ TEST_F(SpirvParserTest, DISABLED__BranchConditional_Forward_Forward_Same) {
        %main = OpFunction %void None %ep_type
          %10 = OpLabel
                OpStore %var %uint_1
-               OpBranchConditional %cond %99 %99; forward
+               OpBranchConditional %true %99 %99; forward
          %99 = OpLabel
                OpStore %var %uint_2
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 1u;
     // var_1 = 2u;
@@ -4996,7 +5288,7 @@ TEST_F(SpirvParserTest, DISABLED__IfSelection_TrueBranch_LoopBreak) {
                OpBranch %20
          %20 = OpLabel
                OpSelectionMerge %40 None
-               OpBranchConditional %cond %99 %30 ; true branch breaking is ok
+               OpBranchConditional %true %99 %30 ; true branch breaking is ok
          %30 = OpLabel
                OpBranch %40
          %40 = OpLabel ; selection merge
@@ -5007,7 +5299,9 @@ TEST_F(SpirvParserTest, DISABLED__IfSelection_TrueBranch_LoopBreak) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   if (false) {
@@ -5040,7 +5334,7 @@ TEST_F(SpirvParserTest, DISABLED__TrueBranch_LoopContinue) {
                OpBranch %20
          %20 = OpLabel
                OpSelectionMerge %40 None
-               OpBranchConditional %cond %90 %30 ; true branch continue is ok
+               OpBranchConditional %true %90 %30 ; true branch continue is ok
          %30 = OpLabel
                OpBranch %40
          %40 = OpLabel ; selection merge
@@ -5051,7 +5345,9 @@ TEST_F(SpirvParserTest, DISABLED__TrueBranch_LoopContinue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   if (false) {
@@ -5082,7 +5378,7 @@ TEST_F(SpirvParserTest, DISABLED__TrueBranch_SwitchBreak) {
                OpSwitch %uint_20 %99 20 %20
          %20 = OpLabel
                OpSelectionMerge %40 None
-               OpBranchConditional %cond %99 %30 ; true branch switch break is ok
+               OpBranchConditional %true %99 %30 ; true branch switch break is ok
          %30 = OpLabel
                OpBranch %40
          %40 = OpLabel ; if-selection merge
@@ -5091,7 +5387,9 @@ TEST_F(SpirvParserTest, DISABLED__TrueBranch_SwitchBreak) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(switch(20u) {
     //   case 20u: {
@@ -5128,7 +5426,7 @@ TEST_F(SpirvParserTest, DISABLED__FalseBranch_LoopBreak) {
                OpBranch %20
          %20 = OpLabel
                OpSelectionMerge %40 None
-               OpBranchConditional %cond %30 %99 ; false branch breaking is ok
+               OpBranchConditional %true %30 %99 ; false branch breaking is ok
          %30 = OpLabel
                OpBranch %40
          %40 = OpLabel ; selection merge
@@ -5139,7 +5437,9 @@ TEST_F(SpirvParserTest, DISABLED__FalseBranch_LoopBreak) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   if (false) {
@@ -5173,7 +5473,7 @@ TEST_F(SpirvParserTest, DISABLED__FalseBranch_LoopContinue) {
                OpBranch %20
          %20 = OpLabel
                OpSelectionMerge %40 None
-               OpBranchConditional %cond %30 %90 ; false branch continue is ok
+               OpBranchConditional %true %30 %90 ; false branch continue is ok
          %30 = OpLabel
                OpBranch %40
          %40 = OpLabel ; selection merge
@@ -5184,7 +5484,9 @@ TEST_F(SpirvParserTest, DISABLED__FalseBranch_LoopContinue) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(loop {
     //   if (false) {
@@ -5216,7 +5518,7 @@ TEST_F(SpirvParserTest, DISABLED__FalseBranch_SwitchBreak) {
                OpSwitch %uint_20 %99 20 %20
          %20 = OpLabel
                OpSelectionMerge %40 None
-               OpBranchConditional %cond %30 %99 ; false branch switch break is ok
+               OpBranchConditional %true %30 %99 ; false branch switch break is ok
          %30 = OpLabel
                OpBranch %40
          %40 = OpLabel ; if-selection merge
@@ -5225,7 +5527,9 @@ TEST_F(SpirvParserTest, DISABLED__FalseBranch_SwitchBreak) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(switch(20u) {
     //   case 20u: {
@@ -5262,7 +5566,7 @@ TEST_F(SpirvParserTest, DISABLED__LoopInternallyDiverge_Simple) {
          %20 = OpLabel
                OpStore %var %uint_20
                OpLoopMerge %99 %90 None
-               OpBranchConditional %cond %30 %40 ; divergence
+               OpBranchConditional %true %30 %40 ; divergence
            %30 = OpLabel
                  OpStore %var %uint_30
                  OpBranch %90
@@ -5277,7 +5581,9 @@ TEST_F(SpirvParserTest, DISABLED__LoopInternallyDiverge_Simple) {
                OpReturn
                OpFunctionEnd
 )",
-              R"(UNIMPLEMENTED)");
+              R"(
+
+)");
 
     //     auto* expect = R"(var_1 = 10u;
     // loop {
