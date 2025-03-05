@@ -33,6 +33,24 @@
       "message": "nit: this could be split to a separate \"TrimErrorScopeStacks\" method to also use it in \"TrimMemoryUsage\".",
       "revId": "6495f9fb68820fdfbbdd4cb3ca6a4e305d8c5a69",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7115ecbd_81fad004",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-05T21:50:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33648c8d_9d9c88da",
+      "revId": "6495f9fb68820fdfbbdd4cb3ca6a4e305d8c5a69",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
