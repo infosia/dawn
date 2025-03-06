@@ -186,7 +186,7 @@
             {"name": "architecture", "type": "string view"},
             {"name": "device", "type": "string view"},
             {"name": "description", "type": "string view"},
-            {"name": "backend type", "type": "backend type"},
+            {"name": "backend type", "type": "backend type", "default": "undefined"},
             {"name": "adapter type", "type": "adapter type"},
             {"name": "vendor ID", "type": "uint32_t"},
             {"name": "device ID", "type": "uint32_t"},
@@ -492,11 +492,11 @@
         "extensible": "in",
         "members": [
             {"name": "binding", "type": "uint32_t"},
-            {"name": "visibility", "type": "shader stage"},
-            {"name": "buffer", "type": "buffer binding layout"},
-            {"name": "sampler", "type": "sampler binding layout"},
-            {"name": "texture", "type": "texture binding layout"},
-            {"name": "storage texture", "type": "storage texture binding layout"}
+            {"name": "visibility", "type": "shader stage", "default": "none"},
+            {"name": "buffer", "type": "buffer binding layout", "default": "zero"},
+            {"name": "sampler", "type": "sampler binding layout", "default": "zero"},
+            {"name": "texture", "type": "texture binding layout", "default": "zero"},
+            {"name": "storage texture", "type": "storage texture binding layout", "default": "zero"}
         ]
     },
     "bind group layout descriptor": {
@@ -651,7 +651,7 @@
         "extensible": "in",
         "members": [
             {"name": "label", "type": "string view", "optional": true},
-            {"name": "usage", "type": "buffer usage"},
+            {"name": "usage", "type": "buffer usage", "default": "none"},
             {"name": "size", "type": "uint64_t"},
             {"name": "mapped at creation", "type": "bool", "default": "false"}
         ]
@@ -3339,8 +3339,8 @@
             {"name": "stencil read mask", "type": "uint32_t", "default": "0xFFFFFFFF"},
             {"name": "stencil write mask", "type": "uint32_t", "default": "0xFFFFFFFF"},
             {"name": "depth bias", "type": "int32_t", "default": "0"},
-            {"name": "depth bias slope scale", "type": "float", "default": "0.0f"},
-            {"name": "depth bias clamp", "type": "float", "default": "0.0f"}
+            {"name": "depth bias slope scale", "type": "float", "default": "0.f"},
+            {"name": "depth bias clamp", "type": "float", "default": "0.f"}
         ]
     },
 
@@ -3430,8 +3430,8 @@
             {"name": "mag filter", "type": "filter mode", "default": "nearest"},
             {"name": "min filter", "type": "filter mode", "default": "nearest"},
             {"name": "mipmap filter", "type": "mipmap filter mode", "default": "nearest"},
-            {"name": "lod min clamp", "type": "float", "default": "0.0f"},
-            {"name": "lod max clamp", "type": "float", "default": "32.0f"},
+            {"name": "lod min clamp", "type": "float", "default": "0.f"},
+            {"name": "lod max clamp", "type": "float", "default": "32.f"},
             {"name": "compare", "type": "compare function", "default": "undefined"},
             {"name": "max anisotropy", "type": "uint16_t", "default": "1"}
         ]
@@ -3918,7 +3918,7 @@
         "extensible": "in",
         "members": [
             {"name": "label", "type": "string view", "optional": true},
-            {"name": "usage", "type": "texture usage"},
+            {"name": "usage", "type": "texture usage", "default": "none"},
             {"name": "dimension", "type": "texture dimension", "default": "2D"},
             {"name": "size", "type": "extent 3D"},
             {"name": "format", "type": "texture format"},
@@ -4337,6 +4337,7 @@
         "category": "bitmask",
         "tags": ["dawn"],
         "values": [
+            {"value": 0, "name": "none"},
             {"value": 1, "name": "device local"},
             {"value": 2, "name": "host visible"},
             {"value": 4, "name": "host coherent"},
