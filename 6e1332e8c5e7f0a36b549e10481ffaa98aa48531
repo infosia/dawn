@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23c08dab_a5482580",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-03-06T23:16:36Z",
+      "side": 1,
+      "message": "Is this a manual roll of an earlier version of the CST (not ToT?)\n\nThe texture suppressions in compat expections are a CTS bug that was just fixed.\n\nThe `[Texture Invalid]` issue showing up in a bunch of tests is new and seems like a chrome/dawn bug at a glance.\n\nThe timeouts for capabilility_checks,limits features in patchset 2 also seem problematic.\n\nDo we just roll, file bugs, and deal with it later or should we try the CTS top of tree? I\u0027d only expect that to fix the compat expectations for textures",
+      "revId": "6e1332e8c5e7f0a36b549e10481ffaa98aa48531",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
