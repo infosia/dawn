@@ -16,6 +16,46 @@
       "message": "PTAL, thanks!",
       "revId": "cb95040843d30412c1b4bc8b99b572c58b5c3a2b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11b4581c_9fc9ee50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-06T12:08:15Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "cb95040843d30412c1b4bc8b99b572c58b5c3a2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f248269e_03bcd052",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-06T12:08:15Z",
+      "side": 1,
+      "message": "This will also be used on Metal.\n\n```suggestion\n// 8 bytes of push constant data to be used by the ClampFragDepth Tint transform.\nstruct ClampFragDepthArgs {\n```",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "cb95040843d30412c1b4bc8b99b572c58b5c3a2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
