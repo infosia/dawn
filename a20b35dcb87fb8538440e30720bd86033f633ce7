@@ -121,6 +121,24 @@
       "parentUuid": "7ffef24b_b5a06f6a",
       "revId": "a20b35dcb87fb8538440e30720bd86033f633ce7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6df952b4_a2af392d",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-06T17:36:43Z",
+      "side": 1,
+      "message": "CTS reuses devices between tests, so we only destroy them if we have to stop using them for some reason (like they got OOM).\n\nI forgot if there are buffer mappings alive then we won\u0027t release the device, but of course, because GC shouldn\u0027t be observable. So I think this function and the destructor are correct actually. (I don\u0027t know if dawn.node implements that load-bearing reference or not but that\u0027s unrelated to this CL.)",
+      "parentUuid": "bb69c541_abd9d59b",
+      "revId": "a20b35dcb87fb8538440e30720bd86033f633ce7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
