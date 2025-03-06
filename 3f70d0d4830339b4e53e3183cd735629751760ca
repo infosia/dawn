@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d5ef953_7d717ec9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-03-06T16:48:50Z",
+      "side": 1,
+      "message": "The CL won\u0027t show on the bug like this.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "3f70d0d4830339b4e53e3183cd735629751760ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b92447f0_3dd80961",
@@ -14,6 +37,23 @@
       "writtenOn": "2025-03-06T15:13:41Z",
       "side": 1,
       "message": "PTAL again!",
+      "revId": "3f70d0d4830339b4e53e3183cd735629751760ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afde937c_0139f95c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-03-06T16:48:50Z",
+      "side": 1,
+      "message": "I\u0027ve created https://chromium-review.googlesource.com/c/chromium/src/+/6330683 to test this with Chromium.\nPTAL dry run results when they are ready.",
       "revId": "3f70d0d4830339b4e53e3183cd735629751760ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
