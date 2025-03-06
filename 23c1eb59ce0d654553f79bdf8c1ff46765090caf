@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19690216_197298be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-06T15:29:34Z",
+      "side": 1,
+      "message": "LGTM, +Dan",
+      "revId": "23c1eb59ce0d654553f79bdf8c1ff46765090caf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abb64239_c677ecc4",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-06T15:29:34Z",
+      "side": 1,
+      "message": "This can be moved outside of the loop and next to mappable. Also mappable isn\u0027t really needed inside `GetRequiredMemoryPropertyFlags`",
+      "revId": "23c1eb59ce0d654553f79bdf8c1ff46765090caf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

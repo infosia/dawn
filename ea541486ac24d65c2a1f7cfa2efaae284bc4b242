@@ -135,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99bb3626_d2648b5d",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-06T15:29:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5cb44d63_340d8a73",
+      "revId": "ea541486ac24d65c2a1f7cfa2efaae284bc4b242",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23a3d593_089103f3",
@@ -166,6 +184,24 @@
       "side": 1,
       "message": "Thanks for your reminder.\n\nCurrently we don\u0027t support map mode other than READ or WRITE so I don\u0027t need to change it now.",
       "parentUuid": "23a3d593_089103f3",
+      "revId": "ea541486ac24d65c2a1f7cfa2efaae284bc4b242",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ef93b92_748c2637",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-06T15:29:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cc4d492f_742408fa",
       "revId": "ea541486ac24d65c2a1f7cfa2efaae284bc4b242",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
