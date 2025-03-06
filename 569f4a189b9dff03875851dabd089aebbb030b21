@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2aefaeb9_f7b37a47",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-06T12:17:46Z",
+      "side": 1,
+      "message": "This needs to move to just an `is_clang` condition to also apply in Chromium.",
+      "revId": "569f4a189b9dff03875851dabd089aebbb030b21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
