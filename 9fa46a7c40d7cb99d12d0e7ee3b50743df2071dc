@@ -52,6 +52,24 @@
       "parentUuid": "76b8c144_9b28a509",
       "revId": "9fa46a7c40d7cb99d12d0e7ee3b50743df2071dc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e47ed4bd_eece44d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 42
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-06T15:19:00Z",
+      "side": 1,
+      "message": "Yes something like that but in a compute shader that only does the textureDimensions call?",
+      "parentUuid": "faeb79f5_183d3271",
+      "revId": "9fa46a7c40d7cb99d12d0e7ee3b50743df2071dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
