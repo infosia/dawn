@@ -33,6 +33,24 @@
       "message": "```suggestion\n// Test to check that Infinity in viewport parameters is not allowed\n```",
       "revId": "ce3d7e7f91bc72cc8a3bcf71e9a56c7618b0d106",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "827efba5_d6b3ee3f",
+        "filename": "src/dawn/tests/unittests/validation/DynamicStateCommandValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-06T19:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b29d62e8_1b5bcd99",
+      "revId": "ce3d7e7f91bc72cc8a3bcf71e9a56c7618b0d106",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
