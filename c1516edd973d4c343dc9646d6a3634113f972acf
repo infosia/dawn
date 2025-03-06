@@ -33,6 +33,24 @@
       "message": "Could we have a minimal test in src/dawn/tests/unittests/native/StreamTests.cpp for this?",
       "revId": "c1516edd973d4c343dc9646d6a3634113f972acf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85d08fdd_29e4bfcb",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-06T20:21:33Z",
+      "side": 1,
+      "message": "Added couple tests, one for vector size and another where it\u0027ll crash since there\u0027s no elements and not a vector.",
+      "parentUuid": "394b2e71_a1a04674",
+      "revId": "c1516edd973d4c343dc9646d6a3634113f972acf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
