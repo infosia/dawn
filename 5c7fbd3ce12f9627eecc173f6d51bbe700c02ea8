@@ -16,6 +16,98 @@
       "message": "PTAL - I\u0027m not done with the packaging CL yet but I think we can land this.\n\nI also went through the readme and made sure it was all up to date, and fixed some things.",
       "revId": "5c7fbd3ce12f9627eecc173f6d51bbe700c02ea8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9d269bb_5ec4c9b4",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-06T20:52:02Z",
+      "side": 1,
+      "message": "nit. Extra parenthesis.",
+      "range": {
+        "startLine": 12,
+        "startChar": 71,
+        "endLine": 12,
+        "endChar": 72
+      },
+      "revId": "5c7fbd3ce12f9627eecc173f6d51bbe700c02ea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c14771d9_0a8ab157",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-06T20:52:02Z",
+      "side": 1,
+      "message": "nit. Maybe \"which is mostly compatible\"? Or not sure about the wording here.",
+      "range": {
+        "startLine": 15,
+        "startChar": 31,
+        "endLine": 15,
+        "endChar": 48
+      },
+      "revId": "5c7fbd3ce12f9627eecc173f6d51bbe700c02ea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbb3f121_f9d3179a",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-06T20:52:02Z",
+      "side": 1,
+      "message": "Maybe we should just remove this part entirely? Or I could do it when I get gn working? We should also mention the `dawn_wasm` .gclient arg?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 80
+      },
+      "revId": "5c7fbd3ce12f9627eecc173f6d51bbe700c02ea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "283845c3_b33b70c5",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-06T20:52:02Z",
+      "side": 1,
+      "message": "If we are using the new `emsdk` DEP, this probably needs to be the full path to `emcmake`.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 19
+      },
+      "revId": "5c7fbd3ce12f9627eecc173f6d51bbe700c02ea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
