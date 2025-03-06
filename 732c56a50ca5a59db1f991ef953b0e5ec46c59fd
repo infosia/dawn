@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "716b2e91_da43ed93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-06T18:30:46Z",
+      "side": 1,
+      "message": "lgtm w/ nits.",
+      "revId": "732c56a50ca5a59db1f991ef953b0e5ec46c59fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b334d45f_156ee74f",
+        "filename": "src/tint/tint.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-06T18:30:46Z",
+      "side": 1,
+      "message": "```suggestion\n  fuzzer_corpus_wgsl_dir \u003d \"${fuzzer_corpus_dir}/wgsl_corpus\"\n```",
+      "revId": "732c56a50ca5a59db1f991ef953b0e5ec46c59fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25665a76_d854ab89",
+        "filename": "src/tint/tint.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-06T18:30:46Z",
+      "side": 1,
+      "message": "```suggestion\n  fuzzer_corpus_wgsl_min_dir \u003d \"${fuzzer_corpus_dir}/wgsl_min_corpus\"\n```",
+      "revId": "732c56a50ca5a59db1f991ef953b0e5ec46c59fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab00bd03_e15f79b8",
+        "filename": "src/tint/tint.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-06T18:30:46Z",
+      "side": 1,
+      "message": "```suggestion\n  fuzzer_corpus_ir_dir \u003d \"${fuzzer_corpus_dir}/ir_corpus\"\n```",
+      "revId": "732c56a50ca5a59db1f991ef953b0e5ec46c59fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e781583c_5d2e7867",
+        "filename": "src/tint/tint.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-06T18:30:46Z",
+      "side": 1,
+      "message": "```suggestion\n  fuzzer_corpus_ir_min_dir \u003d \"${fuzzer_corpus_dir}/ir_min_corpus\"\n```",
+      "revId": "732c56a50ca5a59db1f991ef953b0e5ec46c59fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
