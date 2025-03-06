@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e4e02bd_4b78aede",
+        "filename": "src/tint/tint.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-03-06T18:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b334d45f_156ee74f",
+      "revId": "732c56a50ca5a59db1f991ef953b0e5ec46c59fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25665a76_d854ab89",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-06T18:30:46Z",
       "side": 1,
       "message": "```suggestion\n  fuzzer_corpus_wgsl_min_dir \u003d \"${fuzzer_corpus_dir}/wgsl_min_corpus\"\n```",
+      "revId": "732c56a50ca5a59db1f991ef953b0e5ec46c59fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ce3dd9d_9e0a637b",
+        "filename": "src/tint/tint.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-03-06T18:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25665a76_d854ab89",
       "revId": "732c56a50ca5a59db1f991ef953b0e5ec46c59fd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3c1c72c_9765b499",
+        "filename": "src/tint/tint.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-03-06T18:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab00bd03_e15f79b8",
+      "revId": "732c56a50ca5a59db1f991ef953b0e5ec46c59fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e781583c_5d2e7867",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-03-06T18:30:46Z",
       "side": 1,
       "message": "```suggestion\n  fuzzer_corpus_ir_min_dir \u003d \"${fuzzer_corpus_dir}/ir_min_corpus\"\n```",
+      "revId": "732c56a50ca5a59db1f991ef953b0e5ec46c59fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7ebbdf6_1115c4f2",
+        "filename": "src/tint/tint.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-03-06T18:52:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e781583c_5d2e7867",
       "revId": "732c56a50ca5a59db1f991ef953b0e5ec46c59fd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
