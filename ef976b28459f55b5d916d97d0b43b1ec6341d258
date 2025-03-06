@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be601065_7bb4edab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-03-06T10:12:29Z",
+      "side": 1,
+      "message": "This breaks rolling into Chromium:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/6329553\nhttps://ci.chromium.org/ui/p/chrome/builders/try/win-branded-compile-rel/785734/overview\n```\n../../third_party/dawn/src/dawn/common/RefCounted.cpp(96,5): error: assumption is ignored because it contains (potential) side-effects [-Werror,-Wassume]\n   96 |     DAWN_ASSERT((mRefCount \u0026 ~kPayloadMask) !\u003d 0);\n```",
+      "revId": "ef976b28459f55b5d916d97d0b43b1ec6341d258",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
