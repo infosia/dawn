@@ -19281,10 +19281,6 @@ crbug.com/dawn/2123 [ linux nvidia-0x2184 ] webgpu:api,validation,capability_che
 crbug.com/dawn/2125 [ nvidia-0x2184 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="function";workgroupSize=[1,1,1];batch__=9 [ Failure ]
 crbug.com/dawn/2125 [ nvidia-0x2184 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="private";workgroupSize=[1,1,1];batch__=9 [ Failure ]
 
-# canvas,getCurrentTexture:multiple_frames failures
-# The "onscreen" variant is failing on Android; "offscreen" failing on Intel 770
-crbug.com/341327471 [ android arm ] webgpu:web_platform,canvas,getCurrentTexture:multiple_frames:canvasType="onscreen" [ Failure ]
-
 # primitive_restart failures on Pixel 6; these pass on Pixel 7 Pro
 crbug.com/dawn/0000 [ android-pixel-6 ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint32";primitiveTopology="line-list" [ Failure ]
 crbug.com/dawn/0000 [ android-pixel-6 ] webgpu:api,operation,vertex_state,index_format:primitive_restart:indexFormat="uint32";primitiveTopology="point-list" [ Failure ]
