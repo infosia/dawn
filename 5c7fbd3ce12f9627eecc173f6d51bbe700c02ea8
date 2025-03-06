@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c99f9a99_7aace35e",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-06T21:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9d269bb_5ec4c9b4",
+      "range": {
+        "startLine": 12,
+        "startChar": 71,
+        "endLine": 12,
+        "endChar": 72
+      },
+      "revId": "5c7fbd3ce12f9627eecc173f6d51bbe700c02ea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c14771d9_0a8ab157",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-03-06T20:52:02Z",
       "side": 1,
       "message": "nit. Maybe \"which is mostly compatible\"? Or not sure about the wording here.",
+      "range": {
+        "startLine": 15,
+        "startChar": 31,
+        "endLine": 15,
+        "endChar": 48
+      },
+      "revId": "5c7fbd3ce12f9627eecc173f6d51bbe700c02ea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca7f60ed_00e361d9",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-06T21:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c14771d9_0a8ab157",
       "range": {
         "startLine": 15,
         "startChar": 31,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53e504c0_fadcf9d5",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-06T21:19:25Z",
+      "side": 1,
+      "message": "Done, kept an explanation of why we need 4.0.3 but explained there are two ways to get emsdk",
+      "parentUuid": "cbb3f121_f9d3179a",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 80
+      },
+      "revId": "5c7fbd3ce12f9627eecc173f6d51bbe700c02ea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "283845c3_b33b70c5",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-03-06T20:52:02Z",
       "side": 1,
       "message": "If we are using the new `emsdk` DEP, this probably needs to be the full path to `emcmake`.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 19
+      },
+      "revId": "5c7fbd3ce12f9627eecc173f6d51bbe700c02ea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c25349a9_8feff0d7",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-06T21:19:25Z",
+      "side": 1,
+      "message": "Done. (You can still `source emsdk_env.sh` with the DEP but there was no step to tell people to do this.)",
+      "parentUuid": "283845c3_b33b70c5",
       "range": {
         "startLine": 48,
         "startChar": 0,
