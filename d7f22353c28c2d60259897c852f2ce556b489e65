@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1d4692f5_2f5186cf",
+        "filename": "src/tint/lang/msl/writer/raise/module_scope_vars.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-06T19:28:20Z",
+      "side": 1,
+      "message": "```suggestion\n                        auto* ba \u003d ptr-\u003eStoreType()-\u003eAs\u003ccore::type::BindingArray\u003e();\n                        TINT_ASSERT(ba);\n                        \n                        auto* elem_type \u003d ba-\u003eElemType();\n```\n\nThe `As` can return a `nullptr` so maybe safer to check it explicitly.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 89
+      },
+      "revId": "d7f22353c28c2d60259897c852f2ce556b489e65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9b3aa34d_8950c9d6",
         "filename": "src/tint/lang/msl/writer/raise/module_scope_vars.cc",
         "patchSetId": 4
@@ -54,6 +77,23 @@
       "writtenOn": "2025-03-06T19:19:28Z",
       "side": 1,
       "message": "Suggest `TINT_ASSERT(access_use.instruction-\u003eIs\u003ccore::ir::Load\u003e())` here just in case we allow more uses of these pointers in the future.",
+      "revId": "d7f22353c28c2d60259897c852f2ce556b489e65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dafffb6_d1e33401",
+        "filename": "src/tint/lang/msl/writer/raise/module_scope_vars.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-06T19:28:20Z",
+      "side": 1,
+      "message": "This one was a bit confusing, maybe add a comment as to why the double loop?",
       "revId": "d7f22353c28c2d60259897c852f2ce556b489e65",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
