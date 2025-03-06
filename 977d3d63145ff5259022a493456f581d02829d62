@@ -16,6 +16,24 @@
       "message": "I should also include a readme. One of the specific things in the readme should be that the C++ bindings are NOT stable, but that it SHOULD (mostly) be possible to use older C++ bindings with newer C headers.",
       "revId": "977d3d63145ff5259022a493456f581d02829d62",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0e48e2a_5fa06df2",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-06T17:52:08Z",
+      "side": 1,
+      "message": "Also some file should contain a git hash of the dawn version it came from (e.g. `0000000000000000000000000000000000000000` or `0000000000000000000000000000000000000000-dirty`)",
+      "parentUuid": "93b72eea_2f8f7cce",
+      "revId": "977d3d63145ff5259022a493456f581d02829d62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
