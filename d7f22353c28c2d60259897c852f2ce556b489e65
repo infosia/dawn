@@ -16,6 +16,46 @@
       "message": "PTAL the non-WIP stack!",
       "revId": "d7f22353c28c2d60259897c852f2ce556b489e65",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b3aa34d_8950c9d6",
+        "filename": "src/tint/lang/msl/writer/raise/module_scope_vars.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-06T19:19:28Z",
+      "side": 1,
+      "message": "Nit: So you could also just update the type and operand of the existing access instruction, instead of creating a new one and destroying the old one.\n\ne.g.\n```\naccess-\u003eSetOperand(core::ir::Access::kObjectOperandOffset, extracted_variable);\naccess-\u003eResult(0)-\u003eSetType(elem_type);\n```",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 48
+      },
+      "revId": "d7f22353c28c2d60259897c852f2ce556b489e65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f027cab_cecdcfc6",
+        "filename": "src/tint/lang/msl/writer/raise/module_scope_vars.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-06T19:19:28Z",
+      "side": 1,
+      "message": "Suggest `TINT_ASSERT(access_use.instruction-\u003eIs\u003ccore::ir::Load\u003e())` here just in case we allow more uses of these pointers in the future.",
+      "revId": "d7f22353c28c2d60259897c852f2ce556b489e65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
