@@ -29,6 +29,9 @@
 
 #include <utility>
 
+#include "src/tint/lang/core/ir/block.h"
+#include "src/tint/lang/core/ir/constexpr_if.h"
+#include "src/tint/lang/core/ir/instruction_result.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/referenced_functions.h"
 #include "src/tint/lang/core/ir/referenced_module_decls.h"
@@ -73,6 +76,44 @@ Result<SuccessType> Run(ir::Module& ir, std::string_view entry_point_name) {
     // Remove unused module-scope variables.
     ReferencedModuleDecls<Module> referenced_var_cache(ir);
     auto& referenced_vars = referenced_var_cache.TransitiveReferences(entry_point);
+
+    Vector<Value*, 16> values_to_propagate;
+    for (auto inst : referenced_vars) {
+        // These operands are assumed to simply be the initalizers for the vars.
+        for (auto* op : inst->Operands()) {
+            values_to_propagate.Push(op);
+        }
+    }
+
+    // Transitively add all instruction references for all operands
+    while (!values_to_propagate.IsEmpty()) {
+        auto* value = values_to_propagate.Pop();
+        if (auto* inst_res = value->As<InstructionResult>()) {
+            if (auto* inst = inst_res->Instruction()) {
+                referenced_vars.Add(inst);
+                for (auto* op : inst->Operands()) {
+                    values_to_propagate.Push(op);
+                }
+                // ConstExprIf instruction is special because it use to be a short circuiting binary
+                // operation that was converted to a specialized if instruction.
+                if (auto* const_expr_if = inst->As<ConstExprIf>()) {
+                    auto add_block_instructions = [&values_to_propagate](Block* block) {
+                        if (block) {
+                            for (auto* block_inst : *block) {
+                                for (auto* each_res : block_inst->Results()) {
+                                    values_to_propagate.Push(each_res);
+                                }
+                            }
+                        }
+                    };
+
+                    add_block_instructions(const_expr_if->True());
+                    add_block_instructions(const_expr_if->False());
+                }
+            }
+        }
+    }
+
     auto* inst = ir.root_block->Back();
 
     // The instructions are removed in reverse order. This is in order to handle overrides which
@@ -82,7 +123,11 @@ Result<SuccessType> Run(ir::Module& ir, std::string_view entry_point_name) {
         auto prev = inst->prev;
         if (!referenced_vars.Contains(inst)) {
             // There shouldn't be any remaining references to the variable.
-            TINT_ASSERT(inst->Result(0)->NumUsages() == 0);
+            if (!(inst->Result(0)->NumUsages() == 0)) {
+                printf(" inst %s \n", inst->FriendlyName().c_str());
+
+                TINT_ICE() << " bad things";
+            }
             inst->Destroy();
         }
         inst = prev;
