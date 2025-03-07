@@ -351,6 +351,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "685793d1_765af5df",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:29:30Z",
+      "side": 1,
+      "message": "That\u0027s a test for Dawn\u0027s internal API for creating single planar ExternalTexture, and not using the new API that you are implementing.",
+      "parentUuid": "6b5a00aa_b8ecb09a",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8fcb9008_7895935c",
         "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
         "patchSetId": 43
