@@ -124,10 +124,12 @@ class ResourceMemoryAllocator::SingleTypeAllocator : public ResourceHeapAllocato
                                   "vkAllocateMemory"));
 
         DAWN_ASSERT(allocatedMemory != VK_NULL_HANDLE);
+        total_allocated_memory += size;
         return {std::make_unique<ResourceHeap>(allocatedMemory, mMemoryTypeIndex)};
     }
 
     void DeallocateResourceHeap(std::unique_ptr<ResourceHeapBase> allocation) override {
+        // TODO: Decrement the allocated size here.
         mDevice->GetFencedDeleter()->DeleteWhenUnused(ToBackend(allocation.get())->GetMemory());
     }
 
@@ -137,6 +139,7 @@ class ResourceMemoryAllocator::SingleTypeAllocator : public ResourceHeapAllocato
     VkDeviceSize mMemoryHeapSize;
     PooledResourceMemoryAllocator mPooledMemoryAllocator;
     BuddyMemoryAllocator mBuddySystem;
+    VkDeviceSize total_allocated_memory = 0;
 };
 
 // Implementation of ResourceMemoryAllocator
@@ -196,6 +199,7 @@ ResultOrError<ResourceMemoryAllocation> ResourceMemoryAllocator::Allocate(
         DAWN_TRY_ASSIGN(subAllocation, mAllocatorsPerType[memoryType]->AllocateMemory(
                                            requirements.size, alignment));
         if (subAllocation.GetInfo().mMethod != AllocationMethod::kInvalid) {
+            total_used_memory += requirements.size;
             return std::move(subAllocation);
         }
     }
@@ -216,11 +220,13 @@ ResultOrError<ResourceMemoryAllocation> ResourceMemoryAllocator::Allocate(
 
     AllocationInfo info;
     info.mMethod = AllocationMethod::kDirect;
+    total_used_memory += size;
     return ResourceMemoryAllocation(info, /*offset*/ 0, resourceHeap.release(),
                                     static_cast<uint8_t*>(mappedPointer));
 }
 
 void ResourceMemoryAllocator::Deallocate(ResourceMemoryAllocation* allocation) {
+    // TODO: Decrement the used size here.
     switch (allocation->GetInfo().mMethod) {
         // Some memory allocation can never be initialized, for example when wrapping
         // swapchain VkImages with a Texture.

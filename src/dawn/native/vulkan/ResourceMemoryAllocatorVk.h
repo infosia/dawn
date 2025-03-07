@@ -76,6 +76,8 @@ class ResourceMemoryAllocator {
     std::vector<std::unique_ptr<SingleTypeAllocator>> mAllocatorsPerType;
 
     SerialQueue<ExecutionSerial, ResourceMemoryAllocation> mSubAllocationsToDelete;
+
+    VkDeviceSize total_used_memory = 0;
 };
 
 }  // namespace dawn::native::vulkan
