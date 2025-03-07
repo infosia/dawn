@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59a651c4_c2785a60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-07T01:32:40Z",
+      "side": 1,
+      "message": "My CL has landed, so feel free to push forward with this.",
+      "revId": "c085afa12c67ea1e2a4c7d8d6210a3635ca2292a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
