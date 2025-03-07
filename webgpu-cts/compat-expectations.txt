@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-03-05 10:22:04PM
+# Last rolled: 2025-03-07 07:49:48AM
 
 # conflicts_allowed: true
 
@@ -20601,6 +20601,7 @@ crbug.com/0000 [ android-pixel-6 ] webgpu:api,operation,adapter,requestDevice:al
 crbug.com/0000 [ intel linux ] webgpu:api,operation,adapter,requestDevice:always_returns_device:featureLevel="core" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,operation,adapter,requestDevice:always_returns_device:featureLevel="core" [ Failure ]
 crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rgba32float";dstFormat="rgba32float";dimension="3d" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:api,operation,command_buffer,image_copy:offsets_and_sizes_copy_depth_stencil:format="depth24plus-stencil8";copyMethod="CopyT2B";aspect="stencil-only" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,compute,basic:large_dispatch:dispatchSize="maximum" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,operation,device,all_limits_and_features:everything: [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,operation,limits,max_combined_limits:max_storage_buffer_texture_frag_outputs:format="r8uint" [ Failure ]
@@ -22001,6 +22002,13 @@ crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,t
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="rgba32float";texelViewFormat="rgba32float";viewDimension="cube";sampleCount=1 [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="cube";sampleCount=1 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="cube";sampleCount=1 [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,execution,memory_model,texture_intra_invocation_coherence:texture_intra_invocation_coherence:format="r32float";dim="3d" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,memory_model,texture_intra_invocation_coherence:texture_intra_invocation_coherence:format="r32float";dim="3d" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,execution,memory_model,texture_intra_invocation_coherence:texture_intra_invocation_coherence:format="r32sint";dim="3d" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,memory_model,texture_intra_invocation_coherence:texture_intra_invocation_coherence:format="r32sint";dim="3d" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,execution,memory_model,texture_intra_invocation_coherence:texture_intra_invocation_coherence:format="r32uint";dim="3d" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,memory_model,texture_intra_invocation_coherence:texture_intra_invocation_coherence:format="r32uint";dim="3d" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage:nearFar=[0,1];sampleCount=4;interpolation={"type":"perspective","sampling":"center"} [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="none";orientation="flipY";colorSpaceConversion="none";srcFlipYInCopy=true;dstFormat="rg16float";dstPremultiplied=false [ Failure ]
 crbug.com/0000 [ android-pixel-6 android-t ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:canvasType="offscreen";srcAndDstInSameGPUDevice=false;dstColorFormat="rgba8unorm-srgb";srcAlphaMode="premultiplied";dstAlphaMode="opaque";srcDoFlipYDuringCopy=false [ Failure ]
 crbug.com/0000 [ android-pixel-6 android-t ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gpu_context_canvas:canvasType="offscreen";srcAndDstInSameGPUDevice=false;dstColorFormat="rgba8unorm-srgb";srcAlphaMode="premultiplied";dstAlphaMode="opaque";srcDoFlipYDuringCopy=true [ Failure ]
