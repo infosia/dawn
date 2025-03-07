@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "335352ad_5014be12",
+        "filename": "src/tint/lang/msl/writer/raise/module_scope_vars.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:39:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1d4692f5_2f5186cf",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 89
+      },
+      "revId": "d7f22353c28c2d60259897c852f2ce556b489e65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b3aa34d_8950c9d6",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-03-06T19:19:28Z",
       "side": 1,
       "message": "Nit: So you could also just update the type and operand of the existing access instruction, instead of creating a new one and destroying the old one.\n\ne.g.\n```\naccess-\u003eSetOperand(core::ir::Access::kObjectOperandOffset, extracted_variable);\naccess-\u003eResult(0)-\u003eSetType(elem_type);\n```",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 48
+      },
+      "revId": "d7f22353c28c2d60259897c852f2ce556b489e65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7628c9f0_0f8b86f2",
+        "filename": "src/tint/lang/msl/writer/raise/module_scope_vars.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:39:34Z",
+      "side": 1,
+      "message": "I didn\u0027t know that was possible, that\u0027s much better, done.",
+      "parentUuid": "9b3aa34d_8950c9d6",
       "range": {
         "startLine": 119,
         "startChar": 0,
@@ -94,6 +142,42 @@
       "writtenOn": "2025-03-06T19:28:20Z",
       "side": 1,
       "message": "This one was a bit confusing, maybe add a comment as to why the double loop?",
+      "revId": "d7f22353c28c2d60259897c852f2ce556b489e65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7947419_56494419",
+        "filename": "src/tint/lang/msl/writer/raise/module_scope_vars.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f027cab_cecdcfc6",
+      "revId": "d7f22353c28c2d60259897c852f2ce556b489e65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ff0117a_70bc8cab",
+        "filename": "src/tint/lang/msl/writer/raise/module_scope_vars.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dafffb6_d1e33401",
       "revId": "d7f22353c28c2d60259897c852f2ce556b489e65",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
