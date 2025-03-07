@@ -16,6 +16,23 @@
       "message": "-1 waiting on resolution of the spec issue",
       "revId": "9a3ae93f0a86c0d6c27067478ed49264e259377d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "716b9ff6_0a4f7f29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-07T04:58:41Z",
+      "side": 1,
+      "message": "We are still waiting on a decision\nhttps://github.com/gpuweb/gpuweb/issues/5093",
+      "revId": "9a3ae93f0a86c0d6c27067478ed49264e259377d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
