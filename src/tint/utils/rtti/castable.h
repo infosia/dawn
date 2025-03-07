@@ -392,6 +392,13 @@ class CastableBase {
     /// @see CastFlags
     template <typename TO, int FLAGS = 0>
     inline TO* As() {
+        if (this == nullptr) {
+#if defined(_MSC_VER) && !defined(__clang__)
+            abort();
+#else
+            __builtin_trap();
+#endif
+        }
         return tint::As<TO, FLAGS>(this);
     }
 
@@ -400,6 +407,13 @@ class CastableBase {
     /// @see CastFlags
     template <typename TO, int FLAGS = 0>
     inline const TO* As() const {
+        if (this == nullptr) {
+#if defined(_MSC_VER) && !defined(__clang__)
+            abort();
+#else
+            __builtin_trap();
+#endif
+        }
         return tint::As<const TO, FLAGS>(this);
     }
 
