@@ -501,6 +501,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6979cc5f_98a67f09",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-07T15:07:31Z",
+      "side": 1,
+      "message": "I\u0027m *really* trying but I still get a validation with `mipLevelCount \u003d 2` for both texture and texture views:\n\n```\n    Function call: Call(@0x16d3e96a0 8-byte object \u003c00-34 05-2D 01-00 00-00\u003e, ErrorType::Validation, The texture view ([TextureView of Texture (unlabeled 4x4 px, TextureFormat::RGBA8Unorm)]) mip level count (2) is not 1.\n - While validating entries[0] as a TextureView.\n```\n\nAnd when setting texture\u0027s mip level count to 1, I get the following:\n\n```\n    Function call: Call(@0x16f1157c0 8-byte object \u003c00-68 82-30 01-00 00-00\u003e, ErrorType::Validation, Texture view mip level range (baseMipLevel: 0, mipLevelCount: 2) exceeds the texture\u0027s mip level count (1).\n - While validating [TextureViewDescriptor] against [Texture (unlabeled 4x4 px, TextureFormat::RGBA8Unorm)].\n - While calling [Texture (unlabeled 4x4 px, TextureFormat::RGBA8Unorm)].CreateView([TextureViewDescriptor]).\n```",
+      "parentUuid": "d9f6de7b_4fa87425",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8fcb9008_7895935c",
         "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
         "patchSetId": 43
