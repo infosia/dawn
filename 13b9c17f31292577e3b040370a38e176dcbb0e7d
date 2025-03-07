@@ -111,6 +111,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "05b31d84_19d1f533",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-07T14:41:26Z",
+      "side": 1,
+      "message": "If this check will always true, it means we don\u0027t need _\"entries[%u] is neither an ExternalTexture nor a TextureView when the layout contains an ExternalTexture entry.\"_ below then?",
+      "parentUuid": "f588326c_37d3ca52",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4db67d12_2f10515c",
         "filename": "src/dawn/native/BindGroup.cpp",
         "patchSetId": 43
