@@ -85,8 +85,6 @@ if(TINT_BUILD_WGSL_READER)
 tint_add_target(tint_lang_wgsl_inspector_test test
   lang/wgsl/inspector/inspector_builder_test.cc
   lang/wgsl/inspector/inspector_builder_test.h
-  lang/wgsl/inspector/inspector_runner_test.cc
-  lang/wgsl/inspector/inspector_runner_test.h
   lang/wgsl/inspector/inspector_test.cc
 )
 
@@ -94,7 +92,6 @@ tint_target_add_dependencies(tint_lang_wgsl_inspector_test test
   tint_api_common
   tint_lang_core
   tint_lang_core_constant
-  tint_lang_core_ir
   tint_lang_core_type
   tint_lang_wgsl
   tint_lang_wgsl_ast
@@ -121,11 +118,5 @@ tint_target_add_external_dependencies(tint_lang_wgsl_inspector_test test
   "gtest"
   "src_utils"
 )
-
-if(TINT_BUILD_WGSL_READER)
-  tint_target_add_dependencies(tint_lang_wgsl_inspector_test test
-    tint_lang_wgsl_reader
-  )
-endif(TINT_BUILD_WGSL_READER)
 
 endif(TINT_BUILD_WGSL_READER)

@@ -33,6 +33,7 @@
 #include <string>
 #include <tuple>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -87,7 +88,7 @@ class Inspector {
     /// @param entry_point name of the entry point to get information about.
     /// @returns vector of all of the sampler/texture sampling pairs that are used
     /// by that entry point.
-    VectorRef<SamplerTexturePair> GetSamplerTextureUses(const std::string& entry_point);
+    std::vector<SamplerTexturePair> GetSamplerTextureUses(const std::string& entry_point);
 
     /// @param entry_point name of the entry point to get information about.
     /// @param placeholder the sampler binding point to use for texture-only
@@ -137,8 +138,19 @@ class Inspector {
   private:
     const Program& program_;
     diag::List diagnostics_;
-    std::unique_ptr<std::unordered_map<std::string, UniqueVector<SamplerTexturePair, 4>>>
-        sampler_targets_;
+
+    struct EntryPointTextureMetadata {
+        std::unordered_set<BindingPoint> textures_used_without_samplers;
+        std::unordered_set<BindingPoint> textures_with_num_levels;
+        std::unordered_set<BindingPoint> textures_with_num_samples;
+        std::unordered_set<SamplerTexturePair> sampling_pairs;
+        bool has_texture_load_with_depth_texture = false;
+        bool has_depth_texture_with_non_comparison_sampler = false;
+    };
+    std::unordered_map<std::string, EntryPointTextureMetadata> texture_metadata_;
+
+    /// Computes the texture metadata for `entry_point` and returns it.
+    const EntryPointTextureMetadata& ComputeTextureMetadata(const std::string& entry_point);
 
     /// @param name name of the entry point to find
     /// @returns a pointer to the entry point if it exists, otherwise returns
@@ -176,9 +188,6 @@ class Inspector {
     /// @returns the array length of the builtin clip_distances or empty when it is not used
     std::optional<uint32_t> GetClipDistancesBuiltinSize(const core::type::Type* type) const;
 
-    /// Constructs |sampler_targets_| if it hasn't already been instantiated.
-    void GenerateSamplerTargets();
-
     /// @param attributes attributes associated with the parameter or structure member
     /// @returns the interpolation type and sampling modes for the value
     std::tuple<InterpolationType, InterpolationSampling> CalculateInterpolationData(
@@ -199,54 +208,33 @@ class Inspector {
     /// @returns `true` if @p func uses any subgroup matrix types
     bool UsesSubgroupMatrix(const sem::Function* func) const;
 
-    /// For a N-uple of expressions, resolve to the appropriate global resources
-    /// and call 'cb'.
-    /// 'cb' may be called multiple times.
-    /// Assumes that not being able to resolve the resources is an error, so will
-    /// invoke TINT_ICE when that occurs.
+    /// When computing the list of combinations of textures and samplers used together, what we
+    /// need to return are the global resources. However these resources can be passed as
+    /// parameters that are not immediately linked to the global resource. This helper function
+    /// walks the AST to find this link.
+    ///
+    /// Given an N-uple of expressions, that are either textures or samplers that are used in the
+    /// same call expression, determine each call site where the globals for these resources are
+    /// first combined together. The callback is called for each callsite along with the global
+    /// variables corresponding to the N expressions.
+    ///
     /// @tparam N number of expressions in the n-uple
     /// @tparam F type of the callback provided.
     /// @param exprs N-uple of expressions to resolve.
-    /// @param callsite the callsite the expressions in the n-uple originated from
+    /// @param function the enclosing function where the N-uple is used.
     /// @param cb is a callback function with the signature:
-    /// `void(std::array<const sem::GlobalVariable*, N>, em::Function* callsite)`,
+    /// `void(std::array<const sem::GlobalVariable*, N>, const sem::Function* callsite)`,
     /// which is invoked whenever a set of expressions are resolved to globals. The `callsite`
     /// provides the function where we determined the sampler,texture global variables. This
     /// is the starting point to determine which entry points are using this sampler,texture.
     template <size_t N, typename F>
-    void GetOriginatingResources(std::array<const ast::Expression*, N> exprs,
-                                 const ast::CallExpression* callsite,
-                                 F&& cb);
+    void ForEachOriginatingResource(std::array<const ast::Expression*, N> exprs,
+                                    const sem::Function* function,
+                                    F&& cb);
 
     /// @param func the function of the entry point. Must be non-nullptr and true for IsEntryPoint()
     /// @returns the entry point information
     EntryPoint GetEntryPoint(const tint::ast::Function* func);
-
-    /// The information needed to be supplied.
-    enum class TextureUsageType : uint8_t {
-        /// textureLoad
-        kTextureLoad,
-        /// textureNumLevels
-        kTextureNumLevels,
-        /// textureNumSamples
-        kTextureNumSamples,
-        /// depth texture with non-comparison sampler
-        kDepthTextureWithNonComparisonSampler,
-    };
-    /// Information on level and sample calls by a given texture binding point
-    struct TextureUsageInfo {
-        /// The type of function
-        TextureUsageType type = TextureUsageType::kTextureNumLevels;
-        /// The group number
-        uint32_t group = 0;
-        /// The binding number
-        uint32_t binding = 0;
-    };
-
-    std::vector<Inspector::TextureUsageInfo> GetTextureUsagesForEntryPoint(
-        const tint::ast::Function& ep,
-        std::function<std::optional<TextureUsageType>(const tint::sem::Call* call,
-                                                      tint::wgsl::BuiltinFn builtin_fn)> filter);
 };
 
 }  // namespace tint::inspector

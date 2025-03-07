@@ -82,15 +82,12 @@ cc_library(
   srcs = [
     "inspector_builder_test.cc",
     "inspector_builder_test.h",
-    "inspector_runner_test.cc",
-    "inspector_runner_test.h",
     "inspector_test.cc",
   ],
   deps = [
     "//src/tint/api/common",
     "//src/tint/lang/core",
     "//src/tint/lang/core/constant",
-    "//src/tint/lang/core/ir",
     "//src/tint/lang/core/type",
     "//src/tint/lang/wgsl",
     "//src/tint/lang/wgsl/ast",
@@ -113,12 +110,7 @@ cc_library(
     "//src/tint/utils/text",
     "@gtest",
     "//src/utils",
-  ] + select({
-    ":tint_build_wgsl_reader": [
-      "//src/tint/lang/wgsl/reader",
-    ],
-    "//conditions:default": [],
-  }),
+  ],
   copts = COPTS,
   visibility = ["//visibility:public"],
 )
