@@ -331,7 +331,14 @@ inline bool IsAnyOf(OBJ* obj) {
 /// @param obj the object to cast from
 /// @see CastFlags
 template <typename TO, int FLAGS = 0, typename FROM = tint::detail::Infer>
-inline TO* As(FROM* obj) {
+inline TO* As(FROM* obj, bool is_this = false) {
+    if (is_this && obj == nullptr) {
+#if defined(_MSC_VER) && !defined(__clang__)
+        abort();
+#else
+        __builtin_trap();
+#endif
+    }
     auto* as_castable = static_cast<CastableBase*>(obj);
     return Is<TO, FLAGS>(obj) ? static_cast<TO*>(as_castable) : nullptr;
 }
@@ -341,7 +348,14 @@ inline TO* As(FROM* obj) {
 /// @param obj the object to cast from
 /// @see CastFlags
 template <typename TO, int FLAGS = 0, typename FROM = tint::detail::Infer>
-inline const TO* As(const FROM* obj) {
+inline const TO* As(const FROM* obj, bool is_this = false) {
+    if (is_this && obj == nullptr) {
+#if defined(_MSC_VER) && !defined(__clang__)
+        abort();
+#else
+        __builtin_trap();
+#endif
+    }
     auto* as_castable = static_cast<const CastableBase*>(obj);
     return Is<TO, FLAGS>(obj) ? static_cast<const TO*>(as_castable) : nullptr;
 }
@@ -392,7 +406,7 @@ class CastableBase {
     /// @see CastFlags
     template <typename TO, int FLAGS = 0>
     inline TO* As() {
-        return tint::As<TO, FLAGS>(this);
+        return tint::As<TO, FLAGS>(this, true);
     }
 
     /// @returns this object dynamically cast to the type `TO` or `nullptr` if this object does not
@@ -400,7 +414,7 @@ class CastableBase {
     /// @see CastFlags
     template <typename TO, int FLAGS = 0>
     inline const TO* As() const {
-        return tint::As<const TO, FLAGS>(this);
+        return tint::As<const TO, FLAGS>(this, true);
     }
 
   protected:
@@ -478,7 +492,7 @@ class Castable : public BASE {
     /// @see CastFlags
     template <typename TO, int FLAGS = 0>
     inline TO* As() {
-        return tint::As<TO, FLAGS>(this);
+        return tint::As<TO, FLAGS>(this, true);
     }
 
     /// @returns this object dynamically cast to the type `TO` or `nullptr` if
@@ -486,7 +500,7 @@ class Castable : public BASE {
     /// @see CastFlags
     template <typename TO, int FLAGS = 0>
     inline const TO* As() const {
-        return tint::As<const TO, FLAGS>(this);
+        return tint::As<const TO, FLAGS>(this, true);
     }
 };
 
