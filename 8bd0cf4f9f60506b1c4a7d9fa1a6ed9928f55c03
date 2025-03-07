@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6578a007_ab4ec9c7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-03-07T07:55:14Z",
+      "side": 1,
+      "message": "fyi: the texture_intra_invocation_coherence:texture_intra_invocation_coherence failures are expected. Fixed here: https://github.com/gpuweb/cts/pull/4272",
+      "revId": "8bd0cf4f9f60506b1c4a7d9fa1a6ed9928f55c03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
