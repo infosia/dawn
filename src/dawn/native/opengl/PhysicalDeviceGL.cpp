@@ -34,6 +34,7 @@
 #include <utility>
 
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/opengl/ContextEGL.h"
@@ -256,8 +257,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     if (mDisplay->egl.HasExt(EGLExt::WaitSync) &&
         mFunctions.IsGLExtensionSupported("GL_OES_EGL_sync")) {
+        DAWN_DEBUG() << "\n\n\n !!!! 111\n\n\n";
         if (mDisplay->egl.HasExt(EGLExt::NativeFenceSync)) {
             EnableFeature(dawn::native::Feature::SharedFenceSyncFD);
+            DAWN_DEBUG() << "\n\n\n !!!! 222\n\n\n";
         }
         EnableFeature(dawn::native::Feature::SharedFenceEGLSync);
     }

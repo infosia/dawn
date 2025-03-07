@@ -210,7 +210,7 @@ class SharedTextureMemoryTestAndroidEGLSyncOpenGLESBackend
 
     std::vector<wgpu::FeatureName> RequiredFeatures(const wgpu::Adapter&) const override {
         return {wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer,
-                wgpu::FeatureName::SharedFenceEGLSync};
+                wgpu::FeatureName::SharedFenceSyncFD, wgpu::FeatureName::SharedFenceEGLSync};
     }
 };
 
@@ -659,6 +659,13 @@ TEST_P(SharedTextureMemoryTests, GPUReadForUninitializedTextureWithExternalForma
     beginDesc.nextInChain = &beginLayout;
 
     ASSERT_DEVICE_ERROR(memory.BeginAccess(texture, &beginDesc));
+}
+
+TEST_P(SharedTextureMemoryTests, Test) {
+    EXPECT_TRUE(SupportsFeatures({wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer}));
+    EXPECT_TRUE(SupportsFeatures({wgpu::FeatureName::SharedFenceSyncFD}));
+    EXPECT_TRUE(device.HasFeature(wgpu::FeatureName::SharedTextureMemoryAHardwareBuffer));
+    EXPECT_TRUE(device.HasFeature(wgpu::FeatureName::SharedFenceSyncFD));
 }
 
 DAWN_INSTANTIATE_PREFIXED_TEST_P(Vulkan,
