@@ -387,6 +387,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1bf32c54_7b8b7e6a",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-07T14:34:04Z",
+      "side": 1,
+      "message": "I get the following validation error with `texture.createView({ baseMipLevel: 2, mipLevelCount: 1 })`:\n```\nTexture view mip level range (baseMipLevel: 2, mipLevelCount: 1) exceeds the texture\u0027s mip level count (1).\n```\nIs that intended?",
+      "parentUuid": "925e3086_aaec220d",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8fcb9008_7895935c",
         "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
         "patchSetId": 43
