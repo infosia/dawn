@@ -213,50 +213,6 @@ class Function final : public Castable<Function, CallTarget> {
     std::vector<std::pair<const Variable*, const ast::BuiltinAttribute*>>
     TransitivelyReferencedBuiltinVariables() const;
 
-    /// Retrieves any referenced uniform variables. Note, the variables must be
-    /// decorated with both binding and group attributes.
-    /// @returns the referenced uniforms
-    VariableBindings TransitivelyReferencedUniformVariables() const;
-
-    /// Retrieves any referenced storagebuffer variables. Note, the variables
-    /// must be decorated with both binding and group attributes.
-    /// @returns the referenced storagebuffers
-    VariableBindings TransitivelyReferencedStorageBufferVariables() const;
-
-    /// Retrieves any referenced regular Sampler variables. Note, the
-    /// variables must be decorated with both binding and group attributes.
-    /// @returns the referenced storagebuffers
-    VariableBindings TransitivelyReferencedSamplerVariables() const;
-
-    /// Retrieves any referenced comparison Sampler variables. Note, the
-    /// variables must be decorated with both binding and group attributes.
-    /// @returns the referenced storagebuffers
-    VariableBindings TransitivelyReferencedComparisonSamplerVariables() const;
-
-    /// Retrieves any referenced sampled textures variables. Note, the
-    /// variables must be decorated with both binding and group attributes.
-    /// @returns the referenced sampled textures
-    VariableBindings TransitivelyReferencedSampledTextureVariables() const;
-
-    /// Retrieves any referenced multisampled textures variables. Note, the
-    /// variables must be decorated with both binding and group attributes.
-    /// @returns the referenced sampled textures
-    VariableBindings TransitivelyReferencedMultisampledTextureVariables() const;
-
-    /// Retrieves any referenced variables of the given type. Note, the variables
-    /// must be decorated with both binding and group attributes.
-    /// @param type the type of the variables to find
-    /// @returns the referenced variables
-    VariableBindings TransitivelyReferencedVariablesOfType(const tint::TypeInfo* type) const;
-
-    /// Retrieves any referenced variables of the given type. Note, the variables
-    /// must be decorated with both binding and group attributes.
-    /// @returns the referenced variables
-    template <typename T>
-    VariableBindings TransitivelyReferencedVariablesOfType() const {
-        return TransitivelyReferencedVariablesOfType(&tint::TypeInfo::Of<T>());
-    }
-
     /// Checks if the given entry point is an ancestor
     /// @param sym the entry point symbol
     /// @returns true if `sym` is an ancestor entry point of this function
@@ -299,9 +255,6 @@ class Function final : public Castable<Function, CallTarget> {
   private:
     Function(const Function&) = delete;
     Function(Function&&) = delete;
-
-    VariableBindings TransitivelyReferencedSamplerVariablesImpl(core::type::SamplerKind kind) const;
-    VariableBindings TransitivelyReferencedSampledTextureVariablesImpl(bool multisampled) const;
 
     const ast::Function* const declaration_;
 

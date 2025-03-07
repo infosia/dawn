@@ -472,7 +472,7 @@ main_out main_inner(float2 vMainuv_param, float4 v_output1_param, bool gl_FrontF
   return main_out{.glFragColor_1=(*tint_module_vars.glFragColor)};
 }
 
-fragment main_outputs v_4(main_inputs inputs [[stage_in]], bool gl_FrontFacing_param [[front_facing]], texture2d<float, access::sample> TextureSamplerTexture [[texture(0)]], sampler TextureSamplerSampler [[sampler(0)]], const constant LeftOver_packed_vec3* x_269 [[buffer(0)]], texture2d<float, access::sample> TextureSampler1Texture [[texture(1)]], sampler TextureSampler1Sampler [[sampler(1)]], const constant Light0_packed_vec3* light0 [[buffer(1)]]) {
+fragment main_outputs v_4(main_inputs inputs [[stage_in]], bool gl_FrontFacing_param [[front_facing]], texture2d<float, access::sample> TextureSamplerTexture [[texture(0)]], sampler TextureSamplerSampler [[sampler(0)]], const constant LeftOver_packed_vec3* x_269 [[buffer(1)]], texture2d<float, access::sample> TextureSampler1Texture [[texture(1)]], sampler TextureSampler1Sampler [[sampler(1)]], const constant Light0_packed_vec3* light0 [[buffer(0)]]) {
   thread float u_Float = 0.0f;
   thread float3 u_Color = 0.0f;
   thread float2 vMainuv = 0.0f;
