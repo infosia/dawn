@@ -36,6 +36,7 @@
 #include "src/tint/lang/core/interpolation_sampling.h"
 #include "src/tint/lang/core/interpolation_type.h"
 #include "src/tint/lang/core/type/array.h"
+#include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/bool.h"
 #include "src/tint/lang/core/type/depth_multisampled_texture.h"
 #include "src/tint/lang/core/type/depth_texture.h"
@@ -59,6 +60,7 @@
 #include "src/tint/lang/wgsl/ast/interpolate_attribute.h"
 #include "src/tint/lang/wgsl/ast/module.h"
 #include "src/tint/lang/wgsl/ast/override.h"
+#include "src/tint/lang/wgsl/sem/accessor_expression.h"
 #include "src/tint/lang/wgsl/sem/builtin_enum_expression.h"
 #include "src/tint/lang/wgsl/sem/call.h"
 #include "src/tint/lang/wgsl/sem/function.h"
@@ -390,8 +392,17 @@ std::vector<ResourceBinding> Inspector::GetResourceBindings(const std::string& e
         result.binding = handle->Attributes().binding_point->binding;
         result.variable_name = handle->Declaration()->name->symbol.Name();
 
+        const core::type::Type* handle_type = handle->Type()->UnwrapRef();
+
+        // BindingArray only modifies the array_size member of the ResourceBinding of its inner
+        // type.
+        if (auto* array = handle_type->As<core::type::BindingArray>()) {
+            result.array_size = array->Count()->As<core::type::ConstantArrayCount>()->value;
+            handle_type = array->ElemType();
+        }
+
         Switch(
-            handle->Type()->UnwrapRef(),
+            handle_type,
 
             [&](const core::type::Sampler* sampler) {
                 if (sampler->Kind() == core::type::SamplerKind::kSampler) {
@@ -582,6 +593,16 @@ void Inspector::ForEachOriginatingResource(std::array<const ast::Expression*, N>
 
     auto& sem = program_.Sem();
 
+    // Some of the handles may come from binding_array using an indexing operation. In that case
+    // trace the usage of the binding_array instead.
+    for (size_t i = 0; i < N; i++) {
+        if (auto* access = exprs[i]->template As<ast::AccessorExpression>()) {
+            TINT_ASSERT(sem.Get(access)->Object()->Type()->template Is<core::type::BindingArray>());
+            exprs[i] = access->object;
+            return ForEachOriginatingResource(exprs, function, callback);
+        }
+    }
+
     // At this point expressions can only be IdentifierExpression, sort them between parameters and
     // globals. Variables and lets of handle types are not allowed.
     bool has_parameter = false;
@@ -626,6 +647,8 @@ std::vector<SamplerTexturePair> Inspector::GetSamplerTextureUses(const std::stri
     }
     auto* func_sem = program_.Sem().Get(func);
 
+    // TODO(393558555): Handle textures that are in binding_array to trace through them to find
+    // the corresponding global variable.
     std::vector<SamplerTexturePair> new_pairs;
     for (auto pair : func_sem->TextureSamplerPairs()) {
         auto* texture = pair.first->As<sem::GlobalVariable>();

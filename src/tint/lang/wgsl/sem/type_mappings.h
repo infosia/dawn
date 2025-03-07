@@ -63,13 +63,13 @@ namespace tint::core {
 enum class BuiltinValue : uint8_t;
 }
 namespace tint::sem {
+class AccessorExpression;
 class BlockStatement;
 class Expression;
 class ForLoopStatement;
 class Function;
 class GlobalVariable;
 class IfStatement;
-class Node;
 class Parameter;
 class Statement;
 class Struct;
@@ -105,7 +105,7 @@ struct TypeMappings {
     StructMember* operator()(ast::StructMember*);
     SwitchStatement* operator()(ast::SwitchStatement*);
     core::type::Type* operator()(ast::TypeDecl*);
-    ValueExpression* operator()(ast::AccessorExpression*);
+    AccessorExpression* operator()(ast::AccessorExpression*);
     ValueExpression* operator()(ast::BinaryExpression*);
     ValueExpression* operator()(ast::CallExpression*);
     ValueExpression* operator()(ast::LiteralExpression*);
