@@ -54,6 +54,7 @@
 #include "src/tint/lang/wgsl/ast/call_expression.h"
 #include "src/tint/lang/wgsl/ast/id_attribute.h"
 #include "src/tint/lang/wgsl/ast/identifier.h"
+#include "src/tint/lang/wgsl/ast/identifier_expression.h"
 #include "src/tint/lang/wgsl/ast/input_attachment_index_attribute.h"
 #include "src/tint/lang/wgsl/ast/interpolate_attribute.h"
 #include "src/tint/lang/wgsl/ast/module.h"
@@ -548,8 +549,8 @@ void Inspector::GenerateSamplerTargets() {
         auto* t = c->args[static_cast<size_t>(texture_index)];
         auto* s = c->args[static_cast<size_t>(sampler_index)];
 
-        GetOriginatingResources(
-            std::array<const ast::Expression*, 2>{t, s}, c,
+        ForEachOriginatingResource(
+            std::array<const ast::Expression*, 2>{t, s}, sem.Get(c)->Stmt()->Function(),
             [&](std::array<const sem::GlobalVariable*, 2> globals, const sem::Function* fn) {
                 Vector<const sem::Function*, 4> entry_points;
                 if (fn->Declaration()->IsEntryPoint()) {
@@ -571,9 +572,9 @@ void Inspector::GenerateSamplerTargets() {
 }
 
 template <size_t N, typename F>
-void Inspector::GetOriginatingResources(std::array<const ast::Expression*, N> exprs,
-                                        const ast::CallExpression* callsite,
-                                        F&& callback) {
+void Inspector::ForEachOriginatingResource(std::array<const ast::Expression*, N> exprs,
+                                           const sem::Function* function,
+                                           F&& callback) {
     if (DAWN_UNLIKELY(!program_.IsValid())) {
         TINT_ICE() << "attempting to get originating resources in invalid program";
         return;
@@ -581,48 +582,39 @@ void Inspector::GetOriginatingResources(std::array<const ast::Expression*, N> ex
 
     auto& sem = program_.Sem();
 
+    // At this point expressions can only be IdentifierExpression, sort them between parameters and
+    // globals. Variables and lets of handle types are not allowed.
+    bool has_parameter = false;
     std::array<const sem::GlobalVariable*, N> globals{};
     std::array<const sem::Parameter*, N> parameters{};
-    UniqueVector<const ast::CallExpression*, 8> callsites;
 
     for (size_t i = 0; i < N; i++) {
-        const sem::Variable* root_ident = sem.GetVal(exprs[i])->RootIdentifier();
-        if (auto* global = root_ident->As<sem::GlobalVariable>()) {
-            globals[i] = global;
-        } else if (auto* param = root_ident->As<sem::Parameter>()) {
-            auto* func = tint::As<sem::Function>(param->Owner());
-            if (func->CallSites().IsEmpty()) {
-                // One or more of the expressions is a parameter, but this function
-                // is not called. Ignore.
-                return;
-            }
-            for (auto* call : func->CallSites()) {
-                callsites.Add(call->Declaration());
-            }
-            parameters[i] = param;
-        } else {
-            TINT_ICE() << "cannot resolve originating resource with expression type "
-                       << exprs[i]->TypeInfo().name;
-            return;
-        }
+        TINT_ASSERT(exprs[i]->template Is<ast::IdentifierExpression>());
+        Switch(
+            sem.GetVal(exprs[i])->RootIdentifier(),
+            [&](const sem::GlobalVariable* global) { globals[i] = global; },
+            [&](const sem::Parameter* param) {
+                has_parameter = true;
+                parameters[i] = param;
+            },
+            TINT_ICE_ON_NO_MATCH);
     }
 
-    if (!callsites.IsEmpty()) {
-        for (auto* call_expr : callsites) {
-            // Make a copy of the expressions for this callsite
-            std::array<const ast::Expression*, N> call_exprs = exprs;
-            // Patch all the parameter expressions with their argument
-            for (size_t i = 0; i < N; i++) {
-                if (auto* param = parameters[i]) {
-                    call_exprs[i] = call_expr->args[param->Index()];
-                }
+    // We don't need to trace anymore as all expressions resolved to globals.
+    if (!has_parameter) {
+        callback(globals, function);
+    }
+
+    // Trace through the callers
+    for (auto* callsite : function->CallSites()) {
+        // Replace expressions that are still parameters with the expression passed in the caller.
+        std::array<const ast::Expression*, N> call_exprs = exprs;
+        for (size_t i = 0; i < N; i++) {
+            if (auto* param = parameters[i]) {
+                call_exprs[i] = callsite->Declaration()->args[param->Index()];
             }
-            // Now call GetOriginatingResources() with from the callsite
-            GetOriginatingResources(call_exprs, call_expr, callback);
         }
-    } else {
-        // All the expressions resolved to globals
-        callback(globals, sem.Get(callsite)->Stmt()->Function());
+        ForEachOriginatingResource(call_exprs, callsite->Stmt()->Function(), callback);
     }
 }
 
