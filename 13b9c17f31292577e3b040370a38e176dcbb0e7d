@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61f1245d_e94dcda7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 43
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-07T12:51:07Z",
+      "side": 1,
+      "message": "I\u0027ve added the textureDimensions test. Please review.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
