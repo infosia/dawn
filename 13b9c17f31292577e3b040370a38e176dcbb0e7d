@@ -333,6 +333,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6b5a00aa_b8ecb09a",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-07T14:12:55Z",
+      "side": 1,
+      "message": "According to https://github.com/gpuweb/gpuweb/pull/5079/files, `mipLevelCount` must be 1. I\u0027m not sure how pass two views at different mip levels then.",
+      "parentUuid": "3a1a38ac_39082d22",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8fcb9008_7895935c",
         "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
         "patchSetId": 43
