@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-03-05 10:22:04PM
+# Last rolled: 2025-03-07 05:23:00AM
 
 # conflicts_allowed: true
 
@@ -9266,4 +9266,4 @@ crbug.com/0000 [ dawn-backend-validation intel-0x4680 linux webgpu-adapter-defau
 
 crbug.com/0000 [ mac-arm64 ] webgpu:web_platform,copyToTexture,ImageData:from_ImageData:srcDoFlipYDuringCopy=true;dstColorFormat="rgba8unorm";dstPremultiplied=true [ Failure ]
 crbug.com/0000 [ mac-arm64 ] webgpu:web_platform,copyToTexture,ImageData:from_ImageData:srcDoFlipYDuringCopy=true;dstColorFormat="rgba8unorm-srgb";dstPremultiplied=true [ Failure ]
-crbug.com/0000 [ win10 nvidia-0x2184 ] webgpu:web_platform,copyToTexture,ImageData:from_ImageData:srcDoFlipYDuringCopy=true;dstColorFormat="bgra8unorm-srgb";dstPremultiplied=true [ Failure ]
+crbug.com/0000 [ nvidia-0x2184 win10 ] webgpu:web_platform,copyToTexture,ImageData:from_ImageData:srcDoFlipYDuringCopy=true;dstColorFormat="bgra8unorm-srgb";dstPremultiplied=true [ Failure ]
