@@ -19022,22 +19022,6 @@ crbug.com/367807042 [ android arm ] webgpu:shader,execution,expression,call,buil
 # textureSampleGrad() is broken with cube maps
 crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSampleGrad:sampled_3d_coords:* [ Skip ]
 
-# textureSample() is broken with some cube map formats
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-10x6-unorm";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-10x6-unorm-srgb";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-10x8-unorm";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-10x8-unorm-srgb";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-12x10-unorm";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-12x10-unorm-srgb";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-5x4-unorm";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-5x4-unorm-srgb";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-6x5-unorm";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-6x5-unorm-srgb";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-6x6-unorm";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-6x6-unorm-srgb";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-8x5-unorm";* [ Failure ]
-crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="astc-8x5-unorm-srgb";* [ Failure ]
-
 # textureSampleLevel() is broken with some cube map formats
 crbug.com/383595386 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_3d_coords:* [ Failure ]
 
