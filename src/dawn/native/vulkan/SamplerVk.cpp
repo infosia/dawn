@@ -30,6 +30,7 @@
 #include <algorithm>
 
 #include "dawn/native/ChainUtils.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
@@ -125,7 +126,9 @@ MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
         device->fn.CreateSampler(device->GetVkDevice(), &createInfo, nullptr, &*mHandle),
         "CreateSampler"));
 
-    SetLabelImpl();
+    if (device->GetInstance()->IsBackendValidationEnabled()) {
+        SetLabelImpl();
+    }
 
     return {};
 }

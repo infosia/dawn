@@ -34,6 +34,7 @@
 
 #include "dawn/native/CreatePipelineAsyncEvent.h"
 #include "dawn/native/ImmediateConstantsLayout.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/PipelineCacheVk.h"
@@ -636,7 +637,9 @@ MaybeError RenderPipeline::InitializeImpl() {
 
     DAWN_TRY(cache->DidCompilePipeline());
 
-    SetLabelImpl();
+    if (device->GetInstance()->IsBackendValidationEnabled()) {
+        SetLabelImpl();
+    }
 
     return {};
 }

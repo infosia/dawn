@@ -36,6 +36,7 @@
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/DynamicUploader.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/vulkan/CommandBufferVk.h"
 #include "dawn/native/vulkan/CommandRecordingContextVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
@@ -91,7 +92,9 @@ MaybeError Queue::Initialize() {
 
     DAWN_TRY(PrepareRecordingContext());
 
-    SetLabelImpl();
+    if (device->GetInstance()->IsBackendValidationEnabled()) {
+        SetLabelImpl();
+    }
     return {};
 }
 

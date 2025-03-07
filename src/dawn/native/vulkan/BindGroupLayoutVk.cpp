@@ -35,6 +35,7 @@
 #include "dawn/common/Range.h"
 #include "dawn/common/ityp_vector.h"
 #include "dawn/native/CacheKey.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/vulkan/DescriptorSetAllocator.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
@@ -222,7 +223,9 @@ MaybeError BindGroupLayout::Initialize() {
     mDescriptorSetAllocator =
         DescriptorSetAllocator::Create(device, std::move(descriptorCountPerType));
 
-    SetLabelImpl();
+    if (device->GetInstance()->IsBackendValidationEnabled()) {
+        SetLabelImpl();
+    }
 
     return {};
 }
