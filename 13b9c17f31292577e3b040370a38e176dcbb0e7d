@@ -405,6 +405,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d9f6de7b_4fa87425",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:41:08Z",
+      "side": 1,
+      "message": "Make `mipLevelCount` 2 in this case? I don\u0027t like the `Create2DTexture` helpers that everyone creates because it hides that you can just make a simple descriptor.",
+      "parentUuid": "1bf32c54_7b8b7e6a",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8fcb9008_7895935c",
         "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
         "patchSetId": 43
