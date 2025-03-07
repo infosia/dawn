@@ -30,6 +30,7 @@
 
 #include <cstdint>
 #include <string>
+#include <optional>
 
 #include "src/tint/lang/core/texel_format.h"
 #include "src/tint/lang/core/type/texture_dimension.h"
@@ -112,6 +113,8 @@ struct ResourceBinding {
     uint32_t input_attachment_index;
     /// Size for this binding, in bytes, if defined.
     uint64_t size;
+    /// The array_size, if the binding is in a binding_array
+    std::optional<uint32_t> array_size;
     /// Size for this binding without trailing structure padding, in bytes, if
     /// defined.
     uint64_t size_no_padding;
