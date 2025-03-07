@@ -16,6 +16,41 @@
       "message": "PTAL again!",
       "revId": "00d64b94560b9e3a37cbf668a93f72d869211df0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38022457_64679711",
+        "filename": "src/tint/lang/msl/writer/raise/module_scope_vars.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-07T19:25:03Z",
+      "side": 1,
+      "message": "übernit: typo: binding",
+      "fixSuggestions": [
+        {
+          "fixId": "11d4cb8d_a5ac9e02",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/msl/writer/raise/module_scope_vars.cc",
+              "range": {
+                "startLine": 123,
+                "startChar": 0,
+                "endLine": 124,
+                "endChar": 0
+              },
+              "replacement": "                        // Accesses of the previously ptr\u003cbinding_array\u003cT, N\u003e\u003e would return a ptr\u003cT\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "00d64b94560b9e3a37cbf668a93f72d869211df0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
