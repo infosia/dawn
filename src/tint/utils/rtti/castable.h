@@ -473,12 +473,20 @@ class Castable : public BASE {
         return tint::IsAnyOf<TO...>(static_cast<const CLASS*>(this));
     }
 
+    template <typename TO, int FLAGS, typename FROM>
+    inline TO* AsDecay(FROM* obj) {
+        auto* as_castable = static_cast<CastableBase*>(this);
+        return tint::TypeInfo::Is<TO, FROM, FLAGS>(&this->TypeInfo())
+                   ? static_cast<TO*>(as_castable)
+                   : nullptr;
+    }
+
     /// @returns this object dynamically cast to the type `TO` or `nullptr` if
     /// this object does not derive from `TO`.
     /// @see CastFlags
     template <typename TO, int FLAGS = 0>
     inline TO* As() {
-        return tint::As<TO, FLAGS>(this);
+        return AsDecay<TO, FLAGS>(this);
     }
 
     /// @returns this object dynamically cast to the type `TO` or `nullptr` if
@@ -487,6 +495,8 @@ class Castable : public BASE {
     template <typename TO, int FLAGS = 0>
     inline const TO* As() const {
         return tint::As<const TO, FLAGS>(this);
+        // return TypeInfo::Is<const TO, decltype(this), FLAGS>(&this->TypeInfo())?
+        // static_cast<const TO*>(static_cast<const CastableBase*>(this)) : nullptr;
     }
 };
 
