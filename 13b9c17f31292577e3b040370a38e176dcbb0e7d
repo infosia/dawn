@@ -16,6 +16,472 @@
       "message": "I\u0027ve added the textureDimensions test. Please review.",
       "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e9ce34f_7f3b16eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 43
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Please also choose a second reviewer!",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "529d83bd_fa356014",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "```suggestion\nMaybeError ValidateTextureViewBindingUsedAsExternalTexture(DeviceBase* device,\n```\n\nOtherwise it seems like it should be the validation for regular texture view bindings.",
+      "range": {
+        "startLine": 247,
+        "startChar": 11,
+        "endLine": 247,
+        "endChar": 37
+      },
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc1e43d8_a68d9f94",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Please add an UnsafeAPIValidationTest for this.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20cb1a08_f56688fe",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Can we have a TODO to make this controlled by a toggle before shipping?",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f588326c_37d3ca52",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Why do we do a check that looks as if we check that the layout expects a view, when we are in the code path where we know that the layout asks for an external texture?\n\nThis check will always happen to be true at the moment because when decaying the externalTexture, the layout puts plane0 at the original binding point. https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BindGroupLayoutInternal.cpp;drc\u003d3782643ddbe83ca1362607279b812cfaeb711ef1;l\u003d338\n\nHere all the code under `AllowUnsafeAPIs` should be a call to `ValidateTextureViewBindingUsedAsExternalTexture`.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4db67d12_2f10515c",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Comment that this is for a texture view used as an external texture and what we are doing to support this case.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "189fdfcc_50bb10ce",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "```suggestion\nExternalTextureParams ComputeExternalTextureParams(const ExternalTextureDescriptor* descriptor) {\n```",
+      "range": {
+        "startLine": 143,
+        "startChar": 22,
+        "endLine": 143,
+        "endChar": 46
+      },
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "301cfc09_a10dbced",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "```suggestion\n\n    // Make a fake ExternalTextureDescriptor for the view so at to reuse the code compurting uniform parameters passed to the shader.\n    ExternalTextureDescriptor desc \u003d {};\n```",
+      "range": {
+        "startLine": 333,
+        "startChar": 0,
+        "endLine": 334,
+        "endChar": 1
+      },
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51833557_4d2fe541",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Ah maybe this one should have a label as well to make it clear in Graphics debuggers that it is an internal resource. We can make an additional overload of `CreateBufferFromData` that takes a `std::sting_view` label.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bb05418_3da67924",
+        "filename": "src/dawn/native/ExternalTexture.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "likewise this can use `CreateBufferFromData`",
+      "range": {
+        "startLine": 392,
+        "startChar": 1,
+        "endLine": 396,
+        "endChar": 77
+      },
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3ce5e3d_6e0e555a",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Please add a comment to explain the what this function is used for.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54808996_866fd91d",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Please add a comment before tests that explain what they test.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ece8b3eb_e98d13cd",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Can we also have a minimal test for `textureLoad`?",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84d6b360_45b3ca89",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Does the failure still happen or is the suppression just copy pasted? Ditto for the others.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c182d21c_da58fd6e",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "```suggestion\n    // Create a sampler and bind group that uses a TextureView for the external_texture in the WGSL\n```",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42fd5e9e_94698dcd",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a1a38ac_39082d22",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Can we check that the dimension takes the mip level into account? We could pass two views at different mip levels and output both their sizes.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fcb9008_7895935c",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a531eaf_22f48a96",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "```suggestion\n    pass.DispatchWorkgroups(1);\n```",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b743a3a_55b2cf54",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "IMHO a list of `EXPECT_BUFFER_U32_EQ` is mildly easier to read for this test.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3f5bb71_c9bcc1e3",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "This can be in an if else at [1] to mirror this if else better.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c30e34a_7cc1ac98",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7d91d7a_c4da0e67",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "Why the extra scoping inside the if\u0027s scope?",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd9e7876_fd7f80f4",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "The new comment makes it seem like it is the view and the external texture that are mismatched, but it is the BGLEntry.\n\n// Ensure that bind group validation catches mismatched entries for BGL external texture entries.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2a75f4d_dc08e184",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "This would be in UnsafeAPITests already.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "182b4b3f_efe75f19",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-07T14:02:40Z",
+      "side": 1,
+      "message": "nit: Can we seperate this to its own test and use third_party/dawn/src/dawn/utils/TextureUtils.h to test a lot more formats? For example the spec means that compressed formats should work (somewhat surprisingly, please add a note in the PR as Mozilla will be interested in this).",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
