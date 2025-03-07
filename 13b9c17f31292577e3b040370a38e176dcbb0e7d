@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "04302749_2af3c8f8",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-07T14:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529d83bd_fa356014",
+      "range": {
+        "startLine": 247,
+        "startChar": 11,
+        "endLine": 247,
+        "endChar": 37
+      },
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc1e43d8_a68d9f94",
@@ -88,6 +112,24 @@
       "writtenOn": "2025-03-07T14:02:40Z",
       "side": 1,
       "message": "Can we have a TODO to make this controlled by a toggle before shipping?",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64f586e6_d8519f76",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-07T14:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20cb1a08_f56688fe",
       "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -140,6 +182,24 @@
       "writtenOn": "2025-03-07T14:02:40Z",
       "side": 1,
       "message": "Comment that this is for a texture view used as an external texture and what we are doing to support this case.",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "260c51b3_d6562977",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-07T14:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4db67d12_2f10515c",
       "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
