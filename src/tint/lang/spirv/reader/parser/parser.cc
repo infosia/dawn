@@ -1001,6 +1001,9 @@ class Parser {
                 case spv::Op::OpFMod:
                     EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kFMod);
                     break;
+                case spv::Op::OpSelect:
+                    EmitSelect(inst, core::BuiltinFn::kSelect);
+                    break;
                 default:
                     TINT_UNIMPLEMENTED()
                         << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
@@ -1012,6 +1015,17 @@ class Parser {
         auto val = Value(inst.GetSingleWordInOperand(0));
         auto ty = Type(inst.type_id());
         Emit(b_.Bitcast(ty, val), inst.result_id());
+    }
+
+    void EmitSelect(const spvtools::opt::Instruction& inst, core::BuiltinFn fn) {
+        Vector<core::ir::Value*, 4> args;
+        for (uint32_t i = 3; i < inst.NumOperandWords(); i++) {
+            args.Push(Value(inst.GetSingleWordOperand(i)));
+        }
+        if(inst.NumOperandWords() >= 2){
+            args.Push(Value(inst.GetSingleWordOperand(2)));
+        }
+        Emit(b_.Call(Type(inst.type_id()), fn, args), inst.result_id());
     }
 
     void HandleSelectionMerge(const spvtools::opt::Instruction& inst,
