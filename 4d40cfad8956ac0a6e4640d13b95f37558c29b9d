@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f31c1be_fb53c0d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-03-08T10:05:16Z",
+      "side": 1,
+      "message": "Breaks rolling into Chromium:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/6334755\nhttps://ci.chromium.org/ui/p/chromium/builders/try/linux-rel/2143420/overview\n```\npython3 ../../third_party/dawn/src/tint/cmd/fuzz/generate_tint_corpus.py gen/fuzzers/wgsl_corpus gen/fuzzers --wgsl_fuzzer\u003dtint_wgsl_fuzzer\nbuild step: __third_party_dawn_src_tint_tint_generate_wgsl_minimized_corpus___build_toolchain_linux_clang_x64__rule \"./gen/fuzzers/wgsl_min.stamp\"\nstderr:\nCRITICAL:__main__:Unable to run --wgsl_fuzzer\u003d\u003ctint_wgsl_fuzzer\u003e cmd: tint_wgsl_fuzzer\n```",
+      "revId": "4d40cfad8956ac0a6e4640d13b95f37558c29b9d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
