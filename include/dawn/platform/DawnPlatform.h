@@ -98,7 +98,6 @@ class DAWN_PLATFORM_EXPORT WorkerTaskPool {
 // These features map to similarly named ones in src/chromium/src/gpu/config/gpu_finch_features.h
 // in `namespace features`.
 enum class Features {
-    kWebGPUUseDXC,
     kWebGPUUseTintIR,
     kWebGPUUseVulkanMemoryModel,
 };

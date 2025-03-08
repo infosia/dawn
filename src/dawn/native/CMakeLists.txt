@@ -861,8 +861,6 @@ endif()
 
 if (DAWN_ENABLE_D3D12)
     if (DAWN_USE_BUILT_DXC)
-        target_compile_definitions(dawn_native PRIVATE "DAWN_USE_BUILT_DXC")
-        target_compile_definitions(dawn_native_objects PRIVATE "DAWN_USE_BUILT_DXC")
         add_dependencies(dawn_native copy_dxil_dll)
     endif()
 endif()

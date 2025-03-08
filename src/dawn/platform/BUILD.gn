@@ -48,9 +48,6 @@ dawn_component("platform") {
   ]
 
   deps = [ "${dawn_root}/src/dawn/common" ]
-  if (dawn_use_built_dxc) {
-    defines = [ "DAWN_USE_BUILT_DXC" ]
-  }
 
   public_deps = [
     # DawnPlatform.h has #include <webgpu/webgpu.h>

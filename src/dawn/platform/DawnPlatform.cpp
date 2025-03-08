@@ -94,12 +94,6 @@ std::unique_ptr<dawn::platform::WorkerTaskPool> Platform::CreateWorkerTaskPool()
 
 bool Platform::IsFeatureEnabled(Features feature) {
     switch (feature) {
-        case Features::kWebGPUUseDXC:
-#ifdef DAWN_USE_BUILT_DXC
-            return true;
-#else
-            return false;
-#endif
         case Features::kWebGPUUseTintIR:
 #if defined(DAWN_OS_CHROMEOS)
             return true;

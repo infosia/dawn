@@ -52,7 +52,3 @@ target_compile_definitions(dawn_platform PRIVATE "DAWN_PLATFORM_IMPLEMENTATION")
 if(BUILD_SHARED_LIBS)
   target_compile_definitions(dawn_platform PUBLIC "DAWN_PLATFORM_SHARED_LIBRARY")
 endif()
-
-if (DAWN_USE_BUILT_DXC)
-  target_compile_definitions(dawn_platform PRIVATE "DAWN_USE_BUILT_DXC")
-endif()
