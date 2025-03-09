@@ -605,6 +605,332 @@ tint_symbol_2 = struct @align(4) {
 )");
 }
 
+TEST_F(SpirvParserTest, CopyMemory_Scalar) {
+    EXPECT_IR(R"(
+             OpCapability Shader
+             OpMemoryModel Logical GLSL450
+             OpEntryPoint GLCompute %main "main"
+             OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+       %u32  = OpTypeInt 32 0
+    %u32_ptr = OpTypePointer Function %u32
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+ %main_start = OpLabel
+   %src_var  = OpVariable %u32_ptr Function
+   %dst_var  = OpVariable %u32_ptr Function
+               OpCopyMemory %dst_var %src_var
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:ptr<function, u32, read_write> = var undef
+    %3:ptr<function, u32, read_write> = var undef
+    %4:u32 = load %2
+    store %3, %4
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, CopyMemory_Vector) {
+    EXPECT_IR(R"(
+             OpCapability Shader
+             OpMemoryModel Logical GLSL450
+             OpEntryPoint GLCompute %main "main"
+             OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %u32 = OpTypeInt 32 0
+      %vec4u = OpTypeVector %u32 4
+  %vec4u_ptr = OpTypePointer Function %vec4u
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+ %main_start = OpLabel
+    %src_vec = OpVariable %vec4u_ptr Function
+    %dst_vec = OpVariable %vec4u_ptr Function
+               OpCopyMemory %dst_vec %src_vec
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:ptr<function, vec4<u32>, read_write> = var undef
+    %3:ptr<function, vec4<u32>, read_write> = var undef
+    %4:vec4<u32> = load %2
+    store %3, %4
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, CopyMemory_VectorComponent) {
+    EXPECT_IR(R"(
+             OpCapability Shader
+             OpMemoryModel Logical GLSL450
+             OpEntryPoint GLCompute %main "main"
+             OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %u32 = OpTypeInt 32 0
+      %vec4u = OpTypeVector %u32 4
+    %u32_ptr = OpTypePointer Function %u32
+  %vec4u_ptr = OpTypePointer Function %vec4u
+      %u32_2 = OpConstant %u32 2
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+ %main_start = OpLabel
+    %vec_src = OpVariable %vec4u_ptr Function
+    %vec_dst = OpVariable %vec4u_ptr Function
+        %src = OpAccessChain %u32_ptr %vec_src %u32_2
+        %dst = OpAccessChain %u32_ptr %vec_dst %u32_2
+             OpCopyMemory %dst %src
+             OpReturn
+             OpFunctionEnd
+)",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:ptr<function, vec4<u32>, read_write> = var undef
+    %3:ptr<function, vec4<u32>, read_write> = var undef
+    %4:ptr<function, u32, read_write> = access %2, 2u
+    %5:ptr<function, u32, read_write> = access %3, 2u
+    %6:u32 = load %4
+    store %5, %6
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, CopyMemory_Matrix) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %f32 = OpTypeFloat 32
+      %vec4f = OpTypeVector %f32 4
+    %mat3x4f = OpTypeMatrix %vec4f 3
+%mat3x4f_ptr = OpTypePointer Function %mat3x4f
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+ %main_start = OpLabel
+        %src = OpVariable %mat3x4f_ptr Function
+        %dst = OpVariable %mat3x4f_ptr Function
+               OpCopyMemory %dst %src
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:ptr<function, mat3x4<f32>, read_write> = var undef
+    %3:ptr<function, mat3x4<f32>, read_write> = var undef
+    %4:mat3x4<f32> = load %2
+    store %3, %4
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, CopyMemory_MatrixColumn) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+      %void  = OpTypeVoid
+      %f32   = OpTypeFloat 32
+      %vec4f = OpTypeVector %f32 4
+    %mat3x4f = OpTypeMatrix %vec4f 3
+  %vec4f_ptr = OpTypePointer Function %vec4f
+%mat3x4f_ptr = OpTypePointer Function %mat3x4f
+      %u32   = OpTypeInt 32 0
+      %u32_2 = OpConstant %u32 2
+    %ep_type = OpTypeFunction %void
+      %main  = OpFunction %void None %ep_type
+ %main_start = OpLabel
+    %mat_src = OpVariable %mat3x4f_ptr Function
+    %mat_dst = OpVariable %mat3x4f_ptr Function
+    %src     = OpAccessChain %vec4f_ptr %mat_src %u32_2
+    %dst     = OpAccessChain %vec4f_ptr %mat_dst %u32_2
+               OpCopyMemory %dst %src
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:ptr<function, mat3x4<f32>, read_write> = var undef
+    %3:ptr<function, mat3x4<f32>, read_write> = var undef
+    %4:ptr<function, vec4<f32>, read_write> = access %2, 2u
+    %5:ptr<function, vec4<f32>, read_write> = access %3, 2u
+    %6:vec4<f32> = load %4
+    store %5, %6
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, CopyMemory_Array) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %u32 = OpTypeInt 32 0
+      %u32_4 = OpConstant %u32 4
+        %arr = OpTypeArray %u32 %u32_4
+    %arr_ptr = OpTypePointer Function %arr
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+ %main_start = OpLabel
+        %src = OpVariable %arr_ptr Function
+        %dst = OpVariable %arr_ptr Function
+        OpCopyMemory %dst %src
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:ptr<function, array<u32, 4>, read_write> = var undef
+    %3:ptr<function, array<u32, 4>, read_write> = var undef
+    %4:array<u32, 4> = load %2
+    store %3, %4
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, CopyMemory_ArrayElement) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %u32 = OpTypeInt 32 0
+      %u32_2 = OpConstant %u32 2
+      %u32_4 = OpConstant %u32 4
+        %arr = OpTypeArray %u32 %u32_4
+    %u32_ptr = OpTypePointer Function %u32
+    %arr_ptr = OpTypePointer Function %arr
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+ %main_start = OpLabel
+    %src_arr = OpVariable %arr_ptr Function
+    %dst_arr = OpVariable %arr_ptr Function
+        %src = OpAccessChain %u32_ptr %src_arr %u32_2
+        %dst = OpAccessChain %u32_ptr %dst_arr %u32_2
+               OpCopyMemory %dst %src
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:ptr<function, array<u32, 4>, read_write> = var undef
+    %3:ptr<function, array<u32, 4>, read_write> = var undef
+    %4:ptr<function, u32, read_write> = access %2, 2u
+    %5:ptr<function, u32, read_write> = access %3, 2u
+    %6:u32 = load %4
+    store %5, %6
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, CopyMemory_Struct) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %u32 = OpTypeInt 32 0
+        %str = OpTypeStruct %u32 %u32
+    %str_ptr = OpTypePointer Function %str
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+ %main_start = OpLabel
+        %src = OpVariable %str_ptr Function
+        %dst = OpVariable %str_ptr Function
+               OpCopyMemory %dst %src
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+tint_symbol_2 = struct @align(4) {
+  tint_symbol:u32 @offset(0)
+  tint_symbol_1:u32 @offset(4)
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:ptr<function, tint_symbol_2, read_write> = var undef
+    %3:ptr<function, tint_symbol_2, read_write> = var undef
+    %4:tint_symbol_2 = load %2
+    store %3, %4
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, CopyMemory_StructMember) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+       %void = OpTypeVoid
+        %u32 = OpTypeInt 32 0
+      %u32_1 = OpConstant %u32 1
+        %str = OpTypeStruct %u32 %u32
+    %u32_ptr = OpTypePointer Function %u32
+    %str_ptr = OpTypePointer Function %str
+    %ep_type = OpTypeFunction %void
+       %main = OpFunction %void None %ep_type
+ %main_start = OpLabel
+        %src = OpVariable %str_ptr Function
+        %dst = OpVariable %str_ptr Function
+ %access_src = OpAccessChain %u32_ptr %src %u32_1
+ %access_dst = OpAccessChain %u32_ptr %dst %u32_1
+               OpCopyMemory %access_dst %access_src
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+tint_symbol_2 = struct @align(4) {
+  tint_symbol:u32 @offset(0)
+  tint_symbol_1:u32 @offset(4)
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B1: {
+    %2:ptr<function, tint_symbol_2, read_write> = var undef
+    %3:ptr<function, tint_symbol_2, read_write> = var undef
+    %4:ptr<function, u32, read_write> = access %2, 1u
+    %5:ptr<function, u32, read_write> = access %3, 1u
+    %6:u32 = load %4
+    store %5, %6
+    ret
+  }
+}
+)");
+}
+
 TEST_F(SpirvParserTest, Access_Nested_SingleAccessInstruction) {
     EXPECT_IR(R"(
                OpCapability Shader
