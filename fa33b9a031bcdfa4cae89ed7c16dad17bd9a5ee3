@@ -16,6 +16,24 @@
       "message": "Can these be collapsed to a single entry with tags along the lines of:\n\n`[  webgpu-dxc-disabled win ]` ?",
       "revId": "fa33b9a031bcdfa4cae89ed7c16dad17bd9a5ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27af3fbb_4b836e20",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6915,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-10T20:35:07Z",
+      "side": 1,
+      "message": "I don\u0027t know, my experience with collapsing tags in the past was... not good.",
+      "parentUuid": "1cf4da1e_cffec056",
+      "revId": "fa33b9a031bcdfa4cae89ed7c16dad17bd9a5ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
