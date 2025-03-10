@@ -319,6 +319,20 @@ DAWN_NATIVE_EXPORT void DumpMemoryStatistics(WGPUDevice device, MemoryDump* dump
 // total estimated memory usage, and is intended for background tracing for UMA.
 DAWN_NATIVE_EXPORT uint64_t ComputeEstimatedMemoryUsage(WGPUDevice device);
 
+// Same as ComputeEstimatedMemoryUsage but with more details:
+// - total memory usage of textures.
+// - total memory usage of buffers.
+// - total memory usage of depth/stencil textures.
+// - total memory usage of MSAA textures.
+struct MemoryUsageInfo {
+    uint64_t totalUsage;
+    uint64_t depthStencilTexturesUsage;
+    uint64_t msaaTexturesUsage;
+    uint64_t texturesUsage;
+    uint64_t buffersUsage;
+};
+DAWN_NATIVE_EXPORT void ComputeEstimatedMemoryUsage(WGPUDevice device, MemoryUsageInfo* usageInfo);
+
 // Free any unused GPU memory like staging buffers, cached resources, etc.
 DAWN_NATIVE_EXPORT void ReduceMemoryUsage(WGPUDevice device);
 

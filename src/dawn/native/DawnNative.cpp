@@ -277,8 +277,14 @@ void DumpMemoryStatistics(WGPUDevice device, MemoryDump* dump) {
 }
 
 uint64_t ComputeEstimatedMemoryUsage(WGPUDevice device) {
+    MemoryUsageInfo usageInfo;
+    ComputeEstimatedMemoryUsage(device, &usageInfo);
+    return usageInfo.totalUsage;
+}
+
+void ComputeEstimatedMemoryUsage(WGPUDevice device, MemoryUsageInfo* usageInfo) {
     auto deviceLock(FromAPI(device)->GetScopedLock());
-    return FromAPI(device)->ComputeEstimatedMemoryUsage();
+    FromAPI(device)->ComputeEstimatedMemoryUsage(usageInfo);
 }
 
 void ReduceMemoryUsage(WGPUDevice device) {
