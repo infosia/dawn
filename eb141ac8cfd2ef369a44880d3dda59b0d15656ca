@@ -16,6 +16,24 @@
       "message": "When the arguments don\u0027t match up directly, we\u0027ve been following the pattern of creating a SPIR-V intrinsic, and then in the spirv/reader/lower/builtins.cc file do this work to convert to the WGSL intrinsic ordering.\n\nYou can see https://dawn-review.googlesource.com/c/dawn/+/228114 which does this for `OpSNegate` the intrinsic is defined in the `spirv.def` file.",
       "revId": "eb141ac8cfd2ef369a44880d3dda59b0d15656ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8424a5e9_f53f6462",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-10T13:54:29Z",
+      "side": 1,
+      "message": "Apologies, my guidance in the issue was incorrect, as I thought the operand order was the same.\n\nWe already have a definition for `select` in the `spirv.def` file, so you\u0027ll just want to use `EmitSpirvBuiltinCall` in the parser and then modify the operand order in `builtins.cc` as Dan says.",
+      "parentUuid": "e67120ef_bd423b9c",
+      "revId": "eb141ac8cfd2ef369a44880d3dda59b0d15656ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
