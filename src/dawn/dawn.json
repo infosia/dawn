@@ -1520,7 +1520,7 @@
         "values": [
             {"value": 1, "name": "success"},
             {"value": 2, "name": "instance dropped"},
-            {"value": 3, "name": "empty stack"}
+            {"value": 3, "name": "error"}
         ]
     },
     "pop error scope callback": {
