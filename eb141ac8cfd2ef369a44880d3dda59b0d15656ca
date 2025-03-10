@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e67120ef_bd423b9c",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T13:49:40Z",
+      "side": 1,
+      "message": "When the arguments don\u0027t match up directly, we\u0027ve been following the pattern of creating a SPIR-V intrinsic, and then in the spirv/reader/lower/builtins.cc file do this work to convert to the WGSL intrinsic ordering.\n\nYou can see https://dawn-review.googlesource.com/c/dawn/+/228114 which does this for `OpSNegate` the intrinsic is defined in the `spirv.def` file.",
+      "revId": "eb141ac8cfd2ef369a44880d3dda59b0d15656ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
