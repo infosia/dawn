@@ -87,7 +87,7 @@ class Inspector {
     /// @param entry_point name of the entry point to get information about.
     /// @returns vector of all of the sampler/texture sampling pairs that are used
     /// by that entry point.
-    VectorRef<SamplerTexturePair> GetSamplerTextureUses(const std::string& entry_point);
+    std::vector<SamplerTexturePair> GetSamplerTextureUses(const std::string& entry_point);
 
     /// @param entry_point name of the entry point to get information about.
     /// @param placeholder the sampler binding point to use for texture-only
@@ -137,8 +137,19 @@ class Inspector {
   private:
     const Program& program_;
     diag::List diagnostics_;
-    std::unique_ptr<std::unordered_map<std::string, UniqueVector<SamplerTexturePair, 4>>>
-        sampler_targets_;
+
+    struct EntryPointTextureMetadata {
+        std::unordered_set<BindingPoint> textures_used_without_samplers;
+        std::unordered_set<BindingPoint> textures_with_num_levels;
+        std::unordered_set<BindingPoint> textures_with_num_samples;
+        std::unordered_set<SamplerTexturePair> sampling_pairs;
+        bool has_texture_load_with_depth_texture = false;
+        bool has_depth_texture_with_non_comparison_sampler = false;
+    };
+    std::unordered_map<std::string, EntryPointTextureMetadata> texture_metadata_;
+
+    /// Constructs |sampler_targets_| if it hasn't already been instantiated.
+    void ComputeTextureMetadata(const std::string& entry_point);
 
     /// @param name name of the entry point to find
     /// @returns a pointer to the entry point if it exists, otherwise returns
@@ -175,9 +186,6 @@ class Inspector {
     /// @param type the type of the variable
     /// @returns the array length of the builtin clip_distances or empty when it is not used
     std::optional<uint32_t> GetClipDistancesBuiltinSize(const core::type::Type* type) const;
-
-    /// Constructs |sampler_targets_| if it hasn't already been instantiated.
-    void GenerateSamplerTargets();
 
     /// @param attributes attributes associated with the parameter or structure member
     /// @returns the interpolation type and sampling modes for the value
@@ -226,32 +234,6 @@ class Inspector {
     /// @param func the function of the entry point. Must be non-nullptr and true for IsEntryPoint()
     /// @returns the entry point information
     EntryPoint GetEntryPoint(const tint::ast::Function* func);
-
-    /// The information needed to be supplied.
-    enum class TextureUsageType : uint8_t {
-        /// textureLoad
-        kTextureLoad,
-        /// textureNumLevels
-        kTextureNumLevels,
-        /// textureNumSamples
-        kTextureNumSamples,
-        /// depth texture with non-comparison sampler
-        kDepthTextureWithNonComparisonSampler,
-    };
-    /// Information on level and sample calls by a given texture binding point
-    struct TextureUsageInfo {
-        /// The type of function
-        TextureUsageType type = TextureUsageType::kTextureNumLevels;
-        /// The group number
-        uint32_t group = 0;
-        /// The binding number
-        uint32_t binding = 0;
-    };
-
-    std::vector<Inspector::TextureUsageInfo> GetTextureUsagesForEntryPoint(
-        const tint::ast::Function& ep,
-        std::function<std::optional<TextureUsageType>(const tint::sem::Call* call,
-                                                      tint::wgsl::BuiltinFn builtin_fn)> filter);
 };
 
 }  // namespace tint::inspector
