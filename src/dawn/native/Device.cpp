@@ -2433,16 +2433,27 @@ void DeviceBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump) const {
     });
 }
 
-uint64_t DeviceBase::ComputeEstimatedMemoryUsage() const {
+void DeviceBase::ComputeEstimatedMemoryUsage(MemoryUsageInfo* info) const {
     DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
-    uint64_t size = 0;
-    GetObjectTrackingList(ObjectType::Texture)->ForEach([&](const ApiObjectBase* texture) {
-        size += static_cast<const TextureBase*>(texture)->ComputeEstimatedByteSize();
+    *info = {};
+
+    GetObjectTrackingList(ObjectType::Texture)->ForEach([&](const ApiObjectBase* ptr) {
+        auto texture = static_cast<const TextureBase*>(ptr);
+        auto size = texture->ComputeEstimatedByteSize();
+        info->totalUsage += size;
+        info->texturesUsage += size;
+        if (texture->GetSampleCount() > 1) {
+            info->msaaTexturesUsage += size;
+        }
+        if (texture->GetFormat().HasDepthOrStencil()) {
+            info->depthStencilTexturesUsage += size;
+        }
     });
     GetObjectTrackingList(ObjectType::Buffer)->ForEach([&](const ApiObjectBase* buffer) {
-        size += static_cast<const BufferBase*>(buffer)->GetAllocatedSize();
+        auto size = static_cast<const BufferBase*>(buffer)->GetAllocatedSize();
+        info->totalUsage += size;
+        info->buffersUsage += size;
     });
-    return size;
 }
 
 void DeviceBase::ReduceMemoryUsage() {
