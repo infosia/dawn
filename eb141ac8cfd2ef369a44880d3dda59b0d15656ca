@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02a1567a_c52511d2",
+        "filename": "src/tint/lang/spirv/reader/parser/builtin_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T18:11:13Z",
+      "side": 1,
+      "message": "We should keep these tests around, just change the result so they emit the `spirv.select` command instead of a `select`. That way we test going to the `spirv.select` here and to the wgsl `select` in the builtins code.",
+      "revId": "eb141ac8cfd2ef369a44880d3dda59b0d15656ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e67120ef_bd423b9c",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 3
