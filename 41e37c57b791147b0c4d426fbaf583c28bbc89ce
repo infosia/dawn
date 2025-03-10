@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b27fa546_668c2c9e",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-10T20:03:03Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "ceb8da99_b7e258a7",
+      "revId": "41e37c57b791147b0c4d426fbaf583c28bbc89ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "45a8bdd5_c64c7c49",
         "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
         "patchSetId": 6
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-10T19:40:51Z",
       "side": 1,
       "message": "I think this needs to be `false_, true_, cond` since WGSL select is false, true, condition. The SPIR-V Select is `true, false, condition`. So we need to swap the two first values as well.",
+      "revId": "41e37c57b791147b0c4d426fbaf583c28bbc89ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "190e22ae_9b41c14c",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-10T20:03:03Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "45a8bdd5_c64c7c49",
       "revId": "41e37c57b791147b0c4d426fbaf583c28bbc89ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
