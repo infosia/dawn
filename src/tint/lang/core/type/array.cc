@@ -84,6 +84,22 @@ Array::Array(const Type* element,
     TINT_ASSERT(element_);
 }
 
+Array::Array(size_t hash,
+             const Type* element,
+             const ArrayCount* count,
+             uint32_t align,
+             uint32_t size,
+             uint32_t stride)
+    : Base(hash, FlagsFrom(element, count)),
+      element_(element),
+      count_(count),
+      align_(align),
+      size_(size),
+      stride_(stride),
+      implicit_stride_(stride_) {
+    TINT_ASSERT(element_);
+}
+
 bool Array::Equals(const UniqueNode& other) const {
     if (auto* o = other.As<Array>()) {
         // Note: implicit_stride is not part of the type_name string as this is
