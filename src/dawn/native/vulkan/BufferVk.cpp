@@ -37,6 +37,7 @@
 #include "dawn/common/GPUInfo.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/vulkan/DeviceVk.h"
@@ -278,7 +279,9 @@ MaybeError Buffer::Initialize(bool mappedAtCreation) {
     mHostCoherent = IsSubset(VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, memoryPropertyFlags);
     mHasWriteTransitioned = false;
 
-    SetLabelImpl();
+    if (!GetLabel().empty() || device->GetInstance()->IsBackendValidationEnabled()) {
+        SetLabelImpl();
+    }
 
     return {};
 }
@@ -373,7 +376,9 @@ MaybeError Buffer::InitializeHostMapped(const BufferHostMappedPointer* hostMappe
     mHostCoherent = false;
     mHasWriteTransitioned = false;
 
-    SetLabelImpl();
+    if (!GetLabel().empty() || device->GetInstance()->IsBackendValidationEnabled()) {
+        SetLabelImpl();
+    }
 
     // Assume the data is initialized since an external pointer was provided.
     SetInitialized(true);

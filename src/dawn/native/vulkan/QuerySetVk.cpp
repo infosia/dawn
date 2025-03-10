@@ -30,6 +30,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "dawn/native/Instance.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
@@ -71,7 +72,9 @@ MaybeError QuerySet::Initialize() {
         device->fn.CreateQueryPool(device->GetVkDevice(), &createInfo, nullptr, &*mHandle),
         "vkCreateQueryPool"));
 
-    SetLabelImpl();
+    if (!GetLabel().empty() || device->GetInstance()->IsBackendValidationEnabled()) {
+        SetLabelImpl();
+    }
 
     return {};
 }

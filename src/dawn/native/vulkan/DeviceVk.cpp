@@ -181,7 +181,9 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
         mMonolithicPipelineCache = PipelineCache::CreateMonolithic(this, cacheKey);
     }
 
-    SetLabelImpl();
+    if (!GetLabel().empty() || GetInstance()->IsBackendValidationEnabled()) {
+        SetLabelImpl();
+    }
 
     ToBackend(GetPhysicalDevice())->GetVulkanInstance()->StartListeningForDeviceMessages(this);
 

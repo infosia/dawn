@@ -35,6 +35,7 @@
 #include "dawn/native/DynamicUploader.h"
 #include "dawn/native/EnumMaskIterator.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/VulkanBackend.h"
 #include "dawn/native/vulkan/BufferVk.h"
 #include "dawn/native/vulkan/CommandBufferVk.h"
@@ -1417,7 +1418,9 @@ MaybeError InternalTexture::Initialize(VkImageUsageFlags extraUsages) {
                               GetAllSubresources(), TextureBase::ClearValue::NonZero));
     }
 
-    SetLabelImpl();
+    if (!GetLabel().empty() || device->GetInstance()->IsBackendValidationEnabled()) {
+        SetLabelImpl();
+    }
 
     return {};
 }
@@ -1977,7 +1980,9 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
                                 "CreateImageView for BGRA8Unorm storage"));
     }
 
-    SetLabelImpl();
+    if (!GetLabel().empty() || device->GetInstance()->IsBackendValidationEnabled()) {
+        SetLabelImpl();
+    }
 
     return {};
 }
