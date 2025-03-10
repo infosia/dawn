@@ -16,6 +16,24 @@
       "message": "nit: `Bug: 402178306`\n\n(you _should_ be able to add this without retriggering the bots)",
       "revId": "1aeafe073acebdd59a9ffcc43bd470a71c58f49a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4ad9def_8dbcb20d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-10T21:13:38Z",
+      "side": 1,
+      "message": "Oh nice catch! TY",
+      "parentUuid": "86b363c2_c32d26ef",
+      "revId": "1aeafe073acebdd59a9ffcc43bd470a71c58f49a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
