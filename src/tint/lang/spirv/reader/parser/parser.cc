@@ -1001,6 +1001,9 @@ class Parser {
                 case spv::Op::OpFMod:
                     EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kFMod);
                     break;
+                case spv::Op::OpVectorExtractDynamic:
+                    EmitAccess(inst);
+                    break;
                 default:
                     TINT_UNIMPLEMENTED()
                         << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
