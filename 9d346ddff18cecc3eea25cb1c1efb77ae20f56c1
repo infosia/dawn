@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1440083b_7d2eb85f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T20:42:20Z",
+      "side": 1,
+      "message": "lgtm with nits/questions",
+      "revId": "9d346ddff18cecc3eea25cb1c1efb77ae20f56c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d8ff379_6ac1035b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T20:42:20Z",
+      "side": 1,
+      "message": "I think using `OFF` and `ON` are a bit more \"cmake\" or is an explicit `0`, `1` required by the emscripten code?",
+      "revId": "9d346ddff18cecc3eea25cb1c1efb77ae20f56c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3d6eff7_d00a6c7a",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T20:42:20Z",
+      "side": 1,
+      "message": "is `-s` an emscripten flag?",
+      "revId": "9d346ddff18cecc3eea25cb1c1efb77ae20f56c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
