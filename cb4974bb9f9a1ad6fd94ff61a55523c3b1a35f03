@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5dafe8c_cf7ae0c2",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-10T10:43:59Z",
+      "side": 1,
+      "message": "Some of the changes in dawn.json aren\u0027t needed with this.",
+      "revId": "cb4974bb9f9a1ad6fd94ff61a55523c3b1a35f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "724d5838_c6447379",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-10T10:43:59Z",
+      "side": 1,
+      "message": "Where is this include used?",
+      "revId": "cb4974bb9f9a1ad6fd94ff61a55523c3b1a35f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
