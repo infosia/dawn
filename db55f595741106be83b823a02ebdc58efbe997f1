@@ -34,6 +34,24 @@
       "parentUuid": "b5a0df3d_69f90316",
       "revId": "db55f595741106be83b823a02ebdc58efbe997f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc2eb0f9_3d6407f2",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T14:04:31Z",
+      "side": 0,
+      "message": "These files should be generated during the build, using the `dawn` version isn\u0027t correct here.",
+      "parentUuid": "40c4bc9d_79a5bb03",
+      "revId": "db55f595741106be83b823a02ebdc58efbe997f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
