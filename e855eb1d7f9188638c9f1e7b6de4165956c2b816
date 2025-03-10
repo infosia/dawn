@@ -16,6 +16,23 @@
       "message": "lgtm. Over to James for final approval.",
       "revId": "e855eb1d7f9188638c9f1e7b6de4165956c2b816",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cf4f0eb_3ecaf180",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T20:10:51Z",
+      "side": 1,
+      "message": "Looks like you need to run `git cl format` to fix some formatting in the CL.",
+      "revId": "e855eb1d7f9188638c9f1e7b6de4165956c2b816",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
