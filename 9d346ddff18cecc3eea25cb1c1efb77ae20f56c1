@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0b19f7bb_67041944",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-10T20:55:01Z",
+      "side": 1,
+      "message": "Emscripten.cmake sets it to `1` (https://github.com/emscripten-core/emscripten/blob/b9f897c1910e23e44d2b77472d9043308e05e69e/cmake/Modules/Platform/Emscripten.cmake#L294), so I used `0` for consistency. (Otherwise it would be either `OFF` or `1`.) Clarified the comment.",
+      "parentUuid": "8d8ff379_6ac1035b",
+      "revId": "9d346ddff18cecc3eea25cb1c1efb77ae20f56c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d3d6eff7_d00a6c7a",
         "filename": "src/emdawnwebgpu/README.md",
         "patchSetId": 14
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-10T20:42:20Z",
       "side": 1,
       "message": "is `-s` an emscripten flag?",
+      "revId": "9d346ddff18cecc3eea25cb1c1efb77ae20f56c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02a2495f_6e5a37df",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-10T20:55:01Z",
+      "side": 1,
+      "message": "Yes, I\u0027ll clarify.",
+      "parentUuid": "d3d6eff7_d00a6c7a",
       "revId": "9d346ddff18cecc3eea25cb1c1efb77ae20f56c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
