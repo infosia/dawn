@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48df81d5_615d59dc",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-10T21:22:17Z",
+      "side": 1,
+      "message": "Done, removed some other unnecessary ones as well.",
+      "parentUuid": "e5dafe8c_cf7ae0c2",
+      "revId": "cb4974bb9f9a1ad6fd94ff61a55523c3b1a35f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "724d5838_c6447379",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-10T10:43:59Z",
       "side": 1,
       "message": "Where is this include used?",
+      "revId": "cb4974bb9f9a1ad6fd94ff61a55523c3b1a35f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "483b55ce_4e9ec667",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-10T21:22:17Z",
+      "side": 1,
+      "message": "Removed it for now, but it\u0027s needed for `NAN` for depth stencil clear default value. It was in a previous PS, but I had to remove it because it was breaking C++ builds. Will add it back in once I find a suitable fix in a follow up.",
+      "parentUuid": "724d5838_c6447379",
       "revId": "cb4974bb9f9a1ad6fd94ff61a55523c3b1a35f03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
