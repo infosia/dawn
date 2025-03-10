@@ -74,6 +74,30 @@
       },
       "revId": "79358230cf2b259a47d530a1f91a3d479f4f0d33",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7de0bb25_a22b610d",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T20:55:15Z",
+      "side": 1,
+      "message": "I\u0027d be hesitent to do that, are there any convergence requirements that could change by not having the block?",
+      "parentUuid": "c2cef612_f83afc3b",
+      "range": {
+        "startLine": 1123,
+        "startChar": 35,
+        "endLine": 1123,
+        "endChar": 57
+      },
+      "revId": "79358230cf2b259a47d530a1f91a3d479f4f0d33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
