@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "754dbf71_c5c6aabc",
+        "filename": "src/dawn/tests/perf_tests/WorkgroupAtomicPerf.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-10T14:53:08Z",
+      "side": 1,
+      "message": "I could merge these but im not sure its worth it.",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 35
+      },
+      "revId": "c8ae55d28c18f1e808641e0f5b51eb4bcef5510e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
