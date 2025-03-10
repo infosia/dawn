@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06a35be5_ed2d137d",
+        "filename": "src/tint/lang/spirv/reader/parser/builtin_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1530,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T19:40:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8d740eee_ba165162",
+      "revId": "eb141ac8cfd2ef369a44880d3dda59b0d15656ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e67120ef_bd423b9c",
@@ -85,6 +103,24 @@
       "side": 1,
       "message": "Oh understood, I have made the required changes!\npls confirm, thanks.",
       "parentUuid": "8424a5e9_f53f6462",
+      "revId": "eb141ac8cfd2ef369a44880d3dda59b0d15656ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d02eb39_4b17cf41",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T19:40:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c4d836cf_00f033a0",
       "revId": "eb141ac8cfd2ef369a44880d3dda59b0d15656ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
