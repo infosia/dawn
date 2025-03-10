@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8fbe3681_a5fae727",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:30:55Z",
+      "side": 1,
+      "message": "What is it that makes it not emit the layouts in the printer?",
+      "revId": "9d8757e060b0073ef7729e10bccece5cc63a760e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02fa336c_049ab2cf",
+        "filename": "src/tint/lang/spirv/writer/raise/fork_explicit_layout_types_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:30:55Z",
+      "side": 1,
+      "message": "I didn\u0027t see one, but maybe a test where multiple structs are forked?",
+      "revId": "9d8757e060b0073ef7729e10bccece5cc63a760e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
