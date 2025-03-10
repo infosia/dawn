@@ -64,6 +64,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bf5c1f3_5b28f579",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-10T18:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abe3f7f7_a1172900",
+      "revId": "d1743b3b312df355635d46d4373e9fe49b26c3f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "94e3ceb3_d1525bec",
@@ -77,6 +95,30 @@
       "writtenOn": "2025-03-10T16:40:11Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Spellchecker: \"assignement\" is a possible misspelling of \"assignment\".\n\nAnalyzer Description: Checks for common typos.\nOwner: chops-source-team@google.com\n\n\"assignement\" is a possible misspelling of \"assignment\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 417,
+        "startChar": 50,
+        "endLine": 417,
+        "endChar": 61
+      },
+      "revId": "d1743b3b312df355635d46d4373e9fe49b26c3f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d610fb7_23dd90ea",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-10T18:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94e3ceb3_d1525bec",
       "range": {
         "startLine": 417,
         "startChar": 50,
