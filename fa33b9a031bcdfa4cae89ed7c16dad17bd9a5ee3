@@ -52,6 +52,24 @@
       "parentUuid": "27af3fbb_4b836e20",
       "revId": "fa33b9a031bcdfa4cae89ed7c16dad17bd9a5ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c434cc42_4eb65973",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6915,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-10T20:40:04Z",
+      "side": 1,
+      "message": "On I totally agree, and it was my first instinct, but I got burned in the past for trying to collapse tags. I think it was due to conflicts, but I guess it shouldn\u0027t happen anymore now that we allow conflicts? I\u0027ll do the tag collapsing and cross my fingers ;)",
+      "parentUuid": "ac807600_7bb0f10d",
+      "revId": "fa33b9a031bcdfa4cae89ed7c16dad17bd9a5ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
