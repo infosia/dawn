@@ -2690,6 +2690,42 @@ fn f(v : S) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// Override Construct
+////////////////////////////////////////////////////////////////////////////////
+TEST_F(IRToProgramTest, Override_NoId) {
+    core::ir::Override* o;
+    b.Append(b.ir.root_block, [&] { o = b.Override("o", false); });
+
+    auto* fn = b.Function("f", ty.bool_());
+    b.Append(fn->Block(), [&] { b.Return(fn, o); });
+
+    EXPECT_WGSL(R"(
+override o : bool = false;
+
+fn f() -> bool {
+  return o;
+}
+)");
+}
+
+TEST_F(IRToProgramTest, Override_Id) {
+    core::ir::Override* o;
+    b.Append(b.ir.root_block, [&] { o = b.Override("o", true); });
+    o->SetOverrideId(OverrideId{10});
+
+    auto* fn = b.Function("f", ty.bool_());
+    b.Append(fn->Block(), [&] { b.Return(fn, o); });
+
+    EXPECT_WGSL(R"(
+@id(10) override o : bool = true;
+
+fn f() -> bool {
+  return o;
+}
+)");
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // chromium_internal_graphite
 ////////////////////////////////////////////////////////////////////////////////
 TEST_F(IRToProgramTest, Enable_ChromiumInternalGraphite_SubgroupBallot) {
