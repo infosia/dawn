@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c893dd8_b93173bc",
+        "filename": "src/tint/lang/spirv/reader/parser/memory_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-10T17:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82a8cb8e_8b7a735e",
+      "revId": "11f30e297cfc89348ad17f0489e3f18227946176",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2925afb9_39893357",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbdb2e76_2642fc35",
+        "filename": "src/tint/lang/spirv/reader/parser/memory_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-10T17:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2925afb9_39893357",
+      "revId": "11f30e297cfc89348ad17f0489e3f18227946176",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2210512_29f6251c",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-03-10T13:55:14Z",
       "side": 1,
       "message": "I think this should be `EmitWithoutSpvResult(load)` because there is no spirv result for OpCopyMemory",
+      "revId": "11f30e297cfc89348ad17f0489e3f18227946176",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b616a5f9_3f391572",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-10T17:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2210512_29f6251c",
       "revId": "11f30e297cfc89348ad17f0489e3f18227946176",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
