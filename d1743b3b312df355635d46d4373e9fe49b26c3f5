@@ -48,6 +48,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abe3f7f7_a1172900",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-10T17:06:39Z",
+      "side": 1,
+      "message": "I think there was a shadow var. Let me check",
+      "parentUuid": "d34a2486_f8c63209",
+      "revId": "d1743b3b312df355635d46d4373e9fe49b26c3f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "94e3ceb3_d1525bec",
         "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
         "patchSetId": 7
