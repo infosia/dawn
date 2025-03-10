@@ -16,6 +16,57 @@
       "message": "Hello Dan, James\nCould you take a look at this CL?\nThanks!",
       "revId": "11f30e297cfc89348ad17f0489e3f18227946176",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82a8cb8e_8b7a735e",
+        "filename": "src/tint/lang/spirv/reader/parser/memory_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T13:55:14Z",
+      "side": 1,
+      "message": "nit: Indenting if the first group of `Op` entries is off for this and the next 2 tests.",
+      "revId": "11f30e297cfc89348ad17f0489e3f18227946176",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2925afb9_39893357",
+        "filename": "src/tint/lang/spirv/reader/parser/memory_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T13:55:14Z",
+      "side": 1,
+      "message": "I think if you set the `OpName %src_var \"src_var\"` in the block above for this and `dst_var` then the emitting IR should have the names and make it easier to see what is going on.",
+      "revId": "11f30e297cfc89348ad17f0489e3f18227946176",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2210512_29f6251c",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T13:55:14Z",
+      "side": 1,
+      "message": "I think this should be `EmitWithoutSpvResult(load)` because there is no spirv result for OpCopyMemory",
+      "revId": "11f30e297cfc89348ad17f0489e3f18227946176",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
