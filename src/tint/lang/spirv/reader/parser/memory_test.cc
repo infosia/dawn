@@ -607,10 +607,12 @@ tint_symbol_2 = struct @align(4) {
 
 TEST_F(SpirvParserTest, CopyMemory_Scalar) {
     EXPECT_IR(R"(
-             OpCapability Shader
-             OpMemoryModel Logical GLSL450
-             OpEntryPoint GLCompute %main "main"
-             OpExecutionMode %main LocalSize 1 1 1
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %src_var "src_var"
+               OpName %dst_var "dst_var"
        %void = OpTypeVoid
        %u32  = OpTypeInt 32 0
     %u32_ptr = OpTypePointer Function %u32
@@ -626,10 +628,10 @@ TEST_F(SpirvParserTest, CopyMemory_Scalar) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    %2:ptr<function, u32, read_write> = var undef
-    %3:ptr<function, u32, read_write> = var undef
-    %4:u32 = load %2
-    store %3, %4
+    %src_var:ptr<function, u32, read_write> = var undef
+    %dst_var:ptr<function, u32, read_write> = var undef
+    %4:u32 = load %src_var
+    store %dst_var, %4
     ret
   }
 }
@@ -638,10 +640,12 @@ TEST_F(SpirvParserTest, CopyMemory_Scalar) {
 
 TEST_F(SpirvParserTest, CopyMemory_Vector) {
     EXPECT_IR(R"(
-             OpCapability Shader
-             OpMemoryModel Logical GLSL450
-             OpEntryPoint GLCompute %main "main"
-             OpExecutionMode %main LocalSize 1 1 1
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %src_vec "src_vec"
+               OpName %dst_vec "dst_vec"
        %void = OpTypeVoid
         %u32 = OpTypeInt 32 0
       %vec4u = OpTypeVector %u32 4
@@ -658,10 +662,10 @@ TEST_F(SpirvParserTest, CopyMemory_Vector) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    %2:ptr<function, vec4<u32>, read_write> = var undef
-    %3:ptr<function, vec4<u32>, read_write> = var undef
-    %4:vec4<u32> = load %2
-    store %3, %4
+    %src_vec:ptr<function, vec4<u32>, read_write> = var undef
+    %dst_vec:ptr<function, vec4<u32>, read_write> = var undef
+    %4:vec4<u32> = load %src_vec
+    store %dst_vec, %4
     ret
   }
 }
@@ -670,10 +674,14 @@ TEST_F(SpirvParserTest, CopyMemory_Vector) {
 
 TEST_F(SpirvParserTest, CopyMemory_VectorComponent) {
     EXPECT_IR(R"(
-             OpCapability Shader
-             OpMemoryModel Logical GLSL450
-             OpEntryPoint GLCompute %main "main"
-             OpExecutionMode %main LocalSize 1 1 1
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %src_vec "src_vec"
+               OpName %dst_vec "dst_vec"
+               OpName %src "src"
+               OpName %dst "dst"
        %void = OpTypeVoid
         %u32 = OpTypeInt 32 0
       %vec4u = OpTypeVector %u32 4
@@ -683,10 +691,10 @@ TEST_F(SpirvParserTest, CopyMemory_VectorComponent) {
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
  %main_start = OpLabel
-    %vec_src = OpVariable %vec4u_ptr Function
-    %vec_dst = OpVariable %vec4u_ptr Function
-        %src = OpAccessChain %u32_ptr %vec_src %u32_2
-        %dst = OpAccessChain %u32_ptr %vec_dst %u32_2
+    %src_vec = OpVariable %vec4u_ptr Function
+    %dst_vec = OpVariable %vec4u_ptr Function
+        %src = OpAccessChain %u32_ptr %src_vec %u32_2
+        %dst = OpAccessChain %u32_ptr %dst_vec %u32_2
              OpCopyMemory %dst %src
              OpReturn
              OpFunctionEnd
@@ -694,12 +702,12 @@ TEST_F(SpirvParserTest, CopyMemory_VectorComponent) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    %2:ptr<function, vec4<u32>, read_write> = var undef
-    %3:ptr<function, vec4<u32>, read_write> = var undef
-    %4:ptr<function, u32, read_write> = access %2, 2u
-    %5:ptr<function, u32, read_write> = access %3, 2u
-    %6:u32 = load %4
-    store %5, %6
+    %src_vec:ptr<function, vec4<u32>, read_write> = var undef
+    %dst_vec:ptr<function, vec4<u32>, read_write> = var undef
+    %src:ptr<function, u32, read_write> = access %src_vec, 2u
+    %dst:ptr<function, u32, read_write> = access %dst_vec, 2u
+    %6:u32 = load %src
+    store %dst, %6
     ret
   }
 }
@@ -712,6 +720,8 @@ TEST_F(SpirvParserTest, CopyMemory_Matrix) {
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %main "main"
                OpExecutionMode %main LocalSize 1 1 1
+               OpName %src_mat "src_mat"
+               OpName %dst_mat "dst_mat"
        %void = OpTypeVoid
         %f32 = OpTypeFloat 32
       %vec4f = OpTypeVector %f32 4
@@ -720,19 +730,19 @@ TEST_F(SpirvParserTest, CopyMemory_Matrix) {
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
  %main_start = OpLabel
-        %src = OpVariable %mat3x4f_ptr Function
-        %dst = OpVariable %mat3x4f_ptr Function
-               OpCopyMemory %dst %src
+    %src_mat = OpVariable %mat3x4f_ptr Function
+    %dst_mat = OpVariable %mat3x4f_ptr Function
+               OpCopyMemory %dst_mat %src_mat
                OpReturn
                OpFunctionEnd
 )",
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    %2:ptr<function, mat3x4<f32>, read_write> = var undef
-    %3:ptr<function, mat3x4<f32>, read_write> = var undef
-    %4:mat3x4<f32> = load %2
-    store %3, %4
+    %src_mat:ptr<function, mat3x4<f32>, read_write> = var undef
+    %dst_mat:ptr<function, mat3x4<f32>, read_write> = var undef
+    %4:mat3x4<f32> = load %src_mat
+    store %dst_mat, %4
     ret
   }
 }
@@ -745,6 +755,10 @@ TEST_F(SpirvParserTest, CopyMemory_MatrixColumn) {
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %main "main"
                OpExecutionMode %main LocalSize 1 1 1
+               OpName %src_mat "src_mat"
+               OpName %mat_dst "mat_dst"
+               OpName %src "src"
+               OpName %dst "dst"
       %void  = OpTypeVoid
       %f32   = OpTypeFloat 32
       %vec4f = OpTypeVector %f32 4
@@ -756,9 +770,9 @@ TEST_F(SpirvParserTest, CopyMemory_MatrixColumn) {
     %ep_type = OpTypeFunction %void
       %main  = OpFunction %void None %ep_type
  %main_start = OpLabel
-    %mat_src = OpVariable %mat3x4f_ptr Function
+    %src_mat = OpVariable %mat3x4f_ptr Function
     %mat_dst = OpVariable %mat3x4f_ptr Function
-    %src     = OpAccessChain %vec4f_ptr %mat_src %u32_2
+    %src     = OpAccessChain %vec4f_ptr %src_mat %u32_2
     %dst     = OpAccessChain %vec4f_ptr %mat_dst %u32_2
                OpCopyMemory %dst %src
                OpReturn
@@ -767,12 +781,12 @@ TEST_F(SpirvParserTest, CopyMemory_MatrixColumn) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    %2:ptr<function, mat3x4<f32>, read_write> = var undef
-    %3:ptr<function, mat3x4<f32>, read_write> = var undef
-    %4:ptr<function, vec4<f32>, read_write> = access %2, 2u
-    %5:ptr<function, vec4<f32>, read_write> = access %3, 2u
-    %6:vec4<f32> = load %4
-    store %5, %6
+    %src_mat:ptr<function, mat3x4<f32>, read_write> = var undef
+    %mat_dst:ptr<function, mat3x4<f32>, read_write> = var undef
+    %src:ptr<function, vec4<f32>, read_write> = access %src_mat, 2u
+    %dst:ptr<function, vec4<f32>, read_write> = access %mat_dst, 2u
+    %6:vec4<f32> = load %src
+    store %dst, %6
     ret
   }
 }
@@ -785,6 +799,8 @@ TEST_F(SpirvParserTest, CopyMemory_Array) {
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %main "main"
                OpExecutionMode %main LocalSize 1 1 1
+               OpName %src_arr "src_arr"
+               OpName %dst_arr "dst_arr"
        %void = OpTypeVoid
         %u32 = OpTypeInt 32 0
       %u32_4 = OpConstant %u32 4
@@ -793,19 +809,19 @@ TEST_F(SpirvParserTest, CopyMemory_Array) {
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
  %main_start = OpLabel
-        %src = OpVariable %arr_ptr Function
-        %dst = OpVariable %arr_ptr Function
-        OpCopyMemory %dst %src
+    %src_arr = OpVariable %arr_ptr Function
+    %dst_arr = OpVariable %arr_ptr Function
+               OpCopyMemory %dst_arr %src_arr
                OpReturn
                OpFunctionEnd
 )",
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    %2:ptr<function, array<u32, 4>, read_write> = var undef
-    %3:ptr<function, array<u32, 4>, read_write> = var undef
-    %4:array<u32, 4> = load %2
-    store %3, %4
+    %src_arr:ptr<function, array<u32, 4>, read_write> = var undef
+    %dst_arr:ptr<function, array<u32, 4>, read_write> = var undef
+    %4:array<u32, 4> = load %src_arr
+    store %dst_arr, %4
     ret
   }
 }
@@ -818,6 +834,10 @@ TEST_F(SpirvParserTest, CopyMemory_ArrayElement) {
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %main "main"
                OpExecutionMode %main LocalSize 1 1 1
+               OpName %src_arr "src_arr"
+               OpName %dst_arr "dst_arr"
+               OpName %src "src"
+               OpName %dst "dst"
        %void = OpTypeVoid
         %u32 = OpTypeInt 32 0
       %u32_2 = OpConstant %u32 2
@@ -839,12 +859,12 @@ TEST_F(SpirvParserTest, CopyMemory_ArrayElement) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    %2:ptr<function, array<u32, 4>, read_write> = var undef
-    %3:ptr<function, array<u32, 4>, read_write> = var undef
-    %4:ptr<function, u32, read_write> = access %2, 2u
-    %5:ptr<function, u32, read_write> = access %3, 2u
-    %6:u32 = load %4
-    store %5, %6
+    %src_arr:ptr<function, array<u32, 4>, read_write> = var undef
+    %dst_arr:ptr<function, array<u32, 4>, read_write> = var undef
+    %src:ptr<function, u32, read_write> = access %src_arr, 2u
+    %dst:ptr<function, u32, read_write> = access %dst_arr, 2u
+    %6:u32 = load %src
+    store %dst, %6
     ret
   }
 }
@@ -857,6 +877,8 @@ TEST_F(SpirvParserTest, CopyMemory_Struct) {
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %main "main"
                OpExecutionMode %main LocalSize 1 1 1
+               OpName %src_str "src_str"
+               OpName %dst_str "dst_str"
        %void = OpTypeVoid
         %u32 = OpTypeInt 32 0
         %str = OpTypeStruct %u32 %u32
@@ -864,9 +886,9 @@ TEST_F(SpirvParserTest, CopyMemory_Struct) {
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
  %main_start = OpLabel
-        %src = OpVariable %str_ptr Function
-        %dst = OpVariable %str_ptr Function
-               OpCopyMemory %dst %src
+    %src_str = OpVariable %str_ptr Function
+    %dst_str = OpVariable %str_ptr Function
+               OpCopyMemory %dst_str %src_str
                OpReturn
                OpFunctionEnd
 )",
@@ -878,10 +900,10 @@ tint_symbol_2 = struct @align(4) {
 
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    %2:ptr<function, tint_symbol_2, read_write> = var undef
-    %3:ptr<function, tint_symbol_2, read_write> = var undef
-    %4:tint_symbol_2 = load %2
-    store %3, %4
+    %src_str:ptr<function, tint_symbol_2, read_write> = var undef
+    %dst_str:ptr<function, tint_symbol_2, read_write> = var undef
+    %4:tint_symbol_2 = load %src_str
+    store %dst_str, %4
     ret
   }
 }
@@ -894,6 +916,10 @@ TEST_F(SpirvParserTest, CopyMemory_StructMember) {
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %main "main"
                OpExecutionMode %main LocalSize 1 1 1
+               OpName %src_str "src_str"
+               OpName %dst_str "dst_str"
+               OpName %src "src"
+               OpName %dst "dst"
        %void = OpTypeVoid
         %u32 = OpTypeInt 32 0
       %u32_1 = OpConstant %u32 1
@@ -903,11 +929,11 @@ TEST_F(SpirvParserTest, CopyMemory_StructMember) {
     %ep_type = OpTypeFunction %void
        %main = OpFunction %void None %ep_type
  %main_start = OpLabel
-        %src = OpVariable %str_ptr Function
-        %dst = OpVariable %str_ptr Function
- %access_src = OpAccessChain %u32_ptr %src %u32_1
- %access_dst = OpAccessChain %u32_ptr %dst %u32_1
-               OpCopyMemory %access_dst %access_src
+    %src_str = OpVariable %str_ptr Function
+    %dst_str = OpVariable %str_ptr Function
+        %src = OpAccessChain %u32_ptr %src_str %u32_1
+        %dst = OpAccessChain %u32_ptr %dst_str %u32_1
+               OpCopyMemory %dst %src
                OpReturn
                OpFunctionEnd
 )",
@@ -919,12 +945,12 @@ tint_symbol_2 = struct @align(4) {
 
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    %2:ptr<function, tint_symbol_2, read_write> = var undef
-    %3:ptr<function, tint_symbol_2, read_write> = var undef
-    %4:ptr<function, u32, read_write> = access %2, 1u
-    %5:ptr<function, u32, read_write> = access %3, 1u
-    %6:u32 = load %4
-    store %5, %6
+    %src_str:ptr<function, tint_symbol_2, read_write> = var undef
+    %dst_str:ptr<function, tint_symbol_2, read_write> = var undef
+    %src:ptr<function, u32, read_write> = access %src_str, 1u
+    %dst:ptr<function, u32, read_write> = access %dst_str, 1u
+    %6:u32 = load %src
+    store %dst, %6
     ret
   }
 }

@@ -894,7 +894,7 @@ class Parser {
                     break;
                 case spv::Op::OpCopyMemory: {
                     auto load = b_.Load(Value(inst.GetSingleWordOperand(1)));
-                    Emit(load, inst.result_id());
+                    EmitWithoutSpvResult(load);
                     EmitWithoutResult(b_.Store(Value(inst.GetSingleWordOperand(0)), load));
                     break;
                 }
