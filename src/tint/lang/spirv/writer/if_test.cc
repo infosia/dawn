@@ -82,6 +82,32 @@ TEST_F(SpirvWriterTest, If_FalseEmpty) {
 )");
 }
 
+TEST_F(SpirvWriterTest, If_TrueAndFalseEmptyDifferentLabel) {
+    // Spirv 1.6 requires that 'OpBranchConditional' have different labels for the true/false target
+    // blocks.
+    auto* func = b.Function("foo", ty.void_());
+    b.Append(func->Block(), [&] {
+        auto* i = b.If(true);
+        b.Append(i->True(), [&] { b.ExitIf(i); });
+        b.Append(i->False(), [&] {  //
+            b.ExitIf(i);
+        });
+        b.Return(func);
+    });
+
+    ASSERT_TRUE(Generate()) << Error() << output_;
+    EXPECT_INST(R"(
+          %4 = OpLabel
+               OpSelectionMerge %5 None
+               OpBranchConditional %true %6 %5
+          %6 = OpLabel
+               OpBranch %5
+          %5 = OpLabel
+               OpReturn
+               OpFunctionEnd
+)");
+}
+
 TEST_F(SpirvWriterTest, If_TrueEmpty) {
     auto* func = b.Function("foo", ty.void_());
     b.Append(func->Block(), [&] {
