@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d34a2486_f8c63209",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-10T16:40:11Z",
+      "side": 1,
+      "message": "`result2` -\u003e `result` ?",
+      "fixSuggestions": [
+        {
+          "fixId": "06882cf0_322e713c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+              "range": {
+                "startLine": 415,
+                "startChar": 0,
+                "endLine": 416,
+                "endChar": 0
+              },
+              "replacement": "                    auto* result \u003d value-\u003eAs\u003ccore::ir::InstructionResult\u003e();\n"
+            },
+            {
+              "path": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+              "range": {
+                "startLine": 418,
+                "startChar": 0,
+                "endLine": 419,
+                "endChar": 0
+              },
+              "replacement": "                    if (!result || result-\u003eInstruction()-\u003eBlock() \u003d\u003d mod.root_block) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d1743b3b312df355635d46d4373e9fe49b26c3f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94e3ceb3_d1525bec",
+        "filename": "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-10T16:40:11Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"assignement\" is a possible misspelling of \"assignment\".\n\nAnalyzer Description: Checks for common typos.\nOwner: chops-source-team@google.com\n\n\"assignement\" is a possible misspelling of \"assignment\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 417,
+        "startChar": 50,
+        "endLine": 417,
+        "endChar": 61
+      },
+      "revId": "d1743b3b312df355635d46d4373e9fe49b26c3f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
