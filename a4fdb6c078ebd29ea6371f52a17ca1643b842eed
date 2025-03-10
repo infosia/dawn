@@ -56,6 +56,30 @@
       },
       "revId": "a4fdb6c078ebd29ea6371f52a17ca1643b842eed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93e22de6_1e7e30e3",
+        "filename": "src/dawn/common/DynamicLib.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-03-10T19:40:00Z",
+      "side": 1,
+      "message": "The implementation of `LoadLibraryExA` converts the passed in string to wide characters and calls `LoadLibraryExW`. So having this method accept `std::string` means two string conversions, one when calling \"OpenSystemLibrary\" and one when calling the OS. Passing a `std::wstring_view` here eliminates both the copies.\n\nAs a followon change, would be good for us to standardize on wide characters for all of the Windows filepath ingesting code in Dawn. FWIW, Chromium does this.",
+      "parentUuid": "21028785_d36bb4f0",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "a4fdb6c078ebd29ea6371f52a17ca1643b842eed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
