@@ -16,6 +16,46 @@
       "message": "@Antonio and @Corentin, PTAL",
       "revId": "a4fdb6c078ebd29ea6371f52a17ca1643b842eed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "964d1a1b_f6f4d62a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-10T18:43:38Z",
+      "side": 1,
+      "message": "This LGTM with just a question for Corentin to weigh in.",
+      "revId": "a4fdb6c078ebd29ea6371f52a17ca1643b842eed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21028785_d36bb4f0",
+        "filename": "src/dawn/common/DynamicLib.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-10T18:43:38Z",
+      "side": 1,
+      "message": "Should we standardize and use `std::string` here? I get that this avoids a `UTF8ToWStr` conversion, and it also Windows-only, so probably okay?",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "a4fdb6c078ebd29ea6371f52a17ca1643b842eed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
