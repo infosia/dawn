@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "858b65f5_dfb9f21d",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:04:51Z",
+      "side": 1,
+      "message": "Does this need to call `ComputeTextureMetadata` to make sure the data is generated?",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88212afb_e9ce681a",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:04:51Z",
+      "side": 1,
+      "message": "Could save the next lookup by storing `texture_metadata_[entry_point.name]` to a variable and just accessing twice.",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12f312f_ab75269f",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:04:51Z",
+      "side": 1,
+      "message": "Good catch, shouldn\u0027t have been `VectorRef` to begin with.",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b44e2eb0_cd012114",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:04:51Z",
+      "side": 1,
+      "message": "ditto lookup caching",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "408a894f_d36badae",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:04:51Z",
+      "side": 1,
+      "message": "Compute metadata?",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd05f062_effa8ae0",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:04:51Z",
+      "side": 1,
+      "message": "ditto caching",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cedb113a_f01700a2",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:04:51Z",
+      "side": 1,
+      "message": "Doesn\u0027t this add all the textures instead of just the ones that use num levels?",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84360a3f_cc9efd17",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:04:51Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Computes the texture metadata for `entry_point`\n```",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

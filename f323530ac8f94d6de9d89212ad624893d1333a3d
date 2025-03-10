@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab65005d_3ad5a57e",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2502,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:04:51Z",
+      "side": 0,
+      "message": "This loses the validation?",
+      "revId": "f323530ac8f94d6de9d89212ad624893d1333a3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edceea05_a600407f",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3265,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T21:04:51Z",
+      "side": 0,
+      "message": "Does this validation get covered somewhere else?",
+      "revId": "f323530ac8f94d6de9d89212ad624893d1333a3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
