@@ -16,6 +16,24 @@
       "message": "How do I continue pushing to this stream? I have tried fetching the branch and using git cl upload, but with no luck",
       "revId": "2c0cd0ffba8d1aeb091af644650b4032b50dc72c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d329e9fc_a92a5120",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T17:46:48Z",
+      "side": 1,
+      "message": "`git cl upload --squash` I believe.\n\nI my `.git/config` file in the `[gerrit]` section I have `  override-squash-uploads \u003d True` which does that by default.\n\nIf you don\u0027t do that it creates CLs. Other other option is to alway use `--amend` to always amend the same commit which gerrit will handle correctly on upload. \n\nIf you alreay have commits you can use `git rebase -i \u003csha of hte commit before your first one` and then squash them all together.",
+      "parentUuid": "0e0a4c1d_cb25d63e",
+      "revId": "2c0cd0ffba8d1aeb091af644650b4032b50dc72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
