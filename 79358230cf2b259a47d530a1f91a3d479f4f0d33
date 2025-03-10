@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "224190ca_a52f0325",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T20:52:53Z",
+      "side": 1,
+      "message": "Instead of changing the blocks above (the !add_false_label` in the true condition is a bit confusing), could we jsut leave what was above and add at this point:\n\n```\n// Spirv 1.6 requires that \u0027OpBranchConditional\u0027 have different labels for the true/false\n// target blocks. This change has also been seen to resolve bugs in control flow for some\n// backend compilers.\nif (true_label \u003d\u003d false_label) {\n  false_label \u003d Lable(false_block);\n}\n```\n\n?",
+      "revId": "79358230cf2b259a47d530a1f91a3d479f4f0d33",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c2cef612_f83afc3b",
         "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
         "patchSetId": 5
