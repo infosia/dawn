@@ -34,6 +34,24 @@
       "parentUuid": "1cf4da1e_cffec056",
       "revId": "fa33b9a031bcdfa4cae89ed7c16dad17bd9a5ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac807600_7bb0f10d",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6915,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-10T20:38:33Z",
+      "side": 1,
+      "message": "Like, it caused conflicts, or something else? Looking at the set both `dawn-backend-validation` and `dawn-no-backend-validation` are in them, so it can be removed as it doesn\u0027t matter. `no-asan` and the lack of that tag are both there (so i think that means `asan`) so it can be removed. Both nvidia and intel show up (which I think is all the types of GPU we have) so those should be able to be removed. Similar with `graphite-enabled` So it seems like a lot of them can go away.",
+      "parentUuid": "27af3fbb_4b836e20",
+      "revId": "fa33b9a031bcdfa4cae89ed7c16dad17bd9a5ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
