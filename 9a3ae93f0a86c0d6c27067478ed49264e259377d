@@ -68,6 +68,41 @@
       "message": "It is intresting that this caused no CTS failures? and no unit test failures either?",
       "revId": "9a3ae93f0a86c0d6c27067478ed49264e259377d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d639999d_ea6d8924",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T20:38:07Z",
+      "side": 1,
+      "message": "You didn\u0027t change any code that would affect CTS or unit tests?",
+      "parentUuid": "f7529284_0d4f32ee",
+      "revId": "9a3ae93f0a86c0d6c27067478ed49264e259377d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4838d76e_dd2fbd2e",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T20:38:07Z",
+      "side": 1,
+      "message": "`return false` here instead of trying to continue",
+      "revId": "9a3ae93f0a86c0d6c27067478ed49264e259377d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
