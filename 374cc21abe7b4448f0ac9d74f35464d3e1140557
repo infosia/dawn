@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "121df6b1_9ec3a9ec",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-11T20:36:14Z",
+      "side": 1,
+      "message": "This code is used elsewhere I need to determine what the current usage is and compare it to what we need here (in single entry point).",
+      "parentUuid": "301eb3e2_2caee63d",
+      "revId": "374cc21abe7b4448f0ac9d74f35464d3e1140557",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "42a55f43_55fc45ed",
         "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
         "patchSetId": 9
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "sg",
       "parentUuid": "42a55f43_55fc45ed",
+      "revId": "374cc21abe7b4448f0ac9d74f35464d3e1140557",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "035ecab4_d961aac2",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-11T20:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0c1b2a0_035ab026",
       "revId": "374cc21abe7b4448f0ac9d74f35464d3e1140557",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -84,6 +120,24 @@
       "side": 1,
       "message": "Im going to call this \u0027Dan style\u0027",
       "parentUuid": "b1606a7d_500eacc4",
+      "revId": "374cc21abe7b4448f0ac9d74f35464d3e1140557",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "238058aa_b911bfd9",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-11T20:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43c50298_b4f301f9",
       "revId": "374cc21abe7b4448f0ac9d74f35464d3e1140557",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
