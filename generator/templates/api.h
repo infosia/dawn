@@ -170,7 +170,13 @@ typedef struct {{API}}ChainedStruct {
     {%- elif member.type.category == "enum" -%}
         //* Enum types are either their default values, or zero-init.
         {%- if member.default_value != None -%}
-            {{as_cEnum(member.type.name, Name(member.default_value))}}
+            //* For enums that have an undefined value, instead of using the
+            //* default, just put undefined because they should be the same.
+            {%- if member.type.hasUndefined -%}
+                {{as_cEnum(member.type.name, Name("undefined"))}}
+            {%- else -%}
+                {{as_cEnum(member.type.name, Name(member.default_value))}}
+            {%- endif -%}
         {%- else -%}
             _{{api}}_ENUM_ZERO_INIT({{as_cType(member.type.name)}})
         {%- endif -%}

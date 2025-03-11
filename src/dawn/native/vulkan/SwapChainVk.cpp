@@ -54,6 +54,7 @@ namespace {
 
 VkPresentModeKHR ToVulkanPresentMode(wgpu::PresentMode mode) {
     switch (mode) {
+        case wgpu::PresentMode::Undefined:
         case wgpu::PresentMode::Fifo:
             return VK_PRESENT_MODE_FIFO_KHR;
         case wgpu::PresentMode::FifoRelaxed:

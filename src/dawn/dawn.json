@@ -439,7 +439,7 @@
         "extensible": "in",
         "members": [
             {"name": "device", "type": "device"},
-            {"name": "format", "type": "texture format"},
+            {"name": "format", "type": "texture format", "default": "undefined"},
             {"name": "usage", "type": "texture usage", "default": "render attachment"},
             {"name": "width", "type": "uint32_t"},
             {"name": "height", "type": "uint32_t"},
@@ -2537,7 +2537,7 @@
         "extensible": "in",
         "members": [
             {"name": "step mode", "type": "vertex step mode"},
-            {"name": "array stride", "type": "uint64_t"},
+            {"name": "array stride", "type": "uint64_t", "default": "undefined"},
             {"name": "attribute count", "type": "size_t"},
             {"name": "attributes", "type": "vertex attribute", "annotation": "const*", "length": "attribute count"}
         ]
@@ -2662,6 +2662,7 @@
         "category": "enum",
         "emscripten_no_enum_table": true,
         "values": [
+            {"value": 0, "name": "undefined", "jsrepr": "undefined"},
             {"value": 1, "name": "fifo"},
             {"value": 2, "name": "fifo relaxed"},
             {"value": 3, "name": "immediate"},
@@ -3319,7 +3320,7 @@
         "extensible": "in",
         "members": [
             {"name": "topology", "type": "primitive topology", "default": "triangle list"},
-            {"name": "strip index format", "type": "index format", "default": "undefined"},
+            {"name": "strip index format", "type": "index format"},
             {"name": "front face", "type": "front face", "default": "CCW"},
             {"name": "cull mode", "type": "cull mode", "default": "none"},
             {"name": "unclipped depth", "type": "bool", "default": "false"}
@@ -3330,9 +3331,9 @@
         "category": "structure",
         "extensible": "in",
         "members": [
-            {"name": "format", "type": "texture format"},
+            {"name": "format", "type": "texture format", "default": "undefined"},
             {"name": "depth write enabled", "type": "optional bool", "default": "undefined"},
-            {"name": "depth compare", "type": "compare function", "default": "undefined"},
+            {"name": "depth compare", "type": "compare function"},
             {"name": "stencil front", "type": "stencil face state"},
             {"name": "stencil back", "type": "stencil face state"},
             {"name": "stencil read mask", "type": "uint32_t", "default": "0xFFFFFFFF"},
@@ -3369,7 +3370,7 @@
         "category": "structure",
         "extensible": "in",
         "members": [
-            {"name": "format", "type": "texture format"},
+            {"name": "format", "type": "texture format", "default": "undefined"},
             {"name": "blend", "type": "blend state", "annotation": "const*", "optional": true},
             {"name": "write mask", "type": "color write mask", "default": "all"}
         ]
@@ -3920,7 +3921,7 @@
             {"name": "usage", "type": "texture usage"},
             {"name": "dimension", "type": "texture dimension", "default": "2D"},
             {"name": "size", "type": "extent 3D"},
-            {"name": "format", "type": "texture format"},
+            {"name": "format", "type": "texture format", "default": "undefined"},
             {"name": "mip level count", "type": "uint32_t", "default": 1},
             {"name": "sample count", "type": "uint32_t", "default": 1},
             {"name": "view format count", "type": "size_t", "default": 0},
