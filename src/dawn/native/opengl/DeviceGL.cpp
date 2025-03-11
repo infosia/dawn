@@ -410,8 +410,10 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
     GLuint texture) {
     const OpenGLFunctions& gl = GetGL();
 
+    TextureDescriptor reifiedDescriptor =
+        FromAPI(descriptor->cTextureDescriptor)->WithTrivialFrontendDefaults();
     UnpackedPtr<TextureDescriptor> textureDescriptor;
-    DAWN_TRY_ASSIGN(textureDescriptor, ValidateAndUnpack(FromAPI(descriptor->cTextureDescriptor)));
+    DAWN_TRY_ASSIGN(textureDescriptor, ValidateAndUnpack(&reifiedDescriptor));
     DAWN_TRY(ValidateTextureDescriptor(this, textureDescriptor));
     if (!HasFeature(Feature::ANGLETextureSharing)) {
         return DAWN_VALIDATION_ERROR("Device does not support ANGLE GL texture sharing.");
