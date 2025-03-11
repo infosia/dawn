@@ -104,6 +104,30 @@
       },
       "revId": "a4fdb6c078ebd29ea6371f52a17ca1643b842eed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e45b1dd_1819fd37",
+        "filename": "src/dawn/common/DynamicLib.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-03-11T21:44:19Z",
+      "side": 1,
+      "message": "\u003e Do you mean on all platforms? How is that efficient on non-Windows? (but also Dawn basically opens no files so it really doesn\u0027t seem important to do)\n\nNo, I mean just on Windows.",
+      "parentUuid": "7b57d26a_9bf7a3bd",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 44
+      },
+      "revId": "a4fdb6c078ebd29ea6371f52a17ca1643b842eed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
