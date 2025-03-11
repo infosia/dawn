@@ -33,6 +33,24 @@
       "message": "We are still waiting on a decision\nhttps://github.com/gpuweb/gpuweb/issues/5093",
       "revId": "9a3ae93f0a86c0d6c27067478ed49264e259377d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31e49eff_5e79fce1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-11T18:46:15Z",
+      "side": 1,
+      "message": "The decision was to only support concrete constructible for this function.",
+      "parentUuid": "716b9ff6_0a4f7f29",
+      "revId": "9a3ae93f0a86c0d6c27067478ed49264e259377d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
