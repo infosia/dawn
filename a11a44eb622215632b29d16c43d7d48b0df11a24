@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc6bc3a6_1daadaf5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3600222
+      },
+      "writtenOn": "2025-03-11T12:58:56Z",
+      "side": 1,
+      "message": "This CL is causing build failure of Chrome on iOS with the following error:\n\n```\n[0/1] 28.62s F ACTION //third_party/dawn/src/tint:tint_generate_wgsl_corpus(//build/toolchain/ios:ios_clang_x64)\nFAILED: 3e9d10a9-44a2-49eb-85ce-9d93a4500678 \"./gen/fuzzers/wgsl.stamp\" ACTION //third_party/dawn/src/tint:tint_generate_wgsl_corpus(//build/toolchain/ios:ios_clang_x64)\nerr: exit\u003d1\npython3 ../../third_party/dawn/src/tint/cmd/fuzz/generate_tint_corpus.py ../../third_party/dawn/test gen/fuzzers\nbuild step: __third_party_dawn_src_tint_tint_generate_wgsl_corpus___build_toolchain_ios_ios_clang_x64__rule \"./gen/fuzzers/wgsl.stamp\"\nstderr:\nTraceback (most recent call last):\n  File \"/Users/sdefresne/Developer/chromium/src/out/Debug-iphonesimulator/../../third_party/dawn/src/tint/cmd/fuzz/generate_tint_corpus.py\", line 112, in \u003cmodule\u003e\n    class Options(TypedDict):\n  File \"/Users/sdefresne/Developer/chromium/src/out/Debug-iphonesimulator/../../third_party/dawn/src/tint/cmd/fuzz/generate_tint_corpus.py\", line 115, in Options\n    wgsl_fuzzer_bin: str | None\nTypeError: unsupported operand type(s) for |: \u0027type\u0027 and \u0027NoneType\u0027\n```\n\nThis probably happens because the version of python3 installed by default on macOS is version Python 3.9.6 and the Chrome on iOS build instruction do not require a more recent version of python3.\n\nIs it possible to change the implementation so that it would work with Python 3.9.6. If not, then can we disable the target when building Chromium until we figure out how to get all developers to upgrade to another version of python3.",
+      "revId": "a11a44eb622215632b29d16c43d7d48b0df11a24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
