@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9f3735d_15926f17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-11T20:12:17Z",
+      "side": 1,
+      "message": "I think in general we shouldn\u0027t try to hard to cache things that failed. Invalid shaders are not part of a normal application flow, they should realistically only happen during local development, we can go down the cache-miss path for those and save some complexity.\n\nWe need to avoid the creation of the `tint::Program` for the cache hit case. `tint::Program` is used in a bunch of places in the frontend ShaderModule and in each backend for the creation of the translated shader.\n\nUsing D3D11 as an example, I think the path looks like:\n * Make `EntryPointMetadataTable` serializable. `ShaderModuleBase::InitializeBase` reads the `EntryPointMetadataTable` from the blob cache and does not always need a `tint::Program`. We need a way to hash the shader creation attributes (source, other descriptor fields) for this. Store this hash somewhere for later too.\n * In ShaderModuleD3D11.cpp, `ShaderModule::Compile` creates the compile request and uses the blob cache. The problem here is that the request has a tint::Program in it. We want to use the hash calculated earlier instead of tint::Program here for blob cache lookups.\n  \nA good first step is serializing/deserializing EntryPointMetadataTable and anything else in ShaderModule that needs the tint::Program.",
+      "parentUuid": "38ac5726_69c26dfe",
+      "revId": "5e5adaa03a3a290cf3194922fe18705b397e1a5c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "2fc650a2_def975d9",
