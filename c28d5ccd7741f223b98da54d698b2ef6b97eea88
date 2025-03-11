@@ -70,6 +70,24 @@
       "parentUuid": "119e0118_120c890b",
       "revId": "c28d5ccd7741f223b98da54d698b2ef6b97eea88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9194e72b_6a6011d5",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T20:59:31Z",
+      "side": 1,
+      "message": "Done, nicer your way.",
+      "parentUuid": "0c5d7775_e9c9cfda",
+      "revId": "c28d5ccd7741f223b98da54d698b2ef6b97eea88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
