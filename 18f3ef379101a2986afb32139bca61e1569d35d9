@@ -16,6 +16,58 @@
       "message": "PTAL.",
       "revId": "18f3ef379101a2986afb32139bca61e1569d35d9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbdbdd36_c37d9156",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T21:34:09Z",
+      "side": 1,
+      "message": "Could just `auto spec_id \u003d GetSpecId(inst)` after the `switch`, instead of calling it in all the switch-cases? I guess it\u0027ll be wasted work for the instructions that can never have it though...",
+      "revId": "18f3ef379101a2986afb32139bca61e1569d35d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9a33201_01b57c85",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T21:34:09Z",
+      "side": 1,
+      "message": "Could just put the `continue` in the `default` clause, now that I think about it.",
+      "fixSuggestions": [
+        {
+          "fixId": "3a469695_f7f28496",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 157,
+                "startChar": 0,
+                "endLine": 161,
+                "endChar": 0
+              },
+              "replacement": "                    continue;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "18f3ef379101a2986afb32139bca61e1569d35d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
