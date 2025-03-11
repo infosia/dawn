@@ -45,6 +45,7 @@ namespace {
 
 uint32_t PresentModeToBufferCount(wgpu::PresentMode mode) {
     switch (mode) {
+        case wgpu::PresentMode::Undefined:
         case wgpu::PresentMode::Immediate:
         case wgpu::PresentMode::Fifo:
             return 2;
@@ -61,6 +62,7 @@ uint32_t PresentModeToSwapInterval(wgpu::PresentMode mode) {
         case wgpu::PresentMode::Immediate:
         case wgpu::PresentMode::Mailbox:
             return 0;
+        case wgpu::PresentMode::Undefined:
         case wgpu::PresentMode::Fifo:
             return 1;
         default:
