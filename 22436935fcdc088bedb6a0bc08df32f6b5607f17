@@ -16,6 +16,57 @@
       "message": "PTAL.",
       "revId": "22436935fcdc088bedb6a0bc08df32f6b5607f17",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bbefc29_de47eddc",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T02:23:54Z",
+      "side": 1,
+      "message": "Nit: `if (!override_) { continue; }`",
+      "revId": "22436935fcdc088bedb6a0bc08df32f6b5607f17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3881caea_54265910",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T02:23:54Z",
+      "side": 1,
+      "message": "Can this actually happen? If so we should probably ASSERT/ICE rather than silently ignoring something that we\u0027re supposed to handle.",
+      "revId": "22436935fcdc088bedb6a0bc08df32f6b5607f17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52a49126_25cc435c",
+        "filename": "src/tint/lang/wgsl/writer/ir_to_program/ir_to_program_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2727,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T02:23:54Z",
+      "side": 1,
+      "message": "Nit: Add a test for an override without an intializer.",
+      "revId": "22436935fcdc088bedb6a0bc08df32f6b5607f17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
