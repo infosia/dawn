@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fd15e9d_de1088a4",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T15:43:58Z",
+      "side": 1,
+      "message": "nit: Pull these three lines out into an `EmitCopyMemory` call.",
+      "revId": "ba1401167c7b3dc65220eb6d169214cb8829afc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
