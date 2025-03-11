@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9f13d2f_b9b10b1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T14:00:22Z",
+      "side": 1,
+      "message": "I like the follow, +2 from me. Makes it a lot clearer how this marks explicit instead of having it spread in two places.",
+      "parentUuid": "ae1ff201_bd3d7c00",
+      "revId": "9d8757e060b0073ef7729e10bccece5cc63a760e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02fa336c_049ab2cf",
