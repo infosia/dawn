@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "5da73399_a20c32fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T09:11:15Z",
+      "side": 1,
+      "message": "That\u0027s correct, Dawn takes all bindings, validates them irrespective of their order, the stores them in a form of (group, binding) map so the order disappears.",
+      "parentUuid": "03bdfe18_95a80df4",
+      "revId": "2d8426d74cb98ca18bad75aa6d32880073da3629",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "78454f5d_ecb54e55",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-10T20:17:16Z",
       "side": 1,
       "message": "Can this and `HandleResourceBinding` be actual functions? Is there a benefit to them being lambdas?",
+      "revId": "2d8426d74cb98ca18bad75aa6d32880073da3629",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfc12503_404e7349",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T09:11:15Z",
+      "side": 1,
+      "message": "They could be actual functions but I\u0027ve found lambdas very useful to keep all code related to a single large algorithms together: separate functions would need to go in an anonymous namespace at the top of the file, splitting the logic in multiple chunks, and putting it as a member function would add unnecessary cruft to Inspector.",
+      "parentUuid": "b2159391_ea7f5e67",
       "revId": "2d8426d74cb98ca18bad75aa6d32880073da3629",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
