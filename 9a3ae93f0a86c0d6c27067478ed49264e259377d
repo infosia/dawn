@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2f39b57a_b29eed42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-11T21:00:56Z",
+      "side": 1,
+      "message": "I dont think there is any CTS test that has an array with a override count. (and in addition loads the entire array and not simply an element)",
+      "parentUuid": "d639999d_ea6d8924",
+      "revId": "9a3ae93f0a86c0d6c27067478ed49264e259377d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4838d76e_dd2fbd2e",
         "filename": "src/tint/cmd/tint/main.cc",
         "patchSetId": 7
