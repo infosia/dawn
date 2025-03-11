@@ -34,6 +34,24 @@
       "parentUuid": "6f1305e4_7d7af28c",
       "revId": "a2afb6c6461ce01cec9750573e0c26ad8a7c5daa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5649fd1_15acb55c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-03-11T17:21:41Z",
+      "side": 1,
+      "message": "From briefly looking at the failures, I believe the non-supported features that I was using are all related to type annotations, so non-functional things, just nice to have.\n\nI am currently looking at removing the annotations in the CL and confirming that it works on OSX. I will try to re-land with those changes, since as you mentioned it will take time for devs to migrate.",
+      "parentUuid": "caeed482_d4719929",
+      "revId": "a2afb6c6461ce01cec9750573e0c26ad8a7c5daa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
