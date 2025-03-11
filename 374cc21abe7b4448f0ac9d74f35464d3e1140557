@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a0c1b2a0_035ab026",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-11T19:04:59Z",
+      "side": 1,
+      "message": "sg",
+      "parentUuid": "42a55f43_55fc45ed",
+      "revId": "374cc21abe7b4448f0ac9d74f35464d3e1140557",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b1606a7d_500eacc4",
         "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
         "patchSetId": 9
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-11T19:00:23Z",
       "side": 1,
       "message": "`if (!block) { return; }`",
+      "revId": "374cc21abe7b4448f0ac9d74f35464d3e1140557",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43c50298_b4f301f9",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-11T19:04:59Z",
+      "side": 1,
+      "message": "Im going to call this \u0027Dan style\u0027",
+      "parentUuid": "b1606a7d_500eacc4",
       "revId": "374cc21abe7b4448f0ac9d74f35464d3e1140557",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
