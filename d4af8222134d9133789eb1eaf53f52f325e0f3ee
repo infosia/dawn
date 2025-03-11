@@ -34,6 +34,24 @@
       "parentUuid": "9164a5e1_77063061",
       "revId": "d4af8222134d9133789eb1eaf53f52f325e0f3ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc42c37c_0e4a9e45",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3924072
+      },
+      "writtenOn": "2025-03-11T20:02:46Z",
+      "side": 1,
+      "message": "it doesn\u0027t exist in the webgpu folder anymore.",
+      "parentUuid": "9164a5e1_77063061",
+      "revId": "d4af8222134d9133789eb1eaf53f52f325e0f3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
