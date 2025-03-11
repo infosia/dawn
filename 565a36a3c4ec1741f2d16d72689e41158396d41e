@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce99884d_0bd2e864",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T12:34:52Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "565a36a3c4ec1741f2d16d72689e41158396d41e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d102453_17b6bca5",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T12:34:52Z",
+      "side": 1,
+      "message": "Could we remove the other one entirely afterwards?",
+      "revId": "565a36a3c4ec1741f2d16d72689e41158396d41e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3029d5e_c99baec2",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T12:34:52Z",
+      "side": 1,
+      "message": "nit: the structure can be returned by value, it is more idiomatic and just as efficient in the ABI. Here it\u0027s not clear what happens if the usages aren\u0027t 0 to start with.",
+      "revId": "565a36a3c4ec1741f2d16d72689e41158396d41e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0fbfc06_895fed92",
+        "filename": "src/dawn/tests/unittests/native/MemoryInstrumentationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T12:34:52Z",
+      "side": 1,
+      "message": "Note that if at some point we plumb this to the backends so that they give us the actual size, the values will be different (because of compression planes, alignment constraints etc)",
+      "revId": "565a36a3c4ec1741f2d16d72689e41158396d41e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
