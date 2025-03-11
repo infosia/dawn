@@ -16,6 +16,24 @@
       "message": "Oh, this is a nice benefit. (but maybe @spirv.explicit_layout?)",
       "revId": "70b5a01d113e92bf522b9605823f500547c60dc6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "799906d6_a4c6b63e",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T16:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05f4e24d_84dd779a",
+      "revId": "70b5a01d113e92bf522b9605823f500547c60dc6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
