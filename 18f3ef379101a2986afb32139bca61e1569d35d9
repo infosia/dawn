@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11b21a7e_a652decf",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T21:54:42Z",
+      "side": 1,
+      "message": "Yea, seemed a waste to try to get the spec_id for all the `type_values` that would never have one.",
+      "parentUuid": "cbdbdd36_c37d9156",
+      "revId": "18f3ef379101a2986afb32139bca61e1569d35d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9a33201_01b57c85",
@@ -66,6 +84,24 @@
           ]
         }
       ],
+      "revId": "18f3ef379101a2986afb32139bca61e1569d35d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8644db57_02650204",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T21:54:42Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "a9a33201_01b57c85",
       "revId": "18f3ef379101a2986afb32139bca61e1569d35d9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
