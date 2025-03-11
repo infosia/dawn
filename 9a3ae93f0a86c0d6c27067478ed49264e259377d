@@ -121,6 +121,24 @@
       "message": "`return false` here instead of trying to continue",
       "revId": "9a3ae93f0a86c0d6c27067478ed49264e259377d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a53c842_bc774c09",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-11T21:13:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4838d76e_dd2fbd2e",
+      "revId": "9a3ae93f0a86c0d6c27067478ed49264e259377d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
