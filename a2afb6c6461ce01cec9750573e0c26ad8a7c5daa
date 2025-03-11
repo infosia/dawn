@@ -16,6 +16,24 @@
       "message": "I can confirm that the bot uses python 3.11 but developers mostly use the version shipped with the OS which is version 3.9.6 (really old version).",
       "revId": "a2afb6c6461ce01cec9750573e0c26ad8a7c5daa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "caeed482_d4719929",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3600222
+      },
+      "writtenOn": "2025-03-11T16:52:48Z",
+      "side": 1,
+      "message": "I\u0027m doing a documentation change in Chromium to recommend configuration changes to the developers (to use python3 that is managed by depot_tools). This requires them to change their installation, so it may take a bit of time, but should allow you to reland your CL once the information has been shared (and hopefully acted on by the devs).",
+      "parentUuid": "6f1305e4_7d7af28c",
+      "revId": "a2afb6c6461ce01cec9750573e0c26ad8a7c5daa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
