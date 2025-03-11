@@ -29,8 +29,8 @@
 
 namespace dawn::native::vulkan {
 
-ResourceHeap::ResourceHeap(VkDeviceMemory memory, size_t memoryType)
-    : mMemory(memory), mMemoryType(memoryType) {}
+ResourceHeap::ResourceHeap(VkDeviceMemory memory, size_t memoryType, VkDeviceSize requestedHeapSize)
+    : mMemory(memory), mMemoryType(memoryType), mRequestedHeapSize(requestedHeapSize) {}
 
 VkDeviceMemory ResourceHeap::GetMemory() const {
     return mMemory;
@@ -38,6 +38,10 @@ VkDeviceMemory ResourceHeap::GetMemory() const {
 
 size_t ResourceHeap::GetMemoryType() const {
     return mMemoryType;
+}
+
+VkDeviceSize ResourceHeap::GetRequestedHeapSize() const {
+    return mRequestedHeapSize;
 }
 
 }  // namespace dawn::native::vulkan
