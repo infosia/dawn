@@ -168,17 +168,19 @@ typedef struct {{API}}ChainedStruct {
         //* Callback function types should always default to NULL.
         NULL
     {%- elif member.type.category == "enum" -%}
-        //* Enum types are either their default values, or zero-init.
-        {%- if member.default_value != None -%}
+        {%- if member.type.hasUndefined -%}
+            //* For enums that have an undefined value, instead of using the
+            //* default, just put undefined.
+            {{as_cEnum(member.type.name, Name("undefined"))}}
+        {%- elif member.default_value != None -%}
+            //* Enum types are either their default values, or zero-init.
             {{as_cEnum(member.type.name, Name(member.default_value))}}
         {%- else -%}
             _{{api}}_ENUM_ZERO_INIT({{as_cType(member.type.name)}})
         {%- endif -%}
     {%- elif member.type.category == "bitmask" -%}
-        //* Bitmask types should always have a default since they are set in
-        //* the generator.
-        {{- assert(member.default_value != None) -}}
-        {{as_cEnum(member.type.name, Name(member.default_value))}}
+        //* Bitmask types should currently always be set to "none".
+        {{as_cEnum(member.type.name, Name("none"))}}
     {%- elif member.type.category in ["structure", "callback info"] -%}
         //* Structure types, must be by value here, otherwise, they should have
         //* been caught as a pointer type.
