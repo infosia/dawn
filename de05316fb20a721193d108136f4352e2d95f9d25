@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cc2b01b_0aaca0bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-11T18:10:29Z",
+      "side": 1,
+      "message": "Please take a look.",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d475cdf4_ce390636",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-11T18:10:29Z",
+      "side": 1,
+      "message": "We ideally want to update memory tracking when the memory is actually freed. How should we go about that, maybe callbacks? \n\nSimilar below for suballocations.",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
