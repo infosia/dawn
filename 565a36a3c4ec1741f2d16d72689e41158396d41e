@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cefe4a5_ffc4ca8b",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-11T15:26:03Z",
+      "side": 1,
+      "message": "Done. Added a TODO.",
+      "parentUuid": "8d102453_17b6bca5",
+      "revId": "565a36a3c4ec1741f2d16d72689e41158396d41e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3029d5e_c99baec2",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0950f1e3_13fee59a",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-11T15:26:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3029d5e_c99baec2",
+      "revId": "565a36a3c4ec1741f2d16d72689e41158396d41e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0fbfc06_895fed92",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-03-11T12:34:52Z",
       "side": 1,
       "message": "Note that if at some point we plumb this to the backends so that they give us the actual size, the values will be different (because of compression planes, alignment constraints etc)",
+      "revId": "565a36a3c4ec1741f2d16d72689e41158396d41e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bacf71da_64b3735b",
+        "filename": "src/dawn/tests/unittests/native/MemoryInstrumentationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-11T15:26:03Z",
+      "side": 1,
+      "message": "I think it doesn\u0027t matter much. This test is an unit test, so it uses a null device. The reported sizes will be consistent.\n\nIf the backends are updated to report actual sizes in future, I think we will need create an end2end test.",
+      "parentUuid": "b0fbfc06_895fed92",
       "revId": "565a36a3c4ec1741f2d16d72689e41158396d41e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
