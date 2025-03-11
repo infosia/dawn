@@ -263,6 +263,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b28831bd_7d825a9b",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T13:54:17Z",
+      "side": 1,
+      "message": "OH, I see, I thought this was working over all textures, but it\u0027s a set with just `t1, t2`. So, in the below `t_unused` wouldn\u0027t be in the set, so not added.\n\n```\n@group(0) @binding(0) var t1 : texture_2d\u003cf32\u003e;\n@group(0) @binding(1) var t2 : texture_2d\u003cf32\u003e;\n@group(0) @binding(1) var t_unused : texture_2d\u003cf32\u003e;\n\nfn myNumLevels(t : texture_2d\u003cf32\u003e) -\u003e u32 {\n  return textureNumLevels(t);\n}\n\n@compute fn ep() {\n  let _ \u003d myNumLevels(t1) + myNumLevels(t2);\n}\n```",
+      "parentUuid": "2d7b77eb_cebf39a3",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84360a3f_cc9efd17",
