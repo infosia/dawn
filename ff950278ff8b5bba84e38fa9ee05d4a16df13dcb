@@ -67,6 +67,24 @@
       "message": "Maybe we could remove it here before the first call to `FindBestTypeIndex` with the rationale being that since it is to be host-mapped, DeviceLocal would either be a noop on UMA systems, or prevent host-mapping on non-UMA.",
       "revId": "ff950278ff8b5bba84e38fa9ee05d4a16df13dcb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5834d5ef_edd3ed0e",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-03-11T04:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a399f346_4cfb8735",
+      "revId": "ff950278ff8b5bba84e38fa9ee05d4a16df13dcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
