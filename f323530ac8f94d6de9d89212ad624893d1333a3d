@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98ef1fc7_b083b3c1",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2502,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T10:50:29Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "ab65005d_3ad5a57e",
+      "revId": "f323530ac8f94d6de9d89212ad624893d1333a3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edceea05_a600407f",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-10T21:04:51Z",
       "side": 0,
       "message": "Does this validation get covered somewhere else?",
+      "revId": "f323530ac8f94d6de9d89212ad624893d1333a3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d196f7f6_37521c61",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3265,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T10:50:29Z",
+      "side": 0,
+      "message": "This is an assertion and not a validation, the signature is part of WGSL.def and not something that in the user\u0027s control. A somewhat equivalent assertion is at [1].",
+      "parentUuid": "edceea05_a600407f",
       "revId": "f323530ac8f94d6de9d89212ad624893d1333a3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

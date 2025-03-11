@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f9a47c5_99b55b7d",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T10:50:29Z",
+      "side": 1,
+      "message": "It totally does. This part of the code wasn\u0027t tested in inspector_tests.cc I added a few tests.",
+      "parentUuid": "858b65f5_dfb9f21d",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88212afb_e9ce681a",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-10T21:04:51Z",
       "side": 1,
       "message": "Could save the next lookup by storing `texture_metadata_[entry_point.name]` to a variable and just accessing twice.",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2cfa55a_59abc67a",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T10:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88212afb_e9ce681a",
       "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c0aeeba_2cdcf71f",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T10:50:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f12f312f_ab75269f",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b44e2eb0_cd012114",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-03-10T21:04:51Z",
       "side": 1,
       "message": "ditto lookup caching",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9305ffe9_2b758631",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T10:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b44e2eb0_cd012114",
       "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c55e1577_a9de2113",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T10:50:29Z",
+      "side": 1,
+      "message": "It was done in `GetSamplerTextureUses` but that was not clear. Added an explicit call.",
+      "parentUuid": "408a894f_d36badae",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd05f062_effa8ae0",
@@ -99,6 +189,41 @@
       "writtenOn": "2025-03-10T21:04:51Z",
       "side": 1,
       "message": "ditto caching",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "730745ee_1b45dba7",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T10:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd05f062_effa8ae0",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4b150d7_55e32097",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T10:50:29Z",
+      "side": 1,
+      "message": "[1]",
       "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +245,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d7b77eb_cebf39a3",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T10:50:29Z",
+      "side": 1,
+      "message": "This adds all the globals that could be accessed for that `textureNumLevels`. For example this WGSL code will cause both textures to be added while processing the `textureNumLevels` call only once.\n\n```\n@group(0) @binding(0) var t1 : texture_2d\u003cf32\u003e;\n@group(0) @binding(1) var t2 : texture_2d\u003cf32\u003e;\n\nfn myNumLevels(t : texture_2d\u003cf32\u003e) -\u003e u32 {\n  return textureNumLevels(t);\n}\n\n@compute fn ep() {\n  let _ \u003d myNumLevels(t1) + myNumLevels(t2);\n}\n```",
+      "parentUuid": "cedb113a_f01700a2",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84360a3f_cc9efd17",
@@ -133,6 +276,24 @@
       "writtenOn": "2025-03-10T21:04:51Z",
       "side": 1,
       "message": "```suggestion\n    /// Computes the texture metadata for `entry_point`\n```",
+      "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5dfd5078_c1e201e9",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T10:50:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84360a3f_cc9efd17",
       "revId": "4df5f0492ed1d66499c07c522ebf0dafccd25d4c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
