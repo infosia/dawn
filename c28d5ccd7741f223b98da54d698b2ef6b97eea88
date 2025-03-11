@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62841e14_043be401",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T19:35:53Z",
+      "side": 1,
+      "message": "Seems like you could just keep the `TINT_SCOPED_ASSIGNMENT(current_block_, dst);` rather than using `prev_blk`. The `loop_merge_inst` case below can just overwrite `current_block \u003d loop-\u003eBody()`, and then the scoped assignment will reset it at the end of the function.\n\nMaybe I\u0027m missing something though, it\u0027s hard to follow which block is being written into at the moment.",
+      "revId": "c28d5ccd7741f223b98da54d698b2ef6b97eea88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
