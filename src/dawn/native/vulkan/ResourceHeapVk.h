@@ -36,15 +36,17 @@ namespace dawn::native::vulkan {
 // Wrapper for physical memory used with or without a resource object.
 class ResourceHeap : public ResourceHeapBase {
   public:
-    ResourceHeap(VkDeviceMemory memory, size_t memoryType);
+    ResourceHeap(VkDeviceMemory memory, size_t memoryType, VkDeviceSize requestedHeapSize);
     ~ResourceHeap() override = default;
 
     VkDeviceMemory GetMemory() const;
     size_t GetMemoryType() const;
+    VkDeviceSize GetRequestedHeapSize() const;
 
   private:
     VkDeviceMemory mMemory = VK_NULL_HANDLE;
     size_t mMemoryType = 0;
+    VkDeviceSize mRequestedHeapSize = 0;
 };
 
 }  // namespace dawn::native::vulkan
