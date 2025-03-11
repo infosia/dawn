@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05f4e24d_84dd779a",
+        "filename": "src/tint/lang/core/ir/disassembler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T13:59:46Z",
+      "side": 1,
+      "message": "Oh, this is a nice benefit. (but maybe @spirv.explicit_layout?)",
+      "revId": "70b5a01d113e92bf522b9605823f500547c60dc6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
