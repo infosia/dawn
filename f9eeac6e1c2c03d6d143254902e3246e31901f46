@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc70389d_f56b9602",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 47
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T17:50:15Z",
+      "side": 1,
+      "message": "Almost there, please also add another reviewer!",
+      "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a6a7082_1cc1e2a2",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T17:50:15Z",
+      "side": 1,
+      "message": "Could this be in TextureFormatUtils and maybe be a function as that depends on a few device features?",
+      "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e987d766_81d92c00",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T17:50:15Z",
+      "side": 1,
+      "message": "nit commented out code?",
+      "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

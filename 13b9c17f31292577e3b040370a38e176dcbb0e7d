@@ -134,6 +134,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abc8113c_d3481dcd",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T17:50:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fc1e43d8_a68d9f94",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f588326c_37d3ca52",
@@ -165,6 +183,24 @@
       "side": 1,
       "message": "If this check will always true, it means we don\u0027t need _\"entries[%u] is neither an ExternalTexture nor a TextureView when the layout contains an ExternalTexture entry.\"_ below then?",
       "parentUuid": "f588326c_37d3ca52",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cfac808_9f5ef0dd",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T17:50:15Z",
+      "side": 1,
+      "message": "Correct, that will be done by ValidateTextureBindGroupEntry which could be very slightly better in its wording of the error in this case, but let\u0027s just add a TODO for it and see in a follow up.",
+      "parentUuid": "05b31d84_19d1f533",
       "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -411,6 +447,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "d3ce5e3d_6e0e555a",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "806078d5_6c4241bf",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T17:50:15Z",
+      "side": 1,
+      "message": "It seems like it wasn\u0027t done? I don\u0027t see the comment. Ah it\u0027s in the cpp, maybe it can move here?",
+      "parentUuid": "4950c5e3_f791b583",
       "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -1031,6 +1085,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8043dec6_8d4ab735",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T17:50:15Z",
+      "side": 1,
+      "message": "My suggestion is to move the test there. Although maybe not given that we will move the functionality to be gated by a toggle in the future.",
+      "parentUuid": "5a1307e2_ed52811c",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "182b4b3f_efe75f19",
@@ -1062,6 +1134,24 @@
       "side": 1,
       "message": "I\u0027ve added a test for this but I\u0027m not sure how to properly test formats that require a feature.",
       "parentUuid": "182b4b3f_efe75f19",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62bbf6c4_bec16bbe",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T17:50:15Z",
+      "side": 1,
+      "message": "Acknowledged, we can do that in the CTS",
+      "parentUuid": "4209a3cd_5791c8c4",
       "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
