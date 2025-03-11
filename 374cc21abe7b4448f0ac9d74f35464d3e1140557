@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "301eb3e2_2caee63d",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T19:00:23Z",
+      "side": 1,
+      "message": "Why is this done here and not done in `ReferencedModuleDecls`? It seems like other usesrs would need this as well?",
+      "revId": "374cc21abe7b4448f0ac9d74f35464d3e1140557",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42a55f43_55fc45ed",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T19:00:23Z",
+      "side": 1,
+      "message": "The instruction has to exist for an instruction result. So, this should be at most a TINT_ASSERT(inst)  I think",
+      "revId": "374cc21abe7b4448f0ac9d74f35464d3e1140557",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1606a7d_500eacc4",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T19:00:23Z",
+      "side": 1,
+      "message": "`if (!block) { return; }`",
+      "revId": "374cc21abe7b4448f0ac9d74f35464d3e1140557",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
