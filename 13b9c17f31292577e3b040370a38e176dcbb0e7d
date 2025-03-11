@@ -537,6 +537,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c5086713_a59bb044",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-11T12:26:34Z",
+      "side": 1,
+      "message": "Here what I am suggesting is to do:\n\n```\nwgpu::TextureDescriptor tDesc;\ntDesc.usage \u003d ...\n...\ntDesc.mipLevelCount \u003d 2;\nt \u003d createTexture(tDesc)\n\nwgpu::TextureViewDescriptor vDesc;\nvDesc.mipLevelCount \u003d 1\nvDesc.baseMipLevel \u003d 0;\nview1 \u003d createView(t, vDesc)\nvDesc.baseMipLevel \u003d 1;\nview2 \u003d createView(t, vDesc)\n```\n\nThese should cause neither validation errors. Or I\u0027m missing some context.",
+      "parentUuid": "f80e2553_c4593067",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8fcb9008_7895935c",
         "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
         "patchSetId": 43
