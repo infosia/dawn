@@ -34,6 +34,24 @@
       "parentUuid": "62841e14_043be401",
       "revId": "c28d5ccd7741f223b98da54d698b2ef6b97eea88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "119e0118_120c890b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T20:24:37Z",
+      "side": 1,
+      "message": "Yeah that\u0027s what I meant, in the `loop_merge_inst` case you just set `current_block \u003d loop-\u003eBody()` like you\u0027re currently doing, but you can still put the `TINT_SCOPED_ASSIGNMENT(current_block_, dst);` at the top of the function and then you don\u0027t need the `prev_blk` stuff.",
+      "parentUuid": "6ada812b_6a51d404",
+      "revId": "c28d5ccd7741f223b98da54d698b2ef6b97eea88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
