@@ -16,6 +16,24 @@
       "message": "nit: Pull these three lines out into an `EmitCopyMemory` call.",
       "revId": "ba1401167c7b3dc65220eb6d169214cb8829afc7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6245b96d_6757d70d",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-11T16:27:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd15e9d_de1088a4",
+      "revId": "ba1401167c7b3dc65220eb6d169214cb8829afc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
