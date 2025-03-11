@@ -124,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1c36cba_ecbf9929",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-11T21:23:46Z",
+      "side": 1,
+      "message": "Right, the answer is that simply CTS doesnt test this. \nOur tint end2end does however have at least one test case which is why this was found.",
+      "parentUuid": "dbe3e3c4_88cd08fb",
+      "revId": "9a3ae93f0a86c0d6c27067478ed49264e259377d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4838d76e_dd2fbd2e",
