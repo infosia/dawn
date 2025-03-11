@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1510b3e9_85b56129",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T14:02:33Z",
+      "side": 1,
+      "message": "I\u0027m surprised this was necessary. I\u0027d expect the order of `TransitivelyReferencedGlobals()` to be deterministic since the resolver does a deterministic walk of the AST and so should be adding referenced globals in order too.\n\nIf this is just to satisfy a few unit tests, I\u0027d rather we just write those tests in a way that doesn\u0027t depend on the order. e.g. use GoogleTests\u0027s `Contains()` or `UnorderedElementsAre` matchers. I tried locally and it was just three tests that failed without this sort, and it looks like they could maybe just use `Contains()`.",
+      "revId": "539d22b4e3f655a45d9c42e16f162f81e7e1be53",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3b5be6f_b2bff264",
+        "filename": "src/tint/lang/wgsl/sem/function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T14:02:33Z",
+      "side": 1,
+      "message": "Nit: Can remove this now too.",
+      "revId": "539d22b4e3f655a45d9c42e16f162f81e7e1be53",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
