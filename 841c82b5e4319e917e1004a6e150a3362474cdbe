@@ -209,6 +209,24 @@
       "parentUuid": "15466c94_787ccbef",
       "revId": "841c82b5e4319e917e1004a6e150a3362474cdbe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e47668f_2a07a1eb",
+        "filename": "src/tint/lang/spirv/writer/raise/fork_explicit_layout_types.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T21:56:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5ee1bd4b_33234944",
+      "revId": "841c82b5e4319e917e1004a6e150a3362474cdbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
