@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f1305e4_7d7af28c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3600222
+      },
+      "writtenOn": "2025-03-11T13:38:04Z",
+      "side": 1,
+      "message": "I can confirm that the bot uses python 3.11 but developers mostly use the version shipped with the OS which is version 3.9.6 (really old version).",
+      "revId": "a2afb6c6461ce01cec9750573e0c26ad8a7c5daa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
