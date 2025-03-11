@@ -16,6 +16,24 @@
       "message": "Why? Also why add RenderAttachment??",
       "revId": "2b58f94fcd64f8c4b253446812e2fcf6ad508b2b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f6d24bc_357f9df8",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-11T16:54:17Z",
+      "side": 0,
+      "message": "CreateTextureDescriptor sets descriptor.usage to kDefaultUsage which is wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment;. Since this test is supposed to be about creating an external texture from a texture without TextureUsage::TextureBinding, I thought we should initialize it with a textureDescriptor that does contain it, so I picked RenderAttachment.",
+      "parentUuid": "58d11740_4406ac96",
+      "revId": "2b58f94fcd64f8c4b253446812e2fcf6ad508b2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
