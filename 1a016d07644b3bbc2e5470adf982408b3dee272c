@@ -87,6 +87,24 @@
       "message": "Hii, Should i add the tests in builtin_test.cc or memory_test.cc\nsince OpAccessChain which uses access function is present in memory_test.cc",
       "revId": "1a016d07644b3bbc2e5470adf982408b3dee272c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "231a353f_291fec2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T20:14:53Z",
+      "side": 1,
+      "message": "`memory_test.cc` is fine. Could equally go in `composite_test.cc` since it\u0027s in the `Composite Instructions` section in the SPIR-V spec, but it doesn\u0027t matter too much.",
+      "parentUuid": "060d8242_c507f394",
+      "revId": "1a016d07644b3bbc2e5470adf982408b3dee272c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
