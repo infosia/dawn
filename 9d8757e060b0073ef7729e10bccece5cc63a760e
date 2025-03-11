@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ae1ff201_bd3d7c00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T01:50:49Z",
+      "side": 1,
+      "message": "That was done in this CL:\nhttps://dawn-review.googlesource.com/c/dawn/+/228834\n\nStructures do have an `EnumSet` of StructFlags (currently only used for `Block`), so another option would be add a `SpirvExplicitLayout` flag instead. That might be cleaner (and would be similar to how the logic for arrays works), but it does currently require a `const_cast` since types are immutable.\n\nI made the change as a follow up to see how it looks:\nhttps://dawn-review.googlesource.com/c/dawn/+/230134\nThe `const_cast` is gross, but it\u0027s the same as what we do in `BlockDecoratedStructs`, and in theory these can go away if we eventually fix the const-correctness. Otherwise, I do prefer that approach.",
+      "parentUuid": "8fbe3681_a5fae727",
+      "revId": "9d8757e060b0073ef7729e10bccece5cc63a760e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "02fa336c_049ab2cf",
         "filename": "src/tint/lang/spirv/writer/raise/fork_explicit_layout_types_test.cc",
         "patchSetId": 2
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-10T21:30:55Z",
       "side": 1,
       "message": "I didn\u0027t see one, but maybe a test where multiple structs are forked?",
+      "revId": "9d8757e060b0073ef7729e10bccece5cc63a760e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f176b79b_39d36b10",
+        "filename": "src/tint/lang/spirv/writer/raise/fork_explicit_layout_types_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1427,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-11T01:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02fa336c_049ab2cf",
       "revId": "9d8757e060b0073ef7729e10bccece5cc63a760e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
