@@ -16,6 +16,24 @@
       "message": "This should not need to change. The header is in the `webgpu` folder.",
       "revId": "d4af8222134d9133789eb1eaf53f52f325e0f3ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9967bc26_cd3275b7",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-11T20:01:59Z",
+      "side": 1,
+      "message": "Hm, things have shuffled since I last looked and this does only exist in the `dawn` folder. Is the include actually necesasry? It was added in https://dawn-review.googlesource.com/c/dawn/+/210795 to fix `can\u0027t otherwise find the \u003c\u003c operators for StringView.` but maybe we just need to not use `\u003c\u003c` for whatever is causing the issue and emit it directly.\n\n\n@cwallez@chromium.org do we expect the webgpu_cpp_print file in the dawn folder to be used outside dawn?",
+      "parentUuid": "9164a5e1_77063061",
+      "revId": "d4af8222134d9133789eb1eaf53f52f325e0f3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
