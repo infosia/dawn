@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb5a5a0b_88c91875",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-12T12:59:57Z",
+      "side": 1,
+      "message": "nit: the squash seems to have done something weird here.",
+      "revId": "1cf8b7d4729b4bde82bf9cd9f3f54aa9c0cc10fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be7aff6f_5ff9f084",
+        "filename": "include/webgpu/webgpu_cpp_print.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-12T12:59:57Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "1cf8b7d4729b4bde82bf9cd9f3f54aa9c0cc10fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
