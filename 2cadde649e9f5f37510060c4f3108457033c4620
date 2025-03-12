@@ -196,6 +196,24 @@
       "parentUuid": "8f60991d_09ba166a",
       "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a007f0f_59a34a37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-12T01:41:21Z",
+      "side": 1,
+      "message": "Update from a conversation Loko and I had - I think we came to the conclusion that it\u0027s not possible to fix anything without the cross-refs. It just happens that a lot of code currently works if we auto-destroy on release, but not all correct code will work.\n\nFor 1, I\u0027m not sure if we should do that (treat the js object as one ref) or if we should just set the same no-auto-destroy flag like for 2.\n\nFor 2, the user C++ code can still destroy (and it should, if the user JS code doesn\u0027t). Just the bindings can\u0027t do it automatically.",
+      "parentUuid": "96c0aa58_ecb3f057",
+      "revId": "2cadde649e9f5f37510060c4f3108457033c4620",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
