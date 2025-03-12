@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "da0847bf_6277402c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T13:44:10Z",
+      "side": 1,
+      "message": "You can just edit the description in the text field above. (When you rebased, or merged, you accidentally added both commit messages)",
+      "parentUuid": "83f70839_75ff2649",
+      "revId": "1cf8b7d4729b4bde82bf9cd9f3f54aa9c0cc10fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be7aff6f_5ff9f084",
         "filename": "include/webgpu/webgpu_cpp_print.h",
         "patchSetId": 2
