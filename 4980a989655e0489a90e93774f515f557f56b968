@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbb286ea_200b5dfa",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-12T21:42:50Z",
+      "side": 1,
+      "message": "Nit: body",
+      "fixSuggestions": [
+        {
+          "fixId": "57bc488b_54fab568",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1316,
+                "startChar": 0,
+                "endLine": 1317,
+                "endChar": 0
+              },
+              "replacement": "            // are the same. We\u0027ll be emitting into the IR body, but branch to\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4980a989655e0489a90e93774f515f557f56b968",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
