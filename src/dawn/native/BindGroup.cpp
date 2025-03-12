@@ -109,6 +109,10 @@ MaybeError ValidateBufferBinding(const DeviceBase* device,
             requiredUsage = kInternalStorageBuffer;
             requiredBindingAlignment = device->GetLimits().v1.minStorageBufferOffsetAlignment;
             break;
+        case kInternalReadOnlyStorageBufferBinding:
+            requiredUsage = kReadOnlyStorageBuffer;
+            requiredBindingAlignment = device->GetLimits().v1.minStorageBufferOffsetAlignment;
+            break;
         case wgpu::BufferBindingType::BindingNotUsed:
         case wgpu::BufferBindingType::Undefined:
             DAWN_UNREACHABLE();
@@ -141,6 +145,7 @@ MaybeError ValidateBufferBinding(const DeviceBase* device,
         case wgpu::BufferBindingType::Storage:
         case wgpu::BufferBindingType::ReadOnlyStorage:
         case kInternalStorageBufferBinding:
+        case kInternalReadOnlyStorageBufferBinding:
             maxStorageBufferBindingSize = device->GetLimits().v1.maxStorageBufferBindingSize;
             DAWN_INVALID_IF(bindingSize > maxStorageBufferBindingSize,
                             "Binding size (%u) of %s is larger than the maximum storage buffer "
