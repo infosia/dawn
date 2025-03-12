@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34ca332c_3c4810d5",
+        "filename": "src/tint/tint.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-03-12T18:07:38Z",
+      "side": 1,
+      "message": "There is a number of situations where we need/want to build a CLI exe without wanting to enable building all of the commands.\n\nMaking this template generally avaiable, instead of having a big set of || conditions that replicate where tint_executables may be built, which will likely get out of sync.",
+      "revId": "2380fa29ea9226261e0449db15ad6de6adb8c277",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
