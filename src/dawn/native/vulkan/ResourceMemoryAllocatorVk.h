@@ -72,6 +72,9 @@ class ResourceMemoryAllocator {
 
     int FindBestTypeIndex(VkMemoryRequirements requirements, MemoryKind kind);
 
+    uint64_t GetTotalUsedMemory();
+    uint64_t GetTotalAllocatedMemory();
+
   private:
     raw_ptr<Device> mDevice;
 
@@ -79,6 +82,8 @@ class ResourceMemoryAllocator {
     std::vector<std::unique_ptr<SingleTypeAllocator>> mAllocatorsPerType;
 
     SerialQueue<ExecutionSerial, ResourceMemoryAllocation> mSubAllocationsToDelete;
+
+    VkDeviceSize mTotalUsedMemory = 0;
 };
 
 }  // namespace dawn::native::vulkan
