@@ -16,6 +16,24 @@
       "message": "Please remove.",
       "revId": "d52011b466b90e6a31e557bd609d3555bdc13109",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "815d9bd5_aae6fd17",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-12T21:56:16Z",
+      "side": 1,
+      "message": "There are some other minor changes and i am also going to do this against tint cmd instead of ShaderModuleVK",
+      "parentUuid": "150f2a07_84dda68d",
+      "revId": "d52011b466b90e6a31e557bd609d3555bdc13109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
