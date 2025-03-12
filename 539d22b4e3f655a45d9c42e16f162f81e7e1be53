@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e44f890_9425091b",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-12T09:34:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1510b3e9_85b56129",
+      "revId": "539d22b4e3f655a45d9c42e16f162f81e7e1be53",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3b5be6f_b2bff264",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-11T14:02:33Z",
       "side": 1,
       "message": "Nit: Can remove this now too.",
+      "revId": "539d22b4e3f655a45d9c42e16f162f81e7e1be53",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95b2196f_2a5c91f9",
+        "filename": "src/tint/lang/wgsl/sem/function.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-12T09:34:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3b5be6f_b2bff264",
       "revId": "539d22b4e3f655a45d9c42e16f162f81e7e1be53",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
