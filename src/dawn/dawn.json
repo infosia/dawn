@@ -3808,6 +3808,7 @@
             {"value": 61, "name": "shared fence EGL sync descriptor", "tags": ["dawn", "native"]},
             {"value": 62, "name": "shared fence EGL sync export info", "tags": ["dawn", "native"]},
             {"value": 63, "name": "request adapter options D3D12 device", "tags": ["dawn", "native"]},
+            {"value": 64, "name": "shared texture memory D3D12 resource descriptor", "tags": ["dawn", "native"]}
         ]
     },
     "texture": {

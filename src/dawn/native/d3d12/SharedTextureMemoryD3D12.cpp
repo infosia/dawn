@@ -30,30 +30,29 @@
 #include <utility>
 
 #include "dawn/native/ChainUtils.h"
+#include "dawn/native/D3D12Backend.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d/KeyedMutex.h"
 #include "dawn/native/d3d/UtilsD3D.h"
 #include "dawn/native/d3d12/DeviceD3D12.h"
+#include "dawn/native/d3d12/QueueD3D12.h"
 #include "dawn/native/d3d12/TextureD3D12.h"
 
 namespace dawn::native::d3d12 {
+namespace {
+bool AllowSimultaneousAccess(const ComPtr<ID3D12Resource>& d3d12Resource) {
+    return (d3d12Resource->GetDesc().Flags & D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS) != 0;
+}
 
-// static
-ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
+ResultOrError<SharedTextureMemoryProperties> PropertiesFromD3D12Texture(
     Device* device,
-    StringView label,
-    const SharedTextureMemoryDXGISharedHandleDescriptor* descriptor) {
-    DAWN_INVALID_IF(descriptor->handle == nullptr, "shared HANDLE is missing.");
-
-    ComPtr<ID3D12Resource> d3d12Resource;
-    Ref<d3d::KeyedMutex> keyedMutex;
-    DAWN_TRY(device->ImportSharedHandleResource(descriptor->handle, descriptor->useKeyedMutex,
-                                                d3d12Resource, keyedMutex));
-
+    const ComPtr<ID3D12Resource>& d3d12Resource,
+    bool isSharedWithHandle) {
     D3D12_RESOURCE_DESC desc = d3d12Resource->GetDesc();
     DAWN_INVALID_IF(desc.Dimension != D3D12_RESOURCE_DIMENSION_TEXTURE2D,
                     "Resource dimension (%d) was not Texture2D", desc.Dimension);
-    DAWN_INVALID_IF(desc.DepthOrArraySize != 1, "Resource DepthOrArraySize (%d) was not 1",
+    DAWN_INVALID_IF(isSharedWithHandle && desc.DepthOrArraySize != 1,
+                    "Resource shared with HANDLE, the DepthOrArraySize (%d) was not 1",
                     desc.DepthOrArraySize);
     DAWN_INVALID_IF(desc.MipLevels != 1, "Resource MipLevels (%d) was not 1", desc.MipLevels);
     DAWN_INVALID_IF(desc.SampleDesc.Count != 1, "Resource SampleDesc.Count (%d) was not 1",
@@ -92,8 +91,46 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
                        wgpu::TextureUsage::TextureBinding | storageBindingUsage |
                        renderAttachmentUsage;
 
+    return properties;
+}
+
+}  // namespace
+
+// static
+ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
+    Device* device,
+    StringView label,
+    const SharedTextureMemoryDXGISharedHandleDescriptor* descriptor) {
+    DAWN_INVALID_IF(descriptor->handle == nullptr, "shared HANDLE is missing.");
+
+    ComPtr<ID3D12Resource> d3d12Resource;
+    Ref<d3d::KeyedMutex> keyedMutex;
+    DAWN_TRY(device->ImportSharedHandleResource(descriptor->handle, descriptor->useKeyedMutex,
+                                                d3d12Resource, keyedMutex));
+
+    SharedTextureMemoryProperties properties;
+    DAWN_TRY_ASSIGN(properties,
+                    PropertiesFromD3D12Texture(device, d3d12Resource, /*isSharedWithHandle=*/true));
+
     auto result = AcquireRef(new SharedTextureMemory(
         device, label, properties, std::move(d3d12Resource), std::move(keyedMutex)));
+    result->Initialize();
+    return result;
+}
+
+// static
+ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
+    Device* device,
+    StringView label,
+    const SharedTextureMemoryD3D12ResourceDescriptor* descriptor) {
+    DAWN_INVALID_IF(descriptor->resource == nullptr, "resource is missing.");
+
+    SharedTextureMemoryProperties properties;
+    DAWN_TRY_ASSIGN(properties, PropertiesFromD3D12Texture(device, descriptor->resource,
+                                                           /*isSharedWithHandle=*/false));
+
+    auto result = AcquireRef(
+        new SharedTextureMemory(device, label, properties, descriptor->resource, nullptr));
     result->Initialize();
     return result;
 }
@@ -105,7 +142,10 @@ SharedTextureMemory::SharedTextureMemory(Device* device,
                                          Ref<d3d::KeyedMutex> keyedMutex)
     : d3d::SharedTextureMemory(device, label, properties),
       mResource(std::move(resource)),
-      mKeyedMutex(std::move(keyedMutex)) {}
+      mKeyedMutex(std::move(keyedMutex)),
+      // If the resource has simultaneous access flag, no need for explicit state transition in
+      // EndAccess
+      mSupportDecayToCommonState(AllowSimultaneousAccess(mResource)) {}
 
 void SharedTextureMemory::DestroyImpl() {
     ToBackend(GetDevice())->ReferenceUntilUnused(std::move(mResource));
@@ -148,7 +188,14 @@ ResultOrError<FenceAndSignalValue> SharedTextureMemory::EndAccessImpl(
     TextureBase* texture,
     ExecutionSerial lastUsageSerial,
     UnpackedPtr<EndAccessState>& state) {
-    ToBackend(texture)->NotifySwapChainPresentToPIX();
+    auto backendTexture = ToBackend(texture);
+    backendTexture->NotifySwapChainPresentToPIX();
+    if (!mSupportDecayToCommonState) {
+        CommandRecordingContext* commandContext =
+            ToBackend(backendTexture->GetDevice()->GetQueue())->GetPendingCommandContext();
+        backendTexture->TrackUsageAndTransitionNow(commandContext, D3D12_RESOURCE_STATE_COMMON,
+                                                   backendTexture->GetAllSubresources());
+    }
     return d3d::SharedTextureMemory::EndAccessImpl(texture, lastUsageSerial, state);
 }
 

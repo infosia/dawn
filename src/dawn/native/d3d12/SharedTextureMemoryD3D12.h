@@ -40,12 +40,17 @@ class KeyedMutex;
 namespace d3d12 {
 class Device;
 
+struct SharedTextureMemoryD3D12ResourceDescriptor;
 class SharedTextureMemory final : public d3d::SharedTextureMemory {
   public:
     static ResultOrError<Ref<SharedTextureMemory>> Create(
         Device* device,
         StringView label,
         const SharedTextureMemoryDXGISharedHandleDescriptor* descriptor);
+    static ResultOrError<Ref<SharedTextureMemory>> Create(
+        Device* device,
+        StringView label,
+        const SharedTextureMemoryD3D12ResourceDescriptor* descriptor);
 
     ID3D12Resource* GetD3DResource() const;
 
@@ -72,6 +77,8 @@ class SharedTextureMemory final : public d3d::SharedTextureMemory {
 
     ComPtr<ID3D12Resource> mResource;
     Ref<d3d::KeyedMutex> mKeyedMutex;
+
+    const bool mSupportDecayToCommonState = false;
 };
 }  // namespace d3d12
 }  // namespace dawn::native

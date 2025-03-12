@@ -64,6 +64,17 @@ struct DAWN_NATIVE_EXPORT SharedBufferMemoryD3D12ResourceDescriptor : wgpu::Chai
     Microsoft::WRL::ComPtr<ID3D12Resource> resource;
 };
 
+// May be chained on SharedTextureMemoryDescriptor
+struct DAWN_NATIVE_EXPORT SharedTextureMemoryD3D12ResourceDescriptor : wgpu::ChainedStruct {
+    SharedTextureMemoryD3D12ResourceDescriptor() {
+        sType = static_cast<wgpu::SType>(WGPUSType_SharedTextureMemoryD3D12ResourceDescriptor);
+    }
+
+    // This ID3D12Resource object must be created from the same ID3D12Device used in the
+    // WGPUDevice. The resource must be in common state before BeginAccess() and will also be in
+    // common state after EndAccess()
+    Microsoft::WRL::ComPtr<ID3D12Resource> resource;
+};
 
 // May be chained on RequestAdapterOptions
 struct DAWN_NATIVE_EXPORT RequestAdapterOptionsD3D12Device : wgpu::ChainedStruct {
