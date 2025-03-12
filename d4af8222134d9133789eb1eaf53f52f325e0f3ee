@@ -105,6 +105,24 @@
       "parentUuid": "e170f64a_5689e156",
       "revId": "d4af8222134d9133789eb1eaf53f52f325e0f3ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6e39f21_507d7a0c",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3924072
+      },
+      "writtenOn": "2025-03-12T10:59:03Z",
+      "side": 1,
+      "message": "can you check if everything\u0027s right?",
+      "parentUuid": "25b3ac26_a4a5ccfd",
+      "revId": "d4af8222134d9133789eb1eaf53f52f325e0f3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
