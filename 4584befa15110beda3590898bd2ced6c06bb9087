@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e242fd0_60f51153",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T13:58:11Z",
+      "side": 1,
+      "message": "nit: `Bug: 398890257`",
+      "revId": "4584befa15110beda3590898bd2ced6c06bb9087",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "61699058_ee825e9a",
@@ -14,6 +31,23 @@
       "writtenOn": "2025-03-12T05:53:57Z",
       "side": 1,
       "message": "Hello James, dan \nPlease take a look at this CL.\nThanks!",
+      "revId": "4584befa15110beda3590898bd2ced6c06bb9087",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbb71de9_908a4c72",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1676,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T13:58:11Z",
+      "side": 1,
+      "message": "```suggestion\n    /// @param inst the SPIR-V instruction for OpVectorInsertDynamic\n```",
       "revId": "4584befa15110beda3590898bd2ced6c06bb9087",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
