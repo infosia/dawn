@@ -52,6 +52,24 @@
       "parentUuid": "9164a5e1_77063061",
       "revId": "d4af8222134d9133789eb1eaf53f52f325e0f3ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e170f64a_5689e156",
+        "filename": "docs/quickstart-cmake.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-12T08:54:35Z",
+      "side": 1,
+      "message": "Ah yes, can you add a forwarding header for that similar to `include/webgpu/webgpu_cpp.h`?",
+      "parentUuid": "bc42c37c_0e4a9e45",
+      "revId": "d4af8222134d9133789eb1eaf53f52f325e0f3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
