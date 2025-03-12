@@ -16,6 +16,24 @@
       "message": "We should also validate that there is always an ID if there was no initializer.",
       "revId": "f2154c9f95fb96483774d7826d20cd40c5a235b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f832a4e_518e7846",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2471,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T17:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a8358cb_ca0584e2",
+      "revId": "f2154c9f95fb96483774d7826d20cd40c5a235b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
