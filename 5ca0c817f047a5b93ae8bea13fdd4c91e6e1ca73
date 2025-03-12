@@ -81,6 +81,30 @@
       },
       "revId": "5ca0c817f047a5b93ae8bea13fdd4c91e6e1ca73",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59d1ab63_a09b2ff7",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-03-12T23:07:12Z",
+      "side": 1,
+      "message": "(This one actually they aren\u0027t strictly equivalent.\n\nA compat defaulting device can also have the CoreFeaturesAndLimits feature. If requiring the CoreFeaturesAndLimits feature when requestDevice it can still create a core device.\n\nBut in our test case we only create core device from core defaulting adapter, compat device from compat defaulting adapter. So in terms of result they are the same. And avoiding native api is fine.)",
+      "parentUuid": "cfd01776_70ccae84",
+      "range": {
+        "startLine": 491,
+        "startChar": 11,
+        "endLine": 493,
+        "endChar": 50
+      },
+      "revId": "5ca0c817f047a5b93ae8bea13fdd4c91e6e1ca73",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
