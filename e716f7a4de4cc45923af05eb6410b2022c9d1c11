@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a840906_9a2fb1dc",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T14:08:00Z",
+      "side": 1,
+      "message": "So, before it would insert the line and then reset the global insertion point, now, it changes the insertion point and then inserts the line. Not sure if that\u0027s what causes the issue?",
+      "revId": "e716f7a4de4cc45923af05eb6410b2022c9d1c11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56974cff_f5282c58",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T14:08:00Z",
+      "side": 1,
+      "message": "What ends up spaced out if we call this above instead of in each case statement?",
+      "revId": "e716f7a4de4cc45923af05eb6410b2022c9d1c11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
