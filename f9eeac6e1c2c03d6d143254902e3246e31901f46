@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e93dae39_db84b043",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-12T11:02:18Z",
+      "side": 1,
+      "message": "Let\u0027s wait until https://github.com/gpuweb/gpuweb/pull/5079#pullrequestreview-2676555724 is resolved to see what/how we actually test. WDYT?",
+      "parentUuid": "4a6a7082_1cc1e2a2",
+      "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e987d766_81d92c00",
         "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
         "patchSetId": 47
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-11T17:50:15Z",
       "side": 1,
       "message": "nit commented out code?",
+      "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d471718_224dbf5a",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-12T11:02:18Z",
+      "side": 1,
+      "message": "Since some formats (compressed one for instance) require device features, this code may fail. I was waiting for https://dawn-review.googlesource.com/c/dawn/+/227055/comment/182b4b3f_efe75f19/ outcome.",
+      "parentUuid": "e987d766_81d92c00",
       "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

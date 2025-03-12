@@ -205,6 +205,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b241ff9_73031200",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-12T11:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cfac808_9f5ef0dd",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4db67d12_2f10515c",
@@ -469,6 +487,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8213de75_c833fe3d",
+        "filename": "src/dawn/native/ExternalTexture.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-12T11:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "806078d5_6c4241bf",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54808996_866fd91d",
@@ -574,6 +610,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e36ab1a_e3acbef7",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-12T11:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fc428f9_3ce9c77f",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c182d21c_da58fd6e",
@@ -622,6 +676,24 @@
       "writtenOn": "2025-03-07T14:02:40Z",
       "side": 1,
       "message": "ditto",
+      "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a53cb8c_a8a03999",
+        "filename": "src/dawn/tests/end2end/ExternalTextureTests.cpp",
+        "patchSetId": 43
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-12T11:02:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42fd5e9e_94698dcd",
       "revId": "13b9c17f31292577e3b040370a38e176dcbb0e7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
