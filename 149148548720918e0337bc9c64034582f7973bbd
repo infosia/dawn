@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "149148548720918e0337bc9c64034582f7973bbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "237ff234_d0ecfe28",
+        "filename": "src/tint/lang/core/ir/\u0027",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-12T14:40:46Z",
+      "side": 1,
+      "message": "Drive-by: this file seems added by mistake?",
+      "revId": "149148548720918e0337bc9c64034582f7973bbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
