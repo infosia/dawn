@@ -42,6 +42,7 @@ struct SharedTextureMemoryD3D11Texture2DDescriptor;
 }
 
 namespace d3d12 {
+struct RequestAdapterOptionsD3D12Device;
 struct SharedBufferMemoryD3D12ResourceDescriptor;
 }
 
@@ -73,6 +74,10 @@ constexpr inline wgpu::SType STypeForImpl<d3d11::RequestAdapterOptionsD3D11Devic
     wgpu::SType(WGPUSType_RequestAdapterOptionsD3D11Device);
 
 template <>
+constexpr inline wgpu::SType STypeForImpl<d3d12::RequestAdapterOptionsD3D12Device> =
+    wgpu::SType(WGPUSType_RequestAdapterOptionsD3D12Device);
+
+template <>
 constexpr inline wgpu::SType STypeForImpl<opengl::RequestAdapterOptionsGetGLProc> =
     wgpu::SType(WGPUSType_RequestAdapterOptionsGetGLProc);
 
@@ -80,6 +85,7 @@ template <>
 struct AdditionalExtensions<RequestAdapterOptions> {
     using List = AdditionalExtensionsList<const d3d::RequestAdapterOptionsLUID*,
                                           const d3d11::RequestAdapterOptionsD3D11Device*,
+                                          const d3d12::RequestAdapterOptionsD3D12Device*,
                                           const opengl::RequestAdapterOptionsGetGLProc*>;
 };
 

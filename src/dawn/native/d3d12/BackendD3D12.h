@@ -85,11 +85,18 @@ class Backend final : public d3d::Backend {
 
     const PlatformFunctions* GetFunctions() const;
 
+    std::vector<Ref<PhysicalDeviceBase>> DiscoverPhysicalDevices(
+        const UnpackedPtr<RequestAdapterOptions>& options) override;
+
   protected:
     ResultOrError<Ref<PhysicalDeviceBase>> CreatePhysicalDeviceFromIDXGIAdapter(
         ComPtr<IDXGIAdapter> dxgiAdapter) override;
 
   private:
+    ResultOrError<Ref<PhysicalDeviceBase>> CreatePhysicalDeviceFromExternalD3D12Device(
+        ComPtr<IDXGIAdapter> dxgiAdapter,
+        ComPtr<ID3D12Device> d3d12Device);
+
     // Acquiring DXC version information and store the result in mDxcVersionInfo. This function
     // should be called only once, during startup in `Initialize`.
     void AcquireDxcVersionInformation();

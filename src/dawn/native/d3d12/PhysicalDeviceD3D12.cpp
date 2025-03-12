@@ -56,8 +56,12 @@ const D3D12_MESSAGE_ID DAWN_MESSAGE_ID_CREATERESOURCE_INVALIDALIGNMENT_SMALLRESO
     D3D12_MESSAGE_ID(1380);
 #endif
 
-PhysicalDevice::PhysicalDevice(Backend* backend, ComPtr<IDXGIAdapter4> hardwareAdapter)
-    : Base(backend, std::move(hardwareAdapter), wgpu::BackendType::D3D12) {}
+PhysicalDevice::PhysicalDevice(Backend* backend,
+                               ComPtr<IDXGIAdapter4> hardwareAdapter,
+                               ComPtr<ID3D12Device> d3d12Device)
+    : Base(backend, std::move(hardwareAdapter), wgpu::BackendType::D3D12),
+      mIsSharedD3D12Device(!!d3d12Device),
+      mD3d12Device(std::move(d3d12Device)) {}
 
 PhysicalDevice::~PhysicalDevice() {
     CleanUpDebugLayerFilters();
@@ -98,10 +102,12 @@ MaybeError PhysicalDevice::InitializeImpl() {
     // D3D12 cannot check for feature support without a device.
     // Create the device to populate the adapter properties then reuse it when needed for actual
     // rendering.
-    const PlatformFunctions* functions = GetBackend()->GetFunctions();
-    if (FAILED(functions->d3d12CreateDevice(GetHardwareAdapter(), D3D_FEATURE_LEVEL_11_0,
-                                            __uuidof(ID3D12Device), &mD3d12Device))) {
-        return DAWN_INTERNAL_ERROR("D3D12CreateDevice failed");
+    if (!mIsSharedD3D12Device) {
+        const PlatformFunctions* functions = GetBackend()->GetFunctions();
+        if (FAILED(functions->d3d12CreateDevice(GetHardwareAdapter(), D3D_FEATURE_LEVEL_11_0,
+                                                __uuidof(ID3D12Device), &mD3d12Device))) {
+            return DAWN_INTERNAL_ERROR("D3D12CreateDevice failed");
+        }
     }
 
     DAWN_TRY(InitializeDebugLayerFilters());

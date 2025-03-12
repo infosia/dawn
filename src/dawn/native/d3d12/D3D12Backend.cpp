@@ -36,6 +36,7 @@
 #include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
 #include "dawn/native/d3d12/DeviceD3D12.h"
+#include "dawn/native/d3d12/QueueD3D12.h"
 #include "dawn/native/d3d12/ResidencyManagerD3D12.h"
 #include "dawn/native/d3d12/TextureD3D12.h"
 
@@ -43,6 +44,10 @@ namespace dawn::native::d3d12 {
 
 Microsoft::WRL::ComPtr<ID3D12Device> GetD3D12Device(WGPUDevice device) {
     return ToBackend(FromAPI(device))->GetD3D12Device();
+}
+
+Microsoft::WRL::ComPtr<ID3D12CommandQueue> GetD3D12Queue(WGPUQueue queue) {
+    return ToBackend(FromAPI(queue))->GetCommandQueue();
 }
 
 uint64_t SetExternalMemoryReservation(WGPUDevice device,

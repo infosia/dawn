@@ -47,6 +47,7 @@ enum MemorySegment {
 };
 
 DAWN_NATIVE_EXPORT Microsoft::WRL::ComPtr<ID3D12Device> GetD3D12Device(WGPUDevice device);
+DAWN_NATIVE_EXPORT Microsoft::WRL::ComPtr<ID3D12CommandQueue> GetD3D12Queue(WGPUQueue queue);
 
 DAWN_NATIVE_EXPORT uint64_t SetExternalMemoryReservation(WGPUDevice device,
                                                          uint64_t requestedReservationSize,
@@ -61,6 +62,16 @@ struct DAWN_NATIVE_EXPORT SharedBufferMemoryD3D12ResourceDescriptor : wgpu::Chai
     // This ID3D12Resource object must be created from the same ID3D12Device used in the
     // WGPUDevice.
     Microsoft::WRL::ComPtr<ID3D12Resource> resource;
+};
+
+
+// May be chained on RequestAdapterOptions
+struct DAWN_NATIVE_EXPORT RequestAdapterOptionsD3D12Device : wgpu::ChainedStruct {
+    RequestAdapterOptionsD3D12Device() {
+        sType = static_cast<wgpu::SType>(WGPUSType_RequestAdapterOptionsD3D12Device);
+    }
+
+    Microsoft::WRL::ComPtr<ID3D12Device> device;
 };
 
 }  // namespace dawn::native::d3d12

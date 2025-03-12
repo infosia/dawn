@@ -40,7 +40,9 @@ class Backend;
 
 class PhysicalDevice : public d3d::PhysicalDevice {
   public:
-    PhysicalDevice(Backend* backend, ComPtr<IDXGIAdapter4> hardwareAdapter);
+    PhysicalDevice(Backend* backend,
+                   ComPtr<IDXGIAdapter4> hardwareAdapter,
+                   ComPtr<ID3D12Device> d3d12Device);
     ~PhysicalDevice() override;
 
     // PhysicalDeviceBase Implementation
@@ -87,6 +89,7 @@ class PhysicalDevice : public d3d::PhysicalDevice {
 
     void PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const override;
 
+    const bool mIsSharedD3D12Device;
     ComPtr<ID3D12Device> mD3d12Device;
 
     D3D12DeviceInfo mDeviceInfo = {};

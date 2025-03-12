@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "dawn/common/Log.h"
+#include "dawn/native/ChainUtils.h"
 #include "dawn/native/D3D12Backend.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/d3d/D3DError.h"
@@ -44,6 +45,38 @@ namespace {
 
 uint64_t MakeDXCVersion(uint64_t majorVersion, uint64_t minorVersion) {
     return (majorVersion << 32) + minorVersion;
+}
+
+MaybeError ValidateRequestOptions(const UnpackedPtr<RequestAdapterOptions>& options,
+                                  ComPtr<IDXGIAdapter>* dxgiAdapter,
+                                  ComPtr<ID3D12Device>* d3d12Device) {
+    auto* d3d12DeviceOption = options.Get<RequestAdapterOptionsD3D12Device>();
+    if (!d3d12DeviceOption) {
+        return {};
+    }
+
+    DAWN_INVALID_IF(!d3d12DeviceOption->device,
+                    "RequestAdapterOptionsD3D12Device::device is null.");
+
+    ComPtr<IDXGIDevice> dxgiDevice;
+    DAWN_TRY(CheckHRESULT(d3d12DeviceOption->device.As(&dxgiDevice), "D3D12: Get IDXGIDevice"));
+
+    ComPtr<IDXGIAdapter> adapter;
+    DAWN_TRY(CheckHRESULT(dxgiDevice->GetAdapter(&adapter), "D3D12: Get IDXGIAdapter"));
+
+    DXGI_ADAPTER_DESC adapterDesc;
+    DAWN_TRY(CheckHRESULT(adapter->GetDesc(&adapterDesc), "D3D12: IDXGIAdapter::GetDesc()"));
+
+    if (auto* luidOptions = options.Get<d3d::RequestAdapterOptionsLUID>()) {
+        DAWN_INVALID_IF(
+            memcmp(&adapterDesc.AdapterLuid, &luidOptions->adapterLUID, sizeof(LUID)) != 0,
+            "RequestAdapterOptionsLUID and RequestAdapterOptionsD3D11Device don't match.");
+    }
+
+    *dxgiAdapter = std::move(adapter);
+    *d3d12Device = d3d12DeviceOption->device;
+
+    return {};
 }
 
 }  // anonymous namespace
@@ -261,13 +294,54 @@ bool Backend::IsDXCAvailableAndVersionAtLeast(uint64_t minimumCompilerMajorVersi
     return false;
 }
 
+std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
+    const UnpackedPtr<RequestAdapterOptions>& options) {
+    if (options->forceFallbackAdapter) {
+        return {};
+    }
+
+    ComPtr<IDXGIAdapter> dxgiAdapter;
+    ComPtr<ID3D12Device> d3d12Device;
+    if (GetInstance()->ConsumedError(ValidateRequestOptions(options, &dxgiAdapter, &d3d12Device))) {
+        return {};
+    }
+
+    if (d3d12Device) {
+        Ref<PhysicalDeviceBase> physicalDevice;
+        if (GetInstance()->ConsumedErrorAndWarnOnce(
+                CreatePhysicalDeviceFromExternalD3D12Device(std::move(dxgiAdapter),
+                                                            std::move(d3d12Device)),
+                &physicalDevice) ||
+            !physicalDevice->SupportsFeatureLevel(options->featureLevel, GetInstance())) {
+            return {};
+        }
+        return {std::move(physicalDevice)};
+    }
+
+    return Base::DiscoverPhysicalDevices(options);
+}
+
 ResultOrError<Ref<PhysicalDeviceBase>> Backend::CreatePhysicalDeviceFromIDXGIAdapter(
     ComPtr<IDXGIAdapter> dxgiAdapter) {
     // IDXGIAdapter4 is supported since Windows 8 and Platform Update for Windows 7.
     ComPtr<IDXGIAdapter4> dxgiAdapter4;
     DAWN_TRY(CheckHRESULT(dxgiAdapter.As(&dxgiAdapter4), "DXGIAdapter retrieval"));
     Ref<PhysicalDevice> physicalDevice =
-        AcquireRef(new PhysicalDevice(this, std::move(dxgiAdapter4)));
+        AcquireRef(new PhysicalDevice(this, std::move(dxgiAdapter4), /*d3d12Device=*/{}));
+    DAWN_TRY(physicalDevice->Initialize());
+
+    return {std::move(physicalDevice)};
+}
+
+ResultOrError<Ref<PhysicalDeviceBase>> Backend::CreatePhysicalDeviceFromExternalD3D12Device(
+    ComPtr<IDXGIAdapter> dxgiAdapter,
+    ComPtr<ID3D12Device> d3d12Device) {
+    // IDXGIAdapter4 is supported since Windows 8 and Platform Update for Windows 7.
+    ComPtr<IDXGIAdapter4> dxgiAdapter4;
+    DAWN_TRY(CheckHRESULT(dxgiAdapter.As(&dxgiAdapter4), "DXGIAdapter retrieval"));
+
+    Ref<PhysicalDevice> physicalDevice =
+        AcquireRef(new PhysicalDevice(this, std::move(dxgiAdapter4), std::move(d3d12Device)));
     DAWN_TRY(physicalDevice->Initialize());
 
     return {std::move(physicalDevice)};

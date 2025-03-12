@@ -3806,7 +3806,8 @@
             {"value": 59, "name": "dawn texel copy buffer row alignment limits", "tags": ["dawn"]},
             {"value": 60, "name": "adapter properties subgroup matrix configs", "tags": ["dawn"]},
             {"value": 61, "name": "shared fence EGL sync descriptor", "tags": ["dawn", "native"]},
-            {"value": 62, "name": "shared fence EGL sync export info", "tags": ["dawn", "native"]}
+            {"value": 62, "name": "shared fence EGL sync export info", "tags": ["dawn", "native"]},
+            {"value": 63, "name": "request adapter options D3D12 device", "tags": ["dawn", "native"]},
         ]
     },
     "texture": {
