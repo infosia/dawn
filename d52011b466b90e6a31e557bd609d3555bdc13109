@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "150f2a07_84dda68d",
+        "filename": "src/tint/lang/core/ir/transform/single_entry_point.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T19:57:56Z",
+      "side": 1,
+      "message": "Please remove.",
+      "revId": "d52011b466b90e6a31e557bd609d3555bdc13109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
