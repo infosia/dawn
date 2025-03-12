@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2a45277b_16c94319",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T14:22:12Z",
+      "side": 1,
+      "message": "before:\n\n```\nLine()\nglobal_insertion_point_ \u003d current_buffer_-\u003elines.size()\n```\n\nnow:\n\n```\nglobal_insertion_point_ \u003d current_buffer_-\u003elines.size()\nLine()\nglobal_insertion_point_ \u003d current_buffer_-\u003elines.size()\n```",
+      "parentUuid": "77524dca_78424800",
+      "revId": "e716f7a4de4cc45923af05eb6410b2022c9d1c11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "56974cff_f5282c58",
         "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
         "patchSetId": 6
