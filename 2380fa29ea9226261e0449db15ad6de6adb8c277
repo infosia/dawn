@@ -52,6 +52,24 @@
       "parentUuid": "ca9f10a4_014045a6",
       "revId": "2380fa29ea9226261e0449db15ad6de6adb8c277",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "576d81e6_963dbaa2",
+        "filename": "src/tint/tint.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T18:20:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2f79b32d_36729d1a",
+      "revId": "2380fa29ea9226261e0449db15ad6de6adb8c277",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
