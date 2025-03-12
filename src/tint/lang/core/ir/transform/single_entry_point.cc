@@ -29,6 +29,8 @@
 
 #include <utility>
 
+#include "src/tint/lang/core/ir/block.h"
+#include "src/tint/lang/core/ir/instruction_result.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/referenced_functions.h"
 #include "src/tint/lang/core/ir/referenced_module_decls.h"
@@ -73,6 +75,9 @@ Result<SuccessType> Run(ir::Module& ir, std::string_view entry_point_name) {
     // Remove unused module-scope variables.
     ReferencedModuleDecls<Module> referenced_var_cache(ir);
     auto& referenced_vars = referenced_var_cache.TransitiveReferences(entry_point);
+
+    Vector<Value*, 16> values_to_propagate;
+
     auto* inst = ir.root_block->Back();
 
     // The instructions are removed in reverse order. This is in order to handle overrides which
@@ -82,7 +87,10 @@ Result<SuccessType> Run(ir::Module& ir, std::string_view entry_point_name) {
         auto prev = inst->prev;
         if (!referenced_vars.Contains(inst)) {
             // There shouldn't be any remaining references to the variable.
-            TINT_ASSERT(inst->Result(0)->NumUsages() == 0);
+            if (inst->Result(0)->NumUsages() != 0) {
+                TINT_ICE() << " Unexpected usages remain when applying single entry point IR for  '"
+                           << entry_point_name << "' ";
+            }
             inst->Destroy();
         }
         inst = prev;
