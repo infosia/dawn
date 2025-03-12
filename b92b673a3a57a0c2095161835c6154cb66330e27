@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c1d713b_2c1eb7a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-12T09:35:33Z",
+      "side": 1,
+      "message": "PTAL again, I had to mess with the `Line()` directives in AST printers to minimize expecations but there are still a few HLSl ones.",
+      "revId": "b92b673a3a57a0c2095161835c6154cb66330e27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
