@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "83f70839_75ff2649",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3924072
+      },
+      "writtenOn": "2025-03-12T13:37:12Z",
+      "side": 1,
+      "message": "seems like it might be my fault as i\u0027m new with git and gerrit. can you provide suggestions about this and how to fix this?",
+      "parentUuid": "eb5a5a0b_88c91875",
+      "revId": "1cf8b7d4729b4bde82bf9cd9f3f54aa9c0cc10fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be7aff6f_5ff9f084",
         "filename": "include/webgpu/webgpu_cpp_print.h",
         "patchSetId": 2
