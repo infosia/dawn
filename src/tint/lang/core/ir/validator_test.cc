@@ -1208,7 +1208,7 @@ TEST_F(IR_ValidatorTest, OverrideWithoutCapability) {
         res.Failure().reason.Str(),
         testing::HasSubstr(
             R"(:2:12 error: override: root block: invalid instruction: tint::core::ir::Override
-  %a:u32 = override 1u @id(0)
+  %a:u32 = override 1u
            ^^^^^^^^
 )")) << res.Failure().reason.Str();
 }
@@ -1255,7 +1255,7 @@ TEST_F(IR_ValidatorTest, OverrideWithInvalidType) {
     EXPECT_THAT(
         res.Failure().reason.Str(),
         testing::HasSubstr(R"(:2:18 error: override: override type 'vec3<u32>' is not a scalar
-  %1:vec3<u32> = override undef @id(0)
+  %1:vec3<u32> = override undef
                  ^^^^^^^^
 )")) << res.Failure().reason.Str();
 }
@@ -1273,7 +1273,7 @@ TEST_F(IR_ValidatorTest, OverrideWithMismatchedInitializerType) {
         res.Failure().reason.Str(),
         testing::HasSubstr(
             R"(:2:12 error: override: override type 'u32' does not match initializer type 'i32'
-  %1:u32 = override 1i @id(0)
+  %1:u32 = override 1i
            ^^^^^^^^
 )")) << res.Failure().reason.Str();
 }
