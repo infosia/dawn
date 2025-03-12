@@ -20,6 +20,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1987c588_7224eb96",
+        "filename": "src/dawn/native/ResourceMemoryAllocation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-12T14:19:19Z",
+      "side": 1,
+      "message": "Q: Does ResourceMemoryAllocator/BuddyAllocator know the exact allocation size? Of course it must know how much memory to return for suballocation. I\u0027m wondering if that isn\u0027t enough information to know the exact allocation size vs padding or something like that.",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3a4d648_7d8b89fc",
+        "filename": "src/dawn/native/vulkan/ResourceHeapVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-12T14:19:19Z",
+      "side": 1,
+      "message": "nit: Is this just the size of the heap / VkDeviceMemory? The fact that it\u0027s also the size that was requested is kind of irrelevant since it\u0027s the allocated size you care about. `GetSize()` would avoid confusion.",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d475cdf4_ce390636",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
         "patchSetId": 4
@@ -31,6 +71,57 @@
       "writtenOn": "2025-03-11T18:10:29Z",
       "side": 1,
       "message": "We ideally want to update memory tracking when the memory is actually freed. How should we go about that, maybe callbacks? \n\nSimilar below for suballocations.",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aeae022_98789cf0",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-12T14:19:19Z",
+      "side": 1,
+      "message": "IMO it would be easier to understand if you tracked both allocated and used memory in SingleTypeAllocator. I guess the complication is that SingleTypeAllocator doesn\u0027t know used sizes for individual allocations? I guess it knows the size of the allocation, it just doesn\u0027t know if it\u0027s going to be used for future suballocation or an individual allocation.\n\nAlthough see what cwallez or lokokung think here before making changes. This might also depend on how you deal with tracking when vkFreeMemory() runs from FencedDeleter.",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b24ff480_f87a8101",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-12T14:19:19Z",
+      "side": 1,
+      "message": "This is what you meant for sub-allocations right? ResourceMemoryAllocator::Tick() runs when the memory is available for reuse so you could subtract from mTotalUsedMemory there. Although I think you can say the memory no longer counts as used here when Deallocate() is called. The memory could be handed back out if there were appropriate barriers it\u0027s just not.",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a663ec9b_eee76778",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-12T14:19:19Z",
+      "side": 1,
+      "message": "Can you add the function(s) that return the used and allocated memory from ResourceMemoryAllocator in this CL? That way you can also add some tests here.",
       "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
