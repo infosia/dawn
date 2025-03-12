@@ -16,6 +16,51 @@
       "message": "PTAL.",
       "revId": "8ea32fe64e9780a5457b188f9f11bc21994f3b96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc640a3b_427cb2c8",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-12T17:45:45Z",
+      "side": 1,
+      "message": "```\nif (true_returns) {\n  return std::nullopt;\n}\n```",
+      "fixSuggestions": [
+        {
+          "fixId": "0a835da3_e64390fa",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1199,
+                "startChar": 0,
+                "endLine": 1210,
+                "endChar": 0
+              },
+              "replacement": "        if (true_end-\u003eid() !\u003d merge_id \u0026\u0026 true_end-\u003eIsReturn()) {\n            return true_end-\u003eid();\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1211,
+                "startChar": 0,
+                "endLine": 1216,
+                "endChar": 0
+              },
+              "replacement": "        if (false_end-\u003eid() !\u003d merge_id \u0026\u0026 false_end-\u003eIsReturn()) {\n            return false_end-\u003eid();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "8ea32fe64e9780a5457b188f9f11bc21994f3b96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
