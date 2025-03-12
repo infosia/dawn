@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39760891_bf002812",
+        "filename": "src/tint/tint.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T18:05:33Z",
+      "side": 1,
+      "message": "Do we want to remove this? Or should we make the generation code depend on it?",
+      "revId": "accea1af2fb4033a214b8f4ac92e318a3bbb10e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
