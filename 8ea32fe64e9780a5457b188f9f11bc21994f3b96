@@ -61,6 +61,24 @@
       ],
       "revId": "8ea32fe64e9780a5457b188f9f11bc21994f3b96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a44f9c4d_ba480d46",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T17:50:45Z",
+      "side": 1,
+      "message": "We can\u0027t do that because in this case, the premerge block itself returns. So, both of them will end in a `return` but that\u0027s because they\u0027ve premerged into a return.",
+      "parentUuid": "fc640a3b_427cb2c8",
+      "revId": "8ea32fe64e9780a5457b188f9f11bc21994f3b96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
