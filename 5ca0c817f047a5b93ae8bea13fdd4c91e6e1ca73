@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "23cc503f_ea0c5143",
+        "filename": "src/dawn/tests/AdapterTestConfig.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-03-12T20:28:32Z",
+      "side": 1,
+      "message": "Oops. Removed",
+      "parentUuid": "95a73c09_c43fc615",
+      "revId": "5ca0c817f047a5b93ae8bea13fdd4c91e6e1ca73",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08796fe4_bb6d4967",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-03-12T08:28:46Z",
       "side": 1,
       "message": "Isn\u0027t that the same as checking for !CoreFeaturesAndLimits? It would avoid the need to use dawn::native directly.",
+      "range": {
+        "startLine": 491,
+        "startChar": 11,
+        "endLine": 493,
+        "endChar": 50
+      },
+      "revId": "5ca0c817f047a5b93ae8bea13fdd4c91e6e1ca73",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfd01776_70ccae84",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-03-12T20:28:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08796fe4_bb6d4967",
       "range": {
         "startLine": 491,
         "startChar": 11,
