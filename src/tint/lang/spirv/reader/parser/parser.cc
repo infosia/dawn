@@ -1248,6 +1248,38 @@ class Parser {
         auto true_id = inst.GetSingleWordInOperand(1);
         auto false_id = inst.GetSingleWordInOperand(2);
 
+        bool true_is_header = loop_headers_.count(true_id) > 0;
+        bool false_is_header = loop_headers_.count(false_id) > 0;
+
+        if (true_is_header || false_is_header) {
+            core::ir::Loop* loop = nullptr;
+            if (true_is_header) {
+                loop = loop_headers_[true_id];
+            } else {
+                loop = loop_headers_[false_id];
+            }
+
+            // The only time a loop continuing will be in current blocks is if
+            // we're inside the continuing block itself.
+            if (current_blocks_.count(loop->Continuing())) {
+                bool true_is_merge =
+                    continue_targets_.count(true_id) == 0 && walk_stop_blocks_.count(true_id) > 0;
+                bool false_is_merge =
+                    continue_targets_.count(false_id) == 0 && walk_stop_blocks_.count(false_id) > 0;
+
+                if (true_is_merge && false_is_header) {
+                    EmitWithoutResult(b_.BreakIf(loop, cond));
+                    return;
+                }
+                if (false_is_merge && true_is_header) {
+                    auto* val = b_.Not(cond->Type(), cond);
+                    EmitWithoutSpvResult(val);
+                    EmitWithoutResult(b_.BreakIf(loop, val));
+                    return;
+                }
+            }
+        }
+
         // If the true and false block are the same, then we change the condition into
         // `cond || true` so that we always take the true block, the false block will be marked
         // unreachable.
@@ -1363,6 +1395,7 @@ class Parser {
         auto* loop = StopWalkingAt(header_id)->As<core::ir::Loop>();
         TINT_ASSERT(loop);
 
+        loop_headers_.insert({header_id, loop});
         continue_targets_.insert({continue_id, loop});
 
         // Insert the stop blocks
@@ -2006,6 +2039,8 @@ class Parser {
     std::unordered_map<uint32_t, core::ir::ControlInstruction*> walk_stop_blocks_;
     // Map of continue target ID to the controlling IR loop.
     std::unordered_map<uint32_t, core::ir::Loop*> continue_targets_;
+    // Map of continue target ID to the controlling IR loop.
+    std::unordered_map<uint32_t, core::ir::Loop*> loop_headers_;
 
     std::unordered_set<core::ir::Block*> current_blocks_;
     std::vector<std::unordered_set<uint32_t>> id_stack_;
