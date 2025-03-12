@@ -59,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d494aa5_add0fdbb",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T21:06:14Z",
+      "side": 1,
+      "message": "nack. Turns out this ends up being a valid spir-v construct where we don\u0027t want a break-if. The loop continue target is the loop header, in which case we\u0027ll be emitting to the loop body, not continue block and so can\u0027t use BreakIf.",
+      "parentUuid": "945169a1_e352cdee",
+      "range": {
+        "startLine": 1264,
+        "startChar": 12,
+        "endLine": 1264,
+        "endChar": 60
+      },
+      "revId": "523b3a4895318eecc66fcb64c3f78995d63d6920",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3748112_f6d1e937",
@@ -72,6 +96,24 @@
       "writtenOn": "2025-03-12T20:31:18Z",
       "side": 1,
       "message": "Maybe better way to get the merge... discussed offline.",
+      "revId": "523b3a4895318eecc66fcb64c3f78995d63d6920",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03e445fd_1fec2e8b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T21:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3748112_f6d1e937",
       "revId": "523b3a4895318eecc66fcb64c3f78995d63d6920",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
