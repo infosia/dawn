@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef1241b6_628bc046",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-12T14:45:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4b9bdec_4f946fc0",
+      "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e987d766_81d92c00",
@@ -138,6 +156,24 @@
       "side": 1,
       "message": "Which formats would you hardcode for now?",
       "parentUuid": "5dc22880_baf08240",
+      "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b5f0234_ead1df5f",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-12T14:45:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a9564c31_1eb4ea5c",
       "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
