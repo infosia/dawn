@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d4b9bdec_4f946fc0",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-12T12:58:50Z",
+      "side": 1,
+      "message": "The let\u0027s land as is with a big TODO to revisit.",
+      "parentUuid": "e93dae39_db84b043",
+      "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e987d766_81d92c00",
         "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
         "patchSetId": 47
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Since some formats (compressed one for instance) require device features, this code may fail. I was waiting for https://dawn-review.googlesource.com/c/dawn/+/227055/comment/182b4b3f_efe75f19/ outcome.",
       "parentUuid": "e987d766_81d92c00",
+      "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dc22880_baf08240",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-12T12:58:50Z",
+      "side": 1,
+      "message": "Look at how other tests do it. Or since we are waiting for the TODO, let\u0027s hardcode a few formats and move ahead for now.",
+      "parentUuid": "5d471718_224dbf5a",
       "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
