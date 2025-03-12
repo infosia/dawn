@@ -122,6 +122,24 @@
       "parentUuid": "5d471718_224dbf5a",
       "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9564c31_1eb4ea5c",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 47
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-12T13:02:18Z",
+      "side": 1,
+      "message": "Which formats would you hardcode for now?",
+      "parentUuid": "5dc22880_baf08240",
+      "revId": "f9eeac6e1c2c03d6d143254902e3246e31901f46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
