@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8dce4d62_91d79f81",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-12T15:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e242fd0_60f51153",
+      "revId": "4584befa15110beda3590898bd2ced6c06bb9087",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "61699058_ee825e9a",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-12T13:58:11Z",
       "side": 1,
       "message": "```suggestion\n    /// @param inst the SPIR-V instruction for OpVectorInsertDynamic\n```",
+      "revId": "4584befa15110beda3590898bd2ced6c06bb9087",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0974413_a8d332ca",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1676,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-12T15:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb71de9_908a4c72",
       "revId": "4584befa15110beda3590898bd2ced6c06bb9087",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
