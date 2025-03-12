@@ -35,6 +35,7 @@
 
 #include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/d3d12/DeviceD3D12.h"
 #include "dawn/native/d3d12/QueueD3D12.h"
 #include "dawn/native/d3d12/ResidencyManagerD3D12.h"
@@ -48,6 +49,22 @@ Microsoft::WRL::ComPtr<ID3D12Device> GetD3D12Device(WGPUDevice device) {
 
 Microsoft::WRL::ComPtr<ID3D12CommandQueue> GetD3D12Queue(WGPUQueue queue) {
     return ToBackend(FromAPI(queue))->GetCommandQueue();
+}
+
+Microsoft::WRL::ComPtr<ID3D11Device> GetD3D11On12Device(WGPUDevice device) {
+    Microsoft::WRL::ComPtr<ID3D11Device> d3d11Device;
+    // Need to explicitly get d3d11Device's pointer since Comptr has operator& overload which
+    // returns a non pointer type. It would confuse ConsumeError template function and prevent it
+    // from automatically deducing the correct template types.
+    Microsoft::WRL::ComPtr<ID3D11Device>* d3d11DevicePtr = &d3d11Device;
+    auto backendDevice = ToBackend(FromAPI(device));
+    auto deviceLock(backendDevice->GetScopedLock());
+    if (backendDevice->ConsumedError(backendDevice->GetOrCreateD3D11DeviceOn12(), d3d11DevicePtr,
+                                     "calling GetD3D11On12Device(%s).", backendDevice)) {
+        return nullptr;
+    }
+
+    return d3d11Device;
 }
 
 uint64_t SetExternalMemoryReservation(WGPUDevice device,

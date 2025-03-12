@@ -216,18 +216,32 @@ ID3D12Device* Device::GetD3D12Device() const {
     return mD3d12Device.Get();
 }
 
+ResultOrError<ComPtr<ID3D11Device>> Device::GetOrCreateD3D11DeviceOn12() {
+    if (mD3d11Device != nullptr) {
+        return mD3d11Device;
+    }
+
+    ComPtr<ID3D11On12Device> d3d11on12Device;
+    DAWN_TRY_ASSIGN(d3d11on12Device, GetOrCreateD3D11on12Device());
+    DAWN_ASSERT(mD3d11Device == nullptr);
+    return mD3d11Device;
+}
+
 ResultOrError<ComPtr<ID3D11On12Device>> Device::GetOrCreateD3D11on12Device() {
     if (mD3d11On12Device == nullptr) {
-        ComPtr<ID3D11Device> d3d11Device;
         D3D_FEATURE_LEVEL d3dFeatureLevel;
         IUnknown* const iUnknownQueue = ToBackend(GetQueue())->GetCommandQueue();
-        DAWN_TRY(CheckHRESULT(
-            GetFunctions()->d3d11on12CreateDevice(mD3d12Device.Get(), 0, nullptr, 0, &iUnknownQueue,
-                                                  1, 1, &d3d11Device, nullptr, &d3dFeatureLevel),
-            "D3D11on12CreateDevice"));
+        UINT flags = 0;
+        if (GetInstance()->GetBackendValidationLevel() != BackendValidationLevel::Disabled) {
+            flags = D3D11_CREATE_DEVICE_DEBUG;
+        }
+        DAWN_TRY(CheckHRESULT(GetFunctions()->d3d11on12CreateDevice(
+                                  mD3d12Device.Get(), flags, nullptr, 0, &iUnknownQueue, 1, 1,
+                                  &mD3d11Device, nullptr, &d3dFeatureLevel),
+                              "D3D11on12CreateDevice"));
 
         ComPtr<ID3D11On12Device> d3d11on12Device;
-        d3d11Device.As(&d3d11on12Device);
+        mD3d11Device.As(&d3d11on12Device);
         DAWN_ASSERT(d3d11on12Device);
 
         mD3d11On12Device = std::move(d3d11on12Device);
