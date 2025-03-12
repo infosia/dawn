@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8653dcde_b0011be2",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-12T16:58:32Z",
+      "side": 1,
+      "message": "Rather than a using separate instruction here, you can just make it the initializer of the variable with `tmp-\u003eSetInitializer(vector)`.",
+      "fixSuggestions": [
+        {
+          "fixId": "3c58c8f5_a0562249",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1681,
+                "startChar": 0,
+                "endLine": 1687,
+                "endChar": 0
+              },
+              "replacement": "        auto* tmp \u003d b_.Var(ty_.ptr(core::AddressSpace::kFunction, Type(inst.type_id()),\n                                     core::Access::kReadWrite),\n                            vector);\n        EmitWithoutResult(b_.StoreVectorElement(tmp, index, component, true));\n        Emit(tmp, inst.result_id());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "05dd92df5dec5b2b7ca954a0b8d2b3b7614f5f49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
