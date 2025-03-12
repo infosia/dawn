@@ -33,6 +33,24 @@
       "message": "Drive-by: this file seems added by mistake?",
       "revId": "149148548720918e0337bc9c64034582f7973bbd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47a0d45f_8e43536c",
+        "filename": "src/tint/lang/core/ir/\u0027",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T14:44:01Z",
+      "side": 1,
+      "message": "bad vi-ing, heh.",
+      "parentUuid": "237ff234_d0ecfe28",
+      "revId": "149148548720918e0337bc9c64034582f7973bbd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
