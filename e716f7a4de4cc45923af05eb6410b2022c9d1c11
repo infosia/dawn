@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b607b18b_c5c3da14",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T14:32:53Z",
+      "side": 1,
+      "message": "I don\u0027t actually know, just saw the difference and was inquring, heh.",
+      "parentUuid": "fa861359_62ea602c",
+      "revId": "e716f7a4de4cc45923af05eb6410b2022c9d1c11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56974cff_f5282c58",
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "The problem is that because of the `CallGraphEntryPoints` changes, the EP that used to be after all structures, now in most builtin tests ended up before one of the storage/uniform structures. These structures would still go through the line emission logic, causing tens thousands of the expectations files to gain an additional new line at the end.",
       "parentUuid": "56974cff_f5282c58",
+      "revId": "e716f7a4de4cc45923af05eb6410b2022c9d1c11",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aad4dcfd_54cde407",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-12T14:32:53Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "651be738_96fdf0d0",
       "revId": "e716f7a4de4cc45923af05eb6410b2022c9d1c11",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
