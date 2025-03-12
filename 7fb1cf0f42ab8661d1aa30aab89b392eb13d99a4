@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f805b43_c4a177c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-03-12T21:31:46Z",
+      "side": 1,
+      "message": "webgpu_test removing CL: https://chromium-review.googlesource.com/c/chromium/src/+/6349621",
+      "revId": "7fb1cf0f42ab8661d1aa30aab89b392eb13d99a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
