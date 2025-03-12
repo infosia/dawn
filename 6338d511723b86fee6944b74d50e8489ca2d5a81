@@ -16,6 +16,57 @@
       "message": "Hey Loko, please have a look.",
       "revId": "6338d511723b86fee6944b74d50e8489ca2d5a81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43f17f2b_3a9dc875",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 49
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-12T20:29:58Z",
+      "side": 1,
+      "message": "nit. Here and in other instances, I think we have been trying to use the prefix as well, i.e. `crbug.com/398752857`",
+      "range": {
+        "startLine": 249,
+        "startChar": 12,
+        "endLine": 249,
+        "endChar": 21
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5440e887_f3ee4a68",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/BindGroup.cpp",
+              "range": {
+                "startLine": 249,
+                "startChar": 0,
+                "endLine": 250,
+                "endChar": 0
+              },
+              "replacement": "    // TODO(crbug.com/398752857): Error message should include that entry is neither an ExternalTexture nor a\n"
+            },
+            {
+              "path": "src/dawn/native/BindGroup.cpp",
+              "range": {
+                "startLine": 504,
+                "startChar": 0,
+                "endLine": 505,
+                "endChar": 0
+              },
+              "replacement": "            // TODO(crbug.com/398752857): Make this controlled by a toggle before shipping.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6338d511723b86fee6944b74d50e8489ca2d5a81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
