@@ -1,0 +1,14 @@
+{
+  'dawn_end2end_tests': {
+    'label': '//src/dawn/tests:dawn_end2end_tests',
+    'type': 'windowed_test_launcher',
+  },
+  'dawn_unittests': {
+    'label': '//src/dawn/tests:dawn_unittests',
+    'type': 'windowed_test_launcher',
+  },
+  'test_cmd': {
+    'label': '//src/tint/cmd/test:test_cmd',
+    'type': 'windowed_test_launcher',
+  },
+}
