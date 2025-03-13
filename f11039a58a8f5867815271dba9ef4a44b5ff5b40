@@ -3,6 +3,217 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c654f587_54c9074c",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1535,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-13T18:45:47Z",
+      "side": 1,
+      "message": "Should we create something like `makeCheck` for `err` also? I feel like I see this similar code in a couple places.",
+      "range": {
+        "startLine": 1533,
+        "startChar": 0,
+        "endLine": 1535,
+        "endChar": 6
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "04d519e6_cf7c70d2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 927,
+                "startChar": 0,
+                "endLine": 930,
+                "endChar": 0
+              },
+              "replacement": "      {{{ gpu.makeCheck(\u0027ex instanceof RangeError\u0027) }}}\n      {{{ gpu.makeCheck(\u0027mappedAtCreation\u0027) }}}\n      {{{ gpu.makeCheck(\u0027size\u0027) }}}\n      {{{ gpu.makeCheck(\u0027offset\u0027) }}}\n      {{{ gpu.makeCheck(\u0027bufferPtr\u0027) }}}\n      err(\u0027buffer.getMappedRange() failed:\u0027, ex);\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 951,
+                "startChar": 0,
+                "endLine": 954,
+                "endChar": 0
+              },
+              "replacement": "      {{{ gpu.makeCheck(\u0027ex instanceof RangeError\u0027) }}}\n      {{{ gpu.makeCheck(\u0027mappedAtCreation\u0027) }}}\n      {{{ gpu.makeCheck(\u0027size\u0027) }}}\n      {{{ gpu.makeCheck(\u0027offset\u0027) }}}\n      {{{ gpu.makeCheck(\u0027bufferPtr\u0027) }}}\n      err(\u0027buffer.getMappedRange() failed:\u0027, ex);\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 973,
+                "startChar": 0,
+                "endLine": 976,
+                "endChar": 0
+              },
+              "replacement": "      {{{ gpu.makeCheck(\u0027ex instanceof RangeError\u0027) }}}\n      {{{ gpu.makeCheck(\u0027mappedAtCreation\u0027) }}}\n      {{{ gpu.makeCheck(\u0027size\u0027) }}}\n      {{{ gpu.makeCheck(\u0027offset\u0027) }}}\n      {{{ gpu.makeCheck(\u0027bufferPtr\u0027) }}}\n      err(\u0027buffer.getMappedRange() failed:\u0027, ex);\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 989,
+                "startChar": 0,
+                "endLine": 992,
+                "endChar": 0
+              },
+              "replacement": "      {{{ gpu.makeCheck(\u0027ex instanceof RangeError\u0027) }}}\n      {{{ gpu.makeCheck(\u0027mappedAtCreation\u0027) }}}\n      {{{ gpu.makeCheck(\u0027size\u0027) }}}\n      {{{ gpu.makeCheck(\u0027offset\u0027) }}}\n      {{{ gpu.makeCheck(\u0027bufferPtr\u0027) }}}\n      err(\u0027buffer.getMappedRange() failed:\u0027, ex);\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 1190,
+                "startChar": 0,
+                "endLine": 1191,
+                "endChar": 0
+              },
+              "replacement": "  wgpuCommandEncoderClearBuffer: (encoderPtr, bufferPtr, offsetPtr, sizePtr) \u003d\u003e {\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 1192,
+                "startChar": 0,
+                "endLine": 1193,
+                "endChar": 0
+              },
+              "replacement": "    {{{ gpu.makeCheck(\u0027bufferPtr\u0027) }}}\n    {{{ gpu.makeCheck(\u0027offsetPtr\u0027) }}}\n    {{{ gpu.makeCheck(\u0027sizePtr\u0027) }}}\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 1195,
+                "startChar": 0,
+                "endLine": 1195,
+                "endChar": 0
+              },
+              "replacement": "    var offset \u003d {{{ gpu.makeGetU64(\u0027offsetPtr\u0027, 0) }}};\n    var size \u003d {{{ gpu.makeGetU64(\u0027sizePtr\u0027, 0) }}};\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 1198,
+                "startChar": 0,
+                "endLine": 1199,
+                "endChar": 0
+              },
+              "replacement": "  wgpuCommandEncoderCopyBufferToBuffer: (encoderPtr, srcPtr, srcOffsetPtr, dstPtr, dstOffsetPtr, sizePtr) \u003d\u003e {\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 1202,
+                "startChar": 0,
+                "endLine": 1202,
+                "endChar": 0
+              },
+              "replacement": "    var srcOffset \u003d {{{ gpu.makeGetU64(\u0027srcOffsetPtr\u0027, 0) }}};\n    var dstOffset \u003d {{{ gpu.makeGetU64(\u0027dstOffsetPtr\u0027, 0) }}};\n    var size \u003d {{{ gpu.makeGetU64(\u0027sizePtr\u0027, 0) }}};\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 2203,
+                "startChar": 0,
+                "endLine": 2204,
+                "endChar": 0
+              },
+              "replacement": "  wgpuRenderBundleEncoderSetIndexBuffer: (passPtr, bufferPtr, format, offsetPtr, sizePtr) \u003d\u003e {\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 2206,
+                "startChar": 0,
+                "endLine": 2207,
+                "endChar": 0
+              },
+              "replacement": "    {{{ gpu.makeCheck(\u0027bufferPtr\u0027) }}}\n    {{{ gpu.makeCheck(\u0027offsetPtr\u0027) }}}\n    {{{ gpu.makeCheck(\u0027sizePtr\u0027) }}}\n    var offset \u003d {{{ gpu.makeGetU64(\u0027offsetPtr\u0027, 0) }}};\n    var size \u003d {{{ gpu.makeGetU64(\u0027sizePtr\u0027, 0) }}};\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 2216,
+                "startChar": 0,
+                "endLine": 2217,
+                "endChar": 0
+              },
+              "replacement": "  wgpuRenderBundleEncoderSetVertexBuffer: (passPtr, slot, bufferPtr, offsetPtr, sizePtr) \u003d\u003e {\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 2219,
+                "startChar": 0,
+                "endLine": 2220,
+                "endChar": 0
+              },
+              "replacement": "    {{{ gpu.makeCheck(\u0027bufferPtr\u0027) }}}\n    {{{ gpu.makeCheck(\u0027offsetPtr\u0027) }}}\n    {{{ gpu.makeCheck(\u0027sizePtr\u0027) }}}\n    var offset \u003d {{{ gpu.makeGetU64(\u0027offsetPtr\u0027, 0) }}};\n    var size \u003d {{{ gpu.makeGetU64(\u0027sizePtr\u0027, 0) }}};\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 2311,
+                "startChar": 0,
+                "endLine": 2312,
+                "endChar": 0
+              },
+              "replacement": "  wgpuRenderPassEncoderSetIndexBuffer: (passPtr, bufferPtr, format, offsetPtr, sizePtr) \u003d\u003e {\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 2314,
+                "startChar": 0,
+                "endLine": 2315,
+                "endChar": 0
+              },
+              "replacement": "    {{{ gpu.makeCheck(\u0027bufferPtr\u0027) }}}\n    {{{ gpu.makeCheck(\u0027offsetPtr\u0027) }}}\n    {{{ gpu.makeCheck(\u0027sizePtr\u0027) }}}\n    var offset \u003d {{{ gpu.makeGetU64(\u0027offsetPtr\u0027, 0) }}};\n    var size \u003d {{{ gpu.makeGetU64(\u0027sizePtr\u0027, 0) }}};\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 2334,
+                "startChar": 0,
+                "endLine": 2335,
+                "endChar": 0
+              },
+              "replacement": "  wgpuRenderPassEncoderSetVertexBuffer: (passPtr, slot, bufferPtr, offsetPtr, sizePtr) \u003d\u003e {\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 2337,
+                "startChar": 0,
+                "endLine": 2338,
+                "endChar": 0
+              },
+              "replacement": "    {{{ gpu.makeCheck(\u0027bufferPtr\u0027) }}}\n    {{{ gpu.makeCheck(\u0027offsetPtr\u0027) }}}\n    {{{ gpu.makeCheck(\u0027sizePtr\u0027) }}}\n    var offset \u003d {{{ gpu.makeGetU64(\u0027offsetPtr\u0027, 0) }}};\n    var size \u003d {{{ gpu.makeGetU64(\u0027sizePtr\u0027, 0) }}};\n"
+            },
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 2514,
+                "startChar": 0,
+                "endLine": 2517,
+                "endChar": 0
+              },
+              "replacement": "      {{{ gpu.makeCheck(\u0027ex instanceof RangeError\u0027) }}}\n      {{{ gpu.makeCheck(\u0027surfaceTexturePtr\u0027) }}}\n      err(\u0027wgpuSurfaceGetCurrentTexture() failed:\u0027, ex);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f11039a58a8f5867815271dba9ef4a44b5ff5b40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1b701af7_4e0fe248",
         "filename": "third_party/emdawnwebgpu/webgpu.cpp",
         "patchSetId": 4
@@ -14,6 +225,24 @@
       "writtenOn": "2025-03-13T03:19:56Z",
       "side": 1,
       "message": "Does this need to use `emwgpuCreateBuffer`?",
+      "revId": "f11039a58a8f5867815271dba9ef4a44b5ff5b40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6c76beb_75fa47da",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-13T18:45:47Z",
+      "side": 1,
+      "message": "In the C code, I\u0027m trying to move away from calling the `emwgpuCreate*` functions. I want to use those only for importing stuff from JS in the future. I think in theory, we should always be able to create the C objects in C unless we are importing, in which case I want to make sure we use the correct constructors, i.e. the tagged ones.",
+      "parentUuid": "1b701af7_4e0fe248",
       "revId": "f11039a58a8f5867815271dba9ef4a44b5ff5b40",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
