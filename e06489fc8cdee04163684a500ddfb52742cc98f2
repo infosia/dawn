@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f35883a_7a0df92d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-13T01:27:54Z",
+      "side": 1,
+      "message": "PTAL! I tested against a vulkan-deps roll locally and it seems to resolve all the issues.",
+      "revId": "e06489fc8cdee04163684a500ddfb52742cc98f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
