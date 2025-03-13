@@ -54,6 +54,24 @@
       ],
       "revId": "a24f1781545a9fc34b3bd067770a1fc479dfb358",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f994460b_0ab20aa3",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-13T21:55:43Z",
+      "side": 1,
+      "message": "Probably not, will look into it as a followup.",
+      "parentUuid": "ef0d24ee_c3e43679",
+      "revId": "a24f1781545a9fc34b3bd067770a1fc479dfb358",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
