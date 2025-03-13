@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c15280af_a2162afa",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-13T13:17:50Z",
+      "side": 1,
+      "message": "I think being specific on usage\u0027s requirements could make it easier to do internal optimizations in the backends.\n\nFor example, readonly binding should only need `kReadOnlyStorageBuffer` usage. And D3D11 backend can support creating a mappable + readonly storage buffer  without extra copies. If we required `kInternalStorageBuffer`, the backend would have to allocate more things to anticipate possible GPU writes at some point. Btw, D3D11 cannot natively create a mappable buffer that is also GPU writable. Also in both D3D11 \u0026 D3D12, readonly storage will add different usage flags compared to full-blown `Storage` or `kInternalStorageBuffer` usage.\n\nFurthermore, it would support future extensions like the real `wgpu::BufferUsage::ReadOnlyStorage` usage. It\u0027s for older clients like D3D 11.0 where vertex shaders can only read storage buffers.",
+      "parentUuid": "2bfaed4c_ae0286cf",
+      "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f3587d1_06c8dad5",
         "filename": "src/dawn/native/dawn_platform.h",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-13T12:12:11Z",
       "side": 1,
       "message": "Do you know why this one is ~0 and not 1 \u003c\u003c 31?",
+      "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56609e7a_5763a5cf",
+        "filename": "src/dawn/native/dawn_platform.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-13T13:17:50Z",
+      "side": 1,
+      "message": "Not sure. Probably because a binding doesn\u0027t need to be a bit flag like usage?",
+      "parentUuid": "3f3587d1_06c8dad5",
       "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
