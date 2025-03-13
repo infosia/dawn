@@ -35,6 +35,7 @@
 
 #include "src/tint/utils/containers/vector.h"
 #include "src/tint/utils/diagnostic/source.h"
+#include "src/tint/utils/result/result.h"
 #include "src/tint/utils/rtti/traits.h"
 #include "src/tint/utils/text/styled_text.h"
 
@@ -219,6 +220,65 @@ class List {
     Vector<Diagnostic, 0> entries_;
     size_t error_count_ = 0;
 };
+
+/// The default Result error type.
+struct Failure {
+    /// Constructor with no diagnostics
+    Failure();
+
+    /// Constructor with a single diagnostic
+    /// @param err the single error diagnostic
+    explicit Failure(std::string_view err);
+
+    /// Constructor with a single diagnostic
+    /// @param diagnostic the failure diagnostic
+    explicit Failure(diag::Diagnostic diagnostic);
+
+    /// Constructor with a list of diagnostics
+    /// @param diagnostics the failure diagnostics
+    explicit Failure(diag::List diagnostics);
+
+    /// The diagnostics explaining the failure reason
+    diag::List reason;
+};
+
+template <typename SUCCESS_TYPE, typename FAILURE_TYPE>
+using BaseResult = ::tint::Result<SUCCESS_TYPE, FAILURE_TYPE>;
+
+template <typename SUCCESS_TYPE>
+struct Result : public BaseResult<SUCCESS_TYPE, Failure> {
+    /// Default constructor initializes to invalid state
+    Result() = default;
+
+    /// Constructor
+    /// @param success the success result
+    Result(const SUCCESS_TYPE& success)  // NOLINT(runtime/explicit):
+        : BaseResult<SUCCESS_TYPE, Failure>(success) {}
+
+    /// Constructor
+    /// @param success the success result
+    Result(SUCCESS_TYPE&& success)  // NOLINT(runtime/explicit):
+        : BaseResult<SUCCESS_TYPE, Failure>(std::move(SUCCESS_TYPE(std::move(success)))) {}
+
+    /// Constructor
+    /// @param failure the failure result
+    Result(const Failure& failure)  // NOLINT(runtime/explicit):
+        : BaseResult<SUCCESS_TYPE, Failure>(failure) {}
+
+    /// Constructor
+    /// @param failure the failure result
+    Result(Failure&& failure)  // NOLINT(runtime/explicit):
+        : BaseResult<SUCCESS_TYPE, Failure>(std::move(failure)) {}
+};
+
+/// Write the Failure to the given stream
+/// @param out the output stream
+/// @param failure the Failure
+/// @returns the output stream
+template <typename STREAM, typename = traits::EnableIfIsOStream<STREAM>>
+auto& operator<<(STREAM& out, const Failure& failure) {
+    return out << failure.reason;
+}
 
 /// Write the diagnostic list to the given stream
 /// @param out the output stream
