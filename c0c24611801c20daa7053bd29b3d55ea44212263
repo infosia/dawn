@@ -71,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc8c0142_5814cde8",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-13T18:19:45Z",
+      "side": 1,
+      "message": "Yea, renamer is only needed for AST paths. The backends handle it for IR path.",
+      "parentUuid": "8ffc71e0_8c8900d0",
+      "range": {
+        "startLine": 695,
+        "startChar": 4,
+        "endLine": 695,
+        "endChar": 14
+      },
+      "revId": "c0c24611801c20daa7053bd29b3d55ea44212263",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c300e536_d95d013c",
@@ -84,6 +108,30 @@
       "writtenOn": "2025-03-13T16:53:34Z",
       "side": 1,
       "message": "Notice now that we will never add any decl references to root. \nSo we will only include outgoing references",
+      "range": {
+        "startLine": 100,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 61
+      },
+      "revId": "c0c24611801c20daa7053bd29b3d55ea44212263",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5032a930_d74862a7",
+        "filename": "src/tint/lang/core/ir/referenced_module_decls.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-13T18:19:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c300e536_d95d013c",
       "range": {
         "startLine": 100,
         "startChar": 15,

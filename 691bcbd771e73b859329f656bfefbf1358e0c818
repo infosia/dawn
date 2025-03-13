@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08b7b18f_aee0f8a9",
+        "filename": "test/tint/bug/chromium/339704114.wgsl.expected.glsl",
+        "patchSetId": 13
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-13T18:19:45Z",
+      "side": 0,
+      "message": "Hah, we const folded it away as it\u0027s on the RHS of a `false \u0026\u0026 ...`",
+      "revId": "691bcbd771e73b859329f656bfefbf1358e0c818",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
