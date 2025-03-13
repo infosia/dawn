@@ -33,6 +33,24 @@
       "message": "Fuzzers also didn\u0027t build in the Dawn -\u003e Chromium roll. CQing this to hopefully fix the roll.",
       "revId": "c37e1c4b26d5940150ef729f5934d8bed43e5a3b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ebbdb98_7d3e34bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T09:30:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "884f70ef_6930012d",
+      "revId": "c37e1c4b26d5940150ef729f5934d8bed43e5a3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
