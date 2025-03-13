@@ -318,6 +318,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     deviceToggles->Default(Toggle::UseBlitForBufferToStencilTextureCopy, true);
     deviceToggles->Default(Toggle::D3D11UseUnmonitoredFence, !mDeviceInfo.supportsMonitoredFence);
     deviceToggles->Default(Toggle::UseBlitForT2B, true);
+    deviceToggles->Default(Toggle::UseBlitForB2T, true);
 
     auto deviceId = GetDeviceId();
     auto vendorId = GetVendorId();
