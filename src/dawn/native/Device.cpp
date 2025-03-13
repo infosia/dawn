@@ -402,6 +402,11 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
     // Handle maxXXXPerStage/maxXXXInStage.
     EnforceLimitSpecInvariants(&mLimits.v1, effectiveFeatureLevel);
 
+    if (mLimits.v1.maxStorageBuffersInFragmentStage < 1) {
+        // If there is no storage buffer in fragment stage, UseBlitForB2T is not possible.
+        mToggles.ForceSet(Toggle::UseBlitForB2T, false);
+    }
+
     mFormatTable = BuildFormatTable(this);
 
     if (!descriptor->label.IsUndefined()) {
@@ -2362,7 +2367,9 @@ bool DeviceBase::CanTextureLoadResolveTargetInTheSameRenderpass() const {
     return false;
 }
 
-bool DeviceBase::PreferNotUsingMappableOrUniformBufferAsStorage() const {
+bool DeviceBase::PreferNotAddingInternalStorageUsageToBuffer(wgpu::BufferUsage storageUsage,
+                                                             wgpu::BufferUsage originalUsage,
+                                                             size_t bufferSize) const {
     return false;
 }
 
