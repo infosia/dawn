@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8d32b54_987a51bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T13:50:25Z",
+      "side": 1,
+      "message": "Thank you for the explanation. LGTM",
+      "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "301c4a33_842c4d21",
@@ -14,6 +31,24 @@
       "writtenOn": "2025-03-13T12:12:11Z",
       "side": 1,
       "message": "[1]",
+      "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "591011ad_1bbf93a8",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T13:50:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "301c4a33_842c4d21",
       "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -55,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "163f1621_90c05f2b",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T13:50:25Z",
+      "side": 1,
+      "message": "Got it, makes sense to separate both usages if it makes allocation differences. I don\u0027t think it would actually makes anything different in D3D12 (even if flags aren\u0027t the same) but for D3D11 it\u0027s important.\n\nThen u-nit maybe comment why these two are separate and not the public API usages?",
+      "parentUuid": "c15280af_a2162afa",
+      "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f3587d1_06c8dad5",
         "filename": "src/dawn/native/dawn_platform.h",
         "patchSetId": 2
@@ -84,6 +137,24 @@
       "side": 1,
       "message": "Not sure. Probably because a binding doesn\u0027t need to be a bit flag like usage?",
       "parentUuid": "3f3587d1_06c8dad5",
+      "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92b6896b_03562731",
+        "filename": "src/dawn/native/dawn_platform.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T13:50:25Z",
+      "side": 1,
+      "message": "Ah true, then the new one can be `~0u - 1`",
+      "parentUuid": "56609e7a_5763a5cf",
       "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
