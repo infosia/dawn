@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "301c4a33_842c4d21",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T12:12:11Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bfaed4c_ae0286cf",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T12:12:11Z",
+      "side": 1,
+      "message": "nit: this seems like it only require the buffer to have the storage binding, not necessarily readonly storage. So it could be folded with `kInternalStorageBufferBinding` like we do for [1]\n\nThe reason we split readonly vs. storage is for barrier tracking and validation, but a buffer usage will always be just \"storage\" or \"kInternalStorageBuffer\" that implies the readonly storages are allowed as well?",
+      "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f3587d1_06c8dad5",
+        "filename": "src/dawn/native/dawn_platform.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T12:12:11Z",
+      "side": 1,
+      "message": "Do you know why this one is ~0 and not 1 \u003c\u003c 31?",
+      "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
