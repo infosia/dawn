@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29761ccd_a7748866",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-03-13T14:17:57Z",
+      "side": 1,
+      "message": "I don\u0027t think GL_TEXTURE_BASE_LEVEL has any effect here. I commented out this line, modified the test to use 3 mip levels, read from level 1 (resulting in a BASE_LEVEL of 1) and store to level 2, and it still works. AFAICT, only GL_TEXTURE_MAX_LEVEL affects storage textures.",
+      "revId": "b6fff901889494557bed99fc7f8687475ab71537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
