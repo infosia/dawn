@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1135c7a_c509e3fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-13T20:35:10Z",
+      "side": 1,
+      "message": "Fine for now, but maybe we should just add conversions for the types so that we could use bitwise ops on them later on?",
+      "revId": "720b3e518613755a4afe98d28bbccfb037923e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
