@@ -46,7 +46,6 @@ tint_fuzz_source_set("fuzz") {
   ]
   deps = [
     "${dawn_root}/src/utils:utils",
-    "${tint_src_dir}:thread",
     "${tint_src_dir}/api/common",
     "${tint_src_dir}/lang/core",
     "${tint_src_dir}/lang/core/constant",
