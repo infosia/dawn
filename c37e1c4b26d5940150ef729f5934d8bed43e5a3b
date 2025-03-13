@@ -51,6 +51,24 @@
       "parentUuid": "884f70ef_6930012d",
       "revId": "c37e1c4b26d5940150ef729f5934d8bed43e5a3b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74a859b8_55d32383",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000896
+      },
+      "writtenOn": "2025-03-13T14:26:06Z",
+      "side": 1,
+      "message": "That is really weird. I haven\u0027t seen that before. It appears to not be able to find the proto file that another one is referencing, eventhough it found the first one fine. So either it is a weird flag state, i.e. not confirming both are set somewhere, or some path nonsense.\n\nIs this a local build or a bot build that you saw this on?",
+      "parentUuid": "6ebbdb98_7d3e34bf",
+      "revId": "c37e1c4b26d5940150ef729f5934d8bed43e5a3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
