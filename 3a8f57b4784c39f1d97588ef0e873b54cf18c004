@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54d76170_defe1434",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T14:01:42Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "3a8f57b4784c39f1d97588ef0e873b54cf18c004",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "259f8289_99eac4aa",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T14:01:42Z",
+      "side": 1,
+      "message": "nit: Do you have an issue to associate with this TODO so it\u0027s not your TODO, but our TODO? :)",
+      "revId": "3a8f57b4784c39f1d97588ef0e873b54cf18c004",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

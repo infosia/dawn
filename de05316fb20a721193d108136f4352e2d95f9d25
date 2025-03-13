@@ -119,6 +119,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "811ec250_447b0cca",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T14:01:42Z",
+      "side": 1,
+      "message": "In Vulkan we have the \"FencedDeleter\" that\u0027s used to actually free the objects. We could make it handle not just Vk* objects but also memory allocations that would be moved there? This way the memory allocation would know when it is actually no longer used.",
+      "parentUuid": "d475cdf4_ce390636",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7aeae022_98789cf0",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
         "patchSetId": 4
@@ -148,6 +166,24 @@
       "side": 1,
       "message": "Yeah, I did it this way as SingleTypeAllocator does not directly know the used sizes. Although it would be better if they were tracked together. Maybe cwallez@ or lokokung@ have better ideas here.",
       "parentUuid": "7aeae022_98789cf0",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c60c3ef_7d73bb83",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T14:01:42Z",
+      "side": 1,
+      "message": "Doesn\u0027t the allocator know the used size with [1] though?",
+      "parentUuid": "3739ba96_8ffcdb04",
       "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -218,6 +254,24 @@
       "side": 1,
       "message": "That\u0027s a good point. I\u0027ll add the functions and look into some tests. I guess MemoryInstrumentationTests or BuddyMemoryAllocatorTests would be the right place.",
       "parentUuid": "a663ec9b_eee76778",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10db7b0b_aec43992",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T14:01:42Z",
+      "side": 1,
+      "message": "These would need to be \"white box\" tests since they would poke the internals of a backend. https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/white_box/;l\u003d1?q\u003df:dawn%20white\u0026sq\u003d\n\nBut also this is the kind of thing that\u0027s very hard to test because it will depent on the driver, etc. For a long time I\u0027ve thought we should review how the memory allocation works across all the backends and see if we can move more logic to a frontend class that could be better tested. I guess we\u0027ll see when we add support for MTLHeap.",
+      "parentUuid": "e366f9af_34e7dac1",
       "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
