@@ -220,6 +220,11 @@ deps = {
     ],
   },
 
+  # Used for Dawn-side GN arg definitions.
+  'tools/mb': {
+    'url': '{chromium_git}/chromium/src/tools/mb@61f390a8b5da670b755e021a9ec0c2cac3de840e',
+    'condition': 'dawn_standalone',
+  },
 
   # Testing, GTest and GMock
   'testing': {
@@ -232,6 +237,7 @@ deps = {
   },
   'third_party/re2/src': {
     'url': '{chromium_git}/external/github.com/google/re2.git' + '@' + 'c84a140c93352cdabbfb547c531be34515b12228',
+    'url': '{chromium_git}/chromium/src/testing@60d01c10308998a4bfe13f38ddb5142e6e190c19',
     'condition': 'dawn_standalone',
   },
   'third_party/libFuzzer/src': {
