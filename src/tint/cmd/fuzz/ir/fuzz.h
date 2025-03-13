@@ -91,7 +91,7 @@ struct IRFuzzer {
                 bytes::BufferReader reader{data};
                 auto data_args = bytes::Decode<std::tuple<std::decay_t<ARGS>...>>(reader);
                 if (data_args != Success) {
-                    return data_args.Failure();
+                    return data_args.Failure().reason;
                 }
 
                 auto all_args =
