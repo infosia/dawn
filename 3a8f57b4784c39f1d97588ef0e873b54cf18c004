@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0d272ba_29b2560a",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-13T21:04:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "54d76170_defe1434",
+      "revId": "3a8f57b4784c39f1d97588ef0e873b54cf18c004",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "259f8289_99eac4aa",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-13T14:01:42Z",
       "side": 1,
       "message": "nit: Do you have an issue to associate with this TODO so it\u0027s not your TODO, but our TODO? :)",
+      "revId": "3a8f57b4784c39f1d97588ef0e873b54cf18c004",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c30e3724_4226785a",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-13T21:04:27Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ve remove the TODOs for now since we track the deallocations on ResourceMemoryAllocator::Tick which should essentially behave similar to FencedDeleter::Tick. I\u0027ll keep this in mind.",
+      "parentUuid": "259f8289_99eac4aa",
       "revId": "3a8f57b4784c39f1d97588ef0e873b54cf18c004",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

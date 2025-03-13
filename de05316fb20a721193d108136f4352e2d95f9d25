@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76a9ea28_ae7e4669",
+        "filename": "src/dawn/native/ResourceMemoryAllocation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-13T21:04:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "679d8ae0_2eb86092",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3a4d648_7d8b89fc",
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "Ah yes, its the size of the heap. `GetSize()` is better name, I\u0027ll update to make the changes.",
       "parentUuid": "f3a4d648_7d8b89fc",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 37
+      },
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ddee5b5_0a8e0727",
+        "filename": "src/dawn/native/vulkan/ResourceHeapVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-13T21:04:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b841b9b6_281cf717",
       "range": {
         "startLine": 44,
         "startChar": 17,
@@ -155,6 +197,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e81af8ca_2f2f3c7d",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-13T21:04:27Z",
+      "side": 1,
+      "message": "Thanks for discussion. I moved the tracking to be done within ResourceMemoryAllocator which the SingleTypeAllocator calls from. Also added `SerialQueue` to track heap allocations and used direct allocations which are decremented on `Tick`. Similarly also decrement for suballocation used memory on Tick.",
+      "parentUuid": "797ff18e_55279418",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7aeae022_98789cf0",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
         "patchSetId": 4
@@ -206,6 +266,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1184a97_a2622454",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-13T21:04:27Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right we could track within SingleTypeAllocator actually. We could also track within ResourceMemoryAllocator and based on Kyle\u0027s comment above since it was easier to track deallocations on Tick I went ahead with tracking both memories in ResourceMemoryAllocator.",
+      "parentUuid": "5c60c3ef_7d73bb83",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b24ff480_f87a8101",
@@ -237,6 +315,24 @@
       "side": 1,
       "message": "Yeah, I meant here for sub-allocations. Although agree that the memory here no longer counts as used going forward so doesn\u0027t matter where it is decremented, here or Tick. Looking forward to thoughts from cwallez@/lokokung@.",
       "parentUuid": "b24ff480_f87a8101",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ad24d43_acd54824",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-13T21:04:27Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ve moved the suballocation tracking to be in Tick as well as a single place where all memory tracking for decrements happen.",
+      "parentUuid": "e3dd9901_bd8d2e99",
       "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -290,6 +386,24 @@
       "side": 1,
       "message": "These would need to be \"white box\" tests since they would poke the internals of a backend. https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/white_box/;l\u003d1?q\u003df:dawn%20white\u0026sq\u003d\n\nBut also this is the kind of thing that\u0027s very hard to test because it will depent on the driver, etc. For a long time I\u0027ve thought we should review how the memory allocation works across all the backends and see if we can move more logic to a frontend class that could be better tested. I guess we\u0027ll see when we add support for MTLHeap.",
       "parentUuid": "e366f9af_34e7dac1",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd8699b4_c5586a34",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-13T21:04:27Z",
+      "side": 1,
+      "message": "Thanks for the white box pointer! I looked at VulkanImageWrappingTests_OpaqueFD that does something for memory allocation but couldn\u0027t correlate fully. Is it okay if I add a TODO for adding the white box tests later? \n\nI\u0027m planning to plug changes here to get called from DumpMemoryStatistics/ComputeEstimatedMemoryUsage methods in DawnNative as a follow-up, and then could add some tests to MemoryInstrumentationTests that could test something happening here without having to create ResourceMemoryAllocator.",
+      "parentUuid": "10db7b0b_aec43992",
       "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
