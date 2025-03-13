@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196749da_0c715037",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T12:02:58Z",
+      "side": 0,
+      "message": "Can\u0027t we handle the case of mapped at creation failing here by returning a null ref?",
+      "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

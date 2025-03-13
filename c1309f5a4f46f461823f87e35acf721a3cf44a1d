@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b05f2e16_d0b741b1",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T12:02:58Z",
+      "side": 1,
+      "message": "```suggestion\n    auto Test \u003d [\u0026](bool expectNull, wgpu::BufferDescriptor* desc) {\n```",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5a64de2b_9b18a7f4",
         "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
         "patchSetId": 18
@@ -14,6 +31,75 @@
       "writtenOn": "2025-03-13T06:54:36Z",
       "side": 1,
       "message": "It\u0027s a never ending series of issues with this CL....\n\nI\u0027m pretty sure this is what\u0027s happening. I can keep investigating but it\u0027s a whole other component to go try and debug. Which I can do, but let me know if you have an idea of how this should work, off the top of your head.",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21a4a293_6c13096a",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T12:02:58Z",
+      "side": 1,
+      "message": "The server doesn\u0027t remove mapped at creation because it uses that when available to initialize the buffer. So it may happen that the server returns nullptr when the client doesn\u0027t. IDK how we should handle that case. Create an unnecessay error buffer on the wire side and ignore all mapping stuff?",
+      "parentUuid": "5a64de2b_9b18a7f4",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a9bfbb7_65003cc5",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T12:02:58Z",
+      "side": 1,
+      "message": "I believe the following also works?\n```suggestion\n    for (bool destroyDevice : {false, true}) {\n        if (destroyDevice) {...}\n```",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de51ae76_f7539f64",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T12:02:58Z",
+      "side": 1,
+      "message": "nit: leftover debug?",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5747dca1_7267eac9",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-13T12:02:58Z",
+      "side": 1,
+      "message": "nit: unused buffer.",
       "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
