@@ -16,6 +16,24 @@
       "message": "```suggestion\n[dawn][tint] Move cmd/tint over to IR single entry point.\n```",
       "revId": "09a6abd92b2f96d77b187d3b01294c60d7b6e001",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c8ce549_aedee936",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-13T18:20:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b12a9df_a28176d2",
+      "revId": "09a6abd92b2f96d77b187d3b01294c60d7b6e001",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
