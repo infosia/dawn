@@ -38,6 +38,10 @@
 	path = tools/rust
 	url = https://chromium.googlesource.com/chromium/src/tools/rust
 	gclient-condition = dawn_standalone and checkout_rust
+[submodule "tools/mb"]
+	path = tools/mb
+	url = https://chromium.googlesource.com/chromium/src/tools/mb
+	gclient-condition = dawn_standalone
 [submodule "testing"]
 	path = testing
 	url = https://chromium.googlesource.com/chromium/src/testing
