@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "47c8be6e_f31d4c06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-03-13T14:41:45Z",
+      "side": 1,
+      "message": "\u003e I see no errors with --enable-backend-validation\u003dfull set.\n\nTo be clear, I should have said \"I see no validation errors from the NV GLES driver\". The bug still repros on that config (native NV GLES).",
+      "parentUuid": "f9eb99dc_64b68f1e",
+      "revId": "7ffbd7cffd9bc19338bfd7d02fbb814c2a5129a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da80894d_dd3faae5",
