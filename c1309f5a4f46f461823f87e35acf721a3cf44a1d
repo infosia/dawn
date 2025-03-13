@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a64de2b_9b18a7f4",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-13T06:54:36Z",
+      "side": 1,
+      "message": "It\u0027s a never ending series of issues with this CL....\n\nI\u0027m pretty sure this is what\u0027s happening. I can keep investigating but it\u0027s a whole other component to go try and debug. Which I can do, but let me know if you have an idea of how this should work, off the top of your head.",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
