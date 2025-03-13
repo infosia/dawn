@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ffc71e0_8c8900d0",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-13T17:29:22Z",
+      "side": 1,
+      "message": "This only appears to do somethign when IR is disable.",
+      "range": {
+        "startLine": 695,
+        "startChar": 4,
+        "endLine": 695,
+        "endChar": 14
+      },
+      "revId": "c0c24611801c20daa7053bd29b3d55ea44212263",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c300e536_d95d013c",
         "filename": "src/tint/lang/core/ir/referenced_module_decls.h",
         "patchSetId": 12
