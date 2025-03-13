@@ -25734,6 +25734,7 @@ webgpu:api,validation,encoding,createRenderBundleEncoder:attachment_state,limits
 webgpu:api,validation,encoding,createRenderBundleEncoder:attachment_state,limits,maxColorAttachmentBytesPerSample,aligned:format="rgba32float"
 webgpu:api,validation,encoding,createRenderBundleEncoder:attachment_state,limits,maxColorAttachmentBytesPerSample,aligned:format="rgb10a2uint"
 webgpu:api,validation,encoding,createRenderBundleEncoder:attachment_state,limits,maxColorAttachmentBytesPerSample,aligned:format="rgb10a2unorm"
+webgpu:api,validation,encoding,createRenderBundleEncoder:attachment_state,limits,maxColorAttachmentBytesPerSample,aligned:format="rg11b10ufloat"
 webgpu:api,validation,encoding,createRenderBundleEncoder:attachment_state,limits,maxColorAttachmentBytesPerSample,unaligned:formats=["r8unorm","r32float","rgba8unorm","rgba32float","r8unorm"]
 webgpu:api,validation,encoding,createRenderBundleEncoder:attachment_state,limits,maxColorAttachmentBytesPerSample,unaligned:formats=["r32float","rgba8unorm","rgba32float","r8unorm","r8unorm"]
 webgpu:api,validation,encoding,createRenderBundleEncoder:attachment_state,empty_color_formats:
@@ -32966,6 +32967,7 @@ webgpu:api,validation,render_pipeline,fragment_state:limits,maxColorAttachmentBy
 webgpu:api,validation,render_pipeline,fragment_state:limits,maxColorAttachmentBytesPerSample,aligned:format="rgba32float"
 webgpu:api,validation,render_pipeline,fragment_state:limits,maxColorAttachmentBytesPerSample,aligned:format="rgb10a2uint"
 webgpu:api,validation,render_pipeline,fragment_state:limits,maxColorAttachmentBytesPerSample,aligned:format="rgb10a2unorm"
+webgpu:api,validation,render_pipeline,fragment_state:limits,maxColorAttachmentBytesPerSample,aligned:format="rg11b10ufloat"
 webgpu:api,validation,render_pipeline,fragment_state:limits,maxColorAttachmentBytesPerSample,unaligned:formats=["r8unorm","r32float","rgba8unorm","rgba32float","r8unorm"]
 webgpu:api,validation,render_pipeline,fragment_state:limits,maxColorAttachmentBytesPerSample,unaligned:formats=["r32float","rgba8unorm","rgba32float","r8unorm","r8unorm"]
 webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=false;format="r8unorm"
@@ -33000,6 +33002,7 @@ webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:i
 webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=false;format="rgba32float"
 webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=false;format="rgb10a2uint"
 webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=false;format="rgb10a2unorm"
+webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=false;format="rg11b10ufloat"
 webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=true;format="r8unorm"
 webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=true;format="r8uint"
 webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=true;format="r8sint"
@@ -33032,6 +33035,7 @@ webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:i
 webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=true;format="rgba32float"
 webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=true;format="rgb10a2uint"
 webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=true;format="rgb10a2unorm"
+webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=true;format="rg11b10ufloat"
 webgpu:api,validation,render_pipeline,fragment_state:targets_blend:isAsync=false;component="color";srcFactor="zero";dstFactor="zero"
 webgpu:api,validation,render_pipeline,fragment_state:targets_blend:isAsync=false;component="color";srcFactor="zero";dstFactor="one"
 webgpu:api,validation,render_pipeline,fragment_state:targets_blend:isAsync=false;component="color";srcFactor="zero";dstFactor="src"
@@ -34229,6 +34233,7 @@ webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isA
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isAsync=false;format="rgba32float"
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isAsync=false;format="rgb10a2uint"
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isAsync=false;format="rgb10a2unorm"
+webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isAsync=false;format="rg11b10ufloat"
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isAsync=true;format="_undef_"
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isAsync=true;format="r8unorm"
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isAsync=true;format="r8uint"
@@ -34262,6 +34267,7 @@ webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isA
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isAsync=true;format="rgba32float"
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isAsync=true;format="rgb10a2uint"
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isAsync=true;format="rgb10a2unorm"
+webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets:isAsync=true;format="rg11b10ufloat"
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets,blend:isAsync=false;format="r8unorm";componentCount=1;colorSrcFactor="zero"
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets,blend:isAsync=false;format="r8unorm";componentCount=1;colorSrcFactor="one"
 webgpu:api,validation,render_pipeline,fragment_state:pipeline_output_targets,blend:isAsync=false;format="r8unorm";componentCount=1;colorSrcFactor="src"
@@ -42309,6 +42315,14 @@ webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_fo
 webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rg11b10ufloat";usageType="texture";usageCopy="dst";awaitLost=false
 webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rg11b10ufloat";usageType="texture";usageCopy="src-dest";awaitLost=true
 webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rg11b10ufloat";usageType="texture";usageCopy="src-dest";awaitLost=false
+webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="none";awaitLost=true
+webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="none";awaitLost=false
+webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="src";awaitLost=true
+webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="src";awaitLost=false
+webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="dst";awaitLost=true
+webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="dst";awaitLost=false
+webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="src-dest";awaitLost=true
+webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="src-dest";awaitLost=false
 webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rgb9e5ufloat";usageType="texture";usageCopy="none";awaitLost=true
 webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rgb9e5ufloat";usageType="texture";usageCopy="none";awaitLost=false
 webgpu:api,validation,state,device_lost,destroy:createTexture,2d,uncompressed_format:format="rgb9e5ufloat";usageType="texture";usageCopy="src";awaitLost=true
@@ -43405,6 +43419,14 @@ webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_forma
 webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rg11b10ufloat";usageType="texture";usageCopy="dst";awaitLost=false
 webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rg11b10ufloat";usageType="texture";usageCopy="src-dest";awaitLost=true
 webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rg11b10ufloat";usageType="texture";usageCopy="src-dest";awaitLost=false
+webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="none";awaitLost=true
+webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="none";awaitLost=false
+webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="src";awaitLost=true
+webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="src";awaitLost=false
+webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="dst";awaitLost=true
+webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="dst";awaitLost=false
+webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="src-dest";awaitLost=true
+webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rg11b10ufloat";usageType="render";usageCopy="src-dest";awaitLost=false
 webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rgb9e5ufloat";usageType="texture";usageCopy="none";awaitLost=true
 webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rgb9e5ufloat";usageType="texture";usageCopy="none";awaitLost=false
 webgpu:api,validation,state,device_lost,destroy:createView,2d,uncompressed_format:format="rgb9e5ufloat";usageType="texture";usageCopy="src";awaitLost=true
@@ -43983,6 +44005,8 @@ webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format
 webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rgb10a2uint";awaitLost=false
 webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rgb10a2unorm";awaitLost=true
 webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rgb10a2unorm";awaitLost=false
+webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rg11b10ufloat";awaitLost=true
+webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="rg11b10ufloat";awaitLost=false
 webgpu:api,validation,state,device_lost,destroy:createQuerySet:type="occlusion";awaitLost=true
 webgpu:api,validation,state,device_lost,destroy:createQuerySet:type="occlusion";awaitLost=false
 webgpu:api,validation,state,device_lost,destroy:createQuerySet:type="timestamp";awaitLost=true
