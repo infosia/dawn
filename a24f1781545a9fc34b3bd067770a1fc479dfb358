@@ -1,0 +1,59 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef0d24ee_c3e43679",
+        "filename": "src/tint/lang/core/ir/binary/decode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-13T21:05:19Z",
+      "side": 1,
+      "message": "Nit: Do we really need these `Error()` functions now?",
+      "fixSuggestions": [
+        {
+          "fixId": "3cadcb79_27b6596e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/binary/decode.cc",
+              "range": {
+                "startLine": 32,
+                "startChar": 0,
+                "endLine": 32,
+                "endChar": 0
+              },
+              "replacement": "#include \u003csstream\u003e\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/binary/decode.cc",
+              "range": {
+                "startLine": 84,
+                "startChar": 0,
+                "endLine": 85,
+                "endChar": 0
+              },
+              "replacement": "    std::ostringstream err_{};\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/binary/decode.cc",
+              "range": {
+                "startLine": 170,
+                "startChar": 0,
+                "endLine": 171,
+                "endChar": 0
+              },
+              "replacement": "    std::ostringstream\u0026 Error() { return err_; }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a24f1781545a9fc34b3bd067770a1fc479dfb358",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
