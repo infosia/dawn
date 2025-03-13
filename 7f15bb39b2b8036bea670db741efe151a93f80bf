@@ -16,6 +16,24 @@
       "message": "Can\u0027t we handle the case of mapped at creation failing here by returning a null ref?",
       "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3610969a_0a6778cd",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-13T20:07:34Z",
+      "side": 0,
+      "message": "+1. It would also be nice to not have the extra layer of indirection for reading the code, i.e. `APICreateBuffer`-\u003e`CreateBuffer`-\u003e`CreateBufferInternal`-\u003e`CraeteBufferImpl`.",
+      "parentUuid": "196749da_0c715037",
+      "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

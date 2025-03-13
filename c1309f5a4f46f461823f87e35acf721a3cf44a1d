@@ -1,6 +1,182 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cf85bc3_5d3341a7",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-13T20:07:34Z",
+      "side": 1,
+      "message": "Another interesting idea we could explore is allocating a block of memory up front that is used for fake mapped data that could be used for all `ErrorBuffers`? Maybe not that useful though since we don\u0027t really need to optimize for error paths...",
+      "range": {
+        "startLine": 88,
+        "startChar": 12,
+        "endLine": 88,
+        "endChar": 86
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "dd98fa85_d7a05404",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Buffer.cpp",
+              "range": {
+                "startLine": 30,
+                "startChar": 0,
+                "endLine": 30,
+                "endChar": 0
+              },
+              "replacement": "#include \u003calgorithm\u003e\n"
+            },
+            {
+              "path": "src/dawn/native/Buffer.cpp",
+              "range": {
+                "startLine": 58,
+                "startChar": 0,
+                "endLine": 58,
+                "endChar": 0
+              },
+              "replacement": "#include \"partition_alloc/partition_alloc.h\"\n"
+            },
+            {
+              "path": "src/dawn/native/Buffer.cpp",
+              "range": {
+                "startLine": 88,
+                "startChar": 0,
+                "endLine": 89,
+                "endChar": 0
+              },
+              "replacement": "            // Allocate a block of memory up front that is used for fake mapped data that could be\n            // used for all ErrorBuffers.\n            static uint8_t* sFakeMappedDataBlock \u003d nullptr;\n            static size_t sFakeMappedDataBlockOffset \u003d 0;\n            static size_t sFakeMappedDataBlockSize \u003d 0;\n\n            size_t blockSize \u003d 1 \u003c\u003c 20;\n            if (sFakeMappedDataBlock \u003d\u003d nullptr) {\n                sFakeMappedDataBlock \u003d AllocNoThrow\u003cuint8_t\u003e(blockSize);\n                sFakeMappedDataBlockSize \u003d blockSize;\n            } else {\n                blockSize \u003d std::max(blockSize, sFakeMappedDataBlockSize);\n            }\n\n            mFakeMappedData \u003d std::unique_ptr\u003cuint8_t[]\u003e(\n                sFakeMappedDataBlock + sFakeMappedDataBlockOffset);\n            sFakeMappedDataBlockOffset +\u003d size;\n            if (sFakeMappedDataBlockOffset \u003e\u003d blockSize) {\n                sFakeMappedDataBlockOffset \u003d 0;\n                sFakeMappedDataBlockSize *\u003d 2;\n                sFakeMappedDataBlock \u003d AllocNoThrow\u003cuint8_t\u003e(sFakeMappedDataBlockSize);\n            }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57284deb_328f0ba8",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-13T20:07:34Z",
+      "side": 1,
+      "message": "It\u0027s a bit unclear to me what the difference/value between `Unmapped` and `NeedsMapAtCreation` is (aside from helping with the one `ASSERT` in `MapAtCreationInternal`)? If we don\u0027t need the state, it would be nicer to keep it cleaner without it?",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9eabb7b9_bc080968",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Buffer.h",
+              "range": {
+                "startLine": 78,
+                "startChar": 0,
+                "endLine": 78,
+                "endChar": 0
+              },
+              "replacement": "        // MappedAtCreation is used for buffers with non-mappable usage.\n        // The buffer is mapped at creation time and the mapped data is\n        // stored in a staging buffer.\n"
+            },
+            {
+              "path": "src/dawn/native/Buffer.h",
+              "range": {
+                "startLine": 79,
+                "startChar": 0,
+                "endLine": 79,
+                "endChar": 0
+              },
+              "replacement": "        // NeedsMapAtCreation is used for buffers with non-mappable usage\n        // that are not mapped at creation time. The buffer is mapped at\n        // creation time and the mapped data is stored in a staging buffer.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2383233_a2d0088e",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-13T20:07:34Z",
+      "side": 1,
+      "message": "Maybe `EmitLog` instead? It should probably still be device scope log, not instance scope. Might need to do additional handling since its a `MaybeError` though.",
+      "range": {
+        "startLine": 1266,
+        "startChar": 8,
+        "endLine": 1268,
+        "endChar": 75
+      },
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb4e2f95_3b570681",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-13T20:07:34Z",
+      "side": 1,
+      "message": "Two things:\n\n1) Couldn\u0027t this also be a validation error? Maybe we should be using `ErrorData::GetType()` instead of just using OOM here?\n\n2) I\u0027m not sure how I feel about silencing this error unconditinally if we fail to `MapAtCreation`. Especially if it was a validation error. I guess if it was a validation error, we would be creating an `ErrorBuffer` with a relatively trivial `MapAtCreation` that shouldn\u0027t usually fail, so maybe it\u0027s fine?",
+      "range": {
+        "startLine": 1277,
+        "startChar": 4,
+        "endLine": 1280,
+        "endChar": 5
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4107969d_9f1f34be",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Device.cpp",
+              "range": {
+                "startLine": 1279,
+                "startChar": 0,
+                "endLine": 1280,
+                "endChar": 0
+              },
+              "replacement": "        ConsumeError(std::move(deferredError), InternalErrorType::None);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b05f2e16_d0b741b1",
@@ -66,6 +242,24 @@
       "writtenOn": "2025-03-13T12:02:58Z",
       "side": 1,
       "message": "I believe the following also works?\n```suggestion\n    for (bool destroyDevice : {false, true}) {\n        if (destroyDevice) {...}\n```",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "debc96eb_727a2596",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-13T20:07:34Z",
+      "side": 1,
+      "message": "+1 to at least renaming `destroyed` to `destroyDevice` to make it clear what is being destroyed.",
+      "parentUuid": "6a9bfbb7_65003cc5",
       "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
