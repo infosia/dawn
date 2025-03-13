@@ -96,6 +96,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c51cc40_9529f2fe",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1951,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-13T01:41:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "548be947_03128949",
+      "range": {
+        "startLine": 1949,
+        "startChar": 0,
+        "endLine": 1951,
+        "endChar": 9
+      },
+      "revId": "83244314b5185e0a12d8197c1bbbdd2491071e93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d6b42a5_4f42e021",
@@ -157,6 +181,30 @@
       "side": 1,
       "message": "Yes sorry, haven\u0027t gotten to this yet. Just wanted input on the logging thing.",
       "parentUuid": "733c5776_9b4d0488",
+      "range": {
+        "startLine": 1516,
+        "startChar": 4,
+        "endLine": 1525,
+        "endChar": 55
+      },
+      "revId": "83244314b5185e0a12d8197c1bbbdd2491071e93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "774e6e0c_eced1c97",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-13T01:41:53Z",
+      "side": 1,
+      "message": "Splitting this to a separate CL because the Dawn stuff got complicated. https://dawn-review.googlesource.com/c/dawn/+/230474",
+      "parentUuid": "876f5592_de5ca88c",
       "range": {
         "startLine": 1516,
         "startChar": 4,
