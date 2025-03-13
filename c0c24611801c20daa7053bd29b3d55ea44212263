@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8580b728_98d6ed83",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-13T16:53:34Z",
+      "side": 1,
+      "message": "I will now do this as a different CL",
+      "range": {
+        "startLine": 400,
+        "startChar": 5,
+        "endLine": 420,
+        "endChar": 0
+      },
+      "revId": "c0c24611801c20daa7053bd29b3d55ea44212263",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c300e536_d95d013c",
+        "filename": "src/tint/lang/core/ir/referenced_module_decls.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-13T16:53:34Z",
+      "side": 1,
+      "message": "Notice now that we will never add any decl references to root. \nSo we will only include outgoing references",
+      "range": {
+        "startLine": 100,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 61
+      },
+      "revId": "c0c24611801c20daa7053bd29b3d55ea44212263",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
