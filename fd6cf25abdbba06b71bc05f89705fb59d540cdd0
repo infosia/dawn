@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1d75f34_d388ec1f",
+        "filename": "src/tint/lang/core/ir/transform/add_empty_entry_point_fuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-13T21:06:56Z",
+      "side": 1,
+      "message": "I\u0027m hoping that we will move the validator back to `Result` too and then we can get rid of all of these changes.",
+      "revId": "fd6cf25abdbba06b71bc05f89705fb59d540cdd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
