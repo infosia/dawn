@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6083ea39_161e7381",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-13T16:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "163f1621_90c05f2b",
+      "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f3587d1_06c8dad5",
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "Ah true, then the new one can be `~0u - 1`",
       "parentUuid": "56609e7a_5763a5cf",
+      "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1ae7052_8354dddb",
+        "filename": "src/dawn/native/dawn_platform.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-13T16:35:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92b6896b_03562731",
       "revId": "0b260c07abe32f451c5f240383544a1f7e3bedb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
