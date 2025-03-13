@@ -1,0 +1,21 @@
+[
+  {
+    'name': 'dawn',
+    'mixins': [
+      'chromium-tester-service-account',
+      'swarming_containment_auto',
+    ],
+    'machines': {
+      'linux-clang-rel-x64': {
+        'os_type': 'linux',
+        'mixins': [
+          'linux-jammy',
+          'chromium_pool',
+        ],
+        'test_suites': {
+          'gtest_tests': 'swiftshader_gtests',
+        },
+      },
+    },
+  },
+]
