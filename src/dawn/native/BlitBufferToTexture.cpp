@@ -1,0 +1,443 @@
+// Copyright 2025 The Dawn & Tint Authors
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// 1. Redistributions of source code must retain the above copyright notice, this
+//    list of conditions and the following disclaimer.
+//
+// 2. Redistributions in binary form must reproduce the above copyright notice,
+//    this list of conditions and the following disclaimer in the documentation
+//    and/or other materials provided with the distribution.
+//
+// 3. Neither the name of the copyright holder nor the names of its
+//    contributors may be used to endorse or promote products derived from
+//    this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#include "dawn/native/BlitBufferToTexture.h"
+
+#include <string>
+#include <string_view>
+#include <utility>
+
+#include "dawn/common/Assert.h"
+#include "dawn/native/BindGroup.h"
+#include "dawn/native/CommandBuffer.h"
+#include "dawn/native/CommandEncoder.h"
+#include "dawn/native/Device.h"
+#include "dawn/native/InternalPipelineStore.h"
+#include "dawn/native/Queue.h"
+#include "dawn/native/RenderPassEncoder.h"
+#include "dawn/native/RenderPipeline.h"
+#include "dawn/native/utils/WGPUHelpers.h"
+
+namespace dawn::native {
+
+namespace {
+
+constexpr char kBlitVS[] = R"(
+
+@vertex fn vert_fullscreen_quad(
+  @builtin(vertex_index) vertex_index : u32
+) -> @builtin(position) vec4f {
+  const pos = array(
+      vec2f(-1.0, -1.0),
+      vec2f( 3.0, -1.0),
+      vec2f(-1.0,  3.0));
+  return vec4f(pos[vertex_index], 0.0, 1.0);
+}
+)";
+
+constexpr char kBlitFSCommonHeader[] = R"(
+struct Params {
+  srcOffset : u32,
+  bytesPerRow : u32,
+  dstOrigin : vec2u
+};
+
+@group(0) @binding(0) var<storage, read> src_buf : array<u32>;
+@group(0) @binding(1) var<uniform> params : Params;
+
+override gPixelSize: u32;
+
+fn loadU8AsU32(byteOffset: u32) -> u32 {
+    let uintOffset = byteOffset >> 2;
+    let uintModOffset = byteOffset & 3;
+    let bitShift = uintModOffset * 8;
+    return (src_buf[uintOffset] >> bitShift) & 0xff;
+}
+
+fn loadU16AsU32(byteOffset: u32) -> u32 {
+    let firstHalf = loadU8AsU32(byteOffset);
+    let secondHalf = loadU8AsU32(byteOffset + 1);
+    return firstHalf | (secondHalf << 8);
+}
+
+// byteOffset is expected to be aligned to 4.
+fn loadU32(byteOffset: u32) -> u32 {
+    let uintOffset = byteOffset >> 2;
+    return src_buf[uintOffset];
+}
+
+// byteOffset is expected to be aligned to 4.
+fn loadTwoU32s(byteOffset: u32) -> vec2u {
+    return vec2u(loadU32(byteOffset), loadU32(byteOffset + 4));
+}
+
+)";
+
+constexpr char kBlitFS[] = R"(
+@fragment fn blit_buffer_to_texture(
+    @builtin(position) screen_position : vec4f
+) -> @location(0) vec4f {
+    let iposition = vec2u(screen_position.xy) - params.dstOrigin;
+
+    let srcOffset = params.srcOffset + iposition.x * gPixelSize + iposition.y * params.bytesPerRow;
+
+    return unpackData(srcOffset);
+}
+)";
+
+constexpr std::string_view kUnpackR8Unorm = R"(
+fn unpackData(byteOffset: u32) -> vec4f {
+    return unpack4x8unorm(loadU8AsU32(byteOffset));
+}
+)";
+
+constexpr std::string_view kUnpackRG8Unorm = R"(
+fn unpackData(byteOffset: u32) -> vec4f {
+    return unpack4x8unorm(loadU16AsU32(byteOffset));
+}
+)";
+
+constexpr std::string_view kUnpackRGBA8Unorm = R"(
+fn unpackData(byteOffset: u32) -> vec4f {
+    return unpack4x8unorm(loadU32(byteOffset));
+}
+)";
+
+constexpr std::string_view kUnpackBGRA8Unorm = R"(
+fn unpackData(byteOffset: u32) -> vec4f {
+    return unpack4x8unorm(loadU32(byteOffset)).bgra;
+}
+)";
+
+constexpr std::string_view kUnpackR16Float = R"(
+fn unpackData(byteOffset: u32) -> vec4f {
+    return vec4f(unpack2x16float(loadU16AsU32(byteOffset)), 0.0, 1.0);
+}
+)";
+
+constexpr std::string_view kUnpackRG16Float = R"(
+fn unpackData(byteOffset: u32) -> vec4f {
+    return vec4f(unpack2x16float(loadU32(byteOffset)), 0.0, 1.0);
+}
+)";
+
+constexpr std::string_view kUnpackRGBA16Float = R"(
+fn unpackData(byteOffset: u32) -> vec4f {
+    let data = loadTwoU32s(byteOffset);
+    return vec4f(unpack2x16float(data.x), unpack2x16float(data.y));
+}
+)";
+
+constexpr std::string_view kUnpackR32Float = R"(
+fn unpackData(byteOffset: u32) -> vec4f {
+    return vec4f(bitcast<f32>(loadU32(byteOffset)), 0.0, 0.0, 1.0);
+}
+)";
+
+constexpr std::string_view kUnpackRG32Float = R"(
+fn unpackData(byteOffset: u32) -> vec4f {
+    let color = bitcast<vec2f>(loadTwoU32s(byteOffset));
+    return vec4f(color, 0.0, 1.0);
+}
+)";
+
+constexpr std::string_view kUnpackRGBA32Float = R"(
+fn unpackData(byteOffset: u32) -> vec4f {
+    return vec4f(bitcast<vec2f>(loadTwoU32s(byteOffset)),
+                 bitcast<vec2f>(loadTwoU32s(byteOffset + 8)));
+}
+)";
+
+std::string GenerateFS(wgpu::TextureFormat format) {
+    std::string shader;
+    shader = kBlitFSCommonHeader;
+    switch (format) {
+        case wgpu::TextureFormat::R8Unorm:
+            shader += kUnpackR8Unorm;
+            break;
+        case wgpu::TextureFormat::RG8Unorm:
+            shader += kUnpackRG8Unorm;
+            break;
+        case wgpu::TextureFormat::RGBA8Unorm:
+            shader += kUnpackRGBA8Unorm;
+            break;
+        case wgpu::TextureFormat::BGRA8Unorm:
+            shader += kUnpackBGRA8Unorm;
+            break;
+        case wgpu::TextureFormat::R16Float:
+            shader += kUnpackR16Float;
+            break;
+        case wgpu::TextureFormat::RG16Float:
+            shader += kUnpackRG16Float;
+            break;
+        case wgpu::TextureFormat::RGBA16Float:
+            shader += kUnpackRGBA16Float;
+            break;
+        case wgpu::TextureFormat::R32Float:
+            shader += kUnpackR32Float;
+            break;
+        case wgpu::TextureFormat::RG32Float:
+            shader += kUnpackRG32Float;
+            break;
+        case wgpu::TextureFormat::RGBA32Float:
+            shader += kUnpackRGBA32Float;
+            break;
+        default:
+            DAWN_UNREACHABLE();
+    }
+    shader += kBlitFS;
+
+    return shader;
+}
+
+ResultOrError<Ref<RenderPipelineBase>> GetOrCreatePipeline(DeviceBase* device,
+                                                           const TextureCopy& dst) {
+    const Format& format = dst.texture->GetFormat();
+    InternalPipelineStore* store = device->GetInternalPipelineStore();
+    {
+        auto it = store->blitBufferToTexturePipelines.find(format.format);
+        if (it != store->blitBufferToTexturePipelines.end()) {
+            return it->second;
+        }
+    }
+
+    // vertex shader's source.
+    ShaderSourceWGSL wgslDesc = {};
+    ShaderModuleDescriptor shaderModuleDesc = {};
+    shaderModuleDesc.nextInChain = &wgslDesc;
+    wgslDesc.code = kBlitVS;
+
+    Ref<ShaderModuleBase> vshaderModule;
+    DAWN_TRY_ASSIGN(vshaderModule, device->CreateShaderModule(&shaderModuleDesc));
+
+    // fragment shader's source will depend on pipeline key.
+    std::string fsCode = GenerateFS(format.format);
+    wgslDesc.code = fsCode.c_str();
+    Ref<ShaderModuleBase> fshaderModule;
+    DAWN_TRY_ASSIGN(fshaderModule, device->CreateShaderModule(&shaderModuleDesc));
+
+    FragmentState fragmentState = {};
+    fragmentState.module = fshaderModule.Get();
+    fragmentState.entryPoint = "blit_buffer_to_texture";
+
+    // Override
+    const uint32_t bytesPerTexel = format.GetAspectInfo(dst.aspect).block.byteSize;
+    ConstantEntry constant = {nullptr, "gPixelSize", static_cast<double>(bytesPerTexel)};
+    fragmentState.constantCount = 1;
+    fragmentState.constants = &constant;
+
+    // Color target states.
+    ColorTargetState colorTarget = {};
+    colorTarget.format = format.format;
+    colorTarget.writeMask = wgpu::ColorWriteMask::All;
+
+    fragmentState.targetCount = 1;
+    fragmentState.targets = &colorTarget;
+
+    RenderPipelineDescriptor renderPipelineDesc = {};
+    renderPipelineDesc.label = "blit_buffer_to_texture";
+    renderPipelineDesc.vertex.module = vshaderModule.Get();
+    renderPipelineDesc.vertex.entryPoint = "vert_fullscreen_quad";
+    renderPipelineDesc.fragment = &fragmentState;
+
+    // Multisample state.
+    renderPipelineDesc.multisample.count = 1;
+
+    // Bind group layout.
+    Ref<BindGroupLayoutBase> bindGroupLayout;
+    DAWN_TRY_ASSIGN(bindGroupLayout,
+                    utils::MakeBindGroupLayout(
+                        device,
+                        {
+                            {0, wgpu::ShaderStage::Fragment, kInternalReadOnlyStorageBufferBinding},
+                            {1, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Uniform},
+                        },
+                        /* allowInternalBinding */ true));
+
+    Ref<PipelineLayoutBase> pipelineLayout;
+    DAWN_TRY_ASSIGN(pipelineLayout, utils::MakeBasicPipelineLayout(device, bindGroupLayout));
+    renderPipelineDesc.layout = pipelineLayout.Get();
+
+    Ref<RenderPipelineBase> pipeline;
+    DAWN_TRY_ASSIGN(pipeline, device->CreateRenderPipeline(&renderPipelineDesc));
+
+    store->blitBufferToTexturePipelines.emplace(format.format, pipeline);
+    return pipeline;
+}
+
+}  // anonymous namespace
+
+bool IsFormatSupportedByBufferToTextureBlit(wgpu::TextureFormat format) {
+    // TODO(348653642): Eventually we should support all non-compressed formats. For now, just list
+    // a subset of them that we support.
+    switch (format) {
+        case wgpu::TextureFormat::R8Unorm:
+        case wgpu::TextureFormat::RG8Unorm:
+        case wgpu::TextureFormat::RGBA8Unorm:
+        case wgpu::TextureFormat::BGRA8Unorm:
+        case wgpu::TextureFormat::R16Float:
+        case wgpu::TextureFormat::RG16Float:
+        case wgpu::TextureFormat::RGBA16Float:
+        case wgpu::TextureFormat::R32Float:
+        case wgpu::TextureFormat::RG32Float:
+        case wgpu::TextureFormat::RGBA32Float:
+            return true;
+        default:
+            return false;
+    }
+}
+
+MaybeError BlitBufferToTexture(DeviceBase* device,
+                               CommandEncoder* commandEncoder,
+                               BufferBase* buffer,
+                               const TexelCopyBufferLayout& src,
+                               const TextureCopy& dst,
+                               const Extent3D& copyExtent) {
+    DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
+
+    // This function assumes bytesPerRow is multiples of 4. Normally it's required that
+    // bytesPerRow is aligned to 256. However some backends might enable
+    // DawnTexelCopyBufferRowAlignment feature to relax the alignment. Currently only D3D11 backend
+    // enables this feature, and the relaxed alignment there is 4.
+    DAWN_ASSERT((src.bytesPerRow % 4) == 0);
+
+    DAWN_ASSERT(buffer->GetInternalUsage() &
+                (kReadOnlyStorageBuffer | kInternalStorageBuffer | wgpu::BufferUsage::Storage));
+
+    if (copyExtent.width == 0 || copyExtent.height == 0 || copyExtent.depthOrArrayLayers == 0) {
+        return {};
+    }
+
+    // Allow internal usages since we need to use the destination
+    // as a render attachment.
+    auto scope = commandEncoder->MakeInternalUsageScope();
+
+    Ref<RenderPipelineBase> pipeline;
+    DAWN_TRY_ASSIGN(pipeline, GetOrCreatePipeline(device, dst));
+
+    Ref<BindGroupLayoutBase> bgl;
+    DAWN_TRY_ASSIGN(bgl, pipeline->GetBindGroupLayout(0));
+
+    const auto ssboAlignment = device->GetLimits().v1.minStorageBufferOffsetAlignment;
+    DAWN_ASSERT(IsPowerOfTwo(ssboAlignment));
+
+    wgpu::TextureViewDimension viewDimension;
+    uint32_t baseDepth = 0;
+    uint32_t baseArray = 0;
+    uint32_t depthStep = 0;
+    uint32_t arrayStep = 0;
+    switch (dst.texture->GetDimension()) {
+        case wgpu::TextureDimension::e1D:
+            viewDimension = wgpu::TextureViewDimension::e1D;
+            break;
+        case wgpu::TextureDimension::e3D:
+            viewDimension = wgpu::TextureViewDimension::e3D;
+            baseDepth = dst.origin.z;
+            depthStep = 1;
+            break;
+        default:
+            viewDimension = wgpu::TextureViewDimension::e2D;
+            baseArray = dst.origin.z;
+            arrayStep = 1;
+            break;
+    }
+
+    for (uint32_t z = 0; z < copyExtent.depthOrArrayLayers; ++z) {
+        Ref<TextureViewBase> dstView;
+        {
+            TextureViewDescriptor viewDesc = {};
+            viewDesc.dimension = viewDimension;
+            viewDesc.baseArrayLayer = baseArray + arrayStep * z;
+            viewDesc.arrayLayerCount = 1;
+            viewDesc.baseMipLevel = dst.mipLevel;
+            viewDesc.mipLevelCount = 1;
+            DAWN_TRY_ASSIGN(dstView, dst.texture->CreateView(&viewDesc));
+        }
+
+        const uint64_t srcOffset = src.offset + z * src.rowsPerImage * src.bytesPerRow;
+        const uint64_t srcBufferBindingOffset = AlignDown(srcOffset, ssboAlignment);
+        const uint32_t shaderReadOffset = static_cast<uint32_t>(srcOffset & (ssboAlignment - 1));
+        Ref<BufferBase> paramsBuffer;
+        {
+            DAWN_TRY_ASSIGN(paramsBuffer,
+                            device->GetOrCreateTemporaryUniformBuffer(sizeof(uint32_t) * 4));
+
+            uint32_t params[4];
+            params[0] = shaderReadOffset;
+            params[1] = src.bytesPerRow;
+            params[2] = dst.origin.x;
+            params[3] = dst.origin.y;
+            commandEncoder->APIWriteBuffer(paramsBuffer.Get(), 0,
+                                           reinterpret_cast<const uint8_t*>(&params[0]),
+                                           sizeof(params));
+        }
+
+        Ref<BindGroupBase> bindGroup;
+        {
+            std::array<BindGroupEntry, 2> bgEntries = {};
+            bgEntries[0].binding = 0;
+            bgEntries[0].buffer = buffer;
+            bgEntries[0].offset = srcBufferBindingOffset;
+            bgEntries[1].binding = 1;
+            bgEntries[1].buffer = paramsBuffer.Get();
+
+            BindGroupDescriptor bgDesc = {};
+            bgDesc.layout = bgl.Get();
+            bgDesc.entryCount = bgEntries.size();
+            bgDesc.entries = bgEntries.data();
+            DAWN_TRY_ASSIGN(bindGroup,
+                            device->CreateBindGroup(&bgDesc, UsageValidationMode::Internal));
+        }
+
+        RenderPassColorAttachment colorAttachment;
+        colorAttachment.view = dstView.Get();
+        if (depthStep) {
+            colorAttachment.depthSlice = baseDepth + depthStep * z;
+        }
+        colorAttachment.loadOp = wgpu::LoadOp::Load;
+        colorAttachment.storeOp = wgpu::StoreOp::Store;
+
+        RenderPassDescriptor rpDesc = {};
+        rpDesc.colorAttachmentCount = 1;
+        rpDesc.colorAttachments = &colorAttachment;
+
+        Ref<RenderPassEncoder> pass = commandEncoder->BeginRenderPass(&rpDesc);
+        // Bind the resources.
+        pass->APISetBindGroup(0, bindGroup.Get());
+        pass->APISetViewport(dst.origin.x, dst.origin.y, copyExtent.width, copyExtent.height, 0.f,
+                             1.f);
+
+        // Draw to perform the blit.
+        pass->APISetPipeline(pipeline.Get());
+        pass->APIDraw(3, 1, 0, 0);
+
+        pass->End();
+    }
+    return {};
+}
+
+}  // namespace dawn::native
