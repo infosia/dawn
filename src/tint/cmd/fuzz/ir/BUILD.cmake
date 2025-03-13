@@ -170,7 +170,6 @@ tint_target_add_dependencies(tint_cmd_fuzz_ir_fuzz fuzz
 
 tint_target_add_external_dependencies(tint_cmd_fuzz_ir_fuzz fuzz
   "src_utils"
-  "thread"
 )
 
 if(TINT_BUILD_WGSL_READER)
