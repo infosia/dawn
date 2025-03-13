@@ -71,7 +71,7 @@ class Parser {
   public:
     /// @param spirv the SPIR-V binary data
     /// @returns the generated SPIR-V IR module on success, or failure
-    Result<core::ir::Module> Run(Slice<const uint32_t> spirv) {
+    diag::Result<core::ir::Module> Run(Slice<const uint32_t> spirv) {
         // Validate the incoming SPIR-V binary.
         auto result = validate::Validate(spirv, kTargetEnv);
         if (result != Success) {
@@ -83,7 +83,7 @@ class Parser {
         spirv_context_ =
             spvtools::BuildModule(kTargetEnv, context.CContext()->consumer, spirv.data, spirv.len);
         if (!spirv_context_) {
-            return Failure("failed to build the internal representation of the module");
+            return diag::Failure("failed to build the internal representation of the module");
         }
 
         // Check for unsupported extensions.
@@ -91,7 +91,7 @@ class Parser {
             auto name = ext.GetOperand(0).AsString();
             if (name != "SPV_KHR_storage_buffer_storage_class" &&
                 name != "SPV_KHR_non_semantic_info") {
-                return Failure("SPIR-V extension '" + name + "' is not supported");
+                return diag::Failure("SPIR-V extension '" + name + "' is not supported");
             }
         }
 
@@ -105,7 +105,7 @@ class Parser {
             } else if (name.find("NonSemantic.") == 0) {
                 ignored_imports_.insert(import.result_id());
             } else {
-                return Failure("Unrecognized extended instruction set: " + name);
+                return diag::Failure("Unrecognized extended instruction set: " + name);
             }
         }
 
@@ -140,38 +140,74 @@ class Parser {
         return std::nullopt;
     }
 
+    void CreateOverride(const spvtools::opt::Instruction& inst,
+                        core::ir::Value* value,
+                        std::optional<uint16_t> spec_id) {
+        auto* override_ = b_.Override(Type(inst.type_id()));
+        override_->SetInitializer(value);
+
+        if (spec_id.has_value()) {
+            override_->SetOverrideId(OverrideId{spec_id.value()});
+        }
+
+        Emit(override_, inst.result_id());
+
+        Symbol name = GetSymbolFor(inst.result_id());
+        if (name.IsValid()) {
+            ir_.SetName(override_, name);
+        }
+    }
+
     // Generate a module-scope const declaration for each instruction
     // that is OpSpecConstantTrue, OpSpecConstantFalse, or OpSpecConstant.
     void EmitSpecConstants() {
         for (auto& inst : spirv_context_->types_values()) {
-            core::ir::Value* value = nullptr;
-            std::optional<uint16_t> spec_id = std::nullopt;
             switch (inst.opcode()) {
                 case spv::Op::OpSpecConstantTrue:
                 case spv::Op::OpSpecConstantFalse: {
-                    value = b_.Value(inst.opcode() == spv::Op::OpSpecConstantTrue);
-                    spec_id = GetSpecId(inst);
+                    auto* value = b_.Value(inst.opcode() == spv::Op::OpSpecConstantTrue);
+                    auto spec_id = GetSpecId(inst);
+
+                    if (spec_id.has_value()) {
+                        CreateOverride(inst, value, spec_id);
+                    } else {
+                        // No spec_id means treat this as a constant.
+                        AddValue(inst.result_id(), value);
+                    }
+                    break;
+                }
+                case spv::Op::OpSpecConstantOp: {
+                    auto op = inst.GetSingleWordInOperand(0);
+
+                    // Store the name away and remove it from the name list.
+                    // This keeps any `Emit*` call in the switch below for
+                    // gaining the name we want associated to the override.
+                    std::string name;
+                    auto iter = id_to_name_.find(inst.result_id());
+                    if (iter != id_to_name_.end()) {
+                        name = iter->second;
+                        id_to_name_.erase(inst.result_id());
+                    }
+
+                    switch (static_cast<spv::Op>(op)) {
+                        case spv::Op::OpLogicalAnd:
+                            EmitBinary(inst, core::BinaryOp::kAnd, 3);
+                            break;
+                        default:
+                            TINT_ICE() << "Unknown spec constant operation: " << op;
+                    }
+
+                    // Restore the saved name, if any, in order to provide that
+                    // name to the override.
+                    if (!name.empty()) {
+                        id_to_name_.insert({inst.result_id(), name});
+                    }
+
+                    CreateOverride(inst, Value(inst.result_id()), std::nullopt);
                     break;
                 }
                 default:
-                    continue;
-            }
-
-            // No spec_id means treat this as a constant.
-            if (!spec_id.has_value()) {
-                AddValue(inst.result_id(), value);
-                continue;
-            }
-
-            auto* override_ = b_.Override(Type(inst.type_id()));
-            override_->SetInitializer(value);
-            override_->SetOverrideId(OverrideId{spec_id.value()});
-
-            Emit(override_, inst.result_id());
-
-            Symbol name = GetSymbolFor(inst.result_id());
-            if (name.IsValid()) {
-                ir_.SetName(override_, name);
+                    break;
             }
         }
     }
@@ -852,6 +888,9 @@ class Parser {
                 case spv::Op::OpCompositeExtract:
                     EmitCompositeExtract(inst);
                     break;
+                case spv::Op::OpVectorInsertDynamic:
+                    EmitVectorInsertDynamic(inst);
+                    break;
                 case spv::Op::OpFAdd:
                     EmitBinary(inst, core::BinaryOp::kAdd);
                     break;
@@ -1190,15 +1229,30 @@ class Parser {
             current_spirv_function_, &*(current_spirv_function_->FindBlock(false_id)),
             &*(current_spirv_function_->FindBlock(merge_id.value())), &false_blocks);
 
-        // It's possible one of the blocks returns, so bail early if they don't both end at the
-        // merge.
-        if (true_blocks.back()->id() != merge_id || false_blocks.back()->id() != merge_id) {
+        auto& true_end = true_blocks.back();
+        auto& false_end = false_blocks.back();
+
+        // We only consider the block as returning if it didn't return through
+        // the merge block. (I.e. it's a direct exit from inside the branch
+        // itself.
+        bool true_returns = true_end->id() != merge_id && true_end->IsReturn();
+        bool false_returns = false_end->id() != merge_id && false_end->IsReturn();
+        // If one of the blocks returns but the other doesn't, then we can't
+        // have a premerge block.
+        if (true_returns != false_returns) {
             return std::nullopt;
         }
 
-        // Remove the merge blocks.
-        true_blocks.pop_back();
-        false_blocks.pop_back();
+        // If they don't return, both blocks must merge to the same place.
+        if (!true_returns && (true_end->id() != false_end->id())) {
+            return std::nullopt;
+        }
+
+        // If these aren't returns, then remove the merge blocks.
+        if (!true_returns) {
+            true_blocks.pop_back();
+            false_blocks.pop_back();
+        }
 
         std::optional<uint32_t> id = std::nullopt;
         while (!true_blocks.empty() && !false_blocks.empty()) {
@@ -1232,6 +1286,48 @@ class Parser {
         auto cond = Value(inst.GetSingleWordInOperand(0));
         auto true_id = inst.GetSingleWordInOperand(1);
         auto false_id = inst.GetSingleWordInOperand(2);
+
+        bool true_is_header = loop_headers_.count(true_id) > 0;
+        bool false_is_header = loop_headers_.count(false_id) > 0;
+
+        if (true_is_header || false_is_header) {
+            core::ir::Loop* loop = nullptr;
+            uint32_t merge_id = 0;
+
+            if (true_is_header) {
+                const auto& bb_header = current_spirv_function_->FindBlock(true_id);
+                merge_id = (*bb_header).MergeBlockIdIfAny();
+
+                loop = loop_headers_[true_id];
+
+            } else {
+                const auto& bb_header = current_spirv_function_->FindBlock(false_id);
+                merge_id = (*bb_header).MergeBlockIdIfAny();
+
+                loop = loop_headers_[false_id];
+            }
+            TINT_ASSERT(merge_id > 0);
+
+            // The only time a loop continuing will be in current blocks is if
+            // we're inside the continuing block itself.
+            //
+            // Note, we may _not_ be in the IR continuing block. This can happen
+            // in the case of a SPIR-V loop where the header_id and continue_id
+            // are the same. We'll be emitting into the IR body, but branch to
+            // the header because that's also the continuing in SPIR-V.
+            if (current_blocks_.count(loop->Continuing())) {
+                if (true_id == merge_id && false_is_header) {
+                    EmitWithoutResult(b_.BreakIf(loop, cond));
+                    return;
+                }
+                if (false_id == merge_id && true_is_header) {
+                    auto* val = b_.Not(cond->Type(), cond);
+                    EmitWithoutSpvResult(val);
+                    EmitWithoutResult(b_.BreakIf(loop, val));
+                    return;
+                }
+            }
+        }
 
         // If the true and false block are the same, then we change the condition into
         // `cond || true` so that we always take the true block, the false block will be marked
@@ -1348,6 +1444,7 @@ class Parser {
         auto* loop = StopWalkingAt(header_id)->As<core::ir::Loop>();
         TINT_ASSERT(loop);
 
+        loop_headers_.insert({header_id, loop});
         continue_targets_.insert({continue_id, loop});
 
         // Insert the stop blocks
@@ -1360,6 +1457,7 @@ class Parser {
             // Emit the continuing block.
             EmitBlockParent(loop->Continuing(), *bb_continue);
         }
+
         if (!loop->Continuing()->Terminator()) {
             loop->Continuing()->Append(b_.NextIteration(loop));
         }
@@ -1823,9 +1921,11 @@ class Parser {
 
     /// @param inst the SPIR-V instruction
     /// @param op the binary operator to use
-    void EmitBinary(const spvtools::opt::Instruction& inst, core::BinaryOp op) {
-        auto* lhs = Value(inst.GetSingleWordOperand(2));
-        auto* rhs = Value(inst.GetSingleWordOperand(3));
+    void EmitBinary(const spvtools::opt::Instruction& inst,
+                    core::BinaryOp op,
+                    uint32_t first_operand_idx = 2) {
+        auto* lhs = Value(inst.GetSingleWordOperand(first_operand_idx));
+        auto* rhs = Value(inst.GetSingleWordOperand(first_operand_idx + 1));
         auto* binary = b_.Binary(op, Type(inst.type_id()), lhs, rhs);
         Emit(binary, inst.result_id());
     }
@@ -1857,6 +1957,19 @@ class Parser {
     void EmitConstruct(const spvtools::opt::Instruction& inst) {
         auto* construct = b_.Construct(Type(inst.type_id()), Args(inst, 2));
         Emit(construct, inst.result_id());
+    }
+
+    /// @param inst the SPIR-V instruction for OpVectorInsertDynamic
+    void EmitVectorInsertDynamic(const spvtools::opt::Instruction& inst) {
+        auto vector = Value(inst.GetSingleWordOperand(2));
+        auto component = Value(inst.GetSingleWordOperand(3));
+        auto index = Value(inst.GetSingleWordOperand(4));
+        auto* tmp = b_.Var(
+            ty_.ptr(core::AddressSpace::kFunction, Type(inst.type_id()), core::Access::kReadWrite));
+        tmp->SetInitializer(vector);
+        EmitWithoutSpvResult(tmp);
+        EmitWithoutResult(b_.StoreVectorElement(tmp, index, component));
+        Emit(b_.Load(tmp), inst.result_id());
     }
 
     /// @param inst the SPIR-V instruction for OpFunctionCall
@@ -1991,6 +2104,8 @@ class Parser {
     std::unordered_map<uint32_t, core::ir::ControlInstruction*> walk_stop_blocks_;
     // Map of continue target ID to the controlling IR loop.
     std::unordered_map<uint32_t, core::ir::Loop*> continue_targets_;
+    // Map of continue target ID to the controlling IR loop.
+    std::unordered_map<uint32_t, core::ir::Loop*> loop_headers_;
 
     std::unordered_set<core::ir::Block*> current_blocks_;
     std::vector<std::unordered_set<uint32_t>> id_stack_;
@@ -2002,7 +2117,7 @@ class Parser {
 
 }  // namespace
 
-Result<core::ir::Module> Parse(Slice<const uint32_t> spirv) {
+diag::Result<core::ir::Module> Parse(Slice<const uint32_t> spirv) {
     return Parser{}.Run(spirv);
 }
 

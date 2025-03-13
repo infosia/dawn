@@ -69,8 +69,9 @@ struct State {
 
     /// The type manager.
     core::type::Manager& ty{ir.Types()};
+
     /// Process the module.
-    Result<SuccessType> Process() {
+    diag::Result<SuccessType> Process() {
         Vector<Instruction*, 8> to_remove;
         Vector<Constant*, 8> values_to_propagate;
         Vector<core::ir::Var*, 4> vars_with_value_array_count;
@@ -96,38 +97,45 @@ struct State {
                 continue;
             }
 
-            // Check if the user provided an override for the given ID.
-            auto iter = cfg.map.find(override->OverrideId());
-            if (iter != cfg.map.end()) {
-                bool substitution_representation_valid = tint::Switch(
-                    override->Result(0)->Type(),  //
-                    [&](const core::type::Bool*) { return true; },
-                    [&](const core::type::I32*) {
-                        return dawn::IsDoubleValueRepresentable<int32_t>(iter->second);
-                    },
-                    [&](const core::type::U32*) {
-                        return dawn::IsDoubleValueRepresentable<uint32_t>(iter->second);
-                    },
-                    [&](const core::type::F32*) {
-                        return dawn::IsDoubleValueRepresentable<float>(iter->second);
-                    },
-                    [&](const core::type::F16*) {
-                        return dawn::IsDoubleValueRepresentableAsF16(iter->second);
-                    },
-                    TINT_ICE_ON_NO_MATCH);
+            // Check if the user provided an override for the given ID. In the case of Dawn, all
+            // overrides end up having an ID, so they will all be able to be queried here. If the
+            // code came through the SPIR-V reader, and overrides are being applied on the top of
+            // that IR tree, an OverrideId may not be set, but that also means in SPIR-V the
+            // override could not be set anyway, so it can't have an override value applied.
+            if (override->OverrideId().has_value()) {
+                auto iter = cfg.map.find(override->OverrideId().value());
+                if (iter != cfg.map.end()) {
+                    bool substitution_representation_valid = tint::Switch(
+                        override->Result(0)->Type(),  //
+                        [&](const core::type::Bool*) { return true; },
+                        [&](const core::type::I32*) {
+                            return dawn::IsDoubleValueRepresentable<int32_t>(iter->second);
+                        },
+                        [&](const core::type::U32*) {
+                            return dawn::IsDoubleValueRepresentable<uint32_t>(iter->second);
+                        },
+                        [&](const core::type::F32*) {
+                            return dawn::IsDoubleValueRepresentable<float>(iter->second);
+                        },
+                        [&](const core::type::F16*) {
+                            return dawn::IsDoubleValueRepresentableAsF16(iter->second);
+                        },
+                        TINT_ICE_ON_NO_MATCH);
 
-                if (!substitution_representation_valid) {
-                    diag::Diagnostic error{};
-                    error.severity = diag::Severity::Error;
-                    error.source = ir.SourceOf(override);
-                    error << "Pipeline overridable constant " << iter->first.value
-                          << " with value (" << iter->second << ")  is not representable in type ("
-                          << override->Result(0)->Type()->FriendlyName() << ")";
-                    return Failure(error);
+                    if (!substitution_representation_valid) {
+                        diag::Diagnostic error{};
+                        error.severity = diag::Severity::Error;
+                        error.source = ir.SourceOf(override);
+                        error << "Pipeline overridable constant " << iter->first.value
+                              << " with value (" << iter->second
+                              << ")  is not representable in type ("
+                              << override->Result(0)->Type()->FriendlyName() << ")";
+                        return diag::Failure(error);
+                    }
+
+                    auto* replacement = CreateConstant(override->Result(0)->Type(), iter->second);
+                    override->SetInitializer(replacement);
                 }
-
-                auto* replacement = CreateConstant(override->Result(0)->Type(), iter->second);
-                override->SetInitializer(replacement);
             }
 
             if (override->Initializer() == nullptr) {
@@ -135,7 +143,7 @@ struct State {
                 error.severity = diag::Severity::Error;
                 error.source = ir.SourceOf(override);
                 error << "Initializer not provided for override, and override not overridden.";
-                return Failure(error);
+                return diag::Failure(error);
             }
 
             if (auto* replacement = override->Initializer()->As<core::ir::Constant>()) {
@@ -248,7 +256,7 @@ struct State {
         return Success;
     }
 
-    Result<SuccessType> EvalConstExprIf() {
+    diag::Result<SuccessType> EvalConstExprIf() {
         Vector<core::ir::ConstExprIf*, 32> ordered_constexpr_if;
         core::ir::Traverse(ir.root_block, [&ordered_constexpr_if](ConstExprIf* inst) {
             ordered_constexpr_if.Push(inst);
@@ -292,7 +300,7 @@ struct State {
         return Success;
     }
 
-    Result<core::ir::Constant*> CalculateOverride(core::ir::Value* val) {
+    diag::Result<core::ir::Constant*> CalculateOverride(core::ir::Value* val) {
         auto r = eval::Eval(b, val);
         if (r != Success) {
             return r.Failure();
@@ -303,7 +311,7 @@ struct State {
         return r;
     }
 
-    Result<SuccessType> Propagate(Vector<core::ir::Constant*, 8>& values_to_propagate) {
+    diag::Result<SuccessType> Propagate(Vector<core::ir::Constant*, 8>& values_to_propagate) {
         while (!values_to_propagate.IsEmpty()) {
             auto* value = values_to_propagate.Pop();
             for (auto usage : value->UsagesSorted()) {
@@ -369,7 +377,7 @@ struct State {
 
 SubstituteOverridesConfig::SubstituteOverridesConfig() = default;
 
-Result<SuccessType> SubstituteOverrides(Module& ir, const SubstituteOverridesConfig& cfg) {
+diag::Result<SuccessType> SubstituteOverrides(Module& ir, const SubstituteOverridesConfig& cfg) {
     auto result =
         ValidateAndDumpIfNeeded(ir, "core.SubstituteOverrides", kSubstituteOverridesCapabilities);
     if (result != Success) {

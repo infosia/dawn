@@ -751,7 +751,7 @@ class Validator {
 
     /// Runs the validator over the module provided during construction
     /// @returns success or failure
-    Result<SuccessType> Run();
+    diag::Result<SuccessType> Run();
 
   private:
     /// Runs validation to confirm the structural soundness of the module.
@@ -1369,7 +1369,7 @@ Disassembler& Validator::Disassemble() {
     return *disassembler_;
 }
 
-Result<SuccessType> Validator::Run() {
+diag::Result<SuccessType> Validator::Run() {
     RunStructuralSoundnessChecks();
 
     if (!diagnostics_.ContainsErrors()) {
@@ -1382,7 +1382,7 @@ Result<SuccessType> Validator::Run() {
 
     if (diagnostics_.ContainsErrors()) {
         diagnostics_.AddNote(Source{}) << "# Disassembly\n" << Disassemble().Text();
-        return Failure{std::move(diagnostics_)};
+        return diag::Failure{std::move(diagnostics_)};
     }
     return Success;
 }
@@ -2447,9 +2447,11 @@ void Validator::CheckOverride(const Override* o) {
         return;
     }
 
-    if (!seen_override_ids_.Add(o->OverrideId())) {
-        AddError(o) << "duplicate override id encountered: " << o->OverrideId().value;
-        return;
+    if (o->OverrideId().has_value()) {
+        if (!seen_override_ids_.Add(o->OverrideId().value())) {
+            AddError(o) << "duplicate override id encountered: " << o->OverrideId().value().value;
+            return;
+        }
     }
 
     if (!o->Result(0)->Type()->IsScalar()) {
@@ -2466,6 +2468,11 @@ void Validator::CheckOverride(const Override* o) {
                         << " does not match initializer type " << NameOf(o->Initializer()->Type());
             return;
         }
+    }
+
+    if (!o->OverrideId().has_value() && !o->Initializer()) {
+        AddError(o) << "must have an id or an initializer";
+        return;
     }
 }
 
@@ -3684,14 +3691,14 @@ const core::type::Type* Validator::GetVectorPtrElementType(const Instruction* in
 
 }  // namespace
 
-Result<SuccessType> Validate(const Module& mod, Capabilities capabilities) {
+diag::Result<SuccessType> Validate(const Module& mod, Capabilities capabilities) {
     Validator v(mod, capabilities);
     return v.Run();
 }
 
-Result<SuccessType> ValidateAndDumpIfNeeded([[maybe_unused]] const Module& ir,
-                                            [[maybe_unused]] const char* msg,
-                                            [[maybe_unused]] Capabilities capabilities) {
+diag::Result<SuccessType> ValidateAndDumpIfNeeded([[maybe_unused]] const Module& ir,
+                                                  [[maybe_unused]] const char* msg,
+                                                  [[maybe_unused]] Capabilities capabilities) {
 #if TINT_DUMP_IR_WHEN_VALIDATING
     auto printer = StyledTextPrinter::Create(stdout);
     std::cout << "=========================================================\n";
