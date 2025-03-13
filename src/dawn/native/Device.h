@@ -379,8 +379,12 @@ class DeviceBase : public ErrorSink,
     // will be resolved into.
     virtual bool CanTextureLoadResolveTargetInTheSameRenderpass() const;
 
-    // Whether the backend prefer not using mappable/uniform buffer as storage buffer.
-    virtual bool PreferNotUsingMappableOrUniformBufferAsStorage() const;
+    // Whether the backend prefer not adding internal storage usage to the buffer.
+    // - storageUsage is the internal storage usage that would be added.
+    // - originalUsage is the original usage of the buffer.
+    virtual bool PreferNotAddingInternalStorageUsageToBuffer(wgpu::BufferUsage storageUsage,
+                                                             wgpu::BufferUsage originalUsage,
+                                                             size_t bufferSize) const;
 
     bool HasFeature(Feature feature) const;
 
