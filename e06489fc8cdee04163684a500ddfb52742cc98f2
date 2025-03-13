@@ -16,6 +16,23 @@
       "message": "PTAL! I tested against a vulkan-deps roll locally and it seems to resolve all the issues.",
       "revId": "e06489fc8cdee04163684a500ddfb52742cc98f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41589d04_50c06a59",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests_dmabuf.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-13T01:55:46Z",
+      "side": 1,
+      "message": "```suggestion\n// This must be included instead of vulkan.h so that can we wrap it with vulkan_platform.h.\n```",
+      "revId": "e06489fc8cdee04163684a500ddfb52742cc98f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
