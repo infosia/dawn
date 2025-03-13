@@ -445,6 +445,13 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                     DAWN_GL_TRY(gl, BindImageTexture(imageIndex, handle, view->GetBaseMipLevel(),
                                                      isLayered, view->GetBaseArrayLayer(), access,
                                                      texture->GetGLFormat().internalFormat));
+
+                    // Use the highest (unused) texture unit to set GL_TEXTURE_MAX_LEVEL.
+                    DAWN_GL_TRY(gl, ActiveTexture(GL_TEXTURE0 + mPipeline->GetTextureUnitsUsed()));
+                    DAWN_GL_TRY(gl, BindTexture(view->GetGLTarget(), texture->GetHandle()));
+                    DAWN_GL_TRY(gl,
+                                TexParameteri(view->GetGLTarget(), GL_TEXTURE_MAX_LEVEL,
+                                              view->GetBaseMipLevel() + view->GetLevelCount() - 1));
                     return {};
                 },
                 [](const InputAttachmentBindingInfo&) -> MaybeError { DAWN_UNREACHABLE(); }));

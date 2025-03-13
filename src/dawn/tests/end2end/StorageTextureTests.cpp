@@ -1426,9 +1426,6 @@ fn main(
 // backend where the first usage sets TEXTURE_BASE_LEVEL and TEXTURE_MAX_LEVEL on the texture
 // and they end up affecting the 2nd usage.
 TEST_P(ReadWriteStorageTextureTests, ReadMipLevel0WriteMipLevel1) {
-    // https://crbug.com/392121637
-    DAWN_SUPPRESS_TEST_IF(IsOpenGL() || IsOpenGLES());
-
     wgpu::ShaderModule csModule = utils::CreateShaderModule(device, R"(
         @binding(0) @group(0) var<storage, read_write> buf : array<f32>;
         @binding(1) @group(0) var t_in: texture_2d<f32>;

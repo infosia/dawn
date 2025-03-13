@@ -182,6 +182,7 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
     }
 
     mInternalUniformBufferBinding = layout->GetInternalUniformBinding();
+    mTextureUnitsUsed = textureUnit;
 
     return {};
 }

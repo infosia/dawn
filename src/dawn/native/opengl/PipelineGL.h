@@ -69,6 +69,7 @@ class PipelineGL {
 
     const Buffer* GetInternalUniformBuffer() const;
     const BindingPointToFunctionAndOffset& GetBindingPointBuiltinDataInfo() const;
+    GLuint GetTextureUnitsUsed() const { return mTextureUnitsUsed; }
 
   protected:
     MaybeError ApplyNow(const OpenGLFunctions& gl);
@@ -94,6 +95,7 @@ class PipelineGL {
     GLuint mInternalUniformBufferBinding;
     bool mNeedsTextureBuiltinUniformBuffer;
     Ref<Buffer> mTextureBuiltinsBuffer;
+    GLuint mTextureUnitsUsed = 0;
 
     // Reflect info from tint: a map from texture binding point to extra data need to push into the
     // internal uniform buffer.
