@@ -137,6 +137,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "797ff18e_55279418",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-13T14:23:38Z",
+      "side": 1,
+      "message": "\u003e  We could make it handle not just Vk* objects but also memory allocations that would be moved there? \n\nWe\u0027d have to move all the allocation tracking to FencedDeleter to make that work. Not sure on feasibility there.\n\nWith the memory usage tracking in SingleTypeAllocator we\u0027d need some way for FencedDeleter to notify STA the vkFreeAllocation() call has happened. At that point STA would decrement `mTotalAllocatedMemory`. I think FencedDeleter would essentially need a tuple `{VkDeviceMemory, VkDeviceSize, SingleTypeAllocator*}`  instead of just `VkDeviceMemory` to do that.\n\nIf `mTotalAllocatedMemory` was moved to RMA then I guess FencedDeleter could just hold a single pointer back to RMA and notify it on deletion with size. That way only `{VkDeviceMemory, VkDeviceSize}` needs to be enqueued for deletion.\n\nAlternatively RMA::Tick() already exists. RMA could hold a list of `{ExecutionSerial, VkDeviceSize}`. When this code enqueues deletion with FencedDeleter it would also push the same deletion serial (need a way to get that from FencedDeleter) and size into the list in RMA. That way when RMA::Tick() runs it can pop the corresponding entry in the list for completion serial and decrement `mTotalAllocatedMemory` by the size.",
+      "parentUuid": "811ec250_447b0cca",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7aeae022_98789cf0",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
         "patchSetId": 4
