@@ -1,0 +1,45 @@
+{
+  'basic_suites': {
+    'dawn_end2end_tests_angle_swiftshader_tests': {
+      'dawn_end2end_tests_angle_swiftshader_gles': {
+        'args': [
+          '--backend=opengles',
+          '--use-angle=swiftshader',
+          '--enable-toggles=gl_force_es_31_and_no_extensions',
+        ],
+        'test': 'dawn_end2end_tests',
+      },
+    },
+    'dawn_end2end_tests_swiftshader_tests': {
+      'dawn_end2end_tests_swiftshader': {
+        'args': [
+          '--adapter-vendor-id=0x1AE0',
+        ],
+        'test': 'dawn_end2end_tests',
+      },
+    },
+    'dawn_unittests_tests': {
+      'dawn_unittests': {},
+    },
+    'dawn_unittests_wire_tests': {
+      'dawn_unittests_with_wire': {
+        'args': [
+          '--use-wire',
+        ],
+        'test': 'dawn_unittests',
+      },
+    },
+    'tint_unittests_tests': {
+      'tint_unittests': {},
+    },
+  },
+  'compound_suites': {
+    'swiftshader_gtests': [
+      'dawn_end2end_tests_angle_swiftshader_tests',
+      'dawn_end2end_tests_swiftshader_tests',
+      'dawn_unittests_tests',
+      'dawn_unittests_wire_tests',
+      'tint_unittests_tests',
+    ],
+  },
+}
