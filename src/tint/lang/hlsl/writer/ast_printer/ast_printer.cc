@@ -102,8 +102,6 @@
 using namespace tint::core::number_suffixes;  // NOLINT
 using namespace tint::core::fluent_types;     // NOLINT
 
-TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
-
 namespace tint::hlsl::writer {
 namespace {
 
@@ -1481,7 +1479,7 @@ bool ASTPrinter::EmitUniformBufferAccess(StringStream& out,
         }
     }
 
-    const char swizzle[] = {'x', 'y', 'z', 'w'};
+    static constexpr std::array<char, 4> swizzle = {'x', 'y', 'z', 'w'};
 
     using Op = DecomposeMemoryAccess::Intrinsic::Op;
     using DataType = DecomposeMemoryAccess::Intrinsic::DataType;
@@ -2705,7 +2703,7 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
             // All of these builtins use the GetDimensions() method on the texture
             bool is_ms = texture_type->IsAnyOf<core::type::MultisampledTexture,
                                                core::type::DepthMultisampledTexture>();
-            int num_dimensions = 0;
+            uint num_dimensions = 0;
             std::string swizzle;
 
             switch (builtin->Fn()) {
@@ -2801,7 +2799,8 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
                 // vector. As we've grown the vector by one element, we now need to
                 // swizzle to keep the result expression equivalent.
                 if (swizzle.empty()) {
-                    static constexpr const char* swizzles[] = {"", ".x", ".xy", ".xyz"};
+                    static constexpr std::array<const char*, 4> swizzles = {"", ".x", ".xy",
+                                                                            ".xyz"};
                     swizzle = swizzles[num_dimensions - 1];
                 }
             }
@@ -2838,11 +2837,11 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
                 if (num_dimensions == 1) {
                     pre << dims;
                 } else {
-                    static constexpr char xyzw[] = {'x', 'y', 'z', 'w'};
+                    static constexpr std::array<char, 4> xyzw = {'x', 'y', 'z', 'w'};
                     if (DAWN_UNLIKELY(num_dimensions < 0 || num_dimensions > 4)) {
                         TINT_ICE() << "vector dimensions are " << num_dimensions;
                     }
-                    for (int i = 0; i < num_dimensions; i++) {
+                    for (uint i = 0; i < num_dimensions; i++) {
                         if (i > 0) {
                             pre << ", ";
                         }
@@ -3033,9 +3032,10 @@ bool ASTPrinter::EmitTextureCall(StringStream& out,
             wgsl_ret_width = vec->Width();
         }
         if (wgsl_ret_width < hlsl_ret_width) {
+            static constexpr std::array<char, 3> xyz = {'x', 'y', 'z'};
             out << ".";
             for (uint32_t i = 0; i < wgsl_ret_width; i++) {
-                out << "xyz"[i];
+                out << xyz[i];
             }
         }
         if (DAWN_UNLIKELY(wgsl_ret_width > hlsl_ret_width)) {
@@ -4910,5 +4910,3 @@ std::string ASTPrinter::UniqueIdentifier(const std::string& prefix /* = "" */) {
 }
 
 }  // namespace tint::hlsl::writer
-
-TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
