@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b701af7_4e0fe248",
+        "filename": "third_party/emdawnwebgpu/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-13T03:19:56Z",
+      "side": 1,
+      "message": "Does this need to use `emwgpuCreateBuffer`?",
+      "revId": "f11039a58a8f5867815271dba9ef4a44b5ff5b40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
