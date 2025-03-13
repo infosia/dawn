@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "884f70ef_6930012d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-13T03:49:48Z",
+      "side": 1,
+      "message": "+ autoninja -C out/active\nninja: Entering directory `out/active\u0027\nreapi instance: projects/rbe-chrome-untrusted/instances/default_instance\n[4714/4750] 1m22.79s F ACTION //src/tint/utils/protos/ir_fuzz:proto_gen(//build/toolchain/linux:clang_x64)\nFAILED: 5dd167b9-9645-4dd7-8ec0-69f6ab103565 \"./gen/src/tint/utils/protos/ir_fuzz/ir_fuzz.pb.h\" ACTION //src/tint/utils/protos/ir_fuzz:proto_gen(//build/toolchain/linux:clang_x64)\nerr: remote-exec 543ff258bf0bf2434b528388aa9bdb97c61b1966abf5e88c0e1bf428914d9c7c/355 failed: exit\u003d1\npython3 ../../tools/protoc_wrapper/protoc_wrapper.py src/tint/utils/protos/ir_fuzz/ir_fuzz.proto --protoc ./protoc --proto-in-dir ../../ --cc-out-dir gen/\nbuild step: __src_tint_utils_protos_ir_fuzz_proto_gen___build_toolchain_linux_clang_x64__rule \"./gen/src/tint/utils/protos/ir_fuzz/ir_fuzz.pb.h\"\nsiso_rule: proto/protoc_wrapper\nstdout:\nsrc/tint/utils/protos/ir/ir.proto: File not found.\nsrc/tint/utils/protos/ir_fuzz/ir_fuzz.proto:32:1: Import \"src/tint/utils/protos/ir/ir.proto\" was not found or had errors.\nsrc/tint/utils/protos/ir_fuzz/ir_fuzz.proto:35:5: \"tint.core.ir.binary.pb.Module\" is not defined.\nProtoc has returned non-zero status: 1\n\nbuild failed\nlocal:224 remote:5 cache:4486 fallback:0 retry:0 skip:532\nreapi: ops: 4517(err:5) / r:13472(err:0) 3.76GiB / w:24(err:0) 6.77KiB\nfs: ops: 163482(err:51414) / r:40590(err:0) 2.23GiB / w:9082(err:0) 3.73GiB",
+      "revId": "c37e1c4b26d5940150ef729f5934d8bed43e5a3b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
