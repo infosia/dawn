@@ -33,6 +33,24 @@
       "message": "```suggestion\n// This must be included instead of vulkan.h so that can we wrap it with vulkan_platform.h.\n```",
       "revId": "e06489fc8cdee04163684a500ddfb52742cc98f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20b1e25b_fd4929c7",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests_dmabuf.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-13T02:07:20Z",
+      "side": 1,
+      "message": "Fixed that and the other typo that was in the same sentence.",
+      "parentUuid": "41589d04_50c06a59",
+      "revId": "e06489fc8cdee04163684a500ddfb52742cc98f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
