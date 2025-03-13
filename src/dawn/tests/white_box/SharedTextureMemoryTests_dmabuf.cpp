@@ -28,13 +28,15 @@
 #include <fcntl.h>
 #include <gbm.h>
 #include <unistd.h>
-#include <vulkan/vulkan.h>
 #include <webgpu/webgpu_cpp.h>
 
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
+
+// This must included instead of vulkan.h so that can we wrap it with vulkan_platform.h.
+#include "dawn/common/vulkan_platform.h"
 
 #include "dawn/tests/white_box/SharedTextureMemoryTests.h"
 
