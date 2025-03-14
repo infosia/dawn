@@ -52,6 +52,24 @@
       "parentUuid": "00dae2ec_9262a489",
       "revId": "720b3e518613755a4afe98d28bbccfb037923e58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82258cd2_5cc81ca4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-14T15:14:50Z",
+      "side": 1,
+      "message": "I started down the path of adding bitwise operation overloads. But then wondered whether ubsan would flag the ability to generate outside the set of enumerated values (which are individual bits). I backed off and did the simple thing to unblock now.  \nI\u0027ll land and file a bug for followup.",
+      "parentUuid": "bf74aed6_cf58ffb3",
+      "revId": "720b3e518613755a4afe98d28bbccfb037923e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
