@@ -249,6 +249,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c01ab710_2ca3aed6",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-14T17:10:29Z",
+      "side": 1,
+      "message": "Though the current approch looks good as well.",
+      "parentUuid": "b9a374a1_0ac450e6",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7aeae022_98789cf0",
