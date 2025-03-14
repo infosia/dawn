@@ -16,6 +16,24 @@
       "message": "Fine for now, but maybe we should just add conversions for the types so that we could use bitwise ops on them later on?",
       "revId": "720b3e518613755a4afe98d28bbccfb037923e58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00dae2ec_9262a489",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T01:01:32Z",
+      "side": 1,
+      "message": "Something must be different in the g3 build, since it works fine in Dawn. We already set up the operators for this to be used as a bitmask:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Error.h;l\u003d283;drc\u003de08e8c85cbaa594c61e0235319dcc08b1ed3560e\nwhich is included by `ErrorSink.h`. And evidently it works fine here:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.cpp;l\u003d705;drc\u003d84eb8ce380d0f44f4ec366398828cb4a595553e3\n\nMaybe the issue is that `Error.h` doesn\u0027t include `dawn/native/EnumClassBitmasks.h` or `webgpu/webgpu_enum_class_bitmasks.h`? (Most files get the latter via `webgpu_cpp.h`.) But I\u0027m surprised if the template overload compiles at all if the base template isn\u0027t in scope at all.",
+      "parentUuid": "a1135c7a_c509e3fa",
+      "revId": "720b3e518613755a4afe98d28bbccfb037923e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
