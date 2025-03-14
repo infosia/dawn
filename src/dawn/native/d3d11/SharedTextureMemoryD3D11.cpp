@@ -34,7 +34,9 @@
 #include "dawn/native/d3d/KeyedMutex.h"
 #include "dawn/native/d3d/UtilsD3D.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
+#include "dawn/native/d3d11/DeviceInfoD3D11.h"
 #include "dawn/native/d3d11/TextureD3D11.h"
+#include "dawn/utils/TextureUtils.h"
 
 namespace dawn::native::d3d11 {
 
@@ -58,11 +60,20 @@ PropertiesFromD3D11Texture(Device* device, ID3D11Texture2D* d3d11Texture, bool i
                     "Resource Height (%u) exceeds maxTextureDimension2D (%u).", desc.Height,
                     limits.v1.maxTextureDimension2D);
 
+    wgpu::TextureFormat wgpuFormat;
+    DAWN_TRY_ASSIGN(wgpuFormat, d3d::FromUncompressedColorDXGITextureFormat(desc.Format));
+    if (isSharedWithHandle) {
+        DAWN_INVALID_IF(utils::IsMultiPlanarFormat(wgpuFormat) &&
+                            !device->GetDeviceInfo().supportsSharedResourceCapabilityTier2,
+                        "Resource Format (%s) with HANDLE is only supported if the D3D11 device "
+                        "supports D3D11_SHARED_RESOURCE_TIER_2",
+                        wgpuFormat);
+    }
+
     SharedTextureMemoryProperties properties;
     properties.size = {static_cast<uint32_t>(desc.Width), static_cast<uint32_t>(desc.Height),
                        desc.ArraySize};
-
-    DAWN_TRY_ASSIGN(properties.format, d3d::FromUncompressedColorDXGITextureFormat(desc.Format));
+    properties.format = wgpuFormat;
 
     // The usages that the underlying D3D11 texture supports are partially
     // dependent on its creation flags. Note that the SharedTextureMemory
