@@ -1228,42 +1228,35 @@ bool ShaderModuleParseResult::HasParsedShader() const {
     return tintProgram != nullptr;
 }
 
-MaybeError ValidateAndParseShaderModule(
-    DeviceBase* device,
-    const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
-    const std::vector<tint::wgsl::Extension>& internalExtensions,
-    ShaderModuleParseResult* parseResult,
-    OwnedCompilationMessages* outMessages) {
+MaybeError ParseShaderModule(DeviceBase* device,
+                             const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
+                             wgpu::SType moduleType,
+                             const std::vector<tint::wgsl::Extension>& internalExtensions,
+                             ShaderModuleParseResult* parseResult,
+                             OwnedCompilationMessages* outMessages) {
     DAWN_ASSERT(parseResult != nullptr);
-
-    wgpu::SType moduleType;
-    // A WGSL (or SPIR-V, if enabled) subdescriptor is required, and a Dawn-specific SPIR-V options
-    // descriptor is allowed when using SPIR-V.
-#if TINT_BUILD_SPV_READER
-    DAWN_TRY_ASSIGN(
-        moduleType,
-        (descriptor
-             .ValidateBranches<Branch<ShaderSourceWGSL, ShaderModuleCompilationOptions>,
-                               Branch<ShaderSourceSPIRV, DawnShaderModuleSPIRVOptionsDescriptor,
-                                      ShaderModuleCompilationOptions>>()));
-#else
-    DAWN_TRY_ASSIGN(
-        moduleType,
-        (descriptor.ValidateBranches<Branch<ShaderSourceWGSL, ShaderModuleCompilationOptions>>()));
-#endif
-    DAWN_ASSERT(moduleType != wgpu::SType(0u));
 
     ScopedTintICEHandler scopedICEHandler(device);
 
     const ShaderSourceWGSL* wgslDesc = nullptr;
 
+    // Descriptor should have been validated as a valid WGSL or SPIR-V descriptor.
+#if TINT_BUILD_SPV_READER
+    DAWN_ASSERT(moduleType == wgpu::SType::ShaderSourceWGSL ||
+                moduleType == wgpu::SType::ShaderSourceSPIRV);
+#else   // TINT_BUILD_SPV_READER
+    DAWN_ASSERT(moduleType == wgpu::SType::ShaderSourceWGSL);
+#endif  // TINT_BUILD_SPV_READER
+
     switch (moduleType) {
 #if TINT_BUILD_SPV_READER
         case wgpu::SType::ShaderSourceSPIRV: {
-            DAWN_INVALID_IF(device->IsToggleEnabled(Toggle::DisallowSpirv),
-                            "SPIR-V is disallowed.");
+            // SpirV toggle should have been validated before chacking cache.
+            DAWN_ASSERT(!device->IsToggleEnabled(Toggle::DisallowSpirv));
+
             const auto* spirvDesc = descriptor.Get<ShaderSourceSPIRV>();
             const auto* spirvOptions = descriptor.Get<DawnShaderModuleSPIRVOptionsDescriptor>();
+            DAWN_ASSERT(spirvDesc != nullptr);
 
             // TODO(dawn:2033): Avoid unnecessary copies of the SPIR-V code.
             std::vector<uint32_t> spirv(spirvDesc->code, spirvDesc->code + spirvDesc->codeSize);
@@ -1282,33 +1275,28 @@ MaybeError ValidateAndParseShaderModule(
 #endif  // TINT_BUILD_SPV_READER
         case wgpu::SType::ShaderSourceWGSL: {
             wgslDesc = descriptor.Get<ShaderSourceWGSL>();
-            break;
+            DAWN_ASSERT(wgslDesc != nullptr);
+
+            auto tintFile = std::make_unique<tint::Source::File>("", wgslDesc->code);
+
+            if (device->IsToggleEnabled(Toggle::DumpShaders)) {
+                std::ostringstream dumpedMsg;
+                dumpedMsg << "// Dumped WGSL:\n" << std::string_view(wgslDesc->code) << "\n";
+                device->EmitLog(WGPULoggingType_Info, dumpedMsg.str().c_str());
+            }
+
+            tint::Program program;
+            DAWN_TRY_ASSIGN(program, ParseWGSL(tintFile.get(), device->GetWGSLAllowedFeatures(),
+                                               internalExtensions, outMessages));
+
+            parseResult->tintProgram =
+                AcquireRef(new TintProgram(std::move(program), std::move(tintFile)));
+
+            return {};
         }
         default:
             DAWN_UNREACHABLE();
     }
-    DAWN_ASSERT(wgslDesc != nullptr);
-
-    DAWN_INVALID_IF(descriptor.Get<ShaderModuleCompilationOptions>() != nullptr &&
-                        !device->HasFeature(Feature::ShaderModuleCompilationOptions),
-                    "Shader module compilation options used without %s enabled.",
-                    wgpu::FeatureName::ShaderModuleCompilationOptions);
-
-    auto tintFile = std::make_unique<tint::Source::File>("", wgslDesc->code);
-
-    if (device->IsToggleEnabled(Toggle::DumpShaders)) {
-        std::ostringstream dumpedMsg;
-        dumpedMsg << "// Dumped WGSL:\n" << std::string_view(wgslDesc->code) << "\n";
-        device->EmitLog(WGPULoggingType_Info, dumpedMsg.str().c_str());
-    }
-
-    tint::Program program;
-    DAWN_TRY_ASSIGN(program, ParseWGSL(tintFile.get(), device->GetWGSLAllowedFeatures(),
-                                       internalExtensions, outMessages));
-
-    parseResult->tintProgram = AcquireRef(new TintProgram(std::move(program), std::move(tintFile)));
-
-    return {};
 }
 
 RequiredBufferSizes ComputeRequiredBufferSizesForLayout(const EntryPointMetadata& entryPoint,
@@ -1560,25 +1548,28 @@ Ref<TintProgram> ShaderModuleBase::GetTintProgram() {
         ShaderModuleDescriptor descriptor;
         ShaderSourceWGSL wgslDescriptor;
         ShaderSourceSPIRV sprivDescriptor;
+        wgpu::SType moduleType;
 
         switch (mType) {
             case Type::Spirv:
                 sprivDescriptor.codeSize = mOriginalSpirv.size();
                 sprivDescriptor.code = mOriginalSpirv.data();
                 descriptor.nextInChain = &sprivDescriptor;
+                moduleType = wgpu::SType::ShaderSourceSPIRV;
                 break;
             case Type::Wgsl:
                 wgslDescriptor.code = mWgsl.c_str();
                 descriptor.nextInChain = &wgslDescriptor;
+                moduleType = wgpu::SType::ShaderSourceWGSL;
                 break;
             default:
-                DAWN_ASSERT(false);
+                DAWN_UNREACHABLE();
         }
 
         ShaderModuleParseResult parseResult;
-        ValidateAndParseShaderModule(GetDevice(), Unpack(&descriptor), mInternalExtensions,
-                                     &parseResult,
-                                     /*compilationMessages*/ nullptr)
+        ParseShaderModule(GetDevice(), Unpack(&descriptor), moduleType, mInternalExtensions,
+                          &parseResult,
+                          /*compilationMessages*/ nullptr)
             .AcquireSuccess();
         DAWN_ASSERT(parseResult.tintProgram != nullptr);
 
@@ -1654,6 +1645,22 @@ void ShaderModuleBase::InjectCompilationMessages(
 
 OwnedCompilationMessages* ShaderModuleBase::GetCompilationMessages() const {
     return mCompilationMessages.get();
+}
+
+std::string ShaderModuleBase::GetCompilationLog() const {
+    DAWN_ASSERT(mCompilationMessages);
+    if (!mCompilationMessages->HasWarningsOrErrors()) {
+        return "";
+    }
+
+    // Emit the formatted Tint errors and warnings.
+    std::ostringstream t;
+    t << absl::StrFormat("Compilation log for %s:\n", this);
+    for (const auto& pMessage : mCompilationMessages->GetFormattedTintMessages()) {
+        t << "\n" << pMessage;
+    }
+
+    return t.str();
 }
 
 MaybeError ShaderModuleBase::InitializeBase(ShaderModuleParseResult* parseResult,
