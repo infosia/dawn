@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "246addc1_a339dcfd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-14T17:40:31Z",
+      "side": 1,
+      "message": "Hello Dan, James\nPlease take a look at this CL.\nThanks!\np.s. nit: object in EmitCompositeExtract should be renamed to composite wasn\u0027t sure if i should do it in this cl or not",
+      "revId": "fb6ddb91c8bf36a9b07dd8b795a122bc0ecd14d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
