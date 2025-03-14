@@ -187,6 +187,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6caa337f_1fcba78e",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T20:25:55Z",
+      "side": 1,
+      "message": "Let me see if I can remove the state while keeping the asserts - I realized I can probably derive \"NeedsMappedAtCreation\" from \"MappedAtCreation \u0026\u0026 mapping pointer is null\".",
+      "parentUuid": "9814e44e_88701af0",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e2383233_a2d0088e",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 18
