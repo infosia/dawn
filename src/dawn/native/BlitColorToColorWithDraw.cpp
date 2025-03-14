@@ -29,6 +29,7 @@
 
 #include <sstream>
 #include <string>
+#include <utility>
 
 #include "absl/container/inlined_vector.h"
 #include "dawn/common/Assert.h"
@@ -125,14 +126,14 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateExpandMultisamplePipeline(
     shaderModuleDesc.nextInChain = &wgslDesc;
     wgslDesc.code = kBlitToColorVS;
 
-    Ref<ShaderModuleBase> vshaderModule;
-    DAWN_TRY_ASSIGN(vshaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    auto [vshaderModule, vsCreationResult] = device->CreateShaderModule(&shaderModuleDesc);
+    DAWN_TRY(std::move(vsCreationResult));
 
     // fragment shader's source will depend on pipeline key.
     std::string fsCode = GenerateExpandFS(pipelineKey);
     wgslDesc.code = fsCode.c_str();
-    Ref<ShaderModuleBase> fshaderModule;
-    DAWN_TRY_ASSIGN(fshaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    auto [fshaderModule, fsCreationResult] = device->CreateShaderModule(&shaderModuleDesc);
+    DAWN_TRY(std::move(fsCreationResult));
 
     FragmentState fragmentState = {};
     fragmentState.module = fshaderModule.Get();
@@ -228,14 +229,14 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateResolveMultisamplePipeline(
     shaderModuleDesc.nextInChain = &wgslDesc;
     wgslDesc.code = kBlitToColorVS;
 
-    Ref<ShaderModuleBase> vshaderModule;
-    DAWN_TRY_ASSIGN(vshaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    auto [vshaderModule, vsCreationResult] = device->CreateShaderModule(&shaderModuleDesc);
+    DAWN_TRY(std::move(vsCreationResult));
 
     // fragment shader's source will depend on sample count.
     std::string fsCode = GenerateResolveFS(pipelineKey.sampleCount);
     wgslDesc.code = fsCode.c_str();
-    Ref<ShaderModuleBase> fshaderModule;
-    DAWN_TRY_ASSIGN(fshaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    auto [fshaderModule, fsCreationResult] = device->CreateShaderModule(&shaderModuleDesc);
+    DAWN_TRY(std::move(fsCreationResult));
 
     FragmentState fragmentState = {};
     fragmentState.module = fshaderModule.Get();

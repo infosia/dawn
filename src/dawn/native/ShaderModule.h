@@ -364,7 +364,9 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
 
     void InjectCompilationMessages(std::unique_ptr<OwnedCompilationMessages> compilationMessages);
     OwnedCompilationMessages* GetCompilationMessages() const;
-    std::string GetCompilationLog() const;
+    std::string GetFormattedCompilationMessages(bool SkipIfNoErrorAndWarning) const;
+    std::string GetCompilationLog(bool SkipIfNoErrorAndWarning) const;
+    MaybeError GenerateShaderCodeValidationResult() const;
 
     // Return nullable tintProgram directly without any recreation, can be used for testing the
     // releasing/recreation behaviors.

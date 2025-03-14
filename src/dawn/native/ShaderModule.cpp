@@ -1252,12 +1252,8 @@ MaybeError ValidateAndParseShaderModule(
     switch (moduleType) {
 #if TINT_BUILD_SPV_READER
         case wgpu::SType::ShaderSourceSPIRV: {
-            // SpirV toggle should have been validated before chacking cache.
-            DAWN_ASSERT(!device->IsToggleEnabled(Toggle::DisallowSpirv));
-
             const auto* spirvDesc = descriptor.Get<ShaderSourceSPIRV>();
             const auto* spirvOptions = descriptor.Get<DawnShaderModuleSPIRVOptionsDescriptor>();
-            DAWN_ASSERT(spirvDesc != nullptr);
 
             // TODO(dawn:2033): Avoid unnecessary copies of the SPIR-V code.
             std::vector<uint32_t> spirv(spirvDesc->code, spirvDesc->code + spirvDesc->codeSize);
@@ -1468,7 +1464,10 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
 }
 
 ShaderModuleBase::ShaderModuleBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label)
-    : Base(device, tag, label), mType(Type::Undefined) {}
+    : Base(device, tag, label), mType(Type::Undefined) {
+    // Also track the invalid shader modules, since they might be cached as well.
+    GetObjectTrackingList()->Track(this);
+}
 
 ShaderModuleBase::~ShaderModuleBase() = default;
 
@@ -1648,20 +1647,41 @@ OwnedCompilationMessages* ShaderModuleBase::GetCompilationMessages() const {
     return mCompilationMessages.get();
 }
 
-std::string ShaderModuleBase::GetCompilationLog() const {
+std::string ShaderModuleBase::GetFormattedCompilationMessages(bool SkipIfNoErrorAndWarning) const {
     DAWN_ASSERT(mCompilationMessages);
-    if (!mCompilationMessages->HasWarningsOrErrors()) {
+    if (SkipIfNoErrorAndWarning && !mCompilationMessages->HasWarningsOrErrors()) {
+        return "";
+    }
+
+    // Emit the formatted Tint errors and warnings.
+    std::ostringstream t;
+    for (const auto& pMessage : mCompilationMessages->GetFormattedTintMessages()) {
+        t << "\n" << pMessage;
+    }
+
+    return t.str();
+}
+
+std::string ShaderModuleBase::GetCompilationLog(bool SkipIfNoErrorAndWarning) const {
+    DAWN_ASSERT(mCompilationMessages);
+    if (SkipIfNoErrorAndWarning && !mCompilationMessages->HasWarningsOrErrors()) {
         return "";
     }
 
     // Emit the formatted Tint errors and warnings.
     std::ostringstream t;
     t << absl::StrFormat("Compilation log for %s:\n", this);
-    for (const auto& pMessage : mCompilationMessages->GetFormattedTintMessages()) {
-        t << "\n" << pMessage;
-    }
+    t << GetFormattedCompilationMessages(SkipIfNoErrorAndWarning);
 
     return t.str();
+}
+
+MaybeError ShaderModuleBase::GenerateShaderCodeValidationResult() const {
+    if (!IsError()) {
+        return {};
+    }
+    return DAWN_VALIDATION_ERROR("Error while parsing shader: %s\n",
+                                 GetFormattedCompilationMessages(false));
 }
 
 MaybeError ShaderModuleBase::InitializeBase(ShaderModuleParseResult* parseResult,

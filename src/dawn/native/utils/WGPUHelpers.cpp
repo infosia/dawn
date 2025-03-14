@@ -32,6 +32,7 @@
 #include <limits>
 #include <mutex>
 #include <sstream>
+#include <utility>
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
@@ -55,7 +56,13 @@ ResultOrError<Ref<ShaderModuleBase>> CreateShaderModule(
     wgslDesc.code = source;
     ShaderModuleDescriptor descriptor;
     descriptor.nextInChain = &wgslDesc;
-    return device->CreateShaderModule(&descriptor, internalExtensions);
+    auto [shaderModule, shaderModuleCreationError] =
+        device->CreateShaderModule(&descriptor, internalExtensions);
+    // Handle the shader module creation error, if any.
+    DAWN_TRY(std::move(shaderModuleCreationError));
+    // If shaderModuleCreationError is empty, shaderModule must be valid.
+    DAWN_ASSERT(shaderModule && !shaderModule->IsError());
+    return shaderModule;
 }
 
 ResultOrError<Ref<BufferBase>> CreateBufferFromData(DeviceBase* device,
