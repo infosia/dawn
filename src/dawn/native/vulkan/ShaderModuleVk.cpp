@@ -428,14 +428,14 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                         tint::core::ir::transform::SubstituteOverrides(ir.Get(), cfg);
                     DAWN_INVALID_IF(substituteOverridesResult != tint::Success,
                                     "Pipeline override substitution (IR) failed:\n%s",
-                                    substituteOverridesResult.Failure().reason.Str());
+                                    substituteOverridesResult.Failure().reason);
                 }
 
                 // Generate SPIR-V from Tint IR.
                 auto tintResult = tint::spirv::writer::Generate(ir.Get(), r.tintOptions);
                 DAWN_INVALID_IF(tintResult != tint::Success,
                                 "An error occurred while generating SPIR-V\n%s",
-                                tintResult.Failure().reason.Str());
+                                tintResult.Failure().reason);
 
                 // Workgroup validation has to come after `Generate` because it may require
                 // overrides to have been substituted.

@@ -787,7 +787,7 @@ bool GenerateSpirv([[maybe_unused]] Options& options,
             tint::core::ir::transform::SingleEntryPoint(ir.Get(), options.ep_name);
         if (singleEntryPointResult != tint::Success) {
             std::cerr << "Pipeline single entry point (IR) failed:\n"
-                      << singleEntryPointResult.Failure().reason.Str() << "\n";
+                      << singleEntryPointResult.Failure().reason << "\n";
         }
     }
 
@@ -800,7 +800,7 @@ bool GenerateSpirv([[maybe_unused]] Options& options,
             tint::core::ir::transform::SubstituteOverrides(ir.Get(), ir_cfg);
         if (substituteOverridesResult != tint::Success) {
             std::cerr << "Pipeline override substitution (IR) failed:\n"
-                      << substituteOverridesResult.Failure().reason.Str() << "\n";
+                      << substituteOverridesResult.Failure().reason << "\n";
             return false;
         }
     }
@@ -970,7 +970,7 @@ bool GenerateMsl([[maybe_unused]] Options& options,
             tint::core::ir::transform::SingleEntryPoint(ir.Get(), options.ep_name);
         if (singleEntryPointResult != tint::Success) {
             std::cerr << "Pipeline single entry point (IR) failed:\n"
-                      << singleEntryPointResult.Failure().reason.Str() << "\n";
+                      << singleEntryPointResult.Failure().reason << "\n";
         }
     }
 
@@ -983,7 +983,7 @@ bool GenerateMsl([[maybe_unused]] Options& options,
             tint::core::ir::transform::SubstituteOverrides(ir.Get(), ir_cfg);
         if (substituteOverridesResult != tint::Success) {
             std::cerr << "Pipeline override substitution (IR) failed:\n"
-                      << substituteOverridesResult.Failure().reason.Str() << "\n";
+                      << substituteOverridesResult.Failure().reason << "\n";
             return false;
         }
     }
@@ -1105,7 +1105,7 @@ bool GenerateHlsl([[maybe_unused]] Options& options,
     gen_options.compiler = for_fxc ? tint::hlsl::writer::Options::Compiler::kFXC
                                    : tint::hlsl::writer::Options::Compiler::kDXC;
 
-    tint::diag::Result<tint::hlsl::writer::Output> result;
+    tint::Result<tint::hlsl::writer::Output> result;
     if (options.use_ir) {
         // Convert the AST program to an IR module.
         auto ir = tint::wgsl::reader::ProgramToLoweredIR(res.Get());
@@ -1119,7 +1119,7 @@ bool GenerateHlsl([[maybe_unused]] Options& options,
                 tint::core::ir::transform::SingleEntryPoint(ir.Get(), options.ep_name);
             if (singleEntryPointResult != tint::Success) {
                 std::cerr << "Pipeline single entry point (IR) failed:\n"
-                          << singleEntryPointResult.Failure().reason.Str() << "\n";
+                          << singleEntryPointResult.Failure().reason << "\n";
             }
         }
 
@@ -1132,7 +1132,7 @@ bool GenerateHlsl([[maybe_unused]] Options& options,
                 tint::core::ir::transform::SubstituteOverrides(ir.Get(), ir_cfg);
             if (substituteOverridesResult != tint::Success) {
                 std::cerr << "Pipeline override substitution (IR) failed:\n"
-                          << substituteOverridesResult.Failure().reason.Str() << "\n";
+                          << substituteOverridesResult.Failure().reason << "\n";
                 return false;
             }
         }
@@ -1297,7 +1297,7 @@ bool GenerateGlsl([[maybe_unused]] Options& options,
             tint::core::ir::transform::SingleEntryPoint(ir.Get(), options.ep_name);
         if (singleEntryPointResult != tint::Success) {
             std::cerr << "Pipeline single entry point (IR) failed:\n"
-                      << singleEntryPointResult.Failure().reason.Str() << "\n";
+                      << singleEntryPointResult.Failure().reason << "\n";
         }
     }
 
@@ -1310,7 +1310,7 @@ bool GenerateGlsl([[maybe_unused]] Options& options,
             tint::core::ir::transform::SubstituteOverrides(ir.Get(), ir_cfg);
         if (substituteOverridesResult != tint::Success) {
             std::cerr << "Pipeline override substitution (IR) failed:\n"
-                      << substituteOverridesResult.Failure().reason.Str() << "\n";
+                      << substituteOverridesResult.Failure().reason << "\n";
             return false;
         }
     }

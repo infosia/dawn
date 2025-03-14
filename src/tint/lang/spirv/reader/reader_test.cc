@@ -55,7 +55,7 @@ TEST_F(SpirvReaderTest, UnsupportedExtension) {
                OpFunctionEnd
 )");
     ASSERT_NE(got, Success);
-    EXPECT_EQ(got.Failure().reason.Str(),
+    EXPECT_EQ(got.Failure().reason,
               "error: SPIR-V extension 'SPV_KHR_variable_pointers' is not supported");
 }
 
