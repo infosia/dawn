@@ -88,6 +88,24 @@
       "parentUuid": "82258cd2_5cc81ca4",
       "revId": "720b3e518613755a4afe98d28bbccfb037923e58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "534728b9_9fb444fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T19:31:37Z",
+      "side": 1,
+      "message": "Thanks, updated that issue just to make sure it\u0027s clear!\n\nBTW, nit: avoid using b/ style links for public bugs, as clicking those doesn\u0027t work externally (and for chromium.org users it also puts us on buganizer instead of issues.chromium.org, which is why I noticed). You can use the monorail-style \"bug 403538194\"; both gerrit and buganizer will recognize that and linkify it.",
+      "parentUuid": "a1dcef18_4fc6d5a1",
+      "revId": "720b3e518613755a4afe98d28bbccfb037923e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
