@@ -194,6 +194,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e6e09ce_9bec20b3",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b05f2e16_d0b741b1",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5a64de2b_9b18a7f4",
@@ -225,6 +243,24 @@
       "side": 1,
       "message": "The server doesn\u0027t remove mapped at creation because it uses that when available to initialize the buffer. So it may happen that the server returns nullptr when the client doesn\u0027t. IDK how we should handle that case. Create an unnecessay error buffer on the wire side and ignore all mapping stuff?",
       "parentUuid": "5a64de2b_9b18a7f4",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "633a303b_ab5873e2",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:24:43Z",
+      "side": 1,
+      "message": "OMG. OK. I talked with Loko this afternoon and we figured out the first problem. The failure is in a device destroy test. This happens because the device is destroyed, due to the condition I added to ALSO return null if the device is destroyed (not just on OOM). This was to fix another crash hit by chrome in the same test.\n\nIt makes sense to do this, because destroying the device unmaps all buffers; probably you shouldn\u0027t be able to map any _after_ destroying either. However I realized that\u0027s not what the spec says! It only throws on OOM. https://gpuweb.github.io/gpuweb/#dom-gpudevice-createbuffer\n\nImplementing what the spec says is a pain, because it throws a wrench in assumptions, in particular that we can stop tracking buffers to destroy once the device is destroyed. As a stop-gap, I\u0027ve managed to mostly implement the spec behavior, *except* destroying the device a second time will not destroy any buffers created after the device was first destroyed. Fixing this would require more Dawn changes. But, maybe I should propose a spec change instead, to disallow \n\n---\n\nUnfortunately it\u0027s _also_ possible for mapping at creation to succeed on the client and fail on the server. This would be rare but does mean I still won\u0027t have fixed it structurally. I might add a testing extension to test this and the other impossible-to-trigger case.",
+      "parentUuid": "21a4a293_6c13096a",
       "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -264,6 +300,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78324bc5_77600f2e",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:24:43Z",
+      "side": 1,
+      "message": "refactored the flow to make this less weird",
+      "parentUuid": "debc96eb_727a2596",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de51ae76_f7539f64",
@@ -277,6 +331,24 @@
       "writtenOn": "2025-03-13T12:02:58Z",
       "side": 1,
       "message": "nit: leftover debug?",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94938acb_997a82ba",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de51ae76_f7539f64",
       "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
