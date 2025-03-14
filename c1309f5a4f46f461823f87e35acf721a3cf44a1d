@@ -62,6 +62,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9883c848_dc904ff9",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T06:09:11Z",
+      "side": 1,
+      "message": "It would be complicated because we need to allocate a new one every time an existing one isn\u0027t large enough. Could be done with std::shared_ptr probably but it still adds complexity.\n\nAlso I think it wouldn\u0027t really be compliant because writes to the mapping would show up on other error buffers.",
+      "parentUuid": "4cf85bc3_5d3341a7",
+      "range": {
+        "startLine": 88,
+        "startChar": 12,
+        "endLine": 88,
+        "endChar": 86
+      },
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57284deb_328f0ba8",
@@ -138,6 +162,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "96006944_33e00d61",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T06:09:11Z",
+      "side": 1,
+      "message": "ah, I forgot there were device-scoped logs. This was convenient because it let me add context, but I should be able to make that work. TODO",
+      "parentUuid": "e2383233_a2d0088e",
+      "range": {
+        "startLine": 1266,
+        "startChar": 8,
+        "endLine": 1268,
+        "endChar": 75
+      },
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bb4e2f95_3b570681",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 18
@@ -173,6 +221,30 @@
           ]
         }
       ],
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0d8fe69_15994b4f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T06:09:11Z",
+      "side": 1,
+      "message": "1) It can be either a validation error (from the frontend) or an out-of-memory error (from the backend), it depends on what calling CreateBufferInternal gave us. Maybe adding context is redundant, I\u0027m not sure.\n\n2) This took me ages to figure out: We\u0027re trying to emulate what the wire (and the spec\u0027s client-server model) does - mappedAtCreation allocates on the client before we send anything to the server, so it always fails first. But in dawn native we can\u0027t actually do things in that order, because the mappedAtCreation mapping could actually be the *real* mapping. So we shuffle the error reporting around to make it look the same.",
+      "parentUuid": "bb4e2f95_3b570681",
+      "range": {
+        "startLine": 1277,
+        "startChar": 4,
+        "endLine": 1280,
+        "endChar": 5
+      },
       "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -366,6 +438,24 @@
       "writtenOn": "2025-03-13T12:02:58Z",
       "side": 1,
       "message": "nit: unused buffer.",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7362ebcf_0d4bc743",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T06:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5747dca1_7267eac9",
       "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -34,6 +34,24 @@
       "parentUuid": "196749da_0c715037",
       "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9dee998_c7f31f6d",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T06:09:11Z",
+      "side": 0,
+      "message": "I tried this earlier on, but I it caused problems for at least one internal user of CreateBuffer (I don\u0027t remember which one I saw crash, there are many). Those users want to DAWN_TRY to propagate errors, instead of getting null.\n\nI struggled to find any solution other than this ridiculous layering (btw, the layering is:\n`CreateBuffer`-\u003e`CreateBufferInternal`-\u003e`CreateBufferImpl`\n`APICreateBuffer`-\u003e`CreateBufferInternal`-\u003e`CreateBufferImpl`\n)",
+      "parentUuid": "3610969a_0a6778cd",
+      "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
