@@ -16,6 +16,166 @@
       "message": "LGTM",
       "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5c3b1fd_3e214f8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:39:21Z",
+      "side": 1,
+      "message": "there are probably answers to all my questions, just not sure without downloading this and getting deep into the generated code.",
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58284bc6_5a977c74",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:39:21Z",
+      "side": 1,
+      "message": "I\u0027m surprised we still use default_value in the header for any enum. I thought these cases would also use `_wgpu_ENUM_ZERO_INIT`.\n\nsame comment in c++",
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "396f7bc4_2718ffdf",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:39:21Z",
+      "side": 1,
+      "message": "nit: Seems like the concept of \"default_value\" is still a bit mixed, between trivial frontend defaults, and INIT struct values.\n\nsame comment in c++",
+      "range": {
+        "startLine": 187,
+        "startChar": 49,
+        "endLine": 187,
+        "endChar": 62
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "275a572a_7fb0c570",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:39:21Z",
+      "side": 1,
+      "message": "I don\u0027t understand what this does: generator should hit the `hasUndefined` case regardless of whether this is here; `WithTrivialFrontendDefaults` should no-op. Does it actually have any effect?\n\nsame for other texture formats, and for vertex step mode.",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 79
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf5578f8_bc05e5dc",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 2665,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:39:21Z",
+      "side": 1,
+      "message": "nit: PresentMode doesn\u0027t exist in JS, so no jsrepr is needed.",
+      "range": {
+        "startLine": 2665,
+        "startChar": 46,
+        "endLine": 2665,
+        "endChar": 67
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53dcd87a_d408632a",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:39:21Z",
+      "side": 1,
+      "message": "nit: why is there a default case?",
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da73d2e4_fce00aec",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:39:21Z",
+      "side": 1,
+      "message": "nit: why is there a default case?",
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99e53117_1cb9aa55",
+        "filename": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T05:39:21Z",
+      "side": 1,
+      "message": "how come the rest of these didn\u0027t change to Undefined?",
+      "range": {
+        "startLine": 301,
+        "startChar": 70,
+        "endLine": 301,
+        "endChar": 76
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
