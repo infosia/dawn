@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e68cd64a_0e9514ba",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T23:00:19Z",
+      "side": 1,
+      "message": "Oh, this must be for different enums than the ones I was thinking of.\n\nUpstream we use a named value whenever we can, since it\u0027s more self-documenting. So let\u0027s keep using them.",
+      "parentUuid": "82f40eeb_52ea2ce9",
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "396f7bc4_2718ffdf",
@@ -119,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "15fb72ae_64c9d6cc",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T23:00:19Z",
+      "side": 1,
+      "message": "Same as above, we should use `None` if it\u0027s named.\n\nThe comment is more that in dawn.json I think we should distinguish the init values (webgpu.yml `\"default\"`) from the things that get defaulted in `WithTrivialFrontendDefaults`. This can be fixed later though.",
+      "parentUuid": "89febfc4_f7c5cfa7",
+      "range": {
+        "startLine": 187,
+        "startChar": 49,
+        "endLine": 187,
+        "endChar": 62
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "275a572a_7fb0c570",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 10
@@ -154,6 +196,30 @@
       "side": 1,
       "message": "I was mostly just trying to match the upstream headers, see:\nhttps://github.com/webgpu-native/webgpu-headers/blob/main/webgpu.yml#L2898\nhttps://github.com/webgpu-native/webgpu-headers/blob/main/webgpu.yml#L1949\nhttps://github.com/webgpu-native/webgpu-headers/blob/main/webgpu.yml#L1805\nhttps://github.com/webgpu-native/webgpu-headers/blob/main/webgpu.yml#L3137\n\nThe upstream macros they generate specify the `Undefined` enum instead of using `_wgpu_ENUM_ZERO_INIT`. I think upstream, it makes sense because it allows for documentation to make sense? I could probably make the upstream overwrite with the macro instead of the `Undefined` enum though?",
       "parentUuid": "275a572a_7fb0c570",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 79
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47ce6266_9e73a681",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T23:00:19Z",
+      "side": 1,
+      "message": "But since `member.type.hasUndefined` won\u0027t it generate `Undefined` regardless of the `\"default\"` in dawn.json?\n\nSo it seems like it has no effect on webgpu.h, but in `WithTrivialFrontendDefaults` it might produce code like\n`if (configuration.format \u003d\u003d Undefined) configuration.format \u003d Undefined;`\n(not that that\u0027s a real problem)\n\nAnyway just a nit, doesn\u0027t really matter. Also this problem will sort itself out if we do separate the \"init\" from the \"frontend default\" later.",
+      "parentUuid": "9f4fd92a_269acabf",
       "range": {
         "startLine": 442,
         "startChar": 57,
@@ -242,6 +308,24 @@
       "side": 1,
       "message": "So this (and the `default` case) kinda relates to my question in the description. In C++, there\u0027s no reason to allow explicitly specifying `Undefined` for enums. Users can just not specify them. So maybe in C++, the enum shouldn\u0027t even be explicitly available? \n\nThat said though, that would make the `default` case sort of make sense since it wouldn\u0027t handle 0? I think that would just cause it to fallthrough and still hit the `DAWN_UNREACHABLE` though, so I could still probably remove the pre-exisiting `default` case.",
       "parentUuid": "85ae3a77_f839d939",
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae36e56b_47f3ba1a",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-14T23:00:19Z",
+      "side": 1,
+      "message": "webgpu.yml defines PresentMode_Undefined because it\u0027s a valid input (it defaults). We only don\u0027t name 0 when it would always be invalid to use.\n\nSo since it\u0027s named it needs to be in this switch, but we should ideally also guarantee that it won\u0027t happen (by applying the defaulting in the frontend), and guarantee that no other unnamed numeric values will happen (by validating). We use this pattern in many places:\n\n```cpp\nswitch (enum_value) {\n    case One: return 1;\n    case Two: return 2;\n    case Undefined: break;\n}\n// Undefined AND all unnamed values reach here. It\u0027s UB to reach here in release.\nDAWN_UNREACHABLE();\n```",
+      "parentUuid": "bf8485e0_13a0e4a9",
       "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
