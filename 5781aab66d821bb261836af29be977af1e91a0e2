@@ -61,6 +61,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1671e533_8c45cd03",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1968,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-14T20:48:05Z",
+      "side": 1,
+      "message": "When I changed the code to use Args() i ran into this error:\n \n[ RUN      ] SpirvParserTest.CompositeInsert_Vector\n../../src/tint/lang/spirv/reader/parser/parser.cc:544 internal compiler error: TINT_UNREACHABLE missing value for result ID 2\n\nIllegal instruction\n\nMy guess is that this error occurs because Args calls Value() internally instead of Constant ?",
+      "parentUuid": "31b4c08a_cf6af93d",
+      "range": {
+        "startLine": 1965,
+        "startChar": 0,
+        "endLine": 1968,
+        "endChar": 9
+      },
+      "revId": "5781aab66d821bb261836af29be977af1e91a0e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "794b1158_de8fe813",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
@@ -114,6 +138,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d44f630_8cc5b258",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1971,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-14T20:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "794b1158_de8fe813",
+      "revId": "5781aab66d821bb261836af29be977af1e91a0e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b883358_f0a22fa6",
@@ -127,6 +169,24 @@
       "writtenOn": "2025-03-14T19:35:09Z",
       "side": 1,
       "message": "As above, you can use `function` and drop the `kReadWrite`.",
+      "revId": "5781aab66d821bb261836af29be977af1e91a0e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc861c35_6971c443",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1974,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-14T20:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b883358_f0a22fa6",
       "revId": "5781aab66d821bb261836af29be977af1e91a0e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -162,6 +222,24 @@
           ]
         }
       ],
+      "revId": "5781aab66d821bb261836af29be977af1e91a0e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "776cde25_2a7741ae",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-03-14T20:48:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1546133f_423b9395",
       "revId": "5781aab66d821bb261836af29be977af1e91a0e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
