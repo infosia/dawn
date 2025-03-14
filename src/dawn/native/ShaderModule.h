@@ -133,12 +133,17 @@ struct ShaderModuleEntryPoint {
     std::string name;
 };
 
-MaybeError ValidateAndParseShaderModule(
-    DeviceBase* device,
-    const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
-    const std::vector<tint::wgsl::Extension>& internalExtensions,
-    ShaderModuleParseResult* parseResult,
-    OwnedCompilationMessages* outMessages);
+// Parse the shader provided by shader module descriptor. Error might only occurs in two cases:
+//   1. A validation error would be returned if and only if the shader code is invalid;
+//   2. An internal error would be returned if adding messages to OwnedCompilationMessages failed to
+//   handle UTF in CountUTF16CodeUnitsFromUTF8String.
+MaybeError ParseShaderModule(DeviceBase* device,
+                             const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
+                             wgpu::SType moduleType,
+                             const std::vector<tint::wgsl::Extension>& internalExtensions,
+                             ShaderModuleParseResult* parseResult,
+                             OwnedCompilationMessages* outMessages);
+
 MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
                                                    const EntryPointMetadata& entryPoint,
                                                    const PipelineLayoutBase* layout);
@@ -358,6 +363,7 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
 
     void InjectCompilationMessages(std::unique_ptr<OwnedCompilationMessages> compilationMessages);
     OwnedCompilationMessages* GetCompilationMessages() const;
+    std::string GetCompilationLog() const;
 
     // Return nullable tintProgram directly without any recreation, can be used for testing the
     // releasing/recreation behaviors.

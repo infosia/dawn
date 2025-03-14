@@ -47,8 +47,20 @@ ShaderModuleMock::~ShaderModuleMock() = default;
 Ref<ShaderModuleMock> ShaderModuleMock::Create(
     DeviceMock* device,
     const UnpackedPtr<ShaderModuleDescriptor>& descriptor) {
+#if TINT_BUILD_SPV_READER
+    wgpu::SType moduleType =
+        descriptor
+            .ValidateBranches<Branch<ShaderSourceWGSL, ShaderModuleCompilationOptions>,
+                              Branch<ShaderSourceSPIRV, DawnShaderModuleSPIRVOptionsDescriptor,
+                                     ShaderModuleCompilationOptions>>()
+            .AcquireSuccess();
+#else
+    wgpu::SType moduleType =
+        descriptor.ValidateBranches<Branch<ShaderSourceWGSL, ShaderModuleCompilationOptions>>()
+            .AcquireSuccess();
+#endif
     ShaderModuleParseResult parseResult;
-    ValidateAndParseShaderModule(device, descriptor, {}, &parseResult, nullptr).AcquireSuccess();
+    ParseShaderModule(device, descriptor, moduleType, {}, &parseResult, nullptr).AcquireSuccess();
 
     Ref<ShaderModuleMock> shaderModule =
         AcquireRef(new NiceMock<ShaderModuleMock>(device, descriptor));
