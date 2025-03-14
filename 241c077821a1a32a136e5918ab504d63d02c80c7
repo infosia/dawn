@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "82f40eeb_52ea2ce9",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-14T20:43:36Z",
+      "side": 1,
+      "message": "They could! I only did this because upstream doesn\u0027t use `_wgpu_ENUM_ZERO_INIT` in this case. I could update the upstream to use it though?",
+      "parentUuid": "58284bc6_5a977c74",
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "396f7bc4_2718ffdf",
         "filename": "generator/templates/api.h",
         "patchSetId": 10
@@ -65,6 +83,30 @@
       "writtenOn": "2025-03-14T05:39:21Z",
       "side": 1,
       "message": "nit: Seems like the concept of \"default_value\" is still a bit mixed, between trivial frontend defaults, and INIT struct values.\n\nsame comment in c++",
+      "range": {
+        "startLine": 187,
+        "startChar": 49,
+        "endLine": 187,
+        "endChar": 62
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89febfc4_f7c5cfa7",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-14T20:43:36Z",
+      "side": 1,
+      "message": "This is also a diff w.r.t upstream since there, they use `None` for the default bitmasks instead of `_wgpu_ENUM_ZERO_INIT`. We probably just want to choose one convention and stick with it?",
+      "parentUuid": "396f7bc4_2718ffdf",
       "range": {
         "startLine": 187,
         "startChar": 49,
@@ -100,6 +142,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9f4fd92a_269acabf",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-14T20:43:36Z",
+      "side": 1,
+      "message": "I was mostly just trying to match the upstream headers, see:\nhttps://github.com/webgpu-native/webgpu-headers/blob/main/webgpu.yml#L2898\nhttps://github.com/webgpu-native/webgpu-headers/blob/main/webgpu.yml#L1949\nhttps://github.com/webgpu-native/webgpu-headers/blob/main/webgpu.yml#L1805\nhttps://github.com/webgpu-native/webgpu-headers/blob/main/webgpu.yml#L3137\n\nThe upstream macros they generate specify the `Undefined` enum instead of using `_wgpu_ENUM_ZERO_INIT`. I think upstream, it makes sense because it allows for documentation to make sense? I could probably make the upstream overwrite with the macro instead of the `Undefined` enum though?",
+      "parentUuid": "275a572a_7fb0c570",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 79
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cf5578f8_bc05e5dc",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 10
@@ -111,6 +177,30 @@
       "writtenOn": "2025-03-14T05:39:21Z",
       "side": 1,
       "message": "nit: PresentMode doesn\u0027t exist in JS, so no jsrepr is needed.",
+      "range": {
+        "startLine": 2665,
+        "startChar": 46,
+        "endLine": 2665,
+        "endChar": 67
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9581312_ee09633d",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 2665,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-14T20:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf5578f8_bc05e5dc",
       "range": {
         "startLine": 2665,
         "startChar": 46,
@@ -140,6 +230,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bf8485e0_13a0e4a9",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-14T20:43:36Z",
+      "side": 1,
+      "message": "So this (and the `default` case) kinda relates to my question in the description. In C++, there\u0027s no reason to allow explicitly specifying `Undefined` for enums. Users can just not specify them. So maybe in C++, the enum shouldn\u0027t even be explicitly available? \n\nThat said though, that would make the `default` case sort of make sense since it wouldn\u0027t handle 0? I think that would just cause it to fallthrough and still hit the `DAWN_UNREACHABLE` though, so I could still probably remove the pre-exisiting `default` case.",
+      "parentUuid": "85ae3a77_f839d939",
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "53dcd87a_d408632a",
         "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
         "patchSetId": 10
@@ -151,6 +259,24 @@
       "writtenOn": "2025-03-14T05:39:21Z",
       "side": 1,
       "message": "nit: why is there a default case?",
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de3e8834_726a5c3c",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-14T20:43:36Z",
+      "side": 1,
+      "message": "See response above.",
+      "parentUuid": "53dcd87a_d408632a",
       "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -172,6 +298,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc913b9c_18f40425",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-14T20:43:36Z",
+      "side": 1,
+      "message": "See response above.",
+      "parentUuid": "da73d2e4_fce00aec",
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99e53117_1cb9aa55",
@@ -185,6 +329,30 @@
       "writtenOn": "2025-03-14T05:39:21Z",
       "side": 1,
       "message": "how come the rest of these didn\u0027t change to Undefined?",
+      "range": {
+        "startLine": 301,
+        "startChar": 70,
+        "endLine": 301,
+        "endChar": 76
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4a388e3_8a4a492b",
+        "filename": "src/dawn/tests/unittests/wire/WireArgumentTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-14T20:43:36Z",
+      "side": 1,
+      "message": "Some of them are explicitly set in the test above. The ones I changed aren\u0027t explicitly set and were depending on the default values of the struct before I changed it.",
+      "parentUuid": "99e53117_1cb9aa55",
       "range": {
         "startLine": 301,
         "startChar": 70,
