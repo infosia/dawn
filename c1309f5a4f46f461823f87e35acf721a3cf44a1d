@@ -163,6 +163,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9814e44e_88701af0",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-14T20:17:28Z",
+      "side": 1,
+      "message": "Hmm, personally, I feel like the more states, the harder it is to follow. I would prefer to just keep it as `Unmapped` but leave it up to you and cwallez@chromium.org to decide.",
+      "parentUuid": "d4d83cc4_e2e125b3",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e2383233_a2d0088e",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 18
