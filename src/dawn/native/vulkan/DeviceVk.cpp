@@ -27,6 +27,8 @@
 
 #include "dawn/native/vulkan/DeviceVk.h"
 
+#include <algorithm>
+
 #include "dawn/common/Log.h"
 #include "dawn/common/NonCopyable.h"
 #include "dawn/common/Platform.h"
@@ -37,6 +39,7 @@
 #include "dawn/native/Error.h"
 #include "dawn/native/ErrorData.h"
 #include "dawn/native/Instance.h"
+#include "dawn/native/IntegerTypes.h"
 #include "dawn/native/SystemHandle.h"
 #include "dawn/native/VulkanBackend.h"
 #include "dawn/native/vulkan/BackendVk.h"
@@ -1025,6 +1028,33 @@ float Device::GetTimestampPeriodInNS() const {
 
 void Device::SetLabelImpl() {
     SetDebugName(this, VK_OBJECT_TYPE_DEVICE, mVkDevice, "Dawn_Device", GetLabel());
+}
+
+bool Device::ReduceMemoryUsageImpl() {
+    ExecutionSerial pendingSerial =
+        std::max(GetFencedDeleter()->GetLastPendingDeletionSerial(),
+                 GetResourceMemoryAllocator()->GetLastPendingDeletionSerial());
+
+    if (pendingSerial == kBeginningOfGPUTime) {
+        // Nothing pending deletion.
+        return false;
+    }
+
+    Queue* queue = ToBackend(GetQueue());
+    if (pendingSerial > queue->GetLastSubmittedCommandSerial()) {
+        // Get the recording context as if to record commands. This ensures the next tick will
+        // submit.
+        queue->GetPendingRecordingContext();
+    }
+
+    if (ConsumedError(TickImpl())) {
+        return false;
+    }
+
+    // Check again if there is anything left to delete as tick might have deleted objects.
+    return std::max(GetFencedDeleter()->GetLastPendingDeletionSerial(),
+                    GetResourceMemoryAllocator()->GetLastPendingDeletionSerial()) !=
+           kBeginningOfGPUTime;
 }
 
 void Device::PerformIdleTasksImpl() {

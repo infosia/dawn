@@ -27,6 +27,8 @@
 
 #include "dawn/native/vulkan/FencedDeleter.h"
 
+#include <algorithm>
+
 #include "dawn/native/Queue.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 
@@ -61,7 +63,6 @@ void FencedDeleter::DeleteWhenUnused(VkBuffer buffer) {
 void FencedDeleter::DeleteWhenUnused(VkDescriptorPool pool) {
     mDescriptorPoolsToDelete.Enqueue(pool, mDevice->GetQueue()->GetPendingCommandSerial());
 }
-
 void FencedDeleter::DeleteWhenUnused(VkDeviceMemory memory) {
     mMemoriesToDelete.Enqueue(memory, mDevice->GetQueue()->GetPendingCommandSerial());
 }
@@ -121,6 +122,35 @@ void FencedDeleter::DeleteWhenUnused(VkSurfaceKHR surface) {
 
 void FencedDeleter::DeleteWhenUnused(VkSwapchainKHR swapChain) {
     mSwapChainsToDelete.Enqueue(swapChain, mDevice->GetQueue()->GetPendingCommandSerial());
+}
+
+ExecutionSerial FencedDeleter::GetLastPendingDeletionSerial() {
+    ExecutionSerial lastSerial = kBeginningOfGPUTime;
+    auto GetLastSubmitted = [&lastSerial](auto& queue) {
+        if (!queue.Empty()) {
+            lastSerial = std::max(lastSerial, queue.LastSerial());
+        }
+    };
+
+    GetLastSubmitted(mBuffersToDelete);
+    GetLastSubmitted(mDescriptorPoolsToDelete);
+    GetLastSubmitted(mFencesToDelete);
+    GetLastSubmitted(mFramebuffersToDelete);
+    GetLastSubmitted(mImagesToDelete);
+    GetLastSubmitted(mImageViewsToDelete);
+    GetLastSubmitted(mMemoriesToDelete);
+    GetLastSubmitted(mPipelinesToDelete);
+    GetLastSubmitted(mPipelineLayoutsToDelete);
+    GetLastSubmitted(mQueryPoolsToDelete);
+    GetLastSubmitted(mRenderPassesToDelete);
+    GetLastSubmitted(mSamplerYcbcrConversionsToDelete);
+    GetLastSubmitted(mSamplersToDelete);
+    GetLastSubmitted(mSemaphoresToDelete);
+    GetLastSubmitted(mShaderModulesToDelete);
+    GetLastSubmitted(mSurfacesToDelete);
+    GetLastSubmitted(mSwapChainsToDelete);
+
+    return lastSerial;
 }
 
 void FencedDeleter::Tick(ExecutionSerial completedSerial) {
