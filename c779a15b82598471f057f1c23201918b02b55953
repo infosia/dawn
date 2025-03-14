@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b6b6652_7a558a40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-03-14T09:39:27Z",
+      "side": 1,
+      "message": "This CL make shader module parsing only happens after cache missed. Please take a look, thanks!",
+      "revId": "c779a15b82598471f057f1c23201918b02b55953",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
