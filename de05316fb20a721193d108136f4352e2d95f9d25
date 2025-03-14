@@ -231,6 +231,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9a374a1_0ac450e6",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-14T17:09:40Z",
+      "side": 1,
+      "message": "My suggestion was to put the whole `ResourceHeapBase` in the fenced deleter, the ResourceHeapBase would have a pointer to the allocator to notify of deallocation.",
+      "parentUuid": "f4382171_3f5824df",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7aeae022_98789cf0",
@@ -422,6 +440,24 @@
       "side": 1,
       "message": "Thanks for the white box pointer! I looked at VulkanImageWrappingTests_OpaqueFD that does something for memory allocation but couldn\u0027t correlate fully. Is it okay if I add a TODO for adding the white box tests later? \n\nI\u0027m planning to plug changes here to get called from DumpMemoryStatistics/ComputeEstimatedMemoryUsage methods in DawnNative as a follow-up, and then could add some tests to MemoryInstrumentationTests that could test something happening here without having to create ResourceMemoryAllocator.",
       "parentUuid": "10db7b0b_aec43992",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22a73f83_b9cc058b",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-14T17:09:40Z",
+      "side": 1,
+      "message": "IMHO we could have some basic end2end tests that check that if you allocate things, then non-0 is returned and some basic things like that, but there isn\u0027t much else to test at that level (I wouldn\u0027t even go as far as a whitebox test as it would be a bit change detecting)",
+      "parentUuid": "bd8699b4_c5586a34",
       "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
