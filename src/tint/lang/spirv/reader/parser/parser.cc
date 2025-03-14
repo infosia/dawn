@@ -846,6 +846,9 @@ class Parser {
                 case spv::Op::OpInBoundsAccessChain:
                     EmitAccess(inst);
                     break;
+                case spv::Op::OpCompositeInsert:
+                    EmitCompositeInsert(inst);
+                    break;
                 case spv::Op::OpCompositeConstruct:
                     EmitConstruct(inst);
                     break;
@@ -1866,6 +1869,28 @@ class Parser {
         auto* object = Value(inst.GetSingleWordOperand(2));
         auto* access = b_.Access(Type(inst.type_id()), object, std::move(indices));
         Emit(access, inst.result_id());
+    }
+
+    /// @param inst the SPIR-V instruction for OpCompositeInsert
+    void EmitCompositeInsert(const spvtools::opt::Instruction& inst) {
+        auto* object = Value(inst.GetSingleWordOperand(2));
+        auto* composite = Value(inst.GetSingleWordOperand(3));
+        Vector<core::ir::Value*, 4> indices;
+        for (uint32_t i = 4; i < inst.NumOperandWords(); i++) {
+            indices.Push(b_.Constant(u32(inst.GetSingleWordOperand(i))));
+        }
+
+        auto* tmp = b_.Var(
+            ty_.ptr(core::AddressSpace::kFunction, Type(inst.type_id()), core::Access::kReadWrite));
+        tmp->SetInitializer(composite);
+        auto* ptr_ty =
+            ty_.ptr(core::AddressSpace::kFunction, object->Type(), core::Access::kReadWrite);
+        auto* access = b_.Access(ptr_ty, tmp, std::move(indices));
+
+        EmitWithoutSpvResult(tmp);
+        Emit(access, inst.result_id());
+        EmitWithoutResult(b_.Store(access, object));
+        Emit(b_.Load(tmp), inst.result_id());
     }
 
     /// @param inst the SPIR-V instruction for OpCompositeConstruct
