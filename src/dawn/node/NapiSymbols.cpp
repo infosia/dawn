@@ -39,12 +39,16 @@
 #endif
 
 #ifdef __clang__
+#ifdef NAPI_SYMBOL_WEAK_DECL_ONLY
+#define NAPI_SYMBOL(NAME) __attribute__((weak)) void NAME();
+#else
 #define NAPI_SYMBOL(NAME)                                                    \
     __attribute__((weak)) void NAME() {                                      \
         UNREACHABLE(#NAME                                                    \
                     " is a weak stub, and should have been runtime replaced" \
                     " by the node implementation");                          \
     }
+#endif
 #else
 #define NAPI_SYMBOL(NAME)
 #endif
