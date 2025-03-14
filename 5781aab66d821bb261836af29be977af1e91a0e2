@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c6ef241_6bc780c3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-14T19:35:09Z",
+      "side": 1,
+      "message": "Tests and Tint IR output looks good, just a few suggestions here.",
+      "revId": "5781aab66d821bb261836af29be977af1e91a0e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31b4c08a_cf6af93d",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1968,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-14T19:35:09Z",
+      "side": 1,
+      "message": "We have a helper for this: `auto indices \u003d Args(inst, 4);`",
+      "range": {
+        "startLine": 1965,
+        "startChar": 0,
+        "endLine": 1968,
+        "endChar": 9
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6afcfe8b_66870664",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1965,
+                "startChar": 0,
+                "endLine": 1969,
+                "endChar": 0
+              },
+              "replacement": "        auto indices \u003d Args(inst, 4);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5781aab66d821bb261836af29be977af1e91a0e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "794b1158_de8fe813",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1971,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-14T19:35:09Z",
+      "side": 1,
+      "message": "Nit: We have aliases for the `AddressSpace` enums so you can just write `function` here.\n\nYou can also drop the `Access::kReadWrite` argument since we infer it as `read-write` for function anyway.\n\nWhat you wrote is perfectly correct, these changes would just make it a little shorter to read. I missed this when reviewing the `VectorInsertDyanamic` change.",
+      "fixSuggestions": [
+        {
+          "fixId": "c62d3aa0_b30b4a3c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1971,
+                "startChar": 0,
+                "endLine": 1972,
+                "endChar": 0
+              },
+              "replacement": "            ty_.ptr(function, Type(inst.type_id())));\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1974,
+                "startChar": 0,
+                "endLine": 1975,
+                "endChar": 0
+              },
+              "replacement": "            ty_.ptr(function, object-\u003eType());\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1995,
+                "startChar": 0,
+                "endLine": 1996,
+                "endChar": 0
+              },
+              "replacement": "            ty_.ptr(function, Type(inst.type_id())));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5781aab66d821bb261836af29be977af1e91a0e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b883358_f0a22fa6",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1974,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-14T19:35:09Z",
+      "side": 1,
+      "message": "As above, you can use `function` and drop the `kReadWrite`.",
+      "revId": "5781aab66d821bb261836af29be977af1e91a0e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1546133f_423b9395",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-14T19:35:09Z",
+      "side": 1,
+      "message": "This one should be `EmitWithoutSpvResult` too. The SPIR-V result ID should only be mapped to the last Tint instruction that we create.",
+      "fixSuggestions": [
+        {
+          "fixId": "74d482a3_4f33f757",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1978,
+                "startChar": 0,
+                "endLine": 1979,
+                "endChar": 0
+              },
+              "replacement": "        EmitWithoutSpvResult(access);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5781aab66d821bb261836af29be977af1e91a0e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
