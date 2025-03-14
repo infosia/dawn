@@ -213,6 +213,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4382171_3f5824df",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-14T15:45:32Z",
+      "side": 1,
+      "message": "That sgtm. I left a few comments on the implementation details.",
+      "parentUuid": "e81af8ca_2f2f3c7d",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7aeae022_98789cf0",
