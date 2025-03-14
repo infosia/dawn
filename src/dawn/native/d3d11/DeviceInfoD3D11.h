@@ -43,7 +43,6 @@ struct DeviceInfo {
     // indicates that current driver supports the maximum shader model is shader model 6.2.
     uint32_t shaderModel;
     PerStage<std::wstring> shaderProfiles;
-    bool supportsSharedResourceCapabilityTier2;
     bool supportsROV;
     size_t dedicatedVideoMemory;
     size_t sharedSystemMemory;
