@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-03-13 07:49:51AM
+# Last rolled: 2025-03-15 09:20:07AM
 
 # conflicts_allowed: true
 
@@ -21689,6 +21689,7 @@ crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,t
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="rgba32float";texelViewFormat="rgba32float";viewDimension="cube";sampleCount=1 [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="cube";sampleCount=1 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="cube";sampleCount=1 [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,user,ptr_params:read_full_object:address_space="workgroup";call_indirection=1;type="vec4i" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage,centroid:nearFar=[0,1];sampleCount=1;interpolation={"type":"perspective","sampling":"center"} [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage,centroid:nearFar=[0.25,0.75];sampleCount=1;interpolation={"type":"perspective","sampling":"center"} [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="none";orientation="flipY";colorSpaceConversion="none";srcFlipYInCopy=true;dstFormat="rg16float";dstPremultiplied=false [ Failure ]
