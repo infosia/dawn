@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-03-13 07:49:51AM
+# Last rolled: 2025-03-15 12:25:37PM
 
 # conflicts_allowed: true
 
@@ -20809,6 +20809,7 @@ crbug.com/0000 [ linux nvidia ] webgpu:api,validation,render_pipeline,fragment_s
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=true;format="rg11b10ufloat" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=true;format="rg11b10ufloat" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,render_pipeline,fragment_state:targets_format_filterable:isAsync=true;format="rg11b10ufloat" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:queue,copyExternalImageToTexture,canvas:canvasType="onscreen";contextType="webgl";awaitLost=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize="_undef_";non_uniform_discard=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize="_undef_";non_uniform_discard=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=2;non_uniform_discard=false [ Failure ]
@@ -20819,6 +20820,7 @@ crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,f
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureSample:depth_2d_coords:format="depth32float";modeU="r";modeV="c";offset=false [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_3d_coords:format="bgra8unorm";dim="3d";filt="linear";modeU="m";modeV="m";modeW="r";offset=false [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:stage="c";textureType="texture_external";filt="nearest";modeU="c";modeV="c" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:stage="f";textureType="texture_external";filt="linear";modeU="r";modeV="m" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:arrayed_2d_coords:format="astc-8x5-unorm";filt="nearest";modeU="c";modeV="r";offset=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:arrayed_2d_coords:format="astc-8x5-unorm-srgb";filt="nearest";modeU="r";modeV="c";offset=false [ Failure ]
@@ -21689,6 +21691,7 @@ crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,t
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="rgba32float";texelViewFormat="rgba32float";viewDimension="cube";sampleCount=1 [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="cube";sampleCount=1 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="cube";sampleCount=1 [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,user,ptr_params:read_full_object:address_space="workgroup";call_indirection=1;type="vec4i" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage,centroid:nearFar=[0,1];sampleCount=1;interpolation={"type":"perspective","sampling":"center"} [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,interStage,centroid:nearFar=[0.25,0.75];sampleCount=1;interpolation={"type":"perspective","sampling":"center"} [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="none";orientation="flipY";colorSpaceConversion="none";srcFlipYInCopy=true;dstFormat="rg16float";dstPremultiplied=false [ Failure ]
