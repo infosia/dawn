@@ -209,6 +209,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a2ba0cc_0460c18f",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-15T02:46:56Z",
+      "side": 1,
+      "message": "Hm, the old code was actually inconsistent about whether this state was called \"Unmapped\" or \"MappedAtCreation\". Anyway, I think the asserts should still work sufficiently well.",
+      "parentUuid": "6caa337f_1fcba78e",
+      "range": {
+        "startLine": 79,
+        "startChar": 8,
+        "endLine": 79,
+        "endChar": 27
+      },
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2383233_a2d0088e",
@@ -453,6 +477,24 @@
       "side": 1,
       "message": "OMG. OK. I talked with Loko this afternoon and we figured out the first problem. The failure is in a device destroy test. This happens because the device is destroyed, due to the condition I added to ALSO return null if the device is destroyed (not just on OOM). This was to fix another crash hit by chrome in the same test.\n\nIt makes sense to do this, because destroying the device unmaps all buffers; probably you shouldn\u0027t be able to map any _after_ destroying either. However I realized that\u0027s not what the spec says! It only throws on OOM. https://gpuweb.github.io/gpuweb/#dom-gpudevice-createbuffer\n\nImplementing what the spec says is a pain, because it throws a wrench in assumptions, in particular that we can stop tracking buffers to destroy once the device is destroyed. As a stop-gap, I\u0027ve managed to mostly implement the spec behavior, *except* destroying the device a second time will not destroy any buffers created after the device was first destroyed. Fixing this would require more Dawn changes. But, maybe I should propose a spec change instead, to disallow \n\n---\n\nUnfortunately it\u0027s _also_ possible for mapping at creation to succeed on the client and fail on the server. This would be rare but does mean I still won\u0027t have fixed it structurally. I might add a testing extension to test this and the other impossible-to-trigger case.",
       "parentUuid": "21a4a293_6c13096a",
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5372fba4_3b7d904b",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-15T02:46:56Z",
+      "side": 1,
+      "message": "Aside from the spec issue I filed (https://github.com/gpuweb/gpuweb/issues/5102), this is resolved.",
+      "parentUuid": "633a303b_ab5873e2",
       "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

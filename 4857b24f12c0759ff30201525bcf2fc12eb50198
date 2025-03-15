@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2730d2da_e7dbb953",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-15T02:46:56Z",
+      "side": 1,
+      "message": "Decided yes, and did it.",
+      "parentUuid": "3c967efe_f6cfb582",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 62
+      },
+      "revId": "4857b24f12c0759ff30201525bcf2fc12eb50198",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "279edcb0_50ceb76b",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-03-14T06:28:56Z",
       "side": 1,
       "message": "Is this a problem? For fuzzers especially?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "4857b24f12c0759ff30201525bcf2fc12eb50198",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd82c203_a45ebedf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-15T02:46:56Z",
+      "side": 1,
+      "message": "The fix was much simpler than I expected, once I had a way to test it.",
+      "parentUuid": "279edcb0_50ceb76b",
       "range": {
         "startLine": 26,
         "startChar": 2,
