@@ -215,10 +215,87 @@ struct State {
                 case spirv::BuiltinFn::kSelect:
                     Select(builtin);
                     break;
+                case spirv::BuiltinFn::kOuterProduct:
+                    OuterProduct(builtin);
+                    break;
                 default:
                     TINT_UNREACHABLE() << "unknown spirv builtin: " << builtin->Func();
             }
         }
+    }
+
+    void OuterProduct(spirv::ir::BuiltinCall* call) {
+        auto* vector1 = call->Args()[0];
+        auto* vector2 = call->Args()[1];
+
+        uint32_t cols = vector1->Type()->As<core::type::Vector>()->Width();
+        uint32_t rows = vector2->Type()->As<core::type::Vector>()->Width();
+
+        auto* elem_ty = call->Args()[0]->Type()->As<core::type::Vector>()->Type();
+
+        b.InsertBefore(call, [&] {
+            // Access elements of vector1 and vector2
+            auto* v1_0 = b.Access(elem_ty, vector1, 0_u);
+            auto* v1_1 = (cols >= 2) ? b.Access(elem_ty, vector1, 1_u) : nullptr;
+            auto* v1_2 = (cols >= 3) ? b.Access(elem_ty, vector1, 2_u) : nullptr;
+            auto* v1_3 = (cols >= 4) ? b.Access(elem_ty, vector1, 3_u) : nullptr;
+
+            auto* v2_0 = b.Access(elem_ty, vector2, 0_u);
+            auto* v2_1 = (rows >= 2) ? b.Access(elem_ty, vector2, 1_u) : nullptr;
+            auto* v2_2 = (rows >= 3) ? b.Access(elem_ty, vector2, 2_u) : nullptr;
+            auto* v2_3 = (rows >= 4) ? b.Access(elem_ty, vector2, 3_u) : nullptr;
+
+            auto* r_00 = b.Multiply(elem_ty, v1_0, v2_0);
+            auto* r_01 = (rows >= 2) ? b.Multiply(elem_ty, v1_0, v2_1) : nullptr;
+            auto* r_02 = (rows >= 3) ? b.Multiply(elem_ty, v1_0, v2_2) : nullptr;
+            auto* r_03 = (rows >= 4) ? b.Multiply(elem_ty, v1_0, v2_3) : nullptr;
+
+            auto* r_10 = (cols >= 2) ? b.Multiply(elem_ty, v1_1, v2_0) : nullptr;
+            auto* r_11 = (cols >= 2 && rows >= 2) ? b.Multiply(elem_ty, v1_1, v2_1) : nullptr;
+            auto* r_12 = (cols >= 2 && rows >= 3) ? b.Multiply(elem_ty, v1_1, v2_2) : nullptr;
+            auto* r_13 = (cols >= 2 && rows >= 4) ? b.Multiply(elem_ty, v1_1, v2_3) : nullptr;
+
+            auto* r_20 = (cols >= 3) ? b.Multiply(elem_ty, v1_2, v2_0) : nullptr;
+            auto* r_21 = (cols >= 3 && rows >= 2) ? b.Multiply(elem_ty, v1_2, v2_1) : nullptr;
+            auto* r_22 = (cols >= 3 && rows >= 3) ? b.Multiply(elem_ty, v1_2, v2_2) : nullptr;
+            auto* r_23 = (cols >= 3 && rows >= 4) ? b.Multiply(elem_ty, v1_2, v2_3) : nullptr;
+
+            auto* r_30 = (cols >= 4) ? b.Multiply(elem_ty, v1_3, v2_0) : nullptr;
+            auto* r_31 = (cols >= 4 && rows >= 2) ? b.Multiply(elem_ty, v1_3, v2_1) : nullptr;
+            auto* r_32 = (cols >= 4 && rows >= 3) ? b.Multiply(elem_ty, v1_3, v2_2) : nullptr;
+            auto* r_33 = (cols >= 4 && rows >= 4) ? b.Multiply(elem_ty, v1_3, v2_3) : nullptr;
+
+            // Construct the resulting matrix
+            auto construct_matrix = [&](auto* type, auto* r1, auto* r2, auto* r3, auto* r4) {
+                if (r4) {
+                    return b.Construct(type, r1, r2, r3, r4);
+                } else if (r3) {
+                    return b.Construct(type, r1, r2, r3);
+                }
+                return b.Construct(type, r1, r2);
+            };
+            auto construct_vector = [&](auto* type, auto* ele1, auto* ele2, auto* ele3,
+                                        auto* ele4) {
+                if (ele4) {
+                    return b.Construct(type, ele1, ele2, ele3, ele4);
+                } else if (ele3) {
+                    return b.Construct(type, ele1, ele2, ele3);
+                }
+                return b.Construct(type, ele1, ele2);
+            };
+            auto* r1 = construct_vector(ty.vec(elem_ty, cols), r_00, r_10, r_20, r_30);
+            auto* r2 = (rows >= 2) ? construct_vector(ty.vec(elem_ty, cols), r_01, r_11, r_21, r_31)
+                                   : nullptr;
+            auto* r3 = (rows >= 3) ? construct_vector(ty.vec(elem_ty, cols), r_02, r_12, r_22, r_32)
+                                   : nullptr;
+            auto* r4 = (rows >= 4) ? construct_vector(ty.vec(elem_ty, cols), r_03, r_13, r_23, r_33)
+                                   : nullptr;
+
+            auto* matrix = construct_matrix(ty.mat(elem_ty, rows, cols), r1, r2, r3, r4);
+            call->Result(0)->ReplaceAllUsesWith(matrix->Result(0));
+        });
+
+        call->Destroy();
     }
 
     void Select(spirv::ir::BuiltinCall* call) {

@@ -1648,6 +1648,9 @@ class Printer {
             case BuiltinFn::kFMod:
                 op = spv::Op::OpFMod;
                 break;
+            case BuiltinFn::kOuterProduct:
+                op = spv::Op::OpOuterProduct;
+                break;
             case spirv::BuiltinFn::kNone:
                 TINT_ICE() << "undefined spirv ir function";
         }
