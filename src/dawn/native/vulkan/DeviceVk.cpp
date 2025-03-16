@@ -568,8 +568,8 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         usedKnobs.features.multiDrawIndirect = VK_TRUE;
     }
 
-    if (HasFeature(Feature::ChromiumExperimentalSubgroupMatrix)) {
-        DAWN_ASSERT(IsToggleEnabled(Toggle::UseVulkanMemoryModel));
+    if (HasFeature(Feature::ChromiumExperimentalSubgroupMatrix) &&
+        IsToggleEnabled(Toggle::UseVulkanMemoryModel)) {
         DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::CooperativeMatrix));
         usedKnobs.cooperativeMatrixFeatures = mDeviceInfo.cooperativeMatrixFeatures;
         featuresChain.Add(&usedKnobs.cooperativeMatrixFeatures);
