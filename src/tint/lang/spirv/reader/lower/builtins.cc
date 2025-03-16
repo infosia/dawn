@@ -215,10 +215,45 @@ struct State {
                 case spirv::BuiltinFn::kSelect:
                     Select(builtin);
                     break;
+                case spirv::BuiltinFn::kOuterProduct:
+                    OuterProduct(builtin);
+                    break;
                 default:
                     TINT_UNREACHABLE() << "unknown spirv builtin: " << builtin->Func();
             }
         }
+    }
+    void OuterProduct(spirv::ir::BuiltinCall* call) {
+        auto* vector1 = call->Args()[0];
+        auto* vector2 = call->Args()[1];
+
+        uint32_t cols = vector1->Type()->As<core::type::Vector>()->Width();
+        uint32_t rows = vector2->Type()->As<core::type::Vector>()->Width();
+
+        auto* elem_ty = call->Args()[0]->Type()->As<core::type::Vector>()->Type();
+
+        b.InsertBefore(call, [&] {
+            Vector<core::ir::Value*, 4> row_vectors;
+
+            for (uint32_t row = 0; row < rows; ++row) {
+                Vector<core::ir::Value*, 4> row_elements;
+                auto* v2_element = b.Access(elem_ty, vector2, u32(row));
+
+                for (uint32_t col = 0; col < cols; ++col) {
+                    auto* v1_element = b.Access(elem_ty, vector1, u32(col));
+                    auto* result = b.Value(b.Multiply(elem_ty, v1_element, v2_element));
+                    row_elements.Push(result);
+                }
+
+                auto* row_vector = b.Value(b.Construct(ty.vec(elem_ty, cols), row_elements));
+                row_vectors.Push(row_vector);
+            }
+
+            auto* matrix = b.Construct(ty.mat(elem_ty, rows, cols), row_vectors);
+            call->Result(0)->ReplaceAllUsesWith(matrix->Result(0));
+        });
+
+        call->Destroy();
     }
 
     void Select(spirv::ir::BuiltinCall* call) {
