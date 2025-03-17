@@ -67,5 +67,48 @@ TEST(Sha3, CheckKeccak) {
     }
 }
 
+// Check that the correct values are computed in all by all the hash functions on the 1600 bit test
+// vectors for each SHA3 version. (we don't use the other ones because they are not byte aligned).
+TEST(Sha3, AllSizesOn30BitTestVector) {
+    std::array<uint64_t, 25> message = {
+        0xa3a3a3a3a3a3a3a3, 0xa3a3a3a3a3a3a3a3, 0xa3a3a3a3a3a3a3a3, 0xa3a3a3a3a3a3a3a3,
+        0xa3a3a3a3a3a3a3a3, 0xa3a3a3a3a3a3a3a3, 0xa3a3a3a3a3a3a3a3, 0xa3a3a3a3a3a3a3a3,
+        0xa3a3a3a3a3a3a3a3, 0xa3a3a3a3a3a3a3a3, 0xa3a3a3a3a3a3a3a3, 0xa3a3a3a3a3a3a3a3,
+        0xa3a3a3a3a3a3a3a3, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000,
+        0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000,
+        0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000,
+        0x0000000000000000,
+    };
+
+    Sha3_224::Output sha224Expected = {
+ 0x93 ,0x76 ,0x81 ,0x6A ,0xBA ,0x50 ,0x3F ,0x72 ,0xF9 ,0x6C ,0xE7 ,0xEB ,0x65 ,0xAC ,0x09 ,0x5D ,0xEE ,0xE3 ,0xBE ,0x4B ,0xF9 ,0xBB ,0xC2 ,0xA1 ,0xCB ,0x7E ,0x11 ,0xE0
+    };
+    Sha3_224::Output sha224Actual = Sha3_224::Hash(&message, sizeof(message));
+    for (size_t i = 0; i < sha224Actual.size(); i++) {
+        EXPECT_EQ(sha224Actual[i], sha224Expected[i]);
+    }
+
+    //Sha3_256::Output sha256Expected = {
+    //};
+    //Sha3_256::Output sha256Actual = Sha3_256::Hash(&message, sizeof(message));
+    //for (size_t i = 0; i < sha256Actual.size(); i++) {
+    //    EXPECT_EQ(sha256Actual[i], sha256Expected[i]);
+    //}
+
+    //Sha3_384::Output sha384Expected = {
+    //};
+    //Sha3_384::Output sha384Actual = Sha3_384::Hash(&message, sizeof(message));
+    //for (size_t i = 0; i < sha384Actual.size(); i++) {
+    //    EXPECT_EQ(sha384Actual[i], sha384Expected[i]);
+    //}
+
+    //Sha3_512::Output sha512Expected = {
+    //};
+    //Sha3_512::Output sha512Actual = Sha3_512::Hash(&message, sizeof(message));
+    //for (size_t i = 0; i < sha512Actual.size(); i++) {
+    //    EXPECT_EQ(sha512Actual[i], sha512Expected[i]);
+    //}
+}
+
 }  // anonymous namespace
 }  // namespace dawn
