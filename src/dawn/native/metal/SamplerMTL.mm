@@ -65,7 +65,23 @@ MTLSamplerAddressMode AddressMode(wgpu::AddressMode mode) {
             return MTLSamplerAddressModeMirrorRepeat;
         case wgpu::AddressMode::ClampToEdge:
             return MTLSamplerAddressModeClampToEdge;
+        case wgpu::AddressMode::ClampToBorderColor:
+            return MTLSamplerAddressModeClampToBorderColor;
         case wgpu::AddressMode::Undefined:
+            break;
+    }
+    DAWN_UNREACHABLE();
+}
+
+MTLSamplerBorderColor BorderColor(wgpu::BorderColor borderColor) {
+    switch (borderColor) {
+        case wgpu::BorderColor::TransparentBlack:
+            return MTLSamplerBorderColorTransparentBlack;
+        case wgpu::BorderColor::OpaqueBlack:
+            return MTLSamplerBorderColorOpaqueBlack;
+        case wgpu::BorderColor::OpaqueWhite:
+            return MTLSamplerBorderColorOpaqueWhite;
+        case wgpu::BorderColor::Undefined:
             break;
     }
     DAWN_UNREACHABLE();
@@ -109,6 +125,12 @@ MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
     mtlDesc.lodMaxClamp = descriptor->lodMaxClamp;
     // https://developer.apple.com/documentation/metal/mtlsamplerdescriptor/1516164-maxanisotropy
     mtlDesc.maxAnisotropy = std::min<uint16_t>(GetMaxAnisotropy(), 16u);
+
+    if (descriptor->addressModeU == wgpu::AddressMode::ClampToBorderColor ||
+        descriptor->addressModeV == wgpu::AddressMode::ClampToBorderColor ||
+        descriptor->addressModeW == wgpu::AddressMode::ClampToBorderColor) {
+        mtlDesc.borderColor = BorderColor(descriptor->borderColor);
+    }
 
     if (descriptor->compare != wgpu::CompareFunction::Undefined) {
         // Sampler compare is unsupported before A9, which we validate in

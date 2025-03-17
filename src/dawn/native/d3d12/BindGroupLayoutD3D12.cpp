@@ -83,6 +83,19 @@ D3D12_DESCRIPTOR_RANGE_TYPE WGPUBindingInfoToDescriptorRangeType(const BindingIn
             return D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
         });
 }
+
+D3D12StaticBorderColor(const std::array<float, 4> borderColor) {
+    if (borderColor == {0.0f, 0.0f, 0.0f, 0.0f}) {
+        return D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+    }
+    if (borderColor == {0.0f, 0.0f, 0.0f, 1.0f}) {
+        return D3D12_STATIC_BORDER_COLOR_OPAQUE_BLACK;
+    }
+    if (borderColor == {1.0f, 1.0f, 1.0f, 1.0f}) {
+        return D3D12_STATIC_BORDER_COLOR_OPAQUE_WHITE;
+    }
+    DAWN_UNREACHABLE();
+}
 }  // anonymous namespace
 
 // static
@@ -127,6 +140,11 @@ BindGroupLayout::BindGroupLayout(Device* device, const BindGroupLayoutDescriptor
             staticSamplerDesc.MipLODBias = desc.MipLODBias;
             staticSamplerDesc.MaxAnisotropy = desc.MaxAnisotropy;
             staticSamplerDesc.ComparisonFunc = desc.ComparisonFunc;
+            if (desc.AddressU == D3D12_TEXTURE_ADDRESS_MODE_BORDER ||
+                desc.AddressV == D3D12_TEXTURE_ADDRESS_MODE_BORDER ||
+                desc.AddressW == D3D12_TEXTURE_ADDRESS_MODE_BORDER) {
+                staticSamplerDesc.BorderColor = D3D12StaticBorderColor(desc.BorderColor);
+            }
 
             mStaticSamplers.push_back(staticSamplerDesc);
 
