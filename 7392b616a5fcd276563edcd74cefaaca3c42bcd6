@@ -16,6 +16,23 @@
       "message": "LGTM too",
       "revId": "7392b616a5fcd276563edcd74cefaaca3c42bcd6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba8f41f4_c7b5cece",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-17T16:00:03Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org, I included `\"dawn/utils/TextureUtils.h\"` in SharedTextureMemoryD3D11. The windows bot threw an error. Do you know how to solve this:\n\n```\nERROR at //third_party/dawn/src/dawn/native/d3d11/SharedTextureMemoryD3D11.cpp:39:11: Include not allowed.\n#include \"dawn/utils/TextureUtils.h\"\n```",
+      "revId": "7392b616a5fcd276563edcd74cefaaca3c42bcd6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
