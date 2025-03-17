@@ -78,6 +78,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3cc07725_913228e5",
+        "filename": "src/dawn/native/d3d/SharedTextureMemoryD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T15:48:29Z",
+      "side": 1,
+      "message": "Welp, I totally forgot we had that. Could we ASSERT that we have a keyed mutex here then?",
+      "parentUuid": "9b33aa16_59c421c9",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5cf658b8_9b1a7a97",
         "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
         "patchSetId": 1
