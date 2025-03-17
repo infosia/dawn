@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f0358a44_6df1d7fe",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-17T22:55:52Z",
+      "side": 1,
+      "message": "Hii Dan,\nI first thought of doing the same way you mentioned , but after seeing the code for inverse inbuilt function where you didnt use any for loops , i thought that might be for a reason, sry should have asked first \n\nI have updated the code pls check :)",
+      "parentUuid": "12fe7827_d0fef4b5",
+      "revId": "5af693a7e5068ed0f01c4ef809d4896d7b259912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8965db51_8eefd95b",
         "filename": "src/tint/lang/spirv/spirv.def",
         "patchSetId": 3
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-17T19:49:26Z",
       "side": 1,
       "message": "We should support `f16` as well.",
+      "revId": "5af693a7e5068ed0f01c4ef809d4896d7b259912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb3251dd_3b83313c",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-17T22:55:52Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "8965db51_8eefd95b",
       "revId": "5af693a7e5068ed0f01c4ef809d4896d7b259912",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
