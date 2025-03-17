@@ -83,6 +83,8 @@ GLenum WrapMode(wgpu::AddressMode mode) {
             return GL_MIRRORED_REPEAT;
         case wgpu::AddressMode::ClampToEdge:
             return GL_CLAMP_TO_EDGE;
+        case wgpu::AddressMode::ClampToBorderColor:
+            // FIXME!
         case wgpu::AddressMode::Undefined:
             break;
     }

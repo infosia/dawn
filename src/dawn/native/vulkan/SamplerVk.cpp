@@ -46,6 +46,8 @@ VkSamplerAddressMode VulkanSamplerAddressMode(wgpu::AddressMode mode) {
             return VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT;
         case wgpu::AddressMode::ClampToEdge:
             return VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+        case wgpu::AddressMode::ClampToBorderColor:
+            return VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
         case wgpu::AddressMode::Undefined:
             break;
     }
@@ -95,6 +97,7 @@ MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
     createInfo.minLod = descriptor->lodMinClamp;
     createInfo.maxLod = descriptor->lodMaxClamp;
     createInfo.unnormalizedCoordinates = VK_FALSE;
+    // FIXME! Add borderColor.
 
     Device* device = ToBackend(GetDevice());
     uint16_t maxAnisotropy = GetMaxAnisotropy();

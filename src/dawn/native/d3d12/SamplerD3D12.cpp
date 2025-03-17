@@ -43,6 +43,8 @@ D3D12_TEXTURE_ADDRESS_MODE AddressMode(wgpu::AddressMode mode) {
             return D3D12_TEXTURE_ADDRESS_MODE_MIRROR;
         case wgpu::AddressMode::ClampToEdge:
             return D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+        case wgpu::AddressMode::ClampToBorderColor:
+            // FIXME!
         case wgpu::AddressMode::Undefined:
             break;
     }
