@@ -280,7 +280,8 @@
             {"value": 0, "name": "undefined", "jsrepr": "undefined"},
             {"value": 1, "name": "clamp to edge"},
             {"value": 2, "name": "repeat"},
-            {"value": 3, "name": "mirror repeat"}
+            {"value": 3, "name": "mirror repeat"},
+            {"value": 4, "name": "clamp to border color"}
         ]
     },
     "backend type": {
@@ -2322,6 +2323,15 @@
             {"value": 2, "name": "linear"}
         ]
     },
+    "border color": {
+        "category": "enum",
+        "values": [
+            {"value": 0, "name": "undefined", "jsrepr": "undefined"},
+            {"value": 1, "name": "transparent black"},
+            {"value": 2, "name": "opaque black"},
+            {"value": 3, "name": "opaque white"}
+        ]
+    },
     "float": {
         "category": "native",
         "wasm type": "f"
@@ -3432,7 +3442,8 @@
             {"name": "lod min clamp", "type": "float", "default": "0.0f"},
             {"name": "lod max clamp", "type": "float", "default": "32.0f"},
             {"name": "compare", "type": "compare function"},
-            {"name": "max anisotropy", "type": "uint16_t", "default": "1"}
+            {"name": "max anisotropy", "type": "uint16_t", "default": "1"},
+            {"name": "border color", "type": "border color", "default": "transparent black"}
         ]
     },
     "shader module": {
