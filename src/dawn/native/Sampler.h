@@ -90,6 +90,7 @@ class SamplerBase : public ApiObjectBase,
     uint16_t mMaxAnisotropy;
     bool mIsYCbCr = false;
     YCbCrVkDescriptor mYCbCrVkDescriptor = {};
+    wgpu::BorderColor mBorderColor;
 };
 
 }  // namespace dawn::native
