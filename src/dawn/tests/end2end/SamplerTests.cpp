@@ -65,26 +65,55 @@ const char* kPassThroughUserFunctionsFS = R"(
 
 struct AddressModeTestCase {
     wgpu::AddressMode mMode;
-    uint8_t mExpected2;
-    uint8_t mExpected3;
+    utils::RGBA8 mExpected2;
+    utils::RGBA8 mExpected3;
 };
 AddressModeTestCase addressModes[] = {
     {
         wgpu::AddressMode::Repeat,
-        0,
-        255,
+        utils::RGBA8::kBlack,
+        utils::RGBA8::kWhite,
     },
     {
         wgpu::AddressMode::MirrorRepeat,
-        255,
-        0,
+        utils::RGBA8::kWhite,
+        utils::RGBA8::kBlack,
     },
     {
         wgpu::AddressMode::ClampToEdge,
-        255,
-        255,
+        utils::RGBA8::kWhite,
+        utils::RGBA8::kWhite,
+    },
+    {
+        wgpu::AddressMode::ClampToBorderColor,
+        utils::RGBA8::kZero,  // unused
+        utils::RGBA8::kZero,  // unused
     },
 };
+
+const std::array<wgpu::BorderColor, 4> borderColors = {
+    wgpu::BorderColor::Undefined, wgpu::BorderColor::TransparentBlack,
+    wgpu::BorderColor::OpaqueBlack, wgpu::BorderColor::OpaqueWhite};
+
+utils::RGBA8 ToRGBA8(const wgpu::BorderColor& borderColor) {
+    switch (borderColor) {
+        case wgpu::BorderColor::Undefined:
+        case wgpu::BorderColor::TransparentBlack:
+            return utils::RGBA8::kZero;
+        case wgpu::BorderColor::OpaqueBlack:
+            return utils::RGBA8::kBlack;
+        case wgpu::BorderColor::OpaqueWhite:
+            return utils::RGBA8::kWhite;
+    }
+    DAWN_UNREACHABLE();
+}
+
+utils::RGBA8 ComputeExpectedPixel(const wgpu::AddressMode& addressMode,
+                                  const wgpu::BorderColor& borderColor,
+                                  utils::RGBA8 defaulted) {
+    return (addressMode == wgpu::AddressMode::ClampToBorderColor) ? ToRGBA8(borderColor)
+                                                                  : defaulted;
+}
 
 class SamplerTest : public DawnTest {
   protected:
@@ -163,7 +192,8 @@ class SamplerTest : public DawnTest {
     // Creates a sampler with the given address modes.
     wgpu::Sampler CreateSampler(AddressModeTestCase u,
                                 AddressModeTestCase v,
-                                AddressModeTestCase w) {
+                                AddressModeTestCase w,
+                                const wgpu::BorderColor& borderColor) {
         wgpu::Sampler sampler;
         wgpu::SamplerDescriptor descriptor = {};
         descriptor.minFilter = wgpu::FilterMode::Nearest;
@@ -172,6 +202,7 @@ class SamplerTest : public DawnTest {
         descriptor.addressModeU = u.mMode;
         descriptor.addressModeV = v.mMode;
         descriptor.addressModeW = w.mMode;
+        descriptor.borderColor = borderColor;
         return device.CreateSampler(&descriptor);
     }
 
@@ -179,8 +210,9 @@ class SamplerTest : public DawnTest {
     // `mTextureView` as the texture to be sampled.
     wgpu::BindGroup CreateBindGroup(AddressModeTestCase u,
                                     AddressModeTestCase v,
-                                    AddressModeTestCase w) {
-        wgpu::Sampler sampler = CreateSampler(u, v, w);
+                                    AddressModeTestCase w,
+                                    const wgpu::BorderColor& borderColor) {
+        wgpu::Sampler sampler = CreateSampler(u, v, w, borderColor);
         return utils::MakeBindGroup(device, mPipeline.GetBindGroupLayout(0),
                                     {{0, sampler}, {1, mTextureView}});
     }
@@ -193,9 +225,10 @@ class SamplerTest : public DawnTest {
     void TestAddressModes(AddressModeTestCase u,
                           AddressModeTestCase v,
                           AddressModeTestCase w,
+                          const wgpu::BorderColor& borderColor,
                           wgpu::BindGroup bindGroup = nullptr) {
         if (!bindGroup) {
-            bindGroup = CreateBindGroup(u, v, w);
+            bindGroup = CreateBindGroup(u, v, w, borderColor);
         }
 
         wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
@@ -210,10 +243,10 @@ class SamplerTest : public DawnTest {
         wgpu::CommandBuffer commands = encoder.Finish();
         queue.Submit(1, &commands);
 
-        utils::RGBA8 expectedU2(u.mExpected2, u.mExpected2, u.mExpected2, 255);
-        utils::RGBA8 expectedU3(u.mExpected3, u.mExpected3, u.mExpected3, 255);
-        utils::RGBA8 expectedV2(v.mExpected2, v.mExpected2, v.mExpected2, 255);
-        utils::RGBA8 expectedV3(v.mExpected3, v.mExpected3, v.mExpected3, 255);
+        utils::RGBA8 expectedU2 = ComputeExpectedPixel(u.mMode, borderColor, u.mExpected2);
+        utils::RGBA8 expectedU3 = ComputeExpectedPixel(u.mMode, borderColor, u.mExpected3);
+        utils::RGBA8 expectedV2 = ComputeExpectedPixel(v.mMode, borderColor, v.mExpected2);
+        utils::RGBA8 expectedV3 = ComputeExpectedPixel(v.mMode, borderColor, v.mExpected3);
         EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kBlack, mRenderPass.color, 0, 0);
         EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kWhite, mRenderPass.color, 0, 1);
         EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kWhite, mRenderPass.color, 1, 0);
@@ -235,7 +268,9 @@ TEST_P(SamplerTest, AddressMode) {
     for (auto u : addressModes) {
         for (auto v : addressModes) {
             for (auto w : addressModes) {
-                TestAddressModes(u, v, w);
+                for (auto borderColor : borderColors) {
+                    TestAddressModes(u, v, w, borderColor);
+                }
             }
         }
     }
@@ -247,7 +282,9 @@ TEST_P(SamplerTest, PassThroughUserFunctionParameters) {
     for (auto u : addressModes) {
         for (auto v : addressModes) {
             for (auto w : addressModes) {
-                TestAddressModes(u, v, w);
+                for (auto borderColor : borderColors) {
+                    TestAddressModes(u, v, w, borderColor);
+                }
             }
         }
     }
@@ -279,10 +316,12 @@ class StaticSamplerTest : public SamplerTest {
 
     // Creates a bind group layout with a static sampler with the given address
     // modes as well as the texture to be sampled.
-    wgpu::BindGroupLayout CreateBindGroupLayoutWithStaticSampler(AddressModeTestCase u,
-                                                                 AddressModeTestCase v,
-                                                                 AddressModeTestCase w) {
-        wgpu::Sampler sampler = CreateSampler(u, v, w);
+    wgpu::BindGroupLayout CreateBindGroupLayoutWithStaticSampler(
+        AddressModeTestCase u,
+        AddressModeTestCase v,
+        AddressModeTestCase w,
+        const wgpu::BorderColor& borderColor) {
+        wgpu::Sampler sampler = CreateSampler(u, v, w, borderColor);
         std::vector<wgpu::BindGroupLayoutEntry> entries;
 
         wgpu::BindGroupLayoutEntry binding = {};
@@ -319,12 +358,14 @@ TEST_P(StaticSamplerTest, AddressMode) {
     for (auto u : addressModes) {
         for (auto v : addressModes) {
             for (auto w : addressModes) {
-                // Create the bind group layout with a static sampler for the
-                // given address modes, configure the pipeline with that layout,
-                // and test drawing with a bind group created from that layout.
-                auto bgl = CreateBindGroupLayoutWithStaticSampler(u, v, w);
-                InitShaders(kBasicFS, bgl);
-                TestAddressModes(u, v, w, CreateBindGroupWithStaticSampler(bgl));
+                for (auto borderColor : borderColors) {
+                    // Create the bind group layout with a static sampler for the
+                    // given address modes, configure the pipeline with that layout,
+                    // and test drawing with a bind group created from that layout.
+                    auto bgl = CreateBindGroupLayoutWithStaticSampler(u, v, w, borderColor);
+                    InitShaders(kBasicFS, bgl);
+                    TestAddressModes(u, v, w, borderColor, CreateBindGroupWithStaticSampler(bgl));
+                }
             }
         }
     }
@@ -336,12 +377,14 @@ TEST_P(StaticSamplerTest, PassThroughUserFunctionParameters) {
     for (auto u : addressModes) {
         for (auto v : addressModes) {
             for (auto w : addressModes) {
-                // Create the bind group layout with a static sampler for the
-                // given address modes, configure the pipeline with that layout,
-                // and test drawing with a bind group created from that layout.
-                auto bgl = CreateBindGroupLayoutWithStaticSampler(u, v, w);
-                InitShaders(kPassThroughUserFunctionsFS, bgl);
-                TestAddressModes(u, v, w, CreateBindGroupWithStaticSampler(bgl));
+                for (auto borderColor : borderColors) {
+                    // Create the bind group layout with a static sampler for the
+                    // given address modes, configure the pipeline with that layout,
+                    // and test drawing with a bind group created from that layout.
+                    auto bgl = CreateBindGroupLayoutWithStaticSampler(u, v, w, borderColor);
+                    InitShaders(kPassThroughUserFunctionsFS, bgl);
+                    TestAddressModes(u, v, w, borderColor, CreateBindGroupWithStaticSampler(bgl));
+                }
             }
         }
     }

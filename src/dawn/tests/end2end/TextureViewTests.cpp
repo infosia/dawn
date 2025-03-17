@@ -148,13 +148,14 @@ class TextureViewSamplingTest : public TextureViewTestBase {
         mRenderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
         wgpu::SamplerDescriptor samplerDescriptor = {};
-        // (Off-topic) spot-test for defaulting of these six fields.
+        // (Off-topic) spot-test for defaulting of those fields.
         samplerDescriptor.minFilter = wgpu::FilterMode::Undefined;
         samplerDescriptor.magFilter = wgpu::FilterMode::Undefined;
         samplerDescriptor.mipmapFilter = wgpu::MipmapFilterMode::Undefined;
         samplerDescriptor.addressModeU = wgpu::AddressMode::Undefined;
         samplerDescriptor.addressModeV = wgpu::AddressMode::Undefined;
         samplerDescriptor.addressModeW = wgpu::AddressMode::Undefined;
+        samplerDescriptor.borderColor = wgpu::BorderColor::Undefined;
         mSampler = device.CreateSampler(&samplerDescriptor);
 
         mVSModule = CreateDefaultVertexShaderModule(device);
