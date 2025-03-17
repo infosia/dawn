@@ -45,6 +45,8 @@ D3D11_TEXTURE_ADDRESS_MODE D3D11TextureAddressMode(wgpu::AddressMode mode) {
             return D3D11_TEXTURE_ADDRESS_MIRROR;
         case wgpu::AddressMode::ClampToEdge:
             return D3D11_TEXTURE_ADDRESS_CLAMP;
+        case wgpu::AddressMode::ClampToBorderColor:
+            return D3D11_TEXTURE_ADDRESS_BORDER;
         case wgpu::AddressMode::Undefined:
             break;
     }
@@ -75,6 +77,19 @@ D3D11_FILTER_TYPE D3D11MipmapFilterType(wgpu::MipmapFilterMode mode) {
     DAWN_UNREACHABLE();
 }
 
+std::array<float, 4> D3D11TextureBorderColor(wgpu::BorderColor borderColor) {
+    switch (borderColor) {
+        case wgpu::BorderColor::TransparentBlack:
+            return {0.0f, 0.0f, 0.0f, 0.0f};
+        case wgpu::BorderColor::OpaqueBlack:
+            return {0.0f, 0.0f, 0.0f, 1.0f};
+        case wgpu::BorderColor::OpaqueWhite:
+            return {1.0f, 1.0f, 1.0f, 1.0f};
+        case wgpu::BorderColor::Undefined:
+            break;
+    }
+    DAWN_UNREACHABLE();
+}
 }  // namespace
 
 // static
@@ -117,6 +132,8 @@ MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
     }
     samplerDesc.MinLOD = descriptor->lodMinClamp;
     samplerDesc.MaxLOD = descriptor->lodMaxClamp;
+    std::array<float, 4> borderColor = D3D11TextureBorderColor(descriptor->borderColor);
+    samplerDesc.BorderColor = {borderColor[0], borderColor[1], borderColor[2], borderColor[3]};
 
     DAWN_TRY(CheckHRESULT(ToBackend(GetDevice())
                               ->GetD3D11Device()
