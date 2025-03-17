@@ -33,6 +33,24 @@
       "message": "@cwallez@chromium.org, I included `\"dawn/utils/TextureUtils.h\"` in SharedTextureMemoryD3D11. The windows bot threw an error. Do you know how to solve this:\n\n```\nERROR at //third_party/dawn/src/dawn/native/d3d11/SharedTextureMemoryD3D11.cpp:39:11: Include not allowed.\n#include \"dawn/utils/TextureUtils.h\"\n```",
       "revId": "7392b616a5fcd276563edcd74cefaaca3c42bcd6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6036042c_84785748",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T16:01:14Z",
+      "side": 1,
+      "message": "Ah yes that target is only for use in tests / samples. You can look at the info in src/dawn/native/Format.h instead.",
+      "parentUuid": "ba8f41f4_c7b5cece",
+      "revId": "7392b616a5fcd276563edcd74cefaaca3c42bcd6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
