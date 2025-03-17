@@ -183,6 +183,7 @@ struct Options {
 
 #if TINT_BUILD_GLSL_WRITER
     bool glsl_desktop = false;
+    std::vector<uint32_t> bgra_swizzle;
 #endif  // TINT_BUILD_GLSL_WRITER
 };
 
@@ -402,6 +403,9 @@ violations that may be produced)",
     auto& glsl_desktop = options.Add<BoolOption>(
         "glsl-desktop", "Set the version to the desktop GL instead of ES", Default{false});
     TINT_DEFER(opts->glsl_desktop = *glsl_desktop.value);
+
+    auto& bgra_swizzle =
+        options.Add<StringOption>("bgra-swizzle", "BGRA swizzle indices", Default{""});
 #endif  // TINT_BUILD_GLSL_WRITER
 
 #if TINT_BUILD_MSL_WRITER
@@ -581,6 +585,19 @@ Options:
         }
     }
 #endif  // TINT_BUILD_HLSL_WRITER || TINT_BUILD_MSL_WRITER
+
+#if TINT_BUILD_GLSL_WRITER
+    if (bgra_swizzle.value.has_value() && !bgra_swizzle.value.value().empty()) {
+        for (auto val : tint::Split(*bgra_swizzle.value, ",")) {
+            auto bgra_val = tint::strconv::ParseUint32(val);
+            if (bgra_val != tint::Success) {
+                std::cerr << "invalid bgra_swizzle value: " << val;
+                return false;
+            }
+            opts->bgra_swizzle.push_back(bgra_val.Get());
+        }
+    }
+#endif  // TINT_BUILD_GLSL_WRITER
 
     auto files = result.Get();
     if (files.Length() > 1) {
@@ -1274,15 +1291,22 @@ bool GenerateGlsl([[maybe_unused]] Options& options,
     // Push constant Offset must be 4-byte aligned.
     uint32_t offset = tint::RoundUp(4u, entry_point.push_constant_size);
 
+    if (entry_point.vertex_index_used) {
+        gen_options.first_vertex_offset = offset;
+        offset += 4;
+    }
+
     if (entry_point.instance_index_used) {
-        // Place the first_instance push constant member after user-defined push constants (if
-        // any).
         gen_options.first_instance_offset = offset;
         offset += 4;
     }
     if (entry_point.frag_depth_used) {
         gen_options.depth_range_offsets = {offset + 0, offset + 4};
         offset += 8;
+    }
+
+    for (auto idx : options.bgra_swizzle) {
+        gen_options.bgra_swizzle_locations.insert({idx});
     }
 
     // Convert the AST program to an IR module.
