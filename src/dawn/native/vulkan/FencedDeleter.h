@@ -62,6 +62,8 @@ class FencedDeleter {
 
     void Tick(ExecutionSerial completedSerial);
 
+    ExecutionSerial GetPendingCommandSerial();
+
   private:
     raw_ptr<Device> mDevice = nullptr;
     SerialQueue<ExecutionSerial, VkBuffer> mBuffersToDelete;

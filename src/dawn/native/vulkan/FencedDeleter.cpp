@@ -215,4 +215,8 @@ void FencedDeleter::Tick(ExecutionSerial completedSerial) {
     mSamplersToDelete.ClearUpTo(completedSerial);
 }
 
+ExecutionSerial FencedDeleter::GetPendingCommandSerial() {
+    return mDevice->GetQueue()->GetPendingCommandSerial();
+}
+
 }  // namespace dawn::native::vulkan

@@ -539,6 +539,10 @@ class DeviceBase : public ErrorSink,
                                                     const TextureCopy& dst,
                                                     const Extent3D& copySizePixels) = 0;
 
+    // TODO(chromium:397720827): Make these vulkan specific.
+    virtual uint64_t GetVulkanAllocatedMemory() const;
+    virtual uint64_t GetVulkanUsedMemory() const;
+
     WGPUUncapturedErrorCallbackInfo mUncapturedErrorCallbackInfo =
         WGPU_UNCAPTURED_ERROR_CALLBACK_INFO_INIT;
 

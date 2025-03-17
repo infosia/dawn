@@ -320,5 +320,39 @@ TEST_F(MemoryInstrumentationTest, ComputeEstimatedMemoryUsageInDetails) {
     EXPECT_EQ(memInfo.msaaTexturesUsage, kMultisampleTextureSize);
 }
 
+// Test the detailed vulkan memory usage reported by ComputeEstimatedMemoryUsage()
+TEST_F(MemoryInstrumentationTest, ComputeEstimatedMemoryUsageInDetailsForVulkan) {
+    if (FromAPI(device.Get())->GetPhysicalDevice()->GetBackendType() != wgpu::BackendType::Vulkan) {
+        GTEST_SKIP() << "The backend is not Vulkan";
+    }
+
+    // Create a buffer with size 32.
+    constexpr uint64_t kBufferSize = 32;
+    constexpr wgpu::BufferDescriptor kBufferDesc = {
+        .usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst,
+        .size = kBufferSize,
+    };
+    // Creating the buffer should allocate memory with Vulkan ResourceMemoryAllocator.
+    wgpu::Buffer uniformBuffer = device.CreateBuffer(&kBufferDesc);
+    EXPECT_TRUE(uniformBuffer);
+
+    MemoryUsageInfo memInfo = ComputeEstimatedMemoryUsageInfo(device.Get());
+
+    EXPECT_EQ(memInfo.totalUsage, kBufferSize);
+    EXPECT_EQ(memInfo.buffersUsage, kBufferSize);
+    EXPECT_GT(memInfo.vulkanAllocatedMemory, 0u);
+    EXPECT_GT(memInfo.vulkanUsedMemory, 0u);
+    EXPECT_GT(memInfo.vulkanAllocatedMemory, memInfo.vulkanUsedMemory);
+
+    uniformBuffer.Destroy();
+    // Process the destroy event so that the pending command serials are updated.
+    mDeviceMock->GetInstance()->APIProcessEvents();
+
+    memInfo = ComputeEstimatedMemoryUsageInfo(device.Get());
+    EXPECT_EQ(memInfo.vulkanUsedMemory, 0u);
+    EXPECT_GT(memInfo.vulkanAllocatedMemory, 0u);
+    EXPECT_GT(memInfo.vulkanAllocatedMemory, memInfo.vulkanUsedMemory);
+}
+
 }  // namespace
 }  // namespace dawn::native

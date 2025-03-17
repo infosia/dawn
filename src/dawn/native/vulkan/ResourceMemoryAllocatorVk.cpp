@@ -101,8 +101,12 @@ bool SupportsBufferMapExtendedUsages(const VulkanDeviceInfo& deviceInfo) {
 
 class ResourceMemoryAllocator::SingleTypeAllocator : public ResourceHeapAllocator {
   public:
-    SingleTypeAllocator(Device* device, size_t memoryTypeIndex, VkDeviceSize memoryHeapSize)
+    SingleTypeAllocator(Device* device,
+                        size_t memoryTypeIndex,
+                        VkDeviceSize memoryHeapSize,
+                        ResourceMemoryAllocator* memoryAllocator)
         : mDevice(device),
+          mResourceMemoryAllocator(memoryAllocator),
           mMemoryTypeIndex(memoryTypeIndex),
           mMemoryHeapSize(memoryHeapSize),
           mPooledMemoryAllocator(this),
@@ -149,15 +153,17 @@ class ResourceMemoryAllocator::SingleTypeAllocator : public ResourceHeapAllocato
                                   "vkAllocateMemory"));
 
         DAWN_ASSERT(allocatedMemory != VK_NULL_HANDLE);
-        return {std::make_unique<ResourceHeap>(allocatedMemory, mMemoryTypeIndex)};
+        mResourceMemoryAllocator->RecordHeapAllocation(size);
+        return {std::make_unique<ResourceHeap>(allocatedMemory, mMemoryTypeIndex, size)};
     }
 
     void DeallocateResourceHeap(std::unique_ptr<ResourceHeapBase> allocation) override {
-        mDevice->GetFencedDeleter()->DeleteWhenUnused(ToBackend(allocation.get())->GetMemory());
+        mResourceMemoryAllocator->DeallocateResourceHeap(ToBackend(allocation.get()));
     }
 
   private:
     raw_ptr<Device> mDevice;
+    raw_ptr<ResourceMemoryAllocator> mResourceMemoryAllocator;
     size_t mMemoryTypeIndex;
     VkDeviceSize mMemoryHeapSize;
     PooledResourceMemoryAllocator mPooledMemoryAllocator;
@@ -172,7 +178,7 @@ ResourceMemoryAllocator::ResourceMemoryAllocator(Device* device) : mDevice(devic
 
     for (size_t i = 0; i < info.memoryTypes.size(); i++) {
         mAllocatorsPerType.emplace_back(std::make_unique<SingleTypeAllocator>(
-            mDevice, i, info.memoryHeaps[info.memoryTypes[i].heapIndex].size));
+            mDevice, i, info.memoryHeaps[info.memoryTypes[i].heapIndex].size, this));
     }
 }
 
@@ -221,6 +227,7 @@ ResultOrError<ResourceMemoryAllocation> ResourceMemoryAllocator::Allocate(
         DAWN_TRY_ASSIGN(subAllocation, mAllocatorsPerType[memoryType]->AllocateMemory(
                                            requirements.size, alignment));
         if (subAllocation.GetInfo().mMethod != AllocationMethod::kInvalid) {
+            mTotalUsedMemory += requirements.size;
             return subAllocation;
         }
     }
@@ -239,8 +246,11 @@ ResultOrError<ResourceMemoryAllocation> ResourceMemoryAllocator::Allocate(
             { mAllocatorsPerType[memoryType]->DeallocateResourceHeap(std::move(resourceHeap)); });
     }
 
+    mTotalUsedMemory += size;
+
     AllocationInfo info;
     info.mMethod = AllocationMethod::kDirect;
+    info.mRequestedSize = size;
     return ResourceMemoryAllocation(info, /*offset*/ 0, resourceHeap.release(),
                                     static_cast<uint8_t*>(mappedPointer));
 }
@@ -256,8 +266,14 @@ void ResourceMemoryAllocator::Deallocate(ResourceMemoryAllocation* allocation) {
         // deleter will make sure the resources are freed before the memory.
         case AllocationMethod::kDirect: {
             ResourceHeap* heap = ToBackend(allocation->GetResourceHeap());
+            // Track the direct allocation that will be deallocated for both allocated and used
+            // memory sizes.
+            DAWN_ASSERT(mTotalUsedMemory >= allocation->GetInfo().mRequestedSize);
+            mDeallocatedDirectAllocations.Enqueue(
+                allocation->GetInfo().mRequestedSize,
+                mDevice->GetFencedDeleter()->GetPendingCommandSerial());
             allocation->Invalidate();
-            mDevice->GetFencedDeleter()->DeleteWhenUnused(heap->GetMemory());
+            DeallocateResourceHeap(heap);
             delete heap;
             break;
         }
@@ -266,10 +282,11 @@ void ResourceMemoryAllocator::Deallocate(ResourceMemoryAllocation* allocation) {
         // happen just after that aliases the old one and would require a barrier.
         // TODO(crbug.com/dawn/851): Maybe we can produce the correct barriers to reduce the
         // latency to reclaim memory.
-        case AllocationMethod::kSubAllocated:
+        case AllocationMethod::kSubAllocated: {
             mSubAllocationsToDelete.Enqueue(*allocation,
                                             mDevice->GetQueue()->GetPendingCommandSerial());
             break;
+        }
 
         default:
             DAWN_UNREACHABLE();
@@ -281,16 +298,43 @@ void ResourceMemoryAllocator::Deallocate(ResourceMemoryAllocation* allocation) {
     allocation->Invalidate();
 }
 
+void ResourceMemoryAllocator::RecordHeapAllocation(VkDeviceSize size) {
+    mTotalAllocatedMemory += size;
+}
+
+void ResourceMemoryAllocator::DeallocateResourceHeap(ResourceHeap* heap) {
+    DAWN_ASSERT(mTotalAllocatedMemory >= heap->GetSize());
+    mDeallocatedHeapAllocations.Enqueue(heap->GetSize(),
+                                        mDevice->GetFencedDeleter()->GetPendingCommandSerial());
+    mDevice->GetFencedDeleter()->DeleteWhenUnused(heap->GetMemory());
+}
+
 void ResourceMemoryAllocator::Tick(ExecutionSerial completedSerial) {
     for (const ResourceMemoryAllocation& allocation :
          mSubAllocationsToDelete.IterateUpTo(completedSerial)) {
         DAWN_ASSERT(allocation.GetInfo().mMethod == AllocationMethod::kSubAllocated);
         size_t memoryType = ToBackend(allocation.GetResourceHeap())->GetMemoryType();
 
+        // Track the suballocation memory as used memory that will be deallocated.
+        DAWN_ASSERT(mTotalUsedMemory >= allocation.GetInfo().mRequestedSize);
+        mTotalUsedMemory -= allocation.GetInfo().mRequestedSize;
+
         mAllocatorsPerType[memoryType]->DeallocateMemory(allocation);
     }
-
     mSubAllocationsToDelete.ClearUpTo(completedSerial);
+
+    for (const VkDeviceSize size : mDeallocatedDirectAllocations.IterateUpTo(completedSerial)) {
+        // Track the direct allocation memory as used memory that will be deallocated.
+        DAWN_ASSERT(mTotalUsedMemory >= size);
+        mTotalUsedMemory -= size;
+    }
+    mDeallocatedDirectAllocations.ClearUpTo(completedSerial);
+
+    for (const VkDeviceSize size : mDeallocatedHeapAllocations.IterateUpTo(completedSerial)) {
+        DAWN_ASSERT(mTotalAllocatedMemory >= size);
+        mTotalAllocatedMemory -= size;
+    }
+    mDeallocatedHeapAllocations.ClearUpTo(completedSerial);
 }
 
 int ResourceMemoryAllocator::FindBestTypeIndex(VkMemoryRequirements requirements, MemoryKind kind) {
@@ -374,6 +418,14 @@ void ResourceMemoryAllocator::DestroyPool() {
     for (auto& alloc : mAllocatorsPerType) {
         alloc->DestroyPool();
     }
+}
+
+uint64_t ResourceMemoryAllocator::GetTotalUsedMemory() const {
+    return mTotalUsedMemory;
+}
+
+uint64_t ResourceMemoryAllocator::GetTotalAllocatedMemory() const {
+    return mTotalAllocatedMemory;
 }
 
 }  // namespace dawn::native::vulkan
