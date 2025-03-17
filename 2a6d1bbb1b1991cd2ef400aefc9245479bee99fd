@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc880c1b_484811b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-17T16:02:15Z",
+      "side": 1,
+      "message": "I confirmed this creates a libwebgpu_dawn.so  but haven\u0027t tried it.\nRelated to an OKR I proposed.",
+      "revId": "2a6d1bbb1b1991cd2ef400aefc9245479bee99fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
