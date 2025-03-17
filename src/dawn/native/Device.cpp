@@ -2335,6 +2335,10 @@ void DeviceBase::APISetLabel(StringView label) {
 
 void DeviceBase::SetLabelImpl() {}
 
+bool DeviceBase::ReduceMemoryUsageImpl() {
+    return false;
+}
+
 void DeviceBase::PerformIdleTasksImpl() {}
 
 bool DeviceBase::ShouldDuplicateNumWorkgroupsForDispatchIndirect(
@@ -2459,10 +2463,10 @@ MemoryUsageInfo DeviceBase::ComputeEstimatedMemoryUsage() const {
     return info;
 }
 
-void DeviceBase::ReduceMemoryUsage() {
+bool DeviceBase::ReduceMemoryUsage() {
     DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
     if (ConsumedError(GetQueue()->CheckPassedSerials())) {
-        return;
+        return false;
     }
     GetDynamicUploader()->Deallocate(GetQueue()->GetCompletedCommandSerial(), /*freeAll=*/true);
     mInternalPipelineStore->ResetScratchBuffers();
@@ -2473,6 +2477,7 @@ void DeviceBase::ReduceMemoryUsage() {
     });
 
     TrimErrorScopeStacks(mErrorScopeStacks);
+    return ReduceMemoryUsageImpl();
 }
 
 void DeviceBase::PerformIdleTasks() {
