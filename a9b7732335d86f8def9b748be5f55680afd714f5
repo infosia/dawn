@@ -16,6 +16,24 @@
       "message": "nit: unrelated change.",
       "revId": "a9b7732335d86f8def9b748be5f55680afd714f5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df1f49f8_8d4d5ee6",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-17T16:55:46Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "80c8eb8a_9f694cf5",
+      "revId": "a9b7732335d86f8def9b748be5f55680afd714f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
