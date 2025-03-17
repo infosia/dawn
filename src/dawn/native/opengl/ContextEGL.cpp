@@ -203,6 +203,7 @@ void ContextEGL::RequestRequiredExtensionsExplicitly() {
 
     // src/dawn/native/opengl/supported_extensions.json
     glRequestExtension("GL_OES_texture_stencil8");
+    glRequestExtension("GL_EXT_texture_border_clamp");
     glRequestExtension("GL_EXT_texture_compression_s3tc");
     glRequestExtension("GL_EXT_texture_compression_s3tc_srgb");
     glRequestExtension("GL_OES_EGL_image");
