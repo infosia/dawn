@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a274d3cd_4f956d3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-17T15:06:57Z",
+      "side": 1,
+      "message": "PTAL cwallez@. Also not sure if you want any other dawn reviewers on the CL but feel free to add them if so.",
+      "revId": "48c450f4f66d73f9164820cd33e52a9a80d7d342",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c69aec57_e35ef1ab",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-17T15:06:57Z",
+      "side": 1,
+      "message": "cwallez@ what do you think of this approach? There is an alternative approach I tried that is discussed starting in https://crbug.com/398193014#comment8 that might be better overall but I ran into problems.",
+      "revId": "48c450f4f66d73f9164820cd33e52a9a80d7d342",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25221e4d_86d19cda",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-17T15:06:57Z",
+      "side": 1,
+      "message": "This forces `mRecordingContext.needsSubmit` true so [this](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/QueueVk.cpp;l\u003d322-324;drc\u003dc5c93224f7412a71a58c7951977ca798413e1bcf) doesn\u0027t skip the submit. That is kind of hacky of course.\n\nOne other potential solution is to keep using `GetPendingCommandSerial()` as the serial for FencedDeleter to delete at. Here we can check if `mRecordingContext.used` and `mRecordingContext.needsSubmit` are both false then advance the submitted and completed serial without doing a submit. Otherwise if there is work this code can run `queue-\u003eForceEventualFlushOfCommands()` and wait for the submit/work to finish.",
+      "revId": "48c450f4f66d73f9164820cd33e52a9a80d7d342",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
