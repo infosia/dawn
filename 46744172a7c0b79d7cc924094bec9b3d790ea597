@@ -16,6 +16,24 @@
       "message": "I don\u0027t think this is the right change. If the user enabled subgroup-matrix when they created the device, we shouldn\u0027t just silently fail to do so.\n\nThe biggest question here is why are the CTS tests you are running trying to enable subgroup-matrix in the first place? That seems like a bug elsewhere that we need to investigate.",
       "revId": "46744172a7c0b79d7cc924094bec9b3d790ea597",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "069dd1fe_27db87bc",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-17T15:05:10Z",
+      "side": 1,
+      "message": "Right but atm we have a bad practice which is we have put in a new feature which now has caused non feature related tests to fail.",
+      "parentUuid": "ce4d31c1_6704f7e4",
+      "revId": "46744172a7c0b79d7cc924094bec9b3d790ea597",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
