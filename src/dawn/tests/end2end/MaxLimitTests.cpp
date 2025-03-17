@@ -30,6 +30,7 @@
 #include <string>
 #include <vector>
 
+#include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/Platform.h"
 #include "dawn/tests/DawnTest.h"
@@ -851,6 +852,28 @@ TEST_P(MaxLimitTests, MaxBufferSizes) {
 
     // Unset tiered limit usage to avoid affecting other tests.
     GetAdapter().SetUseTieredLimits(false);
+}
+
+// Regression test for crbug.com/42241110
+TEST_P(MaxLimitTests, TestTextureOOM) {
+    wgpu::Limits limits = GetSupportedLimits();
+    device.PushErrorScope(wgpu::ErrorFilter::OutOfMemory);
+
+    wgpu::TextureDescriptor renderTargetDesc;
+    renderTargetDesc.size = {limits.maxTextureDimension2D, limits.maxTextureDimension2D,
+                             limits.maxTextureArrayLayers};
+    renderTargetDesc.format = wgpu::TextureFormat::RGBA32Float;
+    renderTargetDesc.usage = wgpu::TextureUsage::CopyDst;
+    wgpu::Texture renderTarget = device.CreateTexture(&renderTargetDesc);
+
+    wgpu::ErrorType oomResult;
+    device.PopErrorScope(wgpu::CallbackMode::AllowProcessEvents,
+                         [&oomResult](wgpu::PopErrorScopeStatus, wgpu::ErrorType type,
+                                      wgpu::StringView) { oomResult = type; });
+    FlushWire();
+    instance.ProcessEvents();
+
+    DAWN_DEBUG() << "\n\n\n !!!!" << oomResult << "\n\n\n";
 }
 
 DAWN_INSTANTIATE_TEST(MaxLimitTests,
