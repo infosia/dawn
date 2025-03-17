@@ -1,0 +1,339 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e3f2f35_309c0fb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-17T15:29:18Z",
+      "side": 1,
+      "message": "LGTM. Mostly some naming nits",
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd0a69a1_e2c50ff4",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-17T15:29:18Z",
+      "side": 1,
+      "message": "nit: `ComputeInternalBufferUsages`? \"actual\" gets a bit overloaded when other call sites add even more usages sometimes.",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 44
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2d70b426_fcb89288",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Buffer.h",
+              "range": {
+                "startLine": 74,
+                "startChar": 0,
+                "endLine": 77,
+                "endChar": 0
+              },
+              "replacement": "wgpu::BufferUsage GetActualInternalBufferUsages(const DeviceBase* device,\n                                                wgpu::BufferUsage usage,\n                                                size_t bufferSize);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58785ad4_66fc4f21",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-17T15:29:18Z",
+      "side": 1,
+      "message": "nit: I would invert this function to be `ShouldAddInternalStorageToBuffer`",
+      "range": {
+        "startLine": 361,
+        "startChar": 5,
+        "endLine": 361,
+        "endChar": 48
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "08c83b9f_bc6231bb",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/d3d11/BufferD3D11.cpp",
+              "range": {
+                "startLine": 361,
+                "startChar": 0,
+                "endLine": 365,
+                "endChar": 0
+              },
+              "replacement": "bool ShouldAddInternalStorageUsageToBuffer(const Device* device,\n                                          wgpu::BufferUsage storageUsage,\n                                          wgpu::BufferUsage originalUsage,\n                                          size_t bufferSize) {\n"
+            },
+            {
+              "path": "src/dawn/native/d3d11/BufferD3D11.cpp",
+              "range": {
+                "startLine": 369,
+                "startChar": 0,
+                "endLine": 370,
+                "endChar": 0
+              },
+              "replacement": "        return false;\n"
+            },
+            {
+              "path": "src/dawn/native/d3d11/BufferD3D11.cpp",
+              "range": {
+                "startLine": 374,
+                "startChar": 0,
+                "endLine": 375,
+                "endChar": 0
+              },
+              "replacement": "        return false;\n"
+            },
+            {
+              "path": "src/dawn/native/d3d11/BufferD3D11.cpp",
+              "range": {
+                "startLine": 381,
+                "startChar": 0,
+                "endLine": 382,
+                "endChar": 0
+              },
+              "replacement": "        return !(originalUsage \u0026 kMappableBufferUsages);\n"
+            },
+            {
+              "path": "src/dawn/native/d3d11/BufferD3D11.cpp",
+              "range": {
+                "startLine": 384,
+                "startChar": 0,
+                "endLine": 385,
+                "endChar": 0
+              },
+              "replacement": "    return true;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dda98875_cfa54879",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-17T15:29:18Z",
+      "side": 1,
+      "message": "nit: prefer to not modify the input arguments. How about `alignedSize`?",
+      "range": {
+        "startLine": 1240,
+        "startChar": 4,
+        "endLine": 1240,
+        "endChar": 26
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8af74b9b_f9d86373",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/d3d11/BufferD3D11.cpp",
+              "range": {
+                "startLine": 1240,
+                "startChar": 0,
+                "endLine": 1241,
+                "endChar": 0
+              },
+              "replacement": "    const uint64_t alignedSize \u003d Align(size, 4);\n"
+            },
+            {
+              "path": "src/dawn/native/d3d11/BufferD3D11.cpp",
+              "range": {
+                "startLine": 1242,
+                "startChar": 0,
+                "endLine": 1243,
+                "endChar": 0
+              },
+              "replacement": "    DAWN_ASSERT(alignedSize \u003c\u003d GetAllocatedSize());\n"
+            },
+            {
+              "path": "src/dawn/native/d3d11/BufferD3D11.cpp",
+              "range": {
+                "startLine": 1244,
+                "startChar": 0,
+                "endLine": 1245,
+                "endChar": 0
+              },
+              "replacement": "    UINT numElements \u003d static_cast\u003cUINT\u003e(alignedSize / 4);\n"
+            },
+            {
+              "path": "src/dawn/native/d3d11/BufferD3D11.cpp",
+              "range": {
+                "startLine": 1265,
+                "startChar": 0,
+                "endLine": 1266,
+                "endChar": 0
+              },
+              "replacement": "    const uint64_t alignedSize \u003d Align(size, 4);\n"
+            },
+            {
+              "path": "src/dawn/native/d3d11/BufferD3D11.cpp",
+              "range": {
+                "startLine": 1267,
+                "startChar": 0,
+                "endLine": 1268,
+                "endChar": 0
+              },
+              "replacement": "    DAWN_ASSERT(alignedSize \u003c\u003d GetAllocatedSize());\n"
+            },
+            {
+              "path": "src/dawn/native/d3d11/BufferD3D11.cpp",
+              "range": {
+                "startLine": 1270,
+                "startChar": 0,
+                "endLine": 1271,
+                "endChar": 0
+              },
+              "replacement": "    UINT numElements \u003d static_cast\u003cUINT\u003e(alignedSize / 4);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66f87daa_f2a378db",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-17T15:29:18Z",
+      "side": 1,
+      "message": "same nit",
+      "range": {
+        "startLine": 1265,
+        "startChar": 4,
+        "endLine": 1265,
+        "endChar": 26
+      },
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1389b339_b5053692",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-17T15:29:18Z",
+      "side": 1,
+      "message": "Same naming nit. \"prefernot\" is less obvious than \"prefer\" or \"should\" without the \"not\".",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ef06cdce_5cba1591",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/d3d11/DeviceD3D11.h",
+              "range": {
+                "startLine": 79,
+                "startChar": 0,
+                "endLine": 82,
+                "endChar": 0
+              },
+              "replacement": "    bool ShouldPreferAddingInternalStorageUsageToBuffer(wgpu::BufferUsage storageUsage,\n                                                        wgpu::BufferUsage originalUsage,\n                                                        size_t bufferSize) const override;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71836237_366db6c7",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-17T15:29:18Z",
+      "side": 1,
+      "message": "Maybe change this to check for the toggle specifically?",
+      "range": {
+        "startLine": 357,
+        "startChar": 26,
+        "endLine": 357,
+        "endChar": 35
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "cd1f7712_e43f9393",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+              "range": {
+                "startLine": 357,
+                "startChar": 0,
+                "endLine": 358,
+                "endChar": 0
+              },
+              "replacement": "    DAWN_SUPPRESS_TEST_IF(HasToggleEnabled(\"skip_lazy_clear_count_check\"));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
