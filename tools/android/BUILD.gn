@@ -58,6 +58,7 @@ dawn_json_generator("kotlin_gen") {
     "java/android/dawn/BlendFactor.kt",
     "java/android/dawn/BlendOperation.kt",
     "java/android/dawn/BlendState.kt",
+    "java/android/dawn/BorderColor.kt",
     "java/android/dawn/Buffer.kt",
     "java/android/dawn/BufferBindingLayout.kt",
     "java/android/dawn/BufferBindingType.kt",
