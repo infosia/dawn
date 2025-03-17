@@ -178,7 +178,10 @@ def compute_params(root, supported_extensions):
         section_procs = []
         for command in section.findall('./require/command'):
             proc_name = command.attrib['name']
-            assert all_procs[proc_name].alias == None
+            # Commenting this line avoids an AssertionError with proc_name
+            # glTexParameterIivEXT that has the glTexParameterIiv alias.
+            # FWIW, all commands for GL_EXT_texture_border_clamp have an alias.
+            # assert all_procs[proc_name].alias == None
             section_procs.append(all_procs[proc_name])
 
         section_enums = []

@@ -64,6 +64,28 @@ TEST_F(UnsafeAPIValidationTest, chromium_disable_uniformity_analysis) {
     )"));
 }
 
+// Check setting sampler address modes to ClampToBorderColor is an unsafe API.
+TEST_F(UnsafeAPIValidationTest, ClampToBorderColorAddressMode) {
+    {
+        device.CreateSampler();
+    }
+    {
+        wgpu::SamplerDescriptor descriptor;
+        descriptor.addressModeU = wgpu::AddressMode::ClampToBorderColor;
+        ASSERT_DEVICE_ERROR(device.CreateSampler(&descriptor));
+    }
+    {
+        wgpu::SamplerDescriptor descriptor;
+        descriptor.addressModeV = wgpu::AddressMode::ClampToBorderColor;
+        ASSERT_DEVICE_ERROR(device.CreateSampler(&descriptor));
+    }
+    {
+        wgpu::SamplerDescriptor descriptor;
+        descriptor.addressModeW = wgpu::AddressMode::ClampToBorderColor;
+        ASSERT_DEVICE_ERROR(device.CreateSampler(&descriptor));
+    }
+}
+
 class TimestampQueryUnsafeAPIValidationTest : public ValidationTest {
   protected:
     std::vector<const char*> GetDisabledToggles() override { return {"allow_unsafe_apis"}; }
