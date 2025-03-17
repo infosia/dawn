@@ -46,6 +46,8 @@ VkSamplerAddressMode VulkanSamplerAddressMode(wgpu::AddressMode mode) {
             return VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT;
         case wgpu::AddressMode::ClampToEdge:
             return VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+        case wgpu::AddressMode::ClampToBorderColor:
+            return VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
         case wgpu::AddressMode::Undefined:
             break;
     }
@@ -59,6 +61,21 @@ VkSamplerMipmapMode VulkanMipMapMode(wgpu::MipmapFilterMode filter) {
         case wgpu::MipmapFilterMode::Nearest:
             return VK_SAMPLER_MIPMAP_MODE_NEAREST;
         case wgpu::MipmapFilterMode::Undefined:
+            break;
+    }
+    DAWN_UNREACHABLE();
+}
+
+VkBorderColor VulkanSamplerBorderColor(wgpu::BorderColor borderColor) {
+    // FIXME! When shall we use integer formats?
+    switch (borderColor) {
+        case wgpu::BorderColor::TransparentBlack:
+            return VK_BORDER_COLOR_FLOAT_TRANSPARENT_BLACK;
+        case wgpu::BorderColor::OpaqueBlack:
+            return VK_BORDER_COLOR_FLOAT_OPAQUE_BLACK;
+        case wgpu::BorderColor::OpaqueWhite:
+            return VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
+        case wgpu::BorderColor::Undefined:
             break;
     }
     DAWN_UNREACHABLE();
@@ -119,6 +136,12 @@ MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
         samplerYCbCrInfo.conversion = mSamplerYCbCrConversion;
 
         createInfo.pNext = &samplerYCbCrInfo;
+    }
+
+    if (descriptor->addressModeU == wgpu::AddressMode::ClampToBorderColor ||
+        descriptor->addressModeV == wgpu::AddressMode::ClampToBorderColor ||
+        descriptor->addressModeW == wgpu::AddressMode::ClampToBorderColor) {
+        createInfo.borderColor = VulkanSamplerBorderColor(descriptor->borderColor);
     }
 
     DAWN_TRY(CheckVkSuccess(

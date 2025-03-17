@@ -43,7 +43,23 @@ D3D12_TEXTURE_ADDRESS_MODE AddressMode(wgpu::AddressMode mode) {
             return D3D12_TEXTURE_ADDRESS_MODE_MIRROR;
         case wgpu::AddressMode::ClampToEdge:
             return D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
+        case wgpu::AddressMode::ClampToBorderColor:
+            return D3D12_TEXTURE_ADDRESS_MODE_BORDER;
         case wgpu::AddressMode::Undefined:
+            break;
+    }
+    DAWN_UNREACHABLE();
+}
+
+std::array<float, 4> BorderColor(wgpu::BorderColor borderColor) {
+    switch (borderColor) {
+        case wgpu::BorderColor::TransparentBlack:
+            return {0.0f, 0.0f, 0.0f, 0.0f};
+        case wgpu::BorderColor::OpaqueBlack:
+            return {0.0f, 0.0f, 0.0f, 1.0f};
+        case wgpu::BorderColor::OpaqueWhite:
+            return {1.0f, 1.0f, 1.0f, 1.0f};
+        case wgpu::BorderColor::Undefined:
             break;
     }
     DAWN_UNREACHABLE();
@@ -120,6 +136,16 @@ Sampler::Sampler(Device* device, const SamplerDescriptor* descriptor)
     }
     mSamplerDesc.MinLOD = descriptor->lodMinClamp;
     mSamplerDesc.MaxLOD = descriptor->lodMaxClamp;
+
+    if (descriptor->addressModeU == wgpu::AddressMode::ClampToBorderColor ||
+        descriptor->addressModeV == wgpu::AddressMode::ClampToBorderColor ||
+        descriptor->addressModeW == wgpu::AddressMode::ClampToBorderColor) {
+        std::array<float, 4> borderColor = BorderColor(descriptor->borderColor);
+        mSamplerDesc.BorderColor[0] = borderColor[0];
+        mSamplerDesc.BorderColor[1] = borderColor[1];
+        mSamplerDesc.BorderColor[2] = borderColor[2];
+        mSamplerDesc.BorderColor[3] = borderColor[3];
+    }
 }
 
 const D3D12_SAMPLER_DESC& Sampler::GetSamplerDescriptor() const {
