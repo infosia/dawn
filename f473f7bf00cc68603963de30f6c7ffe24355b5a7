@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19ab93d6_9c2566dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2025-03-17T20:43:54Z",
+      "side": 1,
+      "message": "I better factorized the SDK version number, as for the choice of this version I think it is ok to stick with the current one, because it works :)",
+      "revId": "f473f7bf00cc68603963de30f6c7ffe24355b5a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5baea45_46ed5d01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2025-03-17T20:43:54Z",
+      "side": 1,
+      "message": "I better factorized the SDK version number, as for the choice of this version I think it is ok to stick with the current one, because it works :)",
+      "revId": "f473f7bf00cc68603963de30f6c7ffe24355b5a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

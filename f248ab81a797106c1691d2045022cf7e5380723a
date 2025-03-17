@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb9bea40_23686d36",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2025-03-17T20:43:54Z",
+      "side": 1,
+      "message": "Yes, it\u0027s not directly related to the issue discussed here, but it does not hurt (I believe) and is always convenient to be able to manually trigger workflow (e.g. to run it on other branches than main)",
+      "parentUuid": "952ca804_ad6bdd07",
+      "revId": "f248ab81a797106c1691d2045022cf7e5380723a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ce657fe_19433d1d",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8cded9d_13e3ec5d",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2025-03-17T20:43:54Z",
+      "side": 1,
+      "message": "It still fails on the CI with latest commits, and this is the only thing I change here, so I\u0027d say yes this is still needed. This very version I don\u0027t know, definitly not the version running by default with GitHub Actions.",
+      "parentUuid": "7ce657fe_19433d1d",
+      "revId": "f248ab81a797106c1691d2045022cf7e5380723a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d575fe4_9fad44e1",
@@ -48,6 +84,24 @@
       "writtenOn": "2024-11-19T13:12:57Z",
       "side": 1,
       "message": "Is it possible to make this a variable used both here and for `WIN10_SDK_VERSION`?",
+      "revId": "f248ab81a797106c1691d2045022cf7e5380723a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6252c6c2_7337944d",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2025-03-17T20:43:54Z",
+      "side": 1,
+      "message": "Done in the GH PR (it is automatically synced here, right?)",
+      "parentUuid": "3d575fe4_9fad44e1",
       "revId": "f248ab81a797106c1691d2045022cf7e5380723a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
