@@ -16,6 +16,24 @@
       "message": "It would be nice to keep this restiction documented somewhere, either with some validation rule, or in the docs. Even if it might not be possible to even create the shared handle, having somwhere documented at the interfaces would be better than keeping that constraint only known to users of Dawn.",
       "revId": "a7e344f5417a8ef6e31e09d364a8375aa933b5b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b812e954_ea112a3d",
+        "filename": "src/dawn/native/d3d11/DeviceInfoD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-17T14:46:58Z",
+      "side": 0,
+      "message": "Done. I have added a validation to reject shared handle with NV12 format if D3D11_SHARED_RESOURCE_TIER_2 is not supported.",
+      "parentUuid": "975708c1_c39a5a31",
+      "revId": "a7e344f5417a8ef6e31e09d364a8375aa933b5b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
