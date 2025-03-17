@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9f74d31_45230e20",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-03-17T16:07:53Z",
+      "side": 1,
+      "message": "LGTM with cwallez@\u0027s nits addressed.",
+      "revId": "48c450f4f66d73f9164820cd33e52a9a80d7d342",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c69aec57_e35ef1ab",
