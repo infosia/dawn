@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5798edaf_f91d2dca",
+        "filename": "src/dawn/native/SharedResourceMemory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-17T17:14:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "10f60e02_1e74fbe0",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fa32c1a_28ddd2bb",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-03-17T09:46:35Z",
       "side": 1,
       "message": "Can we have some more details here like why this toggle is useful, that D3D11Fence is not always available etc.",
+      "range": {
+        "startLine": 647,
+        "startChar": 30,
+        "endLine": 647,
+        "endChar": 50
+      },
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e872184_adc4322c",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-17T17:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fa32c1a_28ddd2bb",
       "range": {
         "startLine": 647,
         "startChar": 30,
@@ -94,6 +136,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb3eed41_d450629c",
+        "filename": "src/dawn/native/d3d/SharedTextureMemoryD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-17T17:14:41Z",
+      "side": 1,
+      "message": "Done. I have added a validation to `SharedTextureMemory::Create`.",
+      "parentUuid": "3cc07725_913228e5",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5cf658b8_9b1a7a97",
@@ -107,6 +167,24 @@
       "writtenOn": "2025-03-17T09:46:35Z",
       "side": 1,
       "message": "This is skipping the whole initialize (even future initialization that we might add that doesn\u0027t do fence stuff). Could we split off Fence creation to its own method and skip just that part?",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b816565_580a2977",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-17T17:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cf658b8_9b1a7a97",
       "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -128,6 +206,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c98cb3ea_e9d07bba",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-17T17:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d50786c_c5102b2d",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40357eac_bfad128e",
@@ -145,6 +241,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "778ed707_f9e5b1a0",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-17T17:14:41Z",
+      "side": 1,
+      "message": "Done. This was controlled by a separate class `CommandEncodingContext`. I have changed the triggering code to skip setting its `needsFence` flag if fences are disabled.",
+      "parentUuid": "40357eac_bfad128e",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e41e4fe4_6a8bde24",
@@ -158,6 +272,24 @@
       "writtenOn": "2025-03-17T09:46:35Z",
       "side": 1,
       "message": "This case should already be handled here because the extension wouldn\u0027t be unabled: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/DeviceD3D11.cpp;drc\u003d89a11e9d015f7d466a380e45231cd14fb758414b;l\u003d320",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efb39379_cee18e4f",
+        "filename": "src/dawn/native/d3d11/SharedFenceD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-17T17:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e41e4fe4_6a8bde24",
       "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
