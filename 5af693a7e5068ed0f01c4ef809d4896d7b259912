@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12fe7827_d0fef4b5",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-17T19:05:17Z",
+      "side": 1,
+      "message": "Instead of expanding this out and doing it manually, it should be possible to loop over the columns and rows, do the multiplications and store the values into a row vector. Then take the row vectors and construct a matrix from them.",
+      "revId": "5af693a7e5068ed0f01c4ef809d4896d7b259912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
