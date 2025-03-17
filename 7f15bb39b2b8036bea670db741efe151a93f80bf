@@ -52,6 +52,24 @@
       "parentUuid": "3610969a_0a6778cd",
       "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "300c0de4_bb232c85",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T15:29:12Z",
+      "side": 0,
+      "message": "Ah if `CreateBuffer` fails and returns null because of MappedAtCreation IMHO we can crash because that\u0027s an unrecoverable OOM. Maybe adding this CHECK in `CreateBuffer` will help simplify the logic? I am very concerned about the current amount of state in that one function because it will make any future changes in the area very hard to get right (just as much as this one is hard).\n\nBasically APICreateBuffer is impossible to make sense of at the moment because 5 different code paths are merged together and not contiguous so I\u0027m trying to find solutions to untangle things a bit.",
+      "parentUuid": "a9dee998_c7f31f6d",
+      "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

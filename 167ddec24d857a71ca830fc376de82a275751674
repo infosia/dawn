@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc15e35e_7bfc72f1",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T15:29:12Z",
+      "side": 1,
+      "message": "note: In the future it would be very nice to make HostMapped use SharedBufferMemory instead so that it wouldn\u0027t get in the path of \"normal\" buffer creation.",
+      "revId": "167ddec24d857a71ca830fc376de82a275751674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61ec1434_81f4cac8",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T15:29:12Z",
+      "side": 1,
+      "message": "Would it make sense to handle this in the `CreateBufferInternal` since we have the descriptor unpacked there? Both the OOM for creation and mappedAtCreation can be handled there?",
+      "revId": "167ddec24d857a71ca830fc376de82a275751674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
