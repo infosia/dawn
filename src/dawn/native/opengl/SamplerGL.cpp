@@ -83,8 +83,26 @@ GLenum WrapMode(wgpu::AddressMode mode) {
             return GL_MIRRORED_REPEAT;
         case wgpu::AddressMode::ClampToEdge:
             return GL_CLAMP_TO_EDGE;
+        case wgpu::AddressMode::ClampToBorderColor:
+            return GL_CLAMP_TO_BORDER;
         case wgpu::AddressMode::Undefined:
             break;
+    }
+    DAWN_UNREACHABLE();
+}
+
+GLfloat* BorderColor(wgpu::BorderColor borderColor) {
+    static std::array<GLfloat, 4> transparentBlack = {0.0f, 0.0f, 0.0f, 0.0f};
+    static std::array<GLfloat, 4> opaqueBlack = {0.0f, 0.0f, 0.0f, 1.0f};
+    static std::array<GLfloat, 4> opaqueWhite = {1.0f, 1.0f, 1.0f, 1.0f};
+
+    switch (borderColor) {
+        case wgpu::BorderColor::TransparentBlack:
+            return transparentBlack.data();
+        case wgpu::BorderColor::OpaqueBlack:
+            return opaqueBlack.data();
+        case wgpu::BorderColor::OpaqueWhite:
+            return opaqueWhite.data();
     }
     DAWN_UNREACHABLE();
 }
@@ -157,6 +175,9 @@ MaybeError Sampler::SetupGLSampler(GLuint sampler,
             std::min<uint16_t>(GetMaxAnisotropy(), device->GetMaxTextureMaxAnisotropy());
         DAWN_GL_TRY(gl, SamplerParameteri(sampler, GL_TEXTURE_MAX_ANISOTROPY, value));
     }
+
+    // FIXME! Check GL_EXT_texture_border_clamp first!
+    DAWN_GL_TRY(gl, SamplerParameterfv(sampler, GL_TEXTURE_BORDER_COLOR, BorderColor(descriptor->borderColor));
 
     return {};
 }
