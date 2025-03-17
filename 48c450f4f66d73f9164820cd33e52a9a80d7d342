@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8cc427dc_6b6441dc",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T15:36:00Z",
+      "side": 1,
+      "message": "IMHO this works well, it is a bit hacky like you said but at the moment anything else is a bit too complicated. Can we add TODOs to automatically trim this memory when we notice that a Tick() has completed? That\u0027s something that we want to do soonish now that WGPUFuture is used everywhere and that we\u0027ll be looking at multithreading the internals of Dawn.",
+      "parentUuid": "c69aec57_e35ef1ab",
+      "revId": "48c450f4f66d73f9164820cd33e52a9a80d7d342",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "25221e4d_86d19cda",
         "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
         "patchSetId": 2
