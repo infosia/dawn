@@ -69,6 +69,19 @@ MaybeError ValidateSamplerDescriptor(DeviceBase* device, const SamplerDescriptor
     DAWN_TRY(ValidateAddressMode(descriptor->addressModeV));
     DAWN_TRY(ValidateAddressMode(descriptor->addressModeW));
     DAWN_TRY(ValidateCompareFunction(descriptor->compare));
+    DAWN_TRY(ValidateBorderColor(descriptor->borderColor));
+
+    if (!device->IsToggleEnabled(Toggle::AllowUnsafeAPIs)) {
+        DAWN_INVALID_IF(descriptor->addressModeU == wgpu::AddressMode::ClampToBorderColor,
+                        "Setting addressModeU to %s requires enabling toggle allow_unsafe_apis",
+                        wgpu::AddressMode::ClampToBorderColor);
+        DAWN_INVALID_IF(descriptor->addressModeV == wgpu::AddressMode::ClampToBorderColor,
+                        "Setting addressModeV to %s requires enabling toggle allow_unsafe_apis",
+                        wgpu::AddressMode::ClampToBorderColor);
+        DAWN_INVALID_IF(descriptor->addressModeW == wgpu::AddressMode::ClampToBorderColor,
+                        "Setting addressModeW to %s requires enabling toggle allow_unsafe_apis",
+                        wgpu::AddressMode::ClampToBorderColor);
+    }
 
     UnpackedPtr<SamplerDescriptor> unpacked = Unpack(descriptor);
     if (unpacked.Get<YCbCrVkDescriptor>()) {
@@ -94,7 +107,8 @@ SamplerBase::SamplerBase(DeviceBase* device,
       mLodMinClamp(descriptor->lodMinClamp),
       mLodMaxClamp(descriptor->lodMaxClamp),
       mCompareFunction(descriptor->compare),
-      mMaxAnisotropy(descriptor->maxAnisotropy) {
+      mMaxAnisotropy(descriptor->maxAnisotropy),
+      mBorderColor(descriptor->borderColor) {
     if (auto* yCbCrVkDescriptor = Unpack(descriptor).Get<YCbCrVkDescriptor>()) {
         mIsYCbCr = true;
         mYCbCrVkDescriptor = yCbCrVkDescriptor->WithTrivialFrontendDefaults();
@@ -154,7 +168,7 @@ size_t SamplerBase::ComputeContentHash() {
     // values.
     recorder.Record(
         mAddressModeU, mAddressModeV, mAddressModeW, mMagFilter, mMinFilter, mMipmapFilter,
-        mLodMinClamp, mLodMaxClamp, mCompareFunction, mMaxAnisotropy, mIsYCbCr,
+        mLodMinClamp, mLodMaxClamp, mCompareFunction, mMaxAnisotropy, mIsYCbCr, mBorderColor,
         mYCbCrVkDescriptor.vkFormat, mYCbCrVkDescriptor.vkYCbCrModel,
         mYCbCrVkDescriptor.vkYCbCrRange, mYCbCrVkDescriptor.vkComponentSwizzleRed,
         mYCbCrVkDescriptor.vkComponentSwizzleGreen, mYCbCrVkDescriptor.vkComponentSwizzleBlue,
@@ -184,7 +198,7 @@ bool SamplerBase::EqualityFunc::operator()(const SamplerBase* a, const SamplerBa
            a->mMinFilter == b->mMinFilter && a->mMipmapFilter == b->mMipmapFilter &&
            a->mLodMinClamp == b->mLodMinClamp && a->mLodMaxClamp == b->mLodMaxClamp &&
            a->mCompareFunction == b->mCompareFunction && a->mMaxAnisotropy == b->mMaxAnisotropy &&
-           a->mIsYCbCr == b->mIsYCbCr &&
+           a->mIsYCbCr == b->mIsYCbCr && a->mBorderColor == b->mBorderColor &&
            a->mYCbCrVkDescriptor.vkFormat == b->mYCbCrVkDescriptor.vkFormat &&
            a->mYCbCrVkDescriptor.vkYCbCrModel == b->mYCbCrVkDescriptor.vkYCbCrModel &&
            a->mYCbCrVkDescriptor.vkYCbCrRange == b->mYCbCrVkDescriptor.vkYCbCrRange &&
