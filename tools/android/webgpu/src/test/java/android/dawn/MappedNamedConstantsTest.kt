@@ -20,6 +20,7 @@ class MappedNamedConstantsTest {
         BackendType::class,
         BlendFactor::class,
         BlendOperation::class,
+        BorderColor::class,
         BufferBindingType::class,
         BufferMapState::class,
         BufferUsage::class,
