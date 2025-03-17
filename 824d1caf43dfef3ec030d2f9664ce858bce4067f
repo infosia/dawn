@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10f60e02_1e74fbe0",
+        "filename": "src/dawn/native/SharedResourceMemory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T09:46:35Z",
+      "side": 1,
+      "message": "Same comment as [1]",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fa32c1a_28ddd2bb",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T09:46:35Z",
+      "side": 1,
+      "message": "Can we have some more details here like why this toggle is useful, that D3D11Fence is not always available etc.",
+      "range": {
+        "startLine": 647,
+        "startChar": 30,
+        "endLine": 647,
+        "endChar": 50
+      },
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a550065_5e52c5e0",
+        "filename": "src/dawn/native/d3d/SharedTextureMemoryD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T09:46:35Z",
+      "side": 1,
+      "message": "[1] This seems to mean that if `SharedFenceDXGISharedHandle` is not available, then we have no possible synchronization for EndAccess? This seems to be breaking the API contracts because then something \"magic\" outside the call to EndAccess needs to handle synchronization. Is it in that case that we\u0027ll have Chromium use the same D3D11 device always? How could we ensure that at the API level?\n\nFor example adding a \"useless\" SharedFenceImplicitD3D11Synchronization. Geoff WDYT?",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cf658b8_9b1a7a97",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T09:46:35Z",
+      "side": 1,
+      "message": "This is skipping the whole initialize (even future initialization that we might add that doesn\u0027t do fence stuff). Could we split off Fence creation to its own method and skip just that part?",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d50786c_c5102b2d",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T09:46:35Z",
+      "side": 1,
+      "message": "```suggestion\n// SystemEventQueue:\n```",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40357eac_bfad128e",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T09:46:35Z",
+      "side": 1,
+      "message": "Will `AcquireNeedsFence` still be true if `D3D11DisableFence` is true?",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e41e4fe4_6a8bde24",
+        "filename": "src/dawn/native/d3d11/SharedFenceD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-17T09:46:35Z",
+      "side": 1,
+      "message": "This case should already be handled here because the extension wouldn\u0027t be unabled: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/DeviceD3D11.cpp;drc\u003d89a11e9d015f7d466a380e45231cd14fb758414b;l\u003d320",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
