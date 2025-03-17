@@ -20306,13 +20306,6 @@ crbug.com/42241110 [ linux ] webgpu:api,validation,error_scope:simple:errorType=
 crbug.com/42241110 [ linux ] webgpu:api,validation,error_scope:simple:errorType="out-of-memory";errorFilter="validation" [ Failure ]
 crbug.com/42241110 [ android arm ] webgpu:api,validation,error_scope:current_scope:errorFilter="validation";stackDepth=100000 [ Failure ]
 
-# filtering tests failing with format rg11b10ufloat on all Compat platforms
-crbug.com/402772746 webgpu:api,operation,sampling,filter_mode:magFilter,linear:format="rg11b10ufloat" [ Failure ]
-crbug.com/402772746 webgpu:api,operation,sampling,filter_mode:magFilter,nearest:format="rg11b10ufloat" [ Failure ]
-crbug.com/402772746 webgpu:api,operation,sampling,filter_mode:minFilter,linear:format="rg11b10ufloat" [ Failure ]
-crbug.com/402772746 webgpu:api,operation,sampling,filter_mode:minFilter,nearest:format="rg11b10ufloat" [ Failure ]
-crbug.com/402772746 webgpu:api,operation,sampling,filter_mode:mipmapFilter:format="rg11b10ufloat" [ Failure ]
-
 # sample_texture_combos test is failing on all Compat platforms
 crbug.com/402772749 webgpu:api,operation,sampling,sampler_texture:sample_texture_combos: [ Failure ]
 
@@ -20364,10 +20357,6 @@ crbug.com/42241377 [ linux ] webgpu:api,operation,storage_texture,read_only:basi
 crbug.com/42241377 [ linux ] webgpu:api,operation,storage_texture,read_only:basic:format="rgba8unorm";shaderStage="vertex";dimension="2d";depthOrArrayLayers=2 [ Failure ]
 crbug.com/42241377 [ linux ] webgpu:api,operation,storage_texture,read_only:basic:format="rgba8unorm";shaderStage="vertex";dimension="3d";depthOrArrayLayers=1 [ Failure ]
 crbug.com/42241377 [ linux ] webgpu:api,operation,storage_texture,read_only:basic:format="rgba8unorm";shaderStage="vertex";dimension="3d";depthOrArrayLayers=2 [ Failure ]
-
-### This test is failing on all Compat bots. It's likely because they pass
-### --use-webgpu-adapter=opengles and will thus never create a Core adapter.
-crbug.com/402791063 webgpu:api,operation,adapter,requestDevice:always_returns_device:featureLevel="core" [ Failure ]
 
 ### This section represents platform-specific issues that are likely unfixable
 ### in Compat
