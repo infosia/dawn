@@ -60,6 +60,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9b33aa16_59c421c9",
+        "filename": "src/dawn/native/d3d/SharedTextureMemoryD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-17T10:03:27Z",
+      "side": 1,
+      "message": "There are two types of D3D synchronizations:\n- fences.\n- keyed mutexes.\n\nKeyed mutexes are already handled by Dawn automatically when clients use it to create shared textures. i.e. Dawn will:\n- Acquire keyed mutexes before accessing the textures in a command buffer [1].\n- Release keyed mutexes just before submitting the command buffer to the driver [2].\n\nWithout fences, the synchronizations should already work if the clients create shared textures with keyed mutexes. Since fences cannot be imported in this case though. We already have a validation that rejects if fences are not supported.\n\n[1] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/TextureD3D11.cpp;drc\u003d533610f3b0cddaf48453f570591a39acc7b8042a;l\u003d442\n[2] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/QueueD3D11.cpp;drc\u003d75c5e5c6fb11f2e9785b93c142f73996d9169d2d;l\u003d192",
+      "parentUuid": "4a550065_5e52c5e0",
+      "revId": "824d1caf43dfef3ec030d2f9664ce858bce4067f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5cf658b8_9b1a7a97",
         "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
         "patchSetId": 1
