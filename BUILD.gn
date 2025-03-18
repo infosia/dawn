@@ -34,6 +34,10 @@ import("${dawn_root}/scripts/dawn_features.gni")
 if (!is_clang && is_win) {
   # libc++ cannot currently build with MSVC. See https://anglebug.com/376074941
   assert(!use_custom_libcxx, "MSVC build requires use_custom_libcxx=false")
+
+  # Chromium has deprecated support for MSVC, so many of the
+  # dependencies inherited from it have build warnings.
+  treat_warnings_as_errors = false
 }
 
 group("benchmarks") {
