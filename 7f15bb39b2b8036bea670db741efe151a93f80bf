@@ -88,6 +88,24 @@
       "parentUuid": "300c0de4_bb232c85",
       "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "028cfd5e_fdf87e0c",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-18T13:12:47Z",
+      "side": 0,
+      "message": "\u003e I don\u0027t think it\u0027s a good idea to just crash if mappedAtCreation OOM happens internally, it should propagate out to a device loss.\n\nThat could be handled in `CreateBuffer` no? Detect that there is a nullptr and decide that it was a mappedAtCreation failure. My suggestion is to have both `CreateBuffer` and `APICreateBuffer` call `ResultOrError\u003c(Nullable)Ref\u003cBuffer\u003e\u003e CreateBufferInternal(UnpackedDesc)` and decide what to do in the various cases.",
+      "parentUuid": "79ad6c10_9689e70a",
+      "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
