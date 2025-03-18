@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdf5947c_adf58e13",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-18T20:09:46Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "27f3568f_20d13c48",
+      "range": {
+        "startLine": 218,
+        "startChar": 7,
+        "endLine": 218,
+        "endChar": 19
+      },
+      "revId": "dafb4430f6e119b5cfaa93b31377a06d0f5aa9a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "96ddbb7b_201804a9",
@@ -43,6 +67,47 @@
         "endLine": 248,
         "endChar": 23
       },
+      "revId": "dafb4430f6e119b5cfaa93b31377a06d0f5aa9a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09339cf4_1643b9ca",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-18T20:09:46Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "96ddbb7b_201804a9",
+      "range": {
+        "startLine": 248,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 23
+      },
+      "revId": "dafb4430f6e119b5cfaa93b31377a06d0f5aa9a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1502e034_61473b1e",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-18T20:09:46Z",
+      "side": 1,
+      "message": "This needs a rebase to remove the `.Str()` now that Dan\u0027s CL has landed.",
       "revId": "dafb4430f6e119b5cfaa93b31377a06d0f5aa9a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
