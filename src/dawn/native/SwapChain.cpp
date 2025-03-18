@@ -107,22 +107,28 @@ ResultOrError<SurfaceTexture> SwapChainBase::GetCurrentTexture() {
 
     if (mCurrentTextureInfo.texture == nullptr) {
         DAWN_TRY_ASSIGN(mCurrentTextureInfo, GetCurrentTextureImpl());
-        SetChildLabel(mCurrentTextureInfo.texture.Get());
-
-        // Check that the return texture matches exactly what was given for this descriptor.
-        DAWN_ASSERT(mCurrentTextureInfo.texture->GetFormat().format == mFormat);
-        DAWN_ASSERT(IsSubset(mUsage, mCurrentTextureInfo.texture->GetUsage()));
-        DAWN_ASSERT(mCurrentTextureInfo.texture->GetDimension() == wgpu::TextureDimension::e2D);
-        DAWN_ASSERT(mCurrentTextureInfo.texture->GetWidth(Aspect::Color) == mWidth);
-        DAWN_ASSERT(mCurrentTextureInfo.texture->GetHeight(Aspect::Color) == mHeight);
-        DAWN_ASSERT(mCurrentTextureInfo.texture->GetNumMipLevels() == 1);
-        DAWN_ASSERT(mCurrentTextureInfo.texture->GetArrayLayers() == 1);
-        DAWN_ASSERT(mCurrentTextureInfo.texture->GetViewFormats() == ComputeViewFormatSet());
     }
+
+    // Handle cases where the backend swapchain goes bad and can't return a texture.
+    surfaceTexture.status = mCurrentTextureInfo.status;
+    if (mCurrentTextureInfo.texture == nullptr) {
+        return surfaceTexture;
+    }
+
+    SetChildLabel(mCurrentTextureInfo.texture.Get());
+
+    // Check that the return texture matches exactly what was given for this descriptor.
+    DAWN_ASSERT(mCurrentTextureInfo.texture->GetFormat().format == mFormat);
+    DAWN_ASSERT(IsSubset(mUsage, mCurrentTextureInfo.texture->GetUsage()));
+    DAWN_ASSERT(mCurrentTextureInfo.texture->GetDimension() == wgpu::TextureDimension::e2D);
+    DAWN_ASSERT(mCurrentTextureInfo.texture->GetWidth(Aspect::Color) == mWidth);
+    DAWN_ASSERT(mCurrentTextureInfo.texture->GetHeight(Aspect::Color) == mHeight);
+    DAWN_ASSERT(mCurrentTextureInfo.texture->GetNumMipLevels() == 1);
+    DAWN_ASSERT(mCurrentTextureInfo.texture->GetArrayLayers() == 1);
+    DAWN_ASSERT(mCurrentTextureInfo.texture->GetViewFormats() == ComputeViewFormatSet());
 
     // Calling GetCurrentTexture always returns a new reference.
     surfaceTexture.texture = Ref<TextureBase>(mCurrentTextureInfo.texture).Detach();
-    surfaceTexture.status = mCurrentTextureInfo.status;
     return surfaceTexture;
 }
 
