@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cd00515_44fc6155",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-18T16:43:06Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "b7961d24a8130f1491e89430e43085d93c1dec57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea5db5de_3953af67",
+        "filename": "src/dawn/node/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-18T16:43:06Z",
+      "side": 1,
+      "message": "Nit: s/builty/built/",
+      "revId": "b7961d24a8130f1491e89430e43085d93c1dec57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
