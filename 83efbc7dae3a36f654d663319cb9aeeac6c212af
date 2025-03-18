@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cc8d0fa_4ed2b09b",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3696,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-18T16:55:38Z",
+      "side": 0,
+      "message": "Nit: Could stringify `Validator::Run()` too?",
+      "revId": "83efbc7dae3a36f654d663319cb9aeeac6c212af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
