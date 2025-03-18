@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7de0bb16_d313559b",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-18T19:11:31Z",
+      "side": 1,
+      "message": "Got it Dan, Thanks for your clarification!",
+      "parentUuid": "105a3552_9be38647",
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "091d600d_7162e036",
@@ -150,6 +168,30 @@
       "side": 1,
       "message": "Similar, the `Value()` wrapper is just going to get the `Result(0)`, but using `Result(0)` matches the style of the rest of the codebase.",
       "parentUuid": "ab843f31_d2b5aefb",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 88
+      },
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b062b6d9_6adb8f63",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-18T19:11:31Z",
+      "side": 1,
+      "message": "Got it!",
+      "parentUuid": "7eb726b9_d8f3ae03",
       "range": {
         "startLine": 244,
         "startChar": 0,
