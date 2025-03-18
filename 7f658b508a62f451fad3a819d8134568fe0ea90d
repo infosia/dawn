@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e49cc0d9_5cc7612f",
+        "filename": "generator/templates/dawn/native/api_structs.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-18T22:38:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d613f521_6770daeb",
+      "revId": "7f658b508a62f451fad3a819d8134568fe0ea90d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4b68cbc_fbd48d20",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-18T22:22:53Z",
       "side": 1,
       "message": "same",
+      "revId": "7f658b508a62f451fad3a819d8134568fe0ea90d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b136ff2_2279719a",
+        "filename": "generator/templates/dawn/native/api_structs.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-18T22:38:53Z",
+      "side": 1,
+      "message": "Bitmasks always have `none` though, so I think this one is fine. (Also the `if` is handled with an `else` instead of a `elif` so we should catch all cases and if we add a bitmask without `none` this should cause an error.)",
+      "parentUuid": "b4b68cbc_fbd48d20",
       "revId": "7f658b508a62f451fad3a819d8134568fe0ea90d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
