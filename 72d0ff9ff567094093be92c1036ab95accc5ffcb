@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ba914e30_4b495725",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-18T18:44:09Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "59ff0354_7c8f846b",
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2320cfd9_1ee54c87",
         "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
         "patchSetId": 4
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-18T13:52:41Z",
       "side": 1,
       "message": "```suggestion\n        auto* elem_ty \u003d vector1-\u003eType()-\u003eDeepestElement();\n```",
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf96965a_ce658f84",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-18T18:44:09Z",
+      "side": 1,
+      "message": "Hi Dan,\nI have a doubt, what is the difference between both the functions, since both are returning the correct values,\nsimilarly pls help me understand the below suggestion too, b.Multiply()-\u003eResult() \nthanks!\n\nDone!",
+      "parentUuid": "2320cfd9_1ee54c87",
       "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -60,6 +96,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ab843f31_d2b5aefb",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-18T18:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "091d600d_7162e036",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 88
+      },
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c882af6d_abc93fc8",
         "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
         "patchSetId": 4
@@ -71,6 +131,24 @@
       "writtenOn": "2025-03-18T13:52:41Z",
       "side": 1,
       "message": "```suggestion\n                auto* row_vector \u003d b.Construct(ty.vec(elem_ty, cols), row_elements)-\u003eResult(0);\n```",
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ad30e3_c392a83b",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-18T18:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c882af6d_abc93fc8",
       "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -112,6 +190,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8137dc03_7da3d7b8",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-18T18:44:09Z",
+      "side": 1,
+      "message": "I have redefined rows and cols which matches with our usecase",
+      "parentUuid": "c8498cea_2fa22de4",
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "78c7828e_495d4a2d",
         "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
         "patchSetId": 4
@@ -123,6 +219,30 @@
       "writtenOn": "2025-03-18T13:52:41Z",
       "side": 1,
       "message": "```suggestion\n            b.ConstructWithResult(call-\u003eDetachResult(), row_vectors);\n```",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 67
+      },
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bb531d7_889799df",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 3918109
+      },
+      "writtenOn": "2025-03-18T18:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78c7828e_495d4a2d",
       "range": {
         "startLine": 252,
         "startChar": 0,
