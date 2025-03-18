@@ -16,6 +16,13 @@ config("private_config") {
   cflags = [ "-Wno-shadow" ]
 }
 
+config("proto_config") {
+  if (is_win && !is_clang) {
+    cflags =
+        [ "/wd4141" ]  # Suppress "'inline': used more than once" in protobuf
+  }
+}
+
 source_set("libprotobuf-mutator") {
   testonly = true
 
@@ -26,7 +33,10 @@ source_set("libprotobuf-mutator") {
     ":private_config",
   ]
 
-  public_configs = [ ":public_config" ]
+  public_configs = [
+    ":proto_config",
+    ":public_config",
+  ]
 
   sources = [
     "src/src/binary_format.cc",
