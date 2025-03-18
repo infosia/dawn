@@ -59,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "055198fa_9da0319a",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-18T17:55:18Z",
+      "side": 1,
+      "message": "I think `ActualInternalBufferUsages` will return the final internal usages. `mInternalUsage` will be assigned in ctor using this function [1]. And it is `const` so won\u0027t be changed afterwards.\n\n[1] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Buffer.cpp;drc\u003d492dc9719f6e1845f4f5c0553cd5c7651115f671;l\u003d342",
+      "parentUuid": "bd0a69a1_e2c50ff4",
+      "range": {
+        "startLine": 74,
+        "startChar": 18,
+        "endLine": 74,
+        "endChar": 44
+      },
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "58785ad4_66fc4f21",
@@ -136,6 +160,30 @@
           ]
         }
       ],
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "826dcc16_73af8abc",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-18T17:55:18Z",
+      "side": 1,
+      "message": "Done. I changed the name to `CanAddStorageUsageToBufferWithoutSideEffects`. I think it\u0027s better reflect the purpose of this function.\n\n`ShouldAddInternalStorageToBuffer ` seems like we should always add the storage usage. Whereas this function is only for the workaround to ask whether it can add the storage usage to the buffer without any perf issue.",
+      "parentUuid": "58785ad4_66fc4f21",
+      "range": {
+        "startLine": 361,
+        "startChar": 5,
+        "endLine": 361,
+        "endChar": 48
+      },
       "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -231,6 +279,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4127edc0_7671fa21",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-18T17:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dda98875_cfa54879",
+      "range": {
+        "startLine": 1240,
+        "startChar": 4,
+        "endLine": 1240,
+        "endChar": 26
+      },
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66f87daa_f2a378db",
@@ -244,6 +316,30 @@
       "writtenOn": "2025-03-17T15:29:18Z",
       "side": 1,
       "message": "same nit",
+      "range": {
+        "startLine": 1265,
+        "startChar": 4,
+        "endLine": 1265,
+        "endChar": 26
+      },
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "844ba69e_2b6dfc37",
+        "filename": "src/dawn/native/d3d11/BufferD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-18T17:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66f87daa_f2a378db",
       "range": {
         "startLine": 1265,
         "startChar": 4,
@@ -295,6 +391,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53f2ee2b_874c107c",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-18T17:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1389b339_b5053692",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71836237_366db6c7",
@@ -332,6 +452,30 @@
           ]
         }
       ],
+      "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1366ac5a_0a0c7e4f",
+        "filename": "src/dawn/tests/end2end/TextureZeroInitTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-18T17:55:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71836237_366db6c7",
+      "range": {
+        "startLine": 357,
+        "startChar": 26,
+        "endLine": 357,
+        "endChar": 35
+      },
       "revId": "e964db17459e1acd7e9755518016cc7d2a3cfa31",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
