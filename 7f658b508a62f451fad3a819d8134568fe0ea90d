@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d613f521_6770daeb",
+        "filename": "generator/templates/dawn/native/api_structs.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-18T22:22:53Z",
+      "side": 1,
+      "message": "Members that don\u0027t hit either of those conditions won\u0027t be initialized. I\u0027m not sure if that means zero-init or uninit, in this context, but maybe we can zero-init explicitly to be sure. In C++ I think it should be as simple as `{}` or `wgpu::Enum{}`.",
+      "revId": "7f658b508a62f451fad3a819d8134568fe0ea90d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4b68cbc_fbd48d20",
+        "filename": "generator/templates/dawn/native/api_structs.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-18T22:22:53Z",
+      "side": 1,
+      "message": "same",
+      "revId": "7f658b508a62f451fad3a819d8134568fe0ea90d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
