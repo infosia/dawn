@@ -110,6 +110,24 @@
       "message": "This needs a rebase to remove the `.Str()` now that Dan\u0027s CL has landed.",
       "revId": "dafb4430f6e119b5cfaa93b31377a06d0f5aa9a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d71b7b7_4d4f442c",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-18T21:19:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1502e034_61473b1e",
+      "revId": "dafb4430f6e119b5cfaa93b31377a06d0f5aa9a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
