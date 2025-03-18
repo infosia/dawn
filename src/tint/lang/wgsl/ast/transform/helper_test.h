@@ -34,8 +34,10 @@
 #include <vector>
 
 #include "gtest/gtest.h"
+#include "src/tint/lang/core/ir/disassembler.h"
 #include "src/tint/lang/wgsl/ast/transform/manager.h"
 #include "src/tint/lang/wgsl/ast/transform/transform.h"
+#include "src/tint/lang/wgsl/reader/program_to_ir/program_to_ir.h"
 #include "src/tint/lang/wgsl/reader/reader.h"
 #include "src/tint/lang/wgsl/writer/writer.h"
 
@@ -121,6 +123,7 @@ class TransformTestBase : public BASE {
         for (auto* transform_ptr : std::initializer_list<Transform*>{new TRANSFORMS()...}) {
             manager.append(std::unique_ptr<Transform>(transform_ptr));
         }
+
         auto result = manager.Run(program, data, outputs);
         return {std::move(result), std::move(outputs)};
     }
