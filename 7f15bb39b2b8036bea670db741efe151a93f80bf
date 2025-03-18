@@ -70,6 +70,24 @@
       "parentUuid": "a9dee998_c7f31f6d",
       "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79ad6c10_9689e70a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-18T03:10:57Z",
+      "side": 0,
+      "message": "I don\u0027t think it\u0027s a good idea to just crash if mappedAtCreation OOM happens internally, it should propagate out to a device loss. `AllowedErrorTests.QueueCopyTextureForBrowserOomBuffer` actually tests this for one internal use.\n\nI don\u0027t think the layering of the CreateBuffer calls themselves can be reduced.\n- APICreateBuffer should return a valid buffer, ErrorBuffer, or null, depending on the circumstance.\n- CreateBuffer should return an ErrorData on any type of error (including both mappedAtCreation-OOM and device-OOM).\n\nSo:\n- APICreateBuffer-\u003eCreateBuffer doesn\u0027t work because then we have to unpack the ErrorData to figure out what to do.\n- CreateBuffer-\u003eAPICreateBuffer doesn\u0027t work because we\u0027ve lost the ErrorData already. We can\u0027t make a new one because we don\u0027t know the type.\n\nHowever I can try to simplify the layering of MapAtCreation by having one function that returns something like `std::variant\u003cvalid buffer, map oom ErrorData, other ErrorData\u003e` (and does the mapping) and then CreateBuffer and APICreateBuffer just call that and decide what to do with it. TBD.",
+      "parentUuid": "300c0de4_bb232c85",
+      "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
