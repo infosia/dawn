@@ -16,6 +16,114 @@
       "message": "cwallez@, sry for delay updating. It has been a long time, hope you still record the context. Thanks!",
       "revId": "c63947aff602a6516bff825b8b84c3eed8cd7749",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95b515d9_b5021d3c",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-18T09:31:20Z",
+      "side": 1,
+      "message": "I don\u0027t think that this is needed since we normalize the limits in the adapter already.",
+      "revId": "c63947aff602a6516bff825b8b84c3eed8cd7749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "340cf24d_edba03f5",
+        "filename": "src/dawn/native/PhysicalDevice.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-18T09:31:20Z",
+      "side": 1,
+      "message": "Could we maybe make NormalizeLimits take in CombinedLimits instead of acting on just v1? (can be a TODO and follow up)",
+      "revId": "c63947aff602a6516bff825b8b84c3eed8cd7749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7442d75f_a262ad59",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-18T09:31:20Z",
+      "side": 1,
+      "message": "```suggestion\n                    \"The entry-point uses more bytes of immediate data (%i) than the reserved amount (%i) in %s\",\n                    entryPoint.immediateDataRangeByteSize,\n                    layout-\u003eGetImmediateDataRangeByteSize(), layout);\n\n```",
+      "range": {
+        "startLine": 1450,
+        "startChar": 0,
+        "endLine": 1454,
+        "endChar": 0
+      },
+      "revId": "c63947aff602a6516bff825b8b84c3eed8cd7749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef9a37a6_7c904e56",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-18T09:31:20Z",
+      "side": 1,
+      "message": "optional nit: it is now possible to put everything in a single module and the correct entry poient will be used automatically! (if there\u0027s only one of that stage) but also they are used in a single test so maybe they can be there directly.",
+      "revId": "c63947aff602a6516bff825b8b84c3eed8cd7749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25ed01ab_cc92ac14",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-18T09:31:20Z",
+      "side": 1,
+      "message": "Could we have one check for offset+size doing an overflow and looping back to 0 so that we know that we don\u0027t have a bug handling the overflow?",
+      "revId": "c63947aff602a6516bff825b8b84c3eed8cd7749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5305fb91_49065036",
+        "filename": "src/dawn/tests/unittests/validation/ImmediateDataTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-18T09:31:20Z",
+      "side": 1,
+      "message": "Can we have coverage of the default layout having too many immediates because the shader uses 20 bytes of immediates (and a corresponding 16 bytes control case)?",
+      "revId": "c63947aff602a6516bff825b8b84c3eed8cd7749",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
