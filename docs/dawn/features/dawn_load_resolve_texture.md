@@ -57,8 +57,6 @@ renderPassDesc2.colorAttachments[0].loadOp
  = wgpu::LoadOp::ExpandResolveTexture;
 
 auto renderPassEncoder2 = encoder.BeginRenderPass(&renderPassDesc2);
-renderPassEncoder2.SetPipeline(pipeline);
-renderPassEncoder2.Draw(3);
 renderPassEncoder2.End();
 
 ```
