@@ -131,12 +131,14 @@ bool WaitQueueSerialsImpl(DeviceBase* device,
                 // flush work up to `waitSerial`. This should be done after the
                 // ExecutionQueue / ExecutionContext refactor.
                 queue->ForceEventualFlushOfCommands();
+                std::cout << "Saif --- WaitQueueSerialsImpl calling Tick\n";
                 DAWN_TRY(device->Tick());
             }
             // Check the completed serial.
             ExecutionSerial completedSerial = queue->GetCompletedCommandSerial();
             if (completedSerial < waitSerial) {
                 if (timeout > Nanoseconds(0)) {
+                    std::cout << "Saif --- WaitQueueSerialsImpl wiating for queue serial\n";
                     // Wait on the serial if it hasn't passed yet.
                     DAWN_TRY_ASSIGN(success, queue->WaitForQueueSerial(waitSerial, timeout));
                 }

@@ -341,6 +341,7 @@ ResultOrError<Ref<SharedFenceBase>> Device::ImportSharedFenceImpl(
 }
 
 MaybeError Device::TickImpl() {
+    // std::cout << "Saif --- Device::TickImpl called\n";
     Queue* queue = ToBackend(GetQueue());
 
     ExecutionSerial completedSerial = queue->GetCompletedCommandSerial();
@@ -353,6 +354,7 @@ MaybeError Device::TickImpl() {
         pending->ClearUpTo(completedSerial);
     });
 
+    // std::cout << "Saif --- Device::TickImpl called, calling RMA Tick\n";
     GetResourceMemoryAllocator()->Tick(completedSerial);
     GetFencedDeleter()->Tick(completedSerial);
 
@@ -1024,6 +1026,14 @@ uint64_t Device::GetOptimalBufferToTextureCopyOffsetAlignment() const {
 
 float Device::GetTimestampPeriodInNS() const {
     return mDeviceInfo.properties.limits.timestampPeriod;
+}
+
+uint64_t Device::GetVulkanAllocatedMemory() const {
+    return GetResourceMemoryAllocator()->GetTotalAllocatedMemory();
+}
+
+uint64_t Device::GetVulkanUsedMemory() const {
+    return GetResourceMemoryAllocator()->GetTotalUsedMemory();
 }
 
 void Device::SetLabelImpl() {

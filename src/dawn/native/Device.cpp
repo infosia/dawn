@@ -1547,7 +1547,9 @@ bool DeviceBase::APITick() {
 }
 
 MaybeError DeviceBase::Tick() {
+    // std::cout << "Saif --- DeviceBase::Tick called\n";
     if (IsLost() || !mQueue->HasScheduledCommands()) {
+        std::cout << "Saif --- DeviceBase::Tick called, early return!\n";
         return {};
     }
 
@@ -1555,6 +1557,7 @@ MaybeError DeviceBase::Tick() {
     // 1. the last submitted serial has moved beyond the completed serial
     // 2. or the backend still has pending commands to submit.
     DAWN_TRY(mQueue->CheckPassedSerials());
+    // std::cout << "Saif --- DeviceBase::Tick called, calling TickImpl\n";
     DAWN_TRY(TickImpl());
 
     // TODO(crbug.com/dawn/833): decouple TickImpl from updating the serial so that we can
@@ -2415,6 +2418,14 @@ MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
     return {};
 }
 
+uint64_t DeviceBase::GetVulkanAllocatedMemory() const {
+    return 0u;
+}
+
+uint64_t DeviceBase::GetVulkanUsedMemory() const {
+    return 0u;
+}
+
 Mutex::AutoLockAndHoldRef DeviceBase::GetScopedLockSafeForDelete() {
     return Mutex::AutoLockAndHoldRef(mMutex);
 }
@@ -2459,6 +2470,9 @@ MemoryUsageInfo DeviceBase::ComputeEstimatedMemoryUsage() const {
         info.totalUsage += size;
         info.buffersUsage += size;
     });
+
+    info.vulkanAllocatedMemory = GetVulkanAllocatedMemory();
+    info.vulkanUsedMemory = GetVulkanUsedMemory();
 
     return info;
 }
