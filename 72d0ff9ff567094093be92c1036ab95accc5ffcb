@@ -77,6 +77,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c8498cea_2fa22de4",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-18T17:55:24Z",
+      "side": 1,
+      "message": "Nit: rows and cols are the wrong way around here. A matrix is defined as `cols x rows`, and this constructor you\u0027re using takes a list of column vectors, not row vectors.",
+      "fixSuggestions": [
+        {
+          "fixId": "33f47736_9e4c0bc8",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/builtins.cc",
+              "range": {
+                "startLine": 252,
+                "startChar": 0,
+                "endLine": 253,
+                "endChar": 0
+              },
+              "replacement": "            auto* matrix \u003d b.Construct(ty.mat(elem_ty, cols, rows), row_vectors);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "78c7828e_495d4a2d",
         "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
         "patchSetId": 4
