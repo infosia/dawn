@@ -37,6 +37,11 @@ source_set("libprotobuf-mutator") {
     "src/src/utf8_fix.cc",
   ]
 
+  if (is_win) {
+    cflags +=
+        [ "/wd4141" ]  # Suppress "'inline': used more than once" in protobuf
+  }
+
   # Allow users of LPM to use protobuf reflection and other features from
   # protobuf_full.
   public_deps = [ "//third_party/protobuf:protobuf_full" ]
