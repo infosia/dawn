@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "38fa09ba_1a989a8d",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-18T13:52:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f0358a44_6df1d7fe",
+      "revId": "5af693a7e5068ed0f01c4ef809d4896d7b259912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8965db51_8eefd95b",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "Done!",
       "parentUuid": "8965db51_8eefd95b",
+      "revId": "5af693a7e5068ed0f01c4ef809d4896d7b259912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa4acfdd_c72ef3ec",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-18T13:52:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "eb3251dd_3b83313c",
       "revId": "5af693a7e5068ed0f01c4ef809d4896d7b259912",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

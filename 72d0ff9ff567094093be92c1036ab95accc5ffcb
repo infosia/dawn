@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59ff0354_7c8f846b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-18T13:52:41Z",
+      "side": 1,
+      "message": "Add a blank line after the initial subject line otherwise gerrit merges the two lines together. (You can see the title includes the second line)",
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2320cfd9_1ee54c87",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-18T13:52:41Z",
+      "side": 1,
+      "message": "```suggestion\n        auto* elem_ty \u003d vector1-\u003eType()-\u003eDeepestElement();\n```",
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "091d600d_7162e036",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-18T13:52:41Z",
+      "side": 1,
+      "message": "```suggestion\n                    auto* result \u003d b.Multiply(elem_ty, v1_element, v2_element)-\u003eResult(0);\n```",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 88
+      },
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c882af6d_abc93fc8",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-18T13:52:41Z",
+      "side": 1,
+      "message": "```suggestion\n                auto* row_vector \u003d b.Construct(ty.vec(elem_ty, cols), row_elements)-\u003eResult(0);\n```",
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78c7828e_495d4a2d",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-18T13:52:41Z",
+      "side": 1,
+      "message": "```suggestion\n            b.ConstructWithResult(call-\u003eDetachResult(), row_vectors);\n```",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 67
+      },
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
