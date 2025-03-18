@@ -581,18 +581,13 @@ TEST_P(MultisampledRenderingTest, ResolveIntoNonZeroLocation) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 4 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsQualcomm());
 
-    wgpu::TextureView multisampledColorView2 =
-        CreateTextureForRenderAttachment(kColorFormat, kSampleCount).CreateView();
-
     wgpu::RenderPipeline pipeline = CreateRenderPipelineWithNonZeroLocationOutputForTest();
 
     constexpr wgpu::Color kRed = {0.8f, 0.0f, 0.0f, 0.8f};
     constexpr bool kTestDepth = false;
 
-    // Draws a red triangle to the first color attachment, and a blue triangle to the second color
-    // attachment.
-
-    // Do MSAA resolve on the first render target.
+    // Draw a blue triangle to the second color attachment, and do MSAA resolve on the second
+    // render target.
     {
         wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
         utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
