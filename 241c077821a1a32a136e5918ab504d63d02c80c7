@@ -159,6 +159,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b6df39a_26554d1a",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-18T01:17:08Z",
+      "side": 1,
+      "message": "Updated the code around this area a bit. So now, we no longer set `\"default\"` for `bitmasks` in the generator script, instead we hard-code the `\"none\"` in the header template instead. This should be a lot more consistent with how we are handling `enum`s.",
+      "parentUuid": "15fb72ae_64c9d6cc",
+      "range": {
+        "startLine": 187,
+        "startChar": 49,
+        "endLine": 187,
+        "endChar": 62
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "275a572a_7fb0c570",
@@ -220,6 +244,30 @@
       "side": 1,
       "message": "But since `member.type.hasUndefined` won\u0027t it generate `Undefined` regardless of the `\"default\"` in dawn.json?\n\nSo it seems like it has no effect on webgpu.h, but in `WithTrivialFrontendDefaults` it might produce code like\n`if (configuration.format \u003d\u003d Undefined) configuration.format \u003d Undefined;`\n(not that that\u0027s a real problem)\n\nAnyway just a nit, doesn\u0027t really matter. Also this problem will sort itself out if we do separate the \"init\" from the \"frontend default\" later.",
       "parentUuid": "9f4fd92a_269acabf",
+      "range": {
+        "startLine": 442,
+        "startChar": 57,
+        "endLine": 442,
+        "endChar": 79
+      },
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f51b0e73_e3e85838",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-18T01:17:08Z",
+      "side": 1,
+      "message": "So before, it wasn\u0027t generating `Undefined` regardless. Instead, it was only geneerating `Undefined` if it had some sort of `default` set at all. I changed it so that now if an `enum` has `hasUndefined` it will always set it to `Undefined` and that seems to make it work. This also allowed me to remove all the other `undefined` defaults.",
+      "parentUuid": "47ce6266_9e73a681",
       "range": {
         "startLine": 442,
         "startChar": 57,
@@ -326,6 +374,24 @@
       "side": 1,
       "message": "webgpu.yml defines PresentMode_Undefined because it\u0027s a valid input (it defaults). We only don\u0027t name 0 when it would always be invalid to use.\n\nSo since it\u0027s named it needs to be in this switch, but we should ideally also guarantee that it won\u0027t happen (by applying the defaulting in the frontend), and guarantee that no other unnamed numeric values will happen (by validating). We use this pattern in many places:\n\n```cpp\nswitch (enum_value) {\n    case One: return 1;\n    case Two: return 2;\n    case Undefined: break;\n}\n// Undefined AND all unnamed values reach here. It\u0027s UB to reach here in release.\nDAWN_UNREACHABLE();\n```",
       "parentUuid": "bf8485e0_13a0e4a9",
+      "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8ee3e79_3083ee12",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-18T01:17:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae36e56b_47f3ba1a",
       "revId": "241c077821a1a32a136e5918ab504d63d02c80c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
