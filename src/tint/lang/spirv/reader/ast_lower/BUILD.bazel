@@ -129,6 +129,7 @@ cc_library(
     ":tint_build_wgsl_reader": [
       "//src/tint/lang/wgsl/reader",
       "//src/tint/lang/wgsl/reader/parser",
+      "//src/tint/lang/wgsl/reader/program_to_ir",
     ],
     "//conditions:default": [],
   }) + select({

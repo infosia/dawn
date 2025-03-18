@@ -134,6 +134,7 @@ if (tint_build_unittests) {
         deps += [
           "${tint_src_dir}/lang/wgsl/reader",
           "${tint_src_dir}/lang/wgsl/reader/parser",
+          "${tint_src_dir}/lang/wgsl/reader/program_to_ir",
         ]
       }
 

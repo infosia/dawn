@@ -140,6 +140,7 @@ endif(TINT_BUILD_HLSL_WRITER)
 if(TINT_BUILD_WGSL_READER)
   tint_target_add_dependencies(tint_lang_hlsl_writer_ast_raise_test test
     tint_lang_wgsl_reader
+    tint_lang_wgsl_reader_program_to_ir
   )
 endif(TINT_BUILD_WGSL_READER)
 
