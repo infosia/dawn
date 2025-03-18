@@ -326,6 +326,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5361e055_4060ca48",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-18T20:07:09Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8137dc03_7da3d7b8",
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "78c7828e_495d4a2d",

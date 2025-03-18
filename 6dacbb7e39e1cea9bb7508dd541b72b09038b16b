@@ -1,0 +1,79 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9411f2e4_34fee762",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-18T20:07:09Z",
+      "side": 1,
+      "message": "Nit: These are actually column vectors, so please rename both `row_vector` and `row_vectors`.\n\nEach column vector is a vector whose size is the number of rows, and each element of the column vector is a different row of the matrix. It\u0027s a little confusing, but that\u0027s just how it is.",
+      "fixSuggestions": [
+        {
+          "fixId": "9125a7fb_be958328",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/builtins.cc",
+              "range": {
+                "startLine": 236,
+                "startChar": 0,
+                "endLine": 237,
+                "endChar": 0
+              },
+              "replacement": "            Vector\u003ccore::ir::Value*, 4\u003e col_vectors;\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/lower/builtins.cc",
+              "range": {
+                "startLine": 239,
+                "startChar": 0,
+                "endLine": 240,
+                "endChar": 0
+              },
+              "replacement": "                Vector\u003ccore::ir::Value*, 4\u003e col_elements;\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/lower/builtins.cc",
+              "range": {
+                "startLine": 245,
+                "startChar": 0,
+                "endLine": 246,
+                "endChar": 0
+              },
+              "replacement": "                    col_elements.Push(result);\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/lower/builtins.cc",
+              "range": {
+                "startLine": 248,
+                "startChar": 0,
+                "endLine": 250,
+                "endChar": 0
+              },
+              "replacement": "                auto* col_vector \u003d b.Construct(ty.vec(elem_ty, rows), col_elements)-\u003eResult(0);\n                col_vectors.Push(col_vector);\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/lower/builtins.cc",
+              "range": {
+                "startLine": 251,
+                "startChar": 0,
+                "endLine": 252,
+                "endChar": 0
+              },
+              "replacement": "            b.ConstructWithResult(call-\u003eDetachResult(), col_vectors);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6dacbb7e39e1cea9bb7508dd541b72b09038b16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
