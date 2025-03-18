@@ -281,7 +281,7 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
 
             DAWN_INVALID_IF(substituteOverridesResult != tint::Success,
                             "Pipeline override substitution (IR) failed:\n%s",
-                            substituteOverridesResult.Failure().reason.Str());
+                            substituteOverridesResult.Failure().reason);
         }
 
         result = tint::hlsl::writer::Generate(ir.Get(), r.tintOptions);
