@@ -228,7 +228,6 @@ tint_fuzz_source_set("fuzz") {
   deps = [
     "${dawn_root}/src/utils:utils",
     "${tint_src_dir}/api/common",
-    "${tint_src_dir}/cmd/fuzz/ir:fuzz",
     "${tint_src_dir}/lang/core",
     "${tint_src_dir}/lang/core/common",
     "${tint_src_dir}/lang/core/constant",
@@ -247,4 +246,8 @@ tint_fuzz_source_set("fuzz") {
     "${tint_src_dir}/utils/symbol",
     "${tint_src_dir}/utils/text",
   ]
+
+  if (tint_build_ir_binary && tint_build_wgsl_reader) {
+    deps += [ "${tint_src_dir}/cmd/fuzz/ir:fuzz" ]
+  }
 }

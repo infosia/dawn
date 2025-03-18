@@ -185,6 +185,11 @@ cc_library(
 )
 
 alias(
+  name = "tint_build_ir_binary",
+  actual = "//src/tint:tint_build_ir_binary_true",
+)
+
+alias(
   name = "tint_build_spv_reader",
   actual = "//src/tint:tint_build_spv_reader_true",
 )
@@ -207,6 +212,13 @@ selects.config_setting_group(
     ],
 )
 
+selects.config_setting_group(
+    name = "tint_build_ir_binary_and_tint_build_wgsl_reader",
+    match_all = [
+        ":tint_build_ir_binary",
+        ":tint_build_wgsl_reader",
+    ],
+)
 selects.config_setting_group(
     name = "tint_build_spv_writer_and_tint_build_wgsl_reader",
     match_all = [

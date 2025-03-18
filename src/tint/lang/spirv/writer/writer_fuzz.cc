@@ -27,7 +27,10 @@
 
 #include "src/tint/lang/spirv/writer/writer.h"
 
+#if TINT_BUILD_IR_BINARY && TINT_BUILD_WGSL_READER
 #include "src/tint/cmd/fuzz/ir/fuzz.h"
+#endif  // TINT_BUILD_IR_BINARY && TINT_BUILD_WGSL_READER
+
 #include "src/tint/lang/core/ir/disassembler.h"
 #include "src/tint/lang/spirv/validate/validate.h"
 #include "src/tint/lang/spirv/writer/helpers/generate_bindings.h"
