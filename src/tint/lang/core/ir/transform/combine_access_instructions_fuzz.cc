@@ -27,7 +27,10 @@
 
 #include "src/tint/lang/core/ir/transform/combine_access_instructions.h"
 
+#if TINT_BUILD_WGSL_READER
 #include "src/tint/cmd/fuzz/ir/fuzz.h"
+#endif  // TINT_BUILD_WGSL_READER
+
 #include "src/tint/lang/core/ir/validator.h"
 
 namespace tint::core::ir::transform {

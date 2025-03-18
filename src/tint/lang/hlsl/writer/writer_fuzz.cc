@@ -27,7 +27,10 @@
 
 #include <iostream>
 
+#if TINT_BUILD_WGSL_READER
 #include "src/tint/cmd/fuzz/ir/fuzz.h"
+#endif  // TINT_BUILD_WGSL_READER
+
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/pointer.h"
@@ -35,6 +38,7 @@
 #include "src/tint/lang/hlsl/writer/helpers/generate_bindings.h"
 #include "src/tint/lang/hlsl/writer/writer.h"
 #include "src/tint/utils/command/command.h"
+
 namespace tint::hlsl::writer {
 namespace {
 
