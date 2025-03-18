@@ -16,6 +16,24 @@
       "message": "At the moment it is only used for fences, but maybe that will change, WDYT of unconditionnally querying it and having code just not rely on it if it doesn\u0027t use capabilities that require this interface? Crashes we get if we have a bug related to this would be very clearly pointing at the culprit being that the interface is not present.",
       "revId": "2bb0f51d9d076d2cb747739d71a579ae9bdacea8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c17f2f3e_67c27ab7",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-18T16:00:35Z",
+      "side": 1,
+      "message": "Almost all the code have been updated to not use this interface. Only Signal and Wait use this interface now. If we don\u0027t query it then the pointer will be null and then if we accidentally used it in some places we don\u0027t expect, it would crash and clearly point to the location, right?\n\nI think not querying it when `D3D11DisableFence` toggle is on also useful for local tests. We can disable the fences with toggle and verify that we don\u0027t use the null `ID3D11DeviceContext4` pointer unexpectedly.",
+      "parentUuid": "c9d03e85_f288d120",
+      "revId": "2bb0f51d9d076d2cb747739d71a579ae9bdacea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
