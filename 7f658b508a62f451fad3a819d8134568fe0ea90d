@@ -87,6 +87,24 @@
       "parentUuid": "4b136ff2_2279719a",
       "revId": "7f658b508a62f451fad3a819d8134568fe0ea90d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87ae2414_1dab4eb9",
+        "filename": "generator/templates/dawn/native/api_structs.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-18T23:49:17Z",
+      "side": 1,
+      "message": "Oops never mind",
+      "parentUuid": "5ac574a8_d78850f2",
+      "revId": "7f658b508a62f451fad3a819d8134568fe0ea90d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
