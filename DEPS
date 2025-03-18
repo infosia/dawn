@@ -19,7 +19,7 @@ vars = {
   'dawn_wasm': False, # Also fetches dependencies required for building WebAssembly.
   'dawn_cmake_version': 'version:2@3.23.3',
   'dawn_cmake_win32_sha1': 'b106d66bcdc8a71ea2cdf5446091327bfdb1bcd7',
-  'dawn_gn_version': 'git_revision:182a6eb05d15cc76d2302f7928fdb4f645d52c53',
+  'dawn_gn_version': 'git_revision:18602f6cf1168cf78302024043edc02e8bad2ffb',
   # ninja CIPD package version.
   # https://chrome-infra-packages.appspot.com/p/infra/3pp/tools/ninja
   'dawn_ninja_version': 'version:3@1.12.1.chromium.4',
@@ -73,7 +73,7 @@ vars = {
 
 deps = {
   'buildtools': {
-    'url': '{chromium_git}/chromium/src/buildtools@a660247d3c14a172b74b8e832ba1066b30183c97',
+    'url': '{chromium_git}/chromium/src/buildtools@7f1053216c227a9bebf3b0b858ab6705876bc461',
     'condition': 'dawn_standalone',
   },
   'third_party/clang-format/script': {
@@ -136,11 +136,11 @@ deps = {
   # The //build, //tools/clang, and //tools/rust deps should all be updated
   # in unison, as there are dependencies between them.
   'build': {
-    'url': '{chromium_git}/chromium/src/build@a252ef1991b42918f6e74bc8c26b6543afe7bb2e',
+    'url': '{chromium_git}/chromium/src/build@1c267baae3b3d8cc74f944c58a927ad5b3f959c5',
     'condition': 'dawn_standalone',
   },
   'tools/clang': {
-    'url': '{chromium_git}/chromium/src/tools/clang@e262f0f8896e459fe7fd2a076af48d5746b1d332',
+    'url': '{chromium_git}/chromium/src/tools/clang@e4930c677fd21b6826d642d7099b3c728b9ebbf2',
     'condition': 'dawn_standalone',
   },
   'tools/rust': {
@@ -233,7 +233,7 @@ deps = {
 
   # Testing, GTest and GMock
   'testing': {
-    'url': '{chromium_git}/chromium/src/testing@1bd0da6657e330cf26ed0702b3f456393587ad7c',
+    'url': '{chromium_git}/chromium/src/testing@766ede80c625ec638079a8bec018010c8eb69b87',
     'condition': 'dawn_standalone',
   },
   'third_party/libFuzzer/src': {
@@ -468,7 +468,7 @@ deps = {
   # Dependencies for PartitionAlloc.
   # Doc: https://docs.google.com/document/d/1wz45t0alQthsIU9P7_rQcfQyqnrBMXzrOjSzdQo-V-A
   'third_party/partition_alloc': {
-    'url': '{chromium_git}/chromium/src/base/allocator/partition_allocator.git@2e6b2efb6f435aa3dd400cb3bdcead2a601f8f9a',
+    'url': '{chromium_git}/chromium/src/base/allocator/partition_allocator.git@fb60666cb1896901bb14a5feb10001d20c8833c3',
     'condition': 'dawn_standalone',
   },
 }
