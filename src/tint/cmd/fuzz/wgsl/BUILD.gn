@@ -85,7 +85,6 @@ if (tint_build_wgsl_reader) {
     sources = [ "main_fuzz.cc" ]
     deps = [
       "${dawn_root}/src/utils:utils",
-      "${tint_src_dir}/cmd/fuzz/ir:fuzz",
       "${tint_src_dir}/lang/core",
       "${tint_src_dir}/lang/core/constant",
       "${tint_src_dir}/lang/core/ir/transform:fuzz",
@@ -126,6 +125,10 @@ if (tint_build_wgsl_reader) {
 
     if (tint_build_ir_binary) {
       deps += [ "${tint_src_dir}/lang/core/ir/binary:fuzz" ]
+    }
+
+    if (tint_build_ir_binary && tint_build_wgsl_reader) {
+      deps += [ "${tint_src_dir}/cmd/fuzz/ir:fuzz" ]
     }
 
     if (tint_build_msl_writer) {
