@@ -44,4 +44,4 @@ core::ir::transform::SubstituteOverridesConfig SubstituteOverridesConfig(const P
 
 }  // namespace tint::fuzz::ir
 
-#endif  // SRC_TINT_CMD_FUZZ_IR_SUBSTITUTE_OVERRIDES_CONFIG_H_
+#endif  // SRC_TINT_CMD_FUZZ_IR_HELPERS_SUBSTITUTE_OVERRIDES_CONFIG_H_

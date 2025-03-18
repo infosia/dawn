@@ -27,7 +27,10 @@
 
 #include <iostream>
 
+#if TINT_BUILD_IR_BINARY && TINT_BUILD_WGSL_READER
 #include "src/tint/cmd/fuzz/ir/fuzz.h"
+#endif  // TINT_BUILD_IR_BINARY && TINT_BUILD_WGSL_READER
+
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/pointer.h"
