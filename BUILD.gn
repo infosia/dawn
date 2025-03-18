@@ -135,3 +135,9 @@ if (current_toolchain == default_toolchain) {
 
   write_file("$root_build_dir/gn_logs.txt", _lines)
 }
+
+if (!is_clang && is_win) {
+  # Chromium has deprecated support for MSVC, so many of the
+  # dependencies inherited from it have build warnings.
+  treat_warnings_as_errors = false
+}
