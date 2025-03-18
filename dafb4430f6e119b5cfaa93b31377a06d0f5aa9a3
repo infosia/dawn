@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27f3568f_20d13c48",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-18T18:32:16Z",
+      "side": 1,
+      "message": "Please double check the logic here. \nAll the AST transforms should only apply to the non ir path",
+      "range": {
+        "startLine": 218,
+        "startChar": 7,
+        "endLine": 218,
+        "endChar": 19
+      },
+      "revId": "dafb4430f6e119b5cfaa93b31377a06d0f5aa9a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96ddbb7b_201804a9",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-18T18:32:16Z",
+      "side": 1,
+      "message": "We will no longer un any ast transforms in the ir path. This will be nice to cleanup when we ship ir.",
+      "range": {
+        "startLine": 248,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 23
+      },
+      "revId": "dafb4430f6e119b5cfaa93b31377a06d0f5aa9a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
