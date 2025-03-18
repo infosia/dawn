@@ -27,7 +27,10 @@
 
 #include "src/tint/lang/wgsl/writer/raise/ptr_to_ref.h"
 
+#if TINT_BUILD_IR_BINARY && TINT_BUILD_WGSL_READER
 #include "src/tint/cmd/fuzz/ir/fuzz.h"
+#endif  // TINT_BUILD_IR_BINARY && TINT_BUILD_WGSL_READER
+
 #include "src/tint/lang/core/ir/validator.h"
 
 namespace tint::wgsl::writer::raise {

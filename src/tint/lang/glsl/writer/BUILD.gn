@@ -196,7 +196,6 @@ if (tint_build_glsl_writer) {
     deps = [
       "${dawn_root}/src/utils:utils",
       "${tint_src_dir}/api/common",
-      "${tint_src_dir}/cmd/fuzz/ir:fuzz",
       "${tint_src_dir}/lang/core",
       "${tint_src_dir}/lang/core/constant",
       "${tint_src_dir}/lang/core/intrinsic",
@@ -227,6 +226,10 @@ if (tint_build_glsl_writer) {
         "${tint_src_dir}/lang/glsl/writer/common",
         "${tint_src_dir}/lang/glsl/writer/helpers",
       ]
+    }
+
+    if (tint_build_ir_binary && tint_build_wgsl_reader) {
+      deps += [ "${tint_src_dir}/cmd/fuzz/ir:fuzz" ]
     }
   }
 }

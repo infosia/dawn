@@ -221,7 +221,6 @@ tint_add_target(tint_lang_spirv_writer_fuzz fuzz
 
 tint_target_add_dependencies(tint_lang_spirv_writer_fuzz fuzz
   tint_api_common
-  tint_cmd_fuzz_ir_fuzz
   tint_lang_core
   tint_lang_core_constant
   tint_lang_core_ir
@@ -242,6 +241,12 @@ tint_target_add_dependencies(tint_lang_spirv_writer_fuzz fuzz
 tint_target_add_external_dependencies(tint_lang_spirv_writer_fuzz fuzz
   "src_utils"
 )
+
+if(TINT_BUILD_IR_BINARY AND TINT_BUILD_WGSL_READER)
+  tint_target_add_dependencies(tint_lang_spirv_writer_fuzz fuzz
+    tint_cmd_fuzz_ir_fuzz
+  )
+endif(TINT_BUILD_IR_BINARY AND TINT_BUILD_WGSL_READER)
 
 if(TINT_BUILD_SPV_READER OR TINT_BUILD_SPV_WRITER)
   tint_target_add_dependencies(tint_lang_spirv_writer_fuzz fuzz
