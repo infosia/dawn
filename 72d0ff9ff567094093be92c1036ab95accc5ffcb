@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "105a3552_9be38647",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-18T18:48:47Z",
+      "side": 1,
+      "message": "So, both ways are correct, the `-\u003eDeepestElement` is actually doing what you did just it wraps it up into a slightly nicer API. Using `DeepestElement` is also more consistent with the rest of the code base.",
+      "parentUuid": "bf96965a_ce658f84",
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "091d600d_7162e036",
         "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
         "patchSetId": 4
@@ -108,6 +126,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "091d600d_7162e036",
+      "range": {
+        "startLine": 244,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 88
+      },
+      "revId": "72d0ff9ff567094093be92c1036ab95accc5ffcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7eb726b9_d8f3ae03",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-18T18:48:47Z",
+      "side": 1,
+      "message": "Similar, the `Value()` wrapper is just going to get the `Result(0)`, but using `Result(0)` matches the style of the rest of the codebase.",
+      "parentUuid": "ab843f31_d2b5aefb",
       "range": {
         "startLine": 244,
         "startChar": 0,
