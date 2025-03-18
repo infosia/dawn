@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9d03e85_f288d120",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-18T09:42:15Z",
+      "side": 1,
+      "message": "At the moment it is only used for fences, but maybe that will change, WDYT of unconditionnally querying it and having code just not rely on it if it doesn\u0027t use capabilities that require this interface? Crashes we get if we have a bug related to this would be very clearly pointing at the culprit being that the interface is not present.",
+      "revId": "2bb0f51d9d076d2cb747739d71a579ae9bdacea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
