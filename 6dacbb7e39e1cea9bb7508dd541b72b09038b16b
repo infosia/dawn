@@ -92,6 +92,24 @@
       "parentUuid": "9411f2e4_34fee762",
       "revId": "6dacbb7e39e1cea9bb7508dd541b72b09038b16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba9bfc06_76444b96",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-18T21:55:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92ca28cd_4fde5e3a",
+      "revId": "6dacbb7e39e1cea9bb7508dd541b72b09038b16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
