@@ -3198,7 +3198,7 @@ fn main() {
     auto result = inspector.GetSamplerTextureUses("main");
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-    ASSERT_EQ(0u, result.Length());
+    ASSERT_EQ(0u, result.size());
 }
 
 // Regression test for crbug.com/dawn/380433758.
@@ -3232,7 +3232,7 @@ fn useCombos1() -> vec4f {
     {
         auto result = inspector.GetSamplerTextureUses("vs");
         ASSERT_FALSE(inspector.has_error()) << inspector.error();
-        ASSERT_EQ(1u, result.Length());
+        ASSERT_EQ(1u, result.size());
 
         EXPECT_EQ(0u, result[0].sampler_binding_point.group);
         EXPECT_EQ(2u, result[0].sampler_binding_point.binding);
@@ -3242,7 +3242,7 @@ fn useCombos1() -> vec4f {
     {
         auto result = inspector.GetSamplerTextureUses("fs");
         ASSERT_FALSE(inspector.has_error()) << inspector.error();
-        ASSERT_EQ(1u, result.Length());
+        ASSERT_EQ(1u, result.size());
 
         EXPECT_EQ(0u, result[0].sampler_binding_point.group);
         EXPECT_EQ(2u, result[0].sampler_binding_point.binding);
@@ -3285,7 +3285,7 @@ fn useCombos2() -> vec4f {
     {
         auto result = inspector.GetSamplerTextureUses("vs");
         ASSERT_FALSE(inspector.has_error()) << inspector.error();
-        ASSERT_EQ(1u, result.Length());
+        ASSERT_EQ(1u, result.size());
 
         EXPECT_EQ(0u, result[0].sampler_binding_point.group);
         EXPECT_EQ(2u, result[0].sampler_binding_point.binding);
@@ -3295,7 +3295,7 @@ fn useCombos2() -> vec4f {
     {
         auto result = inspector.GetSamplerTextureUses("fs");
         ASSERT_FALSE(inspector.has_error()) << inspector.error();
-        ASSERT_EQ(1u, result.Length());
+        ASSERT_EQ(1u, result.size());
 
         EXPECT_EQ(0u, result[0].sampler_binding_point.group);
         EXPECT_EQ(2u, result[0].sampler_binding_point.binding);
@@ -3339,7 +3339,7 @@ fn useCombos2() -> vec4f {
     {
         auto result = inspector.GetSamplerTextureUses("vs");
         ASSERT_FALSE(inspector.has_error()) << inspector.error();
-        ASSERT_EQ(2u, result.Length());
+        ASSERT_EQ(2u, result.size());
 
         EXPECT_EQ(0u, result[0].sampler_binding_point.group);
         EXPECT_EQ(2u, result[0].sampler_binding_point.binding);
@@ -3354,7 +3354,7 @@ fn useCombos2() -> vec4f {
     {
         auto result = inspector.GetSamplerTextureUses("fs");
         ASSERT_FALSE(inspector.has_error()) << inspector.error();
-        ASSERT_EQ(1u, result.Length());
+        ASSERT_EQ(1u, result.size());
 
         EXPECT_EQ(0u, result[0].sampler_binding_point.group);
         EXPECT_EQ(2u, result[0].sampler_binding_point.binding);
@@ -3378,7 +3378,7 @@ fn main(@location(0) fragUV: vec2<f32>,
     auto result = inspector.GetSamplerTextureUses("main");
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-    ASSERT_EQ(1u, result.Length());
+    ASSERT_EQ(1u, result.size());
 
     EXPECT_EQ(0u, result[0].sampler_binding_point.group);
     EXPECT_EQ(1u, result[0].sampler_binding_point.binding);
@@ -3420,8 +3420,10 @@ fn main(@location(0) fragUV: vec2<f32>,
     auto result_1 = inspector.GetSamplerTextureUses("main");
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-    EXPECT_EQ((Vector<sem::SamplerTexturePair, 4>(result_0)),
-              (Vector<sem::SamplerTexturePair, 4>(result_1)));
+    EXPECT_EQ(result_0.size(), result_1.size());
+    for (size_t i = 0; i < result_0.size(); i++) {
+        EXPECT_EQ(result_0[i], result_1[i]);
+    }
 }
 
 TEST_F(InspectorGetSamplerTextureUsesTest, BothIndirect) {
@@ -3443,7 +3445,7 @@ fn main(@location(0) fragUV: vec2<f32>,
     auto result = inspector.GetSamplerTextureUses("main");
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-    ASSERT_EQ(1u, result.Length());
+    ASSERT_EQ(1u, result.size());
 
     EXPECT_EQ(0u, result[0].sampler_binding_point.group);
     EXPECT_EQ(1u, result[0].sampler_binding_point.binding);
@@ -3470,7 +3472,7 @@ fn main(@location(0) fragUV: vec2<f32>,
     auto result = inspector.GetSamplerTextureUses("main");
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-    ASSERT_EQ(1u, result.Length());
+    ASSERT_EQ(1u, result.size());
 
     EXPECT_EQ(0u, result[0].sampler_binding_point.group);
     EXPECT_EQ(1u, result[0].sampler_binding_point.binding);
@@ -3497,7 +3499,7 @@ fn main(@location(0) fragUV: vec2<f32>,
     auto result = inspector.GetSamplerTextureUses("main");
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-    ASSERT_EQ(1u, result.Length());
+    ASSERT_EQ(1u, result.size());
 
     EXPECT_EQ(0u, result[0].sampler_binding_point.group);
     EXPECT_EQ(1u, result[0].sampler_binding_point.binding);
@@ -3524,7 +3526,7 @@ fn main(@location(0) fragUV: vec2<f32>,
     auto result = inspector.GetSamplerTextureUses("main");
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-    ASSERT_EQ(1u, result.Length());
+    ASSERT_EQ(1u, result.size());
 
     EXPECT_EQ(0u, result[0].sampler_binding_point.group);
     EXPECT_EQ(1u, result[0].sampler_binding_point.binding);
@@ -3578,7 +3580,7 @@ fn direct(@location(0) fragUV: vec2<f32>,
         auto result = inspector.GetSamplerTextureUses("via_call");
         ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-        ASSERT_EQ(1u, result.Length());
+        ASSERT_EQ(1u, result.size());
 
         EXPECT_EQ(0u, result[0].sampler_binding_point.group);
         EXPECT_EQ(1u, result[0].sampler_binding_point.binding);
@@ -3590,7 +3592,7 @@ fn direct(@location(0) fragUV: vec2<f32>,
         auto result = inspector.GetSamplerTextureUses("via_ptr");
         ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-        ASSERT_EQ(1u, result.Length());
+        ASSERT_EQ(1u, result.size());
 
         EXPECT_EQ(0u, result[0].sampler_binding_point.group);
         EXPECT_EQ(1u, result[0].sampler_binding_point.binding);
@@ -3602,7 +3604,7 @@ fn direct(@location(0) fragUV: vec2<f32>,
         auto result = inspector.GetSamplerTextureUses("direct");
         ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
-        ASSERT_EQ(1u, result.Length());
+        ASSERT_EQ(1u, result.size());
 
         EXPECT_EQ(0u, result[0].sampler_binding_point.group);
         EXPECT_EQ(1u, result[0].sampler_binding_point.binding);
