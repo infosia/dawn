@@ -60,6 +60,9 @@ override c11: f16 = 0.0h;            // type: float16
 override c12: f16 = 0.0h;            // default override
 @id(1000) override c13: f16 = 4.0h;  // default
 
+override u01: f16 = 0.0h;            // default override
+@id(2000) override u02: f16 = 0.0h;  // default override
+
 @compute @workgroup_size(1) fn main() {
     // make sure the overridable constants are not optimized out
     _ = u32(c0);
@@ -148,6 +151,16 @@ TEST_F(ComputePipelineOverridableConstantsValidationTest, ConstantsIdentifierLoo
         TestCreatePipeline(constants);
     }
     {
+        // Valid: in module but unused by entry point.
+        std::vector<wgpu::ConstantEntry> constants{{nullptr, "u01", 0}};
+        TestCreatePipeline(constants);
+    }
+    {
+        // Valid: in module but unused by entry point.
+        std::vector<wgpu::ConstantEntry> constants{{nullptr, "2000", 0}};
+        TestCreatePipeline(constants);
+    }
+    {
         // Error: set the same constant twice
         std::vector<wgpu::ConstantEntry> constants{
             {nullptr, "c0", 0},
@@ -161,7 +174,7 @@ TEST_F(ComputePipelineOverridableConstantsValidationTest, ConstantsIdentifierLoo
         TestCreatePipeline(constants);
     }
     {
-        // Error: c10 already has a constant numeric id specified
+        // Error: c13 already has a constant numeric id specified
         std::vector<wgpu::ConstantEntry> constants{{nullptr, "c13", 0}};
         ASSERT_DEVICE_ERROR(TestCreatePipeline(constants));
     }

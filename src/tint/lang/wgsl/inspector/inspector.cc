@@ -405,7 +405,7 @@ std::map<OverrideId, Scalar> Inspector::GetOverrideDefaultValues() {
             continue;
         }
 
-        // If there are conflicting defintions for an override id, that is invalid
+        // If there are conflicting definitions for an override id, that is invalid
         // WGSL, so the resolver should catch it. Thus here the inspector just
         // assumes all definitions of the override id are the same, so only needs
         // to find the first reference to override id.
@@ -1053,6 +1053,46 @@ bool Inspector::UsesSubgroupMatrix(const sem::Function* func) const {
         }
     }
     return false;
+}
+
+std::vector<Override> Inspector::Overrides() {
+    std::vector<Override> results;
+
+    for (auto* var : program_.AST().GlobalVariables()) {
+        auto* global = program_.Sem().Get<sem::GlobalVariable>(var);
+        if (!global || !global->Declaration()->Is<ast::Override>()) {
+            continue;
+        }
+
+        Override override;
+        override.name = var->name->symbol.Name();
+        override.id = global->Attributes().override_id.value();
+
+        auto* type = global->Type();
+        TINT_ASSERT(type->Is<core::type::Scalar>());
+        if (type->IsBoolScalarOrVector()) {
+            override.type = Override::Type::kBool;
+        } else if (type->IsFloatScalar()) {
+            if (type->Is<core::type::F16>()) {
+                override.type = Override::Type::kFloat16;
+            } else {
+                override.type = Override::Type::kFloat32;
+            }
+        } else if (type->IsSignedIntegerScalar()) {
+            override.type = Override::Type::kInt32;
+        } else if (type->IsUnsignedIntegerScalar()) {
+            override.type = Override::Type::kUint32;
+        } else {
+            TINT_UNREACHABLE();
+        }
+
+        override.is_initialized = global->Declaration()->initializer;
+        override.is_id_specified =
+            ast::HasAttribute<ast::IdAttribute>(global->Declaration()->attributes);
+
+        results.push_back(override);
+    }
+    return results;
 }
 
 }  // namespace tint::inspector

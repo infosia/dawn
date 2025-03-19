@@ -121,12 +121,20 @@ ResultOrError<ShaderModuleEntryPoint> ValidateProgrammableStage(DeviceBase* devi
         DAWN_INVALID_IF(metadata.overrides.count(key) == 0,
                         "Pipeline overridable constant \"%s\" not found in %s.", constants[i].key,
                         module);
+
+        auto override_ = metadata.overrides.at(key);
+        // Allowed to reference an override in the module which is not used by
+        // the entry point.
+        if (!override_.isUsed) {
+            continue;
+        }
+
         DAWN_INVALID_IF(!std::isfinite(value),
                         "Pipeline overridable constant \"%s\" with value (%f) is not finite in %s",
                         key, value, module);
 
         // Validate if constant value can be represented by the given scalar type in shader
-        auto type = metadata.overrides.at(key).type;
+        auto type = override_.type;
         switch (type) {
             case EntryPointMetadata::Override::Type::Float32:
                 DAWN_INVALID_IF(!IsDoubleValueRepresentable<float>(value),
