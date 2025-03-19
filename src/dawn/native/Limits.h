@@ -57,7 +57,7 @@ void EnforceLimitSpecInvariants(Limits* limits, wgpu::FeatureLevel featureLevel)
 MaybeError ValidateLimits(const Limits& supportedLimits, const Limits& requiredLimits);
 
 // Returns a copy of |limits| where limit tiers are applied.
-Limits ApplyLimitTiers(Limits limits);
+CombinedLimits ApplyLimitTiers(CombinedLimits limits);
 
 // If there are new limit member needed at shader compilation time
 // Simply append a new X(type, name) here.
@@ -78,13 +78,9 @@ struct LimitsForCompilationRequest {
 //      arrays in Dawn's internal code;
 //   2. Additional enforcement for dependent limits, e.g. maxStorageBufferBindingSize and
 //      maxUniformBufferBindingSize must not be larger than maxBufferSize.
-void NormalizeLimits(Limits* limits);
-
-// Enforce restriction for experiment limit values, including:
-// 1. Enforce immediate data bytes to ensure they don't go over a fixed limit in Dawn's internal
-//    code.
-// TODO(crbug.com/366291600): Make ApplyLimitTiers and NormalizeLimits accept CombeindLimits.
-void NormalizeExperimentalLimits(CombinedLimits* limits);
+//   3. Enforce immediate data bytes to ensure they don't go over a fixed limit in Dawn's internal
+//      code.
+void NormalizeLimits(CombinedLimits* limits);
 
 }  // namespace dawn::native
 
