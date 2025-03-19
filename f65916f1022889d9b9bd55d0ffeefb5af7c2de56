@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54d1352f_5e07c98c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-19T07:03:25Z",
+      "side": 1,
+      "message": "This is one of a follow-up of ImmediateData. We can use the new iterator to achieve:\nfor (auto [offset, size] : IterateBitRanges(dirty)) {\n   pipelineOffset \u003d ... (offset)\n   // CmdPushConstants pipelineOffset, size\n}\n\nBut I think this CL might need more bit twiddling magic to make it more efficient.",
+      "revId": "f65916f1022889d9b9bd55d0ffeefb5af7c2de56",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
