@@ -267,6 +267,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cff2d2bc_89493028",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-19T19:52:36Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "c01ab710_2ca3aed6",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7aeae022_98789cf0",
@@ -476,6 +494,24 @@
       "side": 1,
       "message": "IMHO we could have some basic end2end tests that check that if you allocate things, then non-0 is returned and some basic things like that, but there isn\u0027t much else to test at that level (I wouldn\u0027t even go as far as a whitebox test as it would be a bit change detecting)",
       "parentUuid": "bd8699b4_c5586a34",
+      "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4128b256_386cb838",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-19T19:52:36Z",
+      "side": 1,
+      "message": "Added an end2end test that creates a buffer, checks the used and allocated sizes and then destroys the buffer and checks that used size is 0. \n\nThis was a bit complicated and required few hoops because of how memory deallocation is wired. It should have really needed calling WaitAny on the Future but we needed adding another Submit and Tick as well. Kyle has explained it well in the linked bug.",
+      "parentUuid": "22a73f83_b9cc058b",
       "revId": "de05316fb20a721193d108136f4352e2d95f9d25",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

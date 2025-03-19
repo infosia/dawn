@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "0557335f_561d289b",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-19T19:52:36Z",
+      "side": 1,
+      "message": "That makes sense. Updated to move it to renamed `DeallocateResourceHeap`",
+      "parentUuid": "9eca2aa9_2517778d",
+      "revId": "a696d5029be6cbe350dd45d17faa865a455c54b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "11984545_2c51ae86",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
         "patchSetId": 6
@@ -69,6 +87,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "26542f0b_78d01842",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-19T19:52:36Z",
+      "side": 1,
+      "message": "Sounds good, updated to move it there.",
+      "parentUuid": "9385abf7_ded52671",
+      "revId": "a696d5029be6cbe350dd45d17faa865a455c54b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b0158e9_664e70ec",
@@ -92,6 +128,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea3f802c_516fed7b",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-19T19:52:36Z",
+      "side": 1,
+      "message": "Good point, updated to get the pending serial from FencedDeleter and use that instead.",
+      "parentUuid": "1b0158e9_664e70ec",
+      "range": {
+        "startLine": 267,
+        "startChar": 48,
+        "endLine": 267,
+        "endChar": 94
+      },
+      "revId": "a696d5029be6cbe350dd45d17faa865a455c54b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a11dfb7_7771d1bc",
@@ -105,6 +165,30 @@
       "writtenOn": "2025-03-14T15:45:32Z",
       "side": 1,
       "message": "It would be better to switch this from SerialQueue to some kind ordered map. If you have say 3 deallocations for the serial 2 then SerialQueue will hold `{2, {1000, 200, 600}` That requires a vector to store the individual sizes when you just need the sum. You can sum up all of the deallocations and store `{2, 1800}` in a map. Pushing deallocations into the map is is just `mDeallocatedHeapAllocations[serial] +\u003d size` and with an order map you can iterate up a serial.\n\nThere is a SerialMap but it holds `std::map\u003cSerial, std::vector\u003cValue\u003e\u003e`. It would be easy enough to implement a SerialStorage specializaton where `Storage` is defined as `std::map\u003cSerial, Value\u003e` and `Enque()` adds to the value if you felt like it.",
+      "range": {
+        "startLine": 324,
+        "startChar": 35,
+        "endLine": 324,
+        "endChar": 62
+      },
+      "revId": "a696d5029be6cbe350dd45d17faa865a455c54b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "709d3248_5d118368",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-19T19:52:36Z",
+      "side": 1,
+      "message": "Updated to use a std::map instead of SerialQueue that should be ordered and we can store the sum in it. I didn\u0027t get around to implementing SerialMap support for it though.",
+      "parentUuid": "9a11dfb7_7771d1bc",
       "range": {
         "startLine": 324,
         "startChar": 35,
