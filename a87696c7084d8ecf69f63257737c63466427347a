@@ -20,6 +20,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7546af21_4e79c050",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-19T14:37:55Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right. The constant *does* have to be present in the shader module. It does *not* have to be statically referenced by the entry point, which I think is the part that needs to change.",
+      "fixSuggestions": [
+        {
+          "fixId": "669af0d0_3cbf4080",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Pipeline.cpp",
+              "range": {
+                "startLine": 121,
+                "startChar": 0,
+                "endLine": 123,
+                "endChar": 0
+              },
+              "replacement": "        // Allowed to provide overrides which are not present in the shader module.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a87696c7084d8ecf69f63257737c63466427347a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b8eac415_29d4013d",
         "filename": "src/dawn/tests/unittests/validation/OverridableConstantsValidationTests.cpp",
         "patchSetId": 1
