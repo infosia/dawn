@@ -34,6 +34,11 @@
 #include "src/tint/lang/core/ir/function.h"
 #include "src/tint/lang/core/ir/var.h"
 
+namespace tint::core::ir {
+class Loop;
+class Var;
+}  // namespace tint::core::ir
+
 namespace tint::core::ir::analysis {
 
 /// The result of a integer range analysis: the upper and lower bound of a given integer variable.
@@ -75,6 +80,19 @@ class IntegerRangeAnalysis {
     /// parameter is a scalar, then `index` must be zero.
     /// @returns the integer range info
     const IntegerRangeInfo* GetInfo(const FunctionParam* param, uint32_t index = 0);
+
+    /// Note: This function is only for tests.
+    /// Returns the pointer of the loop control variable in the given loop when its initializer
+    /// meets the below requirements.
+    /// - There are only two instructions in the loop initializer block.
+    /// - The first instruction is to initialize the loop control variable
+    ///   with a constant integer (signed or unsigned) value.
+    /// - The second instruction is `next_iteration`.
+    /// @param loop the Loop variable to investigate
+    /// @returns the pointer of the loop control variable when its loop initializer meets the
+    /// requirements, return nullptr otherwise.
+    const Var* GetLoopControlVariableWithConstantInitializerForTest(
+        const tint::core::ir::Loop* loop);
 
   private:
     IntegerRangeAnalysis(const IntegerRangeAnalysis&) = delete;
