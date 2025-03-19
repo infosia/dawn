@@ -41,12 +41,6 @@ namespace dawn {
 // Types have been updated to be more specific.
 // TODO(crbug.com/dawn/306): it could be optimized, in particular when N <= 64
 
-template <typename T>
-T roundUp(const T value, const T alignment) {
-    auto temp = value + alignment - static_cast<T>(1);
-    return temp - temp % alignment;
-}
-
 template <size_t N, typename T>
 class BitSetIterator final {
   public:
