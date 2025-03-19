@@ -87,6 +87,24 @@
       "message": "```suggestion\n        // This interface only adds methods related to fences.\n```\n\n(previously it sounded that Dawn only happened to use it just for fences at the moment)",
       "revId": "2bb0f51d9d076d2cb747739d71a579ae9bdacea8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "463d5c87_5c2968e7",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-19T16:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba57569_c947c41d",
+      "revId": "2bb0f51d9d076d2cb747739d71a579ae9bdacea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
