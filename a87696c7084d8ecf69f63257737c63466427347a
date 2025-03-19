@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2e419e51_26efb982",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T14:46:43Z",
+      "side": 1,
+      "message": "Ugh, I missed that subtly, that may be difficult to do as it depends on if single entry point has run or not.",
+      "parentUuid": "7546af21_4e79c050",
+      "revId": "a87696c7084d8ecf69f63257737c63466427347a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b8eac415_29d4013d",
         "filename": "src/dawn/tests/unittests/validation/OverridableConstantsValidationTests.cpp",
         "patchSetId": 1
