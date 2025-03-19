@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4208bba8_b3dd3a8a",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-19T09:26:16Z",
+      "side": 1,
+      "message": "Drive by: Is this limit configurable in backends? This is quite small. It\u0027s not enough for Graphite to use immediately anw. Graphite needs at least 32 bytes (2 vectors).",
+      "range": {
+        "startLine": 407,
+        "startChar": 76,
+        "endLine": 407,
+        "endChar": 98
+      },
+      "revId": "e80f4d74c402ce3d07d6b138c485fa213a45f51a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
