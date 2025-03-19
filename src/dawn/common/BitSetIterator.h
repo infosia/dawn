@@ -44,7 +44,7 @@ namespace dawn {
 template <typename T>
 T roundUp(const T value, const T alignment) {
     auto temp = value + alignment - static_cast<T>(1);
-    return temp - temp % alignment;
+    return temp - (temp % alignment);
 }
 
 template <size_t N, typename T>
@@ -102,7 +102,7 @@ BitSetIterator<N, T>::Iterator::Iterator(const std::bitset<N>& bits)
     if (bits.any()) {
         mCurrentBit = getNextBit();
     } else {
-        mOffset = static_cast<uint32_t>(roundUp(N, kBitsPerWord));
+        mOffset = static_cast<uint32_t>(RoundUp(N, kBitsPerWord));
     }
 }
 
