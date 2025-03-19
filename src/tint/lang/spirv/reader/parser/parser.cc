@@ -262,6 +262,8 @@ class Parser {
                 return core::AddressSpace::kUniform;
             case spv::StorageClass::UniformConstant:
                 return core::AddressSpace::kHandle;
+            case spv::StorageClass::Workgroup:
+                return core::AddressSpace::kWorkgroup;
             default:
                 TINT_UNIMPLEMENTED()
                     << "unhandled SPIR-V storage class: " << static_cast<uint32_t>(sc);
@@ -353,6 +355,10 @@ class Parser {
                 }
                 case spvtools::opt::analysis::Type::kArray:
                     return EmitArray(type->AsArray());
+                case spvtools::opt::analysis::Type::kRuntimeArray: {
+                    auto* arr_ty = type->AsRuntimeArray();
+                    return ty_.runtime_array(Type(arr_ty->element_type()));
+                }
                 case spvtools::opt::analysis::Type::kStruct:
                     return EmitStruct(type->AsStruct());
                 case spvtools::opt::analysis::Type::kPointer: {
@@ -1132,6 +1138,51 @@ class Parser {
                 case spv::Op::OpOuterProduct:
                     EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kOuterProduct);
                     break;
+                case spv::Op::OpAtomicStore:
+                    EmitAtomicStore(inst);
+                    break;
+                case spv::Op::OpAtomicLoad:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicLoad);
+                    break;
+                case spv::Op::OpAtomicIAdd:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicIAdd);
+                    break;
+                case spv::Op::OpAtomicISub:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicISub);
+                    break;
+                case spv::Op::OpAtomicAnd:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicAnd);
+                    break;
+                case spv::Op::OpAtomicOr:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicOr);
+                    break;
+                case spv::Op::OpAtomicXor:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicXor);
+                    break;
+                case spv::Op::OpAtomicSMin:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicSMin);
+                    break;
+                case spv::Op::OpAtomicUMin:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicUMin);
+                    break;
+                case spv::Op::OpAtomicSMax:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicSMax);
+                    break;
+                case spv::Op::OpAtomicUMax:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicUMax);
+                    break;
+                case spv::Op::OpAtomicExchange:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicExchange);
+                    break;
+                case spv::Op::OpAtomicCompareExchange:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicCompareExchange);
+                    break;
+                case spv::Op::OpAtomicIIncrement:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicIIncrement);
+                    break;
+                case spv::Op::OpAtomicIDecrement:
+                    EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicIDecrement);
+                    break;
                 default:
                     TINT_UNIMPLEMENTED()
                         << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
@@ -1155,6 +1206,12 @@ class Parser {
             const auto& merge_bb = current_spirv_function_->FindBlock(merge_id);
             EmitBlock(dst, *merge_bb);
         }
+    }
+
+    void EmitAtomicStore(const spvtools::opt::Instruction& inst) {
+        Emit(b_.Call<spirv::ir::BuiltinCall>(ty_.void_(), spirv::BuiltinFn::kAtomicStore,
+                                             Args(inst, 0)),
+             inst.result_id());
     }
 
     void EmitBitcast(const spvtools::opt::Instruction& inst) {
