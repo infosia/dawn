@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "616dd3f8_6f5dce70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-19T11:14:55Z",
+      "side": 1,
+      "message": "Hey Loko,\n\nThis CL still lacks tests but I\u0027d love an early review from you if possible.\nThanks!",
+      "revId": "42cbb070a5330778baedac4dab94a5c410871ead",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
