@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "389baac1_66791605",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T14:26:49Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "a87696c7084d8ecf69f63257737c63466427347a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8eac415_29d4013d",
+        "filename": "src/dawn/tests/unittests/validation/OverridableConstantsValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T14:26:49Z",
+      "side": 1,
+      "message": "I don\u0027t understand why this was an error? `c13` exists in the file, but it has an override of `1000`. Is there a rule somewhere that if the ID is set you can\u0027t use the name? Or, why  should this be failing, it was apparently failing with the id not present error.",
+      "revId": "a87696c7084d8ecf69f63257737c63466427347a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
