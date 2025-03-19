@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30db38bc_929de379",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-19T14:50:47Z",
+      "side": 1,
+      "message": "Drive by: The tests failed with the added `DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());` because the Surface class doesn\u0027t use the implicit device lock currently [1]\n\n[1] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/dawn.json;drc\u003d492dc9719f6e1845f4f5c0553cd5c7651115f671;l\u003d3541",
+      "revId": "68cb210ad472e0ca1f439ec21edbcc47bb1e266d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
