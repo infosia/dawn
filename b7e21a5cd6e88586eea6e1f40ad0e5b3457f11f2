@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8738bcb9_a619453d",
+        "filename": "src/tint/lang/spirv/reader/parser/atomics_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-19T17:54:03Z",
+      "side": 1,
+      "message": "In that case you could go further and just make them reader tests, so that they test the combined parse+lower flow. But it\u0027s not really a big deal, this is fine as is too.",
+      "parentUuid": "87ffb12d_3950f953",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "69ce0d60_3edf2fd3",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 5
