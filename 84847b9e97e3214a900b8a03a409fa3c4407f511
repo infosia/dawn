@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d8b36b8c_db3a6d70",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-19T21:42:34Z",
+      "side": 1,
+      "message": "I think it\u0027ll be rare for the number of overrides to be large enough that this loop ends up being significant, especially relative to the entire pipeline creation.",
+      "parentUuid": "0a54e2c6_d02c5b6a",
+      "revId": "84847b9e97e3214a900b8a03a409fa3c4407f511",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fa87ef79_377432fd",
         "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
         "patchSetId": 2

@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f006567_38ada79e",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-19T21:42:34Z",
+      "side": 1,
+      "message": "The spec requires this validation to happen even if the override is unused by the pipeline",
+      "revId": "2b318a3a49eae708ff90ac5fc7438455743b894f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa4973f3_4a6c3299",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-19T21:42:34Z",
+      "side": 1,
+      "message": "We would probably want to validate this as well, though that only affects native since it can\u0027t be hit by the JS API.",
+      "revId": "2b318a3a49eae708ff90ac5fc7438455743b894f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a4a0b91_a8d7fbd7",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-19T21:42:34Z",
+      "side": 1,
+      "message": "nit: use contains() instead of count() if possible\n(the linter actually suggests this for std:: containers which is how I found out you can do this now)",
+      "range": {
+        "startLine": 673,
+        "startChar": 32,
+        "endLine": 673,
+        "endChar": 37
+      },
+      "revId": "2b318a3a49eae708ff90ac5fc7438455743b894f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
