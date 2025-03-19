@@ -163,6 +163,12 @@ constexpr T Max(T first, Args... rest) {
     return Max(first, Max(rest...));
 }
 
+template <typename T>
+T roundUp(const T value, const T alignment) {
+    auto temp = value + alignment - static_cast<T>(1);
+    return temp - (temp % alignment);
+}
+
 }  // namespace dawn
 
 #endif  // SRC_DAWN_COMMON_MATH_H_

@@ -318,6 +318,7 @@ dawn_test("dawn_unittests") {
     "DawnNativeTest.h",
     "unittests/AsyncTaskTests.cpp",
     "unittests/BitSetIteratorTests.cpp",
+    "unittests/BitSetRangeIteratorTests.cpp",
     "unittests/BuddyAllocatorTests.cpp",
     "unittests/BuddyMemoryAllocatorTests.cpp",
     "unittests/ChainUtilsTests.cpp",
