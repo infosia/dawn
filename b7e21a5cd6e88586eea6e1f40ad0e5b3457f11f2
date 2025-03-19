@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dc20df9_d3d6b3b0",
+        "filename": "src/tint/lang/spirv/reader/parser/atomics_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T11:43:06Z",
+      "side": 1,
+      "message": "I didn\u0027t add the AtomicCompareExchangeWeak test because it requires the `Kernel` capability which then results in `Capability Kernel is not allowed by Vulkan 1.1 specification (or requires extension)` because we validate SPIR-V as Vulkan 1.1.\n\nI think it\u0027s a valid assumption we\u0027d be getting 1.1 vulkan?",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
