@@ -22,6 +22,30 @@
       },
       "revId": "e80f4d74c402ce3d07d6b138c485fa213a45f51a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "935afc5b_f91ed6d8",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-19T09:31:08Z",
+      "side": 1,
+      "message": "Not yet. But I plan to use a follow-up CL to do things below:\n- Expand immediateDataTracker related part to 128 bytes (or higher).\n- Still limit the default maxImmediateDataRangeByteSize to 16.\n- User could get higher limit by request higher limit and implementation will do real query, combined with internal immediate constants status + reserved some slots, to decide whether the limit could be achieved.\n\nOr Cwallez@ might have more thoughts.",
+      "parentUuid": "4208bba8_b3dd3a8a",
+      "range": {
+        "startLine": 407,
+        "startChar": 76,
+        "endLine": 407,
+        "endChar": 98
+      },
+      "revId": "e80f4d74c402ce3d07d6b138c485fa213a45f51a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
