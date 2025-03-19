@@ -86,6 +86,24 @@
       "message": "I don\u0027t understand why this was an error? `c13` exists in the file, but it has an override of `1000`. Is there a rule somewhere that if the ID is set you can\u0027t use the name? Or, why  should this be failing, it was apparently failing with the id not present error.",
       "revId": "a87696c7084d8ecf69f63257737c63466427347a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01568754_0f52b012",
+        "filename": "src/dawn/tests/unittests/validation/OverridableConstantsValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T16:36:11Z",
+      "side": 1,
+      "message": "There is a load bearing `otherwise` in the spec that I missed, so this test is correct.",
+      "parentUuid": "b8eac415_29d4013d",
+      "revId": "a87696c7084d8ecf69f63257737c63466427347a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
