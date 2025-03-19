@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-03-17 09:54:19AM
+# Last rolled: 2025-03-19 10:45:17AM
 
 # conflicts_allowed: true
 
@@ -20757,6 +20757,17 @@ crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,f
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=3;non_uniform_discard=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,fwidthFine:f32:vectorize=4;non_uniform_discard=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm";filt="nearest";modeU="c";modeV="m";offset=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm";filt="nearest";modeU="m";modeV="r";offset=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm";filt="nearest";modeU="r";modeV="m";offset=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="nearest";modeU="c";modeV="m";offset=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="nearest";modeU="m";modeV="c";offset=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="nearest";modeU="m";modeV="r";offset=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="nearest";modeU="r";modeV="m";offset=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm";filt="nearest";modeU="c";modeV="m";offset=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm";filt="nearest";modeU="r";modeV="m";offset=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm-srgb";filt="nearest";modeU="m";modeV="m";offset=true [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm-srgb";filt="nearest";modeU="r";modeV="m";offset=true [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:stage="c";textureType="texture_external";filt="linear";modeU="r";modeV="r" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:stage="f";textureType="texture_external";filt="linear";modeU="r";modeV="m" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:arrayed_2d_coords:format="astc-8x5-unorm";filt="nearest";modeU="c";modeV="r";offset=true [ Failure ]
