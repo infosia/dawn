@@ -29,7 +29,12 @@
 
 #include <limits>
 
+#include "src/tint/lang/core/constant/scalar.h"
+#include "src/tint/lang/core/ir/loop.h"
+#include "src/tint/lang/core/ir/next_iteration.h"
 #include "src/tint/lang/core/ir/traverse.h"
+#include "src/tint/lang/core/ir/var.h"
+#include "src/tint/lang/core/type/pointer.h"
 
 namespace tint::core::ir::analysis {
 
@@ -93,7 +98,63 @@ struct IntegerRangeAnalysisImpl {
         return &info[index];
     }
 
+    std::variant<std::monostate, int64_t, uint64_t> GetLoopVariableConstantInitializer(
+        const Loop* loop) {
+        auto* init_block = loop->Initializer();
+        if (!init_block) {
+            return {};
+        }
+
+        // Currently we only support the loop initializer of a simple for-loop, which only has two
+        // instructions
+        // - The first instruction is to initialize the loop control variable
+        //   with a constant integer (signed or unsigned) value.
+        // - The second instruction is `next_iteration`
+        // e.g. for (var i = 0; ...)
+        if (init_block->Length() != 2u) {
+            return {};
+        }
+
+        auto* var = init_block->Front()->As<Var>();
+        if (!var) {
+            return {};
+        }
+
+        if (!init_block->Back()->As<NextIteration>()) {
+            return {};
+        }
+
+        const auto* pointer = var->Result(0)->Type()->As<core::type::Pointer>();
+        if (!pointer->StoreType()->IsIntegerScalar()) {
+            return {};
+        }
+
+        const auto* initializer = var->Initializer();
+        if (!initializer) {
+            return {};
+        }
+
+        const auto* constInitializer = initializer->As<Constant>();
+        if (!constInitializer) {
+            return {};
+        }
+
+        return GetValueFromConstantVal(constInitializer);
+    }
+
   private:
+    std::variant<std::monostate, int64_t, uint64_t> GetValueFromConstantVal(const Constant* value) {
+        if (value->Type()->IsSignedIntegerScalar()) {
+            const auto* i32Initializer = value->Value()->As<core::constant::Scalar<i32>>();
+            TINT_ASSERT(i32Initializer);
+            return static_cast<int64_t>(i32Initializer->ValueAs<int32_t>());
+        } else {
+            const auto* u32Initializer = value->Value()->As<core::constant::Scalar<u32>>();
+            TINT_ASSERT(u32Initializer);
+            return static_cast<uint64_t>(u32Initializer->ValueAs<uint32_t>());
+        }
+    }
+
     Function* function_;
     Hashmap<const FunctionParam*, Vector<IntegerRangeInfo, 3>, 4>
         integer_function_param_range_info_map_;
@@ -106,4 +167,10 @@ IntegerRangeAnalysis::~IntegerRangeAnalysis() = default;
 const IntegerRangeInfo* IntegerRangeAnalysis::GetInfo(const FunctionParam* param, uint32_t index) {
     return impl_->GetInfo(param, index);
 }
+
+std::variant<std::monostate, int64_t, uint64_t>
+IntegerRangeAnalysis::GetLoopVariableConstantInitializer(const Loop* loop) {
+    return impl_->GetLoopVariableConstantInitializer(loop);
+}
+
 }  // namespace tint::core::ir::analysis
