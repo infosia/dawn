@@ -211,6 +211,12 @@ tint::ast::transform::SubstituteOverride::Config BuildSubstituteOverridesTransfo
     tint::ast::transform::SubstituteOverride::Config cfg;
 
     for (const auto& [key, value] : constants) {
+        // Verify the override exists in the file before attempting to get the
+        // override
+        if (metadata.overrides.count(key) == 0) {
+            continue;
+        }
+
         const auto& o = metadata.overrides.at(key);
         cfg.map.insert({o.id, value});
     }
