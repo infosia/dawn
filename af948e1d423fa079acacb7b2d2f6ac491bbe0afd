@@ -34,6 +34,115 @@
       "parentUuid": "8d450114_e8ac0656",
       "revId": "af948e1d423fa079acacb7b2d2f6ac491bbe0afd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2ac429d_e270b247",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-19T21:23:30Z",
+      "side": 1,
+      "message": "The meeting was today, which is why I wanted to wait to see if we would resolve anything. But yea, it\u0027s fine to prototype for sure!",
+      "parentUuid": "1d3988a5_6954885e",
+      "revId": "af948e1d423fa079acacb7b2d2f6ac491bbe0afd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbd49ff4_856cafc9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-19T21:23:30Z",
+      "side": 1,
+      "message": "Window tests seem to be failing?",
+      "revId": "af948e1d423fa079acacb7b2d2f6ac491bbe0afd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b480638_dd48c0f7",
+        "filename": "src/dawn/native/d3d11/SamplerD3D11.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-19T21:23:30Z",
+      "side": 1,
+      "message": "nit. This piece of code (or similar to it) is repeated in a couple of the backends. Would it be possible to move it to the frontend, i.e. in `native/Sampler.[h|cpp]`?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 1
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "390c3299_17469b03",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/d3d11/SamplerD3D11.cpp",
+              "range": {
+                "startLine": 80,
+                "startChar": 0,
+                "endLine": 93,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/dawn/native/d3d11/SamplerD3D11.cpp",
+              "range": {
+                "startLine": 139,
+                "startChar": 0,
+                "endLine": 140,
+                "endChar": 0
+              },
+              "replacement": "        std::array\u003cfloat, 4\u003e borderColor \u003d ToD3D11TextureBorderColor(descriptor-\u003eborderColor);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "af948e1d423fa079acacb7b2d2f6ac491bbe0afd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "250c8cf2_6ef7ed85",
+        "filename": "src/dawn/tests/end2end/SamplerTests.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-19T21:23:30Z",
+      "side": 1,
+      "message": "nit. We should include `Undefined` here and set up the `ToRGBA8` helper below to handle it as if it were `TransparentBlack` to make sure that the defaulting is working as intended.",
+      "range": {
+        "startLine": 94,
+        "startChar": 39,
+        "endLine": 94,
+        "endChar": 51
+      },
+      "revId": "af948e1d423fa079acacb7b2d2f6ac491bbe0afd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
