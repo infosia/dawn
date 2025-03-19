@@ -2415,6 +2415,14 @@ MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
     return {};
 }
 
+uint64_t DeviceBase::GetVulkanAllocatedMemory() const {
+    return 0u;
+}
+
+uint64_t DeviceBase::GetVulkanUsedMemory() const {
+    return 0u;
+}
+
 Mutex::AutoLockAndHoldRef DeviceBase::GetScopedLockSafeForDelete() {
     return Mutex::AutoLockAndHoldRef(mMutex);
 }
@@ -2424,6 +2432,9 @@ Mutex::AutoLock DeviceBase::GetScopedLock() {
 }
 
 bool DeviceBase::IsLockedByCurrentThreadIfNeeded() const {
+    // std::cout << "Saif --- DeviceBase::IsLockedByCurrentThreadIfNeeded called, mutex == nullptr =
+    // "
+    //           << (int)(mMutex == nullptr) << "\n";
     return mMutex == nullptr || mMutex->IsLockedByCurrentThread();
 }
 
@@ -2439,9 +2450,11 @@ void DeviceBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump) const {
 }
 
 MemoryUsageInfo DeviceBase::ComputeEstimatedMemoryUsage() const {
+    // std::cout << "Saif --- DeviceBase::ComputeEstimatedMemoryUsage called, checking is locked\n";
     DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
     MemoryUsageInfo info = {};
 
+    // std::cout << "Saif --- DeviceBase::ComputeEstimatedMemoryUsage - iterating over textures\n";
     GetObjectTrackingList(ObjectType::Texture)->ForEach([&](const ApiObjectBase* ptr) {
         auto texture = static_cast<const TextureBase*>(ptr);
         auto size = texture->ComputeEstimatedByteSize();
@@ -2454,11 +2467,15 @@ MemoryUsageInfo DeviceBase::ComputeEstimatedMemoryUsage() const {
             info.depthStencilTexturesUsage += size;
         }
     });
+    // std::cout << "Saif --- DeviceBase::ComputeEstimatedMemoryUsage - iterating over buffers\n";
     GetObjectTrackingList(ObjectType::Buffer)->ForEach([&](const ApiObjectBase* buffer) {
         auto size = static_cast<const BufferBase*>(buffer)->GetAllocatedSize();
         info.totalUsage += size;
         info.buffersUsage += size;
     });
+
+    info.vulkanAllocatedMemory = GetVulkanAllocatedMemory();
+    info.vulkanUsedMemory = GetVulkanUsedMemory();
 
     return info;
 }

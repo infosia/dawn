@@ -281,7 +281,11 @@ uint64_t ComputeEstimatedMemoryUsage(WGPUDevice device) {
 }
 
 MemoryUsageInfo ComputeEstimatedMemoryUsageInfo(WGPUDevice device) {
+    // std::cout << "Saif --- native::ComputeEstimatedMemoryUsageInfo called, getting scoped
+    // lock\n";
     auto deviceLock(FromAPI(device)->GetScopedLock());
+    // std::cout << "Saif --- native::ComputeEstimatedMemoryUsageInfo, calling "
+    //              "DeviceBase::ComputeEstimatedMemoryUsage\n";
     return FromAPI(device)->ComputeEstimatedMemoryUsage();
 }
 
