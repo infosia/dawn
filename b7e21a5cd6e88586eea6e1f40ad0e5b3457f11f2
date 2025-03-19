@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9161fbae_251920f6",
+        "filename": "src/tint/lang/spirv/reader/parser/atomics_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-19T17:34:32Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7dc20df9_d3d6b3b0",
         "filename": "src/tint/lang/spirv/reader/parser/atomics_test.cc",
         "patchSetId": 5
@@ -14,6 +31,93 @@
       "writtenOn": "2025-03-19T11:43:06Z",
       "side": 1,
       "message": "I didn\u0027t add the AtomicCompareExchangeWeak test because it requires the `Kernel` capability which then results in `Capability Kernel is not allowed by Vulkan 1.1 specification (or requires extension)` because we validate SPIR-V as Vulkan 1.1.\n\nI think it\u0027s a valid assumption we\u0027d be getting 1.1 vulkan?",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc196207_d3777b2c",
+        "filename": "src/tint/lang/spirv/reader/parser/atomics_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-19T17:34:32Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7dc20df9_d3d6b3b0",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcb0d68b_4ffc1937",
+        "filename": "src/tint/lang/spirv/reader/parser/atomics_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-19T17:34:32Z",
+      "side": 1,
+      "message": "Do these tests mean anything in the context of the parser? Seems more like a transform thing?",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69ce0d60_3edf2fd3",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-19T17:34:32Z",
+      "side": 1,
+      "message": "This is crbug.com/391482348 and should probably have it\u0027s own tests (maybe pull out to a separate CL?).",
+      "fixSuggestions": [
+        {
+          "fixId": "32ad3343_6457d742",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 359,
+                "startChar": 0,
+                "endLine": 359,
+                "endChar": 0
+              },
+              "replacement": "                    // TODO(crbug.com/tint/391482348): Handle runtime arrays.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "024c0604_9f346913",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-19T17:34:32Z",
+      "side": 1,
+      "message": "`OpAtomicStore` doesn\u0027t have a result, should be `EmitWithoutResult`.",
       "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
