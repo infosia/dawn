@@ -106,6 +106,24 @@
       "parentUuid": "79ad6c10_9689e70a",
       "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55409ca6_11f30ca8",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-19T03:09:04Z",
+      "side": 0,
+      "message": "Ah, I misunderstood.\n\nAnyway, the logic is just too complicated no matter how I refactor it. I tried this suggestion, but I don\u0027t think I ended up with what you had in mind - I couldn\u0027t find a way to do it without CreateBufferInternal knowing which caller we\u0027re using for two reasons:\n- Need to know whether to take the lock.\n- It lets us fall back to an ErrorBuffer without duplicating the code that calls MapAtCreation.\n\nIn the end, the logic ended up being really similar, but definitely not better. (Snapshot at https://dawn-review.googlesource.com/c/dawn/+/231734)\n\nI also tried the thing I suggested, though I didn\u0027t complete it. It didn\u0027t seem helpful either.\n\nEither way there\u0027s so much code that it\u0027s not better than the original CreateBuffer implementation, which was small. I\u0027ve uploaded a version of it here that just gets leaves CreateBuffer as it was and makes all the changes to APICreateBuffer (except for factoring out the unpacking). CreateBufferInternal didn\u0027t really mesh with the weird lock optimization.\n\nThe number of lines of code is reduced slightly, at least! Hopefully the locks are correct.\n(`+74-23` -\u003e `+71-35` in this file)",
+      "parentUuid": "028cfd5e_fdf87e0c",
+      "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

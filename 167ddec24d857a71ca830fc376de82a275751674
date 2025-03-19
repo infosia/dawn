@@ -33,6 +33,24 @@
       "message": "Would it make sense to handle this in the `CreateBufferInternal` since we have the descriptor unpacked there? Both the OOM for creation and mappedAtCreation can be handled there?",
       "revId": "167ddec24d857a71ca830fc376de82a275751674",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eed3e6df_b127b8a2",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-19T03:09:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61ec1434_81f4cac8",
+      "revId": "167ddec24d857a71ca830fc376de82a275751674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
