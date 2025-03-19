@@ -362,6 +362,24 @@
       "parentUuid": "0ff219e1_b921ff27",
       "revId": "334f58284607f2f75b8cdb7731a1536567e47a8e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b1f0a76_a318e64b",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-19T12:36:50Z",
+      "side": 1,
+      "message": "Can we also have a test that the immediates start with value 0?",
+      "parentUuid": "a5071902_677b3bfe",
+      "revId": "334f58284607f2f75b8cdb7731a1536567e47a8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

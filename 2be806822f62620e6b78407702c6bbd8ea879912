@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "597eab09_dbf6815c",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-19T12:36:50Z",
+      "side": 1,
+      "message": "```suggestion\n            enable chromium_experimental_push_constant;\n```",
+      "revId": "2be806822f62620e6b78407702c6bbd8ea879912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f90a48e_a2393ed8",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-19T12:36:50Z",
+      "side": 1,
+      "message": "Could we have one test for push constants in the vertex stage? It will be a different code path on Metal with setVertexBytes",
+      "revId": "2be806822f62620e6b78407702c6bbd8ea879912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e372b2b8_8bc341ca",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-19T12:36:50Z",
+      "side": 1,
+      "message": "Even if they are not compatible, we should have a test for this ideally.",
+      "range": {
+        "startLine": 219,
+        "startChar": 82,
+        "endLine": 220,
+        "endChar": 13
+      },
+      "revId": "2be806822f62620e6b78407702c6bbd8ea879912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
