@@ -34,6 +34,24 @@
       "parentUuid": "c9d03e85_f288d120",
       "revId": "2bb0f51d9d076d2cb747739d71a579ae9bdacea8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab1028a4_c67a2a81",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-19T13:48:11Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org do you have any more concerns?",
+      "parentUuid": "c17f2f3e_67c27ab7",
+      "revId": "2bb0f51d9d076d2cb747739d71a579ae9bdacea8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
