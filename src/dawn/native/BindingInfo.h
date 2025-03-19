@@ -39,6 +39,7 @@
 #include "dawn/native/Format.h"
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/PerStage.h"
+#include "tint/tint.h"
 
 #include "dawn/native/dawn_platform.h"
 
@@ -153,6 +154,35 @@ BindingInfoType GetBindingInfoType(const BindingInfo& bindingInfo);
 struct BindingSlot {
     BindGroupIndex group;
     BindingNumber binding;
+
+    bool operator==(const BindingSlot& rhs) const {
+        return group == rhs.group && binding == rhs.binding;
+    }
+
+    tint::BindingPoint ToTint() const {
+        return {static_cast<uint32_t>(group), static_cast<uint32_t>(binding)};
+    }
+
+    tint::BindingPoint ToTint(const BindingSlot& placeholder,
+                              tint::BindingPoint tintPlaceholder) const {
+        if (*this == placeholder) {
+            return tintPlaceholder;
+        }
+        return {static_cast<uint32_t>(group), static_cast<uint32_t>(binding)};
+    }
+
+    static BindingSlot FromTint(const tint::BindingPoint& tintBindingPoint) {
+        return {BindGroupIndex(tintBindingPoint.group), BindingNumber(tintBindingPoint.binding)};
+    }
+
+    static BindingSlot FromTint(const tint::BindingPoint& tintBindingPoint,
+                                const tint::BindingPoint& tintPlaceholder,
+                                const BindingSlot& placeholder) {
+        return (tintBindingPoint == tintPlaceholder)
+                   ? placeholder
+                   : BindingSlot{BindGroupIndex(tintBindingPoint.group),
+                                 BindingNumber(tintBindingPoint.binding)};
+    }
 };
 
 struct PerStageBindingCounts {

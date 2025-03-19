@@ -336,6 +336,24 @@ EntryPointMetadata::Override::Type FromTintOverrideType(tint::inspector::Overrid
     DAWN_UNREACHABLE();
 }
 
+EntryPointMetadata::LevelSampleInfo FromTintLevelSampleInfo(
+    tint::inspector::Inspector::LevelSampleInfo info) {
+    EntryPointMetadata::LevelSampleInfo result;
+    switch (info.type) {
+        case tint::inspector::Inspector::TextureQueryType::kTextureNumLevels:
+            result.type = EntryPointMetadata::LevelSampleInfo::TextureQueryType::kTextureNumLevels;
+            break;
+        case tint::inspector::Inspector::TextureQueryType::kTextureNumSamples:
+            result.type = EntryPointMetadata::LevelSampleInfo::TextureQueryType::kTextureNumSamples;
+            break;
+        default:
+            DAWN_UNREACHABLE();
+    }
+    result.group = info.group;
+    result.binding = info.binding;
+    return result;
+}
+
 ResultOrError<PixelLocalMemberType> FromTintPixelLocalMemberType(
     tint::inspector::PixelLocalMemberType type) {
     switch (type) {
@@ -1036,12 +1054,34 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
                         resource.binding, resource.bind_group);
     }
 
+    constexpr tint::BindingPoint tintNonSamplerBindingPoint = {
+        std::numeric_limits<uint32_t>::max()};
+
+    // Reflection of combined sampler and texture uses.
+    const auto samplerAndNonSamplerTextureUses =
+        inspector->GetSamplerAndNonSamplerTextureUses(entryPoint.name, tintNonSamplerBindingPoint);
+
+    metadata->samplerAndNonSamplerTexturePairs.reserve(samplerAndNonSamplerTextureUses.size());
+    std::transform(samplerAndNonSamplerTextureUses.cbegin(), samplerAndNonSamplerTextureUses.cend(),
+                   std::back_inserter(metadata->samplerAndNonSamplerTexturePairs),
+                   [tintNonSamplerBindingPoint](const tint::inspector::SamplerTexturePair& pair) {
+                       EntryPointMetadata::SamplerTexturePair result;
+                       result.sampler = BindingSlot::FromTint(
+                           pair.sampler_binding_point, tintNonSamplerBindingPoint,
+                           EntryPointMetadata::nonSamplerBindingPoint);
+                       result.texture = BindingSlot::FromTint(pair.texture_binding_point);
+                       return result;
+                   });
+
+    auto textureQueries = inspector->GetTextureQueries(entryPoint.name);
+    metadata->textureQueries.reserve(textureQueries.size());
+    std::transform(textureQueries.begin(), textureQueries.end(),
+                   std::back_inserter(metadata->textureQueries), FromTintLevelSampleInfo);
+
+    metadata->usesSubgroupMatrix = entryPoint.uses_subgroup_matrix;
+
     // Compute the texture+sampler combination count.
     if (device->IsCompatibilityMode()) {
-        tint::BindingPoint nonSamplerBindingPoint = {std::numeric_limits<uint32_t>::max()};
-        auto samplerAndNonSamplerTextureUses =
-            inspector->GetSamplerAndNonSamplerTextureUses(entryPoint.name, nonSamplerBindingPoint);
-
         // separate sampled from non-sampled and put sampled in set
         std::set<tint::BindingPoint> sampledTextures;
         std::set<tint::BindingPoint> sampledExternalTextures;
@@ -1059,7 +1099,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
             if (isExternalTexture) {
                 ++numSamplerExternalTexturePairs;
                 sampledExternalTextures.insert(pair.texture_binding_point);
-            } else if (pair.sampler_binding_point == nonSamplerBindingPoint) {
+            } else if (pair.sampler_binding_point == tintNonSamplerBindingPoint) {
                 nonSampled.push_back(pair.texture_binding_point);
             } else {
                 ++numSamplerTexturePairs;
@@ -1077,23 +1117,6 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
                                                   numSamplerExternalTexturePairs * 3 +
                                                   sampledExternalTextures.size();
     }
-
-    // Reflection of combined sampler and texture uses.
-    auto samplerTextureUses = inspector->GetSamplerTextureUses(entryPoint.name);
-
-    metadata->samplerTexturePairs.reserve(samplerTextureUses.Length());
-    std::transform(samplerTextureUses.begin(), samplerTextureUses.end(),
-                   std::back_inserter(metadata->samplerTexturePairs),
-                   [](const tint::inspector::SamplerTexturePair& pair) {
-                       EntryPointMetadata::SamplerTexturePair result;
-                       result.sampler = {BindGroupIndex(pair.sampler_binding_point.group),
-                                         BindingNumber(pair.sampler_binding_point.binding)};
-                       result.texture = {BindGroupIndex(pair.texture_binding_point.group),
-                                         BindingNumber(pair.texture_binding_point.binding)};
-                       return result;
-                   });
-
-    metadata->usesSubgroupMatrix = entryPoint.uses_subgroup_matrix;
 
 #undef DelayedInvalidIf
     return std::move(metadata);
@@ -1358,7 +1381,11 @@ MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
     }
 
     // Validate that filtering samplers are not used with unfilterable textures.
-    for (const auto& pair : entryPoint.samplerTexturePairs) {
+    for (const auto& pair : entryPoint.samplerAndNonSamplerTexturePairs) {
+        // Skip non-sampler textures.
+        if (pair.sampler == EntryPointMetadata::nonSamplerBindingPoint) {
+            continue;
+        }
         const BindGroupLayoutInternalBase* samplerBGL =
             layout->GetBindGroupLayout(pair.sampler.group);
         const BindingInfo& samplerInfo =
