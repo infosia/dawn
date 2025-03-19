@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbc66040_a5feefee",
+        "filename": "src/tint/lang/spirv/reader/parser/atomics_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T20:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "715c28ab_4d272979",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7dc20df9_d3d6b3b0",
@@ -124,6 +142,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffe30e48_4e0d1c7e",
+        "filename": "src/tint/lang/spirv/reader/parser/atomics_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T20:26:48Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8738bcb9_a619453d",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "69ce0d60_3edf2fd3",
@@ -177,6 +213,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7baca16_faeb91a4",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T20:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa9b2b05_c85384cb",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "024c0604_9f346913",
@@ -190,6 +244,24 @@
       "writtenOn": "2025-03-19T17:34:32Z",
       "side": 1,
       "message": "`OpAtomicStore` doesn\u0027t have a result, should be `EmitWithoutResult`.",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39b6c870_3d04ab9d",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T20:26:48Z",
+      "side": 1,
+      "message": "`OpAtomicStore` doesn\u0027t have a result, but `BuiltinCall` does have a Result which it gets upset if we don\u0027t assign it somewhere .... Made it an `EmitWithoutSpvResult`",
+      "parentUuid": "024c0604_9f346913",
       "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
