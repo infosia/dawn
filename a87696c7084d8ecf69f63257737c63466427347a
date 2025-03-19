@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b912eb4b_bd3a9b65",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T17:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e419e51_26efb982",
+      "revId": "a87696c7084d8ecf69f63257737c63466427347a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8eac415_29d4013d",
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "There is a load bearing `otherwise` in the spec that I missed, so this test is correct.",
       "parentUuid": "b8eac415_29d4013d",
+      "revId": "a87696c7084d8ecf69f63257737c63466427347a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9332f67_a02e9537",
+        "filename": "src/dawn/tests/unittests/validation/OverridableConstantsValidationTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T17:34:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "01568754_0f52b012",
       "revId": "a87696c7084d8ecf69f63257737c63466427347a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
