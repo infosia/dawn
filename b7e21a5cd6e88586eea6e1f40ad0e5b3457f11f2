@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "715c28ab_4d272979",
+        "filename": "src/tint/lang/spirv/reader/parser/atomics_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T17:44:02Z",
+      "side": 1,
+      "message": "Actually, this was my reminder to add failing tests to show we thought about these and don\u0027t support them.And I forgot .... So i\u0027ll go add the tests.",
+      "parentUuid": "9161fbae_251920f6",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7dc20df9_d3d6b3b0",
         "filename": "src/tint/lang/spirv/reader/parser/atomics_test.cc",
         "patchSetId": 5
@@ -72,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "87ffb12d_3950f953",
+        "filename": "src/tint/lang/spirv/reader/parser/atomics_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T17:44:02Z",
+      "side": 1,
+      "message": "Technically they don\u0027t, but I wanted to make sure the IR generated here is what was consumed on the transform side. There were a few changes from the IR from the AST tests (like spirv requires all Vars to be at the top and a few other things).\n\nSo, I\u0027d like to keep these just as a proof it\u0027s generatible by spir-v.",
+      "parentUuid": "dcb0d68b_4ffc1937",
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "69ce0d60_3edf2fd3",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 5
@@ -101,6 +137,24 @@
           ]
         }
       ],
+      "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa9b2b05_c85384cb",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T17:44:02Z",
+      "side": 1,
+      "message": "Tried to sneek that in there and was going to followup with the tests and close the bug, will create a pre-cl.",
+      "parentUuid": "69ce0d60_3edf2fd3",
       "revId": "b7e21a5cd6e88586eea6e1f40ad0e5b3457f11f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
