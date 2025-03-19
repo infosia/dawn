@@ -1028,6 +1028,14 @@ float Device::GetTimestampPeriodInNS() const {
     return mDeviceInfo.properties.limits.timestampPeriod;
 }
 
+uint64_t Device::GetVulkanAllocatedMemory() const {
+    return GetResourceMemoryAllocator()->GetTotalAllocatedMemory();
+}
+
+uint64_t Device::GetVulkanUsedMemory() const {
+    return GetResourceMemoryAllocator()->GetTotalUsedMemory();
+}
+
 void Device::SetLabelImpl() {
     SetDebugName(this, VK_OBJECT_TYPE_DEVICE, mVkDevice, "Dawn_Device", GetLabel());
 }

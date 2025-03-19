@@ -108,6 +108,9 @@ class Device final : public DeviceBase {
                                             const TextureCopy& dst,
                                             const Extent3D& copySizePixels) override;
 
+    uint64_t GetVulkanAllocatedMemory() const override;
+    uint64_t GetVulkanUsedMemory() const override;
+
     // Return the fixed subgroup size to use for compute shaders on this device or 0 if none
     // needs to be set.
     uint32_t GetComputeSubgroupSize() const;
