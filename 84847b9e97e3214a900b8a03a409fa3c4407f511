@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0a54e2c6_d02c5b6a",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T20:57:57Z",
+      "side": 1,
+      "message": "This seems like a larger change that would be better as a separate issue.",
+      "parentUuid": "2a2586b4_efb1d3ed",
+      "revId": "84847b9e97e3214a900b8a03a409fa3c4407f511",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fa87ef79_377432fd",
         "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
         "patchSetId": 2
@@ -31,6 +49,30 @@
       "writtenOn": "2025-03-19T20:14:32Z",
       "side": 1,
       "message": "This is all duplicated from the `GetEntryPoint` code so should probably be pulled out into a common function.",
+      "range": {
+        "startLine": 1067,
+        "startChar": 0,
+        "endLine": 1091,
+        "endChar": 83
+      },
+      "revId": "84847b9e97e3214a900b8a03a409fa3c4407f511",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e863245_106f2e2a",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-19T20:57:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa87ef79_377432fd",
       "range": {
         "startLine": 1067,
         "startChar": 0,
