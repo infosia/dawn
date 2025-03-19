@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2eb34d88_c48801f2",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-19T15:33:01Z",
+      "side": 1,
+      "message": "Will this be renamed to \"immediates\" a?",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 55
+      },
+      "revId": "2be806822f62620e6b78407702c6bbd8ea879912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0f90a48e_a2393ed8",
         "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
         "patchSetId": 11
@@ -31,6 +54,23 @@
       "writtenOn": "2025-03-19T12:36:50Z",
       "side": 1,
       "message": "Could we have one test for push constants in the vertex stage? It will be a different code path on Metal with setVertexBytes",
+      "revId": "2be806822f62620e6b78407702c6bbd8ea879912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f36473b_1a6b0ba7",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-19T15:33:01Z",
+      "side": 1,
+      "message": "Will this be renamed \"immediates\"? (can we have a TODO somewhere or an issue for that)?",
       "revId": "2be806822f62620e6b78407702c6bbd8ea879912",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
