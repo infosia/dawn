@@ -373,6 +373,12 @@ inline uint32_t ScanReverse(uint16_t bits) {
     return ScanReverse(static_cast<uint32_t>(bits));
 }
 
+template <typename T>
+T roundUp(const T value, const T alignment) {
+    auto temp = value + alignment - static_cast<T>(1);
+    return temp - (temp % alignment);
+}
+
 }  // namespace dawn
 
 #endif  // SRC_DAWN_COMMON_MATH_H_
