@@ -1,0 +1,83 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df0313b7_6afd708b",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-20T19:37:10Z",
+      "side": 1,
+      "message": "Q: Is this public just for unit testing purposes?",
+      "revId": "050407a365025d11c0d6f8fe4350b908249ed2d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90534294_7ebac56e",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-20T19:37:10Z",
+      "side": 1,
+      "message": "Nit: We use CamelCase for gtest function names.",
+      "revId": "050407a365025d11c0d6f8fe4350b908249ed2d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd9aeaa9_dc1ed306",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-20T19:37:10Z",
+      "side": 1,
+      "message": "I\u0027d suggest `EXPECT_EQ(idx, analysis...)` so we\u0027re checking we get back the `var` we expect to.",
+      "fixSuggestions": [
+        {
+          "fixId": "6454e349_5acc7363",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+              "range": {
+                "startLine": 366,
+                "startChar": 0,
+                "endLine": 367,
+                "endChar": 0
+              },
+              "replacement": "    EXPECT_EQ(idx, analysis.GetLoopControlVariableWithConstantInitializer(loop));\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+              "range": {
+                "startLine": 403,
+                "startChar": 0,
+                "endLine": 404,
+                "endChar": 0
+              },
+              "replacement": "    EXPECT_EQ(idx, analysis.GetLoopControlVariableWithConstantInitializer(loop));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "050407a365025d11c0d6f8fe4350b908249ed2d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
