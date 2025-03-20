@@ -53,6 +53,7 @@ struct BlitColorToColorWithDrawPipelineKey {
     ColorAttachmentMask resolveTargetsMask;
     wgpu::TextureFormat depthStencilFormat = wgpu::TextureFormat::Undefined;
     uint32_t sampleCount = 1;
+    bool hasResolveRect = false;
 
     struct HashFunc {
         size_t operator()(const BlitColorToColorWithDrawPipelineKey& key) const;
