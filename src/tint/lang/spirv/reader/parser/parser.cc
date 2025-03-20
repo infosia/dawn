@@ -1190,6 +1190,9 @@ class Parser {
                 case spv::Op::OpAtomicIDecrement:
                     EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kAtomicIDecrement);
                     break;
+                case spv::Op::OpControlBarrier:
+                    EmitControlBarrier(inst);
+                    break;
                 default:
                     TINT_UNIMPLEMENTED()
                         << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
@@ -1212,6 +1215,60 @@ class Parser {
             auto merge_id = loop_merge_inst->GetSingleWordInOperand(0);
             const auto& merge_bb = current_spirv_function_->FindBlock(merge_id);
             EmitBlock(dst, *merge_bb);
+        }
+    }
+
+    void EmitControlBarrier(const spvtools::opt::Instruction& inst) {
+        auto get_constant = [&](uint32_t idx) {
+            uint32_t id = inst.GetSingleWordOperand(idx);
+            if (auto* constant = spirv_context_->get_constant_mgr()->FindDeclaredConstant(id)) {
+                return constant->GetU32();
+            }
+            TINT_ICE() << "invalid or missing operands for control barrier";
+        };
+
+        uint32_t execution = get_constant(0);
+        uint32_t memory = get_constant(1);
+        uint32_t semantics = get_constant(2);
+
+        if (execution != uint32_t(spv::Scope::Workgroup)) {
+            TINT_ICE() << "unsupported control barrier execution scope: "
+                       << "expected Workgroup (2), got: " << execution;
+        }
+
+        if (semantics & uint32_t(spv::MemorySemanticsMask::AcquireRelease)) {
+            semantics &= ~static_cast<uint32_t>(spv::MemorySemanticsMask::AcquireRelease);
+        } else {
+            TINT_ICE() << "control barrier semantics requires acquire and release";
+        }
+
+        if (semantics & uint32_t(spv::MemorySemanticsMask::WorkgroupMemory)) {
+            if (memory != uint32_t(spv::Scope::Workgroup)) {
+                TINT_ICE() << "workgroupBarrier requires workgroup memory scope";
+            }
+
+            EmitWithoutSpvResult(b_.Call(ty_.void_(), core::BuiltinFn::kWorkgroupBarrier, Empty));
+            semantics &= ~static_cast<uint32_t>(spv::MemorySemanticsMask::WorkgroupMemory);
+        }
+
+        if (semantics & uint32_t(spv::MemorySemanticsMask::UniformMemory)) {
+            if (memory != uint32_t(spv::Scope::Workgroup)) {
+                TINT_ICE() << "storageBarrier requires workgroup memory scope";
+            }
+            EmitWithoutSpvResult(b_.Call(ty_.void_(), core::BuiltinFn::kStorageBarrier, Empty));
+            semantics &= ~static_cast<uint32_t>(spv::MemorySemanticsMask::UniformMemory);
+        }
+
+        if (semantics & uint32_t(spv::MemorySemanticsMask::ImageMemory)) {
+            if (memory != uint32_t(spv::Scope::Workgroup)) {
+                TINT_ICE() << "textureBarrier requires workgroup memory scope";
+            }
+            EmitWithoutSpvResult(b_.Call(ty_.void_(), core::BuiltinFn::kTextureBarrier, Empty));
+            semantics &= ~static_cast<uint32_t>(spv::MemorySemanticsMask::ImageMemory);
+        }
+
+        if (semantics) {
+            TINT_ICE() << "unsupported control barrier semantics: " << semantics;
         }
     }
 
