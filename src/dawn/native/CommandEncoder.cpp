@@ -836,6 +836,40 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
                         rect->y, rect->height, validationState->GetRenderHeight());
     }
 
+    if (const auto* rect = descriptor.Get<RenderPassDescriptorResolveRect>()) {
+        DAWN_INVALID_IF(!device->HasFeature(Feature::DawnResolveRect),
+                        "RenderPassDescriptorResolveRect can't be used without %s.",
+                        ToAPI(Feature::DawnResolveRect));
+        DAWN_INVALID_IF(
+            !validationState->WillExpandResolveTexture(),
+            "ExpandResolveRect is invalid to use without wgpu::LoadOp::ExpandResolveTexture.");
+
+        DAWN_INVALID_IF(
+            static_cast<uint64_t>(rect->colorOffsetX) + static_cast<uint64_t>(rect->width) >
+                validationState->GetRenderWidth(),
+            "The colorOffsetX (%u) and width (%u) of ResolveRect is out of the render area width(% "
+            "u).",
+            rect->colorOffsetX, rect->width, validationState->GetRenderWidth());
+        DAWN_INVALID_IF(
+            static_cast<uint64_t>(rect->colorOffsetY) + static_cast<uint64_t>(rect->height) >
+                validationState->GetRenderHeight(),
+            "The colorOffsetY (%u) and height (%u) of ResolveRect is out of the render area "
+            "height(% u).",
+            rect->colorOffsetY, rect->height, validationState->GetRenderHeight());
+        DAWN_INVALID_IF(
+            static_cast<uint64_t>(rect->resolveOffsetX) + static_cast<uint64_t>(rect->width) >
+                validationState->GetRenderWidth(),
+            "The resolveOffsetX (%u) and width (%u) of ResolveRect is out of the render area "
+            "width(% u).",
+            rect->resolveOffsetX, rect->width, validationState->GetRenderWidth());
+        DAWN_INVALID_IF(
+            static_cast<uint64_t>(rect->resolveOffsetY) + static_cast<uint64_t>(rect->height) >
+                validationState->GetRenderHeight(),
+            "The resolveOffsetY (%u) and height (%u) of ResolveRect is out of the render area "
+            "height(% u).",
+            rect->resolveOffsetY, rect->height, validationState->GetRenderHeight());
+    }
+
     return descriptor;
 }
 
