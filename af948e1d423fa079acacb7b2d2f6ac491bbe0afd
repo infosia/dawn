@@ -164,6 +164,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d4b5765_26021152",
+        "filename": "src/dawn/native/d3d11/SamplerD3D11.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-20T19:11:57Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t realize that the GL one was using `GLFloat` the first readthrough. If it\u0027s only for D3D backends maybe its fine to leave as is. If we wanted to dedup it we would probably want to put it in `src/dawn/native/d3d/*`, but I think that would require a lot more effort for marginal gain in this case.",
+      "parentUuid": "4ac37ca5_0388c19e",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 1
+      },
+      "revId": "af948e1d423fa079acacb7b2d2f6ac491bbe0afd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "250c8cf2_6ef7ed85",

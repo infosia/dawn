@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "683c3f89_2886f4b4",
+        "filename": "generator/opengl_loader_generator.py",
+        "patchSetId": 37
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-20T19:11:57Z",
+      "side": 1,
+      "message": "Huh... I\u0027m suprised we have this assertion at all? I looked through the history for this generator, and the related xml and template files and can\u0027t find why we needed this assertion in the first place.\n\nI think it\u0027s probably fine to remove it? Though it seems like cwallez@chromium.org would maybe have more context on why this was put in here?",
+      "range": {
+        "startLine": 181,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 55
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9a77d562_9821b33f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/opengl_loader_generator.py",
+              "range": {
+                "startLine": 181,
+                "startChar": 0,
+                "endLine": 184,
+                "endChar": 0
+              },
+              "replacement": "            # TODO(dawn-dev): This line avoids an AssertionError with proc_name\n            # glTexParameterIivEXT that has the glTexParameterIiv alias.  Figure\n            # out why this is happening and fix it.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b76d4f6a3d65dbd6ea5399dcb1635eb922269c01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0494e90b_f87b6835",
+        "filename": "src/dawn/native/d3d12/BindGroupLayoutD3D12.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-20T19:11:57Z",
+      "side": 1,
+      "message": "nit. Maybe this could just take a `const float (\u0026arr)[4]`?",
+      "range": {
+        "startLine": 87,
+        "startChar": 49,
+        "endLine": 90,
+        "endChar": 67
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7507da8f_1762d189",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/d3d12/BindGroupLayoutD3D12.cpp",
+              "range": {
+                "startLine": 87,
+                "startChar": 0,
+                "endLine": 91,
+                "endChar": 0
+              },
+              "replacement": "D3D12_STATIC_BORDER_COLOR D3D12StaticBorderColor(const float (\u0026borderColor)[4]) {\n    float borderColor0 \u003d borderColor[0];\n    float borderColor1 \u003d borderColor[1];\n    float borderColor2 \u003d borderColor[2];\n    float borderColor3 \u003d borderColor[3];\n"
+            },
+            {
+              "path": "src/dawn/native/d3d12/BindGroupLayoutD3D12.cpp",
+              "range": {
+                "startLine": 153,
+                "startChar": 0,
+                "endLine": 155,
+                "endChar": 0
+              },
+              "replacement": "                    D3D12StaticBorderColor(desc.BorderColor);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b76d4f6a3d65dbd6ea5399dcb1635eb922269c01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
