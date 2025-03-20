@@ -1588,6 +1588,12 @@ void CommandEncoder::APICopyBufferToTexture(const TexelCopyBufferInfo* source,
             TexelCopyBufferLayout srcLayout = source->layout;
             ApplyDefaultTexelCopyBufferLayoutOptions(&srcLayout, blockInfo, *copySize);
 
+            if (copySize->width == 0 || copySize->height == 0 ||
+                copySize->depthOrArrayLayers == 0) {
+                // Noop copy but is valid, simply skip encoding any command.
+                return {};
+            }
+
             TextureCopy dst;
             dst.texture = destination.texture;
             dst.origin = destination.origin;
