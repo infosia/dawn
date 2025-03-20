@@ -16,6 +16,63 @@
       "message": "This is the follow-up of https://dawn-review.googlesource.com/c/dawn/+/221274/comment/a447080e_aa60f499/\n\nPTAL, thanks!",
       "revId": "185d48bea7da65130c79408b66e4cd33bd97e4ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb966adc_147984dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T10:09:42Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "185d48bea7da65130c79408b66e4cd33bd97e4ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ac52910_7d778f58",
+        "filename": "src/dawn/native/vulkan/PipelineVk.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T10:09:42Z",
+      "side": 1,
+      "message": "nit: unused now",
+      "revId": "185d48bea7da65130c79408b66e4cd33bd97e4ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0bdd60c_beb0559c",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T10:09:42Z",
+      "side": 1,
+      "message": "This is a member of PipelineBase directly modified. We could either make it private now and pass the \"additionalImmediateMask\" in InitializeBase, or remove the argument altogether (slight preference for the first one)",
+      "range": {
+        "startLine": 574,
+        "startChar": 36,
+        "endLine": 574,
+        "endChar": 50
+      },
+      "revId": "185d48bea7da65130c79408b66e4cd33bd97e4ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
