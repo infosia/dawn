@@ -92,7 +92,20 @@ SlabAllocatorImpl::SlabAllocatorImpl(SlabAllocatorImpl&& rhs)
       mFullSlabs(std::move(rhs.mFullSlabs)),
       mRecycledSlabs(std::move(rhs.mRecycledSlabs)) {}
 
-SlabAllocatorImpl::~SlabAllocatorImpl() = default;
+SlabAllocatorImpl::~SlabAllocatorImpl() {
+    auto AllSlabsAreEmpty = [](const SentinelSlab& sentinel) {
+        for (Slab* current = sentinel.next; current != nullptr;) {
+            if (current->blocksInUse > 0) {
+                return false;
+            };
+
+            current = current->next;
+        }
+        return true;
+    };
+    DAWN_ASSERT(AllSlabsAreEmpty(mAvailableSlabs));
+    DAWN_ASSERT(AllSlabsAreEmpty(mRecycledSlabs));
+}
 
 SlabAllocatorImpl::IndexLinkNode* SlabAllocatorImpl::OffsetFrom(
     IndexLinkNode* node,
