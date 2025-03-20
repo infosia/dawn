@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "b5785aa3_2b136267",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T09:12:13Z",
+      "side": 1,
+      "message": "Done. I have added a follow-up CL.",
+      "parentUuid": "3f7057bf_a1d74547",
+      "revId": "1f4a276f3eb574833e825ba9fc1d2898ed70c79b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "2d6d8ce8_a64b778f",
         "filename": "src/dawn/native/CommandEncoder.cpp",
         "patchSetId": 14
