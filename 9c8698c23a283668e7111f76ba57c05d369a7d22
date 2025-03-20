@@ -52,6 +52,24 @@
       "parentUuid": "06d7c296_a8aaf21a",
       "revId": "9c8698c23a283668e7111f76ba57c05d369a7d22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62bf70e0_c9387751",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-20T21:45:46Z",
+      "side": 1,
+      "message": "James is right. That\u0027s actually what my original comment was about, I just didn\u0027t read the revision carefully enough, oops.",
+      "parentUuid": "4c3ba90c_3f483330",
+      "revId": "9c8698c23a283668e7111f76ba57c05d369a7d22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
