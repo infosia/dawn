@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48ac34af_08476e84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T12:49:37Z",
+      "side": 1,
+      "message": "If we early returned after [1] for a zero sized copy then the buffer would be incorrectly tracked by `mTopLevelBuffers`. `mTopLevelBuffers` only holds a raw pointer, it doesn\u0027t acquire the Ref, hence later `Queue.Submit` would reference a dangling pointer.\n\nIf we skipped the encoding before [1] then `mTopLevelBuffers` wouldn\u0027t include the buffer. Some tests try to verify that a destroyed buffer being used by a command buffer should trigger validation errors. However, because we skip the tracking, the  `Queue.Submit`\u0027s validation didn\u0027t catch the destroyed buffer.\n\nI think the skipping code in T2B [2] also has this problem.\n\n[1] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CommandEncoder.cpp;drc\u003d492dc9719f6e1845f4f5c0553cd5c7651115f671;l\u003d1584\n[2] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CommandEncoder.cpp;drc\u003d492dc9719f6e1845f4f5c0553cd5c7651115f671;l\u003d1687",
+      "revId": "004890f81275b9f13c332e0e14f3c15dd42f4be1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
