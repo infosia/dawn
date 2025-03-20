@@ -426,6 +426,10 @@ class DeviceBase : public ErrorSink,
     bool ReduceMemoryUsage();
     void PerformIdleTasks();
 
+    // Returns the memory information gathered from backend specific allocators.
+    // TODO(chromium:397720827): Implement allocator memory tracking for D3D12.
+    virtual AllocatorMemoryInfo GetAllocatorMemoryInfo() const;
+
     ResultOrError<Ref<BufferBase>> GetOrCreateTemporaryUniformBuffer(size_t size);
 
     bool HasFlexibleTextureViews() const;
@@ -543,9 +547,6 @@ class DeviceBase : public ErrorSink,
                                                     const TexelCopyBufferLayout& src,
                                                     const TextureCopy& dst,
                                                     const Extent3D& copySizePixels) = 0;
-
-    virtual uint64_t GetVulkanAllocatedMemory() const;
-    virtual uint64_t GetVulkanUsedMemory() const;
 
     WGPUUncapturedErrorCallbackInfo mUncapturedErrorCallbackInfo =
         WGPU_UNCAPTURED_ERROR_CALLBACK_INFO_INIT;

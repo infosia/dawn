@@ -2422,14 +2422,6 @@ MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
     return {};
 }
 
-uint64_t DeviceBase::GetVulkanAllocatedMemory() const {
-    return 0u;
-}
-
-uint64_t DeviceBase::GetVulkanUsedMemory() const {
-    return 0u;
-}
-
 Mutex::AutoLockAndHoldRef DeviceBase::GetScopedLockSafeForDelete() {
     return Mutex::AutoLockAndHoldRef(mMutex);
 }
@@ -2475,10 +2467,11 @@ MemoryUsageInfo DeviceBase::ComputeEstimatedMemoryUsage() const {
         info.buffersUsage += size;
     });
 
-    info.vulkanAllocatedMemory = GetVulkanAllocatedMemory();
-    info.vulkanUsedMemory = GetVulkanUsedMemory();
-
     return info;
+}
+
+AllocatorMemoryInfo DeviceBase::GetAllocatorMemoryInfo() const {
+    return {};
 }
 
 bool DeviceBase::ReduceMemoryUsage() {

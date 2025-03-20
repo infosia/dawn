@@ -32,17 +32,17 @@
 namespace dawn {
 namespace {
 
-class MemoryInstrumentationVulkanTest : public DawnTest {
+class AllocatorMemoryInstrumentationTest : public DawnTest {
   protected:
     void SetUp() override {
         DawnTest::SetUp();
-        // Native ComputeEstimatedMemoryUsageInfo is unsupported on wire.
+        // Native GetAllocatorMemoryInfo method is unsupported on wire.
         DAWN_TEST_UNSUPPORTED_IF(UsesWire());
     }
 };
 
-// Test the detailed vulkan memory usage reported by ComputeEstimatedMemoryUsage()
-TEST_P(MemoryInstrumentationVulkanTest, ComputeEstimatedMemoryUsageInDetailsForVulkan) {
+// Test the detailed memory usage reported by GetAllocatorMemoryInfo()
+TEST_P(AllocatorMemoryInstrumentationTest, GetAllocatorMemoryInfoVulkan) {
     // Create a buffer with size 32.
     constexpr uint64_t kBufferSize = 32;
     constexpr wgpu::BufferDescriptor kBufferDesc = {
@@ -54,12 +54,11 @@ TEST_P(MemoryInstrumentationVulkanTest, ComputeEstimatedMemoryUsageInDetailsForV
     wgpu::Buffer uniformBuffer = device.CreateBuffer(&kBufferDesc);
     EXPECT_TRUE(uniformBuffer);
 
-    native::MemoryUsageInfo memInfo = native::ComputeEstimatedMemoryUsageInfo(device.Get());
-    EXPECT_EQ(memInfo.totalUsage, kBufferSize);
-    EXPECT_EQ(memInfo.buffersUsage, kBufferSize);
-    EXPECT_GT(memInfo.vulkanAllocatedMemory, 0u);
-    EXPECT_GT(memInfo.vulkanUsedMemory, 0u);
-    EXPECT_GE(memInfo.vulkanAllocatedMemory, memInfo.vulkanUsedMemory);
+    native::AllocatorMemoryInfo memInfo = native::GetAllocatorMemoryInfo(device.Get());
+    EXPECT_GT(memInfo.totalAllocatedMemory, 0u);
+    EXPECT_GT(memInfo.totalUsedMemory, 0u);
+    EXPECT_GE(memInfo.totalAllocatedMemory, memInfo.totalUsedMemory);
+    auto prevAllocatedMemory = memInfo.totalAllocatedMemory;
 
     uniformBuffer.Destroy();
     // Process the destroy so that the pending command serials are updated.
@@ -71,11 +70,9 @@ TEST_P(MemoryInstrumentationVulkanTest, ComputeEstimatedMemoryUsageInDetailsForV
     waitInfo.future = device.GetQueue().OnSubmittedWorkDone(wgpu::CallbackMode::WaitAnyOnly,
                                                             [](wgpu::QueueWorkDoneStatus) {});
     const auto& instance = device.GetAdapter().GetInstance();
-    if (instance.WaitAny(1, &waitInfo, /*timeoutNS=*/std::numeric_limits<uint64_t>::max()) !=
-        wgpu::WaitStatus::Success) {
-        // Assert false if there an issue waiting for the queue.
-        DAWN_ASSERT(false);
-    }
+    auto status =
+        instance.WaitAny(1, &waitInfo, /*timeoutNS=*/std::numeric_limits<uint64_t>::max());
+    ASSERT_EQ(status, wgpu::WaitStatus::Success);
 
     // TODO(chromium:404568017): This submit should not really be needed to free the memory but is
     // needed for now. Investigate this.
@@ -83,14 +80,13 @@ TEST_P(MemoryInstrumentationVulkanTest, ComputeEstimatedMemoryUsageInDetailsForV
     // Tick needed in order to call ResourceMemoryAllocator::Tick.
     device.Tick();
 
-    memInfo = native::ComputeEstimatedMemoryUsageInfo(device.Get());
+    memInfo = native::GetAllocatorMemoryInfo(device.Get());
     // Vulkan used memory should be 0 now.
-    EXPECT_EQ(memInfo.vulkanUsedMemory, 0u);
-    EXPECT_GT(memInfo.vulkanAllocatedMemory, 0u);
-    EXPECT_GT(memInfo.vulkanAllocatedMemory, memInfo.vulkanUsedMemory);
+    EXPECT_EQ(memInfo.totalUsedMemory, 0u);
+    EXPECT_LE(memInfo.totalAllocatedMemory, prevAllocatedMemory);
 }
 
-DAWN_INSTANTIATE_TEST(MemoryInstrumentationVulkanTest, VulkanBackend());
+DAWN_INSTANTIATE_TEST(AllocatorMemoryInstrumentationTest, VulkanBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

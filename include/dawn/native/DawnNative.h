@@ -324,8 +324,6 @@ DAWN_NATIVE_EXPORT uint64_t ComputeEstimatedMemoryUsage(WGPUDevice device);
 // - total memory usage of buffers.
 // - total memory usage of depth/stencil textures.
 // - total memory usage of MSAA textures.
-// - total allocated memory by Vulkan resource allocator.
-// - total used memory by Vulkan resource allocator.
 // TODO(chromium:402138745): Remove the old ComputeEstimatedMemoryUsage() once all call sites are
 // updated to use the newer function.
 struct DAWN_NATIVE_EXPORT MemoryUsageInfo {
@@ -334,10 +332,17 @@ struct DAWN_NATIVE_EXPORT MemoryUsageInfo {
     uint64_t msaaTexturesUsage;
     uint64_t texturesUsage;
     uint64_t buffersUsage;
-    uint64_t vulkanAllocatedMemory;
-    uint64_t vulkanUsedMemory;
 };
 DAWN_NATIVE_EXPORT MemoryUsageInfo ComputeEstimatedMemoryUsageInfo(WGPUDevice device);
+
+// Memory information gathered from backend specific allocators.
+// - memory allocated by clients for objects such as buffers, textures.
+// - heap memory used by the allocator for allocations.
+struct DAWN_NATIVE_EXPORT AllocatorMemoryInfo {
+    uint64_t totalUsedMemory;
+    uint64_t totalAllocatedMemory;
+};
+DAWN_NATIVE_EXPORT AllocatorMemoryInfo GetAllocatorMemoryInfo(WGPUDevice device);
 
 // Free any unused GPU memory like staging buffers, cached resources, etc. Returns true if there are
 // still objects to delete and ReduceMemoryUsage() should be run again after a short delay to allow

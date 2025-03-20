@@ -63,10 +63,10 @@ class FencedDeleter {
     // Returns the last serial that an object is pending deletion after or
     // kBeginningOfGPUTime if no objects are pending deletion.
     ExecutionSerial GetLastPendingDeletionSerial();
+    // Returns the pending command serial used for deleting the resources.
+    ExecutionSerial GetCurrentDeletionSerial();
 
     void Tick(ExecutionSerial completedSerial);
-
-    ExecutionSerial GetPendingCommandSerial();
 
   private:
     raw_ptr<Device> mDevice = nullptr;

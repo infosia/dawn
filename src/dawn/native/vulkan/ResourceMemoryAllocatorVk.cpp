@@ -268,7 +268,7 @@ void ResourceMemoryAllocator::Deallocate(ResourceMemoryAllocation* allocation) {
             // Track the direct allocation that will be deallocated for both allocated and used
             // memory sizes.
             DAWN_ASSERT(mTotalUsedMemory >= allocation->GetInfo().mRequestedSize);
-            mDirectAllocationsToTrack[mDevice->GetFencedDeleter()->GetPendingCommandSerial()] +=
+            mUsedMemoryToDecrement[mDevice->GetFencedDeleter()->GetCurrentDeletionSerial()] +=
                 allocation->GetInfo().mRequestedSize;
             allocation->Invalidate();
             DeallocateResourceHeap(heap);
@@ -281,8 +281,12 @@ void ResourceMemoryAllocator::Deallocate(ResourceMemoryAllocation* allocation) {
         // TODO(crbug.com/dawn/851): Maybe we can produce the correct barriers to reduce the
         // latency to reclaim memory.
         case AllocationMethod::kSubAllocated: {
-            mSubAllocationsToDelete.Enqueue(*allocation,
-                                            mDevice->GetQueue()->GetPendingCommandSerial());
+            MutexProtected<FencedDeleter>& fencedDeleter = mDevice->GetFencedDeleter();
+            mSubAllocationsToDelete.Enqueue(*allocation, fencedDeleter->GetCurrentDeletionSerial());
+            // Track suballocation that will be deallocated for used memory sizes.
+            DAWN_ASSERT(mTotalUsedMemory >= allocation->GetInfo().mRequestedSize);
+            mUsedMemoryToDecrement[fencedDeleter->GetCurrentDeletionSerial()] +=
+                allocation->GetInfo().mRequestedSize;
             break;
         }
 
@@ -313,9 +317,9 @@ void ResourceMemoryAllocator::RecordHeapAllocation(VkDeviceSize size) {
 
 void ResourceMemoryAllocator::DeallocateResourceHeap(ResourceHeap* heap) {
     DAWN_ASSERT(mTotalAllocatedMemory >= heap->GetSize());
-    mHeapAllocationsToTrack[mDevice->GetFencedDeleter()->GetPendingCommandSerial()] +=
-        heap->GetSize();
-    mDevice->GetFencedDeleter()->DeleteWhenUnused(heap->GetMemory());
+    MutexProtected<FencedDeleter>& fencedDeleter = mDevice->GetFencedDeleter();
+    mAllocatedMemoryToDecrement[fencedDeleter->GetCurrentDeletionSerial()] += heap->GetSize();
+    fencedDeleter->DeleteWhenUnused(heap->GetMemory());
 }
 
 void ResourceMemoryAllocator::Tick(ExecutionSerial completedSerial) {
@@ -323,34 +327,29 @@ void ResourceMemoryAllocator::Tick(ExecutionSerial completedSerial) {
          mSubAllocationsToDelete.IterateUpTo(completedSerial)) {
         DAWN_ASSERT(allocation.GetInfo().mMethod == AllocationMethod::kSubAllocated);
         size_t memoryType = ToBackend(allocation.GetResourceHeap())->GetMemoryType();
-
-        // Track the suballocation memory as used memory that will be deallocated.
-        DAWN_ASSERT(mTotalUsedMemory >= allocation.GetInfo().mRequestedSize);
-        mTotalUsedMemory -= allocation.GetInfo().mRequestedSize;
-
         mAllocatorsPerType[memoryType]->DeallocateMemory(allocation);
     }
     mSubAllocationsToDelete.ClearUpTo(completedSerial);
 
-    auto it = mDirectAllocationsToTrack.begin();
-    while (it != mDirectAllocationsToTrack.end() && it->first <= completedSerial) {
+    auto it = mUsedMemoryToDecrement.begin();
+    while (it != mUsedMemoryToDecrement.end() && it->first <= completedSerial) {
         // Track the direct allocation memory as used memory that will be deallocated.
         DAWN_ASSERT(mTotalUsedMemory >= it->second);
         mTotalUsedMemory -= it->second;
         it++;
     }
     // Erase the map serials up to the completed serial.
-    mDirectAllocationsToTrack.erase(mDirectAllocationsToTrack.begin(), it);
+    mUsedMemoryToDecrement.erase(mUsedMemoryToDecrement.begin(), it);
 
-    it = mHeapAllocationsToTrack.begin();
-    while (it != mHeapAllocationsToTrack.end() && it->first <= completedSerial) {
+    it = mAllocatedMemoryToDecrement.begin();
+    while (it != mAllocatedMemoryToDecrement.end() && it->first <= completedSerial) {
         // Track the direct allocation memory as used memory that will be deallocated.
         DAWN_ASSERT(mTotalAllocatedMemory >= it->second);
         mTotalAllocatedMemory -= it->second;
         it++;
     }
     // Erase the map serials up to the completed serial.
-    mHeapAllocationsToTrack.erase(mHeapAllocationsToTrack.begin(), it);
+    mAllocatedMemoryToDecrement.erase(mAllocatedMemoryToDecrement.begin(), it);
 }
 
 int ResourceMemoryAllocator::FindBestTypeIndex(VkMemoryRequirements requirements, MemoryKind kind) {
