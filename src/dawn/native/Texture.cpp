@@ -657,7 +657,8 @@ wgpu::TextureUsage AddInternalUsages(const DeviceBase* device,
         internalUsage |= kReadOnlyStorageTexture | kWriteOnlyStorageTexture;
     }
 
-    bool supportsMSAAPartialResolve = device->HasFeature(Feature::DawnPartialLoadResolveTexture) &&
+    bool supportsMSAAPartialResolve = (device->HasFeature(Feature::DawnPartialLoadResolveTexture) ||
+                                       device->HasFeature(Feature::DawnResolveRect)) &&
                                       sampleCount > 1 &&
                                       (usage & wgpu::TextureUsage::RenderAttachment);
     if (supportsMSAAPartialResolve) {
