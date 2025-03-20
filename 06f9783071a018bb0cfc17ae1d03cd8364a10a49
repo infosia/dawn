@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dae5626_8d543158",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T12:51:28Z",
+      "side": 1,
+      "message": "PTAL. What flatten bindings does is sufficiently different from generate bindings that I kept them separate. With flatten, we always go to a single group, and we have different counters per type (texture, sampler, buffer). This isn\u0027t really what generate bindings does as it keeps the original groups.",
+      "revId": "06f9783071a018bb0cfc17ae1d03cd8364a10a49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
