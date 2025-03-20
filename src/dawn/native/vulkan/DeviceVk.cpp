@@ -1027,12 +1027,12 @@ float Device::GetTimestampPeriodInNS() const {
     return mDeviceInfo.properties.limits.timestampPeriod;
 }
 
-uint64_t Device::GetVulkanAllocatedMemory() const {
-    return GetResourceMemoryAllocator()->GetTotalAllocatedMemory();
-}
-
-uint64_t Device::GetVulkanUsedMemory() const {
-    return GetResourceMemoryAllocator()->GetTotalUsedMemory();
+AllocatorMemoryInfo Device::GetAllocatorMemoryInfo() const {
+    DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
+    AllocatorMemoryInfo info = {};
+    info.totalAllocatedMemory = GetResourceMemoryAllocator()->GetTotalAllocatedMemory();
+    info.totalUsedMemory = GetResourceMemoryAllocator()->GetTotalUsedMemory();
+    return info;
 }
 
 void Device::SetLabelImpl() {

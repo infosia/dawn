@@ -93,8 +93,8 @@ class ResourceMemoryAllocator {
     std::vector<std::unique_ptr<SingleTypeAllocator>> mAllocatorsPerType;
 
     SerialQueue<ExecutionSerial, ResourceMemoryAllocation> mSubAllocationsToDelete;
-    std::map<ExecutionSerial, VkDeviceSize> mDirectAllocationsToTrack;
-    std::map<ExecutionSerial, VkDeviceSize> mHeapAllocationsToTrack;
+    std::map<ExecutionSerial, VkDeviceSize> mUsedMemoryToDecrement;
+    std::map<ExecutionSerial, VkDeviceSize> mAllocatedMemoryToDecrement;
 
     VkDeviceSize mTotalAllocatedMemory = 0;
     VkDeviceSize mTotalUsedMemory = 0;
