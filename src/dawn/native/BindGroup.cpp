@@ -262,14 +262,15 @@ MaybeError ValidateTextureViewBindingUsedAsExternalTexture(DeviceBase* device,
 
     TextureViewBase* view = entry.textureView;
     TextureBase* texture = view->GetTexture();
-    Format format = texture->GetFormat();
+    wgpu::TextureFormat format = view->GetFormat().format;
 
-    DAWN_INVALID_IF(format.aspects != Aspect::Color, "The format (%s) is not a color format.",
-                    format.format);
-
-    DAWN_INVALID_IF(
-        !IsSubset(SampleTypeBit::Float, format.GetAspectInfo(Aspect::Color).supportedSampleTypes),
-        "The format (%s) is not filterable float.", format.format);
+    DAWN_INVALID_IF(format != wgpu::TextureFormat::RGBA8Unorm &&
+                        format != wgpu::TextureFormat::BGRA8Unorm &&
+                        format != wgpu::TextureFormat::RGBA16Float,
+                    "The texture view (%s) format (%s) is not one of the supported context formats "
+                    "(%s, %s, or %s).",
+                    view, format, wgpu::TextureFormat::RGBA8Unorm, wgpu::TextureFormat::BGRA8Unorm,
+                    wgpu::TextureFormat::RGBA16Float);
 
     DAWN_INVALID_IF((view->GetUsage() & wgpu::TextureUsage::TextureBinding) == 0,
                     "The texture view (%s) usage (%s) doesn't include the required usage (%s)",
@@ -282,9 +283,8 @@ MaybeError ValidateTextureViewBindingUsedAsExternalTexture(DeviceBase* device,
                     "The texture view (%s) mip level count (%u) is not 1.", view,
                     view->GetLevelCount());
 
-    DAWN_INVALID_IF(texture->GetSampleCount() != 1,
-                    "The texture view (%s) sample count (%u) is not 1.", view,
-                    texture->GetSampleCount());
+    DAWN_INVALID_IF(texture->GetSampleCount() != 1, "The texture (%s) sample count (%u) is not 1.",
+                    texture, texture->GetSampleCount());
     return {};
 }
 
