@@ -61,19 +61,36 @@ constexpr char kBlitToColorVS[] = R"(
 }
 )";
 
-std::string GenerateExpandFS(const BlitColorToColorWithDrawPipelineKey& pipelineKey) {
+std::string GenerateExpandFS(const BlitColorToColorWithDrawPipelineKey& pipelineKey,
+                             bool hasResolveRect) {
     std::ostringstream outputStructStream;
     std::ostringstream assignOutputsStream;
     std::ostringstream finalStream;
-
+    uint8_t uniformIndex = 0;
     for (auto i : IterateBitSet(pipelineKey.attachmentsToExpandResolve)) {
         finalStream << absl::StrFormat("@group(0) @binding(%u) var srcTex%u : texture_2d<f32>;\n",
                                        i, i);
 
         outputStructStream << absl::StrFormat("@location(%u) output%u : vec4f,\n", i, i);
-
-        assignOutputsStream << absl::StrFormat(
-            "\toutputColor.output%u = textureLoad(srcTex%u, vec2u(position.xy), 0);\n", i, i);
+        if (!hasResolveRect) {
+            assignOutputsStream << absl::StrFormat(
+                "\toutputColor.output%u = textureLoad(srcTex%u, vec2u(position.xy), 0);\n", i, i);
+        } else {
+            assignOutputsStream << absl::StrFormat(
+                "\toutputColor.output%u = textureLoad(srcTex%u, vec2u(u32(position.x) + "
+                "params.colorOffset.x, "
+                "u32(position.y) + params.colorOffset.y), 0);\n",
+                i, i);
+            uniformIndex = static_cast<uint8_t>(i);
+        }
+    }
+    if (hasResolveRect) {
+        finalStream << absl::StrFormat(
+            "struct Params {\n"
+            "colorOffset: vec2u,\n"
+            "};\n"
+            "@group(0) @binding(%u) var<uniform> params : Params;\n",
+            ++uniformIndex);
     }
 
     finalStream << "struct OutputColor {\n" << outputStructStream.str() << "}\n\n";
@@ -129,7 +146,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateExpandMultisamplePipeline(
     DAWN_TRY_ASSIGN(vshaderModule, device->CreateShaderModule(&shaderModuleDesc));
 
     // fragment shader's source will depend on pipeline key.
-    std::string fsCode = GenerateExpandFS(pipelineKey);
+    std::string fsCode = GenerateExpandFS(pipelineKey, pipelineKey.hasResolveRect);
     wgslDesc.code = fsCode.c_str();
     Ref<ShaderModuleBase> fshaderModule;
     DAWN_TRY_ASSIGN(fshaderModule, device->CreateShaderModule(&shaderModuleDesc));
@@ -180,7 +197,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateExpandMultisamplePipeline(
     // Multisample state.
     DAWN_ASSERT(pipelineKey.sampleCount > 1);
     renderPipelineDesc.multisample.count = pipelineKey.sampleCount;
-
+    uint8_t uniformIndex = 0;
     // Bind group layout.
     absl::InlinedVector<BindGroupLayoutEntry, kMaxColorAttachments> bglEntries;
     for (auto colorIdx : IterateBitSet(pipelineKey.attachmentsToExpandResolve)) {
@@ -190,7 +207,17 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateExpandMultisamplePipeline(
         bglEntry.visibility = wgpu::ShaderStage::Fragment;
         bglEntry.texture.sampleType = kInternalResolveAttachmentSampleType;
         bglEntry.texture.viewDimension = wgpu::TextureViewDimension::e2D;
+        uniformIndex = static_cast<uint8_t>(colorIdx);
     }
+    if (pipelineKey.hasResolveRect) {
+        bglEntries.push_back({});
+        auto& bglEntry = bglEntries.back();
+        bglEntry.binding = ++uniformIndex;
+        bglEntry.visibility = wgpu::ShaderStage::Fragment;
+        bglEntry.buffer.hasDynamicOffset = false;
+        bglEntry.buffer.type = wgpu::BufferBindingType::Uniform;
+    }
+
     BindGroupLayoutDescriptor bglDesc = {};
     bglDesc.entries = bglEntries.data();
     bglDesc.entryCount = bglEntries.size();
@@ -271,6 +298,7 @@ MaybeError ExpandResolveTextureWithDraw(
     DAWN_ASSERT(device->CanTextureLoadResolveTargetInTheSameRenderpass());
 
     BlitColorToColorWithDrawPipelineKey pipelineKey;
+    const auto* resolveRect = renderPassDescriptor.Get<RenderPassDescriptorResolveRect>();
     for (uint8_t i = 0; i < renderPassDescriptor->colorAttachmentCount; ++i) {
         ColorAttachmentIndex colorIdx(i);
         const auto& colorAttachment = renderPassDescriptor->colorAttachments[i];
@@ -293,6 +321,7 @@ MaybeError ExpandResolveTextureWithDraw(
 
         pipelineKey.colorTargetFormats[colorIdx] = format.format;
         pipelineKey.sampleCount = view->GetTexture()->GetSampleCount();
+        pipelineKey.hasResolveRect = !(resolveRect == nullptr);
     }
 
     if (!pipelineKey.attachmentsToExpandResolve.any()) {
@@ -316,6 +345,7 @@ MaybeError ExpandResolveTextureWithDraw(
     {
         absl::InlinedVector<BindGroupEntry, kMaxColorAttachments> bgEntries = {};
 
+        uint8_t uniformIndex = 0;
         for (auto colorIdx : IterateBitSet(pipelineKey.attachmentsToExpandResolve)) {
             uint8_t i = static_cast<uint8_t>(colorIdx);
             const auto& colorAttachment = renderPassDescriptor->colorAttachments[i];
@@ -323,8 +353,26 @@ MaybeError ExpandResolveTextureWithDraw(
             auto& bgEntry = bgEntries.back();
             bgEntry.binding = i;
             bgEntry.textureView = colorAttachment.resolveTarget;
+            uniformIndex = i;
         }
+        Ref<BufferBase> paramsBuffer;
+        if (resolveRect) {
+            BufferDescriptor bufferDesc = {};
+            bufferDesc.size = sizeof(uint32_t) * 2;
+            bufferDesc.usage = wgpu::BufferUsage::Uniform;
+            bufferDesc.mappedAtCreation = true;
+            DAWN_TRY_ASSIGN(paramsBuffer, device->CreateBuffer(&bufferDesc));
 
+            uint32_t* params =
+                static_cast<uint32_t*>(paramsBuffer->GetMappedRange(0, bufferDesc.size));
+            params[0] = resolveRect->colorOffsetX;
+            params[1] = resolveRect->colorOffsetY;
+            DAWN_TRY(paramsBuffer->Unmap());
+            bgEntries.push_back({});
+            auto& bgEntry = bgEntries.back();
+            bgEntry.binding = ++uniformIndex;
+            bgEntry.buffer = paramsBuffer.Get();
+        }
         BindGroupDescriptor bgDesc = {};
         bgDesc.layout = bgl.Get();
         bgDesc.entryCount = bgEntries.size();
@@ -336,10 +384,19 @@ MaybeError ExpandResolveTextureWithDraw(
     renderEncoder->APISetBindGroup(0, bindGroup.Get());
     renderEncoder->APISetPipeline(pipeline.Get());
 
-    if (const auto* rect = renderPassDescriptor.Get<RenderPassDescriptorExpandResolveRect>()) {
+    if (const auto* expandRect =
+            renderPassDescriptor.Get<RenderPassDescriptorExpandResolveRect>()) {
         // TODO(chromium:344814092): Prevent the scissor to be reset to outside of this region by
         // passing the scissor bound to the render pass creation.
-        renderEncoder->APISetScissorRect(rect->x, rect->y, rect->width, rect->height);
+        renderEncoder->APISetScissorRect(expandRect->x, expandRect->y, expandRect->width,
+                                         expandRect->height);
+    } else if (resolveRect) {
+        // TODO(chromium:344814092): Prevent the scissor to be reset to outside of this region by
+        // passing the scissor bound to the render pass creation.
+        renderEncoder->APISetScissorRect(resolveRect->resolveOffsetX, resolveRect->resolveOffsetY,
+                                         resolveRect->width, resolveRect->height);
+        renderEncoder->APISetViewport(resolveRect->resolveOffsetX, resolveRect->resolveOffsetY,
+                                      resolveRect->width, resolveRect->height, 0.0, 1.0);
     }
 
     renderEncoder->APIDraw(3);
@@ -360,6 +417,7 @@ size_t BlitColorToColorWithDrawPipelineKey::HashFunc::operator()(
 
     HashCombine(&hash, key.depthStencilFormat);
     HashCombine(&hash, key.sampleCount);
+    HashCombine(&hash, key.hasResolveRect);
 
     return hash;
 }
@@ -380,7 +438,8 @@ bool BlitColorToColorWithDrawPipelineKey::EqualityFunc::operator()(
         }
     }
 
-    return a.depthStencilFormat == b.depthStencilFormat && a.sampleCount == b.sampleCount;
+    return a.depthStencilFormat == b.depthStencilFormat && a.sampleCount == b.sampleCount &&
+           a.hasResolveRect == b.hasResolveRect;
 }
 
 MaybeError ResolveMultisampleWithDraw(DeviceBase* device,
@@ -418,6 +477,7 @@ MaybeError ResolveMultisampleWithDraw(DeviceBase* device,
     renderEncoder->APISetBindGroup(0, bindGroup.Get(), 0, nullptr);
     renderEncoder->APISetPipeline(pipeline.Get());
     renderEncoder->APISetScissorRect(rect.x, rect.y, rect.width, rect.height);
+    renderEncoder->APISetViewport(rect.x, rect.y, rect.width, rect.height, 0.0, 1.0);
     renderEncoder->APIDraw(3);
     renderEncoder->End();
 
