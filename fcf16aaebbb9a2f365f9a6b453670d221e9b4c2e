@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d6ea02b_98d85f63",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T19:53:50Z",
+      "side": 1,
+      "message": "Sounds good, added a TODO on `GetAllocatedMemoryInfo` method in Device.h.",
+      "parentUuid": "484db48b_51bfc7c3",
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a935203_9fc5c222",
@@ -245,6 +263,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6efd65cf_ab3e668e",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T19:53:50Z",
+      "side": 1,
+      "message": "Thanks for the discussion here. Following this, I chatted offline with Kyle and it made sense to report the allocator metrics in a separate struct for ease of recording full/background memory dumps in Chromium. This is because the motivation behind this work has been to compare dawn-vulkan allocator dumps with VMA allocator dumps in UMA and reporting separately allows us to add a prefix other than gpu/dawn/ in Chromium which will allow for ease of UMA comparison. \n\nUpdated to add AllocatorMemoryInfo struct with `totalAllocatedMemory` and `totalUsedMemory` as members.",
+      "parentUuid": "efec312a_1c2b0122",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a2294ad1_b94c49ef",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 14
@@ -268,6 +310,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b5776868_1bd90b75",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2473,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T19:53:50Z",
+      "side": 1,
+      "message": "That makes sense. Updated to follow similar pattern for `GetAllocatedMemoryInfo()` since that now returns the allocated and used memory for vulkan.",
+      "parentUuid": "a2294ad1_b94c49ef",
+      "range": {
+        "startLine": 2471,
+        "startChar": 0,
+        "endLine": 2473,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7e56227f_1902cc68",
         "filename": "src/dawn/native/vulkan/FencedDeleter.cpp",
         "patchSetId": 14
@@ -279,6 +345,30 @@
       "writtenOn": "2025-03-20T13:49:20Z",
       "side": 1,
       "message": "All of these fnuctions should use `GetCurrentDeletionSerial()` so that if someone makes changes in FencedDeleter then ResourceMemoryAllocator stays in sync.",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 83
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df0eb13d_5a79b408",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T19:53:50Z",
+      "side": 1,
+      "message": "That makes sense, updated all usages to be GetCurrentDeletionSerial here.",
+      "parentUuid": "7e56227f_1902cc68",
       "range": {
         "startLine": 60,
         "startChar": 37,
@@ -336,6 +426,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94fef80f_7d02bfa7",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T19:53:50Z",
+      "side": 1,
+      "message": "Sounds good, updated to GetCurrentDeletionSerial().",
+      "parentUuid": "3f7b5a35_d8174dcc",
+      "range": {
+        "startLine": 271,
+        "startChar": 39,
+        "endLine": 271,
+        "endChar": 92
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "775bc8bc_f067590b",
@@ -349,6 +463,30 @@
       "writtenOn": "2025-03-20T13:49:20Z",
       "side": 1,
       "message": "auto* fencedDeleter \u003d mDevice-\u003eGetFencedDeleter();\nmHeapAllocationsToTrack...",
+      "range": {
+        "startLine": 316,
+        "startChar": 28,
+        "endLine": 316,
+        "endChar": 55
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78f53b05_bdc8aa78",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T19:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "775bc8bc_f067590b",
       "range": {
         "startLine": 316,
         "startChar": 28,
@@ -417,6 +555,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "302f6828_2f21daf0",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T19:53:50Z",
+      "side": 1,
+      "message": "Updated to rename to `mUsedMemoryToDecrement` and `mAllocatedMemoryToDecrement`. Also updated suballocations to also add to `mUsedMemoryToDecrement` instead of using the suballocations queue.",
+      "parentUuid": "51d120fa_def96027",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3936a226_f7d8612a",
@@ -434,6 +596,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61b9a33f_9f04330b",
+        "filename": "src/dawn/tests/end2end/MemoryInstrumentationVulkanTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T19:53:50Z",
+      "side": 1,
+      "message": "Ah yes, this is better",
+      "parentUuid": "3936a226_f7d8612a",
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "377357ec_9b641341",
@@ -447,6 +627,30 @@
       "writtenOn": "2025-03-20T13:49:20Z",
       "side": 1,
       "message": "The total allocated memory doesn\u0027t have to be above 0 here it would be perfectly valid for RMA to deallocated the only chunk it\u0027s holding and reallocate it again next time.\n\nI think the only thing we know is that total allocated shouldn\u0027t have gone up compared to before? There were no new allocations so it shouldn\u0027t allocated any additional chunks.",
+      "range": {
+        "startLine": 89,
+        "startChar": 45,
+        "endLine": 89,
+        "endChar": 47
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2197b835_5590dd98",
+        "filename": "src/dawn/tests/end2end/MemoryInstrumentationVulkanTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T19:53:50Z",
+      "side": 1,
+      "message": "That makes sense, updated to remove the EXPECT_GT(memInfo.vulkanAllocatedMemory, 0u); and added separate check comparing current allocated memory \u003c\u003d previously allocated memory.",
+      "parentUuid": "377357ec_9b641341",
       "range": {
         "startLine": 89,
         "startChar": 45,
