@@ -1,9 +1,24 @@
 SKIP: INVALID
 
-../../src/tint/lang/msl/writer/raise/module_scope_vars.cc:239 internal compiler error: TINT_UNREACHABLE unhandled address space: push_constant
-********************************************************************
-*  The tint shader compiler has encountered an unexpected error.   *
-*                                                                  *
-*  Please help us fix this issue by submitting a bug report at     *
-*  crbug.com/tint with the source program that triggered the bug.  *
-********************************************************************
+//
+// main1
+//
+push constants are not supported by the MSL backend
+//
+// main2
+//
+push constants are not supported by the MSL backend
+//
+// main3
+//
+push constants are not supported by the MSL backend
+//
+// main4
+//
+#include <metal_stdlib>
+using namespace metal;
+
+kernel void main4() {
+}
+
+tint executable returned error: exit status 1

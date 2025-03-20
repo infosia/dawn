@@ -1,7 +1,7 @@
 SKIP: FAILED
 
 int tint_ftoi(float v) {
-  return ((v < 2147483520.0f) ? ((v < -2147483648.0f) ? -2147483648 : int(v)) : 2147483647);
+  return ((v <= 2147483520.0f) ? ((v < -2147483648.0f) ? -2147483648 : int(v)) : 2147483647);
 }
 
 static float4 gl_FragCoord = float4(0.0f, 0.0f, 0.0f, 0.0f);
@@ -39,7 +39,7 @@ void main_1() {
       break;
     }
     int x_80 = i;
-    map[x_80] = 0;
+    map[min(uint(x_80), 255u)] = 0;
     {
       i = (i + 1);
     }
@@ -61,7 +61,7 @@ void main_1() {
     bool x_92 = (p.x > 0);
     x_105 = x_92;
     if (x_92) {
-      x_104 = (map[((p.x - 2) + (p.y * 16))] == 0);
+      x_104 = (map[min(uint(((p.x - 2) + (p.y * 16))), 255u)] == 0);
       x_105 = x_104;
     }
     if (x_105) {
@@ -70,7 +70,7 @@ void main_1() {
     bool x_112 = (p.y > 0);
     x_125 = x_112;
     if (x_112) {
-      x_124 = (map[(p.x + ((p.y - 2) * 16))] == 0);
+      x_124 = (map[min(uint((p.x + ((p.y - 2) * 16))), 255u)] == 0);
       x_125 = x_124;
     }
     if (x_125) {
@@ -79,7 +79,7 @@ void main_1() {
     bool x_132 = (p.x < 14);
     x_145 = x_132;
     if (x_132) {
-      x_144 = (map[((p.x + 2) + (p.y * 16))] == 0);
+      x_144 = (map[min(uint(((p.x + 2) + (p.y * 16))), 255u)] == 0);
       x_145 = x_144;
     }
     if (x_145) {
@@ -88,7 +88,7 @@ void main_1() {
     bool x_152 = (p.y < 14);
     x_165 = x_152;
     if (x_152) {
-      x_164 = (map[(p.x + ((p.y + 2) * 16))] == 0);
+      x_164 = (map[min(uint((p.x + ((p.y + 2) * 16))), 255u)] == 0);
       x_165 = x_164;
     }
     if (x_165) {
@@ -134,7 +134,7 @@ void main_1() {
           } else {
             break;
           }
-          if ((map[((j * 2) + ((i * 2) * 16))] == 0)) {
+          if ((map[min(uint(((j * 2) + ((i * 2) * 16))), 255u)] == 0)) {
             p.x = (j * 2);
             p.y = (i * 2);
             canwalk = true;
@@ -149,7 +149,7 @@ void main_1() {
       }
       int x_211 = p.x;
       int x_213 = p.y;
-      map[(x_211 + (x_213 * 16))] = 1;
+      map[min(uint((x_211 + (x_213 * 16))), 255u)] = 1;
     } else {
       d = tint_mod(v, directions);
       v = (v + directions);
@@ -161,20 +161,20 @@ void main_1() {
       }
       x_243 = x_230;
       if (x_230) {
-        x_242 = (map[((p.x - 2) + (p.y * 16))] == 0);
+        x_242 = (map[min(uint(((p.x - 2) + (p.y * 16))), 255u)] == 0);
         x_243 = x_242;
       }
       if (x_243) {
         d = (d - 1);
         int x_249 = p.x;
         int x_251 = p.y;
-        map[(x_249 + (x_251 * 16))] = 1;
+        map[min(uint((x_249 + (x_251 * 16))), 255u)] = 1;
         int x_256 = p.x;
         int x_259 = p.y;
-        map[((x_256 - 1) + (x_259 * 16))] = 1;
+        map[min(uint(((x_256 - 1) + (x_259 * 16))), 255u)] = 1;
         int x_264 = p.x;
         int x_267 = p.y;
-        map[((x_264 - 2) + (x_267 * 16))] = 1;
+        map[min(uint(((x_264 - 2) + (x_267 * 16))), 255u)] = 1;
         p.x = (p.x - 2);
       }
       bool x_276 = (d >= 0);
@@ -214,7 +214,7 @@ void main_1() {
         map = x_305;
       }
       if (x_282) {
-        x_315 = map[(x_290 + x_299)];
+        x_315 = map[min(uint((x_290 + x_299)), 255u)];
         x_317 = x_315;
       } else {
         x_316 = 0;
@@ -224,17 +224,17 @@ void main_1() {
         d = (d - 1);
         int x_326 = p.x;
         int x_328 = p.y;
-        map[(x_326 + (x_328 * 16))] = 1;
+        map[min(uint((x_326 + (x_328 * 16))), 255u)] = 1;
         int x_333 = p.x;
         int x_335 = p.y;
-        map[(x_333 + ((x_335 - 1) * 16))] = 1;
+        map[min(uint((x_333 + ((x_335 - 1) * 16))), 255u)] = 1;
         int x_341 = p.x;
         int x_343 = p.y;
         int x_345[256] = map;
         int tint_symbol_5[256] = (int[256])0;
         map = tint_symbol_5;
         map = x_345;
-        map[(x_341 + ((x_343 - 2) * 16))] = 1;
+        map[min(uint((x_341 + ((x_343 - 2) * 16))), 255u)] = 1;
         p.y = (p.y - 2);
       }
       bool x_354 = (d >= 0);
@@ -245,20 +245,20 @@ void main_1() {
       }
       x_373 = x_360;
       if (x_360) {
-        x_372 = (map[((p.x + 2) + (p.y * 16))] == 0);
+        x_372 = (map[min(uint(((p.x + 2) + (p.y * 16))), 255u)] == 0);
         x_373 = x_372;
       }
       if (x_373) {
         d = (d - 1);
         int x_379 = p.x;
         int x_381 = p.y;
-        map[(x_379 + (x_381 * 16))] = 1;
+        map[min(uint((x_379 + (x_381 * 16))), 255u)] = 1;
         int x_386 = p.x;
         int x_389 = p.y;
-        map[((x_386 + 1) + (x_389 * 16))] = 1;
+        map[min(uint(((x_386 + 1) + (x_389 * 16))), 255u)] = 1;
         int x_394 = p.x;
         int x_397 = p.y;
-        map[((x_394 + 2) + (x_397 * 16))] = 1;
+        map[min(uint(((x_394 + 2) + (x_397 * 16))), 255u)] = 1;
         p.x = (p.x + 2);
       }
       bool x_406 = (d >= 0);
@@ -269,24 +269,24 @@ void main_1() {
       }
       x_425 = x_412;
       if (x_412) {
-        x_424 = (map[(p.x + ((p.y + 2) * 16))] == 0);
+        x_424 = (map[min(uint((p.x + ((p.y + 2) * 16))), 255u)] == 0);
         x_425 = x_424;
       }
       if (x_425) {
         d = (d - 1);
         int x_431 = p.x;
         int x_433 = p.y;
-        map[(x_431 + (x_433 * 16))] = 1;
+        map[min(uint((x_431 + (x_433 * 16))), 255u)] = 1;
         int x_438 = p.x;
         int x_440 = p.y;
-        map[(x_438 + ((x_440 + 1) * 16))] = 1;
+        map[min(uint((x_438 + ((x_440 + 1) * 16))), 255u)] = 1;
         int x_446 = p.x;
         int x_448 = p.y;
-        map[(x_446 + ((x_448 + 2) * 16))] = 1;
+        map[min(uint((x_446 + ((x_448 + 2) * 16))), 255u)] = 1;
         p.y = (p.y + 2);
       }
     }
-    if ((map[((ipos.y * 16) + ipos.x)] == 1)) {
+    if ((map[min(uint(((ipos.y * 16) + ipos.x)), 255u)] == 1)) {
       x_GLF_color = (1.0f).xxxx;
       return;
     }

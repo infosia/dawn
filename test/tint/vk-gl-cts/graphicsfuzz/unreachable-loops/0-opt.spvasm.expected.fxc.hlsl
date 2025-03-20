@@ -45,9 +45,3 @@ tint_symbol main() {
   wrapper_result.x_GLF_color_1 = inner_result.x_GLF_color_1;
   return wrapper_result;
 }
-FXC validation failure:
-<scrubbed_path>(10,5-16): warning X3557: loop only executes for 0 iteration(s), forcing loop to unroll
-<scrubbed_path>(16,12-15): error X3696: infinite loop detected - loop never exits
-
-
-tint executable returned error: exit status 1

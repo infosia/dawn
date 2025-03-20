@@ -50,8 +50,3 @@ void f(tint_symbol_1 tint_symbol) {
   f_inner(tint_symbol.local_invocation_index);
   return;
 }
-FXC validation failure:
-<scrubbed_path>(1,20-28): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

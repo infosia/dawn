@@ -74,8 +74,3 @@ void f() {
   s.Store<vector<float16_t, 4> >(136u, vector<float16_t, 4>(ubo_load_4_xz[0], ubo_load_4_yw[0], ubo_load_4_xz[1], ubo_load_4_yw[1]).ywxz);
   return;
 }
-FXC validation failure:
-<scrubbed_path>(3,10-18): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

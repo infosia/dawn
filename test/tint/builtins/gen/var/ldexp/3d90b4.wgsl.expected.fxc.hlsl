@@ -1,5 +1,8 @@
 SKIP: INVALID
 
+//
+// fragment_main
+//
 RWByteAddressBuffer prevent_dce : register(u0);
 
 vector<float16_t, 2> ldexp_3d90b4() {
@@ -13,11 +16,31 @@ void fragment_main() {
   prevent_dce.Store<vector<float16_t, 2> >(0u, ldexp_3d90b4());
   return;
 }
+//
+// compute_main
+//
+RWByteAddressBuffer prevent_dce : register(u0);
+
+vector<float16_t, 2> ldexp_3d90b4() {
+  vector<float16_t, 2> arg_0 = (float16_t(1.0h)).xx;
+  int2 arg_1 = (1).xx;
+  vector<float16_t, 2> res = ldexp(arg_0, arg_1);
+  return res;
+}
 
 [numthreads(1, 1, 1)]
 void compute_main() {
   prevent_dce.Store<vector<float16_t, 2> >(0u, ldexp_3d90b4());
   return;
+}
+//
+// vertex_main
+//
+vector<float16_t, 2> ldexp_3d90b4() {
+  vector<float16_t, 2> arg_0 = (float16_t(1.0h)).xx;
+  int2 arg_1 = (1).xx;
+  vector<float16_t, 2> res = ldexp(arg_0, arg_1);
+  return res;
 }
 
 struct VertexOutput {
@@ -43,8 +66,3 @@ tint_symbol_1 vertex_main() {
   wrapper_result.prevent_dce = inner_result.prevent_dce;
   return wrapper_result;
 }
-FXC validation failure:
-<scrubbed_path>(3,8-16): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

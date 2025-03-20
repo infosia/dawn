@@ -72,13 +72,13 @@ void main_1() {
         int x_32 = d;
         int x_33 = d;
         int x_34 = d;
-        set_matrix_scalar(tempm43, (((x_29 >= 0) & (x_30 < 4)) ? x_31 : 0), (((x_32 >= 0) & (x_33 < 3)) ? x_34 : 0), 1.0f);
+        set_matrix_scalar(tempm43, min(uint((((x_29 >= 0) & (x_30 < 4)) ? x_31 : 0)), 3u), min(uint((((x_32 >= 0) & (x_33 < 3)) ? x_34 : 0)), 2u), 1.0f);
         {
           c = (c + 1);
         }
       }
       int x_117 = (((idx >= 0) & (idx < 9)) ? idx : 0);
-      GLF_live6sums[x_117] = (GLF_live6sums[x_117] + m43[ctr].y);
+      GLF_live6sums[min(uint(x_117), 8u)] = (GLF_live6sums[min(uint(x_117), 8u)] + m43[min(uint(ctr), 3u)].y);
       {
         ctr = (ctr + 1);
       }
@@ -107,11 +107,3 @@ tint_symbol main() {
   wrapper_result.x_GLF_color_1 = inner_result.x_GLF_color_1;
   return wrapper_result;
 }
-DXC validation failure:
-error: validation errors
-hlsl.hlsl:102: error: Loop must have break.
-Validation failed.
-
-
-
-tint executable returned error: exit status 1

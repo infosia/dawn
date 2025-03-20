@@ -1,6 +1,5 @@
 SKIP: INVALID
 
-static uint x_1 = 0u;
 static bool x_7 = false;
 static bool x_8 = false;
 
@@ -35,11 +34,3 @@ void main() {
   main_1();
   return;
 }
-DXC validation failure:
-error: validation errors
-hlsl.hlsl:32: error: Loop must have break.
-Validation failed.
-
-
-
-tint executable returned error: exit status 1

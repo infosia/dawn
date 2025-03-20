@@ -1,0 +1,36 @@
+//
+// alpha
+//
+#include <metal_stdlib>
+using namespace metal;
+
+void alpha_1() {
+}
+
+kernel void alpha() {
+  alpha_1();
+}
+//
+// beta
+//
+#include <metal_stdlib>
+using namespace metal;
+
+void beta_1() {
+}
+
+kernel void beta() {
+  beta_1();
+}
+//
+// gamma
+//
+#include <metal_stdlib>
+using namespace metal;
+
+void gamma_1() {
+}
+
+kernel void gamma() {
+  gamma_1();
+}

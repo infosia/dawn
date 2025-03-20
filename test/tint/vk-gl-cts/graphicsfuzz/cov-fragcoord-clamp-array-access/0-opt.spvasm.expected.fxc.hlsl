@@ -1,7 +1,7 @@
 SKIP: FAILED
 
 int tint_ftoi(float v) {
-  return ((v < 2147483520.0f) ? ((v < -2147483648.0f) ? -2147483648 : int(v)) : 2147483647);
+  return ((v <= 2147483520.0f) ? ((v < -2147483648.0f) ? -2147483648 : int(v)) : 2147483647);
 }
 
 int tint_clamp(int e, int low, int high) {
@@ -52,9 +52,9 @@ void main_1() {
     int x_97 = asint(x_10[2].x);
     int x_99 = asint(x_10[1].x);
     int x_101 = asint(x_10[3].x);
-    data[tint_clamp(x_97, x_99, x_101)] = float4(float(asint(x_10[1].x)), float(asint(x_10[2].x)), float(asint(x_10[2].x)), float(asint(x_10[1].x)));
+    data[min(uint(tint_clamp(x_97, x_99, x_101)), 1u)] = float4(float(asint(x_10[1].x)), float(asint(x_10[2].x)), float(asint(x_10[2].x)), float(asint(x_10[1].x)));
   }
-  float4 x_120 = data[asint(x_10[1].x)];
+  float4 x_120 = data[min(uint(asint(x_10[1].x)), 1u)];
   x_GLF_color = float4(x_120.x, x_120.y, x_120.z, x_120.w);
   return;
 }
@@ -82,5 +82,3 @@ tint_symbol_2 main(tint_symbol_1 tint_symbol) {
   wrapper_result.x_GLF_color_1 = inner_result.x_GLF_color_1;
   return wrapper_result;
 }
-
-tint executable returned error: exit status 0xc00000fd

@@ -1,7 +1,7 @@
 SKIP: FAILED
 
 int tint_ftoi(float v) {
-  return ((v < 2147483520.0f) ? ((v < -2147483648.0f) ? -2147483648 : int(v)) : 2147483647);
+  return ((v <= 2147483520.0f) ? ((v < -2147483648.0f) ? -2147483648 : int(v)) : 2147483647);
 }
 
 static float4 gl_FragCoord = float4(0.0f, 0.0f, 0.0f, 0.0f);
@@ -287,13 +287,3 @@ tint_symbol_2 main(tint_symbol_1 tint_symbol) {
   wrapper_result.x_GLF_color_1 = inner_result.x_GLF_color_1;
   return wrapper_result;
 }
-FXC validation failure:
-<scrubbed_path>(12,3-14): warning X3557: loop only executes for 0 iteration(s), forcing loop to unroll
-<scrubbed_path>(75,9-20): warning X3557: loop only executes for 0 iteration(s), forcing loop to unroll
-<scrubbed_path>(191,7-18): warning X3557: loop only executes for 0 iteration(s), forcing loop to unroll
-<scrubbed_path>(75,9-20): warning X3557: loop only executes for 0 iteration(s), forcing loop to unroll
-<scrubbed_path>(191,7-18): warning X3557: loop only executes for 0 iteration(s), forcing loop to unroll
-<scrubbed_path>(127,11-22): error X4029: infinite loop detected - loop never exits
-
-
-tint executable returned error: exit status 1

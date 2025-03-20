@@ -71,8 +71,3 @@ void f() {
   s.Store<float16_t>(0u, (((tint_symbol + tint_symbol_1) + tint_symbol_2) + tint_symbol_3));
   return;
 }
-FXC validation failure:
-<scrubbed_path>(6,1-9): error X3000: unrecognized identifier 'float16_t'
-
-
-tint executable returned error: exit status 1

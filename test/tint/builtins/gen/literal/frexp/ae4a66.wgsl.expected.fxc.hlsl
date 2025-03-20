@@ -1,5 +1,8 @@
 SKIP: INVALID
 
+//
+// fragment_main
+//
 struct frexp_result_vec3_f16 {
   vector<float16_t, 3> fract;
   int3 exp;
@@ -12,11 +15,31 @@ void fragment_main() {
   frexp_ae4a66();
   return;
 }
+//
+// compute_main
+//
+struct frexp_result_vec3_f16 {
+  vector<float16_t, 3> fract;
+  int3 exp;
+};
+void frexp_ae4a66() {
+  frexp_result_vec3_f16 res = {(float16_t(0.5h)).xxx, (1).xxx};
+}
 
 [numthreads(1, 1, 1)]
 void compute_main() {
   frexp_ae4a66();
   return;
+}
+//
+// vertex_main
+//
+struct frexp_result_vec3_f16 {
+  vector<float16_t, 3> fract;
+  int3 exp;
+};
+void frexp_ae4a66() {
+  frexp_result_vec3_f16 res = {(float16_t(0.5h)).xxx, (1).xxx};
 }
 
 struct VertexOutput {
@@ -39,8 +62,3 @@ tint_symbol_1 vertex_main() {
   wrapper_result.pos = inner_result.pos;
   return wrapper_result;
 }
-FXC validation failure:
-<scrubbed_path>(2,10-18): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

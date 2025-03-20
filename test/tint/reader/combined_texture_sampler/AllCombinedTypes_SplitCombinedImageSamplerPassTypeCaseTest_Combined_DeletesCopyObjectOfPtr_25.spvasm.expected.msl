@@ -1,0 +1,9 @@
+#include <metal_stdlib>
+using namespace metal;
+
+void main_1() {
+}
+
+kernel void v() {
+  main_1();
+}

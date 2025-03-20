@@ -45,11 +45,3 @@ tint_symbol main() {
   wrapper_result.x_GLF_color_1 = inner_result.x_GLF_color_1;
   return wrapper_result;
 }
-DXC validation failure:
-error: validation errors
-hlsl.hlsl:40: error: Loop must have break.
-Validation failed.
-
-
-
-tint executable returned error: exit status 1

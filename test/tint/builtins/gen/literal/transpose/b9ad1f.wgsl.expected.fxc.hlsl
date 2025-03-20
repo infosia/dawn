@@ -1,5 +1,8 @@
 SKIP: INVALID
 
+//
+// fragment_main
+//
 RWByteAddressBuffer prevent_dce : register(u0);
 
 int transpose_b9ad1f() {
@@ -11,11 +14,27 @@ void fragment_main() {
   prevent_dce.Store(0u, asuint(transpose_b9ad1f()));
   return;
 }
+//
+// compute_main
+//
+RWByteAddressBuffer prevent_dce : register(u0);
+
+int transpose_b9ad1f() {
+  matrix<float16_t, 2, 3> res = matrix<float16_t, 2, 3>((float16_t(1.0h)).xxx, (float16_t(1.0h)).xxx);
+  return ((res[0][0] == float16_t(0.0h)) ? 1 : 0);
+}
 
 [numthreads(1, 1, 1)]
 void compute_main() {
   prevent_dce.Store(0u, asuint(transpose_b9ad1f()));
   return;
+}
+//
+// vertex_main
+//
+int transpose_b9ad1f() {
+  matrix<float16_t, 2, 3> res = matrix<float16_t, 2, 3>((float16_t(1.0h)).xxx, (float16_t(1.0h)).xxx);
+  return ((res[0][0] == float16_t(0.0h)) ? 1 : 0);
 }
 
 struct VertexOutput {
@@ -41,9 +60,3 @@ tint_symbol_1 vertex_main() {
   wrapper_result.prevent_dce = inner_result.prevent_dce;
   return wrapper_result;
 }
-FXC validation failure:
-<scrubbed_path>(4,10-18): error X3000: syntax error: unexpected token 'float16_t'
-<scrubbed_path>(5,12-14): error X3004: undeclared identifier 'res'
-
-
-tint executable returned error: exit status 1

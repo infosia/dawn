@@ -16,8 +16,3 @@ void f() {
   vector<float16_t, 4> tint_symbol = m();
   int4 v = int4(tint_symbol);
 }
-FXC validation failure:
-<scrubbed_path>(6,8-16): error X3000: unrecognized identifier 'float16_t'
-
-
-tint executable returned error: exit status 1

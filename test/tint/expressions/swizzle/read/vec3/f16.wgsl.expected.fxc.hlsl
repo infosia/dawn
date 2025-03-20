@@ -134,8 +134,3 @@ void f() {
   vector<float16_t, 4> zzzy = P.v.zzzy;
   vector<float16_t, 4> zzzz = P.v.zzzz;
 }
-FXC validation failure:
-<scrubbed_path>(7,10-18): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

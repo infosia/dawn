@@ -19,7 +19,7 @@ void f_inner(In v) {
 void main() {
   f_inner(In(f_Input, gl_FragCoord));
 }
-error: Error parsing GLSL shader:
+Error parsing GLSL shader:
 ERROR: 0:11: 'int' : must be qualified as flat in
 ERROR: 0:11: '' : compilation terminated 
 ERROR: 2 compilation errors.  No code generated.

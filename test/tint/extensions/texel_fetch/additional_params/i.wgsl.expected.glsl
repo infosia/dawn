@@ -22,7 +22,7 @@ void f_inner(In v) {
 void main() {
   f_inner(In(tint_interstage_location0, tint_interstage_location1, f_Input));
 }
-error: Error parsing GLSL shader:
+Error parsing GLSL shader:
 ERROR: 0:14: 'int' : must be qualified as flat in
 ERROR: 0:14: '' : compilation terminated 
 ERROR: 2 compilation errors.  No code generated.

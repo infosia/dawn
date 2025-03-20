@@ -82,7 +82,7 @@ void main_1() {
         int x_32 = d;
         int x_33 = d;
         int x_34 = d;
-        set_matrix_scalar(tempm43, (((x_29 >= 0) & (x_30 < 4)) ? x_31 : 0), (((x_32 >= 0) & (x_33 < 3)) ? x_34 : 0), 1.0f);
+        set_matrix_scalar(tempm43, min(uint((((x_29 >= 0) & (x_30 < 4)) ? x_31 : 0)), 3u), min(uint((((x_32 >= 0) & (x_33 < 3)) ? x_34 : 0)), 2u), 1.0f);
         {
           int x_35 = c;
           c = (x_35 + 1);
@@ -93,9 +93,9 @@ void main_1() {
       int x_39 = idx;
       int x_117 = (((x_37 >= 0) & (x_38 < 9)) ? x_39 : 0);
       int x_40 = ctr;
-      float x_119 = m43[x_40].y;
-      float x_121 = GLF_live6sums[x_117];
-      GLF_live6sums[x_117] = (x_121 + x_119);
+      float x_119 = m43[min(uint(x_40), 3u)].y;
+      float x_121 = GLF_live6sums[min(uint(x_117), 8u)];
+      GLF_live6sums[min(uint(x_117), 8u)] = (x_121 + x_119);
       {
         int x_41 = ctr;
         ctr = (x_41 + 1);
@@ -126,11 +126,3 @@ tint_symbol main() {
   wrapper_result.x_GLF_color_1 = inner_result.x_GLF_color_1;
   return wrapper_result;
 }
-DXC validation failure:
-error: validation errors
-hlsl.hlsl:121: error: Loop must have break.
-Validation failed.
-
-
-
-tint executable returned error: exit status 1

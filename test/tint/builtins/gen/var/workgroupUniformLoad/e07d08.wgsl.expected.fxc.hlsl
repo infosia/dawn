@@ -37,8 +37,3 @@ void compute_main(tint_symbol_1 tint_symbol) {
   compute_main_inner(tint_symbol.local_invocation_index);
   return;
 }
-FXC validation failure:
-<scrubbed_path>(1,13-21): error X3000: unrecognized identifier 'float16_t'
-
-
-tint executable returned error: exit status 1

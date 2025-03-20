@@ -1,5 +1,8 @@
 SKIP: INVALID
 
+//
+// fragment_main
+//
 RWByteAddressBuffer prevent_dce : register(u0);
 
 vector<float16_t, 4> smoothstep_c43ebd() {
@@ -14,11 +17,33 @@ void fragment_main() {
   prevent_dce.Store<vector<float16_t, 4> >(0u, smoothstep_c43ebd());
   return;
 }
+//
+// compute_main
+//
+RWByteAddressBuffer prevent_dce : register(u0);
+
+vector<float16_t, 4> smoothstep_c43ebd() {
+  vector<float16_t, 4> arg_0 = (float16_t(2.0h)).xxxx;
+  vector<float16_t, 4> arg_1 = (float16_t(4.0h)).xxxx;
+  vector<float16_t, 4> arg_2 = (float16_t(3.0h)).xxxx;
+  vector<float16_t, 4> res = smoothstep(arg_0, arg_1, arg_2);
+  return res;
+}
 
 [numthreads(1, 1, 1)]
 void compute_main() {
   prevent_dce.Store<vector<float16_t, 4> >(0u, smoothstep_c43ebd());
   return;
+}
+//
+// vertex_main
+//
+vector<float16_t, 4> smoothstep_c43ebd() {
+  vector<float16_t, 4> arg_0 = (float16_t(2.0h)).xxxx;
+  vector<float16_t, 4> arg_1 = (float16_t(4.0h)).xxxx;
+  vector<float16_t, 4> arg_2 = (float16_t(3.0h)).xxxx;
+  vector<float16_t, 4> res = smoothstep(arg_0, arg_1, arg_2);
+  return res;
 }
 
 struct VertexOutput {
@@ -44,8 +69,3 @@ tint_symbol_1 vertex_main() {
   wrapper_result.prevent_dce = inner_result.prevent_dce;
   return wrapper_result;
 }
-FXC validation failure:
-<scrubbed_path>(3,8-16): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

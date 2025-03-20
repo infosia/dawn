@@ -16,8 +16,3 @@ void f() {
   matrix<float16_t, 2, 2> tint_symbol = m();
   float2x2 v = float2x2(tint_symbol);
 }
-FXC validation failure:
-<scrubbed_path>(6,8-16): error X3000: unrecognized identifier 'float16_t'
-
-
-tint executable returned error: exit status 1

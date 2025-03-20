@@ -14,10 +14,3 @@ void main() {
   s.Store<vector<float16_t, 3> >(0u, x);
   return;
 }
-FXC validation failure:
-<scrubbed_path>(9,10-18): error X3000: syntax error: unexpected token 'float16_t'
-<scrubbed_path>(10,3-11): error X3000: unrecognized identifier 'float16_t'
-<scrubbed_path>(10,13-22): error X3000: unrecognized identifier 'ubo_load_y'
-
-
-tint executable returned error: exit status 1

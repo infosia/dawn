@@ -55,9 +55,3 @@ void f() {
   s.Store<float16_t>(16u, float16_t(f16tof32(((u[0].z) & 0xFFFF))));
   return;
 }
-FXC validation failure:
-<scrubbed_path>(6,36-44): error X3000: syntax error: unexpected token 'float16_t'
-<scrubbed_path>(7,3-9): error X3018: invalid subscript 'Store'
-
-
-tint executable returned error: exit status 1

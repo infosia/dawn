@@ -3,12 +3,6 @@ SKIP: INVALID
 cbuffer cbuffer_m : register(b0) {
   uint4 m[2];
 };
-static int counter = 0;
-
-int i() {
-  counter = (counter + 1);
-  return counter;
-}
 
 matrix<float16_t, 4, 4> m_load(uint offset) {
   const uint scalar_offset = ((offset + 0u)) / 4;
@@ -43,8 +37,3 @@ void f() {
   vector<float16_t, 4> l_m_1 = vector<float16_t, 4>(ubo_load_8_xz[0], ubo_load_8_yw[0], ubo_load_8_xz[1], ubo_load_8_yw[1]);
   return;
 }
-FXC validation failure:
-<scrubbed_path>(11,8-16): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

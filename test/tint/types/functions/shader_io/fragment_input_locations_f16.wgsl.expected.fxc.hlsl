@@ -22,8 +22,3 @@ void main(tint_symbol_1 tint_symbol) {
   main_inner(tint_symbol.loc0, tint_symbol.loc1, tint_symbol.loc2, tint_symbol.loc3, tint_symbol.loc4, tint_symbol.loc5);
   return;
 }
-FXC validation failure:
-<scrubbed_path>(6,3-11): error X3000: unrecognized identifier 'float16_t'
-
-
-tint executable returned error: exit status 1

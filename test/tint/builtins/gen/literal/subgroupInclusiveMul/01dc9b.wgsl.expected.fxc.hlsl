@@ -1,5 +1,8 @@
 SKIP: INVALID
 
+//
+// fragment_main
+//
 RWByteAddressBuffer prevent_dce : register(u0);
 
 float2 subgroupInclusiveMul_01dc9b() {
@@ -10,6 +13,15 @@ float2 subgroupInclusiveMul_01dc9b() {
 void fragment_main() {
   prevent_dce.Store2(0u, asuint(subgroupInclusiveMul_01dc9b()));
   return;
+}
+//
+// compute_main
+//
+RWByteAddressBuffer prevent_dce : register(u0);
+
+float2 subgroupInclusiveMul_01dc9b() {
+  float2 res = (WavePrefixProduct((1.0f).xx) * (1.0f).xx);
+  return res;
 }
 
 [numthreads(1, 1, 1)]

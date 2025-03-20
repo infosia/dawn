@@ -3,7 +3,10 @@ SKIP: INVALID
 RWByteAddressBuffer output : register(u0);
 
 void main_inner(uint subgroup_invocation_id, uint subgroup_size) {
-  output.Store((4u * subgroup_invocation_id), asuint(subgroup_size));
+  uint tint_symbol_1 = 0u;
+  output.GetDimensions(tint_symbol_1);
+  uint tint_symbol_2 = (tint_symbol_1 / 4u);
+  output.Store((4u * min(subgroup_invocation_id, (tint_symbol_2 - 1u))), asuint(subgroup_size));
 }
 
 [numthreads(1, 1, 1)]
@@ -11,8 +14,3 @@ void main() {
   main_inner(WaveGetLaneIndex(), WaveGetLaneCount());
   return;
 }
-FXC validation failure:
-<scrubbed_path>(9,14-31): error X3004: undeclared identifier 'WaveGetLaneIndex'
-
-
-tint executable returned error: exit status 1

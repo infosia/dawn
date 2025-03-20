@@ -14,8 +14,3 @@ void foo(uint tint_symbol) {
   InterlockedOr(a, 0, atomic_result);
   int z = atomic_result;
 }
-FXC validation failure:
-<scrubbed_path>(9,25-51): error X3004: undeclared identifier 'int8_t4_packed'
-
-
-tint executable returned error: exit status 1

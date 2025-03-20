@@ -30,8 +30,3 @@ void main() {
   vector<float16_t, 3> x = mul(data_load_1(0u), vector<float16_t, 3>(ubo_load_6_xz[0], ubo_load_6_y, ubo_load_6_xz[1]));
   return;
 }
-FXC validation failure:
-<scrubbed_path>(5,8-16): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

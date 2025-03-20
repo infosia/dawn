@@ -1,0 +1,100 @@
+;
+; alpha
+;
+; SPIR-V
+; Version: 1.3
+; Generator: Google Tint Compiler; 1
+; Bound: 8
+; Schema: 0
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %alpha "alpha"
+               OpExecutionMode %alpha LocalSize 1 1 1
+               OpName %alpha_1 "alpha_1"
+               OpName %alpha "alpha"
+       %void = OpTypeVoid
+          %3 = OpTypeFunction %void
+    %alpha_1 = OpFunction %void None %3
+          %4 = OpLabel
+               OpReturn
+               OpFunctionEnd
+      %alpha = OpFunction %void None %3
+          %6 = OpLabel
+          %7 = OpFunctionCall %void %alpha_1
+               OpReturn
+               OpFunctionEnd
+;
+; beta
+;
+; SPIR-V
+; Version: 1.3
+; Generator: Google Tint Compiler; 1
+; Bound: 8
+; Schema: 0
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %beta "beta"
+               OpExecutionMode %beta LocalSize 1 1 1
+               OpName %beta_1 "beta_1"
+               OpName %beta "beta"
+       %void = OpTypeVoid
+          %3 = OpTypeFunction %void
+     %beta_1 = OpFunction %void None %3
+          %4 = OpLabel
+               OpReturn
+               OpFunctionEnd
+       %beta = OpFunction %void None %3
+          %6 = OpLabel
+          %7 = OpFunctionCall %void %beta_1
+               OpReturn
+               OpFunctionEnd
+;
+; gamma
+;
+; SPIR-V
+; Version: 1.3
+; Generator: Google Tint Compiler; 1
+; Bound: 8
+; Schema: 0
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %gamma "gamma"
+               OpExecutionMode %gamma LocalSize 1 1 1
+               OpName %gamma_1 "gamma_1"
+               OpName %gamma "gamma"
+       %void = OpTypeVoid
+          %3 = OpTypeFunction %void
+    %gamma_1 = OpFunction %void None %3
+          %4 = OpLabel
+               OpReturn
+               OpFunctionEnd
+      %gamma = OpFunction %void None %3
+          %6 = OpLabel
+          %7 = OpFunctionCall %void %gamma_1
+               OpReturn
+               OpFunctionEnd
+;
+; delta
+;
+; SPIR-V
+; Version: 1.3
+; Generator: Google Tint Compiler; 1
+; Bound: 8
+; Schema: 0
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %delta "delta"
+               OpExecutionMode %delta LocalSize 1 1 1
+               OpName %delta_1 "delta_1"
+               OpName %delta "delta"
+       %void = OpTypeVoid
+          %3 = OpTypeFunction %void
+    %delta_1 = OpFunction %void None %3
+          %4 = OpLabel
+               OpReturn
+               OpFunctionEnd
+      %delta = OpFunction %void None %3
+          %6 = OpLabel
+          %7 = OpFunctionCall %void %delta_1
+               OpReturn
+               OpFunctionEnd

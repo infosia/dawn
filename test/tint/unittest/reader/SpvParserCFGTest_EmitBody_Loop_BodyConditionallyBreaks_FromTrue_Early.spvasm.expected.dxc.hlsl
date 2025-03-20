@@ -20,11 +20,3 @@ void main() {
   main_1();
   return;
 }
-DXC validation failure:
-error: validation errors
-hlsl.hlsl:17: error: Loop must have break.
-Validation failed.
-
-
-
-tint executable returned error: exit status 1

@@ -26,8 +26,8 @@ void tint_zero_workgroup_memory(uint local_idx) {
   {
     for(uint idx = local_idx; (idx < 4096u); idx = (idx + 32u)) {
       uint i = idx;
-      S tint_symbol_2 = (S)0;
-      x_28[i] = tint_symbol_2;
+      S tint_symbol_8 = (S)0;
+      x_28[i] = tint_symbol_8;
     }
   }
   GroupMemoryBarrierWithGroupSync();
@@ -41,6 +41,9 @@ ByteAddressBuffer x_9 : register(t2);
 RWByteAddressBuffer x_12 : register(u3);
 
 void main_1() {
+  uint tint_symbol_6 = 0u;
+  x_12.GetDimensions(tint_symbol_6);
+  uint tint_symbol_7 = ((tint_symbol_6 - 0u) / 16u);
   uint x_54 = 0u;
   uint x_58 = 0u;
   float4 x_85 = float4(0.0f, 0.0f, 0.0f, 0.0f);
@@ -56,9 +59,12 @@ void main_1() {
     }
     uint x_62 = (x_54 + x_52);
     if ((x_62 >= x_58)) {
-      float4 x_67 = asfloat(x_9.Load4((16u * x_62)));
-      S tint_symbol_3 = {((x_67.xy + x_67.zw) * 0.5f), x_62};
-      x_28[x_62] = tint_symbol_3;
+      uint tint_symbol_3 = 0u;
+      x_9.GetDimensions(tint_symbol_3);
+      uint tint_symbol_4 = ((tint_symbol_3 - 0u) / 16u);
+      float4 x_67 = asfloat(x_9.Load4((16u * min(x_62, (tint_symbol_4 - 1u)))));
+      S tint_symbol_9 = {((x_67.xy + x_67.zw) * 0.5f), x_62};
+      x_28[min(x_62, 4095u)] = tint_symbol_9;
     }
     {
       x_55 = (x_54 + 32u);
@@ -95,7 +101,7 @@ void main_1() {
     uint x_94 = (x_88 + x_52);
     x_86 = x_85;
     if ((x_94 >= x_90)) {
-      float2 x_99 = x_28[x_94].field0;
+      float2 x_99 = x_28[min(x_94, 4095u)].field0;
       float2 x_101 = min(x_85.xy, x_99);
       float4 x_103_1 = x_85;
       x_103_1.x = x_101.x;
@@ -138,7 +144,7 @@ void main_1() {
   InterlockedOr(x_36, 0, atomic_result_14);
   uint atomic_result_15 = 0u;
   InterlockedOr(x_37, 0, atomic_result_15);
-  x_12.Store4(0u, asuint(float4(asfloat(atomic_result_12), asfloat(atomic_result_13), asfloat(atomic_result_14), asfloat(atomic_result_15))));
+  x_12.Store4((16u * min(0u, (tint_symbol_7 - 1u))), asuint(float4(asfloat(atomic_result_12), asfloat(atomic_result_13), asfloat(atomic_result_14), asfloat(atomic_result_15))));
   return;
 }
 
@@ -158,21 +164,3 @@ void main(tint_symbol_1 tint_symbol) {
   main_inner(tint_symbol.x_3_param, tint_symbol.local_invocation_index);
   return;
 }
-DXC validation failure:
-hlsl.hlsl:69:13: warning: equality comparison with extraneous parentheses [-Wparentheses-equality]
-  if ((x_52 == 0u)) {
-       ~~~~~^~~~~
-hlsl.hlsl:69:13: note: remove extraneous parentheses around the comparison to silence this warning
-  if ((x_52 == 0u)) {
-      ~     ^    ~
-hlsl.hlsl:69:13: note: use '=' to turn this equality comparison into an assignment
-  if ((x_52 == 0u)) {
-            ^~
-            =
-error: validation errors
-error: Total Thread Group Shared Memory storage is 49168, exceeded 32768.
-Validation failed.
-
-
-
-tint executable returned error: exit status 1

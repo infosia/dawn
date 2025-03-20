@@ -16,8 +16,3 @@ void f() {
   float4x3 tint_symbol = m();
   matrix<float16_t, 4, 3> v = matrix<float16_t, 4, 3>(tint_symbol);
 }
-FXC validation failure:
-<scrubbed_path>(15,10-18): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

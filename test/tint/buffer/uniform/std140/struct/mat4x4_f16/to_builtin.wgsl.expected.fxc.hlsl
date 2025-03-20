@@ -41,8 +41,3 @@ void f() {
   float16_t a = abs(vector<float16_t, 4>(ubo_load_9_xz[0], ubo_load_9_yw[0], ubo_load_9_xz[1], ubo_load_9_yw[1]).ywxz.x);
   return;
 }
-FXC validation failure:
-<scrubbed_path>(5,8-16): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

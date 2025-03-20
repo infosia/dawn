@@ -17,7 +17,7 @@ void main_1() {
       } else {
         break;
       }
-      GLF_dead6currentNode = donor_replacementGLF_dead6tree[GLF_dead6index];
+      GLF_dead6currentNode = donor_replacementGLF_dead6tree[min(uint(GLF_dead6index), 0u)];
       GLF_dead6index = GLF_dead6currentNode;
     }
   }
@@ -43,8 +43,3 @@ tint_symbol main() {
   wrapper_result.x_GLF_color_1 = inner_result.x_GLF_color_1;
   return wrapper_result;
 }
-FXC validation failure:
-<scrubbed_path>(13,12-15): error X3696: infinite loop detected - loop never exits
-
-
-tint executable returned error: exit status 1

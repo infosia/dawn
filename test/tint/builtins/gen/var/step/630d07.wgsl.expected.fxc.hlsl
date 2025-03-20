@@ -1,5 +1,8 @@
 SKIP: INVALID
 
+//
+// fragment_main
+//
 RWByteAddressBuffer prevent_dce : register(u0);
 
 float16_t step_630d07() {
@@ -13,11 +16,31 @@ void fragment_main() {
   prevent_dce.Store<float16_t>(0u, step_630d07());
   return;
 }
+//
+// compute_main
+//
+RWByteAddressBuffer prevent_dce : register(u0);
+
+float16_t step_630d07() {
+  float16_t arg_0 = float16_t(1.0h);
+  float16_t arg_1 = float16_t(1.0h);
+  float16_t res = step(arg_0, arg_1);
+  return res;
+}
 
 [numthreads(1, 1, 1)]
 void compute_main() {
   prevent_dce.Store<float16_t>(0u, step_630d07());
   return;
+}
+//
+// vertex_main
+//
+float16_t step_630d07() {
+  float16_t arg_0 = float16_t(1.0h);
+  float16_t arg_1 = float16_t(1.0h);
+  float16_t res = step(arg_0, arg_1);
+  return res;
 }
 
 struct VertexOutput {
@@ -43,8 +66,3 @@ tint_symbol_1 vertex_main() {
   wrapper_result.prevent_dce = inner_result.prevent_dce;
   return wrapper_result;
 }
-FXC validation failure:
-<scrubbed_path>(3,1-9): error X3000: unrecognized identifier 'float16_t'
-
-
-tint executable returned error: exit status 1

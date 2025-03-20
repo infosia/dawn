@@ -7,10 +7,3 @@ void f() {
   vector<float16_t, 3> r = (a / (b + b));
   return;
 }
-FXC validation failure:
-<scrubbed_path>(3,10-18): error X3000: syntax error: unexpected token 'float16_t'
-<scrubbed_path>(4,3-11): error X3000: unrecognized identifier 'float16_t'
-<scrubbed_path>(4,13): error X3000: unrecognized identifier 'b'
-
-
-tint executable returned error: exit status 1

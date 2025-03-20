@@ -1,0 +1,56 @@
+; SPIR-V
+; Version: 1.3
+; Generator: Google Tint Compiler; 1
+; Bound: 28
+; Schema: 0
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint Fragment %main "main" %main_position_Input %main_loc0_Output
+               OpExecutionMode %main OriginUpperLeft
+               OpName %in_var "in_var"
+               OpName %out_var "out_var"
+               OpName %main_position_Input "main_position_Input"
+               OpName %main_loc0_Output "main_loc0_Output"
+               OpName %main_1 "main_1"
+               OpName %main_inner "main_inner"
+               OpMemberName %main_out 0 "out_var_1"
+               OpName %main_out "main_out"
+               OpName %in_var_param "in_var_param"
+               OpName %main "main"
+               OpDecorate %main_position_Input BuiltIn FragCoord
+               OpDecorate %main_loc0_Output Location 0
+      %float = OpTypeFloat 32
+    %v4float = OpTypeVector %float 4
+%_ptr_Private_v4float = OpTypePointer Private %v4float
+          %5 = OpConstantNull %v4float
+     %in_var = OpVariable %_ptr_Private_v4float Private %5
+    %out_var = OpVariable %_ptr_Private_v4float Private %5
+%_ptr_Input_v4float = OpTypePointer Input %v4float
+%main_position_Input = OpVariable %_ptr_Input_v4float Input
+%_ptr_Output_v4float = OpTypePointer Output %v4float
+%main_loc0_Output = OpVariable %_ptr_Output_v4float Output
+       %void = OpTypeVoid
+         %13 = OpTypeFunction %void
+   %main_out = OpTypeStruct %v4float
+         %18 = OpTypeFunction %main_out %v4float
+     %main_1 = OpFunction %void None %13
+         %14 = OpLabel
+               OpReturn
+               OpFunctionEnd
+ %main_inner = OpFunction %main_out None %18
+%in_var_param = OpFunctionParameter %v4float
+         %19 = OpLabel
+               OpStore %in_var %in_var_param None
+         %20 = OpFunctionCall %void %main_1
+         %21 = OpLoad %v4float %out_var None
+         %22 = OpCompositeConstruct %main_out %21
+               OpReturnValue %22
+               OpFunctionEnd
+       %main = OpFunction %void None %13
+         %24 = OpLabel
+         %25 = OpLoad %v4float %main_position_Input None
+         %26 = OpFunctionCall %main_out %main_inner %25
+         %27 = OpCompositeExtract %v4float %26 0
+               OpStore %main_loc0_Output %27 None
+               OpReturn
+               OpFunctionEnd

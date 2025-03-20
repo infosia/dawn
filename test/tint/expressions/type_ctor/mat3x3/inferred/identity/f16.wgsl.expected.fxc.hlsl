@@ -14,8 +14,3 @@ void f() {
   tint_symbol_store(0u, matrix<float16_t, 3, 3>(m));
   return;
 }
-FXC validation failure:
-<scrubbed_path>(1,15-23): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

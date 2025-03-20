@@ -25,8 +25,3 @@ void f() {
   float16_t a = abs(vector<float16_t, 2>(float16_t(f16tof32(ubo_load_5 & 0xFFFF)), float16_t(f16tof32(ubo_load_5 >> 16))).yx.x);
   return;
 }
-FXC validation failure:
-<scrubbed_path>(5,8-16): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

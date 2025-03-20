@@ -38,7 +38,7 @@ matrix<float16_t, 4, 4> m_load(uint offset) {
 void f() {
   int p_m_i_save = i();
   matrix<float16_t, 4, 4> l_m = m_load(0u);
-  const uint scalar_offset_4 = ((8u * uint(p_m_i_save))) / 4;
+  const uint scalar_offset_4 = ((8u * min(uint(p_m_i_save), 3u))) / 4;
   uint4 ubo_load_9 = m[scalar_offset_4 / 4];
   uint2 ubo_load_8 = ((scalar_offset_4 & 2) ? ubo_load_9.zw : ubo_load_9.xy);
   vector<float16_t, 2> ubo_load_8_xz = vector<float16_t, 2>(f16tof32(ubo_load_8 & 0xFFFF));
@@ -46,8 +46,3 @@ void f() {
   vector<float16_t, 4> l_m_i = vector<float16_t, 4>(ubo_load_8_xz[0], ubo_load_8_yw[0], ubo_load_8_xz[1], ubo_load_8_yw[1]);
   return;
 }
-FXC validation failure:
-<scrubbed_path>(11,8-16): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

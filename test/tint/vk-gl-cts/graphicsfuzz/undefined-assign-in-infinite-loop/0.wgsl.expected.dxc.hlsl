@@ -19,7 +19,7 @@ void main_1() {
         break;
       }
       int x_9 = GLF_dead6index;
-      int x_10 = donor_replacementGLF_dead6tree[x_9];
+      int x_10 = donor_replacementGLF_dead6tree[min(uint(x_9), 0u)];
       GLF_dead6currentNode = x_10;
       int x_11 = GLF_dead6currentNode;
       GLF_dead6index = x_11;
@@ -47,11 +47,3 @@ tint_symbol main() {
   wrapper_result.x_GLF_color_1 = inner_result.x_GLF_color_1;
   return wrapper_result;
 }
-DXC validation failure:
-error: validation errors
-hlsl.hlsl:42: error: Loop must have break.
-Validation failed.
-
-
-
-tint executable returned error: exit status 1

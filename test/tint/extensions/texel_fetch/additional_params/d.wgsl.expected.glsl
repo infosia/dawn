@@ -22,7 +22,7 @@ void main() {
   In v_2 = In(gl_FragCoord);
   f_inner(v_1, v_2, tint_interstage_location0, f_Input_1);
 }
-error: Error parsing GLSL shader:
+Error parsing GLSL shader:
 ERROR: 0:10: 'int' : must be qualified as flat in
 ERROR: 0:10: '' : compilation terminated 
 ERROR: 2 compilation errors.  No code generated.

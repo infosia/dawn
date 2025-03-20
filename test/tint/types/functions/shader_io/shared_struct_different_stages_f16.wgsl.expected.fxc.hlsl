@@ -1,5 +1,8 @@
 SKIP: INVALID
 
+//
+// vert_main
+//
 struct Interface {
   float col1;
   float16_t col2;
@@ -12,8 +15,8 @@ struct tint_symbol {
 };
 
 Interface vert_main_inner() {
-  Interface tint_symbol_3 = {0.40000000596046447754f, float16_t(0.599609375h), (0.0f).xxxx};
-  return tint_symbol_3;
+  Interface tint_symbol_1 = {0.40000000596046447754f, float16_t(0.599609375h), (0.0f).xxxx};
+  return tint_symbol_1;
 }
 
 tint_symbol vert_main() {
@@ -24,8 +27,15 @@ tint_symbol vert_main() {
   wrapper_result.pos = inner_result.pos;
   return wrapper_result;
 }
-
-struct tint_symbol_2 {
+//
+// frag_main
+//
+struct Interface {
+  float col1;
+  float16_t col2;
+  float4 pos;
+};
+struct tint_symbol_1 {
   float col1 : TEXCOORD1;
   float16_t col2 : TEXCOORD2;
   float4 pos : SV_Position;
@@ -36,13 +46,8 @@ void frag_main_inner(Interface colors) {
   float16_t g = colors.col2;
 }
 
-void frag_main(tint_symbol_2 tint_symbol_1) {
-  Interface tint_symbol_4 = {tint_symbol_1.col1, tint_symbol_1.col2, float4(tint_symbol_1.pos.xyz, (1.0f / tint_symbol_1.pos.w))};
-  frag_main_inner(tint_symbol_4);
+void frag_main(tint_symbol_1 tint_symbol) {
+  Interface tint_symbol_2 = {tint_symbol.col1, tint_symbol.col2, float4(tint_symbol.pos.xyz, (1.0f / tint_symbol.pos.w))};
+  frag_main_inner(tint_symbol_2);
   return;
 }
-FXC validation failure:
-<scrubbed_path>(3,3-11): error X3000: unrecognized identifier 'float16_t'
-
-
-tint executable returned error: exit status 1

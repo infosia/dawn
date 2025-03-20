@@ -1,5 +1,8 @@
 SKIP: INVALID
 
+//
+// fragment_main
+//
 struct frexp_result_f16 {
   float16_t fract;
   int exp;
@@ -12,11 +15,31 @@ void fragment_main() {
   frexp_5257dd();
   return;
 }
+//
+// compute_main
+//
+struct frexp_result_f16 {
+  float16_t fract;
+  int exp;
+};
+void frexp_5257dd() {
+  frexp_result_f16 res = {float16_t(0.5h), 1};
+}
 
 [numthreads(1, 1, 1)]
 void compute_main() {
   frexp_5257dd();
   return;
+}
+//
+// vertex_main
+//
+struct frexp_result_f16 {
+  float16_t fract;
+  int exp;
+};
+void frexp_5257dd() {
+  frexp_result_f16 res = {float16_t(0.5h), 1};
 }
 
 struct VertexOutput {
@@ -39,8 +62,3 @@ tint_symbol_1 vertex_main() {
   wrapper_result.pos = inner_result.pos;
   return wrapper_result;
 }
-FXC validation failure:
-<scrubbed_path>(2,3-11): error X3000: unrecognized identifier 'float16_t'
-
-
-tint executable returned error: exit status 1

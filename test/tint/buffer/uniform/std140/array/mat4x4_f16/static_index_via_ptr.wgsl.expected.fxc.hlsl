@@ -51,8 +51,3 @@ void f() {
   s.Store<float16_t>(0u, (((float16_t(f16tof32(((a[4].z) & 0xFFFF))) + l_a[0][0].x) + l_a_i[0].x) + l_a_i_i.x));
   return;
 }
-FXC validation failure:
-<scrubbed_path>(6,8-16): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1

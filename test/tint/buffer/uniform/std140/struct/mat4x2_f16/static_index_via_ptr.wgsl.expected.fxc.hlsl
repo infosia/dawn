@@ -67,8 +67,3 @@ void f() {
   float16_t l_a_3_a_2_m_1_0 = float16_t(f16tof32(((a[56].y) & 0xFFFF)));
   return;
 }
-FXC validation failure:
-<scrubbed_path>(2,10-18): error X3000: syntax error: unexpected token 'float16_t'
-
-
-tint executable returned error: exit status 1
