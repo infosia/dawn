@@ -16,6 +16,80 @@
       "message": "Addressed feedback, PTAL.",
       "revId": "a44741864061589c2fe1a7650aea0cbf25e2a232",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9784a306_0c9e7818",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T20:34:41Z",
+      "side": 1,
+      "message": "lgtm wtih a few nits",
+      "revId": "a44741864061589c2fe1a7650aea0cbf25e2a232",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c88249bc_345d3285",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T20:34:41Z",
+      "side": 1,
+      "message": "nit: Default values `\u003d 0`",
+      "revId": "a44741864061589c2fe1a7650aea0cbf25e2a232",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2942867b_c720417d",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T20:34:41Z",
+      "side": 1,
+      "message": "nit: `This shouldn\u0027t say \"pending command serial\" since that is an implementation detail that will probably change at some point.",
+      "revId": "a44741864061589c2fe1a7650aea0cbf25e2a232",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd5b94a7_86877a2a",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T20:34:41Z",
+      "side": 1,
+      "message": "nit: Store serial instead of storing `fencedDeleter`.",
+      "range": {
+        "startLine": 285,
+        "startChar": 57,
+        "endLine": 285,
+        "endChar": 96
+      },
+      "revId": "a44741864061589c2fe1a7650aea0cbf25e2a232",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
