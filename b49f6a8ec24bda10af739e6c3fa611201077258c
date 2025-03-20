@@ -89,6 +89,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1505b40d_d48b1cc7",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T17:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4792bb9_0745ea07",
+      "range": {
+        "startLine": 1246,
+        "startChar": 0,
+        "endLine": 1248,
+        "endChar": 13
+      },
+      "revId": "b49f6a8ec24bda10af739e6c3fa611201077258c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "52c9231c_a67e89ad",
@@ -102,6 +126,24 @@
       "writtenOn": "2025-03-20T17:52:14Z",
       "side": 1,
       "message": "Nit: Can just drop the `Empty` I think?",
+      "revId": "b49f6a8ec24bda10af739e6c3fa611201077258c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c136a5d_267b271a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T17:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52c9231c_a67e89ad",
       "revId": "b49f6a8ec24bda10af739e6c3fa611201077258c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
