@@ -82,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd776b42_ecf5b9f3",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-20T06:25:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f90a48e_a2393ed8",
+      "revId": "2be806822f62620e6b78407702c6bbd8ea879912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f36473b_1a6b0ba7",
@@ -130,6 +148,30 @@
       "writtenOn": "2025-03-19T12:36:50Z",
       "side": 1,
       "message": "Even if they are not compatible, we should have a test for this ideally.",
+      "range": {
+        "startLine": 219,
+        "startChar": 82,
+        "endLine": 220,
+        "endChar": 13
+      },
+      "revId": "2be806822f62620e6b78407702c6bbd8ea879912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5b669f7_b4e98395",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-20T06:25:33Z",
+      "side": 1,
+      "message": "Done. Add a new test suites to test non compatible pipelines switch.",
+      "parentUuid": "e372b2b8_8bc341ca",
       "range": {
         "startLine": 219,
         "startChar": 82,
