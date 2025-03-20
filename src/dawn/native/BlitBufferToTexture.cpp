@@ -324,8 +324,7 @@ bool IsBufferToTextureBlitSupported(BufferBase* buffer,
         return false;
     }
 
-    // Must have non-zero copy size.
-    return copyExtent.width * copyExtent.height * copyExtent.depthOrArrayLayers > 0;
+    return true;
 }
 
 MaybeError BlitBufferToTexture(DeviceBase* device,
