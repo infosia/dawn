@@ -142,6 +142,24 @@
       "parentUuid": "55409ca6_11f30ca8",
       "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "112533df_c2dbf4f1",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-20T19:42:18Z",
+      "side": 0,
+      "message": "Both of those would be very helpful. At least I\u0027ve managed to reduce the footprint of those problems for now though.",
+      "parentUuid": "0f6113ce_4ab51923",
+      "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
