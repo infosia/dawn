@@ -111,6 +111,7 @@ bool IsFeatureSupported(WGPUFeatureName feature) {
         case WGPUFeatureName_ShaderModuleCompilationOptions:
         case WGPUFeatureName_DawnLoadResolveTexture:
         case WGPUFeatureName_DawnPartialLoadResolveTexture:
+        case WGPUFeatureName_DawnResolveRect:
         case WGPUFeatureName_Subgroups:
         case WGPUFeatureName_SubgroupsF16:
         case WGPUFeatureName_ClipDistances:
