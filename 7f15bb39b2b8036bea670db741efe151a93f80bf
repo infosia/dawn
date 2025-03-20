@@ -124,6 +124,24 @@
       "parentUuid": "028cfd5e_fdf87e0c",
       "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f6113ce_4ab51923",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T13:06:39Z",
+      "side": 0,
+      "message": "It looks much better and more understandable like this, thank you. I feel that when 1) we move host mapped buffer machinery to SharedBufferMemory and 2) do fine-grained locking in the device, we should be in a much better position to simplify this.",
+      "parentUuid": "55409ca6_11f30ca8",
+      "revId": "7f15bb39b2b8036bea670db741efe151a93f80bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
