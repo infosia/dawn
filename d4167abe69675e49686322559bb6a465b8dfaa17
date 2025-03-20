@@ -16,6 +16,41 @@
       "message": "Shall we add other reviewers since this might change behavior",
       "revId": "d4167abe69675e49686322559bb6a465b8dfaa17",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b08557d4_5f75c010",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-20T02:55:11Z",
+      "side": 1,
+      "message": "Adding Corentin for a second opinion.",
+      "parentUuid": "2c3904c4_ebc3af35",
+      "revId": "d4167abe69675e49686322559bb6a465b8dfaa17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "122311db_41fbcbfc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-20T02:55:11Z",
+      "side": 1,
+      "message": "LGTM, adding cwallez@ for a second opinion since my understanding of the difference between the two types of toggles is still shaky.\n\nFor context: the problem we\u0027re solving here is that the adapter advertises the `SubgroupMatrix` extension even if the `VulkanMemoryModel` toggle is disabled. This leads to CTS trying to enable it (since many CTS tests just enable every extension that is supported), and then stuff breaks. So by making it an adapter toggle, we can prevent the extension from showing up as supported when the toggle is disabled.",
+      "revId": "d4167abe69675e49686322559bb6a465b8dfaa17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
