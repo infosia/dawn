@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d07d08d5_31b36671",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T08:58:06Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "1f4a276f3eb574833e825ba9fc1d2898ed70c79b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f7057bf_a1d74547",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T08:58:06Z",
+      "side": 1,
+      "message": "We can do that all in the frontend the same way it is done at [1] by putting the check around [2]. Can be a follow-up to make forward progress landing the CL.",
+      "revId": "1f4a276f3eb574833e825ba9fc1d2898ed70c79b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d6d8ce8_a64b778f",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1587,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T08:58:06Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "1f4a276f3eb574833e825ba9fc1d2898ed70c79b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "694c4399_abc3a56e",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1697,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T08:58:06Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "1f4a276f3eb574833e825ba9fc1d2898ed70c79b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
