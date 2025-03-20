@@ -788,7 +788,7 @@ bool GenerateSpirv([[maybe_unused]] Options& options,
     std::optional<tint::ast::transform::SubstituteOverride::Config> cfg;
     auto res = ProcessASTTransforms(options, inspector, src_program, cfg);
     if (res != tint::Success) {
-        std::cerr << res.Failure().reason << "\n";
+        std::cerr << res.Failure() << "\n";
         return 1;
     }
 
@@ -804,7 +804,7 @@ bool GenerateSpirv([[maybe_unused]] Options& options,
             tint::core::ir::transform::SingleEntryPoint(ir.Get(), options.ep_name);
         if (singleEntryPointResult != tint::Success) {
             std::cerr << "Pipeline single entry point (IR) failed:\n"
-                      << singleEntryPointResult.Failure().reason << "\n";
+                      << singleEntryPointResult.Failure() << "\n";
         }
     }
 
@@ -817,7 +817,7 @@ bool GenerateSpirv([[maybe_unused]] Options& options,
             tint::core::ir::transform::SubstituteOverrides(ir.Get(), ir_cfg);
         if (substituteOverridesResult != tint::Success) {
             std::cerr << "Pipeline override substitution (IR) failed:\n"
-                      << substituteOverridesResult.Failure().reason << "\n";
+                      << substituteOverridesResult.Failure() << "\n";
             return false;
         }
     }
@@ -963,7 +963,7 @@ bool GenerateMsl([[maybe_unused]] Options& options,
     std::optional<tint::ast::transform::SubstituteOverride::Config> cfg;
     auto transform_res = ProcessASTTransforms(options, inspector, src_program, cfg);
     if (transform_res != tint::Success) {
-        std::cerr << transform_res.Failure().reason << "\n";
+        std::cerr << transform_res.Failure() << "\n";
         return 1;
     }
 
@@ -987,7 +987,7 @@ bool GenerateMsl([[maybe_unused]] Options& options,
             tint::core::ir::transform::SingleEntryPoint(ir.Get(), options.ep_name);
         if (singleEntryPointResult != tint::Success) {
             std::cerr << "Pipeline single entry point (IR) failed:\n"
-                      << singleEntryPointResult.Failure().reason << "\n";
+                      << singleEntryPointResult.Failure() << "\n";
         }
     }
 
@@ -1000,7 +1000,7 @@ bool GenerateMsl([[maybe_unused]] Options& options,
             tint::core::ir::transform::SubstituteOverrides(ir.Get(), ir_cfg);
         if (substituteOverridesResult != tint::Success) {
             std::cerr << "Pipeline override substitution (IR) failed:\n"
-                      << substituteOverridesResult.Failure().reason << "\n";
+                      << substituteOverridesResult.Failure() << "\n";
             return false;
         }
     }
@@ -1101,7 +1101,7 @@ bool GenerateHlsl([[maybe_unused]] Options& options,
     std::optional<tint::ast::transform::SubstituteOverride::Config> cfg;
     auto res = ProcessASTTransforms(options, inspector, src_program, cfg);
     if (res != tint::Success) {
-        std::cerr << res.Failure().reason << "\n";
+        std::cerr << res.Failure() << "\n";
         return 1;
     }
 
@@ -1136,7 +1136,7 @@ bool GenerateHlsl([[maybe_unused]] Options& options,
                 tint::core::ir::transform::SingleEntryPoint(ir.Get(), options.ep_name);
             if (singleEntryPointResult != tint::Success) {
                 std::cerr << "Pipeline single entry point (IR) failed:\n"
-                          << singleEntryPointResult.Failure().reason << "\n";
+                          << singleEntryPointResult.Failure() << "\n";
             }
         }
 
@@ -1149,7 +1149,7 @@ bool GenerateHlsl([[maybe_unused]] Options& options,
                 tint::core::ir::transform::SubstituteOverrides(ir.Get(), ir_cfg);
             if (substituteOverridesResult != tint::Success) {
                 std::cerr << "Pipeline override substitution (IR) failed:\n"
-                          << substituteOverridesResult.Failure().reason << "\n";
+                          << substituteOverridesResult.Failure() << "\n";
                 return false;
             }
         }
@@ -1271,7 +1271,7 @@ bool GenerateGlsl([[maybe_unused]] Options& options,
     std::optional<tint::ast::transform::SubstituteOverride::Config> cfg;
     auto res = ProcessASTTransforms(options, inspector, src_program, cfg);
     if (res != tint::Success) {
-        std::cerr << res.Failure().reason << "\n";
+        std::cerr << res.Failure() << "\n";
         return 1;
     }
 
@@ -1318,7 +1318,7 @@ bool GenerateGlsl([[maybe_unused]] Options& options,
             tint::core::ir::transform::SingleEntryPoint(ir.Get(), options.ep_name);
         if (singleEntryPointResult != tint::Success) {
             std::cerr << "Pipeline single entry point (IR) failed:\n"
-                      << singleEntryPointResult.Failure().reason << "\n";
+                      << singleEntryPointResult.Failure() << "\n";
         }
     }
 
@@ -1331,7 +1331,7 @@ bool GenerateGlsl([[maybe_unused]] Options& options,
             tint::core::ir::transform::SubstituteOverrides(ir.Get(), ir_cfg);
         if (substituteOverridesResult != tint::Success) {
             std::cerr << "Pipeline override substitution (IR) failed:\n"
-                      << substituteOverridesResult.Failure().reason << "\n";
+                      << substituteOverridesResult.Failure() << "\n";
             return false;
         }
     }
