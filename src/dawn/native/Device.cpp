@@ -2470,6 +2470,10 @@ MemoryUsageInfo DeviceBase::ComputeEstimatedMemoryUsage() const {
     return info;
 }
 
+AllocatorMemoryInfo DeviceBase::GetAllocatorMemoryInfo() const {
+    return {};
+}
+
 bool DeviceBase::ReduceMemoryUsage() {
     DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
     if (ConsumedError(GetQueue()->CheckPassedSerials())) {
