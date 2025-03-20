@@ -56,6 +56,30 @@
       },
       "revId": "2b318a3a49eae708ff90ac5fc7438455743b894f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b45f67e2_7ac61158",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T00:10:37Z",
+      "side": 1,
+      "message": "We can\u0027t, not quite yet. The linter is set to c++20 mode, which has `contains`. We\u0027re currently stuck on c++17 until ~April, at which point we can change.",
+      "parentUuid": "4a4a0b91_a8d7fbd7",
+      "range": {
+        "startLine": 673,
+        "startChar": 32,
+        "endLine": 673,
+        "endChar": 37
+      },
+      "revId": "2b318a3a49eae708ff90ac5fc7438455743b894f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
