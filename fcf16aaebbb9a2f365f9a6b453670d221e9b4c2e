@@ -173,6 +173,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "50a0982d_0c3989f5",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T15:08:26Z",
+      "side": 1,
+      "message": "`totalUsage` doesn\u0027t need to be strictly `buffersUsage` + `texturesUsage`. In future it would count hidden memory such as shaders, internal buffers, etc.\n\nSo if you want to unify the function, I think for vulkan, just returning `vulkanAllocatedMemory` as `totalUsage` would also ok.",
+      "parentUuid": "a5ae1c7c_7b615710",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a2294ad1_b94c49ef",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 14
