@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "439f8dda_f91dfff5",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-20T19:23:09Z",
+      "side": 1,
+      "message": "I think this is supposed to be `device.adapterInfo.isFallbackAdapter`.\n\nAlso, I know it\u0027s an existing issue, but we should probably implement an intermediate function that takes an `GPUAdapterInfo` object and fills out the `WGPUAdapterInfo` object and use it to implement these two functions since they are pretty much identical.",
+      "range": {
+        "startLine": 1854,
+        "startChar": 22,
+        "endLine": 1854,
+        "endChar": 51
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "90ab354f_12f793c7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "third_party/emdawnwebgpu/library_webgpu.js",
+              "range": {
+                "startLine": 1854,
+                "startChar": 0,
+                "endLine": 1855,
+                "endChar": 0
+              },
+              "replacement": "    var adapterType \u003d device.adapterInfo.isFallbackAdapter ? {{{ gpu.AdapterType.CPU }}} : {{{ gpu.AdapterType.Unknown }}};\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d74efcd7dc9268f81b8d74ede9ed67ed49b7f383",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
