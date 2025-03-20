@@ -117,7 +117,8 @@ class RenderPassValidationState final : public NonMovable {
     // attachment in the render pass descriptor.
     MaybeError AddAttachment(const TextureViewBase* attachment,
                              AttachmentType attachmentType,
-                             uint32_t depthSlice = wgpu::kDepthSliceUndefined) {
+                             uint32_t depthSlice = wgpu::kDepthSliceUndefined,
+                             bool isExpandResolveTexture = false) {
         if (attachment == nullptr) {
             return {};
         }
@@ -174,12 +175,14 @@ class RenderPassValidationState final : public NonMovable {
                                     "The resolve target %s used as resolve target is from a "
                                     "multi-planar texture. It is not supported by dawn yet.",
                                     attachment);
-                    DAWN_INVALID_IF(
-                        renderSize.width != mRenderWidth || renderSize.height != mRenderHeight,
-                        "The resolve target %s size (width: %u, height: %u) does not match the "
-                        "size of the other attachments (width: %u, height: %u).",
-                        attachment, renderSize.width, renderSize.height, mRenderWidth,
-                        mRenderHeight);
+                    if (!isExpandResolveTexture) {
+                        DAWN_INVALID_IF(
+                            renderSize.width != mRenderWidth || renderSize.height != mRenderHeight,
+                            "The resolve target %s size (width: %u, height: %u) does not match the "
+                            "size of the other attachments (width: %u, height: %u).",
+                            attachment, renderSize.width, renderSize.height, mRenderWidth,
+                            mRenderHeight);
+                    }
                     break;
                 }
                 case AttachmentType::DepthStencilAttachment: {
@@ -591,13 +594,15 @@ MaybeError ValidateRenderPassColorAttachment(DeviceBase* device,
         // any explicit resolveTarget specified.
         DAWN_TRY(ValidateResolveTarget(device, colorAttachment, usageValidationMode));
 
-        if (colorAttachment.loadOp == wgpu::LoadOp::ExpandResolveTexture) {
+        bool isExpandResolveTexture = colorAttachment.loadOp == wgpu::LoadOp::ExpandResolveTexture;
+        if (isExpandResolveTexture) {
             DAWN_TRY(ValidateExpandResolveTextureLoadOp(device, colorAttachment, validationState));
         }
         // Add resolve target after adding color attachment to make sure there is already a color
         // attachment for the comparation of with and height.
-        DAWN_TRY(validationState->AddAttachment(colorAttachment.resolveTarget,
-                                                AttachmentType::ResolveTarget));
+        DAWN_TRY(validationState->AddAttachment(
+            colorAttachment.resolveTarget, AttachmentType::ResolveTarget,
+            wgpu::kDepthSliceUndefined, isExpandResolveTexture));
     }
 
     return {};
@@ -833,6 +838,23 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
                         "The y (%u) and height (%u) of ExpandResolveRect is out of the render area "
                         "height(% u).",
                         rect->y, rect->height, validationState->GetRenderHeight());
+    } else if (const auto* resolveRect = descriptor.Get<RenderPassDescriptorResolveRect>()) {
+        DAWN_INVALID_IF(!device->HasFeature(Feature::DawnPartialLoadResolveTexture),
+                        "RenderPassDescriptorResolveRect can't be used without %s.",
+                        ToAPI(Feature::DawnPartialLoadResolveTexture));
+        DAWN_INVALID_IF(
+            !validationState->WillExpandResolveTexture(),
+            "ResolveRect is invalid to use without wgpu::LoadOp::ExpandResolveTexture.");
+        DAWN_INVALID_IF(
+            static_cast<uint64_t>(resolveRect->width) > validationState->GetRenderWidth(),
+            "The width (%u) of ResolveRect is out of the render area "
+            "width(% u).",
+            resolveRect->width, validationState->GetRenderWidth());
+        DAWN_INVALID_IF(
+            static_cast<uint64_t>(resolveRect->height) > validationState->GetRenderHeight(),
+            "The height (%u) of ResolveRect is out of the render area "
+            "height(% u).",
+            resolveRect->height, validationState->GetRenderHeight());
     }
 
     return descriptor;

@@ -340,6 +340,14 @@ MaybeError ExpandResolveTextureWithDraw(
         // TODO(chromium:344814092): Prevent the scissor to be reset to outside of this region by
         // passing the scissor bound to the render pass creation.
         renderEncoder->APISetScissorRect(rect->x, rect->y, rect->width, rect->height);
+    } else if (const auto* resolveRect =
+                   renderPassDescriptor.Get<RenderPassDescriptorResolveRect>()) {
+        // TODO(chromium:344814092): Prevent the scissor to be reset to outside of this region by
+        // passing the scissor bound to the render pass creation.
+        renderEncoder->APISetScissorRect(resolveRect->colorOffsetX, resolveRect->colorOffsetY,
+                                         resolveRect->width, resolveRect->height);
+        renderEncoder->APISetViewport(resolveRect->colorOffsetX, resolveRect->colorOffsetY,
+                                      resolveRect->width, resolveRect->height, 0.0, 1.0);
     }
 
     renderEncoder->APIDraw(3);
@@ -418,6 +426,7 @@ MaybeError ResolveMultisampleWithDraw(DeviceBase* device,
     renderEncoder->APISetBindGroup(0, bindGroup.Get(), 0, nullptr);
     renderEncoder->APISetPipeline(pipeline.Get());
     renderEncoder->APISetScissorRect(rect.x, rect.y, rect.width, rect.height);
+    renderEncoder->APISetViewport(rect.x, rect.y, rect.width, rect.height, 0.0, 1.0);
     renderEncoder->APIDraw(3);
     renderEncoder->End();
 
