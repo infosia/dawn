@@ -117,7 +117,8 @@ class RenderPassValidationState final : public NonMovable {
     // attachment in the render pass descriptor.
     MaybeError AddAttachment(const TextureViewBase* attachment,
                              AttachmentType attachmentType,
-                             uint32_t depthSlice = wgpu::kDepthSliceUndefined) {
+                             uint32_t depthSlice = wgpu::kDepthSliceUndefined,
+                             const RenderPassDescriptorResolveRect* resolveRect = nullptr) {
         if (attachment == nullptr) {
             return {};
         }
@@ -155,6 +156,38 @@ class RenderPassValidationState final : public NonMovable {
                 attachment->GetTexture()->GetMipLevelSingleSubresourceVirtualSize(
                     attachment->GetBaseMipLevel(), Aspect::Plane0);
         }
+        if (resolveRect && (attachmentType == AttachmentType::ColorAttachment ||
+                            attachmentType == AttachmentType::ResolveTarget)) {
+            int64_t offsetX = static_cast<int64_t>(resolveRect->resolveOffsetX) -
+                              static_cast<int64_t>(resolveRect->colorOffsetX);
+            int64_t offsetY = static_cast<int64_t>(resolveRect->resolveOffsetY) -
+                              static_cast<int64_t>(resolveRect->colorOffsetY);
+            const int64_t updateWidth =
+                static_cast<int64_t>(resolveRect->width) +
+                (attachmentType == AttachmentType::ColorAttachment ? offsetX : -offsetX);
+            const int64_t updateHeight =
+                static_cast<int64_t>(resolveRect->height) +
+                (attachmentType == AttachmentType::ColorAttachment ? offsetY : -offsetY);
+            DAWN_INVALID_IF(updateWidth < 0 || updateWidth > static_cast<int64_t>(renderSize.width),
+                            "The resolveOffsetX (%u), colorOffsetX (%u), and width (%u) of "
+                            "ResolveRect is out of the render area width(% u).",
+                            resolveRect->resolveOffsetX, resolveRect->colorOffsetX,
+                            resolveRect->width, renderSize.width);
+            DAWN_INVALID_IF(
+                updateHeight < 0 || updateHeight > static_cast<int64_t>(renderSize.height),
+                "The resolveOffsetY (%u), colorOffsetY (%u), and height (%u) of "
+                "ResolveRect is out of the render area height(% u).",
+                resolveRect->resolveOffsetY, resolveRect->colorOffsetY, resolveRect->height,
+                renderSize.height);
+            DAWN_INVALID_IF(static_cast<uint64_t>(resolveRect->width) > renderSize.width,
+                            "The width (%u) of ResolveRect is out of the render area "
+                            "width(% u).",
+                            resolveRect->width, renderSize.width);
+            DAWN_INVALID_IF(static_cast<uint64_t>(resolveRect->height) > renderSize.height,
+                            "The height (%u) of ResolveRect is out of the render area "
+                            "height(% u).",
+                            resolveRect->height, renderSize.height);
+        }
         if (HasAttachment()) {
             switch (attachmentType) {
                 case AttachmentType::ColorAttachment:
@@ -174,12 +207,22 @@ class RenderPassValidationState final : public NonMovable {
                                     "The resolve target %s used as resolve target is from a "
                                     "multi-planar texture. It is not supported by dawn yet.",
                                     attachment);
-                    DAWN_INVALID_IF(
-                        renderSize.width != mRenderWidth || renderSize.height != mRenderHeight,
-                        "The resolve target %s size (width: %u, height: %u) does not match the "
-                        "size of the other attachments (width: %u, height: %u).",
-                        attachment, renderSize.width, renderSize.height, mRenderWidth,
-                        mRenderHeight);
+                    if (!resolveRect) {
+                        DAWN_INVALID_IF(
+                            renderSize.width != mRenderWidth || renderSize.height != mRenderHeight,
+                            "The resolve target %s size (width: %u, height: %u) does not match the "
+                            "size of the other attachments (width: %u, height: %u).",
+                            attachment, renderSize.width, renderSize.height, mRenderWidth,
+                            mRenderHeight);
+                    } else {
+                        DAWN_INVALID_IF(
+                            renderSize.width > mRenderWidth || renderSize.height > mRenderHeight,
+                            "The resolve target %s size (width: %u, height: %u) must be no smaller "
+                            "than the "
+                            "size of the other attachments (width: %u, height: %u).",
+                            attachment, renderSize.width, renderSize.height, mRenderWidth,
+                            mRenderHeight);
+                    }
                     break;
                 }
                 case AttachmentType::DepthStencilAttachment: {
@@ -524,7 +567,8 @@ MaybeError ValidateExpandResolveTextureLoadOp(const DeviceBase* device,
 MaybeError ValidateRenderPassColorAttachment(DeviceBase* device,
                                              const RenderPassColorAttachment& colorAttachment,
                                              UsageValidationMode usageValidationMode,
-                                             RenderPassValidationState* validationState) {
+                                             RenderPassValidationState* validationState,
+                                             const RenderPassDescriptorResolveRect* resolveRect) {
     TextureViewBase* attachment = colorAttachment.view;
     if (attachment == nullptr) {
         return {};
@@ -584,7 +628,7 @@ MaybeError ValidateRenderPassColorAttachment(DeviceBase* device,
     DAWN_TRY(ValidateAttachmentArrayLayersAndLevelCount(attachment));
 
     DAWN_TRY(validationState->AddAttachment(attachment, AttachmentType::ColorAttachment,
-                                            colorAttachment.depthSlice));
+                                            colorAttachment.depthSlice, resolveRect));
 
     if (validationState->GetImplicitSampleCount() <= 1) {
         // This step is skipped if implicitSampleCount > 1, because in that case, there shoudn't be
@@ -597,7 +641,8 @@ MaybeError ValidateRenderPassColorAttachment(DeviceBase* device,
         // Add resolve target after adding color attachment to make sure there is already a color
         // attachment for the comparation of with and height.
         DAWN_TRY(validationState->AddAttachment(colorAttachment.resolveTarget,
-                                                AttachmentType::ResolveTarget));
+                                                AttachmentType::ResolveTarget,
+                                                wgpu::kDepthSliceUndefined, resolveRect));
     }
 
     return {};
@@ -756,9 +801,10 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
     auto colorAttachments = ityp::SpanFromUntyped<ColorAttachmentIndex>(
         descriptor->colorAttachments, descriptor->colorAttachmentCount);
     ColorAttachmentFormats colorAttachmentFormats;
+    const auto* resolveRect = descriptor.Get<RenderPassDescriptorResolveRect>();
     for (auto [i, attachment] : Enumerate(colorAttachments)) {
         DAWN_TRY_CONTEXT(ValidateRenderPassColorAttachment(device, attachment, usageValidationMode,
-                                                           validationState),
+                                                           validationState, resolveRect),
                          "validating colorAttachments[%u].", i);
         if (attachment.view) {
             colorAttachmentFormats.push_back(&attachment.view->GetFormat());
@@ -833,6 +879,13 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
                         "The y (%u) and height (%u) of ExpandResolveRect is out of the render area "
                         "height(% u).",
                         rect->y, rect->height, validationState->GetRenderHeight());
+    } else if (resolveRect) {
+        DAWN_INVALID_IF(!device->HasFeature(Feature::DawnPartialLoadResolveTexture),
+                        "RenderPassDescriptorResolveRect can't be used without %s.",
+                        ToAPI(Feature::DawnPartialLoadResolveTexture));
+        DAWN_INVALID_IF(
+            !validationState->WillExpandResolveTexture(),
+            "ResolveRect is invalid to use without wgpu::LoadOp::ExpandResolveTexture.");
     }
 
     return descriptor;
