@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6e0d61a_76f525d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T03:09:24Z",
+      "side": 1,
+      "message": "FYI https://dawn-review.googlesource.com/c/dawn/+/231675 is just waiting on the win-dawn-rel bot",
+      "revId": "041c5aed32228fc2bb65618dd4a80aba6928e311",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
