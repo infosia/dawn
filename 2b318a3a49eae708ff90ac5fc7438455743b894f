@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5617f069_b724edb2",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T13:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f006567_38ada79e",
+      "revId": "2b318a3a49eae708ff90ac5fc7438455743b894f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa4973f3_4a6c3299",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-19T21:42:34Z",
       "side": 1,
       "message": "We would probably want to validate this as well, though that only affects native since it can\u0027t be hit by the JS API.",
+      "revId": "2b318a3a49eae708ff90ac5fc7438455743b894f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e66d5681_5f5a21d8",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T13:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa4973f3_4a6c3299",
       "revId": "2b318a3a49eae708ff90ac5fc7438455743b894f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
