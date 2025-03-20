@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71646247_229f05ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-20T10:03:49Z",
+      "side": 1,
+      "message": "This is the follow-up of https://dawn-review.googlesource.com/c/dawn/+/221274/comment/a447080e_aa60f499/\n\nPTAL, thanks!",
+      "revId": "185d48bea7da65130c79408b66e4cd33bd97e4ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
