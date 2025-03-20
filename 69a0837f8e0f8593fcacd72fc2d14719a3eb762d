@@ -1,6 +1,57 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc7aad75_6650be04",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T11:30:37Z",
+      "side": 1,
+      "message": "```suggestion\n[tint][inspector] Rename GetSampler[+AndNonSampler]TextureUses overload\n```",
+      "revId": "69a0837f8e0f8593fcacd72fc2d14719a3eb762d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e807a08_e7dfc9ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T11:30:37Z",
+      "side": 1,
+      "message": "```suggestion\nThis CL renames an overload of GetSamplerTextureUses to\n```",
+      "revId": "69a0837f8e0f8593fcacd72fc2d14719a3eb762d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63334d10_243d82db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T11:30:37Z",
+      "side": 1,
+      "message": "```suggestion\nunittests are also added for it, which were previously missed.\n```",
+      "revId": "69a0837f8e0f8593fcacd72fc2d14719a3eb762d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "582a8a6c_93af1625",
@@ -14,6 +65,40 @@
       "writtenOn": "2025-03-20T09:45:47Z",
       "side": 1,
       "message": "Please take a look, thanks!",
+      "revId": "69a0837f8e0f8593fcacd72fc2d14719a3eb762d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51f67e12_70fcb6c8",
+        "filename": "src/tint/lang/wgsl/inspector/inspector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T11:30:37Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Contains all texture usages with and without a sampler. Note that storage textures are not\n```",
+      "revId": "69a0837f8e0f8593fcacd72fc2d14719a3eb762d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ed2cb51_8ea94697",
+        "filename": "src/tint/lang/wgsl/inspector/inspector_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3207,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T11:30:37Z",
+      "side": 1,
+      "message": "Just checking you verified these fired and caused gtest to fail? I seem to remember having to jump through some hoops to get expectations inside functions to work correctly",
       "revId": "69a0837f8e0f8593fcacd72fc2d14719a3eb762d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
