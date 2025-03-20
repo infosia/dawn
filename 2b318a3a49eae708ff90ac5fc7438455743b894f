@@ -116,6 +116,30 @@
       },
       "revId": "2b318a3a49eae708ff90ac5fc7438455743b894f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15d3ff76_bdad5dae",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-20T19:28:49Z",
+      "side": 1,
+      "message": "Ah. I thought some other CLs had been able to use it. Never mind!",
+      "parentUuid": "b45f67e2_7ac61158",
+      "range": {
+        "startLine": 673,
+        "startChar": 32,
+        "endLine": 673,
+        "endChar": 37
+      },
+      "revId": "2b318a3a49eae708ff90ac5fc7438455743b894f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
