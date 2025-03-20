@@ -16,6 +16,109 @@
       "message": "Addressed feedback, PTAL.",
       "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "752a50e4_77a3f3bb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T09:31:12Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a935203_9fc5c222",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T09:31:12Z",
+      "side": 1,
+      "message": "nit: this doesn\u0027t need to be specific to Vulkan. D3D12 also usses an allocator and maybe Metal in the future. WDYT of using `totalAllocatedMemory` and `totalUsedMemory` with an explanation about the fragmentation? `totalUsage` would be redundant I believe? Then in the frontend we could assume that `totalAllocatedMemory` can be set to `totalUsedMemory` by default and backends will override if needed.",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2294ad1_b94c49ef",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2473,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T09:31:12Z",
+      "side": 1,
+      "message": "WDYT of having the whole function overridable by the backends so that they can be more precise if they want. Then the function in the Vulkan backend would be:\n\n```\nvulkan::Device::ComputeEstimatedMemoryUsage() {\n  MemoryUsageInfo info;\n  info.totalMemoryAllocated \u003d GetResourceMemoryAllocator()-\u003eGetTotalAllocatedMemory();\n  info.totalMemoryUsed \u003d GetResourceMemoryAllocator()-\u003eGetTotalUsedMemory;\n  return info;\n}\n```\n\nThis 1) avoids adding backend specific logic in the frontend, and makes it useful for other backends in the future 2) ultimately let the backends override any field because in this case they know better 3) still gets code reuse and defaults for backends that don\u0027t have special cases.",
+      "range": {
+        "startLine": 2471,
+        "startChar": 0,
+        "endLine": 2473,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e57239e_701dee29",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T09:31:12Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same as `mDevice-\u003eGetQueue()-\u003eGetPendingCommandSerial()`, why did we need a new method? Ah it\u0027s to make is clear it will be accounted at the same time the fencedDeleter frees the resource. Optionally maybe `GetCurrentDeletionSerial`?",
+      "range": {
+        "startLine": 271,
+        "startChar": 39,
+        "endLine": 271,
+        "endChar": 92
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc29e2e5_87eaef67",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T09:31:12Z",
+      "side": 1,
+      "message": "Wh",
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
