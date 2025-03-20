@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c160bd25_a91dbeed",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T08:34:39Z",
+      "side": 1,
+      "message": "This is a small constant. I don\u0027t think it\u0027s worth to include it in the uniform buffer. It would help reduce the uniform buffer\u0027s size and the compiler would boost the calculation perf a little bit since this is usually power of 2.\n\nBtw, I have changed this to generating the constant value directly in the shader text, based on the input format. So no need for override anymore.",
+      "parentUuid": "eaf19c2a_b11dec2f",
+      "range": {
+        "startLine": 106,
+        "startChar": 53,
+        "endLine": 106,
+        "endChar": 63
+      },
+      "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7818e936_32a8cf6a",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-03-19T18:07:23Z",
       "side": 1,
       "message": "note that declarations don\u0027t have to be in order in WGSL so we could merge `kBlitFSCommonHeader` and `kBlitFS`",
+      "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae4243a4_f4188669",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T08:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7818e936_32a8cf6a",
       "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b268ec35_afba3ebf",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T08:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69d6601a_fc0d8da9",
+      "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60a0399f_53ea0e32",
@@ -71,6 +131,24 @@
       "writtenOn": "2025-03-19T18:07:23Z",
       "side": 1,
       "message": "The VS AND FS can be the same module, the entrypoint is determined automatically if there\u0027s only one in that stage.",
+      "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea3805b0_5a4deb40",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T08:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60a0399f_53ea0e32",
       "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa1dc03e_93a6c95f",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T08:34:39Z",
+      "side": 1,
+      "message": "`wgpu::Format` is already a part of the key. I think there is a 1:1 mapping from format to pixel size so this doesn\u0027t need to be in the key.\n\nNevertheless, I have changed the generator to generate the constant value directly in the shader text. No need for override anymore.",
+      "parentUuid": "51ae26e9_fd2ba61e",
+      "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11a612a8_ef74fbb2",
@@ -105,6 +201,24 @@
       "writtenOn": "2025-03-19T18:07:23Z",
       "side": 1,
       "message": "nit: this is the default value so it doesn\u0027t need to be specified.",
+      "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afa0f903_e3f844f5",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T08:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a612a8_ef74fbb2",
       "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -126,6 +240,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fc3d4fc_3841e838",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T08:34:39Z",
+      "side": 1,
+      "message": "I don\u0027t think this is caught by the front end. There is at least one test that verifies zero copy size and it still reaches here.",
+      "parentUuid": "d71c67e7_142e248a",
+      "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cdf6c234_995b0f0a",
@@ -143,6 +275,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "72cbeb2c_5a2e8992",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T08:34:39Z",
+      "side": 1,
+      "message": "You are right. I have added a code to prevent 1D texture from using this function.",
+      "parentUuid": "cdf6c234_995b0f0a",
+      "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a418b89_3aa751da",
@@ -156,6 +306,24 @@
       "writtenOn": "2025-03-19T18:07:23Z",
       "side": 1,
       "message": "note: the dawn/native/utils/WGPUHelpers.h can help make that code look a bit nicer.",
+      "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34aa7c82_c8ad0e3f",
+        "filename": "src/dawn/native/BlitBufferToTexture.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T08:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a418b89_3aa751da",
       "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -183,6 +351,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aabf9ab1_b5961e64",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T08:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2622d8f0_baa00959",
+      "range": {
+        "startLine": 105,
+        "startChar": 18,
+        "endLine": 105,
+        "endChar": 44
+      },
+      "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c605614a_78c2da8d",
@@ -196,6 +388,30 @@
       "writtenOn": "2025-03-19T18:07:23Z",
       "side": 1,
       "message": "```suggestion\n    DAWN_ASSERT(IsSubset(storageUsage,\n                (wgpu::BufferUsage::Storage | kInternalStorageBuffer | kReadOnlyStorageBuffer)));\n```",
+      "range": {
+        "startLine": 1080,
+        "startChar": 6,
+        "endLine": 1081,
+        "endChar": 6
+      },
+      "revId": "4890d4aa819011afc51a1a2becc2d5c5e6b9f813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c5fbfe2_b27d68df",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-20T08:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c605614a_78c2da8d",
       "range": {
         "startLine": 1080,
         "startChar": 6,
