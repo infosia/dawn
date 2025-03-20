@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "484db48b_51bfc7c3",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T13:49:20Z",
+      "side": 1,
+      "message": "nit: Add a TODO to implement for D3D12 although. If you\u0027re adding a virtual function somewhere then maybe add the TODO in that function for D3D12 instead.",
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8a935203_9fc5c222",
         "filename": "include/dawn/native/DawnNative.h",
         "patchSetId": 14
@@ -48,6 +65,30 @@
       "writtenOn": "2025-03-20T09:31:12Z",
       "side": 1,
       "message": "nit: this doesn\u0027t need to be specific to Vulkan. D3D12 also usses an allocator and maybe Metal in the future. WDYT of using `totalAllocatedMemory` and `totalUsedMemory` with an explanation about the fragmentation? `totalUsage` would be redundant I believe? Then in the frontend we could assume that `totalAllocatedMemory` can be set to `totalUsedMemory` by default and backends will override if needed.",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5aefab0c_aa1e33fa",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T13:49:20Z",
+      "side": 1,
+      "message": "Maybe `allocatorTotalUsedMemory` vs `allocatorTotalAllocatedMemory` just to make it clear this is the allocators bookkeeping? Right now the two total used memory from adding up buffers+textures can be different than ResourceMemoryAllocators total used due to timing of when deallocations no longer count as used.\n\nI believe `totalUsage` isn\u0027t needed indepenent of this CL. It\u0027s used [here](https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/dawn_context_provider.cc;l\u003d865;drc\u003d4c6d5b3c3ed16fa75258c6b4763188f840cb433d) to give a total for `gpu/dawn/device_X/`. I think the memory dump code will just add up all the sub-allocations aka `gpu/dawn/device_X/textures` + `gpu/dawn/device_X/buffers` which gives the same value. If so we can remove it and the code to create that dump. Even if not we don\u0027t need a separate struct member the Chrome code can `mem_usage.texturesUsage + mem_usage.buffersUsage`?",
+      "parentUuid": "8a935203_9fc5c222",
       "range": {
         "startLine": 337,
         "startChar": 0,
@@ -83,6 +124,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7e56227f_1902cc68",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T13:49:20Z",
+      "side": 1,
+      "message": "All of these fnuctions should use `GetCurrentDeletionSerial()` so that if someone makes changes in FencedDeleter then ResourceMemoryAllocator stays in sync.",
+      "range": {
+        "startLine": 60,
+        "startChar": 37,
+        "endLine": 60,
+        "endChar": 83
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9e57239e_701dee29",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
         "patchSetId": 14
@@ -106,6 +170,53 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3f7b5a35_d8174dcc",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T13:49:20Z",
+      "side": 1,
+      "message": "+1 GetCurrentDeletionSerial()",
+      "parentUuid": "9e57239e_701dee29",
+      "range": {
+        "startLine": 271,
+        "startChar": 39,
+        "endLine": 271,
+        "endChar": 92
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "775bc8bc_f067590b",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T13:49:20Z",
+      "side": 1,
+      "message": "auto* fencedDeleter \u003d mDevice-\u003eGetFencedDeleter();\nmHeapAllocationsToTrack...",
+      "range": {
+        "startLine": 316,
+        "startChar": 28,
+        "endLine": 316,
+        "endChar": 55
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dc29e2e5_87eaef67",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
         "patchSetId": 14
@@ -117,6 +228,69 @@
       "writtenOn": "2025-03-20T09:31:12Z",
       "side": 1,
       "message": "Wh",
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51d120fa_def96027",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T13:49:20Z",
+      "side": 1,
+      "message": "It\u0027s not clear that direct allocations impacts used memory or that heap allocations impacts allocated memory from the names. You can add a comment explaining this or maybe just change the names to something like `mUsedMemoryToDecrement` and `mAllocatedMemoryToDecrement`?",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3936a226_f7d8612a",
+        "filename": "src/dawn/tests/end2end/MemoryInstrumentationVulkanTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T13:49:20Z",
+      "side": 1,
+      "message": "```\nauto status \u003d instance.WaitAny();\nASSERT_EQ(status, wgpu::WaitStatus::Success);\n```",
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "377357ec_9b641341",
+        "filename": "src/dawn/tests/end2end/MemoryInstrumentationVulkanTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T13:49:20Z",
+      "side": 1,
+      "message": "The total allocated memory doesn\u0027t have to be above 0 here it would be perfectly valid for RMA to deallocated the only chunk it\u0027s holding and reallocate it again next time.\n\nI think the only thing we know is that total allocated shouldn\u0027t have gone up compared to before? There were no new allocations so it shouldn\u0027t allocated any additional chunks.",
+      "range": {
+        "startLine": 89,
+        "startChar": 45,
+        "endLine": 89,
+        "endChar": 47
+      },
       "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
