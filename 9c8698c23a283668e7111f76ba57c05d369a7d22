@@ -16,6 +16,24 @@
       "message": "I think all of the validation in this `switch` needs to happen for unused overrides too. These bits of validation cover this rule in the spec:\n\n\u003e Converting the IDL value value to WGSL type T must not throw a TypeError.\n\n... which is not gated on the overrides being referenced by the entry point.",
       "revId": "9c8698c23a283668e7111f76ba57c05d369a7d22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06d7c296_a8aaf21a",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-20T20:37:38Z",
+      "side": 1,
+      "message": "(and presumably we could use some more test coverage for this case)",
+      "parentUuid": "a44e7d88_c2ba16f1",
+      "revId": "9c8698c23a283668e7111f76ba57c05d369a7d22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
