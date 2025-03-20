@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b31d7a20_3c3800ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-20T15:18:54Z",
+      "side": 1,
+      "message": "PTAL. (The interesting file is the last one in the file list ....)",
+      "revId": "ceaafd9c393275e0291da0199cb5de90a3d30504",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
