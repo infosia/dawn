@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "05c4647c_8a7c3897",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-20T01:22:32Z",
+      "side": 1,
+      "message": "Yes, I plan to do the rename before I enabling \"immediate data\" on HLSL backend in tint.",
+      "parentUuid": "2eb34d88_c48801f2",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 55
+      },
+      "revId": "2be806822f62620e6b78407702c6bbd8ea879912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0f90a48e_a2393ed8",
         "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
         "patchSetId": 11
@@ -71,6 +95,24 @@
       "writtenOn": "2025-03-19T15:33:01Z",
       "side": 1,
       "message": "Will this be renamed \"immediates\"? (can we have a TODO somewhere or an issue for that)?",
+      "revId": "2be806822f62620e6b78407702c6bbd8ea879912",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3858c519_0888e225",
+        "filename": "src/dawn/tests/end2end/ImmediateDataTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-20T01:22:32Z",
+      "side": 1,
+      "message": "Create an issue https://issues.chromium.org/issues/404887532 for this.",
+      "parentUuid": "0f36473b_1a6b0ba7",
       "revId": "2be806822f62620e6b78407702c6bbd8ea879912",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
