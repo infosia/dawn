@@ -362,6 +362,13 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
       "dawn_load_resolve_texture.md",
       FeatureInfo::FeatureState::Stable}},
+    {Feature::DawnResolveRect,
+     {"Support RenderPassDescriptorResolveRect as chained struct into "
+      "RenderPassDescriptor "
+      "for a render pass. This will expand and resolve the texels within the rect of texture.",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
+      "dawn_partial_load_resolve_texture.md",
+      FeatureInfo::FeatureState::Stable}},
     {Feature::DawnPartialLoadResolveTexture,
      {"Support RenderPassDescriptorExpandResolveRect as chained struct into RenderPassDescriptor "
       "for a render pass. This will expand and resolve the texels within the rect of texture.",

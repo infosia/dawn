@@ -219,12 +219,13 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
         cmd->attachmentState->GetExpandResolveInfo().attachmentsToExpandResolve.any() &&
         device->CanTextureLoadResolveTargetInTheSameRenderpass();
 
+    auto* expandRect = renderPassDescriptor.Get<RenderPassDescriptorExpandResolveRect>();
+    auto* resolveRect = renderPassDescriptor.Get<RenderPassDescriptorResolveRect>();
     // Handle partial resolve. This identifies passes where there are MSAA color attachments with
     // wgpu::LoadOp::ExpandResolveTexture. If that's the case then the resolves are deferred by
     // removing the resolve targets and forcing the storeOp to Store. After the pass has ended an
     // new pass is recorded for each resolve target that resolves it separately.
-    if (mShouldApplyExpandResolveEmulation &&
-        renderPassDescriptor.Get<RenderPassDescriptorExpandResolveRect>()) {
+    if (mShouldApplyExpandResolveEmulation && (expandRect || resolveRect)) {
         std::vector<TemporaryResolveAttachment> temporaryResolveAttachments;
 
         for (auto i : IterateBitSet(cmd->attachmentState->GetColorAttachmentsMask())) {
@@ -240,11 +241,13 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
                 attachmentInfo.resolveTarget = nullptr;
             }
         }
+        Rect2D rect =
+            expandRect ? Rect2D{expandRect->x, expandRect->y, expandRect->width, expandRect->height}
+                       : Rect2D{resolveRect->resolveOffsetX, resolveRect->resolveOffsetY,
+                                resolveRect->width, resolveRect->height};
         for (auto& deferredResolve : temporaryResolveAttachments) {
             passEndOperations.emplace_back(
-                [device, encoder,
-                 rect = *renderPassDescriptor.Get<RenderPassDescriptorExpandResolveRect>(),
-                 deferredResolve]() -> MaybeError {
+                [device, encoder, rect, deferredResolve]() -> MaybeError {
                     // Do partial resolve first in one render pass.
                     DAWN_TRY(ResolveMultisampleWithDraw(
                         device, encoder, {rect.x, rect.y, rect.width, rect.height},
