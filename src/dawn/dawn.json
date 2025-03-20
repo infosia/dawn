@@ -2321,7 +2321,8 @@
             {"value": 54, "name": "flexible texture views", "tags": ["dawn"]},
             {"value": 55, "name": "chromium experimental subgroup matrix", "tags": ["dawn"]},
             {"value": 56, "name": "shared fence EGL sync", "tags": ["dawn", "native"]},
-            {"value": 57, "name": "dawn device allocator control", "tags": ["dawn"]}
+            {"value": 57, "name": "dawn device allocator control", "tags": ["dawn"]},
+            {"value": 58, "name": "dawn resolve rect", "tags": ["dawn"]}
         ]
     },
     "filter mode": {
@@ -3050,6 +3051,20 @@
         "members": [
             {"name": "x", "type": "uint32_t"},
             {"name": "y", "type": "uint32_t"},
+            {"name": "width", "type": "uint32_t"},
+            {"name": "height", "type": "uint32_t"}
+        ]
+    },
+    "render pass descriptor resolve rect": {
+        "category": "structure",
+        "tags": ["dawn"],
+        "chained": "in",
+        "chain roots": ["render pass descriptor"],
+        "members": [
+            {"name": "colorOffsetX", "type": "uint32_t"},
+            {"name": "colorOffsetY", "type": "uint32_t"},
+            {"name": "resolveOffsetX", "type": "uint32_t"},
+            {"name": "resolveOffsetY", "type": "uint32_t"},
             {"name": "width", "type": "uint32_t"},
             {"name": "height", "type": "uint32_t"}
         ]
@@ -3845,7 +3860,8 @@
             {"value": 63, "name": "dawn compilation message utf16", "tags": ["dawn", "emscripten"]},
             {"value": 64, "name": "dawn fake buffer OOM for testing", "tags": ["dawn"]},
             {"value": 65, "name": "surface descriptor from windows WinUI swap chain panel", "tags": ["dawn"]},
-            {"value": 66, "name": "dawn device allocator control", "tags": ["dawn"]}
+            {"value": 66, "name": "dawn device allocator control", "tags": ["dawn"]},
+            {"value": 67, "name": "render pass descriptor resolve rect", "tags": ["dawn"]}
         ]
     },
     "texture": {
