@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f913f3ff_57d3b166",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T20:52:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c88249bc_345d3285",
+      "revId": "a44741864061589c2fe1a7650aea0cbf25e2a232",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2942867b_c720417d",
@@ -69,6 +87,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce0b7158_41443beb",
+        "filename": "src/dawn/native/vulkan/FencedDeleter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T20:52:53Z",
+      "side": 1,
+      "message": "Updated to just serial instead.",
+      "parentUuid": "2942867b_c720417d",
+      "revId": "a44741864061589c2fe1a7650aea0cbf25e2a232",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd5b94a7_86877a2a",
@@ -82,6 +118,30 @@
       "writtenOn": "2025-03-20T20:34:41Z",
       "side": 1,
       "message": "nit: Store serial instead of storing `fencedDeleter`.",
+      "range": {
+        "startLine": 285,
+        "startChar": 57,
+        "endLine": 285,
+        "endChar": 96
+      },
+      "revId": "a44741864061589c2fe1a7650aea0cbf25e2a232",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4642ae3b_a3bc755b",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-03-20T20:52:53Z",
+      "side": 1,
+      "message": "Ah yes updated.",
+      "parentUuid": "bd5b94a7_86877a2a",
       "range": {
         "startLine": 285,
         "startChar": 57,
