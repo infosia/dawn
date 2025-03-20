@@ -1582,6 +1582,12 @@ void CommandEncoder::APICopyBufferToTexture(const TexelCopyBufferInfo* source,
                                                    blockInfo, *copySize));
             }
 
+            if (copySize->width == 0 || copySize->height == 0 ||
+                copySize->depthOrArrayLayers == 0) {
+                // Noop copy but is valid, simply skip encoding any command.
+                return {};
+            }
+
             mTopLevelBuffers.insert(source->buffer);
             mTopLevelTextures.insert(destination.texture);
 
@@ -1688,17 +1694,17 @@ void CommandEncoder::APICopyTextureToBuffer(const TexelCopyTextureInfo* sourceOr
                     destination->layout, destination->buffer->GetSize(), blockInfo, *copySize));
             }
 
-            mTopLevelTextures.insert(source.texture);
-            mTopLevelBuffers.insert(destination->buffer);
-
-            TexelCopyBufferLayout dstLayout = destination->layout;
-            ApplyDefaultTexelCopyBufferLayoutOptions(&dstLayout, blockInfo, *copySize);
-
             if (copySize->width == 0 || copySize->height == 0 ||
                 copySize->depthOrArrayLayers == 0) {
                 // Noop copy but is valid, simply skip encoding any command.
                 return {};
             }
+
+            mTopLevelTextures.insert(source.texture);
+            mTopLevelBuffers.insert(destination->buffer);
+
+            TexelCopyBufferLayout dstLayout = destination->layout;
+            ApplyDefaultTexelCopyBufferLayoutOptions(&dstLayout, blockInfo, *copySize);
 
             auto format = source.texture->GetFormat();
             auto aspect = ConvertAspect(format, source.aspect);
