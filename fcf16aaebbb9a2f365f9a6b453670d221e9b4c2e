@@ -197,6 +197,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cca27e53_26a86fce",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T15:13:29Z",
+      "side": 1,
+      "message": "If `totalUsage` might count things like shader memory (or anything that doesn\u0027t go through ResourceMemoryAllocator) then it\u0027s not going to be the same as allocator memory usage. We should probably keep them separate as a result.\n\nFor Android we need something as close to VMA memory metrics as possible to compare in finch. Maybe putting this in VulkanBackend is the right way to go then?",
+      "parentUuid": "50a0982d_0c3989f5",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a2294ad1_b94c49ef",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 14
