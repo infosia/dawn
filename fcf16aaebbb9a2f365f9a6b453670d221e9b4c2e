@@ -149,6 +149,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a5ae1c7c_7b615710",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-20T14:58:16Z",
+      "side": 1,
+      "message": "We could add expose this information via a function in VulkanBackend for now. If we expose the same allocator usage for D3D12 (or Metal if allocator is added) we\u0027ll probably want to move it back to here though so I don\u0027t have a strong opinion.\n\nI think this data is going to be used in DawnSharedContext::OnMemoryDump() to produce background dumps so we need the data in the same place either way.",
+      "parentUuid": "29fca0e4_a367cc62",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a2294ad1_b94c49ef",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 14
