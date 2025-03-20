@@ -221,6 +221,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "efec312a_1c2b0122",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T15:57:22Z",
+      "side": 1,
+      "message": "We could, but since this is used in backend-agnostic code in Chromium and will be useful on other backends in the future, DawnNative is fine as well. It\u0027s all backdoor APIs for Chromium so we have some flexibility.",
+      "parentUuid": "cca27e53_26a86fce",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a2294ad1_b94c49ef",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 14
