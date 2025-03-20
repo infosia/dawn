@@ -179,6 +179,7 @@ class SlabAllocatorImpl {
 
         SentinelSlab(SentinelSlab&& rhs);
 
+        bool IsEmpty();
         void Prepend(Slab* slab);
     };
 
