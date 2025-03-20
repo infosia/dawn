@@ -16,6 +16,94 @@
       "message": "PTAL.",
       "revId": "b49f6a8ec24bda10af739e6c3fa611201077258c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4792bb9_0745ea07",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-20T17:52:14Z",
+      "side": 1,
+      "message": "Nit: They all require this, so could just do this check once above like with the `execution` check.",
+      "range": {
+        "startLine": 1246,
+        "startChar": 0,
+        "endLine": 1248,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "017bb290_85a6040d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1238,
+                "startChar": 0,
+                "endLine": 1238,
+                "endChar": 0
+              },
+              "replacement": "\n        if (memory !\u003d uint32_t(spv::Scope::Workgroup)) {\n            TINT_ICE() \u003c\u003c \"control barrier requires workgroup memory scope\";\n        }\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1246,
+                "startChar": 0,
+                "endLine": 1250,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1255,
+                "startChar": 0,
+                "endLine": 1258,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1263,
+                "startChar": 0,
+                "endLine": 1266,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "b49f6a8ec24bda10af739e6c3fa611201077258c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52c9231c_a67e89ad",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-20T17:52:14Z",
+      "side": 1,
+      "message": "Nit: Can just drop the `Empty` I think?",
+      "revId": "b49f6a8ec24bda10af739e6c3fa611201077258c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
