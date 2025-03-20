@@ -51,6 +51,24 @@
       "parentUuid": "c7d98200_7a53b762",
       "revId": "43767a03997740de3307864e978bc0dfb3ecd4c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9ae1067_69770bc7",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-03-20T12:47:10Z",
+      "side": 1,
+      "message": "Now I\u0027ve reimplemented this CL to only test the function to get the loop control variable from the loop initializer block. PTAL, thanks!",
+      "parentUuid": "8d1d4146_5c1ade35",
+      "revId": "43767a03997740de3307864e978bc0dfb3ecd4c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
