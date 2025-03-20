@@ -45,10 +45,36 @@ enum class PipelineMultisampleLoadOp {
 };
 using PipelineMultisampleLoadOps = std::array<PipelineMultisampleLoadOp, 16>;
 
-class MultisampledRenderingTest : public DawnTest {
+enum class ResolveRectType : uint8_t {
+    ExpandResolveRect,
+    ResolveRect,
+};
+
+std::ostream& operator<<(std::ostream& o, ResolveRectType type) {
+    switch (type) {
+        case ResolveRectType::ExpandResolveRect:
+            return o << "ResolveRectType_ExpandResolveRect";
+        case ResolveRectType::ResolveRect:
+            return o << "ResolveRectType_ResolveRect";
+    }
+}
+
+DAWN_TEST_PARAM_STRUCT(MultisampledRenderingTestParams, ResolveRectType);
+
+static constexpr std::array<ResolveRectType, 2> kResolveRectTypes = {
+    ResolveRectType::ExpandResolveRect,
+    ResolveRectType::ResolveRect,
+};
+
+// This is used as placeholder, can be any of ResolveRectType.
+static constexpr std::array<ResolveRectType, 1> kResolveRectTypesPlaceholder = {
+    ResolveRectType::ResolveRect,
+};
+
+class MultisampledRenderingTest : public DawnTestWithParams<MultisampledRenderingTestParams> {
   protected:
     void SetUp() override {
-        DawnTest::SetUp();
+        DawnTestWithParams<MultisampledRenderingTestParams>::SetUp();
 
         InitTexturesForTest();
     }
@@ -170,11 +196,14 @@ class MultisampledRenderingTest : public DawnTest {
                                                    uint32_t mipLevelCount = 1,
                                                    uint32_t arrayLayerCount = 1,
                                                    bool transientAttachment = false,
-                                                   bool supportsTextureBinding = false) {
+                                                   bool supportsTextureBinding = false,
+                                                   bool supportsCopyDst = false,
+                                                   uint32_t width = kWidth,
+                                                   uint32_t height = kHeight) {
         wgpu::TextureDescriptor descriptor;
         descriptor.dimension = wgpu::TextureDimension::e2D;
-        descriptor.size.width = kWidth << (mipLevelCount - 1);
-        descriptor.size.height = kHeight << (mipLevelCount - 1);
+        descriptor.size.width = width << (mipLevelCount - 1);
+        descriptor.size.height = height << (mipLevelCount - 1);
         descriptor.size.depthOrArrayLayers = arrayLayerCount;
         descriptor.sampleCount = sampleCount;
         descriptor.format = format;
@@ -188,6 +217,10 @@ class MultisampledRenderingTest : public DawnTest {
 
         if (supportsTextureBinding) {
             descriptor.usage |= wgpu::TextureUsage::TextureBinding;
+        }
+
+        if (supportsCopyDst) {
+            descriptor.usage |= wgpu::TextureUsage::CopyDst;
         }
 
         return device.CreateTexture(&descriptor);
@@ -2196,8 +2229,8 @@ TEST_P(DawnLoadResolveTextureTest, DrawThenLoad2DArrayTextureLayer) {
     VerifyResolveTarget(kGreen, singleSampledTexture, 0, 1);
 }
 
-// Test RenderPassDescriptorExpandResolveRect works correctly when rendering with
-// LoadOp::ExpandResolveTexture.
+// Test RenderPassDescriptorExpandResolveRect or RenderPassDescriptorResolveRect works correctly
+// when rendering with LoadOp::ExpandResolveTexture.
 TEST_P(DawnLoadResolveTextureTest, ClearThenLoadAndDrawWithRect) {
     DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::DawnPartialLoadResolveTexture}));
 
@@ -2223,7 +2256,7 @@ TEST_P(DawnLoadResolveTextureTest, ClearThenLoadAndDrawWithRect) {
         utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
             {multiSampledTextureView}, {singleSampledTextureView}, wgpu::LoadOp::Clear,
             wgpu::LoadOp::Clear,
-            /*testDepth=*/false);
+            /*hasDepthStencilAttachment=*/false);
         renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
 
         wgpu::RenderPassEncoder renderPassEncoder = commandEncoder.BeginRenderPass(&renderPass);
@@ -2237,14 +2270,24 @@ TEST_P(DawnLoadResolveTextureTest, ClearThenLoadAndDrawWithRect) {
         utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
             {multiSampledTextureView}, {singleSampledTextureView},
             wgpu::LoadOp::ExpandResolveTexture, wgpu::LoadOp::Clear,
-            /*testDepth=*/false);
+            /*hasDepthStencilAttachment=*/false);
         renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
-        wgpu::RenderPassDescriptorExpandResolveRect rect{};
-        rect.x = rect.y = 0;
-        rect.width = kWidth - 1;
-        rect.height = kHeight - 1;
-        renderPass.nextInChain = &rect;
-        EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
+        if (GetParam().mResolveRectType == ResolveRectType::ExpandResolveRect) {
+            wgpu::RenderPassDescriptorExpandResolveRect rect{};
+            rect.x = rect.y = 0;
+            rect.width = kWidth - 1;
+            rect.height = kHeight - 1;
+            renderPass.nextInChain = &rect;
+            EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
+        } else if (GetParam().mResolveRectType == ResolveRectType::ResolveRect) {
+            wgpu::RenderPassDescriptorResolveRect rect{};
+            rect.colorOffsetX = rect.colorOffsetY = 0;
+            rect.resolveOffsetX = rect.resolveOffsetY = 0;
+            rect.width = kWidth - 1;
+            rect.height = kHeight - 1;
+            renderPass.nextInChain = &rect;
+            EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
+        }
     }
 
     wgpu::CommandBuffer commandBuffer = commandEncoder.Finish();
@@ -2257,7 +2300,8 @@ TEST_P(DawnLoadResolveTextureTest, ClearThenLoadAndDrawWithRect) {
                         /*msaaCoverage=*/1.0f, /*x=*/kWidth - 1, /*y=*/kHeight - 1);
 }
 
-// Test RenderPassDescriptorExpandResolveRect works correctly with StoreOp::Discard;
+// Test RenderPassDescriptorExpandResolveRect or RenderPassDescriptorResolveRect works correctly
+// with StoreOp::Discard;
 TEST_P(DawnLoadResolveTextureTest, StoreOpDiscardWithRect) {
     DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::DawnPartialLoadResolveTexture}));
 
@@ -2306,13 +2350,22 @@ TEST_P(DawnLoadResolveTextureTest, StoreOpDiscardWithRect) {
 
         // Discard the multisampled texture at the end of this pass.
         renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
-
-        wgpu::RenderPassDescriptorExpandResolveRect rect{};
-        rect.x = rect.y = 0;
-        rect.width = kWidth - 1;
-        rect.height = kHeight - 1;
-        renderPass.nextInChain = &rect;
-        EncodeRenderPassForTest(commandEncoder, renderPass, redPipelineWithExpandResolve, kRed);
+        if (GetParam().mResolveRectType == ResolveRectType::ExpandResolveRect) {
+            wgpu::RenderPassDescriptorExpandResolveRect rect{};
+            rect.x = rect.y = 0;
+            rect.width = kWidth - 1;
+            rect.height = kHeight - 1;
+            renderPass.nextInChain = &rect;
+            EncodeRenderPassForTest(commandEncoder, renderPass, redPipelineWithExpandResolve, kRed);
+        } else if (GetParam().mResolveRectType == ResolveRectType::ResolveRect) {
+            wgpu::RenderPassDescriptorResolveRect rect{};
+            rect.colorOffsetX = rect.colorOffsetY = 0;
+            rect.resolveOffsetX = rect.resolveOffsetY = 0;
+            rect.width = kWidth - 1;
+            rect.height = kHeight - 1;
+            renderPass.nextInChain = &rect;
+            EncodeRenderPassForTest(commandEncoder, renderPass, redPipelineWithExpandResolve, kRed);
+        }
     }
 
     // The third render pass is simply a resolve pass so that we can check the contents of the
@@ -2339,67 +2392,311 @@ TEST_P(DawnLoadResolveTextureTest, StoreOpDiscardWithRect) {
                         /*msaaCoverage=*/1.0f, /*x=*/kWidth - 1, /*y=*/kHeight - 1);
 }
 
-DAWN_INSTANTIATE_TEST(MultisampledRenderingTest,
-                      D3D11Backend(),
-                      D3D12Backend(),
-                      D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
-                      D3D12Backend({}, {"use_d3d12_render_pass"}),
-                      MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
-                      VulkanBackend(),
-                      VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
-                      VulkanBackend({"resolve_multiple_attachments_in_separate_passes"}),
-                      MetalBackend({"emulate_store_and_msaa_resolve"}),
-                      MetalBackend({"always_resolve_into_zero_level_and_layer"}),
-                      MetalBackend({"always_resolve_into_zero_level_and_layer",
-                                    "emulate_store_and_msaa_resolve"}));
+// Test RenderPassDescriptorResolveRect works correctly when rendering with
+// LoadOp::ExpandResolveTexture.
+TEST_P(DawnLoadResolveTextureTest, ResolveRect) {
+    DAWN_TEST_UNSUPPORTED_IF(
+        !SupportsFeatures({wgpu::FeatureName::DawnPartialLoadResolveTexture}) ||
+        GetParam().mResolveRectType == ResolveRectType::ExpandResolveRect);
 
-DAWN_INSTANTIATE_TEST(MultisampledRenderingWithTransientAttachmentTest,
-                      D3D11Backend(),
-                      D3D12Backend(),
-                      D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
-                      D3D12Backend({}, {"use_d3d12_render_pass"}),
-                      MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
-                      VulkanBackend(),
-                      VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
-                      MetalBackend({"emulate_store_and_msaa_resolve"}),
-                      MetalBackend({"always_resolve_into_zero_level_and_layer"}),
-                      MetalBackend({"always_resolve_into_zero_level_and_layer",
-                                    "emulate_store_and_msaa_resolve"}));
+    auto multiSampledTexture = CreateTextureForRenderAttachment(kColorFormat, 4, 1, 1,
+                                                                /*transientAttachment=*/false,
+                                                                /*supportsTextureBinding=*/false);
+    auto multiSampledTextureView = multiSampledTexture.CreateView();
 
-DAWN_INSTANTIATE_TEST(MultisampledRenderToSingleSampledTest,
-                      D3D11Backend(),
-                      D3D12Backend(),
-                      D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
-                      D3D12Backend({}, {"use_d3d12_render_pass"}),
-                      MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
-                      VulkanBackend(),
-                      VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
-                      MetalBackend({"emulate_store_and_msaa_resolve"}),
-                      MetalBackend({"always_resolve_into_zero_level_and_layer"}),
-                      MetalBackend({"always_resolve_into_zero_level_and_layer",
-                                    "emulate_store_and_msaa_resolve"}));
+    const uint32_t approxMsaaWidth = 3;
+    const uint32_t approxMsaaHeight = 3;
+    auto approxMultiSampledTexture =
+        CreateTextureForRenderAttachment(kColorFormat, 4, 1, 1,
+                                         /*transientAttachment=*/false,
+                                         /*supportsTextureBinding=*/false,
+                                         /*supportsCopyDst=*/false,
+                                         /*width*/ approxMsaaWidth,
+                                         /*height*/ approxMsaaHeight);
+    auto approxMultiSampledTextureView = approxMultiSampledTexture.CreateView();
 
-DAWN_INSTANTIATE_TEST(DawnLoadResolveTextureTest,
-                      D3D11Backend(),
-                      D3D12Backend(),
-                      D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
-                      D3D12Backend({}, {"use_d3d12_render_pass"}),
-                      MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
-                      VulkanBackend(),
-                      VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
-                      VulkanBackend({"resolve_multiple_attachments_in_separate_passes"}),
-                      MetalBackend({"emulate_store_and_msaa_resolve"}),
-                      MetalBackend({"always_resolve_into_zero_level_and_layer"}),
-                      MetalBackend({"always_resolve_into_zero_level_and_layer",
-                                    "emulate_store_and_msaa_resolve"}));
+    auto singleSampledTexture =
+        CreateTextureForRenderAttachment(kColorFormat, 1, 1, 1, /*transientAttachment=*/false,
+                                         /*supportsTextureBinding=*/true);
+    auto singleSampledTextureView = singleSampledTexture.CreateView();
+
+    wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
+    wgpu::RenderPipeline pipeline = CreateRenderPipelineWithOneOutputForTest(
+        /*testDepth=*/false, /*sampleMask=*/0xFFFFFFFF, /*alphaToCoverageEnabled=*/false,
+        /*flipTriangle=*/false, /*enableExpandResolveLoadOp=*/true);
+
+    wgpu::RenderPipeline redPipeline = CreateRenderPipelineWithOneOutputForTest(
+        /*testDepth=*/false, /*sampleMask=*/0xFFFFFFFF, /*alphaToCoverageEnabled=*/false,
+        /*flipTriangle=*/false, /*enableExpandResolveLoadOp=*/false);
+
+    constexpr wgpu::Color kGreen = {0.0f, 0.8f, 0.0f, 0.8f};
+    constexpr wgpu::Color kRed = {0.8f, 0.0f, 0.0f, 0.8f};
+    // In first render pass we draw a red triangle. StoreOp=Discard to discard the MSAA texture's
+    // content.
+    {
+        utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
+            {multiSampledTextureView}, {singleSampledTextureView}, wgpu::LoadOp::Clear,
+            wgpu::LoadOp::Clear,
+            /*hasDepthStencilAttachment=*/false);
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
+        EncodeRenderPassForTest(commandEncoder, renderPass, redPipeline, kRed);
+    }
+
+    // In the second render pass, we draw a green triangle with LoadOp::ExpandResolveTexture. We
+    // also specify a scissor rect requiring the pixels in the right and bottom edges untouched
+    // during expanding and resolving.
+    {
+        utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
+            {approxMultiSampledTextureView}, {singleSampledTextureView},
+            wgpu::LoadOp::ExpandResolveTexture, wgpu::LoadOp::Clear,
+            /*hasDepthStencilAttachment=*/false);
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
+        wgpu::RenderPassDescriptorResolveRect rect{};
+        rect.colorOffsetX = rect.colorOffsetY = 1;
+        rect.resolveOffsetX = rect.resolveOffsetY = 1;
+        rect.width = rect.height = 2;
+        renderPass.nextInChain = &rect;
+        EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
+    }
+
+    wgpu::CommandBuffer commandBuffer = commandEncoder.Finish();
+    queue.Submit(1, &commandBuffer);
+
+    VerifyResolveTarget(kRed, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/1, /*y=*/0);
+    VerifyResolveTarget(kRed, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/2, /*y=*/0);
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/2, /*y=*/1);
+}
+
+// Test RenderPassDescriptorResolveRect works correctly when rendering at different offset with
+// LoadOp::ExpandResolveTexture.
+TEST_P(DawnLoadResolveTextureTest, ResolveRectDifferentOffset) {
+    DAWN_TEST_UNSUPPORTED_IF(
+        !SupportsFeatures({wgpu::FeatureName::DawnPartialLoadResolveTexture}) ||
+        GetParam().mResolveRectType == ResolveRectType::ExpandResolveRect);
+
+    auto multiSampledTexture = CreateTextureForRenderAttachment(kColorFormat, 4, 1, 1,
+                                                                /*transientAttachment=*/false,
+                                                                /*supportsTextureBinding=*/false);
+    auto multiSampledTextureView = multiSampledTexture.CreateView();
+
+    const uint32_t approxMsaaWidth = 5;
+    const uint32_t approxMsaaHeight = 5;
+    auto approxMultiSampledTexture =
+        CreateTextureForRenderAttachment(kColorFormat, 4, 1, 1,
+                                         /*transientAttachment=*/false,
+                                         /*supportsTextureBinding=*/false,
+                                         /*supportsCopyDst=*/false,
+                                         /*width*/ approxMsaaWidth,
+                                         /*height*/ approxMsaaHeight);
+    auto approxMultiSampledTextureView = approxMultiSampledTexture.CreateView();
+
+    auto singleSampledTexture =
+        CreateTextureForRenderAttachment(kColorFormat, 1, 1, 1, /*transientAttachment=*/false,
+                                         /*supportsTextureBinding=*/true);
+    auto singleSampledTextureView = singleSampledTexture.CreateView();
+
+    wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
+    wgpu::RenderPipeline pipeline = CreateRenderPipelineWithOneOutputForTest(
+        /*testDepth=*/false, /*sampleMask=*/0xFFFFFFFF, /*alphaToCoverageEnabled=*/false,
+        /*flipTriangle=*/false, /*enableExpandResolveLoadOp=*/true);
+
+    wgpu::RenderPipeline redPipeline = CreateRenderPipelineWithOneOutputForTest(
+        /*testDepth=*/false, /*sampleMask=*/0xFFFFFFFF, /*alphaToCoverageEnabled=*/false,
+        /*flipTriangle=*/false, /*enableExpandResolveLoadOp=*/false);
+
+    constexpr wgpu::Color kGreen = {0.0f, 0.8f, 0.0f, 0.8f};
+    constexpr wgpu::Color kRed = {0.8f, 0.0f, 0.0f, 0.8f};
+    // In first render pass we draw a red triangle. StoreOp=Discard to discard the MSAA texture's
+    // content.
+    {
+        utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
+            {multiSampledTextureView}, {singleSampledTextureView}, wgpu::LoadOp::Clear,
+            wgpu::LoadOp::Clear,
+            /*hasDepthStencilAttachment=*/false);
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
+        EncodeRenderPassForTest(commandEncoder, renderPass, redPipeline, kRed);
+    }
+
+    // In the second render pass, we draw a green triangle with LoadOp::ExpandResolveTexture. We
+    // also specify a scissor rect requiring the pixels in the right and bottom edges touched
+    // during expanding and resolving.
+    {
+        utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
+            {approxMultiSampledTextureView}, {singleSampledTextureView},
+            wgpu::LoadOp::ExpandResolveTexture, wgpu::LoadOp::Clear,
+            /*hasDepthStencilAttachment=*/false);
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
+        wgpu::RenderPassDescriptorResolveRect rect{};
+        rect.colorOffsetX = rect.colorOffsetY = 1;
+        rect.resolveOffsetX = rect.resolveOffsetY = 0;
+        rect.width = rect.height = 2;
+        renderPass.nextInChain = &rect;
+        EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
+    }
+
+    wgpu::CommandBuffer commandBuffer = commandEncoder.Finish();
+    queue.Submit(1, &commandBuffer);
+
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/1, /*y=*/0);
+    VerifyResolveTarget(kRed, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/2, /*y=*/1);
+}
+
+// Test RenderPassDescriptorResolveRect works correctly when texture as input with
+// LoadOp::ExpandResolveTexture.
+TEST_P(DawnLoadResolveTextureTest, ResolveRectTextureAsInput) {
+    DAWN_TEST_UNSUPPORTED_IF(
+        !SupportsFeatures({wgpu::FeatureName::DawnPartialLoadResolveTexture}) ||
+        GetParam().mResolveRectType == ResolveRectType::ExpandResolveRect);
+
+    const uint32_t resolveWidth = 5;
+    const uint32_t resolveHeight = 5;
+    const uint32_t updateSize = 2;
+    auto singleSampledTexture =
+        CreateTextureForRenderAttachment(kColorFormat, 1, 1, 1, /*transientAttachment=*/false,
+                                         /*supportsTextureBinding=*/true,
+                                         /*supportsCopyDst*/ true,
+                                         /*width*/ resolveWidth,
+                                         /*height*/ resolveHeight);
+    auto singleSampledTextureView = singleSampledTexture.CreateView();
+
+    wgpu::TexelCopyTextureInfo dst = {};
+    dst.texture = singleSampledTexture;
+    std::array<utils::RGBA8, resolveWidth * resolveHeight> rgbaTextureData;
+    for (size_t i = 0; i < rgbaTextureData.size(); ++i) {
+        rgbaTextureData[i] = utils::RGBA8(0, 0, 0, 255);
+    }
+    rgbaTextureData[0] = utils::RGBA8(0, 0, 0, 255);
+    rgbaTextureData[1] = utils::RGBA8(63, 0, 0, 255);
+    rgbaTextureData[resolveWidth] = utils::RGBA8(127, 0, 0, 255);
+    rgbaTextureData[resolveWidth + 1] = utils::RGBA8(255, 0, 0, 255);
+    rgbaTextureData[resolveWidth * 2 + updateSize] = utils::RGBA8(63, 0, 0, 255);
+    rgbaTextureData[resolveWidth * 2 + updateSize + 1] = utils::RGBA8(255, 0, 0, 255);
+    rgbaTextureData[resolveWidth * 3 + updateSize] = utils::RGBA8(0, 0, 127, 255);
+    rgbaTextureData[resolveWidth * 3 + updateSize + 1] = utils::RGBA8(0, 0, 255, 255);
+    wgpu::TexelCopyBufferLayout dataLayout = {};
+    wgpu::TextureDescriptor textureDesc = {};
+    textureDesc.size = {resolveWidth, resolveHeight, 1};
+    dataLayout.bytesPerRow = textureDesc.size.width * sizeof(utils::RGBA8);
+    queue.WriteTexture(&dst, rgbaTextureData.data(), rgbaTextureData.size() * sizeof(utils::RGBA8),
+                       &dataLayout, &textureDesc.size);
+
+    auto multiSampledTexture = CreateTextureForRenderAttachment(kColorFormat, 4, 1, 1,
+                                                                /*transientAttachment=*/false,
+                                                                /*supportsTextureBinding=*/false);
+    auto multiSampledTextureView = multiSampledTexture.CreateView();
+
+    const uint32_t approxMsaaWidth = 5;
+    const uint32_t approxMsaaHeight = 5;
+    auto approxMultiSampledTexture =
+        CreateTextureForRenderAttachment(kColorFormat, 4, 1, 1,
+                                         /*transientAttachment=*/false,
+                                         /*supportsTextureBinding=*/false,
+                                         /*supportsCopyDst=*/false,
+                                         /*width*/ approxMsaaWidth,
+                                         /*height*/ approxMsaaHeight);
+    auto approxMultiSampledTextureView = approxMultiSampledTexture.CreateView();
+    wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
+    wgpu::RenderPipeline pipeline = CreateRenderPipelineWithOneOutputForTest(
+        /*testDepth=*/false, /*sampleMask=*/0xFFFFFFFF, /*alphaToCoverageEnabled=*/false,
+        /*flipTriangle=*/false, /*enableExpandResolveLoadOp=*/true);
+
+    constexpr wgpu::Color kGreen = {0.0f, 0.8f, 0.0f, 0.8f};
+    constexpr wgpu::Color kBlue = {0.0f, 0.0f, 0.8f, 0.8f};
+    // In the first render pass, we draw a green triangle with LoadOp::ExpandResolveTexture. We
+    // also specify a scissor rect requiring the pixels in the left and top edges touched
+    // during expanding and resolving.
+    {
+        utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
+            {approxMultiSampledTextureView}, {singleSampledTextureView},
+            wgpu::LoadOp::ExpandResolveTexture, wgpu::LoadOp::Clear,
+            /*hasDepthStencilAttachment=*/false);
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
+        wgpu::RenderPassDescriptorResolveRect rect{};
+        rect.colorOffsetX = rect.colorOffsetY = 0;
+        rect.resolveOffsetX = rect.resolveOffsetY = 0;
+        rect.width = rect.height = updateSize;
+        renderPass.nextInChain = &rect;
+        EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
+    }
+    // In the second render pass, we draw a blue triangle with LoadOp::ExpandResolveTexture. We
+    // also specify a scissor rect requiring the pixels in the middle touched
+    // during expanding and resolving.
+    {
+        utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
+            {approxMultiSampledTextureView}, {singleSampledTextureView},
+            wgpu::LoadOp::ExpandResolveTexture, wgpu::LoadOp::Clear,
+            /*hasDepthStencilAttachment=*/false);
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
+        wgpu::RenderPassDescriptorResolveRect rect{};
+        rect.colorOffsetX = rect.colorOffsetY = 2;
+        rect.resolveOffsetX = rect.resolveOffsetY = 2;
+        rect.width = rect.height = updateSize;
+        renderPass.nextInChain = &rect;
+        EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kBlue);
+    }
+
+    wgpu::CommandBuffer commandBuffer = commandEncoder.Finish();
+    queue.Submit(1, &commandBuffer);
+
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/1, /*y=*/0);
+    VerifyResolveTarget(kBlue, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/3, /*y=*/2);
+}
+
+DAWN_INSTANTIATE_TEST_P(
+    MultisampledRenderingTest,
+    {D3D11Backend(), D3D12Backend(), D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
+     D3D12Backend({}, {"use_d3d12_render_pass"}), MetalBackend(), OpenGLBackend(),
+     OpenGLESBackend(), VulkanBackend(),
+     VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
+     VulkanBackend({"resolve_multiple_attachments_in_separate_passes"}),
+     MetalBackend({"emulate_store_and_msaa_resolve"}),
+     MetalBackend({"always_resolve_into_zero_level_and_layer"}),
+     MetalBackend({"always_resolve_into_zero_level_and_layer", "emulate_store_and_msaa_resolve"})},
+    std::vector<ResolveRectType>(kResolveRectTypesPlaceholder.begin(),
+                                 kResolveRectTypesPlaceholder.end()));
+
+DAWN_INSTANTIATE_TEST_P(
+    MultisampledRenderingWithTransientAttachmentTest,
+    {D3D11Backend(), D3D12Backend(), D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
+     D3D12Backend({}, {"use_d3d12_render_pass"}), MetalBackend(), OpenGLBackend(),
+     OpenGLESBackend(), VulkanBackend(),
+     VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
+     MetalBackend({"emulate_store_and_msaa_resolve"}),
+     MetalBackend({"always_resolve_into_zero_level_and_layer"}),
+     MetalBackend({"always_resolve_into_zero_level_and_layer", "emulate_store_and_msaa_resolve"})},
+    std::vector<ResolveRectType>(kResolveRectTypesPlaceholder.begin(),
+                                 kResolveRectTypesPlaceholder.end()));
+
+DAWN_INSTANTIATE_TEST_P(
+    MultisampledRenderToSingleSampledTest,
+    {D3D11Backend(), D3D12Backend(), D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
+     D3D12Backend({}, {"use_d3d12_render_pass"}), MetalBackend(), OpenGLBackend(),
+     OpenGLESBackend(), VulkanBackend(),
+     VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
+     MetalBackend({"emulate_store_and_msaa_resolve"}),
+     MetalBackend({"always_resolve_into_zero_level_and_layer"}),
+     MetalBackend({"always_resolve_into_zero_level_and_layer", "emulate_store_and_msaa_resolve"})},
+    std::vector<ResolveRectType>(kResolveRectTypesPlaceholder.begin(),
+                                 kResolveRectTypesPlaceholder.end()));
+
+DAWN_INSTANTIATE_TEST_P(
+    DawnLoadResolveTextureTest,
+    {D3D11Backend(), D3D12Backend(), D3D12Backend({}, {"use_d3d12_resource_heap_tier2"}),
+     D3D12Backend({}, {"use_d3d12_render_pass"}), MetalBackend(), OpenGLBackend(),
+     OpenGLESBackend(), VulkanBackend(),
+     VulkanBackend({"always_resolve_into_zero_level_and_layer"}),
+     VulkanBackend({"resolve_multiple_attachments_in_separate_passes"}),
+     MetalBackend({"emulate_store_and_msaa_resolve"}),
+     MetalBackend({"always_resolve_into_zero_level_and_layer"}),
+     MetalBackend({"always_resolve_into_zero_level_and_layer", "emulate_store_and_msaa_resolve"})},
+    std::vector<ResolveRectType>(kResolveRectTypes.begin(), kResolveRectTypes.end()));
 
 }  // anonymous namespace
 }  // namespace dawn

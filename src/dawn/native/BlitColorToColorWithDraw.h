@@ -105,6 +105,7 @@ using ResolveMultisampleWithDrawPipelinesCache =
 // 'dst' single-sampled texture.
 MaybeError ResolveMultisampleWithDraw(DeviceBase* device,
                                       CommandEncoder* encoder,
+                                      const UnpackedPtr<RenderPassDescriptor>& renderPassDescriptor,
                                       Rect2D rect,
                                       TextureViewBase* src,
                                       TextureViewBase* dst);
