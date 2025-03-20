@@ -16,6 +16,57 @@
       "message": "PTAL, thanks!",
       "revId": "e74230d26a2acde8bffd82433c183786e069966b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "255ccc7f_9f980f93",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T10:06:09Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "e74230d26a2acde8bffd82433c183786e069966b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd75fd9d_d1e3d341",
+        "filename": "src/dawn/native/Limits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T10:06:09Z",
+      "side": 1,
+      "message": "```suggestion\nCombinedLimits ApplyLimitTiers(const CombinedLimits\u0026 limits);\n```\n\nI\u0027m not sure that RVO (return value optimization) is happening at the moment.",
+      "revId": "e74230d26a2acde8bffd82433c183786e069966b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56ae920e_2f0120b5",
+        "filename": "src/dawn/native/Limits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-20T10:06:09Z",
+      "side": 1,
+      "message": "This is already part of 1) so no need to mention it specifically IMHO",
+      "revId": "e74230d26a2acde8bffd82433c183786e069966b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
