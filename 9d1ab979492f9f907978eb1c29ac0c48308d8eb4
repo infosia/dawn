@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9a467d5_1aff1f7c",
+        "filename": "src/tint/lang/wgsl/helpers/flatten_bindings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-20T17:39:22Z",
+      "side": 1,
+      "message": "übernit: We\u0027d typically forward-declare for something like this in a header file.",
+      "revId": "9d1ab979492f9f907978eb1c29ac0c48308d8eb4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ad16485_2e8c244c",
+        "filename": "src/tint/lang/wgsl/helpers/flatten_bindings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-20T17:39:22Z",
+      "side": 1,
+      "message": "Nit: s/program/ir/",
+      "revId": "9d1ab979492f9f907978eb1c29ac0c48308d8eb4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
