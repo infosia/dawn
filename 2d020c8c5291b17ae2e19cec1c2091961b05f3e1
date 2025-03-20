@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "2d020c8c5291b17ae2e19cec1c2091961b05f3e1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5af198c_75e5ad28",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-20T23:55:27Z",
+      "side": 1,
+      "message": "exisitng nit, but I think that the error message will already by default add `[TextureView (label)]`, so maybe just `\"%s format (%s) is not one of the ...\"`?\n\n(You can verify if that\u0027s true in the tests that you wrote by printing the error message from the uncaptured error callback. If that is correct, maybe you can update the rest of the error messages in this function as well?)",
+      "range": {
+        "startLine": 270,
+        "startChar": 21,
+        "endLine": 270,
+        "endChar": 42
+      },
+      "revId": "2d020c8c5291b17ae2e19cec1c2091961b05f3e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
