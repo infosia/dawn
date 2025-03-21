@@ -186,6 +186,8 @@ HandlePixelLocalStorageAndGetPixelLocalStorageUAVs(
                 case wgpu::LoadOp::Load:
                 case wgpu::LoadOp::ExpandResolveTexture:
                     break;
+                case wgpu::LoadOp::DontCare:
+                    // This is handled on front-end.
                 case wgpu::LoadOp::Undefined:
                     DAWN_UNREACHABLE();
                     break;

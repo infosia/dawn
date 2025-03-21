@@ -386,6 +386,10 @@ class DeviceBase : public ErrorSink,
                                                               wgpu::BufferUsage originalUsage,
                                                               size_t bufferSize) const;
 
+    // Convert DontCare load/store op to the real load/store op.
+    wgpu::LoadOp ConvertIfLoadOpIsDontCare(wgpu::TextureUsage usage, wgpu::LoadOp loadOp) const;
+    wgpu::StoreOp ConvertIfStoreOpIsDontCare(wgpu::TextureUsage usage, wgpu::StoreOp storeOp) const;
+
     bool HasFeature(Feature feature) const;
 
     const CombinedLimits& GetLimits() const;
@@ -603,6 +607,10 @@ class DeviceBase : public ErrorSink,
 
     CacheKey mDeviceCacheKey;
     std::unique_ptr<BlobCache> mBlobCache;
+
+    // The actual loadOp/storeOp that represent DontCare.
+    wgpu::LoadOp mBestDontCareLoadOp = wgpu::LoadOp::Clear;
+    wgpu::StoreOp mBestDontCareStoreOp = wgpu::StoreOp::Discard;
 
     // We cache this toggle so that we can check it without locking the device.
     bool mIsImmediateErrorHandlingEnabled = false;
