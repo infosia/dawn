@@ -69,6 +69,24 @@
       "parentUuid": "8d1d4146_5c1ade35",
       "revId": "43767a03997740de3307864e978bc0dfb3ecd4c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0d53cfd_7caa3b4a",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-03-21T03:26:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a9ae1067_69770bc7",
+      "revId": "43767a03997740de3307864e978bc0dfb3ecd4c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

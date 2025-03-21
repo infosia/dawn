@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cf817cfc_e6c005af",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-03-21T03:26:20Z",
+      "side": 1,
+      "message": "Yes I purpose to do so and I\u0027ve renamed it to `GetLoopControlVariableWithConstantInitializerForTest()`.",
+      "parentUuid": "df0313b7_6afd708b",
+      "revId": "050407a365025d11c0d6f8fe4350b908249ed2d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "90534294_7ebac56e",
         "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
         "patchSetId": 6
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-20T19:37:10Z",
       "side": 1,
       "message": "Nit: We use CamelCase for gtest function names.",
+      "revId": "050407a365025d11c0d6f8fe4350b908249ed2d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0e42b07_0b96c8ef",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-03-21T03:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90534294_7ebac56e",
       "revId": "050407a365025d11c0d6f8fe4350b908249ed2d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -76,6 +112,24 @@
           ]
         }
       ],
+      "revId": "050407a365025d11c0d6f8fe4350b908249ed2d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cde231b2_8f4f2ca3",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-03-21T03:26:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd9aeaa9_dc1ed306",
       "revId": "050407a365025d11c0d6f8fe4350b908249ed2d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
