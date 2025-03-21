@@ -479,35 +479,77 @@ MaybeError Queue::WaitForIdleForDestruction() {
 MaybeError ComputePipeline::InitializeImpl() {
     const ProgrammableStage& computeStage = GetStage(SingleShaderStage::Compute);
 
-    tint::Program transformedProgram;
-    tint::ast::transform::Manager transformManager;
-    tint::ast::transform::DataMap transformInputs;
-
+    std::optional<tint::ast::transform::SubstituteOverride::Config> substituteOverrideConfig;
     if (!computeStage.metadata->overrides.empty()) {
-        transformManager.Add<tint::ast::transform::SingleEntryPoint>();
-        transformInputs.Add<tint::ast::transform::SingleEntryPoint::Config>(
-            computeStage.entryPoint.c_str());
-
-        // This needs to run after SingleEntryPoint transform which removes unused overrides for
-        // current entry point.
-        transformManager.Add<tint::ast::transform::SubstituteOverride>();
-        transformInputs.Add<tint::ast::transform::SubstituteOverride::Config>(
-            BuildSubstituteOverridesTransformConfig(computeStage));
+        substituteOverrideConfig = BuildSubstituteOverridesTransformConfig(computeStage);
     }
 
-    auto tintProgram = computeStage.module->GetTintProgram();
-    DAWN_TRY_ASSIGN(transformedProgram, RunTransforms(&transformManager, &(tintProgram->program),
-                                                      transformInputs, nullptr, nullptr));
+    // Convert the AST program to an IR module.
+    auto ir =
+        tint::wgsl::reader::ProgramToLoweredIR(computeStage.module->GetTintProgram()->program);
+    DAWN_INVALID_IF(ir != tint::Success, "An error occurred while generating Tint IR\n%s",
+                    ir.Failure().reason.Str());
 
-    // Do the workgroup size validation.
-    Extent3D _;
-    DAWN_TRY_ASSIGN(
-        _, ValidateComputeStageWorkgroupSize(
-               transformedProgram, computeStage.entryPoint.c_str(),
-               computeStage.metadata->usesSubgroupMatrix,
-               GetDevice()->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize(),
-               LimitsForCompilationRequest::Create(GetDevice()->GetLimits().v1),
-               LimitsForCompilationRequest::Create(GetDevice()->GetAdapter()->GetLimits().v1)));
+    auto singleEntryPointResult =
+        tint::core::ir::transform::SingleEntryPoint(ir.Get(), computeStage.entryPoint.c_str());
+    DAWN_INVALID_IF(singleEntryPointResult != tint::Success,
+                    "Pipeline single entry point (IR) failed:\n%s",
+                    singleEntryPointResult.Failure().reason);
+
+    if (substituteOverrideConfig) {
+        // this needs to run after SingleEntryPoint transform which removes unused
+        // overrides for the current entry point.
+        tint::core::ir::transform::SubstituteOverridesConfig cfg;
+        cfg.map = substituteOverrideConfig->map;
+        auto substituteOverridesResult =
+            tint::core::ir::transform::SubstituteOverrides(ir.Get(), cfg);
+        DAWN_INVALID_IF(substituteOverridesResult != tint::Success,
+                        "Pipeline override substitution (IR) failed:\n%s",
+                        substituteOverridesResult.Failure().reason);
+    }
+
+    // Emit functions.
+    std::optional<std::array<uint32_t, 3>> const_wg_size;
+    for (auto func : ir->functions) {
+        if (func->IsEntryPoint()) {
+            const_wg_size = func->WorkgroupSizeAsConst();
+        }
+    }
+
+    auto limits = LimitsForCompilationRequest::Create(GetDevice()->GetLimits().v1);
+    auto adapterSupportedLimits =
+        LimitsForCompilationRequest::Create(GetDevice()->GetAdapter()->GetLimits().v1);
+    auto maxSubgroupSize = GetDevice()->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize();
+
+    size_t wg_storage_size = 0u;
+#if 0
+    for (auto* inst : *ir->root_block) {
+        if(auto* as_var  = inst->As<core::ir::Var>())
+        {   
+            auto* ptr = var->Result(0)->Type()->As<core::type::Pointer>();
+            if (ptr->AddressSpace() == core::AddressSpace::kWorkgroup) {
+                auto* ty = ptr->StoreType();
+                uint32_t align = ty->Align();
+                uint32_t size = ty->Size();
+    
+                // This essentially matches std430 layout rules from GLSL, which are in
+                // turn specified as an upper bound for Vulkan layout sizing.
+                wg_storage_size += tint::RoundUp(16u, tint::RoundUp(align, size));
+            }
+        }
+    }
+#endif
+
+    //  Workgroup validation has to come after `Generate` because it may require
+    //  overrides to have been substituted.
+    if (const_wg_size) {
+        Extent3D _;
+        DAWN_TRY_ASSIGN(_, ValidateComputeStageWorkgroupSize(
+                               (*const_wg_size)[0], (*const_wg_size)[1], (*const_wg_size)[2],
+                               wg_storage_size, computeStage.metadata->usesSubgroupMatrix,
+                               maxSubgroupSize, limits, adapterSupportedLimits));
+    }
+
     return {};
 }
 
