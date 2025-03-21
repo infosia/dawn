@@ -161,6 +161,8 @@ enum class Toggle {
     D3D11DisableFence,
     IgnoreImportedAHardwareBufferVulkanImageSize,
 
+    UseLoadStoreForDontCare,
+
     EnumCount,
     InvalidEnum = EnumCount,
 };

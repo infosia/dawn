@@ -661,6 +661,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Don't validate the required VkImage size against the size of the AHardwareBuffer on import. "
       "Some drivers report the wrong size.",
       "https://crbug.com/333424893", ToggleStage::Device}},
+    {Toggle::UseLoadStoreForDontCare,
+     {"use_load_store_for_dontcare",
+      "If this toggle is on, LoadOp::DontCare & StoreOp::DontCare will be converted to "
+      "LoadOp::Load & StoreOp::Store implicitly. If this toggle is off, LoadOp::Clear & "
+      "StoreOp::Discard will be used instead.",
+      "https://crbug.com/405326705", ToggleStage::Device}},
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
 }};
 }  // anonymous namespace

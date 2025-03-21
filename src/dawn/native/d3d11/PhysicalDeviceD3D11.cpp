@@ -336,6 +336,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // Use the Tint IR backend by default if the corresponding platform feature is enabled.
     deviceToggles->Default(Toggle::UseTintIR,
                            platform->IsFeatureEnabled(platform::Features::kWebGPUUseTintIR));
+
+    // Use Load/Store for DontCare if the device is not TBR.
+    deviceToggles->Default(Toggle::UseLoadStoreForDontCare, !mDeviceInfo.isTileBasedGPU);
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(

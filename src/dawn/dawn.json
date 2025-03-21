@@ -2311,7 +2311,8 @@
             {"value": 55, "name": "dawn texel copy buffer row alignment", "tags": ["dawn"]},
             {"value": 56, "name": "flexible texture views", "tags": ["dawn"]},
             {"value": 57, "name": "chromium experimental subgroup matrix", "tags": ["dawn"]},
-            {"value": 58, "name": "shared fence EGL sync", "tags": ["dawn", "native"]}
+            {"value": 58, "name": "shared fence EGL sync", "tags": ["dawn", "native"]},
+            {"value": 59, "name": "dawn load store op dont care", "tags": ["dawn", "native"]}
         ]
     },
     "filter mode": {
@@ -2555,7 +2556,8 @@
             {"value": 0, "name": "undefined", "jsrepr": "undefined"},
             {"value": 1, "name": "load"},
             {"value": 2, "name": "clear"},
-            {"value": 3, "name": "expand resolve texture", "tags": ["dawn"]}
+            {"value": 3, "name": "expand resolve texture", "tags": ["dawn"]},
+            {"value": 4, "name": "dont care", "tags": ["dawn"]}
         ]
     },
     "map mode": {
@@ -2579,7 +2581,8 @@
         "values": [
             {"value": 0, "name": "undefined", "jsrepr": "undefined"},
             {"value": 1, "name": "store"},
-            {"value": 2, "name": "discard"}
+            {"value": 2, "name": "discard"},
+            {"value": 3, "name": "dont care", "tags": ["dawn"]}
         ]
     },
     "origin 3D": {

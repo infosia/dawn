@@ -1591,6 +1591,10 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
 
         // Skip all tests if the DawnLoadResolveTexture feature is not supported.
         DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::DawnLoadResolveTexture}));
+
+        if (SupportsFeatures({wgpu::FeatureName::DawnLoadStoreOpDontCare})) {
+            mMsaaDontCareStoreOp = wgpu::StoreOp::DontCare;
+        }
     }
 
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
@@ -1601,6 +1605,9 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
         if (SupportsFeatures({wgpu::FeatureName::DawnPartialLoadResolveTexture})) {
             requiredFeatures.push_back(wgpu::FeatureName::DawnPartialLoadResolveTexture);
         }
+        if (SupportsFeatures({wgpu::FeatureName::DawnLoadStoreOpDontCare})) {
+            requiredFeatures.push_back(wgpu::FeatureName::DawnLoadStoreOpDontCare);
+        }
         if (SupportsFeatures({wgpu::FeatureName::TransientAttachments})) {
             requiredFeatures.push_back(wgpu::FeatureName::TransientAttachments);
         }
@@ -1610,6 +1617,11 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
     bool HasResolveMultipleAttachmentInSeparatePassesToggle() {
         return HasToggleEnabled("resolve_multiple_attachments_in_separate_passes");
     }
+
+    wgpu::StoreOp GetDontCareStoreOp() const { return mMsaaDontCareStoreOp; }
+
+  private:
+    wgpu::StoreOp mMsaaDontCareStoreOp = wgpu::StoreOp::Discard;
 };
 
 // Test rendering into a resolve texture then start another render pass with
@@ -1641,7 +1653,7 @@ TEST_P(DawnLoadResolveTextureTest, DrawThenLoad) {
             {multiSampledTextureView}, {singleSampledTextureView}, wgpu::LoadOp::Clear,
             wgpu::LoadOp::Clear,
             /*testDepth=*/false);
-        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
+        renderPass.cColorAttachments[0].storeOp = GetDontCareStoreOp();
         EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
     }
 
@@ -1651,7 +1663,7 @@ TEST_P(DawnLoadResolveTextureTest, DrawThenLoad) {
             {multiSampledTextureView}, {singleSampledTextureView},
             wgpu::LoadOp::ExpandResolveTexture, wgpu::LoadOp::Load,
             /*testDepth=*/false);
-        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
+        renderPass.cColorAttachments[0].storeOp = GetDontCareStoreOp();
         wgpu::RenderPassEncoder renderPassEncoder = commandEncoder.BeginRenderPass(&renderPass);
         renderPassEncoder.End();
     }
@@ -1689,7 +1701,7 @@ TEST_P(DawnLoadResolveTextureTest, DrawThenLoadNonZeroIndexedAttachment) {
             {nullptr, multiSampledTextureView}, {nullptr, singleSampledTextureView},
             wgpu::LoadOp::Clear, wgpu::LoadOp::Clear,
             /*testDepth=*/false);
-        renderPass.cColorAttachments[1].storeOp = wgpu::StoreOp::Discard;
+        renderPass.cColorAttachments[1].storeOp = GetDontCareStoreOp();
         EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
     }
 
@@ -1699,7 +1711,7 @@ TEST_P(DawnLoadResolveTextureTest, DrawThenLoadNonZeroIndexedAttachment) {
             {nullptr, multiSampledTextureView}, {nullptr, singleSampledTextureView},
             wgpu::LoadOp::ExpandResolveTexture, wgpu::LoadOp::Load,
             /*testDepth=*/false);
-        renderPass.cColorAttachments[1].storeOp = wgpu::StoreOp::Discard;
+        renderPass.cColorAttachments[1].storeOp = GetDontCareStoreOp();
         wgpu::RenderPassEncoder renderPassEncoder = commandEncoder.BeginRenderPass(&renderPass);
         renderPassEncoder.End();
     }
@@ -2092,9 +2104,9 @@ TEST_P(DawnLoadResolveTextureTest, TwoOutputsDrawWithDepthTestColor0AndColor1) {
             wgpu::LoadOp::ExpandResolveTexture, wgpu::LoadOp::Clear,
             /*testDepth=*/true);
         renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::ExpandResolveTexture;
-        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
+        renderPass.cColorAttachments[0].storeOp = GetDontCareStoreOp();
         renderPass.cColorAttachments[1].loadOp = wgpu::LoadOp::ExpandResolveTexture;
-        renderPass.cColorAttachments[1].storeOp = wgpu::StoreOp::Discard;
+        renderPass.cColorAttachments[1].storeOp = GetDontCareStoreOp();
 
         std::array<float, 8> kUniformData = {
             static_cast<float>(kRed.r),   static_cast<float>(kRed.g),
@@ -2221,7 +2233,7 @@ TEST_P(DawnLoadResolveTextureTest, ClearThenLoadAndDrawWithRect) {
             {multiSampledTextureView}, {singleSampledTextureView}, wgpu::LoadOp::Clear,
             wgpu::LoadOp::Clear,
             /*testDepth=*/false);
-        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Discard;
+        renderPass.cColorAttachments[0].storeOp = GetDontCareStoreOp();
 
         wgpu::RenderPassEncoder renderPassEncoder = commandEncoder.BeginRenderPass(&renderPass);
         renderPassEncoder.End();
@@ -2235,7 +2247,7 @@ TEST_P(DawnLoadResolveTextureTest, ClearThenLoadAndDrawWithRect) {
             {multiSampledTextureView}, {singleSampledTextureView},
             wgpu::LoadOp::ExpandResolveTexture, wgpu::LoadOp::Clear,
             /*testDepth=*/false);
-        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
+        renderPass.cColorAttachments[0].storeOp = GetDontCareStoreOp();
         wgpu::RenderPassDescriptorExpandResolveRect rect{};
         rect.x = rect.y = 0;
         rect.width = kWidth - 1;

@@ -1743,6 +1743,74 @@ TEST_F(RenderPassDescriptorValidationTest, RenderPassColorAttachmentBytesPerSamp
     }
 }
 
+// Test that using LoadOp::DontCare without DawnLoadStoreOpDontCare feature results in error.
+TEST_F(RenderPassDescriptorValidationTest, ErrorUseDontCareLoadOpWithoutFeature) {
+    // Using DontCare LoadOp for color attachment results in error.
+    {
+        wgpu::TextureView renderView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        utils::ComboRenderPassDescriptor renderPass({renderView});
+        renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::DontCare;
+        AssertBeginRenderPassError(&renderPass, testing::HasSubstr("DawnLoadStoreOpDontCare"));
+    }
+
+    // Using DontCare LoadOp for depth attachment results in error.
+    {
+        wgpu::TextureView colorView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        wgpu::TextureView depthStencilView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::Depth24PlusStencil8);
+        utils::ComboRenderPassDescriptor renderPass({colorView}, depthStencilView);
+        renderPass.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::DontCare;
+        AssertBeginRenderPassError(&renderPass, testing::HasSubstr("DawnLoadStoreOpDontCare"));
+    }
+
+    // Using DontCare LoadOp for stencil attachment results in error.
+    {
+        wgpu::TextureView colorView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        wgpu::TextureView depthStencilView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::Depth24PlusStencil8);
+        utils::ComboRenderPassDescriptor renderPass({colorView}, depthStencilView);
+        renderPass.cDepthStencilAttachmentInfo.stencilLoadOp = wgpu::LoadOp::DontCare;
+        AssertBeginRenderPassError(&renderPass, testing::HasSubstr("DawnLoadStoreOpDontCare"));
+    }
+}
+
+// Test that using StoreOp::DontCare without DawnLoadStoreOpDontCare feature results in error.
+TEST_F(RenderPassDescriptorValidationTest, ErrorUseDontCareStoreOpWithoutFeature) {
+    // Using DontCare StoreOp for color attachment results in error.
+    {
+        wgpu::TextureView renderView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        utils::ComboRenderPassDescriptor renderPass({renderView});
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::DontCare;
+        AssertBeginRenderPassError(&renderPass, testing::HasSubstr("DawnLoadStoreOpDontCare"));
+    }
+
+    // Using DontCare StoreOp for depth attachment results in error.
+    {
+        wgpu::TextureView colorView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        wgpu::TextureView depthStencilView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::Depth24PlusStencil8);
+        utils::ComboRenderPassDescriptor renderPass({colorView}, depthStencilView);
+        renderPass.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::DontCare;
+        AssertBeginRenderPassError(&renderPass, testing::HasSubstr("DawnLoadStoreOpDontCare"));
+    }
+
+    // Using DontCare StoreOp for stencil attachment results in error.
+    {
+        wgpu::TextureView colorView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        wgpu::TextureView depthStencilView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::Depth24PlusStencil8);
+        utils::ComboRenderPassDescriptor renderPass({colorView}, depthStencilView);
+        renderPass.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::DontCare;
+        AssertBeginRenderPassError(&renderPass, testing::HasSubstr("DawnLoadStoreOpDontCare"));
+    }
+}
+
 // TODO(cwallez@chromium.org): Constraints on attachment aliasing?
 
 class MSAARenderToSingleSampledRenderPassDescriptorValidationTest
@@ -2160,6 +2228,111 @@ TEST_F(DawnPartialLoadResolveTextureValidationTest, ExpandResolveRectInvalidLoad
     renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::Load;
 
     AssertBeginRenderPassError(&renderPass);
+}
+
+class DawnLoadStoreOpDontCareValidationTest : public RenderPassDescriptorValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::DawnLoadStoreOpDontCare,
+                wgpu::FeatureName::TransientAttachments};
+    }
+};
+
+// Test that using LoadOp::DontCare with DawnLoadStoreOpDontCare feature should work.
+TEST_F(DawnLoadStoreOpDontCareValidationTest, UseDontCareLoadOpSuccess) {
+    // Using DontCare LoadOp for color attachment.
+    {
+        wgpu::TextureView renderView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        utils::ComboRenderPassDescriptor renderPass({renderView});
+        renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::DontCare;
+        AssertBeginRenderPassSuccess(&renderPass);
+    }
+
+    // Using DontCare LoadOp for depth attachment.
+    {
+        wgpu::TextureView colorView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        wgpu::TextureView depthStencilView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::Depth24PlusStencil8);
+        utils::ComboRenderPassDescriptor renderPass({colorView}, depthStencilView);
+        renderPass.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::DontCare;
+        AssertBeginRenderPassSuccess(&renderPass);
+    }
+
+    // Using DontCare LoadOp for stencil attachment.
+    {
+        wgpu::TextureView colorView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        wgpu::TextureView depthStencilView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::Depth24PlusStencil8);
+        utils::ComboRenderPassDescriptor renderPass({colorView}, depthStencilView);
+        renderPass.cDepthStencilAttachmentInfo.stencilLoadOp = wgpu::LoadOp::DontCare;
+        AssertBeginRenderPassSuccess(&renderPass);
+    }
+}
+
+// Test that using StoreOp::DontCare with DawnLoadStoreOpDontCare feature should work.
+TEST_F(DawnLoadStoreOpDontCareValidationTest, UseDontCareStoreOpSuccess) {
+    // Using DontCare StoreOp for color attachment.
+    {
+        wgpu::TextureView renderView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        utils::ComboRenderPassDescriptor renderPass({renderView});
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::DontCare;
+        AssertBeginRenderPassSuccess(&renderPass);
+    }
+
+    // Using DontCare StoreOp for depth attachment.
+    {
+        wgpu::TextureView colorView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        wgpu::TextureView depthStencilView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::Depth24PlusStencil8);
+        utils::ComboRenderPassDescriptor renderPass({colorView}, depthStencilView);
+        renderPass.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::DontCare;
+        AssertBeginRenderPassSuccess(&renderPass);
+    }
+
+    // Using DontCare StoreOp for stencil attachment.
+    {
+        wgpu::TextureView colorView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+        wgpu::TextureView depthStencilView =
+            Create2DAttachment(device, 1, 1, wgpu::TextureFormat::Depth24PlusStencil8);
+        utils::ComboRenderPassDescriptor renderPass({colorView}, depthStencilView);
+        renderPass.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::DontCare;
+        AssertBeginRenderPassSuccess(&renderPass);
+    }
+}
+
+// Test that using DontCare load/storeOp with TransientAttachment texture should work.
+TEST_F(DawnLoadStoreOpDontCareValidationTest,
+       UseDontCareLoadStoreOpWithTransientAttachmentSuccess) {
+    auto multisampledColorTexture = CreateTexture(
+        device, wgpu::TextureDimension::e2D, wgpu::TextureFormat::RGBA8Unorm, 1, 1, 1, 1,
+        /*sampleCount=*/4,
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment);
+    auto multisampledColorView = multisampledColorTexture.CreateView();
+
+    wgpu::TextureView resolveView =
+        Create2DAttachment(device, 1, 1, wgpu::TextureFormat::RGBA8Unorm);
+
+    auto depthStencilTexture = CreateTexture(
+        device, wgpu::TextureDimension::e2D, wgpu::TextureFormat::Depth24PlusStencil8, 1, 1, 1, 1,
+        /*sampleCount=*/4,
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::TransientAttachment);
+    auto depthStencilView = depthStencilTexture.CreateView();
+
+    utils::ComboRenderPassDescriptor renderPass({multisampledColorView}, depthStencilView);
+    renderPass.cColorAttachments[0].resolveTarget = resolveView;
+    renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::DontCare;
+    renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::DontCare;
+    renderPass.cDepthStencilAttachmentInfo.depthLoadOp = wgpu::LoadOp::DontCare;
+    renderPass.cDepthStencilAttachmentInfo.depthStoreOp = wgpu::StoreOp::DontCare;
+    renderPass.cDepthStencilAttachmentInfo.stencilLoadOp = wgpu::LoadOp::DontCare;
+    renderPass.cDepthStencilAttachmentInfo.stencilStoreOp = wgpu::StoreOp::DontCare;
+    AssertBeginRenderPassSuccess(&renderPass);
 }
 
 }  // anonymous namespace
