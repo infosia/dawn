@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c390f12f_aa123e7f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-21T16:56:45Z",
+      "side": 1,
+      "message": "Can this be more specific? \"Required by WebGPU\" or \"Required by graphite\"?",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "449019c5241109c5663a6a2127e62a173302e7e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
