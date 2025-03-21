@@ -1629,6 +1629,7 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         case wgpu::FeatureName::DawnPartialLoadResolveTexture:
         case wgpu::FeatureName::DawnTexelCopyBufferRowAlignment:
         case wgpu::FeatureName::FlexibleTextureViews:
+        case wgpu::FeatureName::DawnLoadStoreOpDontCare:
             return false;
     }
     return false;
