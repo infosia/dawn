@@ -47,6 +47,8 @@ VkAttachmentLoadOp VulkanAttachmentLoadOp(wgpu::LoadOp op) {
             return VK_ATTACHMENT_LOAD_OP_CLEAR;
         case wgpu::LoadOp::ExpandResolveTexture:
             return VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+        case wgpu::LoadOp::DontCare:
+        // This is handled on front-end.
         case wgpu::LoadOp::Undefined:
             DAWN_UNREACHABLE();
             break;
@@ -62,6 +64,8 @@ VkAttachmentStoreOp VulkanAttachmentStoreOp(wgpu::StoreOp op) {
             return VK_ATTACHMENT_STORE_OP_STORE;
         case wgpu::StoreOp::Discard:
             return VK_ATTACHMENT_STORE_OP_DONT_CARE;
+        case wgpu::StoreOp::DontCare:
+        // This is handled on front-end.
         case wgpu::StoreOp::Undefined:
             DAWN_UNREACHABLE();
             break;
