@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "468e2bc3_3fcdcb04",
+        "filename": "src/dawn/native/d3d11/DeviceInfoD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-21T19:12:17Z",
+      "side": 1,
+      "message": "nit. We should link a TODO to the bug here.",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 97
+      },
+      "revId": "c829d0e7081f6ecba02102b9b0ac33f0892d1035",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
