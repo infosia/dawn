@@ -56,13 +56,13 @@ namespace {
 // Tests for ScanForward
 TEST(Math, ScanForward) {
     // Test extrema
-    ASSERT_EQ(ScanForward(1), 0u);
-    ASSERT_EQ(ScanForward(0x80000000), 31u);
+    ASSERT_EQ(ScanForward(1u), 0u);
+    ASSERT_EQ(ScanForward(0x80000000u), 31u);
 
     // Test with more than one bit set.
-    ASSERT_EQ(ScanForward(256), 8u);
-    ASSERT_EQ(ScanForward(256 + 32), 5u);
-    ASSERT_EQ(ScanForward(1024 + 256 + 32), 5u);
+    ASSERT_EQ(ScanForward(256u), 8u);
+    ASSERT_EQ(ScanForward(256u + 32u), 5u);
+    ASSERT_EQ(ScanForward(1024u + 256u + 32u), 5u);
 }
 
 // Tests for Log2

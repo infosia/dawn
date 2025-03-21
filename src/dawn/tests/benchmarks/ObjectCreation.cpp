@@ -126,6 +126,54 @@ BENCHMARK_REGISTER_F(ObjectCreation, UniqueBindGroupLayout)
     ->Threads(4)
     ->Threads(16);
 
+BENCHMARK_DEFINE_F(ObjectCreation, SameBindGroup)
+(benchmark::State& state) {
+    std::vector<wgpu::BindGroupLayoutEntry> layoutEntries(state.range(0));
+    for (uint32_t i = 0; i < layoutEntries.size(); ++i) {
+        layoutEntries[i].binding = i;
+        layoutEntries[i].visibility = wgpu::ShaderStage::Vertex | wgpu::ShaderStage::Fragment;
+        layoutEntries[i].buffer.type = wgpu::BufferBindingType::Uniform;
+    }
+
+    wgpu::BindGroupLayoutDescriptor bglDesc = {};
+    bglDesc.entryCount = layoutEntries.size();
+    bglDesc.entries = layoutEntries.data();
+
+    wgpu::BindGroupLayout layout = device.CreateBindGroupLayout(&bglDesc);
+
+    wgpu::BufferDescriptor bufferDesc;
+    bufferDesc.size = layoutEntries.size() * 256;
+    bufferDesc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::Uniform;
+
+    wgpu::Buffer uniformBuffer = device.CreateBuffer(&bufferDesc);
+
+    std::vector<wgpu::BindGroupEntry> entries(state.range(0));
+        for (uint32_t i = 0; i < entries.size(); ++i) {
+        entries[i].binding = i;
+        entries[i].buffer = uniformBuffer;
+        entries[i].offset = i * 256;
+        entries[i].size = 64;
+    }
+
+    wgpu::BindGroupDescriptor descriptor;
+    descriptor.layout = layout;
+    descriptor.entryCount = entries.size();
+    descriptor.entries = entries.data();
+
+    std::vector<wgpu::BindGroup> bindGroups;
+    bindGroups.reserve(100000);
+    bindGroups.push_back(device.CreateBindGroup(&descriptor));
+    for (auto _ : state) {
+        bindGroups.push_back(device.CreateBindGroup(&descriptor));
+    }
+}
+BENCHMARK_REGISTER_F(ObjectCreation, SameBindGroup)
+    ->Arg(1)
+    ->Arg(12)
+    ->Threads(1)
+    ->Threads(4)
+    ->Threads(16);
+
 BENCHMARK_DEFINE_F(ObjectCreation, SameSampler)
 (benchmark::State& state) {
     std::vector<wgpu::Sampler> samplers;
