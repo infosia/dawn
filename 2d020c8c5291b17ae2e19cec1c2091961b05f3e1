@@ -39,6 +39,30 @@
       },
       "revId": "2d020c8c5291b17ae2e19cec1c2091961b05f3e1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acee9cd5_0f6b8cc3",
+        "filename": "src/dawn/native/BindGroup.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-21T08:13:14Z",
+      "side": 1,
+      "message": "It\u0027s much better indeed. Thanks!\n```\n[TextureView of Texture (unlabeled 450x450 px, TextureFormat::RGBA8Unorm)] format (TextureFormat::RGBA8UnormSrgb) is not TextureFormat::RGBA8Unorm, TextureFormat::BGRA8Unorm, or TextureFormat::RGBA16Float.\n - While validating entries[1] as a TextureView.\nExpected entry layout: [BindGroupLayoutInternal (unlabeled)]\n - While validating [BindGroupDescriptor] against [BindGroupLayout (unlabeled)]\n - While calling [Device].CreateBindGroup([BindGroupDescriptor]).\n\n```",
+      "parentUuid": "b5af198c_75e5ad28",
+      "range": {
+        "startLine": 270,
+        "startChar": 21,
+        "endLine": 270,
+        "endChar": 42
+      },
+      "revId": "2d020c8c5291b17ae2e19cec1c2091961b05f3e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
