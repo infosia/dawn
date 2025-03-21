@@ -51,6 +51,14 @@ ResultOrError<DeviceInfo> GatherDeviceInfo(const ComPtr<IDXGIAdapter3>& adapter,
     // non-zero offsets.
     DAWN_INVALID_IF(!options.ConstantBufferOffsetting, "ConstantBufferOffsetting is not supported");
 
+    D3D11_FEATURE_DATA_ARCHITECTURE_INFO architectureInfo;
+    if (SUCCEEDED(device->CheckFeatureSupport(D3D11_FEATURE_ARCHITECTURE_INFO, &architectureInfo,
+                                              sizeof(architectureInfo)))) {
+        info.isTileBasedGPU = architectureInfo.TileBasedDeferredRenderer;
+    } else {
+        info.isTileBasedGPU = false;
+    }
+
     D3D11_FEATURE_DATA_D3D11_OPTIONS2 options2;
     DAWN_TRY(CheckHRESULT(
         device->CheckFeatureSupport(D3D11_FEATURE_D3D11_OPTIONS2, &options2, sizeof(options2)),
