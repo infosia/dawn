@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "799539f3_ae13364c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-21T21:21:53Z",
+      "side": 1,
+      "message": "Note that if the crash happened during Graphite initialization, the GPU process would restart. If it crashed 3 times, then the GPU process would fall back to Ganesh which won\u0027t use Dawn.\n\nThe behavior before those two changes was somewhat the same: We queried for `ID3D11Device5` and if it wasn\u0027t available on older devices, we then return Error to Chrome (instead of crashing), and chrome would fall back to Ganesh.",
+      "parentUuid": "87142f0e_72e9792a",
+      "revId": "d222a67b9a079f0c1e3d1caa511296cd77b462cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ef30f761_9b28e547",
         "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
         "patchSetId": 2
@@ -31,6 +49,30 @@
       "writtenOn": "2025-03-21T21:12:09Z",
       "side": 1,
       "message": "Does it matter that this is not a `ID3D11Device5` in this case?",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 201,
+        "endChar": 43
+      },
+      "revId": "d222a67b9a079f0c1e3d1caa511296cd77b462cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df4a728e_b2eb8f80",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-21T21:21:53Z",
+      "side": 1,
+      "message": "No, it doesn\u0027t matter. If we used the wrong pointer in any place, the compiler would complain first.\n\nI suspect the crash was caused by initialization failures because to we passed ID3D11Device5 uuid to `CreateDeviceContextState` below which is not available on older OSs. The rest of the code in this file doesn\u0027t need `ID3D11Device5`.",
+      "parentUuid": "ef30f761_9b28e547",
       "range": {
         "startLine": 201,
         "startChar": 4,
