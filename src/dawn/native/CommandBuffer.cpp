@@ -193,6 +193,8 @@ void LazyClearRenderPassAttachments(BeginRenderPassCmd* renderPass) {
                 view->GetTexture()->SetIsSubresourceContentInitialized(false, range);
                 break;
 
+            case wgpu::StoreOp::DontCare:  // This should already be converted to the actual store
+                                           // op.
             case wgpu::StoreOp::Undefined:
                 DAWN_UNREACHABLE();
                 break;
@@ -261,6 +263,7 @@ void LazyClearRenderPassAttachments(BeginRenderPassCmd* renderPass) {
                     view->GetTexture()->SetIsSubresourceContentInitialized(false, range);
                     break;
 
+                case wgpu::StoreOp::DontCare:
                 case wgpu::StoreOp::Undefined:
                     DAWN_UNREACHABLE();
                     break;

@@ -197,6 +197,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                 descriptor.colorAttachments[i].loadAction = MTLLoadActionDontCare;
                 break;
 
+            case wgpu::LoadOp::DontCare:
+                // This is handled on front-end.
             case wgpu::LoadOp::Undefined:
                 DAWN_UNREACHABLE();
                 break;
@@ -224,6 +226,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                 case wgpu::StoreOp::Discard:
                     descriptor.colorAttachments[i].storeAction = MTLStoreActionMultisampleResolve;
                     break;
+                case wgpu::StoreOp::DontCare:
+                    // This is handled on front-end.
                 case wgpu::StoreOp::Undefined:
                     DAWN_UNREACHABLE();
                     break;
@@ -236,6 +240,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                 case wgpu::StoreOp::Discard:
                     descriptor.colorAttachments[i].storeAction = MTLStoreActionDontCare;
                     break;
+                case wgpu::StoreOp::DontCare:
+                    // This is handled on front-end.
                 case wgpu::StoreOp::Undefined:
                     DAWN_UNREACHABLE();
                     break;
@@ -263,6 +269,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                     descriptor.depthAttachment.storeAction = MTLStoreActionDontCare;
                     break;
 
+                case wgpu::StoreOp::DontCare:
+                    // This is handled on front-end.
                 case wgpu::StoreOp::Undefined:
                     DAWN_UNREACHABLE();
                     break;
@@ -279,6 +287,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                     break;
 
                 case wgpu::LoadOp::ExpandResolveTexture:
+                case wgpu::LoadOp::DontCare:
+                // This is handled on front-end.
                 case wgpu::LoadOp::Undefined:
                     DAWN_UNREACHABLE();
                     break;
@@ -299,6 +309,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                     descriptor.stencilAttachment.storeAction = MTLStoreActionDontCare;
                     break;
 
+                case wgpu::StoreOp::DontCare:
+                    // This is handled on front-end.
                 case wgpu::StoreOp::Undefined:
                     DAWN_UNREACHABLE();
                     break;
@@ -315,6 +327,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                     break;
 
                 case wgpu::LoadOp::ExpandResolveTexture:
+                case wgpu::LoadOp::DontCare:
+                // This is handled on front-end.
                 case wgpu::LoadOp::Undefined:
                     DAWN_UNREACHABLE();
                     break;
@@ -385,6 +399,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                     mtlAttachment.loadAction = MTLLoadActionDontCare;
                     break;
 
+                case wgpu::LoadOp::DontCare:
+                    // This is handled on front-end.
                 case wgpu::LoadOp::Undefined:
                     DAWN_UNREACHABLE();
                     break;
@@ -397,6 +413,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                 case wgpu::StoreOp::Discard:
                     mtlAttachment.storeAction = MTLStoreActionDontCare;
                     break;
+                case wgpu::StoreOp::DontCare:
+                    // This is handled on front-end.
                 case wgpu::StoreOp::Undefined:
                     DAWN_UNREACHABLE();
                     break;

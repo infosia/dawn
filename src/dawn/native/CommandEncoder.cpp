@@ -28,6 +28,7 @@
 #include "dawn/native/CommandEncoder.h"
 
 #include <string_view>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -522,6 +523,25 @@ MaybeError ValidateExpandResolveTextureLoadOp(const DeviceBase* device,
     return {};
 }
 
+template <typename T>
+MaybeError ValidateIfLoadStoreOpIsDontCare(const DeviceBase* device, T loadOrStore) {
+    if constexpr (std::is_same_v<T, wgpu::LoadOp>) {
+        if (loadOrStore != wgpu::LoadOp::DontCare) {
+            return {};
+        }
+    } else {
+        if (loadOrStore != wgpu::StoreOp::DontCare) {
+            return {};
+        }
+    }
+
+    DAWN_INVALID_IF(!device->HasFeature(Feature::DawnLoadStoreOpDontCare),
+                    "%s is used while the %s is not enabled.", loadOrStore,
+                    ToAPI(Feature::DawnLoadStoreOpDontCare));
+
+    return {};
+}
+
 MaybeError ValidateRenderPassColorAttachment(DeviceBase* device,
                                              const RenderPassColorAttachment& colorAttachment,
                                              UsageValidationMode usageValidationMode,
@@ -559,15 +579,19 @@ MaybeError ValidateRenderPassColorAttachment(DeviceBase* device,
 
     DAWN_TRY(ValidateLoadOp(colorAttachment.loadOp));
     DAWN_TRY(ValidateStoreOp(colorAttachment.storeOp));
+    DAWN_TRY(ValidateIfLoadStoreOpIsDontCare(device, colorAttachment.loadOp));
+    DAWN_TRY(ValidateIfLoadStoreOpIsDontCare(device, colorAttachment.storeOp));
     DAWN_INVALID_IF(colorAttachment.loadOp == wgpu::LoadOp::Undefined, "loadOp must be set.");
     DAWN_INVALID_IF(colorAttachment.storeOp == wgpu::StoreOp::Undefined, "storeOp must be set.");
     if (attachment->GetUsage() & wgpu::TextureUsage::TransientAttachment) {
         DAWN_INVALID_IF(colorAttachment.loadOp != wgpu::LoadOp::Clear &&
-                            colorAttachment.loadOp != wgpu::LoadOp::ExpandResolveTexture,
+                            colorAttachment.loadOp != wgpu::LoadOp::ExpandResolveTexture &&
+                            colorAttachment.loadOp != wgpu::LoadOp::DontCare,
                         "The color attachment %s has the load op set to %s while its usage (%s) "
                         "has the transient attachment bit set.",
                         attachment, colorAttachment.loadOp, attachment->GetUsage());
-        DAWN_INVALID_IF(colorAttachment.storeOp != wgpu::StoreOp::Discard,
+        DAWN_INVALID_IF(colorAttachment.storeOp != wgpu::StoreOp::Discard &&
+                            colorAttachment.storeOp != wgpu::StoreOp::DontCare,
                         "The color attachment %s has the store op set to %s while its usage (%s) "
                         "has the transient attachment bit set.",
                         attachment, wgpu::StoreOp::Store, attachment->GetUsage());
@@ -692,6 +716,11 @@ MaybeError ValidateRenderPassDepthStencilAttachment(
                         unpacked->depthClearValue, attachment);
     }
 
+    DAWN_TRY(ValidateIfLoadStoreOpIsDontCare(device, unpacked->depthLoadOp));
+    DAWN_TRY(ValidateIfLoadStoreOpIsDontCare(device, unpacked->depthStoreOp));
+    DAWN_TRY(ValidateIfLoadStoreOpIsDontCare(device, unpacked->stencilLoadOp));
+    DAWN_TRY(ValidateIfLoadStoreOpIsDontCare(device, unpacked->stencilStoreOp));
+
     DAWN_TRY(ValidateAttachmentArrayLayersAndLevelCount(attachment));
 
     DAWN_TRY(validationState->AddAttachment(attachment, AttachmentType::DepthStencilAttachment));
@@ -717,6 +746,11 @@ MaybeError ValidateRenderPassPLS(DeviceBase* device,
         // Validate the load/storeOp and the clearValue.
         DAWN_TRY(ValidateLoadOp(attachment.loadOp));
         DAWN_TRY(ValidateStoreOp(attachment.storeOp));
+        DAWN_INVALID_IF(attachment.loadOp == wgpu::LoadOp::DontCare,
+                        "storageAttachments[%i].loadOp must not be %s.", i, wgpu::LoadOp::DontCare);
+        DAWN_INVALID_IF(attachment.storeOp == wgpu::StoreOp::DontCare,
+                        "storageAttachments[%i].storeOp must not be %s.", i,
+                        wgpu::StoreOp::DontCare);
         DAWN_INVALID_IF(attachment.loadOp == wgpu::LoadOp::Undefined,
                         "storageAttachments[%i].loadOp must be set.", i);
         DAWN_INVALID_IF(attachment.storeOp == wgpu::StoreOp::Undefined,
@@ -1269,8 +1303,10 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                     descColorAttachment.depthSlice == wgpu::kDepthSliceUndefined
                         ? 0
                         : descColorAttachment.depthSlice;
-                cmdColorAttachment.loadOp = descColorAttachment.loadOp;
-                cmdColorAttachment.storeOp = descColorAttachment.storeOp;
+                cmdColorAttachment.loadOp = device->ConvertIfLoadOpIsDontCare(
+                    colorTarget->GetInternalUsage(), descColorAttachment.loadOp);
+                cmdColorAttachment.storeOp = device->ConvertIfStoreOpIsDontCare(
+                    colorTarget->GetInternalUsage(), descColorAttachment.storeOp);
 
                 cmdColorAttachment.resolveTarget = resolveTarget;
                 cmdColorAttachment.clearColor = ClampClearColorValueToLegalRange(
@@ -1298,6 +1334,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                         break;
                     case wgpu::LoadOp::Load:
                     case wgpu::LoadOp::Undefined:
+                    case wgpu::LoadOp::DontCare:
                         // Set depthClearValue to 0 if it is the load op is not clear.
                         // The default value NaN may be invalid in the backend.
                         cmd->depthStencilAttachment.clearDepth = 0.f;
@@ -1328,10 +1365,13 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 if (attachment->GetFormat().HasDepth()) {
                     cmd->depthStencilAttachment.depthReadOnly = depthReadOnly;
                     if (!depthReadOnly) {
-                        cmd->depthStencilAttachment.depthLoadOp =
-                            descriptor->depthStencilAttachment->depthLoadOp;
+                        cmd->depthStencilAttachment.depthLoadOp = device->ConvertIfLoadOpIsDontCare(
+                            attachment->GetInternalUsage(),
+                            descriptor->depthStencilAttachment->depthLoadOp);
                         cmd->depthStencilAttachment.depthStoreOp =
-                            descriptor->depthStencilAttachment->depthStoreOp;
+                            device->ConvertIfStoreOpIsDontCare(
+                                attachment->GetInternalUsage(),
+                                descriptor->depthStencilAttachment->depthStoreOp);
                     }
 
                     usageRange.aspects = Aspect::Depth;
@@ -1356,9 +1396,13 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                     cmd->depthStencilAttachment.stencilReadOnly = stencilReadOnly;
                     if (!stencilReadOnly) {
                         cmd->depthStencilAttachment.stencilLoadOp =
-                            descriptor->depthStencilAttachment->stencilLoadOp;
+                            device->ConvertIfLoadOpIsDontCare(
+                                attachment->GetInternalUsage(),
+                                descriptor->depthStencilAttachment->stencilLoadOp);
                         cmd->depthStencilAttachment.stencilStoreOp =
-                            descriptor->depthStencilAttachment->stencilStoreOp;
+                            device->ConvertIfStoreOpIsDontCare(
+                                attachment->GetInternalUsage(),
+                                descriptor->depthStencilAttachment->stencilStoreOp);
                     }
 
                     usageRange.aspects = Aspect::Stencil;
