@@ -205,7 +205,7 @@ MaybeError CommandRecordingContext::Initialize(Device* device) {
         DAWN_TRY(CheckHRESULT(
             d3d11Device->CreateDeviceContextState(
                 /*Flags=*/0, featureLevels, std::size(featureLevels), D3D11_SDK_VERSION,
-                __uuidof(ID3D11Device5), nullptr, &mD3D11DeviceContextState),
+                __uuidof(ID3D11Device3), nullptr, &mD3D11DeviceContextState),
             "D3D11: create device context state"));
     }
 
@@ -239,6 +239,10 @@ MaybeError CommandRecordingContext::Initialize(Device* device) {
     mD3D11DeviceContext4 = std::move(d3d11DeviceContext4);
     mIsOpen = true;
     return {};
+}
+
+bool CommandRecordingContext::IsValid() const {
+    return mIsOpen;
 }
 
 void CommandRecordingContext::Destroy() {
