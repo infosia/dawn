@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "18de9c6e_ce6d17a0",
+        "filename": "src/dawn/native/Limits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-21T02:24:07Z",
+      "side": 1,
+      "message": "However, making it `const CombinedLimits\u0026 ` not make compiler happy because of assignment here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Limits.cpp;drc\u003d28acc8e807bcdbb986519d9ab6406016b70274b5;l\u003d291",
+      "parentUuid": "fd75fd9d_d1e3d341",
+      "revId": "e74230d26a2acde8bffd82433c183786e069966b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "56ae920e_2f0120b5",
         "filename": "src/dawn/native/Limits.h",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "writtenOn": "2025-03-20T10:06:09Z",
       "side": 1,
       "message": "This is already part of 1) so no need to mention it specifically IMHO",
+      "revId": "e74230d26a2acde8bffd82433c183786e069966b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cc0da45_3539e44b",
+        "filename": "src/dawn/native/Limits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-21T02:24:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56ae920e_2f0120b5",
       "revId": "e74230d26a2acde8bffd82433c183786e069966b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
