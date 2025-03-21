@@ -393,5 +393,108 @@ DAWN_INSTANTIATE_TEST(RenderPassTest_RegressionDawn1389,
                       OpenGLESBackend(),
                       VulkanBackend());
 
+class RenderPassTestWithDontCareLoadStoreOp : public RenderPassTest {
+    void SetUp() override {
+        RenderPassTest::SetUp();
+
+        // Skip all tests if the transient attachments feature is not supported.
+        DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::DawnLoadStoreOpDontCare}));
+    }
+
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        std::vector<wgpu::FeatureName> requiredFeatures = {};
+        if (SupportsFeatures({wgpu::FeatureName::DawnLoadStoreOpDontCare})) {
+            requiredFeatures.push_back(wgpu::FeatureName::DawnLoadStoreOpDontCare);
+        }
+        return requiredFeatures;
+    }
+};
+
+// Test using LoadOp::DontCare
+TEST_P(RenderPassTestWithDontCareLoadStoreOp, LoadOpDontCare) {
+    wgpu::Texture renderTarget = CreateDefault2DTexture();
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+
+    {
+        // In the first render pass we clear renderTarget to red.
+        utils::ComboRenderPassDescriptor renderPass({renderTarget.CreateView()});
+        renderPass.cColorAttachments[0].clearValue = {1.0f, 0.0f, 0.0f, 1.0f};
+
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+        pass.End();
+    }
+
+    {
+        // In the second render pass we use LoadOp::DontCare. Depending on the
+        // "use_load_store_for_dontcare" toggle, the texture will be either cleared or loaded.
+        utils::ComboRenderPassDescriptor renderPass({renderTarget.CreateView()});
+        renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::DontCare;
+
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+        pass.End();
+    }
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    if (HasToggleEnabled("use_load_store_for_dontcare")) {
+        // If DontCare was converted to Load, the color from 1st render pass should be intacted.
+        EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kRed, renderTarget, 1, kRTSize - 1);
+        EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kRed, renderTarget, kRTSize - 1, 1);
+    } else {
+        // Otherwise, DontCare was converted to Clear with default zero values.
+        EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderTarget, 1, kRTSize - 1);
+        EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderTarget, kRTSize - 1, 1);
+    }
+}
+
+// Test using StoreOp::DontCare
+TEST_P(RenderPassTestWithDontCareLoadStoreOp, StoreOpDontCare) {
+    wgpu::Texture renderTarget = CreateDefault2DTexture();
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+
+    {
+        // In the first render pass we clear renderTarget to red and store with DontCare.
+        utils::ComboRenderPassDescriptor renderPass({renderTarget.CreateView()});
+        renderPass.cColorAttachments[0].clearValue = {1.0f, 0.0f, 0.0f, 1.0f};
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::DontCare;
+
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+        pass.End();
+    }
+
+    {
+        // In the second render pass we use LoadOp::Load. Depending on the
+        // "use_load_store_for_dontcare" toggle, the texture will be either cleared or loaded after
+        // 1st render pass.
+        utils::ComboRenderPassDescriptor renderPass({renderTarget.CreateView()});
+        renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::Load;
+
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+        pass.End();
+    }
+
+    wgpu::CommandBuffer commands = encoder.Finish();
+    queue.Submit(1, &commands);
+
+    if (HasToggleEnabled("use_load_store_for_dontcare")) {
+        // If DontCare was converted to Load, the color from 1st render pass should be intacted.
+        EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kRed, renderTarget, 1, kRTSize - 1);
+        EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kRed, renderTarget, kRTSize - 1, 1);
+    } else {
+        // Otherwise, DontCare was converted to Clear with default zero values.
+        EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderTarget, 1, kRTSize - 1);
+        EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8::kZero, renderTarget, kRTSize - 1, 1);
+    }
+}
+
+DAWN_INSTANTIATE_TEST(RenderPassTestWithDontCareLoadStoreOp,
+                      D3D11Backend(),
+                      D3D12Backend(),
+                      MetalBackend(),
+                      OpenGLBackend(),
+                      OpenGLESBackend(),
+                      VulkanBackend());
+
 }  // anonymous namespace
 }  // namespace dawn

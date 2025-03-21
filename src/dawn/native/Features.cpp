@@ -408,7 +408,13 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       FeatureInfo::FeatureState::Stable}},
     {Feature::ChromiumExperimentalSubgroupMatrix,
      {"Support the \"enable chromium_experimental_subgroup_matrix;\" directive in WGSL.",
-      "https://github.com/gpuweb/gpuweb/issues/4195", FeatureInfo::FeatureState::Experimental}}};
+      "https://github.com/gpuweb/gpuweb/issues/4195", FeatureInfo::FeatureState::Experimental}},
+    {Feature::DawnLoadStoreOpDontCare,
+     {"Add support for wgpu::LoadOp::DontCare and wgpu::StoreOp::DontCare.",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
+      "dawn_load_store_op_dontcare.md",
+      FeatureInfo::FeatureState::Stable}},
+};
 }  // anonymous namespace
 
 void FeaturesSet::EnableFeature(Feature feature) {
