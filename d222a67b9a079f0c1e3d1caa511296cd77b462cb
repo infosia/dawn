@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ddcd210_f4d52c7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-21T21:25:09Z",
+      "side": 1,
+      "message": "Ah, good to know that the tail-end behavior would be the same! Thanks for clarifying.",
+      "parentUuid": "799539f3_ae13364c",
+      "revId": "d222a67b9a079f0c1e3d1caa511296cd77b462cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef30f761_9b28e547",
