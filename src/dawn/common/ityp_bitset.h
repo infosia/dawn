@@ -28,13 +28,24 @@
 #ifndef SRC_DAWN_COMMON_ITYP_BITSET_H_
 #define SRC_DAWN_COMMON_ITYP_BITSET_H_
 
+#include <bitset>
+#include <limits>
+
+#include "dawn/common/Assert.h"
 #include "dawn/common/BitSetIterator.h"
+#include "dawn/common/Math.h"
 #include "dawn/common/Platform.h"
 #include "dawn/common/TypedInteger.h"
 #include "dawn/common/UnderlyingType.h"
 
 namespace dawn {
 namespace ityp {
+
+template <typename T>
+T roundUp(const T value, const T alignment) {
+    auto temp = value + alignment - static_cast<T>(1);
+    return temp - temp % alignment;
+}
 
 // ityp::bitset is a helper class that wraps std::bitset with the restriction that
 // indices must be a particular type |Index|.
@@ -48,6 +59,31 @@ class bitset : private ::std::bitset<N> {
     explicit constexpr bitset(const Base& rhs) : Base(rhs) {}
 
   public:
+    class Iterator final {
+      public:
+        explicit Iterator(const std::bitset<N>& bits);
+        Iterator& operator++();
+
+        bool operator==(const Iterator& other) const;
+        bool operator!=(const Iterator& other) const;
+
+        Index operator*() const {
+            DAWN_ASSERT(static_cast<I>(mCurrentBit) <= std::numeric_limits<I>::max());
+            return static_cast<Index>(static_cast<I>(mCurrentBit));
+        }
+
+      private:
+        uint32_t getNextBit();
+
+        static constexpr size_t kBitsPerWord = sizeof(uint32_t) * 8;
+        std::bitset<N> mBits;
+        uint32_t mCurrentBit;
+        uint32_t mOffset;
+    };
+
+    Iterator begin() const { return Iterator(*this); }
+    Iterator end() const { return Iterator(std::bitset<N>(0)); }
+
     const Base& AsBase() const { return static_cast<const Base&>(*this); }
     Base& AsBase() { return static_cast<Base&>(*this); }
 
@@ -128,6 +164,50 @@ class bitset : private ::std::bitset<N> {
 
     friend struct std::hash<bitset>;
 };
+
+template <typename I, size_t N>
+bitset<I, N>::Iterator::Iterator(const std::bitset<N>& bits)
+    : mBits(bits), mCurrentBit(0), mOffset(0) {
+    if (bits.any()) {
+        mCurrentBit = getNextBit();
+    } else {
+        mOffset = static_cast<uint32_t>(roundUp(N, kBitsPerWord));
+    }
+}
+
+template <typename I, size_t N>
+typename bitset<I, N>::Iterator& bitset<I, N>::Iterator::operator++() {
+    DAWN_ASSERT(mBits.any());
+    mBits.set(mCurrentBit - mOffset, 0);
+    mCurrentBit = getNextBit();
+    return *this;
+}
+
+template <typename I, size_t N>
+bool bitset<I, N>::Iterator::operator==(const Iterator& other) const {
+    return mOffset == other.mOffset && mBits == other.mBits;
+}
+
+template <typename I, size_t N>
+bool bitset<I, N>::Iterator::operator!=(const Iterator& other) const {
+    return !(*this == other);
+}
+
+template <typename I, size_t N>
+uint32_t bitset<I, N>::Iterator::getNextBit() {
+    static std::bitset<N> wordMask(std::numeric_limits<uint32_t>::max());
+
+    while (mOffset < N) {
+        uint32_t wordBits = static_cast<uint32_t>((mBits & wordMask).to_ulong());
+        if (wordBits != 0ul) {
+            return ScanForward(wordBits) + mOffset;
+        }
+
+        mBits >>= kBitsPerWord;
+        mOffset += kBitsPerWord;
+    }
+    return 0;
+}
 
 }  // namespace ityp
 
