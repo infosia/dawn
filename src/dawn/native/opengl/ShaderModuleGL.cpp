@@ -31,7 +31,6 @@
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
-#include "dawn/common/BitSetIterator.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
@@ -260,7 +259,7 @@ bool GenerateArrayLengthFromuniformData(const BindingInfoArray& moduleBindingInf
                                         tint::glsl::writer::Bindings& bindings) {
     const PipelineLayout::BindingIndexInfo& indexInfo = layout->GetBindingIndexInfo();
 
-    for (BindGroupIndex group : IterateBitSet(layout->GetBindGroupLayoutsMask())) {
+    for (BindGroupIndex group : layout->GetBindGroupLayoutsMask()) {
         const BindGroupLayoutInternalBase* bgl = layout->GetBindGroupLayout(group);
         for (const auto& [binding, shaderBindingInfo] : moduleBindingInfo[group]) {
             BindingIndex bindingIndex = bgl->GetBindingIndex(binding);
@@ -369,7 +368,7 @@ std::pair<tint::glsl::writer::Bindings, BindingMap> GenerateBindingInfo(
 
     tint::glsl::writer::Bindings bindings;
 
-    for (BindGroupIndex group : IterateBitSet(layout->GetBindGroupLayoutsMask())) {
+    for (BindGroupIndex group : layout->GetBindGroupLayoutsMask()) {
         const BindGroupLayout* bgl = ToBackend(layout->GetBindGroupLayout(group));
 
         for (const auto& [binding, shaderBindingInfo] : moduleBindingInfo[group]) {
@@ -544,7 +543,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     }
 
     if (stage == SingleShaderStage::Vertex) {
-        for (VertexAttributeLocation i : IterateBitSet(bgraSwizzleAttributes)) {
+        for (VertexAttributeLocation i : bgraSwizzleAttributes) {
             req.tintOptions.bgra_swizzle_locations.insert(static_cast<uint8_t>(i));
         }
     }
