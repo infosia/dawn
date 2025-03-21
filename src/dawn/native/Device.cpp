@@ -476,6 +476,14 @@ MaybeError DeviceBase::Initialize(Ref<QueueBase> defaultQueue) {
                         CreateShaderModule(&descriptor));
     }
 
+    if (IsToggleEnabled(Toggle::UseLoadStoreForDontCare)) {
+        mBestDontCareLoadOp = wgpu::LoadOp::Load;
+        mBestDontCareStoreOp = wgpu::StoreOp::Store;
+    } else {
+        mBestDontCareLoadOp = wgpu::LoadOp::Clear;
+        mBestDontCareStoreOp = wgpu::StoreOp::Discard;
+    }
+
     if (HasFeature(Feature::ImplicitDeviceSynchronization)) {
         mMutex = AcquireRef(new Mutex);
     } else {
@@ -2380,6 +2388,28 @@ bool DeviceBase::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage 
                                                               wgpu::BufferUsage originalUsage,
                                                               size_t bufferSize) const {
     return true;
+}
+
+wgpu::LoadOp DeviceBase::ConvertIfLoadOpIsDontCare(wgpu::TextureUsage usage,
+                                                   wgpu::LoadOp loadOp) const {
+    if (DAWN_LIKELY(loadOp != wgpu::LoadOp::DontCare)) {
+        return loadOp;
+    }
+    if (usage & wgpu::TextureUsage::TransientAttachment) {
+        return wgpu::LoadOp::Clear;
+    }
+    return mBestDontCareLoadOp;
+}
+
+wgpu::StoreOp DeviceBase::ConvertIfStoreOpIsDontCare(wgpu::TextureUsage usage,
+                                                     wgpu::StoreOp storeOp) const {
+    if (DAWN_LIKELY(storeOp != wgpu::StoreOp::DontCare)) {
+        return storeOp;
+    }
+    if (usage & wgpu::TextureUsage::TransientAttachment) {
+        return wgpu::StoreOp::Discard;
+    }
+    return mBestDontCareStoreOp;
 }
 
 uint64_t DeviceBase::GetBufferCopyOffsetAlignmentForDepthStencil() const {
