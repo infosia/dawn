@@ -22,6 +22,30 @@
       },
       "revId": "449019c5241109c5663a6a2127e62a173302e7e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f915de4e_6415b1b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-21T17:11:42Z",
+      "side": 1,
+      "message": "Done. I updated the comment as \"required because WebGPU allows binding an uniform buffer at non-zero offset. We don\u0027t have alternative workaround such as passing offsets to shaders yet.\"",
+      "parentUuid": "c390f12f_aa123e7f",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "449019c5241109c5663a6a2127e62a173302e7e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
