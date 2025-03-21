@@ -40,6 +40,30 @@
       ],
       "revId": "d74efcd7dc9268f81b8d74ede9ed67ed49b7f383",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3d7f129_338301a2",
+        "filename": "third_party/emdawnwebgpu/library_webgpu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-03-21T08:18:14Z",
+      "side": 1,
+      "message": "Right! Thanks for cathing this! \n\nThere\u0027s also this comment above a few lines which suggests an alternative:\n```\n    // TODO(crbug.com/377760848): Avoid duplicated code with wgpuAdapterGetInfo,\n    // for example by deferring to wgpuAdapterGetInfo from webgpu.cpp.\n```\n\nI\u0027ll let emdawnwebgpu folks handle this if that\u0027s okay with you.",
+      "parentUuid": "439f8dda_f91dfff5",
+      "range": {
+        "startLine": 1854,
+        "startChar": 22,
+        "endLine": 1854,
+        "endChar": 51
+      },
+      "revId": "d74efcd7dc9268f81b8d74ede9ed67ed49b7f383",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
