@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa073911_4d1c8ad6",
+        "filename": "src/dawn/common/Sha3.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2025-03-21T20:48:39Z",
+      "side": 1,
+      "message": "`#include \u003ccstddef\u003e` is probably needed for size_t. We see errors when building Skia in some configurations as a result.",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 16
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "23f01956_ab304fb5",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/common/Sha3.h",
+              "range": {
+                "startLine": 32,
+                "startChar": 0,
+                "endLine": 32,
+                "endChar": 0
+              },
+              "replacement": "#include \u003ccstddef\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ea08a03a9d09341ad262fe01b6a32fa13a71f823",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
