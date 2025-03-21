@@ -147,6 +147,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e443df5_e1e366ac",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-21T00:06:35Z",
+      "side": 1,
+      "message": "Oops, sorry, this FIXME is way old. At some point I realized my understanding was wrong, and got everything fixed. But I didn\u0027t figure out how to actually test it, which I was hoping to do before landing, hence I haven\u0027t removed it.",
+      "parentUuid": "af240ebc_ceace57c",
+      "range": {
+        "startLine": 309,
+        "startChar": 16,
+        "endLine": 312,
+        "endChar": 93
+      },
+      "revId": "3a0003670a2f857f16752efa527b32946c5b7bd6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b639f9d8_feb71457",
         "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
         "patchSetId": 28
