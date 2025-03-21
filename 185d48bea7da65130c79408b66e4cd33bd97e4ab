@@ -73,6 +73,30 @@
       },
       "revId": "185d48bea7da65130c79408b66e4cd33bd97e4ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9beb0491_7a330962",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-21T05:26:49Z",
+      "side": 1,
+      "message": "I think the name `InitializeBase()` is a bit confusing. This function turns out to initialize `PipelineVk` instead of `PipelineBase`. So it doesn\u0027t have mImmediateMask as member. And the `mImmediateMask` also need to be modified in native pipeline initialization (e.g. https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/RenderPipelineVk.cpp;drc\u003d4c6d5b3c3ed16fa75258c6b4763188f840cb433d;l\u003d367) so making it private might make such change a bit complicated.",
+      "parentUuid": "a0bdd60c_beb0559c",
+      "range": {
+        "startLine": 574,
+        "startChar": 36,
+        "endLine": 574,
+        "endChar": 50
+      },
+      "revId": "185d48bea7da65130c79408b66e4cd33bd97e4ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
