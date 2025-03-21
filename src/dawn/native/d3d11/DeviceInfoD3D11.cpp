@@ -47,6 +47,8 @@ ResultOrError<DeviceInfo> GatherDeviceInfo(const ComPtr<IDXGIAdapter3>& adapter,
 
     info.supportsPartialConstantBufferUpdate = options.ConstantBufferPartialUpdate;
 
+    DAWN_INVALID_IF(!options.ConstantBufferOffsetting, "ConstantBufferOffsetting is not supported");
+
     D3D11_FEATURE_DATA_D3D11_OPTIONS2 options2;
     DAWN_TRY(CheckHRESULT(
         device->CheckFeatureSupport(D3D11_FEATURE_D3D11_OPTIONS2, &options2, sizeof(options2)),
