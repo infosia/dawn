@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-03-17 09:54:19AM
+# Last rolled: 2025-03-20 05:11:32AM
 
 # conflicts_allowed: true
 
@@ -15027,22 +15027,33 @@ crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm";filt="linear";modeU="m";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm";filt="linear";modeU="m";modeV="r";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm";filt="linear";modeU="r";modeV="m";offset=true [ Skip ]
+crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm";filt="nearest";modeU="c";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm";filt="nearest";modeU="m";modeV="c";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm";filt="nearest";modeU="m";modeV="m";offset=true [ Skip ]
+crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm";filt="nearest";modeU="m";modeV="r";offset=true [ Skip ]
+crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm";filt="nearest";modeU="r";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="linear";modeU="c";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="linear";modeU="m";modeV="c";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="linear";modeU="m";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="linear";modeU="m";modeV="r";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="linear";modeU="r";modeV="m";offset=true [ Skip ]
+crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="nearest";modeU="c";modeV="m";offset=true [ Skip ]
+crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="nearest";modeU="m";modeV="c";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="nearest";modeU="m";modeV="m";offset=true [ Skip ]
+crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="nearest";modeU="m";modeV="r";offset=true [ Skip ]
+crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-4x4-unorm-srgb";filt="nearest";modeU="r";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm";filt="linear";modeU="c";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm";filt="linear";modeU="m";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm";filt="linear";modeU="r";modeV="m";offset=true [ Skip ]
+crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm";filt="nearest";modeU="c";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm";filt="nearest";modeU="m";modeV="m";offset=true [ Skip ]
+crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm";filt="nearest";modeU="r";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm-srgb";filt="linear";modeU="c";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm-srgb";filt="linear";modeU="m";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm-srgb";filt="linear";modeU="r";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm-srgb";filt="nearest";modeU="c";modeV="m";offset=true [ Skip ]
+crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm-srgb";filt="nearest";modeU="m";modeV="m";offset=true [ Skip ]
+crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="astc-5x4-unorm-srgb";filt="nearest";modeU="r";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="bgra8unorm";filt="linear";modeU="c";modeV="m";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="bgra8unorm";filt="linear";modeU="m";modeV="c";offset=true [ Skip ]
 crbug.com/364595481 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:format="bgra8unorm";filt="linear";modeU="m";modeV="m";offset=true [ Skip ]
