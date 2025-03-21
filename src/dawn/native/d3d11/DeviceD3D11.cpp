@@ -176,6 +176,14 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     DAWN_TRY(DeviceBase::Initialize(queue));
     DAWN_TRY(queue->InitializePendingContext());
 
+    if (GetDeviceInfo().isTileBasedGPU) {
+        mBestDontCareLoadOp = wgpu::LoadOp::Clear;
+        mBestDontCareStoreOp = wgpu::StoreOp::Discard;
+    } else {
+        mBestDontCareLoadOp = wgpu::LoadOp::Load;
+        mBestDontCareStoreOp = wgpu::StoreOp::Store;
+    }
+
     SetLabelImpl();
 
     return {};

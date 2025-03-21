@@ -386,6 +386,10 @@ class DeviceBase : public ErrorSink,
                                                               wgpu::BufferUsage originalUsage,
                                                               size_t bufferSize) const;
 
+    // Convert DontCare load/store op to the real load/store op.
+    wgpu::LoadOp ConvertIfLoadOpIsDontCare(wgpu::LoadOp loadOp) const;
+    wgpu::StoreOp ConvertIfStoreOpIsDontCare(wgpu::StoreOp storeOp) const;
+
     bool HasFeature(Feature feature) const;
 
     const CombinedLimits& GetLimits() const;
@@ -455,6 +459,10 @@ class DeviceBase : public ErrorSink,
     // Returns a pair of a filename and a boolean indicating whether to start tracing
     // and if so, what filename to save the trace under.
     std::pair<std::string, bool> GetTraceInfo();
+
+    // The actual loadOp/storeOp that represent DontCare. Overridable in backends.
+    wgpu::LoadOp mBestDontCareLoadOp = wgpu::LoadOp::Clear;
+    wgpu::StoreOp mBestDontCareStoreOp = wgpu::StoreOp::Discard;
 
   private:
     void WillDropLastExternalRef() override;

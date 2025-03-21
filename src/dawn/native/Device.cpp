@@ -2382,6 +2382,20 @@ bool DeviceBase::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage 
     return true;
 }
 
+wgpu::LoadOp DeviceBase::ConvertIfLoadOpIsDontCare(wgpu::LoadOp loadOp) const {
+    if (DAWN_LIKELY(loadOp != wgpu::LoadOp::DontCare)) {
+        return loadOp;
+    }
+    return mBestDontCareLoadOp;
+}
+
+wgpu::StoreOp DeviceBase::ConvertIfStoreOpIsDontCare(wgpu::StoreOp storeOp) const {
+    if (DAWN_LIKELY(storeOp != wgpu::StoreOp::DontCare)) {
+        return storeOp;
+    }
+    return mBestDontCareStoreOp;
+}
+
 uint64_t DeviceBase::GetBufferCopyOffsetAlignmentForDepthStencil() const {
     // For depth-stencil texture, buffer offset must be a multiple of 4, which is required
     // by WebGPU and Vulkan SPEC.

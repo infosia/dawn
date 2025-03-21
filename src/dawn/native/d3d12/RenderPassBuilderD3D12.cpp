@@ -49,6 +49,8 @@ D3D12_RENDER_PASS_BEGINNING_ACCESS_TYPE D3D12BeginningAccessType(wgpu::LoadOp lo
             DAWN_UNREACHABLE();
             break;
 
+        case wgpu::LoadOp::DontCare:
+        // This is handled on front-end.
         case wgpu::LoadOp::Undefined:
             DAWN_UNREACHABLE();
             break;
@@ -61,6 +63,8 @@ D3D12_RENDER_PASS_ENDING_ACCESS_TYPE D3D12EndingAccessType(wgpu::StoreOp storeOp
             return D3D12_RENDER_PASS_ENDING_ACCESS_TYPE_DISCARD;
         case wgpu::StoreOp::Store:
             return D3D12_RENDER_PASS_ENDING_ACCESS_TYPE_PRESERVE;
+        case wgpu::StoreOp::DontCare:
+        // This is handled on front-end.
         case wgpu::StoreOp::Undefined:
             DAWN_UNREACHABLE();
             break;
