@@ -1,0 +1,206 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "682fa79d_d202d922",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-21T16:30:19Z",
+      "side": 1,
+      "message": "This could be size_t to match how std::bitset\u0027s `test` args.",
+      "range": {
+        "startLine": 58,
+        "startChar": 21,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a75b9199_ce1bdeca",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/common/BitSetRangeIterator.h",
+              "range": {
+                "startLine": 58,
+                "startChar": 0,
+                "endLine": 59,
+                "endChar": 0
+              },
+              "replacement": "        std::pair\u003cT, size_t\u003e operator*() const {\n"
+            },
+            {
+              "path": "src/dawn/common/BitSetRangeIterator.h",
+              "range": {
+                "startLine": 63,
+                "startChar": 0,
+                "endLine": 64,
+                "endChar": 0
+              },
+              "replacement": "                                  static_cast\u003csize_t\u003e(static_cast\u003cU\u003e(mSize)));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b74000ba_1cb441b1",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-21T16:30:19Z",
+      "side": 1,
+      "message": "I would call this simply `advance`. All the call sites look the same:\n```\n    auto range \u003d getNextRange();\n    mOffset \u003d range.first;\n    mSize \u003d range.second;\n```\nso you can also move the mOffset and mSize setting into this function. I would also shift mBits so that the 0th bit is at offset+size. We would store:\n\n * current offset\n * current size\n * bits that have been shifted to offset + size and are ready to have `advance` called again.\n \nWe could probably avoid needing `mWordOffset` because the bits we want to look at always start at the first bit.\n \nThis means that the iterator will be comparable to the `end` iterator without any processing once there are no ranges left.",
+      "range": {
+        "startLine": 131,
+        "startChar": 67,
+        "endLine": 131,
+        "endChar": 79
+      },
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdc61ae8_14f90e44",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-21T16:30:19Z",
+      "side": 1,
+      "message": "ANGLE has overloads for ScanForward [0] which work on 64 bits with fallbacks for 32-bit systems. Using those would likely be much faster since we do have a bunch of bitsets in the 32-64 bit size. You would use `to_ullong` instead to get the values out of the std::bitset.\n\n[0] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/third_party/angle/src/common/mathutil.h;l\u003d1220-1240;drc\u003df5196a27b9b6bdc358191717f2b5a3ba824d1e82 and https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/third_party/angle/src/common/mathutil.h;l\u003d1283-1293;drc\u003df5196a27b9b6bdc358191717f2b5a3ba824d1e82",
+      "range": {
+        "startLine": 137,
+        "startChar": 30,
+        "endLine": 137,
+        "endChar": 41
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "972e26d9_9569214e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/common/BitSetRangeIterator.h",
+              "range": {
+                "startLine": 137,
+                "startChar": 0,
+                "endLine": 138,
+                "endChar": 0
+              },
+              "replacement": "            uint32_t offset \u003d __builtin_ctz(wordBits) + mWordOffset;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b72897aa_867ced45",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-21T16:30:19Z",
+      "side": 1,
+      "message": "I think we can avoid the loop here. If we invert `remainingBits` then we can use ScanForward on it again to find the next `0` bit.\n\nThe algorithm then becomes roughly:\n```\noffset \u003d ScanForward(bits)\nbits \u003d bits \u003e\u003e offset\nbits \u003d ~bits\nsize \u003d ScanForward(bits) // Here we need to handle wrapping to the next word, we will know because there will be a 1 bit at the end of our data due to the ~\nbits \u003d bits \u003e\u003e size\nbits \u003d ~bits\n```\n\nI would refactor some of these into helper functions that are marked inline. Something like `uint32_t findNext1Bit()` which handles the word wrapping would help a lot here.",
+      "range": {
+        "startLine": 142,
+        "startChar": 1,
+        "endLine": 147,
+        "endChar": 13
+      },
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b29b0f9_aedc43c3",
+        "filename": "src/dawn/tests/unittests/BitSetRangeIteratorTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-21T16:30:19Z",
+      "side": 1,
+      "message": "No need to have this as a member. Lets make each test use different sizes.\n\nPlease cover small sets with \u003c 1 word and very large ones \u003e 128 bits.",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc527c68_ea1149af",
+        "filename": "src/dawn/tests/unittests/BitSetRangeIteratorTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-21T16:30:19Z",
+      "side": 1,
+      "message": "nit: Could be:\n```\nauto iterator \u003d IterateBitSetRanges(mStateBits);\nEXPECT_EQ(iterator.end(), iterator.begin());\n```",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 5
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "20e818af_d2083d26",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/unittests/BitSetRangeIteratorTests.cpp",
+              "range": {
+                "startLine": 94,
+                "startChar": 0,
+                "endLine": 99,
+                "endChar": 0
+              },
+              "replacement": "    auto iterator \u003d IterateBitSetRanges(mStateBits);\n    EXPECT_EQ(iterator.end(), iterator.begin());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
