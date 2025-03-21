@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "396b5e86_9b397b68",
+        "filename": "src/dawn/native/Limits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-21T16:40:42Z",
+      "side": 1,
+      "message": "Either way we\u0027re copying the input explicitly from a const\u0026 or implicitly from a passing by value.\n\nIn this case we\u0027re assigning it back to the source so let\u0027s add an overload:\n\n`void ApplyLimitTiers(CombinedLimits* limits)` which does the in-place updates.\n\n`CombinedLimits ApplyLimitTiers(CombinedLimits limits)` can be rewritten as:\n```\nCombinedLimits ApplyLimitTiers(const CombinedLimits\u0026 limits) {\n    CombinedLimits limitsCopy \u003d limits;\n    ApplyLimitTiers(\u0026limitsCopy);\n    return limitsCopy;\n}\n```",
+      "parentUuid": "18de9c6e_ce6d17a0",
+      "revId": "e74230d26a2acde8bffd82433c183786e069966b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "56ae920e_2f0120b5",
         "filename": "src/dawn/native/Limits.h",
         "patchSetId": 2
