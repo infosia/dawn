@@ -148,6 +148,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ab64ac5b_256c022a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 2002,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-22T06:11:06Z",
+      "side": 1,
+      "message": "ValidateBufferDescriptor is also used by `APICreateErrorBuffer` `SharedBufferMemoryBase::CreateBuffer`. `APICreateErrorBuffer` is probably fine with validation being disabled but I\u0027m not sure about `SharedBufferMemoryBase`. I\u0027ll try though, nice if it works.",
+      "parentUuid": "9a68d3ec_48d67657",
+      "range": {
+        "startLine": 1998,
+        "startChar": 4,
+        "endLine": 2002,
+        "endChar": 5
+      },
+      "revId": "3a0003670a2f857f16752efa527b32946c5b7bd6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af240ebc_ceace57c",
         "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
         "patchSetId": 28
@@ -230,6 +254,30 @@
       "writtenOn": "2025-03-20T23:29:00Z",
       "side": 1,
       "message": "nit. would be nice to have a comment preceding each case so its a bit easier to follow.",
+      "range": {
+        "startLine": 323,
+        "startChar": 12,
+        "endLine": 337,
+        "endChar": 42
+      },
+      "revId": "3a0003670a2f857f16752efa527b32946c5b7bd6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "008380d1_b41a2aa2",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-22T06:11:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b639f9d8_feb71457",
       "range": {
         "startLine": 323,
         "startChar": 12,
