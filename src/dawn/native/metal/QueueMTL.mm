@@ -206,6 +206,7 @@ ResultOrError<Ref<SharedFence>> Queue::GetOrCreateSharedFence() {
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
+    auto deviceLock(GetDevice()->GetScopedLock());
     @autoreleasepool {
         CommandRecordingContext* commandContext = GetPendingCommandContext();
 

@@ -108,6 +108,8 @@ ID3D12SharingContract* Queue::GetSharingContract() const {
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
+    auto deviceLock(GetDevice()->GetScopedLock());
+
     CommandRecordingContext* commandContext = GetPendingCommandContext();
     ExecutionSerial pendingSerial = GetPendingCommandSerial();
 

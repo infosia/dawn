@@ -100,6 +100,13 @@ class Queue::FlushThread {
                 auto commandContext = mQueue->GetScopedPendingCommandContext(SubmitMode::Passive);
 
                 mDXGIDevice2->EnqueueSetEvent(handle);
+#if 0
+                std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+                int a = 0;
+                a = 1;
+                (void)a;
+#endif
             }
         }
     }
@@ -238,6 +245,7 @@ MaybeError Queue::SubmitPendingCommands() {
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
+    auto deviceLock(GetDevice()->GetScopedLock());
     // CommandBuffer::Execute() will modify the state of the global immediate device context, it
     // may affect following usage of it.
     // TODO(dawn:1770): figure how if we need to track and restore the state of the immediate

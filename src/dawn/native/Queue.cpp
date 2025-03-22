@@ -165,6 +165,8 @@ void QueueBase::FormatLabel(absl::FormatSink* s) const {
 void QueueBase::APISubmit(uint32_t commandCount, CommandBufferBase* const* commands) {
     MaybeError result = SubmitInternal(commandCount, commands);
 
+    auto deviceLock(GetDevice()->GetScopedLock());
+
     // Destroy the command buffers even if SubmitInternal failed. (crbug.com/dawn/1863)
     for (uint32_t i = 0; i < commandCount; ++i) {
         commands[i]->Destroy();
@@ -576,19 +578,26 @@ MaybeError QueueBase::ValidateWriteTexture(const TexelCopyTextureInfo* destinati
 MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* const* commands) {
     DeviceBase* device = GetDevice();
 
-    // If device is lost, don't let any commands be submitted
-    DAWN_TRY(device->ValidateIsAlive());
+    {
+        auto deviceLock(device->GetScopedLock());
 
-    TRACE_EVENT0(device->GetPlatform(), General, "Queue::Submit");
-    if (device->IsValidationEnabled()) {
-        DAWN_TRY(ValidateSubmit(commandCount, commands));
+        // If device is lost, don't let any commands be submitted
+        DAWN_TRY(device->ValidateIsAlive());
+
+        TRACE_EVENT0(device->GetPlatform(), General, "Queue::Submit");
+        if (device->IsValidationEnabled()) {
+            DAWN_TRY(ValidateSubmit(commandCount, commands));
+        }
+        DAWN_ASSERT(!IsError());
     }
-    DAWN_ASSERT(!IsError());
 
     DAWN_TRY(SubmitImpl(commandCount, commands));
 
-    // Call Tick() to flush pending work.
-    DAWN_TRY(device->Tick());
+    {
+        auto deviceLock(device->GetScopedLock());
+        // Call Tick() to flush pending work.
+        DAWN_TRY(device->Tick());
+    }
 
     return {};
 }

@@ -76,6 +76,7 @@ Queue::Queue(Device* device, const QueueDescriptor* descriptor) : QueueBase(devi
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
     TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferGL::Execute");
+    auto deviceLock(GetDevice()->GetScopedLock());
     for (uint32_t i = 0; i < commandCount; ++i) {
         DAWN_TRY(ToBackend(commands[i])->Execute());
     }
