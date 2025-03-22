@@ -64,6 +64,13 @@ class CommandRecordingContextGuard : public ::dawn::detail::Guard<Ctx, Traits> {
             this->Get()->mD3D11Multithread->Enter();
         }
     }
+
+    CommandRecordingContextGuard(Ctx* ctx, typename Traits::LockType&& lock)
+        : Base(ctx, std::move(lock)) {
+        if (this->Get() && this->Get()->mD3D11Multithread) {
+            this->Get()->mD3D11Multithread->Enter();
+        }
+    }
     ~CommandRecordingContextGuard() {
         if (this->Get() && this->Get()->mD3D11Multithread) {
             this->Get()->mD3D11Multithread->Leave();

@@ -28,6 +28,8 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 #define SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 
+#include <optional>
+
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/native/d3d/QueueD3D.h"
@@ -44,10 +46,16 @@ class Queue : public d3d::Queue {
     static ResultOrError<Ref<Queue>> Create(Device* device, const QueueDescriptor* descriptor);
 
     ScopedCommandRecordingContext GetScopedPendingCommandContext(SubmitMode submitMode);
+    std::optional<ScopedCommandRecordingContext> TryGetScopedPendingCommandContext(
+        SubmitMode submitMode);
+
     ScopedSwapStateCommandRecordingContext GetScopedSwapStatePendingCommandContext(
         SubmitMode submitMode);
     MaybeError SubmitPendingCommands() override;
-    virtual MaybeError NextSerial() = 0;
+
+    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
+    ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
+    void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
 
     // Separated from creation because it creates resources, which is not valid before the
     // DeviceBase is fully created.
@@ -60,13 +68,15 @@ class Queue : public d3d::Queue {
 
     const Ref<SharedFence>& GetSharedFence() const { return mSharedFence; }
 
-  protected:
+  private:
     using d3d::Queue::Queue;
 
     ~Queue() override = default;
 
-    MaybeError Initialize(bool isMonitored);
-    MaybeError InitializeD3DFence(bool isMonitored);
+    MaybeError Initialize();
+    MaybeError InitializeD3DFence();
+
+    MaybeError NextSerial();
 
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;
     MaybeError WriteBufferImpl(BufferBase* buffer,
@@ -99,6 +109,16 @@ class Queue : public d3d::Queue {
         wgpu::MapMode mode;
     };
     SerialMap<ExecutionSerial, BufferMapEntry> mPendingMapBuffers;
+
+    struct SerialEventReceiverPair {
+        ExecutionSerial serial;
+        SystemEventReceiver receiver;
+    };
+    // Events associated with submitted commands. They are in old to recent order.
+    MutexProtected<std::deque<SerialEventReceiverPair>> mPendingEvents;
+
+    class FlushThread;
+    std::unique_ptr<FlushThread> mBackgroundFlushThread;
 };
 
 }  // namespace dawn::native::d3d11

@@ -28,13 +28,19 @@
 #include "dawn/native/d3d11/QueueD3D11.h"
 
 #include <algorithm>
+#include <atomic>
+#include <chrono>
+#include <condition_variable>
 #include <deque>
 #include <limits>
+#include <mutex>
+#include <thread>
 #include <utility>
 #include <vector>
 
 #include "absl/container/inlined_vector.h"
 #include "dawn/common/Log.h"
+#include "dawn/native/AsyncTask.h"
 #include "dawn/native/WaitAnySystemEvent.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d11/BufferD3D11.h"
@@ -46,92 +52,95 @@
 #include "dawn/native/d3d11/TextureD3D11.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
+#include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native::d3d11 {
 
-class MonitoredQueue final : public Queue {
+class Queue::FlushThread {
   public:
-    using Queue::Queue;
-    MaybeError Initialize();
-    MaybeError NextSerial() override;
-    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
-    void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
+    FlushThread(Queue* queue) : mQueue(queue), mThread([this] { ThreadLoop(); }) {}
+    ~FlushThread() {
+        mRunning.store(false, std::memory_order_release);
+        mCv.notify_one();
+
+        mThread.join();
+    }
+
+    MaybeError Initialize() {
+        auto device = ToBackend(mQueue->GetDevice());
+        DAWN_TRY(
+            CheckHRESULT(device->GetD3D11Device3()->QueryInterface(IID_PPV_ARGS(&mDXGIDevice2)),
+                         "D3D11 querying IDXGIDevice2"));
+        return {};
+    }
+
+    void EnqueueFlush(HANDLE event) {
+        std::lock_guard<std::mutex> lg(mLock);
+        mEventsToFlush.push_back(event);
+        mCv.notify_one();
+    }
 
   private:
-    ~MonitoredQueue() override = default;
-};
+    void ThreadLoop() {
+        while (mRunning.load(std::memory_order_acquire)) {
+            absl::InlinedVector<HANDLE, 2> handles;
 
-class SystemEventQueue final : public Queue {
-  public:
-    using Queue::Queue;
-    MaybeError Initialize();
-    MaybeError NextSerial() override;
-    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
-    ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
-    void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
+            {
+                std::unique_lock<std::mutex> lg(mLock);
+                mCv.wait(lg, [this] {
+                    // Keep waiting until queue is not empty or running is stopped.
+                    return !mEventsToFlush.empty() || !mRunning.load(std::memory_order_acquire);
+                });
+                handles.insert(handles.end(), mEventsToFlush.begin(), mEventsToFlush.end());
+                mEventsToFlush.clear();
+            }
 
-  private:
-    ~SystemEventQueue() override = default;
+            for (auto handle : handles) {
+                TRACE_EVENT0(mQueue->GetDevice()->GetPlatform(), General, "D3D11Device::Flush");
+                auto commandContext = mQueue->GetScopedPendingCommandContext(SubmitMode::Passive);
 
-    struct SerialEventReceiverPair {
-        ExecutionSerial serial;
-        SystemEventReceiver receiver;
-    };
-    // Events associated with submitted commands. They are in old to recent order.
-    MutexProtected<std::deque<SerialEventReceiverPair>> mPendingEvents;
+                mDXGIDevice2->EnqueueSetEvent(handle);
+            }
+        }
+    }
+
+    raw_ptr<Queue> mQueue;
+    ComPtr<IDXGIDevice2> mDXGIDevice2;
+
+    std::deque<HANDLE> mEventsToFlush;
+
+    std::mutex mLock;
+    std::condition_variable mCv;
+
+    std::atomic_bool mRunning{true};
+
+    std::thread mThread;
 };
 
 ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* descriptor) {
-    const auto& deviceInfo = ToBackend(device->GetPhysicalDevice())->GetDeviceInfo();
-    if (device->IsToggleEnabled(Toggle::D3D11UseUnmonitoredFence) ||
-        device->IsToggleEnabled(Toggle::D3D11DisableFence)) {
-        Ref<SystemEventQueue> systemEventQueue =
-            AcquireRef(new SystemEventQueue(device, descriptor));
-        DAWN_TRY(systemEventQueue->Initialize());
-        return systemEventQueue;
-    } else if (deviceInfo.supportsMonitoredFence) {
-        Ref<MonitoredQueue> monitoredQueue = AcquireRef(new MonitoredQueue(device, descriptor));
-        DAWN_TRY(monitoredQueue->Initialize());
-        return monitoredQueue;
-    } else {
-        // TODO(crbug.com/335553337): support devices without fence.
-        return DAWN_INTERNAL_ERROR("D3D11: fence is not supported");
-    }
+    Ref<Queue> queue = AcquireRef(new Queue(device, descriptor));
+    DAWN_TRY(queue->Initialize());
+    return queue;
 }
 
-MaybeError Queue::Initialize(bool isMonitored) {
+MaybeError Queue::Initialize() {
     if (!GetDevice()->IsToggleEnabled(Toggle::D3D11DisableFence)) {
-        DAWN_TRY(InitializeD3DFence(isMonitored));
+        DAWN_TRY(InitializeD3DFence());
     }
+
+    mBackgroundFlushThread = std::make_unique<FlushThread>(this);
+    DAWN_TRY(mBackgroundFlushThread->Initialize());
 
     return {};
 }
 
-MaybeError Queue::InitializeD3DFence(bool isMonitored) {
-    const auto& deviceInfo = ToBackend(GetDevice()->GetPhysicalDevice())->GetDeviceInfo();
-
+MaybeError Queue::InitializeD3DFence() {
     // Create the fence.
     D3D11_FENCE_FLAG flags = D3D11_FENCE_FLAG_SHARED;
-    if (!isMonitored) {
-        if (deviceInfo.supportsNonMonitoredFence) {
-            flags |= D3D11_FENCE_FLAG_NON_MONITORED;
-            // For adapters that support both monitored and non-monitored fences, non-monitored
-            // fences are only supported when created with the D3D12_FENCE_FLAG_SHARED and
-            // D3D12_FENCE_FLAG_SHARED_CROSS_ADAPTER flags
-            // https://learn.microsoft.com/en-us/windows/win32/api/dxgi1_6/ne-dxgi1_6-dxgi_adapter_flag3
-            if (deviceInfo.supportsMonitoredFence) {
-                flags |= D3D11_FENCE_FLAG_SHARED_CROSS_ADAPTER;
-            }
-        } else {
-            WarningLog()
-                << "D3D11: non-monitored fence is not supported, fallback to monitored fence";
-        }
-    } else {
-        DAWN_ASSERT(deviceInfo.supportsMonitoredFence);
-    }
+
     DAWN_TRY(CheckHRESULT(
         ToBackend(GetDevice())->GetD3D11Device5()->CreateFence(0, flags, IID_PPV_ARGS(&mFence)),
-        isMonitored ? "D3D11: creating monitored fence" : "D3D11: creating non-monitored fence"));
+        "D3D11: creating fence"));
 
     DAWN_TRY_ASSIGN(mSharedFence, SharedFence::Create(ToBackend(GetDevice()),
                                                       "Internal shared DXGI fence", mFence));
@@ -160,14 +169,17 @@ MaybeError Queue::InitializePendingContext() {
 }
 
 void Queue::DestroyImpl() {
-    // Release the shared fence here to prevent a ref-cycle with the device, but do not destroy the
-    // underlying native fence so that we can return a SharedFence on EndAccess after destruction.
+    // Release the shared fence here to prevent a ref-cycle with the device, but do not destroy
+    // the underlying native fence so that we can return a SharedFence on EndAccess after
+    // destruction.
     mSharedFence = nullptr;
 
     mPendingCommands.Use([&](auto pendingCommands) {
         pendingCommands->Destroy();
         mPendingCommandsNeedSubmit.store(false, std::memory_order_release);
     });
+
+    mBackgroundFlushThread = nullptr;
 }
 
 ResultOrError<Ref<d3d::SharedFence>> Queue::GetOrCreateSharedFence() {
@@ -189,6 +201,19 @@ ScopedCommandRecordingContext Queue::GetScopedPendingCommandContext(SubmitMode s
         }
         return ScopedCommandRecordingContext(std::move(commands));
     });
+}
+
+std::optional<ScopedCommandRecordingContext> Queue::TryGetScopedPendingCommandContext(
+    SubmitMode submitMode) {
+    std::optional<ScopedCommandRecordingContext> pendingCommandsOrNull = std::nullopt;
+    mPendingCommands.TryUse([&](auto commands) {
+        if (submitMode == SubmitMode::Normal) {
+            mPendingCommandsNeedSubmit.store(true, std::memory_order_release);
+        }
+        pendingCommandsOrNull.emplace(std::move(commands));
+    });
+
+    return pendingCommandsOrNull;
 }
 
 ScopedSwapStateCommandRecordingContext Queue::GetScopedSwapStatePendingCommandContext(
@@ -213,10 +238,10 @@ MaybeError Queue::SubmitPendingCommands() {
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
-    // CommandBuffer::Execute() will modify the state of the global immediate device context, it may
-    // affect following usage of it.
-    // TODO(dawn:1770): figure how if we need to track and restore the state of the immediate device
-    // context.
+    // CommandBuffer::Execute() will modify the state of the global immediate device context, it
+    // may affect following usage of it.
+    // TODO(dawn:1770): figure how if we need to track and restore the state of the immediate
+    // device context.
     TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferD3D11::Execute");
     {
         auto commandContext =
@@ -232,10 +257,15 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
 }
 
 MaybeError Queue::CheckAndMapReadyBuffers(ExecutionSerial completedSerial) {
-    auto commandContext = GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
+    auto commandContext = TryGetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
+    if (!commandContext) {
+        // The FlushThread might be busy using the Command Context. Return early in this case.
+        // We can always check the pending mapped buffers at later points.
+        return {};
+    }
     for (const auto& bufferEntry : mPendingMapBuffers.IterateUpTo(completedSerial)) {
-        DAWN_TRY(
-            bufferEntry.buffer->FinalizeMap(&commandContext, completedSerial, bufferEntry.mode));
+        DAWN_TRY(bufferEntry.buffer->FinalizeMap(&commandContext.value(), completedSerial,
+                                                 bufferEntry.mode));
     }
     mPendingMapBuffers.ClearUpTo(completedSerial);
     return {};
@@ -300,59 +330,7 @@ MaybeError Queue::WaitForIdleForDestruction() {
     return CheckPassedSerials();
 }
 
-// MonitoredQueue:
-MaybeError MonitoredQueue::Initialize() {
-    return Queue::Initialize(/*isMonitored=*/true);
-}
-
-MaybeError MonitoredQueue::NextSerial() {
-    auto commandContext = GetScopedPendingCommandContext(SubmitMode::Passive);
-
-    DAWN_TRY(commandContext.FlushBuffersForSyncingWithCPU());
-
-    IncrementLastSubmittedCommandSerial();
-    TRACE_EVENT1(GetDevice()->GetPlatform(), General, "D3D11Device::SignalFence", "serial",
-                 uint64_t(GetLastSubmittedCommandSerial()));
-    DAWN_TRY(
-        CheckHRESULT(commandContext.Signal(mFence.Get(), uint64_t(GetLastSubmittedCommandSerial())),
-                     "D3D11 command queue signal fence"));
-
-    return {};
-}
-
-ResultOrError<ExecutionSerial> MonitoredQueue::CheckAndUpdateCompletedSerials() {
-    ExecutionSerial completedSerial = ExecutionSerial(mFence->GetCompletedValue());
-    if (DAWN_UNLIKELY(completedSerial == ExecutionSerial(UINT64_MAX))) {
-        // GetCompletedValue returns UINT64_MAX if the device was removed.
-        // Try to query the failure reason.
-        ID3D11Device* d3d11Device = ToBackend(GetDevice())->GetD3D11Device();
-        DAWN_TRY(CheckHRESULT(d3d11Device->GetDeviceRemovedReason(),
-                              "ID3D11Device::GetDeviceRemovedReason"));
-        // Otherwise, return a generic device lost error.
-        return DAWN_DEVICE_LOST_ERROR("Device lost");
-    }
-
-    if (completedSerial <= GetCompletedCommandSerial()) {
-        return ExecutionSerial(0);
-    }
-
-    DAWN_TRY(CheckAndMapReadyBuffers(completedSerial));
-
-    DAWN_TRY(RecycleSystemEventReceivers(completedSerial));
-
-    return completedSerial;
-}
-
-void MonitoredQueue::SetEventOnCompletion(ExecutionSerial serial, HANDLE event) {
-    mFence->SetEventOnCompletion(static_cast<uint64_t>(serial), event);
-}
-
-// SystemEventQueue:
-MaybeError SystemEventQueue::Initialize() {
-    return Queue::Initialize(/*isMonitored=*/false);
-}
-
-MaybeError SystemEventQueue::NextSerial() {
+MaybeError Queue::NextSerial() {
     auto commandContext = GetScopedPendingCommandContext(SubmitMode::Passive);
 
     DAWN_TRY(commandContext.FlushBuffersForSyncingWithCPU());
@@ -370,13 +348,13 @@ MaybeError SystemEventQueue::NextSerial() {
 
     SystemEventReceiver receiver;
     DAWN_TRY_ASSIGN(receiver, GetSystemEventReceiver());
-    commandContext.Flush1(D3D11_CONTEXT_TYPE_ALL, receiver.GetPrimitive().Get());
+    mBackgroundFlushThread->EnqueueFlush(receiver.GetPrimitive().Get());
     mPendingEvents->push_back({lastSubmittedSerial, std::move(receiver)});
 
     return {};
 }
 
-ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials() {
+ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
     ExecutionSerial completedSerial;
     std::vector<SystemEventReceiver> returnedReceivers;
     DAWN_TRY_ASSIGN(
@@ -432,8 +410,7 @@ ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials(
     return completedSerial;
 }
 
-ResultOrError<bool> SystemEventQueue::WaitForQueueSerial(ExecutionSerial serial,
-                                                         Nanoseconds timeout) {
+ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
     ExecutionSerial completedSerial = GetCompletedCommandSerial();
     if (serial <= completedSerial) {
         return true;
@@ -483,7 +460,7 @@ ResultOrError<bool> SystemEventQueue::WaitForQueueSerial(ExecutionSerial serial,
     return didComplete;
 }
 
-void SystemEventQueue::SetEventOnCompletion(ExecutionSerial serial, HANDLE event) {
+void Queue::SetEventOnCompletion(ExecutionSerial serial, HANDLE event) {
     DAWN_UNREACHABLE();
 }
 

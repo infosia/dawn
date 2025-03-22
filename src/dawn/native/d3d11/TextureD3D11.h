@@ -62,7 +62,8 @@ class Texture final : public TextureBase {
                                               ComPtr<ID3D11Resource> d3d11Texture);
     static ResultOrError<Ref<Texture>> CreateFromSharedTextureMemory(
         SharedTextureMemory* memory,
-        const UnpackedPtr<TextureDescriptor>& descriptor);
+        const UnpackedPtr<TextureDescriptor>& descriptor,
+        bool isSharedWithHandle);
     ID3D11Resource* GetD3D11Resource() const;
 
     ResultOrError<ComPtr<ID3D11RenderTargetView>> CreateD3D11RenderTargetView(
@@ -99,7 +100,6 @@ class Texture final : public TextureBase {
     static MaybeError Copy(const ScopedCommandRecordingContext* commandContext,
                            CopyTextureToTextureCmd* copy);
 
-
     // As D3D11 SRV doesn't support 'Shader4ComponentMapping' for depth-stencil textures, we can't
     // sample the stencil component directly. As a workaround we create an internal R8Uint texture,
     // holding the copy of its stencil data, and use the internal texture's SRV instead.
@@ -121,7 +121,10 @@ class Texture final : public TextureBase {
     static ResultOrError<Ref<Texture>>
     CreateInternal(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor, Kind kind);
 
-    Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor, Kind kind);
+    Texture(Device* device,
+            const UnpackedPtr<TextureDescriptor>& descriptor,
+            Kind kind,
+            bool isSharedWithHandle = false);
     ~Texture() override;
 
     template <typename T>
@@ -184,6 +187,7 @@ class Texture final : public TextureBase {
     const Kind mKind = Kind::Normal;
     ComPtr<ID3D11Resource> mD3d11Resource;
     Ref<d3d::KeyedMutex> mKeyedMutex;
+    const bool mIsSharedWithHandle = false;
 
     // The internal 'R8Uint' texture for sampling stencil from depth-stencil textures.
     Ref<Texture> mTextureForStencilSampling;

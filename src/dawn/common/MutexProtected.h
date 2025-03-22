@@ -78,6 +78,7 @@ class Guard : public NonMovable, StackAllocated {
     auto& operator*() const { return *Get(); }
 
   protected:
+    Guard(T* obj, typename Traits::LockType&& lock) : mLock(std::move(lock)), mObj(obj) {}
     Guard(T* obj, typename Traits::MutexType& mutex) : mLock(Traits::GetMutex(mutex)), mObj(obj) {}
     Guard(Guard&& other) : mLock(std::move(other.mLock)), mObj(std::move(other.mObj)) {
         other.mObj = nullptr;
@@ -140,6 +141,7 @@ class MutexProtected {
     using Traits = detail::MutexProtectedTraits<T>;
     using Usage = Guard<T, Traits>;
     using ConstUsage = Guard<const T, Traits>;
+    using MutexType = Traits::MutexType;
 
     MutexProtected() : mMutex(Traits::CreateMutex()) {}
 
@@ -160,11 +162,21 @@ class MutexProtected {
         return fn(Use());
     }
 
+    template <typename Fn, typename = std::enable_if_t<std::is_same_v<MutexType, std::mutex>>>
+    bool TryUse(Fn&& fn) {
+        std::unique_lock<std::mutex> lk(mMutex, std::defer_lock);
+        if (!lk.try_lock()) {
+            return false;
+        }
+        fn(Usage(&mObj, std::move(lk)));
+        return true;
+    }
+
   private:
     Usage Use() { return Usage(&mObj, mMutex); }
     ConstUsage Use() const { return ConstUsage(&mObj, mMutex); }
 
-    mutable typename Traits::MutexType mMutex;
+    mutable MutexType mMutex;
     T mObj;
 };
 
