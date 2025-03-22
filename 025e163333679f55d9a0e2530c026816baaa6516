@@ -16,6 +16,24 @@
       "message": "This is required by the \u0027BuildVertexPullingTransformConfig\u0027 in TintUtils.h",
       "revId": "025e163333679f55d9a0e2530c026816baaa6516",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7325be4_6b19ec33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-22T01:32:13Z",
+      "side": 1,
+      "message": "I am not sure why a change from jan is causing a build break\nhttps://dawn-review.googlesource.com/c/dawn/+/222018",
+      "parentUuid": "4cc86fc8_4744f53a",
+      "revId": "025e163333679f55d9a0e2530c026816baaa6516",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
