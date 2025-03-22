@@ -167,6 +167,8 @@ class ScopedCommandRecordingContext : public CommandRecordingContext::Guard {
                 UINT MapFlags,
                 D3D11_MAPPED_SUBRESOURCE* pMappedResource) const;
     void Unmap(ID3D11Resource* pResource, UINT Subresource) const;
+    HRESULT GetData(ID3D11Query* pQuery, void* pResult, UINT size, UINT flags) const;
+    void End(ID3D11Query* pQuery) const;
     HRESULT Signal(ID3D11Fence* pFence, UINT64 Value) const;
     HRESULT Wait(ID3D11Fence* pFence, UINT64 Value) const;
     void Flush1(D3D11_CONTEXT_TYPE ContextType, HANDLE hEvent) const;

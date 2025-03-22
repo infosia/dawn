@@ -78,6 +78,8 @@ class Queue : public d3d::Queue {
 
     MaybeError NextSerial();
 
+    ResultOrError<bool> WaitForQueueSerialImpl(ExecutionSerial serial, Nanoseconds timeout);
+
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;
     MaybeError WriteBufferImpl(BufferBase* buffer,
                                uint64_t bufferOffset,
@@ -99,6 +101,10 @@ class Queue : public d3d::Queue {
     // Check all pending map buffers, and actually map the ready ones.
     MaybeError CheckAndMapReadyBuffers(ExecutionSerial completedSerial);
 
+    bool WaitForQueryData(const ScopedCommandRecordingContext& commandContext,
+                          ID3D11Query* query,
+                          Nanoseconds timeout);
+
     ComPtr<ID3D11Fence> mFence;
     Ref<SharedFence> mSharedFence;
     MutexProtected<CommandRecordingContext, CommandRecordingContextGuard> mPendingCommands;
@@ -110,12 +116,18 @@ class Queue : public d3d::Queue {
     };
     SerialMap<ExecutionSerial, BufferMapEntry> mPendingMapBuffers;
 
-    struct SerialEventReceiverPair {
+    struct SerialEventQueryPair {
         ExecutionSerial serial;
-        SystemEventReceiver receiver;
+        ComPtr<ID3D11Query> query;
     };
-    // Events associated with submitted commands. They are in old to recent order.
-    MutexProtected<std::deque<SerialEventReceiverPair>> mPendingEvents;
+
+    struct State {
+        std::vector<ComPtr<ID3D11Query>> freeQueries;
+        // Events associated with submitted commands. They are in old to recent order.
+        std::deque<SerialEventQueryPair> pendingQueries;
+    };
+
+    MutexProtected<State> mQueryState;
 
     class FlushThread;
     std::unique_ptr<FlushThread> mBackgroundFlushThread;
