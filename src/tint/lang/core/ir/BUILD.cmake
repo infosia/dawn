@@ -159,6 +159,8 @@ tint_add_target(tint_lang_core_ir lib
   lang/core/ir/user_call.h
   lang/core/ir/validator.cc
   lang/core/ir/validator.h
+  lang/core/ir/generic_output.cc
+  lang/core/ir/generic_output.h
   lang/core/ir/value.cc
   lang/core/ir/value.h
   lang/core/ir/var.cc
