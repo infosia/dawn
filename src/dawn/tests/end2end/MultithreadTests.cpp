@@ -688,6 +688,21 @@ TEST_P(MultithreadCachingTests, RefAndReleaseCachedBindGroupLayoutsInParallel) {
     });
 }
 
+// Test that creating the same bind group and release it on multiple threads won't race.
+TEST_P(MultithreadCachingTests, RefAndReleaseCachedBindGroupsInParallel) {
+    wgpu::BindGroupLayout layout = CreateComputeBindGroupLayout();
+    wgpu::Buffer ssbo =
+        CreateBuffer(sizeof(uint32_t), wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc |
+                                           wgpu::BufferUsage::CopyDst);
+    utils::RunInParallel(100, [&, this](uint32_t) {
+        wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, layout,
+                                                         {
+                                                             {0, ssbo, 0, sizeof(uint32_t)},
+                                                         });
+        EXPECT_NE(nullptr, bindGroup.Get());
+    });
+}
+
 // Test that creating a same pipeline layout (which will return the cached layout) and
 // release it on multiple threads won't race.
 TEST_P(MultithreadCachingTests, RefAndReleaseCachedPipelineLayoutsInParallel) {
