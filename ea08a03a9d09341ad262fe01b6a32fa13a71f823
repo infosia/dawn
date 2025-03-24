@@ -40,6 +40,30 @@
       ],
       "revId": "ea08a03a9d09341ad262fe01b6a32fa13a71f823",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa94ce45_a1c2f2c5",
+        "filename": "src/dawn/common/Sha3.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-24T08:30:59Z",
+      "side": 1,
+      "message": "It has been fixed in https://dawn-review.googlesource.com/c/dawn/+/231675 already, you might recognize the CL author even!",
+      "parentUuid": "aa073911_4d1c8ad6",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 16
+      },
+      "revId": "ea08a03a9d09341ad262fe01b6a32fa13a71f823",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
