@@ -35,6 +35,7 @@
 //                headers will need to be moved to include/tint/.
 
 #include "src/tint/api/tint.h"
+#include "src/tint/lang/core/ir/generic_output.h"
 #include "src/tint/lang/core/ir/transform/single_entry_point.h"
 #include "src/tint/lang/core/ir/transform/substitute_overrides.h"
 #include "src/tint/lang/core/type/manager.h"

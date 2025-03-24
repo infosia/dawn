@@ -103,6 +103,8 @@ libtint_source_set("ir") {
     "function.h",
     "function_param.cc",
     "function_param.h",
+    "generic_output.cc",
+    "generic_output.h",
     "ice.h",
     "if.cc",
     "if.h",

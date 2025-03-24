@@ -102,6 +102,8 @@ tint_add_target(tint_lang_core_ir lib
   lang/core/ir/function.h
   lang/core/ir/function_param.cc
   lang/core/ir/function_param.h
+  lang/core/ir/generic_output.cc
+  lang/core/ir/generic_output.h
   lang/core/ir/ice.h
   lang/core/ir/if.cc
   lang/core/ir/if.h
