@@ -16,6 +16,24 @@
       "message": "Is this something we want to do? These isnt\u0027 really anything our users can do if they get compile errors from FXC or DXC. We need to fix it in Tint. But, provding them with errors they think they _can_ do something.  It seems better to only enable this if they\u0027re dumping shaders, which means probably we asked them for more information.",
       "revId": "516500a25109a6f42705c912e7bc72b8a0364c7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "943d4cd7_c38da112",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-24T14:16:23Z",
+      "side": 1,
+      "message": "There were some errors in the wild related to builtin shaders in [1]. They failed to compile on some GPUs that I don\u0027t have hardwares to diagnose. The error message was just \"FXC failed to compile.\" So I don\u0027t know what really went wrong.\n\nFWIW, the error message had been included before [2].\n\n[1] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlitBufferToTexture.cpp;drc\u003d40f8f44d6bd622a31040e22c3b95cd1f8cbd9e1e;l\u003d51\n\n[2] https://dawn-review.googlesource.com/c/dawn/+/216955",
+      "parentUuid": "5a1b7250_c078bebf",
+      "revId": "516500a25109a6f42705c912e7bc72b8a0364c7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
