@@ -119,6 +119,18 @@ struct hash<dawn::ityp::bitset<Index, N>> {
         return dawn::Hash(static_cast<const std::bitset<N>&>(value));
     }
 };
+
+template <typename T, size_t N>
+struct hash<std::array<T, N>> {
+  public:
+    size_t operator()(const std::array<T, N>& value) const {
+        size_t hash = size_t();
+        for (auto& element : value) {
+            dawn::HashCombine(&hash, element);
+        }
+        return hash;
+    }
+};
 }  // namespace std
 
 #endif  // SRC_DAWN_COMMON_HASHUTILS_H_
