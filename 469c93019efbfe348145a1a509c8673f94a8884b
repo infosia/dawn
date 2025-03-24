@@ -80,6 +80,30 @@
       },
       "revId": "469c93019efbfe348145a1a509c8673f94a8884b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0cb3ae8_8911de5d",
+        "filename": "src/tint/lang/core/ir/generic_output.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-24T16:10:06Z",
+      "side": 1,
+      "message": "This feels more like the beginnings of a set of IR reflection APIs, rather than tying it the concept of faking codegen for the null device.\n\nWe haven\u0027t figured out the API for that yet, but we could stick in in something like `ir/reflection.h` for now and just have it be a free-standing `GetWorkgroupInfo()` function. Just spitballing, but this sits better with me than the fake generate function.",
+      "parentUuid": "2c4f4a37_99ae576e",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 20
+      },
+      "revId": "469c93019efbfe348145a1a509c8673f94a8884b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
