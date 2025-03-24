@@ -45,6 +45,7 @@
 #include "dawn/common/ContentLessObjectCacheable.h"
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/RefCountedWithExternalCount.h"
+#include "dawn/common/Sha3.h"
 #include "dawn/common/ityp_array.h"
 #include "dawn/native/BindingInfo.h"
 #include "dawn/native/CachedObject.h"
@@ -374,6 +375,10 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
 
     std::optional<bool> GetStrictMath() const;
 
+    using ShaderModuleHasher = Sha3_512;
+    using ShaderModuleHash = ShaderModuleHasher::Output;
+    const ShaderModuleHash& GetHash() const;
+
     using ScopedUseTintProgram = APIRef<ShaderModuleBase>;
     ScopedUseTintProgram UseTintProgram();
 
@@ -406,6 +411,8 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
     Type mType;
     std::vector<uint32_t> mOriginalSpirv;
     std::string mWgsl;
+
+    ShaderModuleHash mSourceCodeHash;
 
     // TODO(dawn:2503): Remove the optional when Dawn can has a consistent default across backends.
     // Right now D3D uses strictness by default, and Vulkan/Metal use fast math by default.

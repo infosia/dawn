@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "src/dawn/common/Sha3.h"
+#include "dawn/native/stream/Stream.h"
 
 #include <algorithm>
 #include <bitset>

@@ -190,8 +190,9 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         substituteOverrideConfig = BuildSubstituteOverridesTransformConfig(programmableStage);
     }
 
-    auto tintProgram = GetTintProgram();
-    req.hlsl.inputProgram = &(tintProgram->program);
+    req.hlsl.shaderModuleHash = GetHash();
+    // TODO: Consider pass this ScopedUseTintProgram as a parameter.
+    req.hlsl.inputProgram = UseTintProgram();
     req.hlsl.entryPointName = programmableStage.entryPoint.c_str();
     req.hlsl.stage = stage;
     // Put the firstIndex into the internally reserved group and binding to avoid conflicting with

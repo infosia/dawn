@@ -243,12 +243,15 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
             std::move(r.substituteOverrideConfig).value());
     }
 
+    // Requires Tint Program here right before actual using.
+    auto inputProgram = r.inputProgram.UnsafeGetValue()->GetTintProgram();
+    const tint::Program* tintInputProgram = &(inputProgram->program);
     tint::Program transformedProgram;
     tint::ast::transform::DataMap transformOutputs;
     if (!r.useTintIR) {
         TRACE_EVENT0(tracePlatform.UnsafeGetValue(), General, "RunTransforms");
         DAWN_TRY_ASSIGN(transformedProgram,
-                        RunTransforms(&transformManager, r.inputProgram, transformInputs,
+                        RunTransforms(&transformManager, tintInputProgram, transformInputs,
                                       &transformOutputs, nullptr));
     }
 
@@ -267,7 +270,7 @@ MaybeError TranslateToHLSL(d3d::HlslCompilationRequest r,
     tint::Result<tint::hlsl::writer::Output> result;
     if (r.useTintIR) {
         // Convert the AST program to an IR module.
-        auto ir = tint::wgsl::reader::ProgramToLoweredIR(*r.inputProgram);
+        auto ir = tint::wgsl::reader::ProgramToLoweredIR(*tintInputProgram);
         DAWN_INVALID_IF(ir != tint::Success, "An error occurred while generating Tint IR\n%s",
                         ir.Failure().reason.Str());
 
