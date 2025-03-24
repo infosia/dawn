@@ -59,7 +59,8 @@ enum class Compiler { FXC, DXC };
 using InterStageShaderVariablesMask = std::bitset<tint::hlsl::writer::kMaxInterStageLocations>;
 
 #define HLSL_COMPILATION_REQUEST_MEMBERS(X)                                                      \
-    X(const tint::Program*, inputProgram)                                                        \
+    X(ShaderModuleBase::ShaderModuleHash, shaderModuleHash)                                      \
+    X(CacheKey::UnsafeUnkeyedValue<ShaderModuleBase::ScopedUseTintProgram>, inputProgram)        \
     X(std::string_view, entryPointName)                                                          \
     X(SingleShaderStage, stage)                                                                  \
     X(uint32_t, shaderModel)                                                                     \
@@ -68,9 +69,6 @@ using InterStageShaderVariablesMask = std::bitset<tint::hlsl::writer::kMaxInterS
     X(uint64_t, compilerVersion)                                                                 \
     X(std::wstring_view, dxcShaderProfile)                                                       \
     X(std::string_view, fxcShaderProfile)                                                        \
-    X(pD3DCompile, d3dCompile)                                                                   \
-    X(IDxcLibrary*, dxcLibrary)                                                                  \
-    X(IDxcCompiler3*, dxcCompiler)                                                               \
     X(uint32_t, firstIndexOffsetShaderRegister)                                                  \
     X(uint32_t, firstIndexOffsetRegisterSpace)                                                   \
     X(tint::hlsl::writer::Options, tintOptions)                                                  \
@@ -82,16 +80,16 @@ using InterStageShaderVariablesMask = std::bitset<tint::hlsl::writer::kMaxInterS
     X(bool, dumpShaders)                                                                         \
     X(bool, useTintIR)
 
-#define D3D_BYTECODE_COMPILATION_REQUEST_MEMBERS(X) \
-    X(bool, hasShaderF16Feature)                    \
-    X(uint32_t, compileFlags)                       \
-    X(Compiler, compiler)                           \
-    X(uint64_t, compilerVersion)                    \
-    X(std::wstring_view, dxcShaderProfile)          \
-    X(std::string_view, fxcShaderProfile)           \
-    X(pD3DCompile, d3dCompile)                      \
-    X(IDxcLibrary*, dxcLibrary)                     \
-    X(IDxcCompiler3*, dxcCompiler)
+#define D3D_BYTECODE_COMPILATION_REQUEST_MEMBERS(X)           \
+    X(bool, hasShaderF16Feature)                              \
+    X(uint32_t, compileFlags)                                 \
+    X(Compiler, compiler)                                     \
+    X(uint64_t, compilerVersion)                              \
+    X(std::wstring_view, dxcShaderProfile)                    \
+    X(std::string_view, fxcShaderProfile)                     \
+    X(CacheKey::UnsafeUnkeyedValue<pD3DCompile>, d3dCompile)  \
+    X(CacheKey::UnsafeUnkeyedValue<IDxcLibrary*>, dxcLibrary) \
+    X(CacheKey::UnsafeUnkeyedValue<IDxcCompiler3*>, dxcCompiler)
 
 DAWN_SERIALIZABLE(struct, HlslCompilationRequest, HLSL_COMPILATION_REQUEST_MEMBERS){};
 #undef HLSL_COMPILATION_REQUEST_MEMBERS
