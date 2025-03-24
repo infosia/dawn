@@ -104,6 +104,30 @@
       },
       "revId": "469c93019efbfe348145a1a509c8673f94a8884b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9338db35_36c7a078",
+        "filename": "src/tint/lang/core/ir/generic_output.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-24T16:20:18Z",
+      "side": 1,
+      "message": "Yea, that was the other thing I was thinking, this is similar to what will end up being part of the new inspector.",
+      "parentUuid": "b0cb3ae8_8911de5d",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 20
+      },
+      "revId": "469c93019efbfe348145a1a509c8673f94a8884b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
