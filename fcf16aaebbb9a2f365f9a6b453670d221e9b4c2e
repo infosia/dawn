@@ -285,6 +285,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3ee3470_edfac2f4",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-24T14:37:42Z",
+      "side": 1,
+      "message": "SGTM!",
+      "parentUuid": "6efd65cf_ab3e668e",
+      "range": {
+        "startLine": 337,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2294ad1_b94c49ef",
@@ -322,6 +346,30 @@
       "side": 1,
       "message": "That makes sense. Updated to follow similar pattern for `GetAllocatedMemoryInfo()` since that now returns the allocated and used memory for vulkan.",
       "parentUuid": "a2294ad1_b94c49ef",
+      "range": {
+        "startLine": 2471,
+        "startChar": 0,
+        "endLine": 2473,
+        "endChar": 0
+      },
+      "revId": "fcf16aaebbb9a2f365f9a6b453670d221e9b4c2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91f3b5e4_7a81e255",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2473,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-24T14:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5776868_1bd90b75",
       "range": {
         "startLine": 2471,
         "startChar": 0,
