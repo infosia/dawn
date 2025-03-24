@@ -128,6 +128,30 @@
       },
       "revId": "469c93019efbfe348145a1a509c8673f94a8884b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2e41a91_ac36a763",
+        "filename": "src/tint/lang/core/ir/generic_output.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-24T16:50:52Z",
+      "side": 1,
+      "message": "I can make those changes.",
+      "parentUuid": "9338db35_36c7a078",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 20
+      },
+      "revId": "469c93019efbfe348145a1a509c8673f94a8884b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
