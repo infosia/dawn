@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9f0fabc2_d0d46c53",
+        "filename": "src/dawn/native/null/DeviceNull.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-24T16:01:10Z",
+      "side": 1,
+      "message": "Do these numbers actually matter for the Null device? Could we just make them up instead of pulling out of the IR and save having the generic output stuff at all?",
+      "revId": "469c93019efbfe348145a1a509c8673f94a8884b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "61292eaa_31df3f84",
         "filename": "src/tint/lang/core/ir/generic_output.cc",
         "patchSetId": 5
