@@ -1694,17 +1694,13 @@ void CommandEncoder::APICopyTextureToBuffer(const TexelCopyTextureInfo* sourceOr
             TexelCopyBufferLayout dstLayout = destination->layout;
             ApplyDefaultTexelCopyBufferLayoutOptions(&dstLayout, blockInfo, *copySize);
 
-            if (copySize->width == 0 || copySize->height == 0 ||
-                copySize->depthOrArrayLayers == 0) {
-                // Noop copy but is valid, simply skip encoding any command.
-                return {};
-            }
-
             auto format = source.texture->GetFormat();
             auto aspect = ConvertAspect(format, source.aspect);
 
             // Workaround to use compute pass to emulate texture to buffer copy
-            if (ShouldUseTextureToBufferBlit(GetDevice(), format, aspect)) {
+            if (ShouldUseTextureToBufferBlit(GetDevice(), format, aspect) &&
+                !(copySize->width == 0 || copySize->height == 0 ||
+                  copySize->depthOrArrayLayers == 0)) {
                 // This function might create new resources. Need to lock the Device.
                 // TODO(crbug.com/dawn/1618): In future, all temp resources should be created at
                 // Command Submit time, so the locking would be removed from here at that point.
