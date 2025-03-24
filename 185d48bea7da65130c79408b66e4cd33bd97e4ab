@@ -115,6 +115,30 @@
       },
       "revId": "185d48bea7da65130c79408b66e4cd33bd97e4ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e83ba52_984312ee",
+        "filename": "src/dawn/native/vulkan/RenderPipelineVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-24T09:16:30Z",
+      "side": 1,
+      "message": "Ah got it, can we make the code just slightly more clear by explicitly spelling out `PipelineVk::InitializeBase` here?",
+      "parentUuid": "9beb0491_7a330962",
+      "range": {
+        "startLine": 574,
+        "startChar": 36,
+        "endLine": 574,
+        "endChar": 50
+      },
+      "revId": "185d48bea7da65130c79408b66e4cd33bd97e4ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
