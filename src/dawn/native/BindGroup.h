@@ -63,6 +63,9 @@ class BindGroupBase : public ApiObjectBase {
 
     ObjectType GetType() const override;
 
+    // BindGroup's destruction is currently not thread safe so we need to lock before destroy.
+    void APIRelease() { ReleaseAndLockBeforeDestroy(); }
+
     BindGroupLayoutBase* GetFrontendLayout();
     const BindGroupLayoutBase* GetFrontendLayout() const;
     BindGroupLayoutInternalBase* GetLayout();
