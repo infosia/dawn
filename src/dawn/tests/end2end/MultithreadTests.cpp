@@ -688,6 +688,27 @@ TEST_P(MultithreadCachingTests, RefAndReleaseCachedBindGroupLayoutsInParallel) {
     });
 }
 
+// Test that creating bind groups and release them on multiple threads won't race.
+TEST_P(MultithreadCachingTests, CreateAndReleaseBindGroupsInParallel) {
+    int numThreads = 1000;
+    if (IsSwiftshader()) {
+        // Swiftshader seems to hang if there are too many threads in this test.
+        numThreads = 10;
+    }
+
+    wgpu::BindGroupLayout layout = CreateComputeBindGroupLayout();
+    wgpu::Buffer ssbo =
+        CreateBuffer(sizeof(uint32_t), wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc |
+                                           wgpu::BufferUsage::CopyDst);
+    utils::RunInParallel(numThreads, [&, this](uint32_t) {
+        wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, layout,
+                                                         {
+                                                             {0, ssbo, 0, sizeof(uint32_t)},
+                                                         });
+        EXPECT_NE(nullptr, bindGroup.Get());
+    });
+}
+
 // Test that creating a same pipeline layout (which will return the cached layout) and
 // release it on multiple threads won't race.
 TEST_P(MultithreadCachingTests, RefAndReleaseCachedPipelineLayoutsInParallel) {
