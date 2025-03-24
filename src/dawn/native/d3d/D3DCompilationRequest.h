@@ -59,7 +59,8 @@ enum class Compiler { FXC, DXC };
 using InterStageShaderVariablesMask = std::bitset<tint::hlsl::writer::kMaxInterStageLocations>;
 
 #define HLSL_COMPILATION_REQUEST_MEMBERS(X)                                                      \
-    X(const tint::Program*, inputProgram)                                                        \
+    X(ShaderModuleBase::ShaderModuleHash, shaderModuleHash)                                      \
+    X(CacheKey::UnsafeUnkeyedValue<ShaderModuleBase::ScopedUseTintProgram>, inputProgram)        \
     X(std::string_view, entryPointName)                                                          \
     X(SingleShaderStage, stage)                                                                  \
     X(uint32_t, shaderModel)                                                                     \
