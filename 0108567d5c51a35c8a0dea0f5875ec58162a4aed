@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5223ae0c_0965ddc9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-03-24T18:03:52Z",
+      "side": 1,
+      "message": "PTAL\n\nI ran a shard of WebGPU tests with and without this, and the number of skipped tests remained identical, so this should hopefully be a no-op from the tests\u0027 perspective.",
+      "revId": "0108567d5c51a35c8a0dea0f5875ec58162a4aed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
