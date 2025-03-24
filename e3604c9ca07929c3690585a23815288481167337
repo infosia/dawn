@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c08727df_a19927fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-03-24T21:00:03Z",
+      "side": 1,
+      "message": "Haven\u0027t looked too in depth into the implementation details yet, but from what I can tell, maybe it would make sense to make `[Load|Store]Op::Undefined` equal `DontCare`?\n\nLooking both at `dawn.json` and the JS spec, most of the time, `[Load|Store]Op` either need to be explicitly defined, or, in cases where they are relevant, we don\u0027t really care what they are?\n\nNote this comment is mostly to understand the reasoning behind this change instead of using the toggle to override `Undefined` instead?",
+      "revId": "e3604c9ca07929c3690585a23815288481167337",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
