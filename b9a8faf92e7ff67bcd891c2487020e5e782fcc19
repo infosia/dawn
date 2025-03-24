@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "26e75df4_0c99a15c",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-24T16:11:15Z",
+      "side": 1,
+      "message": "There are actually two different HRESULTs here for DXC: the one above is the result from calling `result-\u003eGetStatus`, which should always succeed. Below, `hr` is the actual result from the compilation itself. We should probably do the same thing as you did for FXC inside the `if (FAILED(hr)) {` for `hr`.",
+      "parentUuid": "7cc491b4_2472aa11",
+      "revId": "b9a8faf92e7ff67bcd891c2487020e5e782fcc19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ccdd73b8_caeaf569",
         "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
         "patchSetId": 2
@@ -73,6 +91,30 @@
       "side": 1,
       "message": "Not sure, the doc doesn\u0027t say it guarantees to be non-null in case of failures. The compilation might fail because of OOM, I think it makes sense if it won\u0027t return any error message in that case.",
       "parentUuid": "ccdd73b8_caeaf569",
+      "range": {
+        "startLine": 201,
+        "startChar": 35,
+        "endLine": 201,
+        "endChar": 44
+      },
+      "revId": "b9a8faf92e7ff67bcd891c2487020e5e782fcc19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef818c10_85ea864d",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-24T16:11:15Z",
+      "side": 1,
+      "message": "Okay, it\u0027s not a big deal, but I was just curious if you made this change because you hit a nullptr in your testing.",
+      "parentUuid": "d86d8b29_52ebf6b5",
       "range": {
         "startLine": 201,
         "startChar": 35,
