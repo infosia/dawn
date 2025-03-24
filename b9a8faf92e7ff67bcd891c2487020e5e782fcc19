@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01ebd2c0_4e391e04",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-24T15:58:26Z",
+      "side": 1,
+      "message": "Should we do the `resultAsString` thing for DXC as well?",
+      "revId": "b9a8faf92e7ff67bcd891c2487020e5e782fcc19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccdd73b8_caeaf569",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-24T15:58:26Z",
+      "side": 1,
+      "message": "I noticed that your original change (https://dawn-review.googlesource.com/c/dawn/+/232516) introduced this check for whether `errors` is valid, but isn\u0027t it always valid when we get a failure?",
+      "range": {
+        "startLine": 201,
+        "startChar": 35,
+        "endLine": 201,
+        "endChar": 44
+      },
+      "revId": "b9a8faf92e7ff67bcd891c2487020e5e782fcc19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
