@@ -738,8 +738,9 @@ void BindGroupBase::DeleteThis() {
     // Add another ref to the layout so that if this is the last ref, the layout
     // is destroyed after the bind group. The bind group is slab-allocated inside
     // memory owned by the layout (except for the null backend).
-    Ref<BindGroupLayoutBase> layout = mLayout;
+    auto deallocateCallback = GetDeallocateCallback();
     ApiObjectBase::DeleteThis();
+    deallocateCallback();
 }
 
 BindGroupBase::BindGroupBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label)
@@ -826,6 +827,11 @@ const std::vector<Ref<ExternalTextureBase>>& BindGroupBase::GetBoundExternalText
 void BindGroupBase::ForEachUnverifiedBufferBindingIndex(
     std::function<void(BindingIndex, uint32_t)> fn) const {
     ForEachUnverifiedBufferBindingIndexImpl(GetLayout(), fn);
+}
+
+std::function<void()> BindGroupBase::GetDeallocateCallback() {
+    // For BindGroups that aren't slab allocated the callback does nothing.
+    return []() {};
 }
 
 }  // namespace dawn::native

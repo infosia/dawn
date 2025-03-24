@@ -108,6 +108,12 @@ class BindGroupBase : public ApiObjectBase {
     BindGroupBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
     void DeleteThis() override;
 
+    // Returns a callback to deallocate memory for `this` if delete doesn't do so. The callback will
+    // be stored right before the destructor runs and then invoked after the destructor finishes.
+    // The callback must keep a reference to ensure the BindGroupLayout/SlabAllocator aren't
+    // destroyed before the callback is invoked.
+    virtual std::function<void()> GetDeallocateCallback();
+
     Ref<BindGroupLayoutBase> mLayout;
     BindGroupLayoutInternalBase::BindingDataPointers mBindingData;
 
