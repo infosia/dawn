@@ -51,9 +51,10 @@ MaybeError BindGroup::InitializeImpl() {
     return {};
 }
 
-void BindGroup::DestroyImpl() {
-    BindGroupBase::DestroyImpl();
-    ToBackend(GetLayout())->DeallocateBindGroup(this);
+std::function<void()> BindGroup::GetDeallocateCallback() {
+    return [layout = Ref<BindGroupLayout>(ToBackend(GetLayout())), bindGroup = this]() {
+        layout->DeallocateBindGroup(bindGroup);
+    };
 }
 
 }  // namespace dawn::native::opengl

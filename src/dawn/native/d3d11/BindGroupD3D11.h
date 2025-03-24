@@ -48,7 +48,7 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
 
     MaybeError InitializeImpl() override;
 
-    void DestroyImpl() override;
+    std::function<void()> GetDeallocateCallback() override;
 };
 
 }  // namespace dawn::native::d3d11

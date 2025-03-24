@@ -206,7 +206,13 @@ MaybeError BindGroup::InitializeImpl() {
 
 void BindGroup::DestroyImpl() {
     BindGroupBase::DestroyImpl();
-    ToBackend(GetLayout())->DeallocateBindGroup(this, &mDescriptorSetAllocation);
+    ToBackend(GetLayout())->DeallocateDescriptorSet(&mDescriptorSetAllocation);
+}
+
+std::function<void()> BindGroup::GetDeallocateCallback() {
+    return [layout = Ref<BindGroupLayout>(ToBackend(GetLayout())), bindGroup = this]() {
+        layout->DeallocateBindGroup(bindGroup);
+    };
 }
 
 VkDescriptorSet BindGroup::GetHandle() const {

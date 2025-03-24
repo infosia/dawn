@@ -227,8 +227,14 @@ MaybeError BindGroup::InitializeImpl() {
 
 void BindGroup::DestroyImpl() {
     BindGroupBase::DestroyImpl();
-    ToBackend(GetLayout())->DeallocateBindGroup(this, &mCPUViewAllocation);
+    ToBackend(GetLayout())->DeallocateDescriptorAllocation(&mCPUViewAllocation);
     DAWN_ASSERT(!mCPUViewAllocation.IsValid());
+}
+
+std::function<void()> BindGroup::GetDeallocateCallback() {
+    return [layout = Ref<BindGroupLayout>(ToBackend(GetLayout())), bindGroup = this]() {
+        layout->DeallocateBindGroup(bindGroup);
+    };
 }
 
 bool BindGroup::PopulateViews(MutexProtected<ShaderVisibleDescriptorAllocator>& viewAllocator) {
