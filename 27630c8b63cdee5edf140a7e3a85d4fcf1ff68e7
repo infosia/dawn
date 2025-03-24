@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "816457d1_c0f2e6d0",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-24T16:20:38Z",
+      "side": 0,
+      "message": "I\u0027m just curious, what happens when we don\u0027t pass in the version to FXC (or DXC)?",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 56
+      },
+      "revId": "27630c8b63cdee5edf140a7e3a85d4fcf1ff68e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e6e4edc_6b0d2f44",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-24T16:20:38Z",
+      "side": 0,
+      "message": "Glad you got rid of this 😊",
+      "range": {
+        "startLine": 241,
+        "startChar": 8,
+        "endLine": 241,
+        "endChar": 25
+      },
+      "revId": "27630c8b63cdee5edf140a7e3a85d4fcf1ff68e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

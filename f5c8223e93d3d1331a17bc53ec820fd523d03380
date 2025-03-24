@@ -18,6 +18,46 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8539dc77_ffdd1004",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-24T16:20:38Z",
+      "side": 1,
+      "message": "This looks great. I love the cleanup, and the fact that we know exactly which DLLs we\u0027re loading. Thanks!\n\nOnly one real pending issue below, pointed out by Corentin.",
+      "revId": "f5c8223e93d3d1331a17bc53ec820fd523d03380",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c198061_06c4b469",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-24T16:20:38Z",
+      "side": 1,
+      "message": "I assume `GetModuleDirectory` returns a path-separator at the end of the string?",
+      "range": {
+        "startLine": 103,
+        "startChar": 29,
+        "endLine": 103,
+        "endChar": 43
+      },
+      "revId": "f5c8223e93d3d1331a17bc53ec820fd523d03380",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d024d158_05af352b",
@@ -31,6 +71,24 @@
       "writtenOn": "2025-03-24T09:13:37Z",
       "side": 1,
       "message": "This can be changed at the Chromium level so IDK that we should CHECK it here because the value might change at runtime from under Dawn. Instaed can we make the defaulting logic use the feature?",
+      "revId": "f5c8223e93d3d1331a17bc53ec820fd523d03380",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2f28b4e_ac554345",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-24T16:20:38Z",
+      "side": 1,
+      "message": "Yeah, Dawn can be built with `DAWN_USE_BUILT_DXC`, and then run with the flag to disable `use_dxc`, so this would fail the check. Try running Chrome with `--disable-dawn-features\u003duse_dxc` and it should fail. This is why we had the conditional logic before to set the adapter toggle\u0027s default based on the result of this runtime flag.",
+      "parentUuid": "d024d158_05af352b",
       "revId": "f5c8223e93d3d1331a17bc53ec820fd523d03380",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
