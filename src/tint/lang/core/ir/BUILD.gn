@@ -135,6 +135,8 @@ libtint_source_set("ir") {
     "referenced_functions.h",
     "referenced_module_decls.h",
     "referenced_module_vars.h",
+    "reflection.cc",
+    "reflection.h",
     "return.cc",
     "return.h",
     "store.cc",
