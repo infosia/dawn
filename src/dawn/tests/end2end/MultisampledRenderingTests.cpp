@@ -2247,11 +2247,27 @@ TEST_P(DawnLoadResolveTextureTest, ClearThenLoadAndDrawWithRect) {
     wgpu::CommandBuffer commandBuffer = commandEncoder.Finish();
     queue.Submit(1, &commandBuffer);
 
-    // Verify the center is green.
-    VerifyResolveTarget(kGreen, singleSampledTexture);
-    // Verify the right-bottom corner, which is outside the rect, stays untouched.
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/0, /*y=*/0);
+#if 1 /*Failed 0, 0, 0, 0*/
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/0, /*y=*/1);
+#endif
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/1, /*y=*/0);
+
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/1, /*y=*/1);
     VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
-                        /*msaaCoverage=*/1.0f, /*x=*/kWidth - 1, /*y=*/kHeight - 1);
+                        /*msaaCoverage=*/1.0f, /*x=*/0, /*y=*/2);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/1, /*y=*/2);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/2, /*y=*/0);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/2, /*y=*/1);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/2, /*y=*/2);
 }
 
 // Test RenderPassDescriptorExpandResolveRect works correctly with StoreOp::Discard;
