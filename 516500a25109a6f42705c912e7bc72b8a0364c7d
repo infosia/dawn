@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a1b7250_c078bebf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-24T13:52:56Z",
+      "side": 1,
+      "message": "Is this something we want to do? These isnt\u0027 really anything our users can do if they get compile errors from FXC or DXC. We need to fix it in Tint. But, provding them with errors they think they _can_ do something.  It seems better to only enable this if they\u0027re dumping shaders, which means probably we asked them for more information.",
+      "revId": "516500a25109a6f42705c912e7bc72b8a0364c7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
