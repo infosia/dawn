@@ -36,6 +36,7 @@
 #include "dawn/common/BitSetIterator.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/MatchVariant.h"
+#include "dawn/common/Sha3.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CompilationMessages.h"
@@ -1504,12 +1505,16 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
     : Base(device, descriptor->label),
       mType(Type::Undefined),
       mInternalExtensions(std::move(internalExtensions)) {
+    ShaderModuleHasher hasher;
     if (auto* spirvDesc = descriptor.Get<ShaderSourceSPIRV>()) {
         mType = Type::Spirv;
         mOriginalSpirv.assign(spirvDesc->code, spirvDesc->code + spirvDesc->codeSize);
+        hasher.Update(mOriginalSpirv.data(),
+                      mOriginalSpirv.size() * sizeof(decltype(mOriginalSpirv)::value_type));
     } else if (auto* wgslDesc = descriptor.Get<ShaderSourceWGSL>()) {
         mType = Type::Wgsl;
         mWgsl = std::string(wgslDesc->code);
+        hasher.Update(mWgsl.data(), mWgsl.size() * sizeof(decltype(mWgsl)::value_type));
     } else {
         DAWN_ASSERT(false);
     }
@@ -1517,6 +1522,17 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
     if (const auto* compileOptions = descriptor.Get<ShaderModuleCompilationOptions>()) {
         mStrictMath = compileOptions->strictMath;
     }
+
+    constexpr const char kMetadataSplit[] = "@@@";
+    hasher.Update(kMetadataSplit, sizeof(kMetadataSplit));
+    hasher.Update(&mType, sizeof(mType));
+    hasher.Update(kMetadataSplit, sizeof(kMetadataSplit));
+    hasher.Update(&mStrictMath, sizeof(mStrictMath));
+    hasher.Update(kMetadataSplit, sizeof(kMetadataSplit));
+    hasher.Update(mInternalExtensions.data(),
+                  mInternalExtensions.size() * sizeof(decltype(mInternalExtensions)::value_type));
+
+    mHash = hasher.Finalize();
 }
 
 ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
@@ -1572,10 +1588,9 @@ const EntryPointMetadata& ShaderModuleBase::GetEntryPoint(absl::string_view entr
 
 size_t ShaderModuleBase::ComputeContentHash() {
     ObjectContentHasher recorder;
-    recorder.Record(mType);
-    recorder.Record(mOriginalSpirv);
-    recorder.Record(mWgsl);
-    recorder.Record(mStrictMath);
+    // Use mHash to represent the source content, which includes shader source, mType
+    // (WGSL or SPIR-V), mStrictMath, and mInternalExtensions.
+    recorder.Record(mHash);
     return recorder.GetContentHash();
 }
 
@@ -1583,6 +1598,10 @@ bool ShaderModuleBase::EqualityFunc::operator()(const ShaderModuleBase* a,
                                                 const ShaderModuleBase* b) const {
     return a->mType == b->mType && a->mOriginalSpirv == b->mOriginalSpirv && a->mWgsl == b->mWgsl &&
            a->mStrictMath == b->mStrictMath;
+}
+
+const ShaderModuleBase::ShaderModuleHash& ShaderModuleBase::GetHash() const {
+    return mHash;
 }
 
 ShaderModuleBase::ScopedUseTintProgram ShaderModuleBase::UseTintProgram() {
