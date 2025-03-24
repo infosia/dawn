@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cc491b4_2472aa11",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-24T16:04:28Z",
+      "side": 1,
+      "message": "`CheckHRESULT` above already returns the error code in case of failures. We didn\u0027t do that for FXC so I added resultAsString for that.",
+      "parentUuid": "01ebd2c0_4e391e04",
+      "revId": "b9a8faf92e7ff67bcd891c2487020e5e782fcc19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ccdd73b8_caeaf569",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-03-24T15:58:26Z",
       "side": 1,
       "message": "I noticed that your original change (https://dawn-review.googlesource.com/c/dawn/+/232516) introduced this check for whether `errors` is valid, but isn\u0027t it always valid when we get a failure?",
+      "range": {
+        "startLine": 201,
+        "startChar": 35,
+        "endLine": 201,
+        "endChar": 44
+      },
+      "revId": "b9a8faf92e7ff67bcd891c2487020e5e782fcc19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d86d8b29_52ebf6b5",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-24T16:04:28Z",
+      "side": 1,
+      "message": "Not sure, the doc doesn\u0027t say it guarantees to be non-null in case of failures. The compilation might fail because of OOM, I think it makes sense if it won\u0027t return any error message in that case.",
+      "parentUuid": "ccdd73b8_caeaf569",
       "range": {
         "startLine": 201,
         "startChar": 35,
