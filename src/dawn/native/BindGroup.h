@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_BINDGROUP_H_
 
 #include <array>
+#include <functional>
 #include <vector>
 
 #include "dawn/common/Constants.h"
@@ -107,6 +108,12 @@ class BindGroupBase : public ApiObjectBase {
   private:
     BindGroupBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
     void DeleteThis() override;
+
+    // Returns a callback to deallocate memory for `this` if necessary. The callback will be stored
+    // right before the destructor runs and then invoked after the destructor finishes. The callback
+    // must keep a reference to the BindGroupLayout/SlabAllocator so they aren't destroyed before
+    // the callback is invoked.
+    virtual std::function<void()> GetDeallocateCallback();
 
     Ref<BindGroupLayoutBase> mLayout;
     BindGroupLayoutInternalBase::BindingDataPointers mBindingData;

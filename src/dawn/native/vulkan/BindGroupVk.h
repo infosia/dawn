@@ -54,7 +54,7 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
 
     MaybeError InitializeImpl() override;
 
-    void DestroyImpl() override;
+    std::function<void()> GetDeallocateCallback() override;
 
     // Dawn API
     void SetLabelImpl() override;
