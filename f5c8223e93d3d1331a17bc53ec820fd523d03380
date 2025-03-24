@@ -16,6 +16,23 @@
       "message": "@Corentin and @Antonio, PTAL",
       "revId": "f5c8223e93d3d1331a17bc53ec820fd523d03380",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d024d158_05af352b",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-24T09:13:37Z",
+      "side": 1,
+      "message": "This can be changed at the Chromium level so IDK that we should CHECK it here because the value might change at runtime from under Dawn. Instaed can we make the defaulting logic use the feature?",
+      "revId": "f5c8223e93d3d1331a17bc53ec820fd523d03380",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
