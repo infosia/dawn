@@ -170,6 +170,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a50933dd_4bf33b6c",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 2002,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-24T22:35:12Z",
+      "side": 1,
+      "message": "Fixed by just getting rid of the new helper and inlining its contents. Only a few lines anyway.",
+      "parentUuid": "ab64ac5b_256c022a",
+      "range": {
+        "startLine": 1998,
+        "startChar": 4,
+        "endLine": 2002,
+        "endChar": 5
+      },
+      "revId": "3a0003670a2f857f16752efa527b32946c5b7bd6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af240ebc_ceace57c",

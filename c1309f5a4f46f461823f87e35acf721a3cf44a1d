@@ -417,6 +417,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "713736df_3b3a1be0",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-24T22:35:12Z",
+      "side": 1,
+      "message": "Marking resolved.",
+      "parentUuid": "22d027c4_d519e14d",
+      "range": {
+        "startLine": 1277,
+        "startChar": 4,
+        "endLine": 1280,
+        "endChar": 5
+      },
+      "revId": "c1309f5a4f46f461823f87e35acf721a3cf44a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b05f2e16_d0b741b1",
