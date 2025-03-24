@@ -70,6 +70,24 @@
       "parentUuid": "4c3ba90c_3f483330",
       "revId": "9c8698c23a283668e7111f76ba57c05d369a7d22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d38ea73b_7d95204f",
+        "filename": "src/dawn/native/Pipeline.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-24T20:17:49Z",
+      "side": 1,
+      "message": "k, added some more tests and reverted the changes in this file as it seems all validation is required.",
+      "parentUuid": "62bf70e0_c9387751",
+      "revId": "9c8698c23a283668e7111f76ba57c05d369a7d22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "833002d8_99f63fe0",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-24T20:17:49Z",
+      "side": 1,
+      "message": "This isnt\u0027 technically needed anymore, but I think it\u0027s useful context to have available.",
+      "revId": "3b9c440eff5af3bf84d4d0e7d9032f49c2c6ae7b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
