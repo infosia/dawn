@@ -2209,11 +2209,8 @@ TEST_P(DawnLoadResolveTextureTest, ClearThenLoadAndDrawWithRect) {
     auto singleSampledTextureView = singleSampledTexture.CreateView();
 
     wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
-    wgpu::RenderPipeline pipeline = CreateRenderPipelineWithOneOutputForTest(
-        /*testDepth=*/false, /*sampleMask=*/0xFFFFFFFF, /*alphaToCoverageEnabled=*/false,
-        /*flipTriangle=*/false, /*enableExpandResolveLoadOp=*/true);
 
-    constexpr wgpu::Color kGreen = {0.0f, 0.8f, 0.0f, 0.8f};
+    constexpr wgpu::Color kGreen = {1.0f, 0.0f, 0.0f, 1.0f};
 
     // In the first render pass we clear the attachment without drawing anything.
     {
@@ -2227,10 +2224,40 @@ TEST_P(DawnLoadResolveTextureTest, ClearThenLoadAndDrawWithRect) {
         renderPassEncoder.End();
     }
 
+#if 1  // pass
+    wgpu::CommandBuffer commandBuffer = commandEncoder.Finish();
+    queue.Submit(1, &commandBuffer);
+
+    // Verify the center is green.
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/0, /*y=*/0);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/0, /*y=*/1);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/0, /*y=*/2);
+
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/1, /*y=*/0);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/1, /*y=*/1);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/1, /*y=*/2);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/2, /*y=*/0);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/2, /*y=*/1);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/2, /*y=*/2);
+    commandEncoder = device.CreateCommandEncoder();
+#endif
+
     // In the second render pass, we draw a green triangle with LoadOp::ExpandResolveTexture. We
     // also specify a scissor rect requiring the pixels in the right and bottom edges untouched
     // during expanding and resolving.
     {
+        wgpu::RenderPipeline pipeline = CreateRenderPipelineWithOneOutputForTest(
+            /*testDepth=*/false, /*sampleMask=*/0xFFFFFFFF, /*alphaToCoverageEnabled=*/false,
+            /*flipTriangle=*/false, /*enableExpandResolveLoadOp=*/true);
         utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
             {multiSampledTextureView}, {singleSampledTextureView},
             wgpu::LoadOp::ExpandResolveTexture, wgpu::LoadOp::Clear,
@@ -2243,15 +2270,60 @@ TEST_P(DawnLoadResolveTextureTest, ClearThenLoadAndDrawWithRect) {
         renderPass.nextInChain = &rect;
         EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
     }
-
+#if 0
+    constexpr std::array<uint8_t, 4 * 9> expectedPixelValue = {
+        255u, 0, 0, 255u, 255u, 0, 0, 255u, 255u, 0, 0, 255u, 255u, 0, 0, 255u, 255u, 0, 0, 255u,
+        255u, 0, 0, 255u, 255u, 0, 0, 255u, 255u, 0, 0, 255u, 255u, 0, 0, 255u};
+    const uint64_t bufferSize = 524;  // sizeof(uint8_t) * expectedPixelValue.size() * 9;
+    const uint64_t bufferSize2 = sizeof(uint8_t) * expectedPixelValue.size() * 9;
+    std::cout << " bufferSize =" << bufferSize << "\n";
+    wgpu::BufferDescriptor bufferDescriptor;
+    bufferDescriptor.size = bufferSize;
+    bufferDescriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
+    wgpu::Buffer buffer = device.CreateBuffer(&bufferDescriptor);
+    constexpr wgpu::Extent3D kTextureSize = {kWidth, kHeight, 1};
+    // wgpu::TextureDescriptor textureDescriptor;
+    // textureDescriptor.dimension = wgpu::TextureDimension::e2D;
+    // textureDescriptor.size = kTextureSize;
+    wgpu::TexelCopyTextureInfo texelCopyTextureInfo =
+        utils::CreateTexelCopyTextureInfo(singleSampledTexture, 0, {0, 0, 0});
+    wgpu::TexelCopyBufferInfo texelCopyBufferInfo =
+        utils::CreateTexelCopyBufferInfo(buffer, 0, kTextureBytesPerRowAlignment);
+    commandEncoder.CopyTextureToBuffer(&texelCopyTextureInfo, &texelCopyBufferInfo, &kTextureSize);
     wgpu::CommandBuffer commandBuffer = commandEncoder.Finish();
     queue.Submit(1, &commandBuffer);
+#if 1
+    EXPECT_BUFFER_U8_RANGE_EQ(reinterpret_cast<const uint8_t*>(expectedPixelValue.data()), buffer,
+                              0, bufferSize2 / sizeof(uint8_t));
+#endif
+#endif
 
-    // Verify the center is green.
-    VerifyResolveTarget(kGreen, singleSampledTexture);
-    // Verify the right-bottom corner, which is outside the rect, stays untouched.
+#if 1
+    commandBuffer = commandEncoder.Finish();
+    queue.Submit(1, &commandBuffer);
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/0, /*y=*/0);
+#if 1 /*Failed 0, 0, 0, 0*/
+    std::cout << "Actual Point 0, 1 is Clear Color, expected to be Green\n";
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/0, /*y=*/1);
+#endif
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/1, /*y=*/0);
+
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/1, /*y=*/1);
     VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
-                        /*msaaCoverage=*/1.0f, /*x=*/kWidth - 1, /*y=*/kHeight - 1);
+                        /*msaaCoverage=*/1.0f, /*x=*/0, /*y=*/2);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/1, /*y=*/2);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/2, /*y=*/0);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/2, /*y=*/1);
+    VerifyResolveTarget(kClearColor, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/0.5f, /*x=*/2, /*y=*/2);
+#endif
 }
 
 // Test RenderPassDescriptorExpandResolveRect works correctly with StoreOp::Discard;
