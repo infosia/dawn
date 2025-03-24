@@ -34,6 +34,24 @@
       "parentUuid": "5a1b7250_c078bebf",
       "revId": "516500a25109a6f42705c912e7bc72b8a0364c7d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c987d65_d4f51d40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-24T14:27:03Z",
+      "side": 1,
+      "message": "Yup, the linked bugs from that CL discuss how the errors are not actionable and we shouldn\u0027t display them by default.",
+      "parentUuid": "943d4cd7_c38da112",
+      "revId": "516500a25109a6f42705c912e7bc72b8a0364c7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
