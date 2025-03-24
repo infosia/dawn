@@ -40,6 +40,8 @@ namespace dawn::native {
 namespace {
 
 thread_local DeviceBase* tlDevice = nullptr;
+// Allow nested TintICEReporter, as long as they are for the same device.
+thread_local size_t tlNested = 0;
 
 void TintICEReporter(const tint::InternalCompilerError& err) {
     if (tlDevice) {
@@ -164,13 +166,17 @@ ScopedTintICEHandler::ScopedTintICEHandler(DeviceBase* device) {
     static bool init_once_tint_error_reporter = InitializeTintErrorReporter();
     (void)init_once_tint_error_reporter;
 
-    // Shouldn't have overlapping instances of this handler.
-    DAWN_ASSERT(tlDevice == nullptr);
+    // Allow instances of this handler if and only if registered for the same device.
+    DAWN_ASSERT((tlDevice == nullptr && tlNested == 0) || (tlDevice == device && tlNested > 0));
     tlDevice = device;
+    ++tlNested;
 }
 
 ScopedTintICEHandler::~ScopedTintICEHandler() {
-    tlDevice = nullptr;
+    DAWN_ASSERT(tlNested > 0 && tlDevice != nullptr);
+    if (--tlNested == 0) {
+        tlDevice = nullptr;
+    }
 }
 
 tint::VertexPullingConfig BuildVertexPullingTransformConfig(
