@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebc60c94_2a61262a",
+        "filename": "src/tint/lang/core/ir/reflection.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-24T20:22:59Z",
+      "side": 1,
+      "message": "Maybe shorten and hope for the day we get designated initializers with c++20, heh\n\n```suggestion\n    return WorkgroupInfo{\n        const_wg_size[0],\n\tconst_wg_size[1],\n\tconst_wg_size[2],\n\twg_storage_size};\n```",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 26
+      },
+      "revId": "9a60d7e8f2bd75c2c78e2fe129d50e0de8c3e109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
