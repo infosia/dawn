@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5337ad9_28c9125f",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-24T16:22:48Z",
+      "side": 1,
+      "message": "Ah ok. Done.",
+      "parentUuid": "26e75df4_0c99a15c",
+      "revId": "b9a8faf92e7ff67bcd891c2487020e5e782fcc19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ccdd73b8_caeaf569",
@@ -115,6 +133,30 @@
       "side": 1,
       "message": "Okay, it\u0027s not a big deal, but I was just curious if you made this change because you hit a nullptr in your testing.",
       "parentUuid": "d86d8b29_52ebf6b5",
+      "range": {
+        "startLine": 201,
+        "startChar": 35,
+        "endLine": 201,
+        "endChar": 44
+      },
+      "revId": "b9a8faf92e7ff67bcd891c2487020e5e782fcc19",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19eb7fd5_c68c48c4",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-24T16:22:48Z",
+      "side": 1,
+      "message": "Yeah. I added it because I suspect the reported error was due to OOM. If a nullptr error message was returned, I would want the process to be able to report the error code instead of crashing defererencing a nullptr. Just an extra caution.",
+      "parentUuid": "ef818c10_85ea864d",
       "range": {
         "startLine": 201,
         "startChar": 35,
