@@ -90,7 +90,8 @@ opengl::CombinedSampler* AppendCombinedSampler(opengl::CombinedSamplerInfo* info
 using InterstageLocationAndName = std::pair<uint32_t, std::string>;
 
 #define GLSL_COMPILATION_REQUEST_MEMBERS(X)                                                      \
-    X(const tint::Program*, inputProgram)                                                        \
+    X(ShaderModuleBase::ShaderModuleHash, shaderModuleHash)                                      \
+    X(CacheKey::UnsafeUnkeyedValue<ShaderModuleBase::ScopedUseTintProgram>, inputProgram)        \
     X(std::string, entryPointName)                                                               \
     X(SingleShaderStage, stage)                                                                  \
     X(std::optional<tint::ast::transform::SubstituteOverride::Config>, substituteOverrideConfig) \
@@ -411,8 +412,8 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
 
     GLSLCompilationRequest req = {};
 
-    auto tintProgram = GetTintProgram();
-    req.inputProgram = &(tintProgram->program);
+    req.shaderModuleHash = GetHash();
+    req.inputProgram = UseTintProgram();
 
     // Since (non-Vulkan) GLSL does not support descriptor sets, generate a
     // mapping from the original group/binding pair to a binding-only
@@ -502,8 +503,11 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
         DAWN_TRY_LOAD_OR_RUN(
             compilationResult, GetDevice(), std::move(req), GLSLCompilation::FromBlob,
             [](GLSLCompilationRequest r) -> ResultOrError<GLSLCompilation> {
+                // Requires Tint Program here right before actual using.
+                auto inputProgram = r.inputProgram.UnsafeGetValue()->GetTintProgram();
+                const tint::Program* tintInputProgram = &(inputProgram->program);
                 // Convert the AST program to an IR module.
-                auto ir = tint::wgsl::reader::ProgramToLoweredIR(*r.inputProgram);
+                auto ir = tint::wgsl::reader::ProgramToLoweredIR(*tintInputProgram);
                 DAWN_INVALID_IF(ir != tint::Success,
                                 "An error occurred while generating Tint IR\n%s",
                                 ir.Failure().reason);

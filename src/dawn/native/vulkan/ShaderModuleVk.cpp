@@ -201,7 +201,8 @@ ShaderModule::~ShaderModule() = default;
 
 #define SPIRV_COMPILATION_REQUEST_MEMBERS(X)                                                     \
     X(SingleShaderStage, stage)                                                                  \
-    X(const tint::Program*, inputProgram)                                                        \
+    X(ShaderModuleBase::ShaderModuleHash, shaderModuleHash)                                      \
+    X(CacheKey::UnsafeUnkeyedValue<ShaderModuleBase::ScopedUseTintProgram>, inputProgram)        \
     X(std::optional<tint::ast::transform::SubstituteOverride::Config>, substituteOverrideConfig) \
     X(LimitsForCompilationRequest, limits)                                                       \
     X(CacheKey::UnsafeUnkeyedValue<LimitsForCompilationRequest>, adapterSupportedLimits)         \
@@ -342,8 +343,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
 
     SpirvCompilationRequest req = {};
     req.stage = stage;
-    auto tintProgram = GetTintProgram();
-    req.inputProgram = &(tintProgram->program);
+    req.shaderModuleHash = GetHash();
+    req.inputProgram = UseTintProgram();
     req.entryPointName = programmableStage.entryPoint;
     req.platform = UnsafeUnkeyedValue(GetDevice()->GetPlatform());
     req.substituteOverrideConfig = std::move(substituteOverrideConfig);
@@ -412,12 +413,15 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                 TRACE_EVENT0(r.platform.UnsafeGetValue(), General,
                              "tint::spirv::writer::Generate()");
 
+                // Requires Tint Program here right before actual using.
+                auto inputProgram = r.inputProgram.UnsafeGetValue()->GetTintProgram();
+                const tint::Program* tintInputProgram = &(inputProgram->program);
                 // Convert the AST program to an IR module.
                 tint::Result<tint::core::ir::Module> ir;
                 {
                     SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(r.platform.UnsafeGetValue(),
                                                        "ShaderModuleProgramToIR");
-                    ir = tint::wgsl::reader::ProgramToLoweredIR(*r.inputProgram);
+                    ir = tint::wgsl::reader::ProgramToLoweredIR(*tintInputProgram);
                     DAWN_INVALID_IF(ir != tint::Success,
                                     "An error occurred while generating Tint IR\n%s",
                                     ir.Failure().reason);
