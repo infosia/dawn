@@ -304,6 +304,30 @@ class Stream<std::vector<T>> {
     }
 };
 
+// Stream specialization for std::array<T, Size>.
+template <typename T, size_t Size>
+class Stream<std::array<T, Size>> {
+  public:
+    static void Write(Sink* s, const std::array<T, Size>& v) {
+        StreamIn(s, v.size());
+        for (const T& it : v) {
+            StreamIn(s, it);
+        }
+    }
+
+    static MaybeError Read(Source* s, std::array<T, Size>* v) {
+        using SizeT = decltype(std::declval<std::array<T, Size>>().size());
+        SizeT readSize;
+        DAWN_TRY(StreamOut(s, &readSize));
+        DAWN_INVALID_IF(readSize != Size, "Expect a std::array of size %zu, got %zu",
+                        static_cast<size_t>(Size), static_cast<size_t>(readSize));
+        for (auto& el : *v) {
+            DAWN_TRY(StreamOut(s, el));
+        }
+        return {};
+    }
+};
+
 // Stream specialization for std::pair.
 template <typename A, typename B>
 class Stream<std::pair<A, B>> {

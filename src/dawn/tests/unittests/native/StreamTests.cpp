@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <array>
 #include <cstring>
 #include <iomanip>
 #include <limits>
@@ -411,6 +412,36 @@ TEST(StreamTests, SerializeDeserializeBlobs) {
     }
 }
 
+// Test that serializing an array then deserializing with differenr size yields error.
+TEST(StreamTests, SerializeDeserializeArraySizeUnmatched) {
+    using InputArrayType = std::array<uint32_t, 5>;
+    using DifferentSizeArrayType = std::array<uint32_t, 4>;
+    const InputArrayType arr = {1, 2, 3, 4, 5};
+    // Test deserializing with same size
+    {
+        ByteVectorSink sink;
+        StreamIn(&sink, arr);
+
+        BlobSource src(CreateBlob(std::move(sink)));
+        InputArrayType out;
+        auto err = StreamOut(&src, &out);
+        EXPECT_FALSE(err.IsError());
+        EXPECT_EQ(arr, out);
+    }
+
+    // Test deserializing with different size
+    {
+        ByteVectorSink sink;
+        StreamIn(&sink, arr);
+
+        BlobSource src(CreateBlob(std::move(sink)));
+        DifferentSizeArrayType out;
+        auto err = StreamOut(&src, &out);
+        EXPECT_TRUE(err.IsError());
+        EXPECT_EQ(err.AcquireError()->GetMessage(), "Expect a std::array of size 4, got 5");
+    }
+}
+
 template <size_t N>
 std::bitset<N - 1> BitsetFromBitString(const char (&str)[N]) {
     // N - 1 because the last character is the null terminator.
@@ -441,7 +472,10 @@ static auto kStreamValueVectorParams = std::make_tuple(
     // Test unordered_sets.
     std::vector<std::unordered_set<int>>{{}, {4, 6, 99, 0}, {100, 300, 300}},
     // Test vectors.
-    std::vector<std::vector<int>>{{}, {1, 5, 2, 7, 4}, {3, 3, 3, 3, 3, 3, 3}});
+    std::vector<std::vector<int>>{{}, {1, 5, 2, 7, 4}, {3, 3, 3, 3, 3, 3, 3}},
+    // Test different size of arrays.
+    std::vector<std::array<int, 3>>{{1, 5, 2}, {-3, -3, -3}},
+    std::vector<std::array<uint8_t, 5>>{{5, 2, 7, 9, 6}, {3, 3, 3, 3, 42}});
 
 static auto kStreamValueInitListParams = std::make_tuple(
     std::initializer_list<char[12]>{"test string", "string test"},
