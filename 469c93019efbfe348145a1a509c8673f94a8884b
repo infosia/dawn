@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5fe8cb1b_06e8f39a",
+        "filename": "src/dawn/native/null/DeviceNull.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-24T20:46:57Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c191e151_4eb2bebf",
+      "revId": "469c93019efbfe348145a1a509c8673f94a8884b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61292eaa_31df3f84",
@@ -49,6 +67,30 @@
       "writtenOn": "2025-03-24T15:56:28Z",
       "side": 1,
       "message": "copyright",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "469c93019efbfe348145a1a509c8673f94a8884b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c92501f_0003d917",
+        "filename": "src/tint/lang/core/ir/generic_output.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-24T20:46:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61292eaa_31df3f84",
       "range": {
         "startLine": 1,
         "startChar": 13,
@@ -144,6 +186,30 @@
       "side": 1,
       "message": "I can make those changes.",
       "parentUuid": "9338db35_36c7a078",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 20
+      },
+      "revId": "469c93019efbfe348145a1a509c8673f94a8884b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "530f7e49_e4fb7b02",
+        "filename": "src/tint/lang/core/ir/generic_output.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-24T20:46:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2e41a91_ac36a763",
       "range": {
         "startLine": 39,
         "startChar": 7,

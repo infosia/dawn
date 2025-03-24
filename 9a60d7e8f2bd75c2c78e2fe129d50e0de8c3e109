@@ -22,6 +22,30 @@
       },
       "revId": "9a60d7e8f2bd75c2c78e2fe129d50e0de8c3e109",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59c276e1_463282d5",
+        "filename": "src/tint/lang/core/ir/reflection.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-24T20:46:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebc60c94_2a61262a",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 26
+      },
+      "revId": "9a60d7e8f2bd75c2c78e2fe129d50e0de8c3e109",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
