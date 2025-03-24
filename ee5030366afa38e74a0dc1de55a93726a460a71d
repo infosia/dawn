@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e625169c_26c4c52b",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-24T15:43:21Z",
+      "side": 1,
+      "message": "This should use the new overload.",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 43
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "4f4cd89d_0ef42d7c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Adapter.cpp",
+              "range": {
+                "startLine": 101,
+                "startChar": 0,
+                "endLine": 102,
+                "endChar": 0
+              },
+              "replacement": "        mLimits \u003d ApplyLimitTiers(std::move(mLimits));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ee5030366afa38e74a0dc1de55a93726a460a71d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
