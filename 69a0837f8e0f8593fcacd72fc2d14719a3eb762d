@@ -191,6 +191,24 @@
       "parentUuid": "7ed2cb51_8ea94697",
       "revId": "69a0837f8e0f8593fcacd72fc2d14719a3eb762d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea486b36_f5689230",
+        "filename": "src/tint/lang/wgsl/inspector/inspector_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3207,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-24T15:33:57Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "970968e4_15bec541",
+      "revId": "69a0837f8e0f8593fcacd72fc2d14719a3eb762d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
