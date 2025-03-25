@@ -16,6 +16,23 @@
       "message": "LGTM!",
       "revId": "f2ea1505e45af6b6d42dd4df6f00281142760deb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "770445d6_0bbb596b",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-25T18:11:45Z",
+      "side": 1,
+      "message": "Will this work? `DeleteThis` will trigger `DestroyImpl()` which will need layout for `DeallocateDescriptor`.",
+      "revId": "f2ea1505e45af6b6d42dd4df6f00281142760deb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
