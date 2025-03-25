@@ -33,6 +33,24 @@
       "message": "Will this work? `DeleteThis` will trigger `DestroyImpl()` which will need layout for `DeallocateDescriptor`.",
       "revId": "f2ea1505e45af6b6d42dd4df6f00281142760deb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce4fd237_de50f63d",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-25T18:13:35Z",
+      "side": 1,
+      "message": "Dammit yes the DestroyImpl is in there.\n\nWe could move it to do `DeleteThis` before the `Take.`",
+      "parentUuid": "770445d6_0bbb596b",
+      "revId": "f2ea1505e45af6b6d42dd4df6f00281142760deb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
