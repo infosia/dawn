@@ -16,6 +16,24 @@
       "message": "This exists twice, (and the x, y, z one below once). Can we combine the 3 of them into a global?",
       "revId": "763ab756e62a9bf201058dc4aec5abb8b61ed443",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29da8f5f_78b03b71",
+        "filename": "src/tint/lang/hlsl/writer/ast_printer/ast_printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2840,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-03-25T19:22:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb9c924f_29dcb6bb",
+      "revId": "763ab756e62a9bf201058dc4aec5abb8b61ed443",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
