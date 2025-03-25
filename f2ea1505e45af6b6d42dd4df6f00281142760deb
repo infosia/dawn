@@ -51,6 +51,24 @@
       "parentUuid": "770445d6_0bbb596b",
       "revId": "f2ea1505e45af6b6d42dd4df6f00281142760deb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb50659b_36932ac8",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-25T19:05:18Z",
+      "side": 1,
+      "message": "Good catch! DeleteThis() runs the destructor so we can\u0027t call TakeLayout() afterwards either.",
+      "parentUuid": "ce4fd237_de50f63d",
+      "revId": "f2ea1505e45af6b6d42dd4df6f00281142760deb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
