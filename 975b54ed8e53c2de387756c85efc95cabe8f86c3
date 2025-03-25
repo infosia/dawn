@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cb6d5dc_6b93db4e",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-25T13:59:03Z",
+      "side": 1,
+      "message": "This is still the same function. It should be `ApplyLimitTiers(\u0026mLimits)`",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 54
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "a6e2c6b2_5b911b3e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Adapter.cpp",
+              "range": {
+                "startLine": 101,
+                "startChar": 0,
+                "endLine": 102,
+                "endChar": 0
+              },
+              "replacement": "        ApplyLimitTiers(\u0026mLimits);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "975b54ed8e53c2de387756c85efc95cabe8f86c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
