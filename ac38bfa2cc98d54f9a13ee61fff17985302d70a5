@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d9663f8_d825f9a6",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-25T18:45:09Z",
+      "side": 1,
+      "message": "Nit: `ShaderModuleSubstituteOverrides` just to be clearer.",
+      "revId": "ac38bfa2cc98d54f9a13ee61fff17985302d70a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a0ffb8f_e9897086",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-25T18:45:09Z",
+      "side": 1,
+      "message": "Probably worth making this more specific so that it doesn\u0027t clash other backend timers we add in the future? e.g. `ShaderModuleGenerateSPIRV`",
+      "revId": "ac38bfa2cc98d54f9a13ee61fff17985302d70a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "895132f1_2feb0723",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-25T18:45:09Z",
+      "side": 1,
+      "message": "`Vulkan.CreateShaderModule` would be more consistent with the existing timer names for Vulkan APIs (e.g. `Vulkan.CreateComputePipelines`).",
+      "revId": "ac38bfa2cc98d54f9a13ee61fff17985302d70a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
