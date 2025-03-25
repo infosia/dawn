@@ -22,6 +22,30 @@
       },
       "revId": "a2380ab22a7cb0348c3dc399d231fbf8a1787f59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79e5912a_6e560b46",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-25T08:09:18Z",
+      "side": 1,
+      "message": "This looks ok to me. Though I think you might be able to override `DeleteThis` directly here:\n```\nvoid BindGroup::DeleteThis() {\n\tRef\u003cBindGroupLayout\u003e layout \u003d ToBackend(GetLayout());\n\tBindGroupBase::DeleteThis();\n\tlayout-\u003eDeallocateBindGroup(this);\n}\n```",
+      "parentUuid": "1c5d6d10_a2248252",
+      "range": {
+        "startLine": 213,
+        "startChar": 12,
+        "endLine": 213,
+        "endChar": 83
+      },
+      "revId": "a2380ab22a7cb0348c3dc399d231fbf8a1787f59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
