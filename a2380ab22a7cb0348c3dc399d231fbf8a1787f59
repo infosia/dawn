@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c5d6d10_a2248252",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-25T01:18:30Z",
+      "side": 1,
+      "message": "Is this the right way to capture/bind the variables by value with a lambda? I\u0027m used to the base::BindOnce() machinery so I\u0027m not 100% sure.",
+      "range": {
+        "startLine": 213,
+        "startChar": 12,
+        "endLine": 213,
+        "endChar": 83
+      },
+      "revId": "a2380ab22a7cb0348c3dc399d231fbf8a1787f59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
