@@ -33,6 +33,24 @@
       "message": "This duplication is cleaned up in a followup. I wanted to get all the known cases working before trying to split apart the method.",
       "revId": "8ad0fff287f86d0510014bb152edad534f7eecb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f9c4b95_1717510a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1542,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-25T18:03:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4ff5f077_c606cec6",
+      "revId": "8ad0fff287f86d0510014bb152edad534f7eecb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
