@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2eefbdc_1cfb8b44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-25T00:33:34Z",
+      "side": 1,
+      "message": "Wow, that\u0027s a strangely common typo indeed!",
+      "revId": "38f6844fbd24d22e28018698171a25c4d298e5e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
