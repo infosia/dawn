@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdb54f18_7d0dbed7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-25T20:38:16Z",
+      "side": 1,
+      "message": "nit: \n\n```suggestion\n[dawn] IR reflection for single entry and overrides\n```",
+      "revId": "ad50ad10bafda3d9543b8ac44c817ac11f8ec61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b70ed57b_1b14135d",
+        "filename": "src/dawn/native/null/DeviceNull.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-25T20:38:16Z",
+      "side": 1,
+      "message": "nit:\n```suggestion\n    auto wgInfo \u003d tint::core::ir::GetWorkgroupInfo(ir.Get());\n```",
+      "range": {
+        "startLine": 517,
+        "startChar": 4,
+        "endLine": 517,
+        "endChar": 47
+      },
+      "revId": "ad50ad10bafda3d9543b8ac44c817ac11f8ec61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5306d2ad_5345758d",
+        "filename": "src/dawn/native/null/DeviceNull.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-25T20:38:16Z",
+      "side": 1,
+      "message": "Doesn\u0027t this have to be true given the `DAWN_INVALID_IF` check?",
+      "revId": "ad50ad10bafda3d9543b8ac44c817ac11f8ec61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dcb0070_a4586f9e",
+        "filename": "src/tint/lang/core/ir/reflection_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-25T20:38:16Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ad50ad10bafda3d9543b8ac44c817ac11f8ec61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89453b53_37798ff4",
+        "filename": "src/tint/lang/core/ir/reflection_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-25T20:38:16Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "ad50ad10bafda3d9543b8ac44c817ac11f8ec61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62349977_9ae86be4",
+        "filename": "src/tint/lang/core/ir/reflection_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-25T20:38:16Z",
+      "side": 1,
+      "message": "```suggestion\n    auto* foo \u003d b.ComputeFunction(\"foo\", 3_u, 5_u, 7_u);\n```",
+      "revId": "ad50ad10bafda3d9543b8ac44c817ac11f8ec61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a2ecc7f_d7aa90b3",
+        "filename": "src/tint/lang/core/ir/reflection_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-25T20:38:16Z",
+      "side": 1,
+      "message": "Maybe add a test where the storage_size would be 0, and one where it\u0027s like 64 or something \u003e 16?",
+      "revId": "ad50ad10bafda3d9543b8ac44c817ac11f8ec61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f9edc27_0f1cc45c",
+        "filename": "src/tint/lang/core/ir/reflection_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-25T20:38:16Z",
+      "side": 1,
+      "message": "check the error here to make sure we\u0027re failing for the right reason",
+      "revId": "ad50ad10bafda3d9543b8ac44c817ac11f8ec61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
