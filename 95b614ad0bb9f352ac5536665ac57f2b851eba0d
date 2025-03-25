@@ -51,6 +51,42 @@
       ],
       "revId": "95b614ad0bb9f352ac5536665ac57f2b851eba0d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7feda60f_4abe59e0",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-25T17:09:41Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "5c3e612b_b672ce29",
+      "revId": "95b614ad0bb9f352ac5536665ac57f2b851eba0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f16eb943_7273b948",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-25T17:09:41Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "5c3e612b_b672ce29",
+      "revId": "95b614ad0bb9f352ac5536665ac57f2b851eba0d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
