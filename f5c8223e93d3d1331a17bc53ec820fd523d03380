@@ -133,6 +133,24 @@
       "parentUuid": "c2f28b4e_ac554345",
       "revId": "f5c8223e93d3d1331a17bc53ec820fd523d03380",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d9337bb_0620ed47",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-25T13:01:22Z",
+      "side": 1,
+      "message": "You\u0027re right, I mixed up `kWebGPUUseDXC` with the Dawn toggle `use_dxc`.",
+      "parentUuid": "1b988e28_a5fe922f",
+      "revId": "f5c8223e93d3d1331a17bc53ec820fd523d03380",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
