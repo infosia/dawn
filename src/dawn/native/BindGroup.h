@@ -98,6 +98,8 @@ class BindGroupBase : public ApiObjectBase {
         static_assert(std::is_base_of<BindGroupBase, Derived>::value);
     }
 
+    Ref<BindGroupLayoutBase> TakeLayoutForDeletion();
+
     virtual MaybeError InitializeImpl() = 0;
 
     void DestroyImpl() override;

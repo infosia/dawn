@@ -54,9 +54,9 @@ void BindGroup::DeleteThis() {
     // This function must first run the destructor and then deallocate memory. Take a reference to
     // the BindGroupLayout+SlabAllocator before running the destructor so this function can access
     // it afterwards and it's not destroyed prematurely.
-    Ref<BindGroupLayout> layout = ToBackend(GetLayout());
+    Ref<BindGroupLayoutBase> layout = TakeLayoutForDeletion();
     BindGroupBase::DeleteThis();
-    layout->DeallocateBindGroup(this);
+    ToBackend(layout->GetInternalBindGroupLayout())->DeallocateBindGroup(this);
 }
 
 }  // namespace dawn::native::metal

@@ -27,6 +27,7 @@
 
 #include "dawn/native/BindGroup.h"
 
+#include <utility>
 #include <variant>
 
 #include "absl/container/flat_hash_map.h"
@@ -818,6 +819,10 @@ const std::vector<Ref<ExternalTextureBase>>& BindGroupBase::GetBoundExternalText
 void BindGroupBase::ForEachUnverifiedBufferBindingIndex(
     std::function<void(BindingIndex, uint32_t)> fn) const {
     ForEachUnverifiedBufferBindingIndexImpl(GetLayout(), fn);
+}
+
+Ref<BindGroupLayoutBase> BindGroupBase::TakeLayoutForDeletion() {
+    return std::move(mLayout);
 }
 
 }  // namespace dawn::native
