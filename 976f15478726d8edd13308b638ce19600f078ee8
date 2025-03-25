@@ -54,6 +54,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b8cf870c_7eaf39f8",
+        "filename": "src/tint/lang/core/ir/reflection.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-25T15:32:34Z",
+      "side": 1,
+      "message": "s/GenericOutput/GetWorkgroupInfo/",
+      "revId": "976f15478726d8edd13308b638ce19600f078ee8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f7433208_aae2b49c",
         "filename": "src/tint/lang/core/ir/reflection.cc",
         "patchSetId": 11
