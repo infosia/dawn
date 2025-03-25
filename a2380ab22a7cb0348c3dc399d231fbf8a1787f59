@@ -46,6 +46,30 @@
       },
       "revId": "a2380ab22a7cb0348c3dc399d231fbf8a1787f59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15f04f75_6a3ed59d",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-25T13:32:15Z",
+      "side": 1,
+      "message": "I was hoping to avoid repeating the same logic in every BindGroup::DeleteThis() but in retrospect I don\u0027t think having GetDeallocateCallback() thing helped complexity. Done.",
+      "parentUuid": "79e5912a_6e560b46",
+      "range": {
+        "startLine": 213,
+        "startChar": 12,
+        "endLine": 213,
+        "endChar": 83
+      },
+      "revId": "a2380ab22a7cb0348c3dc399d231fbf8a1787f59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
