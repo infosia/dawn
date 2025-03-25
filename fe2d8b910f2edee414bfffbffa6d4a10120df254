@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b040f7b5_de98eb8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-03-25T18:59:20Z",
+      "side": 1,
+      "message": "Heads up that Brandon is adding a 64-bit ScanForward variant here: https://dawn-review.googlesource.com/c/dawn/+/232674",
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "682fa79d_d202d922",
