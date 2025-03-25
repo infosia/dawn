@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e24a4c97_4abe83ae",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-03-25T00:48:19Z",
+      "side": 0,
+      "message": "AFACT, this `compilerVersion` member is never passed to FXC or DXC. I deleted the member from the struct and received no compiler errors. Seems like dead code to me but let me know if I\u0027m mistaken.",
+      "parentUuid": "816457d1_c0f2e6d0",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 56
+      },
+      "revId": "27630c8b63cdee5edf140a7e3a85d4fcf1ff68e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "3e6e4edc_6b0d2f44",
         "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
         "patchSetId": 5

@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "818c0f79_4bb7bb03",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-03-25T00:48:19Z",
+      "side": 1,
+      "message": "Yes, the comment and code for the function agree that a trailing path-separate are left at the end of the string. See [GetModuleDirectory](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/SystemUtils.h?q\u003dsymbol:%5Cbdawn::GetModuleDirectory%5Cb%20case:yes).",
+      "parentUuid": "3c198061_06c4b469",
+      "range": {
+        "startLine": 103,
+        "startChar": 29,
+        "endLine": 103,
+        "endChar": 43
+      },
+      "revId": "f5c8223e93d3d1331a17bc53ec820fd523d03380",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d024d158_05af352b",
@@ -89,6 +113,24 @@
       "side": 1,
       "message": "Yeah, Dawn can be built with `DAWN_USE_BUILT_DXC`, and then run with the flag to disable `use_dxc`, so this would fail the check. Try running Chrome with `--disable-dawn-features\u003duse_dxc` and it should fail. This is why we had the conditional logic before to set the adapter toggle\u0027s default based on the result of this runtime flag.",
       "parentUuid": "d024d158_05af352b",
+      "revId": "f5c8223e93d3d1331a17bc53ec820fd523d03380",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b988e28_a5fe922f",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-03-25T00:48:19Z",
+      "side": 1,
+      "message": "@amaiorano@google.com `--disable-dawn-features\u003duse_dxc` affects the Dawn toggles, of which there is already one called \"UseDXC\". Since Chromium [returns a hardcoded value of \"true\"](https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/dawn_platform.cc;bpv\u003d1;bpt\u003d1;l\u003d241?q\u003dDawnPlatform::IsFeatureEnabled\u0026gsn\u003dIsFeatureEnabled\u0026gs\u003dKYTHE%3A%2F%2Fkythe%3A%2F%2Fchromium.googlesource.com%2Fcodesearch%2Fchromium%2Fsrc%2F%2Fmain%3Flang%3Dc%252B%252B%3Fpath%3Dgpu%2Fcommand_buffer%2Fservice%2Fdawn_platform.cc%23l9VrmsHBOCZhCYjGq7yyf31jOtxIXzSX4FdiZv1PeF4) for `kWebGPUUseDXC`, the DAWN_CHECK I added here does not fire when I pass this command line flag. \n\nThere is a existing crbug to [delete kWebGPUUseDXC](https://issues.chromium.org/issues/362247692). Happy to do remove the flag (but still keep the toggle) as a separate change if you\u0027d like. Are there people who set the feature flag to anything other than true? \n\nFor this CL, I\u0027ll set the toggle\u0027s default value to the value of the feature flag as Corentin suggests. I didn\u0027t realize `IsFeatureEnabled` can be overridden by the host.",
+      "parentUuid": "c2f28b4e_ac554345",
       "revId": "f5c8223e93d3d1331a17bc53ec820fd523d03380",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
