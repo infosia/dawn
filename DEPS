@@ -378,6 +378,12 @@ deps = {
     'condition': 'dawn_node',
   },
 
+  # Upstream WGPU headers
+  'third_party/webgpu-headers': {
+    'url': '{github_git}/webgpu-native/webgpu-headers@2e292f8763742311b6e3e8abd680dc0dd0cafc37',
+    'condition': 'dawn_standalone',
+  },
+
   'tools/golang': {
     'packages': [{
       'package': 'infra/3pp/tools/go/${{platform}}',

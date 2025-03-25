@@ -158,6 +158,10 @@
 	path = third_party/gpuweb
 	url = https://github.com/gpuweb/gpuweb.git
 	gclient-condition = dawn_node
+[submodule "third_party/webgpu-headers"]
+	path = third_party/webgpu-headers
+	url = https://github.com/webgpu-native/webgpu-headers
+	gclient-condition = dawn_standalone
 [submodule "third_party/protobuf"]
 	path = third_party/protobuf
 	url = https://chromium.googlesource.com/chromium/src/third_party/protobuf
