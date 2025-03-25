@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29029dd7_31bf6f5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-25T16:30:04Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "5bb0ab3b4b2353b00b816daad321d2ce90b16478",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e078189f_0421f2a7",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-25T16:30:04Z",
+      "side": 1,
+      "message": "To avoid taking a new ref before dropping it at the end of the function, and dropping the `BindGroupBase::mLayout` in `~BindGroupBase` WDYT of havind a `BindGroupBase::AcquireLayoutForDeletion` that moves `BindGroupBase::mLayout`? (bindgroups are hot code). Could be a separate CL or a TODO.",
+      "revId": "5bb0ab3b4b2353b00b816daad321d2ce90b16478",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
