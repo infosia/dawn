@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46167375_6a9ed9ce",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-25T18:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d9663f8_d825f9a6",
+      "revId": "ac38bfa2cc98d54f9a13ee61fff17985302d70a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a0ffb8f_e9897086",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82f0b83c_5d9a071d",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-25T18:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a0ffb8f_e9897086",
+      "revId": "ac38bfa2cc98d54f9a13ee61fff17985302d70a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "895132f1_2feb0723",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-03-25T18:45:09Z",
       "side": 1,
       "message": "`Vulkan.CreateShaderModule` would be more consistent with the existing timer names for Vulkan APIs (e.g. `Vulkan.CreateComputePipelines`).",
+      "revId": "ac38bfa2cc98d54f9a13ee61fff17985302d70a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "072ba785_13165325",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-25T18:53:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "895132f1_2feb0723",
       "revId": "ac38bfa2cc98d54f9a13ee61fff17985302d70a5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
