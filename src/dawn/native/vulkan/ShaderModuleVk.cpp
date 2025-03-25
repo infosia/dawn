@@ -410,7 +410,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                 auto ir = tint::wgsl::reader::ProgramToLoweredIR(*r.inputProgram);
                 DAWN_INVALID_IF(ir != tint::Success,
                                 "An error occurred while generating Tint IR\n%s",
-                                ir.Failure().reason.Str());
+                                ir.Failure().reason);
 
                 // Many Vulkan drivers can't handle multi-entrypoint shader modules.
                 auto singleEntryPointResult =
