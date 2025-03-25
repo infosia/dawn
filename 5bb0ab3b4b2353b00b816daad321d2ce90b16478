@@ -68,6 +68,24 @@
       "parentUuid": "e078189f_0421f2a7",
       "revId": "5bb0ab3b4b2353b00b816daad321d2ce90b16478",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7422f7a2_84f88591",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-25T18:07:35Z",
+      "side": 1,
+      "message": "Thank you, yeah that looks great!",
+      "parentUuid": "76b514a0_2faec1a6",
+      "revId": "5bb0ab3b4b2353b00b816daad321d2ce90b16478",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
