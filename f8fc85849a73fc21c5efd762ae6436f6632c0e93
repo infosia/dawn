@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "f8fc85849a73fc21c5efd762ae6436f6632c0e93",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0e31819_86a4cbbc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-25T20:56:11Z",
+      "side": 1,
+      "message": "I realized that `RenameConflicts` (partially) handles the type/enum renaming already, and does it in a more targeted and more future proof way. But it\u0027s missing renaming of textures and format enums. I\u0027ll open an issue to unify this logic at some point.",
+      "revId": "f8fc85849a73fc21c5efd762ae6436f6632c0e93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
