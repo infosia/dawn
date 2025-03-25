@@ -1328,6 +1328,8 @@ class Parser {
                 if (InBlock(loop->Body()) && !InBlock(loop->Continuing())) {
                     EmitWithoutResult(b_.Exit(ctrl_inst));
                 }
+            } else if (auto* swtch = ctrl_inst->As<core::ir::Switch>()) {
+                EmitWithoutResult(b_.Exit(ctrl_inst));
             }
             return;
         }
