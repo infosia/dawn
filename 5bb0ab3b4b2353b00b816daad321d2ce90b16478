@@ -33,6 +33,24 @@
       "message": "To avoid taking a new ref before dropping it at the end of the function, and dropping the `BindGroupBase::mLayout` in `~BindGroupBase` WDYT of havind a `BindGroupBase::AcquireLayoutForDeletion` that moves `BindGroupBase::mLayout`? (bindgroups are hot code). Could be a separate CL or a TODO.",
       "revId": "5bb0ab3b4b2353b00b816daad321d2ce90b16478",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76b514a0_2faec1a6",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-03-25T17:23:07Z",
+      "side": 1,
+      "message": "That would work fine. I guess it\u0027s problematic if the destructor ever needs the layout but BaseGroupBase and BindGroup implementations never do today. I uploaded that change in https://dawn-review.googlesource.com/c/dawn/+/232854 though if you think it\u0027s worth landing!",
+      "parentUuid": "e078189f_0421f2a7",
+      "revId": "5bb0ab3b4b2353b00b816daad321d2ce90b16478",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
