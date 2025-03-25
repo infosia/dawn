@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6301135b_486bc08e",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1702,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-25T08:33:03Z",
+      "side": 1,
+      "message": "For consistency with https://dawn-review.googlesource.com/c/dawn/+/230419 can we do this check in `ShouldUseTextureToBufferBlit`?",
+      "revId": "e80b2a6a73482268c3b3a61da1e26bd47049984e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
