@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9725263a_093b7590",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-03-25T23:01:53Z",
+      "side": 1,
+      "message": "cwallez@, geofflang@: PTAL! It\u0027s a big change but doesn\u0027t actually touch Dawn functionality yet. I wanted to do as clean of an import of the ANGLE code as I could, which hopefully makes it easier to review.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
