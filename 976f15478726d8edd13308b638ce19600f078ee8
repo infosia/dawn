@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48e8c9b9_31447365",
+        "filename": "src/dawn/native/null/DeviceNull.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-25T20:30:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61b1b40d_ae90ca0b",
+      "revId": "976f15478726d8edd13308b638ce19600f078ee8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "17a8210c_6787d036",
@@ -92,6 +110,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f70d76f_eae88a1e",
+        "filename": "src/tint/lang/core/ir/reflection.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-25T20:30:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7433208_aae2b49c",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 9
+      },
+      "revId": "976f15478726d8edd13308b638ce19600f078ee8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "651a97b0_a31de61e",
@@ -105,6 +147,30 @@
       "writtenOn": "2025-03-24T21:19:07Z",
       "side": 1,
       "message": "```suggestion\n            if (ptr-\u003eAddressSpace() !\u003d core::AddressSpace::kWorkgroup) {\n                continue;\n            }\n            \n            auto* ty \u003d ptr-\u003eStoreType();\n            uint32_t align \u003d ty-\u003eAlign();\n            uint32_t size \u003d ty-\u003eSize();\n\n            // This essentially matches std430 layout rules from GLSL, which are in\n            // turn specified as an upper bound for Vulkan layout sizing.\n            wg_storage_size +\u003d tint::RoundUp(16u, tint::RoundUp(align, size));\n```",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 13
+      },
+      "revId": "976f15478726d8edd13308b638ce19600f078ee8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "865a7554_57a7dc78",
+        "filename": "src/tint/lang/core/ir/reflection.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-25T20:30:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "651a97b0_a31de61e",
       "range": {
         "startLine": 55,
         "startChar": 0,
