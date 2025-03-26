@@ -87,6 +87,24 @@
       "parentUuid": "bb50659b_36932ac8",
       "revId": "f2ea1505e45af6b6d42dd4df6f00281142760deb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "618d1df5_f6cb5816",
+        "filename": "src/dawn/native/d3d12/BindGroupD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T14:20:27Z",
+      "side": 1,
+      "message": "Thank you for trying, it was worth a shot. We\u0027ll revisit in if we see that ref in the profiles in the future.",
+      "parentUuid": "33757d7b_b81c98b8",
+      "revId": "f2ea1505e45af6b6d42dd4df6f00281142760deb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
