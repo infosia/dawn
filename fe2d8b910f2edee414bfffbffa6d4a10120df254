@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06026e70_1fd44d7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-26T07:07:49Z",
+      "side": 1,
+      "message": "Geoff@, so per my understanding, we have ityp::bitset which have at most 64 bit. With the latest scanforward 64 bit version, we could eliminate \"word\" shifting things. The algorithm would be:\n- find the first 1\n- shift bits and reverse remaining bits, find the first 1\n- reverse bits again and shift bits\n- until there is no 1\u0027s\n\nAm I right or we still need to consider the bit set which size is larger than 64 bit?",
+      "parentUuid": "f122e8fd_321ae619",
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "682fa79d_d202d922",
