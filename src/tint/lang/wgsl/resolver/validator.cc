@@ -2046,6 +2046,12 @@ bool Validator::WorkgroupUniformLoad(const sem::Call* call) const {
         return false;
     }
 
+    if (!ptr->UnwrapPtrOrRef()->HasCreationFixedFootprint()) {
+        AddError(arg->Declaration()->source) << "workgroupUniformLoad must be called with an "
+                                                "argument that is creation-fixed-footprint";
+        return false;
+    }
+
     return true;
 }
 
