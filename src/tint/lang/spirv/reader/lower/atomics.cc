@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/spirv/reader/lower/atomics.h"
 
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 
@@ -57,6 +58,15 @@ struct State {
 
     /// The `ir::Value`s which have been converted
     std::unordered_set<core::ir::Value*> converted_{};
+
+    struct ForkedStruct {
+        const core::type::Struct* src_strct = nullptr;
+        core::type::Struct* dst_strct = nullptr;
+        std::unordered_set<size_t> atomic_members;
+    };
+
+    /// Map of original structure to forked structure information
+    std::unordered_map<const core::type::Struct*, ForkedStruct> forked_structs_{};
 
     /// Process the module.
     void Process() {
@@ -104,6 +114,8 @@ struct State {
             converted_.insert(val);
             ConvertAtomicValue(val);
         }
+
+        ProcessForkedStructs();
     }
 
     void AtomicStore(spirv::ir::BuiltinCall* call) {
@@ -119,19 +131,51 @@ struct State {
         call->Destroy();
     }
 
+    void ProcessForkedStructs() {
+        for (auto iter : forked_structs_) {
+            auto& forked = iter.second;
+        }
+    }
+
     void ConvertAtomicValue(core::ir::Value* val) {
         auto* res = val->As<core::ir::InstructionResult>();
         TINT_ASSERT(res);
 
-        auto* atomic_ty = AtomicTypeFor(res->Type());
+        auto* orig_ty = res->Type();
+        auto* atomic_ty = AtomicTypeFor(orig_ty);
         res->SetType(atomic_ty);
 
-        tint::Switch(                                                                 //
-            res->Instruction(),                                                       //
-            [&](core::ir::Access* a) { values_to_convert_.push_back(a->Object()); },  //
-            [&](core::ir::Let* l) { values_to_convert_.push_back(l->Value()); },      //
-            [&](core::ir::Var*) {},                                                   //
+        tint::Switch(            //
+            res->Instruction(),  //
+            [&](core::ir::Access* a) {
+                CheckForStructForking(a);
+                values_to_convert_.push_back(a->Object());
+            },                                                                    //
+            [&](core::ir::Let* l) { values_to_convert_.push_back(l->Value()); },  //
+            [&](core::ir::Var*) {},                                               //
             TINT_ICE_ON_NO_MATCH);
+    }
+
+    void CheckForStructForking(core::ir::Access* access) {
+        auto* cur_ty = access->Object()->Type();
+        for (auto* idx : access->Indices()) {
+            tint::Switch(
+                cur_ty,  //
+                [&](const core::type::Struct* str) {
+                    auto& forked = Fork(str);
+
+                    auto* const_val = idx->As<core::ir::Constant>();
+                    TINT_ASSERT(const_val);
+
+                    auto const_idx = const_val->Value()->ValueAs<uint32_t>();
+                    forked.atomic_members.insert(const_idx);
+
+                    cur_ty = str->Members()[const_idx]->Type();
+                },                                                                   //
+                [&](const core::type::Array* ary) { cur_ty = ary->ElemType(); },     //
+                [&](const core::type::Pointer* ptr) { cur_ty = ptr->StoreType(); },  //
+                TINT_ICE_ON_NO_MATCH);
+        }
     }
 
     const core::type::Type* AtomicTypeFor(const core::type::Type* orig_ty) {
@@ -139,7 +183,7 @@ struct State {
             orig_ty,  //
             [&](const core::type::I32*) { return ty.atomic(orig_ty); },
             [&](const core::type::U32*) { return ty.atomic(orig_ty); },
-            // [&](const core::type::Struct* str) { return ty(Fork(str).name); },
+            [&](const core::type::Struct* str) { return Fork(str).dst_strct; },
             [&](const core::type::Array* arr) {
                 if (arr->Count()->Is<core::type::RuntimeArrayCount>()) {
                     return ty.runtime_array(AtomicTypeFor(arr->ElemType()));
@@ -153,6 +197,16 @@ struct State {
                 return ty.ptr(ptr->AddressSpace(), AtomicTypeFor(ptr->StoreType()), ptr->Access());
             },
             TINT_ICE_ON_NO_MATCH);
+    }
+
+    ForkedStruct& Fork(const core::type::Struct* str) {
+        auto& forked = forked_structs_[str];
+        if (!forked.dst_strct) {
+            forked.src_strct = str;
+            forked.dst_strct = const_cast<core::type::Struct*>(
+                ty.Struct(ir.symbols.New(str->Name().Name() + "_atomic"), {}));
+        }
+        return forked;
     }
 };
 

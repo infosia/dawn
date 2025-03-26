@@ -180,7 +180,7 @@ $B1: {  # root
     ASSERT_EQ(expect, str());
 }
 
-TEST_F(SpirvReader_AtomicsTest, DISABLED_FlatSingleAtomic) {
+TEST_F(SpirvReader_AtomicsTest, FlatSingleAtomic) {
     auto* f = b.ComputeFunction("main");
 
     auto* sb = ty.Struct(mod.symbols.New("S"), {
