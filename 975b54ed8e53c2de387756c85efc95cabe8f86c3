@@ -40,6 +40,30 @@
       ],
       "revId": "975b54ed8e53c2de387756c85efc95cabe8f86c3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f904162_2f5d38cc",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-03-26T00:49:41Z",
+      "side": 1,
+      "message": "So, it seems that we don\u0027t need ApplyLimitTiers(const CombinedLimit\u0026) version anymore? I\u0027ll fix this in refactor bitset state to support more customer immediate data limits.",
+      "parentUuid": "6cb6d5dc_6b93db4e",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 54
+      },
+      "revId": "975b54ed8e53c2de387756c85efc95cabe8f86c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
