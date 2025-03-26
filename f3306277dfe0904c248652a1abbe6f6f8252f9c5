@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7afddf21_c0660d5f",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-26T15:26:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f3d6438_d242eedf",
+      "revId": "f3306277dfe0904c248652a1abbe6f6f8252f9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48ec13ee_69bca830",
@@ -102,6 +120,24 @@
       "writtenOn": "2025-03-26T13:38:22Z",
       "side": 1,
       "message": "If you\u0027re using `Hashset` you could do:\n```\nif (converted_.Add(val)) {\n  ConvertAtomicValue(val);\n}\n```",
+      "revId": "f3306277dfe0904c248652a1abbe6f6f8252f9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a88b7e51_9b0310b2",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-26T15:26:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48ec13ee_69bca830",
       "revId": "f3306277dfe0904c248652a1abbe6f6f8252f9c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
