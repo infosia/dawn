@@ -274,6 +274,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f11c6827_50341988",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T19:28:38Z",
+      "side": 1,
+      "message": "Perhaps you are saying that atomic types are not constructible? We need to resolve this given https://github.com/gpuweb/gpuweb/issues/5124",
+      "parentUuid": "d896dc0f_ff321acb",
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f213f240_271e3a64",
         "filename": "src/tint/lang/wgsl/resolver/validator.cc",
         "patchSetId": 4
