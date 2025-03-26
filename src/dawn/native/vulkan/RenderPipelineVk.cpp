@@ -642,7 +642,7 @@ VkPipelineVertexInputStateCreateInfo RenderPipeline::ComputeVertexInputDesc(
     PipelineVertexInputStateCreateInfoTemporaryAllocations* tempAllocations) {
     // Fill in the "binding info" that will be chained in the create info
     uint32_t bindingCount = 0;
-    for (VertexBufferSlot slot : IterateBitSet(GetVertexBuffersUsed())) {
+    for (VertexBufferSlot slot : GetVertexBuffersUsed()) {
         const VertexBufferInfo& bindingInfo = GetVertexBuffer(slot);
 
         VkVertexInputBindingDescription* bindingDesc = &tempAllocations->bindings[bindingCount];

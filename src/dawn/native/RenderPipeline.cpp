@@ -1332,7 +1332,7 @@ size_t RenderPipelineBase::ComputeContentHash() {
     }
 
     recorder.Record(mVertexBuffersUsed);
-    for (VertexBufferSlot slot : IterateBitSet(mVertexBuffersUsed)) {
+    for (VertexBufferSlot slot : mVertexBuffersUsed) {
         const VertexBufferInfo& desc = GetVertexBuffer(slot);
         recorder.Record(desc.arrayStride, desc.stepMode);
     }
@@ -1440,7 +1440,7 @@ bool RenderPipelineBase::EqualityFunc::operator()(const RenderPipelineBase* a,
         return false;
     }
 
-    for (VertexBufferSlot slot : IterateBitSet(a->mVertexBuffersUsed)) {
+    for (VertexBufferSlot slot : a->mVertexBuffersUsed) {
         const VertexBufferInfo& descA = a->GetVertexBuffer(slot);
         const VertexBufferInfo& descB = b->GetVertexBuffer(slot);
         if (descA.arrayStride != descB.arrayStride || descA.stepMode != descB.stepMode) {

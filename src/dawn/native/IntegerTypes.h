@@ -91,7 +91,7 @@ using PerColorAttachment = ityp::array<ColorAttachmentIndex, Value, kMaxColorAtt
 using VertexBufferSlot = TypedInteger<struct VertexBufferSlotT, uint8_t>;
 constexpr VertexBufferSlot kMaxVertexBuffersTyped = VertexBufferSlot(kMaxVertexBuffers);
 
-using VertexBufferMask = ityp::bitset<VertexBufferSlot, kMaxVertexBuffers>;
+using VertexBufferMask = BitSet<kMaxVertexBuffers, VertexBufferSlot>;
 template <typename Value>
 using PerVertexBuffer = ityp::array<VertexBufferSlot, Value, kMaxVertexBuffers>;
 

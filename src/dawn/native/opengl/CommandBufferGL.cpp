@@ -221,7 +221,8 @@ class VertexStateBufferBindingTracker {
         }
 
         for (VertexBufferSlot slot :
-             IterateBitSet(mDirtyVertexBuffers & mLastPipeline->GetVertexBuffersUsed())) {
+             // FIXME: This shouldn't need to be an explicit cast.
+             VertexBufferMask(mDirtyVertexBuffers.bits() & mLastPipeline->GetVertexBuffersUsed().bits())) {
             for (VertexAttributeLocation location :
                  ToBackend(mLastPipeline)->GetAttributesUsingVertexBuffer(slot)) {
                 const VertexAttributeInfo& attribute = mLastPipeline->GetAttribute(location);

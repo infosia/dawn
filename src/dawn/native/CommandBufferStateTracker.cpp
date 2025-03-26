@@ -401,7 +401,7 @@ MaybeError CommandBufferStateTracker::ValidateBufferInRangeForVertexBuffer(uint3
     const auto& vertexBuffersUsedAsVertexBuffer =
         lastRenderPipeline->GetVertexBuffersUsedAsVertexBuffer();
 
-    for (auto usedSlotVertex : IterateBitSet(vertexBuffersUsedAsVertexBuffer)) {
+    for (auto usedSlotVertex : vertexBuffersUsedAsVertexBuffer) {
         const VertexBufferInfo& vertexBuffer = lastRenderPipeline->GetVertexBuffer(usedSlotVertex);
         uint64_t arrayStride = vertexBuffer.arrayStride;
         uint64_t bufferSize = mVertexBufferSizes[usedSlotVertex];
@@ -447,7 +447,7 @@ MaybeError CommandBufferStateTracker::ValidateBufferInRangeForInstanceBuffer(
     const auto& vertexBuffersUsedAsInstanceBuffer =
         lastRenderPipeline->GetVertexBuffersUsedAsInstanceBuffer();
 
-    for (auto usedSlotInstance : IterateBitSet(vertexBuffersUsedAsInstanceBuffer)) {
+    for (auto usedSlotInstance : vertexBuffersUsedAsInstanceBuffer) {
         const VertexBufferInfo& vertexBuffer =
             lastRenderPipeline->GetVertexBuffer(usedSlotInstance);
         uint64_t arrayStride = vertexBuffer.arrayStride;
@@ -551,7 +551,7 @@ void CommandBufferStateTracker::RecomputeLazyAspects(ValidationAspects aspects) 
         RenderPipelineBase* lastRenderPipeline = GetRenderPipeline();
 
         const auto& requiredVertexBuffers = lastRenderPipeline->GetVertexBuffersUsed();
-        if (IsSubset(requiredVertexBuffers, mVertexBuffersUsed)) {
+        if (requiredVertexBuffers.IsSubset(mVertexBuffersUsed)) {
             mAspects.set(VALIDATION_ASPECT_VERTEX_BUFFERS);
         }
     }
@@ -602,8 +602,9 @@ MaybeError CommandBufferStateTracker::CheckMissingAspects(ValidationAspects aspe
 
     if (aspects[VALIDATION_ASPECT_VERTEX_BUFFERS]) {
         // Try to be helpful by finding one missing vertex buffer to surface in the error message.
-        const auto missingVertexBuffers =
-            GetRenderPipeline()->GetVertexBuffersUsed() & ~mVertexBuffersUsed;
+        // FIXME: Before landing
+        VertexBufferMask missingVertexBuffers(
+            GetRenderPipeline()->GetVertexBuffersUsed().bits() & (~mVertexBuffersUsed).bits());
         DAWN_ASSERT(missingVertexBuffers.any());
 
         VertexBufferSlot firstMissing = ityp::Sub(GetHighestBitIndexPlusOne(missingVertexBuffers),
