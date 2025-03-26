@@ -157,7 +157,7 @@ SubresourceRange GetSubresourcesAffectedByCopy(const TextureCopy& copy, const Ex
 }
 
 void LazyClearRenderPassAttachments(BeginRenderPassCmd* renderPass) {
-    for (auto i : IterateBitSet(renderPass->attachmentState->GetColorAttachmentsMask())) {
+    for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
         auto& attachmentInfo = renderPass->colorAttachments[i];
         TextureViewBase* view = attachmentInfo.view.Get();
         bool hasResolveTarget = attachmentInfo.resolveTarget != nullptr;

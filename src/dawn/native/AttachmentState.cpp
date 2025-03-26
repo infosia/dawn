@@ -95,7 +95,7 @@ AttachmentState::AttachmentState(DeviceBase* device,
         mExpandResolveInfo.resolveTargetsMask.reset();
     }
 
-    DAWN_ASSERT(IsSubset(mExpandResolveInfo.attachmentsToExpandResolve,
+    DAWN_ASSERT(mExpandResolveInfo.attachmentsToExpandResolve.IsSubset(
                          mExpandResolveInfo.resolveTargetsMask));
 
     if (descriptor->depthStencil != nullptr) {
@@ -161,7 +161,7 @@ AttachmentState::AttachmentState(DeviceBase* device,
         // where ExpandResolveTexture is not used.
         mExpandResolveInfo.resolveTargetsMask.reset();
     }
-    DAWN_ASSERT(IsSubset(mExpandResolveInfo.attachmentsToExpandResolve,
+    DAWN_ASSERT(mExpandResolveInfo.attachmentsToExpandResolve.IsSubset(
                          mExpandResolveInfo.resolveTargetsMask));
 
     // Gather the PLS information.
@@ -195,7 +195,7 @@ AttachmentState::AttachmentState(const AttachmentState& blueprint)
     mExpandResolveInfo = blueprint.mExpandResolveInfo;
     mHasPLS = blueprint.mHasPLS;
     mStorageAttachmentSlots = blueprint.mStorageAttachmentSlots;
-    DAWN_ASSERT(IsSubset(mExpandResolveInfo.attachmentsToExpandResolve,
+    DAWN_ASSERT(mExpandResolveInfo.attachmentsToExpandResolve.IsSubset(
                          mExpandResolveInfo.resolveTargetsMask));
     SetContentHash(blueprint.GetContentHash());
 }
@@ -213,7 +213,7 @@ bool AttachmentState::EqualityFunc::operator()(const AttachmentState* a,
     }
 
     // Check color formats
-    for (auto i : IterateBitSet(a->mColorAttachmentsSet)) {
+    for (auto i : a->mColorAttachmentsSet) {
         if (a->mColorFormats[i] != b->mColorFormats[i]) {
             return false;
         }
@@ -260,7 +260,7 @@ size_t AttachmentState::ComputeContentHash() {
 
     // Hash color formats
     HashCombine(&hash, mColorAttachmentsSet);
-    for (auto i : IterateBitSet(mColorAttachmentsSet)) {
+    for (auto i : mColorAttachmentsSet) {
         HashCombine(&hash, mColorFormats[i]);
     }
 

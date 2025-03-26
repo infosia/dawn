@@ -330,12 +330,12 @@ MaybeError RenderPipeline::ApplyNow(PersistentPipelineState& persistentPipelineS
     }
 
     if (!GetDevice()->IsToggleEnabled(Toggle::DisableIndexedDrawBuffers)) {
-        for (auto attachmentSlot : IterateBitSet(GetColorAttachmentsMask())) {
+        for (auto attachmentSlot : GetColorAttachmentsMask()) {
             DAWN_TRY(ApplyColorState(gl, attachmentSlot, GetColorTargetState(attachmentSlot)));
         }
     } else {
         const ColorTargetState* prevDescriptor = nullptr;
-        for (auto attachmentSlot : IterateBitSet(GetColorAttachmentsMask())) {
+        for (auto attachmentSlot : GetColorAttachmentsMask()) {
             const ColorTargetState* descriptor = GetColorTargetState(attachmentSlot);
             if (!prevDescriptor) {
                 DAWN_TRY(ApplyColorState(gl, descriptor));

@@ -1257,7 +1257,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
             auto descColorAttachments = ityp::SpanFromUntyped<ColorAttachmentIndex>(
                 descriptor->colorAttachments, descriptor->colorAttachmentCount);
-            for (auto i : IterateBitSet(cmd->attachmentState->GetColorAttachmentsMask())) {
+            for (auto i : cmd->attachmentState->GetColorAttachmentsMask()) {
                 auto& descColorAttachment = descColorAttachments[i];
                 auto& cmdColorAttachment = cmd->colorAttachments[i];
 

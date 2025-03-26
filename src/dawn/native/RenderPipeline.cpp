@@ -683,7 +683,7 @@ ResultOrError<ShaderModuleEntryPoint> ValidateFragmentState(DeviceBase* device,
     bool usesSrc1 = false;
     bool usesBlendSrc1 = false;
     ColorAttachmentFormats colorAttachmentFormats;
-    for (auto i : IterateBitSet(targetMask)) {
+    for (auto i : targetMask) {
         const Format* format;
         DAWN_TRY_ASSIGN(format, device->GetInternalFormat(targets[i].format));
 
@@ -717,7 +717,8 @@ ResultOrError<ShaderModuleEntryPoint> ValidateFragmentState(DeviceBase* device,
                         "is not 1.");
     }
 
-    auto extraFramebufferInputs = fragmentMetadata.fragmentInputMask & ~targetMask;
+    // FIXME
+    ColorAttachmentMask extraFramebufferInputs(fragmentMetadata.fragmentInputMask.bits() & (~targetMask).bits());
     DAWN_INVALID_IF(
         extraFramebufferInputs.any(),
         "Framebuffer input at index %u is used without a corresponding color target state.",
@@ -758,7 +759,7 @@ ResultOrError<ShaderModuleEntryPoint> ValidateFragmentState(DeviceBase* device,
         // Check that all the color target states match.
         ColorAttachmentIndex firstColorTargetIndex{};
         const ColorTargetState* firstColorTargetState = nullptr;
-        for (auto i : IterateBitSet(targetMask)) {
+        for (auto i : targetMask) {
             if (!firstColorTargetState) {
                 firstColorTargetState = &targets[i];
                 firstColorTargetIndex = i;
@@ -1054,7 +1055,7 @@ RenderPipelineBase::RenderPipelineBase(DeviceBase* device,
         mDepthStencil.depthCompare = wgpu::CompareFunction::Always;
     }
 
-    for (auto i : IterateBitSet(mAttachmentState->GetColorAttachmentsMask())) {
+    for (auto i : mAttachmentState->GetColorAttachmentsMask()) {
         // Vertex-only render pipeline have no color attachment. For a render pipeline with
         // color attachments, there must be a valid FragmentState.
         DAWN_ASSERT(descriptor->fragment != nullptr);
@@ -1302,7 +1303,7 @@ size_t RenderPipelineBase::ComputeContentHash() {
     recorder.Record(mAttachmentState->GetContentHash());
 
     // Record attachments
-    for (auto i : IterateBitSet(mAttachmentState->GetColorAttachmentsMask())) {
+    for (auto i : mAttachmentState->GetColorAttachmentsMask()) {
         const ColorTargetState& desc = *GetColorTargetState(i);
         recorder.Record(desc.writeMask);
         if (desc.blend != nullptr) {
@@ -1362,7 +1363,7 @@ bool RenderPipelineBase::EqualityFunc::operator()(const RenderPipelineBase* a,
     }
 
     if (a->mAttachmentState.Get() != nullptr) {
-        for (auto i : IterateBitSet(a->mAttachmentState->GetColorAttachmentsMask())) {
+        for (auto i : a->mAttachmentState->GetColorAttachmentsMask()) {
             const ColorTargetState& descA = *a->GetColorTargetState(i);
             const ColorTargetState& descB = *b->GetColorTargetState(i);
             if (descA.writeMask != descB.writeMask) {

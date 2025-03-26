@@ -82,7 +82,7 @@ using ColorAttachmentIndex = TypedInteger<struct ColorAttachmentIndexT, uint8_t>
 constexpr ColorAttachmentIndex kMaxColorAttachmentsTyped =
     ColorAttachmentIndex(kMaxColorAttachments);
 
-using ColorAttachmentMask = ityp::bitset<ColorAttachmentIndex, kMaxColorAttachments>;
+using ColorAttachmentMask = BitSet<kMaxColorAttachments, ColorAttachmentIndex>;
 template <typename Value>
 using PerColorAttachment = ityp::array<ColorAttachmentIndex, Value, kMaxColorAttachments>;
 

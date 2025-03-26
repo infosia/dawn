@@ -499,7 +499,7 @@ MaybeError RenderPipeline::InitializeImpl() {
             GetStage(SingleShaderStage::Fragment).metadata->fragmentOutputMask;
         auto highestColorAttachmentIndexPlusOne =
             GetHighestBitIndexPlusOne(GetColorAttachmentsMask());
-        for (auto i : IterateBitSet(GetColorAttachmentsMask())) {
+        for (auto i : GetColorAttachmentsMask()) {
             const ColorTargetState* target = GetColorTargetState(i);
             colorBlendAttachments[i] = ComputeColorDesc(target, fragmentOutputMask[i]);
         }
@@ -546,7 +546,7 @@ MaybeError RenderPipeline::InitializeImpl() {
         ColorAttachmentMask expandResolveMask =
             GetAttachmentState()->GetExpandResolveInfo().attachmentsToExpandResolve;
 
-        for (auto i : IterateBitSet(GetColorAttachmentsMask())) {
+        for (auto i : GetColorAttachmentsMask()) {
             wgpu::LoadOp colorLoadOp = wgpu::LoadOp::Load;
             bool hasResolveTarget = resolveMask.test(i);
 

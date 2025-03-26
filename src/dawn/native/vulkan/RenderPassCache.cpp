@@ -189,7 +189,7 @@ ResultOrError<RenderPassCache::RenderPassInfo> RenderPassCache::CreateRenderPass
 
     uint32_t attachmentCount = 0;
     ColorAttachmentIndex highestColorAttachmentIndexPlusOne(static_cast<uint8_t>(0));
-    for (auto i : IterateBitSet(query.colorMask)) {
+    for (auto i : query.colorMask) {
         auto& attachmentRef = colorAttachmentRefs[i];
         auto& attachmentDesc = attachmentDescs[attachmentCount];
 
@@ -240,7 +240,7 @@ ResultOrError<RenderPassCache::RenderPassInfo> RenderPassCache::CreateRenderPass
     uint32_t resolveAttachmentCount = 0;
     ColorAttachmentIndex highestInputAttachmentIndex(static_cast<uint8_t>(0));
 
-    for (auto i : IterateBitSet(query.resolveTargetMask)) {
+    for (auto i : query.resolveTargetMask) {
         auto& resolveAttachmentRef = resolveAttachmentRefs[i];
         auto& resolveAttachmentDesc = attachmentDescs[attachmentCount];
 
@@ -339,7 +339,7 @@ size_t RenderPassCache::CacheFuncs::operator()(const RenderPassCacheQuery& query
 
     HashCombine(&hash, Hash(query.resolveTargetMask));
 
-    for (auto i : IterateBitSet(query.colorMask)) {
+    for (auto i : query.colorMask) {
         HashCombine(&hash, query.colorFormats[i], query.colorLoadOp[i], query.colorStoreOp[i]);
     }
     HashCombine(&hash, query.expandResolveMask);
@@ -370,7 +370,7 @@ bool RenderPassCache::CacheFuncs::operator()(const RenderPassCacheQuery& a,
         return false;
     }
 
-    for (auto i : IterateBitSet(a.colorMask)) {
+    for (auto i : a.colorMask) {
         if ((a.colorFormats[i] != b.colorFormats[i]) || (a.colorLoadOp[i] != b.colorLoadOp[i]) ||
             (a.colorStoreOp[i] != b.colorStoreOp[i])) {
             return false;
