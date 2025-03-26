@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2f3d6438_d242eedf",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-26T14:19:24Z",
+      "side": 1,
+      "message": "Some of the non-core ir transforms do, like hlsl decompose_memory_access. Looks like it\u0027s more common in ast transforms then newer ir transforms.",
+      "parentUuid": "e0f94e12_0a84b660",
+      "revId": "f3306277dfe0904c248652a1abbe6f6f8252f9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "48ec13ee_69bca830",
         "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
         "patchSetId": 1
