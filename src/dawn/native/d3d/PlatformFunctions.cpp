@@ -32,6 +32,8 @@
 
 #include <vector>
 
+#include "dawn/common/SystemUtils.h"
+
 namespace dawn::native::d3d {
 
 namespace {
@@ -96,8 +98,18 @@ MaybeError PlatformFunctions::LoadFXCompiler() {
     d3dDisassemble = &D3DDisassemble;
 #else
     std::string error;
-    if (!mFXCompilerLib.Open("d3dcompiler_47.dll", &error) ||
-        !mFXCompilerLib.GetProc(&d3dCompile, "D3DCompile", &error) ||
+    const auto modulePath = GetModuleDirectory();
+    const std::string& pathToPrepend = modulePath.value_or("");
+
+    bool loadSuccess = mFXCompilerLib.Open(pathToPrepend + "d3dcompiler_47.dll", &error);
+#ifndef DAWN_USE_BUILT_DXC
+    if (!loadSuccess) {
+        // https://crbug.com/399358291. If the compiler library is not found, the build did not copy
+        // the compiler from the SDK directory. Fallback to the system library.
+        loadSuccess = mFXCompilerLib.OpenSystemLibrary(L"d3dcompiler_47.dll", &error);
+    }
+#endif
+    if (!loadSuccess || !mFXCompilerLib.GetProc(&d3dCompile, "D3DCompile", &error) ||
         !mFXCompilerLib.GetProc(&d3dDisassemble, "D3DDisassemble", &error)) {
         return DAWN_INTERNAL_ERROR(error.c_str());
     }
