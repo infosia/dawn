@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7acf63f6_9ad3a05b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T19:24:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c499d62f_16283713",
+      "range": {
+        "startLine": 12,
+        "startChar": 7,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "51c969a3_1edf4ad5",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ada6d0dd_bab511e8",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T19:24:28Z",
+      "side": 1,
+      "message": "I thought so as well.",
+      "parentUuid": "51c969a3_1edf4ad5",
+      "range": {
+        "startLine": 1488,
+        "startChar": 79,
+        "endLine": 1488,
+        "endChar": 103
+      },
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ad478d53_a390e590",
         "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
         "patchSetId": 4
@@ -60,6 +108,24 @@
       "writtenOn": "2025-03-26T19:05:26Z",
       "side": 1,
       "message": "Can we validate the error to make sure we got the right one?",
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "586b716b_21be1d4f",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T19:24:28Z",
+      "side": 1,
+      "message": "Ah this is just a pattern where there is no error but we still injest the error to print it if it fails.",
+      "parentUuid": "ad478d53_a390e590",
       "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -106,6 +172,48 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d896dc0f_ff321acb",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T19:24:28Z",
+      "side": 1,
+      "message": "I dont want to drop the atomic check until it is approved by committie ?",
+      "parentUuid": "53fa794b_d03429bc",
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "905c66a3_a0e0da5f",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T19:24:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "108e341a_f087c826",
+      "range": {
+        "startLine": 2049,
+        "startChar": 14,
+        "endLine": 2049,
+        "endChar": 23
+      },
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f213f240_271e3a64",
         "filename": "src/tint/lang/wgsl/resolver/validator.cc",
         "patchSetId": 4
@@ -135,6 +243,24 @@
       "side": 1,
       "message": "I thought we have merely not updated the spec to reflect creation fixed footprint",
       "parentUuid": "f213f240_271e3a64",
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ec3a515_b5aed8c6",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T19:24:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7fc814cf_5c262335",
       "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
