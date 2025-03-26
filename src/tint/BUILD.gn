@@ -385,7 +385,7 @@ group("tests") {
   testonly = true
   deps = []
   if (tint_build_unittests) {
-    deps += [ "${tint_src_dir}/cmd/test:test_cmd" ]
+    deps += [ "${tint_src_dir}/cmd/test:tint_unittests" ]
   }
 }
 
@@ -393,7 +393,7 @@ group("benchmarks") {
   testonly = true
   deps = []
   if (tint_build_benchmarks && tint_build_wgsl_reader) {
-    deps += [ "${tint_src_dir}/cmd/bench:bench_cmd" ]
+    deps += [ "${tint_src_dir}/cmd/bench:tint_benchmark" ]
   }
 }
 

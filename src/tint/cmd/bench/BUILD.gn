@@ -83,7 +83,7 @@ if (tint_build_benchmarks) {
 }
 if (tint_build_benchmarks) {
   if (tint_build_wgsl_reader) {
-    test("bench_cmd") {
+    test("tint_benchmark") {
       testonly = true
       output_name = "tint_benchmark"
       sources = [ "main_bench.cc" ]
