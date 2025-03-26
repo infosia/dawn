@@ -655,7 +655,7 @@ VkPipelineVertexInputStateCreateInfo RenderPipeline::ComputeVertexInputDesc(
 
     // Fill in the "attribute info" that will be chained in the create info
     uint32_t attributeCount = 0;
-    for (VertexAttributeLocation loc : IterateBitSet(GetAttributeLocationsUsed())) {
+    for (VertexAttributeLocation loc : GetAttributeLocationsUsed()) {
         const VertexAttributeInfo& attributeInfo = GetAttribute(loc);
 
         VkVertexInputAttributeDescription* attributeDesc =

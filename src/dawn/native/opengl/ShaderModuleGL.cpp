@@ -476,7 +476,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     }
 
     if (stage == SingleShaderStage::Vertex) {
-        for (VertexAttributeLocation i : IterateBitSet(bgraSwizzleAttributes)) {
+        for (VertexAttributeLocation i : bgraSwizzleAttributes) {
             req.tintOptions.bgra_swizzle_locations.insert(static_cast<uint8_t>(i));
         }
     }

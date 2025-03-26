@@ -190,7 +190,7 @@ tint::VertexPullingConfig BuildVertexPullingTransformConfig(
     }
 
     for (VertexAttributeLocation location :
-         IterateBitSet(renderPipeline.GetAttributeLocationsUsed())) {
+         renderPipeline.GetAttributeLocationsUsed()) {
         const VertexAttributeInfo& dawnInfo = renderPipeline.GetAttribute(location);
         tint::VertexAttributeDescriptor tintInfo;
         tintInfo.format = ToTintVertexFormat(dawnInfo.format);

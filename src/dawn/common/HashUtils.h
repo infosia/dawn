@@ -31,6 +31,7 @@
 #include <bitset>
 #include <functional>
 
+#include "dawn/common/BitSet.h"
 #include "dawn/common/Platform.h"
 #include "dawn/common/TypedInteger.h"
 #include "dawn/common/ityp_bitset.h"
@@ -108,6 +109,20 @@ size_t Hash(const std::bitset<N>& value) {
     return hash;
 }
 #endif
+
+template <size_t N, typename BitsT, typename ParamT>
+size_t Hash(const BitSetT<N, BitsT, ParamT>& value) {
+    constexpr size_t kWindowSize = sizeof(uint64_t);
+
+    BitSetT<N, BitsT, ParamT> bits = value;
+    size_t hash = 0;
+    for (size_t processedBits = 0; processedBits < N; processedBits += kWindowSize) {
+        HashCombine(&hash, bits.to_ullong());
+        bits >>= kWindowSize;
+    }
+
+    return hash;
+}
 
 }  // namespace dawn
 

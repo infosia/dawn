@@ -30,6 +30,7 @@
 
 #include <cstdint>
 
+#include "dawn/common/BitSet.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/TypedInteger.h"
 
@@ -99,7 +100,7 @@ using VertexAttributeLocation = TypedInteger<struct VertexAttributeLocationT, ui
 constexpr VertexAttributeLocation kMaxVertexAttributesTyped =
     VertexAttributeLocation(kMaxVertexAttributes);
 
-using VertexAttributeMask = ityp::bitset<VertexAttributeLocation, kMaxVertexAttributes>;
+using VertexAttributeMask = BitSet<kMaxVertexAttributes, VertexAttributeLocation>;
 template <typename Value>
 using PerVertexAttribute = ityp::array<VertexAttributeLocation, Value, kMaxVertexAttributes>;
 

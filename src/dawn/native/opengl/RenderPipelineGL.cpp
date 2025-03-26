@@ -224,7 +224,7 @@ RenderPipeline::RenderPipeline(Device* device,
 
 MaybeError RenderPipeline::InitializeImpl() {
     VertexAttributeMask bgraSwizzleAttributes = {};
-    for (VertexAttributeLocation i : IterateBitSet(GetAttributeLocationsUsed())) {
+    for (VertexAttributeLocation i : GetAttributeLocationsUsed()) {
         bgraSwizzleAttributes.set(i, GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
     }
 
@@ -260,7 +260,7 @@ MaybeError RenderPipeline::CreateVAOForVertexState() {
     DAWN_GL_TRY(gl, GenVertexArrays(1, &mVertexArrayObject));
     DAWN_GL_TRY(gl, BindVertexArray(mVertexArrayObject));
 
-    for (VertexAttributeLocation location : IterateBitSet(GetAttributeLocationsUsed())) {
+    for (VertexAttributeLocation location : GetAttributeLocationsUsed()) {
         const auto& attribute = GetAttribute(location);
         GLuint glAttrib = static_cast<GLuint>(static_cast<uint8_t>(location));
         DAWN_GL_TRY(gl, EnableVertexAttribArray(glAttrib));

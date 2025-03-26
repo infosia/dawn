@@ -223,7 +223,7 @@ class VertexStateBufferBindingTracker {
         for (VertexBufferSlot slot :
              IterateBitSet(mDirtyVertexBuffers & mLastPipeline->GetVertexBuffersUsed())) {
             for (VertexAttributeLocation location :
-                 IterateBitSet(ToBackend(mLastPipeline)->GetAttributesUsingVertexBuffer(slot))) {
+                 ToBackend(mLastPipeline)->GetAttributesUsingVertexBuffer(slot)) {
                 const VertexAttributeInfo& attribute = mLastPipeline->GetAttribute(location);
 
                 GLuint attribIndex = static_cast<GLuint>(static_cast<uint8_t>(location));

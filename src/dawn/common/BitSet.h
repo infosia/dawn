@@ -181,6 +181,8 @@ class BitSetT final {
 
     // NOLINTNEXTLINE(runtime/int)
     constexpr unsigned long to_ulong() const { return static_cast<unsigned long>(mBits); }
+    // NOLINTNEXTLINE(runtime/int)
+    constexpr unsigned long long to_ullong() const { return static_cast<unsigned long long>(mBits); }
     constexpr BitsT bits() const { return mBits; }
 
     Iterator begin() const { return Iterator(*this); }
@@ -196,6 +198,11 @@ class BitSetT final {
         BitSetT result;
         result.mBits = BitMask<BitsT>(static_cast<ParamT>(x));
         return result;
+    }
+
+    constexpr bool IsSubset(const BitSetT& set) const {
+        BitsT bitsAlsoInSet = mBits & set.bits();
+        return bitsAlsoInSet == mBits;
     }
 
   private:
@@ -998,6 +1005,16 @@ constexpr BitSetArray<N, ParamT> BitSetArray<N, ParamT>::Mask(std::size_t x) {
 
     return result;
 }
+
+template <size_t N, typename BitsT, typename ParamT>
+ParamT GetHighestBitIndexPlusOne(const BitSetT<N, BitsT, ParamT>& bitset) {
+    BitsT bits = bitset.bits();
+    if (bits == 0) {
+        return static_cast<ParamT>(0);
+    }
+    return static_cast<ParamT>(ScanReverse(bits) + 1);
+}
+
 }  // namespace dawn
 
 template <size_t N, typename BitsT, typename ParamT>

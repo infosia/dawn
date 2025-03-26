@@ -30,6 +30,7 @@
 #include <algorithm>
 #include <cmath>
 
+#include "dawn/common/BitSet.h"
 #include "dawn/common/BitSetIterator.h"
 #include "dawn/common/Enumerator.h"
 #include "dawn/common/ityp_array.h"
@@ -251,9 +252,12 @@ ResultOrError<ShaderModuleEntryPoint> ValidateVertexState(
 
     // Validate that attributes used by the VertexState are in the shader using bitmask operations
     // but try to be helpful by finding one missing attribute to surface in the error message
-    if (!IsSubset(vertexMetadata.usedVertexInputs, attributesSetMask)) {
-        const VertexAttributeMask missingAttributes =
-            vertexMetadata.usedVertexInputs & ~attributesSetMask;
+    if (!vertexMetadata.usedVertexInputs.IsSubset(attributesSetMask)) {
+        // FIXME: Get this working properly before landing. Should be:
+        // const VertexAttributeMask missingAttributes =
+        //     vertexMetadata.usedVertexInputs & ~attributesSetMask;
+        const VertexAttributeMask missingAttributes(
+            vertexMetadata.usedVertexInputs.bits() & (~attributesSetMask).bits());
         DAWN_ASSERT(missingAttributes.any());
 
         VertexAttributeLocation firstMissing = ityp::Sub(
@@ -1322,7 +1326,7 @@ size_t RenderPipelineBase::ComputeContentHash() {
 
     // Record vertex state
     recorder.Record(mAttributeLocationsUsed);
-    for (VertexAttributeLocation location : IterateBitSet(mAttributeLocationsUsed)) {
+    for (VertexAttributeLocation location : mAttributeLocationsUsed) {
         const VertexAttributeInfo& desc = GetAttribute(location);
         recorder.Record(desc.shaderLocation, desc.vertexBufferSlot, desc.offset, desc.format);
     }
@@ -1422,7 +1426,7 @@ bool RenderPipelineBase::EqualityFunc::operator()(const RenderPipelineBase* a,
         return false;
     }
 
-    for (VertexAttributeLocation loc : IterateBitSet(a->mAttributeLocationsUsed)) {
+    for (VertexAttributeLocation loc : a->mAttributeLocationsUsed) {
         const VertexAttributeInfo& descA = a->GetAttribute(loc);
         const VertexAttributeInfo& descB = b->GetAttribute(loc);
         if (descA.shaderLocation != descB.shaderLocation ||
