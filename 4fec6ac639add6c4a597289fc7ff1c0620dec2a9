@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bfe2858_f322bb51",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2120,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-26T22:03:22Z",
+      "side": 1,
+      "message": "heh. tricky.",
+      "revId": "4fec6ac639add6c4a597289fc7ff1c0620dec2a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
