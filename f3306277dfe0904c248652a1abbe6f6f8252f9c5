@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e0f94e12_0a84b660",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-26T14:09:40Z",
+      "side": 1,
+      "message": "\u003e We have more includes of unordered_map then hashmap.h and more of unordered_set then hashset.h.\n\nInternally? Looking at transforms specifically, I don\u0027t see a single transform that is using `std::unordered_*` for non-public-interface stuff. There are five IR transforms that use `std::unordered*` at all, and they are all for data coming from public APIs. Conversely, there are 27 IR transforms using `tint::Hash*`.\n\nSo this would be the very first IR transform that I\u0027m aware of that would use the STL containers for internal stuff, which is why I\u0027m calling out the inconsistency.\n\n\u003e unless there is a real shown perf impact of using these containers\n\nWe\u0027ve already shown the perf impact in previous benchmarking work. It seems sensible to me to default the other way around - use the thing that we know is more efficienct unless there\u0027s a good reason not to (where that reason is \"this is part of a public interface\").",
+      "parentUuid": "ceb28c3d_07bfb92d",
+      "revId": "f3306277dfe0904c248652a1abbe6f6f8252f9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "48ec13ee_69bca830",
         "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Six of one, half dozen of the other. I assert in the atomics transform if any other builtin is seen.",
       "parentUuid": "1d90818b_b7a91bde",
+      "revId": "f3306277dfe0904c248652a1abbe6f6f8252f9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb672a78_6ab9c684",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-26T14:09:40Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9c084e07_010e56b9",
       "revId": "f3306277dfe0904c248652a1abbe6f6f8252f9c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
