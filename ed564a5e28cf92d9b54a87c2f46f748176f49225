@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bf6c142_ca208c81",
+        "filename": "src/tint/lang/spirv/writer/common/binary_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-26T21:28:18Z",
+      "side": 1,
+      "message": "Why is the `const_cast` needed since we\u0027re just loading the value?",
+      "revId": "ed564a5e28cf92d9b54a87c2f46f748176f49225",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
