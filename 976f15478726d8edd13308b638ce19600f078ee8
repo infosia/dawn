@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1829601_c9d2963d",
+        "filename": "src/dawn/native/null/DeviceNull.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T14:11:36Z",
+      "side": 1,
+      "message": "crbug.com/406475345",
+      "parentUuid": "ab938b4b_58f45485",
+      "revId": "976f15478726d8edd13308b638ce19600f078ee8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61b1b40d_ae90ca0b",
