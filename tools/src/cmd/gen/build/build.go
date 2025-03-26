@@ -406,6 +406,17 @@ func applyDirectoryConfigs(p *Project, fsReaderWriter oswrapper.FilesystemReader
 			// Apply any custom output name
 			target.OutputName = tc.cfg.OutputName
 
+			// Assert that "test" GN target types have an output name set, as it will
+			// be used for the target name. Having different target and output names
+			// for tests can cause issues when trying to run tests on Swarming.
+			if tc.kind == targetTestCmd || tc.kind == targetBenchCmd {
+				if len(target.OutputName) == 0 {
+					return fmt.Errorf(
+						"Target of kind %v with cfg %v in dir %v does not contain OutputName",
+						tc.kind, tc.cfg, dir.Path)
+				}
+			}
+
 			if tc.cfg.Condition != "" {
 				condition, err := cnf.Parse(tc.cfg.Condition)
 				if err != nil {
