@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3f13304d_2d7ce520",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T19:27:21Z",
+      "side": 1,
+      "message": "We basically want to hint at the example of arrays with override sizes",
+      "parentUuid": "ada6d0dd_bab511e8",
+      "range": {
+        "startLine": 1488,
+        "startChar": 79,
+        "endLine": 1488,
+        "endChar": 103
+      },
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ad478d53_a390e590",
         "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
         "patchSetId": 4
