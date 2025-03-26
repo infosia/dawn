@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31b04eeb_d9608342",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T16:40:31Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/233114 is in the CQ already",
+      "revId": "9168e4e658e6691e3e71662066d20e2a786dcf60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
