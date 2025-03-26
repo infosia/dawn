@@ -51,6 +51,23 @@
       "message": "PTAL.",
       "revId": "0c843bff771f3a57e7caf2f9327f2584b1409f23",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "885c391b_86c3e08a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-03-26T16:44:33Z",
+      "side": 1,
+      "message": "Thanks for the update! Sorry that neither I nor the CQ caught this.",
+      "revId": "0c843bff771f3a57e7caf2f9327f2584b1409f23",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
