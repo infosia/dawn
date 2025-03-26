@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23524469_3939824b",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T19:01:43Z",
+      "side": 1,
+      "message": "I assume this is always safe to do since this will always be a pointer",
+      "range": {
+        "startLine": 2049,
+        "startChar": 14,
+        "endLine": 2049,
+        "endChar": 30
+      },
+      "revId": "22554587515ca8956e21e9e515a7ee1a205a615b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
