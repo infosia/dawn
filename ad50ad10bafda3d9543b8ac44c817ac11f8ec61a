@@ -303,6 +303,24 @@
       "parentUuid": "9f9edc27_0f1cc45c",
       "revId": "ad50ad10bafda3d9543b8ac44c817ac11f8ec61a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc9d50e6_2616a298",
+        "filename": "src/tint/lang/core/ir/reflection_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T01:48:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54f52278_441c9eee",
+      "revId": "ad50ad10bafda3d9543b8ac44c817ac11f8ec61a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
