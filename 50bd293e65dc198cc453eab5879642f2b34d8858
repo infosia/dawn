@@ -54,6 +54,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "032d99bc_f1074ee1",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:49:03Z",
+      "side": 1,
+      "message": "Overall I\u0027m wondering if we need specializations for BitSet and BitSetArray. The only big difference would be for the `Iterator`. The rest of the code should be the same but with loops, and we can trust compilers will remove loops with a constant size of 1 maybe?",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b47023f_8fa593bf",
         "filename": "src/dawn/common/BitSet.h",
         "patchSetId": 6
