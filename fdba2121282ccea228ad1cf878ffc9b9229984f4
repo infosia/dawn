@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "997ddf02_49ec207e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-03-26T22:16:12Z",
+      "side": 1,
+      "message": "PTAL\n\nHopefully the trybots are happy with this.",
+      "revId": "fdba2121282ccea228ad1cf878ffc9b9229984f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00877a78_b45c5e73",
+        "filename": "tools/src/cmd/gen/build/build.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-03-26T22:16:12Z",
+      "side": 1,
+      "message": "Note: No unittest added due to this.",
+      "range": {
+        "startLine": 354,
+        "startChar": 0,
+        "endLine": 356,
+        "endChar": 21
+      },
+      "revId": "fdba2121282ccea228ad1cf878ffc9b9229984f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
