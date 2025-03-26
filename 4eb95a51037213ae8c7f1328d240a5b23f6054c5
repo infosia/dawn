@@ -344,6 +344,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "40d91b5d_ed175a44",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-26T19:48:15Z",
+      "side": 1,
+      "message": "Better error reporting is a reasonable argument.",
+      "parentUuid": "d168834c_9c2ed6a8",
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f213f240_271e3a64",
