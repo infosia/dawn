@@ -119,6 +119,24 @@
       "message": "Again: \"constructible\" is the actual spec restriction.",
       "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fc814cf_5c262335",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T19:16:53Z",
+      "side": 1,
+      "message": "I thought we have merely not updated the spec to reflect creation fixed footprint",
+      "parentUuid": "f213f240_271e3a64",
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
