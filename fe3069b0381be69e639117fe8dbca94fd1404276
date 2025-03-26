@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d029eff0_c5743936",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-26T21:23:00Z",
+      "side": 1,
+      "message": "Might have to be `core::ir::Value` to cover function parameters too. I don\u0027t think there\u0027s test coverage for this right now, but I believe you can pass pointer to workgroup storage as function parameters without any additional capabilities. Maybe we don\u0027t care about supporting that case.",
+      "revId": "fe3069b0381be69e639117fe8dbca94fd1404276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aafddf6a_3cc3db30",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-26T21:23:00Z",
+      "side": 1,
+      "message": "Nit: Could just use `static_cast\u003cuint32_t\u003e(i)` since you have it.",
+      "fixSuggestions": [
+        {
+          "fixId": "458b2640_12eba547",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/atomics.cc",
+              "range": {
+                "startLine": 161,
+                "startChar": 0,
+                "endLine": 162,
+                "endChar": 0
+              },
+              "replacement": "            auto index \u003d static_cast\u003cuint32_t\u003e(i);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fe3069b0381be69e639117fe8dbca94fd1404276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e46911e_2b8a8786",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-26T21:23:00Z",
+      "side": 1,
+      "message": "I could\u0027ve maybe used a comment here as it took me a while to piece together the different flows that get here.\n\nIIUC: `non-nullptr` here means \"don\u0027t actually fork the thing\", and `nullptr` means please actually fork the thing. `AtomicTypeFor()` will always be called with a `non-nullptr` `val` during the value conversion loop, which is how you guarantee that no structs will actually be forked until we\u0027ve figured out all the structs that need to be forked?",
+      "revId": "fe3069b0381be69e639117fe8dbca94fd1404276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5621a7d_ef749e15",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-26T21:23:00Z",
+      "side": 1,
+      "message": "Nit: Just `GetOrAdd()` and then you don\u0027t need the `.value`.",
+      "revId": "fe3069b0381be69e639117fe8dbca94fd1404276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
