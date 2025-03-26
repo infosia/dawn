@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c499d62f_16283713",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-26T19:05:26Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"whos\" is a possible misspelling of \"whose\" or \"who\u0027s\".\n\nAnalyzer Description: Checks for common typos.\nOwner: chops-source-team@google.com\n\n\"whos\" is a possible misspelling of \"whose\" or \"who\u0027s\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 12,
+        "startChar": 7,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51c969a3_1edf4ad5",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-26T19:05:26Z",
+      "side": 1,
+      "message": "Is there a more userfriendly statement we can make here? Unless someone reads the spec this won\u0027t mean anything",
+      "range": {
+        "startLine": 1488,
+        "startChar": 79,
+        "endLine": 1488,
+        "endChar": 103
+      },
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad478d53_a390e590",
+        "filename": "src/tint/lang/wgsl/resolver/validation_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-26T19:05:26Z",
+      "side": 1,
+      "message": "Can we validate the error to make sure we got the right one?",
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "108e341a_f087c826",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-26T19:05:26Z",
+      "side": 1,
+      "message": "```suggestion\n    if (!ptr-\u003eStoreType()-\u003eHasCreationFixedFootprint()) {\n```",
+      "range": {
+        "startLine": 2049,
+        "startChar": 14,
+        "endLine": 2049,
+        "endChar": 23
+      },
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
