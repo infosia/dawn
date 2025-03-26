@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d2d06a5_0aa1be92",
+        "filename": "src/dawn/common/Math.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:43:53Z",
+      "side": 1,
+      "message": "```suggestion\nT RoundUp(const T value, const T alignment) {\n```\n\nCan we static assert that the alignment is a power of two? Otherwise the implementation will not work.\n\nAlso please add a small test in MathTests.cpp",
+      "revId": "b33c5f50d8d7c36ae70f4c9ba745733fa2efcab6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
