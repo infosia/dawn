@@ -85,6 +85,40 @@
       },
       "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53fa794b_d03429bc",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2049,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-26T19:11:14Z",
+      "side": 1,
+      "message": "Nit: `ty` already gives you the unwrapped type\n\nAlso, maybe we should use `IsConstructible()` just to be closer to what the spec text says? I think they amount to the same thing in practice (given the other restrictions that are already in play), but it\u0027s always good to line up with the spec where we can.\n\nCould also drop the atomic check above too, since it\u0027s now covered here.",
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f213f240_271e3a64",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-26T19:11:14Z",
+      "side": 1,
+      "message": "Again: \"constructible\" is the actual spec restriction.",
+      "revId": "4eb95a51037213ae8c7f1328d240a5b23f6054c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
