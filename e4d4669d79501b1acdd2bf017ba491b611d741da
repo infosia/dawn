@@ -22,6 +22,30 @@
       },
       "revId": "e4d4669d79501b1acdd2bf017ba491b611d741da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "225ae7ff_960b7e16",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-03-26T13:17:59Z",
+      "side": 0,
+      "message": "Sorry, need to resolve this to get this landed.\nHopefully the question isn\u0027t lost.",
+      "parentUuid": "8b141069_bd01d426",
+      "range": {
+        "startLine": 573,
+        "startChar": 4,
+        "endLine": 573,
+        "endChar": 48
+      },
+      "revId": "e4d4669d79501b1acdd2bf017ba491b611d741da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
