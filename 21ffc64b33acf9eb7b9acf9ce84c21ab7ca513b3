@@ -34,6 +34,42 @@
       ],
       "revId": "21ffc64b33acf9eb7b9acf9ce84c21ab7ca513b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7973f499_79c6b5a3",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-26T20:22:10Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "c43f9549_14f963b7",
+      "revId": "21ffc64b33acf9eb7b9acf9ce84c21ab7ca513b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "735a3a12_910753ef",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-26T20:22:10Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "c43f9549_14f963b7",
+      "revId": "21ffc64b33acf9eb7b9acf9ce84c21ab7ca513b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
