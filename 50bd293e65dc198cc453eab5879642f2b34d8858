@@ -16,6 +16,643 @@
       "message": "cwallez@, geofflang@: PTAL! It\u0027s a big change but doesn\u0027t actually touch Dawn functionality yet. I wanted to do as clean of an import of the ANGLE code as I could, which hopefully makes it easier to review.",
       "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eada47de_4ca6fa7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "Sorry for the many comments. Because this will be part of the core helper libraries it\u0027s worth rereviewing in detail.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "292221d9_034a39d4",
+        "filename": "src/dawn/common/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "This will also need to be added to the CMakeLists.txt",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b47023f_8fa593bf",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "Do you know why ANGLE had to make its own bitset implementation? Can we comment about that here? Is the main difference that we support parameter types that are not size_t? Otherwise the code looks amazingly similar to https://github.com/llvm/llvm-project/blob/main/libcxx/include/bitset\n\nWhat I\u0027m slightly concerned about is that it is a reimplementation of std::bitset, but with some functionality missing, as well as additions that aren\u0027t explicitly marked so it\u0027s unclear what is what.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "068459d3_22061edd",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "Could this function be a private method on the bitsets to avoid the need to specify the template argument everytime?",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ab324ff_fe0a61df",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "I believe that we will need to cast to UnderlyingType\u003cParamT\u003e(x) here to support Dawn\u0027s typed integers.",
+      "range": {
+        "startLine": 54,
+        "startChar": 49,
+        "endLine": 54,
+        "endChar": 55
+      },
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a349c053_30706dbc",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "Please document that this is a \"single integer\" bitset and not a general one that can go above 64 bits.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dc40a1e_f9ebc62a",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "This is missing a few methods from the standard:\n\n```\n        reference\u0026 operator\u003d(bool x) noexcept;           // for b[i] \u003d x;\n        reference\u0026 operator\u003d(const reference\u0026) noexcept; // for b[i] \u003d b[j];\n        bool operator~() const noexcept;                 // flips the bit\n        reference\u0026 flip() noexcept;                      // for b[i].flip();\n```",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40c317ac_42a3fad6",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "This looks amazingly similar to the current BitSetIterator. Can we mark it as an addition compared to what\u0027s in the std::bitset, and group the `begin/end` with it?",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b46bb8b_fa76b2a0",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "It\u0027s not clear that we will need these mutations on the iterator because our dirty bit system will be less complex than ANGLE\u0027s, could we remove them for now?",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39d4170a_b5d23df7",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "These are non-standard additionr and should be flagged as such.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 30
+      },
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6903a876_595a00fa",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "Any reason some functions are defined inline and some are defined below? IMHO we could keep everything below to make the interface super clear.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "798ee2c0_5629978f",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "This is a non-standard addition and should be flagged as such, but also we might not need it.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0868d06a_d0fc4fbe",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "This is just the default constructor so why do we have a proxy method?",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a08886e_06567aa0",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "ditto these are additions that could be grouped with the iterator stuff.",
+      "range": {
+        "startLine": 191,
+        "startChar": 1,
+        "endLine": 192,
+        "endChar": 34
+      },
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e67bd005_2e6518c1",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "These are non-standard and not very type safe since it means you can do:\n\n```\nmyBitset \u0026\u003d 3;\n```\n\nDitto for the next 2.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09186729_420531f2",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these take a ParamT to shift with? ditto for the next 3",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1393d3a4_f4ce2290",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "This will need a static cast using UnderlyingType ditto in other places",
+      "range": {
+        "startLine": 345,
+        "startChar": 28,
+        "endLine": 345,
+        "endChar": 34
+      },
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "737de030_0161d2bf",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "Could we wait until we have uses for them before adding all the specializations?",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1e826b8_71fa685f",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "Could we make BitSet automatically use one of the fixed size bitsets vs BitSetArray depending on N?\n\nIt would look like:\n\n```\ntemplate \u003csize_t N, typename ParamT \u003d std::size_t\u003e\nusing BitSet \u003d std::conditional_t\u003c\n\t(N \u003c sizeof(std::size_t) * 8),\n\tdetail::BitSetOne\u003cN, size_t, ParamT\u003e, // true\n\tdetail::BitSetArrayT\u003cN, ParamT\u003e\u003e; // false\n```\n\nAlso the detail of the imlementations could go in the a detail namespace so we don\u0027t rely on them.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aa380a5_d7e2847b",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "All the same comment as for BitSetT.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d17d1022_5f41ca58",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "Uh, what value do we get from using BaseBitSet here instead of just u32/u64? using raw numbers would make some of the logic at [1] simpler.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "067b4620_bd872b8b",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "That seems unrelated to the standard? In Dawn we might want to add a few methods to the bitsets to access their internals instaed of using the standard methods like ulong. IMHO let\u0027s remove this check and implement the Dawn serialization for it later.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65e9477c_056a8f5f",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "The grouping is nice, can we have the same in BitSetT and to group implementation of functions?",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91832c27_77f80b76",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "```suggestion\n    // Relational operators\n```",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a28c502_273bb027",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "All the size_t here will need to be ParamT",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3851c270_5910fd28",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "[1]\n\nkBitsPerElement \u003d 8 * sizeof(size_t);\nkArraySize \u003d (N + kBitsPerElement - 1) / kBitsPerElement;",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1300ed3_15ef5cd7",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "I wonder if we could get away with not having this constructos in either specializations given that we mostly use typed bitsets. It\u0027s a bit annoying for not much value imho.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "354b20bb_5e10b170",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "```suggestion\n    for (param_type element : init) {\n        set(element);\n    }\n```",
+      "range": {
+        "startLine": 704,
+        "startChar": 0,
+        "endLine": 708,
+        "endChar": 5
+      },
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dec5d1b9_970b4069",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "```suggestion\n    // The last element needs to keep extra bits set to 0\n```\n\nditto below.",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b0869fc_888729dd",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "TBH we can divide, all compilers should recognized a division with a constexpr 4 or 8 as a peephole optimization to shift.",
+      "range": {
+        "startLine": 861,
+        "startChar": 26,
+        "endLine": 861,
+        "endChar": 43
+      },
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f487fe4_eb16acf1",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7aa1804_5648b8a5",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28be87ee_3966b1f4",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73136341_dde8e305",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "With ADT I believe that these can stay in whatever namespace the class is defined in. We should also have them for BitSetArray, and add at least the equivalent of\n\n```\ntemplate \u003csize_t N\u003e struct hash\u003cstd::bitset\u003cN\u003e\u003e;\n```",
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "106aaa9a_143cafe7",
+        "filename": "src/dawn/common/BitSet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-26T15:40:54Z",
+      "side": 1,
+      "message": "In the standard these are in the class itself. Can we try to do that?\n\n```\n    bool operator\u003d\u003d(const bitset\u0026 rhs) const noexcept; // constexpr since C++23\n    bool operator!\u003d(const bitset\u0026 rhs) const noexcept; // removed in C++20\n```",
+      "range": {
+        "startLine": 1029,
+        "startChar": 0,
+        "endLine": 1038,
+        "endChar": 1
+      },
+      "revId": "50bd293e65dc198cc453eab5879642f2b34d8858",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
