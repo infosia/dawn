@@ -129,6 +129,7 @@ struct State {
         tint::Switch(                                                                 //
             res->Instruction(),                                                       //
             [&](core::ir::Access* a) { values_to_convert_.push_back(a->Object()); },  //
+            [&](core::ir::Let* l) { values_to_convert_.push_back(l->Value()); },      //
             [&](core::ir::Var*) {},                                                   //
             TINT_ICE_ON_NO_MATCH);
     }
