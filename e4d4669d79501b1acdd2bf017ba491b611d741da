@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b141069_bd01d426",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-26T13:16:35Z",
+      "side": 0,
+      "message": "On x86 builds, despite not building DXC, `GetBackend()-\u003eIsDXCAvailable()` is returning true. Does this means that `dxcompiler.dll` is somehow in the build directory? Or is it somehow finding a `dxcompiler.dll` in PATH?",
+      "range": {
+        "startLine": 573,
+        "startChar": 4,
+        "endLine": 573,
+        "endChar": 48
+      },
+      "revId": "e4d4669d79501b1acdd2bf017ba491b611d741da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
