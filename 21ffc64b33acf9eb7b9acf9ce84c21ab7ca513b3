@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c43f9549_14f963b7",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-26T20:00:03Z",
+      "side": 1,
+      "message": "Nit: `Pop()` returns the back so this can be done in one line.",
+      "fixSuggestions": [
+        {
+          "fixId": "ce54108d_9b4954c7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/atomics.cc",
+              "range": {
+                "startLine": 96,
+                "startChar": 0,
+                "endLine": 98,
+                "endChar": 0
+              },
+              "replacement": "            auto* val \u003d values_to_convert_.Pop();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "21ffc64b33acf9eb7b9acf9ce84c21ab7ca513b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
