@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ceb28c3d_07bfb92d",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-26T13:43:04Z",
+      "side": 1,
+      "message": "I\u0027m not sure if the consistency argument holds. We have more includes of `unordered_map` then `hashmap.h` and more of `unordered_set` then `hashset.h`. I try to lean towards the `std` versions unless there is a real shown perf impact of using these containers as they\u0027re easier to lookup the api and will be more familiar to other users.",
+      "parentUuid": "abb6c7c3_df2405ce",
+      "revId": "f3306277dfe0904c248652a1abbe6f6f8252f9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "48ec13ee_69bca830",
         "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
         "patchSetId": 1
@@ -65,6 +83,24 @@
       "writtenOn": "2025-03-26T13:38:22Z",
       "side": 1,
       "message": "Wouldn\u0027t it be safer to run `Atomics` first in this case, and then we\u0027d rightfully ICE here if there are any left for some reason?",
+      "revId": "f3306277dfe0904c248652a1abbe6f6f8252f9c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c084e07_010e56b9",
+        "filename": "src/tint/lang/spirv/reader/lower/builtins.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-26T13:43:04Z",
+      "side": 1,
+      "message": "Six of one, half dozen of the other. I assert in the atomics transform if any other builtin is seen.",
+      "parentUuid": "1d90818b_b7a91bde",
       "revId": "f3306277dfe0904c248652a1abbe6f6f8252f9c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
