@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "82f4ce9a86246407e409b3c99f54bd04d9f77e44",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d908caf_adc25492",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-03-26T20:29:47Z",
+      "side": 1,
+      "message": "Swapping reviewers, apparently Kai isn\u0027t an owner.",
+      "revId": "82f4ce9a86246407e409b3c99f54bd04d9f77e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
