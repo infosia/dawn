@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a46fb64f_2dc72db7",
+        "filename": "src/tint/lang/core/ir/reflection.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T01:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17a8210c_6787d036",
+      "revId": "976f15478726d8edd13308b638ce19600f078ee8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8cf870c_7eaf39f8",
@@ -83,6 +101,24 @@
       "writtenOn": "2025-03-25T15:32:34Z",
       "side": 1,
       "message": "s/GenericOutput/GetWorkgroupInfo/",
+      "revId": "976f15478726d8edd13308b638ce19600f078ee8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "328ebb37_90a07cec",
+        "filename": "src/tint/lang/core/ir/reflection.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-26T01:48:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8cf870c_7eaf39f8",
       "revId": "976f15478726d8edd13308b638ce19600f078ee8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
