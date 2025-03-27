@@ -68,6 +68,7 @@ class PipelineGL {
     GLuint GetProgramHandle() const;
 
     const Buffer* GetInternalUniformBuffer() const;
+    const Buffer* GetInternalArrayLengthUniformBuffer() const;
     const BindingPointToFunctionAndOffset& GetBindingPointBuiltinDataInfo() const;
 
   protected:
@@ -91,9 +92,13 @@ class PipelineGL {
     Ref<Sampler> mPlaceholderSampler;
 
     // Maintain an internal uniform buffer to store extra information needed by shader emulation.
-    GLuint mInternalUniformBufferBinding;
+    GLuint mInternalTextureBuiltinsUniformBufferBinding;
     bool mNeedsTextureBuiltinUniformBuffer;
     Ref<Buffer> mTextureBuiltinsBuffer;
+
+    //
+    GLuint mInternalArrayLengthUniformBufferBinding;
+    Ref<Buffer> mArrayLengthBuffer;
 
     // Reflect info from tint: a map from texture binding point to extra data need to push into the
     // internal uniform buffer.

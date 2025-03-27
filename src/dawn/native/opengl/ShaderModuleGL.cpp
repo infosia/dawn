@@ -31,6 +31,8 @@
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
+#include "dawn/common/BitSetIterator.h"
+#include "dawn/common/MatchVariant.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/CacheRequest.h"
@@ -94,6 +96,8 @@ using InterstageLocationAndName = std::pair<uint32_t, std::string>;
     X(std::string, entryPointName)                                                               \
     X(SingleShaderStage, stage)                                                                  \
     X(std::optional<tint::ast::transform::SubstituteOverride::Config>, substituteOverrideConfig) \
+    X(std::optional<tint::glsl::writer::ArrayLengthFromUniformOptions>,                          \
+      arrayLengthFromUniformOptions)                                                             \
     X(LimitsForCompilationRequest, limits)                                                       \
     X(CacheKey::UnsafeUnkeyedValue<LimitsForCompilationRequest>, adapterSupportedLimits)         \
     X(bool, disableSymbolRenaming)                                                               \
@@ -433,7 +437,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     // Remap the internal ubo binding as well.
     bindings.uniform.emplace(
         bindings.texture_builtins_from_uniform.ubo_binding,
-        tint::glsl::writer::binding::Uniform{layout->GetInternalUniformBinding()});
+        tint::glsl::writer::binding::Uniform{layout->GetInternalTextureBuiltinsUniformBinding()});
 
     CombinedSamplerInfo combinedSamplerInfo =
         GenerateCombinedSamplerInfo(inspector, programmableStage.entryPoint, bindings,
@@ -453,6 +457,53 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     req.limits = LimitsForCompilationRequest::Create(GetDevice()->GetLimits().v1);
     req.adapterSupportedLimits =
         LimitsForCompilationRequest::Create(GetDevice()->GetAdapter()->GetLimits().v1);
+
+    // temp: use toggle later
+    if (true) {
+        tint::glsl::writer::ArrayLengthFromUniformOptions arrayLengthFromUniformOptions;
+        arrayLengthFromUniformOptions.ubo_binding = {kMaxBindGroups + 2, 0};
+        bindings.uniform.emplace(
+            arrayLengthFromUniformOptions.ubo_binding,
+            tint::glsl::writer::binding::Uniform{layout->GetInternalArrayLengthUniformBinding()});
+
+        for (BindGroupIndex group : IterateBitSet(layout->GetBindGroupLayoutsMask())) {
+            const BindGroupLayoutInternalBase* bgl = layout->GetBindGroupLayout(group);
+            for (BindingIndex bindingIndex{0}; bindingIndex < bgl->GetBindingCount();
+                 ++bindingIndex) {
+                const BindingInfo& bindingInfo = bgl->GetBindingInfo(bindingIndex);
+
+                MatchVariant(
+                    bindingInfo.bindingLayout,
+                    [&](const BufferBindingInfo& bufferBinding) {
+                        switch (bufferBinding.type) {
+                            case wgpu::BufferBindingType::Storage:
+                            case kInternalStorageBufferBinding:
+                            case wgpu::BufferBindingType::ReadOnlyStorage:
+                            case kInternalReadOnlyStorageBufferBinding: {
+                                const PipelineLayout::BindingIndexInfo& indexInfo =
+                                    layout->GetBindingIndexInfo();
+                                // Use ssbo index as the indices for the buffer size lookups
+                                // in the array length from uniform transform.
+                                // arrayLengthFromUniformOptions.bindpoint_to_size_index.emplace(
+                                //     srcBinding, indexInfo[group][bindingIndex]);
+                                arrayLengthFromUniformOptions.bindpoint_to_size_index.emplace(
+                                    tint::BindingPoint{static_cast<uint32_t>(group),
+                                                       static_cast<uint32_t>(bindingIndex)},
+                                    indexInfo[group][bindingIndex]);
+                                break;
+                            }
+                            default:
+                                break;
+                        }
+                    },
+                    [](const StaticSamplerBindingInfo&) {}, [](const SamplerBindingInfo&) {},
+                    [](const TextureBindingInfo&) {}, [](const StorageTextureBindingInfo&) {},
+                    [](const InputAttachmentBindingInfo&) {});
+            }
+        }
+
+        req.arrayLengthFromUniformOptions = arrayLengthFromUniformOptions;
+    }
 
     req.platform = UnsafeUnkeyedValue(GetDevice()->GetPlatform());
 
@@ -523,6 +574,17 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
                     DAWN_INVALID_IF(substituteOverridesResult != tint::Success,
                                     "Pipeline override substitution (IR) failed:\n%s",
                                     substituteOverridesResult.Failure().reason);
+                }
+
+                if (r.arrayLengthFromUniformOptions) {
+                    auto arrayLengthFromUniformResult =
+                        tint::core::ir::transform::ArrayLengthFromUniform(
+                            ir.Get(), r.arrayLengthFromUniformOptions->ubo_binding,
+                            r.arrayLengthFromUniformOptions->bindpoint_to_size_index);
+                    // printf("\n\n!!! if (r.arrayLengthFromUniformOptions) \n\n\n" );
+                    DAWN_INVALID_IF(arrayLengthFromUniformResult != tint::Success,
+                                    "Pipeline array length from uniform (IR) failed:\n%s",
+                                    arrayLengthFromUniformResult.Failure().reason);
                 }
 
                 const std::string remappedEntryPoint = "";

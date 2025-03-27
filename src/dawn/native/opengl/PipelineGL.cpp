@@ -105,6 +105,15 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
         mTextureBuiltinsBuffer = ToBackend(std::move(buffer));
     }
 
+    if (true) {
+        BufferDescriptor desc = {};
+        desc.size = layout->GetNumSSBO() * sizeof(uint32_t);
+        desc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
+        Ref<BufferBase> buffer;
+        DAWN_TRY_ASSIGN(buffer, layout->GetDevice()->CreateBuffer(&desc));
+        mArrayLengthBuffer = ToBackend(std::move(buffer));
+    }
+
     // Link all the shaders together.
     DAWN_GL_TRY(gl, LinkProgram(mProgram));
 
@@ -181,7 +190,9 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
         DAWN_GL_TRY(gl, DeleteShader(glShader));
     }
 
-    mInternalUniformBufferBinding = layout->GetInternalUniformBinding();
+    mInternalTextureBuiltinsUniformBufferBinding =
+        layout->GetInternalTextureBuiltinsUniformBinding();
+    mInternalArrayLengthUniformBufferBinding = layout->GetInternalArrayLengthUniformBinding();
 
     return {};
 }
@@ -213,14 +224,23 @@ MaybeError PipelineGL::ApplyNow(const OpenGLFunctions& gl) {
     }
 
     if (mTextureBuiltinsBuffer.Get() != nullptr) {
-        DAWN_GL_TRY(gl, BindBufferBase(GL_UNIFORM_BUFFER, mInternalUniformBufferBinding,
-                                       mTextureBuiltinsBuffer->GetHandle()));
+        DAWN_GL_TRY(gl,
+                    BindBufferBase(GL_UNIFORM_BUFFER, mInternalTextureBuiltinsUniformBufferBinding,
+                                   mTextureBuiltinsBuffer->GetHandle()));
+    }
+    if (mArrayLengthBuffer.Get() != nullptr) {
+        DAWN_GL_TRY(gl, BindBufferBase(GL_UNIFORM_BUFFER, mInternalArrayLengthUniformBufferBinding,
+                                       mArrayLengthBuffer->GetHandle()));
     }
     return {};
 }
 
 const Buffer* PipelineGL::GetInternalUniformBuffer() const {
     return mTextureBuiltinsBuffer.Get();
+}
+
+const Buffer* PipelineGL::GetInternalArrayLengthUniformBuffer() const {
+    return mArrayLengthBuffer.Get();
 }
 
 const BindingPointToFunctionAndOffset& PipelineGL::GetBindingPointBuiltinDataInfo() const {
