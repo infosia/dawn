@@ -51,6 +51,24 @@
       "parentUuid": "4ae97318_9d323b8b",
       "revId": "ed564a5e28cf92d9b54a87c2f46f748176f49225",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa32598b_cc3d2692",
+        "filename": "src/tint/lang/spirv/writer/common/binary_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-03-27T16:40:14Z",
+      "side": 1,
+      "message": "Apparently I was (unintentionally?) supressing the warning that `*reinterpret_cast\u003cfoo *\u003e(bar)` is actually UB (you are not supposed to dereference a ptr that has been reinterpret_cast\u0027d).\n\nWe have an implementation of bit_cast, which is based off of Chromium\u0027s which in turn is based off of C++20\u0027s that I should be using here.",
+      "parentUuid": "6bf6c142_ca208c81",
+      "revId": "ed564a5e28cf92d9b54a87c2f46f748176f49225",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
