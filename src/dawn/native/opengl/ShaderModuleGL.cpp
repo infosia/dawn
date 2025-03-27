@@ -31,6 +31,8 @@
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
+#include "dawn/common/BitSetIterator.h"
+#include "dawn/common/MatchVariant.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/CacheRequest.h"
@@ -201,11 +203,12 @@ CombinedSamplerInfo GenerateCombinedSamplerInfo(tint::inspector::Inspector& insp
     return combinedSamplerInfo;
 }
 
-bool GenerateTextureBuiltinFromUniformData(tint::inspector::Inspector& inspector,
-                                           const std::string& entryPoint,
-                                           const PipelineLayout* layout,
-                                           BindingPointToFunctionAndOffset* bindingPointToData,
-                                           tint::glsl::writer::Bindings& bindings) {
+bool GenerateTextureBuiltinFromUniformData(
+    tint::inspector::Inspector& inspector,
+    const std::string& entryPoint,
+    const PipelineLayout* layout,
+    BindingPointToFunctionAndOffset* bindingPointToTextureBuiltinData,
+    tint::glsl::writer::Bindings& bindings) {
     auto textureBuiltinsFromUniformData = inspector.GetTextureQueries(entryPoint);
 
     if (textureBuiltinsFromUniformData.empty()) {
@@ -238,11 +241,56 @@ bool GenerateTextureBuiltinFromUniformData(tint::inspector::Inspector& inspector
 
         // Note, the `sizeof(uint32_t)` has to match up with the data type created by the
         // `TextureBuiltinsFromUniform` when it creates the UBO structure.
-        bindingPointToData->emplace(dstBindingPoint,
-                                    std::pair{type, static_cast<uint32_t>(i * sizeof(uint32_t))});
+        bindingPointToTextureBuiltinData->emplace(
+            dstBindingPoint, std::pair{type, static_cast<uint32_t>(i * sizeof(uint32_t))});
     }
 
     return true;
+}
+
+bool GenerateArrayLengthFromuniformData(const BindingInfoArray& moduleBindingInfo,
+                                        const PipelineLayout* layout,
+                                        tint::glsl::writer::Bindings& bindings) {
+    const PipelineLayout::BindingIndexInfo& indexInfo = layout->GetBindingIndexInfo();
+
+    for (BindGroupIndex group : IterateBitSet(layout->GetBindGroupLayoutsMask())) {
+        const BindGroupLayoutInternalBase* bgl = layout->GetBindGroupLayout(group);
+        for (const auto& [binding, shaderBindingInfo] : moduleBindingInfo[group]) {
+            BindingIndex bindingIndex = bgl->GetBindingIndex(binding);
+            const BindingInfo& bindingInfo = bgl->GetBindingInfo(bindingIndex);
+
+            // TODO(crbug.com/408010433): capturing binding directly in lambda is C++20
+            // extension in cmake
+            uint32_t capturedBindingNumber = static_cast<uint32_t>(binding);
+
+            MatchVariant(
+                bindingInfo.bindingLayout,
+                [&](const BufferBindingInfo& bufferBinding) {
+                    switch (bufferBinding.type) {
+                        case wgpu::BufferBindingType::Storage:
+                        case kInternalStorageBufferBinding:
+                        case wgpu::BufferBindingType::ReadOnlyStorage:
+                        case kInternalReadOnlyStorageBufferBinding: {
+                            // Use ssbo index as the indices for the buffer size lookups
+                            // in the array length from uniform transform.
+                            tint::BindingPoint srcBindingPoint = {static_cast<uint32_t>(group),
+                                                                  capturedBindingNumber};
+                            uint32_t ssboIndex = indexInfo[group][bindingIndex];
+                            bindings.array_length_from_uniform.bindpoint_to_size_index.emplace(
+                                srcBindingPoint, ssboIndex);
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                },
+                [](const StaticSamplerBindingInfo&) {}, [](const SamplerBindingInfo&) {},
+                [](const TextureBindingInfo&) {}, [](const StorageTextureBindingInfo&) {},
+                [](const InputAttachmentBindingInfo&) {});
+        }
+    }
+
+    return bindings.array_length_from_uniform.bindpoint_to_size_index.size() > 0;
 }
 
 }  // namespace
@@ -399,8 +447,8 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     CombinedSamplerInfo* combinedSamplers,
     const PipelineLayout* layout,
     bool* needsPlaceholderSampler,
-    bool* needsTextureBuiltinUniformBuffer,
-    BindingPointToFunctionAndOffset* bindingPointToData) {
+    BindingPointToFunctionAndOffset* bindingPointToTextureBuiltinData,
+    bool* needsSSBOLengthUniformBuffer) {
     TRACE_EVENT0(GetDevice()->GetPlatform(), General, "TranslateToGLSL");
 
     const OpenGLVersion& version = ToBackend(GetDevice())->GetGL().GetVersion();
@@ -426,21 +474,25 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     // GetSamplerTextureUses() will return this sentinel value.
     bindings.placeholder_sampler_bind_point = {static_cast<uint32_t>(kMaxBindGroupsTyped), 0};
 
-    // Some texture builtin functions are unsupported on GLSL ES. These are emulated with internal
-    // uniforms.
-    bindings.texture_builtins_from_uniform.ubo_binding = {kMaxBindGroups + 1, 0};
-
-    // Remap the internal ubo binding as well.
-    bindings.uniform.emplace(
-        bindings.texture_builtins_from_uniform.ubo_binding,
-        tint::glsl::writer::binding::Uniform{layout->GetInternalUniformBinding()});
 
     CombinedSamplerInfo combinedSamplerInfo =
         GenerateCombinedSamplerInfo(inspector, programmableStage.entryPoint, bindings,
                                     externalTextureExpansionMap, needsPlaceholderSampler);
 
-    bool needsInternalUBO = GenerateTextureBuiltinFromUniformData(
-        inspector, programmableStage.entryPoint, layout, bindingPointToData, bindings);
+    bool needsInternalUBO =
+        GenerateTextureBuiltinFromUniformData(inspector, programmableStage.entryPoint, layout,
+                                              bindingPointToTextureBuiltinData, bindings);
+    if (needsInternalUBO) {
+        DAWN_ASSERT(!bindingPointToTextureBuiltinData->empty());
+        // Some texture builtin functions are unsupported on GLSL ES. These are emulated with
+        // internal uniforms.
+        bindings.texture_builtins_from_uniform.ubo_binding = {kMaxBindGroups + 1, 0};
+
+        // Remap the internal ubo binding as well.
+        bindings.uniform.emplace(bindings.texture_builtins_from_uniform.ubo_binding,
+                                 tint::glsl::writer::binding::Uniform{
+                                     layout->GetInternalTextureBuiltinsUniformBinding()});
+    }
 
     std::optional<tint::ast::transform::SubstituteOverride::Config> substituteOverrideConfig;
     if (!programmableStage.metadata->overrides.empty()) {
@@ -453,6 +505,18 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     req.limits = LimitsForCompilationRequest::Create(GetDevice()->GetLimits().v1);
     req.adapterSupportedLimits =
         LimitsForCompilationRequest::Create(GetDevice()->GetAdapter()->GetLimits().v1);
+
+    if (GetDevice()->IsToggleEnabled(Toggle::GLUseArrayLengthFromUniform)) {
+        *needsSSBOLengthUniformBuffer =
+            GenerateArrayLengthFromuniformData(moduleBindingInfo, layout, bindings);
+        if (*needsSSBOLengthUniformBuffer) {
+            req.tintOptions.use_array_length_from_uniform = true;
+            bindings.array_length_from_uniform.ubo_binding = {kMaxBindGroups + 2, 0};
+            bindings.uniform.emplace(bindings.array_length_from_uniform.ubo_binding,
+                                     tint::glsl::writer::binding::Uniform{
+                                         layout->GetInternalArrayLengthUniformBinding()});
+        }
+    }
 
     req.platform = UnsafeUnkeyedValue(GetDevice()->GetPlatform());
 
@@ -580,7 +644,6 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     }
 
     GetDevice()->GetBlobCache()->EnsureStored(compilationResult);
-    *needsTextureBuiltinUniformBuffer = needsInternalUBO;
 
     *combinedSamplers = std::move(combinedSamplerInfo);
     return shader;
