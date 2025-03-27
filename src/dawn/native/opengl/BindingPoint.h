@@ -46,7 +46,11 @@ enum class BindPointFunction : uint8_t {
 /// Records the field and the byte offset of the data to push in the internal uniform buffer.
 using FunctionAndOffset = std::pair<BindPointFunction, uint32_t>;
 /// Maps from binding point to data entry with the information to populate the data.
+/// textureNumSamples only takes texture_(depth_)multisampled_2d as input while textureNumLevels
+/// does not, so the same binding point can have at most one entry in this map.
 using BindingPointToFunctionAndOffset = absl::flat_hash_map<tint::BindingPoint, FunctionAndOffset>;
+/// Maps from binding point to data entry with the byte offset in the uniform buffer.
+using BindingPointToArrayLengthOffset = absl::flat_hash_map<tint::BindingPoint, uint32_t>;
 
 }  // namespace dawn::native::opengl
 
