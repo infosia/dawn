@@ -102,10 +102,28 @@ void GPUCommandEncoder::clearBuffer(Napi::Env env,
 
 void GPUCommandEncoder::copyBufferToBuffer(Napi::Env env,
                                            interop::Interface<interop::GPUBuffer> source,
+                                           interop::Interface<interop::GPUBuffer> destination,
+                                           std::optional<interop::GPUSize64> size) {
+    Converter conv(env);
+
+    wgpu::Buffer src{};
+    wgpu::Buffer dst{};
+    uint64_t s = wgpu::kWholeSize;
+    if (!conv(src, source) ||       //
+        !conv(dst, destination) ||  //
+        !conv(s, size)) {
+        return;
+    }
+
+    enc_.CopyBufferToBuffer(src, 0, dst, 0, s);
+}
+
+void GPUCommandEncoder::copyBufferToBuffer(Napi::Env env,
+                                           interop::Interface<interop::GPUBuffer> source,
                                            interop::GPUSize64 sourceOffset,
                                            interop::Interface<interop::GPUBuffer> destination,
                                            interop::GPUSize64 destinationOffset,
-                                           interop::GPUSize64 size) {
+                                           std::optional<interop::GPUSize64> size) {
     Converter conv(env);
 
     wgpu::Buffer src{};
@@ -115,7 +133,13 @@ void GPUCommandEncoder::copyBufferToBuffer(Napi::Env env,
         return;
     }
 
-    enc_.CopyBufferToBuffer(src, sourceOffset, dst, destinationOffset, size);
+    uint64_t rangeSize = size.has_value() ? size.value().value : (src.size - sourceOffset);
+    uint64_t s = wgpu::kWholeSize;
+    if (!conv(s, rangeSize)) {
+        return;
+    }
+
+    enc_.CopyBufferToBuffer(src, sourceOffset, dst, destinationOffset, s);
 }
 
 void GPUCommandEncoder::copyBufferToTexture(Napi::Env env,
