@@ -209,6 +209,7 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     if (HasAnisotropicFiltering(gl)) {
         DAWN_GL_TRY(gl, GetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &mMaxTextureMaxAnisotropy));
     }
+
     return DeviceBase::Initialize(std::move(queue));
 }
 
@@ -522,6 +523,44 @@ EGLDisplay Device::GetEGLDisplay() const {
 
 ContextEGL* Device::GetContext() const {
     return mContext.get();
+}
+
+const Buffer* Device::GetInternalTextureBuiltinsUniformBuffer() const {
+    return mTextureBuiltinsBuffer.Get();
+}
+
+const Buffer* Device::GetInternalArrayLengthUniformBuffer() const {
+    return mArrayLengthBuffer.Get();
+}
+
+MaybeError Device::CreateInternalTextureBuiltinsUniformBuffer() {
+    if (mTextureBuiltinsBuffer.Get()) {
+        return {};
+    }
+
+    BufferDescriptor desc = {};
+    desc.size = 16 * sizeof(uint32_t);
+    desc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
+    Ref<BufferBase> buffer;
+    DAWN_TRY_ASSIGN(buffer, Buffer::CreateInternalBuffer(this, &desc, false));
+    mTextureBuiltinsBuffer = ToBackend(std::move(buffer));
+
+    return {};
+}
+
+MaybeError Device::CreateInternalArrayLengthUniformBuffer() {
+    if (mArrayLengthBuffer.Get()) {
+        return {};
+    }
+
+    BufferDescriptor desc = {};
+    desc.size = 16 * sizeof(uint32_t);
+    desc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
+    Ref<BufferBase> buffer;
+    DAWN_TRY_ASSIGN(buffer, Buffer::CreateInternalBuffer(this, &desc, false));
+    mArrayLengthBuffer = ToBackend(std::move(buffer));
+
+    return {};
 }
 
 }  // namespace dawn::native::opengl
