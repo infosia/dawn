@@ -117,9 +117,9 @@ class OpArrayLengthTest : public DawnTest {
 
 // Test OpArrayLength in the compute stage
 TEST_P(OpArrayLengthTest, Compute) {
-    // TODO(crbug.com/dawn/197): The computations for length() of unsized buffer is broken on
-    // Nvidia OpenGL.
-    DAWN_SUPPRESS_TEST_IF(IsNvidia() && (IsOpenGL() || IsOpenGLES()));
+    // // TODO(crbug.com/dawn/197): The computations for length() of unsized buffer is broken on
+    // // Nvidia OpenGL.
+    // DAWN_SUPPRESS_TEST_IF(IsNvidia() && (IsOpenGL() || IsOpenGLES()));
 
     // Create a buffer to hold the result sizes and create a bindgroup for it.
     wgpu::BufferDescriptor bufferDesc;

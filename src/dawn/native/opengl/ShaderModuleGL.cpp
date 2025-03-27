@@ -31,6 +31,8 @@
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
+#include "dawn/common/BitSetIterator.h"
+#include "dawn/common/MatchVariant.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/native/CacheRequest.h"
@@ -433,7 +435,7 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     // Remap the internal ubo binding as well.
     bindings.uniform.emplace(
         bindings.texture_builtins_from_uniform.ubo_binding,
-        tint::glsl::writer::binding::Uniform{layout->GetInternalUniformBinding()});
+        tint::glsl::writer::binding::Uniform{layout->GetInternalTextureBuiltinsUniformBinding()});
 
     CombinedSamplerInfo combinedSamplerInfo =
         GenerateCombinedSamplerInfo(inspector, programmableStage.entryPoint, bindings,
@@ -453,6 +455,53 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     req.limits = LimitsForCompilationRequest::Create(GetDevice()->GetLimits().v1);
     req.adapterSupportedLimits =
         LimitsForCompilationRequest::Create(GetDevice()->GetAdapter()->GetLimits().v1);
+
+    // temp: use toggle later
+    if (true) {
+        req.tintOptions.use_array_length_from_uniform = true;
+        bindings.array_length_from_uniform.ubo_binding = {kMaxBindGroups + 2, 0};
+        bindings.uniform.emplace(
+            bindings.array_length_from_uniform.ubo_binding,
+            tint::glsl::writer::binding::Uniform{layout->GetInternalArrayLengthUniformBinding()});
+
+        for (BindGroupIndex group : IterateBitSet(layout->GetBindGroupLayoutsMask())) {
+            const BindGroupLayoutInternalBase* bgl = layout->GetBindGroupLayout(group);
+            // for (BindingIndex bindingIndex{0}; bindingIndex < bgl->GetBindingCount();
+            //      ++bindingIndex) {
+            for (const auto& [binding, shaderBindingInfo] : moduleBindingInfo[group]) {
+                BindingIndex bindingIndex = bgl->GetBindingIndex(binding);
+                const BindingInfo& bindingInfo = bgl->GetBindingInfo(bindingIndex);
+
+                MatchVariant(
+                    bindingInfo.bindingLayout,
+                    [&](const BufferBindingInfo& bufferBinding) {
+                        switch (bufferBinding.type) {
+                            case wgpu::BufferBindingType::Storage:
+                            case kInternalStorageBufferBinding:
+                            case wgpu::BufferBindingType::ReadOnlyStorage:
+                            case kInternalReadOnlyStorageBufferBinding: {
+                                const PipelineLayout::BindingIndexInfo& indexInfo =
+                                    layout->GetBindingIndexInfo();
+                                // Use ssbo index as the indices for the buffer size lookups
+                                // in the array length from uniform transform.
+                                // arrayLengthFromUniformOptions.bindpoint_to_size_index.emplace(
+                                //     srcBinding, indexInfo[group][bindingIndex]);
+                                bindings.array_length_from_uniform.bindpoint_to_size_index.emplace(
+                                    tint::BindingPoint{static_cast<uint32_t>(group),
+                                                       static_cast<uint32_t>(binding)},
+                                    indexInfo[group][bindingIndex]);
+                                break;
+                            }
+                            default:
+                                break;
+                        }
+                    },
+                    [](const StaticSamplerBindingInfo&) {}, [](const SamplerBindingInfo&) {},
+                    [](const TextureBindingInfo&) {}, [](const StorageTextureBindingInfo&) {},
+                    [](const InputAttachmentBindingInfo&) {});
+            }
+        }
+    }
 
     req.platform = UnsafeUnkeyedValue(GetDevice()->GetPlatform());
 
