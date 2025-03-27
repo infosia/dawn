@@ -33,6 +33,24 @@
       "message": "Loading an int value from a location that was last stored to via a float pointer.\nThis is undefind behaviour.\n\nThe memcpy is necessary by spec.",
       "revId": "ed564a5e28cf92d9b54a87c2f46f748176f49225",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61382514_76bba57b",
+        "filename": "src/tint/lang/spirv/writer/common/binary_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-27T16:39:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ae97318_9d323b8b",
+      "revId": "ed564a5e28cf92d9b54a87c2f46f748176f49225",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
