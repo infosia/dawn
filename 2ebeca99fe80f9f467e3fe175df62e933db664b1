@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "742550c1_ad59eca5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-27T15:03:58Z",
+      "side": 1,
+      "message": "Search for \"export_compile_commands\" in the docs here: https://gn.googlesource.com/gn/+/main/docs/reference.md",
+      "revId": "2ebeca99fe80f9f467e3fe175df62e933db664b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
