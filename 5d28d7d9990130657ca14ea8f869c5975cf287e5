@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d11ba07a_a669f5e6",
+        "filename": "src/tint/lang/spirv/writer/common/binary_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-27T16:41:07Z",
+      "side": 1,
+      "message": "replace with tint::Bitcast\u003cuint32_t\u003e(f)",
+      "fixSuggestions": [
+        {
+          "fixId": "e74285c3_8c6a7adc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/common/binary_writer.cc",
+              "range": {
+                "startLine": 77,
+                "startChar": 0,
+                "endLine": 78,
+                "endChar": 0
+              },
+              "replacement": "        out_.push_back(tint::Bitcast\u003cuint32_t\u003e(f));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5d28d7d9990130657ca14ea8f869c5975cf287e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
