@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ade8d55_da76b45b",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-27T02:02:15Z",
+      "side": 1,
+      "message": "Filed https://crbug.com/dawn/406616153 to followup with function parameters. Will figure out what to change this too when adding that support. I don\u0027t think the old reader had support for that, or at least, I don\u0027t recall seeing any tests.",
+      "parentUuid": "d029eff0_c5743936",
+      "revId": "fe3069b0381be69e639117fe8dbca94fd1404276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aafddf6a_3cc3db30",
@@ -53,6 +71,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7e2c8b0_eb10f926",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-27T02:02:15Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "aafddf6a_3cc3db30",
+      "revId": "fe3069b0381be69e639117fe8dbca94fd1404276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f109a4b_aec6599f",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-27T02:02:15Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "aafddf6a_3cc3db30",
+      "revId": "fe3069b0381be69e639117fe8dbca94fd1404276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e46911e_2b8a8786",
@@ -70,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be1fe0c3_cca962b0",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-27T02:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e46911e_2b8a8786",
+      "revId": "fe3069b0381be69e639117fe8dbca94fd1404276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5621a7d_ef749e15",
@@ -83,6 +155,24 @@
       "writtenOn": "2025-03-26T21:23:00Z",
       "side": 1,
       "message": "Nit: Just `GetOrAdd()` and then you don\u0027t need the `.value`.",
+      "revId": "fe3069b0381be69e639117fe8dbca94fd1404276",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f94886ef_30e96281",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-27T02:02:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5621a7d_ef749e15",
       "revId": "fe3069b0381be69e639117fe8dbca94fd1404276",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
