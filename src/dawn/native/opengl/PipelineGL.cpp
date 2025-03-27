@@ -71,16 +71,18 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
     // Create an OpenGL shader for each stage and gather the list of combined samplers.
     PerStage<CombinedSamplerInfo> combinedSamplers;
     bool needsPlaceholderSampler = false;
+    mNeedsSSBOLengthUniformBuffer = false;
     std::vector<GLuint> glShaders;
     for (SingleShaderStage stage : IterateStages(activeStages)) {
         ShaderModule* module = ToBackend(stages[stage].module.Get());
         GLuint shader;
-        DAWN_TRY_ASSIGN(
-            shader,
-            module->CompileShader(
-                gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex, usesFragDepth,
-                bgraSwizzleAttributes, &combinedSamplers[stage], layout, &needsPlaceholderSampler,
-                &mNeedsTextureBuiltinUniformBuffer, &mBindingPointEmulatedBuiltins));
+        bool needsSSBOLengthUniformBuffer = false;
+        DAWN_TRY_ASSIGN(shader, module->CompileShader(
+                                    gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex,
+                                    usesFragDepth, bgraSwizzleAttributes, &combinedSamplers[stage],
+                                    layout, &needsPlaceholderSampler,
+                                    &mBindingPointEmulatedBuiltins, &needsSSBOLengthUniformBuffer));
+        mNeedsSSBOLengthUniformBuffer |= needsSSBOLengthUniformBuffer;
         // XXX transform to flip some attributes from RGBA to BGRA
         DAWN_GL_TRY(gl, AttachShader(mProgram, shader));
         glShaders.push_back(shader);
@@ -103,6 +105,16 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
         Ref<BufferBase> buffer;
         DAWN_TRY_ASSIGN(buffer, layout->GetDevice()->CreateBuffer(&desc));
         mTextureBuiltinsBuffer = ToBackend(std::move(buffer));
+    }
+
+    if (mNeedsSSBOLengthUniformBuffer &&
+        layout->GetDevice()->IsToggleEnabled(Toggle::GLUseArrayLengthFromUniform)) {
+        BufferDescriptor desc = {};
+        desc.size = layout->GetNumSSBO() * sizeof(uint32_t);
+        desc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
+        Ref<BufferBase> buffer;
+        DAWN_TRY_ASSIGN(buffer, layout->GetDevice()->CreateBuffer(&desc));
+        mArrayLengthBuffer = ToBackend(std::move(buffer));
     }
 
     // Link all the shaders together.
@@ -181,8 +193,6 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
         DAWN_GL_TRY(gl, DeleteShader(glShader));
     }
 
-    mInternalUniformBufferBinding = layout->GetInternalUniformBinding();
-
     return {};
 }
 
@@ -205,16 +215,22 @@ GLuint PipelineGL::GetProgramHandle() const {
     return mProgram;
 }
 
-MaybeError PipelineGL::ApplyNow(const OpenGLFunctions& gl) {
+MaybeError PipelineGL::ApplyNow(const OpenGLFunctions& gl, const PipelineLayout* layout) {
     DAWN_GL_TRY(gl, UseProgram(mProgram));
     for (GLuint unit : mPlaceholderSamplerUnits) {
         DAWN_ASSERT(mPlaceholderSampler.Get() != nullptr);
         DAWN_GL_TRY(gl, BindSampler(unit, mPlaceholderSampler->GetNonFilteringHandle()));
     }
 
-    if (mTextureBuiltinsBuffer.Get() != nullptr) {
-        DAWN_GL_TRY(gl, BindBufferBase(GL_UNIFORM_BUFFER, mInternalUniformBufferBinding,
+    if (!mBindingPointEmulatedBuiltins.empty() && mTextureBuiltinsBuffer.Get() != nullptr) {
+        DAWN_GL_TRY(gl, BindBufferBase(GL_UNIFORM_BUFFER,
+                                       layout->GetInternalTextureBuiltinsUniformBinding(),
                                        mTextureBuiltinsBuffer->GetHandle()));
+    }
+    if (mNeedsSSBOLengthUniformBuffer && mArrayLengthBuffer.Get() != nullptr) {
+        DAWN_GL_TRY(
+            gl, BindBufferBase(GL_UNIFORM_BUFFER, layout->GetInternalArrayLengthUniformBinding(),
+                               mArrayLengthBuffer->GetHandle()));
     }
     return {};
 }
@@ -223,8 +239,16 @@ const Buffer* PipelineGL::GetInternalUniformBuffer() const {
     return mTextureBuiltinsBuffer.Get();
 }
 
+const Buffer* PipelineGL::GetInternalArrayLengthUniformBuffer() const {
+    return mArrayLengthBuffer.Get();
+}
+
 const BindingPointToFunctionAndOffset& PipelineGL::GetBindingPointBuiltinDataInfo() const {
     return mBindingPointEmulatedBuiltins;
+}
+
+bool PipelineGL::GetNeedsSSBOLengthUniformBuffer() const {
+    return mNeedsSSBOLengthUniformBuffer;
 }
 
 }  // namespace dawn::native::opengl
