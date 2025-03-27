@@ -101,6 +101,12 @@ static constexpr size_t kWireBufferAlignment = 8u;
 // Timestamp query quantization mask to perform a granularity of ~0.1ms.
 static constexpr uint32_t kTimestampQuantizationMask = 0xFFFF0000;
 
+// According to gpuinfo.org, devices report GL_MAX_TEXTURE_IMAGE_UNITS <= 128
+static constexpr size_t kGLMaxTextureImageUnitsReported = 128;
+
+// According to gpuinfo.org, devices report GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS <= 96
+static constexpr size_t kGLMaxShaderStorageBufferBindingsReported = 96;
+
 }  // namespace dawn
 
 #endif  // SRC_DAWN_COMMON_CONSTANTS_H_

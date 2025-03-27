@@ -52,8 +52,10 @@ class PipelineLayout final : public PipelineLayoutBase {
     GLuint GetTextureUnitsUsed() const;
     size_t GetNumSamplers() const;
     size_t GetNumSampledTextures() const;
+    size_t GetNumSSBO() const;
 
-    GLuint GetInternalUniformBinding() const;
+    GLuint GetInternalTextureBuiltinsUniformBinding() const;
+    GLuint GetInternalArrayLengthUniformBinding() const;
 
     enum PushConstantLocation {
         FirstVertex = 0,
@@ -67,8 +69,10 @@ class PipelineLayout final : public PipelineLayoutBase {
     BindingIndexInfo mIndexInfo;
     size_t mNumSamplers;
     size_t mNumSampledTextures;
+    size_t mNumSSBO;
 
-    GLuint mInternalUniformBinding;
+    GLuint mInternalTextureBuiltinsUniformBinding;
+    GLuint mInternalArrayLengthUniformBinding;
 };
 
 }  // namespace dawn::native::opengl
