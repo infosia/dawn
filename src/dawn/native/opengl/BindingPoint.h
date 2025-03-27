@@ -47,6 +47,8 @@ enum class BindPointFunction : uint8_t {
 using FunctionAndOffset = std::pair<BindPointFunction, uint32_t>;
 /// Maps from binding point to data entry with the information to populate the data.
 using BindingPointToFunctionAndOffset = absl::flat_hash_map<tint::BindingPoint, FunctionAndOffset>;
+/// Maps from binding point to data entry with the byte offset in the uniform buffer.
+using BindingPointToOffset = absl::flat_hash_map<tint::BindingPoint, uint32_t>;
 
 }  // namespace dawn::native::opengl
 
