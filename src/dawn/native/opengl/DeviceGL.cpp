@@ -209,7 +209,31 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     if (HasAnisotropicFiltering(gl)) {
         DAWN_GL_TRY(gl, GetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY, &mMaxTextureMaxAnisotropy));
     }
-    return DeviceBase::Initialize(std::move(queue));
+
+    DAWN_TRY(DeviceBase::Initialize(std::move(queue)));
+
+    // Create internal buffers needed for workarounds.
+    {
+        BufferDescriptor desc = {};
+        // According to gpuinfo.org, devices report GL_MAX_TEXTURE_IMAGE_UNITS <= 128
+        desc.size = 128 * sizeof(uint32_t);
+        desc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
+        Ref<BufferBase> buffer;
+        DAWN_TRY_ASSIGN(buffer, CreateBuffer(&desc));
+        mTextureBuiltinsBuffer = ToBackend(std::move(buffer));
+    }
+
+    if (IsToggleEnabled(Toggle::GLUseArrayLengthFromUniform)) {
+        BufferDescriptor desc = {};
+        // According to gpuinfo.org, devices report GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS <= 96
+        desc.size = 96 * sizeof(uint32_t);
+        desc.usage = wgpu::BufferUsage::Uniform | wgpu::BufferUsage::CopyDst;
+        Ref<BufferBase> buffer;
+        DAWN_TRY_ASSIGN(buffer, CreateBuffer(&desc));
+        mArrayLengthBuffer = ToBackend(std::move(buffer));
+    }
+
+    return {};
 }
 
 const GLFormat& Device::GetGLFormat(const Format& format) {
@@ -522,6 +546,14 @@ EGLDisplay Device::GetEGLDisplay() const {
 
 ContextEGL* Device::GetContext() const {
     return mContext.get();
+}
+
+const Buffer* Device::GetInternalTextureBuiltinsUniformBuffer() const {
+    return mTextureBuiltinsBuffer.Get();
+}
+
+const Buffer* Device::GetInternalArrayLengthUniformBuffer() const {
+    return mArrayLengthBuffer.Get();
 }
 
 }  // namespace dawn::native::opengl
