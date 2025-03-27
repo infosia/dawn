@@ -111,6 +111,13 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(raise::TextureBuiltinsFromUniform, module,
                   options.bindings.texture_builtins_from_uniform);
 
+    // Must come after Robustness as it may add `arrayLength`.
+    if (options.use_array_length_from_uniform) {
+        RUN_TRANSFORM(core::ir::transform::ArrayLengthFromUniform, module,
+                      options.bindings.array_length_from_uniform.ubo_binding,
+                      options.bindings.array_length_from_uniform.bindpoint_to_size_index);
+    }
+
     tint::transform::multiplanar::BindingsMap multiplanar_map{};
     RemapperData remapper_data{};
     PopulateBindingInfo(options, remapper_data, multiplanar_map);

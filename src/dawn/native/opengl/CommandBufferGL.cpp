@@ -281,12 +281,14 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
         BindGroupTrackerBase::OnSetPipeline(pipeline);
         mPipeline = pipeline;
         ResetInternalUniformDataDirtyRange();
+        ResetInternalUniformDataDirtyRangeArrayLength();
     }
 
     void OnSetPipeline(ComputePipeline* pipeline) {
         BindGroupTrackerBase::OnSetPipeline(pipeline);
         mPipeline = pipeline;
         ResetInternalUniformDataDirtyRange();
+        ResetInternalUniformDataDirtyRangeArrayLength();
     }
 
     MaybeError Apply(const OpenGLFunctions& gl) {
@@ -295,6 +297,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
             DAWN_TRY(ApplyBindGroup(gl, index, mBindGroups[index], mDynamicOffsets[index]));
         }
         DAWN_TRY(ApplyInternalUniforms(gl));
+        DAWN_TRY(ApplyInternalArrayLengthUniforms(gl));
         AfterApply();
         return {};
     }
@@ -347,6 +350,12 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                         case wgpu::BufferBindingType::ReadOnlyStorage:
                         case kInternalReadOnlyStorageBufferBinding:
                             target = GL_SHADER_STORAGE_BUFFER;
+                            if (mPipelineLayout->GetDevice()->IsToggleEnabled(
+                                    Toggle::UseArrayLengthFromUniform) &&
+                                mPipeline->GetInternalArrayLengthUniformBuffer() != nullptr) {
+                                UpdateSSBOLengthUniformData(gl, binding.size, groupIndex,
+                                                            bindingIndex);
+                            }
                             break;
                         case wgpu::BufferBindingType::BindingNotUsed:
                         case wgpu::BufferBindingType::Undefined:
@@ -520,6 +529,67 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
         return {};
     }
 
+    MaybeError ApplyInternalArrayLengthUniforms(const OpenGLFunctions& gl) {
+        const Buffer* internalUniformBuffer = mPipeline->GetInternalArrayLengthUniformBuffer();
+        if (!internalUniformBuffer) {
+            return {};
+        }
+
+        size_t size = sizeof(uint32_t) * mPipeline->GetBindingPointSSBOLengthOffsetInfo().size();
+        if (size == 0) {
+            return {};
+        }
+
+        if (mDirtyRangeArrayLength.first >= mDirtyRangeArrayLength.second) {
+            // Early return if no dirty uniform range needs updating.
+            return {};
+        }
+
+        GLuint internalUniformBufferHandle = internalUniformBuffer->GetHandle();
+        DAWN_GL_TRY(gl, BindBuffer(GL_UNIFORM_BUFFER, internalUniformBufferHandle));
+        DAWN_GL_TRY(gl, BufferSubData(
+                            GL_UNIFORM_BUFFER, mDirtyRangeArrayLength.first,
+                            mDirtyRangeArrayLength.second - mDirtyRangeArrayLength.first,
+                            mInternalArrayLengthBufferData.data() + mDirtyRangeArrayLength.first));
+        DAWN_GL_TRY(gl, BindBuffer(GL_UNIFORM_BUFFER, 0));
+
+        ResetInternalUniformDataDirtyRangeArrayLength();
+
+        return {};
+    }
+
+    void UpdateSSBOLengthUniformData(const OpenGLFunctions& gl,
+                                     uint64_t size,
+                                     BindGroupIndex groupIndex,
+                                     BindingIndex bindingIndex) {
+        const auto& bindingInfo = mPipeline->GetBindingPointSSBOLengthOffsetInfo();
+        if (bindingInfo.empty()) {
+            return;
+        }
+
+        auto iter = bindingInfo.find(tint::BindingPoint{static_cast<uint32_t>(groupIndex),
+                                                        static_cast<uint32_t>(bindingIndex)});
+        if (iter == bindingInfo.end()) {
+            return;
+        }
+        uint32_t data = static_cast<uint32_t>(size);
+        const size_t byteOffset = static_cast<size_t>(iter->second);
+
+        if (byteOffset >= mInternalArrayLengthBufferData.size()) {
+            mInternalArrayLengthBufferData.resize(byteOffset + (sizeof(uint32_t) * 4));
+        }
+        memcpy(mInternalArrayLengthBufferData.data() + byteOffset, &data, sizeof(uint32_t));
+
+        // Updating dirty range of the data vector
+        mDirtyRangeArrayLength.first = std::min(mDirtyRangeArrayLength.first, byteOffset);
+        mDirtyRangeArrayLength.second =
+            std::max(mDirtyRangeArrayLength.second, byteOffset + sizeof(uint32_t));
+    }
+
+    void ResetInternalUniformDataDirtyRangeArrayLength() {
+        mDirtyRangeArrayLength = {mInternalUniformBufferData.size(), 0};
+    }
+
     raw_ptr<PipelineGL> mPipeline = nullptr;
 
     // The data used for mPipeline's internal uniform buffer from current bind group.
@@ -529,6 +599,14 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
     // Tracking dirty byte range of the mInternalUniformBufferData that needs to call bufferSubData
     // to update to the internal uniform buffer of mPipeline. Range it represents: [first, second)
     std::pair<size_t, size_t> mDirtyRange;
+
+    // The data used for mPipeline's internal uniform buffer to store ssbo buffer sizes.
+    std::vector<uint8_t> mInternalArrayLengthBufferData =
+        std::vector<uint8_t>(4 * sizeof(uint32_t));
+    // Tracking dirty byte range of the mInternalArrayLengthBufferData that needs to call
+    // bufferSubData to update to the internal uniform buffer of mPipeline.
+    // Range it represents: [first, second)
+    std::pair<size_t, size_t> mDirtyRangeArrayLength;
 };
 
 MaybeError ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
