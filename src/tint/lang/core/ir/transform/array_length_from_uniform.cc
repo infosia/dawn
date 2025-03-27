@@ -239,6 +239,11 @@ Result<ArrayLengthFromUniformResult> ArrayLengthFromUniform(
         return validated.Failure();
     }
 
+    // printf("\n\n\n!!!!\n\n\n");
+    // for (const auto& p : bindpoint_to_size_index) {
+    //     printf("!!! (%u, %u) -> %u\n", p.first.group, p.first.binding, p.second);
+    // }
+
     State state{ir, ubo_binding, bindpoint_to_size_index};
     state.Process();
 

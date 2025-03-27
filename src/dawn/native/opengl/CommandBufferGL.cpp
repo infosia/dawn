@@ -295,6 +295,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
             DAWN_TRY(ApplyBindGroup(gl, index, mBindGroups[index], mDynamicOffsets[index]));
         }
         DAWN_TRY(ApplyInternalUniforms(gl));
+        DAWN_TRY(ApplyInternalArrayLengthUniforms(gl));
         AfterApply();
         return {};
     }
@@ -347,6 +348,12 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                         case wgpu::BufferBindingType::ReadOnlyStorage:
                         case kInternalReadOnlyStorageBufferBinding:
                             target = GL_SHADER_STORAGE_BUFFER;
+                            // TODO: update ssbo array length if needed
+                            // toggle && reflection
+                            if (true) {
+                                UpdateSSBOLengthUniformData(gl, binding.size, groupIndex,
+                                                            bindingIndex);
+                            }
                             break;
                         case wgpu::BufferBindingType::BindingNotUsed:
                         case wgpu::BufferBindingType::Undefined:
@@ -454,6 +461,29 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
         return {};
     }
 
+    void UpdateSSBOLengthUniformData(const OpenGLFunctions& gl,
+                                     uint64_t size,
+                                     BindGroupIndex groupIndex,
+                                     BindingIndex bindingIndex) {
+        const auto& bindingInfo = mPipeline->GetBindingPointSSBOLengthOffsetInfo();
+        if (bindingInfo.empty()) {
+            return;
+        }
+
+        auto iter = bindingInfo.find(tint::BindingPoint{static_cast<uint32_t>(groupIndex),
+                                                        static_cast<uint32_t>(bindingIndex)});
+        if (iter == bindingInfo.end()) {
+            return;
+        }
+        uint32_t data = static_cast<uint32_t>(size);
+        const size_t byteOffset = static_cast<size_t>(iter->second);
+
+        if (byteOffset >= mInternalArrayLengthBufferData.size()) {
+            mInternalArrayLengthBufferData.resize(byteOffset + sizeof(uint32_t) * 4);
+        }
+        memcpy(mInternalArrayLengthBufferData.data() + byteOffset, &data, sizeof(uint32_t));
+    }
+
     void UpdateTextureBuiltinsUniformData(const OpenGLFunctions& gl,
                                           const TextureView* view,
                                           BindGroupIndex groupIndex,
@@ -520,6 +550,26 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
         return {};
     }
 
+    MaybeError ApplyInternalArrayLengthUniforms(const OpenGLFunctions& gl) {
+        const Buffer* internalUniformBuffer = mPipeline->GetInternalArrayLengthUniformBuffer();
+        if (!internalUniformBuffer) {
+            return {};
+        }
+
+        size_t size = sizeof(uint32_t) * mPipeline->GetBindingPointSSBOLengthOffsetInfo().size();
+        if (size == 0) {
+            return {};
+        }
+
+        GLuint internalUniformBufferHandle = internalUniformBuffer->GetHandle();
+        DAWN_GL_TRY(gl, BindBuffer(GL_UNIFORM_BUFFER, internalUniformBufferHandle));
+        DAWN_GL_TRY(
+            gl, BufferSubData(GL_UNIFORM_BUFFER, 0, size, mInternalArrayLengthBufferData.data()));
+        DAWN_GL_TRY(gl, BindBuffer(GL_UNIFORM_BUFFER, 0));
+
+        return {};
+    }
+
     raw_ptr<PipelineGL> mPipeline = nullptr;
 
     // The data used for mPipeline's internal uniform buffer from current bind group.
@@ -529,6 +579,9 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
     // Tracking dirty byte range of the mInternalUniformBufferData that needs to call bufferSubData
     // to update to the internal uniform buffer of mPipeline. Range it represents: [first, second)
     std::pair<size_t, size_t> mDirtyRange;
+
+    std::vector<uint8_t> mInternalArrayLengthBufferData =
+        std::vector<uint8_t>(4 * sizeof(uint32_t));
 };
 
 MaybeError ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
