@@ -84,7 +84,6 @@
 
 # Last rolled: 2025-03-17 09:54:19AM
 
-# conflicts_allowed: true
 # full_wildcard_support: true
 
 ################################################################################
