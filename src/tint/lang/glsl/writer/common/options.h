@@ -161,10 +161,10 @@ using CombinedTextureSamplerInfo =
     std::unordered_map<binding::CombinedTextureSamplerPair, std::string>;
 
 /// Options used to specify a mapping of binding points to indices into a UBO
-/// from which to load buffer sizes.
+/// from which to load texture builtin values.
 struct TextureBuiltinsFromUniformOptions {
     /// The binding point to use to generate a uniform buffer from which to read
-    /// buffer sizes.
+    /// texture builtin values.
     BindingPoint ubo_binding = {};
 
     /// Ordered list of binding points in the uniform buffer for polyfilling `textureNumSamples` and
@@ -173,6 +173,19 @@ struct TextureBuiltinsFromUniformOptions {
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(TextureBuiltinsFromUniformOptions, ubo_binding, ubo_bindingpoint_ordering);
+};
+
+/// Options used to specify a mapping of binding points to indices into a UBO
+/// from which to load buffer sizes.
+struct ArrayLengthFromUniformOptions {
+    /// The binding point to use to generate a uniform buffer from which to read buffer sizes.
+    BindingPoint ubo_binding;
+    /// The mapping from the storage buffer binding points in WGSL binding-point space to the index
+    /// into the uniform buffer where the length of the buffer is stored.
+    std::unordered_map<BindingPoint, uint32_t> bindpoint_to_size_index;
+
+    /// Reflect the fields of this class so that it can be used by tint::ForeachField()
+    TINT_REFLECT(ArrayLengthFromUniformOptions, ubo_binding, bindpoint_to_size_index);
 };
 
 /// Binding information
