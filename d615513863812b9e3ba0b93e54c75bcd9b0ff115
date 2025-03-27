@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "252a65fa_9f0a4250",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-03-27T10:09:31Z",
+      "side": 1,
+      "message": "@geofflang@chromium.org Please take a look, thanks!\nThis CL move WGSL code parsing and validating into the shader module front-end cache missing function, so we don\u0027t need to parse the code if there might be a cache hit.\nI think this change can stil be applied even if we are going to change the shader module front-end caching?",
+      "revId": "d615513863812b9e3ba0b93e54c75bcd9b0ff115",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
