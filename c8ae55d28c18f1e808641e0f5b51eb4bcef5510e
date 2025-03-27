@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab239899_5514b124",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-27T13:50:00Z",
+      "side": 1,
+      "message": "Just cosmetic things to fix",
+      "revId": "c8ae55d28c18f1e808641e0f5b51eb4bcef5510e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "754dbf71_c5c6aabc",
@@ -20,6 +37,127 @@
         "endLine": 69,
         "endChar": 35
       },
+      "revId": "c8ae55d28c18f1e808641e0f5b51eb4bcef5510e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d545f742_a382cd47",
+        "filename": "src/dawn/tests/perf_tests/WorkgroupAtomicPerf.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-27T13:50:00Z",
+      "side": 1,
+      "message": "I agree. Don\u0027t.  Simplicity in tests is important.",
+      "parentUuid": "754dbf71_c5c6aabc",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 69,
+        "endChar": 35
+      },
+      "revId": "c8ae55d28c18f1e808641e0f5b51eb4bcef5510e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be864bbc_740af37f",
+        "filename": "src/dawn/tests/perf_tests/WorkgroupAtomicPerf.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-27T13:50:00Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: performance-enum-size\n\nAnalyzer Description: Runs clang-tidy checks against chromium\nOwner: gbiv@chromium.org\n\ncheck: performance-enum-size\n\nenum \u0027WorkgroupUsageType\u0027 uses a larger base type (\u0027int\u0027, size: 4 bytes) than necessary for its value set, consider using \u0027std::uint8_t\u0027 (1 byte) as the base type to reduce its size (https://clang.llvm.org/extra/clang-tidy/checks/performance/enum-size.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: performance-enum-size` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "c8ae55d28c18f1e808641e0f5b51eb4bcef5510e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "602dd30e_6ec4b605",
+        "filename": "src/dawn/tests/perf_tests/WorkgroupAtomicPerf.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-27T13:50:00Z",
+      "side": 1,
+      "message": "copypasta?",
+      "revId": "c8ae55d28c18f1e808641e0f5b51eb4bcef5510e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0befa22_a3145437",
+        "filename": "src/dawn/tests/perf_tests/WorkgroupAtomicPerf.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-27T13:50:00Z",
+      "side": 1,
+      "message": "Something to watch for.  AFAIK std::generate does not specify the order of calls to the generator. (And this generator has side effects.)\nDoesn\u0027t matter in this use.",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 17
+      },
+      "revId": "c8ae55d28c18f1e808641e0f5b51eb4bcef5510e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd7f431d_42ee5f37",
+        "filename": "src/dawn/tests/perf_tests/WorkgroupAtomicPerf.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-27T13:50:00Z",
+      "side": 1,
+      "message": "Delete this function.",
+      "revId": "c8ae55d28c18f1e808641e0f5b51eb4bcef5510e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d73ba811_dce9d588",
+        "filename": "src/dawn/tests/perf_tests/WorkgroupAtomicPerf.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-03-27T13:50:00Z",
+      "side": 1,
+      "message": "Sink this function into GetShader",
       "revId": "c8ae55d28c18f1e808641e0f5b51eb4bcef5510e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
