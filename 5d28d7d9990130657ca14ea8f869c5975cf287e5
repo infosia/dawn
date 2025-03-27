@@ -34,6 +34,24 @@
       ],
       "revId": "5d28d7d9990130657ca14ea8f869c5975cf287e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "094dd47c_3840e689",
+        "filename": "src/tint/lang/spirv/writer/common/binary_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-03-27T16:43:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d11ba07a_a669f5e6",
+      "revId": "5d28d7d9990130657ca14ea8f869c5975cf287e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
