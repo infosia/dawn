@@ -88,18 +88,20 @@ class ShaderModule final : public ShaderModuleBase {
         ShaderModuleParseResult* parseResult,
         OwnedCompilationMessages* compilationMessages);
 
-    ResultOrError<GLuint> CompileShader(const OpenGLFunctions& gl,
-                                        const ProgrammableStage& programmableStage,
-                                        SingleShaderStage stage,
-                                        bool usesVertexIndex,
-                                        bool usesInstanceIndex,
-                                        bool usesFragDepth,
-                                        VertexAttributeMask bgraSwizzleAttributes,
-                                        CombinedSamplerInfo* combinedSamplers,
-                                        const PipelineLayout* layout,
-                                        bool* needsPlaceholderSampler,
-                                        bool* needsTextureBuiltinUniformBuffer,
-                                        BindingPointToFunctionAndOffset* bindingPointToData);
+    ResultOrError<GLuint> CompileShader(
+        const OpenGLFunctions& gl,
+        const ProgrammableStage& programmableStage,
+        SingleShaderStage stage,
+        bool usesVertexIndex,
+        bool usesInstanceIndex,
+        bool usesFragDepth,
+        VertexAttributeMask bgraSwizzleAttributes,
+        CombinedSamplerInfo* combinedSamplers,
+        const PipelineLayout* layout,
+        bool* needsPlaceholderSampler,
+        bool* needsTextureBuiltinUniformBuffer,
+        BindingPointToFunctionAndOffset* bindingPointToData,
+        BindingPointToArrayLengthIndices* bindingPointToSSBOLengthOffset);
 
   private:
     ShaderModule(Device* device,

@@ -68,10 +68,12 @@ class PipelineGL {
     GLuint GetProgramHandle() const;
 
     const Buffer* GetInternalUniformBuffer() const;
+    const Buffer* GetInternalArrayLengthUniformBuffer() const;
     const BindingPointToFunctionAndOffset& GetBindingPointBuiltinDataInfo() const;
+    const BindingPointToArrayLengthIndices& GetBindingPointSSBOLengthIndicesInfo() const;
 
   protected:
-    MaybeError ApplyNow(const OpenGLFunctions& gl);
+    MaybeError ApplyNow(const OpenGLFunctions& gl, const PipelineLayout* layout);
     MaybeError InitializeBase(const OpenGLFunctions& gl,
                               const PipelineLayout* layout,
                               const PerStage<ProgrammableStage>& stages,
@@ -91,13 +93,18 @@ class PipelineGL {
     Ref<Sampler> mPlaceholderSampler;
 
     // Maintain an internal uniform buffer to store extra information needed by shader emulation.
-    GLuint mInternalUniformBufferBinding;
     bool mNeedsTextureBuiltinUniformBuffer;
     Ref<Buffer> mTextureBuiltinsBuffer;
+
+    // Maintain an internal uniform buffer to store extra array length information if needed.
+    Ref<Buffer> mArrayLengthBuffer;
 
     // Reflect info from tint: a map from texture binding point to extra data need to push into the
     // internal uniform buffer.
     BindingPointToFunctionAndOffset mBindingPointEmulatedBuiltins;
+
+    // Dst binding point (GLSL) to array length value offsets in the internal uniform buffer.
+    BindingPointToArrayLengthIndices mBindingPointSSBOLengthIndices;
 };
 
 }  // namespace dawn::native::opengl
