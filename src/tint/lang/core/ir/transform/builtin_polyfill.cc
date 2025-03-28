@@ -94,6 +94,9 @@ struct State {
                     case core::BuiltinFn::kSmoothstep:
                         worklist.Push(builtin);
                         break;
+                    case core::BuiltinFn::kMix:
+                        worklist.Push(builtin);
+                        break;
                     case core::BuiltinFn::kExtractBits:
                         if (config.extract_bits != BuiltinPolyfillLevel::kNone) {
                             worklist.Push(builtin);
@@ -205,6 +208,9 @@ struct State {
                     break;
                 case core::BuiltinFn::kSmoothstep:
                     SmoothStep(builtin);
+                    break;
+                case core::BuiltinFn::kMix:
+                    Mix(builtin);
                     break;
                 case core::BuiltinFn::kExtractBits:
                     ExtractBits(builtin);
@@ -577,6 +583,23 @@ struct State {
                            b.Multiply(type, t_clamped,
                                       b.Subtract(type, three, b.Multiply(type, two, t_clamped))));
             smooth_result->SetResults(Vector{call->DetachResult()});
+        });
+        call->Destroy();
+    }
+
+    /// Polyfill an `mix()` builtin call.
+    /// @param call the builtin call instruction
+    void Mix(ir::CoreBuiltinCall* call) {
+        auto* arg_x = call->Args()[0];
+        auto* arg_y = call->Args()[1];
+        auto* arg_z = call->Args()[2];
+        auto* type = arg_x->Type();
+        b.InsertBefore(call, [&] {
+            // x + (y – x) * z
+            auto* diff = b.Subtract(type, arg_y, arg_x);
+            auto* mult = b.Multiply(type, diff, arg_z);
+            auto* mix_result = b.Add(type, arg_x, mult);
+            mix_result->SetResults(Vector{call->DetachResult()});
         });
         call->Destroy();
     }

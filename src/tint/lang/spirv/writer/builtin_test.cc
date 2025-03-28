@@ -1448,9 +1448,7 @@ INSTANTIATE_TEST_SUITE_P(SpirvWriterTest,
                          Builtin_3arg,
                          testing::Values(BuiltinTestCase{kF32, core::BuiltinFn::kClamp, "NClamp"},
                                          BuiltinTestCase{kF32, core::BuiltinFn::kFma, "Fma"},
-                                         BuiltinTestCase{kF16, core::BuiltinFn::kFma, "Fma"},
-                                         BuiltinTestCase{kF32, core::BuiltinFn::kMix, "Mix"},
-                                         BuiltinTestCase{kF16, core::BuiltinFn::kMix, "Mix"}));
+                                         BuiltinTestCase{kF16, core::BuiltinFn::kFma, "Fma"}));
 
 TEST_F(SpirvWriterTest, Builtin_Clamp_Scalar_I32) {
     auto* value = b.FunctionParam("value", ty.i32());
@@ -1797,40 +1795,6 @@ TEST_F(SpirvWriterTest, Builtin_FaceForward_F16) {
     EXPECT_INST("%result = OpExtInst %v4half %10 FaceForward %arg1 %arg2 %arg3");
 }
 
-TEST_F(SpirvWriterTest, Builtin_Mix_VectorOperands_ScalarFactor) {
-    auto* arg1 = b.FunctionParam("arg1", ty.vec4<f32>());
-    auto* arg2 = b.FunctionParam("arg2", ty.vec4<f32>());
-    auto* factor = b.FunctionParam("factor", ty.f32());
-    auto* func = b.Function("foo", ty.vec4<f32>());
-    func->SetParams({arg1, arg2, factor});
-
-    b.Append(func->Block(), [&] {
-        auto* result = b.Call(ty.vec4<f32>(), core::BuiltinFn::kMix, arg1, arg2, factor);
-        b.Return(func, result);
-        mod.SetName(result, "result");
-    });
-
-    ASSERT_TRUE(Generate()) << Error() << output_;
-    EXPECT_INST("%9 = OpCompositeConstruct %v4float %factor %factor %factor %factor");
-    EXPECT_INST("%result = OpExtInst %v4float %11 FMix %arg1 %arg2 %9");
-}
-
-TEST_F(SpirvWriterTest, Builtin_Mix_VectorOperands_VectorFactor) {
-    auto* arg1 = b.FunctionParam("arg1", ty.vec4<f32>());
-    auto* arg2 = b.FunctionParam("arg2", ty.vec4<f32>());
-    auto* factor = b.FunctionParam("factor", ty.vec4<f32>());
-    auto* func = b.Function("foo", ty.vec4<f32>());
-    func->SetParams({arg1, arg2, factor});
-
-    b.Append(func->Block(), [&] {
-        auto* result = b.Call(ty.vec4<f32>(), core::BuiltinFn::kMix, arg1, arg2, factor);
-        b.Return(func, result);
-        mod.SetName(result, "result");
-    });
-
-    ASSERT_TRUE(Generate()) << Error() << output_;
-    EXPECT_INST("%result = OpExtInst %v4float %10 FMix %arg1 %arg2 %factor");
-}
 
 TEST_F(SpirvWriterTest, Builtin_Refract_F32) {
     auto* arg1 = b.FunctionParam("arg1", ty.vec4<f32>());
