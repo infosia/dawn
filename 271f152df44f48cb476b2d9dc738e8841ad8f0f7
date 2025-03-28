@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9ffa275_360b28ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-28T16:02:04Z",
+      "side": 1,
+      "message": "LGTM, thanks! Will need a second +2 from Dan.",
+      "revId": "271f152df44f48cb476b2d9dc738e8841ad8f0f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
