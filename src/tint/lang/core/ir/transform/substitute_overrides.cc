@@ -187,6 +187,7 @@ struct State {
             func->SetWorkgroupSize(new_wg);
         }
 
+        // OTher random comment
         // Replace array types MUST be evaluate prior to 'propagate' because array count values are
         // not proper usages.
         for (auto var : vars_with_value_array_count) {
