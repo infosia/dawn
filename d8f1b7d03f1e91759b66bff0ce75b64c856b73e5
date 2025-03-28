@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eae99613_2ecad60d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-03-28T13:29:04Z",
+      "side": 1,
+      "message": "This approval was a while ago. PTAL the diff in inspector between PS 7 and the latest.",
+      "revId": "d8f1b7d03f1e91759b66bff0ce75b64c856b73e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
