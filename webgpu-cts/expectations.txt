@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-03-17 09:54:19AM
+# Last rolled: 2025-03-28 06:28:12AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -282,11 +282,7 @@ crbug.com/dawn/374691235 [ amd-0x7340 dawn-no-backend-validation mac ] webgpu:sh
 crbug.com/dawn/374691235 [ amd-0x7340 dawn-no-backend-validation mac ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_3d_coords:* [ Skip ]
 
 # textureGather with offset broken on android-t and android-14
-crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_2d_coords:*;offset=true [ Skip ]
-crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureGather:sampled_array_2d_coords:*;offset=true [ Skip ]
-crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:*;offset=true [ Skip ]
 crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords:* [ Skip ]
-crbug.com/364595481 [ android arm ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_array_2d_coords:*;offset=true [ Skip ]
 
 # Flaky on MacBookPro16,1 (AMD) machines
 crbug.com/372055513 [ amd mac ] webgpu:shader,execution,expression,call,builtin,subgroupBroadcast:workgroup_uniform_load:* [ RetryOnFailure ]
