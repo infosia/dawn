@@ -46,6 +46,30 @@
       },
       "revId": "e5f6951b9dc4f3e0a8cd36963f208ad34b9dc8a4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76b64705_d79546a1",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-28T17:55:51Z",
+      "side": 1,
+      "message": "James said it might be a good idea to fix this.\nSo we can just check if it is signed/unsigned value and do the correct thing.\nif it is less than or equal to zero it must be an error",
+      "parentUuid": "a5de08d9_4de382ec",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 82
+      },
+      "revId": "e5f6951b9dc4f3e0a8cd36963f208ad34b9dc8a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
