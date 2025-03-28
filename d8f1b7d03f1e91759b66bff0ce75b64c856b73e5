@@ -16,6 +16,23 @@
       "message": "This approval was a while ago. PTAL the diff in inspector between PS 7 and the latest.",
       "revId": "d8f1b7d03f1e91759b66bff0ce75b64c856b73e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d26b9f5_1f0747c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-28T17:29:11Z",
+      "side": 1,
+      "message": "LGTM but no designated initializers yet, sorry :-(",
+      "revId": "d8f1b7d03f1e91759b66bff0ce75b64c856b73e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
