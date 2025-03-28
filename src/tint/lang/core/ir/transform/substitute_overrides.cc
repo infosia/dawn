@@ -203,6 +203,15 @@ struct State {
             }
 
             uint32_t num_elements = new_value.Get()->Value()->ValueAs<uint32_t>();
+            if (num_elements < 1) {
+                // Pipeline creation error for zero sized array. This is important as we do not
+                // check constant evaluation access against zero size.
+                diag::Diagnostic error{};
+                error.severity = diag::Severity::Error;
+                error.source = ir.SourceOf(var);
+                error << "array count (" << num_elements << ") must be greater than 0";
+                return diag::Failure(error);
+            }
             auto* new_cnt = ty.Get<core::type::ConstantArrayCount>(num_elements);
             auto* new_ty = ty.Get<core::type::Array>(old_ty->ElemType(), new_cnt, old_ty->Align(),
                                                      num_elements * old_ty->Stride(),
