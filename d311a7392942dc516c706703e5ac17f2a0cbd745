@@ -16,6 +16,23 @@
       "message": "LGTM!",
       "revId": "d311a7392942dc516c706703e5ac17f2a0cbd745",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "945018c0_8acfa0b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-03-28T15:20:12Z",
+      "side": 1,
+      "message": "Just curious what is the relation between `maxStorageBuffersPerShaderStage` and `maxStorageBuffersInFragmentStage`?\n\nI understand D3D11 is not the main focus for compat mode atm. But in D3D 11.0, storage buffers and storage textures share the same registers set. And there are only 8 of those registers in D3D 11.0. So if we allocate half for storage buffers, half for storage textures, then each one of them only have 4 slots. Thus, `maxStorageBuffersPerShaderStage` \u003d 8 won\u0027t be satisfied. I guess the specific limit `maxStorageBuffersInFragmentStage` \u003d 4 would still be viable?",
+      "revId": "d311a7392942dc516c706703e5ac17f2a0cbd745",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
