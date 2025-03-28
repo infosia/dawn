@@ -33,6 +33,24 @@
       "message": "Just curious what is the relation between `maxStorageBuffersPerShaderStage` and `maxStorageBuffersInFragmentStage`?\n\nI understand D3D11 is not the main focus for compat mode atm. But in D3D 11.0, storage buffers and storage textures share the same registers set. And there are only 8 of those registers in D3D 11.0. So if we allocate half for storage buffers, half for storage textures, then each one of them only have 4 slots. Thus, `maxStorageBuffersPerShaderStage` \u003d 8 won\u0027t be satisfied. I guess the specific limit `maxStorageBuffersInFragmentStage` \u003d 4 would still be viable?",
       "revId": "d311a7392942dc516c706703e5ac17f2a0cbd745",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3cd2a1f_7abb5319",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-03-28T23:45:20Z",
+      "side": 1,
+      "message": "This is a compat related limit. It\u0027s really only relevant to compat mode and is effectively ignored in core\n\n`maxStorageBuffersInFragmentStage` corresponds to `GL_MAX_FRAGMENT_SHADER_STORAGE_BLOCKS`\n`maxStorageBuffersPerShaderStage` effectively becomes \"compute stage only\" in compat mode. (`GL_MAX_SHADER_STORAGE_BUFFER_BINDINGS`)\n\nThe actual way they work is specified in the compat proposal\nhttps://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md\n\nThe short version is, in core they will always be the same. You can request one or other and they\u0027ll both get raised to match.\n\nIn compat they are not the same but regardless of which one you request, `maxStorageBuffersPerShaderStage` will always be raised to be equal to or higher than `maxStorageBuffersInFragmentStage` up to their respective limits.",
+      "parentUuid": "945018c0_8acfa0b6",
+      "revId": "d311a7392942dc516c706703e5ac17f2a0cbd745",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
