@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aba856b8_35a43cb8",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-28T17:50:16Z",
+      "side": 1,
+      "message": "One thing to think about here is that in the resolver this is a int64 and here it is a u32. Is there edge cases here we should handle.",
+      "range": {
+        "startLine": 205,
+        "startChar": 12,
+        "endLine": 205,
+        "endChar": 82
+      },
+      "revId": "e5f6951b9dc4f3e0a8cd36963f208ad34b9dc8a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
