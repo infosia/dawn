@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7279080_e7112e8d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-03-29T00:35:01Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "25dc3f6affbe23474aed9ef3a80c0500ece405de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adbd5cbf_eec7e8c7",
+        "filename": "tools/src/cts/expectations/expectations_test.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-03-29T00:35:01Z",
+      "side": 1,
+      "message": "I have yet to attempt a roll with this, but running this modified test on ToT fails due to `a:*:d*` being removed. Running with this CL passes. So, I\u0027m reasonably confident that this will fix the issue with new-style glob expectations being erroneously removed.",
+      "range": {
+        "startLine": 137,
+        "startChar": 5,
+        "endLine": 137,
+        "endChar": 42
+      },
+      "revId": "25dc3f6affbe23474aed9ef3a80c0500ece405de",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
