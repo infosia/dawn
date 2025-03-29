@@ -16,6 +16,24 @@
       "message": "Does `ir.SourceOf(cnt-\u003evalue)` work? Feels like this might give a better diagnostic location if so.",
       "revId": "c3bf5f9b038212d60de85d820711184b30de4563",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe11e175_a21930dd",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-03-29T01:52:57Z",
+      "side": 1,
+      "message": "I can try that.",
+      "parentUuid": "891a1acc_405a79ee",
+      "revId": "c3bf5f9b038212d60de85d820711184b30de4563",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
