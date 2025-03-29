@@ -30,6 +30,8 @@
 
 #include <optional>
 
+#include "src/tint/lang/core/ir/transform/substitute_overrides.h"
+
 // Forward declarations
 namespace tint {
 class Program;
@@ -42,7 +44,8 @@ namespace tint::wgsl {
 /// @param program A valid program
 /// @return A new program with `override`s substituted, or std::nullopt if the program has no
 /// `override`s.
-std::optional<Program> ApplySubstituteOverrides(const Program& program);
+tint::core::ir::transform::SubstituteOverridesConfig SubstituteOverridesConfig(
+    const Program& program);
 
 }  // namespace tint::wgsl
 
