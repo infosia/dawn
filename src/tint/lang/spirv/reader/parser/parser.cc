@@ -1147,6 +1147,9 @@ class Parser {
                 case spv::Op::OpOuterProduct:
                     EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kOuterProduct);
                     break;
+                case spv::Op::OpVectorShuffle:
+                    EmitVectorShuffle(inst);
+                    break;
                 case spv::Op::OpAtomicStore:
                     EmitAtomicStore(inst);
                     break;
@@ -2199,6 +2202,94 @@ class Parser {
         EmitWithoutSpvResult(tmp);
         EmitWithoutResult(b_.StoreVectorElement(tmp, index, component));
         Emit(b_.Load(tmp), inst.result_id());
+    }
+
+    /// @param inst the SPIR-V instruction for OpVectorShuffle
+    void EmitVectorShuffle(const spvtools::opt::Instruction& inst) {
+        auto* vector1 = Value(inst.GetSingleWordOperand(2));
+        auto* vector2 = Value(inst.GetSingleWordOperand(3));
+        auto* result_ty = Type(inst.type_id());
+
+        uint32_t n1 = vector1->Type()->As<core::type::Vector>()->Width();
+        uint32_t n2 = vector2->Type()->As<core::type::Vector>()->Width();
+
+        Vector<uint32_t, 4> literals;
+        for (uint32_t i = 4; i < inst.NumOperandWords(); i++) {
+            literals.Push(inst.GetSingleWordOperand(i));
+        }
+
+        // Check if all indices fall entirely within vector1 or vector2,
+        // which would allow us to use a single-vector swizzle.
+        bool swizzle_vector1 = true;
+        bool swizzle_vector2 = true;
+        for (auto lit : literals) {
+            if (lit == ~0u) {
+                // Ignore ~0u (0xFFFFFFFF) when determining bounds.
+                continue;
+            }
+            if (lit >= n1) {
+                // Logical index space is now bounded by [0,n2).
+                swizzle_vector1 = false;
+            }
+            if (lit < n1) {
+                // Logical index space is now bounded by (n1,n2).
+                swizzle_vector2 = false;
+            }
+        }
+
+        // Adjust literals to match possible swizzle.
+        for (uint32_t i = 0; i < literals.Length(); i++) {
+            if (literals[i] == ~0u) {
+                // ~0u literals are undefined behavior. As fallback,
+                // the component is chosen based on logical current index.
+
+                // ~0u literals are clamped to the last logical index.
+                uint32_t swizzle_offset = swizzle_vector2 ? n1 : 0;
+                uint32_t logical_curr_idx = i + swizzle_offset;
+                if (swizzle_vector1) {
+                    literals[i] = std::clamp(logical_curr_idx, 0u, n1 - 1);
+                } else {
+                    literals[i] = std::clamp(logical_curr_idx, 0u, n1 + n2 - 1);
+                }
+            }
+
+            if (swizzle_vector2) {
+                // Prepare index for swizzle.
+                literals[i] -= n1;
+            }
+
+            // No need to adjust literals for the case of vector1 swizzle.
+        }
+
+        // If only one vector is used, we can swizzle it.
+        if (swizzle_vector1) {
+            Emit(b_.Swizzle(result_ty, vector1, literals), inst.result_id());
+            return;
+        }
+        if (swizzle_vector2) {
+            Emit(b_.Swizzle(result_ty, vector2, literals), inst.result_id());
+            return;
+        }
+
+        // Swizzle is not possible, construct the result vector out of elements
+        // from both vectors.
+        auto* element_ty = vector1->Type()->DeepestElement();
+        Vector<core::ir::Value*, 4> result;
+        for (auto idx : literals) {
+            TINT_ASSERT(idx < n1 + n2);
+
+            if (idx < n1) {
+                auto* access_inst = b_.Access(element_ty, vector1, b_.Constant(u32(idx)));
+                EmitWithoutSpvResult(access_inst);
+                result.Push(access_inst->Result(0));
+            } else {
+                auto* access_inst = b_.Access(element_ty, vector2, b_.Constant(u32(idx - n1)));
+                EmitWithoutSpvResult(access_inst);
+                result.Push(access_inst->Result(0));
+            }
+        }
+
+        Emit(b_.Construct(result_ty, result), inst.result_id());
     }
 
     /// @param inst the SPIR-V instruction for OpFunctionCall
