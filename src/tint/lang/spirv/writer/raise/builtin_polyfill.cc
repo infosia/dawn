@@ -369,7 +369,7 @@ struct State {
                     }
                 });
             }
-            sum->SetResults(Vector{builtin->DetachResult()});
+            sum->SetResult(builtin->DetachResult());
             builtin->Destroy();
             return;
         }
@@ -624,7 +624,7 @@ struct State {
             result->InsertBefore(builtin);
         }
 
-        result->SetResults(Vector{builtin->DetachResult()});
+        result->SetResult(builtin->DetachResult());
         builtin->Destroy();
     }
 
@@ -755,7 +755,7 @@ struct State {
             result->InsertBefore(builtin);
         }
 
-        result->SetResults(Vector{builtin->DetachResult()});
+        result->SetResult(builtin->DetachResult());
         builtin->Destroy();
     }
 
@@ -846,7 +846,7 @@ struct State {
             result->InsertBefore(builtin);
         }
 
-        result->SetResults(Vector{builtin->DetachResult()});
+        result->SetResult(builtin->DetachResult());
         builtin->Destroy();
     }
 
@@ -927,7 +927,7 @@ struct State {
             result_ty, spirv::BuiltinFn::kImageRead, std::move(builtin_args));
         result->InsertBefore(builtin);
 
-        result->SetResults(Vector{builtin->DetachResult()});
+        result->SetResult(builtin->DetachResult());
         builtin->Destroy();
     }
 
