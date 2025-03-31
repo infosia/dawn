@@ -118,6 +118,9 @@ crbug.com/40853211 [ webgpu-adapter-swiftshader ] webgpu:web_platform,copyToText
 crbug.com/40853211 [ webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,ImageData:from_ImageData:* [ Skip ]
 crbug.com/40853211 [ webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_2d_context_canvas:* [ Skip ]
 crbug.com/40853211 [ webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:copy_contents_from_gl_context_canvas:* [ Skip ]
+crbug.com/40853211 [ webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,image:from_image:* [ Skip ]
+crbug.com/40853211 [ webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:* [ Skip ]
+crbug.com/40853211 [ webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,image:from_image:* [ Skip ]
 
 # Causing bot instability on Mac AMD
 crbug.com/42240813 [ amd-0x67ef ] webgpu:api,operation,rendering,color_target_state:blending,GPUBlendComponent:* [ Skip ]
@@ -1133,6 +1136,12 @@ crbug.com/407147668 [ intel mac ] webgpu:web_platform,copyToTexture,canvas:color
 crbug.com/407147668 [ mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="bgra8unorm";dstPremultiplied=false;srcDoFlipYDuringCopy=true [ Failure ]
 crbug.com/407147668 [ mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="r32float";dstPremultiplied=true;srcDoFlipYDuringCopy=true [ Failure ]
 crbug.com/407147668 [ mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="r8unorm";dstPremultiplied=false;srcDoFlipYDuringCopy=true [ Failure ]
+crbug.com/407147668 [ mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="bgra8unorm";dstPremultiplied=false;srcDoFlipYDuringCopy=false [ Failure ]
+crbug.com/407147668 [ mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="bgra8unorm";dstPremultiplied=true;srcDoFlipYDuringCopy=false [ Failure ]
+crbug.com/407147668 [ mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="bgra8unorm";dstPremultiplied=true;srcDoFlipYDuringCopy=false [ Failure ]
+crbug.com/407147668 [ mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="bgra8unorm-srgb";dstPremultiplied=false;srcDoFlipYDuringCopy=false [ Failure ]
+crbug.com/407147668 [ mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="bgra8unorm-srgb";dstPremultiplied=false;srcDoFlipYDuringCopy=false [ Failure ]
+crbug.com/407147668 [ mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="bgra8unorm-srgb";dstPremultiplied=true;srcDoFlipYDuringCopy=false [ Failure ]
 crbug.com/407147668 [ nvidia win ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="bgra8unorm-srgb";dstPremultiplied=false;srcDoFlipYDuringCopy=true [ Failure ]
 crbug.com/407147668 [ nvidia win ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="bgra8unorm-srgb";dstPremultiplied=true;srcDoFlipYDuringCopy=true [ Failure ]
 crbug.com/407147668 [ nvidia win ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="display-p3";dstColorSpace="display-p3";dstColorFormat="bgra8unorm";dstPremultiplied=false;srcDoFlipYDuringCopy=true [ Failure ]
