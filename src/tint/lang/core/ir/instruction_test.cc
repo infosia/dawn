@@ -171,7 +171,7 @@ TEST_F(IR_InstructionDeathTest, Fail_RemoveNotInserted) {
 
 TEST_F(IR_InstructionTest, DetachResult) {
     auto* inst = b.Let("foo", 42_u);
-    auto* result = inst->Result(0);
+    auto* result = inst->Result();
     EXPECT_EQ(result->Instruction(), inst);
 
     auto* detached = inst->DetachResult();

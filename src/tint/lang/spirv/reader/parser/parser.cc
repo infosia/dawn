@@ -671,7 +671,7 @@ class Parser {
     void Emit(core::ir::Instruction* inst, uint32_t result_id) {
         current_block_->Append(inst);
         TINT_ASSERT(inst->Results().Length() == 1u);
-        AddValue(result_id, inst->Result(0));
+        AddValue(result_id, inst->Result());
 
         Symbol name = GetSymbolFor(result_id);
         if (name.IsValid()) {
@@ -1240,9 +1240,8 @@ class Parser {
                       strct, u32(field_index));
         EmitWithoutSpvResult(access);
 
-        Emit(
-            b_.Call(Type(inst.type_id()), core::BuiltinFn::kArrayLength, Vector{access->Result(0)}),
-            inst.result_id());
+        Emit(b_.Call(Type(inst.type_id()), core::BuiltinFn::kArrayLength, Vector{access->Result()}),
+             inst.result_id());
     }
 
     void EmitControlBarrier(const spvtools::opt::Instruction& inst) {
@@ -1526,7 +1525,7 @@ class Parser {
             auto* premerge_cond = b_.Load(iter->second.condition);
             EmitWithoutSpvResult(premerge_cond);
             premerge_if_->SetOperand(core::ir::If::kConditionOperandOffset,
-                                     premerge_cond->Result(0));
+                                     premerge_cond->Result());
         }
         merge_to_premerge_.erase(iter);
 
@@ -1565,7 +1564,7 @@ class Parser {
         if (true_id == false_id) {
             auto* binary = b_.Binary(core::BinaryOp::kOr, cond->Type(), cond, b_.Constant(true));
             EmitWithoutSpvResult(binary);
-            cond = binary->Result(0);
+            cond = binary->Result();
         }
 
         auto* if_ = b_.If(cond);
@@ -2065,7 +2064,7 @@ class Parser {
             auto* call = b_.Call(result_ty, wgsl_fn, operands);
             auto* fract = b_.Access(mem_ty, call, 0_u);
             auto* exp = b_.Access(ty_.MatchWidth(ty_.i32(), mem_ty), call, 1_u);
-            auto* exp_res = exp->Result(0);
+            auto* exp_res = exp->Result();
 
             EmitWithoutSpvResult(call);
             EmitWithoutSpvResult(fract);
@@ -2075,7 +2074,7 @@ class Parser {
                 auto* exp_ty = str->Members()[1]->Type();
                 if (exp_ty->DeepestElement()->IsUnsignedIntegerScalar()) {
                     auto* uexp = b_.Bitcast(exp_ty, exp);
-                    exp_res = uexp->Result(0);
+                    exp_res = uexp->Result();
                     EmitWithoutSpvResult(uexp);
                 }
             }
