@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8841e32_7d46a621",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-03-31T06:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47297331_58caf4dd",
+      "revId": "c1193baaacb33b3c0dd6d6f283653c5466f4e94f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac25be52_7b281291",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-03-28T17:48:22Z",
       "side": 1,
       "message": "Nit: This check is redundant since the check below makes sure the first instruction is a terminator, and nothing can come after that.",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 362,
+        "endChar": 9
+      },
+      "revId": "c1193baaacb33b3c0dd6d6f283653c5466f4e94f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a925377_c6f468e9",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-03-31T06:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac25be52_7b281291",
       "range": {
         "startLine": 359,
         "startChar": 0,
