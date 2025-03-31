@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d73350fa_8adb450b",
+        "filename": "src/tint/lang/spirv/ir/image_from_texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T19:31:59Z",
+      "side": 1,
+      "message": "I\u0027ll clean this up in a followup, there are a couple other things that I realized aren\u0027t needed that get removed in a later CL (the Rect and Buffer dimensions and the KnownAtRuntime sampling value)",
+      "parentUuid": "900b74d0_ea6870f1",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "54eb23b3_cd0c8bac",
         "filename": "src/tint/lang/spirv/spirv.def",
         "patchSetId": 4
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-31T19:26:56Z",
       "side": 1,
       "message": "S can only be kSamplingCompatible I think?",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "feafb0bd_a2eb4cb2",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T19:31:59Z",
+      "side": 1,
+      "message": "`Its OpTypeImage must have a Dim of 2D, Cube, or Rect. The MS operand of the underlying OpTypeImage must be 0.` is all the SPIR-V spec says?",
+      "parentUuid": "54eb23b3_cd0c8bac",
       "revId": "0202a6bd30f1459531143908240aded21baad674",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8c16b203_f8075dc4",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T19:31:59Z",
+      "side": 1,
+      "message": "Ditto: `Its OpTypeImage must have a Dim of 2D, Cube, or Rect. The MS operand of the underlying OpTypeImage must be 0.`",
+      "parentUuid": "b543cab0_21a3e7f5",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1ebf5ba0_013c6213",
         "filename": "src/tint/lang/spirv/spirv.def",
         "patchSetId": 4
@@ -71,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "37b5c6b1_7c0e217f",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T19:31:59Z",
+      "side": 1,
+      "message": "`Its OpTypeImage must not have a Dim of Buffer. The MS operand of the underlying OpTypeImage must be 0.`",
+      "parentUuid": "1ebf5ba0_013c6213",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "64447dcc_c934ba32",
         "filename": "src/tint/lang/spirv/spirv.def",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2025-03-31T19:26:56Z",
       "side": 1,
       "message": "M R F and A are all fixed here, so I don\u0027t think they need to be template parameters. And then I don\u0027t think you need the explicit template parameter at all, since the output type is always a single fixed type based on the input type.",
+      "range": {
+        "startLine": 537,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 112
+      },
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97b97f1b_9f657c96",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T19:31:59Z",
+      "side": 1,
+      "message": "M, R, F, A aren\u0027t fixed in the template? Or are you saying they should be fixed in the template? Like, this is always single_sampled, sampling_compatible, unknown, read_write?",
+      "parentUuid": "64447dcc_c934ba32",
       "range": {
         "startLine": 537,
         "startChar": 0,
