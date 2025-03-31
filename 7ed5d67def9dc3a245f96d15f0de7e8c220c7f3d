@@ -16,6 +16,41 @@
       "message": "PTAL.",
       "revId": "7ed5d67def9dc3a245f96d15f0de7e8c220c7f3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0570beb6_3f6f1a31",
+        "filename": "src/tint/lang/spirv/type/image.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T16:01:55Z",
+      "side": 1,
+      "message": "Unused?",
+      "fixSuggestions": [
+        {
+          "fixId": "6f3a7862_3b52275c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/type/image.h",
+              "range": {
+                "startLine": 34,
+                "startChar": 0,
+                "endLine": 35,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "7ed5d67def9dc3a245f96d15f0de7e8c220c7f3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
