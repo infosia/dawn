@@ -52,6 +52,24 @@
       "parentUuid": "165eb796_71541692",
       "revId": "e1a4a136b579a252568c4982d8564e68176a537f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fec1434_f03b50d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-03-31T17:25:26Z",
+      "side": 1,
+      "message": "The fact that it\u0027s also called this in CTS is definitely a reason not to bother changing it.",
+      "parentUuid": "79ec6fd7_e3ad60b7",
+      "revId": "e1a4a136b579a252568c4982d8564e68176a537f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
