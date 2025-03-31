@@ -16,6 +16,40 @@
       "message": "PTAL!",
       "revId": "4a938e63ff81f1ef47064d435ab1b4f2f0b4ccc0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bfb2355_bef5a423",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-31T23:14:13Z",
+      "side": 1,
+      "message": "I think these are overbroad (especially important since it\u0027s a Skip). But I\u0027m not sure if the passing tests are meaningful, or just lucky.\n\nOut of\nhttps://gpuweb.github.io/cts/standalone/?q\u003dwebgpu:shader,execution,expression,call,builtin,textureGather:sampled_3d_coords:stage\u003d%22c%22;filt\u003d%22nearest%22;mode\u003d%22c%22;*\nthese are the formats that weren\u0027t skipped before:\n\n```\ndepth24plus\ndepth24plus-stencil8\ndepth32float-stencil8\nr32sint\nr32uint\nrg32sint\nrg32uint\nrgba32sint\nrgba32uint\n```\n\nInterestingly, out of all of these, on my old Intel i7-4600U laptop (HD 4400ish, older than intel-0x9bc5), everything passes (regardless of the other options) except for rg32float.",
+      "revId": "4a938e63ff81f1ef47064d435ab1b4f2f0b4ccc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95df9cf8_0f952961",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-31T23:14:13Z",
+      "side": 1,
+      "message": "This seems overbroad, there are cases here that pass, like\n`webgpu:api,operation,rendering,depth_clip_clamp:depth_clamp_and_clip:format\u003d\"*\";unclippedDepth\u003dfalse;writeDepth\u003dfalse;multisampled\u003d*` for every format other than depth16unorm",
+      "revId": "4a938e63ff81f1ef47064d435ab1b4f2f0b4ccc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
