@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f3bbe62_c5e2adf0",
+        "filename": "src/tint/lang/wgsl/helpers/apply_substitute_overrides.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-03-31T14:40:39Z",
+      "side": 1,
+      "message": "nit: comment block needs updating",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 16
+      },
+      "revId": "724c19b9a3f879a0b89f11d8e8e97f7ad6055771",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
