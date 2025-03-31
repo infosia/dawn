@@ -73,7 +73,32 @@ struct State {
     void Process() {
         // Find the builtins that need replacing.
         Vector<core::ir::CoreBuiltinCall*, 4> worklist;
+
+        // Convert function parameters to `spirv::type::Image` if necessary
+        for (auto* fn : ir.DependencyOrderedFunctions()) {
+            for (auto* param : fn->Params()) {
+                if (auto* tex = param->Type()->As<core::type::Texture>()) {
+                    param->SetType(ir::ImageFromTexture(ty, tex));
+                }
+            }
+        }
+
         for (auto* inst : ir.Instructions()) {
+            // Convert instruction results to `spirv::type::Image` if necessary
+            if (!inst->Results().IsEmpty()) {
+                if (auto* res = inst->Result(0)->As<core::ir::InstructionResult>()) {
+                    // Watch for pointers, which would be wrapping any texture on a `var`
+                    if (auto* tex = res->Type()->UnwrapPtr()->As<core::type::Texture>()) {
+                        auto* tex_ty = ir::ImageFromTexture(ty, tex);
+                        const core::type::Type* res_ty = tex_ty;
+                        if (auto* orig_ptr = res->Type()->As<core::type::Pointer>()) {
+                            res_ty = ty.ptr(orig_ptr->AddressSpace(), res_ty, orig_ptr->Access());
+                        }
+                        res->SetType(res_ty);
+                    }
+                }
+            }
+
             if (auto* builtin = inst->As<core::ir::CoreBuiltinCall>()) {
                 switch (builtin->Func()) {
                     case core::BuiltinFn::kArrayLength:
@@ -100,6 +125,8 @@ struct State {
                     case core::BuiltinFn::kTextureGatherCompare:
                     case core::BuiltinFn::kTextureLoad:
                     case core::BuiltinFn::kTextureNumLayers:
+                    case core::BuiltinFn::kTextureNumLevels:
+                    case core::BuiltinFn::kTextureNumSamples:
                     case core::BuiltinFn::kTextureSample:
                     case core::BuiltinFn::kTextureSampleBias:
                     case core::BuiltinFn::kTextureSampleCompare:
@@ -176,6 +203,12 @@ struct State {
                 case core::BuiltinFn::kTextureNumLayers:
                     TextureNumLayers(builtin);
                     break;
+                case core::BuiltinFn::kTextureNumLevels:
+                    TextureNumLevels(builtin);
+                    break;
+                case core::BuiltinFn::kTextureNumSamples:
+                    TextureNumSamples(builtin);
+                    break;
                 case core::BuiltinFn::kTextureSample:
                 case core::BuiltinFn::kTextureSampleBias:
                 case core::BuiltinFn::kTextureSampleCompare:
@@ -221,7 +254,8 @@ struct State {
     /// Handle an `arrayLength()` builtin.
     /// @param builtin the builtin call instruction
     void ArrayLength(core::ir::CoreBuiltinCall* builtin) {
-        // Strip away any let instructions to get to the original struct member access instruction.
+        // Strip away any let instructions to get to the original struct member access
+        // instruction.
         auto* ptr = builtin->Args()[0]->As<core::ir::InstructionResult>();
         while (auto* let = tint::As<core::ir::Let>(ptr->Instruction())) {
             ptr = let->Value()->As<core::ir::InstructionResult>();
@@ -350,7 +384,8 @@ struct State {
     /// @param builtin the builtin call instruction
     void Dot(core::ir::CoreBuiltinCall* builtin) {
         // OpDot only supports floating point operands, so we need to polyfill the integer case.
-        // TODO(crbug.com/tint/1267): If SPV_KHR_integer_dot_product is supported, use that instead.
+        // TODO(crbug.com/tint/1267): If SPV_KHR_integer_dot_product is supported, use that
+        // instead.
         if (builtin->Result(0)->Type()->IsIntegerScalar()) {
             core::ir::Instruction* sum = nullptr;
 
@@ -409,8 +444,8 @@ struct State {
             builtin->Args()[0],
         };
 
-        // If the condition is scalar and the objects are vectors, we need to splat the condition
-        // into a vector of the same size.
+        // If the condition is scalar and the objects are vectors, we need to splat the
+        // condition into a vector of the same size.
         // TODO(jrprice): We don't need to do this if we're targeting SPIR-V 1.4 or newer.
         auto* vec = builtin->Result(0)->Type()->As<core::type::Vector>();
         if (vec && args[0]->Type()->Is<core::type::Scalar>()) {
@@ -454,19 +489,20 @@ struct State {
                              Vector<core::ir::Value*, 8>& args,
                              core::ir::CoreBuiltinCall* insertion_point,
                              bool requires_float_lod) {
-        // Add a placeholder argument for the image operand mask, which we will fill in when we have
-        // processed the image operands.
+        // Add a placeholder argument for the image operand mask, which we will fill in when we
+        // have processed the image operands.
         uint32_t image_operand_mask = 0u;
         size_t mask_idx = args.Length();
         args.Push(nullptr);
 
-        // Append the NonPrivateTexel flag to Read/Write storage textures when we load/store them.
+        // Append the NonPrivateTexel flag to Read/Write storage textures when we load/store
+        // them.
         if (use_vulkan_memory_model) {
             if (insertion_point->Func() == core::BuiltinFn::kTextureLoad ||
                 insertion_point->Func() == core::BuiltinFn::kTextureStore) {
-                if (auto* st =
-                        insertion_point->Args()[0]->Type()->As<core::type::StorageTexture>()) {
-                    if (st->Access() == core::Access::kReadWrite) {
+                if (auto* st = insertion_point->Args()[0]->Type()->As<spirv::type::Image>()) {
+                    if (st->GetTexelFormat() != core::TexelFormat::kUndefined &&
+                        st->GetAccess() == core::Access::kReadWrite) {
                         image_operand_mask |= SpvImageOperandsNonPrivateTexelMask;
                     }
                 }
@@ -534,7 +570,8 @@ struct State {
     /// Handle a textureSample*() builtin.
     /// @param builtin the builtin call instruction
     void TextureSample(core::ir::CoreBuiltinCall* builtin) {
-        // Helper to get the next argument from the call, or nullptr if there are no more arguments.
+        // Helper to get the next argument from the call, or nullptr if there are no more
+        // arguments.
         uint32_t arg_idx = 0;
         auto next_arg = [&]() {
             return arg_idx < builtin->Args().Length() ? builtin->Args()[arg_idx++] : nullptr;
@@ -543,17 +580,17 @@ struct State {
         auto* texture = next_arg();
         auto* sampler = next_arg();
         auto* coords = next_arg();
-        auto* texture_ty = texture->Type()->As<core::type::Texture>();
-        auto* img_ty = ir::ImageFromTexture(ty, texture_ty);
+        auto* texture_ty = texture->Type()->As<spirv::type::Image>();
 
         // Use OpSampledImage to create an OpTypeSampledImage object.
         auto* sampled_image = b.CallExplicit<spirv::ir::BuiltinCall>(
-            ty.Get<type::SampledImage>(img_ty), spirv::BuiltinFn::kSampledImage, Vector{img_ty},
-            Vector{texture, sampler});
+            ty.Get<type::SampledImage>(texture_ty), spirv::BuiltinFn::kSampledImage,
+            Vector{texture_ty}, Vector{texture, sampler});
         sampled_image->InsertBefore(builtin);
 
         // Append the array index to the coordinates if provided.
-        auto* array_idx = IsTextureArray(texture_ty->Dim()) ? next_arg() : nullptr;
+        auto* array_idx =
+            texture_ty->GetArrayed() == type::Arrayed::kArrayed ? next_arg() : nullptr;
         if (array_idx) {
             coords = AppendArrayIndex(coords, array_idx, builtin);
         }
@@ -599,8 +636,8 @@ struct State {
         }
 
         // Start building the argument list for the function.
-        // The first two operands are always the sampled image and then the coordinates, followed by
-        // the depth reference if used.
+        // The first two operands are always the sampled image and then the coordinates,
+        // followed by the depth reference if used.
         Vector<core::ir::Value*, 8> function_args;
         function_args.Push(sampled_image->Result(0));
         function_args.Push(coords);
@@ -618,10 +655,9 @@ struct State {
             b.Call<spirv::ir::BuiltinCall>(result_ty, function, std::move(function_args));
         result->InsertBefore(builtin);
 
-        // If this is not a depth comparison but we are sampling a depth texture, extract the first
-        // component to get the scalar f32 that SPIR-V expects.
-        if (!depth &&
-            texture_ty->IsAnyOf<core::type::DepthTexture, core::type::DepthMultisampledTexture>()) {
+        // If this is not a depth comparison but we are sampling a depth texture, extract the
+        // first component to get the scalar f32 that SPIR-V expects.
+        if (!depth && texture_ty->GetDepth() == type::Depth::kDepth) {
             result = b.Access(ty.f32(), result, 0_u);
             result->InsertBefore(builtin);
         }
@@ -633,7 +669,8 @@ struct State {
     /// Handle a textureGather*() builtin.
     /// @param builtin the builtin call instruction
     void TextureGather(core::ir::CoreBuiltinCall* builtin) {
-        // Helper to get the next argument from the call, or nullptr if there are no more arguments.
+        // Helper to get the next argument from the call, or nullptr if there are no more
+        // arguments.
         uint32_t arg_idx = 0;
         auto next_arg = [&]() {
             return arg_idx < builtin->Args().Length() ? builtin->Args()[arg_idx++] : nullptr;
@@ -649,17 +686,17 @@ struct State {
         auto* texture = next_arg();
         auto* sampler = next_arg();
         auto* coords = next_arg();
-        auto* texture_ty = texture->Type()->As<core::type::Texture>();
-        auto* img_ty = ir::ImageFromTexture(ty, texture_ty);
+        auto* texture_ty = texture->Type()->As<spirv::type::Image>();
 
         // Use OpSampledImage to create an OpTypeSampledImage object.
         auto* sampled_image = b.CallExplicit<spirv::ir::BuiltinCall>(
-            ty.Get<type::SampledImage>(img_ty), spirv::BuiltinFn::kSampledImage, Vector{img_ty},
-            Vector{texture, sampler});
+            ty.Get<type::SampledImage>(texture_ty), spirv::BuiltinFn::kSampledImage,
+            Vector{texture_ty}, Vector{texture, sampler});
         sampled_image->InsertBefore(builtin);
 
         // Append the array index to the coordinates if provided.
-        auto* array_idx = IsTextureArray(texture_ty->Dim()) ? next_arg() : nullptr;
+        auto* array_idx =
+            texture_ty->GetArrayed() == type::Arrayed::kArrayed ? next_arg() : nullptr;
         if (array_idx) {
             coords = AppendArrayIndex(coords, array_idx, builtin);
         }
@@ -683,8 +720,8 @@ struct State {
         }
 
         // Start building the argument list for the function.
-        // The first two operands are always the sampled image and then the coordinates, followed by
-        // either the depth reference or the component.
+        // The first two operands are always the sampled image and then the coordinates,
+        // followed by either the depth reference or the component.
         Vector<core::ir::Value*, 8> function_args;
         function_args.Push(sampled_image->Result(0));
         function_args.Push(coords);
@@ -707,7 +744,8 @@ struct State {
     /// Handle a textureLoad() builtin.
     /// @param builtin the builtin call instruction
     void TextureLoad(core::ir::CoreBuiltinCall* builtin) {
-        // Helper to get the next argument from the call, or nullptr if there are no more arguments.
+        // Helper to get the next argument from the call, or nullptr if there are no more
+        // arguments.
         uint32_t arg_idx = 0;
         auto next_arg = [&]() {
             return arg_idx < builtin->Args().Length() ? builtin->Args()[arg_idx++] : nullptr;
@@ -715,10 +753,11 @@ struct State {
 
         auto* texture = next_arg();
         auto* coords = next_arg();
-        auto* texture_ty = texture->Type()->As<core::type::Texture>();
+        auto* texture_ty = texture->Type()->As<spirv::type::Image>();
 
         // Append the array index to the coordinates if provided.
-        auto* array_idx = IsTextureArray(texture_ty->Dim()) ? next_arg() : nullptr;
+        auto* array_idx =
+            texture_ty->GetArrayed() == type::Arrayed::kArrayed ? next_arg() : nullptr;
         if (array_idx) {
             coords = AppendArrayIndex(coords, array_idx, builtin);
         }
@@ -731,8 +770,7 @@ struct State {
 
         // Add the optional image operands, if any.
         ImageOperands operands;
-        if (texture_ty->IsAnyOf<core::type::MultisampledTexture,
-                                core::type::DepthMultisampledTexture>()) {
+        if (texture_ty->GetMultisampled() == type::Multisampled::kMultisampled) {
             operands.sample = next_arg();
         } else {
             operands.lod = next_arg();
@@ -746,8 +784,9 @@ struct State {
         if (expects_scalar_result) {
             result_ty = ty.vec4(result_ty);
         }
-        auto kind = texture_ty->Is<core::type::StorageTexture>() ? spirv::BuiltinFn::kImageRead
-                                                                 : spirv::BuiltinFn::kImageFetch;
+        auto kind = texture_ty->GetTexelFormat() != core::TexelFormat::kUndefined
+                        ? spirv::BuiltinFn::kImageRead
+                        : spirv::BuiltinFn::kImageFetch;
         core::ir::Instruction* result =
             b.Call<spirv::ir::BuiltinCall>(result_ty, kind, std::move(builtin_args));
         result->InsertBefore(builtin);
@@ -765,7 +804,8 @@ struct State {
     /// Handle a textureStore() builtin.
     /// @param builtin the builtin call instruction
     void TextureStore(core::ir::CoreBuiltinCall* builtin) {
-        // Helper to get the next argument from the call, or nullptr if there are no more arguments.
+        // Helper to get the next argument from the call, or nullptr if there are no more
+        // arguments.
         uint32_t arg_idx = 0;
         auto next_arg = [&]() {
             return arg_idx < builtin->Args().Length() ? builtin->Args()[arg_idx++] : nullptr;
@@ -773,10 +813,11 @@ struct State {
 
         auto* texture = next_arg();
         auto* coords = next_arg();
-        auto* texture_ty = texture->Type()->As<core::type::Texture>();
+        auto* texture_ty = texture->Type()->As<spirv::type::Image>();
 
         // Append the array index to the coordinates if provided.
-        auto* array_idx = IsTextureArray(texture_ty->Dim()) ? next_arg() : nullptr;
+        auto* array_idx =
+            texture_ty->GetArrayed() == type::Arrayed::kArrayed ? next_arg() : nullptr;
         if (array_idx) {
             coords = AppendArrayIndex(coords, array_idx, builtin);
         }
@@ -803,23 +844,23 @@ struct State {
     /// Handle a textureDimensions() builtin.
     /// @param builtin the builtin call instruction
     void TextureDimensions(core::ir::CoreBuiltinCall* builtin) {
-        // Helper to get the next argument from the call, or nullptr if there are no more arguments.
+        // Helper to get the next argument from the call, or nullptr if there are no more
+        // arguments.
         uint32_t arg_idx = 0;
         auto next_arg = [&]() {
             return arg_idx < builtin->Args().Length() ? builtin->Args()[arg_idx++] : nullptr;
         };
 
         auto* texture = next_arg();
-        auto* texture_ty = texture->Type()->As<core::type::Texture>();
+        auto* texture_ty = texture->Type()->As<spirv::type::Image>();
 
         Vector<core::ir::Value*, 8> function_args;
         function_args.Push(texture);
 
         // Determine which SPIR-V function to use, and add the Lod argument if needed.
         enum spirv::BuiltinFn function;
-        if (texture_ty
-                ->IsAnyOf<core::type::MultisampledTexture, core::type::DepthMultisampledTexture,
-                          core::type::StorageTexture>()) {
+        if (texture_ty->GetMultisampled() == type::Multisampled::kMultisampled ||
+            texture_ty->GetTexelFormat() != core::TexelFormat::kUndefined) {
             function = spirv::BuiltinFn::kImageQuerySize;
         } else {
             function = spirv::BuiltinFn::kImageQuerySizeLod;
@@ -833,7 +874,8 @@ struct State {
 
         // Add an extra component to the result vector for arrayed textures.
         auto* result_ty = builtin->Result(0)->Type();
-        if (core::type::IsTextureArray(texture_ty->Dim())) {
+        bool is_arrayed = texture_ty->GetArrayed() == type::Arrayed::kArrayed;
+        if (is_arrayed) {
             auto* vec = result_ty->As<core::type::Vector>();
             result_ty = ty.vec(vec->Type(), vec->Width() + 1);
         }
@@ -844,7 +886,7 @@ struct State {
         result->InsertBefore(builtin);
 
         // Swizzle the first two components from the result for arrayed textures.
-        if (core::type::IsTextureArray(texture_ty->Dim())) {
+        if (is_arrayed) {
             result = b.Swizzle(builtin->Result(0)->Type(), result, {0, 1});
             result->InsertBefore(builtin);
         }
@@ -853,20 +895,49 @@ struct State {
         builtin->Destroy();
     }
 
+    /// Handle a textureNumLevels() builtin.
+    /// @param builtin the builtin call instruction
+    void TextureNumLevels(core::ir::CoreBuiltinCall* builtin) {
+        auto args = builtin->Args();
+
+        b.InsertBefore(builtin, [&] {
+            // Call the function.
+            auto* res_ty = builtin->Result(0)->Type();
+            b.CallExplicitWithResult<spirv::ir::BuiltinCall>(builtin->DetachResult(),
+                                                             spirv::BuiltinFn::kImageQueryLevels,
+                                                             Vector{res_ty}, Vector{args[0]});
+        });
+        builtin->Destroy();
+    }
+
+    /// Handle a textureNumSamples() builtin.
+    /// @param builtin the builtin call instruction
+    void TextureNumSamples(core::ir::CoreBuiltinCall* builtin) {
+        auto args = builtin->Args();
+
+        b.InsertBefore(builtin, [&] {
+            // Call the function.
+            auto* res_ty = builtin->Result(0)->Type();
+            b.CallExplicitWithResult<spirv::ir::BuiltinCall>(builtin->DetachResult(),
+                                                             spirv::BuiltinFn::kImageQuerySamples,
+                                                             Vector{res_ty}, Vector{args[0]});
+        });
+        builtin->Destroy();
+    }
+
     /// Handle a textureNumLayers() builtin.
     /// @param builtin the builtin call instruction
     void TextureNumLayers(core::ir::CoreBuiltinCall* builtin) {
         auto* texture = builtin->Args()[0];
-        auto* texture_ty = texture->Type()->As<core::type::Texture>();
+        auto* texture_ty = texture->Type()->As<spirv::type::Image>();
 
         Vector<core::ir::Value*, 2> function_args;
         function_args.Push(texture);
 
         // Determine which SPIR-V function to use, and add the Lod argument if needed.
         enum spirv::BuiltinFn function;
-        if (texture_ty
-                ->IsAnyOf<core::type::MultisampledTexture, core::type::DepthMultisampledTexture,
-                          core::type::StorageTexture>()) {
+        if (texture_ty->GetMultisampled() == type::Multisampled::kMultisampled ||
+            texture_ty->GetTexelFormat() != core::TexelFormat::kUndefined) {
             function = spirv::BuiltinFn::kImageQuerySize;
         } else {
             function = spirv::BuiltinFn::kImageQuerySizeLod;
@@ -1055,8 +1126,8 @@ struct State {
     /// @param builtin the builtin call instruction
     void SubgroupMatrixMultiply(core::ir::CoreBuiltinCall* builtin) {
         b.InsertBefore(builtin, [&] {
-            // SPIR-V only provides a multiply-accumulate instruction, so construct a zero-valued
-            // matrix to accumulate into.
+            // SPIR-V only provides a multiply-accumulate instruction, so construct a
+            // zero-valued matrix to accumulate into.
             auto* result_ty = builtin->Result(0)->Type()->As<core::type::SubgroupMatrix>();
             auto* left = builtin->Args()[0];
             auto* right = builtin->Args()[1];
