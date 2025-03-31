@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84752757_f7027780",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T18:55:46Z",
+      "side": 1,
+      "message": "This seems OK.\n\nI feel like it could be slightly nicer if the namespace was just inferred from the directory that contains the `.def` file (so `core/*.def` enums are `core::`, `spirv/type/*.def` enums are `spirv::type::`, etc). I\u0027m not familiar enough with the Go code to know if that\u0027s significantly harder for some reason though.",
+      "revId": "757c88e2c736a3427167fcf54a4deab91d04070c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e43b2db2_e47f3ac1",
+        "filename": "tools/src/tint/intrinsic/resolver/resolve.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T18:55:46Z",
+      "side": 1,
+      "message": "Should add a couple of tests to `resolver_test.go` for the changes in this file.",
+      "revId": "757c88e2c736a3427167fcf54a4deab91d04070c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
