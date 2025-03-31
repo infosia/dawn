@@ -90,6 +90,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc664fce_87adbc1a",
+        "filename": "src/tint/lang/spirv/ir/image_from_texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T22:16:47Z",
+      "side": 1,
+      "message": "I see the usages in the next patch now.",
+      "parentUuid": "2999ef69_4b36a601",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54eb23b3_cd0c8bac",
