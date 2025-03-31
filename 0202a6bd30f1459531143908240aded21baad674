@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "27b8bfa7_6fbffe30",
+        "filename": "src/tint/lang/spirv/ir/image_from_texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T22:18:10Z",
+      "side": 1,
+      "message": "Hm, we use it to set the access setting in the next CL, maybe it can be removed, but I\u0027d prefer to get this landed as it currently works and then go back and figure out if it isn\u0027t necessary (at least the next CL which does the conversion of all the textures to image)",
+      "parentUuid": "2999ef69_4b36a601",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "54eb23b3_cd0c8bac",
         "filename": "src/tint/lang/spirv/spirv.def",
         "patchSetId": 4
@@ -394,6 +412,30 @@
       "side": 1,
       "message": "We could maybe add an explicit `Unknown` format. It\u0027d be nice to get rid of the explicit template parameters, but it\u0027s not urgent.",
       "parentUuid": "aa2d1b61_155f67f6",
+      "range": {
+        "startLine": 537,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 112
+      },
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c037865_cbbf9897",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T22:18:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f2449ee4_cb607b4d",
       "range": {
         "startLine": 537,
         "startChar": 0,
