@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "900b74d0_ea6870f1",
+        "filename": "src/tint/lang/spirv/ir/image_from_texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T19:26:56Z",
+      "side": 1,
+      "message": "Looks like we should just drop the `access` parameter from `Image` altogether, since we never use it and it\u0027s not supported outside of the `Kernel` capability.",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54eb23b3_cd0c8bac",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T19:26:56Z",
+      "side": 1,
+      "message": "S can only be kSamplingCompatible I think?",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b543cab0_21a3e7f5",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T19:26:56Z",
+      "side": 1,
+      "message": "I think S can only be `kSamplingCompatible`.",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ebf5ba0_013c6213",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T19:26:56Z",
+      "side": 1,
+      "message": "Again, `S` must be `kSamplingCompatible`.",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64447dcc_c934ba32",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T19:26:56Z",
+      "side": 1,
+      "message": "M R F and A are all fixed here, so I don\u0027t think they need to be template parameters. And then I don\u0027t think you need the explicit template parameter at all, since the output type is always a single fixed type based on the input type.",
+      "range": {
+        "startLine": 537,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 112
+      },
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
