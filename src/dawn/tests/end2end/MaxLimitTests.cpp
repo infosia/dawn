@@ -699,9 +699,6 @@ TEST_P(MaxLimitTests, WriteToMaxFragmentCombinedOutputResources) {
     // TODO(crbug.com/dawn/2295): diagnose this failure on Pixel 6 OpenGLES
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
 
-    // TODO(http://crbug.com/348199037): VUID-RuntimeSpirv-Location-06428
-    DAWN_SUPPRESS_TEST_IF(IsLinux() && IsVulkan() && IsNvidia());
-
     // Compute the number of each resource type (storage buffers and storage textures) such that
     // there is at least one color attachment, and as many of the buffer/textures as possible,
     // splitting a shared remaining count between the two resources if they are not separately
