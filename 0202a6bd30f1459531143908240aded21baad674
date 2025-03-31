@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2999ef69_4b36a601",
+        "filename": "src/tint/lang/spirv/ir/image_from_texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T21:46:20Z",
+      "side": 1,
+      "message": "I see that the SPIR-V reader CL sets the access mode, but I don\u0027t think we actually want to support that since it requires the Kernel capability.",
+      "parentUuid": "45251a83_443447d3",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "54eb23b3_cd0c8bac",
         "filename": "src/tint/lang/spirv/spirv.def",
         "patchSetId": 4
@@ -334,6 +352,30 @@
       "side": 1,
       "message": "I\u0027ve fixed M and R. F, the `unknown` format isn\u0027t listed in the texel_format enum, I guess it\u0027s magically added? A I set to readable",
       "parentUuid": "116a3939_2c6d3b36",
+      "range": {
+        "startLine": 537,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 112
+      },
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2449ee4_cb607b4d",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T21:46:20Z",
+      "side": 1,
+      "message": "We could maybe add an explicit `Unknown` format. It\u0027d be nice to get rid of the explicit template parameters, but it\u0027s not urgent.",
+      "parentUuid": "aa2d1b61_155f67f6",
       "range": {
         "startLine": 537,
         "startChar": 0,
