@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b121cd7_af130063",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2224,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T15:51:00Z",
+      "side": 1,
+      "message": "Maybe name these something like `swizzle_from_vector2_only` ?",
+      "revId": "0050549be449b4e718260647566cc791863b6ddd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09881717_867c47c1",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T15:51:00Z",
+      "side": 1,
+      "message": "This is probably simpler by emitting a `undef` value in the IR which should get turned into a 0",
+      "revId": "0050549be449b4e718260647566cc791863b6ddd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16e0f824_d09b694c",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T15:51:00Z",
+      "side": 1,
+      "message": "```suggestion\n            // Adjust indices in the second vector so they will be in bounds. Indices in the first vector will already be in bounds.\n            //\n            // Note, this only happens if we\u0027re pulling all values from the second vector with a swizzle.\n            if (swizzle_vector2) {\n                // Prepare index for swizzle.\n                literals[i] -\u003d n1;\n            }\n```",
+      "range": {
+        "startLine": 2256,
+        "startChar": 0,
+        "endLine": 2261,
+        "endChar": 74
+      },
+      "revId": "0050549be449b4e718260647566cc791863b6ddd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
