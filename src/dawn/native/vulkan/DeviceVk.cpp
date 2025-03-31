@@ -78,6 +78,7 @@ struct NoopDrawFunction<R(VKAPI_PTR*)(Args...)> {
     static R VKAPI_PTR Fun(Args...) {}
 };
 
+static uint64_t sNumVkDevices = 0;
 }  // namespace
 
 // static
@@ -634,6 +635,9 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         createInfo.pEnabledFeatures = &usedKnobs.features;
     }
 
+    DAWN_DEBUG() << "Creating a VkDevice for" << this << ", sNumVkDevices=" << sNumVkDevices; 
+    sNumVkDevices ++;
+
     DAWN_TRY(CheckVkSuccess(fn.CreateDevice(vkPhysicalDevice, &createInfo, nullptr, &mVkDevice),
                             "vkCreateDevice"));
 
@@ -917,6 +921,8 @@ void Device::DestroyImpl() {
     // because the function pointers might not have been loaded (and there is nothing to
     // destroy anyway).
     if (mDeleter == nullptr) {
+        DAWN_DEBUG() << "Destroying a VkDevice for" << this << ", sNumVkDevices=" << sNumVkDevices; 
+        sNumVkDevices --;
         fn.DestroyDevice(mVkDevice, nullptr);
         mVkDevice = VK_NULL_HANDLE;
         return;
@@ -957,6 +963,8 @@ void Device::DestroyImpl() {
     // The VkDevice is needed to destroy child objects, so it must be destroyed last after all
     // child objects have been deleted.
     DAWN_ASSERT(mVkDevice != VK_NULL_HANDLE);
+    DAWN_DEBUG() << "Destroying a VkDevice for" << this << ", sNumVkDevices=" << sNumVkDevices; 
+    sNumVkDevices --;
     fn.DestroyDevice(mVkDevice, nullptr);
     mVkDevice = VK_NULL_HANDLE;
 
