@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ead05b_d7fe63d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-03-31T19:04:36Z",
+      "side": 1,
+      "message": "Probably use `No-Try: true` so this can land more quickly in case other people want to make expectations edits. I verified manually that these expectations should be a superset of the old ones.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 3
+      },
+      "revId": "4e6b9c7a3b63b028cf76c972c0fcb013e4a3c8c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
