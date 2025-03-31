@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fad0b1a5_2b3b8fbe",
+        "filename": "src/tint/lang/spirv/ir/image_from_texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T19:37:06Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d73350fa_8adb450b",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54eb23b3_cd0c8bac",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "`Its OpTypeImage must have a Dim of 2D, Cube, or Rect. The MS operand of the underlying OpTypeImage must be 0.` is all the SPIR-V spec says?",
       "parentUuid": "54eb23b3_cd0c8bac",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de3b0d4c_ebe9c488",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T19:37:06Z",
+      "side": 1,
+      "message": "It\u0027s a requirement of the fact that you have a `sampled_image`.\n\nOpSampledImage says:\n\u003e Image is an object whose type is an OpTypeImage, whose Sampled operand is 0 or 1\n\n(and we don\u0027t support `0`)",
+      "parentUuid": "feafb0bd_a2eb4cb2",
       "revId": "0202a6bd30f1459531143908240aded21baad674",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -178,6 +214,30 @@
       "side": 1,
       "message": "M, R, F, A aren\u0027t fixed in the template? Or are you saying they should be fixed in the template? Like, this is always single_sampled, sampling_compatible, unknown, read_write?",
       "parentUuid": "64447dcc_c934ba32",
+      "range": {
+        "startLine": 537,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 112
+      },
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "116a3939_2c6d3b36",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T19:37:06Z",
+      "side": 1,
+      "message": "Right, I\u0027m saying they *should* be fixed, because we already know what they are based on the input parameter.",
+      "parentUuid": "97b97f1b_9f657c96",
       "range": {
         "startLine": 537,
         "startChar": 0,
