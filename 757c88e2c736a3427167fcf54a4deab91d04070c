@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f37bc270_e6af3388",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T18:58:07Z",
+      "side": 1,
+      "message": "Currently my enums are in `spirv/spirv.def` I don\u0027t really want to have to split out to a separate def file just for this purpose.",
+      "parentUuid": "84752757_f7027780",
+      "revId": "757c88e2c736a3427167fcf54a4deab91d04070c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e43b2db2_e47f3ac1",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-31T18:55:46Z",
       "side": 1,
       "message": "Should add a couple of tests to `resolver_test.go` for the changes in this file.",
+      "revId": "757c88e2c736a3427167fcf54a4deab91d04070c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d721c426_cfbfb41c",
+        "filename": "tools/src/tint/intrinsic/resolver/resolve.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T18:58:07Z",
+      "side": 1,
+      "message": "I\u0027ll look at doing this as a followup. This was split out of the following CL which uses the `@ns` attribute which did provide a good amount of testing at the time, heh.",
+      "parentUuid": "e43b2db2_e47f3ac1",
       "revId": "757c88e2c736a3427167fcf54a4deab91d04070c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
