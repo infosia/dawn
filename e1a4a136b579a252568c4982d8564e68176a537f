@@ -16,6 +16,24 @@
       "message": "LGTM, although I\u0027d call it `disable-all-features`.",
       "revId": "e1a4a136b579a252568c4982d8564e68176a537f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "165eb796_71541692",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-03-31T16:37:54Z",
+      "side": 1,
+      "message": "That might be a better name but it\u0027s already block-all-features in the CTS and this is just repeating that. Also, It\u0027s not disabling the features, it\u0027s actually blocking them. The features still exist and this option is blocking you from requesting them, at least in the code. Naming is hard. 😅 If you feel strongly about it I can put in a PR on to the CTS to rename it there and then rename it here too",
+      "parentUuid": "34f3ed19_b89dbe31",
+      "revId": "e1a4a136b579a252568c4982d8564e68176a537f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
