@@ -33,6 +33,7 @@
 #include <vector>
 
 #include "dawn/common/Assert.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/GPUInfo.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Error.h"
@@ -592,6 +593,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
     // Only re-adjust the limits when the limit makes sense w.r.t to the required WebGPU limits.
     // Otherwise, we ignore the maxFragmentCombinedOutputResources since it is known to yield
     // incorrect values on desktop drivers.
+    DAWN_DEBUG() << "maxFragmentCombinedOutputResources" << vkLimits.maxFragmentCombinedOutputResources;
     bool readjustFragmentCombinedOutputResources =
         vkLimits.maxFragmentCombinedOutputResources > minFragmentCombinedOutputResources &&
         uint64_t(vkLimits.maxFragmentCombinedOutputResources) < maxFragmentCombinedOutputResources;
