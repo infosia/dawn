@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0e1ffcf3_5d21775a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2248,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-03-31T18:37:03Z",
+      "side": 1,
+      "message": "Why do we need to add `i` here? Since we can pick any index, surely we could just always pick the first index? Then we don\u0027t need the clamp below.",
+      "revId": "0050549be449b4e718260647566cc791863b6ddd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "16e0f824_d09b694c",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 1
