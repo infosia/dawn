@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "45251a83_443447d3",
+        "filename": "src/tint/lang/spirv/ir/image_from_texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T20:37:21Z",
+      "side": 1,
+      "message": "We do actually use the access param in a followup CL, it\u0027s set explicitly as Read for StorageTextures.",
+      "parentUuid": "fad0b1a5_2b3b8fbe",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "54eb23b3_cd0c8bac",
         "filename": "src/tint/lang/spirv/spirv.def",
         "patchSetId": 4
@@ -107,6 +125,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c13dd065_b9f78106",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T20:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de3b0d4c_ebe9c488",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b543cab0_21a3e7f5",
@@ -142,6 +178,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1f3c05a_e766af77",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T20:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c16b203_f8075dc4",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1ebf5ba0_013c6213",
@@ -173,6 +227,24 @@
       "side": 1,
       "message": "`Its OpTypeImage must not have a Dim of Buffer. The MS operand of the underlying OpTypeImage must be 0.`",
       "parentUuid": "1ebf5ba0_013c6213",
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "654e2927_66b9591e",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T20:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37b5c6b1_7c0e217f",
       "revId": "0202a6bd30f1459531143908240aded21baad674",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -238,6 +310,30 @@
       "side": 1,
       "message": "Right, I\u0027m saying they *should* be fixed, because we already know what they are based on the input parameter.",
       "parentUuid": "97b97f1b_9f657c96",
+      "range": {
+        "startLine": 537,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 112
+      },
+      "revId": "0202a6bd30f1459531143908240aded21baad674",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa2d1b61_155f67f6",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-03-31T20:37:21Z",
+      "side": 1,
+      "message": "I\u0027ve fixed M and R. F, the `unknown` format isn\u0027t listed in the texel_format enum, I guess it\u0027s magically added? A I set to readable",
+      "parentUuid": "116a3939_2c6d3b36",
       "range": {
         "startLine": 537,
         "startChar": 0,
