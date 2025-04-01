@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "bd42060fac362ed6733785e2ba5a84d2c72d8603",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bebea0b1_6ef5fa84",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-01T21:36:16Z",
+      "side": 1,
+      "message": "Hm, it looks like DawnTest.h is only meant for end2end tests? Is there already a good place to stick code used by all Dawn tests?",
+      "revId": "bd42060fac362ed6733785e2ba5a84d2c72d8603",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
