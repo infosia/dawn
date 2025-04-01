@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1aeb4d05_8f15f0b0",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T19:08:51Z",
+      "side": 1,
+      "message": "New skip, why skip instead of failure?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 119
+      },
+      "revId": "4a058835bfe9d26308b1c989941b69584f585548",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92bd6a5d_81fc26a9",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T19:08:51Z",
+      "side": 1,
+      "message": "New skips, why skip instead of failure?",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 111
+      },
+      "revId": "4a058835bfe9d26308b1c989941b69584f585548",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9dd7c9a7_25ba80d8",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T19:08:51Z",
+      "side": 1,
+      "message": "These shouldn\u0027t be in the \"Temporary Skip Expectations\" section",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 195
+      },
+      "revId": "4a058835bfe9d26308b1c989941b69584f585548",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
