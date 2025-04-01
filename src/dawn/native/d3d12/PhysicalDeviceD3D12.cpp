@@ -668,6 +668,13 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     if (!GetDeviceInfo().supportsUnrestrictedBufferTextureCopyPitch) {
         deviceToggles->ForceSet(Toggle::D3D12RelaxBufferTextureCopyPitchAndOffsetAlignment, false);
     }
+
+    // Qualcomm ACPI driver might have a bug that causes the texture to buffer fail on some end2end
+    // tests. This is a workaround for that issue.
+    // TODO(crbug.com/407564099): Remove this workaround when the issue is fixed.
+    if (gpu_info::IsQualcomm_ACPI(GetVendorId())) {
+        deviceToggles->ForceSet(Toggle::D3D12RelaxBufferTextureCopyPitchAndOffsetAlignment, false);
+    }
     deviceToggles->Default(Toggle::D3D12RelaxBufferTextureCopyPitchAndOffsetAlignment,
                            GetDeviceInfo().supportsUnrestrictedBufferTextureCopyPitch);
 
