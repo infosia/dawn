@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57b252bf_697eaaaa",
+        "filename": "webgpu-cts/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T20:27:27Z",
+      "side": 1,
+      "message": "Will this work? I thought we weren\u0027t allowed to have 2 entries in OWNERS?",
+      "revId": "c393e0dbbd25ea9a6643889d22edd36d1ce370b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
