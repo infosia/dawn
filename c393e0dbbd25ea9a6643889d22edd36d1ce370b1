@@ -34,6 +34,24 @@
       "parentUuid": "57b252bf_697eaaaa",
       "revId": "c393e0dbbd25ea9a6643889d22edd36d1ce370b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e2fb5c9_cd16ed3b",
+        "filename": "webgpu-cts/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T20:31:37Z",
+      "side": 1,
+      "message": "\u003e If the author is a Dawn committer, code review is required from one other committer (see https://dawn.googlesource.com/dawn/+/HEAD/docs/becoming-committer.md). Otherwise, code review is required from two committers.",
+      "parentUuid": "3d436bb3_2fd6e072",
+      "revId": "c393e0dbbd25ea9a6643889d22edd36d1ce370b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
