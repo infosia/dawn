@@ -141,15 +141,16 @@ const [sendHeartbeat, {
 function wrapPromiseWithHeartbeat(prototype, key) {
   const old = prototype[key];
   prototype[key] = function (...args) {
-    return new Promise((resolve, reject) => {
-      // Send the heartbeat both before and after resolve/reject
-      // so that the heartbeat is sent ahead of any potentially
-      // long-running synchronous code awaiting the Promise.
-      old.call(this, ...args)
-        .then(val => { sendHeartbeat(); resolve(val) })
-        .catch(err => { sendHeartbeat(); reject(err) })
-        .finally(sendHeartbeat);
+    const promise = old.call(this, ...args);
+    promise.finally(() => {
+      // Heartbeat just before any code that was waiting on the promise.
+      // (This happens before because it's attached to the promise first.)
+      sendHeartbeat();
+      // And heartbeat just after. (This happens after because awaiting code
+      // will run as a microtask, while setTimeout always runs as a full task.)
+      setTimeout(sendHeartbeat, 0);
     });
+    return promise;
   }
 }
 
