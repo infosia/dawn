@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ba1e58f_505f5077",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T03:16:03Z",
+      "side": 1,
+      "message": "It seems like the update to the defs file is causing a swiftshader on Mac failure? It didn\u0027t fail on prior CLs, only after updating the defs in the last patchset to set the sampling_compatible and access restrictions.  I\u0027m going to revert the last defs change, try to land it and can iterate on making the defs nicer in a followup",
+      "revId": "52186099e02e7de4b08f614b9a218dad76151fd4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
