@@ -29,11 +29,13 @@
 
 #include <algorithm>
 #include <atomic>
+#include <cstdio>
 #include <fstream>
 #include <iomanip>
 #include <regex>
 #include <set>
 #include <sstream>
+#include <string_view>
 #include <tuple>
 #include <unordered_map>
 #include <unordered_set>
@@ -185,6 +187,32 @@ std::string DawnTestBase::PrintToStringParamName::SanitizeParamName(
 void InitDawnEnd2EndTestEnvironment(int argc, char** argv) {
     dawn::gTestEnv = new dawn::DawnTestEnvironment(argc, argv);
     testing::AddGlobalTestEnvironment(dawn::gTestEnv);
+}
+
+void SubstituteChromiumArgs(int argc, char** argv) {
+    std::string testSummaryOutputArg("--test-launcher-summary-output=");
+
+    for (int i = 0; i < argc; i++) {
+        std::string_view argument(argv[i]);
+
+        // Look to replace "--test-launcher-summary-output=" with "--gtest_output=json:". The former
+        // is a Chromium-specific flag for where to output results in a Chromium-specific format,
+        // while the latter is gtest flag to output results in a gtest-specific format.
+        if (argument.length() > testSummaryOutputArg.length()) {
+            auto prefix = argument.substr(0, testSummaryOutputArg.length());
+            if (prefix != testSummaryOutputArg) {
+                continue;
+            }
+            auto argValue = argument.substr(testSummaryOutputArg.length());
+            std::string replacementArg("--gtest_output=json:");
+            replacementArg += argValue;
+            dawn::InfoLog() << "Replacing " << argument << " with " << replacementArg;
+            size_t bufferSize = replacementArg.length() + 1;
+            argv[i] = new char[bufferSize];
+            int charsWritten = std::snprintf(argv[i], bufferSize, "%s", replacementArg.c_str());
+            DAWN_ASSERT(size_t(charsWritten) == replacementArg.length());
+        }
+    }
 }
 
 namespace dawn {

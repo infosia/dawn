@@ -151,6 +151,10 @@ struct GLFWwindow;
 
 void InitDawnEnd2EndTestEnvironment(int argc, char** argv);
 
+// Substitutes any Chromium-specific arguments for rough equivalents that are
+// compatible with standalone Dawn checkouts.
+void SubstituteChromiumArgs(int argc, char** argv);
+
 namespace dawn {
 namespace utils {
 class PlatformDebugLogger;

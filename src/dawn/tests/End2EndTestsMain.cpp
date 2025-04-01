@@ -28,6 +28,7 @@
 #include "dawn/tests/DawnTest.h"
 
 int main(int argc, char** argv) {
+    SubstituteChromiumArgs(argc, argv);
     InitDawnEnd2EndTestEnvironment(argc, argv);
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
