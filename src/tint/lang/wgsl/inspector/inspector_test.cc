@@ -127,7 +127,9 @@ class InspectorTextureTest : public InspectorBuilder, public testing::Test {};
 class InspectorRegressionTest : public InspectorBuilder, public testing::Test {};
 
 TEST_F(InspectorGetEntryPointTest, NoFunctions) {
-    Inspector& inspector = Build();
+    auto* src = R"(
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -136,7 +138,10 @@ TEST_F(InspectorGetEntryPointTest, NoFunctions) {
 }
 
 TEST_F(InspectorGetEntryPointTest, NoEntryPoints) {
-    Inspector& inspector = Build();
+    auto* src = R"(
+fn foo() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -145,13 +150,10 @@ TEST_F(InspectorGetEntryPointTest, NoEntryPoints) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OneEntryPoint) {
-    MakeEmptyBodyFunction("foo", Vector{
-                                     Stage(ast::PipelineStage::kFragment),
-                                 });
-
-    // TODO(dsinclair): Update to run the namer transform when available.
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment fn foo() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -163,18 +165,12 @@ TEST_F(InspectorGetEntryPointTest, OneEntryPoint) {
 }
 
 TEST_F(InspectorGetEntryPointTest, MultipleEntryPoints) {
-    MakeEmptyBodyFunction("foo", Vector{
-                                     Stage(ast::PipelineStage::kFragment),
-                                 });
+    auto* src = R"(
+@fragment fn foo() {}
 
-    MakeEmptyBodyFunction("bar", Vector{
-                                     Stage(ast::PipelineStage::kCompute),
-                                     WorkgroupSize(1_i),
-                                 });
-
-    // TODO(dsinclair): Update to run the namer transform when available.
-
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i) fn bar() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -189,22 +185,20 @@ TEST_F(InspectorGetEntryPointTest, MultipleEntryPoints) {
 }
 
 TEST_F(InspectorGetEntryPointTest, MixFunctionsAndEntryPoints) {
-    MakeEmptyBodyFunction("func", tint::Empty);
+    auto* src = R"(
+fn func() {}
 
-    MakeCallerBodyFunction("foo", Vector{std::string("func")},
-                           Vector{
-                               Stage(ast::PipelineStage::kCompute),
-                               WorkgroupSize(1_i),
-                           });
+@compute @workgroup_size(1i)
+fn foo() {
+  func();
+}
 
-    MakeCallerBodyFunction("bar", Vector{std::string("func")},
-                           Vector{
-                               Stage(ast::PipelineStage::kFragment),
-                           });
-
-    // TODO(dsinclair): Update to run the namer transform when available.
-
-    Inspector& inspector = Build();
+@fragment
+fn bar() {
+  func();
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     EXPECT_FALSE(inspector.has_error());
@@ -219,12 +213,10 @@ TEST_F(InspectorGetEntryPointTest, MixFunctionsAndEntryPoints) {
 }
 
 TEST_F(InspectorGetEntryPointTest, DefaultWorkgroupSize) {
-    MakeEmptyBodyFunction("foo", Vector{
-                                     Stage(ast::PipelineStage::kCompute),
-                                     WorkgroupSize(8_i, 2_i, 1_i),
-                                 });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@compute @workgroup_size(8i, 2i, 1i)  fn foo() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -239,11 +231,10 @@ TEST_F(InspectorGetEntryPointTest, DefaultWorkgroupSize) {
 
 // Test that push_constant_size is zero if there are no push constants.
 TEST_F(InspectorGetEntryPointTest, PushConstantSizeNone) {
-    MakeEmptyBodyFunction("foo", Vector{
-                                     Stage(ast::PipelineStage::kFragment),
-                                 });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment fn foo() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -254,14 +245,17 @@ TEST_F(InspectorGetEntryPointTest, PushConstantSizeNone) {
 
 // Test that push_constant_size is 4 (bytes) if there is a single F32 push constant.
 TEST_F(InspectorGetEntryPointTest, PushConstantSizeOneWord) {
-    Enable(wgsl::Extension::kChromiumExperimentalPushConstant);
-    GlobalVar("pc", core::AddressSpace::kPushConstant, ty.f32());
-    MakePlainGlobalReferenceBodyFunction("foo", "pc", ty.f32(),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kFragment),
-                                         });
+    auto* src = R"(
+enable chromium_experimental_push_constant;
 
-    Inspector& inspector = Build();
+var<push_constant> pc: f32;
+
+@fragment
+fn foo() {
+  _ = pc;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -273,16 +267,22 @@ TEST_F(InspectorGetEntryPointTest, PushConstantSizeOneWord) {
 // Test that push_constant_size is 12 (bytes) if there is a struct containing one
 // each of i32, f32 and u32.
 TEST_F(InspectorGetEntryPointTest, PushConstantSizeThreeWords) {
-    Enable(wgsl::Extension::kChromiumExperimentalPushConstant);
-    auto* pc_struct_type =
-        MakeStructType("PushConstantStruct", Vector{ty.i32(), ty.f32(), ty.u32()});
-    GlobalVar("pc", core::AddressSpace::kPushConstant, ty.Of(pc_struct_type));
-    MakePlainGlobalReferenceBodyFunction("foo", "pc", ty.Of(pc_struct_type),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kFragment),
-                                         });
+    auto* src = R"(
+enable chromium_experimental_push_constant;
 
-    Inspector& inspector = Build();
+struct S {
+  a: i32,
+  b: f32,
+  c: u32,
+}
+var<push_constant> pc : S;
+
+@fragment
+fn foo() {
+  _ = pc;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -295,17 +295,23 @@ TEST_F(InspectorGetEntryPointTest, PushConstantSizeThreeWords) {
 // one used by the entry point containing an f32, and one unused by the entry
 // point containing a struct of size 12 bytes.
 TEST_F(InspectorGetEntryPointTest, PushConstantSizeTwoConstants) {
-    Enable(wgsl::Extension::kChromiumExperimentalPushConstant);
-    auto* unused_struct_type =
-        MakeStructType("PushConstantStruct", Vector{ty.i32(), ty.f32(), ty.u32()});
-    GlobalVar("unused", core::AddressSpace::kPushConstant, ty.Of(unused_struct_type));
-    GlobalVar("pc", core::AddressSpace::kPushConstant, ty.f32());
-    MakePlainGlobalReferenceBodyFunction("foo", "pc", ty.f32(),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kFragment),
-                                         });
+    auto* src = R"(
+enable chromium_experimental_push_constant;
 
-    Inspector& inspector = Build();
+struct S {
+  a: i32,
+  b: f32,
+  c: u32,
+}
+var<push_constant> unused : S;
+var<push_constant> pc: f32;
+
+@fragment
+fn foo() {
+  _ = pc;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -317,12 +323,11 @@ TEST_F(InspectorGetEntryPointTest, PushConstantSizeTwoConstants) {
 }
 
 TEST_F(InspectorGetEntryPointTest, NonDefaultWorkgroupSize) {
-    MakeEmptyBodyFunction("foo", Vector{
-                                     Stage(ast::PipelineStage::kCompute),
-                                     WorkgroupSize(8_i, 2_i, 1_i),
-                                 });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@compute @workgroup_size(8i, 2i, 1i)
+fn foo() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -336,11 +341,11 @@ TEST_F(InspectorGetEntryPointTest, NonDefaultWorkgroupSize) {
 }
 
 TEST_F(InspectorGetEntryPointTest, WorkgroupStorageSizeEmpty) {
-    MakeEmptyBodyFunction("ep_func", Vector{
-                                         Stage(ast::PipelineStage::kCompute),
-                                         WorkgroupSize(1_i),
-                                     });
-    Inspector& inspector = Build();
+    auto* src = R"(
+@compute @workgroup_size(1i)
+fn ep_func() {}
+)";
+    Inspector& inspector = Initialize(src);
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
@@ -349,18 +354,24 @@ TEST_F(InspectorGetEntryPointTest, WorkgroupStorageSizeEmpty) {
 }
 
 TEST_F(InspectorGetEntryPointTest, WorkgroupStorageSizeSimple) {
-    AddWorkgroupStorage("wg_f32", ty.f32());
-    AddWorkgroupStorage("wg_i32", ty.i32());
-    MakePlainGlobalReferenceBodyFunction("f32_func", "wg_f32", ty.f32(), tint::Empty);
-    MakePlainGlobalReferenceBodyFunction("i32_func", "wg_i32", ty.i32(), tint::Empty);
+    auto* src = R"(
+var<workgroup> wg_f32: f32;
+var<workgroup> wg_i32: i32;
 
-    MakeCallerBodyFunction("ep_func", Vector{std::string("f32_func"), "i32_func"},
-                           Vector{
-                               Stage(ast::PipelineStage::kCompute),
-                               WorkgroupSize(1_i),
-                           });
+fn f32_func() {
+  _ = wg_f32;
+}
+fn i32_func() {
+  _ = wg_i32;
+}
 
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep_func() {
+  f32_func();
+  i32_func();
+}
+)";
+    Inspector& inspector = Initialize(src);
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
@@ -369,31 +380,31 @@ TEST_F(InspectorGetEntryPointTest, WorkgroupStorageSizeSimple) {
 }
 
 TEST_F(InspectorGetEntryPointTest, WorkgroupStorageSizeCompoundTypes) {
-    // This struct should occupy 68 bytes. 4 from the i32 field, and another 64
-    // from the 4-element array with 16-byte stride.
-    auto* wg_struct_type = MakeStructType("WgStruct", Vector{
-                                                          ty.i32(),
-                                                          ty.array<i32, 4>(Vector{
-                                                              Stride(16),
-                                                          }),
-                                                      });
-    AddWorkgroupStorage("wg_struct_var", ty.Of(wg_struct_type));
-    MakeStructVariableReferenceBodyFunction("wg_struct_func", "wg_struct_var",
-                                            Vector{
-                                                MemberInfo{0, ty.i32()},
-                                            });
+    auto* src = R"(
+// This struct should occupy 68 bytes.
+struct WgStruct {
+  a: i32,
+  b: array<i32, 16>,
+}
+var<workgroup> wg_struct_var: WgStruct;
 
-    // Plus another 4 bytes from this other workgroup-class f32.
-    AddWorkgroupStorage("wg_f32", ty.f32());
-    MakePlainGlobalReferenceBodyFunction("f32_func", "wg_f32", ty.f32(), tint::Empty);
+fn wg_struct_func() {
+  _ = wg_struct_var.a;
+}
 
-    MakeCallerBodyFunction("ep_func", Vector{std::string("wg_struct_func"), "f32_func"},
-                           Vector{
-                               Stage(ast::PipelineStage::kCompute),
-                               WorkgroupSize(1_i),
-                           });
+// Plus another 4 bytes from this other workgroup-class f32.
+var<workgroup> wg_f32: f32;
+fn f32_func() {
+  _ = wg_f32;
+}
 
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep_func() {
+  wg_struct_func();
+  f32_func();
+}
+)";
+    Inspector& inspector = Initialize(src);
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
@@ -402,18 +413,21 @@ TEST_F(InspectorGetEntryPointTest, WorkgroupStorageSizeCompoundTypes) {
 }
 
 TEST_F(InspectorGetEntryPointTest, WorkgroupStorageSizeAlignmentPadding) {
-    // vec3<f32> has an alignment of 16 but a size of 12. We leverage this to test
-    // that our padded size calculation for workgroup storage is accurate.
-    AddWorkgroupStorage("wg_vec3", ty.vec3<f32>());
-    MakePlainGlobalReferenceBodyFunction("wg_func", "wg_vec3", ty.vec3<f32>(), tint::Empty);
+    auto* src = R"(
+// vec3<f32> has an alignment of 16 but a size of 12. We leverage this to test
+// that our padded size calculation for workgroup storage is accurate.
+var<workgroup> wg_vec3: vec3f;
 
-    MakeCallerBodyFunction("ep_func", Vector{std::string("wg_func")},
-                           Vector{
-                               Stage(ast::PipelineStage::kCompute),
-                               WorkgroupSize(1_i),
-                           });
+fn wg_func() {
+  _ = wg_vec3;
+}
 
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep_func() {
+  wg_func();
+}
+)";
+    Inspector& inspector = Initialize(src);
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
@@ -422,27 +436,25 @@ TEST_F(InspectorGetEntryPointTest, WorkgroupStorageSizeAlignmentPadding) {
 }
 
 TEST_F(InspectorGetEntryPointTest, WorkgroupStorageSizeStructAlignment) {
-    // Per WGSL spec, a struct's size is the offset its last member plus the size
-    // of its last member, rounded up to the alignment of its largest member. So
-    // here the struct is expected to occupy 1024 bytes of workgroup storage.
-    const auto* wg_struct_type = MakeStructTypeFromMembers(
-        "WgStruct", Vector{
-                        MakeStructMember(0, ty.f32(), Vector{MemberAlign(1024_i)}),
-                    });
+    auto* src = R"(
+// Per WGSL spec, a struct's size is the offset its last member plus the size
+// of its last member, rounded up to the alignment of its largest member. So
+// here the struct is expected to occupy 1024 bytes of workgroup storage.
+struct WgStruct {
+  @align(1024i) a: f32,
+}
+var<workgroup> wg_struct_var: WgStruct;
 
-    AddWorkgroupStorage("wg_struct_var", ty.Of(wg_struct_type));
-    MakeStructVariableReferenceBodyFunction("wg_struct_func", "wg_struct_var",
-                                            Vector{
-                                                MemberInfo{0, ty.f32()},
-                                            });
+fn wg_struct_func() {
+  _ = wg_struct_var.a;
+}
 
-    MakeCallerBodyFunction("ep_func", Vector{std::string("wg_struct_func")},
-                           Vector{
-                               Stage(ast::PipelineStage::kCompute),
-                               WorkgroupSize(1_i),
-                           });
-
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep_func() {
+  wg_struct_func();
+}
+)";
+    Inspector& inspector = Initialize(src);
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
 
@@ -451,14 +463,11 @@ TEST_F(InspectorGetEntryPointTest, WorkgroupStorageSizeStructAlignment) {
 }
 
 TEST_F(InspectorGetEntryPointTest, NoInOutVariables) {
-    MakeEmptyBodyFunction("func", tint::Empty);
-
-    MakeCallerBodyFunction("foo", Vector{std::string("func")},
-                           Vector{
-                               Stage(ast::PipelineStage::kFragment),
-                           });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+fn func() {}
+@fragment fn foo() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -468,32 +477,67 @@ TEST_F(InspectorGetEntryPointTest, NoInOutVariables) {
     EXPECT_EQ(0u, result[0].output_variables.size());
 }
 
+std::string GetType(ComponentType component, CompositionType composition) {
+    std::string comp;
+    switch (component) {
+        case ComponentType::kF32:
+            comp = "f32";
+            break;
+        case ComponentType::kI32:
+            comp = "i32";
+            break;
+        case ComponentType::kU32:
+            comp = "u32";
+            break;
+        case ComponentType::kF16:
+            comp = "f16";
+            break;
+        case ComponentType::kUnknown:
+            TINT_UNREACHABLE();
+    }
+
+    uint32_t n;
+    switch (composition) {
+        case CompositionType::kScalar:
+            return comp;
+        case CompositionType::kVec2:
+            n = 2;
+            break;
+        case CompositionType::kVec3:
+            n = 3;
+            break;
+        case CompositionType::kVec4:
+            n = 4;
+            break;
+        default:
+            TINT_UNREACHABLE();
+    }
+    return std::string("vec") + std::to_string(n) + "<" + comp + ">";
+}
+
 TEST_P(InspectorGetEntryPointComponentAndCompositionTest, Test) {
     ComponentType component;
     CompositionType composition;
     std::tie(component, composition) = GetParam();
-    std::function<ast::Type()> tint_type = GetTypeFunction(component, composition);
 
     if (component == ComponentType::kF16) {
         Enable(wgsl::Extension::kF16);
     }
 
-    auto* in_var = Param("in_var", tint_type(),
-                         Vector{
-                             Location(0_u),
-                             Flat(),
-                         });
-    Func("foo", Vector{in_var}, tint_type(),
-         Vector{
-             Return("in_var"),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         },
-         Vector{
-             Location(0_u),
-         });
-    Inspector& inspector = Build();
+    std::string src = "";
+    if (component == ComponentType::kF16) {
+        src += "enable f16;\n";
+    }
+
+    auto tint_type = GetType(component, composition);
+    src += R"(
+@fragment
+fn foo(@location(0u) @interpolate(flat) in_var: )" +
+           tint_type + ") -> @location(0) " + tint_type + R"( {
+  return in_var;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -524,33 +568,15 @@ INSTANTIATE_TEST_SUITE_P(InspectorGetEntryPointTest,
                                                           CompositionType::kVec4)));
 
 TEST_F(InspectorGetEntryPointTest, MultipleInOutVariables) {
-    Enable(wgsl::Extension::kChromiumExperimentalFramebufferFetch);
+    auto* src = R"(
+enable chromium_experimental_framebuffer_fetch;
 
-    auto* in_var0 = Param("in_var0", ty.u32(),
-                          Vector{
-                              Location(0_u),
-                              Flat(),
-                          });
-    auto* in_var1 = Param("in_var1", ty.u32(),
-                          Vector{
-                              Location(1_u),
-                              Flat(),
-                          });
-    auto* in_var4 = Param("in_var4", ty.u32(),
-                          Vector{
-                              Color(2_u),
-                          });
-    Func("foo", Vector{in_var0, in_var1, in_var4}, ty.u32(),
-         Vector{
-             Return("in_var0"),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         },
-         Vector{
-             Location(0_u),
-         });
-    Inspector& inspector = Build();
+@fragment
+fn foo(@location(0u) @interpolate(flat) in_var0: u32, @location(1u) @interpolate(flat) in_var1: u32, @color(2u) in_var4: u32) -> @location(0u) u32 {
+  return in_var0;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -586,39 +612,18 @@ TEST_F(InspectorGetEntryPointTest, MultipleInOutVariables) {
 }
 
 TEST_F(InspectorGetEntryPointTest, MultipleEntryPointsInOutVariables) {
-    auto* in_var_foo = Param("in_var_foo", ty.u32(),
-                             Vector{
-                                 Location(0_u),
-                                 Flat(),
-                             });
-    Func("foo", Vector{in_var_foo}, ty.u32(),
-         Vector{
-             Return("in_var_foo"),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         },
-         Vector{
-             Location(0_u),
-         });
+    auto* src = R"(
+@fragment
+fn foo(@location(0u) @interpolate(flat) in_var_foo: u32) -> @location(0) u32 {
+  return in_var_foo;
+}
 
-    auto* in_var_bar = Param("in_var_bar", ty.u32(),
-                             Vector{
-                                 Location(0_u),
-                                 Flat(),
-                             });
-    Func("bar", Vector{in_var_bar}, ty.u32(),
-         Vector{
-             Return("in_var_bar"),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         },
-         Vector{
-             Location(1_u),
-         });
-
-    Inspector& inspector = Build();
+@fragment
+fn bar(@location(0u) @interpolate(flat) in_var_bar: u32) -> @location(1u) u32 {
+  return in_var_bar;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -653,25 +658,13 @@ TEST_F(InspectorGetEntryPointTest, MultipleEntryPointsInOutVariables) {
 }
 
 TEST_F(InspectorGetEntryPointTest, BuiltInsNotStageVariables) {
-    auto* in_var0 = Param("in_var0", ty.u32(),
-                          Vector{
-                              Builtin(core::BuiltinValue::kSampleIndex),
-                          });
-    auto* in_var1 = Param("in_var1", ty.f32(),
-                          Vector{
-                              Location(0_u),
-                          });
-    Func("foo", Vector{in_var0, in_var1}, ty.f32(),
-         Vector{
-             Return("in_var1"),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         },
-         Vector{
-             Builtin(core::BuiltinValue::kFragDepth),
-         });
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment
+fn foo(@builtin(sample_index) in_var0: u32, @location(0u) in_var1: f32) -> @builtin(frag_depth) f32 {
+  return in_var1;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -688,22 +681,17 @@ TEST_F(InspectorGetEntryPointTest, BuiltInsNotStageVariables) {
 }
 
 TEST_F(InspectorGetEntryPointTest, InOutStruct) {
-    auto* interface = MakeInOutStruct("interface", Vector{
-                                                       InOutInfo{"a", 0u},
-                                                       InOutInfo{"b", 1u},
-                                                   });
-    Func("foo",
-         Vector{
-             Param("param", ty.Of(interface)),
-         },
-         ty.Of(interface),
-         Vector{
-             Return("param"),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-    Inspector& inspector = Build();
+    auto* src = R"(
+struct Interface {
+  @location(0u) @interpolate(flat) a: u32,
+  @location(1u) @interpolate(flat) b: u32,
+}
+@fragment
+fn foo(param: Interface) -> Interface {
+  return param;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -732,22 +720,20 @@ TEST_F(InspectorGetEntryPointTest, InOutStruct) {
 }
 
 TEST_F(InspectorGetEntryPointTest, MultipleEntryPointsInOutSharedStruct) {
-    auto* interface = MakeInOutStruct("interface", Vector{
-                                                       InOutInfo{"a", 0u},
-                                                       InOutInfo{"b", 1u},
-                                                   });
-    Func("foo", tint::Empty, ty.Of(interface),
-         Vector{
-             Return(Call(ty.Of(interface))),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-    Func("bar", Vector{Param("param", ty.Of(interface))}, ty.void_(), tint::Empty,
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-    Inspector& inspector = Build();
+    auto* src = R"(
+struct Interface {
+  @location(0u) @interpolate(flat) a: u32,
+  @location(1u) @interpolate(flat) b: u32,
+}
+@fragment
+fn foo() -> Interface {
+  return Interface();
+}
+
+@fragment
+fn bar(param: Interface) {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -780,28 +766,21 @@ TEST_F(InspectorGetEntryPointTest, MultipleEntryPointsInOutSharedStruct) {
 }
 
 TEST_F(InspectorGetEntryPointTest, MixInOutVariablesAndStruct) {
-    auto* struct_a = MakeInOutStruct("struct_a", Vector{
-                                                     InOutInfo{"a", 0u},
-                                                     InOutInfo{"b", 1u},
-                                                 });
-    auto* struct_b = MakeInOutStruct("struct_b", Vector{
-                                                     InOutInfo{"a", 2u},
-                                                 });
-    Func("foo",
-         Vector{
-             Param("param_a", ty.Of(struct_a)),
-             Param("param_b", ty.Of(struct_b)),
-             Param("param_c", ty.f32(), Vector{Location(3_u)}),
-             Param("param_d", ty.f32(), Vector{Location(4_u)}),
-         },
-         ty.Of(struct_a),
-         Vector{
-             Return("param_a"),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-    Inspector& inspector = Build();
+    auto* src = R"(
+struct struct_a {
+  @location(0u) @interpolate(flat) a: u32,
+  @location(1u) @interpolate(flat) b: u32,
+}
+struct struct_b {
+  @location(2u) @interpolate(flat) a: u32,
+}
+
+@fragment
+fn foo(param_a: struct_a, param_b: struct_b, @location(3u) param_c: f32, @location(4u) param_d: f32) -> struct_a {
+  return param_a;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -842,13 +821,13 @@ TEST_F(InspectorGetEntryPointTest, MixInOutVariablesAndStruct) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideUnreferenced) {
-    Override("foo", ty.f32());
-    MakeEmptyBodyFunction("ep_func", Vector{
-                                         Stage(ast::PipelineStage::kCompute),
-                                         WorkgroupSize(1_i),
-                                     });
+    auto* src = R"(
+override foo: f32;
 
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep_func() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -857,14 +836,15 @@ TEST_F(InspectorGetEntryPointTest, OverrideUnreferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideReferencedByEntryPoint) {
-    Override("foo", ty.f32());
-    MakePlainGlobalReferenceBodyFunction("ep_func", "foo", ty.f32(),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kCompute),
-                                             WorkgroupSize(1_i),
-                                         });
+    auto* src = R"(
+override foo: f32;
 
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep_func() {
+  _ = foo;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -874,15 +854,19 @@ TEST_F(InspectorGetEntryPointTest, OverrideReferencedByEntryPoint) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideReferencedByCallee) {
-    Override("foo", ty.f32());
-    MakePlainGlobalReferenceBodyFunction("callee_func", "foo", ty.f32(), tint::Empty);
-    MakeCallerBodyFunction("ep_func", Vector{std::string("callee_func")},
-                           Vector{
-                               Stage(ast::PipelineStage::kCompute),
-                               WorkgroupSize(1_i),
-                           });
+    auto* src = R"(
+override foo: f32;
 
-    Inspector& inspector = Build();
+fn callee_func() {
+  _ = foo;
+}
+
+@compute @workgroup_size(1i)
+fn ep_func() {
+  callee_func();
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -892,16 +876,20 @@ TEST_F(InspectorGetEntryPointTest, OverrideReferencedByCallee) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideSomeReferenced) {
-    Override("foo", ty.f32(), Id(1_a));
-    Override("bar", ty.f32(), Id(2_a));
-    MakePlainGlobalReferenceBodyFunction("callee_func", "foo", ty.f32(), tint::Empty);
-    MakeCallerBodyFunction("ep_func", Vector{std::string("callee_func")},
-                           Vector{
-                               Stage(ast::PipelineStage::kCompute),
-                               WorkgroupSize(1_i),
-                           });
+    auto* src = R"(
+@id(1) override foo: f32;
+@id(2) override bar: f32;
 
-    Inspector& inspector = Build();
+fn callee_fn() {
+  _ = foo;
+}
+
+@compute @workgroup_size(1i)
+fn ep_func() {
+  callee_fn();
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -912,15 +900,16 @@ TEST_F(InspectorGetEntryPointTest, OverrideSomeReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideReferencedIndirectly) {
-    Override("foo", ty.f32());
-    Override("bar", ty.f32(), Mul(2_a, "foo"));
-    MakePlainGlobalReferenceBodyFunction("ep_func", "bar", ty.f32(),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kCompute),
-                                             WorkgroupSize(1_i),
-                                         });
+    auto* src = R"(
+override foo: f32;
+override bar: f32 = 2 * foo;
 
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep_func() {
+  _ = bar;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -933,15 +922,16 @@ TEST_F(InspectorGetEntryPointTest, OverrideReferencedIndirectly) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideReferencedIndirectly_ViaPrivateInitializer) {
-    Override("foo", ty.f32());
-    GlobalVar("bar", core::AddressSpace::kPrivate, ty.f32(), Mul(2_a, "foo"));
-    MakePlainGlobalReferenceBodyFunction("ep_func", "bar", ty.f32(),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kCompute),
-                                             WorkgroupSize(1_i),
-                                         });
+    auto* src = R"(
+override foo: f32;
+var<private> bar: f32 = 2 * foo;
 
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep_func() {
+  _ = bar;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -952,22 +942,22 @@ TEST_F(InspectorGetEntryPointTest, OverrideReferencedIndirectly_ViaPrivateInitia
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideReferencedIndirectly_MultipleEntryPoints) {
-    Override("foo1", ty.f32());
-    Override("bar1", ty.f32(), Mul(2_a, "foo1"));
-    MakePlainGlobalReferenceBodyFunction("ep_func1", "bar1", ty.f32(),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kCompute),
-                                             WorkgroupSize(1_i),
-                                         });
-    Override("foo2", ty.f32());
-    Override("bar2", ty.f32(), Mul(2_a, "foo2"));
-    MakePlainGlobalReferenceBodyFunction("ep_func2", "bar2", ty.f32(),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kCompute),
-                                             WorkgroupSize(1_i),
-                                         });
+    auto* src = R"(
+override foo1: f32;
+override bar1: f32 = 2 * foo1;
+@compute @workgroup_size(1i)
+fn ep_func1() {
+  _ = bar1;
+}
 
-    Inspector& inspector = Build();
+override foo2: f32;
+override bar2: f32 = 2 * foo2;
+@compute @workgroup_size(1i)
+fn ep_func2() {
+  _ = bar2;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -987,13 +977,12 @@ TEST_F(InspectorGetEntryPointTest, OverrideReferencedIndirectly_MultipleEntryPoi
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideReferencedByAttribute) {
-    Override("wgsize", ty.u32());
-    MakeEmptyBodyFunction("ep_func", Vector{
-                                         Stage(ast::PipelineStage::kCompute),
-                                         WorkgroupSize("wgsize"),
-                                     });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+override wgsize: u32;
+@compute @workgroup_size(wgsize)
+fn ep_func() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1004,14 +993,13 @@ TEST_F(InspectorGetEntryPointTest, OverrideReferencedByAttribute) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideReferencedByAttributeIndirectly) {
-    Override("foo", ty.u32());
-    Override("bar", ty.u32(), Mul(2_a, "foo"));
-    MakeEmptyBodyFunction("ep_func", Vector{
-                                         Stage(ast::PipelineStage::kCompute),
-                                         WorkgroupSize(Mul(2_a, Expr("bar"))),
-                                     });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+override foo: u32;
+override bar: u32 = 2 * foo;
+@compute @workgroup_size(2 * bar)
+fn ep_func() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1024,18 +1012,16 @@ TEST_F(InspectorGetEntryPointTest, OverrideReferencedByAttributeIndirectly) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideReferencedByArraySize) {
-    Override("size", ty.u32());
-    GlobalVar("v", core::AddressSpace::kWorkgroup, ty.array(ty.f32(), "size"));
-    Func("ep", tint::Empty, ty.void_(),
-         Vector{
-             Assign(Phony(), IndexAccessor("v", 0_a)),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kCompute),
-             WorkgroupSize(1_i),
-         });
+    auto* src = R"(
+override size: u32;
+var<workgroup> v: array<f32, size>;
 
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep() {
+  _ = v[0];
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1046,19 +1032,17 @@ TEST_F(InspectorGetEntryPointTest, OverrideReferencedByArraySize) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideReferencedByArraySizeIndirectly) {
-    Override("foo", ty.u32());
-    Override("bar", ty.u32(), Mul(2_a, "foo"));
-    GlobalVar("v", core::AddressSpace::kWorkgroup, ty.array(ty.f32(), Mul(2_a, Expr("bar"))));
-    Func("ep", tint::Empty, ty.void_(),
-         Vector{
-             Assign(Phony(), IndexAccessor("v", 0_a)),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kCompute),
-             WorkgroupSize(1_i),
-         });
+    auto* src = R"(
+override foo: u32;
+override bar: u32 = 2 * foo;
+var<workgroup> v: array<f32, 2 * bar>;
 
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep() {
+  _ = v[0];
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1071,22 +1055,22 @@ TEST_F(InspectorGetEntryPointTest, OverrideReferencedByArraySizeIndirectly) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideReferencedByArraySizeViaAlias) {
-    Override("foo", ty.u32());
-    Override("bar", ty.u32(), Expr("foo"));
-    Alias("MyArray", ty.array(ty.f32(), Mul(2_a, Expr("bar"))));
-    Override("zoo", ty.u32());
-    Alias("MyArrayUnused", ty.array(ty.f32(), Mul(2_a, Expr("zoo"))));
-    GlobalVar("v", core::AddressSpace::kWorkgroup, ty("MyArray"));
-    Func("ep", tint::Empty, ty.void_(),
-         Vector{
-             Assign(Phony(), IndexAccessor("v", 0_a)),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kCompute),
-             WorkgroupSize(1_i),
-         });
+    auto* src = R"(
+override foo: u32;
+override bar: u32 = foo;
+alias MyArray = array<f32, 2 * bar>;
 
-    Inspector& inspector = Build();
+override zoo: u32;
+alias MyArrayUnused = array<f32, 2 * zoo>;
+
+var<workgroup> v: MyArray;
+
+@compute @workgroup_size(1i)
+fn ep() {
+  _ = v[0];
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1099,29 +1083,31 @@ TEST_F(InspectorGetEntryPointTest, OverrideReferencedByArraySizeViaAlias) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideTypes) {
-    Enable(wgsl::Extension::kF16);
+    auto* src = R"(
+enable f16;
 
-    Override("bool_var", ty.bool_());
-    Override("float_var", ty.f32());
-    Override("u32_var", ty.u32());
-    Override("i32_var", ty.i32());
-    Override("f16_var", ty.f16());
+override bool_var: bool;
+override float_var: f32;
+override u32_var: u32;
+override i32_var: i32;
+override f16_var: f16;
 
-    MakePlainGlobalReferenceBodyFunction("bool_func", "bool_var", ty.bool_(), tint::Empty);
-    MakePlainGlobalReferenceBodyFunction("float_func", "float_var", ty.f32(), tint::Empty);
-    MakePlainGlobalReferenceBodyFunction("u32_func", "u32_var", ty.u32(), tint::Empty);
-    MakePlainGlobalReferenceBodyFunction("i32_func", "i32_var", ty.i32(), tint::Empty);
-    MakePlainGlobalReferenceBodyFunction("f16_func", "f16_var", ty.f16(), tint::Empty);
+fn bool_func() { _ = bool_var; }
+fn float_func() { _ = float_var; }
+fn u32_func() { _ = u32_var; }
+fn i32_func() { _ = i32_var; }
+fn f16_func() { _ = f16_var; }
 
-    MakeCallerBodyFunction(
-        "ep_func",
-        Vector{std::string("bool_func"), "float_func", "u32_func", "i32_func", "f16_func"},
-        Vector{
-            Stage(ast::PipelineStage::kCompute),
-            WorkgroupSize(1_i),
-        });
-
-    Inspector& inspector = Build();
+@compute @workgroup_size(1)
+fn ep_func() {
+  bool_func();
+  float_func();
+  u32_func();
+  i32_func();
+  f16_func();
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1140,14 +1126,14 @@ TEST_F(InspectorGetEntryPointTest, OverrideTypes) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideInitialized) {
-    Override("foo", ty.f32(), Expr(0_f));
-    MakePlainGlobalReferenceBodyFunction("ep_func", "foo", ty.f32(),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kCompute),
-                                             WorkgroupSize(1_i),
-                                         });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+override foo: f32 = 0f;
+@compute @workgroup_size(1i)
+fn ep_func() {
+  _ = foo;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1158,14 +1144,14 @@ TEST_F(InspectorGetEntryPointTest, OverrideInitialized) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideUninitialized) {
-    Override("foo", ty.f32());
-    MakePlainGlobalReferenceBodyFunction("ep_func", "foo", ty.f32(),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kCompute),
-                                             WorkgroupSize(1_i),
-                                         });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+override foo: f32;
+@compute @workgroup_size(1i)
+fn ep_func() {
+  _ = foo;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1177,19 +1163,20 @@ TEST_F(InspectorGetEntryPointTest, OverrideUninitialized) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OverrideNumericIDSpecified) {
-    Override("foo_no_id", ty.f32());
-    Override("foo_id", ty.f32(), Id(1234_a));
+    auto* src = R"(
+override foo_no_id: f32;
+@id(1234) override foo_id: f32;
 
-    MakePlainGlobalReferenceBodyFunction("no_id_func", "foo_no_id", ty.f32(), tint::Empty);
-    MakePlainGlobalReferenceBodyFunction("id_func", "foo_id", ty.f32(), tint::Empty);
+fn no_id_func() { _ = foo_no_id; }
+fn id_func() { _ = foo_id; }
 
-    MakeCallerBodyFunction("ep_func", Vector{std::string("no_id_func"), "id_func"},
-                           Vector{
-                               Stage(ast::PipelineStage::kCompute),
-                               WorkgroupSize(1_i),
-                           });
-
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep_func() {
+  no_id_func();
+  id_func();
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1204,20 +1191,19 @@ TEST_F(InspectorGetEntryPointTest, OverrideNumericIDSpecified) {
 }
 
 TEST_F(InspectorGetEntryPointTest, NonOverrideSkipped) {
-    auto* foo_struct_type = MakeUniformBufferType("foo_type", Vector{
-                                                                  ty.i32(),
-                                                              });
-    AddUniformBuffer("foo_ub", ty.Of(foo_struct_type), 0, 0);
-    MakeStructVariableReferenceBodyFunction("ub_func", "foo_ub",
-                                            Vector{
-                                                MemberInfo{0, ty.i32()},
-                                            });
-    MakeCallerBodyFunction("ep_func", Vector{std::string("ub_func")},
-                           Vector{
-                               Stage(ast::PipelineStage::kFragment),
-                           });
+    auto* src = R"(
+struct foo_type {
+  a: i32,
+}
+@binding(0) @group(0) var<uniform> foo_ub: foo_type;
+fn ub_func() { _ = foo_ub.a; }
 
-    Inspector& inspector = Build();
+@fragment
+fn ep_func() {
+  ub_func();
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1226,11 +1212,11 @@ TEST_F(InspectorGetEntryPointTest, NonOverrideSkipped) {
 }
 
 TEST_F(InspectorGetEntryPointTest, BuiltinNotReferenced) {
-    MakeEmptyBodyFunction("ep_func", Vector{
-                                         Stage(ast::PipelineStage::kFragment),
-                                     });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment
+fn ep_func() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1245,19 +1231,11 @@ TEST_F(InspectorGetEntryPointTest, BuiltinNotReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, InputSampleMaskSimpleReferenced) {
-    auto* in_var = Param("in_var", ty.u32(),
-                         Vector{
-                             Builtin(core::BuiltinValue::kSampleMask),
-                         });
-    Func("ep_func", Vector{in_var}, ty.void_(),
-         Vector{
-             Return(),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment
+fn ep_func(@builtin(sample_mask) in_var: u32) {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1266,25 +1244,15 @@ TEST_F(InspectorGetEntryPointTest, InputSampleMaskSimpleReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, InputSampleMaskStructReferenced) {
-    Vector members{
-        Member("inner_position", ty.u32(), Vector{Builtin(core::BuiltinValue::kSampleMask)}),
-    };
+    auto* src = R"(
+struct in_struct {
+  @builtin(sample_mask) inner_position: u32,
+}
 
-    Structure("in_struct", members);
-
-    Func("ep_func",
-         Vector{
-             Param("in_var", ty("in_struct"), tint::Empty),
-         },
-         ty.void_(),
-         Vector{
-             Return(),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-
-    Inspector& inspector = Build();
+@fragment
+fn ep_func(in_var: in_struct) {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1293,22 +1261,13 @@ TEST_F(InspectorGetEntryPointTest, InputSampleMaskStructReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OutputSampleMaskSimpleReferenced) {
-    Func("ep_func",
-         Vector{
-             Param("in_var", ty.u32(), Vector{Builtin(core::BuiltinValue::kSampleMask)}),
-         },
-         ty.u32(),
-         Vector{
-             Return("in_var"),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         },
-         Vector{
-             Builtin(core::BuiltinValue::kSampleMask),
-         });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment
+fn ep_func(@builtin(sample_mask) in_var: u32) -> @builtin(sample_mask) u32 {
+  return in_var;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1317,21 +1276,18 @@ TEST_F(InspectorGetEntryPointTest, OutputSampleMaskSimpleReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OutputSampleMaskStructReferenced) {
-    Structure("out_struct", Vector{
-                                Member("inner_sample_mask", ty.u32(),
-                                       Vector{Builtin(core::BuiltinValue::kSampleMask)}),
-                            });
+    auto* src = R"(
+struct out_struct {
+  @builtin(sample_mask) inner_sample_mask: u32,
+}
 
-    Func("ep_func", tint::Empty, ty("out_struct"),
-         Vector{
-             Decl(Var("out_var", ty("out_struct"))),
-             Return("out_var"),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-
-    Inspector& inspector = Build();
+@fragment
+fn ep_func() -> out_struct {
+  var out_var: out_struct;
+  return out_var;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1340,19 +1296,11 @@ TEST_F(InspectorGetEntryPointTest, OutputSampleMaskStructReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, InputPositionSimpleReferenced) {
-    Func("ep_func",
-         Vector{
-             Param("in_var", ty.vec4<f32>(), Vector{Builtin(core::BuiltinValue::kPosition)}),
-         },
-         ty.void_(),
-         Vector{
-             Return(),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment
+fn ep_func(@builtin(position) in_var: vec4f) {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1361,24 +1309,14 @@ TEST_F(InspectorGetEntryPointTest, InputPositionSimpleReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, InputPositionStructReferenced) {
-    Structure("in_struct", Vector{
-                               Member("inner_position", ty.vec4<f32>(),
-                                      Vector{Builtin(core::BuiltinValue::kPosition)}),
-                           });
-
-    Func("ep_func",
-         Vector{
-             Param("in_var", ty("in_struct"), tint::Empty),
-         },
-         ty.void_(),
-         Vector{
-             Return(),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+struct in_struct {
+  @builtin(position) inner_position: vec4f,
+}
+@fragment
+fn ep_func(in_var: in_struct) {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1387,19 +1325,11 @@ TEST_F(InspectorGetEntryPointTest, InputPositionStructReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, FrontFacingSimpleReferenced) {
-    Func("ep_func",
-         Vector{
-             Param("in_var", ty.bool_(), Vector{Builtin(core::BuiltinValue::kFrontFacing)}),
-         },
-         ty.void_(),
-         Vector{
-             Return(),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment
+fn ep_func(@builtin(front_facing) in_var: bool) {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1408,24 +1338,14 @@ TEST_F(InspectorGetEntryPointTest, FrontFacingSimpleReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, FrontFacingStructReferenced) {
-    Structure("in_struct", Vector{
-                               Member("inner_position", ty.bool_(),
-                                      Vector{Builtin(core::BuiltinValue::kFrontFacing)}),
-                           });
-
-    Func("ep_func",
-         Vector{
-             Param("in_var", ty("in_struct"), tint::Empty),
-         },
-         ty.void_(),
-         Vector{
-             Return(),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+struct in_struct {
+  @builtin(front_facing) inner_position: bool,
+}
+@fragment
+fn ep_func(in_var: in_struct) {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1434,19 +1354,11 @@ TEST_F(InspectorGetEntryPointTest, FrontFacingStructReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, SampleIndexSimpleReferenced) {
-    Func("ep_func",
-         Vector{
-             Param("in_var", ty.u32(), Vector{Builtin(core::BuiltinValue::kSampleIndex)}),
-         },
-         ty.void_(),
-         Vector{
-             Return(),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment
+fn ep_func(@builtin(sample_index) in_var: u32) {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1455,24 +1367,15 @@ TEST_F(InspectorGetEntryPointTest, SampleIndexSimpleReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, SampleIndexStructReferenced) {
-    Structure("in_struct", Vector{
-                               Member("inner_position", ty.u32(),
-                                      Vector{Builtin(core::BuiltinValue::kSampleIndex)}),
-                           });
+    auto* src = R"(
+struct in_struct {
+  @builtin(sample_index) inner_position: u32,
+}
 
-    Func("ep_func",
-         Vector{
-             Param("in_var", ty("in_struct"), tint::Empty),
-         },
-         ty.void_(),
-         Vector{
-             Return(),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-
-    Inspector& inspector = Build();
+@fragment
+fn ep_func(in_var: in_struct) {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1481,17 +1384,11 @@ TEST_F(InspectorGetEntryPointTest, SampleIndexStructReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, NumWorkgroupsSimpleReferenced) {
-    Func("ep_func",
-         Vector{
-             Param("in_var", ty.vec3<u32>(), Vector{Builtin(core::BuiltinValue::kNumWorkgroups)}),
-         },
-         ty.void_(),
-         Vector{
-             Return(),
-         },
-         Vector{Stage(ast::PipelineStage::kCompute), WorkgroupSize(1_i)}, tint::Empty);
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@compute @workgroup_size(1i)
+fn ep_func(@builtin(num_workgroups) in_var: vec3u) {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1500,22 +1397,15 @@ TEST_F(InspectorGetEntryPointTest, NumWorkgroupsSimpleReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, NumWorkgroupsStructReferenced) {
-    Structure("in_struct", Vector{
-                               Member("inner_position", ty.vec3<u32>(),
-                                      Vector{Builtin(core::BuiltinValue::kNumWorkgroups)}),
-                           });
+    auto* src = R"(
+struct in_struct {
+  @builtin(num_workgroups) inner_position: vec3u,
+}
 
-    Func("ep_func",
-         Vector{
-             Param("in_var", ty("in_struct"), tint::Empty),
-         },
-         ty.void_(),
-         Vector{
-             Return(),
-         },
-         Vector{Stage(ast::PipelineStage::kCompute), WorkgroupSize(1_i)}, tint::Empty);
-
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i)
+fn ep_func(in_var: in_struct) {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1524,18 +1414,13 @@ TEST_F(InspectorGetEntryPointTest, NumWorkgroupsStructReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, FragDepthSimpleReferenced) {
-    Func("ep_func", {}, ty.f32(),
-         Vector{
-             Return(Expr(0_f)),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         },
-         Vector{
-             Builtin(core::BuiltinValue::kFragDepth),
-         });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment
+fn ep_func() -> @builtin(frag_depth) f32 {
+  return 0f;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1544,21 +1429,17 @@ TEST_F(InspectorGetEntryPointTest, FragDepthSimpleReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, FragDepthStructReferenced) {
-    Structure("out_struct", Vector{
-                                Member("inner_frag_depth", ty.f32(),
-                                       Vector{Builtin(core::BuiltinValue::kFragDepth)}),
-                            });
-
-    Func("ep_func", tint::Empty, ty("out_struct"),
-         Vector{
-             Decl(Var("out_var", ty("out_struct"))),
-             Return("out_var"),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kFragment),
-         });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+struct out_struct {
+  @builtin(frag_depth) inner_frag_depth: f32,
+}
+@fragment
+fn ep_func() -> out_struct {
+  var out_var: out_struct;
+  return out_var;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
@@ -1567,22 +1448,21 @@ TEST_F(InspectorGetEntryPointTest, FragDepthStructReferenced) {
 }
 
 TEST_F(InspectorGetEntryPointTest, ClipDistancesReferenced) {
-    Enable(wgsl::Extension::kClipDistances);
+    auto* src = R"(
+enable clip_distances;
 
-    Structure("out_struct", Vector{Member("inner_clip_distances", ty.array<f32, 8>(),
-                                          Vector{Builtin(core::BuiltinValue::kClipDistances)}),
-                                   Member("inner_position", ty.vec4<f32>(),
-                                          Vector{Builtin(core::BuiltinValue::kPosition)})});
-    Func("ep_func", tint::Empty, ty("out_struct"),
-         Vector{
-             Decl(Var("out_var", ty("out_struct"))),
-             Return("out_var"),
-         },
-         Vector{
-             Stage(ast::PipelineStage::kVertex),
-         });
+struct out_struct {
+  @builtin(clip_distances) inner_clip_distances: array<f32, 8>,
+  @builtin(position) inner_position: vec4f,
+}
 
-    Inspector& inspector = Build();
+@vertex
+fn ep_func() -> out_struct {
+  var out_var: out_struct;
+  return out_var;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
 
