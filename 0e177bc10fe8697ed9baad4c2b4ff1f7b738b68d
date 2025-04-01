@@ -16,6 +16,24 @@
       "message": "Brian, do you want to be an OWNER on dawn/webgpu-cts/?\n\nAlso which address should I use? It seems most places in chromium use your chromium account but dawn/tools/ uses your google account.",
       "revId": "0e177bc10fe8697ed9baad4c2b4ff1f7b738b68d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f5527f3_637d8d33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T20:25:08Z",
+      "side": 1,
+      "message": "discussed this and adding both should be fine, though in practice Brian is using the google.com account",
+      "parentUuid": "f6a5ea7a_c941e19b",
+      "revId": "0e177bc10fe8697ed9baad4c2b4ff1f7b738b68d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
