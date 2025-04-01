@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03afab4c_68ed21ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T17:14:00Z",
+      "side": 1,
+      "message": "Have you run clang-tidy locally to see what this catches? Otherwise, it will run on CL uploads and give people suggestions when they edit code around one of the issues.",
+      "revId": "744664f89553d8f86151b80767a2f49928722342",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
