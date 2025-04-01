@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bfb79871_4769dfbb",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-01T18:30:50Z",
+      "side": 1,
+      "message": "Can we invert this so it is \"DisableXXX\", just so we don\u0027t have 1000 toggles enabled for all the tiny features we have in the future?",
+      "revId": "43631ac2e80ac18f9a531c26443f3bd14304b53e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "32f3f736_4eae365d",
         "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
         "patchSetId": 2
