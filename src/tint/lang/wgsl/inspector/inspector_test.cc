@@ -127,7 +127,9 @@ class InspectorTextureTest : public InspectorBuilder, public testing::Test {};
 class InspectorRegressionTest : public InspectorBuilder, public testing::Test {};
 
 TEST_F(InspectorGetEntryPointTest, NoFunctions) {
-    Inspector& inspector = Build();
+    auto* src = R"(
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -136,7 +138,10 @@ TEST_F(InspectorGetEntryPointTest, NoFunctions) {
 }
 
 TEST_F(InspectorGetEntryPointTest, NoEntryPoints) {
-    Inspector& inspector = Build();
+    auto* src = R"(
+fn foo() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -145,13 +150,10 @@ TEST_F(InspectorGetEntryPointTest, NoEntryPoints) {
 }
 
 TEST_F(InspectorGetEntryPointTest, OneEntryPoint) {
-    MakeEmptyBodyFunction("foo", Vector{
-                                     Stage(ast::PipelineStage::kFragment),
-                                 });
-
-    // TODO(dsinclair): Update to run the namer transform when available.
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment fn foo() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -163,18 +165,12 @@ TEST_F(InspectorGetEntryPointTest, OneEntryPoint) {
 }
 
 TEST_F(InspectorGetEntryPointTest, MultipleEntryPoints) {
-    MakeEmptyBodyFunction("foo", Vector{
-                                     Stage(ast::PipelineStage::kFragment),
-                                 });
+    auto* src = R"(
+@fragment fn foo() {}
 
-    MakeEmptyBodyFunction("bar", Vector{
-                                     Stage(ast::PipelineStage::kCompute),
-                                     WorkgroupSize(1_i),
-                                 });
-
-    // TODO(dsinclair): Update to run the namer transform when available.
-
-    Inspector& inspector = Build();
+@compute @workgroup_size(1i) fn bar() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -189,22 +185,20 @@ TEST_F(InspectorGetEntryPointTest, MultipleEntryPoints) {
 }
 
 TEST_F(InspectorGetEntryPointTest, MixFunctionsAndEntryPoints) {
-    MakeEmptyBodyFunction("func", tint::Empty);
+    auto* src = R"(
+fn func() {}
 
-    MakeCallerBodyFunction("foo", Vector{std::string("func")},
-                           Vector{
-                               Stage(ast::PipelineStage::kCompute),
-                               WorkgroupSize(1_i),
-                           });
+@compute @workgroup_size(1i)
+fn foo() {
+  func();
+}
 
-    MakeCallerBodyFunction("bar", Vector{std::string("func")},
-                           Vector{
-                               Stage(ast::PipelineStage::kFragment),
-                           });
-
-    // TODO(dsinclair): Update to run the namer transform when available.
-
-    Inspector& inspector = Build();
+@fragment
+fn bar() {
+  func();
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     EXPECT_FALSE(inspector.has_error());
@@ -219,12 +213,10 @@ TEST_F(InspectorGetEntryPointTest, MixFunctionsAndEntryPoints) {
 }
 
 TEST_F(InspectorGetEntryPointTest, DefaultWorkgroupSize) {
-    MakeEmptyBodyFunction("foo", Vector{
-                                     Stage(ast::PipelineStage::kCompute),
-                                     WorkgroupSize(8_i, 2_i, 1_i),
-                                 });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@compute @workgroup_size(8i, 2i, 1i)  fn foo() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -239,11 +231,10 @@ TEST_F(InspectorGetEntryPointTest, DefaultWorkgroupSize) {
 
 // Test that push_constant_size is zero if there are no push constants.
 TEST_F(InspectorGetEntryPointTest, PushConstantSizeNone) {
-    MakeEmptyBodyFunction("foo", Vector{
-                                     Stage(ast::PipelineStage::kFragment),
-                                 });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@fragment fn foo() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -254,14 +245,17 @@ TEST_F(InspectorGetEntryPointTest, PushConstantSizeNone) {
 
 // Test that push_constant_size is 4 (bytes) if there is a single F32 push constant.
 TEST_F(InspectorGetEntryPointTest, PushConstantSizeOneWord) {
-    Enable(wgsl::Extension::kChromiumExperimentalPushConstant);
-    GlobalVar("pc", core::AddressSpace::kPushConstant, ty.f32());
-    MakePlainGlobalReferenceBodyFunction("foo", "pc", ty.f32(),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kFragment),
-                                         });
+    auto* src = R"(
+enable chromium_experimental_push_constant;
 
-    Inspector& inspector = Build();
+var<push_constant> pc: f32;
+
+@fragment
+fn foo() {
+  _ = pc;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -273,16 +267,22 @@ TEST_F(InspectorGetEntryPointTest, PushConstantSizeOneWord) {
 // Test that push_constant_size is 12 (bytes) if there is a struct containing one
 // each of i32, f32 and u32.
 TEST_F(InspectorGetEntryPointTest, PushConstantSizeThreeWords) {
-    Enable(wgsl::Extension::kChromiumExperimentalPushConstant);
-    auto* pc_struct_type =
-        MakeStructType("PushConstantStruct", Vector{ty.i32(), ty.f32(), ty.u32()});
-    GlobalVar("pc", core::AddressSpace::kPushConstant, ty.Of(pc_struct_type));
-    MakePlainGlobalReferenceBodyFunction("foo", "pc", ty.Of(pc_struct_type),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kFragment),
-                                         });
+    auto* src = R"(
+enable chromium_experimental_push_constant;
 
-    Inspector& inspector = Build();
+struct S {
+  a: i32,
+  b: f32,
+  c: u32,
+}
+var<push_constant> pc : S;
+
+@fragment
+fn foo() {
+  _ = pc;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -295,17 +295,23 @@ TEST_F(InspectorGetEntryPointTest, PushConstantSizeThreeWords) {
 // one used by the entry point containing an f32, and one unused by the entry
 // point containing a struct of size 12 bytes.
 TEST_F(InspectorGetEntryPointTest, PushConstantSizeTwoConstants) {
-    Enable(wgsl::Extension::kChromiumExperimentalPushConstant);
-    auto* unused_struct_type =
-        MakeStructType("PushConstantStruct", Vector{ty.i32(), ty.f32(), ty.u32()});
-    GlobalVar("unused", core::AddressSpace::kPushConstant, ty.Of(unused_struct_type));
-    GlobalVar("pc", core::AddressSpace::kPushConstant, ty.f32());
-    MakePlainGlobalReferenceBodyFunction("foo", "pc", ty.f32(),
-                                         Vector{
-                                             Stage(ast::PipelineStage::kFragment),
-                                         });
+    auto* src = R"(
+enable chromium_experimental_push_constant;
 
-    Inspector& inspector = Build();
+struct S {
+  a: i32,
+  b: f32,
+  c: u32,
+}
+var<push_constant> unused : S;
+var<push_constant> pc: f32;
+
+@fragment
+fn foo() {
+  _ = pc;
+}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
@@ -317,12 +323,11 @@ TEST_F(InspectorGetEntryPointTest, PushConstantSizeTwoConstants) {
 }
 
 TEST_F(InspectorGetEntryPointTest, NonDefaultWorkgroupSize) {
-    MakeEmptyBodyFunction("foo", Vector{
-                                     Stage(ast::PipelineStage::kCompute),
-                                     WorkgroupSize(8_i, 2_i, 1_i),
-                                 });
-
-    Inspector& inspector = Build();
+    auto* src = R"(
+@compute @workgroup_size(8i, 2i, 1i)
+fn foo() {}
+)";
+    Inspector& inspector = Initialize(src);
 
     auto result = inspector.GetEntryPoints();
     ASSERT_FALSE(inspector.has_error()) << inspector.error();
