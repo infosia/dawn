@@ -33,6 +33,24 @@
       "message": "Could this also be the cause of https://crbug.com/407567233 ? I Marked those as failing under TSAN yesterday due to the test never completing. But if it never got the async message ....",
       "revId": "fa47dff1055fe7586e4b3813eb060dfeea1c6000",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f11a4bb_bbd7b82d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T20:41:49Z",
+      "side": 1,
+      "message": "No, this is specific to CTS in Telemetry, those are end2end tests (is it the bug you intended to link to?).",
+      "parentUuid": "5576e906_bef72d35",
+      "revId": "fa47dff1055fe7586e4b3813eb060dfeea1c6000",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
