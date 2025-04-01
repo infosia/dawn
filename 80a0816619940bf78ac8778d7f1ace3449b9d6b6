@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "80a0816619940bf78ac8778d7f1ace3449b9d6b6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bbeb588_03fe0244",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T22:36:05Z",
+      "side": 1,
+      "message": "There is some overlap with @senorblanco@chromium.org\u0027s CL:\nhttps://dawn-review.googlesource.com/c/dawn/+/234054\n\nin particular note that (both before and after stephen\u0027s change) most of these tests are skipped on swiftshader completely. I would prefer not to do this but apparently the failures were expensive enough at some point that we decided to do that",
+      "revId": "80a0816619940bf78ac8778d7f1ace3449b9d6b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
