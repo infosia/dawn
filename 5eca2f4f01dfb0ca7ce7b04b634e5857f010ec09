@@ -67,6 +67,24 @@
       "message": "Rafael, any concern with this?",
       "revId": "5eca2f4f01dfb0ca7ce7b04b634e5857f010ec09",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d251e666_13af00f0",
+        "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-04-01T19:56:46Z",
+      "side": 1,
+      "message": "No.",
+      "parentUuid": "be8e03f5_504b8806",
+      "revId": "5eca2f4f01dfb0ca7ce7b04b634e5857f010ec09",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
