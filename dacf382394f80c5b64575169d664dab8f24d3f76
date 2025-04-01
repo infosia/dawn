@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "733e1789_eb1c7f2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T18:32:13Z",
+      "side": 1,
+      "message": "If you\u0027re just adding expectations you can always `No-Try: true` to get it landed faster. Helps avoid conflicts.",
+      "revId": "dacf382394f80c5b64575169d664dab8f24d3f76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58b90f35_d6b0b375",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T18:32:13Z",
+      "side": 1,
+      "message": "This already has a merge conflict and I\u0027m about to make another. But drive-by review.",
+      "revId": "dacf382394f80c5b64575169d664dab8f24d3f76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "437bd2bc_da93587a",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T18:32:13Z",
+      "side": 1,
+      "message": "Why `Skip`? These seem to only be flaky, they\u0027re not even failing every time.",
+      "revId": "dacf382394f80c5b64575169d664dab8f24d3f76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
