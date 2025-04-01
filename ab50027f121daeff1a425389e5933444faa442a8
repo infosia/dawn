@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8bc867b_c5cab472",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-01T21:57:45Z",
+      "side": 1,
+      "message": "Now arrayLengthFromUniform, textureBuiltinsFromUniform, and pushConstants use seperate uniform buffer objects or uniforms. Ideally we can put them into one internal uniform buffer objects to save binding slots. This require change of current transforms, and properly handle different cases where only a subset of these features are used. Defer this refactor to future work.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
