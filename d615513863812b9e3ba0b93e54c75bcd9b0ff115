@@ -16,6 +16,93 @@
       "message": "@geofflang@chromium.org Please take a look, thanks!\nThis CL move WGSL code parsing and validating into the shader module front-end cache missing function, so we don\u0027t need to parse the code if there might be a cache hit.\nI think this change can stil be applied even if we are going to change the shader module front-end caching?",
       "revId": "d615513863812b9e3ba0b93e54c75bcd9b0ff115",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab78fa8b_6a4f315d",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2128,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-01T19:47:22Z",
+      "side": 1,
+      "message": "Did you find this happened in practice? Doen\u0027t this mean that we\u0027re ignoring request for no compilation info now?",
+      "range": {
+        "startLine": 2127,
+        "startChar": 46,
+        "endLine": 2128,
+        "endChar": 90
+      },
+      "revId": "d615513863812b9e3ba0b93e54c75bcd9b0ff115",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7760bb4b_d80151b6",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2199,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-01T19:47:22Z",
+      "side": 1,
+      "message": "If you decide to keep the `inplaceCompilationMessages` above. I would allocate it direclty here instead so it\u0027s only allocated on cache misses.",
+      "range": {
+        "startLine": 2199,
+        "startChar": 12,
+        "endLine": 2199,
+        "endChar": 63
+      },
+      "revId": "d615513863812b9e3ba0b93e54c75bcd9b0ff115",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ec9822b_3688d421",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-01T19:47:22Z",
+      "side": 1,
+      "message": "I would rephrase this as \"Parse a shader module from a validated ShaderModuleDescriptor. Errors are generated only if the shader code itself is invalid.\"\n\nThe CountUTF16CodeUnitsFromUTF8String is an edge case and probably an internal error, not worth mentioning I think.",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 53
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "13f9d4b1_7e0d4d5e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/ShaderModule.h",
+              "range": {
+                "startLine": 136,
+                "startChar": 0,
+                "endLine": 140,
+                "endChar": 0
+              },
+              "replacement": "// Parse a shader module from a validated ShaderModuleDescriptor. Errors are generated only if the\n// shader code itself is invalid.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d615513863812b9e3ba0b93e54c75bcd9b0ff115",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
