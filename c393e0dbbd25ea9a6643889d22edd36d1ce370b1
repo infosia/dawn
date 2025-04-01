@@ -52,6 +52,24 @@
       "parentUuid": "3d436bb3_2fd6e072",
       "revId": "c393e0dbbd25ea9a6643889d22edd36d1ce370b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfdf005c_9aaa0b6d",
+        "filename": "webgpu-cts/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T20:34:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2e2fb5c9_cd16ed3b",
+      "revId": "c393e0dbbd25ea9a6643889d22edd36d1ce370b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
