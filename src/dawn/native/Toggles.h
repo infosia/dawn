@@ -65,6 +65,7 @@ enum class Toggle {
     UseDXC,
     DisableRobustness,
     MetalEnableVertexPulling,
+    AllowTextureViewBindingUsedAsExternalTexture,
     AllowUnsafeAPIs,
     FlushBeforeClientWaitSync,
     UseTempBufferInSmallFormatTextureToTextureCopyFromGreaterToLessMipLevel,
