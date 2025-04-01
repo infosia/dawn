@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbecf3b6_f8891d02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3984191
+      },
+      "writtenOn": "2025-04-01T15:10:09Z",
+      "side": 1,
+      "message": "Added support for WinUI SwapChainPanel as a new surface descriptor type.\n\nThere was already support for the UWP SwapChainPanel under the name SurfaceDescriptorFromWindowsSwapChainPanel, but this is not the same as the WinUI SwapChainPanel. So I renamed this to include UWP in the name as well.",
+      "revId": "5eca2f4f01dfb0ca7ce7b04b634e5857f010ec09",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
