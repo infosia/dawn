@@ -33,6 +33,24 @@
       "message": "Hm, it looks like DawnTest.h is only meant for end2end tests? Is there already a good place to stick code used by all Dawn tests?",
       "revId": "bd42060fac362ed6733785e2ba5a84d2c72d8603",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b008ca0c_c997cfc8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T22:06:58Z",
+      "side": 1,
+      "message": "Not that I\u0027m aware of. Maybe gmock_and_gtest, but more likely you want to just add a source_set and add it as a dep on all three test targets (end2end, unit, perf). I don\u0027t know why DawnTest and DawnNativeTest are the way they are.",
+      "parentUuid": "bebea0b1_6ef5fa84",
+      "revId": "bd42060fac362ed6733785e2ba5a84d2c72d8603",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
