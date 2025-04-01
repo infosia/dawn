@@ -33,6 +33,24 @@
       "message": "LGTM, but shouldn\u0027t UPF catch these?",
       "revId": "381d9f957658e0a28742be14982b59ee21be34b6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8017e8d6_7b8d9109",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T02:11:21Z",
+      "side": 1,
+      "message": "BTW could you write a tip into https://docs.google.com/document/d/1xpBROvUvAKF5zCkQDVzgmSd8NstbAfgL1KFI4xwqgvs/edit?usp\u003dsharing about how to search LUCI for failures?\n\nI tried it for https://dawn-review.googlesource.com/c/dawn/+/233934 but apparently I did it wrong, because those were still failing.",
+      "parentUuid": "6966a6b9_e4fc5edf",
+      "revId": "381d9f957658e0a28742be14982b59ee21be34b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
