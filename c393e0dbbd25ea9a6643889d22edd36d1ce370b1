@@ -16,6 +16,24 @@
       "message": "Will this work? I thought we weren\u0027t allowed to have 2 entries in OWNERS?",
       "revId": "c393e0dbbd25ea9a6643889d22edd36d1ce370b1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d436bb3_2fd6e072",
+        "filename": "webgpu-cts/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T20:31:11Z",
+      "side": 1,
+      "message": "I _think_ that\u0027s only for committers because of the two-committer policy. I don\u0027t think there\u0027s a two-owner policy?",
+      "parentUuid": "57b252bf_697eaaaa",
+      "revId": "c393e0dbbd25ea9a6643889d22edd36d1ce370b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
