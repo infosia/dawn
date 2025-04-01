@@ -16,7 +16,10 @@ class AsyncHelperTest {
 
             /* Call an asynchronous method, converted from a callback pattern by a helper. */
             val result = device.createRenderPipelineAsync(
-                RenderPipelineDescriptor(vertex = VertexState(module = shaderModule))
+              RenderPipelineDescriptor(
+                vertex = VertexState(module = shaderModule),
+                primitive = PrimitiveState(stripIndexFormat = IndexFormat.Undefined)
+              )
             )
 
             assert(result.status == CreatePipelineAsyncStatus.ValidationError) {
@@ -53,7 +56,8 @@ class AsyncHelperTest {
                     fragment = FragmentState(
                         module = shaderModule,
                         targets = arrayOf(ColorTargetState(format = TextureFormat.RGBA8Unorm))
-                    )
+                    ),
+                    primitive = PrimitiveState(stripIndexFormat = IndexFormat.Undefined)
                 )
             )
 

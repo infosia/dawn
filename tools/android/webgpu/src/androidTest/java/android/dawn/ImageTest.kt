@@ -62,7 +62,8 @@ class ImageTest {
                                 RenderPipelineDescriptor(
                                     vertex = VertexState(module = shaderModule),
                                     primitive = PrimitiveState(
-                                        topology = PrimitiveTopology.TriangleList
+                                        topology = PrimitiveTopology.TriangleList,
+                                        stripIndexFormat = IndexFormat.Undefined
                                     ),
                                     fragment = FragmentState(
                                         module = shaderModule,
