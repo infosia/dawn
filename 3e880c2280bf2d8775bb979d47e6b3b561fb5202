@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b35907b_c6c1769b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T04:20:11Z",
+      "side": 1,
+      "message": "LGTM. Just need James to review.",
+      "revId": "3e880c2280bf2d8775bb979d47e6b3b561fb5202",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e95d2405_81d43166",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T04:20:11Z",
+      "side": 1,
+      "message": "This is much clearer here, thanks.",
+      "revId": "3e880c2280bf2d8775bb979d47e6b3b561fb5202",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
