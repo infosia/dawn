@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "478b96f5_646f1eae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T18:10:03Z",
+      "side": 1,
+      "message": "Most of the failures look unrelated but the presubmit failure is real: please run `git cl format`, amend your commit, and upload again\n\nIf you use `git cl upload` instead of `git push origin HEAD:refs/for/main` then presubmit will run locally so it catches this.",
+      "revId": "5eca2f4f01dfb0ca7ce7b04b634e5857f010ec09",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be8e03f5_504b8806",
         "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
         "patchSetId": 1
