@@ -20,6 +20,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "9faa2a29_dc633b47",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-04-01T04:52:58Z",
+      "side": 1,
+      "message": "Hi mentors, thank you for your feedback. I’ve uploaded patch set 2.",
+      "revId": "3e880c2280bf2d8775bb979d47e6b3b561fb5202",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "e95d2405_81d43166",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 2

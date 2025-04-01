@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec501a3c_3be1fd2e",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2224,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-04-01T04:52:58Z",
+      "side": 1,
+      "message": "I agree, swizzle_from_vector2_only is more appropriate",
+      "parentUuid": "4b121cd7_af130063",
+      "revId": "0050549be449b4e718260647566cc791863b6ddd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09881717_867c47c1",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-31T15:51:00Z",
       "side": 1,
       "message": "This is probably simpler by emitting a `undef` value in the IR which should get turned into a 0",
+      "revId": "0050549be449b4e718260647566cc791863b6ddd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df16f067_e6392361",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2247,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-04-01T04:52:58Z",
+      "side": 1,
+      "message": "After going over `core::ir`, I couldn’t find a way to emit an `undef` instruction, so I temporarily substituted it with the literal `0`. It might be appropriate to add an `undef` IR node in `core::ir` along with a corresponding builder function to do something like `undef_inst-\u003eResult(0)`.",
+      "parentUuid": "09881717_867c47c1",
       "revId": "0050549be449b4e718260647566cc791863b6ddd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e9485f9_9576bbb4",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2248,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-04-01T04:52:58Z",
+      "side": 1,
+      "message": "I was trying to define behavior for the undefined case by selecting a logical current index. For example, given literals `0, ~0u, 1, 2`, the literal `~0u` was interpreted as the second index. However, I realized, thanks for your guidance, that\u0027s simpler to fallback to the first index. I apologize for any confusion.",
+      "parentUuid": "0e1ffcf3_5d21775a",
+      "revId": "0050549be449b4e718260647566cc791863b6ddd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16e0f824_d09b694c",
@@ -65,6 +119,30 @@
       "writtenOn": "2025-03-31T15:51:00Z",
       "side": 1,
       "message": "```suggestion\n            // Adjust indices in the second vector so they will be in bounds. Indices in the first vector will already be in bounds.\n            //\n            // Note, this only happens if we\u0027re pulling all values from the second vector with a swizzle.\n            if (swizzle_vector2) {\n                // Prepare index for swizzle.\n                literals[i] -\u003d n1;\n            }\n```",
+      "range": {
+        "startLine": 2256,
+        "startChar": 0,
+        "endLine": 2261,
+        "endChar": 74
+      },
+      "revId": "0050549be449b4e718260647566cc791863b6ddd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b751ec4_874283fa",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-04-01T04:52:58Z",
+      "side": 1,
+      "message": "OK",
+      "parentUuid": "16e0f824_d09b694c",
       "range": {
         "startLine": 2256,
         "startChar": 0,
