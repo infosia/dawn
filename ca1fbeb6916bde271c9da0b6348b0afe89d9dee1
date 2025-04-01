@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03be1621_37933b9f",
+        "filename": "src/dawn/node/binding/GPUCommandEncoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-01T10:52:50Z",
+      "side": 1,
+      "message": "Can we have the same comment as in Blink?",
+      "revId": "ca1fbeb6916bde271c9da0b6348b0afe89d9dee1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
