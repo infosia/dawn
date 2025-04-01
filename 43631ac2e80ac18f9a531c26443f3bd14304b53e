@@ -16,6 +16,29 @@
       "message": "PTAL.\n\nNote that I won\u0027t merge this CL before https://chromium-review.googlesource.com/c/chromium/src/+/6422216 is approved and before Intent to Ship is sent and approved by Blink API owners.",
       "revId": "43631ac2e80ac18f9a531c26443f3bd14304b53e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32f3f736_4eae365d",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-01T18:01:58Z",
+      "side": 1,
+      "message": "I think that this test case should probably be moved into the `BindGroupDoesNotMatchLayout` test above since it\u0027s effectively testing whether the layouts match.\n\nInstead, for this test, we should probably still make a new test fixture class, override `GetDisabledToggles()` to return the new toggle, and then verify that we get an error when the toggle is off and the usage is valid.",
+      "range": {
+        "startLine": 632,
+        "startChar": 4,
+        "endLine": 632,
+        "endChar": 90
+      },
+      "revId": "43631ac2e80ac18f9a531c26443f3bd14304b53e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
