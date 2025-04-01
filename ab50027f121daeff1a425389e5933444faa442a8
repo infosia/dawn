@@ -16,6 +16,24 @@
       "message": "Now arrayLengthFromUniform, textureBuiltinsFromUniform, and pushConstants use seperate uniform buffer objects or uniforms. Ideally we can put them into one internal uniform buffer objects to save binding slots. This require change of current transforms, and properly handle different cases where only a subset of these features are used. Defer this refactor to future work.",
       "revId": "ab50027f121daeff1a425389e5933444faa442a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75c04df9_68e398b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T22:07:10Z",
+      "side": 1,
+      "message": "There is a src/tint/lang/core/ir/transform/prepare_push_constants.h which can be used to prepare the push constant structure. Will that work here?",
+      "parentUuid": "b8bc867b_c5cab472",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
