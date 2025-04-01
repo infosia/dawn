@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc15414f_02b9ccc0",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T15:03:01Z",
+      "side": 1,
+      "message": "Going to leave this for now, maybe look at removing access in the future.",
+      "parentUuid": "ffdfcd27_7eb8d455",
+      "revId": "8e9ef41d26d524b0615234606649e3a1f6db2cf5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "907863d6_deb2fb29",
