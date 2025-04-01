@@ -16,6 +16,23 @@
       "message": "It\u0027s interesting that this causes the error scope tests to fail due to a timeout. They should send heartbeats given the new code so IDK why WebSocket waits 20 seconds. https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/modules/webgpu/gpu_device.cc;drc\u003da29762124d3d9c3c2a93a6745bae4900578a7d9c;l\u003d685 ensures the GPU process should process commands in finite time as well.",
       "revId": "fa47dff1055fe7586e4b3813eb060dfeea1c6000",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5576e906_bef72d35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T11:41:00Z",
+      "side": 1,
+      "message": "Could this also be the cause of https://crbug.com/407567233 ? I Marked those as failing under TSAN yesterday due to the test never completing. But if it never got the async message ....",
+      "revId": "fa47dff1055fe7586e4b3813eb060dfeea1c6000",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
