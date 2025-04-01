@@ -320,27 +320,25 @@ void Texture::DestroyImpl() {
     mD3d11Resource = nullptr;
     mKeyedMutex = nullptr;
     mTextureForStencilSampling = nullptr;
+    mLastCreatedRTVs.clear();
+    mLastCreatedSRVs.clear();
 }
 
 ID3D11Resource* Texture::GetD3D11Resource() const {
     return mD3d11Resource.Get();
 }
 
-ResultOrError<ComPtr<ID3D11RenderTargetView>> Texture::CreateD3D11RenderTargetView(
-    wgpu::TextureFormat format,
-    uint32_t mipLevel,
-    uint32_t baseSlice,
-    uint32_t sliceCount,
-    uint32_t planeSlice) const {
+ResultOrError<ComPtr<ID3D11RenderTargetView1>> Texture::GetOrCreateD3D11RenderTargetView(
+    const RTVKey& key) {
     D3D11_RENDER_TARGET_VIEW_DESC1 rtvDesc;
-    rtvDesc.Format = d3d::DXGITextureFormat(GetDevice(), format);
+    rtvDesc.Format = d3d::DXGITextureFormat(GetDevice(), key.viewFormat);
     if (IsMultisampledTexture()) {
         DAWN_ASSERT(GetDimension() == wgpu::TextureDimension::e2D);
         DAWN_ASSERT(GetNumMipLevels() == 1);
-        DAWN_ASSERT(mipLevel == 0);
-        DAWN_ASSERT(baseSlice == 0);
-        DAWN_ASSERT(sliceCount == 1);
-        DAWN_ASSERT(planeSlice == 0);
+        DAWN_ASSERT(key.mipLevel == 0);
+        DAWN_ASSERT(key.baseSlice == 0);
+        DAWN_ASSERT(key.sliceCount == 1);
+        DAWN_ASSERT(key.planeSlice == 0);
         rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DMS;
     } else {
         switch (GetDimension()) {
@@ -354,31 +352,41 @@ ResultOrError<ComPtr<ID3D11RenderTargetView>> Texture::CreateD3D11RenderTargetVi
                 // https://docs.microsoft.com/en-us/windows/desktop/api/d3d11/ns-d3d11-d3d11_tex2d_array
                 // _rtv
                 rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2DARRAY;
-                rtvDesc.Texture2DArray.MipSlice = mipLevel;
-                rtvDesc.Texture2DArray.FirstArraySlice = baseSlice;
-                rtvDesc.Texture2DArray.ArraySize = sliceCount;
-                rtvDesc.Texture2DArray.PlaneSlice = planeSlice;
+                rtvDesc.Texture2DArray.MipSlice = key.mipLevel;
+                rtvDesc.Texture2DArray.FirstArraySlice = key.baseSlice;
+                rtvDesc.Texture2DArray.ArraySize = key.sliceCount;
+                rtvDesc.Texture2DArray.PlaneSlice = key.planeSlice;
                 break;
             case wgpu::TextureDimension::e3D:
                 rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE3D;
-                rtvDesc.Texture3D.MipSlice = mipLevel;
-                rtvDesc.Texture3D.FirstWSlice = baseSlice;
-                rtvDesc.Texture3D.WSize = sliceCount;
+                rtvDesc.Texture3D.MipSlice = key.mipLevel;
+                rtvDesc.Texture3D.FirstWSlice = key.baseSlice;
+                rtvDesc.Texture3D.WSize = key.sliceCount;
                 break;
             case wgpu::TextureDimension::e1D:
                 rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE1D;
-                rtvDesc.Texture1D.MipSlice = mipLevel;
+                rtvDesc.Texture1D.MipSlice = key.mipLevel;
                 break;
         }
     }
 
-    ComPtr<ID3D11RenderTargetView1> rtv;
+    if (mLastCreatedRTVs.size() <= key.planeSlice) {
+        mLastCreatedRTVs.resize(key.planeSlice + 1);
+    }
+
+    if (mLastCreatedRTVs[key.planeSlice].key == key) {
+        return mLastCreatedRTVs[key.planeSlice].view;
+    }
+
     DAWN_TRY(CheckHRESULT(ToBackend(GetDevice())
                               ->GetD3D11Device3()
-                              ->CreateRenderTargetView1(GetD3D11Resource(), &rtvDesc, &rtv),
+                              ->CreateRenderTargetView1(GetD3D11Resource(), &rtvDesc,
+                                                        &mLastCreatedRTVs[key.planeSlice].view),
                           "CreateRenderTargetView"));
 
-    return {std::move(rtv)};
+    mLastCreatedRTVs[key.planeSlice].key = key;
+
+    return {mLastCreatedRTVs[key.planeSlice].view};
 }
 
 ResultOrError<ComPtr<ID3D11DepthStencilView>> Texture::CreateD3D11DepthStencilView(
@@ -519,12 +527,12 @@ MaybeError Texture::ClearRenderable(const ScopedCommandRecordingContext* command
                     // RTV, we can use the 'layer' as baseSlice and the 'depthOrArrayLayers' as
                     // sliceCount to create RTV without checking the dimension.
                     DAWN_TRY_ASSIGN(d3d11RTV,
-                                    CreateD3D11RenderTargetView(
-                                        format, clearRange.baseMipLevel, clearRange.baseArrayLayer,
-                                        GetMipLevelSingleSubresourceVirtualSize(
-                                            clearRange.baseMipLevel, clearRange.aspects)
-                                            .depthOrArrayLayers,
-                                        GetAspectIndex(aspect)));
+                                    GetOrCreateD3D11RenderTargetView(
+                                        {format, clearRange.baseMipLevel, clearRange.baseArrayLayer,
+                                         GetMipLevelSingleSubresourceVirtualSize(
+                                             clearRange.baseMipLevel, clearRange.aspects)
+                                             .depthOrArrayLayers,
+                                         GetAspectIndex(aspect)}));
                     commandContext->ClearRenderTargetView(d3d11RTV.Get(), d3d11ClearValue.color);
                 }
             }
@@ -1148,6 +1156,91 @@ ResultOrError<ComPtr<ID3D11ShaderResourceView>> Texture::GetStencilSRV(
     return srv;
 }
 
+ResultOrError<ComPtr<ID3D11ShaderResourceView1>> Texture::GetOrCreateSRV(const SRVKey& key) {
+    D3D11_SHADER_RESOURCE_VIEW_DESC1 srvDesc;
+    srvDesc.Format = d3d::D3DShaderResourceViewFormat(
+        GetDevice(), GetFormat(), GetDevice()->GetValidInternalFormat(key.viewFormat), key.aspects);
+
+    const auto planeSlice = GetAspectIndex(key.aspects);
+
+    // Currently we always use D3D11_TEX2D_ARRAY_SRV because we cannot specify base array
+    // layer and layer count in D3D11_TEX2D_SRV. For 2D texture views, we treat them as
+    // 1-layer 2D array textures. Multisampled textures may only be one array layer, so we
+    // use D3D11_SRV_DIMENSION_TEXTURE2DMS.
+    // https://docs.microsoft.com/en-us/windows/desktop/api/d3d11/ns-d3d11-d3d11_tex2d_srv
+    // https://docs.microsoft.com/en-us/windows/desktop/api/d3d11/ns-d3d11-d3d11_tex2d_array_srv
+    if (IsMultisampledTexture()) {
+        switch (key.viewDimension) {
+            case wgpu::TextureViewDimension::e2DArray:
+                DAWN_ASSERT(GetArrayLayers() == 1);
+                [[fallthrough]];
+            case wgpu::TextureViewDimension::e2D:
+                DAWN_ASSERT(GetDimension() == wgpu::TextureDimension::e2D);
+                srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DMS;
+                break;
+
+            default:
+                DAWN_UNREACHABLE();
+        }
+    } else {
+        switch (key.viewDimension) {
+            case wgpu::TextureViewDimension::e1D:
+                srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE1D;
+                srvDesc.Texture1D.MipLevels = key.levelCount;
+                srvDesc.Texture1D.MostDetailedMip = key.mipLevel;
+                break;
+
+            case wgpu::TextureViewDimension::e2D:
+            case wgpu::TextureViewDimension::e2DArray:
+                DAWN_ASSERT(GetDimension() == wgpu::TextureDimension::e2D);
+                srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
+                srvDesc.Texture2DArray.ArraySize = key.sliceCount;
+                srvDesc.Texture2DArray.FirstArraySlice = key.baseSlice;
+                srvDesc.Texture2DArray.MipLevels = key.levelCount;
+                srvDesc.Texture2DArray.MostDetailedMip = key.mipLevel;
+                srvDesc.Texture2DArray.PlaneSlice = planeSlice;
+                break;
+            case wgpu::TextureViewDimension::Cube:
+            case wgpu::TextureViewDimension::CubeArray:
+                DAWN_ASSERT(GetDimension() == wgpu::TextureDimension::e2D);
+                DAWN_ASSERT(key.sliceCount % 6 == 0);
+                srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBEARRAY;
+                srvDesc.TextureCubeArray.First2DArrayFace = key.baseSlice;
+                srvDesc.TextureCubeArray.NumCubes = key.sliceCount / 6;
+                srvDesc.TextureCubeArray.MipLevels = key.levelCount;
+                srvDesc.TextureCubeArray.MostDetailedMip = key.mipLevel;
+                break;
+            case wgpu::TextureViewDimension::e3D:
+                DAWN_ASSERT(GetDimension() == wgpu::TextureDimension::e3D);
+                srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE3D;
+                srvDesc.Texture3D.MostDetailedMip = key.mipLevel;
+                srvDesc.Texture3D.MipLevels = key.levelCount;
+                break;
+
+            case wgpu::TextureViewDimension::Undefined:
+                DAWN_UNREACHABLE();
+        }
+    }
+
+    if (mLastCreatedSRVs.size() <= planeSlice) {
+        mLastCreatedSRVs.resize(planeSlice + 1);
+    }
+
+    if (mLastCreatedSRVs[planeSlice].key == key) {
+        return mLastCreatedSRVs[planeSlice].view;
+    }
+
+    ComPtr<ID3D11ShaderResourceView1> srv;
+    DAWN_TRY(CheckHRESULT(ToBackend(GetDevice())
+                              ->GetD3D11Device3()
+                              ->CreateShaderResourceView1(GetD3D11Resource(), &srvDesc,
+                                                          &mLastCreatedSRVs[planeSlice].view),
+                          "CreateShaderResourceView1"));
+
+    mLastCreatedSRVs[planeSlice].key = key;
+    return {mLastCreatedSRVs[planeSlice].view};
+}
+
 // static
 Ref<TextureView> TextureView::Create(TextureBase* texture,
                                      const UnpackedPtr<TextureViewDescriptor>& descriptor) {
@@ -1169,75 +1262,11 @@ ResultOrError<ID3D11ShaderResourceView*> TextureView::GetOrCreateD3D11ShaderReso
         return mD3d11SharedResourceView.Get();
     }
 
-    Device* device = ToBackend(GetDevice());
-    D3D11_SHADER_RESOURCE_VIEW_DESC1 srvDesc;
-    srvDesc.Format = d3d::D3DShaderResourceViewFormat(GetDevice(), GetTexture()->GetFormat(),
-                                                      GetFormat(), GetAspects());
-
-    // Currently we always use D3D11_TEX2D_ARRAY_SRV because we cannot specify base array
-    // layer and layer count in D3D11_TEX2D_SRV. For 2D texture views, we treat them as
-    // 1-layer 2D array textures. Multisampled textures may only be one array layer, so we
-    // use D3D11_SRV_DIMENSION_TEXTURE2DMS.
-    // https://docs.microsoft.com/en-us/windows/desktop/api/d3d11/ns-d3d11-d3d11_tex2d_srv
-    // https://docs.microsoft.com/en-us/windows/desktop/api/d3d11/ns-d3d11-d3d11_tex2d_array_srv
-    if (GetTexture()->IsMultisampledTexture()) {
-        switch (GetDimension()) {
-            case wgpu::TextureViewDimension::e2DArray:
-                DAWN_ASSERT(GetTexture()->GetArrayLayers() == 1);
-                [[fallthrough]];
-            case wgpu::TextureViewDimension::e2D:
-                DAWN_ASSERT(GetTexture()->GetDimension() == wgpu::TextureDimension::e2D);
-                srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DMS;
-                break;
-
-            default:
-                DAWN_UNREACHABLE();
-        }
-    } else {
-        switch (GetDimension()) {
-            case wgpu::TextureViewDimension::e1D:
-                srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE1D;
-                srvDesc.Texture1D.MipLevels = GetLevelCount();
-                srvDesc.Texture1D.MostDetailedMip = GetBaseMipLevel();
-                break;
-
-            case wgpu::TextureViewDimension::e2D:
-            case wgpu::TextureViewDimension::e2DArray:
-                DAWN_ASSERT(GetTexture()->GetDimension() == wgpu::TextureDimension::e2D);
-                srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
-                srvDesc.Texture2DArray.ArraySize = GetLayerCount();
-                srvDesc.Texture2DArray.FirstArraySlice = GetBaseArrayLayer();
-                srvDesc.Texture2DArray.MipLevels = GetLevelCount();
-                srvDesc.Texture2DArray.MostDetailedMip = GetBaseMipLevel();
-                srvDesc.Texture2DArray.PlaneSlice = GetAspectIndex(GetAspects());
-                break;
-            case wgpu::TextureViewDimension::Cube:
-            case wgpu::TextureViewDimension::CubeArray:
-                DAWN_ASSERT(GetTexture()->GetDimension() == wgpu::TextureDimension::e2D);
-                DAWN_ASSERT(GetLayerCount() % 6 == 0);
-                srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBEARRAY;
-                srvDesc.TextureCubeArray.First2DArrayFace = GetBaseArrayLayer();
-                srvDesc.TextureCubeArray.NumCubes = GetLayerCount() / 6;
-                srvDesc.TextureCubeArray.MipLevels = GetLevelCount();
-                srvDesc.TextureCubeArray.MostDetailedMip = GetBaseMipLevel();
-                break;
-            case wgpu::TextureViewDimension::e3D:
-                DAWN_ASSERT(GetTexture()->GetDimension() == wgpu::TextureDimension::e3D);
-                srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE3D;
-                srvDesc.Texture3D.MostDetailedMip = GetBaseMipLevel();
-                srvDesc.Texture3D.MipLevels = GetLevelCount();
-                break;
-
-            case wgpu::TextureViewDimension::Undefined:
-                DAWN_UNREACHABLE();
-        }
-    }
-
-    ComPtr<ID3D11ShaderResourceView1> srv;
-    DAWN_TRY(CheckHRESULT(device->GetD3D11Device3()->CreateShaderResourceView1(
-                              ToBackend(GetTexture())->GetD3D11Resource(), &srvDesc, &srv),
-                          "CreateShaderResourceView1"));
-    mD3d11SharedResourceView = std::move(srv);
+    DAWN_TRY_ASSIGN(
+        mD3d11SharedResourceView,
+        ToBackend(GetTexture())
+            ->GetOrCreateSRV({GetDimension(), GetFormat().format, GetAspects(), GetBaseMipLevel(),
+                              GetLevelCount(), GetBaseArrayLayer(), GetLayerCount()}));
     return mD3d11SharedResourceView.Get();
 }
 
@@ -1257,11 +1286,12 @@ ResultOrError<ID3D11RenderTargetView*> TextureView::GetOrCreateD3D11RenderTarget
     // 2d RTVs, which value is set to 0. For 3d RTVs, the baseArrayLayer must be 0. So here we can
     // simply use baseArrayLayer + depthSlice to specify the slice in RTVs without checking the
     // view's dimension.
-    DAWN_TRY_ASSIGN(mD3d11RenderTargetViews[depthSlice],
-                    ToBackend(GetTexture())
-                        ->CreateD3D11RenderTargetView(
-                            GetFormat().format, GetBaseMipLevel(), GetBaseArrayLayer() + depthSlice,
-                            GetLayerCount(), GetAspectIndex(GetAspects())));
+    DAWN_TRY_ASSIGN(
+        mD3d11RenderTargetViews[depthSlice],
+        ToBackend(GetTexture())
+            ->GetOrCreateD3D11RenderTargetView({GetFormat().format, GetBaseMipLevel(),
+                                                GetBaseArrayLayer() + depthSlice, GetLayerCount(),
+                                                GetAspectIndex(GetAspects())}));
     return mD3d11RenderTargetViews[depthSlice].Get();
 }
 
