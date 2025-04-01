@@ -51,6 +51,24 @@
       "parentUuid": "bebea0b1_6ef5fa84",
       "revId": "bd42060fac362ed6733785e2ba5a84d2c72d8603",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36e56f90_b465b59b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-01T23:20:49Z",
+      "side": 1,
+      "message": "Done. Compilation failure is fixed locally, let\u0027s see if the bots are happy.",
+      "parentUuid": "b008ca0c_c997cfc8",
+      "revId": "bd42060fac362ed6733785e2ba5a84d2c72d8603",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
