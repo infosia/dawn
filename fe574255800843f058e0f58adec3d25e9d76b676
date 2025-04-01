@@ -1,0 +1,183 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "906423bf_388791d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-01T19:22:02Z",
+      "side": 1,
+      "message": "Sorry the review took so long on this one. LGTM with some small fixes.",
+      "revId": "fe574255800843f058e0f58adec3d25e9d76b676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e299e1d_8503a4d3",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-01T19:22:02Z",
+      "side": 1,
+      "message": "I only see this call made in one place. Can we remove it and put the condition at the call site? It\u0027s just not as obvious what placeholder means at this level.",
+      "revId": "fe574255800843f058e0f58adec3d25e9d76b676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfe7e6be_fa6890cd",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-01T19:22:02Z",
+      "side": 1,
+      "message": "If this function needs to stay, this can become `return ToTint();`",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 171,
+        "endChar": 78
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "3bdfc008_c4ff754a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/BindingInfo.h",
+              "range": {
+                "startLine": 171,
+                "startChar": 0,
+                "endLine": 172,
+                "endChar": 0
+              },
+              "replacement": "        return ToTint();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fe574255800843f058e0f58adec3d25e9d76b676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd57fb2a_d679bdd6",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-01T19:22:02Z",
+      "side": 1,
+      "message": "Same for this, I only see one call site and the condition isn\u0027t based on any members of this struct.",
+      "revId": "fe574255800843f058e0f58adec3d25e9d76b676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca84ee61_6a3263b8",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-01T19:22:02Z",
+      "side": 1,
+      "message": "Same with this, can be `FromTint(tintBindingPoint);`",
+      "range": {
+        "startLine": 183,
+        "startChar": 21,
+        "endLine": 184,
+        "endChar": 74
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1c19d148_f3232c48",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/BindingInfo.h",
+              "range": {
+                "startLine": 183,
+                "startChar": 0,
+                "endLine": 185,
+                "endChar": 0
+              },
+              "replacement": "                   : FromTint(tintBindingPoint);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "fe574255800843f058e0f58adec3d25e9d76b676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edbf1a7a_071f6f86",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-01T19:22:02Z",
+      "side": 1,
+      "message": "I don\u0027t think these need the `k` prefix in Dawn code.",
+      "range": {
+        "startLine": 237,
+        "startChar": 12,
+        "endLine": 237,
+        "endChar": 29
+      },
+      "revId": "fe574255800843f058e0f58adec3d25e9d76b676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cff4fb94_7b640073",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-01T19:22:02Z",
+      "side": 1,
+      "message": "Let\u0027s make this const ref.",
+      "range": {
+        "startLine": 124,
+        "startChar": 48,
+        "endLine": 124,
+        "endChar": 66
+      },
+      "revId": "fe574255800843f058e0f58adec3d25e9d76b676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
