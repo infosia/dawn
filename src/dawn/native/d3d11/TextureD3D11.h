@@ -28,6 +28,8 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_TEXTURED3D11_H_
 #define SRC_DAWN_NATIVE_D3D11_TEXTURED3D11_H_
 
+#include <deque>
+#include <utility>
 #include <vector>
 
 #include "dawn/native/DawnNative.h"
@@ -65,12 +67,12 @@ class Texture final : public TextureBase {
         const UnpackedPtr<TextureDescriptor>& descriptor);
     ID3D11Resource* GetD3D11Resource() const;
 
-    ResultOrError<ComPtr<ID3D11RenderTargetView>> CreateD3D11RenderTargetView(
+    ResultOrError<ComPtr<ID3D11RenderTargetView1>> GetOrCreateD3D11RenderTargetView(
         wgpu::TextureFormat format,
         uint32_t mipLevel,
         uint32_t baseSlice,
         uint32_t sliceCount,
-        uint32_t planeSlice) const;
+        uint32_t planeSlice);
     ResultOrError<ComPtr<ID3D11DepthStencilView>> CreateD3D11DepthStencilView(
         const SubresourceRange& singleLevelRange,
         bool depthReadOnly,
@@ -106,6 +108,9 @@ class Texture final : public TextureBase {
     ResultOrError<ComPtr<ID3D11ShaderResourceView>> GetStencilSRV(
         const ScopedCommandRecordingContext* commandContext,
         const TextureView* view);
+
+    ResultOrError<ComPtr<ID3D11ShaderResourceView1>> GetOrCreateSRV(
+        const D3D11_SHADER_RESOURCE_VIEW_DESC1& desc);
 
   private:
     using Base = TextureBase;
@@ -181,12 +186,20 @@ class Texture final : public TextureBase {
     static MaybeError CopyInternal(const ScopedCommandRecordingContext* commandContext,
                                    CopyTextureToTextureCmd* copy);
 
+    ResultOrError<ComPtr<ID3D11RenderTargetView1>> GetOrCreateRTV(
+        const D3D11_RENDER_TARGET_VIEW_DESC1& desc);
+
     const Kind mKind = Kind::Normal;
     ComPtr<ID3D11Resource> mD3d11Resource;
     Ref<d3d::KeyedMutex> mKeyedMutex;
 
     // The internal 'R8Uint' texture for sampling stencil from depth-stencil textures.
     Ref<Texture> mTextureForStencilSampling;
+
+    std::deque<std::pair<D3D11_RENDER_TARGET_VIEW_DESC1, ComPtr<ID3D11RenderTargetView1>>>
+        mCachedRTVs;
+    std::deque<std::pair<D3D11_SHADER_RESOURCE_VIEW_DESC1, ComPtr<ID3D11ShaderResourceView1>>>
+        mCachedSRVs;
 };
 
 class TextureView final : public TextureViewBase {

@@ -320,19 +320,22 @@ void Texture::DestroyImpl() {
     mD3d11Resource = nullptr;
     mKeyedMutex = nullptr;
     mTextureForStencilSampling = nullptr;
+    mCachedRTVs.clear();
+    mCachedSRVs.clear();
 }
 
 ID3D11Resource* Texture::GetD3D11Resource() const {
     return mD3d11Resource.Get();
 }
 
-ResultOrError<ComPtr<ID3D11RenderTargetView>> Texture::CreateD3D11RenderTargetView(
+ResultOrError<ComPtr<ID3D11RenderTargetView1>> Texture::GetOrCreateD3D11RenderTargetView(
     wgpu::TextureFormat format,
     uint32_t mipLevel,
     uint32_t baseSlice,
     uint32_t sliceCount,
-    uint32_t planeSlice) const {
+    uint32_t planeSlice) {
     D3D11_RENDER_TARGET_VIEW_DESC1 rtvDesc;
+    memset(&rtvDesc, 0, sizeof(rtvDesc));
     rtvDesc.Format = d3d::DXGITextureFormat(GetDevice(), format);
     if (IsMultisampledTexture()) {
         DAWN_ASSERT(GetDimension() == wgpu::TextureDimension::e2D);
@@ -372,13 +375,7 @@ ResultOrError<ComPtr<ID3D11RenderTargetView>> Texture::CreateD3D11RenderTargetVi
         }
     }
 
-    ComPtr<ID3D11RenderTargetView1> rtv;
-    DAWN_TRY(CheckHRESULT(ToBackend(GetDevice())
-                              ->GetD3D11Device3()
-                              ->CreateRenderTargetView1(GetD3D11Resource(), &rtvDesc, &rtv),
-                          "CreateRenderTargetView"));
-
-    return {std::move(rtv)};
+    return GetOrCreateRTV(rtvDesc);
 }
 
 ResultOrError<ComPtr<ID3D11DepthStencilView>> Texture::CreateD3D11DepthStencilView(
@@ -519,7 +516,7 @@ MaybeError Texture::ClearRenderable(const ScopedCommandRecordingContext* command
                     // RTV, we can use the 'layer' as baseSlice and the 'depthOrArrayLayers' as
                     // sliceCount to create RTV without checking the dimension.
                     DAWN_TRY_ASSIGN(d3d11RTV,
-                                    CreateD3D11RenderTargetView(
+                                    GetOrCreateD3D11RenderTargetView(
                                         format, clearRange.baseMipLevel, clearRange.baseArrayLayer,
                                         GetMipLevelSingleSubresourceVirtualSize(
                                             clearRange.baseMipLevel, clearRange.aspects)
@@ -1148,6 +1145,57 @@ ResultOrError<ComPtr<ID3D11ShaderResourceView>> Texture::GetStencilSRV(
     return srv;
 }
 
+ResultOrError<ComPtr<ID3D11RenderTargetView1>> Texture::GetOrCreateRTV(
+    const D3D11_RENDER_TARGET_VIEW_DESC1& rtvDesc) {
+    // Check cached RTVs
+    for (const auto& viewEntry : mCachedRTVs) {
+        if (memcmp(&viewEntry.first, &rtvDesc, sizeof(rtvDesc)) == 0) {
+            return viewEntry.second;
+        }
+    }
+
+    // Cache miss, remove oldest entry.
+    constexpr size_t kMaxCachedRTVs = 3;
+    while (mCachedRTVs.size() >= kMaxCachedRTVs) {
+        mCachedRTVs.pop_front();
+    }
+
+    ComPtr<ID3D11RenderTargetView1> rtv;
+    DAWN_TRY(CheckHRESULT(ToBackend(GetDevice())
+                              ->GetD3D11Device3()
+                              ->CreateRenderTargetView1(GetD3D11Resource(), &rtvDesc, &rtv),
+                          "CreateRenderTargetView"));
+
+    mCachedRTVs.push_back(std::make_pair(rtvDesc, rtv));
+
+    return std::move(rtv);
+}
+
+ResultOrError<ComPtr<ID3D11ShaderResourceView1>> Texture::GetOrCreateSRV(
+    const D3D11_SHADER_RESOURCE_VIEW_DESC1& desc) {
+    for (const auto& viewEntry : mCachedSRVs) {
+        if (memcmp(&viewEntry.first, &desc, sizeof(desc)) == 0) {
+            return viewEntry.second;
+        }
+    }
+
+    // Cache miss. Remove oldest entry.
+    constexpr uint32_t kMaxCachedViews = 3;
+    while (mCachedSRVs.size() >= kMaxCachedViews) {
+        mCachedSRVs.pop_front();
+    }
+
+    ComPtr<ID3D11ShaderResourceView1> srv;
+    DAWN_TRY(CheckHRESULT(ToBackend(GetDevice())
+                              ->GetD3D11Device3()
+                              ->CreateShaderResourceView1(GetD3D11Resource(), &desc, &srv),
+                          "CreateShaderResourceView1"));
+
+    mCachedSRVs.push_back(std::make_pair(desc, srv));
+
+    return std::move(srv);
+}
+
 // static
 Ref<TextureView> TextureView::Create(TextureBase* texture,
                                      const UnpackedPtr<TextureViewDescriptor>& descriptor) {
@@ -1169,8 +1217,8 @@ ResultOrError<ID3D11ShaderResourceView*> TextureView::GetOrCreateD3D11ShaderReso
         return mD3d11SharedResourceView.Get();
     }
 
-    Device* device = ToBackend(GetDevice());
     D3D11_SHADER_RESOURCE_VIEW_DESC1 srvDesc;
+    memset(&srvDesc, 0, sizeof(srvDesc));
     srvDesc.Format = d3d::D3DShaderResourceViewFormat(GetDevice(), GetTexture()->GetFormat(),
                                                       GetFormat(), GetAspects());
 
@@ -1233,11 +1281,7 @@ ResultOrError<ID3D11ShaderResourceView*> TextureView::GetOrCreateD3D11ShaderReso
         }
     }
 
-    ComPtr<ID3D11ShaderResourceView1> srv;
-    DAWN_TRY(CheckHRESULT(device->GetD3D11Device3()->CreateShaderResourceView1(
-                              ToBackend(GetTexture())->GetD3D11Resource(), &srvDesc, &srv),
-                          "CreateShaderResourceView1"));
-    mD3d11SharedResourceView = std::move(srv);
+    DAWN_TRY_ASSIGN(mD3d11SharedResourceView, ToBackend(GetTexture())->GetOrCreateSRV(srvDesc));
     return mD3d11SharedResourceView.Get();
 }
 
@@ -1259,7 +1303,7 @@ ResultOrError<ID3D11RenderTargetView*> TextureView::GetOrCreateD3D11RenderTarget
     // view's dimension.
     DAWN_TRY_ASSIGN(mD3d11RenderTargetViews[depthSlice],
                     ToBackend(GetTexture())
-                        ->CreateD3D11RenderTargetView(
+                        ->GetOrCreateD3D11RenderTargetView(
                             GetFormat().format, GetBaseMipLevel(), GetBaseArrayLayer() + depthSlice,
                             GetLayerCount(), GetAspectIndex(GetAspects())));
     return mD3d11RenderTargetViews[depthSlice].Get();
