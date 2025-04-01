@@ -69,6 +69,24 @@
       "parentUuid": "8f11a4bb_bbd7b82d",
       "revId": "fa47dff1055fe7586e4b3813eb060dfeea1c6000",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "794f3570_a8094187",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-01T20:50:39Z",
+      "side": 1,
+      "message": "This is pretty weird, but maybe it\u0027s something like, this is allowing the test to run ahead faster than before, so there\u0027s a larger bubble at the end when waiting for the gpu process?",
+      "parentUuid": "c45e64ba_a97ca4a6",
+      "revId": "fa47dff1055fe7586e4b3813eb060dfeea1c6000",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
