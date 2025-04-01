@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ffdfcd27_7eb8d455",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T02:36:25Z",
+      "side": 1,
+      "message": "So, this is setting the access mode for a `StorageTexture`. We know it\u0027s storage texture because there is a texel format attached. I\u0027m planning on a followup to add some helper methods to make it clearer what these mean. \n\nWe need to set the format to Read (or leave it as write as set in the image) so that we can emit the `NonReadable`, `NonWritable` annotations correctly later.",
+      "parentUuid": "a468daf5_446da7bf",
+      "revId": "8e9ef41d26d524b0615234606649e3a1f6db2cf5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "907863d6_deb2fb29",
         "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
         "patchSetId": 5
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-31T22:20:02Z",
       "side": 1,
       "message": "Nit: Don\u0027t think you need them dependency ordered here?",
+      "revId": "8e9ef41d26d524b0615234606649e3a1f6db2cf5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c0fb505_c8428928",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T02:36:25Z",
+      "side": 1,
+      "message": "You\u0027re correct, I just forgot `functions` was directly accessible and went looking for an accessor, heh.",
+      "parentUuid": "907863d6_deb2fb29",
       "revId": "8e9ef41d26d524b0615234606649e3a1f6db2cf5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -48,6 +84,24 @@
       "writtenOn": "2025-03-31T22:20:02Z",
       "side": 1,
       "message": "Nit: `texture_ty-\u003eGetSampled() \u003d\u003d type::Sampled::kSamplingCompatible ? spirv::BuiltinFn::kImageFetch : spirv::BuiltinFn::ImageRead` would be more future-proof (and a better match to the SPIR-V spec). We might do formatless storage textures one day.",
+      "revId": "8e9ef41d26d524b0615234606649e3a1f6db2cf5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d21be98c_20bb0fb3",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-01T02:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab053680_0fbce5e3",
       "revId": "8e9ef41d26d524b0615234606649e3a1f6db2cf5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
