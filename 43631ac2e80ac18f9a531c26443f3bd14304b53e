@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5aaf1758_369b767c",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-01T18:37:01Z",
+      "side": 1,
+      "message": "I thought about this also... But I also vaguely remember we wanted to try to avoid naming the toggles with a negative because we use `enabledToggles` and `disabledToggles` in `DawnTogglesDescriptor` where these are set and we end up with confusing double negatives in some situations.\n\nThat said though, we already have a ton of `Disable*` toggles so at this point it\u0027s probably fine to use `Disable*` for this as well.",
+      "parentUuid": "bfb79871_4769dfbb",
+      "revId": "43631ac2e80ac18f9a531c26443f3bd14304b53e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "32f3f736_4eae365d",
         "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
         "patchSetId": 2
