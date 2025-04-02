@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f18e7c5_da8860dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T09:43:34Z",
+      "side": 1,
+      "message": "LGTM but I\u0027m trying to understand how that would help, we should mark the device as lost in this case, which will wait for all commands to complete and destroy it. So it wouldn\u0027t produce the stack trace you saw no?",
+      "revId": "7ac2c0b9cf07b5cbb90eb266bfc2e83131d2b5fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
