@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0c22c83_ec35a216",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-02T06:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaf1758_369b767c",
+      "revId": "43631ac2e80ac18f9a531c26443f3bd14304b53e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32f3f736_4eae365d",
@@ -66,6 +84,30 @@
       "writtenOn": "2025-04-01T18:01:58Z",
       "side": 1,
       "message": "I think that this test case should probably be moved into the `BindGroupDoesNotMatchLayout` test above since it\u0027s effectively testing whether the layouts match.\n\nInstead, for this test, we should probably still make a new test fixture class, override `GetDisabledToggles()` to return the new toggle, and then verify that we get an error when the toggle is off and the usage is valid.",
+      "range": {
+        "startLine": 632,
+        "startChar": 4,
+        "endLine": 632,
+        "endChar": 90
+      },
+      "revId": "43631ac2e80ac18f9a531c26443f3bd14304b53e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f4944f2_584e954d",
+        "filename": "src/dawn/tests/unittests/validation/ExternalTextureTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-02T06:59:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32f3f736_4eae365d",
       "range": {
         "startLine": 632,
         "startChar": 4,
