@@ -74,6 +74,24 @@
       "parentUuid": "58089a42_40e3d9ed",
       "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a3b4edf_f4a55fae",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T15:30:39Z",
+      "side": 1,
+      "message": "I think we would if the GPU doesn\u0027t support DXIL",
+      "parentUuid": "41e601c1_8e7fbc2b",
+      "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
