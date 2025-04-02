@@ -830,6 +830,20 @@ struct BuiltinPolyfill::State {
     /// @return the polyfill function name
     Symbol workgroupUniformLoad(const core::type::Type* type) {
         auto name = b.Symbols().New("tint_workgroupUniformLoad");
+        if (auto* a = type->As<core::type::Atomic>()) {
+            b.Func(name,
+                   tint::Vector{
+                       b.Param("p", b.ty.ptr<workgroup>(T(type))),
+                   },
+                   T(a->Type()),
+                   tint::Vector{
+                       b.CallStmt(b.Call("workgroupBarrier")),
+                       b.Decl(b.Let("result", b.Deref("p"))),
+                       b.CallStmt(b.Call("workgroupBarrier")),
+                       b.Return("result"),
+                   });
+            return name;
+        }
         b.Func(name,
                tint::Vector{
                    b.Param("p", b.ty.ptr<workgroup>(T(type))),
