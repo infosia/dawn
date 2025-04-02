@@ -43,6 +43,7 @@
 #include "dawn/native/Forward.h"
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/SystemEvent.h"
+#include "dawn/native/WaitListEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native {
@@ -116,20 +117,6 @@ struct QueueAndSerial {
 // to any TrackedEvents. Any which are not ref'd elsewhere (in order to be `Spontaneous`ly
 // completed) will be cleaned up at that time.
 class EventManager::TrackedEvent : public RefCounted {
-  protected:
-    // Create an event from a SystemEvent. Note that events like RequestAdapter and
-    // RequestDevice complete immediately in dawn native, and may use an already-completed event.
-    TrackedEvent(wgpu::CallbackMode callbackMode, Ref<SystemEvent> completionEvent);
-
-    // Create a TrackedEvent from a queue completion serial.
-    TrackedEvent(wgpu::CallbackMode callbackMode,
-                 QueueBase* queue,
-                 ExecutionSerial completionSerial);
-
-    struct Completed {};
-    // Create a TrackedEvent that is already completed.
-    TrackedEvent(wgpu::CallbackMode callbackMode, Completed tag);
-
   public:
     // Subclasses must implement this to complete the event (if not completed) with
     // EventCompletionType::Shutdown.
@@ -148,11 +135,63 @@ class EventManager::TrackedEvent : public RefCounted {
     // (Queue->Device->Instance->EventManager->TrackedEvent). This is OK because the instance will
     // clear out the EventManager on shutdown.
     // TODO(crbug.com/dawn/2067): This is a bit fragile. Is it possible to remove the ref cycle?
-    using CompletionData = std::variant<QueueAndSerial, Ref<SystemEvent>>;
+    bool IsCompleted() const { return std::holds_alternative<Completed>(mCompletionData); }
 
-    const CompletionData& GetCompletionData() const;
+    bool IsNonProgressing() const {
+        return std::holds_alternative<NonProgressing>(mCompletionData);
+    }
+
+    bool IsQueueAndSerial() const {
+        return std::holds_alternative<QueueAndSerial>(mCompletionData);
+    }
+
+    const QueueAndSerial& GetQueueAndSerial() const {
+        return std::get<QueueAndSerial>(mCompletionData);
+    }
+
+    bool IsSystemEvent() const { return std::holds_alternative<Ref<SystemEvent>>(mCompletionData); }
+
+    const Ref<SystemEvent>& GetSystemEvent() & {
+        return std::get<Ref<SystemEvent>>(mCompletionData);
+    }
+
+    bool IsWaitListEvent() const {
+        return std::holds_alternative<Ref<WaitListEvent>>(mCompletionData);
+    }
+
+    const Ref<WaitListEvent>& GetWaitListEvent() const {
+        return std::get<Ref<WaitListEvent>>(mCompletionData);
+    }
+
+    bool PollForCompletion();
 
   protected:
+    struct Completed {};
+    struct NonProgressing {};
+    using CompletionData = std::
+        variant<Completed, NonProgressing, QueueAndSerial, Ref<SystemEvent>, Ref<WaitListEvent>>;
+
+    // Create an event from a WaitListEvent that can be signaled and waited-on in user-space only in
+    // the current process. Note that events like RequestAdapter and RequestDevice complete
+    // immediately in dawn native, and may use an already-completed event.
+    TrackedEvent(wgpu::CallbackMode callbackMode, Ref<WaitListEvent> completionEvent);
+
+    // Create an event from a SystemEvent. Note that events like RequestAdapter and
+    // RequestDevice complete immediately in dawn native, and may use an already-completed event.
+    TrackedEvent(wgpu::CallbackMode callbackMode, Ref<SystemEvent> completionEvent);
+
+    // Create a TrackedEvent from a queue completion serial.
+    TrackedEvent(wgpu::CallbackMode callbackMode,
+                 QueueBase* queue,
+                 ExecutionSerial completionSerial);
+
+    // Create a TrackedEvent that is already completed.
+    TrackedEvent(wgpu::CallbackMode callbackMode, Completed tag);
+
+    // Some SystemEvents may be non-progressing, i.e. DeviceLost. We tag these events so that we can
+    // correctly return whether there is progressing work when users are polling.
+    TrackedEvent(wgpu::CallbackMode callbackMode, NonProgressing tag);
+
     void EnsureComplete(EventCompletionType);
     virtual void Complete(EventCompletionType) = 0;
 

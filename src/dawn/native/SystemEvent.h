@@ -53,6 +53,7 @@ class SystemEventPipeSender;
 class SystemEventReceiver final : NonCopyable {
   public:
     static SystemEventReceiver CreateAlreadySignaled();
+    static SystemEventReceiver CreateNonProgressing();
 
     SystemEventReceiver() = default;
     explicit SystemEventReceiver(SystemHandle primitive);
@@ -105,12 +106,6 @@ std::pair<SystemEventPipeSender, SystemEventReceiver> CreateSystemEventPipe();
 
 class SystemEvent : public RefCounted {
   public:
-    using RefCounted::RefCounted;
-
-    static Ref<SystemEvent> CreateSignaled();
-    static Ref<SystemEvent> CreateNonProgressingEvent();
-
-    bool IsProgressing() const;
     bool IsSignaled() const;
     void Signal();
 
@@ -119,10 +114,6 @@ class SystemEvent : public RefCounted {
     const SystemEventReceiver& GetOrCreateSystemEventReceiver();
 
   private:
-    // Some SystemEvents may be non-progressing, i.e. DeviceLost. We tag these events so that we can
-    // correctly return whether there is progressing work when users are polling.
-    static constexpr uint64_t kNonProgressingPayload = 1;
-
     // mSignaled indicates whether the event has already been signaled.
     // It is stored outside the mPipe mutex so its status can quickly be checked without
     // acquiring a lock.
