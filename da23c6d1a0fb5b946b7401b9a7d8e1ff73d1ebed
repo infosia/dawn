@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e26d5137_385cb859",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-02T13:16:09Z",
+      "side": 1,
+      "message": "I think this is just a simple check. Besides, we do the same in the metal backend https://dawn-review.googlesource.com/c/dawn/+/135302",
+      "parentUuid": "51031c97_a473773f",
+      "revId": "da23c6d1a0fb5b946b7401b9a7d8e1ff73d1ebed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab7078c4_ca69a4f6",
@@ -67,6 +85,24 @@
       "writtenOn": "2025-04-02T10:50:31Z",
       "side": 1,
       "message": "```suggestion\n        const auto vertexBuffersToApply \u003d\n```",
+      "revId": "da23c6d1a0fb5b946b7401b9a7d8e1ff73d1ebed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11ec8676_61054405",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-02T13:16:09Z",
+      "side": 1,
+      "message": "Done. It\u0027s weird the compiler didn\u0027t complain. Is it in C++ spec that the temp variable would be kept alive until the ref is out of scope?",
+      "parentUuid": "ab7078c4_ca69a4f6",
       "revId": "da23c6d1a0fb5b946b7401b9a7d8e1ff73d1ebed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
