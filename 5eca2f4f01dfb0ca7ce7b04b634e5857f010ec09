@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1a3747b_f3b6b703",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:52:36Z",
+      "side": 1,
+      "message": "Uuuuh I\u0027ve never seen this :/ At least the CL passed the bots now so we\u0027re good but I\u0027m not sure how to make gclient work. Sometimes rebooting helps with locks?",
+      "parentUuid": "92fec8e0_68d3ed48",
+      "revId": "5eca2f4f01dfb0ca7ce7b04b634e5857f010ec09",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "be8e03f5_504b8806",
