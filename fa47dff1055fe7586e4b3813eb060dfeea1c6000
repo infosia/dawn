@@ -87,6 +87,24 @@
       "parentUuid": "c45e64ba_a97ca4a6",
       "revId": "fa47dff1055fe7586e4b3813eb060dfeea1c6000",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a276c865_56ef37ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-02T01:18:40Z",
+      "side": 1,
+      "message": "I think it was actually just that this new heartbeat injection was much slower than before. I think something to do with trying to fix it with the setTimeout thing. I really don\u0027t think that matters so I\u0027ve just removed it. I also landed a CTS fix to make heartbeats interact better with this test. Hopefully then we can lift the expectations. https://github.com/gpuweb/cts/pull/4324",
+      "parentUuid": "794f3570_a8094187",
+      "revId": "fa47dff1055fe7586e4b3813eb060dfeea1c6000",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
