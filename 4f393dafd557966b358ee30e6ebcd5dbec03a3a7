@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c0376b7_d6a4c42c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-02T20:14:02Z",
+      "side": 1,
+      "message": "Technically there is an abseil version, but I prefer waiting for c++20 given it\u0027s soon-ish-ness compared to introducing the abseil version.",
+      "revId": "4f393dafd557966b358ee30e6ebcd5dbec03a3a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
