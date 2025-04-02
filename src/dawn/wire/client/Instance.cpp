@@ -250,10 +250,10 @@ void Instance::GatherWGSLFeatures(const WGPUDawnWireWGSLControl* wgslControl,
                 break;
 
             case tint::wgsl::FeatureStatus::kUnsafeExperimental:
-                enable = wgslControl->enableUnsafe;
+                enable = (wgslControl->enableUnsafe != 0u);
                 break;
             case tint::wgsl::FeatureStatus::kExperimental:
-                enable = wgslControl->enableExperimental;
+                enable = (wgslControl->enableExperimental != 0u);
                 break;
 
             case tint::wgsl::FeatureStatus::kShippedWithKillswitch:
@@ -319,7 +319,7 @@ wgpuDawnWireClientGetInstanceCapabilities(WGPUInstanceCapabilities* capabilities
         return WGPUStatus_Error;
     }
 
-    capabilities->timedWaitAnyEnable = false;
+    capabilities->timedWaitAnyEnable = 0u;
     capabilities->timedWaitAnyMaxCount = dawn::kTimedWaitAnyMaxCountDefault;
     return WGPUStatus_Success;
 }
