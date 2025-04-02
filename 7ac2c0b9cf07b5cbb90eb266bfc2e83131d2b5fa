@@ -52,6 +52,23 @@
       "parentUuid": "e6897ce2_b28b6814",
       "revId": "7ac2c0b9cf07b5cbb90eb266bfc2e83131d2b5fa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6286d886_d6298e7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-02T18:07:52Z",
+      "side": 1,
+      "message": "LGTM but I was looking at the D3D12 code and it looks like it might also be wrong then? Could take a look at it in a follow up though.",
+      "revId": "7ac2c0b9cf07b5cbb90eb266bfc2e83131d2b5fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
