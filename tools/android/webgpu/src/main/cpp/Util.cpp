@@ -27,9 +27,15 @@
 
 #include <jni.h>
 
+#if __ANDROID__
 #include <android/native_window_jni.h>
+#endif
 
 extern "C" JNIEXPORT jlong JNICALL
 Java_android_dawn_helper_Util_windowFromSurface(JNIEnv* env, jclass thiz, jobject surface) {
+#if __ANDROID__
     return reinterpret_cast<jlong>(ANativeWindow_fromSurface(env, surface));
+#else
+    return 0;
+#endif
 }
