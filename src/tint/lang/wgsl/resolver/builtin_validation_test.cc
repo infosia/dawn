@@ -783,9 +783,11 @@ TEST_F(ResolverBuiltinValidationTest, WorkgroupUniformLoad_WrongAddressSpace) {
     EXPECT_EQ(r()->error(),
               R"(error: no matching call to 'workgroupUniformLoad(ptr<storage, i32, read_write>)'
 
-1 candidate function:
+2 candidate functions:
  • 'workgroupUniformLoad(ptr<workgroup, T, read_write>  ✗ ) -> T' where:
       ✗  'T' is 'any concrete constructible type'
+ • 'workgroupUniformLoad(ptr<workgroup, atomic<T>, read_write>  ✗ ) -> T' where:
+      ✗  'T' is 'i32' or 'u32'
 )");
 }
 
@@ -797,15 +799,7 @@ TEST_F(ResolverBuiltinValidationTest, WorkgroupUniformLoad_Atomic) {
     GlobalVar("v", ty.atomic<i32>(), core::AddressSpace::kWorkgroup);
     WrapInFunction(CallStmt(Call("workgroupUniformLoad", AddressOf(Source{{12, 34}}, "v"))));
 
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(error: no matching call to 'workgroupUniformLoad(ptr<workgroup, atomic<i32>, read_write>)'
-
-1 candidate function:
- • 'workgroupUniformLoad(ptr<workgroup, T, read_write>  ✗ ) -> T' where:
-      ✗  'T' is 'any concrete constructible type'
-)");
+    EXPECT_TRUE(r()->Resolve());
 }
 
 TEST_F(ResolverBuiltinValidationTest, WorkgroupUniformLoad_AtomicInArray) {
@@ -821,9 +815,11 @@ TEST_F(ResolverBuiltinValidationTest, WorkgroupUniformLoad_AtomicInArray) {
         r()->error(),
         R"(error: no matching call to 'workgroupUniformLoad(ptr<workgroup, array<atomic<i32>, 4>, read_write>)'
 
-1 candidate function:
+2 candidate functions:
  • 'workgroupUniformLoad(ptr<workgroup, T, read_write>  ✗ ) -> T' where:
       ✗  'T' is 'any concrete constructible type'
+ • 'workgroupUniformLoad(ptr<workgroup, atomic<T>, read_write>  ✗ ) -> T' where:
+      ✗  'T' is 'i32' or 'u32'
 )");
 }
 
@@ -844,9 +840,11 @@ TEST_F(ResolverBuiltinValidationTest, WorkgroupUniformLoad_AtomicInStruct) {
         r()->error(),
         R"(error: no matching call to 'workgroupUniformLoad(ptr<workgroup, array<S, 4>, read_write>)'
 
-1 candidate function:
+2 candidate functions:
  • 'workgroupUniformLoad(ptr<workgroup, T, read_write>  ✗ ) -> T' where:
       ✗  'T' is 'any concrete constructible type'
+ • 'workgroupUniformLoad(ptr<workgroup, atomic<T>, read_write>  ✗ ) -> T' where:
+      ✗  'T' is 'i32' or 'u32'
 )");
 }
 
