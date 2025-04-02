@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4020af66_2c8019f8",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:06:08Z",
+      "side": 1,
+      "message": "We should comment that tracking the max bound is the best tracking because the pipeline layout packs everything at the start of the range so we can reset exactly the correct slots with a single call for the whole range.",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "311b7d97_f7063935",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:06:08Z",
+      "side": 1,
+      "message": "We can know the max bindings used without tracking each binding (if that turns out to be unnecessary) as the pipeline layouts should know how many slots of each type are used for each stage. I also wonder if we should hardcode the D3D11 max number of bindings to use a stack variable here that would contain a bunch of zeroes, or a static variable.",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "744bdf85_681cde13",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:06:08Z",
+      "side": 1,
+      "message": "Since we are resetting here, do we need to keep render targets? I don\u0027t know if an option is better than another perf-wise.",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf9adfaa_a56a1f6c",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:06:08Z",
+      "side": 1,
+      "message": "Bindings are grouped by type in the bind group layout, so if it would help performance, we could iterate all the uniform buffers, then all the storage buffers, etc. This way the Set* function would be called at most once per bind group.",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1129ac26_3b4c6dd3",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:06:08Z",
+      "side": 1,
+      "message": "Is caching a net win overall? Any perf numbers that show the effect (and separately the effect of resetting only the max used bindings on pass end?). Overall we could also just check if the bindgroup changes instead of individual resources, since we have them grouped in the WebGPU API. But also apps should avoid binding the same bindgroup redundantly, and group resources in bindgroup by change frequency.\n\nBut maybe perf numbers for Graphite show that it is necessary.",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cb3f63d_9cd85958",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:06:08Z",
+      "side": 1,
+      "message": "Can\u0027t we keep VS/PS stuff in `RenderPassBindGroupTracker` and CS stuff in `ComputePassBindGroupTracker`? Ah no because we do everything in `ApplyBindGroup`. But here we end up using a lot more members/stack space than needed, not sure if it\u0027s worth fixing.",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
