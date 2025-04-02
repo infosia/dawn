@@ -33,6 +33,24 @@
       "message": "Oh, this is duplicate of line 442.\n\nMaybe since that makes this just removals, we can rely on UPF?\n\n(Though if the expectations you removed are still hit, just redundant, then I\u0027m not sure if UPF will remove them. I don\u0027t think that should be the case though.)",
       "revId": "3ed69fa186905ca0ddd4b690beb8ae282e173981",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f403e8c5_ee303d38",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-02T20:13:19Z",
+      "side": 1,
+      "message": "Removed.\n\nAnd I\u0027m still inclined to try this removal rather than wait for UPF given the fact that it hasn\u0027t managed to remove them yet, even though these expectations are fairly old.",
+      "parentUuid": "a1c5ec37_eedbf292",
+      "revId": "3ed69fa186905ca0ddd4b690beb8ae282e173981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
