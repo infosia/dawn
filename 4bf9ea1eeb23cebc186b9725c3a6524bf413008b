@@ -16,6 +16,40 @@
       "message": "PTAL.",
       "revId": "4bf9ea1eeb23cebc186b9725c3a6524bf413008b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e9dada1_61d4defa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T13:46:24Z",
+      "side": 1,
+      "message": "Very nice! (just realized now that I was only on CC)",
+      "revId": "4bf9ea1eeb23cebc186b9725c3a6524bf413008b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9ff43ac_ff197907",
+        "filename": "src/tint/lang/wgsl/inspector/inspector_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1445,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T13:46:24Z",
+      "side": 1,
+      "message": "These french variables names xD I wonder who wrote that.",
+      "revId": "4bf9ea1eeb23cebc186b9725c3a6524bf413008b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
