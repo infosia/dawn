@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "92fec8e0_68d3ed48",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3984191
+      },
+      "writtenOn": "2025-04-02T09:59:05Z",
+      "side": 1,
+      "message": "depot_tools is indeed in my path, I did run `gclient sync` but that resulted in a stacktrace\n```\n[...]\nFile \"C:\\DEV\\Temp\\depot_tools\\gclient.py\", line 1010, in ParseDepsFile\n    deps_to_add \u003d self._deps_to_objects(\n                  ^^^^^^^^^^^^^^^^^^^^^^\nFile \"C:\\DEV\\Temp\\depot_tools\\gclient.py\", line 852, in _deps_to_objects\n    shutil.rmtree(gcs_deps[0].output_dir)\n[... after this the stacktrace goes into the shutil lib]\nFile \"C:\\Users\\amarinis\\AppData\\Local\\vpython-root.0\\store\\cpython+gdee0q11ohi0s4eqh0uqprvov4\\contents\\bin\\Lib\\shutil.py\", line 632, in _rmtree_unsafe\n    os.unlink(fullname)\nPermissionError: [WinError 5] Access is denied: \u0027C:\\\\DEV\\\\Temp\\\\google-dawn\\\\buildtools/win-format\\\\.cipd_bin\\\\.cipd\\\\pkgs\\\\0\\\\TeiVPgchvRPmFPH27ldu8-DwGRcLAbL2u2gK-QbGzv4C\\\\.cipdpkg\\\\manifest.json\u0027\n```\nI\u0027m running with elevated privileges and the file does exist and no other process is holding a lock on it, I\u0027m guessing `gclient sync` somehow holds a lock to it while it tries to delete it?",
+      "parentUuid": "789b0025_006cfb5d",
+      "revId": "5eca2f4f01dfb0ca7ce7b04b634e5857f010ec09",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be8e03f5_504b8806",
         "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
         "patchSetId": 1
