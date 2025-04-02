@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33d4b9b0_c3819125",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T09:30:09Z",
+      "side": 1,
+      "message": "This adds the include transitively everywhere which is quite expensive because it includes like half of the Tint header files. IMHO in the future we should try to better box them.",
+      "revId": "b3b3054e1e8c5ed463778ea6c684bb7ca9c5eef7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
