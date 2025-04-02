@@ -77,6 +77,7 @@
 #include "dawn/native/SwapChain.h"
 #include "dawn/native/Texture.h"
 #include "dawn/native/ValidationUtils_autogen.h"
+#include "dawn/native/WaitListEvent.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
@@ -174,7 +175,7 @@ void TrimErrorScopeStacks(
 
 DeviceBase::DeviceLostEvent::DeviceLostEvent(const WGPUDeviceLostCallbackInfo& callbackInfo)
     : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode),
-                   SystemEvent::CreateNonProgressingEvent()),
+                   TrackedEvent::NonProgressing{}),
       mCallback(callbackInfo.callback),
       mUserdata1(callbackInfo.userdata1),
       mUserdata2(callbackInfo.userdata2) {}
@@ -1362,7 +1363,7 @@ Future DeviceBase::APICreateComputePipelineAsync(
     // New pipeline: create an event backed by system event that is really async.
     Ref<CreateComputePipelineAsyncEvent> event = AcquireRef(new CreateComputePipelineAsyncEvent(
         this, callbackInfo, std::move(uninitializedComputePipeline),
-        AcquireRef(new SystemEvent())));
+        AcquireRef(new WaitListEvent())));
     Future future = GetFuture(event);
     InitializeComputePipelineAsyncImpl(std::move(event));
     return future;
@@ -1430,7 +1431,8 @@ Future DeviceBase::APICreateRenderPipelineAsync(
 
     // New pipeline: create an event backed by system event that is really async.
     Ref<CreateRenderPipelineAsyncEvent> event = AcquireRef(new CreateRenderPipelineAsyncEvent(
-        this, callbackInfo, std::move(uninitializedRenderPipeline), AcquireRef(new SystemEvent())));
+        this, callbackInfo, std::move(uninitializedRenderPipeline),
+        AcquireRef(new WaitListEvent())));
     Future future = GetFuture(event);
     InitializeRenderPipelineAsyncImpl(std::move(event));
     return future;
