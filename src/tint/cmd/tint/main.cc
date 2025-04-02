@@ -790,7 +790,7 @@ bool GenerateSpirv([[maybe_unused]] Options& options,
     auto res = ProcessASTTransforms(options, inspector, src_program, cfg);
     if (res != tint::Success) {
         std::cerr << res.Failure() << "\n";
-        return 1;
+        return true;
     }
 
     // Convert the AST program to an IR module.
@@ -965,7 +965,7 @@ bool GenerateMsl([[maybe_unused]] Options& options,
     auto transform_res = ProcessASTTransforms(options, inspector, src_program, cfg);
     if (transform_res != tint::Success) {
         std::cerr << transform_res.Failure() << "\n";
-        return 1;
+        return true;
     }
 
     // Convert the AST program to an IR module.
@@ -1113,7 +1113,7 @@ bool GenerateHlsl([[maybe_unused]] Options& options,
     auto res = ProcessASTTransforms(options, inspector, src_program, cfg);
     if (res != tint::Success) {
         std::cerr << res.Failure() << "\n";
-        return 1;
+        return true;
     }
 
     const bool for_fxc = options.format == Format::kHlslFxc;
@@ -1283,7 +1283,7 @@ bool GenerateGlsl([[maybe_unused]] Options& options,
     auto res = ProcessASTTransforms(options, inspector, src_program, cfg);
     if (res != tint::Success) {
         std::cerr << res.Failure() << "\n";
-        return 1;
+        return true;
     }
 
     tint::glsl::writer::Options gen_options;
@@ -1491,7 +1491,7 @@ int main(int argc, const char** argv) {
     if (options.dump_ir || options.format == Format::kIr) {
         auto res = DumpIR(info.program, options);
         if (options.format == Format::kIr) {
-            return res;
+            return static_cast<int>(res);
         }
     }
 
