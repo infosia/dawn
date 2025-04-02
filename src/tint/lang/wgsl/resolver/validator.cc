@@ -2039,13 +2039,6 @@ bool Validator::WorkgroupUniformLoad(const sem::Call* call) const {
     TINT_ASSERT(ptr != nullptr);
     auto* ty = ptr->StoreType();
 
-    if (ty->Is<core::type::Atomic>() || atomic_composite_info_.Contains(ty)) {
-        AddError(arg->Declaration()->source)
-            << "workgroupUniformLoad must not be called with an argument that "
-               "contains an atomic type";
-        return false;
-    }
-
     if (!ty->IsConstructible()) {
         AddError(arg->Declaration()->source)
             << "workgroupUniformLoad must be called with an argument whose type is constructible";
