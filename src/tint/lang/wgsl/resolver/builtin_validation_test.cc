@@ -783,55 +783,10 @@ TEST_F(ResolverBuiltinValidationTest, WorkgroupUniformLoad_WrongAddressSpace) {
     EXPECT_EQ(r()->error(),
               R"(error: no matching call to 'workgroupUniformLoad(ptr<storage, i32, read_write>)'
 
-1 candidate function:
+2 candidate functions:
  • 'workgroupUniformLoad(ptr<workgroup, T, read_write>  ✗ ) -> T'
+ • 'workgroupUniformLoad(ptr<workgroup, atomic<T>, read_write>  ✗ ) -> T'
 )");
-}
-
-TEST_F(ResolverBuiltinValidationTest, WorkgroupUniformLoad_Atomic) {
-    // var<workgroup> v : atomic<i32>;
-    // fn foo() {
-    //   workgroupUniformLoad(&v);
-    // }
-    GlobalVar("v", ty.atomic<i32>(), core::AddressSpace::kWorkgroup);
-    WrapInFunction(CallStmt(Call("workgroupUniformLoad", AddressOf(Source{{12, 34}}, "v"))));
-
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(12:34 error: workgroupUniformLoad must not be called with an argument that contains an atomic type)");
-}
-
-TEST_F(ResolverBuiltinValidationTest, WorkgroupUniformLoad_AtomicInArray) {
-    // var<workgroup> v : array<atomic<i32>, 4>;
-    // fn foo() {
-    //   workgroupUniformLoad(&v);
-    // }
-    GlobalVar("v", ty.array(ty.atomic<i32>(), 4_a), core::AddressSpace::kWorkgroup);
-    WrapInFunction(CallStmt(Call("workgroupUniformLoad", AddressOf(Source{{12, 34}}, "v"))));
-
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(12:34 error: workgroupUniformLoad must not be called with an argument that contains an atomic type)");
-}
-
-TEST_F(ResolverBuiltinValidationTest, WorkgroupUniformLoad_AtomicInStruct) {
-    // struct Inner { a : array<atomic<i32, 4> }
-    // struct S { i : Inner }
-    // var<workgroup> v : array<S, 4>;
-    // fn foo() {
-    //   workgroupUniformLoad(&v);
-    // }
-    Structure("Inner", Vector{Member("a", ty.array(ty.atomic<i32>(), 4_a))});
-    Structure("S", Vector{Member("i", ty("Inner"))});
-    GlobalVar(Source{{12, 34}}, "v", ty.array(ty("S"), 4_a), core::AddressSpace::kWorkgroup);
-    WrapInFunction(CallStmt(Call("workgroupUniformLoad", AddressOf("v"))));
-
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(
-        r()->error(),
-        R"(error: workgroupUniformLoad must not be called with an argument that contains an atomic type)");
 }
 
 TEST_F(ResolverBuiltinValidationTest, SubgroupShuffleLaneArgMustBeNonNeg) {
