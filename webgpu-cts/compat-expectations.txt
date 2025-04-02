@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-03-17 09:54:19AM
+# Last rolled: 2025-04-02 05:20:12AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -418,7 +418,6 @@ crbug.com/341327472 [ intel-0x4680 linux ] webgpu:api,validation,state,device_lo
 
 # Timeouts on error_scope
 crbug.com/367513506 [ android arm ] webgpu:api,validation,error_scope:current_scope:errorFilter="validation";stackDepth=100000 [ Failure ]
-
 
 # sample_texture_combos test is failing on all Compat platforms
 crbug.com/402772749 webgpu:api,operation,sampling,sampler_texture:sample_texture_combos: [ Failure ]
