@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fee5797_4072e75b",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T14:38:55Z",
+      "side": 1,
+      "message": "I left these as is for now.",
+      "parentUuid": "3bfb2355_bef5a423",
+      "revId": "4a938e63ff81f1ef47064d435ab1b4f2f0b4ccc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "95df9cf8_0f952961",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-31T23:14:13Z",
       "side": 1,
       "message": "This seems overbroad, there are cases here that pass, like\n`webgpu:api,operation,rendering,depth_clip_clamp:depth_clamp_and_clip:format\u003d\"*\";unclippedDepth\u003dfalse;writeDepth\u003dfalse;multisampled\u003d*` for every format other than depth16unorm",
+      "revId": "4a938e63ff81f1ef47064d435ab1b4f2f0b4ccc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "711cd97a_2529b5a8",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T14:38:55Z",
+      "side": 1,
+      "message": "This one I\u0027d be fine keeping overbroad because we know the fix and it should be coming soonish.",
+      "parentUuid": "95df9cf8_0f952961",
       "revId": "4a938e63ff81f1ef47064d435ab1b4f2f0b4ccc0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
