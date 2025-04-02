@@ -16,6 +16,23 @@
       "message": "@Corentin and @Antonio, please take another look",
       "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58089a42_40e3d9ed",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T14:52:16Z",
+      "side": 1,
+      "message": "This flag is for DXC so instead can\u0027t we always fallback to system for FXC?",
+      "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
