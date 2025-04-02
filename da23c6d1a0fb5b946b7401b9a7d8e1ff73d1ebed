@@ -16,6 +16,24 @@
       "message": "Same as the other CL, this seems to be the application\u0027s responsibility to avoid redundant state changes as it has more semantic information that can help avoid this structurally. Do we have numbers that show that this matters?",
       "revId": "da23c6d1a0fb5b946b7401b9a7d8e1ff73d1ebed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8cc23d91_f416937e",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-02T10:13:16Z",
+      "side": 1,
+      "message": "The previous version of the code did redundant bindings even if there is no change in the vertex buffer bindings.\n\nThe prior code called `IASetVertexBuffers` to bind 8 vertex buffer slots in every draw call [1]. i.e.\n- Draw\n  - VertexBufferTracker::Apply\n    - Set 8 vertex buffer slots every time,",
+      "parentUuid": "b203b417_ffb24fc0",
+      "revId": "da23c6d1a0fb5b946b7401b9a7d8e1ff73d1ebed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6560b429_80b653f4",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-02T10:13:16Z",
+      "side": 0,
+      "message": "[1]",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
