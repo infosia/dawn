@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "60cd5831_571f7f5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3984191
+      },
+      "writtenOn": "2025-04-02T07:40:14Z",
+      "side": 1,
+      "message": "Hi, I think my project is not set up properly (git cl presubmit fails on a missing go.exe, and git cl format fails on a missing clang-format.exe). It seems it only looks for them in specific folders. I copied my own clang-format.exe to the folder it searches for them and it fixed the formatting issues, so those are now in Patchset 2. I\u0027m not sure if any other presubmit checks are failing.",
+      "parentUuid": "478b96f5_646f1eae",
+      "revId": "5eca2f4f01dfb0ca7ce7b04b634e5857f010ec09",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "be8e03f5_504b8806",
         "filename": "src/dawn/native/d3d/SwapChainD3D.cpp",
         "patchSetId": 1
