@@ -92,6 +92,24 @@
       "parentUuid": "41e601c1_8e7fbc2b",
       "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d428a56f_f45c846b",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-02T15:35:51Z",
+      "side": 1,
+      "message": "Yes, right, I think what this code is saying is: if we build DXC, then we expect both DXC and FXC DLLs in the module directory. If we don\u0027t build DXC, then FXC DLLs might not be in the module directory, so look also in the system directory.\n\nI think this comes from Skia, where they were relying on loading system FXC. I think what needs to be clarified is _when_ are FXC DLLs copies to the module directory (build output directory)? Ideally, the answer is \"always\", in which case we wouldn\u0027t need the fallback to system FXC. But clearly that\u0027s not the case right now.",
+      "parentUuid": "7a3b4edf_f4a55fae",
+      "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
