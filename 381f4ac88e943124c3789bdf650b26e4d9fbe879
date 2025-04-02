@@ -33,6 +33,24 @@
       "message": "Instead of ForceSet, can we change the default value? This will allow overriding the toggle for testing if newer drivers are fixed.",
       "revId": "381f4ac88e943124c3789bdf650b26e4d9fbe879",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d937ba2c_f6ece817",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-02T05:01:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1ffaa34_e4d0cc6e",
+      "revId": "381f4ac88e943124c3789bdf650b26e4d9fbe879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
