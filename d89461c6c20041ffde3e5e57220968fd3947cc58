@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f383589_fb220e04",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-02T08:29:54Z",
+      "side": 1,
+      "message": "Can we use the existing `DawnPartialLoadResolveTexture` rather than add a new feature? Ideally we could just add a new struct `RenderPassDescriptorPartialExpandResolveRect` as discussed in https://issues.chromium.org/issues/402810062#comment16",
+      "range": {
+        "startLine": 365,
+        "startChar": 6,
+        "endLine": 365,
+        "endChar": 30
+      },
+      "revId": "d89461c6c20041ffde3e5e57220968fd3947cc58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a018afc2_7805eabb",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2451,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-02T08:29:54Z",
+      "side": 1,
+      "message": "A helper like `VerifyRegion(colors[w][h], texture, ...)` might be more readable.",
+      "range": {
+        "startLine": 2434,
+        "startChar": 1,
+        "endLine": 2451,
+        "endChar": 65
+      },
+      "revId": "d89461c6c20041ffde3e5e57220968fd3947cc58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
