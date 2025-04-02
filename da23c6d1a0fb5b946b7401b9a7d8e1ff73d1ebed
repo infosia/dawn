@@ -34,6 +34,41 @@
       "parentUuid": "b203b417_ffb24fc0",
       "revId": "da23c6d1a0fb5b946b7401b9a7d8e1ff73d1ebed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51031c97_a473773f",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:50:31Z",
+      "side": 1,
+      "message": "Ah yes that\u0027s bad. I guess the comment was about this specific check here",
+      "parentUuid": "8cc23d91_f416937e",
+      "revId": "da23c6d1a0fb5b946b7401b9a7d8e1ff73d1ebed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab7078c4_ca69a4f6",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:50:31Z",
+      "side": 1,
+      "message": "```suggestion\n        const auto vertexBuffersToApply \u003d\n```",
+      "revId": "da23c6d1a0fb5b946b7401b9a7d8e1ff73d1ebed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
