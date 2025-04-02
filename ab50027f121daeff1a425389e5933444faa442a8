@@ -52,6 +52,58 @@
       "parentUuid": "75c04df9_68e398b6",
       "revId": "ab50027f121daeff1a425389e5933444faa442a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0a2988e_2cee19f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-02T00:55:25Z",
+      "side": 1,
+      "message": "No, we\u0027d need to make a push-constant version of ArrayLengthFromUniform (and other similar transforms). I\u0027m sure we\u0027ll do this at some point.",
+      "parentUuid": "9b4b9097_87de23e5",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a018204a_49f2382d",
+        "filename": "include/tint/tint.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-02T00:55:25Z",
+      "side": 1,
+      "message": "Why was this needed?",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d750fd6_10ac00a0",
+        "filename": "src/tint/lang/glsl/writer/raise/raise.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-02T00:55:25Z",
+      "side": 1,
+      "message": "Please also note that this needs to come *before* `BindingRemapper` (similar to the note for `TextureBuiltinsFromUniform` above). Transform dependencies are easily forgotten.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
