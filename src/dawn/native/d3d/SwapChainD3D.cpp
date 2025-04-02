@@ -105,10 +105,10 @@ DXGI_USAGE ToDXGIUsage(DeviceBase* device, wgpu::TextureFormat format, wgpu::Tex
 // Interface from microsoft.ui.xaml.media.dxinterop.h
 MIDL_INTERFACE("63aad0b8-7c24-40ff-85a8-640d944cc325")
 IWinUISwapChainPanelNative : public IUnknown {
-public:
+  public:
     virtual HRESULT STDMETHODCALLTYPE SetSwapChain(
         /* [annotation][in] */
-        _In_  IDXGISwapChain *swapChain) = 0;
+        _In_ IDXGISwapChain * swapChain) = 0;
 };
 #endif  // defined(DAWN_USE_WINDOWS_UI)
 

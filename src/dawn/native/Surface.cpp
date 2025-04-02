@@ -163,9 +163,9 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
         case wgpu::SType::SurfaceDescriptorFromWindowsWinUISwapChainPanel: {
             auto* subDesc = descriptor.Get<SurfaceDescriptorFromWindowsWinUISwapChainPanel>();
             DAWN_ASSERT(subDesc != nullptr);
-            // Unfortunately, checking whether this is a valid Microsoft.UI.Xaml.Controls.SwapChainPanel
-            // would require the WindowsAppSDK as a dependency, which is not trivial.
-            // So we'll only check for nullptr here.
+            // Unfortunately, checking whether this is a valid
+            // Microsoft.UI.Xaml.Controls.SwapChainPanel would require the WindowsAppSDK as a
+            // dependency, which is not trivial. So we'll only check for nullptr here.
             DAWN_INVALID_IF(subDesc->swapChainPanel == nullptr, "SwapChainPanel is nullptr.");
             return descriptor;
         }
