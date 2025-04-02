@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d39bd23_a24c0d93",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T07:07:33Z",
+      "side": 1,
+      "message": "Ah yes that\u0027s interesting as well. Mmmmh. We should probably discuss it with the team at some point and decide if it\u0027s better to avoid the double negative or to have the \"default default\" at off.",
+      "parentUuid": "a0c22c83_ec35a216",
+      "revId": "43631ac2e80ac18f9a531c26443f3bd14304b53e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32f3f736_4eae365d",
