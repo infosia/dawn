@@ -220,6 +220,27 @@ Result<SuccessType> Lower(core::ir::Module& mod) {
         if (auto* call = inst->As<wgsl::ir::BuiltinCall>()) {
             switch (call->Func()) {
                 case BuiltinFn::kWorkgroupUniformLoad: {
+                    auto* param0 = call->Args()[0];
+                    TINT_ASSERT(param0->Type()->Is<core::type::Pointer>());
+                    auto* storeType = param0->Type()->As<core::type::Pointer>()->StoreType();
+                    if (auto* a = storeType->As<core::type::Atomic>()) {
+                        // Replace:
+                        //    %value = call workgroupUniformLoad %ptr
+                        // With:
+                        //    call workgroupBarrier
+                        //    %value = atomicLoad &ptr
+                        //    call workgroupBarrier
+                        //    return %value
+                        b.InsertBefore(call, [&] {
+                            b.Call(ty.void_(), core::BuiltinFn::kWorkgroupBarrier);
+                            auto* result =
+                                b.Call(a->Type(), core::BuiltinFn::kAtomicLoad, call->Args()[0])
+                                    ->Result();
+                            b.Call(ty.void_(), core::BuiltinFn::kWorkgroupBarrier);
+                            call->Result()->ReplaceAllUsesWith(result);
+                        });
+                        break;
+                    }
                     // Replace:
                     //    %value = call workgroupUniformLoad %ptr
                     // With:
