@@ -91,6 +91,352 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a3bf5bb1_88e4bca7",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "Can we add a configuration using the Toggle to various relevant end2end tests so that we have at least some test coverage on the CQ?",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f39373f0_e19713d7",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "Since this is only used in GL we should tag it as such, and we can later unprefix it if needed. Description could be updated.\n\n```suggestion\n    {Toggle::GLUseArrayLengthFromUniform,\n```",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e634fbfd_8501ba48",
+        "filename": "src/dawn/native/opengl/BindingPoint.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "The names are very non-descript, \"Function\" is very generic. Maybe `TextureReflection` or `TextureMetadata` or `EmulatedBuiltin`? (for another CL)",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f6a8b6e_09106449",
+        "filename": "src/dawn/native/opengl/BindingPoint.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "What happens if both `textureNumbSamples` and `textureNumLevels` are used on the same binding point? If that\u0027s not possible now, can we have a comment explaining that? And do we have some form of assert that will trigger if that becomes possible?",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67776e78_2acef3c6",
+        "filename": "src/dawn/native/opengl/BindingPoint.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "```suggestion\nusing BindingPointToArrayLengthOffset \u003d absl::flat_hash_map\u003ctint::BindingPoint, uint32_t\u003e;\n```",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f0ba972_66a04ce1",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e239979_805500c5",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "We could always keep the data tracked as it is just setting a value in an array at an offset (although we might need to size the vector conservatively), then checking only in `ApplyInternalArrayLengthUniforms` if we actually need to apply things.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98bb73d6_08b3b467",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "Uuuh we have a per SSBO packed index at [1] so there is really no need to do a map lookup per binding that\u0027s set. In general all the precomputations needed to avoid map lookups can be done in the PipelineLayout.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a2d3d8b_ba7223d7",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "Could we name members of a struct instead of using first and second like this that don\u0027t have clear meaning outside of this code?",
+      "range": {
+        "startLine": 584,
+        "startChar": 1,
+        "endLine": 586,
+        "endChar": 83
+      },
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3da23e48_b7d61d82",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "This could also be a vector of uint32_t directly instaed of requiring a memcpy etc.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12d7b2a7_d51feec2",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "Why copy this here when the information can be gathered from the layout?",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b07cacb_a5c8f3f9",
+        "filename": "src/dawn/native/opengl/PipelineGL.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "Why are these buffers on the pipelines? We only need a single large enough buffer per device no? The sampler has a comment explaining why it is here, and also it is a deduplicated object so the cost is just 8 more bytes of data per pipeline to store the ref, whereas here we have two GPU allocations per pipeline.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b37d0dc6_7a0ff171",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "For a potential follow-up, we should make CompileShader return a structure instead of returning 5 things by out argument and 1 by value.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8359b24_4cdd7231",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "ditto we should add a TODO",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "662ad7d5_52264d71",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "Also this seems like it should be extracted to a function to avoid complicating CompileShader too much more when it is already insane.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3713390b_d8f243b9",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "Maybe we could check if any SSBO is in the pipeline layout to do the transform, so that we don\u0027t need to bind an empty UBO when there are no SSBOs.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed91981e_b059f39d",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to depend on the shader so the `bindingPointToSSBOLengthOffset` can be computed in the layout, and here we\u0027d only convert from the Dawn format to the Tint format.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e981ff2_62c7c007",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "Is it because here we are capturing a reference? Can we have a TODO on the issue to add C++20 so we know to clean that up when C++20 becomes available?",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "839f5b85_07a6163a",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "This can be extracted outside of all the loops since it is used in each positive iteration.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4df1543_6c06e834",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T10:48:05Z",
+      "side": 1,
+      "message": "Maybe that map should contain indices in uint32_ts instead of bytes.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d750fd6_10ac00a0",
         "filename": "src/tint/lang/glsl/writer/raise/raise.cc",
         "patchSetId": 13
