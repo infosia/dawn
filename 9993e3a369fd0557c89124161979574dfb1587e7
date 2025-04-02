@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6861f87_1c8d4e73",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-04-02T15:51:02Z",
+      "side": 1,
+      "message": "Before we merge, I\u0027d like to first get confirmation from QC that this is the correct workaround for the bug. We\u0027ve file a bug in their system.",
+      "range": {
+        "startLine": 675,
+        "startChar": 8,
+        "endLine": 675,
+        "endChar": 48
+      },
+      "revId": "9993e3a369fd0557c89124161979574dfb1587e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
