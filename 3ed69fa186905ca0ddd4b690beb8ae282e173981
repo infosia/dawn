@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76939891_26624d82",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-02T18:44:17Z",
+      "side": 1,
+      "message": "Hopefully this works! There were a few other attempts to remove expectations this week that did not pan out on FYI. (https://dawn-review.googlesource.com/c/dawn/+/234219, https://dawn-review.googlesource.com/c/dawn/+/234218)",
+      "revId": "3ed69fa186905ca0ddd4b690beb8ae282e173981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
