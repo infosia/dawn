@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74c59657_f0a9dd0e",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/AsyncHelperTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-02T09:24:25Z",
+      "side": 1,
+      "message": "I\u0027m surprised that the undefined values need to be spelt out. +CC Loko about that, don\u0027t we have default values for these?",
+      "revId": "dd0dc5c8559654a51d3706d603888e771c7c5203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
