@@ -16,6 +16,24 @@
       "message": "This ends up being a slightly bigger lib to link here, with some more dependencies. But, I don\u0027t think that really matters?\n\n@cwallez@chromium.org?",
       "revId": "f52e4fcb6fb0ab3a95c5e77410eafd4c45997d2b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79131b33_6715c715",
+        "filename": "src/dawn/wire/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T10:20:05Z",
+      "side": 1,
+      "message": "We want the wire to depend as little as possible from Tint so the tightly scoped lib was nice. But like this should be fine as well.",
+      "parentUuid": "a86198cf_bfcf80a2",
+      "revId": "f52e4fcb6fb0ab3a95c5e77410eafd4c45997d2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
