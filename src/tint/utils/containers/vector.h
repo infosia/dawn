@@ -44,8 +44,6 @@
 #include "src/tint/utils/memory/aligned_storage.h"
 #include "src/tint/utils/memory/bitcast.h"
 
-TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
-
 #ifndef TINT_VECTOR_MUTATION_CHECKS_ENABLED
 #ifdef NDEBUG
 #define TINT_VECTOR_MUTATION_CHECKS_ENABLED 0
@@ -67,6 +65,10 @@ class VectorRef;
 }  // namespace tint
 
 namespace tint {
+
+// VectorIterator operates directly on T*s, so there is no simple way to avoid this warning without
+// rewriting the C-style code.
+TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
 /// VectorIterator is a forward iterator of Vector elements.
 template <typename T, bool FORWARD = true>
@@ -282,6 +284,8 @@ class VectorIterator {
 #endif
 };
 
+TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
+
 /// @param out the stream to write to
 /// @param it the VectorIterator
 /// @returns @p out so calls can be chained
@@ -336,7 +340,7 @@ class Vector {
     Vector(std::initializer_list<T> elements) {
         Reserve(elements.size());
         for (auto& el : elements) {
-            new (&impl_.slice.data[impl_.slice.len++]) T{el};
+            new (&impl_.slice[impl_.slice.len++]) T{el};
         }
     }
 
@@ -504,13 +508,13 @@ class Vector {
     void Reserve(size_t new_cap) {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
         if (new_cap > impl_.slice.cap) {
-            auto* old_data = impl_.slice.data;
+            auto old_slice = std::move(impl_.slice);
             impl_.Allocate(new_cap);
             for (size_t i = 0; i < impl_.slice.len; i++) {
-                new (&impl_.slice.data[i]) T(std::move(old_data[i]));
-                old_data[i].~T();
+                new (&impl_.slice[i]) T(std::move(old_slice[i]));
+                old_slice[i].~T();
             }
-            impl_.Free(old_data);
+            impl_.Free(old_slice.data);
         }
     }
 
@@ -520,10 +524,10 @@ class Vector {
     void Resize(size_t new_len) {
         Reserve(new_len);
         for (size_t i = impl_.slice.len; i > new_len; i--) {  // Shrink
-            impl_.slice.data[i - 1].~T();
+            impl_.slice[i - 1].~T();
         }
         for (size_t i = impl_.slice.len; i < new_len; i++) {  // Grow
-            new (&impl_.slice.data[i]) T{};
+            new (&impl_.slice[i]) T{};
         }
         impl_.slice.len = new_len;
     }
@@ -534,10 +538,10 @@ class Vector {
     void Resize(size_t new_len, const T& value) {
         Reserve(new_len);
         for (size_t i = impl_.slice.len; i > new_len; i--) {  // Shrink
-            impl_.slice.data[i - 1].~T();
+            impl_.slice[i - 1].~T();
         }
         for (size_t i = impl_.slice.len; i < new_len; i++) {  // Grow
-            new (&impl_.slice.data[i]) T{value};
+            new (&impl_.slice[i]) T{value};
         }
         impl_.slice.len = new_len;
     }
@@ -553,7 +557,7 @@ class Vector {
     void Clear() {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
         for (size_t i = 0; i < impl_.slice.len; i++) {
-            impl_.slice.data[i].~T();
+            impl_.slice[i].~T();
         }
         impl_.slice.len = 0;
     }
@@ -565,7 +569,7 @@ class Vector {
         if (impl_.slice.len >= impl_.slice.cap) {
             Grow();
         }
-        new (&impl_.slice.data[impl_.slice.len++]) T(el);
+        new (&impl_.slice[impl_.slice.len++]) T(el);
     }
 
     /// Appends a new element to the vector.
@@ -575,7 +579,7 @@ class Vector {
         if (impl_.slice.len >= impl_.slice.cap) {
             Grow();
         }
-        new (&impl_.slice.data[impl_.slice.len++]) T(std::move(el));
+        new (&impl_.slice[impl_.slice.len++]) T(std::move(el));
     }
 
     /// Appends a new element to the vector.
@@ -586,7 +590,7 @@ class Vector {
         if (impl_.slice.len >= impl_.slice.cap) {
             Grow();
         }
-        new (&impl_.slice.data[impl_.slice.len++]) T{std::forward<ARGS>(args)...};
+        new (&impl_.slice[impl_.slice.len++]) T{std::forward<ARGS>(args)...};
     }
 
     /// Removes and returns the last element from the vector.
@@ -594,7 +598,7 @@ class Vector {
     T Pop() {
         TINT_VECTOR_MUTATION_CHECK_ASSERT(iterator_count_ == 0);
         TINT_ASSERT(!IsEmpty());
-        auto& el = impl_.slice.data[--impl_.slice.len];
+        auto& el = impl_.slice[--impl_.slice.len];
         auto val = std::move(el);
         el.~T();
         return val;
@@ -611,12 +615,12 @@ class Vector {
         Resize(Length() + 1);
         // Shuffle
         for (size_t i = n; i > before; i--) {
-            auto& src = impl_.slice.data[i - 1];
-            auto& dst = impl_.slice.data[i];
+            auto& src = impl_.slice[i - 1];
+            auto& dst = impl_.slice[i];
             dst = std::move(src);
         }
         // Insert
-        impl_.slice.data[before] = std::forward<EL>(element);
+        impl_.slice[before] = std::forward<EL>(element);
     }
 
     /// Removes @p count elements from the vector
@@ -628,13 +632,13 @@ class Vector {
         TINT_ASSERT((start + count) <= Length());
         // Shuffle
         for (size_t i = start + count; i < impl_.slice.len; i++) {
-            auto& src = impl_.slice.data[i];
-            auto& dst = impl_.slice.data[i - count];
+            auto& src = impl_.slice[i];
+            auto& dst = impl_.slice[i - count];
             dst = std::move(src);
         }
         // Pop
         for (size_t i = 0; i < count; i++) {
-            auto& el = impl_.slice.data[--impl_.slice.len];
+            auto& el = impl_.slice[--impl_.slice.len];
             el.~T();
         }
     }
@@ -648,10 +652,10 @@ class Vector {
         // Shuffle
         size_t num_removed = 0;
         for (size_t i = 0; i < impl_.slice.len; i++) {
-            auto& el = impl_.slice.data[i];
+            auto& el = impl_.slice[i];
             bool remove = predicate(const_cast<const T&>(el));
             if (num_removed > 0) {
-                auto& dst = impl_.slice.data[i - num_removed];
+                auto& dst = impl_.slice[i - num_removed];
                 dst = std::move(el);
             }
             if (remove) {
@@ -660,7 +664,7 @@ class Vector {
         }
         // Pop
         for (size_t i = 0; i < num_removed; i++) {
-            auto& el = impl_.slice.data[--impl_.slice.len];
+            auto& el = impl_.slice[--impl_.slice.len];
             el.~T();
         }
     }
@@ -835,7 +839,7 @@ class Vector {
 
     template <typename... Ts>
     void AppendVariadic(Ts&&... args) {
-        ((new (&impl_.slice.data[impl_.slice.len++]) T(std::forward<Ts>(args))), ...);
+        ((new (&impl_.slice[impl_.slice.len++]) T(std::forward<Ts>(args))), ...);
     }
 
     /// Expands the capacity of the vector
@@ -866,7 +870,7 @@ class Vector {
 
         impl_.slice.len = other.len;
         for (size_t i = 0; i < impl_.slice.len; i++) {
-            new (&impl_.slice.data[i]) T{other.data[i]};
+            new (&impl_.slice[i]) T{other[i]};
         }
     }
 
@@ -895,10 +899,10 @@ class Vector {
             Clear();
         }
 
-        // Move each of the elements.
+        // Move each of the elements.c
         impl_.slice.len = other_slice.len;
         for (size_t i = 0; i < impl_.slice.len; i++) {
-            new (&impl_.slice.data[i]) T{std::move(other_slice.data[i])};
+            new (&impl_.slice[i]) T{std::move(other_slice[i])};
         }
 
         // Clear other
@@ -1302,7 +1306,5 @@ template <typename T>
 static constexpr bool IsVectorLike = tint::detail::IsVectorLike<T>::value;
 
 }  // namespace tint
-
-TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
 
 #endif  // SRC_TINT_UTILS_CONTAINERS_VECTOR_H_

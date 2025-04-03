@@ -29,6 +29,7 @@
 
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/module.h"
@@ -72,9 +73,15 @@ struct State {
         }
 
         // Process the entry points.
-        // Take a copy of the function list since the transform adds new functions to the module.
-        auto functions = ir.functions;
-        for (auto& func : functions) {
+        // Make a weak reference copy of the function list since the transform adds new functions
+        // to the module.
+        std::vector<ConstPropagatingPtr<Function>*> functions;
+        for (size_t i = 0; i < ir.functions.Length(); i++) {
+            functions.push_back(&ir.functions[i]);
+        }
+
+        for (auto f : functions) {
+            auto& func = *f;
             // Only process entry points.
             if (!func->IsEntryPoint()) {
                 continue;
