@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7053035e_be678082",
+        "filename": "tools/android/webgpu/src/main/cpp/Util.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T10:15:45Z",
+      "side": 1,
+      "message": "Given that this whole file is specific to Android, maybe we should just not compile it? Also did we ever make a specific function to create a surface from a ANativeWindow without having to do the dance of passing a C pointer as a long in JVM?",
+      "revId": "7921a55ed9bdfc7d78ae0ab7a287a25956a22bd8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
