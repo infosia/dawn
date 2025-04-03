@@ -50,6 +50,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "eace5f4e_8d973d1e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-03T17:42:23Z",
+      "side": 1,
+      "message": "Right, yeah, that\u0027s the copy step I added for when we build DXC - when `dawn_use_built_dxc` is true - but what you removed from `test/BUILD.gn` is for when `!dawn_use_built_dxc`. This should be fine, since your change makes it so that we _only_ ever use our built DXC.",
+      "parentUuid": "ab478144_8f942a83",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c3da70d2_de74a09f",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
