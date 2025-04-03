@@ -46,6 +46,30 @@
       },
       "revId": "5e155fd23844347f0f085a989f6f35048f1cdbf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f5b1318_eaa4ebf2",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-03T14:07:12Z",
+      "side": 1,
+      "message": "In that case, we should name it `TINT_ENABLE_IR_VALIDATION_IN_NDEBUG` as I suggested yesterday. This would be just like `DAWN_DXC_ENABLE_ASSERTS_IN_NDEBUG`.",
+      "parentUuid": "3d8c0b02_ea4177b8",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "5e155fd23844347f0f085a989f6f35048f1cdbf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
