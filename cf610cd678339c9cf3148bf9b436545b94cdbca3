@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab478144_8f942a83",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-04-03T17:28:46Z",
+      "side": 1,
+      "message": "They can be found in [src/dawn/native/BUILD.GN](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BUILD.gn;l\u003d543). Specifically, these lines. \n\n```GN\n  if (dawn_enable_d3d12) {\n    if (dawn_use_built_dxc) {\n      deps +\u003d [ \"$dawn_root/third_party/gn/dxc:dxcompiler\" ]\n      defines +\u003d [ \"DAWN_USE_BUILT_DXC\" ]\n      data_deps +\u003d [ \"$dawn_root/third_party/gn/dxc:copy_dxil_dll\" ]\n    }\n```\n\nHere is the definition of [dxc:copy_dxil_dll](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/third_party/gn/dxc/BUILD.gn;l\u003d2419)\n\n```GN\n# Define a target to copy the DXIL signing library, dxil.dll, to the output directory\nif (is_win) {\n  import(\"//build/config/win/visual_studio_version.gni\")\n  copy(\"copy_dxil_dll\") {\n    sources \u003d\n        [ \"$windows_sdk_path/bin/$windows_sdk_version/$target_cpu/dxil.dll\" ]\n    outputs \u003d [ \"$root_out_dir/{{source_file_part}}\" ]\n  }\n}\n```",
+      "parentUuid": "fe16dc4f_04d51758",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 6
+      },
+      "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c3da70d2_de74a09f",
@@ -107,6 +131,24 @@
       "writtenOn": "2025-04-02T15:35:51Z",
       "side": 1,
       "message": "Yes, right, I think what this code is saying is: if we build DXC, then we expect both DXC and FXC DLLs in the module directory. If we don\u0027t build DXC, then FXC DLLs might not be in the module directory, so look also in the system directory.\n\nI think this comes from Skia, where they were relying on loading system FXC. I think what needs to be clarified is _when_ are FXC DLLs copies to the module directory (build output directory)? Ideally, the answer is \"always\", in which case we wouldn\u0027t need the fallback to system FXC. But clearly that\u0027s not the case right now.",
+      "parentUuid": "7a3b4edf_f4a55fae",
+      "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e4e09fb_a9d0f136",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-04-03T17:28:46Z",
+      "side": 1,
+      "message": "\u003e This flag is for DXC so instead can\u0027t we always fallback to system for FXC?\n\n@cwallez@chromium.org as Antonio states `d3dcompiler_47.dll` is normally copied from the SDK and shipped with the installer so we get a version with the latest fixes. For reasons, Skia\u0027s build files are not able to access the SDK so they build with `dawn_use_built_dxc` set to false. Neither `dxcompiler.dll`, nor `d3dcompiler_47.dll` are copied from the SDK. Only in this no-copy case do we want to fallback to the system compiler if we can\u0027t find it in the local path.\n\n\u003e I think what needs to be clarified is when are FXC DLLs copies to the module directory (build output directory)? Ideally, the answer is \"always\", in which case we wouldn\u0027t need the fallback to system FXC. But clearly that\u0027s not the case right now.\n\n@amaiorano@google.com, ANGLE is the component that copies `d3dcompiler_47.dll` from the SDK to the build output directory. I don\u0027t believe it is also not able to do so in Skia\u0027s build system.\n\nPer our offline conversation, we agreed to keep the code but eliminate the #ifndef so that it always runs. However, care must be taken always ship `d3dcompiler_47.dll`, otherwise the code will load whatever random one comes with the OS. \n\nChromium has a [CHECK_IS_TEST](https://chromium.googlesource.com/chromium/src/base/+/refs/heads/main/check_is_test.h) helper you can call to assert that you\u0027re running only lights up in tests so if this exists",
       "parentUuid": "7a3b4edf_f4a55fae",
       "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
