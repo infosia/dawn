@@ -140,7 +140,7 @@
 	url = https://chromium.googlesource.com/external/github.com/KhronosGroup/EGL-Registry
 [submodule "third_party/webgpu-cts"]
 	path = third_party/webgpu-cts
-	url = https://chromium.googlesource.com/external/github.com/gpuweb/cts
+	url = https://github.com/kainino0x/cts.git
 	gclient-condition = build_with_chromium
 [submodule "third_party/emsdk"]
 	path = third_party/emsdk
