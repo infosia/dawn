@@ -56,6 +56,30 @@
       },
       "revId": "ee4b825accfa7ad964d227f5e719758a210d1a50",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b433ae4c_398ddd23",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-03T16:13:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure but at least in DXVK implementation, it does expect that the array pointer is non-null if count \u003e 0.\n\nhttps://github.com/doitsujin/dxvk/blob/2e20d7302682ea66b2e4f6c870b859f36c543f63/src/d3d11/d3d11_context.cpp#L5116",
+      "parentUuid": "cbcd9285_66f182f8",
+      "range": {
+        "startLine": 142,
+        "startChar": 81,
+        "endLine": 142,
+        "endChar": 93
+      },
+      "revId": "ee4b825accfa7ad964d227f5e719758a210d1a50",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
