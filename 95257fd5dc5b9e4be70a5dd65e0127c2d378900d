@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03d6948b_b5fa396b",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:58:05Z",
+      "side": 1,
+      "message": "Nice, thanks!",
+      "parentUuid": "035ae08a_ef0042ad",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "744bdf85_681cde13",
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Resetting render targets is currently done outside `BindGroupTracker`.",
       "parentUuid": "744bdf85_681cde13",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "634cad03_a4679d6f",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:58:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c5ef2e1f_9e8bfff2",
       "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -155,6 +191,24 @@
       "side": 1,
       "message": "\u003e Grouping buffers in one bind call requires them to be bound to a continuous range. This is not guaranteed\n\nTo add to this. Not all bindings are visible to both vertex \u0026 fragment stage. So the binding indices could have \"holes\", thus not being continuous. Making it more difficult to grouping them and setting in one call.",
       "parentUuid": "4410f52f_7f98f98c",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8664faba_f03fb209",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:58:05Z",
+      "side": 1,
+      "message": "Yeah I was thinking of the holes as well. In the future I think we could still consider walking per binding type for perf (to avoid the switch, not sure if it will matter in practice), but maybe won\u0027t need to coalesce state setting and keep setting buffers individually.",
+      "parentUuid": "c5de6569_df251460",
       "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -225,6 +279,24 @@
       "side": 1,
       "message": "Btw, we also do the similar thing in the metal backend [1].\nI have created a bug tracker for moving common code to front-end. Currently it\u0027s a bit tricky since D3D11 and Metal have slightly different binding models. Metal uses generic binding slots for all buffers whereas D3D11 separates between constant buffers, SRVs, UAVs. Furthermore, metal could move to use argument buffers in future.\n\nGraphite/D3D11 is currently slower than Ganesh/D3D11 in some cases. I think every optimization should count.\n\n- [1] https://dawn-review.googlesource.com/c/dawn/+/193940\n- [2] https://crbug.com/408066880",
       "parentUuid": "a47c3b63_c82ba2c3",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8ad42de_0eadc608",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:58:05Z",
+      "side": 1,
+      "message": "Yeah I\u0027m not fond of doing that in Metal either TBH but w/e because we will move to argument buffers soon enough. The fact that the redundancy check reduces the time in half is indicative of Graphite setting many bindings redundantly. We could paper over it here, but also I strongly suggest that Graphite group its bindings by change frequency in BindGroups.",
+      "parentUuid": "53f6219e_75c90d3f",
       "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
