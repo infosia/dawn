@@ -27,41 +27,51 @@
 
 #include "src/tint/lang/core/type/abstract_float.h"
 #include "src/tint/lang/core/type/abstract_int.h"
+#include "src/tint/lang/core/type/array.h"
 #include "src/tint/lang/core/type/array_count.h"
 #include "src/tint/lang/core/type/f16.h"
+#include "src/tint/lang/core/type/f32.h"
 #include "src/tint/lang/core/type/helper_test.h"
+#include "src/tint/lang/core/type/i32.h"
+#include "src/tint/lang/core/type/manager.h"
+#include "src/tint/lang/core/type/matrix.h"
 #include "src/tint/lang/core/type/reference.h"
+#include "src/tint/lang/core/type/u32.h"
+#include "src/tint/lang/core/type/vector.h"
+#include "src/tint/utils/symbol/symbol_table.h"
 
 namespace tint::core::type {
 namespace {
 
 struct TypeTest : public TestHelper {
-    const AbstractFloat* af = create<AbstractFloat>();
-    const AbstractInt* ai = create<AbstractInt>();
-    const F32* f32 = create<F32>();
-    const F16* f16 = create<F16>();
-    const I32* i32 = create<I32>();
-    const U32* u32 = create<U32>();
-    const Vector* vec2_f32 = create<Vector>(f32, 2u);
-    const Vector* vec3_f32 = create<Vector>(f32, 3u);
-    const Vector* vec3_f16 = create<Vector>(f16, 3u);
-    const Vector* vec4_f32 = create<Vector>(f32, 4u);
-    const Vector* vec3_u32 = create<Vector>(u32, 3u);
-    const Vector* vec3_i32 = create<Vector>(i32, 3u);
-    const Vector* vec3_af = create<Vector>(af, 3u);
-    const Vector* vec3_ai = create<Vector>(ai, 3u);
-    const Matrix* mat2x4_f32 = create<Matrix>(vec4_f32, 2u);
-    const Matrix* mat3x4_f32 = create<Matrix>(vec4_f32, 3u);
-    const Matrix* mat4x2_f32 = create<Matrix>(vec2_f32, 4u);
-    const Matrix* mat4x3_f32 = create<Matrix>(vec3_f32, 4u);
-    const Matrix* mat4x3_f16 = create<Matrix>(vec3_f16, 4u);
-    const Matrix* mat4x3_af = create<Matrix>(vec3_af, 4u);
-    const Reference* ref_u32 =
-        create<Reference>(core::AddressSpace::kPrivate, u32, core::Access::kReadWrite);
-    const Struct* str_f32 = create<Struct>(Sym("str_f32"),
+    GenerationID id = GenerationID::New();
+    SymbolTable st{id};
+    Manager ty;
+    const AbstractFloat* af = ty.Get<AbstractFloat>();
+    const AbstractInt* ai = ty.Get<AbstractInt>();
+    const F32* f32 = ty.f32();
+    const F16* f16 = ty.f16();
+    const I32* i32 = ty.i32();
+    const U32* u32 = ty.u32();
+    const Vector* vec2_f32 = ty.vec2(f32);
+    const Vector* vec3_f32 = ty.vec3(f32);
+    const Vector* vec3_f16 = ty.vec3(f16);
+    const Vector* vec4_f32 = ty.vec4(f32);
+    const Vector* vec3_u32 = ty.vec3(u32);
+    const Vector* vec3_i32 = ty.vec3(i32);
+    const Vector* vec3_af = ty.vec3(af);
+    const Vector* vec3_ai = ty.vec3(ai);
+    const Matrix* mat2x4_f32 = ty.mat2x4(f32);
+    const Matrix* mat3x4_f32 = ty.mat3x4(f32);
+    const Matrix* mat4x2_f32 = ty.mat4x2(f32);
+    const Matrix* mat4x3_f32 = ty.mat4x3(f32);
+    const Matrix* mat4x3_f16 = ty.mat4x3(f16);
+    const Matrix* mat4x3_af = ty.mat4x3(af);
+    const Reference* ref_u32 = ty.ref(core::AddressSpace::kPrivate, u32, core::Access::kReadWrite);
+    const Struct* str_f32 = ty.Get<Struct>(st.New("str_f32"),
                                            tint::Vector{
-                                               create<StructMember>(
-                                                   /* name */ Sym("x"),
+                                               ty.Get<StructMember>(
+                                                   /* name */ st.New("x"),
                                                    /* type */ f32,
                                                    /* index */ 0u,
                                                    /* offset */ 0u,
@@ -72,10 +82,10 @@ struct TypeTest : public TestHelper {
                                            /* align*/ 4u,
                                            /* size*/ 4u,
                                            /* size_no_padding*/ 4u);
-    const Struct* str_f16 = create<Struct>(Sym("str_f16"),
+    const Struct* str_f16 = ty.Get<Struct>(st.New("str_f16"),
                                            tint::Vector{
-                                               create<StructMember>(
-                                                   /* name */ Sym("x"),
+                                               ty.Get<StructMember>(
+                                                   /* name */ st.New("x"),
                                                    /* type */ f16,
                                                    /* index */ 0u,
                                                    /* offset */ 0u,
@@ -86,10 +96,10 @@ struct TypeTest : public TestHelper {
                                            /* align*/ 4u,
                                            /* size*/ 4u,
                                            /* size_no_padding*/ 4u);
-    Struct* str_af = create<Struct>(Sym("str_af"),
+    Struct* str_af = ty.Get<Struct>(st.New("str_af"),
                                     tint::Vector{
-                                        create<StructMember>(
-                                            /* name */ Sym("x"),
+                                        ty.Get<StructMember>(
+                                            /* name */ st.New("x"),
                                             /* type */ af,
                                             /* index */ 0u,
                                             /* offset */ 0u,
@@ -100,69 +110,15 @@ struct TypeTest : public TestHelper {
                                     /* align*/ 4u,
                                     /* size*/ 4u,
                                     /* size_no_padding*/ 4u);
-    const Array* arr_i32 = create<Array>(
-        /* element */ i32,
-        /* count */ create<ConstantArrayCount>(5u),
-        /* align */ 4u,
-        /* size */ 5u * 4u,
-        /* stride */ 5u * 4u,
-        /* implicit_stride */ 5u * 4u);
-    const Array* arr_ai = create<Array>(
-        /* element */ ai,
-        /* count */ create<ConstantArrayCount>(5u),
-        /* align */ 4u,
-        /* size */ 5u * 4u,
-        /* stride */ 5u * 4u,
-        /* implicit_stride */ 5u * 4u);
-    const Array* arr_vec3_i32 = create<Array>(
-        /* element */ vec3_i32,
-        /* count */ create<ConstantArrayCount>(5u),
-        /* align */ 16u,
-        /* size */ 5u * 16u,
-        /* stride */ 5u * 16u,
-        /* implicit_stride */ 5u * 16u);
-    const Array* arr_vec3_ai = create<Array>(
-        /* element */ vec3_ai,
-        /* count */ create<ConstantArrayCount>(5u),
-        /* align */ 16u,
-        /* size */ 5u * 16u,
-        /* stride */ 5u * 16u,
-        /* implicit_stride */ 5u * 16u);
-    const Array* arr_mat4x3_f16 = create<Array>(
-        /* element */ mat4x3_f16,
-        /* count */ create<ConstantArrayCount>(5u),
-        /* align */ 32u,
-        /* size */ 5u * 32u,
-        /* stride */ 5u * 32u,
-        /* implicit_stride */ 5u * 32u);
-    const Array* arr_mat4x3_f32 = create<Array>(
-        /* element */ mat4x3_f32,
-        /* count */ create<ConstantArrayCount>(5u),
-        /* align */ 64u,
-        /* size */ 5u * 64u,
-        /* stride */ 5u * 64u,
-        /* implicit_stride */ 5u * 64u);
-    const Array* arr_mat4x3_af = create<Array>(
-        /* element */ mat4x3_af,
-        /* count */ create<ConstantArrayCount>(5u),
-        /* align */ 64u,
-        /* size */ 5u * 64u,
-        /* stride */ 5u * 64u,
-        /* implicit_stride */ 5u * 64u);
-    const Array* arr_str_f16 = create<Array>(
-        /* element */ str_f16,
-        /* count */ create<ConstantArrayCount>(5u),
-        /* align */ 4u,
-        /* size */ 5u * 4u,
-        /* stride */ 5u * 4u,
-        /* implicit_stride */ 5u * 4u);
-    const Array* arr_str_af = create<Array>(
-        /* element */ str_af,
-        /* count */ create<ConstantArrayCount>(5u),
-        /* align */ 4u,
-        /* size */ 5u * 4u,
-        /* stride */ 5u * 4u,
-        /* implicit_stride */ 5u * 4u);
+    const Array* arr_i32 = ty.array(i32, 5);
+    const Array* arr_ai = ty.array(ai, 5);
+    const Array* arr_vec3_i32 = ty.array(vec3_i32, 5);
+    const Array* arr_vec3_ai = ty.array(vec3_ai, 5);
+    const Array* arr_mat4x3_f16 = ty.array(mat4x3_f16, 5);
+    const Array* arr_mat4x3_f32 = ty.array(mat4x3_f32, 5);
+    const Array* arr_mat4x3_af = ty.array(mat4x3_af, 5);
+    const Array* arr_str_f16 = ty.array(str_f16, 5);
+    const Array* arr_str_af = ty.array(str_af, 5);
 
     TypeTest() { str_af->SetConcreteTypes(tint::Vector{str_f32, str_f16}); }
 };
