@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5e022e2d_823e2271",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2128,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-03T09:07:39Z",
+      "side": 1,
+      "message": "Some internal shader modules ([example](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlitBufferToTexture.cpp;l\u003d294)) are created without giving a `compilationMessages`, assuming that the shader creation will succeed, and the caller doesn\u0027t care about the compilation messages (if any). `dawn::native::utils::CreateShaderModule` in `dawn/native/utils/WGPUHelpers.cpp` also call `DeviceBase::CreateShaderModule` without `compilationMessages`.\n\nIn all these cases, without this CL, the shader module will have no compilation messages if created successfully, or the error module won\u0027t be able to query the compilation messages if failed.\n\nI would like to use an in-place compilation messages here so that we can ensure all shader module successfully created and stored in the cache have valid compilation messages. But this CL doesn\u0027t make error shader get compilation messages injected in `dawn::native::utils::CreateShaderModule`.",
+      "parentUuid": "ab78fa8b_6a4f315d",
+      "range": {
+        "startLine": 2127,
+        "startChar": 46,
+        "endLine": 2128,
+        "endChar": 90
+      },
+      "revId": "d615513863812b9e3ba0b93e54c75bcd9b0ff115",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7760bb4b_d80151b6",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 8
@@ -54,6 +78,30 @@
       "writtenOn": "2025-04-01T19:47:22Z",
       "side": 1,
       "message": "If you decide to keep the `inplaceCompilationMessages` above. I would allocate it direclty here instead so it\u0027s only allocated on cache misses.",
+      "range": {
+        "startLine": 2199,
+        "startChar": 12,
+        "endLine": 2199,
+        "endChar": 63
+      },
+      "revId": "d615513863812b9e3ba0b93e54c75bcd9b0ff115",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ab4ef84_4e7f685f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2199,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-03T09:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7760bb4b_d80151b6",
       "range": {
         "startLine": 2199,
         "startChar": 12,
@@ -101,6 +149,30 @@
           ]
         }
       ],
+      "revId": "d615513863812b9e3ba0b93e54c75bcd9b0ff115",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "deb875fc_fb2b3fc3",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-03T09:07:39Z",
+      "side": 1,
+      "message": "Done rephrasing, but I still want to leave a clue for CountUTF16CodeUnitsFromUTF8String. Would that be OK?",
+      "parentUuid": "8ec9822b_3688d421",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 53
+      },
       "revId": "d615513863812b9e3ba0b93e54c75bcd9b0ff115",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

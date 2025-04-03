@@ -33,6 +33,24 @@
       "message": "Note: `validationBeforeCache` only do minimium vlidation (e.g. device is alive and the descriptor is correctly constructed), so that we can query the front-end cache below as soon as possible.",
       "revId": "c779a15b82598471f057f1c23201918b02b55953",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "516181e8_302e4745",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-03T09:07:39Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f6d35c08_224c527a",
+      "revId": "c779a15b82598471f057f1c23201918b02b55953",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

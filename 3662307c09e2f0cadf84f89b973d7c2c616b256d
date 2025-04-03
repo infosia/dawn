@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "138c5980_01a1163c",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1444,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-03T09:07:39Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "f5dca440_cc4d59ca",
+      "revId": "3662307c09e2f0cadf84f89b973d7c2c616b256d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "caf16796_2d027a2e",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-03-27T10:09:31Z",
       "side": 0,
       "message": "Note: Previously we call `ValidateAndParseShaderModule` by default before checking the front-end cache, which leads to WGSL parsing in main thread. This CL move this into the cache missing function.",
+      "revId": "3662307c09e2f0cadf84f89b973d7c2c616b256d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8de1252f_6741cb19",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-03T09:07:39Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "caf16796_2d027a2e",
       "revId": "3662307c09e2f0cadf84f89b973d7c2c616b256d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
