@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b826aaa_89b3a15d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-03T18:54:37Z",
+      "side": 1,
+      "message": "PTAL first (especially if there are any other specialized owners you can think of), then I\u0027ll send this to everyone who is affected.",
+      "revId": "6d586d70a7a1b3ef6fd319264d6bc9a5e5d24f21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
