@@ -429,7 +429,7 @@ int ResourceMemoryAllocator::FindBestTypeIndex(VkMemoryRequirements requirements
     return bestType;
 }
 
-void ResourceMemoryAllocator::DestroyPool() {
+void ResourceMemoryAllocator::FreeRecycledMemory() {
     for (auto& alloc : mAllocatorsPerType) {
         alloc->DestroyPool();
     }
