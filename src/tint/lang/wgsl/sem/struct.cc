@@ -44,6 +44,15 @@ Struct::Struct(const ast::Struct* declaration,
     TINT_ASSERT(declaration != nullptr);
 }
 
+Struct::Struct(const ast::Struct* declaration,
+               Symbol name,
+               uint32_t align,
+               uint32_t size,
+               uint32_t size_no_padding)
+    : Base(name, align, size, size_no_padding), declaration_(declaration) {
+    TINT_ASSERT(declaration != nullptr);
+}
+
 Struct::~Struct() = default;
 
 StructMember::StructMember(const ast::StructMember* declaration,

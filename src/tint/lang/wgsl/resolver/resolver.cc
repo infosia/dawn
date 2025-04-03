@@ -4396,7 +4396,7 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
         }
     }
 
-    Vector<const sem::StructMember*, 8> sem_members;
+    Vector<sem::StructMember*, 8> sem_members;
     sem_members.Reserve(str->members.Length());
 
     // Calculate the effective size and alignment of each field, and the overall size of the
@@ -4659,9 +4659,9 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
         ICE(str->source) << "calculated struct stride exceeds uint32";
     }
 
-    auto* out = b.create<sem::Struct>(
-        str, str->name->symbol, std::move(sem_members), static_cast<uint32_t>(struct_align),
-        static_cast<uint32_t>(struct_size), static_cast<uint32_t>(size_no_padding));
+    auto* out = b.create<sem::Struct>(str, str->name->symbol, static_cast<uint32_t>(struct_align),
+                                      static_cast<uint32_t>(struct_size),
+                                      static_cast<uint32_t>(size_no_padding));
 
     for (size_t i = 0; i < sem_members.Length(); i++) {
         auto* mem_type = sem_members[i]->Type();
@@ -4675,9 +4675,8 @@ sem::Struct* Resolver::Structure(const ast::Struct* str) {
         if (subgroup_matrix_uses_.Contains(mem_type)) {
             subgroup_matrix_uses_.Add(out);
         }
-
-        const_cast<sem::StructMember*>(sem_members[i])->SetStruct(out);
     }
+    out->SetMembers(std::move(sem_members));
 
     auto stage = current_function_ ? current_function_->Declaration()->PipelineStage()
                                    : ast::PipelineStage::kNone;
