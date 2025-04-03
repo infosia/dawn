@@ -44,39 +44,63 @@ ResultOrError<Ref<PipelineLayout>> PipelineLayout::Create(
 }
 
 MaybeError PipelineLayout::Initialize(Device* device) {
-    unsigned int constantBufferIndex = 0;
-    unsigned int samplerIndex = 0;
-    unsigned int shaderResourceViewIndex = 0;
+    PerStage<uint32_t> constantBufferCounter(0);
+    PerStage<uint32_t> samplerCounter(0);
+    PerStage<uint32_t> shaderResourceViewCounter(0);
+
+    const auto AssignPerStageNativeIndex = [](wgpu::ShaderStage visibility,
+                                              PerStage<uint32_t>& counters) {
+        PerStage<uint32_t> nativeIndex(kInvalidSlot);
+        for (SingleShaderStage stage : IterateStages(visibility)) {
+            nativeIndex[stage] = counters[stage]++;
+        }
+        return nativeIndex;
+    };
+
     // For d3d11 pixel shaders, the render targets and unordered-access views share the same
     // resource slots when being written out. So we assign UAV binding index decreasingly here.
     // https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omsetrendertargetsandunorderedaccessviews
     // TODO(dawn:1818): Support testing on both FL11_0 and FL11_1.
-    mTotalUAVBindingCount = device->GetUAVSlotCount();
+    const uint32_t kUAVSlotCount = device->GetUAVSlotCount();
+    PerStage<uint32_t> uavBindingCounter(kUAVSlotCount);
 
     // Reserve last several UAV slots for Pixel Local Storage attachments.
-    uint32_t unorderedAccessViewIndex =
-        mTotalUAVBindingCount - static_cast<uint32_t>(GetStorageAttachmentSlots().size());
+    uavBindingCounter[SingleShaderStage::Fragment] -=
+        static_cast<uint32_t>(GetStorageAttachmentSlots().size());
+
+    const auto AssignPerStageNativeUAVIndex = [&uavBindingCounter](wgpu::ShaderStage visibility) {
+        PerStage<uint32_t> nativeIndex(kInvalidSlot);
+        for (SingleShaderStage stage : IterateStages(visibility)) {
+            nativeIndex[stage] = --uavBindingCounter[stage];
+        }
+        return nativeIndex;
+    };
+
     for (BindGroupIndex group : IterateBitSet(GetBindGroupLayoutsMask())) {
         const BindGroupLayoutInternalBase* bgl = GetBindGroupLayout(group);
-        mIndexInfo[group].resize(bgl->GetBindingCount());
+        mIndexToNativeMap[group].resize(bgl->GetBindingCount());
 
         for (BindingIndex bindingIndex{0}; bindingIndex < bgl->GetBindingCount(); ++bindingIndex) {
             const BindingInfo& bindingInfo = bgl->GetBindingInfo(bindingIndex);
+
             MatchVariant(
                 bindingInfo.bindingLayout,
                 [&](const BufferBindingInfo& layout) {
                     switch (layout.type) {
                         case wgpu::BufferBindingType::Uniform:
-                            mIndexInfo[group][bindingIndex] = constantBufferIndex++;
+                            mIndexToNativeMap[group][bindingIndex] = AssignPerStageNativeIndex(
+                                bindingInfo.visibility, constantBufferCounter);
                             break;
                         case wgpu::BufferBindingType::Storage:
                         case kInternalStorageBufferBinding:
-                            mIndexInfo[group][bindingIndex] = --unorderedAccessViewIndex;
+                            mIndexToNativeMap[group][bindingIndex] =
+                                AssignPerStageNativeUAVIndex(bindingInfo.visibility);
                             mUAVBindGroups.set(group);
                             break;
                         case wgpu::BufferBindingType::ReadOnlyStorage:
                         case kInternalReadOnlyStorageBufferBinding:
-                            mIndexInfo[group][bindingIndex] = shaderResourceViewIndex++;
+                            mIndexToNativeMap[group][bindingIndex] = AssignPerStageNativeIndex(
+                                bindingInfo.visibility, shaderResourceViewCounter);
                             break;
                         case wgpu::BufferBindingType::BindingNotUsed:
                         case wgpu::BufferBindingType::Undefined:
@@ -84,7 +108,8 @@ MaybeError PipelineLayout::Initialize(Device* device) {
                     }
                 },
                 [&](const SamplerBindingInfo&) {
-                    mIndexInfo[group][bindingIndex] = samplerIndex++;
+                    mIndexToNativeMap[group][bindingIndex] =
+                        AssignPerStageNativeIndex(bindingInfo.visibility, samplerCounter);
                 },
                 [&](const StaticSamplerBindingInfo&) {
                     // Static samplers are implemented in the frontend on
@@ -92,17 +117,20 @@ MaybeError PipelineLayout::Initialize(Device* device) {
                     DAWN_UNREACHABLE();
                 },
                 [&](const TextureBindingInfo&) {
-                    mIndexInfo[group][bindingIndex] = shaderResourceViewIndex++;
+                    mIndexToNativeMap[group][bindingIndex] = AssignPerStageNativeIndex(
+                        bindingInfo.visibility, shaderResourceViewCounter);
                 },
                 [&](const StorageTextureBindingInfo& layout) {
                     switch (layout.access) {
                         case wgpu::StorageTextureAccess::ReadWrite:
                         case wgpu::StorageTextureAccess::WriteOnly:
-                            mIndexInfo[group][bindingIndex] = --unorderedAccessViewIndex;
+                            mIndexToNativeMap[group][bindingIndex] =
+                                AssignPerStageNativeUAVIndex(bindingInfo.visibility);
                             mUAVBindGroups.set(group);
                             break;
                         case wgpu::StorageTextureAccess::ReadOnly:
-                            mIndexInfo[group][bindingIndex] = shaderResourceViewIndex++;
+                            mIndexToNativeMap[group][bindingIndex] = AssignPerStageNativeIndex(
+                                bindingInfo.visibility, shaderResourceViewCounter);
                             break;
                         case wgpu::StorageTextureAccess::BindingNotUsed:
                         case wgpu::StorageTextureAccess::Undefined:
@@ -112,14 +140,26 @@ MaybeError PipelineLayout::Initialize(Device* device) {
                 [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
         }
     }
-    mUnusedUAVBindingCount = unorderedAccessViewIndex;
-    DAWN_ASSERT(constantBufferIndex <= kReservedConstantBufferSlot);
+
+    mUAVStartIndex = uavBindingCounter;
+    for (SingleShaderStage stage : IterateStages(kAllStages)) {
+        mUAVCount[stage] = kUAVSlotCount - mUAVStartIndex[stage];
+    }
+
+    DAWN_ASSERT([constantBufferCounter] {
+        for (SingleShaderStage stage : IterateStages(kAllStages)) {
+            if (constantBufferCounter[stage] > kReservedConstantBufferSlot) {
+                return false;
+            }
+        }
+        return true;
+    }());
 
     return {};
 }
 
-const PipelineLayout::BindingIndexInfo& PipelineLayout::GetBindingIndexInfo() const {
-    return mIndexInfo;
+const PipelineLayout::BindingIndexToNativeMap& PipelineLayout::GetBindingIndexToNativeMap() const {
+    return mIndexToNativeMap;
 }
 
 const BindGroupMask& PipelineLayout::GetUAVBindGroupLayoutsMask() const {
