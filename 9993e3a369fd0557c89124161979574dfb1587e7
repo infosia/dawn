@@ -22,6 +22,30 @@
       },
       "revId": "9993e3a369fd0557c89124161979574dfb1587e7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37e336a3_3e8e9704",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-03T01:56:59Z",
+      "side": 1,
+      "message": "Ack. Let\u0027s wait for the confirmation",
+      "parentUuid": "e6861f87_1c8d4e73",
+      "range": {
+        "startLine": 675,
+        "startChar": 8,
+        "endLine": 675,
+        "endChar": 48
+      },
+      "revId": "9993e3a369fd0557c89124161979574dfb1587e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
