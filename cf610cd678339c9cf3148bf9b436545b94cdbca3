@@ -152,6 +152,24 @@
       "parentUuid": "7a3b4edf_f4a55fae",
       "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c187ff3_319b8776",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-04-03T17:30:25Z",
+      "side": 1,
+      "message": "(Sorry forgot to finish this comment)\n\nIf we ever have a CHECK_IS_TEST in Dawn in the future, we should use it in this code.",
+      "parentUuid": "6e4e09fb_a9d0f136",
+      "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
