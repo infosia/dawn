@@ -16,6 +16,24 @@
       "message": "The param is still there?",
       "revId": "3960a16440b778166776e2c32bb0705111ef53e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18f1fa7a_7f364764",
+        "filename": "src/tint/lang/core/type/storage_texture.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-03T17:18:22Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "594f5eb0_392c6a94",
+      "revId": "3960a16440b778166776e2c32bb0705111ef53e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
