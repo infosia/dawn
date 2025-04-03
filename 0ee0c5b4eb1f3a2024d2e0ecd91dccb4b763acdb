@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6186214e_6814cfb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-03T18:18:47Z",
+      "side": 1,
+      "message": "PTAL",
+      "revId": "0ee0c5b4eb1f3a2024d2e0ecd91dccb4b763acdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b665c329_eac950a5",
+        "filename": "src/utils/chromium_test_compat/CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-03T18:18:47Z",
+      "side": 1,
+      "message": "Copied from `src/utils/CMakeLists.txt` without really knowing what all the arguments do, but seems to work as intended locally.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "0ee0c5b4eb1f3a2024d2e0ecd91dccb4b763acdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78db2ce1_92795ae4",
+        "filename": "src/utils/chromium_test_compat/chromium_test_compat.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-03T18:18:47Z",
+      "side": 1,
+      "message": "`src/dawn/` code used `.cpp`, but the one source file in `src/utils/` uses `.cc`. Should this be renamed to match?",
+      "revId": "0ee0c5b4eb1f3a2024d2e0ecd91dccb4b763acdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b3a8ff6_100b063e",
+        "filename": "src/utils/chromium_test_compat/chromium_test_compat.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-03T18:18:47Z",
+      "side": 1,
+      "message": "It feels weird to me to have a `dawn` namespace outside of `src/dawn/`, but `src/utils/numeric.h` does this, so I guess it\u0027s okay? Happy to change to something else if preferred, though.",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "0ee0c5b4eb1f3a2024d2e0ecd91dccb4b763acdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
