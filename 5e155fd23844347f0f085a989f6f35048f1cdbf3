@@ -166,6 +166,30 @@
       },
       "revId": "5e155fd23844347f0f085a989f6f35048f1cdbf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2896f6d8_081c052e",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-03T14:16:08Z",
+      "side": 1,
+      "message": "It\u0027s more that it forces it on/off, regardless of the build type. The way it is currently in this CL, you can turn if *off* in debug too, which might be useful for some of our CQ bots.\n\nI realize that `!NDEBUG || TINT_ENABLE_IR_VALIDATION` loses that ability though. So it\u0027d have to be `if (!defined(TINT_ENABLE_IR_VALIDATION) \u0026\u0026 !NDEBUG) || TINT_ENABLE_IR_VALIDATION` instead.",
+      "parentUuid": "f7375b73_934445c6",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "5e155fd23844347f0f085a989f6f35048f1cdbf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
