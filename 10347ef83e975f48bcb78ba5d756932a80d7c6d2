@@ -16,6 +16,114 @@
       "message": "Thanks for reviewing!",
       "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f53dd548_517e3297",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:44:54Z",
+      "side": 1,
+      "message": "Looks good overall with quite some simplifications possible. Feel free to not do the CompilationMessage simplification here if too complex but in a follow-up.",
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0513b00b_e4a4b24b",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:44:54Z",
+      "side": 1,
+      "message": "Could we make ShaderModuleBase::MakeError take in the compilation messages directly? It removes the need for `InjectCompilationMessages`.",
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a68f769e_0b312656",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2149,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:44:54Z",
+      "side": 1,
+      "message": "What do you think of something like this to simplify the logic a bit?\n\n```\n// Unpack and validate the descriptor chain before doing further validation or cache lookups.\n// Note from the reviewer It\u0027s ok to do some validation when `IsValidationEnabled \u003d false` as long as it is not expensive.\nUnpackedPtr\u003cShaderModuleDescriptor\u003e unpacked;\nDAWN_TRY_ASSIGN_CONTEXT(unpacked, ValidateAndUnpack(descriptor),\n                                  \"validating and unpacking %s\", descriptor);\n       \n// A WGSL (or SPIR-V, if enabled) subdescriptor is required, and a Dawn-specific SPIR-V options descriptor is allowed when using SPIR-V.\n// Note from the reviewer: we don\u0027t need to guard with #if here because we don\u0027t use any tint::spirv APIs \nwgpu::SType moduleType\nDAWN_TRY_ASSIGN(moduleType,\n            (unpacked\n                 .ValidateBranches\u003cBranch\u003cShaderSourceWGSL, ShaderModuleCompilationOptions\u003e,\n                                   Branch\u003cShaderSourceSPIRV, DawnShaderModuleSPIRVOptionsDescriptor,\n                                          ShaderModuleCompilationOptions\u003e\u003e()));\n\n        // Module type specific validation.\n        switch (moduleType) {\n            case wgpu::SType::ShaderSourceSPIRV: {\n                // Note from the reviewer: we only need to check TINT_BUILD_SPV_READER here. Or could ForceSet DisallowSpirv in this case alternativly.\n                DAWN_INVALID_IF(IsToggleEnabled(Toggle::DisallowSpirv) || !TINT_BUILD_SPV_READER, \"SPIR-V is disallowed.\");\n                break;\n            }\n#endif  // TINT_BUILD_SPV_READER\n            case wgpu::SType::ShaderSourceWGSL: {\n                DAWN_INVALID_IF(unpacked.Get\u003cShaderModuleCompilationOptions\u003e() !\u003d nullptr \u0026\u0026\n                                    !HasFeature(Feature::ShaderModuleCompilationOptions),\n                                \"Shader module compilation options used without %s enabled.\",\n                                wgpu::FeatureName::ShaderModuleCompilationOptions);\n                break;\n            }\n            default:\n                DAWN_UNREACHABLE();\n        }\n        \n// Rest of the code as usual.\n```",
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcdb77b0_b7b78359",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:44:54Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised, don\u0027t we want this histogram to contain the cost of parsing the module? Otherwise in `CreateShaderModuleImpl` we are just moving data around and not doing any actual compilation.",
+      "range": {
+        "startLine": 2232,
+        "startChar": 67,
+        "endLine": 2232,
+        "endChar": 87
+      },
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03fe6390_86305f5e",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2236,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:44:54Z",
+      "side": 1,
+      "message": "```\n// NFR (note from reviewer): `ShaderModuleParseResult ` would contain compilation messages as well\n\nSCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetPlatform(), \"CreateShaderModuleUS\");\n\n// Proxy the error handling to record a compilation success histogram\nauto resultOrError \u003d [\u0026]()  -\u003e ResultOrError\u003cRef\u003cShaderModuleBase\u003e\u003e {\n    // Try to validate and parse the shader code, and if an error occurred return it without updating the cache.\n    ShaderModuleParseResult parseResult;\n    DAWN_TRY_ASSIGN(parseResult, ParseShaderModule(this, unpacked, moduleType, internalExtensions));\n    \n    Ref\u003cShaderModuleBase\u003e module;\n    // NFR: the compilation messages are passed in as part of the ShaderModuleParseResult\n    DAWN_TRY_ASSIGN(module, CreateShaderModuleImpl(unpacked, internalExtensions, parseResult));\n    module-\u003eSetContentHash(blueprintHash);\n    return module;\n}();\n\nDAWN_HISTOGRAM_BOOLEAN(GetPlatform(), \"CreateShaderModuleSuccess\",\n                                   resultOrError.IsSuccess());\nreturn result;\n```",
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2658fea5_4fc90dd4",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:44:54Z",
+      "side": 1,
+      "message": "nit: we don\u0027t need to pass the moduleType in here, and WDYT of something like this to not require the moduleType, and decrease the indentation levels / complexity of the control flow? (the switch is not super necessary given there are only two options)\n\n```\n// We assume that the descriptor chain has already been validated.\n\n#if TINT_BUILD_SPV_READER\nif (auto spirv \u003d descriptor.Get\u003cShaderSourceSPIRV\u003e()) {\n    // SPIRV handling\n}\n#endif  // TINT_BUILD_SPV_READER\n\nauto wgsl \u003d descriptor.Get\u003cShaderSourceWGSL\u003e();\n// WGSL handling\n```",
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -175,6 +175,30 @@
       },
       "revId": "d615513863812b9e3ba0b93e54c75bcd9b0ff115",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ee9fcf6_c7ee3833",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:44:54Z",
+      "side": 1,
+      "message": "IMHO it is more confusing than helpful and because it is an INTERNAL_ERROR it should cause a device loss so we don\u0027t need to be super aware of it.",
+      "parentUuid": "deb875fc_fb2b3fc3",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 53
+      },
+      "revId": "d615513863812b9e3ba0b93e54c75bcd9b0ff115",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
