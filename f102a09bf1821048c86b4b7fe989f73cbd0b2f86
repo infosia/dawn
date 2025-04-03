@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db468066_fc7fc361",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-03T19:36:53Z",
+      "side": 1,
+      "message": "Two things:\n\n1. It looks like Chromium builders don\u0027t like `src/...` includes. Okay to switch back to `utils/...` instead of `src/utils/...` ?\n\n2. cmake is failing due to\n\n```\nld: library not found for -ldawn_shared_utils_chromium_test_compat\n```\n\nAny idea what I\u0027m holding wrong?",
+      "revId": "f102a09bf1821048c86b4b7fe989f73cbd0b2f86",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
