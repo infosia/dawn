@@ -16,6 +16,24 @@
       "message": "Given that this whole file is specific to Android, maybe we should just not compile it? Also did we ever make a specific function to create a surface from a ANativeWindow without having to do the dance of passing a C pointer as a long in JVM?",
       "revId": "7921a55ed9bdfc7d78ae0ab7a287a25956a22bd8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5c1d559_00ac3f86",
+        "filename": "tools/android/webgpu/src/main/cpp/Util.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-04-03T11:28:15Z",
+      "side": 1,
+      "message": "OK I found a better way to do it by splitting up the native files into two targets, the code that needs #include \u003candroid/... gets built under android_cc_library not cc_library.",
+      "parentUuid": "7053035e_be678082",
+      "revId": "7921a55ed9bdfc7d78ae0ab7a287a25956a22bd8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
