@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4e0a817_769a56ad",
+        "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-03T09:12:14Z",
+      "side": 1,
+      "message": "Shall we also make `pD3DCompile`,  `IDxcLibrary*`, and `IDxcCompiler3*` become `UnsafeUnkeyedValue`? They are function pointers and seems should not be an on-disk cache key.",
+      "revId": "425cc70756cd7882fa681078c816c5b5d03c7cc2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

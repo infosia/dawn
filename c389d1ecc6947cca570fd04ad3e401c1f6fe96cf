@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47cc0232_314a8a35",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-03T09:12:14Z",
+      "side": 1,
+      "message": "Please take a look, thanks! This CL use SHA3-512 to distinguish between (front end) shader module, and use the shader module hash instead of tint Program in backend compilation cache key.",
+      "revId": "c389d1ecc6947cca570fd04ad3e401c1f6fe96cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
