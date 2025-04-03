@@ -52,6 +52,24 @@
       "parentUuid": "ce45f71d_5861d81b",
       "revId": "dd0dc5c8559654a51d3706d603888e771c7c5203",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e72c92b3_797a934e",
+        "filename": "tools/android/webgpu/src/androidTest/java/android/dawn/AsyncHelperTest.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-04-03T15:51:34Z",
+      "side": 1,
+      "message": "In an offline discussion we agreed to implement similar logic to the C++ version with regard to implicitly defaulting enums where \u0027undefined\u0027 exists",
+      "parentUuid": "aa1de320_5836230c",
+      "revId": "dd0dc5c8559654a51d3706d603888e771c7c5203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
