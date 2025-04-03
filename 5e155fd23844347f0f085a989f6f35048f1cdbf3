@@ -142,6 +142,30 @@
       },
       "revId": "5e155fd23844347f0f085a989f6f35048f1cdbf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "084d0056_2e1e050c",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-03T14:13:58Z",
+      "side": 1,
+      "message": "Agree to disagree 😊",
+      "parentUuid": "f7375b73_934445c6",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "5e155fd23844347f0f085a989f6f35048f1cdbf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
