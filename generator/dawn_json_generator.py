@@ -375,7 +375,7 @@ class StructureType(Record, Type):
     # Returns True if the structure can be created with no parameters, e.g. all of its members have
     # defaults or are optional,
     def has_basic_constructor(self):
-        return all((member.optional or member.default_value)
+        return all((member.optional or member.default_value or member.type.hasUndefined)
                    for member in self.members)
 
 
