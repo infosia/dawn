@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "035ae08a_ef0042ad",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-03T00:16:34Z",
+      "side": 1,
+      "message": "I have hardcoded the D3D11 max number of bindings as a static variable.",
+      "parentUuid": "1dc9836c_9feb8ac2",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "744bdf85_681cde13",
@@ -125,6 +143,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c5de6569_df251460",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-03T00:16:34Z",
+      "side": 1,
+      "message": "\u003e Grouping buffers in one bind call requires them to be bound to a continuous range. This is not guaranteed\n\nTo add to this. Not all bindings are visible to both vertex \u0026 fragment stage. So the binding indices could have \"holes\", thus not being continuous. Making it more difficult to grouping them and setting in one call.",
+      "parentUuid": "4410f52f_7f98f98c",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "1ca84854_01606293",
         "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
         "patchSetId": 5
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "We already check for bind group changes in [1]. That\u0027s not enough to eliminate all redundancies because D3D11 doesn\u0027t have native BindGroup concept.\n\nIf BG1 has `{A, B, C}` and BG2 has `{D, B, C}`, there will still be redundant bindings of `{B, C}`.\n\nI saw `Commandbuffer::Execute`\u0027s time cut by half by removing the redundant bindings:\n- Before change (298ms): https://pprof.corp.google.com/?id\u003d4a8a04f7ce4a329b4931e275cdaa0f7b\u0026pivot\u003d%5Edawn::native::d3d11::CommandBuffer::Execute$\n- After change (168ms): https://pprof.corp.google.com/?id\u003dffdb3db8da6415fb1d1c004111fb544c\u0026pivot\u003d%5Edawn::native::d3d11::CommandBuffer::Execute$",
       "parentUuid": "1129ac26_3b4c6dd3",
+      "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53f6219e_75c90d3f",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-03T00:16:34Z",
+      "side": 1,
+      "message": "Btw, we also do the similar thing in the metal backend [1].\nI have created a bug tracker for moving common code to front-end. Currently it\u0027s a bit tricky since D3D11 and Metal have slightly different binding models. Metal uses generic binding slots for all buffers whereas D3D11 separates between constant buffers, SRVs, UAVs. Furthermore, metal could move to use argument buffers in future.\n\nGraphite/D3D11 is currently slower than Ganesh/D3D11 in some cases. I think every optimization should count.\n\n- [1] https://dawn-review.googlesource.com/c/dawn/+/193940\n- [2] https://crbug.com/408066880",
+      "parentUuid": "a47c3b63_c82ba2c3",
       "revId": "95257fd5dc5b9e4be70a5dd65e0127c2d378900d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
