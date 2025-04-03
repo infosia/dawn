@@ -194,6 +194,24 @@
       "parentUuid": "6e4e09fb_a9d0f136",
       "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "064c58b7_79b0e1d0",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-03T17:43:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6c187ff3_319b8776",
+      "revId": "cf610cd678339c9cf3148bf9b436545b94cdbca3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
