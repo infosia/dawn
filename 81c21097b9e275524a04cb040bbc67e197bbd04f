@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ad3ceef_3023b17f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-03T20:34:17Z",
+      "side": 1,
+      "message": "I think cwallez@ is OOO tomorrow so adding lokokung@.",
+      "parentUuid": "a8a173b5_35cf23b0",
+      "revId": "81c21097b9e275524a04cb040bbc67e197bbd04f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33e39b31_c9ec8a35",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-04-03T19:47:00Z",
       "side": 1,
       "message": "I suggest carrying the rename through to this method as well, as it\u0027s currently not clear what \"DestroyPool\" does at this level. To me this suggested that all of the memory allocated by the allocator would be destroyed, which makes sense when calling from the destructor but not from ReduceMemoryUsageImpl. Instead I had to go digging to determine that the pool in question only contains freed allocations, and \"DestroyPool\" doesn\u0027t actually destroy to pool but deallocates the freed resource heaps it\u0027s holding on to. FreeRecycledMemory would be appropriate IMO.",
+      "revId": "81c21097b9e275524a04cb040bbc67e197bbd04f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acd51d7a_c57dafe4",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-03T20:34:17Z",
+      "side": 1,
+      "message": "I carried it through to PRMA and as a result also changed the ResourceMemoryManagerD3D12 function names.",
+      "parentUuid": "33e39b31_c9ec8a35",
       "revId": "81c21097b9e275524a04cb040bbc67e197bbd04f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
