@@ -1,6 +1,80 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f527576a_0d6d449c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:05:19Z",
+      "side": 1,
+      "message": "Looks much better, thank you!",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcf78e43_cac46201",
+        "filename": "src/dawn/native/opengl/BindingPoint.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:05:19Z",
+      "side": 1,
+      "message": "This is no longer used :D",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7164e0ec_8c3a793b",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:05:19Z",
+      "side": 1,
+      "message": "optional nit: we could move the binding of the buffer from [3] to here so all the runtime handling is in one place. ditto below",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d232dafe_c3297f83",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:05:19Z",
+      "side": 1,
+      "message": "Can we put these numbers somewhere and use them to clamp the limits gathered in PhysicalDevice?",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 23
+      },
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c8c7dc87_b2493850",
@@ -14,6 +88,64 @@
       "writtenOn": "2025-04-03T03:21:37Z",
       "side": 1,
       "message": "Do you know when shall I create these internal buffers in device? swiftshader tests seem unhappy about creating buffer in device init.",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fa52b0e_936d0668",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:05:19Z",
+      "side": 1,
+      "message": "I\u0027m not sure, do we hook up `GL_debug_output_KHR` so ANGLE could tell us why it produces a GL error? I thought it could be because of zero-init but IIRC we get zero-init for free on GL.",
+      "parentUuid": "c8c7dc87_b2493850",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23b72cc6_8160a116",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:05:19Z",
+      "side": 1,
+      "message": "[3]",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11a4a730_41ae77fd",
+        "filename": "src/dawn/native/opengl/PipelineGL.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T12:05:19Z",
+      "side": 1,
+      "message": "u-nit: so code reads even more like english\n\n```suggestion\n    bool NeedsTextureBuiltinUniformBuffer() const;\n\n    bool NeedsSSBOLengthUniformBuffer() const;\n\n```",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 0
+      },
       "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
