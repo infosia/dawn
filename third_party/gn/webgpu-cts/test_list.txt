@@ -346,7 +346,8 @@ webgpu:api,operation,command_buffer,basic:empty:
 webgpu:api,operation,command_buffer,basic:b2t2b:
 webgpu:api,operation,command_buffer,basic:b2t2t2b:
 webgpu:api,operation,command_buffer,clearBuffer:clear:
-webgpu:api,operation,command_buffer,copyBufferToBuffer:single:
+webgpu:api,operation,command_buffer,copyBufferToBuffer:single:newSig=false
+webgpu:api,operation,command_buffer,copyBufferToBuffer:single:newSig=true
 webgpu:api,operation,command_buffer,copyBufferToBuffer:state_transitions:
 webgpu:api,operation,command_buffer,copyBufferToBuffer:copy_order:
 webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,non_array:srcFormat="r8unorm";dstFormat="r8unorm";dimension="1d"
