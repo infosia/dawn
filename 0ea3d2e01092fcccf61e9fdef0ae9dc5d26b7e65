@@ -16,6 +16,23 @@
       "message": "Please take a look, thanks! This CL help enable moving tint Program handling into cache missing function.",
       "revId": "0ea3d2e01092fcccf61e9fdef0ae9dc5d26b7e65",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1be46dc_b0e082ef",
+        "filename": "src/dawn/native/TintUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T10:25:34Z",
+      "side": 1,
+      "message": "We just recently figured out with Dan that the ScopedICEHandlers are no longer necessary because TINT_ICE exits the program (similar to an ASSERT). So we should remove it completely! That should simplify a few things nicely.\n\n(and also remove `InitializeTintErrorReporter` and related code in Tint)",
+      "revId": "0ea3d2e01092fcccf61e9fdef0ae9dc5d26b7e65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
