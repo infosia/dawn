@@ -16,6 +16,24 @@
       "message": "Why were all of the tests from here and below delete? I think they should just work on the `core::Struct` instead of the `sem::Struct`?\n\nAh, I see you moved them to the resolver. I think all apart from the one above should be moved back if possible, because we want to make sure this stuff works for structs that weren\u0027t created via WGSL too.",
       "revId": "0d6690b804b6db354794f873652be48d4d45360c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66fa7fe9_960d6456",
+        "filename": "src/tint/lang/core/type/struct_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-03T15:48:33Z",
+      "side": 0,
+      "message": "Duplicated them back into here, this way tests through sem and though type directly.",
+      "parentUuid": "16b38593_8127a7b6",
+      "revId": "0d6690b804b6db354794f873652be48d4d45360c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
