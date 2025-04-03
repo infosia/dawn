@@ -91,6 +91,18 @@ Struct::Struct(Symbol name,
       size_no_padding_(size_no_padding),
       is_wgsl_internal_(is_wgsl_internal) {}
 
+Struct::Struct(Symbol name,
+               uint32_t align,
+               uint32_t size,
+               uint32_t size_no_padding,
+               bool is_wgsl_internal)
+    : Base(Hash(tint::TypeCode::Of<Struct>().bits, name, is_wgsl_internal), type::Flags{}),
+      name_(name),
+      align_(align),
+      size_(size),
+      size_no_padding_(size_no_padding),
+      is_wgsl_internal_(is_wgsl_internal) {}
+
 Struct::~Struct() = default;
 
 bool Struct::Equals(const UniqueNode& other) const {
@@ -98,6 +110,15 @@ bool Struct::Equals(const UniqueNode& other) const {
         return o->name_ == name_;
     }
     return false;
+}
+
+void Struct::SetMembers(VectorRef<StructMember*> members) {
+    flags_ = FlagsFrom(members);
+
+    for (auto& mem : members) {
+        mem->struct_ = this;
+    }
+    members_ = std::move(members);
 }
 
 const StructMember* Struct::FindMember(Symbol name) const {

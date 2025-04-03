@@ -238,7 +238,7 @@ class Type : public Castable<Type, UniqueNode> {
     Type(size_t hash, core::type::Flags flags);
 
     /// The flags of this type.
-    const core::type::Flags flags_;
+    core::type::Flags flags_;
 };
 
 }  // namespace tint::core::type

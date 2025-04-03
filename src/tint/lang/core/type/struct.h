@@ -97,6 +97,19 @@ class Struct : public Castable<Struct, Type> {
            uint32_t size_no_padding,
            bool is_wgsl_internal = false);
 
+    /// Constructor
+    /// @param name the name of the structure
+    /// @param align the byte alignment of the structure
+    /// @param size the byte size of the structure
+    /// @param size_no_padding size of the members without the end of structure
+    /// @param is_wgsl_internal `true` if the structure is an internally defined structure in WGSL
+    /// alignment padding
+    Struct(Symbol name,
+           uint32_t align,
+           uint32_t size,
+           uint32_t size_no_padding,
+           bool is_wgsl_internal = false);
+
     /// Destructor
     ~Struct() override;
 
@@ -113,6 +126,10 @@ class Struct : public Castable<Struct, Type> {
 
     /// @returns the members of the structure
     VectorRef<const StructMember*> Members() const { return members_; }
+
+    /// Set the struct members
+    /// @param members the members
+    void SetMembers(VectorRef<StructMember*> members);
 
     /// @param name the member name to look for
     /// @returns the member with the given name, or nullptr if it was not found.
@@ -202,7 +219,7 @@ class Struct : public Castable<Struct, Type> {
 
   private:
     Symbol name_;
-    const tint::Vector<const StructMember*, 4> members_;
+    tint::Vector<const StructMember*, 4> members_;
     const uint32_t align_;
     const uint32_t size_;
     const uint32_t size_no_padding_;
@@ -238,10 +255,6 @@ class StructMember : public Castable<StructMember, Node> {
     /// @returns the name of the structure member
     Symbol Name() const { return name_; }
 
-    /// Sets the owning structure to `s`
-    /// @param s the new structure owner
-    void SetStruct(const Struct* s) { struct_ = s; }
-
     /// @returns the structure that owns this member
     const core::type::Struct* Struct() const { return struct_; }
 
@@ -272,6 +285,8 @@ class StructMember : public Castable<StructMember, Node> {
     StructMember* Clone(CloneContext& ctx) const;
 
   private:
+    friend class Struct;
+
     const Symbol name_;
     const core::type::Struct* struct_;
     const core::type::Type* type_;

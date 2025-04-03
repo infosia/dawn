@@ -68,6 +68,18 @@ class Struct final : public Castable<Struct, core::type::Struct> {
            uint32_t size,
            uint32_t size_no_padding);
 
+    /// Constructor
+    /// @param declaration the AST structure declaration
+    /// @param name the name of the structure
+    /// @param align the byte alignment of the structure
+    /// @param size the byte size of the structure
+    /// @param size_no_padding size of the members without the end of structure alignment padding
+    Struct(const ast::Struct* declaration,
+           Symbol name,
+           uint32_t align,
+           uint32_t size,
+           uint32_t size_no_padding);
+
     /// Destructor
     ~Struct() override;
 
