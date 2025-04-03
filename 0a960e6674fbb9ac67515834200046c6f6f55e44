@@ -16,6 +16,131 @@
       "message": "Thanks for reviewing!",
       "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc417ef5_34eebe79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T10:37:51Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "571c8534_9b31b192",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T10:37:51Z",
+      "side": 1,
+      "message": "Here or in a follow up IMHO we could move the conversions to TintUtils. We should be able to call `ToTint` and `FromTint` on pretty much anything eventually to do the conversion. This avoids leaking a ton of Tint stuff in Dawn because conversions would all be in the C++ files where Tint is called (so ShaderModule*)",
+      "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "943b5dbd_2326b7d6",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T10:37:51Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11cf9c3b_10ecb5ca",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T10:37:51Z",
+      "side": 1,
+      "message": "Can we have a TODO to eventually remove this hack of having a placeholder sampler for textures that aren\u0027t used with a sampler? This is 1) specific to GL 2) the code in the inspector add the placeholder just so GL can do stuff at [1] and [2] when instead the logic could be extracted in a function/lambda and called for each texture/sampler pair, and for nonSamplerTextureUses.",
+      "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "116b938f_38b55852",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T10:37:51Z",
+      "side": 1,
+      "message": "nit: `TextureMetadataQuery`?",
+      "range": {
+        "startLine": 248,
+        "startChar": 16,
+        "endLine": 248,
+        "endChar": 31
+      },
+      "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "351a680a_18bad667",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T10:37:51Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22ba8c07_026ab22e",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-03T10:37:51Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
