@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87906af6_c3fd9c0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-03T20:35:52Z",
+      "side": 1,
+      "message": "I hate absl so much right now.\n\nLooks like there is a mix of I have a missing flag somewhere in cmake and I am seeing the annoying clang extension warnings that I had to deal with on the GN side. I really don\u0027t have the energy at the moment to smash my head against fixing fiddly little build system things right now. I will come back to this next week.",
+      "revId": "450a9d7c424441e78e3ea1ae880185b4901e2cd2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
