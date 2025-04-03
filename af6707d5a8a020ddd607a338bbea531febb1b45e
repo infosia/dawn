@@ -16,6 +16,24 @@
       "message": "PTAL!\n\nWith https://dawn-review.googlesource.com/c/dawn/+/234494 I finally managed to get the tool to autogenerate expectations based on the results of the last roll. So I just did that, amended the commit, and reuploaded as a new CL.",
       "revId": "af6707d5a8a020ddd607a338bbea531febb1b45e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd087efc_56d01710",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-03T01:19:06Z",
+      "side": 1,
+      "message": "PS1 \u003d identical to https://dawn-review.googlesource.com/c/dawn/+/233882/2\nPS2 \u003d rebased\nPS3 \u003d new expectations",
+      "parentUuid": "7d689bff_6422787d",
+      "revId": "af6707d5a8a020ddd607a338bbea531febb1b45e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
