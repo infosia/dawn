@@ -18,6 +18,57 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b3581bc_57881864",
+        "filename": "src/dawn/tests/End2EndTestsMain.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-03T18:23:58Z",
+      "side": 1,
+      "message": "```suggestion\n#include \"src/utils/chromium_test_compat/chromium_test_compat.h\"\n```",
+      "revId": "0ee0c5b4eb1f3a2024d2e0ecd91dccb4b763acdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d00a7617_256181e6",
+        "filename": "src/dawn/tests/PerfTestsMain.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-03T18:23:58Z",
+      "side": 1,
+      "message": "```suggestion\n#include \"src/utils/chromium_test_compat/chromium_test_compat.h\"\n```",
+      "revId": "0ee0c5b4eb1f3a2024d2e0ecd91dccb4b763acdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9bf49e5_5412dc6b",
+        "filename": "src/dawn/tests/UnittestsMain.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-03T18:23:58Z",
+      "side": 1,
+      "message": "```suggestion\n#include \"src/utils/chromium_test_compat/chromium_test_compat.h\"\n```",
+      "revId": "0ee0c5b4eb1f3a2024d2e0ecd91dccb4b763acdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "b665c329_eac950a5",
@@ -60,6 +111,41 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "27cde2cf_d661b157",
+        "filename": "src/utils/chromium_test_compat/chromium_test_compat.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-03T18:23:58Z",
+      "side": 1,
+      "message": "My preference is yes, but it\u0027s a weak preference.",
+      "parentUuid": "78db2ce1_92795ae4",
+      "revId": "0ee0c5b4eb1f3a2024d2e0ecd91dccb4b763acdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96d22051_65aac2cc",
+        "filename": "src/utils/chromium_test_compat/chromium_test_compat.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-03T18:23:58Z",
+      "side": 1,
+      "message": "```suggestion\n            std::cout \u003c\u003c \"Replacing \" \u003c\u003c argument \u003c\u003c \" with \" \u003c\u003c replacementArg \u003c\u003c \"\\n\";\n```",
+      "revId": "0ee0c5b4eb1f3a2024d2e0ecd91dccb4b763acdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "9b3a8ff6_100b063e",
         "filename": "src/utils/chromium_test_compat/chromium_test_compat.h",
         "patchSetId": 2
@@ -71,6 +157,30 @@
       "writtenOn": "2025-04-03T18:18:47Z",
       "side": 1,
       "message": "It feels weird to me to have a `dawn` namespace outside of `src/dawn/`, but `src/utils/numeric.h` does this, so I guess it\u0027s okay? Happy to change to something else if preferred, though.",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "0ee0c5b4eb1f3a2024d2e0ecd91dccb4b763acdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "538a6b8b_d81bbbac",
+        "filename": "src/utils/chromium_test_compat/chromium_test_compat.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-03T18:23:58Z",
+      "side": 1,
+      "message": "I\u0027ve been using `dawn` for things in src/utils. It\u0027s a little strange, but due to the build, and tint being able to be built as standalone, it\u0027s the only real way to share code and I treat dawn as the \"parent\" project for naming purposes.",
+      "parentUuid": "9b3a8ff6_100b063e",
       "range": {
         "startLine": 31,
         "startChar": 10,
