@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "079684f6_21484923",
+        "filename": "include/tint/tint.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Removed (I first run the transform in ShaderModuleGL instead of glsl/writer/raise. And forget to remove that)",
+      "parentUuid": "a018204a_49f2382d",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3bf5bb1_88e4bca7",
@@ -123,6 +141,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c481372a_c96fb0cb",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done (Linux nvidia is on CQ so they should be tested)",
+      "parentUuid": "a3bf5bb1_88e4bca7",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b02d6fe1_2c3847c5",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f39373f0_e19713d7",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e634fbfd_8501ba48",
@@ -136,6 +190,24 @@
       "writtenOn": "2025-04-02T10:48:05Z",
       "side": 1,
       "message": "The names are very non-descript, \"Function\" is very generic. Maybe `TextureReflection` or `TextureMetadata` or `EmulatedBuiltin`? (for another CL)",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1756379d_1a05b059",
+        "filename": "src/dawn/native/opengl/BindingPoint.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Ack (tracked at https://crbug.com/408065421)",
+      "parentUuid": "e634fbfd_8501ba48",
       "revId": "ab50027f121daeff1a425389e5933444faa442a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -157,6 +229,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a02924e9_aff9f6f9",
+        "filename": "src/dawn/native/opengl/BindingPoint.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done (added comment, there can at most be one entry per binding point because of texture type difference of args of the two builtin functions)",
+      "parentUuid": "8f6a8b6e_09106449",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "67776e78_2acef3c6",
@@ -170,6 +260,24 @@
       "writtenOn": "2025-04-02T10:48:05Z",
       "side": 1,
       "message": "```suggestion\nusing BindingPointToArrayLengthOffset \u003d absl::flat_hash_map\u003ctint::BindingPoint, uint32_t\u003e;\n```",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b55a19c4_bd3a9be8",
+        "filename": "src/dawn/native/opengl/BindingPoint.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67776e78_2acef3c6",
       "revId": "ab50027f121daeff1a425389e5933444faa442a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -208,6 +316,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4eb2a3b_83c9f27d",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e239979_805500c5",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98bb73d6_08b3b467",
@@ -221,6 +347,24 @@
       "writtenOn": "2025-04-02T10:48:05Z",
       "side": 1,
       "message": "Uuuh we have a per SSBO packed index at [1] so there is really no need to do a map lookup per binding that\u0027s set. In general all the precomputations needed to avoid map lookups can be done in the PipelineLayout.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a73865ca_4e128716",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98bb73d6_08b3b467",
       "revId": "ab50027f121daeff1a425389e5933444faa442a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -248,6 +392,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c6369bb_4007fc5a",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a2d3d8b_ba7223d7",
+      "range": {
+        "startLine": 584,
+        "startChar": 1,
+        "endLine": 586,
+        "endChar": 83
+      },
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3da23e48_b7d61d82",
@@ -261,6 +429,24 @@
       "writtenOn": "2025-04-02T10:48:05Z",
       "side": 1,
       "message": "This could also be a vector of uint32_t directly instaed of requiring a memcpy etc.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a60824d_990b7032",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3da23e48_b7d61d82",
       "revId": "ab50027f121daeff1a425389e5933444faa442a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -282,6 +468,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67b1d66f_d3315400",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done (pass layout in PipelineGL::ApplyNow)",
+      "parentUuid": "12d7b2a7_d51feec2",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b07cacb_a5c8f3f9",
@@ -295,6 +499,24 @@
       "writtenOn": "2025-04-02T10:48:05Z",
       "side": 1,
       "message": "Why are these buffers on the pipelines? We only need a single large enough buffer per device no? The sampler has a comment explaining why it is here, and also it is a deduplicated object so the cost is just 8 more bytes of data per pipeline to store the ref, whereas here we have two GPU allocations per pipeline.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "caf14740_8288f5eb",
+        "filename": "src/dawn/native/opengl/PipelineGL.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Moved internal buffers to DeviceGL. Still keep these 2 seperated. Merging requires transform change to properly handle offsets and variables added by other transform.",
+      "parentUuid": "5b07cacb_a5c8f3f9",
       "revId": "ab50027f121daeff1a425389e5933444faa442a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -316,6 +538,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0195bf5d_b76e684c",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Ack (tracked at https://crbug.com/408065421)",
+      "parentUuid": "b37d0dc6_7a0ff171",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e8359b24_4cdd7231",
@@ -329,6 +569,24 @@
       "writtenOn": "2025-04-02T10:48:05Z",
       "side": 1,
       "message": "ditto we should add a TODO",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6049e42e_0d5c85bb",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8359b24_4cdd7231",
       "revId": "ab50027f121daeff1a425389e5933444faa442a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -350,6 +608,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8abcd0b_9aa157f9",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "662ad7d5_52264d71",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3713390b_d8f243b9",
@@ -363,6 +639,24 @@
       "writtenOn": "2025-04-02T10:48:05Z",
       "side": 1,
       "message": "Maybe we could check if any SSBO is in the pipeline layout to do the transform, so that we don\u0027t need to bind an empty UBO when there are no SSBOs.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c90edbb_ca7ef0a1",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3713390b_d8f243b9",
       "revId": "ab50027f121daeff1a425389e5933444faa442a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -384,6 +678,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "845af0cd_da16a314",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed91981e_b059f39d",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e981ff2_62c7c007",
@@ -397,6 +709,24 @@
       "writtenOn": "2025-04-02T10:48:05Z",
       "side": 1,
       "message": "Is it because here we are capturing a reference? Can we have a TODO on the issue to add C++20 so we know to clean that up when C++20 becomes available?",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4448c572_70713e10",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e981ff2_62c7c007",
       "revId": "ab50027f121daeff1a425389e5933444faa442a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -418,6 +748,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e666394_59e38ad8",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "839f5b85_07a6163a",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c4df1543_6c06e834",
@@ -435,6 +783,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "41592345_f49728df",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4df1543_6c06e834",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d750fd6_10ac00a0",
@@ -448,6 +814,24 @@
       "writtenOn": "2025-04-02T00:55:25Z",
       "side": 1,
       "message": "Please also note that this needs to come *before* `BindingRemapper` (similar to the note for `TextureBuiltinsFromUniform` above). Transform dependencies are easily forgotten.",
+      "revId": "ab50027f121daeff1a425389e5933444faa442a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca6323be_8d26cc2d",
+        "filename": "src/tint/lang/glsl/writer/raise/raise.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d750fd6_10ac00a0",
       "revId": "ab50027f121daeff1a425389e5933444faa442a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

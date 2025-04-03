@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8c7dc87_b2493850",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-03T03:21:37Z",
+      "side": 1,
+      "message": "Do you know when shall I create these internal buffers in device? swiftshader tests seem unhappy about creating buffer in device init.",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
