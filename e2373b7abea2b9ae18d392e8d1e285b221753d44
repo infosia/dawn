@@ -33,6 +33,24 @@
       "message": "I think the cmake failures are due to the warning being in C++17 and not C++20... Since cmake isn\u0027t related to chromium and stuff, maybe we can just bump cmake to use C++20 now? (I think we are gonna bump GN soon also anyways?)\n\nIf yea, I think we just need to update here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/cmake/DawnCompilerChecks.cmake;l\u003d31?q\u003ddawncompilerchecks.cmake",
       "revId": "e2373b7abea2b9ae18d392e8d1e285b221753d44",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5dbc60b_080f5e10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-03T01:32:03Z",
+      "side": 1,
+      "message": "I have rolled back the abseil change to a point that it doesn\u0027t need the libc++, etc rolls, so hopefull that doesn\u0027t push us over the C++20 horizon for cmake anymore, since rolling that that was a speculative fix for the msvc issues.",
+      "parentUuid": "b6598160_8f675981",
+      "revId": "e2373b7abea2b9ae18d392e8d1e285b221753d44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
