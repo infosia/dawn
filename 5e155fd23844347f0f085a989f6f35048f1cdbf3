@@ -70,6 +70,30 @@
       },
       "revId": "5e155fd23844347f0f085a989f6f35048f1cdbf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6514839b_763b8581",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-03T14:10:03Z",
+      "side": 1,
+      "message": "I don\u0027t think the `IN_NDEBUG` buys us anything, it just enables validation, regardless of NDEBUG",
+      "parentUuid": "4f5b1318_eaa4ebf2",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "5e155fd23844347f0f085a989f6f35048f1cdbf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
