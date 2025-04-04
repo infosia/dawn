@@ -16,6 +16,40 @@
       "message": "PTAL at this early CL",
       "revId": "f3050f8aff7d592543b67fab9b4823260ba70b4d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a24692a_14b5468f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-04T21:11:17Z",
+      "side": 1,
+      "message": "Looks like you deleted many E2E test expectations, and some of the new auto-generated tests are invalid (maybe generated using with an unfinished wgsl.def line?).\n\nI\u0027d suggest reverting all of the changes in the E2E test directory and then run `tools/run gen templates` again, and then generate expectations for new tests by running `tools/run tests --generate-expected test/tint/builtins/gen/*/workgroupUniformLoad`.",
+      "revId": "f3050f8aff7d592543b67fab9b4823260ba70b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "595048d9_cd173219",
+        "filename": "src/tint/lang/wgsl/ast/transform/builtin_polyfill.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-04T21:11:17Z",
+      "side": 1,
+      "message": "It should always be a pointer, so I\u0027d TINT_ASSERT instead of the `if`.",
+      "revId": "f3050f8aff7d592543b67fab9b4823260ba70b4d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
