@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b910646d_845e56b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-04T22:56:40Z",
+      "side": 1,
+      "message": "Both cmake and Chromium compilation looks happy now. Need another +1 due to file list changing.",
+      "revId": "ebc76075d729fd6406728153fab395b7a7641bcc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
