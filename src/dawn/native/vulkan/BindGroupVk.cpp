@@ -32,6 +32,7 @@
 #include "dawn/common/Range.h"
 #include "dawn/common/ityp_stack_vec.h"
 #include "dawn/native/ExternalTexture.h"
+#include "dawn/native/Instance.h"
 #include "dawn/native/vulkan/BindGroupLayoutVk.h"
 #include "dawn/native/vulkan/BufferVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
@@ -199,7 +200,11 @@ MaybeError BindGroup::InitializeImpl() {
     // TODO(crbug.com/dawn/855): Batch these updates
     device->fn.UpdateDescriptorSets(device->GetVkDevice(), numWrites, writes.data(), 0, nullptr);
 
-    SetLabelImpl();
+    if (!GetLabel().empty() || device->GetInstance()->IsBackendValidationEnabled()) {
+        // Setting the label can be expensive and a default label is only needed if backend
+        // validation is also enabled.
+        SetLabelImpl();
+    }
 
     return {};
 }
