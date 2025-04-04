@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "96622620_7c3fbf4f",
+        "filename": "src/dawn/native/opengl/BindingPoint.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-04T01:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcf78e43_cac46201",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7164e0ec_8c3a793b",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12710eb8_335543fa",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-04T01:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7164e0ec_8c3a793b",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d232dafe_c3297f83",
@@ -65,6 +101,30 @@
       "writtenOn": "2025-04-03T12:05:19Z",
       "side": 1,
       "message": "Can we put these numbers somewhere and use them to clamp the limits gathered in PhysicalDevice?",
+      "range": {
+        "startLine": 219,
+        "startChar": 20,
+        "endLine": 219,
+        "endChar": 23
+      },
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a974c74f_ac9e94c8",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-04T01:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d232dafe_c3297f83",
       "range": {
         "startLine": 219,
         "startChar": 20,
@@ -110,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "92b8182e_51351f28",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-04T01:47:41Z",
+      "side": 1,
+      "message": "Looks like some out of memory issue. Workaround by only creating the internal buffer if detected needed, called at shader compile time. Still fails linux x86 clang though. (OOO till next Tue, will revisit then)",
+      "parentUuid": "4fa52b0e_936d0668",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "23b72cc6_8160a116",
@@ -140,6 +218,30 @@
       "writtenOn": "2025-04-03T12:05:19Z",
       "side": 1,
       "message": "u-nit: so code reads even more like english\n\n```suggestion\n    bool NeedsTextureBuiltinUniformBuffer() const;\n\n    bool NeedsSSBOLengthUniformBuffer() const;\n\n```",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4551b9d_50956435",
+        "filename": "src/dawn/native/opengl/PipelineGL.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-04T01:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a4a730_41ae77fd",
       "range": {
         "startLine": 71,
         "startChar": 0,
