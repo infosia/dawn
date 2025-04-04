@@ -28,12 +28,14 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_PIPELINELAYOUTD3D11_H_
 #define SRC_DAWN_NATIVE_D3D11_PIPELINELAYOUTD3D11_H_
 
-#include "dawn/native/PipelineLayout.h"
+#include <vector>
 
 #include "dawn/common/ityp_array.h"
+#include "dawn/common/ityp_span.h"
 #include "dawn/common/ityp_vector.h"
 #include "dawn/native/BindingInfo.h"
 #include "dawn/native/PerStage.h"
+#include "dawn/native/PipelineLayout.h"
 #include "dawn/native/d3d/d3d_platform.h"
 
 namespace dawn::native::d3d11 {
@@ -70,8 +72,21 @@ class PipelineLayout final : public PipelineLayoutBase {
     using BindingIndexToNativeMap = PerBindGroup<ityp::vector<BindingIndex, PerStage<uint32_t>>>;
     const BindingIndexToNativeMap& GetBindingIndexToNativeMap() const;
 
+    // Per bind group, per stage, per type bindings. The bindings are ordered from lowest native
+    // index to highest native index.
+    using BindingList = PerBindGroup<PerStage<std::vector<BindingIndex>>>;
+    using BindingSpan = PerBindGroup<PerStage<ityp::span<size_t, const BindingIndex>>>;
+    const BindingList& GetConstantBufferBindings() const;
+    const BindingList& GetSRVBindings() const;
+    const BindingSpan& GetBufferSRVBindings() const;
+    const BindingSpan& GetTextureSRVBindings() const;
+    const BindingList& GetSamplerBindings() const;
+    const BindingList& GetUAVBindings() const;
+    const BindingSpan& GetBufferUAVBindings() const;
+    const BindingSpan& GetTextureUAVBindings() const;
+
     uint32_t GetUAVStartIndex(SingleShaderStage stage) const { return mUAVStartIndex[stage]; }
-    uint32_t GetUAVCount(SingleShaderStage stage) const { return mUAVCount[stage]; }
+    uint32_t GetUAVAndPLSCount(SingleShaderStage stage) const { return mUAVAndPLSCount[stage]; }
     uint32_t GetPLSSlotCount() const {
         return static_cast<uint32_t>(GetStorageAttachmentSlots().size());
     }
@@ -88,8 +103,18 @@ class PipelineLayout final : public PipelineLayoutBase {
 
     BindingIndexToNativeMap mIndexToNativeMap;
 
+    BindingList mConstantBufferBindings;
+    BindingList mSRVBindings;
+    BindingList mUAVBindings;
+    BindingList mSamplerBindings;
+
+    BindingSpan mBufferSRVBindings;
+    BindingSpan mTextureSRVBindings;
+    BindingSpan mBufferUAVBindings;
+    BindingSpan mTextureUAVBindings;
+
     PerStage<uint32_t> mUAVStartIndex = PerStage<uint32_t>(0u);
-    PerStage<uint32_t> mUAVCount = PerStage<uint32_t>(0u);
+    PerStage<uint32_t> mUAVAndPLSCount = PerStage<uint32_t>(0u);
     BindGroupMask mUAVBindGroups = 0;
 };
 
