@@ -55,6 +55,10 @@ class Node : public Castable<Node> {
     /// The identifier of the program that owns this node
     const GenerationID generation_id;
 
+    // Hasher object uses this function if it exists
+    tint::HashCode HashCode() const { return node_id.value; }
+
+
     /// The node identifier, unique for the program.
     const NodeID node_id;
 
@@ -76,6 +80,16 @@ class Node : public Castable<Node> {
 }  // namespace tint::ast
 
 namespace tint {
+
+
+  struct EqualObj
+  {
+      bool operator() (const tint::ast::Node* x, const tint::ast::Node* y) const{
+        return x->node_id.value == y->node_id.value;
+      }
+  };
+
+
 
 /// @param node a pointer to an AST node
 /// @returns the GenerationID of the given AST node.

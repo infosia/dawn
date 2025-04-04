@@ -60,6 +60,7 @@
 #include "src/tint/lang/wgsl/ast/location_attribute.h"
 #include "src/tint/lang/wgsl/ast/loop_statement.h"
 #include "src/tint/lang/wgsl/ast/must_use_attribute.h"
+#include "src/tint/lang/wgsl/ast/node.h"
 #include "src/tint/lang/wgsl/ast/override.h"
 #include "src/tint/lang/wgsl/ast/return_statement.h"
 #include "src/tint/lang/wgsl/ast/row_major_attribute.h"
@@ -668,9 +669,12 @@ struct DependencyAnalysis {
     /// SortGlobals sorts the globals into dependency order, erroring if cyclic
     /// dependencies are found. The sorted dependencies are assigned to #sorted.
     void SortGlobals() {
+
+        printf("%s %d   clock %d \n",   __FILE__ , __LINE__, (int)clock());
         if (diagnostics_.ContainsErrors()) {
             return;  // This code assumes there are no undeclared identifiers.
         }
+        printf("%s %d   clock %d \n",   __FILE__ , __LINE__, (int)clock());
 
         // Make sure all directives go before any other global declarations.
         for (auto* global : declaration_order_) {
@@ -679,6 +683,8 @@ struct DependencyAnalysis {
             }
         }
 
+        printf("%s %d   clock %d \n",   __FILE__ , __LINE__, (int)clock());
+        int num_times_checked = 0;
         for (auto* global : declaration_order_) {
             if (global->node->IsAnyOf<ast::DiagnosticDirective, ast::Enable, ast::Requires>()) {
                 // Skip directives here, as they are already added.
@@ -692,6 +698,7 @@ struct DependencyAnalysis {
                         CyclicDependencyFound(g, stack.Release());
                         return false;
                     }
+                    num_times_checked++;
                     if (sorted_.Contains(g->node)) {
                         // Visited this global already.
                         // stack was pushed, but exit() will not be called when we return
@@ -713,6 +720,9 @@ struct DependencyAnalysis {
                 TINT_ICE() << "stack not empty after returning from TraverseDependencies()";
             }
         }
+
+        printf("Num times checked %d \n", num_times_checked);
+        printf("%s %d   clock %d \n",   __FILE__ , __LINE__, (int)clock());
     }
 
     /// DepInfoFor() looks up the global dependency information for the dependency
@@ -798,8 +808,9 @@ struct DependencyAnalysis {
     /// Globals in declaration order. Populated by GatherGlobals().
     Vector<Global*, 64> declaration_order_;
 
+
     /// Globals in sorted dependency order. Populated by SortGlobals().
-    UniqueVector<const ast::Node*, 64> sorted_;
+    UniqueVector<const ast::Node*, 64, tint::Hasher<const ast::Node*> , tint::EqualObj> sorted_;
 };
 
 }  // namespace
