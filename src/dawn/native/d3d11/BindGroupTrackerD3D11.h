@@ -120,7 +120,9 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
 
     BindingSlot<ComPtr<ID3D11UnorderedAccessView>, 4> mCSUAVSlots;
 
-    uint32_t mPSMaxBoundUAVs = 0;
+    uint32_t mCSMinUAVSlot = 0xffffffff;
+    uint32_t mPSMinUAVSlot = 0xffffffff;
+    uint32_t mPSMaxUAVSlot = 0;
 };
 
 class ComputePassBindGroupTracker final : public BindGroupTracker {
