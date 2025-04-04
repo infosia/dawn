@@ -244,7 +244,7 @@ MaybeError RenderPipeline::InitializeImpl() {
     uint32_t colorAttachments =
         static_cast<uint8_t>(GetHighestBitIndexPlusOne(GetColorAttachmentsMask()));
     uint32_t startUAVIndex = ToBackend(GetLayout())->GetUAVStartIndex(SingleShaderStage::Fragment);
-    uint32_t usedUAVs = ToBackend(GetLayout())->GetUAVCount(SingleShaderStage::Fragment);
+    uint32_t usedUAVs = ToBackend(GetLayout())->GetUAVAndPLSCount(SingleShaderStage::Fragment);
     // TODO(dawn:1814): Move the validation to the frontend, if we eventually regard it as a compat
     // restriction.
     DAWN_INVALID_IF(colorAttachments > startUAVIndex,
@@ -487,7 +487,7 @@ MaybeError RenderPipeline::InitializeShaders() {
                 GetAttachmentState()->GetStorageAttachmentSlots();
             const uint32_t uavEndIndex =
                 ToBackend(GetLayout())->GetUAVStartIndex(SingleShaderStage::Fragment) +
-                ToBackend(GetLayout())->GetUAVCount(SingleShaderStage::Fragment);
+                ToBackend(GetLayout())->GetUAVAndPLSCount(SingleShaderStage::Fragment);
             DAWN_ASSERT(uavEndIndex > storageAttachmentSlots.size());
             // Currently all the pixel local storage UAVs are allocated at the last several UAV
             // slots. For example, when there are 4 pixel local storage attachments, we will
