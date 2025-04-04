@@ -27,6 +27,9 @@
 
 #include "dawn/native/d3d11/PipelineLayoutD3D11.h"
 
+#include <algorithm>
+#include <functional>
+
 #include "dawn/common/BitSetIterator.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
@@ -44,110 +47,136 @@ ResultOrError<Ref<PipelineLayout>> PipelineLayout::Create(
 }
 
 MaybeError PipelineLayout::Initialize(Device* device) {
-    const PerStage<uint32_t> kInvalidSlots = PerStage<uint32_t>(PipelineLayout::kInvalidSlot);
+    ityp::array<ResourceType, PerStage<uint32_t>, static_cast<uint8_t>(ResourceType::Count)>
+        counters;
 
-    PerStage<uint32_t> constantBufferCounter(0);
-    PerStage<uint32_t> samplerCounter(0);
-    PerStage<uint32_t> shaderResourceViewCounter(0);
+    counters[ResourceType::ConstantBuffer] = PerStage<uint32_t>(0);
+    counters[ResourceType::SRV] = PerStage<uint32_t>(0);
+    counters[ResourceType::Sampler] = PerStage<uint32_t>(0);
 
     // For d3d11 pixel shaders, the render targets and unordered-access views share the same
     // resource slots when being written out. So we assign UAV binding index decreasingly here.
     // https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omsetrendertargetsandunorderedaccessviews
     // TODO(dawn:1818): Support testing on both FL11_0 and FL11_1.
     const uint32_t kUAVSlotCount = device->GetUAVSlotCount();
-    PerStage<uint32_t> uavBindingCounter(kUAVSlotCount);
+    counters[ResourceType::UAV] = PerStage<uint32_t>(kUAVSlotCount);
 
     // Reserve last several UAV slots for Pixel Local Storage attachments.
-    uavBindingCounter[SingleShaderStage::Fragment] -=
+    counters[ResourceType::UAV][SingleShaderStage::Fragment] -=
         static_cast<uint32_t>(GetStorageAttachmentSlots().size());
 
-    constexpr auto CountIncreasingIndex = [](wgpu::ShaderStage visibility,
-                                             PerStage<uint32_t>* counters) {
-        PerStage<uint32_t> nativeIndex(kInvalidSlot);
-        for (SingleShaderStage stage : IterateStages(visibility)) {
-            nativeIndex[stage] = (*counters)[stage]++;
-        }
-        return nativeIndex;
-    };
+    using CountIndexFunc = uint32_t (*)(uint32_t*);
+    constexpr CountIndexFunc CountIncreasingIndex = [](uint32_t* counter) { return (*counter)++; };
 
-    constexpr auto CountDecreasingIndex = [](wgpu::ShaderStage visibility,
-                                             PerStage<uint32_t>* counters) {
-        PerStage<uint32_t> nativeIndex(kInvalidSlot);
-        for (SingleShaderStage stage : IterateStages(visibility)) {
-            nativeIndex[stage] = --(*counters)[stage];
-        }
-        return nativeIndex;
-    };
+    constexpr CountIndexFunc CountDecreasingIndex = [](uint32_t* counter) { return --(*counter); };
 
     for (BindGroupIndex group : IterateBitSet(GetBindGroupLayoutsMask())) {
         const BindGroupLayoutInternalBase* bgl = GetBindGroupLayout(group);
         mBindingTableIndexMap[group].resize(bgl->GetBindingCount());
 
+        PerStage<uint32_t> numBufferSRVs(0);
+        PerStage<uint32_t> numTextureUAVs(0);
+
         for (BindingIndex bindingIndex{0}; bindingIndex < bgl->GetBindingCount(); ++bindingIndex) {
             const BindingInfo& bindingInfo = bgl->GetBindingInfo(bindingIndex);
 
-            mBindingTableIndexMap[group][bindingIndex] = MatchVariant(
+            ResourceType resourceType = MatchVariant(
                 bindingInfo.bindingLayout,
-                [&](const BufferBindingInfo& layout) -> PerStage<uint32_t> {
+                [&](const BufferBindingInfo& layout) -> ResourceType {
                     switch (layout.type) {
                         case wgpu::BufferBindingType::Uniform:
-                            return CountIncreasingIndex(bindingInfo.visibility,
-                                                        &constantBufferCounter);
+                            return ResourceType::ConstantBuffer;
                         case wgpu::BufferBindingType::Storage:
                         case kInternalStorageBufferBinding:
-                            mUAVBindGroups.set(group);
-                            return CountDecreasingIndex(bindingInfo.visibility, &uavBindingCounter);
+                            return ResourceType::UAV;
                         case wgpu::BufferBindingType::ReadOnlyStorage:
                         case kInternalReadOnlyStorageBufferBinding:
-                            return CountIncreasingIndex(bindingInfo.visibility,
-                                                        &shaderResourceViewCounter);
+                            for (SingleShaderStage stage : IterateStages(bindingInfo.visibility)) {
+                                numBufferSRVs[stage]++;
+                            }
+                            return ResourceType::SRV;
                         case wgpu::BufferBindingType::BindingNotUsed:
                         case wgpu::BufferBindingType::Undefined:
                             DAWN_UNREACHABLE();
                     }
-                    return kInvalidSlots;
+                    return ResourceType::Count;
                 },
-                [&](const SamplerBindingInfo&) -> PerStage<uint32_t> {
-                    return CountIncreasingIndex(bindingInfo.visibility, &samplerCounter);
-                },
-                [&](const StaticSamplerBindingInfo&) -> PerStage<uint32_t> {
+                [&](const SamplerBindingInfo&) -> ResourceType { return ResourceType::Sampler; },
+                [&](const StaticSamplerBindingInfo&) -> ResourceType {
                     // Static samplers are implemented in the frontend on
                     // D3D11.
                     DAWN_UNREACHABLE();
-                    return kInvalidSlots;
+                    return ResourceType::Count;
                 },
-                [&](const TextureBindingInfo&) -> PerStage<uint32_t> {
-                    return CountIncreasingIndex(bindingInfo.visibility, &shaderResourceViewCounter);
-                },
-                [&](const StorageTextureBindingInfo& layout) -> PerStage<uint32_t> {
+                [&](const TextureBindingInfo&) -> ResourceType { return ResourceType::SRV; },
+                [&](const StorageTextureBindingInfo& layout) -> ResourceType {
                     switch (layout.access) {
                         case wgpu::StorageTextureAccess::ReadWrite:
                         case wgpu::StorageTextureAccess::WriteOnly:
-                            mUAVBindGroups.set(group);
-                            return CountDecreasingIndex(bindingInfo.visibility, &uavBindingCounter);
+                            for (SingleShaderStage stage : IterateStages(bindingInfo.visibility)) {
+                                numTextureUAVs[stage]++;
+                            }
+                            return ResourceType::UAV;
                         case wgpu::StorageTextureAccess::ReadOnly:
-                            return CountIncreasingIndex(bindingInfo.visibility,
-                                                        &shaderResourceViewCounter);
+                            return ResourceType::SRV;
                         case wgpu::StorageTextureAccess::BindingNotUsed:
                         case wgpu::StorageTextureAccess::Undefined:
                             DAWN_UNREACHABLE();
                     }
-                    return kInvalidSlots;
+                    return ResourceType::Count;
                 },
-                [&](const InputAttachmentBindingInfo&) -> PerStage<uint32_t> {
+                [&](const InputAttachmentBindingInfo&) -> ResourceType {
                     DAWN_UNREACHABLE();
-                    return kInvalidSlots;
+                    return ResourceType::Count;
                 });
+
+            auto& indexCounter = counters[resourceType];
+            CountIndexFunc indexCountOp = CountIncreasingIndex;
+            if (resourceType == ResourceType::UAV) {
+                mUAVBindGroups.set(group);
+                indexCountOp = CountDecreasingIndex;
+            }
+
+            for (SingleShaderStage stage : IterateStages(bindingInfo.visibility)) {
+                // Assign binding table's index.
+                mBindingTableIndexMap[group][bindingIndex][stage] = indexCountOp(&indexCounter[stage]);
+                // Track a list of bindings of this type
+                mBindings[resourceType][group][stage].push_back(bindingIndex);
+            }
+        }  // Per bindingIndex
+
+        for (SingleShaderStage stage : IterateStages(kAllStages)) {
+            // Make buffer SRV and texture SRV bindings' span
+            // Front-end already guarantees that buffers are packed before textures.
+            const auto& srvBindings = mBindings[ResourceType::SRV][group][stage];
+            const auto bufferSRVCount = numBufferSRVs[stage];
+            mBufferSRVBindings[group][stage] =
+                ityp::SpanFromUntyped<size_t>(srvBindings.data(), bufferSRVCount);
+            mTextureSRVBindings[group][stage] = ityp::SpanFromUntyped<size_t>(
+                srvBindings.data() + bufferSRVCount, srvBindings.size() - bufferSRVCount);
+
+            // Make buffers UAV & texture UAV bindings' span
+            // Since we assign UAVs in reversed order, the texture UAVs will appear before the
+            // buffer UAVs.
+            const auto textureUAVCount = numTextureUAVs[stage];
+            auto& uavBindings = mBindings[ResourceType::UAV][group][stage];
+            std::reverse(uavBindings.begin(), uavBindings.end());
+            const auto* uavBindingsPtr = uavBindings.data();
+
+            mTextureUAVBindings[group][stage] =
+                ityp::SpanFromUntyped<size_t>(uavBindingsPtr, textureUAVCount);
+            mBufferUAVBindings[group][stage] = ityp::SpanFromUntyped<size_t>(
+                uavBindingsPtr + textureUAVCount, uavBindings.size() - textureUAVCount);
         }
+    }  // Per group
+
+    mUAVStartIndex = counters[ResourceType::UAV];
+    for (SingleShaderStage stage : IterateStages(kAllStages)) {
+        mUAVAndPLSCount[stage] = kUAVSlotCount - mUAVStartIndex[stage];
     }
 
-    mUAVStartIndex = uavBindingCounter;
     for (SingleShaderStage stage : IterateStages(kAllStages)) {
-        mUAVCount[stage] = kUAVSlotCount - mUAVStartIndex[stage];
-    }
-
-    for (SingleShaderStage stage : IterateStages(kAllStages)) {
-        DAWN_ASSERT(constantBufferCounter[stage] <= kReservedConstantBufferSlot);
+        DAWN_ASSERT(counters[ResourceType::ConstantBuffer][stage] <= kReservedConstantBufferSlot);
     }
 
     return {};
@@ -159,6 +188,31 @@ const PipelineLayout::BindingTableIndexMap& PipelineLayout::GetBindingTableIndex
 
 const BindGroupMask& PipelineLayout::GetUAVBindGroupLayoutsMask() const {
     return mUAVBindGroups;
+}
+
+const PipelineLayout::BindingList& PipelineLayout::GetConstantBufferBindings() const {
+    return mBindings[ResourceType::ConstantBuffer];
+}
+const PipelineLayout::BindingList& PipelineLayout::GetSRVBindings() const {
+    return mBindings[ResourceType::SRV];
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetBufferSRVBindings() const {
+    return mBufferSRVBindings;
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetTextureSRVBindings() const {
+    return mTextureSRVBindings;
+}
+const PipelineLayout::BindingList& PipelineLayout::GetSamplerBindings() const {
+    return mBindings[ResourceType::Sampler];
+}
+const PipelineLayout::BindingList& PipelineLayout::GetUAVBindings() const {
+    return mBindings[ResourceType::UAV];
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetBufferUAVBindings() const {
+    return mBufferUAVBindings;
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetTextureUAVBindings() const {
+    return mTextureUAVBindings;
 }
 
 }  // namespace dawn::native::d3d11

@@ -31,7 +31,9 @@
 #include <vector>
 
 #include "absl/container/inlined_vector.h"
+#include "dawn/common/ityp_span.h"
 #include "dawn/native/BindGroupTracker.h"
+#include "dawn/native/PerStage.h"
 #include "dawn/native/d3d/d3d_platform.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
@@ -52,7 +54,7 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
 
   protected:
     template <wgpu::ShaderStage kVisibleStage>
-    MaybeError ApplyBindGroup(BindGroupIndex index);
+    MaybeError ApplyBindGroupNonUAVBindings(BindGroupIndex index);
 
     template <SingleShaderStage Stage>
     void SetConstantBuffer(uint32_t idx,
@@ -81,15 +83,10 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
     template <SingleShaderStage Stage>
     void UnbindUnorderedAccessViews();
 
-    template <typename T>
-    ResultOrError<ComPtr<T>> GetBufferD3DView(
-        BindGroupBase* group,
-        BindingIndex bindingIndex,
-        const BufferBindingInfo& layout,
-        const ityp::vector<BindingIndex, uint64_t>& dynamicOffsets);
-
-    template <typename T>
-    ResultOrError<ComPtr<T>> GetTextureD3DView(BindGroupBase* group, BindingIndex bindingIndex);
+    template <SingleShaderStage Stage, typename D3DType, typename Fn>
+    MaybeError IterateD3DViewBindings(BindGroupMask bindGroups, Fn&& processFunc);
+    template <SingleShaderStage Stage, typename D3DType, typename Fn>
+    MaybeError IterateD3DViewBindings(BindGroupIndex index, Fn&& processFunc);
 
   private:
     struct ConstantBufferBinding {
@@ -103,10 +100,26 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
         UINT numConstants = 0;
     };
 
+    template <SingleShaderStage Stage>
+    MaybeError ApplyBindGroupPerStage(BindGroupIndex index);
+
+    template <SingleShaderStage Stage, typename Fn>
+    MaybeError IteratePerTypeBindings(BindGroupIndex index,
+                                      const std::vector<BindingIndex>& bindings,
+                                      Fn&& processFunc);
+    template <SingleShaderStage Stage, typename Fn>
+    MaybeError IteratePerTypeBindings(BindGroupIndex index,
+                                      ityp::span<size_t, const BindingIndex> bindings,
+                                      Fn&& processFunc);
+
     ResultOrError<ConstantBufferBinding> GetConstantBufferBinding(
         BindGroupBase* group,
         BindingIndex bindingIndex,
-        const BufferBindingInfo& layout,
+        const ityp::vector<BindingIndex, uint64_t>& dynamicOffsets);
+    template <typename T>
+    ResultOrError<ComPtr<T>> GetBufferD3DView(
+        BindGroupBase* group,
+        BindingIndex bindingIndex,
         const ityp::vector<BindingIndex, uint64_t>& dynamicOffsets);
 
     ResultOrError<ComPtr<ID3D11ShaderResourceView>> GetTextureShaderResourceView(
@@ -115,6 +128,8 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
     ResultOrError<ComPtr<ID3D11UnorderedAccessView>> GetTextureUnorderedAccessView(
         BindGroupBase* group,
         BindingIndex bindingIndex);
+    template <typename T>
+    ResultOrError<ComPtr<T>> GetTextureD3DView(BindGroupBase* group, BindingIndex bindingIndex);
 
     ID3D11SamplerState* GetSamplerState(BindGroupBase* group, BindingIndex bindingIndex);
 
