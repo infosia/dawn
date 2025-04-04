@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df1c371a_8c31d910",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-04T04:12:46Z",
+      "side": 0,
+      "message": "Some of these are definitely still flaky. Here\u0027s a VVL flake on this particular one:\nhttps://ci.chromium.org/ui/p/chromium/builders/try/linux-dawn-rel/44488/overview\nbut there are more of other cases on that bot.\n\nNot sure if there are any others but I keep running into this one.",
+      "range": {
+        "startLine": 1026,
+        "startChar": 0,
+        "endLine": 1026,
+        "endChar": 260
+      },
+      "revId": "74a59a663a113f25ef9e404314e7f030841db71b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
