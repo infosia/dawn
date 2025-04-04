@@ -27,6 +27,8 @@
 
 #include "dawn/native/d3d11/PipelineLayoutD3D11.h"
 
+#include <algorithm>
+
 #include "dawn/common/BitSetIterator.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
@@ -48,15 +50,6 @@ MaybeError PipelineLayout::Initialize(Device* device) {
     PerStage<uint32_t> samplerCounter(0);
     PerStage<uint32_t> shaderResourceViewCounter(0);
 
-    const auto AssignPerStageNativeIndex = [](wgpu::ShaderStage visibility,
-                                              PerStage<uint32_t>& counters) {
-        PerStage<uint32_t> nativeIndex(kInvalidSlot);
-        for (SingleShaderStage stage : IterateStages(visibility)) {
-            nativeIndex[stage] = counters[stage]++;
-        }
-        return nativeIndex;
-    };
-
     // For d3d11 pixel shaders, the render targets and unordered-access views share the same
     // resource slots when being written out. So we assign UAV binding index decreasingly here.
     // https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nf-d3d11-id3d11devicecontext-omsetrendertargetsandunorderedaccessviews
@@ -68,39 +61,58 @@ MaybeError PipelineLayout::Initialize(Device* device) {
     uavBindingCounter[SingleShaderStage::Fragment] -=
         static_cast<uint32_t>(GetStorageAttachmentSlots().size());
 
-    const auto AssignPerStageNativeUAVIndex = [&uavBindingCounter](wgpu::ShaderStage visibility) {
-        PerStage<uint32_t> nativeIndex(kInvalidSlot);
-        for (SingleShaderStage stage : IterateStages(visibility)) {
-            nativeIndex[stage] = --uavBindingCounter[stage];
-        }
-        return nativeIndex;
-    };
-
     for (BindGroupIndex group : IterateBitSet(GetBindGroupLayoutsMask())) {
         const BindGroupLayoutInternalBase* bgl = GetBindGroupLayout(group);
         mIndexToNativeMap[group].resize(bgl->GetBindingCount());
 
+        PerStage<uint32_t> numBufferSRVs(0);
+        PerStage<uint32_t> numBufferUAVs(0);
+
         for (BindingIndex bindingIndex{0}; bindingIndex < bgl->GetBindingCount(); ++bindingIndex) {
             const BindingInfo& bindingInfo = bgl->GetBindingInfo(bindingIndex);
+
+            const auto AssignPerStageNativeNonUAVIndex = [&](PerStage<uint32_t>& counters,
+                                                             BindingList& bindings) {
+                PerStage<uint32_t> nativeIndex(kInvalidSlot);
+                for (SingleShaderStage stage : IterateStages(bindingInfo.visibility)) {
+                    nativeIndex[stage] = counters[stage]++;
+                    bindings[group][stage].push_back(bindingIndex);
+                }
+                mIndexToNativeMap[group][bindingIndex] = nativeIndex;
+            };
+
+            const auto AssignPerStageNativeUAVIndex = [&](BindingList& bindings) {
+                PerStage<uint32_t> nativeIndex(kInvalidSlot);
+                for (SingleShaderStage stage : IterateStages(bindingInfo.visibility)) {
+                    nativeIndex[stage] = --uavBindingCounter[stage];
+                    bindings[group][stage].push_back(bindingIndex);
+                }
+                mUAVBindGroups.set(group);
+                mIndexToNativeMap[group][bindingIndex] = nativeIndex;
+            };
 
             MatchVariant(
                 bindingInfo.bindingLayout,
                 [&](const BufferBindingInfo& layout) {
                     switch (layout.type) {
                         case wgpu::BufferBindingType::Uniform:
-                            mIndexToNativeMap[group][bindingIndex] = AssignPerStageNativeIndex(
-                                bindingInfo.visibility, constantBufferCounter);
+                            AssignPerStageNativeNonUAVIndex(constantBufferCounter,
+                                                            mConstantBufferBindings);
                             break;
                         case wgpu::BufferBindingType::Storage:
                         case kInternalStorageBufferBinding:
-                            mIndexToNativeMap[group][bindingIndex] =
-                                AssignPerStageNativeUAVIndex(bindingInfo.visibility);
-                            mUAVBindGroups.set(group);
+                            AssignPerStageNativeUAVIndex(mUAVBindings);
+                            for (SingleShaderStage stage : IterateStages(bindingInfo.visibility)) {
+                                numBufferUAVs[stage]++;
+                            }
                             break;
                         case wgpu::BufferBindingType::ReadOnlyStorage:
                         case kInternalReadOnlyStorageBufferBinding:
-                            mIndexToNativeMap[group][bindingIndex] = AssignPerStageNativeIndex(
-                                bindingInfo.visibility, shaderResourceViewCounter);
+                            AssignPerStageNativeNonUAVIndex(shaderResourceViewCounter,
+                                                            mSRVBindings);
+                            for (SingleShaderStage stage : IterateStages(bindingInfo.visibility)) {
+                                numBufferSRVs[stage]++;
+                            }
                             break;
                         case wgpu::BufferBindingType::BindingNotUsed:
                         case wgpu::BufferBindingType::Undefined:
@@ -108,8 +120,7 @@ MaybeError PipelineLayout::Initialize(Device* device) {
                     }
                 },
                 [&](const SamplerBindingInfo&) {
-                    mIndexToNativeMap[group][bindingIndex] =
-                        AssignPerStageNativeIndex(bindingInfo.visibility, samplerCounter);
+                    AssignPerStageNativeNonUAVIndex(samplerCounter, mSamplerBindings);
                 },
                 [&](const StaticSamplerBindingInfo&) {
                     // Static samplers are implemented in the frontend on
@@ -117,20 +128,17 @@ MaybeError PipelineLayout::Initialize(Device* device) {
                     DAWN_UNREACHABLE();
                 },
                 [&](const TextureBindingInfo&) {
-                    mIndexToNativeMap[group][bindingIndex] = AssignPerStageNativeIndex(
-                        bindingInfo.visibility, shaderResourceViewCounter);
+                    AssignPerStageNativeNonUAVIndex(shaderResourceViewCounter, mSRVBindings);
                 },
                 [&](const StorageTextureBindingInfo& layout) {
                     switch (layout.access) {
                         case wgpu::StorageTextureAccess::ReadWrite:
                         case wgpu::StorageTextureAccess::WriteOnly:
-                            mIndexToNativeMap[group][bindingIndex] =
-                                AssignPerStageNativeUAVIndex(bindingInfo.visibility);
-                            mUAVBindGroups.set(group);
+                            AssignPerStageNativeUAVIndex(mUAVBindings);
                             break;
                         case wgpu::StorageTextureAccess::ReadOnly:
-                            mIndexToNativeMap[group][bindingIndex] = AssignPerStageNativeIndex(
-                                bindingInfo.visibility, shaderResourceViewCounter);
+                            AssignPerStageNativeNonUAVIndex(shaderResourceViewCounter,
+                                                            mSRVBindings);
                             break;
                         case wgpu::StorageTextureAccess::BindingNotUsed:
                         case wgpu::StorageTextureAccess::Undefined:
@@ -138,6 +146,25 @@ MaybeError PipelineLayout::Initialize(Device* device) {
                     }
                 },
                 [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
+
+            for (SingleShaderStage stage : IterateStages(kAllStages)) {
+                std::reverse(mUAVBindings[group][stage].begin(), mUAVBindings[group][stage].end());
+
+                // front-end already guarantees that buffers are packed before textures.
+                const auto* srvBindingsPtr = mSRVBindings[group][stage].data();
+                mBufferSRVBindings[group][stage] =
+                    ityp::SpanFromUntyped<size_t>(srvBindingsPtr, numBufferSRVs[stage]);
+                mTextureSRVBindings[group][stage] = ityp::SpanFromUntyped<size_t>(
+                    srvBindingsPtr + numBufferSRVs[stage],
+                    mSRVBindings[group][stage].size() - numBufferSRVs[stage]);
+
+                const auto* uavBindingsPtr = mUAVBindings[group][stage].data();
+                mBufferUAVBindings[group][stage] =
+                    ityp::SpanFromUntyped<size_t>(uavBindingsPtr, numBufferUAVs[stage]);
+                mTextureUAVBindings[group][stage] = ityp::SpanFromUntyped<size_t>(
+                    uavBindingsPtr + numBufferUAVs[stage],
+                    mUAVBindings[group][stage].size() - numBufferUAVs[stage]);
+            }
         }
     }
 
@@ -164,6 +191,31 @@ const PipelineLayout::BindingIndexToNativeMap& PipelineLayout::GetBindingIndexTo
 
 const BindGroupMask& PipelineLayout::GetUAVBindGroupLayoutsMask() const {
     return mUAVBindGroups;
+}
+
+const PipelineLayout::BindingList& PipelineLayout::GetConstantBufferBindings() {
+    return mConstantBufferBindings;
+}
+const PipelineLayout::BindingList& PipelineLayout::GetSRVBindings() {
+    return mSRVBindings;
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetBufferSRVBindings() {
+    return mBufferSRVBindings;
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetTextureSRVBindings() {
+    return mTextureSRVBindings;
+}
+const PipelineLayout::BindingList& PipelineLayout::GetSamplerBindings() {
+    return mSamplerBindings;
+}
+const PipelineLayout::BindingList& PipelineLayout::GetUAVBindings() {
+    return mUAVBindings;
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetBufferUAVBindings() {
+    return mBufferUAVBindings;
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetTextureUAVBindings() {
+    return mTextureUAVBindings;
 }
 
 }  // namespace dawn::native::d3d11
