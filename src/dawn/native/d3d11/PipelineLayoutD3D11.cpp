@@ -27,6 +27,8 @@
 
 #include "dawn/native/d3d11/PipelineLayoutD3D11.h"
 
+#include <algorithm>
+
 #include "dawn/common/BitSetIterator.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
@@ -63,21 +65,27 @@ MaybeError PipelineLayout::Initialize(Device* device) {
         const BindGroupLayoutInternalBase* bgl = GetBindGroupLayout(group);
         mIndexToNativeMap[group].resize(bgl->GetBindingCount());
 
+        PerStage<uint32_t> numBufferSRVs(0);
+        PerStage<uint32_t> numTextureUAVs(0);
+
         for (BindingIndex bindingIndex{0}; bindingIndex < bgl->GetBindingCount(); ++bindingIndex) {
             const BindingInfo& bindingInfo = bgl->GetBindingInfo(bindingIndex);
 
-            const auto AssignPerStageNativeNonUAVIndex = [&](PerStage<uint32_t>& counters) {
+            const auto AssignPerStageNativeNonUAVIndex = [&](PerStage<uint32_t>& counters,
+                                                             BindingList& bindings) {
                 PerStage<uint32_t> nativeIndex(kInvalidSlot);
                 for (SingleShaderStage stage : IterateStages(bindingInfo.visibility)) {
                     nativeIndex[stage] = counters[stage]++;
+                    bindings[group][stage].push_back(bindingIndex);
                 }
                 mIndexToNativeMap[group][bindingIndex] = nativeIndex;
             };
 
-            const auto AssignPerStageNativeUAVIndex = [&]() {
+            const auto AssignPerStageNativeUAVIndex = [&](BindingList& bindings) {
                 PerStage<uint32_t> nativeIndex(kInvalidSlot);
                 for (SingleShaderStage stage : IterateStages(bindingInfo.visibility)) {
                     nativeIndex[stage] = --uavBindingCounter[stage];
+                    bindings[group][stage].push_back(bindingIndex);
                 }
                 mUAVBindGroups.set(group);
                 mIndexToNativeMap[group][bindingIndex] = nativeIndex;
@@ -88,38 +96,49 @@ MaybeError PipelineLayout::Initialize(Device* device) {
                 [&](const BufferBindingInfo& layout) {
                     switch (layout.type) {
                         case wgpu::BufferBindingType::Uniform:
-                            AssignPerStageNativeNonUAVIndex(constantBufferCounter);
+                            AssignPerStageNativeNonUAVIndex(constantBufferCounter,
+                                                            mConstantBufferBindings);
                             break;
                         case wgpu::BufferBindingType::Storage:
                         case kInternalStorageBufferBinding:
-                            AssignPerStageNativeUAVIndex();
+                            AssignPerStageNativeUAVIndex(mUAVBindings);
                             break;
                         case wgpu::BufferBindingType::ReadOnlyStorage:
                         case kInternalReadOnlyStorageBufferBinding:
-                            AssignPerStageNativeNonUAVIndex(shaderResourceViewCounter);
+                            AssignPerStageNativeNonUAVIndex(shaderResourceViewCounter,
+                                                            mSRVBindings);
+                            for (SingleShaderStage stage : IterateStages(bindingInfo.visibility)) {
+                                numBufferSRVs[stage]++;
+                            }
                             break;
                         case wgpu::BufferBindingType::BindingNotUsed:
                         case wgpu::BufferBindingType::Undefined:
                             DAWN_UNREACHABLE();
                     }
                 },
-                [&](const SamplerBindingInfo&) { AssignPerStageNativeNonUAVIndex(samplerCounter); },
+                [&](const SamplerBindingInfo&) {
+                    AssignPerStageNativeNonUAVIndex(samplerCounter, mSamplerBindings);
+                },
                 [&](const StaticSamplerBindingInfo&) {
                     // Static samplers are implemented in the frontend on
                     // D3D11.
                     DAWN_UNREACHABLE();
                 },
                 [&](const TextureBindingInfo&) {
-                    AssignPerStageNativeNonUAVIndex(shaderResourceViewCounter);
+                    AssignPerStageNativeNonUAVIndex(shaderResourceViewCounter, mSRVBindings);
                 },
                 [&](const StorageTextureBindingInfo& layout) {
                     switch (layout.access) {
                         case wgpu::StorageTextureAccess::ReadWrite:
                         case wgpu::StorageTextureAccess::WriteOnly:
-                            AssignPerStageNativeUAVIndex();
+                            AssignPerStageNativeUAVIndex(mUAVBindings);
+                            for (SingleShaderStage stage : IterateStages(bindingInfo.visibility)) {
+                                numTextureUAVs[stage]++;
+                            }
                             break;
                         case wgpu::StorageTextureAccess::ReadOnly:
-                            AssignPerStageNativeNonUAVIndex(shaderResourceViewCounter);
+                            AssignPerStageNativeNonUAVIndex(shaderResourceViewCounter,
+                                                            mSRVBindings);
                             break;
                         case wgpu::StorageTextureAccess::BindingNotUsed:
                         case wgpu::StorageTextureAccess::Undefined:
@@ -127,6 +146,30 @@ MaybeError PipelineLayout::Initialize(Device* device) {
                     }
                 },
                 [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
+        }
+
+        for (SingleShaderStage stage : IterateStages(kAllStages)) {
+            // Make buffer SRV and texture SRV bindings' span
+            // Front-end already guarantees that buffers are packed before textures.
+            const auto& srvBindings = mSRVBindings[group][stage];
+            const auto bufferSRVCount = numBufferSRVs[stage];
+            mBufferSRVBindings[group][stage] =
+                ityp::SpanFromUntyped<size_t>(srvBindings.data(), bufferSRVCount);
+            mTextureSRVBindings[group][stage] = ityp::SpanFromUntyped<size_t>(
+                srvBindings.data() + bufferSRVCount, srvBindings.size() - bufferSRVCount);
+
+            // Make buffers UAV & texture UAV bindings' span
+            // Since we assign UAVs in reversed order, the texture UAVs will appear before the
+            // buffer UAVs.
+            const auto textureUAVCount = numTextureUAVs[stage];
+            auto& uavBindings = mUAVBindings[group][stage];
+            std::reverse(uavBindings.begin(), uavBindings.end());
+            const auto* uavBindingsPtr = uavBindings.data();
+
+            mTextureUAVBindings[group][stage] =
+                ityp::SpanFromUntyped<size_t>(uavBindingsPtr, textureUAVCount);
+            mBufferUAVBindings[group][stage] = ityp::SpanFromUntyped<size_t>(
+                uavBindingsPtr + textureUAVCount, uavBindings.size() - textureUAVCount);
         }
     }
 
@@ -153,6 +196,31 @@ const PipelineLayout::BindingIndexToNativeMap& PipelineLayout::GetBindingIndexTo
 
 const BindGroupMask& PipelineLayout::GetUAVBindGroupLayoutsMask() const {
     return mUAVBindGroups;
+}
+
+const PipelineLayout::BindingList& PipelineLayout::GetConstantBufferBindings() {
+    return mConstantBufferBindings;
+}
+const PipelineLayout::BindingList& PipelineLayout::GetSRVBindings() {
+    return mSRVBindings;
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetBufferSRVBindings() {
+    return mBufferSRVBindings;
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetTextureSRVBindings() {
+    return mTextureSRVBindings;
+}
+const PipelineLayout::BindingList& PipelineLayout::GetSamplerBindings() {
+    return mSamplerBindings;
+}
+const PipelineLayout::BindingList& PipelineLayout::GetUAVBindings() {
+    return mUAVBindings;
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetBufferUAVBindings() {
+    return mBufferUAVBindings;
+}
+const PipelineLayout::BindingSpan& PipelineLayout::GetTextureUAVBindings() {
+    return mTextureUAVBindings;
 }
 
 }  // namespace dawn::native::d3d11
