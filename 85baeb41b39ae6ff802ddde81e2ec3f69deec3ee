@@ -16,6 +16,24 @@
       "message": "Would love some preliminary thoughts on this approach.",
       "revId": "85baeb41b39ae6ff802ddde81e2ec3f69deec3ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb20e8e0_de754182",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-04T02:37:45Z",
+      "side": 1,
+      "message": "This seems like a good idea. I originally wanted to somehow use condition variables instead of a pipe on Metal and maybe for async pipeline creation (because both of those can be signalled from our own code), but I decided to simplify by having fewer paths. I also see it would have been more complex than I realized - I was thinking it could be lighter-weight than a pipe. (I didn\u0027t know about `base::WaitableEvent`. That would have been a useful reference, and still will be, because I wanted to try integrating Dawn SystemEvent-based futures into the gpu process\u0027s main event loop. Which we should talk about sometime, because you probably know more about it.)\n\nThe iOS restriction is surprising. I am surprised we can run a GPU driver at all without being able to open fds. Won\u0027t that also prevent us from using a disk cache...?\n\nAnyway, will let others give it a look before I review in detail.",
+      "parentUuid": "62e7d1ff_51ec4596",
+      "revId": "85baeb41b39ae6ff802ddde81e2ec3f69deec3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
