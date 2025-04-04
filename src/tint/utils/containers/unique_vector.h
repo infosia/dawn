@@ -63,7 +63,7 @@ struct UniqueVector {
     /// @param item the item to append to the end of the vector
     /// @returns true if the item was added, otherwise false.
     bool Add(const T& item) {
-        if (set.Add(item)) {
+        if (set.insert(item).second) {
             vector.Push(item);
             return true;
         }
@@ -75,14 +75,14 @@ struct UniqueVector {
     /// @param count the number of elements to remove
     void Erase(size_t start, size_t count = 1) {
         for (size_t i = 0; i < count; i++) {
-            set.Remove(vector[start + i]);
+            set.erase(vector[start + i]);
         }
         vector.Erase(start, count);
     }
 
     /// @returns true if the vector contains `item`
     /// @param item the item
-    bool Contains(const T& item) const { return set.Contains(item); }
+    bool Contains(const T& item) const { return set.count(item) != 0u; }
 
     /// @param i the index of the element to retrieve
     /// @returns the element at the index `i`
@@ -130,13 +130,13 @@ struct UniqueVector {
     /// @param count the number of elements to pre-allocate
     void Reserve(size_t count) {
         vector.Reserve(count);
-        set.Reserve(count);
+        //set.Reserve(count);
     }
 
     /// Removes the last element from the vector
     /// @returns the popped element
     T Pop() {
-        set.Remove(vector.Back());
+        set.erase(vector.Back());
         return vector.Pop();
     }
 
@@ -145,7 +145,7 @@ struct UniqueVector {
     /// @returns true if the value was popped, otherwise false
     bool TryPop(T value) {
         if (!vector.IsEmpty() && vector.Back() == value) {
-            set.Remove(vector.Back());
+            set.erase(vector.Back());
             vector.Pop();
             return true;
         }
@@ -154,7 +154,7 @@ struct UniqueVector {
 
   private:
     Vector<T, N> vector;
-    Hashset<T, N, HASH, EQUAL> set;
+    std::unordered_set<T, HASH, EQUAL> set;
 };
 
 }  // namespace tint
