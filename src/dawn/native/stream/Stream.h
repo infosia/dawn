@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_STREAM_STREAM_H_
 
 #include <algorithm>
+#include <array>
 #include <bitset>
 #include <functional>
 #include <limits>
@@ -252,6 +253,24 @@ class Stream<T[N], std::enable_if_t<std::is_fundamental_v<T>>> {
         const void* ptr;
         DAWN_TRY(s->Read(&ptr, sizeof(*t)));
         memcpy(*t, ptr, sizeof(*t));
+        return {};
+    }
+};
+
+// Stream specialization for std::arrays of fundamental types.
+template <typename T, size_t N>
+class Stream<std::array<T, N>, std::enable_if_t<std::is_fundamental_v<T>>> {
+  public:
+    static void Write(Sink* s, const std::array<T, N>& t) {
+        static_assert(N > 0);
+        memcpy(s->GetSpace(sizeof(t)), t.data(), sizeof(t));
+    }
+
+    static MaybeError Read(Source* s, std::array<T, N>* t) {
+        static_assert(N > 0);
+        const void* ptr;
+        DAWN_TRY(s->Read(&ptr, sizeof(*t)));
+        memcpy(t->data(), ptr, sizeof(*t));
         return {};
     }
 };
