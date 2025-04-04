@@ -34,12 +34,14 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Compiler.h"
+#include "dawn/common/Sha3.h"
 #include "dawn/native/Blob.h"
 #include "dawn/native/BlobCache.h"
 #include "dawn/native/CacheKey.h"
 #include "dawn/native/CacheResult.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/Toggles.h"
 #include "dawn/native/VisitableMembers.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
 
@@ -99,6 +101,18 @@ class CacheRequestImpl {
         return key;
     }
 
+    // Create a CacheKey from the request type and SHA3 hash of all members
+    CacheKey CreateHashedCacheKey(const DeviceBase* device) const {
+        CacheKey tempKey;
+        static_cast<const Request*>(this)->VisitAll(
+            [&](const auto&... members) { StreamIn(&tempKey, members...); });
+
+        CacheKey key = device->GetCacheKey();
+        StreamIn(&key, Request::kName);
+        StreamIn(&key, Sha3_512::Hash(tempKey.data(), tempKey.size()));
+        return key;
+    }
+
     template <typename CacheHitFn, typename CacheMissFn>
     friend auto LoadOrRun(DeviceBase* device,
                           Request&& r,
@@ -124,7 +138,9 @@ class CacheRequestImpl {
         using CacheResultType = CacheResult<UnwrappedReturnType>;
         using ReturnType = ResultOrError<CacheResultType>;
 
-        CacheKey key = r.CreateCacheKey(device);
+        CacheKey key = device->IsToggleEnabled(Toggle::HashedShaderCacheKeys)
+                           ? r.CreateCacheKey(device)
+                           : r.CreateHashedCacheKey(device);
         platform::metrics::DawnHistogramTimer cacheTimer(
             cacheMetricName.empty() ? nullptr : device->GetPlatform());
         Blob blob = device->GetBlobCache()->Load(key);

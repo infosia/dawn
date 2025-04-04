@@ -275,6 +275,10 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Disables usage of the blob cache (backed by the platform cache if set/passed). Prevents any "
       "persistent caching capabilities, i.e. pipeline caching.",
       "https://crbug.com/dawn/549", ToggleStage::Device}},
+    {Toggle::HashedShaderCacheKeys,
+     {"hashed_shader_cache_keys",
+      "Uses SHA3 hash of WGSL shader source as cache key instead of full source.",
+      "https://crbug.com/dawn/402772741", ToggleStage::Device}},
     {Toggle::D3D12ForceClearCopyableDepthStencilTextureOnCreation,
      {"d3d12_force_clear_copyable_depth_stencil_texture_on_creation",
       "Always clearing copyable depth stencil textures when creating them instead of skipping the "

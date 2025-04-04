@@ -85,6 +85,7 @@ enum class Toggle {
     VulkanUseZeroInitializeWorkgroupMemoryExtension,
     MetalRenderR8RG8UnormSmallMipToTempTexture,
     DisableBlobCache,
+    HashedShaderCacheKeys,
     D3D12ForceClearCopyableDepthStencilTextureOnCreation,
     D3D12DontSetClearValueOnDepthTextureCreation,
     D3D12AlwaysUseTypelessFormatsForCastableTexture,

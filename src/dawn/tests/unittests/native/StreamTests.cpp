@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <array>
 #include <cstring>
 #include <iomanip>
 #include <limits>
@@ -217,6 +218,30 @@ TEST(SerializeTests, Blob) {
     expected.insert(expected.end(), data, data + sizeof(data));
 
     EXPECT_CACHE_KEY_EQ(blob, expected);
+}
+
+// Test that ByteVectorSink serializes fixed arrays of fundamental types as expected.
+TEST(SerializeTests, ArrayFundementalType) {
+    uint8_t data[] = {1, 2, 3, 4, 5};
+
+    ByteVectorSink expected;
+    for (uint8_t i = 1; i <= 5; ++i) {
+        StreamIn(&expected, i);
+    }
+
+    EXPECT_CACHE_KEY_EQ(data, expected);
+}
+
+// Test that ByteVectorSink serializes std::arrays of fundamental types as expected.
+TEST(SerializeTests, StdArrayFundementalType) {
+    std::array<uint8_t, 5> data = {1, 2, 3, 4, 5};
+
+    ByteVectorSink expected;
+    for (uint8_t i = 1; i <= 5; ++i) {
+        StreamIn(&expected, i);
+    }
+
+    EXPECT_CACHE_KEY_EQ(data, expected);
 }
 
 // Test that ByteVectorSink serializes other ByteVectorSinks as expected.
