@@ -59,45 +59,47 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
     MaybeError ApplyBindGroupNonUAVBindings(BindGroupIndex index);
 
     template <SingleShaderStage Stage>
-    void SetConstantBuffer(uint32_t idx,
-                           ID3D11Buffer* d3d11Buffer,
-                           uint32_t firstConstant,
-                           uint32_t numConstants);
+    void SetConstantBuffers(uint32_t idx,
+                            uint32_t count,
+                            ID3D11Buffer* const* d3d11Buffer,
+                            const uint32_t* firstConstant,
+                            const uint32_t* numConstants);
 
     template <SingleShaderStage Stage>
-    void SetShaderResource(uint32_t idx, ID3D11ShaderResourceView* srv);
+    void SetShaderResources(uint32_t idx, uint32_t count, ID3D11ShaderResourceView* const* srv);
 
     template <SingleShaderStage Stage>
-    void SetSampler(uint32_t idx, ID3D11SamplerState* sampler);
-
-    void CSSetUnorderedAccessView(uint32_t idx, ID3D11UnorderedAccessView* uav);
-
-    void OMSetUnorderedAccessViews(uint32_t idx,
-                                   uint32_t count,
-                                   ID3D11UnorderedAccessView* const* uavs);
+    void SetSamplers(uint32_t idx, uint32_t count, ID3D11SamplerState* const* sampler);
 
     template <SingleShaderStage Stage>
-    void UnbindConstantBuffers();
-    template <SingleShaderStage Stage>
-    void UnbindShaderResources();
-    template <SingleShaderStage Stage>
-    void UnbindSamplers();
-    template <SingleShaderStage Stage>
-    void UnbindUnorderedAccessViews();
+    void SetUnorderedAccessViews(uint32_t idx,
+                                 uint32_t count,
+                                 ID3D11UnorderedAccessView* const* uavs);
 
-    template <SingleShaderStage Stage, typename D3DType, typename Fn>
-    MaybeError IterateD3DViewBindings(BindGroupMask bindGroups, Fn&& processFunc);
-    template <SingleShaderStage Stage, typename D3DType, typename Fn>
-    MaybeError IterateD3DViewBindings(BindGroupIndex index, Fn&& processFunc);
+    template <SingleShaderStage Stage>
+    void UnbindConstantBuffers(uint32_t startSlot, uint32_t numSlots);
+    template <SingleShaderStage Stage>
+    void UnbindShaderResources(uint32_t startSlot, uint32_t numSlots);
+    template <SingleShaderStage Stage>
+    void UnbindSamplers(uint32_t startSlot, uint32_t numSlots);
+    template <SingleShaderStage Stage>
+    void UnbindUnorderedAccessViews(uint32_t startSlot, uint32_t endSlot);
+
+    template <SingleShaderStage Stage, typename D3DType>
+    ResultOrError<uint32_t> CollectD3DViewBindings(
+        BindGroupMask bindGroups,
+        absl::InlinedVector<ComPtr<D3DType>, 1>* viewsOut);
+    template <SingleShaderStage Stage, typename D3DType>
+    ResultOrError<uint32_t> CollectD3DViewBindings(
+        BindGroupIndex index,
+        absl::InlinedVector<ComPtr<D3DType>, 1>* viewsOut);
+
+    static_assert(sizeof(ComPtr<ID3D11UnorderedAccessView>) == sizeof(ID3D11UnorderedAccessView*));
+    absl::InlinedVector<ComPtr<ID3D11UnorderedAccessView>, 1> mScratchUAVSlots;
 
   private:
     struct ConstantBufferBinding {
-        bool operator==(const ConstantBufferBinding& rhs) const {
-            return buffer.Get() == rhs.buffer.Get() && firstConstant == rhs.firstConstant &&
-                   numConstants == rhs.numConstants;
-        }
-
-        ComPtr<ID3D11Buffer> buffer;
+        ID3D11Buffer* buffer;
         UINT firstConstant = 0;
         UINT numConstants = 0;
     };
@@ -106,13 +108,13 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
     MaybeError ApplyBindGroupPerStage(BindGroupIndex index);
 
     template <SingleShaderStage Stage, typename Fn>
-    MaybeError IteratePerTypeBindings(BindGroupIndex index,
-                                      const std::vector<BindingIndex>& bindings,
-                                      Fn&& processFunc);
+    ResultOrError<uint32_t> IteratePerTypeBindings(BindGroupIndex index,
+                                                   const std::vector<BindingIndex>& bindings,
+                                                   Fn&& processFunc);
     template <SingleShaderStage Stage, typename Fn>
-    MaybeError IteratePerTypeBindings(BindGroupIndex index,
-                                      ityp::span<size_t, const BindingIndex> bindings,
-                                      Fn&& processFunc);
+    ResultOrError<uint32_t> IteratePerTypeBindings(BindGroupIndex index,
+                                                   ityp::span<size_t, const BindingIndex> bindings,
+                                                   Fn&& processFunc);
 
     ResultOrError<ConstantBufferBinding> GetConstantBufferBinding(
         BindGroupBase* group,
@@ -137,30 +139,19 @@ class BindGroupTracker : public BindGroupTrackerBase</*CanInheritBindGroups=*/tr
 
     raw_ptr<const ScopedSwapStateCommandRecordingContext> mCommandContext;
 
-    // This class will track the current bound resources and prevent redundant bindings.
-    template <typename T, uint32_t InitialCapacity>
-    class BindingSlot {
-      public:
-        template <typename Fn>
-        void Bind(uint32_t idx, T binding, Fn&& bindFunc);
+    absl::InlinedVector<ID3D11Buffer*, 1> mScratchBufferSlots;
+    absl::InlinedVector<UINT, 1> mScratchStartConstants;
+    absl::InlinedVector<UINT, 1> mScratchNumConstants;
+    static_assert(sizeof(ComPtr<ID3D11ShaderResourceView>) == sizeof(ID3D11ShaderResourceView*));
+    absl::InlinedVector<ComPtr<ID3D11ShaderResourceView>, 1> mScratchSRVSlots;
+    absl::InlinedVector<ID3D11SamplerState*, 1> mScratchSamplerSlots;
 
-        uint32_t MaxBoundSlots() const { return static_cast<uint32_t>(mBoundSlots.size()); }
+    PerStage<uint32_t> mMaxConstantBufferSlot = PerStage<uint32_t>(0);
+    PerStage<uint32_t> mMaxSRVSlot = PerStage<uint32_t>(0);
+    PerStage<uint32_t> mMaxSamplerSlot = PerStage<uint32_t>(0);
 
-      private:
-        absl::InlinedVector<T, InitialCapacity> mBoundSlots;
-    };
-
-    PerStage<BindingSlot<ConstantBufferBinding, 4>> mConstantBufferSlots;
-
-    PerStage<BindingSlot<ComPtr<ID3D11ShaderResourceView>, 4>> mSRVSlots;
-
-    PerStage<BindingSlot<ComPtr<ID3D11SamplerState>, 4>> mSamplerSlots;
-
-    // We only track individual UAV slot in CS because UAV slots in PS must be bound all as one.
-    BindingSlot<ComPtr<ID3D11UnorderedAccessView>, 4> mCSUAVSlots;
-
-    PerStage<uint32_t> mMinUAVSlots = PerStage<uint32_t>(0xffffffff);
-    uint32_t mPSMaxUAVSlot = 0;
+    PerStage<uint32_t> mMinUAVSlot = PerStage<uint32_t>(0xffffffff);
+    PerStage<uint32_t> mMaxUAVSlot = PerStage<uint32_t>(0);
 };
 
 class ComputePassBindGroupTracker final : public BindGroupTracker {
