@@ -76,14 +76,14 @@ class PipelineLayout final : public PipelineLayoutBase {
     // index to highest native index.
     using BindingList = PerBindGroup<PerStage<std::vector<BindingIndex>>>;
     using BindingSpan = PerBindGroup<PerStage<ityp::span<size_t, const BindingIndex>>>;
-    const BindingList& GetConstantBufferBindings();
-    const BindingList& GetSRVBindings();
-    const BindingSpan& GetBufferSRVBindings();
-    const BindingSpan& GetTextureSRVBindings();
-    const BindingList& GetSamplerBindings();
-    const BindingList& GetUAVBindings();
-    const BindingSpan& GetBufferUAVBindings();
-    const BindingSpan& GetTextureUAVBindings();
+    const BindingList& GetConstantBufferBindings() const;
+    const BindingList& GetSRVBindings() const;
+    const BindingSpan& GetBufferSRVBindings() const;
+    const BindingSpan& GetTextureSRVBindings() const;
+    const BindingList& GetSamplerBindings() const;
+    const BindingList& GetUAVBindings() const;
+    const BindingSpan& GetBufferUAVBindings() const;
+    const BindingSpan& GetTextureUAVBindings() const;
 
     uint32_t GetUAVStartIndex(SingleShaderStage stage) const { return mUAVStartIndex[stage]; }
     uint32_t GetUAVCount(SingleShaderStage stage) const { return mUAVCount[stage]; }

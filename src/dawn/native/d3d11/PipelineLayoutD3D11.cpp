@@ -198,28 +198,28 @@ const BindGroupMask& PipelineLayout::GetUAVBindGroupLayoutsMask() const {
     return mUAVBindGroups;
 }
 
-const PipelineLayout::BindingList& PipelineLayout::GetConstantBufferBindings() {
+const PipelineLayout::BindingList& PipelineLayout::GetConstantBufferBindings() const {
     return mConstantBufferBindings;
 }
-const PipelineLayout::BindingList& PipelineLayout::GetSRVBindings() {
+const PipelineLayout::BindingList& PipelineLayout::GetSRVBindings() const {
     return mSRVBindings;
 }
-const PipelineLayout::BindingSpan& PipelineLayout::GetBufferSRVBindings() {
+const PipelineLayout::BindingSpan& PipelineLayout::GetBufferSRVBindings() const {
     return mBufferSRVBindings;
 }
-const PipelineLayout::BindingSpan& PipelineLayout::GetTextureSRVBindings() {
+const PipelineLayout::BindingSpan& PipelineLayout::GetTextureSRVBindings() const {
     return mTextureSRVBindings;
 }
-const PipelineLayout::BindingList& PipelineLayout::GetSamplerBindings() {
+const PipelineLayout::BindingList& PipelineLayout::GetSamplerBindings() const {
     return mSamplerBindings;
 }
-const PipelineLayout::BindingList& PipelineLayout::GetUAVBindings() {
+const PipelineLayout::BindingList& PipelineLayout::GetUAVBindings() const {
     return mUAVBindings;
 }
-const PipelineLayout::BindingSpan& PipelineLayout::GetBufferUAVBindings() {
+const PipelineLayout::BindingSpan& PipelineLayout::GetBufferUAVBindings() const {
     return mBufferUAVBindings;
 }
-const PipelineLayout::BindingSpan& PipelineLayout::GetTextureUAVBindings() {
+const PipelineLayout::BindingSpan& PipelineLayout::GetTextureUAVBindings() const {
     return mTextureUAVBindings;
 }
 
