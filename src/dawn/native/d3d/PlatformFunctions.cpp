@@ -32,6 +32,8 @@
 
 #include <vector>
 
+#include "dawn/common/Log.h"
+
 namespace dawn::native::d3d {
 
 namespace {
@@ -63,6 +65,7 @@ MaybeError PlatformFunctions::LoadFunctions() {
     DAWN_TRY(LoadDXGI());
     DAWN_TRY(LoadFXCompiler());
     DAWN_TRY(LoadKernelBase());
+    DAWN_TRY(LoadKernel());
     InitWindowsVersion();
     return {};
 }
@@ -113,6 +116,21 @@ MaybeError PlatformFunctions::LoadKernelBase() {
     if (!mKernelBaseLib.Open("kernelbase.dll", &error) ||
         !mKernelBaseLib.GetProc(&compareObjectHandles, "CompareObjectHandles", &error)) {
         return DAWN_INTERNAL_ERROR(error.c_str());
+    }
+#endif
+    return {};
+}
+
+MaybeError PlatformFunctions::LoadKernel() {
+#if DAWN_PLATFORM_IS(WINUWP)
+    setThreadDescription = &SetThreadDescription;
+#else
+    std::string error;
+    if (!mKernelLib.Open("kernel32.dll", &error)) {
+        return DAWN_INTERNAL_ERROR(error.c_str());
+    }
+    if (!mKernelLib.GetProc(&setThreadDescription, "SetThreadDescription", &error)) {
+        WarningLog() << "SetThreadDescription is not available";
     }
 #endif
     return {};
