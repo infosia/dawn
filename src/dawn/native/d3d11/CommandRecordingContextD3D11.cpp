@@ -105,6 +105,17 @@ void ScopedCommandRecordingContext::Unmap(ID3D11Resource* pResource, UINT Subres
     Get()->mD3D11DeviceContext3->Unmap(pResource, Subresource);
 }
 
+HRESULT ScopedCommandRecordingContext::GetData(ID3D11Query* pQuery,
+                                               void* pResult,
+                                               UINT size,
+                                               UINT flags) const {
+    return Get()->mD3D11DeviceContext3->GetData(pQuery, pResult, size, flags);
+}
+
+void ScopedCommandRecordingContext::End(ID3D11Query* pQuery) const {
+    Get()->mD3D11DeviceContext3->End(pQuery);
+}
+
 HRESULT ScopedCommandRecordingContext::Signal(ID3D11Fence* pFence, UINT64 Value) const {
     DAWN_ASSERT(Get()->mD3D11DeviceContext4);
     return Get()->mD3D11DeviceContext4->Signal(pFence, Value);
