@@ -57,11 +57,14 @@ class SharedTextureMemory final : public d3d::SharedTextureMemory {
 
     d3d::KeyedMutex* GetKeyedMutex() const;
 
+    bool IsSharedWithHandle() const;
+
   private:
     SharedTextureMemory(Device* device,
                         StringView label,
                         SharedTextureMemoryProperties properties,
-                        ComPtr<ID3D11Resource> resource);
+                        ComPtr<ID3D11Resource> resource,
+                        bool isSharedWithHandle);
 
     void DestroyImpl() override;
 
@@ -70,6 +73,7 @@ class SharedTextureMemory final : public d3d::SharedTextureMemory {
 
     ComPtr<ID3D11Resource> mResource;
     Ref<d3d::KeyedMutex> mKeyedMutex;
+    const bool mIsSharedWithHandle = false;
 };
 }  // namespace d3d11
 }  // namespace dawn::native

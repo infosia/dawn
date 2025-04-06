@@ -33,6 +33,7 @@
 
 #include "dawn/common/Constants.h"
 #include "dawn/common/Math.h"
+#include "dawn/native/AsyncTask.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandValidation.h"
@@ -175,9 +176,11 @@ ResultOrError<Ref<Texture>> Texture::CreateInternal(
 // static
 ResultOrError<Ref<Texture>> Texture::CreateFromSharedTextureMemory(
     SharedTextureMemory* memory,
-    const UnpackedPtr<TextureDescriptor>& descriptor) {
+    const UnpackedPtr<TextureDescriptor>& descriptor,
+    bool isSharedWithHandle) {
     Device* device = ToBackend(memory->GetDevice());
-    Ref<Texture> texture = AcquireRef(new Texture(device, descriptor, Kind::Normal));
+    Ref<Texture> texture =
+        AcquireRef(new Texture(device, descriptor, Kind::Normal, isSharedWithHandle));
     DAWN_TRY(
         texture->InitializeAsExternalTexture(memory->GetD3DResource(), memory->GetKeyedMutex()));
     texture->mSharedResourceMemoryContents = memory->GetContents();
@@ -303,8 +306,11 @@ MaybeError Texture::InitializeAsExternalTexture(ComPtr<IUnknown> d3dTexture,
     return {};
 }
 
-Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor, Kind kind)
-    : Base(device, descriptor), mKind(kind) {}
+Texture::Texture(Device* device,
+                 const UnpackedPtr<TextureDescriptor>& descriptor,
+                 Kind kind,
+                 bool isSharedWithHandle)
+    : Base(device, descriptor), mKind(kind), mIsSharedWithHandle(isSharedWithHandle) {}
 
 Texture::~Texture() = default;
 
@@ -437,7 +443,7 @@ MaybeError Texture::SynchronizeTextureBeforeUse(
                 CheckHRESULT(commandContext->Wait(d3dFence->GetD3DFence(), fence.signaledValue),
                              "ID3D11DeviceContext4::Wait"));
         }
-        if (!device->IsToggleEnabled(Toggle::D3D11DisableFence)) {
+        if (mIsSharedWithHandle && !device->IsToggleEnabled(Toggle::D3D11DisableFence)) {
             commandContext->SetNeedsFence();
         }
     }
