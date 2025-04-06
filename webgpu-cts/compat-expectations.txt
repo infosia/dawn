@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-04-02 05:20:12AM
+# Last rolled: 2025-04-06 07:10:10AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -601,7 +601,6 @@ crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,bui
 crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="uniform";vectorize=2 [ Failure ]
 crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="uniform";vectorize=3 [ Failure ]
 crbug.com/341327470 [ intel-0x9bc5 ] webgpu:shader,execution,expression,call,builtin,asin:f32:inputSource="uniform";vectorize=4 [ Failure ]
-
 
 # constructor w/concrete_array_elements failures on Pixel 6
 crbug.com/373670504 [ android arm ] webgpu:shader,execution,expression,constructor,non_zero:concrete_array_elements:inputSource="storage_r";type="bool";length=10;infer_type=false [ Failure ]
