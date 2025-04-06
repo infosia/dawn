@@ -32,6 +32,8 @@
 
 #include <vector>
 
+#include "dawn/common/Log.h"
+
 namespace dawn::native::d3d {
 
 namespace {
@@ -63,6 +65,8 @@ MaybeError PlatformFunctions::LoadFunctions() {
     DAWN_TRY(LoadDXGI());
     DAWN_TRY(LoadFXCompiler());
     DAWN_TRY(LoadKernelBase());
+    DAWN_TRY(LoadKernel32());
+    DAWN_TRY(LoadWinmm());
     InitWindowsVersion();
     return {};
 }
@@ -112,6 +116,42 @@ MaybeError PlatformFunctions::LoadKernelBase() {
     std::string error;
     if (!mKernelBaseLib.Open("kernelbase.dll", &error) ||
         !mKernelBaseLib.GetProc(&compareObjectHandles, "CompareObjectHandles", &error)) {
+        return DAWN_INTERNAL_ERROR(error.c_str());
+    }
+#endif
+    return {};
+}
+
+MaybeError PlatformFunctions::LoadKernel32() {
+#if DAWN_PLATFORM_IS(WINUWP)
+    setThreadDescription = &SetThreadDescription;
+#else
+    std::string error;
+    if (!mKernel32Lib.Open("kernel32.dll", &error)) {
+        return DAWN_INTERNAL_ERROR(error.c_str());
+    }
+    if (!mKernel32Lib.GetProc(&setThreadDescription, "SetThreadDescription", &error)) {
+        WarningLog() << "SetThreadDescription is not available";
+    }
+#endif
+    return {};
+}
+
+MaybeError PlatformFunctions::LoadWinmm() {
+#if DAWN_PLATFORM_IS(WINUWP)
+    timeGetDevCaps = [](LPTIMECAPS ptc, UINT cbtc) -> MMRESULT {
+        ptc->wPeriodMin = 1;
+        ptc->wPeriodMax = 1;
+        return MMSYSERR_NOERROR;
+    };
+
+    timBeginPeriod = timEndPeriod = [](UINT cbtc) -> MMRESULT { return MMSYSERR_NOERROR; };
+#else
+    std::string error;
+    if (!mWinmmLib.Open("winmm.dll", &error) ||
+        !mWinmmLib.GetProc(&timeGetDevCaps, "timeGetDevCaps", &error) ||
+        !mWinmmLib.GetProc(&timeBeginPeriod, "timeBeginPeriod", &error) ||
+        !mWinmmLib.GetProc(&timeEndPeriod, "timeEndPeriod", &error)) {
         return DAWN_INTERNAL_ERROR(error.c_str());
     }
 #endif

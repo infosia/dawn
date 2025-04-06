@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_D3D_PLATFORMFUNCTIONS_H_
 
 #include <d3dcompiler.h>
+#include <timeapi.h>
 
 #include <string>
 
@@ -69,15 +70,31 @@ class PlatformFunctions {
                                                      HANDLE hSecondObjectHandle);
     PFN_COMPARE_OBJECT_HANDLES compareObjectHandles = nullptr;
 
+    // Functions from kernel32.dll
+    using PFN_SET_THREAD_DESCRIPTION = HRESULT(WINAPI*)(HANDLE hThread, PCWSTR lpThreadDescription);
+    PFN_SET_THREAD_DESCRIPTION setThreadDescription = nullptr;
+
+    // Functions from winmm.dll
+    using PFN_TIME_GET_DEV_CAPS = MMRESULT(WINAPI*)(LPTIMECAPS ptc, UINT cbtc);
+    PFN_TIME_GET_DEV_CAPS timeGetDevCaps = nullptr;
+
+    using PFN_TIME_BEGIN_END_PERIOD = MMRESULT(WINAPI*)(UINT);
+    PFN_TIME_BEGIN_END_PERIOD timeBeginPeriod = nullptr;
+    PFN_TIME_BEGIN_END_PERIOD timeEndPeriod = nullptr;
+
   private:
     MaybeError LoadDXGI();
     MaybeError LoadFXCompiler();
     MaybeError LoadKernelBase();
+    MaybeError LoadKernel32();
+    MaybeError LoadWinmm();
     void InitWindowsVersion();
 
     DynamicLib mDXGILib;
     DynamicLib mFXCompilerLib;
     DynamicLib mKernelBaseLib;
+    DynamicLib mKernel32Lib;
+    DynamicLib mWinmmLib;
 
     uint64_t mCurrentBuildNumber;
 };
