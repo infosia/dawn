@@ -47,7 +47,10 @@ class Queue : public d3d::Queue {
     ScopedSwapStateCommandRecordingContext GetScopedSwapStatePendingCommandContext(
         SubmitMode submitMode);
     MaybeError SubmitPendingCommands() override;
-    virtual MaybeError NextSerial() = 0;
+
+    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
+    ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
+    void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
 
     // Separated from creation because it creates resources, which is not valid before the
     // DeviceBase is fully created.
@@ -60,13 +63,17 @@ class Queue : public d3d::Queue {
 
     const Ref<SharedFence>& GetSharedFence() const { return mSharedFence; }
 
-  protected:
+  private:
     using d3d::Queue::Queue;
 
     ~Queue() override = default;
 
-    MaybeError Initialize(bool isMonitored);
-    MaybeError InitializeD3DFence(bool isMonitored);
+    MaybeError Initialize();
+    MaybeError InitializeD3DFence();
+
+    MaybeError NextSerial();
+
+    ResultOrError<bool> WaitForQueueSerialImpl(ExecutionSerial serial, Nanoseconds timeout);
 
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;
     MaybeError WriteBufferImpl(BufferBase* buffer,
@@ -99,6 +106,9 @@ class Queue : public d3d::Queue {
         wgpu::MapMode mode;
     };
     SerialMap<ExecutionSerial, BufferMapEntry> mPendingMapBuffers;
+
+    class PollingThread;
+    std::unique_ptr<PollingThread> mPollingThread;
 };
 
 }  // namespace dawn::native::d3d11
