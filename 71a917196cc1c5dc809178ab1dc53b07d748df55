@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c80ce78a_497aa1ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-07T03:11:53Z",
+      "side": 1,
+      "message": "Hi, I have a waiting-for-review CL https://dawn-review.googlesource.com/c/dawn/+/232375 to specifically make shader module backend compilation cache to use shader module hash instead of shader source. Please also take a look and maybe we could avoid duplicated effort, thanks!",
+      "revId": "71a917196cc1c5dc809178ab1dc53b07d748df55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
