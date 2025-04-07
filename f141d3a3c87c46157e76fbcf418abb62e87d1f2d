@@ -16,6 +16,24 @@
       "message": "This should work but it might end up being confusing since it modifies state outside the program. Maybe we could feed it in during GenTestList?\n\nAside: If we use the \"official\" format then this would simply replace this line:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/tools/src/cmd/cts/common/gen_test_list.go;l\u003d22;drc\u003df0c5cf6462bef7996bd39a950ec0deb98cd4d6f7\n(which also has the minor benefit of being faster since it only traverses the relevant test files)\nhowever first we would need to implement support for that to accept multiple test queries (`Error: currently, there must be exactly one query on the cmd line`), so this is not a blocking issue. But I\u0027d be happy to look into it, if you think that would be sufficiently expressive. (I have a minor preference to avoid adding a third way of selecting multiple test cases - official, glob, and regex).\n\nBTW, \"official\" still works with out-of-order case parameters:\n```\n\u003e tools/run_node --list \u0027webgpu:examples:basic,builder_cases:y\u003d1;*\u0027\nwebgpu:examples:basic,builder_cases:x\u003d1;y\u003d1\nwebgpu:examples:basic,builder_cases:x\u003d2;y\u003d1\n```",
       "revId": "f141d3a3c87c46157e76fbcf418abb62e87d1f2d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c8f0747_8b2378d0",
+        "filename": "tools/src/cmd/cts/roll/roll.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-04-07T21:38:59Z",
+      "side": 1,
+      "message": "So I updated it to use a test query. GenTestList is called from 3 different tools. Not sure if being able to pass in a query to the other tools was important but added it. Also wasn\u0027t sure if I should be storing the default query in some shared place.\n\nOn the other hand, it\u0027s way more cumbersome to use this way. You have to have a valid query which you can figure out by using the web cts but still, typing `--test-filter textureSampleLevel` is far more convenient than `--test-query \"webgpu:shader,execution,expression,call,builtin,textureSampleLevel:*\"`. Forget the `*` or use a `,`, `:`, or `;` in the wrong place and the query is invalid.\n\nFurther, the test-query above only tests execution, not validation where was the test-filter tests both. I could take a list of queries but that would be even more cumbersome. I also can not test all the texture builtins with texture-query where as I can with texture-filter just by using `--test-filter \"builtin,texture*\"`\n\nI wrongly assumed the only point of the test query being a special format was to load the minimal number of .ts files so it didn\u0027t require a full build. That\u0027s a super useful feature but it\u0027s not clear that limitation needs to carry over to other places.\n\nIn any case. Either way is fine with me. I\u0027d find it more useful to use test-filter but I can stick to my node script if it\u0027s unacceptable to use a regex.\n\nTo be honest, I\u0027d like to add a regex to the standalone CTS and dawn.node. It would be super useful for the same reasons. The standalone CTS could see if in got a `test_filter\u003d` in which case it would load the query (the default being webgpu:*) and then filter the results. Maybe I should add both `--test-filter` and `--test-query` where the filter runs after the query?",
+      "parentUuid": "5afe1089_d815ba98",
+      "revId": "f141d3a3c87c46157e76fbcf418abb62e87d1f2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
