@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfa65f0c_4e5e7c09",
+        "filename": "test/tint/builtins/gen/literal/workgroupUniformLoad/7ea8de.wgsl",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-07T21:04:33Z",
+      "side": 1,
+      "message": "Please check in the generated expectations for these new files too.\n\n`tools/run tests --generate-expected test/tint/builtins/gen/*/workgroupUniformLoad` will generate new `.expected.*` files for these tests.",
+      "revId": "d623f89e8b740a448daf96dea6d8a02f6f0b3dd9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
