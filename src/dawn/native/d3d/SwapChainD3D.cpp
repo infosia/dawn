@@ -181,15 +181,12 @@ MaybeError SwapChain::Initialize(SwapChainBase* previousSwapChain) {
     }
 
     // We can't reuse the buffers so we need to resize, IDXGSwapChain->ResizeBuffers requires
-    // that all references to buffers are lost before it is called. Contrary to D3D11, the
-    // application is responsible for keeping references to the buffers until the GPU is done
-    // using them so we have no choice but to synchrounously wait for all operations to complete
-    // on the previous swapchain and then lose references to its buffers.
-    if (GetBackendType() == wgpu::BackendType::D3D12) {
-        DAWN_TRY(previousD3DSwapChain->DetachAndWaitForDeallocation());
-    } else {
-        previousD3DSwapChain->DetachFromSurface();
-    }
+    // that all references to buffers are lost before it is called. In D3D12, the application is
+    // responsible for keeping references to the buffers until the GPU is done using them so we have
+    // no choice but to synchrounously wait for all operations to complete on the previous swapchain
+    // and then lose references to its buffers. Similarly D3D11 uses a background thread to release
+    // the references, so we need to wait for it to finish.
+    DAWN_TRY(previousD3DSwapChain->DetachAndWaitForDeallocation());
     DAWN_TRY(
         CheckHRESULT(mDXGISwapChain->ResizeBuffers(mConfig.bufferCount, GetWidth(), GetHeight(),
                                                    mConfig.format, mConfig.swapChainFlags),
