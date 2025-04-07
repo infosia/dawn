@@ -38,6 +38,7 @@
 #include "dawn/native/PassResourceUsage.h"
 #include "dawn/native/Texture.h"
 #include "dawn/native/d3d/d3d_platform.h"
+#include "dawn/native/d3d11/QueueD3D11.h"
 
 namespace dawn::native {
 struct CopyTextureToTextureCmd;
@@ -226,13 +227,18 @@ class Texture final : public TextureBase {
     template <typename K, typename T>
     class ViewCache {
       public:
-        ComPtr<T> Get(const K& key) const;
-        void Set(const K& key, ComPtr<T> view);
-        void Clear();
-
-      private:
         static constexpr uint32_t kMaxCacheSize = 3;
 
+        ViewCache() = default;
+        ViewCache(const ViewCache& src) = default;
+        ViewCache(ViewCache&& src);
+        ViewCache& operator=(ViewCache&& src);
+        ViewCache& operator=(const ViewCache& src) = default;
+
+        ComPtr<T> Get(const K& key) const;
+        void Set(const K& key, ComPtr<T> view);
+
+      private:
         struct Entry {
             Entry(const K& keyIn, ComPtr<T> viewIn) : key(keyIn), view(std::move(viewIn)) {}
 

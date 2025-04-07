@@ -28,6 +28,7 @@
 #include "dawn/native/d3d11/TextureD3D11.h"
 
 #include <algorithm>
+#include <iterator>
 #include <string>
 #include <utility>
 
@@ -149,10 +150,19 @@ DepthStencilAspectLayout DepthStencilAspectLayout(DXGI_FORMAT format, Aspect asp
 
 // TODO(409035452): Consider using the real LRU cache for caching the views.
 template <typename K, typename T>
+Texture::ViewCache<K, T>::ViewCache(ViewCache&& src) : mViews(std::move(src.mViews)) {}
+
+template <typename K, typename T>
+typename Texture::ViewCache<K, T>& Texture::ViewCache<K, T>::operator=(ViewCache&& src) {
+    mViews = std::move(src.mViews);
+    return *this;
+}
+
+template <typename K, typename T>
 ComPtr<T> Texture::ViewCache<K, T>::Get(const K& key) const {
-    for (auto ite = mViews.begin(); ite != mViews.end(); ++ite) {
-        if (ite->key == key) {
-            return ite->view;
+    for (auto& viewEntry : mViews) {
+        if (viewEntry.key == key) {
+            return viewEntry.view;
         }
     }
 
@@ -168,11 +178,6 @@ void Texture::ViewCache<K, T>::Set(const K& key, ComPtr<T> view) {
 
     DAWN_ASSERT(mViews.size() < kMaxCacheSize);
     mViews.emplace_back(key, std::move(view));
-}
-
-template <typename K, typename T>
-void Texture::ViewCache<K, T>::Clear() {
-    mViews.clear();
 }
 
 // static
@@ -351,11 +356,15 @@ void Texture::DestroyImpl() {
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the texture since there are no other live refs.
     TextureBase::DestroyImpl();
-    mD3d11Resource = nullptr;
+
     mKeyedMutex = nullptr;
     mTextureForStencilSampling = nullptr;
-    mCachedRTVs.Clear();
-    mCachedSRVs.Clear();
+
+    // Defer the deletions of D3D resources since deletions would have tried to acquire the D3D11's
+    // internal lock and blocked this thread for extended period of time.
+    auto queue = ToBackend(GetDevice()->GetQueue());
+    queue->ScheduleCleanupTask([rtvs = std::move(mCachedRTVs), srvs = std::move(mCachedSRVs),
+                                res = std::move(mD3d11Resource)] {});
 }
 
 ID3D11Resource* Texture::GetD3D11Resource() const {
@@ -1276,10 +1285,14 @@ TextureView::~TextureView() = default;
 
 void TextureView::DestroyImpl() {
     TextureViewBase::DestroyImpl();
-    mD3d11SharedResourceView = nullptr;
-    mD3d11RenderTargetViews.clear();
-    mD3d11DepthStencilView = nullptr;
-    mD3d11UnorderedAccessView = nullptr;
+
+    auto queue = ToBackend(GetDevice()->GetQueue());
+
+    // Defer the deletions of resources since deletions would have tried to acquire the d3d11's
+    // internal lock and blocked this thread for extended period of time.
+    queue->ScheduleCleanupTask(
+        [srv = std::move(mD3d11SharedResourceView), dsv = std::move(mD3d11DepthStencilView),
+         uav = std::move(mD3d11UnorderedAccessView), _ = std::move(mD3d11RenderTargetViews)] {});
 }
 
 ResultOrError<ID3D11ShaderResourceView*> TextureView::GetOrCreateD3D11ShaderResourceView() {
