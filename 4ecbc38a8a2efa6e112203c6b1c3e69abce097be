@@ -22,6 +22,30 @@
       },
       "revId": "4ecbc38a8a2efa6e112203c6b1c3e69abce097be",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69453242_e70ab860",
+        "filename": "src/tint/lang/wgsl/reader/lower/lower.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-07T13:36:40Z",
+      "side": 1,
+      "message": "I\u0027ve used `param0` as well. Thanks!",
+      "parentUuid": "a103d51f_d286363d",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 23
+      },
+      "revId": "4ecbc38a8a2efa6e112203c6b1c3e69abce097be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
