@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6004aad4_1880333e",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1418,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-07T09:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0513b00b_e4a4b24b",
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a68f769e_0b312656",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-04-03T12:44:54Z",
       "side": 1,
       "message": "What do you think of something like this to simplify the logic a bit?\n\n```\n// Unpack and validate the descriptor chain before doing further validation or cache lookups.\n// Note from the reviewer It\u0027s ok to do some validation when `IsValidationEnabled \u003d false` as long as it is not expensive.\nUnpackedPtr\u003cShaderModuleDescriptor\u003e unpacked;\nDAWN_TRY_ASSIGN_CONTEXT(unpacked, ValidateAndUnpack(descriptor),\n                                  \"validating and unpacking %s\", descriptor);\n       \n// A WGSL (or SPIR-V, if enabled) subdescriptor is required, and a Dawn-specific SPIR-V options descriptor is allowed when using SPIR-V.\n// Note from the reviewer: we don\u0027t need to guard with #if here because we don\u0027t use any tint::spirv APIs \nwgpu::SType moduleType\nDAWN_TRY_ASSIGN(moduleType,\n            (unpacked\n                 .ValidateBranches\u003cBranch\u003cShaderSourceWGSL, ShaderModuleCompilationOptions\u003e,\n                                   Branch\u003cShaderSourceSPIRV, DawnShaderModuleSPIRVOptionsDescriptor,\n                                          ShaderModuleCompilationOptions\u003e\u003e()));\n\n        // Module type specific validation.\n        switch (moduleType) {\n            case wgpu::SType::ShaderSourceSPIRV: {\n                // Note from the reviewer: we only need to check TINT_BUILD_SPV_READER here. Or could ForceSet DisallowSpirv in this case alternativly.\n                DAWN_INVALID_IF(IsToggleEnabled(Toggle::DisallowSpirv) || !TINT_BUILD_SPV_READER, \"SPIR-V is disallowed.\");\n                break;\n            }\n#endif  // TINT_BUILD_SPV_READER\n            case wgpu::SType::ShaderSourceWGSL: {\n                DAWN_INVALID_IF(unpacked.Get\u003cShaderModuleCompilationOptions\u003e() !\u003d nullptr \u0026\u0026\n                                    !HasFeature(Feature::ShaderModuleCompilationOptions),\n                                \"Shader module compilation options used without %s enabled.\",\n                                wgpu::FeatureName::ShaderModuleCompilationOptions);\n                break;\n            }\n            default:\n                DAWN_UNREACHABLE();\n        }\n        \n// Rest of the code as usual.\n```",
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c33ad04b_34beff88",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2149,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-07T09:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a68f769e_0b312656",
       "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +128,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "123fa12d_b63fe580",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-07T09:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcdb77b0_b7b78359",
+      "range": {
+        "startLine": 2232,
+        "startChar": 67,
+        "endLine": 2232,
+        "endChar": 87
+      },
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03fe6390_86305f5e",
@@ -109,6 +169,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "102e809b_69e091ee",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2236,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-07T09:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03fe6390_86305f5e",
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2658fea5_4fc90dd4",
@@ -122,6 +200,24 @@
       "writtenOn": "2025-04-03T12:44:54Z",
       "side": 1,
       "message": "nit: we don\u0027t need to pass the moduleType in here, and WDYT of something like this to not require the moduleType, and decrease the indentation levels / complexity of the control flow? (the switch is not super necessary given there are only two options)\n\n```\n// We assume that the descriptor chain has already been validated.\n\n#if TINT_BUILD_SPV_READER\nif (auto spirv \u003d descriptor.Get\u003cShaderSourceSPIRV\u003e()) {\n    // SPIRV handling\n}\n#endif  // TINT_BUILD_SPV_READER\n\nauto wgsl \u003d descriptor.Get\u003cShaderSourceWGSL\u003e();\n// WGSL handling\n```",
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34d98cff_00c0828d",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-07T09:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2658fea5_4fc90dd4",
       "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
