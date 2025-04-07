@@ -28,11 +28,13 @@
 #include "dawn/native/d3d11/TextureD3D11.h"
 
 #include <algorithm>
+#include <iterator>
 #include <string>
 #include <utility>
 
 #include "dawn/common/Constants.h"
 #include "dawn/common/Math.h"
+#include "dawn/native/AsyncTask.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandValidation.h"
@@ -175,9 +177,11 @@ ResultOrError<Ref<Texture>> Texture::CreateInternal(
 // static
 ResultOrError<Ref<Texture>> Texture::CreateFromSharedTextureMemory(
     SharedTextureMemory* memory,
-    const UnpackedPtr<TextureDescriptor>& descriptor) {
+    const UnpackedPtr<TextureDescriptor>& descriptor,
+    bool isSharedWithHandle) {
     Device* device = ToBackend(memory->GetDevice());
-    Ref<Texture> texture = AcquireRef(new Texture(device, descriptor, Kind::Normal));
+    Ref<Texture> texture =
+        AcquireRef(new Texture(device, descriptor, Kind::Normal, isSharedWithHandle));
     DAWN_TRY(
         texture->InitializeAsExternalTexture(memory->GetD3DResource(), memory->GetKeyedMutex()));
     texture->mSharedResourceMemoryContents = memory->GetContents();
@@ -303,8 +307,11 @@ MaybeError Texture::InitializeAsExternalTexture(ComPtr<IUnknown> d3dTexture,
     return {};
 }
 
-Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor, Kind kind)
-    : Base(device, descriptor), mKind(kind) {}
+Texture::Texture(Device* device,
+                 const UnpackedPtr<TextureDescriptor>& descriptor,
+                 Kind kind,
+                 bool isSharedWithHandle)
+    : Base(device, descriptor), mKind(kind), mIsSharedWithHandle(isSharedWithHandle) {}
 
 Texture::~Texture() = default;
 
@@ -317,9 +324,19 @@ void Texture::DestroyImpl() {
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the texture since there are no other live refs.
     TextureBase::DestroyImpl();
-    mD3d11Resource = nullptr;
+
     mKeyedMutex = nullptr;
     mTextureForStencilSampling = nullptr;
+
+    // Defer the deletions of resources since deletions would acquire the d3d11's internal lock
+    // and stall this thread for extended period of time.
+    ComPtr<IUnknown> resourcesToRelease[] = {
+        std::move(mD3d11Resource),
+    };
+
+    ToBackend(GetDevice()->GetQueue())
+        ->DeferReleaseResource(
+            ityp::SpanFromUntyped<size_t>(resourcesToRelease, std::size(resourcesToRelease)));
 }
 
 ID3D11Resource* Texture::GetD3D11Resource() const {
@@ -437,7 +454,7 @@ MaybeError Texture::SynchronizeTextureBeforeUse(
                 CheckHRESULT(commandContext->Wait(d3dFence->GetD3DFence(), fence.signaledValue),
                              "ID3D11DeviceContext4::Wait"));
         }
-        if (!device->IsToggleEnabled(Toggle::D3D11DisableFence)) {
+        if (mIsSharedWithHandle && !device->IsToggleEnabled(Toggle::D3D11DisableFence)) {
             commandContext->SetNeedsFence();
         }
     }
@@ -1158,10 +1175,32 @@ TextureView::~TextureView() = default;
 
 void TextureView::DestroyImpl() {
     TextureViewBase::DestroyImpl();
-    mD3d11SharedResourceView = nullptr;
-    mD3d11RenderTargetViews.clear();
-    mD3d11DepthStencilView = nullptr;
-    mD3d11UnorderedAccessView = nullptr;
+
+    auto queue = ToBackend(GetDevice()->GetQueue());
+
+    // Defer the deletions of resources since deletions would acquire the d3d11's internal lock
+    // and stall this thread for extended period of time.
+    {
+        ComPtr<IUnknown> resourcesToRelease[] = {
+            std::move(mD3d11SharedResourceView),
+            std::move(mD3d11DepthStencilView),
+            std::move(mD3d11UnorderedAccessView),
+        };
+
+        queue->DeferReleaseResource(
+            ityp::SpanFromUntyped<size_t>(resourcesToRelease, std::size(resourcesToRelease)));
+    }
+
+    if (!mD3d11RenderTargetViews.empty()) {
+        std::vector<ComPtr<IUnknown>> resourcesToRelease(
+            std::make_move_iterator(mD3d11RenderTargetViews.begin()),
+            std::make_move_iterator(mD3d11RenderTargetViews.end()));
+
+        queue->DeferReleaseResource(ityp::SpanFromUntyped<size_t>(resourcesToRelease.data(),
+                                                                  std::size(resourcesToRelease)));
+
+        mD3d11RenderTargetViews.clear();
+    }
 }
 
 ResultOrError<ID3D11ShaderResourceView*> TextureView::GetOrCreateD3D11ShaderResourceView() {
