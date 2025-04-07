@@ -657,6 +657,7 @@ TEST_P(SurfaceTests, Storage) {
 
 DAWN_INSTANTIATE_TEST(SurfaceTests,
                       D3D11Backend(),
+                      D3D11Backend({"d3d11_async_flush"}),
                       D3D12Backend(),
                       MetalBackend(),
                       OpenGLBackend(),

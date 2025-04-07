@@ -28,6 +28,8 @@
 #ifndef SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 #define SRC_DAWN_NATIVE_D3D11_QUEUED3D11_H_
 
+#include <functional>
+
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
 #include "dawn/native/d3d/QueueD3D.h"
@@ -53,6 +55,8 @@ class Queue : public d3d::Queue {
     // DeviceBase is fully created.
     MaybeError InitializePendingContext();
 
+    using d3d::Queue::WaitForQueueSerial;
+
     // Register the pending map buffer to be checked.
     void TrackPendingMapBuffer(Ref<Buffer>&& buffer,
                                wgpu::MapMode mode,
@@ -60,13 +64,16 @@ class Queue : public d3d::Queue {
 
     const Ref<SharedFence>& GetSharedFence() const { return mSharedFence; }
 
+    virtual void ScheduleCleanupTask(std::function<void()> task);
+    virtual void WaitUntilScheduledCleaupTasksCompleted();
+
   protected:
     using d3d::Queue::Queue;
 
     ~Queue() override = default;
 
-    MaybeError Initialize(bool isMonitored);
-    MaybeError InitializeD3DFence(bool isMonitored);
+    MaybeError Initialize(bool useNonMonitoredFence);
+    MaybeError InitializeD3DFence(bool useNonMonitoredFence);
 
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;
     MaybeError WriteBufferImpl(BufferBase* buffer,

@@ -115,6 +115,10 @@ HRESULT ScopedCommandRecordingContext::Wait(ID3D11Fence* pFence, UINT64 Value) c
     return Get()->mD3D11DeviceContext4->Wait(pFence, Value);
 }
 
+void ScopedCommandRecordingContext::Flush() const {
+    return Get()->mD3D11DeviceContext3->Flush();
+}
+
 void ScopedCommandRecordingContext::Flush1(D3D11_CONTEXT_TYPE ContextType, HANDLE hEvent) const {
     return Get()->mD3D11DeviceContext3->Flush1(ContextType, hEvent);
 }

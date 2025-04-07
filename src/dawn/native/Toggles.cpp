@@ -668,6 +668,10 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
      {"d3d11_disable_fence",
       "Disable d3d11 fence. Fences are not always available on every D3D11 device.",
       "https://crbug.com/chromium/390441217", ToggleStage::Device}},
+    {Toggle::D3D11AsyncFlush,
+     {"d3d11_async_flush",
+      "Do ID3D11DeviceContext::Flush on a background thread to reduce Queue::Submit()'s overhead.",
+      "https://crbug.com/chromium/377716220", ToggleStage::Device}},
     {Toggle::IgnoreImportedAHardwareBufferVulkanImageSize,
      {"ignore_imported_ahardwarebuffer_vulkan_image_size",
       "Don't validate the required VkImage size against the size of the AHardwareBuffer on import. "
