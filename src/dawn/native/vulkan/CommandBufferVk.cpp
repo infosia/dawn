@@ -218,18 +218,12 @@ class ImmediateConstantTracker : public T {
 
         // TODO(crbug.com/366291600): Add IterateBitRanges helper function to achieve iteration on
         // ranges.
+        uint32_t lastIndex = 0;
         for (ImmediateConstantIndex i : IterateBitSet(lastPipeline->GetImmediateMask())) {
             if (uploadBits.test(i)) {
                 uint32_t index = static_cast<uint32_t>(i);
-                if (immediateDataCount == 0) {
-                    prefixBits = (1u << index) - 1u;
-                    pushConstantRangeStartOffset = (prefixBits & pipelineImmediateMask).count() *
-                                                   kImmediateConstantElementByteSize;
-                    immediateContentStartOffset = index * kImmediateConstantElementByteSize;
-                }
-                ++immediateDataCount;
-            } else {
-                if (immediateDataCount > 0) {
+                // Upload immediate constants when contents are in next range.
+                if (index - lastIndex > 1 && immediateDataCount > 0) {
                     device->fn.CmdPushConstants(
                         commandBuffer, ToBackend(lastPipeline)->GetVkLayout(),
                         ToBackend(lastPipeline->GetLayout())->GetImmediateDataRangeStage(),
@@ -238,6 +232,14 @@ class ImmediateConstantTracker : public T {
                         this->mContent.template Get<uint32_t>(immediateContentStartOffset));
                     immediateDataCount = 0;
                 }
+                if (immediateDataCount == 0) {
+                    prefixBits = (1u << index) - 1u;
+                    pushConstantRangeStartOffset = (prefixBits & pipelineImmediateMask).count() *
+                                                   kImmediateConstantElementByteSize;
+                    immediateContentStartOffset = index * kImmediateConstantElementByteSize;
+                }
+                ++immediateDataCount;
+                lastIndex = index;
             }
         }
 

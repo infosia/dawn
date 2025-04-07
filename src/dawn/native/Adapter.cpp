@@ -98,7 +98,7 @@ void AdapterBase::UpdateLimits() {
 
     // Apply the tiered limits if needed.
     if (mUseTieredLimits) {
-        mLimits = ApplyLimitTiers(std::move(mLimits));
+        ApplyLimitTiers(&mLimits);
     }
 }
 
@@ -126,11 +126,13 @@ wgpu::Status AdapterBase::APIGetLimits(Limits* limits) const {
             // If immediate data features are not supported, return the default-initialized
             // DawnExperimentalImmediateDataLimits object, where maxImmediateDataByteSize is
             // WGPU_LIMIT_U32_UNDEFINED.
-            *immediateDataLimits = DawnExperimentalImmediateDataLimits{};
+            // *immediateDataLimits = DawnExperimentalImmediateDataLimits{};
+            immediateDataLimits->maxImmediateDataRangeByteSize = 0;
         } else {
             // If adapter supports immediate data features, always return the valid immediate data
             // limits.
-            *immediateDataLimits = mLimits.experimentalImmediateDataLimits;
+            immediateDataLimits->maxImmediateDataRangeByteSize =
+                mLimits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize;
         }
 
         // Recover origin chain.
@@ -348,12 +350,10 @@ ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
     }
 
     if (descriptor->requiredLimits != nullptr) {
-        // Only consider limits in RequiredLimits structure, and currently no chained structure
-        // supported.
-        DAWN_INVALID_IF(descriptor->requiredLimits->nextInChain != nullptr,
-                        "can not chain after requiredLimits.");
-
         Limits supportedLimits;
+        DawnExperimentalImmediateDataLimits dawnExperimentalImmediateDataLimits =
+            DawnExperimentalImmediateDataLimits{};
+        supportedLimits.nextInChain = &dawnExperimentalImmediateDataLimits;
         wgpu::Status status = APIGetLimits(&supportedLimits);
         DAWN_ASSERT(status == wgpu::Status::Success);
 
