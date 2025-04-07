@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0b53286_547f79b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-07T20:49:06Z",
+      "side": 1,
+      "message": "What\u0027s wrong with the error coming from Tint instead of Dawn?\n\nI suspect we\u0027ll have to do it in the const-eval validator anyway once we turn on the IR proto fuzzer, because the standalone substitute-overrides fuzzer is likely going to hit this same thing.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "979e012a9440b506fa93f6886dcfff5338993c47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "a72897f0_f10db83f",
