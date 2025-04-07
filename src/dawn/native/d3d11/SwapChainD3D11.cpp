@@ -38,6 +38,7 @@
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d/UtilsD3D.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
+#include "dawn/native/d3d11/QueueD3D11.h"
 #include "dawn/native/d3d11/TextureD3D11.h"
 
 namespace dawn::native::d3d11 {
@@ -98,6 +99,8 @@ ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
 
 MaybeError SwapChain::DetachAndWaitForDeallocation() {
     DetachFromSurface();
+    Queue* queue = ToBackend(GetDevice()->GetQueue());
+    queue->WaitUntilScheduledCleaupTasksCompleted();
     return {};
 }
 
