@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "42c427ce_4374a274",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-07T21:20:49Z",
+      "side": 1,
+      "message": "I think that leads to a larger question of what we want to validate in tint and what in dawn. This currently keeps it all together in one place which is nice. Otherwise we have some checks from tint and some from dawn.",
+      "parentUuid": "f0b53286_547f79b7",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "979e012a9440b506fa93f6886dcfff5338993c47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "a72897f0_f10db83f",
