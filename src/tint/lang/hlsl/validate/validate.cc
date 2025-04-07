@@ -136,7 +136,7 @@ Result ValidateUsingDXC(const std::string& dxc_path,
     }
     // Avoid ASAN false positives when unloading DLL: https://github.com/google/sanitizers/issues/89
 #if !DAWN_ASAN_ENABLED()
-    TINT_DEFER({ dlclose(dxcLib); });
+    // TINT_DEFER({ dlclose(dxcLib); });
 #endif
 
     dxc_create_instance =
