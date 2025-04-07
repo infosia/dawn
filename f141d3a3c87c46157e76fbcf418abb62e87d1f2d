@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5afe1089_d815ba98",
+        "filename": "tools/src/cmd/cts/roll/roll.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-07T18:50:18Z",
+      "side": 1,
+      "message": "This should work but it might end up being confusing since it modifies state outside the program. Maybe we could feed it in during GenTestList?\n\nAside: If we use the \"official\" format then this would simply replace this line:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/tools/src/cmd/cts/common/gen_test_list.go;l\u003d22;drc\u003df0c5cf6462bef7996bd39a950ec0deb98cd4d6f7\n(which also has the minor benefit of being faster since it only traverses the relevant test files)\nhowever first we would need to implement support for that to accept multiple test queries (`Error: currently, there must be exactly one query on the cmd line`), so this is not a blocking issue. But I\u0027d be happy to look into it, if you think that would be sufficiently expressive. (I have a minor preference to avoid adding a third way of selecting multiple test cases - official, glob, and regex).\n\nBTW, \"official\" still works with out-of-order case parameters:\n```\n\u003e tools/run_node --list \u0027webgpu:examples:basic,builder_cases:y\u003d1;*\u0027\nwebgpu:examples:basic,builder_cases:x\u003d1;y\u003d1\nwebgpu:examples:basic,builder_cases:x\u003d2;y\u003d1\n```",
+      "revId": "f141d3a3c87c46157e76fbcf418abb62e87d1f2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
