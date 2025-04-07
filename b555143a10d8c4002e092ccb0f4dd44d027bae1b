@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f35b7bc_7c72f757",
+        "filename": "src/tint/utils/text/unicode.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-07T20:57:27Z",
+      "side": 1,
+      "message": "Can you try reverting the `std::array` change you made to above, and replace these calls to std::binary_search with:\n\n```\nstd::binary_search(std::begin(kXIDStartRanges), std::end(kXIDStartRanges), *this);\n```\n\nThis should be considered the safe way to do this. `std::end` is overloaded for C-style arrays, and will return one past the last entry. Note that the old school:\n\n```\nconstexpr size_t kNumXIDContinueRanges \u003d sizeof(kXIDContinueRanges) / sizeof(kXIDContinueRanges[0]);\n```\n\nCan also be replaced by `std::size(kXIDContinueRanges)`, although not needed here.",
+      "range": {
+        "startLine": 586,
+        "startChar": 11,
+        "endLine": 586,
+        "endChar": 86
+      },
+      "revId": "b555143a10d8c4002e092ccb0f4dd44d027bae1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
