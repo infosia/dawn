@@ -1608,7 +1608,7 @@ int main(int argc, const char** argv) {
             tint::Vector<std::string, 8> arg_tokens;
             while (!arg_in.eof()) {
                 std::string arg;
-                arg_in >> std::quoted(arg);
+                arg_in >> std::quoted(arg, '"', '\0');
                 if (!arg.empty()) {
                     arg_tokens.Push(arg);
                 }
