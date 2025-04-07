@@ -69,15 +69,21 @@ class PlatformFunctions {
                                                      HANDLE hSecondObjectHandle);
     PFN_COMPARE_OBJECT_HANDLES compareObjectHandles = nullptr;
 
+    // Functions from kernel32.dll
+    using PFN_SET_THREAD_DESCRIPTION = HRESULT(WINAPI*)(HANDLE hThread, PCWSTR lpThreadDescription);
+    PFN_SET_THREAD_DESCRIPTION setThreadDescription = nullptr;
+
   private:
     MaybeError LoadDXGI();
     MaybeError LoadFXCompiler();
     MaybeError LoadKernelBase();
+    MaybeError LoadKernel32();
     void InitWindowsVersion();
 
     DynamicLib mDXGILib;
     DynamicLib mFXCompilerLib;
     DynamicLib mKernelBaseLib;
+    DynamicLib mKernel32Lib;
 
     uint64_t mCurrentBuildNumber;
 };

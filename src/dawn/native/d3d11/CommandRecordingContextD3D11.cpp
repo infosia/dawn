@@ -115,6 +115,10 @@ HRESULT ScopedCommandRecordingContext::Wait(ID3D11Fence* pFence, UINT64 Value) c
     return Get()->mD3D11DeviceContext4->Wait(pFence, Value);
 }
 
+void ScopedCommandRecordingContext::Flush() const {
+    return Get()->mD3D11DeviceContext3->Flush();
+}
+
 void ScopedCommandRecordingContext::Flush1(D3D11_CONTEXT_TYPE ContextType, HANDLE hEvent) const {
     return Get()->mD3D11DeviceContext3->Flush1(ContextType, hEvent);
 }
@@ -235,7 +239,8 @@ MaybeError CommandRecordingContext::Initialize(Device* device) {
         CheckHRESULT(d3d11DeviceContext3.As(&mD3DUserDefinedAnnotation),
                      "D3D11 querying immediate context for ID3DUserDefinedAnnotation interface"));
 
-    if (device->HasFeature(Feature::D3D11MultithreadProtected)) {
+    if (device->HasFeature(Feature::D3D11MultithreadProtected) ||
+        device->IsToggleEnabled(Toggle::D3D11AsyncFlush)) {
         DAWN_TRY(CheckHRESULT(d3d11DeviceContext.As(&mD3D11Multithread),
                               "D3D11 querying immediate context for ID3D11Multithread interface"));
         mD3D11Multithread->SetMultithreadProtected(TRUE);
