@@ -38,6 +38,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -85,6 +86,7 @@ type rollerFlags struct {
 	cacheDir             string
 	ctsGitURL            string
 	ctsRevision          string
+	testFilter           string
 	force                bool // Create a new roll, even if CTS is up to date
 	rebuild              bool // Rebuild the expectations file from scratch
 	preserve             bool // If false, abandon past roll changes
@@ -117,6 +119,7 @@ func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, e
 	flag.StringVar(&c.flags.cacheDir, "cache", common.DefaultCacheDir, "path to the results cache")
 	flag.StringVar(&c.flags.ctsGitURL, "repo", cfg.Git.CTS.HttpsURL(), "the CTS source repo")
 	flag.StringVar(&c.flags.ctsRevision, "revision", refMain, "revision of the CTS to roll")
+	flag.StringVar(&c.flags.testFilter, "test-filter", "", "regex to filter tests")
 	flag.BoolVar(&c.flags.force, "force", false, "create a new roll, even if CTS is up to date")
 	flag.BoolVar(&c.flags.rebuild, "rebuild", false, "rebuild the expectation file from scratch")
 	flag.BoolVar(&c.flags.preserve, "preserve", false, "do not abandon existing rolls")
@@ -226,6 +229,12 @@ type roller struct {
 	ctsDir              string
 }
 
+type lineFilterFunc func(string) bool
+
+func alwaysPass(_ string) bool {
+	return true
+}
+
 // TODO(crbug.com/344014313): Split this up into helper functions and add
 // unittest coverage after code this depends on switches to using dependency
 // injection.
@@ -320,6 +329,24 @@ func (r *roller) roll(ctx context.Context) error {
 	generatedFiles, err := r.generateFiles(ctx, r.cfg.OsWrapper)
 	if err != nil {
 		return err
+	}
+
+	if r.flags.testFilter != "" {
+		log.Printf("filtering test list...")
+		re, err := regexp.Compile(r.flags.testFilter)
+		if err != nil {
+			return fmt.Errorf("error compiling regex '%s': %v", r.flags.testFilter, err)
+		}
+		// Filter the test list in place. This way it will get used after
+		// being filtered and written as filtered.
+		newLines := []string{}
+		lines := strings.Split(generatedFiles[common.TestListRelPath], "\n")
+		for _, line := range lines {
+			if re.MatchString(line) {
+				newLines = append(newLines, line)
+			}
+		}
+		generatedFiles[common.TestListRelPath] = strings.Join(newLines, "\n")
 	}
 
 	// Pull out the test list from the generated files
