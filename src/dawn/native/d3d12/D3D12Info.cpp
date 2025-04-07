@@ -161,9 +161,6 @@ ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDe
                 D3D12_FEATURE_D3D12_OPTIONS1, &featureOptions1, sizeof(featureOptions1)))) {
             info.supportsWaveOps = featureOptions1.WaveOps;
             info.waveLaneCountMin = featureOptions1.WaveLaneCountMin;
-            // Currently the WaveLaneCountMax queried from D3D12 API is not reliable and the meaning
-            // is unclear. The result is recorded into D3D12DeviceInfo, but is not intended to be
-            // used now.
             info.waveLaneCountMax = featureOptions1.WaveLaneCountMax;
         }
     }

@@ -115,10 +115,7 @@ MaybeError PhysicalDevice::InitializeImpl() {
     }
 
     mSubgroupMinSize = mDeviceInfo.waveLaneCountMin;
-    // Currently the WaveLaneCountMax queried from D3D12 API is not reliable and the meaning is
-    // unclear. Use 128 instead, which is the largest possible size. Reference:
-    // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics#:~:text=UINT%20WaveLaneCountMax
-    mSubgroupMaxSize = 128u;
+    mSubgroupMaxSize = mDeviceInfo.waveLaneCountMax;
 
     return {};
 }
@@ -857,10 +854,7 @@ MaybeError PhysicalDevice::ResetInternalDeviceForTestingImpl() {
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {
     if (auto* subgroupProperties = info.Get<AdapterPropertiesSubgroups>()) {
         subgroupProperties->subgroupMinSize = mDeviceInfo.waveLaneCountMin;
-        // Currently the WaveLaneCountMax queried from D3D12 API is not reliable and the meaning is
-        // unclear. Use 128 instead, which is the largest possible size. Reference:
-        // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics#:~:text=UINT%20WaveLaneCountMax
-        subgroupProperties->subgroupMaxSize = 128u;
+        subgroupProperties->subgroupMaxSize = mDeviceInfo.waveLaneCountMax;
     }
     if (auto* memoryHeapProperties = info.Get<AdapterPropertiesMemoryHeaps>()) {
         // https://microsoft.github.io/DirectX-Specs/d3d/D3D12GPUUploadHeaps.html describes

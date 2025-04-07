@@ -58,9 +58,6 @@ struct D3D12DeviceInfo {
     // Whether the device support wave intrinsics
     bool supportsWaveOps;
     uint32_t waveLaneCountMin;
-    // Currently the WaveLaneCountMax queried from D3D12 API is not reliable and the meaning is
-    // unclear. Reference:
-    // https://github.com/Microsoft/DirectXShaderCompiler/wiki/Wave-Intrinsics#:~:text=UINT%20WaveLaneCountMax
     uint32_t waveLaneCountMax;
     size_t dedicatedVideoMemory;
     size_t sharedSystemMemory;
