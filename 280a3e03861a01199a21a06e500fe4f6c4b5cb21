@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de516732_ca8caa1c",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-07T19:16:17Z",
+      "side": 1,
+      "message": "nit. Since we aren\u0027t using the fact that only a slice of the whole vector which uses the queue is passed in anymore, we can probably just pass a reference to the vector directly instead?",
+      "range": {
+        "startLine": 141,
+        "startChar": 26,
+        "endLine": 142,
+        "endChar": 75
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef5498f6_39bebee9",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-07T19:16:17Z",
+      "side": 1,
+      "message": "Not sure if the lock is needed for this check, so maybe we could even move this to [1]?",
+      "range": {
+        "startLine": 164,
+        "startChar": 12,
+        "endLine": 177,
+        "endChar": 13
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60dd6b5d_e53e223d",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-07T19:16:17Z",
+      "side": 1,
+      "message": "WDYT of keeping a map to a struct that has both the `lowestWaitSerial` and a `vector` of indices into the `futures` vector? We could pass the struct into `WaitQueueSerialsImpl` and avoid iterating over the entire list of futures for every device in that way.",
+      "range": {
+        "startLine": 197,
+        "startChar": 36,
+        "endLine": 197,
+        "endChar": 51
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e4ac219_9ddaf96c",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-07T19:16:17Z",
+      "side": 1,
+      "message": "[1] We could probably use the helper in [2] here.",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 234,
+        "endChar": 9
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82374727_54cdbcb6",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-07T19:16:17Z",
+      "side": 1,
+      "message": "[2] Since we are moving helpers into the actual event object, I think we might as well move this into a helper as well. That way if we add a new type of event in the future, we can update it there.\n\nIf we do it in event, we should also add some sort of assert that exactly one of these are true.",
+      "range": {
+        "startLine": 345,
+        "startChar": 8,
+        "endLine": 355,
+        "endChar": 9
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d23769c_e4392d5e",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-07T19:16:17Z",
+      "side": 1,
+      "message": "Maybe this could also be a helper?",
+      "range": {
+        "startLine": 379,
+        "startChar": 4,
+        "endLine": 388,
+        "endChar": 5
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
