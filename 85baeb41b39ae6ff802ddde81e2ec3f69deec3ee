@@ -52,6 +52,24 @@
       "parentUuid": "cb20e8e0_de754182",
       "revId": "85baeb41b39ae6ff802ddde81e2ec3f69deec3ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ebbaa3c_77ef295d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-07T20:26:30Z",
+      "side": 1,
+      "message": "I definitely prefer a condvar implementation over kqueue, which feels more niche (plus kqueue seems to be quite complicated, though so is this). My intuition was that it would be faster since it\u0027s simpler (not actually pushing data through a pipe) but it\u0027s great that\u0027s actually true!\n\nI\u0027d still love to reuse the posix pipe implementation if we could adjust it to make it work, but assuming that would also be measurably slower (if it\u0027s even possible), this seems like the right way to go.",
+      "parentUuid": "68b284a4_a33b1933",
+      "revId": "85baeb41b39ae6ff802ddde81e2ec3f69deec3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
