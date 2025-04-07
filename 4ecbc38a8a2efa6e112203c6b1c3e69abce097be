@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a103d51f_d286363d",
+        "filename": "src/tint/lang/wgsl/reader/lower/lower.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-07T13:20:38Z",
+      "side": 1,
+      "message": "```suggestion\n                    // Replace:\n                    //    %value \u003d call workgroupUniformLoad %ptr\n                    // With:\n                    //    call workgroupBarrier\n                    //    %value \u003d {load || atomicLoad} \u0026ptr\n                    //    call workgroupBarrier\n                    b.InsertBefore(call, [\u0026] {\n                        b.Call(ty.void_(), core::BuiltinFn::kWorkgroupBarrier);\n                        if (auto* a \u003d storeType-\u003eAs\u003ccore::type::Atomic\u003e()) {\n                            b.CallWithResult(call-\u003eDetachResult(), core::BuiltinFn::kAtomicLoad, call-\u003eArgs()[0])\n                        } else {\n                            b.LoadWithResult(call-\u003eDetachResult(), call-\u003eArgs()[0]);\n                        }\n                        b.Call(ty.void_(), core::BuiltinFn::kWorkgroupBarrier);\n                    });\n```",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 23
+      },
+      "revId": "4ecbc38a8a2efa6e112203c6b1c3e69abce097be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
