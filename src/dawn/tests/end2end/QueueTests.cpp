@@ -266,6 +266,7 @@ TEST_P(QueueWriteBufferTests, WriteUniformBufferWithVariousOffsetAndSizeAlignmen
 
 DAWN_INSTANTIATE_TEST(QueueWriteBufferTests,
                       D3D11Backend(),
+                      D3D11Backend({"d3d11_async_flush"}),
                       D3D12Backend(),
                       MetalBackend(),
                       OpenGLBackend(),
@@ -786,7 +787,7 @@ TEST_P(QueueWriteTextureTests, UnalignedDynamicUploader) {
 }
 
 DAWN_INSTANTIATE_TEST_P(QueueWriteTextureTests,
-                        {D3D11Backend(), D3D12Backend(),
+                        {D3D11Backend(), D3D11Backend({"d3d11_async_flush"}), D3D12Backend(),
                          D3D12Backend({"d3d12_use_temp_buffer_in_depth_stencil_texture_and_buffer_"
                                        "copy_with_non_zero_buffer_offset"}),
                          MetalBackend(),
@@ -984,6 +985,7 @@ TEST_P(QueueWriteTextureSimpleTests, WriteStencilAspectAfterOtherQueueWriteTextu
 
 DAWN_INSTANTIATE_TEST(QueueWriteTextureSimpleTests,
                       D3D11Backend(),
+                      D3D11Backend({"d3d11_async_flush"}),
                       D3D11Backend({"d3d11_use_unmonitored_fence"}),
                       D3D11Backend({"d3d11_disable_fence"}),
                       D3D12Backend(),
