@@ -16,6 +16,29 @@
       "message": "Please take a look, thanks",
       "revId": "76d169bc77365d9f83fbaf29a152d9a121b780a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "581f8274_10639e24",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-07T09:42:13Z",
+      "side": 1,
+      "message": "Talking with Geoff, we think in the future (not this CL) we should make the compilation messages part of the `ShaderModuleParseResult` since they are a result of the parsing, and get consumed / not consumed the same way. It will require changing the `ParseShaderModule` to return a `ShaderModuleParseResult` unconditionnally that has a `::HasError` or something like that.",
+      "range": {
+        "startLine": 378,
+        "startChar": 30,
+        "endLine": 379,
+        "endChar": 92
+      },
+      "revId": "76d169bc77365d9f83fbaf29a152d9a121b780a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

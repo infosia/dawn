@@ -220,6 +220,46 @@
       "parentUuid": "2658fea5_4fc90dd4",
       "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db666f73_6c68f4d7",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-07T09:42:13Z",
+      "side": 1,
+      "message": "```suggestion\n        ShaderSourceSPIRV spirvDescriptor;\n```",
+      "range": {
+        "startLine": 1571,
+        "startChar": 26,
+        "endLine": 1571,
+        "endChar": 41
+      },
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94cd6354_e7814cac",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-07T09:42:13Z",
+      "side": 1,
+      "message": "Nice removal!",
+      "revId": "10347ef83e975f48bcb78ba5d756932a80d7c6d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
