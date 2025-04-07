@@ -34,6 +34,24 @@
       "parentUuid": "62e7d1ff_51ec4596",
       "revId": "85baeb41b39ae6ff802ddde81e2ec3f69deec3ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68b284a4_a33b1933",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-07T18:50:36Z",
+      "side": 1,
+      "message": "So I was mistaken about not being able to use mach_ports - we can certainly create mach_ports, but we can\u0027t use mach_port_peek and probably other APIs.\n\ndtapuska@ experimented a bit with mach_ports and kqueue and found that we can use that in the iOS child process sandbox. However, we need to use the special be_kevent[1] API for that. That doesn\u0027t support a timeout per se, but we can use timer events to simulate a timeout.\n\nHowever, more importantly, Dave found that condition variable based base::WaitableEvent (waitable_event_posix.cc) now performs better than the mach_port/kqueue based one (waitable_event_apple.cc) on Mac. We believe this is because Apple has started using their ulock syscall (similar to Linux futex) to implement locks and condition variables (see Apple\u0027s libpthread source[2]).\n\nSo I don\u0027t think there\u0027s a huge benefit to do the mach_port/kqueue based approach in Dawn either.\n\n[1] https://developer.apple.com/documentation/browserenginecore/be_kevent(_:_:_:_:_:_:)?language\u003dobjc\n\n[2] https://github.com/apple-oss-distributions/libpthread/blob/main/src/pthread_cond.c#L783C15-L783C40",
+      "parentUuid": "cb20e8e0_de754182",
+      "revId": "85baeb41b39ae6ff802ddde81e2ec3f69deec3ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
