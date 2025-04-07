@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7da78b3a_ac2379fa",
+        "filename": "src/dawn/tests/perf_tests/WorkgroupAtomicPerf.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-04-07T15:57:56Z",
+      "side": 1,
+      "message": "I could put more effort in and create more of a common bit of code by having fake read/write using functions that then point to atomic vs non atomic versions. \nMaybe not worth it now but perhaps one day we will try extending this to testing atomic vs non atomic speeds of storage.\n\nThis test also does not focus on writing but simply reading. \nI think this focus makes sense since racy writes are UB.",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 33
+      },
+      "revId": "d7b84ba2b3061a8b863d780725f363db80656ed6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
