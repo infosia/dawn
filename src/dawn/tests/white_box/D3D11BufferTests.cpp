@@ -75,8 +75,14 @@ class D3D11BufferTests : public DawnTest {
         ComPtr<ID3D11Buffer> stagingBuffer;
         ASSERT_HRESULT_SUCCEEDED(GetD3D11Device()->CreateBuffer(&desc, nullptr, &stagingBuffer));
 
-        ID3D11DeviceContext* deviceContext;
+        ComPtr<ID3D11DeviceContext> deviceContext;
         GetD3D11Device()->GetImmediateContext(&deviceContext);
+
+        // Since we use D3D11 outside dawn's owned objects, we need to synchronize D3D11 commands
+        // using ID3D11Multithread.
+        ComPtr<ID3D11Multithread> multithread;
+        deviceContext.As(&multithread);
+        multithread->SetMultithreadProtected(true);
 
         // Copy buffer to staging buffer
         D3D11_BOX srcBox;
