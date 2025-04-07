@@ -28,6 +28,7 @@
 #include <gtest/gtest.h>
 
 #include "dawn/common/Constants.h"
+#include "dawn/native/ChainUtils.h"
 #include "dawn/native/Limits.h"
 
 namespace dawn {
@@ -52,6 +53,17 @@ TEST(Limits, GetDefaultLimits_Compat) {
     GetDefaultLimits(&limits, wgpu::FeatureLevel::Compatibility);
 
     EXPECT_EQ(limits.maxColorAttachments, 4u);
+}
+
+// Test |GetDeviceDefaultImmediateDataLimit| returns the default immediate data range
+// limits kDeviceDefaultImmediateDataBytes.
+TEST(Limits, GetDeviceDefaultImmediateDataLimit) {
+    CombinedLimits limits = {};
+    EXPECT_NE(limits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize, 16u);
+
+    GetDeviceDefaultImmediateDataLimit(&limits);
+
+    EXPECT_EQ(limits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize, 16u);
 }
 
 // Test |ReifyDefaultLimits| populates the default for wgpu::FeatureLevel::Core
@@ -96,6 +108,60 @@ TEST(Limits, ReifyDefaultLimits_Clamps) {
     Limits reified = ReifyDefaultLimits(limits, wgpu::FeatureLevel::Core);
     EXPECT_EQ(reified.maxStorageBuffersPerShaderStage, 8u);
     EXPECT_EQ(reified.minUniformBufferOffsetAlignment, 256u);
+}
+
+// Test |ReifyDeviceDefaultImmediateDataLimits| update the default value if provided
+// immediate data range byte size is supported.
+TEST(Limits, ReifyDeviceDefaultImmediateDataLimits) {
+    Limits limits;
+    wgpu::DawnExperimentalImmediateDataLimits chain = wgpu::DawnExperimentalImmediateDataLimits{};
+    limits.nextInChain = &chain;
+
+    UnpackedPtr<Limits> unpacked = Unpack(&limits);
+
+    auto* experimentalImmediateDataLimits = unpacked.Get<DawnExperimentalImmediateDataLimits>();
+    DAWN_ASSERT(experimentalImmediateDataLimits != nullptr);
+    experimentalImmediateDataLimits->maxImmediateDataRangeByteSize = 32u;
+
+    CombinedLimits reified;
+    ReifyDeviceDefaultImmediateDataLimits(limits, &reified);
+    EXPECT_EQ(reified.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize, 32u);
+}
+
+// Test |ReifyDeviceDefaultImmediateDataLimits| populates the device default immediate data
+// range byte size if the provided limits are undefined.
+TEST(Limits, ReifyDeviceDefaultImmediateDataLimits_PopulatesDefault) {
+    Limits limits;
+    wgpu::DawnExperimentalImmediateDataLimits chain = wgpu::DawnExperimentalImmediateDataLimits{};
+    limits.nextInChain = &chain;
+
+    UnpackedPtr<Limits> unpacked = Unpack(&limits);
+
+    auto* experimentalImmediateDataLimits = unpacked.Get<DawnExperimentalImmediateDataLimits>();
+    DAWN_ASSERT(experimentalImmediateDataLimits != nullptr);
+    experimentalImmediateDataLimits->maxImmediateDataRangeByteSize = wgpu::kLimitU32Undefined;
+
+    CombinedLimits reified;
+    ReifyDeviceDefaultImmediateDataLimits(limits, &reified);
+    EXPECT_EQ(reified.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize, 16u);
+}
+
+// Test |ReifyDeviceDefaultImmediateDataLimits| clamps to the device default immediate data
+// range byte size if the provided limits are worse.
+TEST(Limits, ReifyDeviceDefaultImmediateDataLimits_Clamps) {
+    Limits limits;
+    wgpu::DawnExperimentalImmediateDataLimits chain = wgpu::DawnExperimentalImmediateDataLimits{};
+    limits.nextInChain = &chain;
+
+    UnpackedPtr<Limits> unpacked = Unpack(&limits);
+
+    auto* experimentalImmediateDataLimits = unpacked.Get<DawnExperimentalImmediateDataLimits>();
+    DAWN_ASSERT(experimentalImmediateDataLimits != nullptr);
+    experimentalImmediateDataLimits->maxImmediateDataRangeByteSize = 8u;
+
+    CombinedLimits reified;
+    ReifyDeviceDefaultImmediateDataLimits(limits, &reified);
+    EXPECT_EQ(reified.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize, 16u);
 }
 
 // Test |ValidateLimits| works to validate limits are not better
@@ -372,7 +438,7 @@ TEST(Limits, NormalizeLimits) {
         limits.v1.maxStorageTexturesPerShaderStage = kMaxStorageTexturesPerShaderStage + 1;
         limits.v1.maxUniformBuffersPerShaderStage = kMaxUniformBuffersPerShaderStage + 1;
         limits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
-            kMaxImmediateDataBytes + 1;
+            kDeviceDefaultImmediateDataBytes + 1;
 
         NormalizeLimits(&limits);
 
@@ -388,7 +454,7 @@ TEST(Limits, NormalizeLimits) {
         EXPECT_EQ(limits.v1.maxStorageTexturesPerShaderStage, kMaxStorageTexturesPerShaderStage);
         EXPECT_EQ(limits.v1.maxUniformBuffersPerShaderStage, kMaxUniformBuffersPerShaderStage);
         EXPECT_EQ(limits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize,
-                  kMaxImmediateDataBytes);
+                  kAdapterMaxImmediateDataBytes);
     }
 
     // Test maxStorageBufferBindingSize is clamped to maxBufferSize.

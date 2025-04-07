@@ -222,6 +222,60 @@ bool IsLimitUndefined<uint64_t>(uint64_t value) {
     return value == wgpu::kLimitU64Undefined;
 }
 
+// Validate that |requiredLimits| DawnExperimentalImmediateDataLimits part
+// are no better than |supportedLimits| DawnExperimentalImmediateDataLimits part.
+MaybeError ValidateImmediateDataLimits(Limits* supportedLimits, Limits* requiredLimits) {
+    UnpackedPtr<Limits> unpackedSupportedLimits;
+    UnpackedPtr<Limits> unpackedRequiredLimits;
+    DAWN_TRY_ASSIGN(unpackedSupportedLimits, ValidateAndUnpack(supportedLimits));
+    DAWN_TRY_ASSIGN(unpackedRequiredLimits, ValidateAndUnpack(requiredLimits));
+
+    if (auto* requiredExperimentalImmediateDataLimits =
+            unpackedRequiredLimits.Get<DawnExperimentalImmediateDataLimits>()) {
+        auto* supportedExperimentalImmediateDataLimits =
+            unpackedSupportedLimits.Get<DawnExperimentalImmediateDataLimits>();
+        DAWN_INVALID_IF(supportedExperimentalImmediateDataLimits == nullptr,
+                        "ImmediateData is not supported.");
+        if (!IsLimitUndefined(
+                requiredExperimentalImmediateDataLimits->maxImmediateDataRangeByteSize)) {
+            DAWN_TRY_CONTEXT(
+                CheckLimit<LimitClass::Maximum>::Validate(
+                    supportedExperimentalImmediateDataLimits->maxImmediateDataRangeByteSize,
+                    requiredExperimentalImmediateDataLimits->maxImmediateDataRangeByteSize),
+                "validating maxImmediateDataRangeByteSize");
+        }
+    }
+    return {};
+}
+
+// Modify |limits| immediate data range byte limits if requiredLimits has chained struct about
+// DawnExperimentalImmediateDataLimits. The undefined maximum value is replaced
+// with device defaults. Also clamps to the device defaults if the provided limits
+// are worse.
+void ReifyDeviceDefaultImmediateDataLimits(const Limits& requiredLimits, CombinedLimits* limits) {
+    Limits* requiredLimitsPtr = const_cast<Limits*>(&requiredLimits);
+    UnpackedPtr<Limits> unpacked = Unpack(requiredLimitsPtr);
+    // Initialize device limits to descriptor requiredLimits if it has a chain struct about
+    // DawnExperimentalImmediateDataLimits. Otherwise, initialize device limits to default value.
+    if (auto* requiredExperimentalImmediateDataLimits =
+            unpacked.Get<DawnExperimentalImmediateDataLimits>()) {
+        if (IsLimitUndefined(
+                requiredExperimentalImmediateDataLimits->maxImmediateDataRangeByteSize) ||
+            CheckLimit<LimitClass::Maximum>::IsBetter(
+                kDeviceDefaultImmediateDataBytes,
+                requiredExperimentalImmediateDataLimits->maxImmediateDataRangeByteSize)) {
+            limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
+                kDeviceDefaultImmediateDataBytes;
+        } else {
+            limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
+                requiredExperimentalImmediateDataLimits->maxImmediateDataRangeByteSize;
+        }
+    } else {
+        limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
+            kDeviceDefaultImmediateDataBytes;
+    }
+}
+
 }  // namespace
 
 void GetDefaultLimits(Limits* limits, wgpu::FeatureLevel featureLevel) {
@@ -230,6 +284,11 @@ void GetDefaultLimits(Limits* limits, wgpu::FeatureLevel featureLevel) {
     limits->limitName = featureLevel == wgpu::FeatureLevel::Compatibility ? compat : base;
     LIMITS(X)
 #undef X
+}
+
+void GetDeviceDefaultImmediateDataLimit(CombinedLimits* limits) {
+    limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
+        kDeviceDefaultImmediateDataBytes;
 }
 
 Limits ReifyDefaultLimits(const Limits& limits, wgpu::FeatureLevel featureLevel) {
@@ -260,6 +319,10 @@ MaybeError ValidateLimits(const Limits& supportedLimits, const Limits& requiredL
     }
     LIMITS(X)
 #undef X
+    Limits* supportedLimitsPtr = const_cast<Limits*>(&supportedLimits);
+    Limits* requiredLimitsPtr = const_cast<Limits*>(&requiredLimits);
+    DAWN_TRY_CONTEXT(ValidateImmediateDataLimits(supportedLimitsPtr, requiredLimitsPtr),
+                     "validating immediate data limits");
 
     return {};
 }
@@ -375,7 +438,8 @@ void NormalizeLimits(CombinedLimits* limits) {
 
     // Enforce immediate data bytes to ensure they don't go over a fixed limit in Dawn's internal
     // code.
-    limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize = kMaxImmediateDataBytes;
+    limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
+        kAdapterMaxImmediateDataBytes;
 }
 
 void EnforceLimitSpecInvariants(Limits* limits, wgpu::FeatureLevel featureLevel) {
@@ -409,12 +473,6 @@ void EnforceLimitSpecInvariants(Limits* limits, wgpu::FeatureLevel featureLevel)
         limits->maxStorageBuffersInVertexStage = limits->maxStorageBuffersPerShaderStage;
         limits->maxStorageTexturesInVertexStage = limits->maxStorageTexturesPerShaderStage;
     }
-}
-
-void NormalizeExperimentalLimits(CombinedLimits* limits) {
-    // Enforce immediate data bytes to ensure they don't go over a fixed limit in Dawn's internal
-    // code.
-    limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize = kMaxImmediateDataBytes;
 }
 
 }  // namespace dawn::native

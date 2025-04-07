@@ -375,13 +375,11 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
 
     if (descriptor->requiredLimits != nullptr) {
         mLimits.v1 = ReifyDefaultLimits(*descriptor->requiredLimits, effectiveFeatureLevel);
+        ReifyDeviceDefaultImmediateDataLimits(*descriptor->requiredLimits, &mLimits);
     } else {
         GetDefaultLimits(&mLimits.v1, effectiveFeatureLevel);
+        GetDeviceDefaultImmediateDataLimit(&mLimits);
     }
-
-    // Get experimentalImmediateDataRangeByteSizeLimit from physical device
-    mLimits.experimentalImmediateDataLimits =
-        GetPhysicalDevice()->GetLimits().experimentalImmediateDataLimits;
 
     // Get texelCopyBufferRowAlignmentLimits from physical device
     mLimits.texelCopyBufferRowAlignmentLimits =
@@ -412,6 +410,7 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
 
 DeviceBase::DeviceBase() : mState(State::Alive), mToggles(ToggleStage::Device) {
     GetDefaultLimits(&mLimits.v1, wgpu::FeatureLevel::Core);
+    GetDeviceDefaultImmediateDataLimit(&mLimits);
     EnforceLimitSpecInvariants(&mLimits.v1, wgpu::FeatureLevel::Core);
     mFormatTable = BuildFormatTable(this);
 
