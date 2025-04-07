@@ -812,6 +812,8 @@ class GPUUsableBuffer::Storage : public RefCounted, NonCopyable {
     bool IsGPUWritable() const { return mD3d11Usage == D3D11_USAGE_DEFAULT; }
 
   private:
+    ~Storage() override = default;
+
     ComPtr<ID3D11Buffer> mD3d11Buffer;
     uint64_t mRevision = 0;
     D3D11_USAGE mD3d11Usage;
@@ -847,7 +849,9 @@ void GPUUsableBuffer::DestroyImpl() {
     mCPUWritableStorage = nullptr;
     mMappedStorage = nullptr;
 
-    mStorages = {};
+    // Defer the deletions of resources since deletions would have tried to acquire the d3d11's
+    // internal lock and blocked this thread for extended period of time.
+    ToBackend(GetDevice()->GetQueue())->ScheduleCleanupTask([_ = std::move(mStorages)] {});
 }
 
 void GPUUsableBuffer::SetLabelImpl() {
