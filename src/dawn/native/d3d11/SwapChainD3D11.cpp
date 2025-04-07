@@ -31,6 +31,7 @@
 #include <windows.ui.xaml.media.dxinterop.h>
 #endif  // defined(DAWN_USE_WINDOWS_UI)
 
+#include <limits>
 #include <utility>
 
 #include "dawn/native/ChainUtils.h"
@@ -38,6 +39,7 @@
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d/UtilsD3D.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
+#include "dawn/native/d3d11/QueueD3D11.h"
 #include "dawn/native/d3d11/TextureD3D11.h"
 
 namespace dawn::native::d3d11 {
@@ -98,6 +100,12 @@ ResultOrError<SwapChainTextureInfo> SwapChain::GetCurrentTextureImpl() {
 
 MaybeError SwapChain::DetachAndWaitForDeallocation() {
     DetachFromSurface();
+    Queue* queue = ToBackend(GetDevice()->GetQueue());
+    DAWN_TRY(queue->EnsureCommandsFlushed(queue->GetPendingCommandSerial()));
+    DAWN_TRY_ASSIGN(std::ignore,
+                    queue->WaitForQueueSerial(queue->GetLastSubmittedCommandSerial(),
+                                              Nanoseconds(std::numeric_limits<uint64_t>::max())));
+    queue->WaitUntilScheduledCleaupTasksCompleted();
     return {};
 }
 

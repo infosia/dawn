@@ -28,8 +28,13 @@
 #include "dawn/native/d3d11/QueueD3D11.h"
 
 #include <algorithm>
-#include <deque>
+#include <atomic>
+#include <chrono>
+#include <condition_variable>
+#include <iterator>
 #include <limits>
+#include <mutex>
+#include <thread>
 #include <utility>
 #include <vector>
 
@@ -37,6 +42,7 @@
 #include "dawn/common/Log.h"
 #include "dawn/native/WaitAnySystemEvent.h"
 #include "dawn/native/d3d/D3DError.h"
+#include "dawn/native/d3d/PlatformFunctions.h"
 #include "dawn/native/d3d11/BufferD3D11.h"
 #include "dawn/native/d3d11/CommandBufferD3D11.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
@@ -46,92 +52,154 @@
 #include "dawn/native/d3d11/TextureD3D11.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
+#include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native::d3d11 {
 
-class MonitoredQueue final : public Queue {
+class Queue::FlushThread {
   public:
-    using Queue::Queue;
-    MaybeError Initialize();
-    MaybeError NextSerial() override;
-    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
-    void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
+    explicit FlushThread(Queue* queue) : mQueue(queue), mThread([this] { ThreadLoop(); }) {}
+    ~FlushThread() {
+        {
+            std::lock_guard<std::mutex> lg(mLock);
+            mRunning.store(false, std::memory_order_release);
+            mQueueCv.notify_one();
+        }
+
+        mThread.join();
+    }
+
+    void EnqueueFlush(HANDLE event) {
+        std::lock_guard<std::mutex> lg(mLock);
+        mEventsToFlush.push_back(event);
+        mQueueCv.notify_one();
+    }
+
+    void EnqueueCleanupTask(std::function<void()> task) {
+        std::lock_guard<std::mutex> lg(mLock);
+        mCleanupTasks.emplace_back(std::move(task));
+        mScheduledCleanupCount++;
+        mQueueCv.notify_one();
+    }
+
+    void WaitUntilScheduledCleaupTasksCompleted() {
+        std::unique_lock<std::mutex> lg(mLock);
+        const auto scheduledCleanupCount = mScheduledCleanupCount;
+        mCleanupTaskCompletedCv.wait(lg, [this, scheduledCleanupCount] {
+            // Keep waiting until scheduled tasks completed.
+            return mCompletedCleanupCount >= scheduledCleanupCount;
+        });
+    }
 
   private:
-    ~MonitoredQueue() override = default;
-};
+    void ThreadLoop() {
+        auto device = ToBackend(mQueue->GetDevice());
+        if (device->GetFunctions()->setThreadDescription) {
+            device->GetFunctions()->setThreadDescription(GetCurrentThread(),
+                                                         L"QueueD3D11::FlushingThread");
+        }
 
-class SystemEventQueue final : public Queue {
-  public:
-    using Queue::Queue;
-    MaybeError Initialize();
-    MaybeError NextSerial() override;
-    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
-    ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
-    void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
+        ComPtr<IDXGIDevice2> dxgiDevice2;
+        if (FAILED(device->GetD3D11Device3()->QueryInterface(IID_PPV_ARGS(&dxgiDevice2)))) {
+            DAWN_UNREACHABLE();
+        }
 
-  private:
-    ~SystemEventQueue() override = default;
+        absl::InlinedVector<HANDLE, 2> handles;
+        absl::InlinedVector<std::function<void()>, 2> tasks;
+        uint64_t curCleanupCount = 0;
+        while (mRunning.load(std::memory_order_acquire)) {
+            {
+                std::unique_lock<std::mutex> lg(mLock);
+                mQueueCv.wait(lg, [this] {
+                    // Keep waiting until queue is not empty or running is stopped.
+                    return !mEventsToFlush.empty() || !mCleanupTasks.empty() ||
+                           !mRunning.load(std::memory_order_acquire);
+                });
+                handles.insert(handles.end(), mEventsToFlush.begin(), mEventsToFlush.end());
+                mEventsToFlush.clear();
 
-    struct SerialEventReceiverPair {
-        ExecutionSerial serial;
-        SystemEventReceiver receiver;
-    };
-    // Events associated with submitted commands. They are in old to recent order.
-    MutexProtected<std::deque<SerialEventReceiverPair>> mPendingEvents;
+                tasks.insert(tasks.end(), std::make_move_iterator(mCleanupTasks.begin()),
+                             std::make_move_iterator(mCleanupTasks.end()));
+                mCleanupTasks.clear();
+            }
+
+            // Flush commands first
+            for (auto handle : handles) {
+                TRACE_EVENT0(device->GetPlatform(), General, "D3D11Device::Flush");
+                [[maybe_unused]] auto commandContext =
+                    mQueue->GetScopedPendingCommandContext(SubmitMode::Passive);
+
+                // commandContext.Flush1(D3D11_CONTEXT_TYPE_ALL, handle);
+                // Flush1 seems to have bug on older GPUs. Use IDXGIDevice2::EnqueueSetEvent
+                // instead. commandContext's scope is still useful to make sure only one thread can
+                // use the D3D11 commands at a time.
+                dxgiDevice2->EnqueueSetEvent(handle);
+            }
+            handles.resize(0);
+
+            // Then release resources
+            if (tasks.size() == 0) {
+                continue;
+            }
+
+            curCleanupCount += tasks.size();
+            for (const auto& task : tasks) {
+                task();
+            }
+            tasks.resize(0);
+            {
+                // D3D11 requires a Flush to properly destroy released resources.
+                auto commandContext = mQueue->GetScopedPendingCommandContext(SubmitMode::Passive);
+                commandContext.Flush();
+            }
+            {
+                std::unique_lock<std::mutex> lg(mLock);
+                mCompletedCleanupCount = curCleanupCount;
+                mCleanupTaskCompletedCv.notify_all();
+            }
+        }
+    }
+
+    raw_ptr<Queue> mQueue;
+
+    std::deque<HANDLE> mEventsToFlush;
+    std::deque<std::function<void()>> mCleanupTasks;
+
+    std::mutex mLock;
+    std::condition_variable mQueueCv;
+    std::condition_variable mCleanupTaskCompletedCv;
+
+    uint64_t mCompletedCleanupCount = 0;
+    uint64_t mScheduledCleanupCount = 0;
+
+    std::atomic_bool mRunning{true};
+
+    std::thread mThread;
 };
 
 ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* descriptor) {
-    const auto& deviceInfo = ToBackend(device->GetPhysicalDevice())->GetDeviceInfo();
-    if (device->IsToggleEnabled(Toggle::D3D11UseUnmonitoredFence) ||
-        device->IsToggleEnabled(Toggle::D3D11DisableFence)) {
-        Ref<SystemEventQueue> systemEventQueue =
-            AcquireRef(new SystemEventQueue(device, descriptor));
-        DAWN_TRY(systemEventQueue->Initialize());
-        return systemEventQueue;
-    } else if (deviceInfo.supportsMonitoredFence) {
-        Ref<MonitoredQueue> monitoredQueue = AcquireRef(new MonitoredQueue(device, descriptor));
-        DAWN_TRY(monitoredQueue->Initialize());
-        return monitoredQueue;
-    } else {
-        // TODO(crbug.com/335553337): support devices without fence.
-        return DAWN_INTERNAL_ERROR("D3D11: fence is not supported");
-    }
+    Ref<Queue> queue = AcquireRef(new Queue(device, descriptor));
+    DAWN_TRY(queue->Initialize());
+    return queue;
 }
 
-MaybeError Queue::Initialize(bool isMonitored) {
+MaybeError Queue::Initialize() {
     if (!GetDevice()->IsToggleEnabled(Toggle::D3D11DisableFence)) {
-        DAWN_TRY(InitializeD3DFence(isMonitored));
+        DAWN_TRY(InitializeD3DFence());
     }
+
+    mBackgroundFlushThread = std::make_unique<FlushThread>(this);
 
     return {};
 }
 
-MaybeError Queue::InitializeD3DFence(bool isMonitored) {
-    const auto& deviceInfo = ToBackend(GetDevice()->GetPhysicalDevice())->GetDeviceInfo();
-
+MaybeError Queue::InitializeD3DFence() {
     // Create the fence.
     D3D11_FENCE_FLAG flags = D3D11_FENCE_FLAG_SHARED;
-    if (!isMonitored) {
-        if (deviceInfo.supportsNonMonitoredFence) {
-            flags |= D3D11_FENCE_FLAG_NON_MONITORED;
-            // For adapters that support both monitored and non-monitored fences, non-monitored
-            // fences are only supported when created with the D3D12_FENCE_FLAG_SHARED and
-            // D3D12_FENCE_FLAG_SHARED_CROSS_ADAPTER flags
-            // https://learn.microsoft.com/en-us/windows/win32/api/dxgi1_6/ne-dxgi1_6-dxgi_adapter_flag3
-            if (deviceInfo.supportsMonitoredFence) {
-                flags |= D3D11_FENCE_FLAG_SHARED_CROSS_ADAPTER;
-            }
-        } else {
-            WarningLog()
-                << "D3D11: non-monitored fence is not supported, fallback to monitored fence";
-        }
-    } else {
-        DAWN_ASSERT(deviceInfo.supportsMonitoredFence);
-    }
+
     DAWN_TRY(CheckHRESULT(
         ToBackend(GetDevice())->GetD3D11Device5()->CreateFence(0, flags, IID_PPV_ARGS(&mFence)),
-        isMonitored ? "D3D11: creating monitored fence" : "D3D11: creating non-monitored fence"));
+        "D3D11: creating fence"));
 
     DAWN_TRY_ASSIGN(mSharedFence, SharedFence::Create(ToBackend(GetDevice()),
                                                       "Internal shared DXGI fence", mFence));
@@ -160,9 +228,12 @@ MaybeError Queue::InitializePendingContext() {
 }
 
 void Queue::DestroyImpl() {
-    // Release the shared fence here to prevent a ref-cycle with the device, but do not destroy the
-    // underlying native fence so that we can return a SharedFence on EndAccess after destruction.
+    // Release the shared fence here to prevent a ref-cycle with the device, but do not destroy
+    // the underlying native fence so that we can return a SharedFence on EndAccess after
+    // destruction.
     mSharedFence = nullptr;
+
+    mBackgroundFlushThread = nullptr;
 
     mPendingCommands.Use([&](auto pendingCommands) {
         pendingCommands->Destroy();
@@ -213,10 +284,10 @@ MaybeError Queue::SubmitPendingCommands() {
 }
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
-    // CommandBuffer::Execute() will modify the state of the global immediate device context, it may
-    // affect following usage of it.
-    // TODO(dawn:1770): figure how if we need to track and restore the state of the immediate device
-    // context.
+    // CommandBuffer::Execute() will modify the state of the global immediate device context, it
+    // may affect following usage of it.
+    // TODO(dawn:1770): figure how if we need to track and restore the state of the immediate
+    // device context.
     TRACE_EVENT_BEGIN0(GetDevice()->GetPlatform(), Recording, "CommandBufferD3D11::Execute");
     {
         auto commandContext =
@@ -232,7 +303,13 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
 }
 
 MaybeError Queue::CheckAndMapReadyBuffers(ExecutionSerial completedSerial) {
+    if (mPendingMapBuffers.Empty() || mPendingMapBuffers.FirstSerial() > completedSerial) {
+        // Skip early so that we don't need to acquire the command context.
+        return {};
+    }
+
     auto commandContext = GetScopedPendingCommandContext(QueueBase::SubmitMode::Passive);
+
     for (const auto& bufferEntry : mPendingMapBuffers.IterateUpTo(completedSerial)) {
         DAWN_TRY(
             bufferEntry.buffer->FinalizeMap(&commandContext, completedSerial, bufferEntry.mode));
@@ -290,7 +367,9 @@ bool Queue::HasPendingCommands() const {
     return mPendingCommandsNeedSubmit.load(std::memory_order_acquire);
 }
 
-void Queue::ForceEventualFlushOfCommands() {}
+void Queue::ForceEventualFlushOfCommands() {
+    mPendingCommandsNeedSubmit.store(true, std::memory_order_release);
+}
 
 MaybeError Queue::WaitForIdleForDestruction() {
     if (!mPendingCommands->IsValid()) {
@@ -301,66 +380,12 @@ MaybeError Queue::WaitForIdleForDestruction() {
     // Wait for all in-flight commands to finish executing
     DAWN_TRY_ASSIGN(std::ignore, WaitForQueueSerial(GetLastSubmittedCommandSerial(),
                                                     std::numeric_limits<Nanoseconds>::max()));
+
+    mBackgroundFlushThread->WaitUntilScheduledCleaupTasksCompleted();
     return CheckPassedSerials();
 }
 
-// MonitoredQueue:
-MaybeError MonitoredQueue::Initialize() {
-    return Queue::Initialize(/*isMonitored=*/true);
-}
-
-MaybeError MonitoredQueue::NextSerial() {
-    auto commandContext = GetScopedPendingCommandContext(SubmitMode::Passive);
-
-    DAWN_TRY(commandContext.FlushBuffersForSyncingWithCPU());
-
-    const uint64_t submitSerial = uint64_t(GetPendingCommandSerial());
-
-    {
-        TRACE_EVENT1(GetDevice()->GetPlatform(), General, "D3D11Device::SignalFence", "serial",
-                     submitSerial);
-        DAWN_TRY(CheckHRESULT(commandContext.Signal(mFence.Get(), submitSerial),
-                              "D3D11 command queue signal fence"));
-    }
-
-    IncrementLastSubmittedCommandSerial();
-
-    return {};
-}
-
-ResultOrError<ExecutionSerial> MonitoredQueue::CheckAndUpdateCompletedSerials() {
-    ExecutionSerial completedSerial = ExecutionSerial(mFence->GetCompletedValue());
-    if (DAWN_UNLIKELY(completedSerial == ExecutionSerial(UINT64_MAX))) {
-        // GetCompletedValue returns UINT64_MAX if the device was removed.
-        // Try to query the failure reason.
-        ID3D11Device* d3d11Device = ToBackend(GetDevice())->GetD3D11Device();
-        DAWN_TRY(CheckHRESULT(d3d11Device->GetDeviceRemovedReason(),
-                              "ID3D11Device::GetDeviceRemovedReason"));
-        // Otherwise, return a generic device lost error.
-        return DAWN_DEVICE_LOST_ERROR("Device lost");
-    }
-
-    if (completedSerial <= GetCompletedCommandSerial()) {
-        return ExecutionSerial(0);
-    }
-
-    DAWN_TRY(CheckAndMapReadyBuffers(completedSerial));
-
-    DAWN_TRY(RecycleSystemEventReceivers(completedSerial));
-
-    return completedSerial;
-}
-
-void MonitoredQueue::SetEventOnCompletion(ExecutionSerial serial, HANDLE event) {
-    mFence->SetEventOnCompletion(static_cast<uint64_t>(serial), event);
-}
-
-// SystemEventQueue:
-MaybeError SystemEventQueue::Initialize() {
-    return Queue::Initialize(/*isMonitored=*/false);
-}
-
-MaybeError SystemEventQueue::NextSerial() {
+MaybeError Queue::NextSerial() {
     auto commandContext = GetScopedPendingCommandContext(SubmitMode::Passive);
 
     DAWN_TRY(commandContext.FlushBuffersForSyncingWithCPU());
@@ -377,7 +402,7 @@ MaybeError SystemEventQueue::NextSerial() {
 
     SystemEventReceiver receiver;
     DAWN_TRY_ASSIGN(receiver, GetSystemEventReceiver());
-    commandContext.Flush1(D3D11_CONTEXT_TYPE_ALL, receiver.GetPrimitive().Get());
+    mBackgroundFlushThread->EnqueueFlush(receiver.GetPrimitive().Get());
     mPendingEvents->push_back({submitSerial, std::move(receiver)});
 
     IncrementLastSubmittedCommandSerial();
@@ -385,7 +410,7 @@ MaybeError SystemEventQueue::NextSerial() {
     return {};
 }
 
-ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials() {
+ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
     ExecutionSerial completedSerial;
     std::vector<SystemEventReceiver> returnedReceivers;
     DAWN_TRY_ASSIGN(
@@ -441,8 +466,7 @@ ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials(
     return completedSerial;
 }
 
-ResultOrError<bool> SystemEventQueue::WaitForQueueSerial(ExecutionSerial serial,
-                                                         Nanoseconds timeout) {
+ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
     ExecutionSerial completedSerial = GetCompletedCommandSerial();
     if (serial <= completedSerial) {
         return true;
@@ -492,8 +516,16 @@ ResultOrError<bool> SystemEventQueue::WaitForQueueSerial(ExecutionSerial serial,
     return didComplete;
 }
 
-void SystemEventQueue::SetEventOnCompletion(ExecutionSerial serial, HANDLE event) {
+void Queue::SetEventOnCompletion(ExecutionSerial serial, HANDLE event) {
     DAWN_UNREACHABLE();
+}
+
+void Queue::ScheduleCleanupTask(std::function<void()> task) {
+    mBackgroundFlushThread->EnqueueCleanupTask(std::move(task));
+}
+
+void Queue::WaitUntilScheduledCleaupTasksCompleted() {
+    mBackgroundFlushThread->WaitUntilScheduledCleaupTasksCompleted();
 }
 
 }  // namespace dawn::native::d3d11
