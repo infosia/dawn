@@ -224,42 +224,109 @@ bool IsLimitUndefined<uint64_t>(uint64_t value) {
 
 }  // namespace
 
-void GetDefaultLimits(Limits* limits, wgpu::FeatureLevel featureLevel) {
+void GetDefaultLimits(CombinedLimits* limits, wgpu::FeatureLevel featureLevel) {
     DAWN_ASSERT(limits != nullptr);
 #define X(Better, limitName, compat, base, ...) \
-    limits->limitName = featureLevel == wgpu::FeatureLevel::Compatibility ? compat : base;
+    limits->v1.limitName = featureLevel == wgpu::FeatureLevel::Compatibility ? compat : base;
     LIMITS(X)
 #undef X
+    // NormalizeLimits() overrides the default value to kAdaterDefaultImmediateDataBytes if
+    // GetDefaultLimits() is called during adapter initialization.
+    limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
+        kDeviceDefaultImmediateDataBytes;
 }
 
-Limits ReifyDefaultLimits(const Limits& limits, wgpu::FeatureLevel featureLevel) {
-    Limits out;
-#define X(Class, limitName, compat, base, ...)                                         \
-    {                                                                                  \
-        const auto defaultLimit = static_cast<decltype(limits.limitName)>(             \
-            featureLevel == wgpu::FeatureLevel::Compatibility ? compat : base);        \
-        if (IsLimitUndefined(limits.limitName) ||                                      \
-            CheckLimit<LimitClass::Class>::IsBetter(defaultLimit, limits.limitName)) { \
-            /* If the limit is undefined or the default is better, use the default */  \
-            out.limitName = defaultLimit;                                              \
-        } else {                                                                       \
-            out.limitName = limits.limitName;                                          \
-        }                                                                              \
+CombinedLimits ReifyDefaultLimits(const CombinedLimits& limits, wgpu::FeatureLevel featureLevel) {
+    CombinedLimits out;
+#define X(Class, limitName, compat, base, ...)                                            \
+    {                                                                                     \
+        const auto defaultLimit = static_cast<decltype(limits.v1.limitName)>(             \
+            featureLevel == wgpu::FeatureLevel::Compatibility ? compat : base);           \
+        if (IsLimitUndefined(limits.v1.limitName) ||                                      \
+            CheckLimit<LimitClass::Class>::IsBetter(defaultLimit, limits.v1.limitName)) { \
+            /* If the limit is undefined or the default is better, use the default */     \
+            out.v1.limitName = defaultLimit;                                              \
+        } else {                                                                          \
+            out.v1.limitName = limits.v1.limitName;                                       \
+        }                                                                                 \
     }
     LIMITS(X)
 #undef X
+    if (IsLimitUndefined(limits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize) ||
+        CheckLimit<LimitClass::Maximum>::IsBetter(
+            kDeviceDefaultImmediateDataBytes,
+            limits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize)) {
+        out.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
+            kDeviceDefaultImmediateDataBytes;
+    } else {
+        out.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
+            limits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize;
+    }
     return out;
 }
 
-MaybeError ValidateLimits(const Limits& supportedLimits, const Limits& requiredLimits) {
-#define X(Class, limitName, ...)                                                            \
-    if (!IsLimitUndefined(requiredLimits.limitName)) {                                      \
-        DAWN_TRY_CONTEXT(CheckLimit<LimitClass::Class>::Validate(supportedLimits.limitName, \
-                                                                 requiredLimits.limitName), \
-                         "validating " #limitName);                                         \
+MaybeError ValidateAndUnpackLimitsIn(const Limits* chainedLimits,
+                                     const std::unordered_set<wgpu::FeatureName>& supportedFeatures,
+                                     CombinedLimits* out) {
+    DAWN_ASSERT(chainedLimits != nullptr);
+    DAWN_ASSERT(out != nullptr);
+
+    Limits* chainedLimitsPtr = const_cast<Limits*>(chainedLimits);
+    UnpackedPtr<Limits> unpacked;
+    DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(chainedLimitsPtr));
+
+    // copy required v1 limits.
+    out->v1 = **unpacked;
+    out->v1.nextInChain = nullptr;
+
+    if (auto* requiredExperimentalImmediateDataLimits =
+            unpacked.Get<DawnExperimentalImmediateDataLimits>()) {
+        DAWN_INVALID_IF(
+            !supportedFeatures.count(wgpu::FeatureName::ChromiumExperimentalImmediateData),
+            "ImmediateData is not supported without ChromiumExperimentalImmediateData supported.");
+        out->experimentalImmediateDataLimits = *requiredExperimentalImmediateDataLimits;
+        out->experimentalImmediateDataLimits.nextInChain = nullptr;
+    }
+
+    return {};
+}
+
+void UnpackLimitsIn(const Limits* chainedLimits, CombinedLimits* out) {
+    DAWN_ASSERT(chainedLimits != nullptr);
+    DAWN_ASSERT(out != nullptr);
+
+    Limits* chainedLimitsPtr = const_cast<Limits*>(chainedLimits);
+    UnpackedPtr<Limits> unpacked = Unpack(chainedLimitsPtr);
+
+    // copy required v1 limits.
+    out->v1 = **unpacked;
+    out->v1.nextInChain = nullptr;
+
+    if (auto* requiredExperimentalImmediateDataLimits =
+            unpacked.Get<DawnExperimentalImmediateDataLimits>()) {
+        out->experimentalImmediateDataLimits = *requiredExperimentalImmediateDataLimits;
+        out->experimentalImmediateDataLimits.nextInChain = nullptr;
+    }
+}
+
+MaybeError ValidateLimits(const CombinedLimits& supportedLimits,
+                          const CombinedLimits& requiredLimits) {
+#define X(Class, limitName, ...)                                                               \
+    if (!IsLimitUndefined(requiredLimits.v1.limitName)) {                                      \
+        DAWN_TRY_CONTEXT(CheckLimit<LimitClass::Class>::Validate(supportedLimits.v1.limitName, \
+                                                                 requiredLimits.v1.limitName), \
+                         "validating " #limitName);                                            \
     }
     LIMITS(X)
 #undef X
+    if (!IsLimitUndefined(
+            requiredLimits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize)) {
+        DAWN_TRY_CONTEXT(
+            CheckLimit<LimitClass::Maximum>::Validate(
+                supportedLimits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize,
+                requiredLimits.experimentalImmediateDataLimits.maxImmediateDataRangeByteSize),
+            "validating maxImmediateDataRangeByteSize");
+    }
 
     return {};
 }
@@ -375,7 +442,8 @@ void NormalizeLimits(CombinedLimits* limits) {
 
     // Enforce immediate data bytes to ensure they don't go over a fixed limit in Dawn's internal
     // code.
-    limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize = kMaxImmediateDataBytes;
+    limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
+        kAdapterMaxImmediateDataBytes;
 }
 
 void EnforceLimitSpecInvariants(Limits* limits, wgpu::FeatureLevel featureLevel) {
@@ -409,12 +477,6 @@ void EnforceLimitSpecInvariants(Limits* limits, wgpu::FeatureLevel featureLevel)
         limits->maxStorageBuffersInVertexStage = limits->maxStorageBuffersPerShaderStage;
         limits->maxStorageTexturesInVertexStage = limits->maxStorageTexturesPerShaderStage;
     }
-}
-
-void NormalizeExperimentalLimits(CombinedLimits* limits) {
-    // Enforce immediate data bytes to ensure they don't go over a fixed limit in Dawn's internal
-    // code.
-    limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize = kMaxImmediateDataBytes;
 }
 
 }  // namespace dawn::native
