@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-04-02 05:20:12AM
+# Last rolled: 2025-04-07 05:14:43AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -327,8 +327,9 @@ crbug.com/40853211 [ mac webgpu-adapter-swiftshader ] webgpu:web_platform,copyTo
 
 # Flaky on Linux (with SwiftShader)
 crbug.com/408486529 [ linux webgpu-adapter-swiftshader ] webgpu:web_platform,copyToTexture,video:copy_from_video:* [ Failure ]
+
 # Flaky on Linux (with VVL)
-crbug.com/408556424 [ linux dawn-backend-validation ] webgpu:web_platform,copyToTexture,video:copy_from_video:* [ Failure ]
+crbug.com/408556424 [ dawn-backend-validation linux ] webgpu:web_platform,copyToTexture,video:copy_from_video:* [ Failure ]
 
 # Failing on SwiftShader on various platforms
 crbug.com/407814992 [ mac webgpu-adapter-swiftshader ] webgpu:web_platform,canvas,readbackFromWebGPUCanvas:transferToImageBitmap_huge_size: [ Failure ]
