@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba08d427_12d9f449",
+        "filename": "src/dawn/native/d3d11/TextureD3D11.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-07T17:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f0845e4_72078aca",
+      "range": {
+        "startLine": 377,
+        "startChar": 0,
+        "endLine": 379,
+        "endChar": 5
+      },
+      "revId": "88728ad4d53ba161bd3fc08d5d7d2635aa805a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9beee741_e468d057",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b37ddf8_1d0898a7",
+        "filename": "src/dawn/native/d3d11/TextureD3D11.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-07T17:25:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9beee741_e468d057",
+      "range": {
+        "startLine": 1229,
+        "startChar": 0,
+        "endLine": 1231,
+        "endChar": 5
+      },
+      "revId": "88728ad4d53ba161bd3fc08d5d7d2635aa805a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46e4efc2_eba4e96e",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-04-07T13:52:59Z",
       "side": 1,
       "message": "It seems very specific to cache only one. I can understand that each texture is probably not sampled in very many ways but a simple LRU with 3 items (the same as kMaxPlanesPerFormat, could be more) would also be very cheap and have more hits.",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 73
+      },
+      "revId": "88728ad4d53ba161bd3fc08d5d7d2635aa805a1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a52ecb45_98cbf706",
+        "filename": "src/dawn/native/d3d11/TextureD3D11.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-07T17:25:49Z",
+      "side": 1,
+      "message": "Done. Originally I wanted to use a LRU. But it seems overkill. Also it might require adding a full-blown LRU class and all its unit tests to Dawn\u0027s code base.\nHowever, a simple \"mini\" LRU implementation could be sufficient for this CL.",
+      "parentUuid": "46e4efc2_eba4e96e",
       "range": {
         "startLine": 229,
         "startChar": 0,
