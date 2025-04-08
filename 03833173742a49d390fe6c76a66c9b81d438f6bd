@@ -16,6 +16,24 @@
       "message": "Maybe something to deal with in a follow-up since you\u0027ve finally got this passing bots, but since `TINT_IR_MODULE_FUZZER` is defined in `ir/fuzz.h` these guards probably aren\u0027t quite what we want.\n\nIt\u0027s not obvious to me what the guard is needed for - we shouldn\u0027t need the WGSL frontend for IR proto fuzzing, so maybe there\u0027s a dependency somewhere that we need to break?",
       "revId": "03833173742a49d390fe6c76a66c9b81d438f6bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e372310a_e1531494",
+        "filename": "src/tint/lang/core/ir/transform/add_empty_entry_point_fuzz.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-08T02:33:06Z",
+      "side": 1,
+      "message": "This was a hold over from an older version of the CL. I had also noticed these when giving this patch a once over, so was already in the process of removing them.",
+      "parentUuid": "f9ed92bc_c8ed58eb",
+      "revId": "03833173742a49d390fe6c76a66c9b81d438f6bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
