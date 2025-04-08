@@ -263,7 +263,6 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::ClipDistances);
     }
 
-    bool shaderF16Enabled = false;
     if (mDeviceInfo.HasExt(DeviceExt::ShaderFloat16Int8) &&
         mDeviceInfo.HasExt(DeviceExt::_16BitStorage) &&
         mDeviceInfo.shaderFloat16Int8Features.shaderFloat16 == VK_TRUE &&
@@ -272,7 +271,6 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         // TODO(crbug.com/tint/2164): Investigate crashes in f16 CTS tests to enable on NVIDIA.
         if (!gpu_info::IsNvidia(GetVendorId())) {
             EnableFeature(Feature::ShaderF16);
-            shaderF16Enabled = true;
         }
     }
 
@@ -421,25 +419,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         (mDeviceInfo.HasExt(DeviceExt::SubgroupSizeControl)) &&
         (mDeviceInfo.subgroupSizeControlFeatures.subgroupSizeControl == VK_TRUE) &&
         (mDeviceInfo.subgroupSizeControlFeatures.computeFullSubgroups == VK_TRUE)) {
-        if (shaderF16Enabled) {
-            if (mDeviceInfo.shaderSubgroupExtendedTypes.shaderSubgroupExtendedTypes == VK_TRUE) {
-                // Enable SubgroupsF16 feature if:
-                // 1. Subgroups feature is enabled, and
-                // 2. ShaderF16 feature is enabled, and
-                // 3. shaderSubgroupExtendedTypes is TRUE in
-                //    VkPhysicalDeviceShaderSubgroupExtendedTypesFeaturesKHR.
-                // TODO(crbug.com/380244620): Remove when 'subgroups_f16' has been fully deprecated.
-                EnableFeature(Feature::SubgroupsF16);
-                // If shader f16 is enable we only enable subgroups if we extended subgroup support.
-                // This means there is a vary narrow number of devices (~4%) will not get subgroup
-                // support due to the fact that they support shader f16 but not actually f16
-                // operations in subgroups.
-                EnableFeature(Feature::Subgroups);
-            }
-        } else {
-            // Subgroups without extended type support (f16).
-            EnableFeature(Feature::Subgroups);
-        }
+        EnableFeature(Feature::Subgroups);
     }
 
     // Enable subgroup matrix if both Cooperative Matrix and Vulkan Memory Model are supported.
