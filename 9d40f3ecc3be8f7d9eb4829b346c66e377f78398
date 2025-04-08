@@ -34,6 +34,24 @@
       "parentUuid": "82793c19_43720c47",
       "revId": "9d40f3ecc3be8f7d9eb4829b346c66e377f78398",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6faf2c68_b6d09600",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T13:47:19Z",
+      "side": 1,
+      "message": "Maybe we should skip setting labels if `label` is empty here? https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/UtilsVulkan.h;drc\u003d78883e6c824fd669688b9943096a7b01f87c1cb5;l\u003d156\n\nIt would only pay the cost for objects with labels, I\u0027m not sure. It\u0027s also not clear that we need to prefix just to say that the object comes from Dawn. IDK that there would be a lot of cases where we mix Dawn with other Vulkan.\n\nWDYT?",
+      "parentUuid": "7fa9f6ae_e2b8b90d",
+      "revId": "9d40f3ecc3be8f7d9eb4829b346c66e377f78398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
