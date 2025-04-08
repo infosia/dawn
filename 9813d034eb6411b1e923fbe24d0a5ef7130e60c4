@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d1c9ee3c_c07f91b6",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-08T20:20:04Z",
+      "side": 1,
+      "message": "Can we skip this check and just assign here? The checks below all check visibility before using.",
+      "range": {
+        "startLine": 312,
+        "startChar": 8,
+        "endLine": 312,
+        "endChar": 49
+      },
+      "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "26a478cc_6b74726a",
         "filename": "src/dawn/native/d3d11/PipelineLayoutD3D11.cpp",
         "patchSetId": 9
