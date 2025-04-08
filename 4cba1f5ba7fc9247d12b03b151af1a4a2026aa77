@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78e03d3c_395db2c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-08T18:38:08Z",
+      "side": 1,
+      "message": "Ancestor CL needs to be reverted",
+      "revId": "4cba1f5ba7fc9247d12b03b151af1a4a2026aa77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
