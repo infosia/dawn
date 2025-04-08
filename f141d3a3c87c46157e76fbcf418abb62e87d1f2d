@@ -52,6 +52,24 @@
       "parentUuid": "3c8f0747_8b2378d0",
       "revId": "f141d3a3c87c46157e76fbcf418abb62e87d1f2d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d48bd598_14950190",
+        "filename": "tools/src/cmd/cts/roll/roll.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-08T00:21:40Z",
+      "side": 1,
+      "message": "To be clear I\u0027m also fine with this CL as is - it _is_ extremely simple - so it\u0027s up to you if you want to keep it or go back to regex.",
+      "parentUuid": "a21c8b23_f744eb41",
+      "revId": "f141d3a3c87c46157e76fbcf418abb62e87d1f2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
