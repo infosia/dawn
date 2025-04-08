@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0c2797fe_0b253218",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 34
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-08T16:11:57Z",
+      "side": 1,
+      "message": "I am not sure, I will take look",
+      "parentUuid": "5d8c2df0_bb6ebfaf",
+      "revId": "613c2e847af7362417e79c0d518aa877f4726fbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a569f16d_0f1e465b",
         "filename": "src/cmake/DawnCompilerExtraFlags.cmake",
         "patchSetId": 34
@@ -48,6 +66,24 @@
       "writtenOn": "2025-04-08T16:01:58Z",
       "side": 1,
       "message": "Any chance to fold this in `common_compile_options`? It would avoid the need to remember calling a different function if we add a new target in the future.",
+      "revId": "613c2e847af7362417e79c0d518aa877f4726fbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35081aa6_2fb9fe4c",
+        "filename": "src/cmake/DawnCompilerExtraFlags.cmake",
+        "patchSetId": 34
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-08T16:11:57Z",
+      "side": 1,
+      "message": "Possibly, though I don\u0027t think we want to just turn this on everywhere, so I probably would want to do something in the target template where we know what the dependencies are, and if abseil is present to turn on the options. I will take a look.\n\n(I did it like this for Tint, but that was much simpler since we were already doing other things for \u0027if depends on abseil\u0027",
+      "parentUuid": "a569f16d_0f1e465b",
       "revId": "613c2e847af7362417e79c0d518aa877f4726fbc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
