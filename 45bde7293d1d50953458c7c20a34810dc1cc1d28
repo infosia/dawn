@@ -188,6 +188,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ef758ca_695952c0",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-08T23:51:32Z",
+      "side": 1,
+      "message": "Some updates:\n\nTried with Patch 20 (more reproducible). Looks like dawn or angle gets into a bad state after some whole shard runs. A backtrace of the out of memory is: https://paste.googleplex.com/5329631429001216#\n\nSome guesses and directions to try:\n\n- Is it because Cached device is used in end2end tests and initialize multiple tests? (seems no according to my step in to the Device::Initialize)\n- Is Ref\u003cBufferBase\u003e in device didn\u0027t release when device destroyed?\n- Is BufferGL or Angle gl buffer has a bug and goes into some bad state when glBufferBind etc?",
+      "parentUuid": "92b8182e_51351f28",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "23b72cc6_8160a116",
