@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d79ad2ef_88a10976",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 22
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-08T16:32:23Z",
+      "side": 1,
+      "message": "LGTM, hopefully the bots go green after the next CTS roll.",
+      "revId": "956b7b1e50ff60635827bb0a0fb102efb443225d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
