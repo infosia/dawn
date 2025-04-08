@@ -33,6 +33,24 @@
       "message": "LGTM, can we make sure to reenable them when we start using a newer WARP?",
       "revId": "247f4182a6d130ca5fb8c0b935a71438d60de747",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80a5f596_dd485c6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-08T14:01:54Z",
+      "side": 1,
+      "message": "100%, in fact take a look at the linked bug 😊",
+      "parentUuid": "98f85470_7ef9b172",
+      "revId": "247f4182a6d130ca5fb8c0b935a71438d60de747",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
