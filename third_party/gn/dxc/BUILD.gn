@@ -1457,6 +1457,7 @@ dxcompiler_sourceset("lib_dxilpixpasses") {
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilPIXMeshShaderOutputInstrumentation.cpp",
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilPIXPasses.cpp",
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilPIXVirtualRegisters.cpp",
+    "$dawn_dxc_dir/lib/DxilPIXPasses/DxilNonUniformResourceIndexInstrumentation.cpp",
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilReduceMSAAToSingleSample.cpp",
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilRemoveDiscards.cpp",
     "$dawn_dxc_dir/lib/DxilPIXPasses/DxilShaderAccessTracking.cpp",
