@@ -120,18 +120,6 @@ TEST_F(FeatureTests, AdapterWithRequiredFeatureDisabled) {
     }
 }
 
-// For a given feature, returns a set containing the feature and its depending features if any to
-// ensure creating device with these features can success
-std::unordered_set<wgpu::FeatureName> FeatureAndDependenciesSet(wgpu::FeatureName feature) {
-    switch (feature) {
-        case wgpu::FeatureName::SubgroupsF16:
-            return {wgpu::FeatureName::SubgroupsF16, wgpu::FeatureName::ShaderF16,
-                    wgpu::FeatureName::Subgroups};
-        default:
-            return {feature};
-    }
-}
-
 bool IsExperimental(wgpu::FeatureName feature) {
     return native::kFeatureNameAndInfoList[native::FromAPI(feature)].featureState ==
            native::FeatureInfo::FeatureState::Experimental;
@@ -148,19 +136,13 @@ TEST_F(FeatureTests, RequireAndGetEnabledFeatures) {
         native::Feature feature = static_cast<native::Feature>(i);
         wgpu::FeatureName featureName = ToAPI(feature);
 
-        std::unordered_set<wgpu::FeatureName> requiredFeaturesSet =
-            FeatureAndDependenciesSet(featureName);
+        std::unordered_set<wgpu::FeatureName> requiredFeaturesSet = {featureName};
         std::vector<wgpu::FeatureName> features(requiredFeaturesSet.cbegin(),
                                                 requiredFeaturesSet.cend());
-        bool requiredExperimentalFeature = false;
-        for (auto requiredFeature : features) {
-            requiredExperimentalFeature =
-                requiredExperimentalFeature || IsExperimental(requiredFeature);
-        }
 
         wgpu::DeviceDescriptor deviceDescriptor;
         deviceDescriptor.requiredFeatures = features.data();
-        deviceDescriptor.requiredFeatureCount = features.size();
+        deviceDescriptor.requiredFeatureCount = 1;
 
         // Helper to check the returned device has all required features
         auto ExpectDeviceHasRequiredFeatures =
@@ -189,7 +171,7 @@ TEST_F(FeatureTests, RequireAndGetEnabledFeatures) {
 
             // Creating a device with experimental feature requires the adapter enables
             // AllowUnsafeAPIs or disables DisallowUnsafeApis, otherwise expect validation error.
-            if (requiredExperimentalFeature) {
+            if (IsExperimental(featureName)) {
                 ASSERT_EQ(nullptr, deviceBase) << i;
             } else {
                 // Requiring stable features should succeed.
