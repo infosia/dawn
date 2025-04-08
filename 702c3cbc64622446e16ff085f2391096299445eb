@@ -88,6 +88,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6b99c5e5_1516ba76",
+        "filename": "src/dawn/native/Limits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-08T13:28:11Z",
+      "side": 1,
+      "message": "That\u0027s brilliant!",
+      "parentUuid": "43a7e0be_27b2049f",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29d33208_692dcbeb",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 4
@@ -116,6 +134,24 @@
       "writtenOn": "2025-04-08T11:50:07Z",
       "side": 1,
       "message": "This seems like it will upload push constants one by one, which defeats the purpose of the logic here. At this point I think I\u0027d rather focus on correctness and remove the range iteration (and upload one by one) while waiting for the bitset range iterator. This way we know the code is correct. Right now it\u0027s a bit insane.",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3142df7_3096495e",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-08T13:28:11Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll simplify things here to do uploading for each element and using another CL after bitsetrange iterator to do range uploading.",
+      "parentUuid": "e15a27d6_57aa865d",
       "revId": "702c3cbc64622446e16ff085f2391096299445eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
