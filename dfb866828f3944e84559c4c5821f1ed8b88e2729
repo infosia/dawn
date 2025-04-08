@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f683d77_f5355b61",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-08T19:15:49Z",
+      "side": 1,
+      "message": "I kind of just copied DawnCacheDeviceDescriptor, DawnTogglesDescriptor, etc naming here.",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68277b51_27130455",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-08T19:15:49Z",
+      "side": 1,
+      "message": "Should there be some validation is only provided for vulkan backend currently?",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fde521a_6abafa25",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-08T19:15:49Z",
+      "side": 1,
+      "message": "Should there be some validation in the vulkan backend for a minimum size? If so any input on a reasonable min size to use, eg. 32kb?",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
