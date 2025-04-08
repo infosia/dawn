@@ -16,6 +16,24 @@
       "message": "Can we add the failing bots to the try jobs?",
       "revId": "347b32e709576c2cdeb4c3d742ae2f3e9e55709c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "358fe5d6_b00fad4e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-08T19:32:02Z",
+      "side": 1,
+      "message": "I tried, some of them bounced due to not being able to apply the patch. That might be because the problematic roll hasn\u0027t landed. So it is trying to apply the patch to the DEPS in chromium on those bots, which doesn\u0027t ahve the CL that is failing to roll in it (by definition_",
+      "parentUuid": "7a75f093_0de0a3da",
+      "revId": "347b32e709576c2cdeb4c3d742ae2f3e9e55709c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
