@@ -27,6 +27,9 @@
 
 #include <array>
 #include <thread>
+#include <cstdio>
+using std::fprintf;
+using std::fflush;
 
 #include "dawn/utils/PlatformDebugLogger.h"
 

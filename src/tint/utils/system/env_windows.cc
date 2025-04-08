@@ -35,12 +35,20 @@
 namespace tint {
 
 std::string GetEnvVar(std::string_view name) {
-    // Use _dupenv_s to avoid unsafe warnings about std::getenv
+    // For mingw type compilers use regular std::getenv
+    // For others (mainly MSVC) use _dupenv_s to avoid unsafe warnings about std::getenv
     char* value = nullptr;
+    #ifdef __GNUC__
+    std::string name_nullterminated(name);
+    value = std::getenv(name_nullterminated.c_str());
+    #else
     _dupenv_s(&value, nullptr, name.data());
+    #endif
     if (value) {
         std::string result = value;
+        #ifndef __GNUC__ // Only free a char* obtained from _dupenv_s 
         free(value);
+        #endif
         return result;
     }
     return "";
