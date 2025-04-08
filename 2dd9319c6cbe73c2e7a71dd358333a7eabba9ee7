@@ -33,6 +33,24 @@
       "message": "optional nit: we could use numeric limits for this, or the D3D max constants.",
       "revId": "2dd9319c6cbe73c2e7a71dd358333a7eabba9ee7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1005518_d892e787",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-08T15:55:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9300420_9ba7fc11",
+      "revId": "2dd9319c6cbe73c2e7a71dd358333a7eabba9ee7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
