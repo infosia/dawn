@@ -114,6 +114,30 @@ TEST_F(DeviceCreationTest, CreateDeviceSuccess) {
     EXPECT_NE(device, nullptr);
 }
 
+// Test successful call to CreateDevice with allocator descriptor.
+TEST_F(DeviceCreationTest, CreateDeviceWithAllocatorSuccess) {
+    wgpu::DawnAllocatorDescriptor allocationDesc = {};
+    allocationDesc.allocatorHeapBlockSize = 4 * 1024;
+
+    wgpu::DeviceDescriptor desc = {};
+    desc.nextInChain = &allocationDesc;
+
+    wgpu::Device device = adapter.CreateDevice(&desc);
+    EXPECT_NE(device, nullptr);
+}
+
+// Test failed call to CreateDevice with allocator descriptor.
+TEST_F(DeviceCreationTest, CreateDeviceWithAllocatorFailed) {
+    wgpu::DawnAllocatorDescriptor allocationDesc = {};
+    allocationDesc.allocatorHeapBlockSize = 4 * 1024 + 1;
+
+    wgpu::DeviceDescriptor desc = {};
+    desc.nextInChain = &allocationDesc;
+
+    wgpu::Device device = adapter.CreateDevice(&desc);
+    EXPECT_EQ(device, nullptr);
+}
+
 // Test successful call to CreateDevice with toggle descriptor.
 TEST_F(DeviceCreationTest, CreateDeviceWithTogglesSuccess) {
     wgpu::DeviceDescriptor desc = {};

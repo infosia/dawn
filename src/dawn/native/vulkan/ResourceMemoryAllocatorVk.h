@@ -61,7 +61,7 @@ bool SupportsBufferMapExtendedUsages(const VulkanDeviceInfo& deviceInfo);
 
 class ResourceMemoryAllocator {
   public:
-    explicit ResourceMemoryAllocator(Device* device);
+    ResourceMemoryAllocator(Device* device, const DawnAllocatorDescriptor* descriptor);
     ~ResourceMemoryAllocator();
 
     ResultOrError<ResourceMemoryAllocation> Allocate(const VkMemoryRequirements& requirements,
@@ -88,6 +88,7 @@ class ResourceMemoryAllocator {
 
   private:
     raw_ptr<Device> mDevice;
+    const VkDeviceSize mMaxSizeForSuballocation;
 
     class SingleTypeAllocator;
     std::vector<std::unique_ptr<SingleTypeAllocator>> mAllocatorsPerType;
