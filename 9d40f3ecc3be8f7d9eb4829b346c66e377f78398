@@ -16,6 +16,24 @@
       "message": "Isn\u0027t this going to be skipped mostly with https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/UtilsVulkan.cpp;drc\u003d78883e6c824fd669688b9943096a7b01f87c1cb5;l\u003d243 ? which defaults to `IsBackendValidationEnabled`? I feel that I am missing something.",
       "revId": "9d40f3ecc3be8f7d9eb4829b346c66e377f78398",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fa9f6ae_e2b8b90d",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-08T13:24:39Z",
+      "side": 1,
+      "message": "egdaniel had asked for this in [this internal comment thread](https://docs.google.com/document/d/1MXjB6r7ng5hFaR9zvbT4wPFD5S7XR9kLts88YoreOFA/edit?resourcekey\u003d0--_ZyNahIW6-6tNpHVodUcA\u0026disco\u003dAAABepJmWiM). I\u0027m pretty indifferent about landing this but figured I would attempt it. I do agree it\u0027s a footgun that if you have backend labels enabled then dawn/vulkan will get measurably slower just because it\u0027s setting `Dawn_BindGroup` as the label for every BindGroup for no real reason.",
+      "parentUuid": "82793c19_43720c47",
+      "revId": "9d40f3ecc3be8f7d9eb4829b346c66e377f78398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
