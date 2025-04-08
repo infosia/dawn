@@ -106,6 +106,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9aae19f9_28f20cd9",
+        "filename": "src/dawn/native/Limits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-08T18:24:02Z",
+      "side": 1,
+      "message": "We already have something like this via `Unpack` and `UnpackedPtr`. I think the one issue atm with `UnpackedPtr` is that it doesn\u0027t make a copy of the underlying structs, and as a result probably can\u0027t be used as a drop in replacement for `CombinedLimits` yet.\n\nI\u0027ve been thinking about updating `UnpackedPtr` to actually make a copy of, and own all the structs it unpacks, but was worried that it would be too much copying, however, when I was doing the defaulting of stuff, I realized that we also have this `WithTrivialFrontendDefaults` helper that already has to make a copy of the structs, and was considering merging the two.\n\nI think that if I merge them, then `CombinedLimits` could just become an `UnpackedPtr\u003cLimits\u003e` (or equivalent in case I rename it when it copies), and we can just set the default in `dawn.json` which should in turn set the defaults.",
+      "parentUuid": "6b99c5e5_1516ba76",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29d33208_692dcbeb",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 4
