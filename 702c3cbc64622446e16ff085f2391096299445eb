@@ -16,6 +16,125 @@
       "message": "Bots are happy now. PTAL, thanks!",
       "revId": "702c3cbc64622446e16ff085f2391096299445eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fee6a556_c9c6d4f3",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T11:50:07Z",
+      "side": 1,
+      "message": "nit: commented out code?",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d7b4bc9_5f62bf6f",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T11:50:07Z",
+      "side": 1,
+      "message": "Can we use GetLimits here? `ValidateLimits` would need to be changed to take a `CombinedLimits`",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f1612d2_8a847749",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T11:50:07Z",
+      "side": 1,
+      "message": "Ditto both `ReifyDefaultLimits` and `GetDefaultLimits` should take `CombinedLimits`",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43a7e0be_27b2049f",
+        "filename": "src/dawn/native/Limits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T11:50:07Z",
+      "side": 1,
+      "message": "I feel that this could be improved a lot: Dawn doesn\u0027t want to care about `Limits` and chained descriptors at all and all these methods should work on `CombinedLimits` for simplicity. What we need though it is a single function `MaybeError UnpackLimitsIn(const Limits* limits, CombinedLimits* out);` that\u0027s used to validate the chained structs are the allowed one, and copies data in a `CombinedLimits`. This way internally all the code is consistent and doesn\u0027t need to care about the chain. (and doesn\u0027t need to care about what\u0027s allowed vs. not because that validation will have already been done).",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29d33208_692dcbeb",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T11:50:07Z",
+      "side": 1,
+      "message": "Can we use the bitset range iterator instead? This logic is growing to be quite complex and difficult to follow. We should split this to a different CL to avoid blocking the work on limits.",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e15a27d6_57aa865d",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T11:50:07Z",
+      "side": 1,
+      "message": "This seems like it will upload push constants one by one, which defeats the purpose of the logic here. At this point I think I\u0027d rather focus on correctness and remove the range iteration (and upload one by one) while waiting for the bitset range iterator. This way we know the code is correct. Right now it\u0027s a bit insane.",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7900ae5b_9604e3fa",
+        "filename": "src/dawn/tests/unittests/validation/DeviceValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T11:50:07Z",
+      "side": 1,
+      "message": "Didn\u0027t look at this yet.",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
