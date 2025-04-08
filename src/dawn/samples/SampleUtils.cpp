@@ -321,9 +321,14 @@ bool SampleBase::Setup() {
     // Configure the surface.
     wgpu::SurfaceCapabilities capabilities;
     surface.GetCapabilities(adapter, &capabilities);
+    if(capabilities.formatCount < 1 || capabilities.presentModeCount < 1){
+        dawn::ErrorLog() << "Failed to query sensible surface capabilities";
+        return false;
+    }
     wgpu::SurfaceConfiguration config = {};
     config.device = device;
     config.format = capabilities.formats[0];
+    config.presentMode = capabilities.presentModes[0];
     config.width = width;
     config.height = height;
     surface.Configure(&config);
