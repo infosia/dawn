@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b68f3aad_6eb593e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T14:06:38Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26a478cc_6b74726a",
+        "filename": "src/dawn/native/d3d11/PipelineLayoutD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T14:06:38Z",
+      "side": 1,
+      "message": "The usage of these lambdas makes the code mildly less clear imho, what about something like the following? (IIRC MatchVariant can return a value)\n\n```\n    // Before the loops\n    using CountIncreasingIndex(wgpu::ShaderStage visibility, PerStage\u003cuint32_t\u003e* counters) -\u003e PerStage\u003cuint32_t\u003e {\n        PerStage\u003cuint32_t\u003e nativeIndex(kInvalidSlot);\n        for (SingleShaderStage stage : IterateStages(visibility)) {\n             nativeIndex[stage] \u003d (*counters)[stage]++;\n        }\n        return nativeIndex\n    }\n    \n\n    mIndexToNativeMap[group][bindingIndex] \u003d MatchVariant(\n          bindingInfo.bindingLayout,\n                [\u0026](const BufferBindingInfo\u0026 layout) {\n                    switch (layout.type) {\n                        case wgpu::BufferBindingType::Uniform:\n                            return CountIncreasingIndex(visibility, \u0026constantBufferCounter);\n                        case wgpu::BufferBindingType::Storage:\n                        case kInternalStorageBufferBinding:\n                            mUAVBindGroups.set(group);\n                            return CountDecreasingIndex(\u0026uavBindingCounter);\n                        case wgpu::BufferBindingType::ReadOnlyStorage:\n                        case kInternalReadOnlyStorageBufferBinding:\n                            ...\n\n    )\n```",
+      "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfa46808_ed8addaf",
+        "filename": "src/dawn/native/d3d11/PipelineLayoutD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T14:06:38Z",
+      "side": 1,
+      "message": "This code is cold, so even if the compiler is not able to 100% optimize it out, I think `for (SingleShaderStage stage : IterateStages(kAllStages)) {ASSERT(constantBufferCounter[stage] \u003c\u003d kReservedConstantBufferSlot)}` is more readable and fine.",
+      "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28f69810_bbb92435",
+        "filename": "src/dawn/native/d3d11/PipelineLayoutD3D11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T14:06:38Z",
+      "side": 1,
+      "message": "to the index of the binding in the D3D11 SRV / UAV or CBV table. \"native\" is not very clear, maybe \"table index\"?",
+      "range": {
+        "startLine": 69,
+        "startChar": 62,
+        "endLine": 69,
+        "endChar": 77
+      },
+      "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "142fb49d_3a9b99df",
+        "filename": "src/dawn/native/d3d11/PipelineLayoutD3D11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T14:06:38Z",
+      "side": 1,
+      "message": "```suggestion\n    const BindingTableIndexMap\u0026 GetBindingTableIndexMap() const;\n```",
+      "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
