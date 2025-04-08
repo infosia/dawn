@@ -16,6 +16,23 @@
       "message": "This CL is required before we land the following one that adds dawn_end2end_tests against WARP: https://chromium-review.googlesource.com/c/chromium/tools/build/+/6438197",
       "revId": "247f4182a6d130ca5fb8c0b935a71438d60de747",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98f85470_7ef9b172",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T13:56:43Z",
+      "side": 1,
+      "message": "LGTM, can we make sure to reenable them when we start using a newer WARP?",
+      "revId": "247f4182a6d130ca5fb8c0b935a71438d60de747",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
