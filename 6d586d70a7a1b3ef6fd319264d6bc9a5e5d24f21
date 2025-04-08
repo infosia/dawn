@@ -50,6 +50,24 @@
       "message": "Could I be listed here so folks think to reach out to me as well for Vulkan things?",
       "revId": "6d586d70a7a1b3ef6fd319264d6bc9a5e5d24f21",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ba4df62_740da603",
+        "filename": "src/dawn/native/vulkan/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-08T04:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c610804_be026658",
+      "revId": "6d586d70a7a1b3ef6fd319264d6bc9a5e5d24f21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
