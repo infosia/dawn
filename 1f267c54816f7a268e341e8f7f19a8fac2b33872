@@ -16,6 +16,23 @@
       "message": "Ancestor CL needs to be reverted",
       "revId": "1f267c54816f7a268e341e8f7f19a8fac2b33872",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c38a0ec_f7c31039",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-08T20:53:50Z",
+      "side": 1,
+      "message": "Fix for the roll has landed, going to wait for that roll to go through before landing this, so there are not too many changes if a revert is needed.",
+      "revId": "1f267c54816f7a268e341e8f7f19a8fac2b33872",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
