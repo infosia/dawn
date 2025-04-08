@@ -33,6 +33,46 @@
       "message": "@cwallez@chromium.org PTAL, thanks.",
       "revId": "07624af9fc9cbd888c87112a03dd35f8b34e214a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48a518e4_4a564bf7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T12:25:58Z",
+      "side": 1,
+      "message": "LGTM too",
+      "revId": "07624af9fc9cbd888c87112a03dd35f8b34e214a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0340fd5f_556489e6",
+        "filename": "src/dawn/native/d3d11/TextureD3D11.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T12:25:58Z",
+      "side": 1,
+      "message": "Why this constant esp. since we are not doing anything related to planes. We could put 3 in this file directly I guess.",
+      "range": {
+        "startLine": 220,
+        "startChar": 42,
+        "endLine": 220,
+        "endChar": 61
+      },
+      "revId": "07624af9fc9cbd888c87112a03dd35f8b34e214a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
