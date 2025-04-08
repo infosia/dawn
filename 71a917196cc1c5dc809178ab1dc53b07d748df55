@@ -16,6 +16,24 @@
       "message": "Hi, I have a waiting-for-review CL https://dawn-review.googlesource.com/c/dawn/+/232375 to specifically make shader module backend compilation cache to use shader module hash instead of shader source. Please also take a look and maybe we could avoid duplicated effort, thanks!",
       "revId": "71a917196cc1c5dc809178ab1dc53b07d748df55",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f4bd88a_22f42b0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-08T13:50:34Z",
+      "side": 1,
+      "message": "Your approach looks better so I\u0027ll abandon this. You might want to steal take the std::array stream specialization I have here for fundemental types I have here to go with your stream implementation that can be used for non-fundemental types. memcpy should be faster and I\u0027d imagine that\u0027s why the C-array stream operator has both versions?",
+      "parentUuid": "c80ce78a_497aa1ad",
+      "revId": "71a917196cc1c5dc809178ab1dc53b07d748df55",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
