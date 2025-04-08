@@ -52,6 +52,24 @@
       "parentUuid": "7fa9f6ae_e2b8b90d",
       "revId": "9d40f3ecc3be8f7d9eb4829b346c66e377f78398",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee8f318f_682487ff",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-08T19:19:04Z",
+      "side": 1,
+      "message": "\u003e Maybe we should skip setting labels if label is empty here?\n\nWhat if a user sets a label on an object to something non-empty and then later set the label back to empty? Setting the label back to empty will be skipped and that\u0027s potentially confusing.\n\nI\u0027m equally happy to abandon this CL FWIW. I don\u0027t think what the code now is doing is wrong it\u0027s just a bit unexpected.",
+      "parentUuid": "6faf2c68_b6d09600",
+      "revId": "9d40f3ecc3be8f7d9eb4829b346c66e377f78398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
