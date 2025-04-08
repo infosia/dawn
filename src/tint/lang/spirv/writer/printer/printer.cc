@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/spirv/writer/printer/printer.h"
 
+#include <deque>
 #include <string>
 #include <utility>
 
@@ -203,7 +204,6 @@ class Printer {
         BinaryWriter writer;
         writer.WriteHeader(module_.IdBound(), kWriterVersion);
         writer.WriteModule(module_);
-
         output_.spirv = std::move(writer.Result());
         return output_;
     }
@@ -216,6 +216,13 @@ class Printer {
     BinaryWriter writer_;
 
     Output output_;
+
+    struct BlockInfo {
+        size_t idx;
+        core::ir::Block* block;
+        bool is_function_start;
+    };
+    std::deque<BlockInfo> blocks_to_emit_;
 
     /// A function type used for an OpTypeFunction declaration.
     struct FunctionType {
@@ -267,18 +274,6 @@ class Printer {
 
     /// The current function that is being emitted.
     Function current_function_;
-
-    /// The merge block for the current if statement
-    uint32_t if_merge_label_ = 0;
-
-    /// The header block for the current loop statement
-    uint32_t loop_header_label_ = 0;
-
-    /// The merge block for the current loop statement
-    uint32_t loop_merge_label_ = 0;
-
-    /// The merge block for the current switch statement
-    uint32_t switch_merge_label_ = 0;
 
     bool zero_init_workgroup_memory_ = false;
 
@@ -509,9 +504,7 @@ class Printer {
                 [&](const core::type::U32*) {
                     module_.PushType(spv::Op::OpTypeInt, {id, 32u, 0u});
                 },
-                [&](const core::type::F32*) {
-                    module_.PushType(spv::Op::OpTypeFloat, {id, 32u});
-                },
+                [&](const core::type::F32*) { module_.PushType(spv::Op::OpTypeFloat, {id, 32u}); },
                 [&](const core::type::F16*) {
                     module_.PushCapability(SpvCapabilityFloat16);
                     module_.PushCapability(SpvCapabilityUniformAndStorageBuffer16BitAccess);
@@ -742,7 +735,14 @@ class Printer {
         TINT_DEFER(current_function_ = Function());
 
         // Emit the body of the function.
-        EmitBlock(func->Block());
+        blocks_to_emit_.push_back({current_function_.CurrentBlockIndex(), func->Block(), true});
+
+        while (!blocks_to_emit_.empty()) {
+            auto blk = blocks_to_emit_.front();
+            blocks_to_emit_.pop_front();
+
+            EmitBlockInternal(blk.idx, blk.block, blk.is_function_start);
+        }
 
         // Add the function to the module.
         module_.PushFunction(current_function_);
@@ -853,12 +853,6 @@ class Printer {
     /// Emit a block, including the initial OpLabel, OpPhis and instructions.
     /// @param block the block to emit
     void EmitBlock(core::ir::Block* block) {
-        // Emit the label.
-        // Skip if this is the function's entry block, as it will be emitted by the function object.
-        if (!current_function_.Instructions().empty()) {
-            current_function_.PushInst(spv::Op::OpLabel, {Label(block)});
-        }
-
         // If there are no instructions in the block, it's a dead end, so we shouldn't be able to
         // get here to begin with.
         if (block->IsEmpty()) {
@@ -870,6 +864,24 @@ class Printer {
             return;
         }
 
+        auto idx = current_function_.CurrentBlockIndex();
+        current_function_.AppendBlock();
+
+        blocks_to_emit_.push_back({current_function_.CurrentBlockIndex(), block, false});
+        current_function_.SetCurrentBlockIndex(idx);
+    }
+
+    void EmitBlockInternal(size_t idx, core::ir::Block* block, bool is_function_start) {
+        auto prev_idx = current_function_.CurrentBlockIndex();
+        current_function_.SetCurrentBlockIndex(idx);
+
+        // Emit the label.
+        // Skip if this is the function's entry block, as it will be emitted by the function object.
+        if (!is_function_start) {
+            uint32_t l = Label(block);
+            current_function_.PushInst(spv::Op::OpLabel, {l});
+        }
+
         if (auto* mib = block->As<core::ir::MultiInBlock>()) {
             // Emit all OpPhi nodes for incoming branches to block.
             EmitIncomingPhis(mib);
@@ -877,6 +889,8 @@ class Printer {
 
         // Emit the block's statements.
         EmitBlockInstructions(block);
+
+        current_function_.SetCurrentBlockIndex(prev_idx);
     }
 
     /// Emit all OpPhi nodes for incoming branches to @p block.
@@ -967,24 +981,24 @@ class Printer {
                 current_function_.PushInst(spv::Op::OpBranchConditional,
                                            {
                                                Value(breakif->Condition()),
-                                               loop_merge_label_,
-                                               loop_header_label_,
+                                               GetMergeLabel(breakif->Loop()),
+                                               Label(breakif->Loop()->Block()),
                                            });
             },
             [&](core::ir::Continue* cont) {
                 current_function_.PushInst(spv::Op::OpBranch, {Label(cont->Loop()->Continuing())});
             },
-            [&](core::ir::ExitIf*) {
-                current_function_.PushInst(spv::Op::OpBranch, {if_merge_label_});
+            [&](core::ir::ExitIf* i) {
+                current_function_.PushInst(spv::Op::OpBranch, {GetMergeLabel(i->If())});
             },
-            [&](core::ir::ExitLoop*) {
-                current_function_.PushInst(spv::Op::OpBranch, {loop_merge_label_});
+            [&](core::ir::ExitLoop* l) {
+                current_function_.PushInst(spv::Op::OpBranch, {GetMergeLabel(l->Loop())});
             },
-            [&](core::ir::ExitSwitch*) {
-                current_function_.PushInst(spv::Op::OpBranch, {switch_merge_label_});
+            [&](core::ir::ExitSwitch* s) {
+                current_function_.PushInst(spv::Op::OpBranch, {GetMergeLabel(s->Switch())});
             },
-            [&](core::ir::NextIteration*) {
-                current_function_.PushInst(spv::Op::OpBranch, {loop_header_label_});
+            [&](core::ir::NextIteration* l) {
+                current_function_.PushInst(spv::Op::OpBranch, {Label(l->Loop()->Block())});
             },
             [&](core::ir::TerminateInvocation*) {
                 current_function_.PushInst(spv::Op::OpKill, {});
@@ -1007,7 +1021,6 @@ class Printer {
         // 3. the if returns a value
         // Otherwise we skip them and branch straight to the merge block.
         uint32_t merge_label = GetMergeLabel(i);
-        TINT_SCOPED_ASSIGNMENT(if_merge_label_, merge_label);
 
         uint32_t true_label = merge_label;
         uint32_t false_label = merge_label;
@@ -2260,10 +2273,7 @@ class Printer {
         auto continuing_label = Label(loop->Continuing());
 
         auto header_label = module_.NextId();
-        TINT_SCOPED_ASSIGNMENT(loop_header_label_, header_label);
-
         auto merge_label = GetMergeLabel(loop);
-        TINT_SCOPED_ASSIGNMENT(loop_merge_label_, merge_label);
 
         if (init_label != 0) {
             // Emit the loop initializer.
@@ -2330,7 +2340,6 @@ class Printer {
         }
 
         uint32_t merge_label = GetMergeLabel(swtch);
-        TINT_SCOPED_ASSIGNMENT(switch_merge_label_, merge_label);
 
         // Emit the OpSelectionMerge and OpSwitch instructions.
         current_function_.PushInst(spv::Op::OpSelectionMerge,

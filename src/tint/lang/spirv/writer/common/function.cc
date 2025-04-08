@@ -34,7 +34,9 @@ Function::Function() : declaration_(Instruction{spv::Op::OpNop, {}}), label_op_(
 Function::Function(const Instruction& declaration,
                    const Operand& label_op,
                    const InstructionList& params)
-    : declaration_(declaration), label_op_(label_op), params_(params) {}
+    : declaration_(declaration), label_op_(label_op), params_(params) {
+    blocks_.push_back({});
+}
 
 Function::Function(const Function& other) = default;
 
@@ -54,8 +56,10 @@ void Function::Iterate(std::function<void(const Instruction&)> cb) const {
     for (const auto& var : vars_) {
         cb(var);
     }
-    for (const auto& inst : instructions_) {
-        cb(inst);
+    for (const auto& blk : blocks_) {
+        for (const auto& inst : blk) {
+            cb(inst);
+        }
     }
 
     cb(Instruction{spv::Op::OpFunctionEnd, {}});
