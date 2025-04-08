@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27cb737e_41f56d12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-08T13:01:59Z",
+      "side": 1,
+      "message": "General approach looks great! Deferring to Loko and Kai\n\nAre unittests of WaitListEvent itself doable?",
+      "revId": "0857d14b9eca9426cdce7b43da8d4a21da156e2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
