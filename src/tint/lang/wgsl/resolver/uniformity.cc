@@ -1734,7 +1734,9 @@ class UniformityGraph {
                     if (severity != wgsl::DiagnosticSeverity::kOff) {
                         callsite_tag = {CallSiteTag::CallSiteRequiredToBeUniform, severity};
                     }
-                    function_tag = ReturnValueMayBeNonUniform;
+                    if (builtin->Fn() == wgsl::BuiltinFn::kSubgroupMatrixLoad) {
+                        function_tag = ReturnValueMayBeNonUniform;
+                    }
                 }
             },
             [&](const sem::Function* func) {
