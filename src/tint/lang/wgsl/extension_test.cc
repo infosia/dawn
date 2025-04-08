@@ -69,7 +69,6 @@ static constexpr Case kValidCases[] = {
     {"dual_source_blending", Extension::kDualSourceBlending},
     {"f16", Extension::kF16},
     {"subgroups", Extension::kSubgroups},
-    {"subgroups_f16", Extension::kSubgroupsF16},
 };
 
 static constexpr Case kInvalidCases[] = {
