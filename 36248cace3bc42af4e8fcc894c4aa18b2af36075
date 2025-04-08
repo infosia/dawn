@@ -1,0 +1,172 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11926699_2be9bc5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-08T20:39:01Z",
+      "side": 1,
+      "message": "Nice! This connects it all :)",
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d650a06_5879fe1f",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-08T20:39:01Z",
+      "side": 1,
+      "message": "Why do we need this separator?",
+      "range": {
+        "startLine": 1529,
+        "startChar": 4,
+        "endLine": 1529,
+        "endChar": 72
+      },
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94cb8e11_aeec06f7",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-08T20:39:01Z",
+      "side": 1,
+      "message": "I think this warrants another templated helper function that takes a data by const ref. Probably with that check that the type is std::is_trivial.",
+      "range": {
+        "startLine": 1530,
+        "startChar": 0,
+        "endLine": 1538,
+        "endChar": 98
+      },
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48dae284_830ae4a7",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-08T20:39:01Z",
+      "side": 1,
+      "message": "Let\u0027s add an assert that the hashes also match to help verify the hashing.\n\n```\nbool membersEq \u003d a-\u003emType \u003d\u003d b-\u003emType \u0026\u0026 ...\nDAWN_ASSERT(membersEq \u003d\u003d (a-\u003emHash \u003d\u003d b-\u003emHash));\nreturn membersEq;\n```\n\nI\u0027m hesitant to just compare the hashes but I should probably just trust the crypto.",
+      "range": {
+        "startLine": 1604,
+        "startChar": 0,
+        "endLine": 1605,
+        "endChar": 44
+      },
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "747c82de_8b15bf66",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-08T20:39:01Z",
+      "side": 1,
+      "message": "array here?",
+      "range": {
+        "startLine": 319,
+        "startChar": 49,
+        "endLine": 319,
+        "endChar": 55
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "3f955f61_93e70105",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/stream/Stream.h",
+              "range": {
+                "startLine": 319,
+                "startChar": 0,
+                "endLine": 320,
+                "endChar": 0
+              },
+              "replacement": "        using SizeT \u003d decltype(std::declval\u003cstd::array\u003cT, Size\u003e\u003e().size());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5301e605_051795dd",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-08T20:39:01Z",
+      "side": 1,
+      "message": "nit: readSize so we\u0027re not comparing two variables with only differing capitalization.",
+      "range": {
+        "startLine": 320,
+        "startChar": 14,
+        "endLine": 320,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "dace1b5b_79771b32",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/stream/Stream.h",
+              "range": {
+                "startLine": 320,
+                "startChar": 0,
+                "endLine": 324,
+                "endChar": 0
+              },
+              "replacement": "        SizeT readSize;\n        DAWN_TRY(StreamOut(s, \u0026readSize));\n        DAWN_INVALID_IF(readSize !\u003d Size, \"Expect a std::array of size %zu, got %zu\",\n                        static_cast\u003csize_t\u003e(Size), static_cast\u003csize_t\u003e(readSize));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
