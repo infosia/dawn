@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b6826845_44545980",
+        "filename": "src/tint/utils/command/command_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-09T17:29:41Z",
+      "side": 0,
+      "message": "Basically, there\u0027s nothing wrong with using a C-style array, as long as we use standard functions to interact with it. There\u0027s also nothing wrong with using `std::array`, of course.",
+      "range": {
+        "startLine": 245,
+        "startChar": 12,
+        "endLine": 245,
+        "endChar": 26
+      },
+      "revId": "310d213777c86beedce8d37cb1f52123510d28f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "09a31fd2_3239521f",
         "filename": "src/tint/utils/command/command_posix.cc",
         "patchSetId": 1
