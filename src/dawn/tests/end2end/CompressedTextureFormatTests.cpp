@@ -861,9 +861,6 @@ TEST_P(CompressedTextureFormatTest, CopyIntoNonZeroArrayLayer) {
 TEST_P(CompressedTextureFormatTest, CopyBufferIntoNonZeroMipmapLevel) {
     DAWN_TEST_UNSUPPORTED_IF(!IsFormatSupported());
 
-    // TODO(crbug.com/dawn/0000): diagnose this failure on QualComm OpenGL ES.
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsOpenGLES() && IsQualcomm());
-
     CopyConfig config = GetDefaultFullConfig();
     // The virtual size of the texture at mipmap level == 2 is not a multiple of the texel
     // dimensions so paddings are required in the copies.
@@ -1224,9 +1221,6 @@ TEST_P(CompressedTextureFormatTest, LargeImageHeight) {
 TEST_P(CompressedTextureFormatTest, LargeImageHeightAndClampedCopyExtent) {
     DAWN_TEST_UNSUPPORTED_IF(!IsFormatSupported());
 
-    // TODO(crbug.com/dawn/0000): diagnose this failure on QualComm OpenGL ES.
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsOpenGLES() && IsQualcomm());
-
     CopyConfig config = GetDefaultFullConfig();
 
     // The virtual size of the texture at mipmap level == 2 is not a multiple of the texel
@@ -1448,9 +1442,6 @@ TEST_P(CompressedTextureWriteTextureTest,
 
     // TODO(crbug.com/dawn/976): Failing on Linux Intel OpenGL drivers.
     DAWN_SUPPRESS_TEST_IF(IsIntel() && IsOpenGL() && IsLinux());
-
-    // TODO(crbug.com/dawn/0000): diagnose this failure on QualComm OpenGL ES.
-    DAWN_SUPPRESS_TEST_IF(IsAndroid() && IsOpenGLES() && IsQualcomm());
 
     // TODO(https://issues.chromium.org/issues/41479545): Triggers some VVL sync error on the
     // textures used as an attachment when verifying the contents of the compressed texture.
