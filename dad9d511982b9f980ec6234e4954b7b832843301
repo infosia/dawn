@@ -39,6 +39,30 @@
       },
       "revId": "dad9d511982b9f980ec6234e4954b7b832843301",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d199bf5_42cfccfe",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-09T13:18:26Z",
+      "side": 1,
+      "message": "We do the same for other resources. It\u0027s just I don\u0027t feel the need for repeating the same comment for them. Should we remove this?",
+      "parentUuid": "f25d502c_532e98ad",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 63
+      },
+      "revId": "dad9d511982b9f980ec6234e4954b7b832843301",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
