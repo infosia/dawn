@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a8cbc51_3c1b3b20",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-09T08:45:37Z",
+      "side": 1,
+      "message": "Debug legacy. Revert the change.",
+      "parentUuid": "fee6a556_c9c6d4f3",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d7b4bc9_5f62bf6f",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76536c13_d7734401",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-09T08:45:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d7b4bc9_5f62bf6f",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6f1612d2_8a847749",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-04-08T11:50:07Z",
       "side": 1,
       "message": "Ditto both `ReifyDefaultLimits` and `GetDefaultLimits` should take `CombinedLimits`",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63fdcbd6_00ad78bc",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-09T08:45:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f1612d2_8a847749",
       "revId": "702c3cbc64622446e16ff085f2391096299445eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -157,6 +211,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1ead446_58899353",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-09T08:45:37Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "29d33208_692dcbeb",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e15a27d6_57aa865d",
@@ -188,6 +260,24 @@
       "side": 1,
       "message": "Ok, I\u0027ll simplify things here to do uploading for each element and using another CL after bitsetrange iterator to do range uploading.",
       "parentUuid": "e15a27d6_57aa865d",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9162a230_82dd5ab1",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-09T08:45:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3142df7_3096495e",
       "revId": "702c3cbc64622446e16ff085f2391096299445eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
