@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06def970_11bfd18f",
+        "filename": "src/tint/utils/strconv/parse_num.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-09T17:47:23Z",
+      "side": 1,
+      "message": "Unfortunately, `from_chars` doesn\u0027t work with iterators. It also seems like what the old code did is the expected way to pass in the values, see the example from https://en.cppreference.com/w/cpp/utility/from_chars.\n\nI don\u0027t think there\u0027s another way to pass in the \"one past the last character\" pointer for the second parameter. You can\u0027t do `\u0026number[number.size()]` as that\u0027s UB for indexing out of bounds.",
+      "range": {
+        "startLine": 42,
+        "startChar": 39,
+        "endLine": 42,
+        "endChar": 67
+      },
+      "revId": "7daa7c15f0ddaaef5d9dbf3076eb696be2e0964b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
