@@ -16,6 +16,24 @@
       "message": "I\u0027m not sure why it fails on Android only...",
       "revId": "8a21006f846226a7167c569a785d4d768d34da2b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b93bcd59_4ccf5f80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-09T22:31:22Z",
+      "side": 1,
+      "message": "Seems like that test is asserting that requestAdapter(core) works, but running on compat-only bots where it\u0027s not supposed to work. They shouldn\u0027t pass.\n\nPretty sure the reason they worked before this change is because the test is not setting `compatibilityMode` so it was inheriting it from `setDefaultRequestAdapterOptions`. Now, the test\u0027s `featureLevel` is overriding one we set as default.\n\nAnyway, that means the problem is independent, I\u0027m just going to suppress those tests.",
+      "parentUuid": "b5e85272_5c515e17",
+      "revId": "8a21006f846226a7167c569a785d4d768d34da2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
