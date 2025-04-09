@@ -206,6 +206,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "23aa3609_fbe10dd2",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:52:19Z",
+      "side": 1,
+      "message": "Could it be that somehow we never call gl.DestroyBuffer on the underlying GL buffers because of the way device destruction works?",
+      "parentUuid": "5ef758ca_695952c0",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "23b72cc6_8160a116",
