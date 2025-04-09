@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c3d0876_4f73ed2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:10:39Z",
+      "side": 1,
+      "message": "Still LGTM. David PTAL the Tint part.",
+      "revId": "75e4267ea72d8c85a93e96586c2e0be8abc6afc2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fbffc84_ff9774d1",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:10:39Z",
+      "side": 1,
+      "message": "```suggestion\n    const bool hasRequiredF16Support \u003d\n        !shaderF16Enabled || (mDeviceInfo.shaderSubgroupExtendedTypes.shaderSubgroupExtendedTypes \u003d\u003d VK_TRUE);\n```",
+      "range": {
+        "startLine": 430,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 89
+      },
+      "revId": "75e4267ea72d8c85a93e96586c2e0be8abc6afc2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
