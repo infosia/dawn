@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09a31fd2_3239521f",
+        "filename": "src/tint/utils/command/command_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-09T17:27:38Z",
+      "side": 0,
+      "message": "This can also be fixed using `std::size(buf)`",
+      "range": {
+        "startLine": 247,
+        "startChar": 53,
+        "endLine": 247,
+        "endChar": 64
+      },
+      "revId": "310d213777c86beedce8d37cb1f52123510d28f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6af415f_c1f42700",
+        "filename": "src/tint/utils/command/command_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-09T17:27:38Z",
+      "side": 0,
+      "message": "And here: `std::begin(buf), std::end(buf)`",
+      "range": {
+        "startLine": 249,
+        "startChar": 46,
+        "endLine": 249,
+        "endChar": 58
+      },
+      "revId": "310d213777c86beedce8d37cb1f52123510d28f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
