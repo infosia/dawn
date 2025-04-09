@@ -29,6 +29,7 @@
 
 #include "src/tint/utils/system/executable_path.h"
 
+#define NOMINMAX
 #include <Windows.h>
 #include <filesystem>
 
