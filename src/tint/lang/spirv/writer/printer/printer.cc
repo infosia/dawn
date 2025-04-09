@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/spirv/writer/printer/printer.h"
 
+#include <deque>
 #include <string>
 #include <utility>
 
@@ -272,6 +273,26 @@ class Printer {
     Function current_function_;
 
     bool zero_init_workgroup_memory_ = false;
+
+    struct BlockInfo {
+        size_t idx;
+        core::ir::Block* block;
+        bool skip_phi = false;
+    };
+    struct MergeInfo {
+        std::deque<BlockInfo> blocks;
+
+        uint32_t label;
+        core::ir::ControlInstruction* ctrl;
+        core::ir::Block* block;
+        core::ir::Instruction* instruction;
+        bool is_root = false;
+    };
+    std::vector<MergeInfo> merge_points_;
+
+    /// The instruction being emitted
+    core::ir::Instruction* current_instruction_ = nullptr;
+    bool stop_walking_ = false;
 
     /// Builds the SPIR-V from the IR
     Result<SuccessType> Generate() {
@@ -732,7 +753,39 @@ class Printer {
 
         // Emit the body of the function.
         auto idx = current_function_.AppendBlock();
-        EmitBlockInternal(idx, func->Block());
+        merge_points_.push_back(MergeInfo{{}, 0, nullptr, nullptr, nullptr, true});
+        merge_points_.back().blocks.push_back(BlockInfo{idx, func->Block()});
+
+        while (!merge_points_.empty()) {
+            auto& merge_blk = merge_points_.back();
+            if (merge_blk.blocks.empty()) {
+                merge_points_.pop_back();
+
+                if (merge_blk.is_root) {
+                    break;
+                }
+
+                // Emit the merge block.
+                auto blk_id = NewBlock(merge_blk.label);
+
+                // Emit the OpPhis for the control instruction
+                if (merge_blk.ctrl) {
+                    EmitExitPhis(merge_blk.ctrl);
+                }
+                if (merge_blk.block) {
+                    EmitBlockInternal(blk_id, merge_blk.block, false);
+                } else {
+                    EmitInstructions(merge_blk.instruction);
+                }
+                continue;
+            }
+
+            auto blk = merge_blk.blocks.front();
+            merge_blk.blocks.pop_front();
+
+            EmitBlockInternal(blk.idx, blk.block, blk.skip_phi);
+        }
+        TINT_ASSERT(merge_points_.empty());
 
         // Add the function to the module.
         module_.PushFunction(current_function_);
@@ -843,39 +896,30 @@ class Printer {
     size_t NewBlock(uint32_t id) {
         auto idx = current_function_.AppendBlock();
         current_function_.SetCurrentBlockIndex(idx);
+
         current_function_.PushInst(spv::Op::OpLabel, {id});
         return idx;
     }
 
-    /// Emit a block, including the initial OpLabel, OpPhis and instructions.
-    /// @param block the block to emit
-    void EmitBlock(core::ir::Block* block) {
-        auto idx = NewBlock(Label(block));
+    void EmitBlockInternal(size_t idx, core::ir::Block* block, bool skip_phi) {
+        current_function_.SetCurrentBlockIndex(idx);
 
-        if (!block->IsEmpty()) {
-            EmitBlockInternal(idx, block);
-            return;
+        if (!skip_phi) {
+            if (auto* mib = block->As<core::ir::MultiInBlock>()) {
+                // Emit all OpPhi nodes for incoming branches to block.
+                EmitIncomingPhis(mib);
+            }
         }
 
         // If there are no instructions in the block, it's a dead end, so we shouldn't be able to
         // get here to begin with.
-        if (!block->Parent()->Results().IsEmpty()) {
-            current_function_.PushInst(spv::Op::OpBranch, {GetMergeLabel(block->Parent())});
-        } else {
+        if (block->IsEmpty()) {
             current_function_.PushInst(spv::Op::OpUnreachable, {});
-        }
-    }
-
-    void EmitBlockInternal(size_t idx, core::ir::Block* block) {
-        current_function_.SetCurrentBlockIndex(idx);
-
-        if (auto* mib = block->As<core::ir::MultiInBlock>()) {
-            // Emit all OpPhi nodes for incoming branches to block.
-            EmitIncomingPhis(mib);
+            return;
         }
 
         // Emit the block's statements.
-        EmitBlockInstructions(block);
+        EmitInstructions(block->Instructions());
     }
 
     /// Emit all OpPhi nodes for incoming branches to @p block.
@@ -891,18 +935,21 @@ class Printer {
                 ops.push_back(Value(arg));
                 ops.push_back(GetTerminatorBlockLabel(incoming));
             }
-
             current_function_.PushInst(spv::Op::OpPhi, std::move(ops));
         }
     }
 
     /// Emit all instructions of @p block.
-    /// @param block the block's instructions to emit
-    void EmitBlockInstructions(core::ir::Block* block) {
-        TINT_ASSERT(!block->IsEmpty());
-        for (auto* inst : *block) {
+    /// @param inst the starting instruction, if nullptr uses the first block
+    /// instruction
+    void EmitInstructions(core::ir::Instruction* inst) {
+        stop_walking_ = false;
+
+        current_instruction_ = inst;
+
+        while (current_instruction_ != nullptr) {
             Switch(
-                inst,                                                                 //
+                current_instruction_,                                                 //
                 [&](core::ir::Access* a) { EmitAccess(a); },                          //
                 [&](core::ir::Bitcast* b) { EmitBitcast(b); },                        //
                 [&](core::ir::CoreBinary* b) { EmitBinary(b); },                      //
@@ -927,9 +974,16 @@ class Printer {
                 TINT_ICE_ON_NO_MATCH);
 
             // Set the name for the SPIR-V result ID if provided in the module.
-            if (inst->Results().Length() == 1u && !inst->Is<core::ir::Var>()) {
-                PushName(Value(inst), inst);
+            if (current_instruction_->Results().Length() == 1u &&
+                !current_instruction_->Is<core::ir::Var>()) {
+                PushName(Value(current_instruction_), current_instruction_);
             }
+
+            if (stop_walking_) {
+                break;
+            }
+
+            current_instruction_ = current_instruction_->next;
         }
     }
 
@@ -1033,18 +1087,23 @@ class Printer {
         current_function_.PushInst(spv::Op::OpBranchConditional,
                                    {Value(i->Condition()), true_label, false_label});
 
+        merge_points_.push_back({});
+        auto& merge_pt = merge_points_.back();
+
         // Emit the `true` and `false` blocks, if they're not being skipped.
         if (true_label != merge_label) {
-            EmitBlock(true_block);
+            auto true_idx = NewBlock(true_label);
+            merge_pt.blocks.push_back({true_idx, true_block});
         }
         if (false_label != merge_label) {
-            EmitBlock(false_block);
+            auto false_idx = NewBlock(false_label);
+            merge_pt.blocks.push_back({false_idx, false_block});
         }
 
-        NewBlock(merge_label);
-
-        // Emit the OpPhis for the ExitIfs
-        EmitExitPhis(i);
+        merge_pt.label = merge_label;
+        merge_pt.ctrl = i;
+        merge_pt.instruction = current_instruction_->next;
+        stop_walking_ = true;
     }
 
     /// Emit an access instruction
@@ -2259,10 +2318,21 @@ class Printer {
         auto header_label = GetLoopHeaderLabel(loop);
         auto merge_label = GetMergeLabel(loop);
 
+        // Reserve space to keep the location of the merge_pt stable.
+        merge_points_.reserve(merge_points_.size() + 2);
+
+        merge_points_.push_back({});
+        auto& merge_pt = merge_points_.back();
+
+        merge_points_.push_back({});
+        auto& continue_pt = merge_points_.back();
+
         if (init_label != 0) {
             // Emit the loop initializer.
             current_function_.PushInst(spv::Op::OpBranch, {init_label});
-            EmitBlock(loop->Initializer());
+
+            auto init_blk = NewBlock(Label(loop->Initializer()));
+            continue_pt.blocks.push_back({init_blk, loop->Initializer()});
         } else {
             // No initializer. Branch to body.
             current_function_.PushInst(spv::Op::OpBranch, {header_label});
@@ -2270,30 +2340,23 @@ class Printer {
 
         // Emit the loop body header, which contains the OpLoopMerge and OpPhis.
         // This then unconditionally branches to body_label
-        [[maybe_unused]] auto header_idx = NewBlock(header_label);
+        NewBlock(header_label);
         EmitIncomingPhis(loop->Body());
         current_function_.PushInst(spv::Op::OpLoopMerge, {merge_label, continuing_label,
                                                           U32Operand(SpvLoopControlMaskNone)});
         current_function_.PushInst(spv::Op::OpBranch, {body_label});
 
         // Emit the loop body
-        [[maybe_unused]] auto body_blk = NewBlock(body_label);
-        EmitBlockInstructions(loop->Body());
+        auto body_idx = NewBlock(body_label);
+        continue_pt.blocks.push_back({body_idx, loop->Body(), true});
 
-        // Emit the loop continuing block.
-        if (loop->Continuing()->Terminator()) {
-            EmitBlock(loop->Continuing());
-        } else {
-            // We still need to emit a continuing block with a back-edge, even if it is unreachable.
-            [[maybe_unused]] auto continuing_blk = NewBlock(continuing_label);
-            current_function_.PushInst(spv::Op::OpBranch, {header_label});
-        }
+        continue_pt.label = continuing_label;
+        continue_pt.block = loop->Continuing();
 
-        // Emit the loop merge block.
-        [[maybe_unused]] auto merge_blk = NewBlock(merge_label);
-
-        // Emit the OpPhis for the ExitLoops
-        EmitExitPhis(loop);
+        merge_pt.label = merge_label;
+        merge_pt.ctrl = loop;
+        merge_pt.instruction = current_instruction_->next;
+        stop_walking_ = true;
     }
 
     /// Emit a switch instruction.
@@ -2324,6 +2387,8 @@ class Printer {
         }
 
         uint32_t merge_label = GetMergeLabel(swtch);
+        merge_points_.push_back({});
+        auto& merge_pt = merge_points_.back();
 
         // Emit the OpSelectionMerge and OpSwitch instructions.
         current_function_.PushInst(spv::Op::OpSelectionMerge,
@@ -2332,14 +2397,14 @@ class Printer {
 
         // Emit the cases.
         for (auto& c : swtch->Cases()) {
-            EmitBlock(c.block);
+            auto case_idx = NewBlock(Label(c.block));
+            merge_pt.blocks.push_back({case_idx, c.block});
         }
 
-        // Emit the switch merge block.
-        [[maybe_unused]] auto merge_blk = NewBlock(merge_label);
-
-        // Emit the OpPhis for the ExitSwitches
-        EmitExitPhis(swtch);
+        merge_pt.label = merge_label;
+        merge_pt.ctrl = swtch;
+        merge_pt.instruction = current_instruction_->next;
+        stop_walking_ = true;
     }
 
     /// Emit a swizzle instruction.
@@ -2612,8 +2677,8 @@ class Printer {
             core::ir::Value* value = nullptr;
             bool operator<(const Branch& other) const { return label < other.label; }
         };
-
         auto results = inst->Results();
+
         for (size_t index = 0; index < results.Length(); index++) {
             auto* result = results[index];
             auto* ty = result->Type();
