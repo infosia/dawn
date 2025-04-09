@@ -34,6 +34,24 @@
       "parentUuid": "b5e85272_5c515e17",
       "revId": "8a21006f846226a7167c569a785d4d768d34da2b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65dee039_852ff80d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-09T22:40:14Z",
+      "side": 1,
+      "message": "Should be fixed, retrying that failing bot.",
+      "parentUuid": "b93bcd59_4ccf5f80",
+      "revId": "8a21006f846226a7167c569a785d4d768d34da2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
