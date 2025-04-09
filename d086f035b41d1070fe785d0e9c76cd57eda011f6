@@ -50,6 +50,23 @@
       "message": "Unfortunately I don\u0027t think Emscripten has a way to do this right now, but if we add one, and then we can use it.",
       "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9db78aa8_a2125135",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-09T23:34:33Z",
+      "side": 1,
+      "message": "I just had a thought to maybe provide two ports, one for webgpu.h and one for webgpu_cpp.h (which would just add an include path). Just in case people care to avoid the C API like if they fork webgpu_cpp.h or use alternate C++ bindings or something.",
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
