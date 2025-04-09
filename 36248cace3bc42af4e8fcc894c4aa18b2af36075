@@ -18,6 +18,40 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0abccb4_500d4e76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:34:53Z",
+      "side": 1,
+      "message": "LGTM too",
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c88147a_0235b92e",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:34:53Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d650a06_5879fe1f",
@@ -31,6 +65,30 @@
       "writtenOn": "2025-04-08T20:39:01Z",
       "side": 1,
       "message": "Why do we need this separator?",
+      "range": {
+        "startLine": 1529,
+        "startChar": 4,
+        "endLine": 1529,
+        "endChar": 72
+      },
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52ac357e_b15cd1ce",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:34:53Z",
+      "side": 1,
+      "message": "It could be a try at avoiding the possibility of collisions if an attacker controls two different pieces of variable length data. (so it can hash the same content from SHA3\u0027s POV but for two ShaderModules that should be different)\n\nIMHO we should also hash the size of the SPIR-V / WGSL or put them at the end.",
+      "parentUuid": "1d650a06_5879fe1f",
       "range": {
         "startLine": 1529,
         "startChar": 4,
@@ -66,6 +124,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cbd11fad_3cf6b051",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1596,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:34:53Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "48dae284_830ae4a7",
         "filename": "src/dawn/native/ShaderModule.cpp",
         "patchSetId": 11
@@ -83,6 +158,40 @@
         "endLine": 1605,
         "endChar": 44
       },
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35796bde_b41271de",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:34:53Z",
+      "side": 1,
+      "message": "u-nit: Can we avoid listing the exact variables hashed? This comment will become out of date very quickly.",
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0b3da65_21ee5380",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:34:53Z",
+      "side": 1,
+      "message": "Could we add minimal StreamTests for this?",
       "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -165,6 +274,23 @@
           ]
         }
       ],
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b63e614a_8456bb11",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:34:53Z",
+      "side": 1,
+      "message": "IMHO since the size of the std::array is always the same, we don\u0027t need to stream it and validate it.",
       "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
