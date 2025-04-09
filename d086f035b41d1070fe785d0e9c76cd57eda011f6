@@ -20,6 +20,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b9bf573d_fdec3eb6",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3993625
+      },
+      "writtenOn": "2025-04-09T23:42:36Z",
+      "side": 1,
+      "message": "Use the emdawn license here instead?",
+      "fixSuggestions": [
+        {
+          "fixId": "02581dc9_76cc88e9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "third_party/emdawnwebgpu/port.py",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 4,
+                "endChar": 0
+              },
+              "replacement": "# Copyright 2025 The Dawn Authors. All rights reserved.\n# Use of this source code is governed by a BSD-style license that can be\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "00498903_7ba01c8b",
         "filename": "third_party/emdawnwebgpu/port.py",
         "patchSetId": 17
@@ -31,6 +66,24 @@
       "writtenOn": "2025-04-09T03:23:27Z",
       "side": 1,
       "message": "Is there a better way of making sure Emscripten rebuilds the port every time it changes? Most ports seem to rely on `fetch_project()` to do that, but we can\u0027t.",
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04c183b5_7a6e0c1d",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3993625
+      },
+      "writtenOn": "2025-04-09T23:42:36Z",
+      "side": 1,
+      "message": "Maybe just use a version number in this file that gets bumped every time you publish?\n\nOtherwise, this approach doesn\u0027t seem unreasonable I suppose.",
+      "parentUuid": "00498903_7ba01c8b",
       "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -65,6 +118,41 @@
       "writtenOn": "2025-04-09T23:34:33Z",
       "side": 1,
       "message": "I just had a thought to maybe provide two ports, one for webgpu.h and one for webgpu_cpp.h (which would just add an include path). Just in case people care to avoid the C API like if they fork webgpu_cpp.h or use alternate C++ bindings or something.",
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc39aec7_b2d9289b",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 3993625
+      },
+      "writtenOn": "2025-04-09T23:42:36Z",
+      "side": 1,
+      "message": "Should this just be on single line?",
+      "fixSuggestions": [
+        {
+          "fixId": "4163afb2_3791f535",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "third_party/emdawnwebgpu/port.py",
+              "range": {
+                "startLine": 61,
+                "startChar": 0,
+                "endLine": 67,
+                "endChar": 0
+              },
+              "replacement": "    return [\u0027-isystem\u0027, include_c, \u0027-isystem\u0027, include_cpp]\n"
+            }
+          ]
+        }
+      ],
       "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
