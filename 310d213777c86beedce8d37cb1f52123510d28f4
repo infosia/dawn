@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "803db06f_ef1a879a",
+        "filename": "src/tint/utils/command/command_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-09T17:51:55Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "b6826845_44545980",
+      "range": {
+        "startLine": 245,
+        "startChar": 12,
+        "endLine": 245,
+        "endChar": 26
+      },
+      "revId": "310d213777c86beedce8d37cb1f52123510d28f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09a31fd2_3239521f",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c78ef6a1_2a98de63",
+        "filename": "src/tint/utils/command/command_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-09T17:51:55Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "09a31fd2_3239521f",
+      "range": {
+        "startLine": 247,
+        "startChar": 53,
+        "endLine": 247,
+        "endChar": 64
+      },
+      "revId": "310d213777c86beedce8d37cb1f52123510d28f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c6af415f_c1f42700",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-04-09T17:27:38Z",
       "side": 0,
       "message": "And here: `std::begin(buf), std::end(buf)`",
+      "range": {
+        "startLine": 249,
+        "startChar": 46,
+        "endLine": 249,
+        "endChar": 58
+      },
+      "revId": "310d213777c86beedce8d37cb1f52123510d28f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f471bd61_094cf88a",
+        "filename": "src/tint/utils/command/command_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-09T17:51:55Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "c6af415f_c1f42700",
       "range": {
         "startLine": 249,
         "startChar": 46,

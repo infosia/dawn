@@ -22,6 +22,30 @@
       },
       "revId": "609a1e9c4919f746fc056b5336cd71a42b3ffeef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81241a06_c5d7ad21",
+        "filename": "src/tint/utils/command/command_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-09T17:51:55Z",
+      "side": 1,
+      "message": "I don\u0027t think we can use `end()` here, what if the read is for less then 256 bytes, so n \u003e 0 and n \u003c 256, the read doesn\u0027t resize the array, either c-style or std::array, so anything after n might be uninitialized values.",
+      "parentUuid": "e0c9761e_13f5c28d",
+      "range": {
+        "startLine": 248,
+        "startChar": 46,
+        "endLine": 248,
+        "endChar": 83
+      },
+      "revId": "609a1e9c4919f746fc056b5336cd71a42b3ffeef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
