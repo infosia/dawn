@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bf5ba19_9d8001a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:47:38Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "dad9d511982b9f980ec6234e4954b7b832843301",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f25d502c_532e98ad",
+        "filename": "src/dawn/native/d3d11/BindGroupTrackerD3D11.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:47:38Z",
+      "side": 1,
+      "message": "nit that comment seems mildly out of date given that it is not in other types of resources.",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 63
+      },
+      "revId": "dad9d511982b9f980ec6234e4954b7b832843301",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
