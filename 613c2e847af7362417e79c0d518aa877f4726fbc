@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "73411bc6_e8df34c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 34
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-09T15:02:35Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t think I have seen errors specifically like that, but that smells like maybe the abseil source repo didn\u0027t get updated in the build.\n\nIf this is in a Dawn repo make sure that `gclient sync` has been run, since there is a bunch of DEPS updates.\n\nIf this in a project embedding Dawn, however abseil and the other third_party dependencies are managed will need to be updated. (Skia for example has its own DEPS file and doesn\u0027t use the Dawn one, so they need to update the relavent hashes when updating the Dawn one)\n\nThe other thing I can think of, is this CL moved Dawn from having its own custom GN files for abseil to using the ones in third_party/abseil-cpp, so again depending on how you are building Dawn that might be related.",
+      "parentUuid": "f6b1eb76_0d335d88",
+      "revId": "613c2e847af7362417e79c0d518aa877f4726fbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d8c2df0_bb6ebfaf",
         "filename": "CMakeLists.txt",
         "patchSetId": 34
