@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0d7e06e_3324ec5d",
+        "filename": "src/dawn/utils/WindowsDebugLogger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-09T13:44:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09f2f063_a9b801e0",
+      "revId": "9b286e6eddb62fa04eec3041fbec957886f839ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d8191a3_caacc31f",
