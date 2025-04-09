@@ -226,6 +226,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "2a963ef0_6b9bf2ab",
+        "filename": "src/dawn/native/opengl/DeviceGL.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-04-09T17:38:09Z",
+      "side": 1,
+      "message": "Yes you are right. I didn\u0027t see glDeleteBuffers in the angle trace events log. Turns out there\u0027s a section in Device::Destroy explicitly releasing internal resources. I should do that for the new internal buffers in DeviceGL::DestroyImpl as well. I think this should fix it.",
+      "parentUuid": "23aa3609_fbe10dd2",
+      "revId": "45bde7293d1d50953458c7c20a34810dc1cc1d28",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "23b72cc6_8160a116",
         "filename": "src/dawn/native/opengl/PipelineGL.cpp",
         "patchSetId": 18
