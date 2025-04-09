@@ -16,6 +16,24 @@
       "message": "LGTM given the direction of the stack. Did you see perf wins with the whole stack?",
       "revId": "2a24406e8cad945fd0a280012aaf3212ee8d4ae7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91fa458f_28fece4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-09T13:17:39Z",
+      "side": 1,
+      "message": "there is a slight improvement in perf. but at least I think this direction will make the code cleaner, less if else and less duplications.",
+      "parentUuid": "ac82806a_7196e22e",
+      "revId": "2a24406e8cad945fd0a280012aaf3212ee8d4ae7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
