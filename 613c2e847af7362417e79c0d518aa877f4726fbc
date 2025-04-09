@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e03d442d_ee9300db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 34
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-09T21:12:12Z",
+      "side": 1,
+      "message": "FYI, I am probably going to be bringing back the custom abseil GN files in Dawn, since they appear to have been somewhat load bearing for skia, https://issues.chromium.org/issues/409576873",
+      "parentUuid": "73411bc6_e8df34c8",
+      "revId": "613c2e847af7362417e79c0d518aa877f4726fbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d8c2df0_bb6ebfaf",
         "filename": "CMakeLists.txt",
         "patchSetId": 34
