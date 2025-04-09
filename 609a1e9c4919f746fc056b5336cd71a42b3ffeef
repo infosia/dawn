@@ -46,6 +46,30 @@
       },
       "revId": "609a1e9c4919f746fc056b5336cd71a42b3ffeef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "385f788f_ac9e1cc5",
+        "filename": "src/tint/utils/command/command_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-09T17:55:01Z",
+      "side": 1,
+      "message": "Oh yes, you\u0027re right, I missed that it was adding \u0027n\u0027 here. What you did is fine, then. Not a huge fan of how the code looks now, especially with that static_cast. What is the type of `n` anyway? Curious why it\u0027s not already a `size_t` as the result from `read`.",
+      "parentUuid": "81241a06_c5d7ad21",
+      "range": {
+        "startLine": 248,
+        "startChar": 46,
+        "endLine": 248,
+        "endChar": 83
+      },
+      "revId": "609a1e9c4919f746fc056b5336cd71a42b3ffeef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
