@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0667e25_46dcfae4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:24:39Z",
+      "side": 1,
+      "message": "LGTM overall",
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5162e749_5513a750",
+        "filename": "src/dawn/common/Constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:24:39Z",
+      "side": 1,
+      "message": "`kMaxSupportedImmediateDataBytes` and `kDefaultMaxImmediateDataBytes`? With explanation that one is the default limit and the other one is used to size data structures in dawn::native? (right now the comments don\u0027t really help, also no need to list the value in the comments, it\u0027s literally written just below)",
+      "range": {
+        "startLine": 65,
+        "startChar": 26,
+        "endLine": 65,
+        "endChar": 58
+      },
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36c0b991_f5e3a98e",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:24:39Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05e68902_b64d801d",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:24:39Z",
+      "side": 1,
+      "message": "This function shouldn\u0027t really care about that so we can remove the comment IMHO.",
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a0736b5_f081c24c",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:24:39Z",
+      "side": 1,
+      "message": "Ok, and now we can do something even better where we use the X macros for push constants as well! At [1] we add the scope `v1` or `experimentalImmediateDataLimits`, then use it to access the value in this macro and other `X` macros in this file. This will make adding new limits require very little code compared to how it is done now.",
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29679276_059b0ca9",
+        "filename": "src/dawn/tests/unittests/validation/DeviceValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:24:39Z",
+      "side": 1,
+      "message": "Why 32? That\u0027s neither the default, nor the max supported.",
+      "range": {
+        "startLine": 446,
+        "startChar": 38,
+        "endLine": 446,
+        "endChar": 42
+      },
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0d47169_6c7a811a",
+        "filename": "src/dawn/tests/unittests/validation/DeviceValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:24:39Z",
+      "side": 1,
+      "message": "```suggestion\n            EXPECT_EQ(GetMaxImmediateDataRangeByteSize(deviceLimits), supportedImmediateDataLimit);\n```",
+      "range": {
+        "startLine": 476,
+        "startChar": 70,
+        "endLine": 476,
+        "endChar": 73
+      },
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea8a4411_e7aa74d5",
+        "filename": "src/dawn/tests/unittests/validation/DeviceValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:24:39Z",
+      "side": 1,
+      "message": "Can we use the constants instead of all these hardcoded numbers?",
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

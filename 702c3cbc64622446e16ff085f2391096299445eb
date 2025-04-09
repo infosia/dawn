@@ -196,6 +196,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7efb50cb_2a779c60",
+        "filename": "src/dawn/native/Limits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T12:24:39Z",
+      "side": 1,
+      "message": "WRT to unpacking by value instead of by pointer, as far as I can tell, very few spots are going to want to store the data as a bunch of unpacked descriptors like is done here. In most cases we repack the data differently or only look at it transiently unpacking by value seem like it would be inefficient. But it would make the TrivialFrontendDefaults even more trivial for sure.",
+      "parentUuid": "8443a57e_bc7553d8",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29d33208_692dcbeb",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 4
