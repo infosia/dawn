@@ -77,6 +77,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "15394463_52ee2cc7",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-09T20:26:31Z",
+      "side": 1,
+      "message": "Should we unpack `DawnTexelCopyBufferRowAlignmentLimits` here also?",
+      "range": {
+        "startLine": 282,
+        "startChar": 4,
+        "endLine": 282,
+        "endChar": 55
+      },
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7a0736b5_f081c24c",
         "filename": "src/dawn/native/Limits.cpp",
         "patchSetId": 5
@@ -151,6 +174,24 @@
       "writtenOn": "2025-04-09T12:24:39Z",
       "side": 1,
       "message": "Can we use the constants instead of all these hardcoded numbers?",
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66d5bed2_0ca863a1",
+        "filename": "src/dawn/tests/unittests/validation/DeviceValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-09T20:26:31Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "ea8a4411_e7aa74d5",
       "revId": "228929f6830bc993c7b368e26aa413080738339e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
