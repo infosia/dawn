@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c150d51_b8b07f0c",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-09T08:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "571c8534_9b31b192",
+      "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "943b5dbd_2326b7d6",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-04-03T10:37:51Z",
       "side": 1,
       "message": "nit: unused",
+      "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1c0ed2c_6f842605",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-09T08:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "943b5dbd_2326b7d6",
       "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +122,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30516a9e_8d2314c6",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-09T08:51:31Z",
+      "side": 1,
+      "message": "Done, filing an issue https://issues.chromium.org/issues/409438000. I am trying to write a CL, but found it tricky in Compat mode handling external texture etc...",
+      "parentUuid": "11cf9c3b_10ecb5ca",
+      "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "116b938f_38b55852",
@@ -99,6 +153,30 @@
       "writtenOn": "2025-04-03T10:37:51Z",
       "side": 1,
       "message": "nit: `TextureMetadataQuery`?",
+      "range": {
+        "startLine": 248,
+        "startChar": 16,
+        "endLine": 248,
+        "endChar": 31
+      },
+      "revId": "0a960e6674fbb9ac67515834200046c6f6f55e44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2627595e_4db0c664",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-09T08:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "116b938f_38b55852",
       "range": {
         "startLine": 248,
         "startChar": 16,
