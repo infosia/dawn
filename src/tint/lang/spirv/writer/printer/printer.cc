@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/spirv/writer/printer/printer.h"
 
+#include <deque>
 #include <string>
 #include <utility>
 
@@ -216,6 +217,13 @@ class Printer {
     BinaryWriter writer_;
 
     Output output_;
+
+    struct BlockInfo {
+        size_t idx;
+        core::ir::Block* block;
+        bool skip_phis = false;
+    };
+    std::deque<BlockInfo> blocks_to_emit_;
 
     /// A function type used for an OpTypeFunction declaration.
     struct FunctionType {
@@ -732,7 +740,14 @@ class Printer {
 
         // Emit the body of the function.
         auto idx = current_function_.AppendBlock();
-        EmitBlockInternal(idx, func->Block());
+        blocks_to_emit_.push_back({idx, func->Block()});
+
+        while (!blocks_to_emit_.empty()) {
+            auto blk = blocks_to_emit_.front();
+            blocks_to_emit_.pop_front();
+
+            EmitBlock(blk.idx, blk.block, blk.skip_phis);
+        }
 
         // Add the function to the module.
         module_.PushFunction(current_function_);
@@ -849,11 +864,11 @@ class Printer {
 
     /// Emit a block, including the initial OpLabel, OpPhis and instructions.
     /// @param block the block to emit
-    void EmitBlock(core::ir::Block* block) {
+    void QueueBlock(core::ir::Block* block) {
         auto idx = NewBlock(Label(block));
 
         if (!block->IsEmpty()) {
-            EmitBlockInternal(idx, block);
+            blocks_to_emit_.push_back({idx, block});
             return;
         }
 
@@ -866,12 +881,14 @@ class Printer {
         }
     }
 
-    void EmitBlockInternal(size_t idx, core::ir::Block* block) {
+    void EmitBlock(size_t idx, core::ir::Block* block, bool skip_phis) {
         current_function_.SetCurrentBlockIndex(idx);
 
-        if (auto* mib = block->As<core::ir::MultiInBlock>()) {
-            // Emit all OpPhi nodes for incoming branches to block.
-            EmitIncomingPhis(mib);
+        if (!skip_phis) {
+            if (auto* mib = block->As<core::ir::MultiInBlock>()) {
+                // Emit all OpPhi nodes for incoming branches to block.
+                EmitIncomingPhis(mib);
+            }
         }
 
         // Emit the block's statements.
@@ -963,11 +980,13 @@ class Printer {
                 return;
             },
             [&](core::ir::BreakIf* breakif) {
+                auto true_idx = GetMergeLabel(breakif->Loop());
+                auto false_idx = GetLoopHeaderLabel(breakif->Loop());
                 current_function_.PushInst(spv::Op::OpBranchConditional,
                                            {
                                                Value(breakif->Condition()),
-                                               GetMergeLabel(breakif->Loop()),
-                                               GetLoopHeaderLabel(breakif->Loop()),
+                                               true_idx,
+                                               false_idx,
                                            });
             },
             [&](core::ir::Continue* cont) {
@@ -1035,10 +1054,10 @@ class Printer {
 
         // Emit the `true` and `false` blocks, if they're not being skipped.
         if (true_label != merge_label) {
-            EmitBlock(true_block);
+            QueueBlock(true_block);
         }
         if (false_label != merge_label) {
-            EmitBlock(false_block);
+            QueueBlock(false_block);
         }
 
         NewBlock(merge_label);
@@ -2262,7 +2281,7 @@ class Printer {
         if (init_label != 0) {
             // Emit the loop initializer.
             current_function_.PushInst(spv::Op::OpBranch, {init_label});
-            EmitBlock(loop->Initializer());
+            QueueBlock(loop->Initializer());
         } else {
             // No initializer. Branch to body.
             current_function_.PushInst(spv::Op::OpBranch, {header_label});
@@ -2277,20 +2296,20 @@ class Printer {
         current_function_.PushInst(spv::Op::OpBranch, {body_label});
 
         // Emit the loop body
-        [[maybe_unused]] auto body_blk = NewBlock(body_label);
-        EmitBlockInstructions(loop->Body());
+        auto body_blk = NewBlock(body_label);
+        blocks_to_emit_.push_back({body_blk, loop->Body(), /* skip_phis */ true});
 
         // Emit the loop continuing block.
         if (loop->Continuing()->Terminator()) {
-            EmitBlock(loop->Continuing());
+            QueueBlock(loop->Continuing());
         } else {
+            NewBlock(continuing_label);
             // We still need to emit a continuing block with a back-edge, even if it is unreachable.
-            [[maybe_unused]] auto continuing_blk = NewBlock(continuing_label);
             current_function_.PushInst(spv::Op::OpBranch, {header_label});
         }
 
         // Emit the loop merge block.
-        [[maybe_unused]] auto merge_blk = NewBlock(merge_label);
+        NewBlock(merge_label);
 
         // Emit the OpPhis for the ExitLoops
         EmitExitPhis(loop);
@@ -2332,7 +2351,7 @@ class Printer {
 
         // Emit the cases.
         for (auto& c : swtch->Cases()) {
-            EmitBlock(c.block);
+            QueueBlock(c.block);
         }
 
         // Emit the switch merge block.
@@ -2620,7 +2639,11 @@ class Printer {
 
             Vector<Branch, 8> branches;
             branches.Reserve(inst->Exits().Count());
-            for (auto& exit : inst->Exits()) {
+
+            auto exits = inst->Exits().Vector();
+            exits.Sort([](auto a, auto b) -> bool { return a < b; });
+
+            for (auto& exit : exits) {
                 branches.Push(Branch{GetTerminatorBlockLabel(exit), exit->Args()[index]});
             }
             branches.Sort();  // Sort the branches by label to ensure deterministic output
@@ -2633,7 +2656,6 @@ class Printer {
                     }
                 });
             }
-
             OperandList ops{Type(ty), Value(result)};
             for (auto& branch : branches) {
                 if (branch.value == nullptr) {
