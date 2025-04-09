@@ -31,8 +31,6 @@
 
 #include "absl/strings/charconv.h"
 
-TINT_BEGIN_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
-
 namespace tint::strconv {
 
 namespace {
@@ -41,19 +39,19 @@ template <typename T>
 Result<T, ParseNumberError> Parse(std::string_view number) {
     T val = 0;
     if constexpr (std::is_floating_point_v<T>) {
-        auto result = absl::from_chars(number.data(), number.data() + number.size(), val);
+        auto result = absl::from_chars(number.begin(), number.end(), val);
         if (result.ec == std::errc::result_out_of_range) {
             return ParseNumberError::kResultOutOfRange;
         }
-        if (result.ec != std::errc() || result.ptr != number.data() + number.size()) {
+        if (result.ec != std::errc() || result.ptr != number.end()) {
             return ParseNumberError::kUnparsable;
         }
     } else {
-        auto result = std::from_chars(number.data(), number.data() + number.size(), val);
+        auto result = std::from_chars(number.begin(), number.end(), val);
         if (result.ec == std::errc::result_out_of_range) {
             return ParseNumberError::kResultOutOfRange;
         }
-        if (result.ec != std::errc() || result.ptr != number.data() + number.size()) {
+        if (result.ec != std::errc() || result.ptr != number.end()) {
             return ParseNumberError::kUnparsable;
         }
     }
@@ -111,5 +109,3 @@ Result<uint8_t, ParseNumberError> ParseUint8(std::string_view str) {
 }
 
 }  // namespace tint::strconv
-
-TINT_END_DISABLE_WARNING(UNSAFE_BUFFER_USAGE);
