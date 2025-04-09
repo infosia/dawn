@@ -58,6 +58,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d267a280_cf7fbd99",
+        "filename": "src/dawn/native/d3d11/PipelineLayoutD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-09T10:24:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26a478cc_6b74726a",
+      "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cfa46808_ed8addaf",
@@ -71,6 +89,24 @@
       "writtenOn": "2025-04-08T14:06:38Z",
       "side": 1,
       "message": "This code is cold, so even if the compiler is not able to 100% optimize it out, I think `for (SingleShaderStage stage : IterateStages(kAllStages)) {ASSERT(constantBufferCounter[stage] \u003c\u003d kReservedConstantBufferSlot)}` is more readable and fine.",
+      "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3df1b3e4_40802b31",
+        "filename": "src/dawn/native/d3d11/PipelineLayoutD3D11.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-09T10:24:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfa46808_ed8addaf",
       "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -98,6 +134,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f4f036e_dec87645",
+        "filename": "src/dawn/native/d3d11/PipelineLayoutD3D11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-09T10:24:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28f69810_bbb92435",
+      "range": {
+        "startLine": 69,
+        "startChar": 62,
+        "endLine": 69,
+        "endChar": 77
+      },
+      "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "142fb49d_3a9b99df",
@@ -111,6 +171,24 @@
       "writtenOn": "2025-04-08T14:06:38Z",
       "side": 1,
       "message": "```suggestion\n    const BindingTableIndexMap\u0026 GetBindingTableIndexMap() const;\n```",
+      "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef54277a_632960e1",
+        "filename": "src/dawn/native/d3d11/PipelineLayoutD3D11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-09T10:24:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "142fb49d_3a9b99df",
       "revId": "9813d034eb6411b1e923fbe24d0a5ef7130e60c4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
