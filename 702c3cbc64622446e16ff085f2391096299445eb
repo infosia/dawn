@@ -124,6 +124,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8443a57e_bc7553d8",
+        "filename": "src/dawn/native/Limits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-09T02:17:40Z",
+      "side": 1,
+      "message": "loko@, thanks. \n\nI think maybe doing a copy only in `MaybeError UnpackLimitsIn(const Limits* limits, CombinedLimits* out);` through here is enough ?\n\nBecause we still need NormalizeLimits and ReifyDefaultLimits (instead of using default value in \"dawn.json\") because of featureLevel. Unless we could have such table in dawn.json.",
+      "parentUuid": "9aae19f9_28f20cd9",
+      "revId": "702c3cbc64622446e16ff085f2391096299445eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29d33208_692dcbeb",
         "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
         "patchSetId": 4
