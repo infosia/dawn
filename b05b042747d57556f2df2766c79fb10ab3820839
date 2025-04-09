@@ -33,6 +33,23 @@
       "message": "oops, forgot to add Quyen since his ownership change was indirect",
       "revId": "b05b042747d57556f2df2766c79fb10ab3820839",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d445ad04_3e4e49ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-09T23:22:03Z",
+      "side": 1,
+      "message": "I\u0027ve scheduled an email to Brandon to review when he gets back. Corentin, PTAL for toplevel OWNERS",
+      "revId": "b05b042747d57556f2df2766c79fb10ab3820839",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
