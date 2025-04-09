@@ -32,28 +32,31 @@
 
 #include "src/tint/utils/ice/debugger.h"
 #include "src/tint/utils/macros/compiler.h"
+#include "src/tint/utils/text/string.h"
+#include "src/tint/utils/text/styled_text.h"
+#include "src/tint/utils/text/styled_text_printer.h"
+#include "src/tint/utils/text/text_style.h"
 
 namespace tint {
-namespace {
-
-InternalCompilerErrorReporter* ice_reporter = nullptr;
-
-}  // namespace
-
-void SetInternalCompilerErrorReporter(InternalCompilerErrorReporter* reporter) {
-    ice_reporter = reporter;
-}
 
 InternalCompilerError::InternalCompilerError(const char* file, size_t line)
     : file_(file), line_(line) {}
 
 TINT_BEGIN_DISABLE_WARNING(DESTRUCTOR_NEVER_RETURNS);
 InternalCompilerError::~InternalCompilerError() {
-    if (ice_reporter) {
-        ice_reporter(*this);
-    } else {
-        std::cerr << Error() << "\n\n";
-    }
+    // When consuming the ICE, print the error message to stderr and never return.
+    auto printer = StyledTextPrinter::Create(stderr);
+    StyledText msg;
+    msg << (style::Error + style::Bold) << Error();
+    msg << R"(
+********************************************************************
+*  The tint shader compiler has encountered an unexpected error.   *
+*                                                                  *
+*  Please help us fix this issue by submitting a bug report at     *
+*  crbug.com/tint with the source program that triggered the bug.  *
+********************************************************************
+)";
+    printer->Print(msg);
 
     debugger::Break();
 
