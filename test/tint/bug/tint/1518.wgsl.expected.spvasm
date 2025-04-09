@@ -16,6 +16,8 @@
           %4 = OpLabel
                OpSelectionMerge %5 None
                OpBranchConditional %false %5 %6
+          %5 = OpLabel
+               OpReturn
           %6 = OpLabel
                OpSelectionMerge %9 None
                OpBranchConditional %false %9 %10
@@ -638,6 +640,4 @@
                OpBranch %9
           %9 = OpLabel
                OpBranch %5
-          %5 = OpLabel
-               OpReturn
                OpFunctionEnd
