@@ -173,9 +173,6 @@ TEST_P(SubresourceRenderAttachmentTest, DepthTexture) {
 
 // Test rendering into a subresource of a stencil texture
 TEST_P(SubresourceRenderAttachmentTest, StencilTexture) {
-    // TODO(crbug.com/352360580): Investigate failures.
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM());
-    DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsANGLED3D11());
     DoTest(Type::Stencil);
 }
 
