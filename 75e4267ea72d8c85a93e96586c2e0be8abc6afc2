@@ -39,6 +39,72 @@
       },
       "revId": "75e4267ea72d8c85a93e96586c2e0be8abc6afc2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fba66501_1fc5cde0",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-09T12:12:24Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "7fbffc84_ff9774d1",
+      "range": {
+        "startLine": 430,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 89
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1c499d44_8ba054f0",
+          "description": "User suggestion",
+          "replacements": [
+            {
+              "path": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+              "range": {
+                "startLine": 430,
+                "startChar": 0,
+                "endLine": 433,
+                "endChar": 89
+              },
+              "replacement": "    const bool hasRequiredF16Support \u003d\n        !shaderF16Enabled || (mDeviceInfo.shaderSubgroupExtendedTypes.shaderSubgroupExtendedTypes \u003d\u003d VK_TRUE);"
+            }
+          ]
+        }
+      ],
+      "revId": "75e4267ea72d8c85a93e96586c2e0be8abc6afc2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5598d2ce_4ec57286",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-09T12:12:24Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "7fbffc84_ff9774d1",
+      "range": {
+        "startLine": 430,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 89
+      },
+      "revId": "75e4267ea72d8c85a93e96586c2e0be8abc6afc2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
