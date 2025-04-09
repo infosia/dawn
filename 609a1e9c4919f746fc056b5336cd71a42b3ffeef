@@ -70,6 +70,30 @@
       },
       "revId": "609a1e9c4919f746fc056b5336cd71a42b3ffeef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1105e86c_7dec3232",
+        "filename": "src/tint/utils/command/command_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-09T18:04:59Z",
+      "side": 1,
+      "message": "ssize_t, since it will return negative for certain types of failure (probably actually returns -1 and sets errono, because posix)",
+      "parentUuid": "385f788f_ac9e1cc5",
+      "range": {
+        "startLine": 248,
+        "startChar": 46,
+        "endLine": 248,
+        "endChar": 83
+      },
+      "revId": "609a1e9c4919f746fc056b5336cd71a42b3ffeef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
