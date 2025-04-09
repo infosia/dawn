@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea2a7b24_4f3d5ea2",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T06:46:09Z",
+      "side": 1,
+      "message": "I believe that this logic should still check for `mDeviceInfo.shaderSubgroupExtendedTypes.shaderSubgroupExtendedTypes \u003d\u003d VK_TRUE` if `shaderF16Enabled`.\n\nI suggest breaking the condition in a few booleans to make it more clear. One for base subgroup support, and one for having the required f16 support if needed.",
+      "revId": "9b2a118172a3f9cc470f9835315168ddd4f1d13e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
