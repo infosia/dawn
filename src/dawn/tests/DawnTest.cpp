@@ -679,7 +679,8 @@ bool DawnTestEnvironment::IsImplicitDeviceSyncEnabled() const {
 }
 
 bool DawnTestEnvironment::RunSuppressedTests() const {
-    return mRunSuppressedTests;
+    // return mRunSuppressedTests;
+    return true;
 }
 
 native::BackendValidationLevel DawnTestEnvironment::GetBackendValidationLevel() const {
