@@ -70,6 +70,24 @@
       "parentUuid": "6faf2c68_b6d09600",
       "revId": "9d40f3ecc3be8f7d9eb4829b346c66e377f78398",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddcd6fc1_61109f0b",
+        "filename": "src/dawn/native/vulkan/BindGroupVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-09T11:50:01Z",
+      "side": 1,
+      "message": "Yeah, maybe let\u0027s skip this until we have something super compelling.",
+      "parentUuid": "ee8f318f_682487ff",
+      "revId": "9d40f3ecc3be8f7d9eb4829b346c66e377f78398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
