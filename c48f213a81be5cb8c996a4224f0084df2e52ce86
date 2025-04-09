@@ -16,6 +16,24 @@
       "message": "Note that https://dawn-review.googlesource.com/c/dawn/+/234354 waits for this CL.",
       "revId": "c48f213a81be5cb8c996a4224f0084df2e52ce86",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d10e07c7_ccf89140",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-09T18:56:50Z",
+      "side": 1,
+      "message": "Looks like a merge conflict. At this point, it may be better to wait for tonights roll to run.",
+      "parentUuid": "07a2ba7e_7568fdea",
+      "revId": "c48f213a81be5cb8c996a4224f0084df2e52ce86",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
