@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac4f0235_3e8fb255",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-09T03:14:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d33433_cd081b66",
+      "revId": "977d3d63145ff5259022a493456f581d02829d62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93b72eea_2f8f7cce",
@@ -49,6 +67,24 @@
       "side": 1,
       "message": "Also some file should contain a git hash of the dawn version it came from (e.g. `0000000000000000000000000000000000000000` or `0000000000000000000000000000000000000000-dirty`)",
       "parentUuid": "93b72eea_2f8f7cce",
+      "revId": "977d3d63145ff5259022a493456f581d02829d62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89a2c521_d5ef7d00",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-09T03:14:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a0e48e2a_5fa06df2",
       "revId": "977d3d63145ff5259022a493456f581d02829d62",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
