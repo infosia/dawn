@@ -25,6 +25,15 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# This file exists for two reasons:
+# a) it allows for when using Dawn outside of Chromium to only include
+#    the minimal amount of abseil needed (Chromium already includes
+#    all of abseil, so there is no need to minimize there)
+# b) addresses the fact that the BUILD.gn files supplied via Chromium
+#    for abseill are opinionated on exactly where the checkout of
+#    abseil should be, and some embedders (i.e. Skia) use a different
+#    location.
+
 import("../../../scripts/dawn_overrides_with_defaults.gni")
 
 import("${dawn_root}/scripts/dawn_features.gni")
@@ -35,6 +44,9 @@ config("absl_config") {
       # Allow the use of enable_if()
       "-Wno-gcc-compat",
       "-Wno-unreachable-code-break",
+
+      # Allows use of _Nullable, _Nonnull & _Null_unspecified
+      "-Wno-nullability-extension",
     ]
   }
 
@@ -259,10 +271,29 @@ absl_source_set("spinlock_wait") {
   ]
 }
 
+absl_source_set("strerror") {
+  sources = [ "${dawn_abseil_dir}/absl/base/internal/strerror.cc" ]
+  public = [ "${dawn_abseil_dir}/absl/base/internal/strerror.h" ]
+  deps = [
+    ":config",
+    ":core_headers",
+    ":errno_saver",
+  ]
+}
+
 absl_source_set("throw_delegate") {
   sources = [ "${dawn_abseil_dir}/absl/base/internal/throw_delegate.cc" ]
   public = [ "${dawn_abseil_dir}/absl/base/internal/throw_delegate.h" ]
   public_deps = [ ":raw_logging_internal" ]
+}
+
+absl_source_set("tracing_internal") {
+  public = [ "${dawn_abseil_dir}/absl/base/internal/tracing.h" ]
+  sources = [ "${dawn_abseil_dir}/absl/base/internal/tracing.cc" ]
+  deps = [
+    ":config",
+    ":core_headers",
+  ]
 }
 
 #
@@ -379,6 +410,7 @@ absl_source_set("hashtablez_sampler") {
     ":stacktrace",
     ":synchronization",
     ":time",
+    ":tracing_internal",
     ":utility",
   ]
 }
@@ -473,6 +505,29 @@ absl_source_set("debugging_internal") {
   ]
 }
 
+absl_source_set("bounded_utf8_length_sequence") {
+  public = [
+    "${dawn_abseil_dir}/absl/debugging/internal/bounded_utf8_length_sequence.h",
+  ]
+  deps = [
+    ":bits",
+    ":config",
+  ]
+}
+
+absl_source_set("decode_rust_punycode") {
+  sources =
+      [ "${dawn_abseil_dir}/absl/debugging/internal/decode_rust_punycode.cc" ]
+  public =
+      [ "${dawn_abseil_dir}/absl/debugging/internal/decode_rust_punycode.h" ]
+  deps = [
+    ":bounded_utf8_length_sequence",
+    ":config",
+    ":nullability",
+    ":utf8_for_code_point",
+  ]
+}
+
 absl_source_set("demangle_internal") {
   sources = [
     "${dawn_abseil_dir}/absl/debugging/internal/demangle.cc",
@@ -486,6 +541,7 @@ absl_source_set("demangle_internal") {
     ":base",
     ":config",
     ":core_headers",
+    ":decode_rust_punycode",
   ]
 }
 
@@ -538,6 +594,41 @@ absl_source_set("function_ref") {
     ":core_headers",
     ":type_traits",
   ]
+}
+
+absl_source_set("symbolize") {
+  sources = [
+    "${dawn_abseil_dir}/absl/debugging/symbolize.cc",
+    "${dawn_abseil_dir}/absl/debugging/symbolize_darwin.inc",
+    "${dawn_abseil_dir}/absl/debugging/symbolize_elf.inc",
+    "${dawn_abseil_dir}/absl/debugging/symbolize_emscripten.inc",
+    "${dawn_abseil_dir}/absl/debugging/symbolize_unimplemented.inc",
+    "${dawn_abseil_dir}/absl/debugging/symbolize_win32.inc",
+  ]
+  public = [
+    "${dawn_abseil_dir}/absl/debugging/internal/symbolize.h",
+    "${dawn_abseil_dir}/absl/debugging/symbolize.h",
+  ]
+  deps = [
+    ":base",
+    ":config",
+    ":core_headers",
+    ":debugging_internal",
+    ":demangle_internal",
+    ":dynamic_annotations",
+    ":malloc_internal",
+    ":raw_logging_internal",
+    ":string_view",
+    ":strings",
+  ]
+}
+
+absl_source_set("utf8_for_code_point") {
+  sources =
+      [ "${dawn_abseil_dir}/absl/debugging/internal/utf8_for_code_point.cc" ]
+  public =
+      [ "${dawn_abseil_dir}/absl/debugging/internal/utf8_for_code_point.h" ]
+  deps = [ ":config" ]
 }
 
 #
@@ -826,33 +917,6 @@ absl_source_set("kernel_timeout_internal") {
   ]
 }
 
-absl_source_set("symbolize") {
-  sources = [
-    "${dawn_abseil_dir}/absl/debugging/symbolize.cc",
-    "${dawn_abseil_dir}/absl/debugging/symbolize_darwin.inc",
-    "${dawn_abseil_dir}/absl/debugging/symbolize_elf.inc",
-    "${dawn_abseil_dir}/absl/debugging/symbolize_emscripten.inc",
-    "${dawn_abseil_dir}/absl/debugging/symbolize_unimplemented.inc",
-    "${dawn_abseil_dir}/absl/debugging/symbolize_win32.inc",
-  ]
-  public = [
-    "${dawn_abseil_dir}/absl/debugging/internal/symbolize.h",
-    "${dawn_abseil_dir}/absl/debugging/symbolize.h",
-  ]
-  deps = [
-    ":base",
-    ":config",
-    ":core_headers",
-    ":debugging_internal",
-    ":demangle_internal",
-    ":dynamic_annotations",
-    ":malloc_internal",
-    ":raw_logging_internal",
-    ":string_view",
-    ":strings",
-  ]
-}
-
 absl_source_set("synchronization") {
   sources = [
     "${dawn_abseil_dir}/absl/synchronization/barrier.cc",
@@ -1012,7 +1076,7 @@ absl_source_set("bad_variant_access") {
 
 absl_source_set("optional") {
   sources = [ "${dawn_abseil_dir}/absl/types/internal/optional.h" ]
-  public = [ "${dawn_abseil_dir}/absl/types/internal/optional.h" ]
+  public = [ "${dawn_abseil_dir}/absl/types/optional.h" ]
   public_deps = [
     ":bad_optional_access",
     ":base_internal",
