@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f27b9ef_9ede0b5d",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3848,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-10T13:47:54Z",
+      "side": 1,
+      "message": "Are you saying that `\"native\"` makes this struct get generated just for dawn::native headers while `\"dawn\"` makes this struct get generated for dawn::native and dawn::wire headers? If so what does `\"dawn\", \"native\"` do?\n\nAlso am I understanding correctly you want this struct generated in both native and wire headers?",
+      "parentUuid": "de70ce61_6a253fa8",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "68277b51_27130455",
         "filename": "src/dawn/native/Adapter.cpp",
         "patchSetId": 1
