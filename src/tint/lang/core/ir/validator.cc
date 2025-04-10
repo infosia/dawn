@@ -1831,6 +1831,13 @@ void Validator::CheckType(const core::type::Type* root,
                         return false;
                     }
                 }
+
+                if (ptr->AddressSpace() == core::AddressSpace::kPixelLocal) {
+                    if (!ptr->StoreType()->Is<core::type::Struct>()) {
+                        diag() << "pixel_local var must be of type struct";
+                        return false;
+                    }
+                }
                 return true;
             },
             [&](const core::type::U64*) {
