@@ -22,6 +22,30 @@
       },
       "revId": "46d3f107bc24da75346222e09fd98a42e50bdba2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcb5a7a5_b9f48703",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-10T21:20:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dea0faf_88a1551e",
+      "range": {
+        "startLine": 464,
+        "startChar": 16,
+        "endLine": 464,
+        "endChar": 32
+      },
+      "revId": "46d3f107bc24da75346222e09fd98a42e50bdba2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94f34b76_e024f266",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-10T21:20:19Z",
+      "side": 0,
+      "message": "Because we return a reference to `l`, which technically local, so goes out of scope after the return. The value is actually a reference through to the underlying string_view in line(), which doesn\u0027t go out of scope, so is safe, but ClangTidy doesn\u0027t appear to be smart enoough to realize that.\n\nI am fine with leaving it as-is, since it was mostly me just getting annoyed with seeing the ClangTidy highlight in my editor, since I needed to squint at it a bit to make sure it is was safe.",
+      "parentUuid": "f4b6271c_df41ec77",
+      "range": {
+        "startLine": 157,
+        "startChar": 3,
+        "endLine": 157,
+        "endChar": 20
+      },
+      "revId": "d0989686cb14531bc724ed6c9db681ca16053be1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f4a763f2_0c71e225",
         "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2025-04-10T21:10:18Z",
       "side": 0,
       "message": "I assume this is what you meant by \"Also cleans up `at()` to not return a reference to a local variable, since I was tired of ClangTidy warning me about it.\".\n\nI\u0027m not sure why it\u0027s saying it returns a ref to a local variable, given that `at()` returns a reference to a member variable. What is the warning exactly? Maybe you can \"fix\" it by assigning the rresult to a local var:\n\n```\nauto\u0026 end_ref \u003d \u0026at(length() - 1);\nend_ptr \u003d \u0026end_ref + 1;\n```",
+      "range": {
+        "startLine": 448,
+        "startChar": 18,
+        "endLine": 448,
+        "endChar": 40
+      },
+      "revId": "d0989686cb14531bc724ed6c9db681ca16053be1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04cc7dce_a6871581",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-10T21:20:19Z",
+      "side": 0,
+      "message": "The issue here is that we are adding to a raw pointer, `\u0026at()` is a `const char *` not a reference. That will always cause the unsafe buffer usage warning to fire.",
+      "parentUuid": "f4a763f2_0c71e225",
       "range": {
         "startLine": 448,
         "startChar": 18,
