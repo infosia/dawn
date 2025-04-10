@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ce13337_307f8a28",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-10T13:25:19Z",
+      "side": 1,
+      "message": "LGTM overall",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f683d77_f5355b61",
@@ -14,6 +31,41 @@
       "writtenOn": "2025-04-08T19:15:49Z",
       "side": 1,
       "message": "I kind of just copied DawnCacheDeviceDescriptor, DawnTogglesDescriptor, etc naming here.",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a055560a_77767dc1",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-10T13:25:19Z",
+      "side": 1,
+      "message": "It should probably \"dawn device heap allocator control\" or similar? WDYT?",
+      "parentUuid": "3f683d77_f5355b61",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de70ce61_6a253fa8",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3848,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-10T13:25:19Z",
+      "side": 1,
+      "message": "The tags are to control the visibility in the various headers we generate. `native` is to make generate for dawn::native, https://github.com/webgpu-native/webgpu-headers but not dawn::wire. In this case we want dawn::native (and can get dawn::wire if we want).\n\n```suggestion\n            {\"value\": 66, \"name\": \"dawn allocator descriptor\", \"tags\": [\"dawn\"]}\n```",
       "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -37,6 +89,58 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bc5316e0_f245b7cd",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-10T13:25:19Z",
+      "side": 1,
+      "message": "Yes, we should gate this one an optional feature that\u0027s only enabled in backends that support it.",
+      "parentUuid": "68277b51_27130455",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9efee33_288d2b43",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-10T13:25:19Z",
+      "side": 1,
+      "message": "```suggestion\n                        \"allocator heap block size (%d) isn\u0027t a power of two\",\n```",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8d258e7_553b15f5",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-10T13:25:19Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5fde521a_6abafa25",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
         "patchSetId": 1
@@ -48,6 +152,24 @@
       "writtenOn": "2025-04-08T19:15:49Z",
       "side": 1,
       "message": "Should there be some validation in the vulkan backend for a minimum size? If so any input on a reasonable min size to use, eg. 32kb?",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d257bacf_69336b85",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-10T13:25:19Z",
+      "side": 1,
+      "message": "We can use 0 to disable suballocation so I think any value is fine. Also I think I\u0027d have a slight preference for handling the descriptor and defaulting in [1] so this class doesn\u0027t have to think about it. (though that puts the constant for the default value in a public class, so maybe it\u0027s not clear cut)",
+      "parentUuid": "5fde521a_6abafa25",
       "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
