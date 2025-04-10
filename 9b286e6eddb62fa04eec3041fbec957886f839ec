@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ff0a04b_8a43103e",
+        "filename": "src/dawn/samples/SampleUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-04-10T07:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c81f17a1_71493d3d",
+      "revId": "9b286e6eddb62fa04eec3041fbec957886f839ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "09f2f063_a9b801e0",
@@ -46,6 +64,24 @@
         "id": 1000257
       },
       "writtenOn": "2025-04-09T13:44:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09f2f063_a9b801e0",
+      "revId": "9b286e6eddb62fa04eec3041fbec957886f839ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70b0d7a2_ac5bde10",
+        "filename": "src/dawn/utils/WindowsDebugLogger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-04-10T07:49:58Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "09f2f063_a9b801e0",
@@ -88,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77cb7af8_cf3a46ce",
+        "filename": "src/tint/utils/system/env_windows.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-04-10T07:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d8191a3_caacc31f",
+      "revId": "9b286e6eddb62fa04eec3041fbec957886f839ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cff108e5_5d4ae967",
@@ -122,6 +176,30 @@
         "id": 1000002
       },
       "writtenOn": "2025-04-09T12:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cff108e5_5d4ae967",
+      "range": {
+        "startLine": 49,
+        "startChar": 69,
+        "endLine": 49,
+        "endChar": 70
+      },
+      "revId": "9b286e6eddb62fa04eec3041fbec957886f839ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "721a0c67_f6f47712",
+        "filename": "src/tint/utils/system/env_windows.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-04-10T07:49:58Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "cff108e5_5d4ae967",
