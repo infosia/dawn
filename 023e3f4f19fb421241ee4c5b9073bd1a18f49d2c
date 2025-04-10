@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80f4d7bc_5334fdb8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-10T13:28:52Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "023e3f4f19fb421241ee4c5b9073bd1a18f49d2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d7243fd_d4b4c7be",
+        "filename": "include/dawn/native/D3D11Backend.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-10T13:28:52Z",
+      "side": 1,
+      "message": "Could we validate that it is only used with SharedTextureMemoryD3D11Texture2DDescriptor?",
+      "revId": "023e3f4f19fb421241ee4c5b9073bd1a18f49d2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
