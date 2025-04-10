@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c382600f_71395797",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 34
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-10T05:01:43Z",
+      "side": 1,
+      "message": "Thanks for replying! I am building Dawn repo using GN+Ninja, and yes I do run `gclient sync`.\n\nIt turns out that failures only occurs when `is_debug \u003d true` and `is_component_build \u003d ture`. When I switch to `is_component_build \u003d false` the debug build succeed. Release build always success whether component build or not.\n\nI filed an issue https://issues.chromium.org/issues/409589680 for this.",
+      "parentUuid": "e03d442d_ee9300db",
+      "revId": "613c2e847af7362417e79c0d518aa877f4726fbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5d8c2df0_bb6ebfaf",
         "filename": "CMakeLists.txt",
         "patchSetId": 34
