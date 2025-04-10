@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "625605bb_5cf09bf4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-10T08:54:49Z",
+      "side": 1,
+      "message": "Please take a look, thanks!",
+      "revId": "90974ae701016201d4e1743e70a4fa5e112a4e62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b07e07d_09c2bc60",
+        "filename": "src/tint/utils/ice/ice.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-10T08:54:49Z",
+      "side": 1,
+      "message": "I wanted to use `StyledTextPrinter` here but that results in a cyclic target dependency error, namely `utils/containers -\u003e utils/ice -\u003e utils/text -\u003e utils/containers`",
+      "revId": "90974ae701016201d4e1743e70a4fa5e112a4e62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
