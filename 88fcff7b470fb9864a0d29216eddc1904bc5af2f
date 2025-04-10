@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aed29ef6_4f2df183",
+        "filename": "src/tint/lang/spirv/writer/common/function.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-10T20:04:41Z",
+      "side": 1,
+      "message": "Seems like we just pass the label ID into `AppendBlock()` and then we can build the map as we go, instead of doing it after-the-fact here?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 5
+      },
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b439f47_8d6ac5d8",
+        "filename": "src/tint/lang/spirv/writer/common/function.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-10T20:04:41Z",
+      "side": 1,
+      "message": "I think you can get away with only one set here. If you do the \"seen\" check inside `push_id` instead, you can make sure that every block is enqueued once, which means they will also only be emitted once.\n\nIt slightly changes the block emission order in certain cases (namely switch statements that re-use blocks), but I think it still works (briefly tested locally).\n\nThen you don\u0027t need the `is_stop` thing, I think.",
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5744fc3c_8a1a0189",
+        "filename": "src/tint/lang/spirv/writer/common/function.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-10T20:04:41Z",
+      "side": 1,
+      "message": "Couldn\u0027t the initial block just contain a merge and branch instruction? At which point `\u003e2` is false and then we won\u0027t do this merge check? \n\nFor example in the `Switch_MultipleSelectorsPerCase` test  is emitting the merge block halfway through the switch cases.\n\nSide note: I feel like we can probably just put the initial block\u0027s OpLabel in the block now so that we don\u0027t need to special-case it.",
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abf77330_a0e5aed9",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-10T20:04:41Z",
+      "side": 1,
+      "message": "Nit: Could just pass `blk`?",
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecbdfc83_8bbf91ec",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-10T20:04:41Z",
+      "side": 1,
+      "message": "Nit: Update comment",
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faf58712_12de118b",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2304,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-10T20:04:41Z",
+      "side": 1,
+      "message": "I think you can get rid of all of the `skip_phis` logic if you just change this to:\n```\nauto cont_blk \u003d NewBlock(Label(loop-\u003eContinuing()));\nEmitIncomingPhis(loop-\u003eContinuing());\nblocks_to_emit_.push_back({cont_blk, loop-\u003eContinuing()});\n```\n\nThat also keeps all of the logic for incoming phis in `EmitLoop`, which is kinda nice.",
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
