@@ -100,6 +100,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dd662fe4_6a4149f5",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-10T00:20:45Z",
+      "side": 1,
+      "message": "`DawnTexelCopyBufferRowAlignmentLimits` doesn\u0027t support \"required limits\"(I think it needs more validations). So we assume there is no such chained structures, maybe a DAWN_ASSERT needed here.",
+      "parentUuid": "15394463_52ee2cc7",
+      "range": {
+        "startLine": 282,
+        "startChar": 4,
+        "endLine": 282,
+        "endChar": 55
+      },
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7a0736b5_f081c24c",
         "filename": "src/dawn/native/Limits.cpp",
         "patchSetId": 5
