@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "16bca0e5_acaed3bd",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-10T00:03:51Z",
+      "side": 1,
+      "message": "Since some of the files in the package were originally developed in emscripten, they have the emscripten license. Using that license here lets us have a single license file for everything in the package, which I think is more straightforward.",
+      "parentUuid": "b9bf573d_fdec3eb6",
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "00498903_7ba01c8b",
         "filename": "third_party/emdawnwebgpu/port.py",
         "patchSetId": 17
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Maybe just use a version number in this file that gets bumped every time you publish?\n\nOtherwise, this approach doesn\u0027t seem unreasonable I suppose.",
       "parentUuid": "00498903_7ba01c8b",
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e34fc65f_8a80479c",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-10T00:03:51Z",
+      "side": 1,
+      "message": "Thanks. I thought about that, but the specific thing I wanted to fix was that it wouldn\u0027t rebuild when I was testing locally, something I\u0027m sure people will run into in the future. This fixes both, so I think I\u0027ll keep it.",
+      "parentUuid": "04c183b5_7a6e0c1d",
       "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -153,6 +189,24 @@
           ]
         }
       ],
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4da93fb_c9bd342b",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-10T00:03:51Z",
+      "side": 1,
+      "message": "Ah, I used to have this formatted better, clang-format did this ^_^",
+      "parentUuid": "cc39aec7_b2d9289b",
       "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
