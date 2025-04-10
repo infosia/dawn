@@ -173096,6 +173096,14 @@ webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type=
 webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="ComplexStruct";wgsize=[3,7]
 webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="ComplexStruct";wgsize=[1,128]
 webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="ComplexStruct";wgsize=[16,16]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="atomic%3Cu32%3E";wgsize=[1,1]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="atomic%3Cu32%3E";wgsize=[3,7]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="atomic%3Cu32%3E";wgsize=[1,128]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="atomic%3Cu32%3E";wgsize=[16,16]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="atomic%3Ci32%3E";wgsize=[1,1]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="atomic%3Ci32%3E";wgsize=[3,7]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="atomic%3Ci32%3E";wgsize=[1,128]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="atomic%3Ci32%3E";wgsize=[16,16]
 webgpu:shader,execution,expression,call,user,ptr_params:read_full_object:address_space="function";call_indirection=0;type="vec4i"
 webgpu:shader,execution,expression,call,user,ptr_params:read_full_object:address_space="function";call_indirection=0;type="array"
 webgpu:shader,execution,expression,call,user,ptr_params:read_full_object:address_space="function";call_indirection=0;type="struct"
@@ -213037,10 +213045,6 @@ webgpu:shader,validation,expression,call,builtin,workgroupUniformLoad:only_in_co
 webgpu:shader,validation,expression,call,builtin,workgroupUniformLoad:only_in_compute:entry_point="fragment_without_call";call="workgroupUniformLoad(%26wgvar)"
 webgpu:shader,validation,expression,call,builtin,workgroupUniformLoad:no_atomics:type="bool";call="bar()"
 webgpu:shader,validation,expression,call,builtin,workgroupUniformLoad:no_atomics:type="bool";call="workgroupUniformLoad(%26wgvar)"
-webgpu:shader,validation,expression,call,builtin,workgroupUniformLoad:no_atomics:type="atomic%3Ci32%3E";call="bar()"
-webgpu:shader,validation,expression,call,builtin,workgroupUniformLoad:no_atomics:type="atomic%3Ci32%3E";call="workgroupUniformLoad(%26wgvar)"
-webgpu:shader,validation,expression,call,builtin,workgroupUniformLoad:no_atomics:type="atomic%3Cu32%3E";call="bar()"
-webgpu:shader,validation,expression,call,builtin,workgroupUniformLoad:no_atomics:type="atomic%3Cu32%3E";call="workgroupUniformLoad(%26wgvar)"
 webgpu:shader,validation,expression,call,builtin,workgroupUniformLoad:no_atomics:type="array%3Catomic%3Ci32%3E,%204%3E";call="bar()"
 webgpu:shader,validation,expression,call,builtin,workgroupUniformLoad:no_atomics:type="array%3Catomic%3Ci32%3E,%204%3E";call="workgroupUniformLoad(%26wgvar)"
 webgpu:shader,validation,expression,call,builtin,workgroupUniformLoad:no_atomics:type="AtomicStruct";call="bar()"
