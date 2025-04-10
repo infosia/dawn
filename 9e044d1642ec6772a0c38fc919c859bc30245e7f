@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27654248_bee170e6",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-10T21:20:44Z",
+      "side": 1,
+      "message": "I meant pointer, will fix.",
+      "revId": "9e044d1642ec6772a0c38fc919c859bc30245e7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
