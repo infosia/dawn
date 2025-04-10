@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4b6271c_df41ec77",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-10T21:10:18Z",
+      "side": 0,
+      "message": "Why is this a problem?",
+      "range": {
+        "startLine": 157,
+        "startChar": 3,
+        "endLine": 157,
+        "endChar": 20
+      },
+      "revId": "d0989686cb14531bc724ed6c9db681ca16053be1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4a763f2_0c71e225",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-10T21:10:18Z",
+      "side": 0,
+      "message": "I assume this is what you meant by \"Also cleans up `at()` to not return a reference to a local variable, since I was tired of ClangTidy warning me about it.\".\n\nI\u0027m not sure why it\u0027s saying it returns a ref to a local variable, given that `at()` returns a reference to a member variable. What is the warning exactly? Maybe you can \"fix\" it by assigning the rresult to a local var:\n\n```\nauto\u0026 end_ref \u003d \u0026at(length() - 1);\nend_ptr \u003d \u0026end_ref + 1;\n```",
+      "range": {
+        "startLine": 448,
+        "startChar": 18,
+        "endLine": 448,
+        "endChar": 40
+      },
+      "revId": "d0989686cb14531bc724ed6c9db681ca16053be1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dea0faf_88a1551e",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-10T21:10:18Z",
+      "side": 1,
+      "message": "```suggestion\n                auto* exp_end_ptr \u003d \u0026at(exp_end);\n```",
+      "range": {
+        "startLine": 464,
+        "startChar": 16,
+        "endLine": 464,
+        "endChar": 32
+      },
+      "revId": "46d3f107bc24da75346222e09fd98a42e50bdba2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
