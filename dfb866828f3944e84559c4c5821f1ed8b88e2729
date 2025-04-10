@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f19cf343_fa8aca6a",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-10T18:02:19Z",
+      "side": 1,
+      "message": "I went with `dawn device allocator control` since it might contain non-heap related allocator stuff someday. For example the disable suballocation toggle could be merged into this struct as a bool?",
+      "parentUuid": "a055560a_77767dc1",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "de70ce61_6a253fa8",
@@ -106,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "528b25f8_61b9bb38",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3848,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-10T18:02:19Z",
+      "side": 1,
+      "message": "Oh I didn\u0027t realize there were upstream native headers. That makes more sense. I don\u0027t think this needs to be exposed on wire? Although I guess it\u0027s not harmful and it\u0027s not going to be exposed to JS anyways.",
+      "parentUuid": "f4489a16_8bbb280a",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68277b51_27130455",
@@ -141,6 +177,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fee5c9d8_a354ebc4",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-10T18:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc5316e0_f245b7cd",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9efee33_288d2b43",
@@ -154,6 +208,24 @@
       "writtenOn": "2025-04-10T13:25:19Z",
       "side": 1,
       "message": "```suggestion\n                        \"allocator heap block size (%d) isn\u0027t a power of two\",\n```",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e88782f_e2f139d5",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-10T18:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9efee33_288d2b43",
       "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -206,6 +278,24 @@
       "side": 1,
       "message": "We can use 0 to disable suballocation so I think any value is fine. Also I think I\u0027d have a slight preference for handling the descriptor and defaulting in [1] so this class doesn\u0027t have to think about it. (though that puts the constant for the default value in a public class, so maybe it\u0027s not clear cut)",
       "parentUuid": "5fde521a_6abafa25",
+      "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "16a441af_cd2d15db",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-10T18:02:19Z",
+      "side": 1,
+      "message": "In my current implementation 0 means use the default size (8mb) but fair I won\u0027t validate a minimum here. As an aside, it would be nice if there was a way to attach documentation to the generated structs to explain what the fields actually do.\n\n\u003e Also I think I\u0027d have a slight preference for handling the descriptor and defaulting in [1] so this class doesn\u0027t have to think about it. (though that puts the constant for the default value in a public class, so maybe it\u0027s not clear cut)\n\nDone. I added a static function on RMA to get HeapBlockSize or default from the struct. That way the constant isn\u0027t exposed.",
+      "parentUuid": "d257bacf_69336b85",
       "revId": "dfb866828f3944e84559c4c5821f1ed8b88e2729",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
