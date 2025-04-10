@@ -70,6 +70,24 @@
       "parentUuid": "a21c8b23_f744eb41",
       "revId": "f141d3a3c87c46157e76fbcf418abb62e87d1f2d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4ee390a_2ffc3c39",
+        "filename": "tools/src/cmd/cts/roll/roll.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-04-10T22:36:03Z",
+      "side": 1,
+      "message": "I added -test-query (passed to the CTS to generate the list) and -test-filter (a glob to filter the list). You can use either or both.",
+      "parentUuid": "d48bd598_14950190",
+      "revId": "f141d3a3c87c46157e76fbcf418abb62e87d1f2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
