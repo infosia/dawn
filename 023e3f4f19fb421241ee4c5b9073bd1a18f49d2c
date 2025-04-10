@@ -33,6 +33,41 @@
       "message": "Could we validate that it is only used with SharedTextureMemoryD3D11Texture2DDescriptor?",
       "revId": "023e3f4f19fb421241ee4c5b9073bd1a18f49d2c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "590555cf_1df16dfb",
+        "filename": "include/dawn/native/D3D11Backend.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-10T14:28:49Z",
+      "side": 1,
+      "message": "This flag is only a member of `SharedTextureMemoryD3D11Texture2DDescriptor`. So it can only be used by that struct currently, right?\n\nThe other chained struct is `SharedTextureMemoryDXGISharedHandleDescriptor` which doesn\u0027t have this flag and we always requires end access fence in [1].",
+      "parentUuid": "9d7243fd_d4b4c7be",
+      "revId": "023e3f4f19fb421241ee4c5b9073bd1a18f49d2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1d633f8_27b4b3f4",
+        "filename": "src/dawn/native/d3d11/SharedTextureMemoryD3D11.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-10T14:28:49Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "023e3f4f19fb421241ee4c5b9073bd1a18f49d2c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
