@@ -52,6 +52,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "55b75f4c_417b7c45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-10T18:05:58Z",
+      "side": 1,
+      "message": "LGTM. The notable behavioral change here is that ICEs will no longer show up in Chrome\u0027s dev console, but that\u0027s probably not a big deal given that they are always caused by an internal bug.",
+      "revId": "90974ae701016201d4e1743e70a4fa5e112a4e62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b07e07d_09c2bc60",
