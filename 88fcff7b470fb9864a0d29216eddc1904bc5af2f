@@ -118,6 +118,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1d2858f_fe63e99a",
+        "filename": "src/tint/lang/spirv/writer/common/function.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-10T20:59:35Z",
+      "side": 1,
+      "message": "Ah yes, forgot about the vars.",
+      "parentUuid": "33f2e723_e5b0c97f",
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abf77330_a0e5aed9",
