@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4500c3f3_a9164191",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-04-10T19:40:30Z",
+      "side": 1,
+      "message": "I think this should be removed from client code first.\n\nI see a couple of usages inside g3.  \nThere\u0027s a bug filed to track that: crbug.com/390632529",
+      "revId": "bb12be89cd3f1a7b857b5398197ab842d496a8e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
