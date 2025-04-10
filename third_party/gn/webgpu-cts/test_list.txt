@@ -3732,10 +3732,7 @@ webgpu:api,operation,reflection:texture_reflection_attributes:
 webgpu:api,operation,reflection:texture_creation_from_reflection:
 webgpu:api,operation,reflection:query_set_reflection_attributes:
 webgpu:api,operation,reflection:query_set_creation_from_reflection:
-webgpu:api,operation,render_pass,clear_value:stored:
 webgpu:api,operation,render_pass,clear_value:loaded:
-webgpu:api,operation,render_pass,clear_value:srgb:
-webgpu:api,operation,render_pass,clear_value:layout:
 webgpu:api,operation,render_pass,clear_value:stencil_clear_value:stencilFormat="stencil8";stencilClearValue=0;applyStencilClearValueAsStencilReferenceValue=true
 webgpu:api,operation,render_pass,clear_value:stencil_clear_value:stencilFormat="stencil8";stencilClearValue=0;applyStencilClearValueAsStencilReferenceValue=false
 webgpu:api,operation,render_pass,clear_value:stencil_clear_value:stencilFormat="stencil8";stencilClearValue=1;applyStencilClearValueAsStencilReferenceValue=true
