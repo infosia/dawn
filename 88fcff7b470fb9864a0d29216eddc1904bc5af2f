@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89888063_c03f8b03",
+        "filename": "src/tint/lang/spirv/writer/common/function.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-10T20:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aed29ef6_4f2df183",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 5
+      },
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1b439f47_8d6ac5d8",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-04-10T20:04:41Z",
       "side": 1,
       "message": "I think you can get away with only one set here. If you do the \"seen\" check inside `push_id` instead, you can make sure that every block is enqueued once, which means they will also only be emitted once.\n\nIt slightly changes the block emission order in certain cases (namely switch statements that re-use blocks), but I think it still works (briefly tested locally).\n\nThen you don\u0027t need the `is_stop` thing, I think.",
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "693c34ca_588e8a89",
+        "filename": "src/tint/lang/spirv/writer/common/function.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-10T20:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b439f47_8d6ac5d8",
       "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -60,6 +102,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "33f2e723_e5b0c97f",
+        "filename": "src/tint/lang/spirv/writer/common/function.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-10T20:52:33Z",
+      "side": 1,
+      "message": "Changed to `\u003e\u003d`. We can\u0027t easily split the function headers label into the block because we need to print it as:\n\n```\nlabel\n\u003cvars\u003e\n\u003cinstructions\u003e\n```\n\nThe vars depends on whats in the block as we emit it.",
+      "parentUuid": "5744fc3c_8a1a0189",
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "abf77330_a0e5aed9",
         "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
         "patchSetId": 3
@@ -71,6 +131,24 @@
       "writtenOn": "2025-04-10T20:04:41Z",
       "side": 1,
       "message": "Nit: Could just pass `blk`?",
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc3d2362_fa7ba8cb",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-10T20:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abf77330_a0e5aed9",
       "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2967e98_44845fd0",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-10T20:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecbdfc83_8bbf91ec",
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "faf58712_12de118b",
@@ -105,6 +201,24 @@
       "writtenOn": "2025-04-10T20:04:41Z",
       "side": 1,
       "message": "I think you can get rid of all of the `skip_phis` logic if you just change this to:\n```\nauto cont_blk \u003d NewBlock(Label(loop-\u003eContinuing()));\nEmitIncomingPhis(loop-\u003eContinuing());\nblocks_to_emit_.push_back({cont_blk, loop-\u003eContinuing()});\n```\n\nThat also keeps all of the logic for incoming phis in `EmitLoop`, which is kinda nice.",
+      "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "459c1b1e_c3332bce",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2304,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-10T20:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faf58712_12de118b",
       "revId": "88fcff7b470fb9864a0d29216eddc1904bc5af2f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
