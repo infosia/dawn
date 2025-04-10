@@ -86,6 +86,24 @@
       "message": "Sorry for not replying for so long, I didn\u0027t notice that this got cached as drafts.\nMy github account\u0027s email matches the email of both the commits I made, so I don\u0027t know what the mismatch is.",
       "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e38934d_3a70c1eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-10T14:30:01Z",
+      "side": 1,
+      "message": "The `Author` of the commits (you can see it under the `Change Info` in the top right) is an address which does not match the gmail address this comment was left with.  (If you run `git log` it will also show the `author` line). The CLA is signed and associated to the gmail account, not the other.",
+      "parentUuid": "016a059d_a8be36f1",
+      "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
