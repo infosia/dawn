@@ -33,6 +33,23 @@
       "message": "James PTAL tint/",
       "revId": "b1be5d2f95fe36bbbc769e3a5086fb8489a73a58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfac09d2_28cf82d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 27
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-10T13:28:26Z",
+      "side": 1,
+      "message": "Tint side LGTM.",
+      "revId": "b1be5d2f95fe36bbbc769e3a5086fb8489a73a58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
