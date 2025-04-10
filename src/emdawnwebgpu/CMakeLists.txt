@@ -255,8 +255,6 @@ if (EMSCRIPTEN)
             "${CMAKE_BINARY_DIR}/emdawnwebgpu_pkg/include_cpp/dawn"
             "${CMAKE_BINARY_DIR}/emdawnwebgpu_pkg/src"
         COMMAND ${CMAKE_COMMAND} -E copy
-            # TODO(crbug.com/371024051): Include a file that refers back to the
-            # Dawn revision used to build the package.
             "${DAWN_EMDAWNWEBGPU_DIR}/LICENSE"
             "${DAWN_EMDAWNWEBGPU_DIR}/port.py"
             "${CMAKE_BINARY_DIR}/emdawnwebgpu_pkg/"
