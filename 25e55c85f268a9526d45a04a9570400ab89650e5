@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24275f89_df4d493d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-10T18:53:34Z",
+      "side": 1,
+      "message": "+ynovikov for infra-focused review\n+dsinclair for owner stamps",
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
