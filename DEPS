@@ -231,14 +231,6 @@ deps = {
     'url': '{chromium_git}/chromium/src/testing@ae9705179f821d1dbd2b0a2ba7a6582faac7f86b',
     'condition': 'dawn_standalone',
   },
-  'third_party/fuzztest/src': {
-    'url': '{chromium_git}/external/github.com/google/fuzztest.git' + '@' + '89408f91d2f1101fe2d79199e7ed994a4d197eb8',
-    'condition': 'dawn_standalone',
-  },
-  'third_party/re2/src': {
-    'url': '{chromium_git}/external/github.com/google/re2.git' + '@' + 'c84a140c93352cdabbfb547c531be34515b12228',
-    'condition': 'dawn_standalone',
-  },
   'third_party/libFuzzer/src': {
     'url': '{chromium_git}/external/github.com/llvm/llvm-project/compiler-rt/lib/fuzzer.git' + '@' + '26cc39e59b2bf5cbc20486296248a842c536878d',
     'condition': 'dawn_standalone',
