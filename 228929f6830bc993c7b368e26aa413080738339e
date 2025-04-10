@@ -182,6 +182,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46f896ad_e8beabc8",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-10T20:46:11Z",
+      "side": 1,
+      "message": "Ah, right... Maybe not an ASSERT since I can imagine a world where a user uses `GetLimits` and then passes that result to create something. They would needed to have provided `DawnTexelCopyBufferRowAlignmentLimits` in the `GetLimits` call, and not removed it when they create, but it\u0027s not necessarily incorrect usage?\n\nWe could maybe just do a warning? Or leaving it as is is probably fine also then.",
+      "parentUuid": "dd662fe4_6a4149f5",
+      "range": {
+        "startLine": 282,
+        "startChar": 4,
+        "endLine": 282,
+        "endChar": 55
+      },
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a0736b5_f081c24c",
