@@ -70,8 +70,7 @@ enum class BindingInfoType {
 
 // A mirror of wgpu::BufferBindingLayout for use inside dawn::native.
 struct BufferBindingInfo {
-    BufferBindingInfo();
-    explicit BufferBindingInfo(const BufferBindingLayout& apiLayout);
+    static BufferBindingInfo From(const BufferBindingLayout& apiLayout);
 
     wgpu::BufferBindingType type;
     uint64_t minBindingSize;
@@ -82,8 +81,7 @@ struct BufferBindingInfo {
 
 // A mirror of wgpu::TextureBindingLayout for use inside dawn::native.
 struct TextureBindingInfo {
-    TextureBindingInfo();
-    explicit TextureBindingInfo(const TextureBindingLayout& apiLayout);
+    static TextureBindingInfo From(const TextureBindingLayout& apiLayout);
 
     // For shader reflection UnfilterableFloat is never used and the sample type is Float for any
     // texture_Nd<f32>.
@@ -94,8 +92,7 @@ struct TextureBindingInfo {
 
 // A mirror of wgpu::StorageTextureBindingLayout for use inside dawn::native.
 struct StorageTextureBindingInfo {
-    StorageTextureBindingInfo();
-    explicit StorageTextureBindingInfo(const StorageTextureBindingLayout& apiLayout);
+    static StorageTextureBindingInfo From(const StorageTextureBindingLayout& apiLayout);
 
     wgpu::TextureFormat format;
     wgpu::TextureViewDimension viewDimension;
@@ -104,8 +101,7 @@ struct StorageTextureBindingInfo {
 
 // A mirror of wgpu::SamplerBindingLayout for use inside dawn::native.
 struct SamplerBindingInfo {
-    SamplerBindingInfo();
-    explicit SamplerBindingInfo(const SamplerBindingLayout& apiLayout);
+    static SamplerBindingInfo From(const SamplerBindingLayout& apiLayout);
 
     // For shader reflection NonFiltering is never used and Filtering is used for any `sampler`.
     wgpu::SamplerBindingType type;
@@ -113,7 +109,7 @@ struct SamplerBindingInfo {
 
 // A mirror of wgpu::StaticSamplerBindingLayout for use inside dawn::native.
 struct StaticSamplerBindingInfo {
-    explicit StaticSamplerBindingInfo(const StaticSamplerBindingLayout& apiLayout);
+    static StaticSamplerBindingInfo From(const StaticSamplerBindingLayout& apiLayout);
 
     // Holds a ref instead of an unowned pointer.
     Ref<SamplerBase> sampler;
@@ -129,9 +125,6 @@ struct ExternalTextureBindingInfo {};
 
 // Internal to vulkan only.
 struct InputAttachmentBindingInfo {
-    InputAttachmentBindingInfo();
-    explicit InputAttachmentBindingInfo(wgpu::TextureSampleType sampleType);
-
     wgpu::TextureSampleType sampleType;
 };
 
@@ -146,6 +139,9 @@ struct BindingInfo {
                  StaticSamplerBindingInfo,
                  InputAttachmentBindingInfo>
         bindingLayout;
+
+    bool operator==(const BindingInfo& other) const;
+    bool operator!=(const BindingInfo& other) const;
 };
 
 BindingInfoType GetBindingInfoType(const BindingInfo& bindingInfo);
