@@ -93,9 +93,9 @@ ResultOrError<UnpackedPtr<PipelineLayoutDescriptor>> ValidatePipelineLayoutDescr
                         "created as part of a pipeline's default layout.",
                         i, descriptor->bindGroupLayouts[i]);
 
-        AccumulateBindingCounts(
-            &bindingCounts,
-            descriptor->bindGroupLayouts[i]->GetInternalBindGroupLayout()->GetBindingCountInfo());
+        AccumulateBindingCounts(&bindingCounts, descriptor->bindGroupLayouts[i]
+                                                    ->GetInternalBindGroupLayout()
+                                                    ->GetValidationBindingCounts());
     }
 
     DAWN_TRY(ValidateBindingCounts(device->GetLimits(), bindingCounts, device->GetAdapter()));
@@ -172,7 +172,7 @@ PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
     for (BindGroupIndex i : IterateBitSet(mMask)) {
         AccumulateBindingCounts(
             &bindingCounts,
-            mBindGroupLayouts[i]->GetInternalBindGroupLayout()->GetBindingCountInfo());
+            mBindGroupLayouts[i]->GetInternalBindGroupLayout()->GetValidationBindingCounts());
     }
     mNumStorageBufferBindingsInVertexStage =
         bindingCounts.perStage[SingleShaderStage::Vertex].storageBufferCount;
