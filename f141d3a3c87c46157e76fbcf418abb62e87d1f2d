@@ -88,6 +88,24 @@
       "parentUuid": "d48bd598_14950190",
       "revId": "f141d3a3c87c46157e76fbcf418abb62e87d1f2d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4573203_b7aa287a",
+        "filename": "tools/src/cmd/cts/roll/roll.go",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-04-11T18:56:01Z",
+      "side": 1,
+      "message": "LGTM!",
+      "parentUuid": "a4ee390a_2ffc3c39",
+      "revId": "f141d3a3c87c46157e76fbcf418abb62e87d1f2d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
