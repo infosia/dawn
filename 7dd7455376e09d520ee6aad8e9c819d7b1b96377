@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbc44296_6a8128fb",
+        "filename": "src/tint/lang/core/type/matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-11T23:02:51Z",
+      "side": 1,
+      "message": "Opened crbug.com/410060296",
+      "parentUuid": "bb455e11_a0159130",
+      "range": {
+        "startLine": 43,
+        "startChar": 11,
+        "endLine": 48,
+        "endChar": 12
+      },
+      "revId": "7dd7455376e09d520ee6aad8e9c819d7b1b96377",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44f4626f_c465be67",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "003e32b6_1b16a98f",
+        "filename": "src/tint/lang/core/type/type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-11T23:02:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "44f4626f_c465be67",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 11
+      },
+      "revId": "7dd7455376e09d520ee6aad8e9c819d7b1b96377",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9fb5e85b_58b4b417",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-04-11T19:08:19Z",
       "side": 1,
       "message": "For a future CL: I think we can init Vector::flags with the flags of subtype.",
+      "range": {
+        "startLine": 57,
+        "startChar": 76,
+        "endLine": 57,
+        "endChar": 95
+      },
+      "revId": "7dd7455376e09d520ee6aad8e9c819d7b1b96377",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78e2aa04_ac7b74b0",
+        "filename": "src/tint/lang/core/type/vector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-11T23:02:51Z",
+      "side": 1,
+      "message": "Opened crbug.com/410060296",
+      "parentUuid": "9fb5e85b_58b4b417",
       "range": {
         "startLine": 57,
         "startChar": 76,
