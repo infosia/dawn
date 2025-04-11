@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb455e11_a0159130",
+        "filename": "src/tint/lang/core/type/matrix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-11T19:08:19Z",
+      "side": 1,
+      "message": "For a future CL: I think we can just init Matrix::flags with that of the subtype (`column_type-\u003eType()`).",
+      "range": {
+        "startLine": 43,
+        "startChar": 11,
+        "endLine": 48,
+        "endChar": 12
+      },
+      "revId": "7dd7455376e09d520ee6aad8e9c819d7b1b96377",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44f4626f_c465be67",
+        "filename": "src/tint/lang/core/type/type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-11T19:08:19Z",
+      "side": 1,
+      "message": "Not for this change, but we should really remove these `inline` keywords on inlined member functions. They serve no function.",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 11
+      },
+      "revId": "7dd7455376e09d520ee6aad8e9c819d7b1b96377",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fb5e85b_58b4b417",
+        "filename": "src/tint/lang/core/type/vector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-11T19:08:19Z",
+      "side": 1,
+      "message": "For a future CL: I think we can init Vector::flags with the flags of subtype.",
+      "range": {
+        "startLine": 57,
+        "startChar": 76,
+        "endLine": 57,
+        "endChar": 95
+      },
+      "revId": "7dd7455376e09d520ee6aad8e9c819d7b1b96377",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
