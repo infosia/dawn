@@ -340,7 +340,13 @@ deps = {
   },
 
   'third_party/dxc': {
+<<<<<<< PATCH SET (3c31a6 change deps test)
+    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@4bc1498c479c39bdf75c793da5f846f0d616683c',
+||||||| BASE
+    'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@bc9044adc7356896eeb1f37a3846f4fef8ed241e',
+=======
     'url': '{chromium_git}/external/github.com/microsoft/DirectXShaderCompiler@0a470b51535265b759c0c3a3078fa8f97fd5eb12',
+>>>>>>> BASE      (47761a [tint] Make server mode the default for E2E tests)
   },
 
   'third_party/dxheaders': {
