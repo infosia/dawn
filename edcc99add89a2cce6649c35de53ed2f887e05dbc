@@ -16,6 +16,23 @@
       "message": "PTAL. Decided to go a slightly different route, keeping these tests as written as _resolver_ tests by moving them back to wgsl/resolver. We can then create tests similar to the runtime tests which are `Eval` specific. I think these tests as written have value given they check things like resolver errors, abstracts and that the flow through resolver works correctly.",
       "revId": "edcc99add89a2cce6649c35de53ed2f887e05dbc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4dbae05_4b384215",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-11T13:07:24Z",
+      "side": 1,
+      "message": "I hope we can remove some of these tests when we add `core` ones to avoid just duplicating everything. There\u0027s only a few cases that are more interesting to test in the WGSL frontend flow (e.g. short-circuiting).",
+      "revId": "edcc99add89a2cce6649c35de53ed2f887e05dbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
