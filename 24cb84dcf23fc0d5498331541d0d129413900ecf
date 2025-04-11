@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13e7047b_2170f9d4",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-11T19:01:10Z",
+      "side": 1,
+      "message": "nit. Maybe:\n\n\"DawnTexelCopyBufferRowAlignmentLimits is not supported in required limits.\"",
+      "range": {
+        "startLine": 289,
+        "startChar": 16,
+        "endLine": 289,
+        "endChar": 88
+      },
+      "revId": "24cb84dcf23fc0d5498331541d0d129413900ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
