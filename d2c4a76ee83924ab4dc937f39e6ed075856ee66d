@@ -122,6 +122,24 @@
       "parentUuid": "9e38934d_3a70c1eb",
       "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e47e4497_788731fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-11T11:28:55Z",
+      "side": 1,
+      "message": "You could sign the CLA with the Manuel email address or, I think you can use something like `git commit --amend --reset-author --author\u003d\"author name \u003cauthor email\u003e\"` and then do `git cl upload` of the change an I believe it changes the author information in Gerrit. Or, if that fails to change it in gerrit you can always `git cl issue 0` `git cl upload` to send up a new change and then Abandon this one.",
+      "parentUuid": "5ce36a82_2c8dde46",
+      "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
