@@ -141,6 +141,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7778069_2bb5f8d5",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-11T06:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "682fa79d_d202d922",
+      "range": {
+        "startLine": 58,
+        "startChar": 21,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b74000ba_1cb441b1",
@@ -154,6 +178,30 @@
       "writtenOn": "2025-03-21T16:30:19Z",
       "side": 1,
       "message": "I would call this simply `advance`. All the call sites look the same:\n```\n    auto range \u003d getNextRange();\n    mOffset \u003d range.first;\n    mSize \u003d range.second;\n```\nso you can also move the mOffset and mSize setting into this function. I would also shift mBits so that the 0th bit is at offset+size. We would store:\n\n * current offset\n * current size\n * bits that have been shifted to offset + size and are ready to have `advance` called again.\n \nWe could probably avoid needing `mWordOffset` because the bits we want to look at always start at the first bit.\n \nThis means that the iterator will be comparable to the `end` iterator without any processing once there are no ranges left.",
+      "range": {
+        "startLine": 131,
+        "startChar": 67,
+        "endLine": 131,
+        "endChar": 79
+      },
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcf0a784_26116efa",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-11T06:02:51Z",
+      "side": 1,
+      "message": "Updated! PTAL, thanks!",
+      "parentUuid": "b74000ba_1cb441b1",
       "range": {
         "startLine": 131,
         "startChar": 67,
@@ -201,6 +249,30 @@
           ]
         }
       ],
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "257fc170_51caf708",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-11T06:02:51Z",
+      "side": 1,
+      "message": "Done. Use new `ScanForward`",
+      "parentUuid": "bdc61ae8_14f90e44",
+      "range": {
+        "startLine": 137,
+        "startChar": 30,
+        "endLine": 137,
+        "endChar": 41
+      },
       "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -254,6 +326,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aafddde8_935c147c",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-11T06:02:51Z",
+      "side": 1,
+      "message": "Updated!",
+      "parentUuid": "8cf97071_52239b3c",
+      "range": {
+        "startLine": 142,
+        "startChar": 1,
+        "endLine": 147,
+        "endChar": 13
+      },
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6b29b0f9_aedc43c3",
         "filename": "src/dawn/tests/unittests/BitSetRangeIteratorTests.cpp",
         "patchSetId": 3
@@ -265,6 +361,30 @@
       "writtenOn": "2025-03-21T16:30:19Z",
       "side": 1,
       "message": "No need to have this as a member. Lets make each test use different sizes.\n\nPlease cover small sets with \u003c 1 word and very large ones \u003e 128 bits.",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33c04509_903a12d0",
+        "filename": "src/dawn/tests/unittests/BitSetRangeIteratorTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-11T06:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b29b0f9_aedc43c3",
       "range": {
         "startLine": 40,
         "startChar": 4,
@@ -312,6 +432,30 @@
           ]
         }
       ],
+      "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7c45054_a4f4e594",
+        "filename": "src/dawn/tests/unittests/BitSetRangeIteratorTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-11T06:02:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc527c68_ea1149af",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 5
+      },
       "revId": "fe2d8b910f2edee414bfffbffa6d4a10120df254",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

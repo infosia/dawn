@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ed8bde1_bd189bed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-11T06:02:51Z",
+      "side": 1,
+      "message": "Sry for delay, CL updated, PTAL again, thanks!",
+      "revId": "23f450015fdcf1cd56e9eec1d44d78442b465a8b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
