@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05822b7e_7d5fc9a8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-11T20:35:51Z",
+      "side": 1,
+      "message": "I think the gitignore file is right, you just need to cleanup the old stuff given that it moved to src/?",
+      "revId": "543095c871c3b3bbfc4607c4295c419afa39ec4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
