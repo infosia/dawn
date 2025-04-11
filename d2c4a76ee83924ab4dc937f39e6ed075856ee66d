@@ -158,6 +158,24 @@
       "parentUuid": "e47e4497_788731fd",
       "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aba9760d_128c9150",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-04-11T12:55:24Z",
+      "side": 1,
+      "message": "I reset the author to the gmail now and force pushed. How can I import this to gerrit? I only have vanilla git on my computer.",
+      "parentUuid": "093e3089_1a6aebb4",
+      "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
