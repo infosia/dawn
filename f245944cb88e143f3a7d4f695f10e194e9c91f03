@@ -16,6 +16,29 @@
       "message": "LGTM!  This is a nice addition.\ncc\u0027d bsheedy so he knows about this.",
       "revId": "f245944cb88e143f3a7d4f695f10e194e9c91f03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25cd924c_4efdef9b",
+        "filename": "tools/src/cmd/cts/roll/roll.go",
+        "patchSetId": 4
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-11T19:28:01Z",
+      "side": 1,
+      "message": "I think you\u0027re missing an `err` check after this call.",
+      "range": {
+        "startLine": 326,
+        "startChar": 17,
+        "endLine": 326,
+        "endChar": 20
+      },
+      "revId": "f245944cb88e143f3a7d4f695f10e194e9c91f03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
