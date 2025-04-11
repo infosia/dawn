@@ -16,6 +16,374 @@
       "message": "+ynovikov for infra-focused review\n+dsinclair for owner stamps",
       "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90de84d2_2908d328",
+        "filename": "infra/specs/OWNERS",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "Can you add me, too?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99926560_ffbefbfb",
+        "filename": "infra/specs/generate_test_spec_json.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "I don\u0027t think we should do that.\nChromium and Dawn\u0027s copies can get out of sync, so running in different checkouts can produce a different JSON.\nI\u0027d rather have this script fail when run from Chromium checkout.",
+      "range": {
+        "startLine": 38,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 59
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29c18755_55b020ef",
+        "filename": "infra/specs/generate_test_spec_json.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have a `gpu_linux_none_stable` mixin in https://source.chromium.org/chromium/chromium/src/+/main:infra/config/targets/mixins.star and use it for Chromium SwANGLE bots, and also import it in ANGLE and Dawn.\nCurrently, these are the dimensions that SwANGLE bots use:\n```\n          \"dimensions\": {\n            \"cpu\": \"x86-64\",\n            \"gpu\": \"none\",\n            \"os\": \"Ubuntu-22.04\",\n            \"pool\": \"chromium.tests.gpu\"\n          },\n```\nI think I prefer that to `\u0027gce\u0027: \u00271\u0027` for consistency with other `gpu_*` mixins.\n\nFor now, we can use the existing mixins in waterfalls.pyl, like ANGLE does:\n```\n        \u0027mixins\u0027: [\n          \u0027gpu-swarming-pool\u0027,\n          \u0027no_gpu\u0027,\n          \u0027linux-jammy\u0027,\n          \u0027x86-64\u0027,\n        ],\n```",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b49e604_9400711f",
+        "filename": "infra/specs/generate_test_spec_json.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "used but not defined?",
+      "range": {
+        "startLine": 167,
+        "startChar": 57,
+        "endLine": 167,
+        "endChar": 76
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd53d06f_45f117d2",
+        "filename": "infra/specs/generate_test_spec_json.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "This should be used in presubmit to ensure consistency between generator and generated files, I don\u0027t see this called in this CL.",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 24
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35998c9a_03144486",
+        "filename": "infra/specs/mb_config.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "I think we also need `use_reclient \u003d false`.\nMight want to group with remoteexec as well.",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2c2ee0e_5428c8a0",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "I\u0027d like to suggest a different naming scheme, consistent with what we use for webgl_conformance_tests and ANGLE\u0027s test_suites.pyl.\n@dsinclair@chromium.org, could you PTAL at the suggestions below?\n(or maybe we need another reviewer if Dan is OOO)",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2c7e5af_07e80dd9",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "dawn_end2end_swangle_gtests",
+      "range": {
+        "startLine": 3,
+        "startChar": 5,
+        "endLine": 3,
+        "endChar": 47
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e4cd936_5055c1b5",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "dawn_end2end_swangle_tests",
+      "range": {
+        "startLine": 4,
+        "startChar": 7,
+        "endLine": 4,
+        "endChar": 48
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5d4f96e_9830317e",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "We use `\u0027skip_merge_script\u0027: True,` in chrome.gpu.fyi waterfall, can that work?\nI remember we used it for Android tests and they were sharded.",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 60
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "faaa3524_37be1c85",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "dawn_end2end_sws_gtests",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 41
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ead7efbe_aa66211a",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "dawn_end2end_sws_tests",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6363b8f9_003c3ef8",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "dawn_unit_gtests",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7724e481_88fbe97f",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "dawn_wire_unit_gtests",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 30
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84fc9aee_ccfa5a33",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "dawn_wire_unittests",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 31
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48bb0316_1c4bc6b0",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-11T14:06:20Z",
+      "side": 1,
+      "message": "tint_unit_gtests",
+      "range": {
+        "startLine": 81,
+        "startChar": 5,
+        "endLine": 81,
+        "endChar": 25
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
