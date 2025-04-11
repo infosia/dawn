@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "957a7856_87d32aee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-11T20:01:09Z",
+      "side": 1,
+      "message": "+amaiorano for additional comment on Yuly\u0027s proposed name changes since you reviewed the design doc for this effort",
+      "revId": "995c909256be29c8086ccd739c3624485a910b45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d74e822d_d0370b4d",
+        "filename": "infra/specs/OWNERS",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-11T20:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90de84d2_2908d328",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99926560_ffbefbfb",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-04-11T14:06:20Z",
       "side": 1,
       "message": "I don\u0027t think we should do that.\nChromium and Dawn\u0027s copies can get out of sync, so running in different checkouts can produce a different JSON.\nI\u0027d rather have this script fail when run from Chromium checkout.",
+      "range": {
+        "startLine": 38,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 59
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b87f50f_b4ba0e97",
+        "filename": "infra/specs/generate_test_spec_json.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-11T20:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99926560_ffbefbfb",
       "range": {
         "startLine": 38,
         "startChar": 17,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db26398f_0f73c500",
+        "filename": "infra/specs/generate_test_spec_json.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-11T20:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c18755_55b020ef",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6b49e604_9400711f",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-04-11T14:06:20Z",
       "side": 1,
       "message": "used but not defined?",
+      "range": {
+        "startLine": 167,
+        "startChar": 57,
+        "endLine": 167,
+        "endChar": 76
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ba97b13_4000e341",
+        "filename": "infra/specs/generate_test_spec_json.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-11T20:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b49e604_9400711f",
       "range": {
         "startLine": 167,
         "startChar": 57,
@@ -133,6 +229,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1610e553_88669a56",
+        "filename": "infra/specs/generate_test_spec_json.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-11T20:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd53d06f_45f117d2",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 24
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35998c9a_03144486",
@@ -146,6 +266,30 @@
       "writtenOn": "2025-04-11T14:06:20Z",
       "side": 1,
       "message": "I think we also need `use_reclient \u003d false`.\nMight want to group with remoteexec as well.",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25116a45_e771c662",
+        "filename": "infra/specs/mb_config.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-11T20:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35998c9a_03144486",
       "range": {
         "startLine": 33,
         "startChar": 18,
@@ -238,6 +382,30 @@
       "writtenOn": "2025-04-11T14:06:20Z",
       "side": 1,
       "message": "We use `\u0027skip_merge_script\u0027: True,` in chrome.gpu.fyi waterfall, can that work?\nI remember we used it for Android tests and they were sharded.",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 60
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55698d3f_3286ff8f",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-11T20:01:09Z",
+      "side": 1,
+      "message": "It looks like use of that has been largely removed? The only reference to `merge` in `chromium.gpu.fyi.star` is `use_android_merge_script_by_default`, which doesn\u0027t fully remove merging. The generated JSON still shows them [using](https://source.chromium.org/chromium/chromium/src/+/main:infra/config/generated/builders/ci/Android%20FYI%20Release%20%28Pixel%204%29/targets/chromium.gpu.fyi.json;l\u003d41) the `standard_gtest_merge.py` script.\n\nThe only uses of `skip_merge_script` left that I\u0027m seeing are for Skylab builders. [Documentation](https://source.chromium.org/chromium/chromium/src/+/main:testing/buildbot/README.md;l\u003d445?q\u003d-file:%5Eout%20-file:%5Egen%20skip_merge_script%20-file:third_party%2Fangle%20-file_third_party%2Fdawn) also indicates that further use of `skip_merge_script` is discouraged.",
+      "parentUuid": "e5d4f96e_9830317e",
       "range": {
         "startLine": 20,
         "startChar": 10,
