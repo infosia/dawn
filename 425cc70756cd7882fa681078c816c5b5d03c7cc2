@@ -34,6 +34,24 @@
       "parentUuid": "e4e0a817_769a56ad",
       "revId": "425cc70756cd7882fa681078c816c5b5d03c7cc2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bacdafe_ae3fa266",
+        "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T09:29:12Z",
+      "side": 1,
+      "message": "Done, it turns out that these pointers in `HlslCompilationRequest` are completely not used so I removed them, and pointers in `D3DBytecodeCompilationRequest` are changed to `UnsafeUnkeyedValue`.",
+      "parentUuid": "37fe51d5_6bd1a48b",
+      "revId": "425cc70756cd7882fa681078c816c5b5d03c7cc2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

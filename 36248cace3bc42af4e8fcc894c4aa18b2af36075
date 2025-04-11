@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29718aae_249d3050",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T09:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c88147a_0235b92e",
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d650a06_5879fe1f",
@@ -99,6 +117,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b094cb26_d134b92d",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T09:29:12Z",
+      "side": 1,
+      "message": "Done, also hash the size of the SPIR-V / WGSL and put them at the end.",
+      "parentUuid": "52ac357e_b15cd1ce",
+      "range": {
+        "startLine": 1529,
+        "startChar": 4,
+        "endLine": 1529,
+        "endChar": 72
+      },
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "94cb8e11_aeec06f7",
@@ -112,6 +154,30 @@
       "writtenOn": "2025-04-08T20:39:01Z",
       "side": 1,
       "message": "I think this warrants another templated helper function that takes a data by const ref. Probably with that check that the type is std::is_trivial.",
+      "range": {
+        "startLine": 1530,
+        "startChar": 0,
+        "endLine": 1538,
+        "endChar": 98
+      },
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a79d0182_d8c69cf4",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T09:29:12Z",
+      "side": 1,
+      "message": "Done, since `std::is_trivial` is deprecated in C++26, I tried using `is_trivially_copyable_v`.",
+      "parentUuid": "94cb8e11_aeec06f7",
       "range": {
         "startLine": 1530,
         "startChar": 0,
@@ -139,6 +205,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4e46c75_08cab983",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1596,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T09:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbd11fad_3cf6b051",
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48dae284_830ae4a7",
@@ -152,6 +236,30 @@
       "writtenOn": "2025-04-08T20:39:01Z",
       "side": 1,
       "message": "Let\u0027s add an assert that the hashes also match to help verify the hashing.\n\n```\nbool membersEq \u003d a-\u003emType \u003d\u003d b-\u003emType \u0026\u0026 ...\nDAWN_ASSERT(membersEq \u003d\u003d (a-\u003emHash \u003d\u003d b-\u003emHash));\nreturn membersEq;\n```\n\nI\u0027m hesitant to just compare the hashes but I should probably just trust the crypto.",
+      "range": {
+        "startLine": 1604,
+        "startChar": 0,
+        "endLine": 1605,
+        "endChar": 44
+      },
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff8e808e_a3a7931a",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T09:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48dae284_830ae4a7",
       "range": {
         "startLine": 1604,
         "startChar": 0,
@@ -179,6 +287,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae2860c8_672923d1",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T09:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35796bde_b41271de",
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c0b3da65_21ee5380",
@@ -192,6 +318,24 @@
       "writtenOn": "2025-04-09T12:34:53Z",
       "side": 1,
       "message": "Could we add minimal StreamTests for this?",
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5811ef7c_d2861482",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T09:29:12Z",
+      "side": 1,
+      "message": "Done, add `std::array` types into existing type-parameterized streaming test.",
+      "parentUuid": "c0b3da65_21ee5380",
       "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -237,6 +381,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31353e13_ece3ec54",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T09:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "747c82de_8b15bf66",
+      "range": {
+        "startLine": 319,
+        "startChar": 49,
+        "endLine": 319,
+        "endChar": 55
+      },
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5301e605_051795dd",
@@ -278,6 +446,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea3826d9_1929a2d9",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T09:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5301e605_051795dd",
+      "range": {
+        "startLine": 320,
+        "startChar": 14,
+        "endLine": 320,
+        "endChar": 18
+      },
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b63e614a_8456bb11",
@@ -291,6 +483,24 @@
       "writtenOn": "2025-04-09T12:34:53Z",
       "side": 1,
       "message": "IMHO since the size of the std::array is always the same, we don\u0027t need to stream it and validate it.",
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "783824b9_801c5cf8",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T09:29:12Z",
+      "side": 1,
+      "message": "Yes currently we only have one usage of streaming array, but I think validating size can help prevent wrong usage in the future?",
+      "parentUuid": "b63e614a_8456bb11",
       "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
