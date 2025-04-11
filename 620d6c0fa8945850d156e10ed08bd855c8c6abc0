@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "a699f85a_c37dd6f1",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-11T18:48:23Z",
+      "side": 1,
+      "message": "Ack, there\u0027s a bunch of refactoring to be done in this file now. Opened crbug.com/410044185",
+      "parentUuid": "12bcce12_246c0737",
+      "revId": "620d6c0fa8945850d156e10ed08bd855c8c6abc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "cd7bbdc6_8ac3d6dc",
         "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
         "patchSetId": 2
