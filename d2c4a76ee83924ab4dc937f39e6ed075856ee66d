@@ -176,6 +176,24 @@
       "parentUuid": "093e3089_1a6aebb4",
       "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7b921ac_f30dcc88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-11T19:38:56Z",
+      "side": 1,
+      "message": "It doesn\u0027t seemed to have changed it on gerrit. I don\u0027t typically go through github when pushing changes, I use the `git cl upload` command to send them directly to gerrit. Maybe you can\u0027t reset the author when going through github?\n\nThere is an Edit button in Gerrit (https://dawn-review.googlesource.com/c/dawn/+/235494) which lets you edit the author? Otherwise, I don\u0027t know how to do it outside of closing the PR and putting up a new one or uploading directly to gerrit.",
+      "parentUuid": "aba9760d_128c9150",
+      "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
