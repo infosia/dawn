@@ -45,6 +45,7 @@ import (
 	"time"
 
 	commonAuth "dawn.googlesource.com/dawn/tools/src/auth"
+	"dawn.googlesource.com/dawn/tools/src/buganizer"
 	"dawn.googlesource.com/dawn/tools/src/buildbucket"
 	"dawn.googlesource.com/dawn/tools/src/cmd/cts/common"
 	"dawn.googlesource.com/dawn/tools/src/container"
@@ -144,6 +145,28 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 	if err != nil {
 		return fmt.Errorf("failed to obtain authentication options: %w", err)
 	}
+
+	buganizerClient, err := buganizer.NewClient()
+	if err != nil {
+		return err
+	}
+
+	err = buganizerClient.GetIssue(403257845)
+	if err != nil {
+		return err
+	}
+
+	/*buganizerClient, err := buganizer.NewClient(ctx)
+	if err != nil {
+		return err
+	}
+
+	err = buganizerClient.GetRest()
+	if err != nil {
+		return err
+	}*/
+
+	return fmt.Errorf("Early return")
 
 	// Check tools can be found
 	for _, tool := range []struct {
