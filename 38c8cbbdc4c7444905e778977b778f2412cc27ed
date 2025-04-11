@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c9da737_be34e5b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-11T18:41:49Z",
+      "side": 1,
+      "message": "PTAL, similar to the pixel local issue you just fixed.",
+      "revId": "38c8cbbdc4c7444905e778977b778f2412cc27ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
