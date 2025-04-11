@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc56c46e_840ca783",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-11T02:30:46Z",
+      "side": 1,
+      "message": "PTAL. I think this makes more sense as a location as these are more wgsl IR tests.",
+      "revId": "b4b2f423ee7544b27bc714ae3955329667f59667",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
