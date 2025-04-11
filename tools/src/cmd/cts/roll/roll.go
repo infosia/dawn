@@ -45,6 +45,7 @@ import (
 	"time"
 
 	commonAuth "dawn.googlesource.com/dawn/tools/src/auth"
+	"dawn.googlesource.com/dawn/tools/src/buganizer"
 	"dawn.googlesource.com/dawn/tools/src/buildbucket"
 	"dawn.googlesource.com/dawn/tools/src/cmd/cts/common"
 	"dawn.googlesource.com/dawn/tools/src/container"
@@ -144,6 +145,77 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 	if err != nil {
 		return fmt.Errorf("failed to obtain authentication options: %w", err)
 	}
+
+	buganizerClient, err := buganizer.NewClient()
+	if err != nil {
+		return err
+	}
+
+	comment := buganizer.NewCommentInfo{
+		Comment: "Test for [this bug](crbug.com/403257845)",
+		Format: buganizer.FormatMarkdown,
+	}
+	err = buganizerClient.PostComment(comment, 413070230)
+	if err != nil {
+		return err
+	}
+
+	/*newIssue := buganizer.NewIssueInfo{
+		Title: "Test bug for 403257845",
+		Description: "Test for [this bug](crbug.com/403257845)",
+		ComponentId: "1571065",
+		Cc: []string{"bsheedy@chromium.org"},
+		Status: buganizer.StatusNew,
+		Severity: buganizer.Severity3,
+		Priority: buganizer.Priority3,
+		Format: buganizer.FormatMarkdown,
+	}
+
+	_, err = buganizerClient.CreateIssue(newIssue)
+	if err != nil {
+		return err
+	}*/
+
+	/*err = buganizerClient.GetIssue(403257845)
+	if err != nil {
+		return err
+	}*/
+
+	/*buganizerIssue := buganizer.Issue {
+		IssueComment: buganizer.IssueComment{
+			Comment: "ASDF",
+			FormattingMode: "MARKDOWN",
+		},
+	}
+
+	j, err := buganizerIssue.AsJSONString()
+	if err != nil {
+		return err
+	}
+	fmt.Printf("%v\n", j)*/
+
+	/*ni := buganizer.NewIssueInfo{
+		Title: "ASDF",
+		Description: "foobar",
+		ComponentId: "1234",
+		Cc: []string{"a", "b"},
+		Status: buganizer.StatusNew,
+		Severity: buganizer.Severity2,
+		Priority: buganizer.Priority2,
+	}*/
+
+	/*ni := buganizer.NewCommentInfo{
+		Comment: "asdf",
+		Format: buganizer.FormatMarkdown,
+	}
+
+	j, err := ni.AsJSONString()
+	if err != nil {
+		return err
+	}
+	fmt.Printf("%v\n", j)*/
+
+	return fmt.Errorf("Early return")
 
 	// Check tools can be found
 	for _, tool := range []struct {
