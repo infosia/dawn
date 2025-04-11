@@ -297,37 +297,96 @@ MaybeError ValidateBindingCounts(const CombinedLimits& limits,
     return {};
 }
 
-BufferBindingInfo::BufferBindingInfo() = default;
+// static
+BufferBindingInfo BufferBindingInfo::From(const BufferBindingLayout& apiLayout) {
+    return {
+        .type = apiLayout.type,
+        .minBindingSize = apiLayout.minBindingSize,
+        .hasDynamicOffset = apiLayout.hasDynamicOffset,
+    };
+}
 
-BufferBindingInfo::BufferBindingInfo(const BufferBindingLayout& apiLayout)
-    : type(apiLayout.type),
-      minBindingSize(apiLayout.minBindingSize),
-      hasDynamicOffset(apiLayout.hasDynamicOffset) {}
+// static
+TextureBindingInfo TextureBindingInfo::From(const TextureBindingLayout& apiLayout) {
+    return {
+        .sampleType = apiLayout.sampleType,
+        .viewDimension = apiLayout.viewDimension,
+        .multisampled = apiLayout.multisampled,
+    };
+}
 
-TextureBindingInfo::TextureBindingInfo() {}
+// static
+StorageTextureBindingInfo StorageTextureBindingInfo::From(
+    const StorageTextureBindingLayout& apiLayout) {
+    return {
+        .format = apiLayout.format,
+        .viewDimension = apiLayout.viewDimension,
+        .access = apiLayout.access,
+    };
+}
 
-TextureBindingInfo::TextureBindingInfo(const TextureBindingLayout& apiLayout)
-    : sampleType(apiLayout.sampleType),
-      viewDimension(apiLayout.viewDimension),
-      multisampled(apiLayout.multisampled) {}
+// static
+SamplerBindingInfo SamplerBindingInfo::From(const SamplerBindingLayout& apiLayout) {
+    return {
+        .type = apiLayout.type,
+    };
+}
 
-StorageTextureBindingInfo::StorageTextureBindingInfo() = default;
+// static
+StaticSamplerBindingInfo StaticSamplerBindingInfo::From(
+    const StaticSamplerBindingLayout& apiLayout) {
+    return {
+        .sampler = apiLayout.sampler,
+        .sampledTextureBinding = BindingNumber{apiLayout.sampledTextureBinding},
+        .isUsedForSingleTextureBinding = apiLayout.sampledTextureBinding < WGPU_LIMIT_U32_UNDEFINED,
+    };
+}
 
-StorageTextureBindingInfo::StorageTextureBindingInfo(const StorageTextureBindingLayout& apiLayout)
-    : format(apiLayout.format), viewDimension(apiLayout.viewDimension), access(apiLayout.access) {}
+bool BindingInfo::operator==(const BindingInfo& other) const {
+    return !(*this != other);
+}
 
-SamplerBindingInfo::SamplerBindingInfo() = default;
+bool BindingInfo::operator!=(const BindingInfo& other) const {
+    if (this->binding != other.binding || this->visibility != other.visibility ||
+        this->bindingLayout.index() != other.bindingLayout.index()) {
+        return true;
+    }
 
-SamplerBindingInfo::SamplerBindingInfo(const SamplerBindingLayout& apiLayout)
-    : type(apiLayout.type) {}
-
-StaticSamplerBindingInfo::StaticSamplerBindingInfo(const StaticSamplerBindingLayout& apiLayout)
-    : sampler(apiLayout.sampler),
-      sampledTextureBinding(BindingNumber{apiLayout.sampledTextureBinding}),
-      isUsedForSingleTextureBinding(apiLayout.sampledTextureBinding < WGPU_LIMIT_U32_UNDEFINED) {}
-
-InputAttachmentBindingInfo::InputAttachmentBindingInfo() = default;
-InputAttachmentBindingInfo::InputAttachmentBindingInfo(wgpu::TextureSampleType sampleType)
-    : sampleType(sampleType) {}
+    return MatchVariant(
+        this->bindingLayout,
+        [&](const BufferBindingInfo& layoutA) -> bool {
+            const BufferBindingInfo& layoutB = std::get<BufferBindingInfo>(other.bindingLayout);
+            return layoutA.type != layoutB.type ||
+                   layoutA.hasDynamicOffset != layoutB.hasDynamicOffset ||
+                   layoutA.minBindingSize != layoutB.minBindingSize;
+        },
+        [&](const SamplerBindingInfo& layoutA) -> bool {
+            const SamplerBindingInfo& layoutB = std::get<SamplerBindingInfo>(other.bindingLayout);
+            return layoutA.type != layoutB.type;
+        },
+        [&](const StaticSamplerBindingInfo& layoutA) -> bool {
+            const StaticSamplerBindingInfo& layoutB =
+                std::get<StaticSamplerBindingInfo>(other.bindingLayout);
+            return layoutA.sampler != layoutB.sampler;
+        },
+        [&](const TextureBindingInfo& layoutA) -> bool {
+            const TextureBindingInfo& layoutB = std::get<TextureBindingInfo>(other.bindingLayout);
+            return layoutA.sampleType != layoutB.sampleType ||
+                   layoutA.viewDimension != layoutB.viewDimension ||
+                   layoutA.multisampled != layoutB.multisampled;
+        },
+        [&](const StorageTextureBindingInfo& layoutA) -> bool {
+            const StorageTextureBindingInfo& layoutB =
+                std::get<StorageTextureBindingInfo>(other.bindingLayout);
+            return layoutA.access != layoutB.access ||
+                   layoutA.viewDimension != layoutB.viewDimension ||
+                   layoutA.format != layoutB.format;
+        },
+        [&](const InputAttachmentBindingInfo& layoutA) -> bool {
+            const InputAttachmentBindingInfo& layoutB =
+                std::get<InputAttachmentBindingInfo>(other.bindingLayout);
+            return layoutA.sampleType != layoutB.sampleType;
+        });
+}
 
 }  // namespace dawn::native
