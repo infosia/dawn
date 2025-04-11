@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f1a016a_4767b7e7",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-04-11T18:48:56Z",
+      "side": 1,
+      "message": "This seems like a non-functional change?\nWhy move it up?",
+      "revId": "6bac987519d57e6eb33b0ae70e5c93e5874e1623",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66561306_2e053ddd",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1876,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-04-11T18:48:56Z",
+      "side": 1,
+      "message": "What about constructors of things that contain subgroup uniform?",
+      "revId": "6bac987519d57e6eb33b0ae70e5c93e5874e1623",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
