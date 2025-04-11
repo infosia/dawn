@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "1cec5efbf8d26d16f344f243fbcbc55d5a620fb6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c520138f_8bbc339f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-11T13:11:00Z",
+      "side": 1,
+      "message": "All of the benchmarks have this problem, and I don\u0027t think we should move them all into `wgsl/` because then you\u0027d have weird layering in the other directions.\n\nI think we should probably just move them into `cmd/bench/` instead.",
+      "revId": "1cec5efbf8d26d16f344f243fbcbc55d5a620fb6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
