@@ -325,6 +325,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b0f2e97_9c9d670c",
+        "filename": "infra/specs/test_suites.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-11T20:02:48Z",
+      "side": 1,
+      "message": "They suggestions all seem fine, not a huge fan of `sws` but if it\u0027s consistent with angle then it seems ok.",
+      "parentUuid": "a2c2ee0e_5428c8a0",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "25e55c85f268a9526d45a04a9570400ab89650e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a2c7e5af_07e80dd9",
         "filename": "infra/specs/test_suites.pyl",
         "patchSetId": 17
