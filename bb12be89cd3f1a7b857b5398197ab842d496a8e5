@@ -34,6 +34,24 @@
       "parentUuid": "4500c3f3_a9164191",
       "revId": "bb12be89cd3f1a7b857b5398197ab842d496a8e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ab21142_d9888151",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-11T13:06:29Z",
+      "side": 1,
+      "message": "This is now done as shared offline.",
+      "parentUuid": "70803931_9bbd32f4",
+      "revId": "bb12be89cd3f1a7b857b5398197ab842d496a8e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
