@@ -137,6 +137,8 @@ func (c *cmd) Run(ctx context.Context, cfg common.Config) error {
 		return fmt.Errorf("failed to obtain authentication options: %w", err)
 	}
 
+	return fmt.Errorf("Early return")
+
 	// Check tools can be found
 	for _, tool := range []struct {
 		name, path, hint string
