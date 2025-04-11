@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6a5962f_5b9b178e",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1793,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-11T19:06:23Z",
+      "side": 1,
+      "message": "Reverted, I used it in the other branch at one point but then changed the approach.",
+      "parentUuid": "2f1a016a_4767b7e7",
+      "revId": "6bac987519d57e6eb33b0ae70e5c93e5874e1623",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66561306_2e053ddd",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-04-11T18:48:56Z",
       "side": 1,
       "message": "What about constructors of things that contain subgroup uniform?",
+      "revId": "6bac987519d57e6eb33b0ae70e5c93e5874e1623",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e6365fa_b303c2e8",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1876,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-11T19:06:23Z",
+      "side": 1,
+      "message": "I don\u0027t think there is a uniformity requirement in those scenarios. The uniformity requirement on constructors here is specifically on the value that is used to fill a subgroup matrix.\n\nI think we would allow construction of an array of subgroup matrices using some non-uniform subgroup matrices without triggering a diagnostic at that point. The result would be an array that we would consider to be non-uniform though.",
+      "parentUuid": "66561306_2e053ddd",
       "revId": "6bac987519d57e6eb33b0ae70e5c93e5874e1623",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
