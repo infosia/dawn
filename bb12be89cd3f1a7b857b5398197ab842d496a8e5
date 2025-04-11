@@ -16,6 +16,24 @@
       "message": "I think this should be removed from client code first.\n\nI see a couple of usages inside g3.  \nThere\u0027s a bug filed to track that: crbug.com/390632529",
       "revId": "bb12be89cd3f1a7b857b5398197ab842d496a8e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70803931_9bbd32f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-11T11:46:51Z",
+      "side": 1,
+      "message": "I\u0027ll wait for sakal@ to clean-up client code then as shared in https://issues.chromium.org/issues/383606929#comment8",
+      "parentUuid": "4500c3f3_a9164191",
+      "revId": "bb12be89cd3f1a7b857b5398197ab842d496a8e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
