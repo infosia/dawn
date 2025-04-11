@@ -503,6 +503,24 @@
       "parentUuid": "b63e614a_8456bb11",
       "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6982179b_3ca32a86",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-11T10:00:00Z",
+      "side": 1,
+      "message": "At second thought since fixed size array `T[]` streaming also don\u0027t stream or validate size, I remove the check.\nAnd thanks for hint from @kylechar, different implementation added for fundamental and non-fundamental element types.",
+      "parentUuid": "783824b9_801c5cf8",
+      "revId": "36248cace3bc42af4e8fcc894c4aa18b2af36075",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
