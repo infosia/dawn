@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12bcce12_246c0737",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-04-11T18:43:00Z",
+      "side": 1,
+      "message": "nit: at 700 lines of code, this probably should be pulled out of the class declaration.",
+      "revId": "620d6c0fa8945850d156e10ed08bd855c8c6abc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd7bbdc6_8ac3d6dc",
+        "filename": "src/tint/lang/wgsl/resolver/uniformity.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-04-11T18:43:00Z",
+      "side": 1,
+      "message": "Right, and you only need this on the \"does not have initializer\" branch because in the case of having an initializer the constructor will have fired the error.",
+      "revId": "620d6c0fa8945850d156e10ed08bd855c8c6abc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
