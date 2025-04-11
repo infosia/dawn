@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf9a8d91_d70e9184",
+        "filename": "src/tint/lang/wgsl/extension_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-04-11T13:23:00Z",
+      "side": 0,
+      "message": "This is ok, but I would prefer these remain.",
+      "revId": "3a8b544dd7fe9da95a9cc0eb3f48d26ac08bc808",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
