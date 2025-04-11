@@ -206,6 +206,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34c63c68_97bee33d",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-11T01:12:52Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right. I\u0027ll left a TODO and warning first. And then complete the same validation things for `DawnTexelCopyBufferRowAlignmentLimits`. Thanks!",
+      "parentUuid": "46f896ad_e8beabc8",
+      "range": {
+        "startLine": 282,
+        "startChar": 4,
+        "endLine": 282,
+        "endChar": 55
+      },
+      "revId": "228929f6830bc993c7b368e26aa413080738339e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a0736b5_f081c24c",
