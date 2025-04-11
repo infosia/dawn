@@ -16,6 +16,24 @@
       "message": "I added `Feature::DawnDeviceAllocatorControl` but I haven\u0027t figured out is how to mark the feature as enabled for these tests. I see that null::PhysicalDevice exposes `SetSupportedFeaturesForTesting()` but I\u0027m not sure how to that. These tests have `native::Adapter` which doesn\u0027t expose much. I need to go from `native::Adapter` to `native::AdapaterBase` to get the physical device but I can\u0027t find any examples of that.",
       "revId": "ea3750b9edf4babaf5ad15534590567d7558fb52",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b9b1760_70fa6561",
+        "filename": "src/dawn/tests/unittests/native/DeviceCreationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-11T14:26:32Z",
+      "side": 1,
+      "message": "Ah I figured out that `unsafeAdapter` has all features enabled so that works here. I also added a test that device creation fails when Feature::DawnDeviceAllocatorControl is not enabled.",
+      "parentUuid": "02a60ac5_96083bb5",
+      "revId": "ea3750b9edf4babaf5ad15534590567d7558fb52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
