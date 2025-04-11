@@ -296,7 +296,7 @@ MaybeError PipelineLayout::Initialize() {
         mDynamicStorageBufferLengthInfo[group].firstRegisterOffset =
             dynamicStorageBufferLengthsShaderRegisterOffset;
         mDynamicStorageBufferLengthInfo[group].bindingAndRegisterOffsets.reserve(
-            bgl->GetBindingCountInfo().dynamicStorageBufferCount);
+            bgl->GetDynamicStorageBufferCount());
 
         for (BindingIndex bindingIndex(0); bindingIndex < bgl->GetDynamicBufferCount();
              ++bindingIndex) {
@@ -308,7 +308,7 @@ MaybeError PipelineLayout::Initialize() {
         }
 
         DAWN_ASSERT(mDynamicStorageBufferLengthInfo[group].bindingAndRegisterOffsets.size() ==
-                    bgl->GetBindingCountInfo().dynamicStorageBufferCount);
+                    bgl->GetDynamicStorageBufferCount());
     }
 
     if (dynamicStorageBufferLengthsShaderRegisterOffset > 0) {
