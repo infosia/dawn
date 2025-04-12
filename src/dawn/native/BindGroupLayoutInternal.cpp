@@ -403,7 +403,7 @@ BindingInfo CreateUniformBindingForExternalTexture(BindingNumber binding,
     };
 }
 
-BindingInfo ConvertToBindingInfo(const UnpackedPtr<BindGroupLayoutEntry>& binding) {
+BindingInfo ConvertToBindingInfoNoArray(const UnpackedPtr<BindGroupLayoutEntry>& binding) {
     BindingInfo bindingInfo;
     bindingInfo.binding = BindingNumber(binding->binding);
     bindingInfo.visibility = binding->visibility;
@@ -432,7 +432,8 @@ BindingInfo ConvertToBindingInfo(const UnpackedPtr<BindGroupLayoutEntry>& bindin
 
 // This function handles the conversion of the API format for each binding info to Dawn's internal
 // representation of them. This is also where the ExternalTextures are replaced and expanded in the
-// various bindings that are used internally in Dawn.
+// various bindings that are used internally in Dawn. Arrays are also expanded to individual
+// bindings here.
 struct ExpandedBindingInfo {
     ityp::vector<BindingIndex, BindingInfo> entries;
     ExternalTextureBindingExpansionMap externalTextureBindingExpansions;
@@ -446,10 +447,16 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(const BindGroupLayoutDescriptor* 
     for (uint32_t i = 0; i < descriptor->entryCount; i++) {
         UnpackedPtr<BindGroupLayoutEntry> entry = Unpack(&descriptor->entries[i]);
 
+        BindingIndex arraySize{1};
+        if (const auto* arraySizeInfo = entry.Get<BindGroupLayoutEntryArraySize>()) {
+            arraySize = BindingIndex(arraySizeInfo->arraySize);
+        }
+
         // External textures are expanded from a texture_external into two sampled texture bindings
         // and one uniform buffer binding. The original binding number is used for the first sampled
         // texture.
         if (entry.Get<ExternalTextureBindingLayout>()) {
+            DAWN_ASSERT(arraySize == BindingIndex{1});
             dawn::native::ExternalTextureBindingExpansion bindingExpansion;
 
             BindingInfo plane0Entry = CreateSampledTextureBindingForExternalTexture(
@@ -472,7 +479,16 @@ ExpandedBindingInfo ConvertAndExpandBGLEntries(const BindGroupLayoutDescriptor* 
             continue;
         }
 
-        result.entries.push_back(ConvertToBindingInfo(entry));
+        // Add one BindingInfo per element of the array with increasing indexInArray for backends to
+        // know which element it is when they need it, but also with increasing BindingNumber as the
+        // array takes consecutive binding numbers on the API side.
+        BindingInfo info = ConvertToBindingInfoNoArray(entry);
+        info.arraySize = arraySize;
+        for (BindingIndex indexInArray : Range(arraySize)) {
+            info.indexInArray = indexInArray;
+            result.entries.push_back(info);
+            info.binding++;
+        }
     }
     return result;
 }
@@ -650,6 +666,8 @@ size_t BindGroupLayoutInternalBase::ComputeContentHash() {
 
         const BindingInfo& info = mBindingInfo[index];
         recorder.Record(info.visibility);
+        recorder.Record(info.arraySize);
+        recorder.Record(info.indexInArray);
 
         MatchVariant(
             info.bindingLayout,
