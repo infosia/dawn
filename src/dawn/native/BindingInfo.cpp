@@ -348,6 +348,7 @@ bool BindingInfo::operator==(const BindingInfo& other) const {
 
 bool BindingInfo::operator!=(const BindingInfo& other) const {
     if (this->binding != other.binding || this->visibility != other.visibility ||
+        this->arraySize != other.arraySize || this->indexInArray != other.indexInArray ||
         this->bindingLayout.index() != other.bindingLayout.index()) {
         return true;
     }
