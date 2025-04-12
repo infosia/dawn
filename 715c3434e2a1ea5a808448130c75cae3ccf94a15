@@ -16,6 +16,24 @@
       "message": "Planning to replace this with an emscripten port python file that can be used locally (though this is unorthodox). Then it will work for everyone and not just CMake users.\n\nSee:\nhttps://github.com/emscripten-core/emscripten/blob/c70b9ff20af6b2af635421fffef0594e3075dcd1/site/source/docs/compiling/Building-Projects.rst#external-ports",
       "revId": "715c3434e2a1ea5a808448130c75cae3ccf94a15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc07fcac_e90e7954",
+        "filename": "src/emdawnwebgpu/pkg_CMakeLists.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-12T02:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3d6990f_1e24d243",
+      "revId": "715c3434e2a1ea5a808448130c75cae3ccf94a15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

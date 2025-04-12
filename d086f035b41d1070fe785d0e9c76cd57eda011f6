@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e13001d6_0b94f521",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-12T02:51:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b5920275_fbfe194c",
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b9bf573d_fdec3eb6",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "Since some of the files in the package were originally developed in emscripten, they have the emscripten license. Using that license here lets us have a single license file for everything in the package, which I think is more straightforward.",
       "parentUuid": "b9bf573d_fdec3eb6",
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06d9bfb7_d25fadb8",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-12T02:51:43Z",
+      "side": 1,
+      "message": "wait, that\u0027s not even true, because webgpu.h and the C++ stuff are different. There are three different licenses, sigh. Fixed this up.",
+      "parentUuid": "16bca0e5_acaed3bd",
       "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -141,6 +177,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ef63f67_cdf2ce29",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-12T02:51:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8b191dc5_1a954760",
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9db78aa8_a2125135",
@@ -154,6 +208,24 @@
       "writtenOn": "2025-04-09T23:34:33Z",
       "side": 1,
       "message": "I just had a thought to maybe provide two ports, one for webgpu.h and one for webgpu_cpp.h (which would just add an include path). Just in case people care to avoid the C API like if they fork webgpu_cpp.h or use alternate C++ bindings or something.",
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cae5e96_0b3edd8a",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-12T02:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9db78aa8_a2125135",
       "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -207,6 +279,24 @@
       "side": 1,
       "message": "Ah, I used to have this formatted better, clang-format did this ^_^",
       "parentUuid": "cc39aec7_b2d9289b",
+      "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf89bc34_905a151e",
+        "filename": "third_party/emdawnwebgpu/port.py",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-12T02:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4da93fb_c9bd342b",
       "revId": "d086f035b41d1070fe785d0e9c76cd57eda011f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
