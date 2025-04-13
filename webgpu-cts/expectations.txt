@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-04-10 07:19:07AM
+# Last rolled: 2025-04-13 05:03:41AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -684,7 +684,6 @@ crbug.com/360916910 [ intel-0x9bc5 linux mesa_ge_23.2 no-clang-coverage ] webgpu
 crbug.com/360916910 [ intel-0x9bc5 linux mesa_ge_23.2 no-clang-coverage ] webgpu:api,operation,storage_texture,read_only:basic:format="rgba8snorm";* [ Failure ]
 crbug.com/360916910 [ intel-0x9bc5 linux mesa_ge_23.2 no-clang-coverage ] webgpu:api,operation,storage_texture,read_only:basic:format="rgba8unorm";* [ Failure ]
 
-
 crbug.com/407076121 [ android-14 ] webgpu:shader,execution,limits:const_array_elements: [ Failure ]
 crbug.com/407076121 [ android-t ] webgpu:shader,execution,limits:const_array_elements: [ Failure ]
 crbug.com/407076121 [ android-pixel-4 dawn-no-backend-validation ] webgpu:shader,execution,limits:const_array_elements: [ Failure ]
@@ -1056,7 +1055,6 @@ crbug.com/407076135 [ apple-angle-metal-renderer:-apple-m2 mac ] webgpu:shader,e
 # All textureSampleBias tests marked failing on Linux NVIDIA
 crbug.com/407109061 [ clang-coverage dawn-no-backend-validation linux nvidia-0x2184 nvidia_lt_535.183.01 ] webgpu:shader,execution,expression,call,builtin,textureSampleBias:* [ Failure ]
 
-
 # fragment_builtins with multisampling and "sample" mode failing on many Vulkan devices
 crbug.com/407144390 [ android-14 android-pixel-6 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,position:nearFar=*;sampleCount=4;interpolation={"type":"*","sampling":"sample"} [ Failure ]
 crbug.com/407144390 [ android-14 android-pixel-6 ] webgpu:shader,execution,shader_io,fragment_builtins:inputs,sample_mask:nearFar=*;sampleCount=4;interpolation={"type":"*","sampling":"sample"} [ Failure ]
@@ -1070,7 +1068,6 @@ crbug.com/407144390 [ linux nvidia-0x2184 ] webgpu:shader,execution,shader_io,fr
 # depth_bias test failures on Linux NVIDIA
 crbug.com/407133970 [ linux nvidia-0x2184 nvidia_lt_535.183.01 ] webgpu:api,operation,rendering,depth_bias:depth_bias:quadAngle=0;bias=-8388608;biasSlopeScale=0;biasClamp=0.125 [ Failure ]
 crbug.com/407133970 [ linux nvidia-0x2184 nvidia_lt_535.183.01 ] webgpu:api,operation,rendering,depth_bias:depth_bias:quadAngle=0;bias=8388608;biasSlopeScale=0;biasClamp=0 [ Failure ]
-
 
 # `texture_utils:readTextureToTexelViews` failures with "stencil8" arrays/cubes on Mac (AMD/Intel)
 crbug.com/407147670 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,texture_utils:readTextureToTexelViews:srcFormat="stencil8";texelViewFormat="stencil8";viewDimension="2d-array";sampleCount=1 [ Failure ]
@@ -1093,7 +1090,6 @@ crbug.com/407159836 [ dawn-no-backend-validation no-asan no-clang-coverage nvidi
 crbug.com/407159836 [ dawn-no-backend-validation intel-0x9bc5 no-asan webgpu-dxc-disabled win ] webgpu:shader,execution,expression,binary,af_matrix_subtraction:matrix:inputSource="const";cols=3;rows=4 [ Failure ]
 crbug.com/407159836 [ dawn-no-backend-validation intel webgpu-dxc-disabled win ] webgpu:shader,execution,expression,binary,af_matrix_subtraction:matrix:inputSource="const";cols=4;rows=4 [ Failure ]
 crbug.com/407159836 [ dawn-no-backend-validation no-asan no-clang-coverage nvidia webgpu-dxc-disabled win ] webgpu:shader,execution,expression,binary,af_matrix_subtraction:matrix:inputSource="const";cols=4;rows=4 [ Failure ]
-
 
 # capability_checks,limits,maxInterStageShaderVariables failure on Android Qualcomm
 crbug.com/407159803 [ android-r qualcomm ] webgpu:api,validation,capability_checks,limits,maxInterStageShaderVariables:* [ Failure ]
