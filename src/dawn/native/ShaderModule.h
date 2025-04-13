@@ -167,6 +167,7 @@ RequiredBufferSizes ComputeRequiredBufferSizesForLayout(const EntryPointMetadata
 // Shader metadata for a binding, very similar to information contained in a pipeline layout.
 struct ShaderBindingInfo {
     BindingNumber binding;
+    BindingIndex arraySize;
 
     // The variable name of the binding resource.
     std::string name;
