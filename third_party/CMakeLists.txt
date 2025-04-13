@@ -155,8 +155,8 @@ if (DAWN_ENABLE_DESKTOP_GL OR DAWN_ENABLE_OPENGLES)
     target_include_directories(dawn_khronos_platform INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/khronos/EGL-Registry/api")
 endif()
 
-if (NOT TARGET Vulkan-Headers AND DAWN_ENABLE_VULKAN)
-    message(STATUS "Dawn: using Vulkan-Headers at ${DAWN_VULKAN_HEADERS_DIR}")
+if (NOT TARGET Vulkan::Headers AND DAWN_ENABLE_VULKAN)
+    message(STATUS "Dawn: using Vulkan::Headers at ${DAWN_VULKAN_HEADERS_DIR}")
 
     set(VULKAN_HEADERS_ENABLE_MODULE OFF)
     add_subdirectory(${DAWN_VULKAN_HEADERS_DIR} "${CMAKE_CURRENT_BINARY_DIR}/vulkan-headers")
