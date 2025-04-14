@@ -16,6 +16,57 @@
       "message": "PTAL",
       "revId": "29ec258bb2e8baf546457b3df8096eb2fb1a7a8f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3668fdde_8bbded99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-14T20:19:26Z",
+      "side": 1,
+      "message": "LGTM with a nit.",
+      "revId": "29ec258bb2e8baf546457b3df8096eb2fb1a7a8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53c137cc_eb2d2473",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-14T20:19:26Z",
+      "side": 1,
+      "message": "Ah, I see that this is addressing a question I had in a previous review. Might be nice if this was pulled back into the base CL to make it a bit more atomic?",
+      "revId": "29ec258bb2e8baf546457b3df8096eb2fb1a7a8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81e6650c_c3e5ed78",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-14T20:19:26Z",
+      "side": 1,
+      "message": "Very minor wording suggestion: The way this is stated makes it sound like 0 is _only_ used for non-arrays.\n```suggestion\n    // The index of this entry in the array. Must be 0 if this entry is not in an array.\n```",
+      "revId": "29ec258bb2e8baf546457b3df8096eb2fb1a7a8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
