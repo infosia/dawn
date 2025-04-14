@@ -68,6 +68,7 @@ static constexpr Case kValidCases[] = {
     {"dual_source_blending", Extension::kDualSourceBlending},
     {"f16", Extension::kF16},
     {"subgroups", Extension::kSubgroups},
+    {"subgroups_f16", Extension::kSubgroupsF16},
 };
 
 static constexpr Case kInvalidCases[] = {
@@ -104,6 +105,24 @@ static constexpr Case kInvalidCases[] = {
     {"skkkgroups", Extension::kUndefined},
     {"siibgrop", Extension::kUndefined},
     {"subgroupXX", Extension::kUndefined},
+    {"chromium_int9rnal_relaxed_Fnifor_layout", Extension::kUndefined},
+    {"chrmium_internal_relaxed_uniform_layout", Extension::kUndefined},
+    {"VRhHomium_internal_relaxd_uniform_OOayout", Extension::kUndefined},
+    {"clip_distyces", Extension::kUndefined},
+    {"clipGlr77inntances", Extension::kUndefined},
+    {"clip_d04stances", Extension::kUndefined},
+    {"dua_ource_bledoong", Extension::kUndefined},
+    {"dualsorce_blendzzng", Extension::kUndefined},
+    {"ua_sopiirce_bl11nding", Extension::kUndefined},
+    {"f1XX", Extension::kUndefined},
+    {"55199II", Extension::kUndefined},
+    {"frSSHHa", Extension::kUndefined},
+    {"kkbHups", Extension::kUndefined},
+    {"jggoupRR", Extension::kUndefined},
+    {"sugoupb", Extension::kUndefined},
+    {"subgroupj_f16", Extension::kUndefined},
+    {"subgroups_f6", Extension::kUndefined},
+    {"sgroupq_f16", Extension::kUndefined},
 };
 
 using ExtensionParseTest = testing::TestWithParam<Case>;
