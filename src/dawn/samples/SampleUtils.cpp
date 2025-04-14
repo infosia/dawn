@@ -326,6 +326,9 @@ bool SampleBase::Setup() {
     config.format = capabilities.formats[0];
     config.width = width;
     config.height = height;
+    if (capabilities.presentModeCount > 0) {
+        config.presentMode = capabilities.presentModes[0];
+    }
     surface.Configure(&config);
     this->preferredSurfaceTextureFormat = capabilities.formats[0];
 
