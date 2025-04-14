@@ -93,6 +93,7 @@ class QueueBase : public ApiObjectBase, public ExecutionQueueBase {
                            uint64_t bufferOffset,
                            const void* data,
                            size_t size);
+
     // Ensure a flush occurs if needed, and track this task as complete after the
     // scheduled work is complete.
     void TrackTaskAfterEventualFlush(std::unique_ptr<TrackTaskCallback> task);
