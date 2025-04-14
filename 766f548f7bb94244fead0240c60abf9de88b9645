@@ -16,6 +16,108 @@
       "message": "PTAL",
       "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c053518_b917c7c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-14T17:45:01Z",
+      "side": 1,
+      "message": "LGTM with some nits/questions that aren\u0027t necessarily blocking.",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "313bdf9e_cce6c216",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-14T17:45:01Z",
+      "side": 1,
+      "message": "Phrasing on this strikes me as a bit awkward? I\u0027d suggest something like:\n\n\"BindGroupLayoutEntry arraySize (%u) is greater than 1 for an entry that is not a sampled texture.\"",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15d2094b_42ac4426",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-14T17:45:01Z",
+      "side": 1,
+      "message": "I presume that (bindingNumber \u003d maxBindingsPerGroup) + (arraySize \u003d maxBindingsPerGroup) is considered OK because the max binding number is made up and will always be far less than the native API maximums?",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d96cff8c_4d55466f",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-14T17:45:01Z",
+      "side": 1,
+      "message": "Here and below, doesn\u0027t this conflict with the validation above that states that arraySize can only be used with sampled textures?",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "812dcad8_37bff245",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1801,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-14T17:45:01Z",
+      "side": 1,
+      "message": "Comment appears copied from next test and doesn\u0027t accurately describe this one.",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07d3e9e7_a8341629",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-14T17:45:01Z",
+      "side": 1,
+      "message": "I recognize that this the default maxSampledTexturesPerShaderStage fits under this, but it\u0027s still a little weird to have this arbitrary number here that\u0027s not being replaced and has no relation to the value being tested.\n\nFor the purposes of this test is the second entry even necessary?",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
