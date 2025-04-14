@@ -258,7 +258,7 @@ CommandLineParser::EnumOption<E>::EnumOption(
     : Option<EnumOption<E>>(name, desc), mConversions(conversions) {}
 
 template <typename E>
-CommandLineParser::EnumOption<E>::~EnumOption<E>() = default;
+CommandLineParser::EnumOption<E>::~EnumOption() = default;
 
 template <typename E>
 E CommandLineParser::EnumOption<E>::GetValue() const {
