@@ -37,6 +37,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4793f6dd_0fbb878e",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-14T20:09:22Z",
+      "side": 1,
+      "message": "Does it even make sense to allow this chained struct on anything that is not a sampled texture for this change then? (Given that it must be 1 for anything else anyways)",
+      "range": {
+        "startLine": 227,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 75
+      },
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "313bdf9e_cce6c216",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 4
@@ -105,6 +128,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "13d2e56b_1e61b3a9",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1996,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-14T20:09:22Z",
+      "side": 1,
+      "message": "nit. Maybe name this constant (and below) as a placeholder value so its clear it\u0027s value doesn\u0027t matter here at initialization and will be overridden for the test cases?",
+      "range": {
+        "startLine": 1996,
+        "startChar": 27,
+        "endLine": 1996,
+        "endChar": 29
+      },
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "07d3e9e7_a8341629",
         "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
         "patchSetId": 4
@@ -116,6 +162,24 @@
       "writtenOn": "2025-04-14T17:45:01Z",
       "side": 1,
       "message": "I recognize that this the default maxSampledTexturesPerShaderStage fits under this, but it\u0027s still a little weird to have this arbitrary number here that\u0027s not being replaced and has no relation to the value being tested.\n\nFor the purposes of this test is the second entry even necessary?",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c6dd0f8_897ced0f",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-14T20:09:22Z",
+      "side": 1,
+      "message": "+1, but also, if we want to keep the entry which is fine, we would also need to make sure that the `.binding \u003d limits.maxSampledTexturesPerShaderStage` as to isolate the testing condition. Otherwise, the failure could also be caused by just overlapping binding number.",
+      "parentUuid": "07d3e9e7_a8341629",
       "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
