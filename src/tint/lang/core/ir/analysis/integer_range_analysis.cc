@@ -68,6 +68,69 @@ bool IsConstantInteger(const Value* v) {
     }
     return false;
 }
+
+std::variant<int64_t, uint64_t> GetValueFromConstantValue(const Constant* value) {
+    if (value->Type()->IsSignedIntegerScalar()) {
+        const auto* i32Initializer = value->Value()->As<core::constant::Scalar<i32>>();
+        TINT_ASSERT(i32Initializer);
+        return static_cast<int64_t>(i32Initializer->ValueAs<int32_t>());
+    } else {
+        const auto* u32Initializer = value->Value()->As<core::constant::Scalar<u32>>();
+        TINT_ASSERT(u32Initializer);
+        return static_cast<uint64_t>(u32Initializer->ValueAs<uint32_t>());
+    }
+}
+
+int32_t Compare(std::variant<int64_t, uint64_t> lhs, std::variant<int64_t, uint64_t> rhs) {
+    TINT_ASSERT(std::holds_alternative<int64_t>(lhs) == std::holds_alternative<int64_t>(rhs));
+    if (std::holds_alternative<int64_t>(lhs)) {
+        int64_t lhs_sint = std::get<int64_t>(lhs);
+        int64_t rhs_sint = std::get<int64_t>(rhs);
+        if (lhs_sint > rhs_sint) {
+            return 1;
+        } else if (lhs_sint < rhs_sint) {
+            return -1;
+        }
+        return 0;
+    } else {
+        uint64_t lhs_uint = std::get<uint64_t>(lhs);
+        uint64_t rhs_uint = std::get<uint64_t>(rhs);
+        if (lhs_uint > rhs_uint) {
+            return 1;
+        } else if (lhs_uint < rhs_uint) {
+            return -1;
+        }
+        return 0;
+    }
+}
+
+IntegerRangeInfo GetIntegerRangeInfo(std::variant<int64_t, uint64_t> min_bound,
+                                     std::variant<int64_t, uint64_t> max_bound) {
+    TINT_ASSERT(std::holds_alternative<int64_t>(min_bound) ==
+                std::holds_alternative<int64_t>(max_bound));
+    if (std::holds_alternative<int64_t>(min_bound)) {
+        return IntegerRangeInfo(std::get<int64_t>(min_bound), std::get<int64_t>(max_bound));
+    } else {
+        return IntegerRangeInfo(std::get<uint64_t>(min_bound), std::get<uint64_t>(max_bound));
+    }
+}
+
+struct CompareEqualOpAndConstRHS {
+    BinaryOp op;
+    std::variant<int64_t, uint64_t> constRHS;
+};
+
+CompareEqualOpAndConstRHS GetCompareEqualOpAndConstRHS(const Binary* compare) {
+    CompareEqualOpAndConstRHS result;
+
+    // TODO(348701956): Support more situations
+    TINT_ASSERT(IsConstantInteger(compare->RHS()));
+
+    result.op = compare->Op();
+    result.constRHS = GetValueFromConstantValue(compare->RHS()->As<Constant>());
+    return result;
+}
+
 }  // namespace
 
 IntegerRangeInfo::IntegerRangeInfo(int64_t min_bound, int64_t max_bound) {
@@ -81,7 +144,10 @@ IntegerRangeInfo::IntegerRangeInfo(uint64_t min_bound, uint64_t max_bound) {
 }
 
 struct IntegerRangeAnalysisImpl {
-    explicit IntegerRangeAnalysisImpl(Function* func) : function_(func) {}
+    explicit IntegerRangeAnalysisImpl(Function* func) : function_(func) {
+        // Analyze all of the loops in the function.
+        Traverse(func->Block(), [&](Loop* l) { AnalyzeLoop(l); });
+    }
 
     const IntegerRangeInfo* GetInfo(const FunctionParam* param, uint32_t index) {
         if (!param->Type()->IsIntegerScalarOrVector()) {
@@ -128,6 +194,85 @@ struct IntegerRangeAnalysisImpl {
 
         TINT_ASSERT(info.Length() > index);
         return &info[index];
+    }
+
+    const IntegerRangeInfo* GetInfo(const Var* var) {
+        return integer_var_range_info_map_.Get(var).value;
+    }
+
+    /// Analyze a loop to compute the range of the loop control variable if possible.
+    void AnalyzeLoop(Loop* loop) {
+        const Var* index = GetLoopControlVariableFromConstantInitializer(loop);
+        if (!index) {
+            return;
+        }
+        const Binary* update = GetBinaryToUpdateLoopControlVariableInContinuingBlock(loop, index);
+        if (!update) {
+            return;
+        }
+        const Binary* compare = GetBinaryToCompareLoopControlVariableInLoopBody(loop, index);
+        if (!compare) {
+            return;
+        }
+
+        TINT_ASSERT(index->Initializer());
+        TINT_ASSERT(index->Initializer()->As<Constant>());
+
+        // for (var i = const_init; ...)
+        std::variant<int64_t, uint64_t> const_init =
+            GetValueFromConstantValue(index->Initializer()->As<Constant>());
+
+        // for (...; i++) or for(...; i--)
+        bool index_is_increasing = update->Op() == BinaryOp::kAdd;
+
+        // Currently we only support `binary` in "index <= constant" or "index >= constant" format.
+        // TODO(348701956): Support other cases in `GetCompareEqualOpAndConstRHS()`. For example,
+        // - turn "index < constant" into "index <= constant - 1"
+        // - turn "index > constant" into "index >= constant + 1"
+        // - turn "constant op index" into "index reverse-op constant"
+        if (!IsConstantInteger(compare->RHS())) {
+            return;
+        }
+        CompareEqualOpAndConstRHS compare_info = GetCompareEqualOpAndConstRHS(compare);
+        int32_t compare_const_init_with_const_rhs = Compare(const_init, compare_info.constRHS);
+
+        switch (compare_info.op) {
+            case BinaryOp::kLessThanEqual: {
+                // for (var index = const_init; index <= const_rhs; index++)
+                // Only `const_init <= const_rhs` is valid. The range of `index` is:
+                // [const_init, const_rhs]
+                // Note that in `GetBinaryToCompareLoopControlVariableInLoopBody()` we disallow
+                //  `const_rhs` to be the maximum value of i32 or u32, so
+                // - `index + 1` won't be overflow as `const_init` cannot be greater than
+                //   `const_rhs`.
+                // - `index <= const_rhs` can correctly exit when `const_init + 1` is the maximum
+                //   value of i32 or u32.
+                if (index_is_increasing && compare_const_init_with_const_rhs <= 0) {
+                    IntegerRangeInfo rangeInfo =
+                        GetIntegerRangeInfo(const_init, compare_info.constRHS);
+                    integer_var_range_info_map_.Add(index, rangeInfo);
+                }
+                break;
+            }
+            case BinaryOp::kGreaterThanEqual: {
+                // for (var index = const_init; index >= const_rhs; index--)
+                // Only `const_init >= const_rhs` is valid. The range of `index` is:
+                // [const_rhs, const_init]
+                // Note that in `GetBinaryToCompareLoopControlVariableInLoopBody()` we disallow
+                //  `const_rhs` to be the minimum value of i32 or u32, so
+                // - `index - 1` won't be overflow as `const_init` cannot be less than `const_rhs`.
+                // - `index >= const_rhs` can correctly exit when `const_init - 1` is the minimum
+                //   value of i32 or u32.
+                if (!index_is_increasing && compare_const_init_with_const_rhs >= 0) {
+                    IntegerRangeInfo rangeInfo =
+                        GetIntegerRangeInfo(compare_info.constRHS, const_init);
+                    integer_var_range_info_map_.Add(index, rangeInfo);
+                }
+                break;
+            }
+            default:
+                break;
+        }
     }
 
     const Var* GetLoopControlVariableFromConstantInitializer(const Loop* loop) {
@@ -501,6 +646,7 @@ struct IntegerRangeAnalysisImpl {
     Function* function_;
     Hashmap<const FunctionParam*, Vector<IntegerRangeInfo, 3>, 4>
         integer_function_param_range_info_map_;
+    Hashmap<const Var*, IntegerRangeInfo, 8> integer_var_range_info_map_;
 };
 
 IntegerRangeAnalysis::IntegerRangeAnalysis(Function* func)
@@ -527,6 +673,10 @@ const Binary* IntegerRangeAnalysis::GetBinaryToCompareLoopControlVariableInLoopB
     const Loop* loop,
     const Var* loop_control_variable) {
     return impl_->GetBinaryToCompareLoopControlVariableInLoopBody(loop, loop_control_variable);
+}
+
+const IntegerRangeInfo* IntegerRangeAnalysis::GetInfo(const Var* var) {
+    return impl_->GetInfo(var);
 }
 
 }  // namespace tint::core::ir::analysis
