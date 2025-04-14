@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66d27d8a_a99ce3b3",
+        "filename": "src/tint/cmd/fuzz/ir/helpers/substitute_overrides_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-14T16:03:30Z",
+      "side": 1,
+      "message": "I think Peter\u0027s point is that most of us would find this easier to read by just putting the code into the block, instead of doing the `continue` thing.\n\n\"if this is true then do the thing\"\nis easier to parse for me than\n\"if this is not true then continue, and we\u0027ll do the thing if we didn\u0027t continue\"",
+      "parentUuid": "70628cf2_97eccd66",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "6b5c09ef68f5771b77b3bb00681ef9afec11feae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac8f58fd_4307f813",
