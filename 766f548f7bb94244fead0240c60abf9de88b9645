@@ -94,6 +94,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e96a5f63_f26920af",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-14T20:21:16Z",
+      "side": 1,
+      "message": "Related to change in a CL further down the chain: https://dawn-review.googlesource.com/c/dawn/+/236554/comment/53c137cc_eb2d2473/",
+      "parentUuid": "15d2094b_42ac4426",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d96cff8c_4d55466f",
         "filename": "src/dawn/native/BindingInfo.cpp",
         "patchSetId": 4
