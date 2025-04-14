@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e328d72_0b91d2ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-14T08:42:09Z",
+      "side": 1,
+      "message": "James, could you provide some guidance as to how we usually test changes like these? I looked at the MSL produced and it is fine, as well as used this CL in Dawn end2end tests that pass on Metal.",
+      "revId": "5c3e9917e17ef4a3bf1cfc76790e15b43cce1ef7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
