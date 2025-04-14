@@ -34,6 +34,24 @@
       "parentUuid": "258dc917_26be20de",
       "revId": "8a1ba95876f0ed05b4c7683a7093e757cd2acfc1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b46974ec_8f2aa89d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-14T15:14:44Z",
+      "side": 1,
+      "message": "That\u0027s my understanding yes. @cwallez@chromium.org would confirm.",
+      "parentUuid": "289889dc_4bcca243",
+      "revId": "8a1ba95876f0ed05b4c7683a7093e757cd2acfc1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
