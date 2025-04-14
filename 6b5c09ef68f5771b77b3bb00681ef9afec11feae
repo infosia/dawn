@@ -93,6 +93,30 @@
       },
       "revId": "6b5c09ef68f5771b77b3bb00681ef9afec11feae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f5a209d_22552e57",
+        "filename": "src/tint/cmd/fuzz/ir/helpers/substitute_overrides_config_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-14T16:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8f58fd_4307f813",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "6b5c09ef68f5771b77b3bb00681ef9afec11feae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
