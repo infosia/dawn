@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1817105a_f2eb1c10",
+        "filename": "src/tint/cmd/fuzz/ir/helpers/substitute_overrides_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-14T15:58:08Z",
+      "side": 1,
+      "message": "Why? If it\u0027s not an override or the override doesn\u0027t have an initializer?",
+      "parentUuid": "e51a78d8_06e92951",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "6b5c09ef68f5771b77b3bb00681ef9afec11feae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac8f58fd_4307f813",
