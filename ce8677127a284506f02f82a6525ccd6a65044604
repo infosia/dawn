@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "ce8677127a284506f02f82a6525ccd6a65044604",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "832aff6a_054af2d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-14T23:21:41Z",
+      "side": 1,
+      "message": "Looks like we\u0027ll need another person to stamp. +dsinclair for that.",
+      "revId": "ce8677127a284506f02f82a6525ccd6a65044604",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
