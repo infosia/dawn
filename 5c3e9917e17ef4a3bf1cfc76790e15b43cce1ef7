@@ -16,6 +16,24 @@
       "message": "James, could you provide some guidance as to how we usually test changes like these? I looked at the MSL produced and it is fine, as well as used this CL in Dawn end2end tests that pass on Metal.",
       "revId": "5c3e9917e17ef4a3bf1cfc76790e15b43cce1ef7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d782df7_95686f9b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-14T13:51:16Z",
+      "side": 1,
+      "message": "I\u0027d first add a very basic unit test to `msl/writer/type_test.cc` (similar to to the sampler emission tests there), just to check the basic emission.\n\nThen we should add at least a couple of Tint E2E tests, which are shared by all backends and do backend shader validation. So probably add a `test/tint/types/binding_array/` directory and add a couple of `.wgsl` tests that declare and use a binding array for something, maybe covering some interesting indexing cases?",
+      "parentUuid": "1e328d72_0b91d2ce",
+      "revId": "5c3e9917e17ef4a3bf1cfc76790e15b43cce1ef7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
