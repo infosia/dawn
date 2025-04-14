@@ -189,6 +189,30 @@
       },
       "revId": "d0989686cb14531bc724ed6c9db681ca16053be1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4d62777_24610f5b",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-14T15:13:16Z",
+      "side": 0,
+      "message": "Perfect!",
+      "parentUuid": "14a9e0f4_82995f3f",
+      "range": {
+        "startLine": 448,
+        "startChar": 18,
+        "endLine": 448,
+        "endChar": 40
+      },
+      "revId": "d0989686cb14531bc724ed6c9db681ca16053be1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
