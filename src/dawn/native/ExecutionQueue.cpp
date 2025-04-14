@@ -31,6 +31,10 @@
 
 namespace dawn::native {
 
+ExecutionQueueBase::ExecutionQueueBase(EventManager* eventManager) : mEventManager(eventManager) {
+    DAWN_ASSERT(eventManager);
+}
+
 ExecutionSerial ExecutionQueueBase::GetPendingCommandSerial() const {
     return ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire) + 1);
 }
@@ -50,13 +54,28 @@ MaybeError ExecutionQueueBase::CheckPassedSerials() {
     DAWN_ASSERT(completedSerial <=
                 ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire)));
 
+    UpdateCompletedSerial(completedSerial);
+    return {};
+}
+
+void ExecutionQueueBase::TrackSerialEvent(EventManager::TrackedEvent* event,
+                                          ExecutionSerial serial) {
+    mWaitingEvents->Enqueue(event, serial);
+}
+
+void ExecutionQueueBase::UpdateCompletedSerial(ExecutionSerial completedSerial) {
     // Atomically set mCompletedSerial to completedSerial if completedSerial is larger.
     uint64_t current = mCompletedSerial.load(std::memory_order_acquire);
     while (uint64_t(completedSerial) > current &&
            !mCompletedSerial.compare_exchange_weak(current, uint64_t(completedSerial),
                                                    std::memory_order_acq_rel)) {
     }
-    return {};
+    mWaitingEvents.Use([&](auto events) {
+        for (auto& e : events->IterateUpTo(completedSerial)) {
+            mEventManager->SetFutureReady(e.Get());
+        }
+        events->ClearUpTo(completedSerial);
+    });
 }
 
 MaybeError ExecutionQueueBase::EnsureCommandsFlushed(ExecutionSerial serial) {
@@ -75,6 +94,10 @@ void ExecutionQueueBase::AssumeCommandsComplete() {
     // thread-safe yet. Two threads calling destroy would race setting these serials.
     uint64_t prev = mLastSubmittedSerial.fetch_add(1u, std::memory_order_release);
     mCompletedSerial.store(prev + 1u, std::memory_order_release);
+
+    // Clear out all waiting events to avoid reference cycle:
+    //   QueueBase -> ExecutionQueueBase -> TrackedEvent[QueueAndSerial] -> QueueBase
+    mWaitingEvents->Clear();
 }
 
 void ExecutionQueueBase::IncrementLastSubmittedCommandSerial() {

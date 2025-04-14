@@ -307,7 +307,15 @@ MaybeError EventManager::Initialize(const UnpackedPtr<InstanceDescriptor>& descr
 }
 
 void EventManager::ShutDown() {
-    mEvents.Use([&](auto events) { (*events).reset(); });
+    mEvents.Use([&](auto events) {
+        // For all non-spontaneous events, call their callbacks now.
+        for (auto& [futureID, event] : **events) {
+            if (event->mCallbackMode != wgpu::CallbackMode::AllowSpontaneous) {
+                event->EnsureComplete(EventCompletionType::Shutdown);
+            }
+        }
+        (*events).reset();
+    });
 }
 
 bool EventManager::IsShutDown() const {
@@ -345,6 +353,12 @@ FutureID EventManager::TrackEvent(Ref<TrackedEvent>&& event) {
 
     mEvents.Use([&](auto events) {
         if (!events->has_value()) {
+            // If the event isn't a spontaneous event, call the callback now.
+            if (event->mCallbackMode != wgpu::CallbackMode::AllowSpontaneous) {
+                event->EnsureComplete(EventCompletionType::Shutdown);
+            }
+            // Otherwise, in native, the event manager is not in charge of tracking the event, so
+            // just return early now.
             return;
         }
         if (event->mCallbackMode != wgpu::CallbackMode::WaitAnyOnly) {
@@ -544,7 +558,9 @@ EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode,
 EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode,
                                          QueueBase* queue,
                                          ExecutionSerial completionSerial)
-    : mCallbackMode(callbackMode), mCompletionData(QueueAndSerial{queue, completionSerial}) {}
+    : mCallbackMode(callbackMode), mCompletionData(QueueAndSerial{queue, completionSerial}) {
+    queue->TrackSerialEvent(this, completionSerial);
+}
 
 EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode, Completed tag)
     : TrackedEvent(callbackMode, SystemEvent::CreateSignaled()) {}
