@@ -39,6 +39,30 @@
       },
       "revId": "07ca3d576923f538967330c967c5c47f08f14dd2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40899756_9a9ee10a",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-14T13:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caf15103_b3418062",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 58
+      },
+      "revId": "07ca3d576923f538967330c967c5c47f08f14dd2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
