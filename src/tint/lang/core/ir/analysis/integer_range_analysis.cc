@@ -68,6 +68,53 @@ bool IsConstantInteger(const Value* v) {
     }
     return false;
 }
+
+std::variant<int64_t, uint64_t> GetValueFromConstantValue(const Constant* value) {
+    if (value->Type()->IsSignedIntegerScalar()) {
+        const auto* i32Initializer = value->Value()->As<core::constant::Scalar<i32>>();
+        TINT_ASSERT(i32Initializer);
+        return static_cast<int64_t>(i32Initializer->ValueAs<int32_t>());
+    } else {
+        const auto* u32Initializer = value->Value()->As<core::constant::Scalar<u32>>();
+        TINT_ASSERT(u32Initializer);
+        return static_cast<uint64_t>(u32Initializer->ValueAs<uint32_t>());
+    }
+}
+
+int Compare(std::variant<int64_t, uint64_t> lhs, std::variant<int64_t, uint64_t> rhs) {
+    TINT_ASSERT(std::holds_alternative<int64_t>(lhs) == std::holds_alternative<int64_t>(rhs));
+    if (std::holds_alternative<int64_t>(lhs)) {
+        int64_t lhs_sint = std::get<int64_t>(lhs);
+        int64_t rhs_sint = std::get<int64_t>(rhs);
+        if (lhs_sint > rhs_sint) {
+            return 1;
+        } else if (lhs_sint < rhs_sint) {
+            return -1;
+        }
+        return 0;
+    } else {
+        uint64_t lhs_uint = std::get<uint64_t>(lhs);
+        uint64_t rhs_uint = std::get<uint64_t>(rhs);
+        if (lhs_uint > rhs_uint) {
+            return 1;
+        } else if (lhs_uint < rhs_uint) {
+            return -1;
+        }
+        return 0;
+    }
+}
+
+IntegerRangeInfo GetIntegerRangeInfo(std::variant<int64_t, uint64_t> min_bound,
+                                     std::variant<int64_t, uint64_t> max_bound) {
+    TINT_ASSERT(std::holds_alternative<int64_t>(min_bound) ==
+                std::holds_alternative<int64_t>(max_bound));
+    if (std::holds_alternative<int64_t>(min_bound)) {
+        return IntegerRangeInfo(std::get<int64_t>(min_bound), std::get<int64_t>(max_bound));
+    } else {
+        return IntegerRangeInfo(std::get<uint64_t>(min_bound), std::get<uint64_t>(max_bound));
+    }
+}
+
 }  // namespace
 
 IntegerRangeInfo::IntegerRangeInfo(int64_t min_bound, int64_t max_bound) {
@@ -81,7 +128,10 @@ IntegerRangeInfo::IntegerRangeInfo(uint64_t min_bound, uint64_t max_bound) {
 }
 
 struct IntegerRangeAnalysisImpl {
-    explicit IntegerRangeAnalysisImpl(Function* func) : function_(func) {}
+    explicit IntegerRangeAnalysisImpl(Function* func) : function_(func) {
+        // Analyze all of the loops in the function.
+        Traverse(func->Block(), [&](Loop* l) { AnalyzeLoop(l); });
+    }
 
     const IntegerRangeInfo* GetInfo(const FunctionParam* param, uint32_t index) {
         if (!param->Type()->IsIntegerScalarOrVector()) {
@@ -128,6 +178,63 @@ struct IntegerRangeAnalysisImpl {
 
         TINT_ASSERT(info.Length() > index);
         return &info[index];
+    }
+
+    const IntegerRangeInfo* GetInfo(const Var* var) {
+        return integer_var_range_info_map_.Get(var).value;
+    }
+
+    /// Analyze a loop to compute the range of the loop control variable if possible.
+    void AnalyzeLoop(Loop* loop) {
+        const Var* loop_control_variable = GetLoopControlVariableFromConstantInitializer(loop);
+        if (!loop_control_variable) {
+            return;
+        }
+        const Binary* update =
+            GetBinaryToUpdateLoopControlVariableInContinuingBlock(loop, loop_control_variable);
+        if (!update) {
+            return;
+        }
+        const Binary* compare =
+            GetBinaryToCompareLoopControlVariableInLoopBody(loop, loop_control_variable);
+        if (!compare) {
+            return;
+        }
+
+        TINT_ASSERT(loop_control_variable->Initializer());
+        TINT_ASSERT(loop_control_variable->Initializer()->As<Constant>());
+
+        // for (var i = const_init; ...)
+        std::variant<int64_t, uint64_t> const_init =
+            GetValueFromConstantValue(loop_control_variable->Initializer()->As<Constant>());
+
+        // for (...; i++) or for(...; i--)
+        bool loop_control_variable_is_increasing = update->Op() == BinaryOp::kAdd;
+
+        // TODO(348701956): Compute integer range in other cases
+        // for (var i = const_init; i <= const_rhs; i++)
+        if (IsConstantInteger(compare->RHS()) && loop_control_variable_is_increasing &&
+            compare->Op() == BinaryOp::kLessThanEqual) {
+            auto const_rhs = GetValueFromConstantValue(compare->RHS()->As<Constant>());
+
+            // Only `const_init <= const_rhs` is valid. The range of `i` is [const_init, const_rhs]
+            if (Compare(const_init, const_rhs) <= 0) {
+                IntegerRangeInfo rangeInfo = GetIntegerRangeInfo(const_init, const_rhs);
+                integer_var_range_info_map_.Add(loop_control_variable, rangeInfo);
+                return;
+            }
+        }
+        // for (var i = const_init; i >= const_rhs; i--)
+        if (IsConstantInteger(compare->RHS()) && !loop_control_variable_is_increasing &&
+            compare->Op() == BinaryOp::kGreaterThanEqual) {
+            auto const_rhs = GetValueFromConstantValue(compare->RHS()->As<Constant>());
+
+            // Only `const_init >= const_rhs` is valid. The range of `i` is [const_rhs, const_init]
+            if (Compare(const_init, const_rhs) >= 0) {
+                IntegerRangeInfo rangeInfo = GetIntegerRangeInfo(const_rhs, const_init);
+                integer_var_range_info_map_.Add(loop_control_variable, rangeInfo);
+            }
+        }
     }
 
     const Var* GetLoopControlVariableFromConstantInitializer(const Loop* loop) {
@@ -425,6 +532,7 @@ struct IntegerRangeAnalysisImpl {
     Function* function_;
     Hashmap<const FunctionParam*, Vector<IntegerRangeInfo, 3>, 4>
         integer_function_param_range_info_map_;
+    Hashmap<const Var*, IntegerRangeInfo, 8> integer_var_range_info_map_;
 };
 
 IntegerRangeAnalysis::IntegerRangeAnalysis(Function* func)
@@ -451,6 +559,10 @@ const Binary* IntegerRangeAnalysis::GetBinaryToCompareLoopControlVariableInLoopB
     const Loop* loop,
     const Var* loop_control_variable) {
     return impl_->GetBinaryToCompareLoopControlVariableInLoopBody(loop, loop_control_variable);
+}
+
+const IntegerRangeInfo* IntegerRangeAnalysis::GetInfo(const Var* var) {
+    return impl_->GetInfo(var);
 }
 
 }  // namespace tint::core::ir::analysis
