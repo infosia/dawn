@@ -50,6 +50,23 @@
       "message": "My bad, I never rereviewed this. LGTM! Feel free to ping reviewers when there is no answer for a long time like that.",
       "revId": "f473f7bf00cc68603963de30f6c7ffe24355b5a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c9f0e72_09bbefd6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-14T11:34:56Z",
+      "side": 1,
+      "message": "Dan PTAL as well!",
+      "revId": "f473f7bf00cc68603963de30f6c7ffe24355b5a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
