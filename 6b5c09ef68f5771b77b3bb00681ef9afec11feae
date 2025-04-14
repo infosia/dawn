@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e51a78d8_06e92951",
+        "filename": "src/tint/cmd/fuzz/ir/helpers/substitute_overrides_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-04-14T15:57:07Z",
+      "side": 1,
+      "message": "Has dan style gone too far?",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 21
+      },
+      "revId": "6b5c09ef68f5771b77b3bb00681ef9afec11feae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac8f58fd_4307f813",
+        "filename": "src/tint/cmd/fuzz/ir/helpers/substitute_overrides_config_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-04-14T15:57:07Z",
+      "side": 1,
+      "message": "Maybe add a test where one override initialized by another.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "6b5c09ef68f5771b77b3bb00681ef9afec11feae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
