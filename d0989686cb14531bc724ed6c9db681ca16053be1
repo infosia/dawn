@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2e2deb0_a13087e5",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-14T15:01:03Z",
+      "side": 0,
+      "message": "Apparently that works (technically it needs to be `const auto\u0026`, but whatever).",
+      "parentUuid": "83e3dc10_81096472",
+      "range": {
+        "startLine": 157,
+        "startChar": 3,
+        "endLine": 157,
+        "endChar": 20
+      },
+      "revId": "d0989686cb14531bc724ed6c9db681ca16053be1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f4a763f2_0c71e225",
@@ -133,6 +157,30 @@
       "side": 0,
       "message": "Right, I meant to write:\n```\nauto\u0026 end_ref \u003d at(length() - 1);\nend_ptr \u003d \u0026end_ref + 1;\n```\n\nI\u0027m not sure that will make ClangTidy happy because we ultimately need to do some pointer arithmetic to get the pointer to one past the end thanks to `std::from_chars` working with pointers.\n\nI wonder if a better solution here would be to make an `at_ptr` function that\u0027s like `at`, except it returns a `const char*`. It would need to handle when the input `pos` is one past the end to return that pointer correctly. The key would be to scope the unsafe pointer arithmetic to this one function, and disable the ClangTidy check only on this function.",
       "parentUuid": "04cc7dce_a6871581",
+      "range": {
+        "startLine": 448,
+        "startChar": 18,
+        "endLine": 448,
+        "endChar": 40
+      },
+      "revId": "d0989686cb14531bc724ed6c9db681ca16053be1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14a9e0f4_82995f3f",
+        "filename": "src/tint/lang/wgsl/reader/parser/lexer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-14T15:01:03Z",
+      "side": 0,
+      "message": "In my more recent diffs I did something similar to this with a `line_end()` function that returns a ptr one past the last element and isolated the warning suppression to just that function.",
+      "parentUuid": "9e7e56d1_089935c1",
       "range": {
         "startLine": 448,
         "startChar": 18,
