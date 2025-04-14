@@ -16,6 +16,23 @@
       "message": "I haven\u0027t added unit tests yet, but let me know where the best place would be and I can add them to this CL.",
       "revId": "d67c8b3d3ec85666dc5853b06c3e5788e845e193",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10a95788_2e114ab6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-14T12:21:42Z",
+      "side": 1,
+      "message": "Very nice find! Thank you for digging till there.\n\nTwo tests that I can think of are:\n\n - One that looks like [this one](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/VideoViewsTests.cpp;drc\u003d32a073a0f1da3f67e27797a6fedeb5fe5f8748b1;l\u003d763) but calls `textureDimensions` on both planes and returns the value in a storage buffer, then we look that the size matches what we expected.\n - One that tries to renter to the plane similar to [this test](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/VideoViewsTests.cpp;drc\u003d32a073a0f1da3f67e27797a6fedeb5fe5f8748b1;l\u003d1966) but with a second attachment so that we know that size validation ensures the YUV attachment has the correct size (that\u0027s simpler)\n \nHowever both of these could be a bunch of effort to make because the various backends for this test return block-aligned textures, so we could need yet another boolean to [`CreatVideoTextureForTest`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/VideoViewsTests.h;drc\u003dd3beaf962a84fda344aaa27919a5e31d84892e07;l\u003d66) to ask to creat a texture with a size that\u0027s not aligned.\n\nIf that\u0027s too much work let us know and we can take care of adding the test after this lands.",
+      "revId": "d67c8b3d3ec85666dc5853b06c3e5788e845e193",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
