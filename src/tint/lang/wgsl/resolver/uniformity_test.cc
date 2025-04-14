@@ -468,6 +468,10 @@ fn foo() {
   var func_non_uniform = 7;
   func_non_uniform = rw;
 
+  var subgroup_matrix_left_zero: subgroup_matrix_left<f32, 8, 8>;
+  var subgroup_matrix_right_zero: subgroup_matrix_right<f32, 8, 8>;
+  var subgroup_matrix_result_zero: subgroup_matrix_result<f32, 8, 8>;
+
   if ()" + ConditionToStr(condition) +
                       R"() {
     )" + FunctionCallToStr(function) +

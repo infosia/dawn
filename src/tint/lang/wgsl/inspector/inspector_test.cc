@@ -4195,8 +4195,9 @@ TEST_F(InspectorSubgroupMatrixTest, DirectUse) {
     auto* src = R"(
 enable chromium_experimental_subgroup_matrix;
 
-var<private> sm: subgroup_matrix_result<f32, 8, 8>;
-@compute @workgroup_size(1) fn foo() { _ = sm; }
+@compute @workgroup_size(1) fn foo() {
+  _ = subgroup_matrix_result<f32, 8, 8>();
+}
 )";
     Inspector& inspector = Initialize(src);
 
@@ -4211,8 +4212,7 @@ TEST_F(InspectorSubgroupMatrixTest, IndirectUse) {
     auto* src = R"(
 enable chromium_experimental_subgroup_matrix;
 
-var<private> sm: subgroup_matrix_result<f32, 8, 8>;
-fn foo() { _ = sm; }
+fn foo() { _ = subgroup_matrix_result<f32, 8, 8>(); }
 @compute @workgroup_size(1) fn main() { foo(); }
 )";
     Inspector& inspector = Initialize(src);
