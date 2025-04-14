@@ -78,6 +78,9 @@ Extension ParseExtension(std::string_view str) {
     if (str == "subgroups") {
         return Extension::kSubgroups;
     }
+    if (str == "subgroups_f16") {
+        return Extension::kSubgroupsF16;
+    }
     return Extension::kUndefined;
 }
 
@@ -109,6 +112,8 @@ std::string_view ToString(Extension value) {
             return "f16";
         case Extension::kSubgroups:
             return "subgroups";
+        case Extension::kSubgroupsF16:
+            return "subgroups_f16";
     }
     return "<unknown>";
 }
