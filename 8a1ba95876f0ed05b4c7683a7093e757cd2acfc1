@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "258dc917_26be20de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-14T15:07:56Z",
+      "side": 1,
+      "message": "I believe you need to add those failures to `third_party/dawn/webgpu-cts/expectations.txt` as they\u0027re expected at the moment since WebGPU CTS runs with allow_unsafe_apis.\n\nYou could also gate it already with the WGPUFeatureName_TextureCompressionBCSliced3D but I\u0027m not sure that\u0027s what you want right now. Once it\u0027s enabled on some backends though, it would work nicely.\n\nNote that I\u0027m going to update CTS to check for those features in the meantime: https://github.com/gpuweb/cts/pull/4352",
+      "revId": "8a1ba95876f0ed05b4c7683a7093e757cd2acfc1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
