@@ -59,6 +59,27 @@ MaybeError ExecutionQueueBase::CheckPassedSerials() {
     return {};
 }
 
+void ExecutionQueueBase::TrackSerialEvent(EventManager::TrackedEvent* event,
+                                          ExecutionSerial serial) {
+    mWaitingEvents->Enqueue(event, serial);
+}
+
+void ExecutionQueueBase::UpdateCompletedSerial(EventManager* eventManager,
+                                               ExecutionSerial completedSerial) {
+    // Atomically set mCompletedSerial to completedSerial if completedSerial is larger.
+    uint64_t current = mCompletedSerial.load(std::memory_order_acquire);
+    while (uint64_t(completedSerial) > current &&
+           !mCompletedSerial.compare_exchange_weak(current, uint64_t(completedSerial),
+                                                   std::memory_order_acq_rel)) {
+    }
+    mWaitingEvents.Use([&](auto events) {
+        for (auto& e : events->IterateUpTo(completedSerial)) {
+            eventManager->SetFutureReady(e.Get());
+        }
+        events->ClearUpTo(completedSerial);
+    });
+}
+
 MaybeError ExecutionQueueBase::EnsureCommandsFlushed(ExecutionSerial serial) {
     DAWN_ASSERT(serial <= GetPendingCommandSerial());
     if (serial > GetLastSubmittedCommandSerial()) {
@@ -75,6 +96,10 @@ void ExecutionQueueBase::AssumeCommandsComplete() {
     // thread-safe yet. Two threads calling destroy would race setting these serials.
     uint64_t prev = mLastSubmittedSerial.fetch_add(1u, std::memory_order_release);
     mCompletedSerial.store(prev + 1u, std::memory_order_release);
+
+    // Clear out all waiting events to avoid reference cycle:
+    //   QueueBase -> ExecutionQueueBase -> TrackedEvent[QueueAndSerial] -> QueueBase
+    mWaitingEvents->Clear();
 }
 
 void ExecutionQueueBase::IncrementLastSubmittedCommandSerial() {
