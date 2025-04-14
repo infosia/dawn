@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc48531a_6c223475",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-04-14T12:49:47Z",
+      "side": 1,
+      "message": "Thanks, LGTM!\nI think we can land it and follow up if Antonio has any comments (since this doesn\u0027t start the bot yet).",
+      "revId": "013d5869d6fb863c3c92278c70aeda8bda3de365",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
