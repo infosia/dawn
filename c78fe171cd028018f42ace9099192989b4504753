@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e74bb8c0_92eee582",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-15T17:49:28Z",
+      "side": 1,
+      "message": "Currently unused?",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a358347_99a3813c",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-15T17:49:28Z",
+      "side": 1,
+      "message": "Relying on the fact that `UsagesSorted()` makes a copy is a little scary because it\u0027s not part of the API and could potentially change in the future.\n\nPrefer `val-\u003eForEachUseUnsorted()` which actually does provide that guarantee.",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "088bfd4d_1950a9a5",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-15T17:49:28Z",
+      "side": 1,
+      "message": "Worth producing a `TINT_ICE()` if the load is not operating on an atomic (e.g. you loaded a whole struct or array that contains an atomic). We can\u0027t handle that case in Tint/WGSL so better to produce an error instead of invalid IR.",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fff5d345_df6ac6e5",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-15T17:49:28Z",
+      "side": 1,
+      "message": "As above, TINT_ICE if not the target is not an atomic.",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "651c4b9d_1c32e03f",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-15T17:49:28Z",
+      "side": 1,
+      "message": "`TINT_ICE_ON_NO_MATCH`",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
