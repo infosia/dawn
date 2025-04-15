@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67f6fe1c_d9e3f596",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-15T20:02:43Z",
+      "side": 1,
+      "message": "There\u0027s enough of these calls that it\u0027s worth hoisting this out of the switch and re-using it. You know that the LHS and RHS must match so only need to do one check.\n`const bool is_signed \u003d lhs-\u003eType()-\u003eIsSignedIntegerScalar();`",
+      "range": {
+        "startLine": 349,
+        "startChar": 24,
+        "endLine": 349,
+        "endChar": 87
+      },
+      "revId": "9e6eefa5ec77f6072568801517daaed4c7d69abf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d42b741a_a667739f",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-15T20:02:43Z",
+      "side": 1,
+      "message": "I think it\u0027d be worth making a couple of helpers for this, e.g.\n```\nauto const_i32 \u003d [](const Value* val) {\n    return val-\u003eAs\u003cConstant\u003e()-\u003eValue()-\u003eValueAs\u003cint32_t\u003e();\n};\nauto const_u32 \u003d [](const Value* val) {\n    return val-\u003eAs\u003cConstant\u003e()-\u003eValue()-\u003eValueAs\u003cuint32_t\u003e();\n};\n```\n\nWith these and the above change to hoist the bool, you could make all of these conditions one line, which makes them a bit easier to read, e.g.:\n```\nif (!is_signed \u0026\u0026 const_u32(lhs) \u003d\u003d u32::Highest()) {\n}\n```",
+      "range": {
+        "startLine": 350,
+        "startChar": 24,
+        "endLine": 350,
+        "endChar": 73
+      },
+      "revId": "9e6eefa5ec77f6072568801517daaed4c7d69abf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
