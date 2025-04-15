@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b52ecc56_887fa4e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-15T08:31:22Z",
+      "side": 1,
+      "message": "Please take a look, thanks! After asking MS D3D12 team, they suggest us to honor the `WaveLaneCountMax` reported by D3D12.",
+      "revId": "7c1ff5ab1271d8e6a3fb6ad84668a482e8c73095",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
