@@ -115,6 +115,30 @@ IntegerRangeInfo GetIntegerRangeInfo(std::variant<int64_t, uint64_t> min_bound,
     }
 }
 
+std::variant<int64_t, uint64_t> AddOne(std::variant<int64_t, uint64_t> original_value) {
+    if (std::holds_alternative<int64_t>(original_value)) {
+        int64_t original_value_sint = std::get<int64_t>(original_value);
+        TINT_ASSERT(original_value_sint < std::numeric_limits<int64_t>::max());
+        return std::get<int64_t>(original_value) + 1;
+    } else {
+        uint64_t original_value_uint = std::get<uint64_t>(original_value);
+        TINT_ASSERT(original_value_uint < std::numeric_limits<uint64_t>::max());
+        return std::get<uint64_t>(original_value) + 1u;
+    }
+}
+
+std::variant<int64_t, uint64_t> MinusOne(std::variant<int64_t, uint64_t> original_value) {
+    if (std::holds_alternative<int64_t>(original_value)) {
+        int64_t original_value_sint = std::get<int64_t>(original_value);
+        TINT_ASSERT(original_value_sint > std::numeric_limits<int64_t>::min());
+        return std::get<int64_t>(original_value) - 1;
+    } else {
+        uint64_t original_value_uint = std::get<uint64_t>(original_value);
+        TINT_ASSERT(original_value_uint > 0);
+        return std::get<uint64_t>(original_value) - 1u;
+    }
+}
+
 struct CompareEqualOpAndConstRHS {
     BinaryOp op;
     std::variant<int64_t, uint64_t> constRHS;
@@ -125,9 +149,28 @@ CompareEqualOpAndConstRHS GetCompareEqualOpAndConstRHS(const Binary* compare) {
 
     // TODO(348701956): Support more situations
     TINT_ASSERT(IsConstantInteger(compare->RHS()));
+    auto const_rhs = GetValueFromConstantValue(compare->RHS()->As<Constant>());
 
-    result.op = compare->Op();
-    result.constRHS = GetValueFromConstantValue(compare->RHS()->As<Constant>());
+    switch (compare->Op()) {
+        case BinaryOp::kLessThan:
+            // variable < constant => variable <= constant - 1
+            result.op = BinaryOp::kLessThanEqual;
+            result.constRHS = MinusOne(const_rhs);
+            break;
+        case BinaryOp::kGreaterThan:
+            // variable > constant => variable >= constant + 1
+            result.op = BinaryOp::kGreaterThanEqual;
+            result.constRHS = AddOne(const_rhs);
+            break;
+        case BinaryOp::kLessThanEqual:
+        case BinaryOp::kGreaterThanEqual:
+            result.op = compare->Op();
+            result.constRHS = const_rhs;
+            break;
+        default:
+            TINT_UNREACHABLE();
+    }
+
     return result;
 }
 
@@ -227,8 +270,6 @@ struct IntegerRangeAnalysisImpl {
 
         // Currently we only support `binary` in "index <= constant" or "index >= constant" format.
         // TODO(348701956): Support other cases in `GetCompareEqualOpAndConstRHS()`. For example,
-        // - turn "index < constant" into "index <= constant - 1"
-        // - turn "index > constant" into "index >= constant + 1"
         // - turn "constant op index" into "index reverse-op constant"
         if (!IsConstantInteger(compare->RHS())) {
             return;
