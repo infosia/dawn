@@ -55,6 +55,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "6e614890_5fe01cac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-15T17:59:08Z",
+      "side": 1,
+      "message": "Will do so in a follow-up.",
+      "parentUuid": "1d1e5b9c_afb2609c",
+      "revId": "ce8677127a284506f02f82a6525ccd6a65044604",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "ea9e1097_b13fefa3",
         "filename": "infra/config/global/generated/luci-scheduler.cfg",
         "patchSetId": 2
@@ -78,6 +96,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "ced26f11_1702c83d",
+        "filename": "infra/config/global/generated/luci-scheduler.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-15T17:59:08Z",
+      "side": 1,
+      "message": "I think it\u0027s because there aren\u0027t any other parent/child builders within Dawn? Or are you referring to other builders including Chromium ones?",
+      "parentUuid": "ea9e1097_b13fefa3",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "ce8677127a284506f02f82a6525ccd6a65044604",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "e3d5a08e_b89d4bd6",
         "filename": "infra/config/global/generated/realms.cfg",
         "patchSetId": 2
@@ -89,6 +131,30 @@
       "writtenOn": "2025-04-15T13:59:52Z",
       "side": 1,
       "message": "Never saw this either.\nIs this for manual triggering?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 36
+      },
+      "revId": "ce8677127a284506f02f82a6525ccd6a65044604",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bad3055_0077a896",
+        "filename": "infra/config/global/generated/realms.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-15T17:59:08Z",
+      "side": 1,
+      "message": "I think it\u0027s for triggering child testers from the parent, which will be using the `dawn-ci-builder@` service account.",
+      "parentUuid": "e3d5a08e_b89d4bd6",
       "range": {
         "startLine": 51,
         "startChar": 0,
