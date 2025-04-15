@@ -3732,10 +3732,7 @@ webgpu:api,operation,reflection:texture_reflection_attributes:
 webgpu:api,operation,reflection:texture_creation_from_reflection:
 webgpu:api,operation,reflection:query_set_reflection_attributes:
 webgpu:api,operation,reflection:query_set_creation_from_reflection:
-webgpu:api,operation,render_pass,clear_value:stored:
 webgpu:api,operation,render_pass,clear_value:loaded:
-webgpu:api,operation,render_pass,clear_value:srgb:
-webgpu:api,operation,render_pass,clear_value:layout:
 webgpu:api,operation,render_pass,clear_value:stencil_clear_value:stencilFormat="stencil8";stencilClearValue=0;applyStencilClearValueAsStencilReferenceValue=true
 webgpu:api,operation,render_pass,clear_value:stencil_clear_value:stencilFormat="stencil8";stencilClearValue=0;applyStencilClearValueAsStencilReferenceValue=false
 webgpu:api,operation,render_pass,clear_value:stencil_clear_value:stencilFormat="stencil8";stencilClearValue=1;applyStencilClearValueAsStencilReferenceValue=true
@@ -173104,6 +173101,10 @@ webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type=
 webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="atomic%3Ci32%3E";wgsize=[3,7]
 webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="atomic%3Ci32%3E";wgsize=[1,128]
 webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="atomic%3Ci32%3E";wgsize=[16,16]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="AtomicInStruct";wgsize=[1,1]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="AtomicInStruct";wgsize=[3,7]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="AtomicInStruct";wgsize=[1,128]
+webgpu:shader,execution,expression,call,builtin,workgroupUniformLoad:types:type="AtomicInStruct";wgsize=[16,16]
 webgpu:shader,execution,expression,call,user,ptr_params:read_full_object:address_space="function";call_indirection=0;type="vec4i"
 webgpu:shader,execution,expression,call,user,ptr_params:read_full_object:address_space="function";call_indirection=0;type="array"
 webgpu:shader,execution,expression,call,user,ptr_params:read_full_object:address_space="function";call_indirection=0;type="struct"
@@ -225730,6 +225731,7 @@ webgpu:shader,validation,uniformity,uniformity:pointers:case="address_uniform_ch
 webgpu:shader,validation,uniformity,uniformity:pointers:case="address_nonuniform_chain1"
 webgpu:shader,validation,uniformity,uniformity:pointers:case="address_nonuniform_chain2"
 webgpu:shader,validation,uniformity,uniformity:pointers:case="wg_uniform_load_is_uniform"
+webgpu:shader,validation,uniformity,uniformity:pointers:case="wg_uniform_load_atomic_is_uniform"
 webgpu:shader,validation,uniformity,uniformity:pointers:case="contents_scalar_uniform1"
 webgpu:shader,validation,uniformity,uniformity:pointers:case="contents_scalar_uniform2"
 webgpu:shader,validation,uniformity,uniformity:pointers:case="contents_scalar_uniform3"
