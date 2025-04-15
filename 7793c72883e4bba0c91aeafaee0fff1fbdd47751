@@ -16,6 +16,98 @@
       "message": "PTAL again - all comments should be addressed!",
       "revId": "7793c72883e4bba0c91aeafaee0fff1fbdd47751",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83040d6b_f5d3c44d",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-15T23:41:33Z",
+      "side": 1,
+      "message": "nit. No longer true.",
+      "range": {
+        "startLine": 135,
+        "startChar": 49,
+        "endLine": 136,
+        "endChar": 17
+      },
+      "revId": "7793c72883e4bba0c91aeafaee0fff1fbdd47751",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a073f999_3a50db76",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-15T23:41:33Z",
+      "side": 1,
+      "message": "nit. `queueWaitSerials`",
+      "range": {
+        "startLine": 148,
+        "startChar": 46,
+        "endLine": 148,
+        "endChar": 67
+      },
+      "revId": "7793c72883e4bba0c91aeafaee0fff1fbdd47751",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40abe44c_661b3fd7",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-15T23:41:33Z",
+      "side": 1,
+      "message": "I think this might be wrong? IIUC, this happens if a single queue/device is lost, but we will end up marking every future (potentially unrelated futures on other queue/devices) ready here.\n\nI think this isn\u0027t a problem atm for `WaitAny` with a timeout because we only allow a single queue/device, but I think that if we are just polling with `timeout\u003d0`, this could happen? This is where I think I thought we would need the indices to events on a specific queue so that we can properly set those to be ready, but not others.\n\nSeparately though... I\u0027m wondering whether we even need to do this?... If the device is lost, I think it will result in `ExecutionQueueBase::AssumeCommandsComplete` being called here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.cpp;l\u003d710;drc\u003df667feb8a5c6f227b49328ce78a062acc4f81187;bpv\u003d1;bpt\u003d1 and IIUC, that should set the completed serial of the corresponding queue to the end, which in turn should result in the `PollFutures` below seeing the queue events as `IsReadyToComplete()`.",
+      "range": {
+        "startLine": 178,
+        "startChar": 12,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "7793c72883e4bba0c91aeafaee0fff1fbdd47751",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5175707a_e26e4e44",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-15T23:41:33Z",
+      "side": 1,
+      "message": "Bleh... it\u0027s pretty hard to understand all the conditions and how they are branching and pruned right now. I had to read it quite a few times to convince myself this is correct.\n\nI think the most jarring condition that tripped me up was that `!queueLowestWaitSerials.empty()` implies `timeout \u003d\u003d Nanoseconds(0) || queueLowestWaitSerials.size() \u003d\u003d 1` by the second if block clause because of the early out. It was especially confusing because immediately following it is the `else if (timeout \u003d\u003d Nanoseconds(0))`.\n\nI think it would be a bit easier to follow if we split the logic by whether we are polling or waiting, even if we end up repeating the call a little bit, so something like:\n\n```\n// Handle polling.\nif (timeout \u003d\u003d Nanoseconds(0)) {\n    success |\u003d WaitQueueSerials(queueLowestWaitSerials, futures, timeout);\n    success |\u003d PollFutures(futures);\n    return success ? wgpu::WaitStatus::Success : wgpu::WaitStatus::TimedOut;\n}\n\n// Handle waiting with a timeout, where only a single type of event is allowed.\nif (!queueLowestWaitSerials.empty()) {\n    DAWN_ASSERT(queueLowestWaitSerials.size() \u003d\u003d 1);\n    success |\u003d WaitQueueSerials(queueLowestWaitSerials, futures, timeout);\n} else if (foundSystemEvent) {\n    // Can upgrade wait list events to system events.\n    success |\u003d\n        WaitAnySystemEvent(\n            SystemEventAndReadyStateIterator{futures.begin()},\n            SystemEventAndReadyStateIterator{futures.end()}, timeout);\n} else if (foundWaitListEvent) {\n    success |\u003d \n        WaitListEvent::WaitAny(\n            WaitListEventAndReadyStateIterator{futures.begin()},\n            WaitListEventAndReadyStateIterator{futures.end()}, timeout);\n} else {\n    DAWN_ASSERT(futures.size() \u003d\u003d 0);\n}\n```",
+      "range": {
+        "startLine": 213,
+        "startChar": 4,
+        "endLine": 247,
+        "endChar": 5
+      },
+      "revId": "7793c72883e4bba0c91aeafaee0fff1fbdd47751",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
