@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94c66042_7f03ea81",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-15T23:50:52Z",
+      "side": 1,
+      "message": "nit: For whatever reason all of the other blocks explicitly set `isBlendable \u003d false` so I guess we should do it here for consistency.",
+      "range": {
+        "startLine": 428,
+        "startChar": 27,
+        "endLine": 428,
+        "endChar": 39
+      },
+      "revId": "5a87cafea6dc2bad22995d40810c7ebbd2204743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7eac781d_19c39dd5",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-15T23:50:52Z",
+      "side": 1,
+      "message": "This INVALID_IF won\u0027t trigger if the dimension is 3D and the format is ETC2 for example. I think it should be more like:\n\n```\nif (format-\u003eisCompressed) {\n  DAWN_INVALID_IF( 1D )\n  \n  if (format-\u003eisBC) {\n    DAWN_INVALID_IF( 3D \u0026\u0026 !TextureCompressionBCSliced3D )\n  } else {\n    DAWN_INVALID_IF( 3D )\n  }\n}\n```\n\nAlso note I didn\u0027t check for TextureCompressionBC. That should already be validated elsewhere.\n\nI think CTS should catch this. If not maybe we\u0027re either missing coverage, or there\u0027s already some redundant validation that\u0027s catching it, or I\u0027m misunderstanding this code.",
+      "range": {
+        "startLine": 744,
+        "startChar": 12,
+        "endLine": 746,
+        "endChar": 76
+      },
+      "revId": "5a87cafea6dc2bad22995d40810c7ebbd2204743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
