@@ -16,6 +16,23 @@
       "message": "Please take a look, thanks! After asking MS D3D12 team, they suggest us to honor the `WaveLaneCountMax` reported by D3D12.",
       "revId": "7c1ff5ab1271d8e6a3fb6ad84668a482e8c73095",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf5727e4_52a503e1",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-15T13:11:45Z",
+      "side": 1,
+      "message": "Do we know why it was marked as unreliable? Of course drivers are supposed to follow the D3D12 semantics but it sounds like they weren\u0027t? Can we keep the workaround on drivers that had issues?",
+      "revId": "7c1ff5ab1271d8e6a3fb6ad84668a482e8c73095",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
