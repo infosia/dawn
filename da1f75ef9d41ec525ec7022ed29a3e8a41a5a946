@@ -22,6 +22,30 @@
       },
       "revId": "da1f75ef9d41ec525ec7022ed29a3e8a41a5a946",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db49a037_a4a2a0ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-15T18:29:43Z",
+      "side": 1,
+      "message": "Bit confusing that manual ended up above nightly for 2025.04.12, even though nighly is labeled \"latest\". I thought GitHub would sort by semver order, in which `v2025.04.12-03.06.48` is a prerelease that I\u0027m pretty sure should come before the corresponding full release `v2025.04.12`. But I think it\u0027s actually sorting alphanumerically.\nhttps://github.com/kainino0x/dawn/releases\n\nMaybe we should just take the commit time of the commit we\u0027re building and use that as the version, no nightly vs manual distinction. Maybe include the user+branch name if it\u0027s not `google/main`?\n\nMaybe we should just produce a version number based on how far we are from the initial commit (`git rev-list --count f07e3bd4c9553e7cd2af058fb6b8482721e4e486..HEAD`), especially if we only do this on `google/main` which we can mostly assume will move monotonically forward?",
+      "parentUuid": "b44aa048_11a2f10b",
+      "range": {
+        "startLine": 13,
+        "startChar": 20,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "da1f75ef9d41ec525ec7022ed29a3e8a41a5a946",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
