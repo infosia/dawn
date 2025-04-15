@@ -56,6 +56,24 @@
       "message": "This CL predates and caused the addition of the `https://gpuweb.github.io/gpuweb/#texture-compression-bc-sliced-3d` to the spec. So instead we should use a feature and not \"unsafe API\" this would likely fix the newly added expectations.\n\nBackends should be updated to list ETCSliced3D as supported when it is.\n\nA test should explicitly enable the feature and check that it makes sliced3d BC allowed. Then CTS should be able to check the rest (copy origin / size restrictions, some sampling?, etc)",
       "revId": "2f1e196ae656ffa33c2fd74bed4d42fc49a251d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e875be80_6ca8986e",
+        "filename": "src/dawn/tests/unittests/validation/TextureValidationTests.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-15T13:41:10Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org that makes sense. I will adjust to check for feature rather than unsafe API. Thank you for the guidance!",
+      "parentUuid": "df8d5278_ce3b8a28",
+      "revId": "2f1e196ae656ffa33c2fd74bed4d42fc49a251d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
