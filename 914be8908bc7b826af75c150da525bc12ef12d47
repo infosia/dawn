@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d1af684_7659afbb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2025-04-15T20:48:51Z",
+      "side": 1,
+      "message": "I upgraded go.mod and pushed a fix for fetch_dawn_dependencies.py to reflect the recent move of the googletest submodule.\n\nThe only issue that remains is this link error with macOS, but it is supposedly fixed by CL 237094",
+      "revId": "914be8908bc7b826af75c150da525bc12ef12d47",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
