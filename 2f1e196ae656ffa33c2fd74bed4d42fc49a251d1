@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ace3bce_06673e25",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-15T13:33:16Z",
+      "side": 1,
+      "message": "nit: slight preference for having the code look like\n\n```\nif (isCompressed) {\n   DAWN_INVALID_IF(\n        descriptor-\u003edimension \u003d\u003d wgpu::TextureDimension::e3D \u0026\u0026 format-\u003eisBC \u0026\u0026\n            !device-\u003eIsFeatureEnabled(...),\n        \"The dimension (%s) of a texture with a BC compressed format (%s) is 3D and %s is not enabled.\",\n        descriptor-\u003edimension, format-\u003eformat, wgpu::FeatureName::TextureCompressionBCSliced3D);\n    // Other check.\n}\n```",
+      "revId": "2f1e196ae656ffa33c2fd74bed4d42fc49a251d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "247a2f52_af54f4b5",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-15T13:33:16Z",
+      "side": 1,
+      "message": "Maybe `\"Compressed texture with %s has unsupported dimension %s.\", format, dimension`.",
+      "range": {
+        "startLine": 749,
+        "startChar": 0,
+        "endLine": 754,
+        "endChar": 59
+      },
+      "revId": "2f1e196ae656ffa33c2fd74bed4d42fc49a251d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df8d5278_ce3b8a28",
+        "filename": "src/dawn/tests/unittests/validation/TextureValidationTests.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-15T13:33:16Z",
+      "side": 1,
+      "message": "This CL predates and caused the addition of the `https://gpuweb.github.io/gpuweb/#texture-compression-bc-sliced-3d` to the spec. So instead we should use a feature and not \"unsafe API\" this would likely fix the newly added expectations.\n\nBackends should be updated to list ETCSliced3D as supported when it is.\n\nA test should explicitly enable the feature and check that it makes sliced3d BC allowed. Then CTS should be able to check the rest (copy origin / size restrictions, some sampling?, etc)",
+      "revId": "2f1e196ae656ffa33c2fd74bed4d42fc49a251d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
