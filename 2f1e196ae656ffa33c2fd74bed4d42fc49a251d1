@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cd4edcb_5b1a3767",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-15T23:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ace3bce_06673e25",
+      "revId": "2f1e196ae656ffa33c2fd74bed4d42fc49a251d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "247a2f52_af54f4b5",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-04-15T13:33:16Z",
       "side": 1,
       "message": "Maybe `\"Compressed texture with %s has unsupported dimension %s.\", format, dimension`.",
+      "range": {
+        "startLine": 749,
+        "startChar": 0,
+        "endLine": 754,
+        "endChar": 59
+      },
+      "revId": "2f1e196ae656ffa33c2fd74bed4d42fc49a251d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa975c12_ef1f4bba",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-15T23:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "247a2f52_af54f4b5",
       "range": {
         "startLine": 749,
         "startChar": 0,
@@ -72,6 +114,24 @@
       "side": 1,
       "message": "@cwallez@chromium.org that makes sense. I will adjust to check for feature rather than unsafe API. Thank you for the guidance!",
       "parentUuid": "df8d5278_ce3b8a28",
+      "revId": "2f1e196ae656ffa33c2fd74bed4d42fc49a251d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef66aad9_47575f47",
+        "filename": "src/dawn/tests/unittests/validation/TextureValidationTests.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-15T23:34:09Z",
+      "side": 1,
+      "message": "I\u0027ve adjusted according to suggestions, updated title to be only BC so that ASTC can be treated separately and added the BCSliced3D enum to features incl. changes to `dawn.json` file. This does not enable the feature for backends (usually BC implies Sliced 3D). Should I enable in backends or would that be the task of a separate CL? Thank you for the guidance!",
+      "parentUuid": "e875be80_6ca8986e",
       "revId": "2f1e196ae656ffa33c2fd74bed4d42fc49a251d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
