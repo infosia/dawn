@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b46434d_5c69cf83",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-15T07:38:25Z",
+      "side": 1,
+      "message": "Can we upgrade the version in `\u003cdawn_root\u003e/go.mod` as well?",
+      "revId": "ad3e4b5d046dbee9d6fa10b2c5c44ac6cb442f1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
