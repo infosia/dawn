@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5661ad5_9f6cfa29",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-15T22:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de516732_ca8caa1c",
+      "range": {
+        "startLine": 141,
+        "startChar": 26,
+        "endLine": 142,
+        "endChar": 75
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef5498f6_39bebee9",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-04-07T19:16:17Z",
       "side": 1,
       "message": "Not sure if the lock is needed for this check, so maybe we could even move this to [1]?",
+      "range": {
+        "startLine": 164,
+        "startChar": 12,
+        "endLine": 177,
+        "endChar": 13
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bca4f54_e5861f0c",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-15T22:13:53Z",
+      "side": 1,
+      "message": "So there\u0027s a very subtle difference between polling `WaitListEvent`/`SystemEvent` and `QueueAndSerial` events. For `QueueAndSerial` events you want to tick the device queue to give it a chance to complete the event in case it\u0027s just stuck on that. But you can\u0027t tick the queue per event - you have to tick each queue only once per `WaitAny`/`ProcessEvents` call. Otherwise, you can have a scenario like this:\n\n\u003e [`MapAsync` future, `OnSubmittedWorkDone` future] \u003c- list of futures\n\u003e\n\u003e Poll `MapAsync` future: tick the device, it\u0027s not done yet (it\u0027s tracking the last usage serial of the buffer which could be the pending serial at the time of mapping e.g. because we zero initialize the buffer as a command)\n\u003e\n\u003e \u003cGPU completion of all previous work\u003e\n\u003e\n\u003e Poll `OnSubmittedWorkDone` future: tick the device, marked as done because GPU work is now done.\n\nThis is incorrect per the spec - the `MapAsync` callback must run before the `OnSubmittedWorkDone` does which means the `MapAsync` future must be complete if the `OnSubmittedWorkDone` future is also complete - and you\u0027ll actually notice tests failing in the previous patchsets because of this.\n\nSo the correct thing to do is tick each device queue once which is basically what `WaitForQueueSerials` already does for the non-zero timeout case.\n\nAll this is to say that we have to flush each queue upto the lowest wait serial first and then we can check all the futures together.",
+      "parentUuid": "ef5498f6_39bebee9",
       "range": {
         "startLine": 164,
         "startChar": 12,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "04155bbe_62187b0b",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-15T22:13:53Z",
+      "side": 1,
+      "message": "I think the vector of indices is not needed - we can simply flush pending commands for each queue and then check all the futures in one go. So we\u0027d not be iterating over the futures multiple times.",
+      "parentUuid": "60dd6b5d_e53e223d",
+      "range": {
+        "startLine": 197,
+        "startChar": 36,
+        "endLine": 197,
+        "endChar": 51
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e4ac219_9ddaf96c",
@@ -83,6 +155,30 @@
       "writtenOn": "2025-04-07T19:16:17Z",
       "side": 1,
       "message": "[1] We could probably use the helper in [2] here.",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 234,
+        "endChar": 9
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5b8fa73_de34c9c8",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-15T22:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e4ac219_9ddaf96c",
       "range": {
         "startLine": 223,
         "startChar": 8,
@@ -116,6 +212,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d692c6a0_c501d84a",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-15T22:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82374727_54cdbcb6",
+      "range": {
+        "startLine": 345,
+        "startChar": 8,
+        "endLine": 355,
+        "endChar": 9
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d23769c_e4392d5e",
@@ -129,6 +249,30 @@
       "writtenOn": "2025-04-07T19:16:17Z",
       "side": 1,
       "message": "Maybe this could also be a helper?",
+      "range": {
+        "startLine": 379,
+        "startChar": 4,
+        "endLine": 388,
+        "endChar": 5
+      },
+      "revId": "280a3e03861a01199a21a06e500fe4f6c4b5cb21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ddce84d_96a29482",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-15T22:13:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d23769c_e4392d5e",
       "range": {
         "startLine": 379,
         "startChar": 4,
