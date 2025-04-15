@@ -16,6 +16,40 @@
       "message": "LGTM",
       "revId": "47d5ae98baa264ddcc3448c4d7edf4e4823fad5a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "155c3e18_e1b37786",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-15T13:18:08Z",
+      "side": 1,
+      "message": "LGTM too",
+      "revId": "47d5ae98baa264ddcc3448c4d7edf4e4823fad5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57f399c9_55392066",
+        "filename": "src/dawn/native/d3d12/BufferD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-15T13:18:08Z",
+      "side": 1,
+      "message": "Why do we need to move in a vector? We should be able to iterate over the absl::InlinedVector.",
+      "revId": "47d5ae98baa264ddcc3448c4d7edf4e4823fad5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
