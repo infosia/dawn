@@ -16,6 +16,24 @@
       "message": "Can we upgrade the version in `\u003cdawn_root\u003e/go.mod` as well?",
       "revId": "ad3e4b5d046dbee9d6fa10b2c5c44ac6cb442f1b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b50cb03_1962a02f",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-15T13:52:34Z",
+      "side": 1,
+      "message": "I think this is required or things will break on the bots. We\u0027ve had issues in the past where go.mod got out of sync and things stopped working.",
+      "parentUuid": "7b46434d_5c69cf83",
+      "revId": "ad3e4b5d046dbee9d6fa10b2c5c44ac6cb442f1b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
