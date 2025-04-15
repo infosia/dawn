@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be743196_8146507e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-15T01:27:10Z",
+      "side": 1,
+      "message": "Nice cleanup, thank you! Sorry for the delay.",
+      "revId": "d68d7dbc9f69c55024133ed06a5dfc686963f231",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
