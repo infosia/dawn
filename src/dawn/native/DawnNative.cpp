@@ -118,6 +118,10 @@ void Adapter::ResetInternalDeviceForTesting() {
         mImpl->GetPhysicalDevice()->ResetInternalDeviceForTesting());
 }
 
+void Adapter::ResetIsConsumedForTesting() {
+    mImpl->ResetIsConsumedForTesting();
+}
+
 // DawnInstanceDescriptor
 
 DawnInstanceDescriptor::DawnInstanceDescriptor() {

@@ -307,6 +307,8 @@ class VulkanImageWrappingUsageTests : public VulkanImageWrappingTestBase {
         deviceTogglesDesc.disabledToggles = GetParam().forceDisabledWorkarounds.data();
         deviceTogglesDesc.disabledToggleCount = GetParam().forceDisabledWorkarounds.size();
 
+        adapterBase.ResetIsConsumedForTesting();
+
         secondDeviceVk = native::vulkan::ToBackend(adapterBase->APICreateDevice(&deviceDescriptor));
         secondDevice = wgpu::Device::Acquire(native::ToAPI(secondDeviceVk));
     }

@@ -341,6 +341,8 @@ TEST_F(LabelTest, QuerySet) {
 TEST_F(LabelTest, Queue) {
     std::string label = "test";
 
+    GetBackendAdapter().ResetIsConsumedForTesting();
+
     // The label should be empty if one was not set.
     {
         wgpu::DeviceDescriptor descriptor;
@@ -349,6 +351,8 @@ TEST_F(LabelTest, Queue) {
         std::string readbackLabel = native::GetObjectLabelForTesting(labelDevice.GetQueue().Get());
         ASSERT_TRUE(readbackLabel.empty());
     }
+
+    GetBackendAdapter().ResetIsConsumedForTesting();
 
     // Test setting a label through API
     {
@@ -359,6 +363,8 @@ TEST_F(LabelTest, Queue) {
         std::string readbackLabel = native::GetObjectLabelForTesting(labelDevice.GetQueue().Get());
         ASSERT_EQ(label, readbackLabel);
     }
+
+    GetBackendAdapter().ResetIsConsumedForTesting();
 
     // Test setting a label through the descriptor.
     {

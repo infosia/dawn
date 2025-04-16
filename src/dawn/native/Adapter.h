@@ -89,6 +89,9 @@ class AdapterBase : public RefCounted, public WeakRefSupport<AdapterBase> {
     // Get a human readable label for the adapter (in practice, the physical device name)
     const std::string& GetName() const;
 
+    // Set mIsConsumed to false. Used only in tests.
+    void ResetIsConsumedForTesting();
+
   private:
     std::pair<Ref<DeviceBase::DeviceLostEvent>, ResultOrError<Ref<DeviceBase>>> CreateDevice(
         const DeviceDescriptor* rawDescriptor);
@@ -114,6 +117,9 @@ class AdapterBase : public RefCounted, public WeakRefSupport<AdapterBase> {
     TogglesState mTogglesState;
 
     wgpu::PowerPreference mPowerPreference;
+
+    // Becomes true after the adapter has been used to create a device.
+    bool mIsConsumed = false;
 };
 
 std::vector<Ref<AdapterBase>> SortAdapters(std::vector<Ref<AdapterBase>> adapters,
