@@ -320,8 +320,11 @@ WGPUFuture Adapter::RequestDevice(const WGPUDeviceDescriptor* descriptor,
     AdapterRequestDeviceCmd cmd;
     cmd.adapterId = GetWireId();
     cmd.eventManagerHandle = GetEventManagerHandle();
+    cmd.callbackMode = callbackInfo.mode;
     cmd.future = {futureIDInternal};
     cmd.deviceObjectHandle = device->GetWireHandle();
+    cmd.deviceLostCallbackMode = descriptor ? descriptor->deviceLostCallbackInfo.mode
+                                            : wireDescriptor.deviceLostCallbackInfo.mode;
     cmd.deviceLostFuture = device->GetLostFuture();
     cmd.descriptor = &wireDescriptor;
 
