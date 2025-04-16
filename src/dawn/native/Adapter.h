@@ -114,6 +114,9 @@ class AdapterBase : public RefCounted, public WeakRefSupport<AdapterBase> {
     TogglesState mTogglesState;
 
     wgpu::PowerPreference mPowerPreference;
+
+    // Becomes true after the adapter has been used to create a device.
+    bool mIsConsumed = false;
 };
 
 std::vector<Ref<AdapterBase>> SortAdapters(std::vector<Ref<AdapterBase>> adapters,
