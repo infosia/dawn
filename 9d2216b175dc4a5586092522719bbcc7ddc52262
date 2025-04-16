@@ -16,6 +16,24 @@
       "message": "```\ngo: downloading go1.23 (linux/amd64)\ngo: download go1.23 for linux/amd64: toolchain not available\n```\n\nUhhh is it not in CIPD?",
       "revId": "9d2216b175dc4a5586092522719bbcc7ddc52262",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9066b10_ea0b88b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-16T14:53:02Z",
+      "side": 1,
+      "message": "I don\u0027t think this is CIPD, I think it maybe go.mod related? (https://stackoverflow.com/questions/78519711/toolchain-not-available-error-prevents-me-from-using-any-go-commands)",
+      "parentUuid": "2b56599b_a7237f03",
+      "revId": "9d2216b175dc4a5586092522719bbcc7ddc52262",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
