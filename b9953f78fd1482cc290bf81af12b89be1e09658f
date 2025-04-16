@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "795a9968_4a3a1e09",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T13:22:42Z",
+      "side": 1,
+      "message": "Ah nvm I misremembered a previous patchset. LGTM",
+      "parentUuid": "40a02b25_2a8fcfb2",
+      "revId": "b9953f78fd1482cc290bf81af12b89be1e09658f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15e5ee0b_15d7d6fb",
