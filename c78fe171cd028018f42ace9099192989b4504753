@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4158ee0_3a83737e",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-16T03:41:04Z",
+      "side": 1,
+      "message": "Used in the next CL, going to leave it so I don\u0027t get weird conflicts.",
+      "parentUuid": "e74bb8c0_92eee582",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a358347_99a3813c",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-04-15T17:49:28Z",
       "side": 1,
       "message": "Relying on the fact that `UsagesSorted()` makes a copy is a little scary because it\u0027s not part of the API and could potentially change in the future.\n\nPrefer `val-\u003eForEachUseUnsorted()` which actually does provide that guarantee.",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74be1c95_3e25b210",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-16T03:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a358347_99a3813c",
       "revId": "c78fe171cd028018f42ace9099192989b4504753",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c2b9b076_fce7a9ab",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-16T03:41:04Z",
+      "side": 1,
+      "message": "Because of the way this Cl is updating types, the type isn\u0027t necessarily changed to an atomic until after the call is changed. I re-work the walking in the next CL, will try to add the asserts into that Cl.",
+      "parentUuid": "088bfd4d_1950a9a5",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fff5d345_df6ac6e5",
         "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
         "patchSetId": 3
@@ -65,6 +119,24 @@
       "writtenOn": "2025-04-15T17:49:28Z",
       "side": 1,
       "message": "As above, TINT_ICE if not the target is not an atomic.",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "170b8162_71003d71",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-16T03:41:04Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "fff5d345_df6ac6e5",
       "revId": "c78fe171cd028018f42ace9099192989b4504753",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -82,6 +154,24 @@
       "writtenOn": "2025-04-15T17:49:28Z",
       "side": 1,
       "message": "`TINT_ICE_ON_NO_MATCH`",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf0c7e78_83b23bff",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-16T03:41:04Z",
+      "side": 1,
+      "message": "There are a bunch of other things that come in here as well `Access`, `Let`, `UserCall` can all have usages of an Atomic but we should have handled them before we get to this point.",
+      "parentUuid": "651c4b9d_1c32e03f",
       "revId": "c78fe171cd028018f42ace9099192989b4504753",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
