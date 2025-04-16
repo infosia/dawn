@@ -390,6 +390,7 @@ WGPUFuture Buffer::MapAsync(WGPUMapMode mode,
     BufferMapAsyncCmd cmd;
     cmd.bufferId = GetWireId();
     cmd.eventManagerHandle = GetEventManagerHandle();
+    cmd.callbackMode = callbackInfo.mode;
     cmd.future = {futureIDInternal};
     cmd.mode = mode;
     cmd.offset = offset;

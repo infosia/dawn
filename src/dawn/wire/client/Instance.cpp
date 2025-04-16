@@ -190,6 +190,7 @@ WGPUFuture Instance::RequestAdapter(const WGPURequestAdapterOptions* options,
     InstanceRequestAdapterCmd cmd;
     cmd.instanceId = GetWireId();
     cmd.eventManagerHandle = GetEventManagerHandle();
+    cmd.callbackMode = callbackInfo.mode;
     cmd.future = {futureIDInternal};
     cmd.adapterObjectHandle = adapter->GetWireHandle();
     cmd.options = options;
