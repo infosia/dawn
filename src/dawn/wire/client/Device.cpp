@@ -367,6 +367,7 @@ WGPUFuture Device::PopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbackIn
     DevicePopErrorScopeCmd cmd;
     cmd.deviceId = GetWireId();
     cmd.eventManagerHandle = GetEventManagerHandle();
+    cmd.callbackMode = callbackInfo.mode;
     cmd.future = {futureIDInternal};
     client->SerializeCommand(cmd);
     return {futureIDInternal};
@@ -440,6 +441,7 @@ WGPUFuture Device::CreatePipelineAsync(Descriptor const* descriptor,
     cmd.deviceId = GetWireId();
     cmd.descriptor = descriptor;
     cmd.eventManagerHandle = GetEventManagerHandle();
+    cmd.callbackMode = callbackInfo.mode;
     cmd.future = {futureIDInternal};
     cmd.pipelineObjectHandle = pipeline->GetWireHandle();
 
