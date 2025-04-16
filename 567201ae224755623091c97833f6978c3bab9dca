@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43aec3a2_b68de3d5",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-16T05:26:13Z",
+      "side": 1,
+      "message": "`!hasResolveRect` may be merged, as it\u0027s just one special case where colorOffset is zero.",
+      "range": {
+        "startLine": 79,
+        "startChar": 1,
+        "endLine": 84,
+        "endChar": 51
+      },
+      "revId": "567201ae224755623091c97833f6978c3bab9dca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4932553c_86aa7f22",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-16T05:26:13Z",
+      "side": 1,
+      "message": "Buffer creation may be expansive. Maybe we\u0027d better get it from a buffer cache.",
+      "range": {
+        "startLine": 366,
+        "startChar": 12,
+        "endLine": 366,
+        "endChar": 77
+      },
+      "revId": "567201ae224755623091c97833f6978c3bab9dca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e8e4eaa_bc08c604",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-16T05:26:13Z",
+      "side": 1,
+      "message": "We may also need to ensure the viewport will not be changed until resolve.",
+      "range": {
+        "startLine": 400,
+        "startChar": 8,
+        "endLine": 401,
+        "endChar": 89
+      },
+      "revId": "567201ae224755623091c97833f6978c3bab9dca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07e5eb75_b3f718b0",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 2448,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-16T05:26:13Z",
+      "side": 1,
+      "message": "red?",
+      "range": {
+        "startLine": 2448,
+        "startChar": 38,
+        "endLine": 2448,
+        "endChar": 43
+      },
+      "revId": "567201ae224755623091c97833f6978c3bab9dca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d1f825e_0810bae1",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 2471,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-16T05:26:13Z",
+      "side": 1,
+      "message": "`approxMsaaWidth` must be no smaller than `rect.width`, right? We\u0027d better have a case to guard this.",
+      "range": {
+        "startLine": 2470,
+        "startChar": 8,
+        "endLine": 2471,
+        "endChar": 23
+      },
+      "revId": "567201ae224755623091c97833f6978c3bab9dca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "461b66cf_6248f79b",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 2523,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-16T05:26:13Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 2523,
+        "startChar": 38,
+        "endLine": 2523,
+        "endChar": 43
+      },
+      "revId": "567201ae224755623091c97833f6978c3bab9dca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d831700_fa1d9b7a",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 2556,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-16T05:26:13Z",
+      "side": 1,
+      "message": "[0, 1] and [0, 2] are still red, right?",
+      "range": {
+        "startLine": 2555,
+        "startChar": 4,
+        "endLine": 2556,
+        "endChar": 65
+      },
+      "revId": "567201ae224755623091c97833f6978c3bab9dca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d8b4b47_18a3f7d6",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 2595,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-16T05:26:13Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 2595,
+        "startChar": 38,
+        "endLine": 2595,
+        "endChar": 44
+      },
+      "revId": "567201ae224755623091c97833f6978c3bab9dca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14b9e857_5873fed8",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 2628,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-16T05:26:13Z",
+      "side": 1,
+      "message": "[0, 1] and [0, 2] are still red, right?",
+      "range": {
+        "startLine": 2627,
+        "startChar": 0,
+        "endLine": 2628,
+        "endChar": 65
+      },
+      "revId": "567201ae224755623091c97833f6978c3bab9dca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
