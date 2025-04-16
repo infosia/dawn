@@ -16,6 +16,23 @@
       "message": "Hi @cwallez@chromium.org, PTAL.",
       "revId": "64ad62f9e4f455c06f1127607967fc0d0ee03641",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c58f543f_ce5f06f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T08:19:18Z",
+      "side": 1,
+      "message": "LGTM though you should know that there might be additional things to fix because we never tested the execution of actual WebGPU on tvOS, and that these devices have different Metal restrictions than macOS (but I\u0027d expect the vast majority of things to work for sure)",
+      "revId": "64ad62f9e4f455c06f1127607967fc0d0ee03641",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
