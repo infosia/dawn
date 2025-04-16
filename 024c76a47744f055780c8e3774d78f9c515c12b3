@@ -33,6 +33,24 @@
       "message": "LGTM, though IDK why tests fail. Maybe the std::move cause an issue?",
       "revId": "024c76a47744f055780c8e3774d78f9c515c12b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ed57c47_b9bbb8dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-16T14:39:08Z",
+      "side": 1,
+      "message": "I figured it out, the optional means something slightly different. If the optional has a map, then there are overrides in the module. The optional may point to an empty map because none of them are overridden.\n\nSo, the problem is that we end up not running substitute overrides when we need too.\n\nThink I have a way to fix this, will update in a bit.",
+      "parentUuid": "96885274_b45914e0",
+      "revId": "024c76a47744f055780c8e3774d78f9c515c12b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
