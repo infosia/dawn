@@ -355,6 +355,8 @@ class DeviceToggleTest : public ToggleTest {
         native::DeviceDescriptor desc{};
         desc.nextInChain = requiredDeviceToggles;
 
+        adapter->ResetIsConsumedForTesting();
+
         // Creater a device with given toggles descriptor from the adapter.
         Ref<native::DeviceBase> device = AcquireRef(adapter->APICreateDevice(&desc));
 

@@ -176,6 +176,8 @@ TEST_F(FeatureTests, RequireAndGetEnabledFeatures) {
                 }
             };
 
+        adapter.ResetIsConsumedForTesting();
+
         // Test with the default adapter.
         {
             native::DeviceBase* deviceBase = native::FromAPI(adapter.CreateDevice(
@@ -192,6 +194,8 @@ TEST_F(FeatureTests, RequireAndGetEnabledFeatures) {
                 deviceBase->APIRelease();
             }
         }
+
+        unsafeAdapterAllow.ResetIsConsumedForTesting();
 
         // Test with the adapter with AllowUnsafeApis toggles enabled, creating device should always
         // succeed.

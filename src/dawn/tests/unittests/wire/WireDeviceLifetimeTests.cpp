@@ -125,7 +125,7 @@ TEST_F(WireDeviceLifetimeTests, DeviceDroppedFromWireThenUncapturedErrorCallback
                                     wgpu::StringView) { device = std::move(d); });
     ASSERT_TRUE(wireHelper->FlushClient());
     ASSERT_TRUE(wireHelper->FlushServer());
-    ASSERT_NE(device, nullptr);
+    ASSERT_EQ(device, nullptr);
 
     // Finally, release the old retained device which will flush any of its outstanding
     // callbacks.
@@ -167,7 +167,7 @@ TEST_F(WireDeviceLifetimeTests, DeviceDroppedFromWireThenLoggingCallback) {
                                     wgpu::StringView) { device = std::move(d); });
     ASSERT_TRUE(wireHelper->FlushClient());
     ASSERT_TRUE(wireHelper->FlushServer());
-    ASSERT_NE(device, nullptr);
+    ASSERT_EQ(device, nullptr);
 
     // Finally, release the old retained device which will flush any of its outstanding
     // callbacks.
@@ -201,7 +201,7 @@ TEST_F(WireDeviceLifetimeTests, DeviceDroppedFromWireThenLostCallback) {
                                     wgpu::StringView) { device = std::move(d); });
     ASSERT_TRUE(wireHelper->FlushClient());
     ASSERT_TRUE(wireHelper->FlushServer());
-    ASSERT_NE(device, nullptr);
+    ASSERT_EQ(device, nullptr);
 
     // Finally, release the old retained device which will flush any of its outstanding
     // callbacks.
