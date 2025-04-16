@@ -34,6 +34,24 @@
       "parentUuid": "2b56599b_a7237f03",
       "revId": "9d2216b175dc4a5586092522719bbcc7ddc52262",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d2deead_2006fa22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T17:58:28Z",
+      "side": 1,
+      "message": "The answer on that SO question looks right. Checking, it seems they changed the version numbers starting with `1.21.0` to have a trailing `.0`:\nhttps://go.dev/doc/devel/release",
+      "parentUuid": "c9066b10_ea0b88b8",
+      "revId": "9d2216b175dc4a5586092522719bbcc7ddc52262",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
