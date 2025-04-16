@@ -644,6 +644,12 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Adds a small amount of work to empty render passes which perform a resolve. This toggle is "
       "enabled by default on Qualcomm GPUs, where it is needed to force the resolve to complete.",
       "https://crbug.com/411656647", ToggleStage::Device}},
+    {Toggle::D3D12RunRobustnessTransformForAllBuffer,
+     {"d3d12_run_robustness_transform_for_all_buffer",
+      "When running robustness transform, run for all buffer to prevent OOB access. This toggle is "
+      "enabled by default on some Qualcomm GPUs to workaround OOB issue. Note that if "
+      "disable_robustness toggle is enabled, robustness transform will not get run at all.",
+      "https://crbug.com/410985021", ToggleStage::Device}},
     {Toggle::NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
      {"no_workaround_sample_mask_becomes_zero_for_all_but_last_color_target",
       "MacOS 12.0+ Intel has a bug where the sample mask is only applied for the last color "

@@ -152,6 +152,7 @@ enum class Toggle {
     D3D12RelaxBufferTextureCopyPitchAndOffsetAlignment,
     UseVulkanMemoryModel,
     VulkanAddWorkToEmptyResolvePass,
+    D3D12RunRobustnessTransformForAllBuffer,
 
     // Unresolved issues.
     NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,

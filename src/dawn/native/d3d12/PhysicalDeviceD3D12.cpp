@@ -821,10 +821,17 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     }
 
     // Use packed DXGI_FORMAT_D24_UNORM_S8_UINT format on Qualcomm devices to workaround texture
-    // loading/sampling issues for depth24plus-stencil8 texture.
+    // loading/sampling issues for depth24plus-stencil8 texture. Note that only ACPI Qualcomm
+    // devices supports D3D12.
     // See https://crbug.com/411268750 for more information.
-    if (gpu_info::IsQualcomm_ACPI(vendorId) || gpu_info::IsQualcomm_PCI(vendorId)) {
+    if (gpu_info::IsQualcomm_ACPI(vendorId)) {
         deviceToggles->Default(Toggle::UsePackedDepth24UnormStencil8Format, true);
+    }
+
+    // Force buffer index clamping on all buffer for some Qualcomm devices to workaround OOB issue.
+    // See https://crbug.com/410985021 for more information.
+    if (gpu_info::IsQualcomm_ACPI(vendorId)) {
+        deviceToggles->Default(Toggle::D3D12RunRobustnessTransformForAllBuffer, true);
     }
 
     // Use the Tint IR backend by default if the corresponding platform feature is enabled.

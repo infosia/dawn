@@ -275,7 +275,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
                 }
 
                 // On D3D12 backend all storage buffers without Dynamic Buffer Offset will always be
-                // bound to root descriptor tables, where D3D12 runtime can guarantee that OOB-read
+                // bound using descriptor tables, where D3D12 runtime can guarantee that OOB-read
                 // will always return 0 and OOB-write will always take no action, so we don't need
                 // to do robustness transform on them. Note that we still need to do robustness
                 // transform on uniform buffers because only sized array is allowed in uniform
@@ -299,9 +299,23 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
                 //     }
                 //     return 0u;
                 // }
-                if ((bufferBindingInfo->type == wgpu::BufferBindingType::Storage ||
+                //
+                // In conclusion, D3D12 spec allow us to safely skip index clamping for storage
+                // buffers without Dynamic Buffer Offset.
+                const bool isStorageBufferWithoutDBO =
+                    (bufferBindingInfo->type == wgpu::BufferBindingType::Storage ||
                      bufferBindingInfo->type == wgpu::BufferBindingType::ReadOnlyStorage) &&
-                    !bindingLayout.hasDynamicOffset) {
+                    !bindingLayout.hasDynamicOffset;
+
+                // However, on some devices the OOB access of storage buffer may result in undefined
+                // result or possible device reset rather than expected robustness behavior.
+                // Robustness transform should be run on all buffer for these devices.
+                // (https://crbug.com/410985021)
+                const bool canBindingPointBeIgnoredByRobustnessTransform =
+                    isStorageBufferWithoutDBO &&
+                    !device->IsToggleEnabled(Toggle::D3D12RunRobustnessTransformForAllBuffer);
+
+                if (canBindingPointBeIgnoredByRobustnessTransform) {
                     bindings.ignored_by_robustness_transform.emplace_back(srcBindingPoint);
                 }
             }
