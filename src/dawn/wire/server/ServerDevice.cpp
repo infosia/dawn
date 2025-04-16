@@ -66,15 +66,17 @@ void Server::OnLogging(ObjectHandle device, WGPULoggingType type, WGPUStringView
 
 WireResult Server::DoDevicePopErrorScope(Known<WGPUDevice> device,
                                          ObjectHandle eventManager,
+                                         WGPUCallbackMode callbackMode,
                                          WGPUFuture future) {
     auto userdata = MakeUserdata<ErrorScopeUserdata>();
     userdata->device = device.AsHandle();
     userdata->eventManager = eventManager;
     userdata->future = future;
 
-    mProcs.devicePopErrorScope(device->handle, {nullptr, WGPUCallbackMode_AllowProcessEvents,
-                                                ForwardToServer<&Server::OnDevicePopErrorScope>,
-                                                userdata.release(), nullptr});
+    mProcs.devicePopErrorScope(
+        device->handle,
+        MakeCallbackInfo<WGPUPopErrorScopeCallbackInfo, &Server::OnDevicePopErrorScope>(
+            callbackMode, userdata.release()));
     return WireResult::Success;
 }
 
@@ -95,6 +97,7 @@ void Server::OnDevicePopErrorScope(ErrorScopeUserdata* userdata,
 WireResult Server::DoDeviceCreateComputePipelineAsync(
     Known<WGPUDevice> device,
     ObjectHandle eventManager,
+    WGPUCallbackMode callbackMode,
     WGPUFuture future,
     ObjectHandle pipelineObjectHandle,
     const WGPUComputePipelineDescriptor* descriptor) {
@@ -110,9 +113,9 @@ WireResult Server::DoDeviceCreateComputePipelineAsync(
 
     mProcs.deviceCreateComputePipelineAsync(
         device->handle, descriptor,
-        {nullptr, WGPUCallbackMode_AllowProcessEvents,
-         ForwardToServer<&Server::OnCreateComputePipelineAsyncCallback>, userdata.release(),
-         nullptr});
+        MakeCallbackInfo<WGPUCreateComputePipelineAsyncCallbackInfo,
+                         &Server::OnCreateComputePipelineAsyncCallback>(callbackMode,
+                                                                        userdata.release()));
     return WireResult::Success;
 }
 
@@ -137,6 +140,7 @@ void Server::OnCreateComputePipelineAsyncCallback(CreatePipelineAsyncUserData* d
 WireResult Server::DoDeviceCreateRenderPipelineAsync(
     Known<WGPUDevice> device,
     ObjectHandle eventManager,
+    WGPUCallbackMode callbackMode,
     WGPUFuture future,
     ObjectHandle pipelineObjectHandle,
     const WGPURenderPipelineDescriptor* descriptor) {
@@ -152,9 +156,9 @@ WireResult Server::DoDeviceCreateRenderPipelineAsync(
 
     mProcs.deviceCreateRenderPipelineAsync(
         device->handle, descriptor,
-        {nullptr, WGPUCallbackMode_AllowProcessEvents,
-         ForwardToServer<&Server::OnCreateRenderPipelineAsyncCallback>, userdata.release(),
-         nullptr});
+        MakeCallbackInfo<WGPUCreateRenderPipelineAsyncCallbackInfo,
+                         &Server::OnCreateRenderPipelineAsyncCallback>(callbackMode,
+                                                                       userdata.release()));
     return WireResult::Success;
 }
 
