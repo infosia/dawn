@@ -61,7 +61,7 @@ using SubstituteOverrideConfig = std::unordered_map<tint::OverrideId, double>;
 #define MSL_COMPILATION_REQUEST_MEMBERS(X)                                               \
     X(SingleShaderStage, stage)                                                          \
     X(const tint::Program*, inputProgram)                                                \
-    X(std::optional<SubstituteOverrideConfig>, substituteOverrideConfig)                 \
+    X(SubstituteOverrideConfig, substituteOverrideConfig)                                \
     X(LimitsForCompilationRequest, limits)                                               \
     X(CacheKey::UnsafeUnkeyedValue<LimitsForCompilationRequest>, adapterSupportedLimits) \
     X(uint32_t, maxSubgroupSize)                                                         \
@@ -251,7 +251,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
         }
     }
 
-    std::optional<SubstituteOverrideConfig> substituteOverrideConfig;
+    SubstituteOverrideConfig substituteOverrideConfig;
     if (!programmableStage.metadata->overrides.empty()) {
         substituteOverrideConfig = BuildSubstituteOverridesTransformConfig(programmableStage);
     }
@@ -318,11 +318,11 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
                             "Pipeline single entry point (IR) failed:\n%s",
                             singleEntryPointResult.Failure().reason);
 
-            if (r.substituteOverrideConfig) {
+            if (!r.substituteOverrideConfig.empty()) {
                 // this needs to run after SingleEntryPoint transform which removes unused
                 // overrides for the current entry point.
                 tint::core::ir::transform::SubstituteOverridesConfig cfg;
-                cfg.map = r.substituteOverrideConfig.value();
+                cfg.map = std::move(r.substituteOverrideConfig);
                 auto substituteOverridesResult =
                     tint::core::ir::transform::SubstituteOverrides(ir.Get(), cfg);
                 DAWN_INVALID_IF(substituteOverridesResult != tint::Success,
