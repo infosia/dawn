@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c7adac75_98b1248e",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T05:56:31Z",
+      "side": 1,
+      "message": "The builds do seem to be reproducible, and on further testing it seems that Emscripten is automatically injecting the correct `-flto` flag (but not `-O`) when building `lib_emdawnwebgpu-*.a`. (At least, if I\u0027m deducing correctly from which builds have the same hash.) I\u0027ll remove the LTO flag logic later.\n\nMaybe setting `-g` and `-O` is not important enough that we need this hack. It still seems nice to preserve the caller\u0027s intent, though.",
+      "parentUuid": "59b1d53d_92fef53d",
+      "revId": "0303cb1c9417b1b73942ea8a41edb9228d04268d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "903de86c_d8045d7e",
         "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
         "patchSetId": 25
