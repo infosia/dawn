@@ -22,6 +22,70 @@
       },
       "revId": "18a2b7f01313170288487fd5a980b199d5a1fb54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c71c2451_d25d18e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-16T18:05:19Z",
+      "side": 1,
+      "message": "See [1] and [2].",
+      "parentUuid": "c12cfb4e_a9da1dcf",
+      "range": {
+        "startLine": 10,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "18a2b7f01313170288487fd5a980b199d5a1fb54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "776e59da_a8bb1c06",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-16T18:05:19Z",
+      "side": 1,
+      "message": "[2] The server is (re)started when the test is invoked, if it is not running.",
+      "revId": "18a2b7f01313170288487fd5a980b199d5a1fb54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "148aafb4_2dc100a1",
+        "filename": "tools/src/cmd/tests/main.go",
+        "patchSetId": 7
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-16T18:05:19Z",
+      "side": 1,
+      "message": "[1] Flag the server as not running if it failed/crashed. Also done for timeouts, just above.",
+      "range": {
+        "startLine": 1078,
+        "startChar": 0,
+        "endLine": 1080,
+        "endChar": 23
+      },
+      "revId": "18a2b7f01313170288487fd5a980b199d5a1fb54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
