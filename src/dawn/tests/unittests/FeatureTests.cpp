@@ -141,10 +141,10 @@ bool IsExperimental(wgpu::FeatureName feature) {
 // toggle disabled for experimental features), and Device.GetEnabledFeatures() can return the names
 // of the enabled features correctly.
 TEST_F(FeatureTests, RequireAndGetEnabledFeatures) {
-    native::Adapter adapter(&mAdapterBase);
-    native::Adapter unsafeAdapterAllow(&mUnsafeAdapterBase);
-
     for (size_t i = 0; i < kTotalFeaturesCount; ++i) {
+        native::Adapter adapter(&mAdapterBase);
+        native::Adapter unsafeAdapterAllow(&mUnsafeAdapterBase);
+
         native::Feature feature = static_cast<native::Feature>(i);
         wgpu::FeatureName featureName = ToAPI(feature);
 
