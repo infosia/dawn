@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f513c6d5_6eecc8b8",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T13:28:18Z",
+      "side": 1,
+      "message": "This and the next 3 should probably just be removed and instead EventTarget functions renamed so they are called directly.",
+      "revId": "a18a91c64646305c0f6813819576f7578f19b601",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
