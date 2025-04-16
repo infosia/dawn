@@ -36,6 +36,7 @@ class ToggleValidationTest : public ValidationTest {
     void SetUp() override {
         ValidationTest::SetUp();
         DAWN_SKIP_TEST_IF(UsesWire());
+        GetBackendAdapter().ResetIsConsumedForTesting();
     }
 };
 
@@ -81,6 +82,8 @@ TEST_F(ToggleValidationTest, OverrideToggleUsage) {
         }
         ASSERT_EQ(validToggleExists, true);
     }
+
+    GetBackendAdapter().ResetIsConsumedForTesting();
 
     // Create device with an invalid toggle name
     {
