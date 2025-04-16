@@ -131,6 +131,7 @@ func run() error {
 		"FlattenedMethodsOf":         g.flattenedMethodsOf,
 		"Include":                    g.include,
 		"IsBasicLiteral":             is(ast.BasicLiteral{}),
+		"IsCallback":                 is(ast.Callback{}),
 		"IsInitializer":              isInitializer,
 		"IsDefaultDictionaryLiteral": is(ast.DefaultDictionaryLiteral{}),
 		"IsDictionary":               is(ast.Dictionary{}),
@@ -193,6 +194,8 @@ func nameOf(n ast.Node) string {
 	case *ast.Typedef:
 		return n.Name
 	case *ast.Mixin:
+		return n.Name
+	case *ast.Callback:
 		return n.Name
 	case *ast.Includes:
 		return ""
@@ -380,6 +383,10 @@ func (s *simplifier) visit(d ast.Decl) {
 	case *ast.Includes:
 		if register(d.Name) {
 			return
+		}
+	case *ast.Callback:
+		for _, p := range d.Parameters {
+			s.visitType(p.Type)
 		}
 	default:
 		panic(fmt.Errorf("unhandled AST declaration %T", d))

@@ -58,6 +58,8 @@ namespace wgpu::binding {
 
 namespace {
 
+const char kUncapturedError[] = "uncapturederror";
+
 // Returns a string representation of the WGPULoggingType
 const char* str(wgpu::LoggingType ty) {
     switch (ty) {
@@ -120,6 +122,23 @@ class InternalError : public interop::GPUInternalError {
     std::string message_;
 };
 
+class UncapturedErrorEvent : public interop::GPUUncapturedErrorEvent {
+  public:
+    explicit UncapturedErrorEvent(WGPUErrorType type, std::string error)
+        : type_(type), error_(std::move(error)) {}
+
+    virtual std::string getType(Napi::Env) { return kUncapturedError; }
+
+    virtual interop::Interface<interop::GPUError> getError(Napi::Env env) {
+        // TODO switch on type_
+        return interop::GPUError::Create<ValidationError>(env, error_);
+    }
+
+  private:
+    WGPUErrorType type_;
+    std::string error_;
+};
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -153,6 +172,14 @@ GPUDevice::GPUDevice(Napi::Env env,
         printf("%s:\n", str(type));
         chunkedWrite(message);
     });
+    // FIX: This is set at device creation time
+    // device_.SetUncapturedErrorCallback(
+    //    [](WGPUErrorType type, char const* message, void* userdata) {
+    //        auto* self = static_cast<GPUDevice*>(userdata);
+    //        self->DispatchEvent(self->env_, interop::Event::Create<UncapturedErrorEvent>(
+    //                                            self->env_, type, message));
+    //    },
+    //    this);
 }
 
 GPUDevice::~GPUDevice() {
@@ -592,37 +619,32 @@ void GPUDevice::setLabel(Napi::Env, std::string value) {
 }
 
 interop::Interface<interop::EventHandler> GPUDevice::getOnuncapturederror(Napi::Env env) {
-    // TODO(dawn:1348): Implement support for the "unhandlederror" event.
-    UNIMPLEMENTED(env, {});
+    return GetEventHandlerAttribute(env, kUncapturedError);
 }
 
 void GPUDevice::setOnuncapturederror(Napi::Env env,
                                      interop::Interface<interop::EventHandler> value) {
-    // TODO(dawn:1348): Implement support for the "unhandlederror" event.
-    UNIMPLEMENTED(env);
+    SetEventHandlerAttribute(env, kUncapturedError, value);
 }
 
 void GPUDevice::addEventListener(
-    Napi::Env env,
+    Napi::Env,
     std::string type,
     std::optional<interop::Interface<interop::EventListener>> callback,
     std::optional<std::variant<interop::AddEventListenerOptions, bool>> options) {
-    // TODO(dawn:1348): Implement support for the "unhandlederror" event.
-    UNIMPLEMENTED(env);
+    AddEventListener(type, callback, options);
 }
 
 void GPUDevice::removeEventListener(
-    Napi::Env env,
+    Napi::Env,
     std::string type,
     std::optional<interop::Interface<interop::EventListener>> callback,
     std::optional<std::variant<interop::EventListenerOptions, bool>> options) {
-    // TODO(dawn:1348): Implement support for the "unhandlederror" event.
-    UNIMPLEMENTED(env);
+    RemoveEventListener(type, callback, options);
 }
 
-bool GPUDevice::dispatchEvent(Napi::Env env, interop::Interface<interop::Event> event) {
-    // TODO(dawn:1348): Implement support for the "unhandlederror" event.
-    UNIMPLEMENTED(env, {});
+bool GPUDevice::dispatchEvent(Napi::Env env, Inteface<Event> event) {
+    return DispatchEvent(env, event);
 }
 
 }  // namespace wgpu::binding
