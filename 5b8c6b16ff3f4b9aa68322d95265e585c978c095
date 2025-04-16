@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "170bca95_3438c807",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T17:04:20Z",
+      "side": 1,
+      "message": "PTAL, though I will land only after the MSL code changes that are still a bit WIP",
+      "revId": "5b8c6b16ff3f4b9aa68322d95265e585c978c095",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
