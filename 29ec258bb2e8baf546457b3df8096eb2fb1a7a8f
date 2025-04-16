@@ -77,6 +77,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "133a562e_e9cf3590",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T17:03:47Z",
+      "side": 1,
+      "message": "That\u0027s a valid concern because the memory used will be a larger than it could, however fixed-size arrays should stay relatively small because they still validate against the `max*PerStage` limits. Bindless will be a whole different mechanism.\n\nI didn\u0027t want to add the indirection because bind group creation is very hot code that needs to look up each BindingInfo at least twice (once (or twice) in frontend validation and once in the backend). Adding a random access indirection seems like it would be much worse than using more memory (and cache lines) for the BGL, in the semi-rare case where fixed binding_array are used. WDYT?",
+      "parentUuid": "ab9a78ea_f39618bb",
+      "range": {
+        "startLine": 458,
+        "startChar": 8,
+        "endLine": 467,
+        "endChar": 9
+      },
+      "revId": "29ec258bb2e8baf546457b3df8096eb2fb1a7a8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "81e6650c_c3e5ed78",
         "filename": "src/dawn/native/BindingInfo.h",
         "patchSetId": 3
