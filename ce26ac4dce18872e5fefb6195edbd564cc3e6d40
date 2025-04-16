@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c55d8ad2_c30f2692",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-16T21:12:58Z",
+      "side": 1,
+      "message": "Follow-up to https://dawn-review.googlesource.com/c/dawn/+/237035 that finishes updating the remaining, less trivial uses of BitSetIterator so that it can be dropped entirely. Same motivation from the previous CL applies: Getting rid of this indirection for bitset iteration will make updating/improving/replacing our bitset implementation easier.",
+      "revId": "ce26ac4dce18872e5fefb6195edbd564cc3e6d40",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
