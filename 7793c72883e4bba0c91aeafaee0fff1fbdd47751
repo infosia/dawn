@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbf881c6_16810c49",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-16T22:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83040d6b_f5d3c44d",
+      "range": {
+        "startLine": 135,
+        "startChar": 49,
+        "endLine": 136,
+        "endChar": 17
+      },
+      "revId": "7793c72883e4bba0c91aeafaee0fff1fbdd47751",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a073f999_3a50db76",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-04-15T23:41:33Z",
       "side": 1,
       "message": "nit. `queueWaitSerials`",
+      "range": {
+        "startLine": 148,
+        "startChar": 46,
+        "endLine": 148,
+        "endChar": 67
+      },
+      "revId": "7793c72883e4bba0c91aeafaee0fff1fbdd47751",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "613242f2_3a7907d7",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-16T22:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a073f999_3a50db76",
       "range": {
         "startLine": 148,
         "startChar": 46,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a705426e_adea4a0e",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-16T22:32:00Z",
+      "side": 1,
+      "message": "I had wondered about the same thing regarding device lost causing the serials to be considered complete anyway - so I\u0027d prefer relying on that behavior instead of handling it here.",
+      "parentUuid": "40abe44c_661b3fd7",
+      "range": {
+        "startLine": 178,
+        "startChar": 12,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "7793c72883e4bba0c91aeafaee0fff1fbdd47751",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5175707a_e26e4e44",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-04-15T23:41:33Z",
       "side": 1,
       "message": "Bleh... it\u0027s pretty hard to understand all the conditions and how they are branching and pruned right now. I had to read it quite a few times to convince myself this is correct.\n\nI think the most jarring condition that tripped me up was that `!queueLowestWaitSerials.empty()` implies `timeout \u003d\u003d Nanoseconds(0) || queueLowestWaitSerials.size() \u003d\u003d 1` by the second if block clause because of the early out. It was especially confusing because immediately following it is the `else if (timeout \u003d\u003d Nanoseconds(0))`.\n\nI think it would be a bit easier to follow if we split the logic by whether we are polling or waiting, even if we end up repeating the call a little bit, so something like:\n\n```\n// Handle polling.\nif (timeout \u003d\u003d Nanoseconds(0)) {\n    success |\u003d WaitQueueSerials(queueLowestWaitSerials, futures, timeout);\n    success |\u003d PollFutures(futures);\n    return success ? wgpu::WaitStatus::Success : wgpu::WaitStatus::TimedOut;\n}\n\n// Handle waiting with a timeout, where only a single type of event is allowed.\nif (!queueLowestWaitSerials.empty()) {\n    DAWN_ASSERT(queueLowestWaitSerials.size() \u003d\u003d 1);\n    success |\u003d WaitQueueSerials(queueLowestWaitSerials, futures, timeout);\n} else if (foundSystemEvent) {\n    // Can upgrade wait list events to system events.\n    success |\u003d\n        WaitAnySystemEvent(\n            SystemEventAndReadyStateIterator{futures.begin()},\n            SystemEventAndReadyStateIterator{futures.end()}, timeout);\n} else if (foundWaitListEvent) {\n    success |\u003d \n        WaitListEvent::WaitAny(\n            WaitListEventAndReadyStateIterator{futures.begin()},\n            WaitListEventAndReadyStateIterator{futures.end()}, timeout);\n} else {\n    DAWN_ASSERT(futures.size() \u003d\u003d 0);\n}\n```",
+      "range": {
+        "startLine": 213,
+        "startChar": 4,
+        "endLine": 247,
+        "endChar": 5
+      },
+      "revId": "7793c72883e4bba0c91aeafaee0fff1fbdd47751",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "435437ea_51c04877",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-16T22:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5175707a_e26e4e44",
       "range": {
         "startLine": 213,
         "startChar": 4,
