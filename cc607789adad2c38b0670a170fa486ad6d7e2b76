@@ -16,6 +16,46 @@
       "message": "Thanks!\n\nKai/Corentin: did you all have any concerns about landing this?",
       "revId": "cc607789adad2c38b0670a170fa486ad6d7e2b76",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "add39342_e0d464a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-16T23:06:29Z",
+      "side": 1,
+      "message": "LGTM to me! Would probably be best to have one more pass from either Corentin or Kai, but from what I can tell this should be fine either way!",
+      "revId": "cc607789adad2c38b0670a170fa486ad6d7e2b76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "949db69c_41e9dfd8",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-16T23:06:29Z",
+      "side": 1,
+      "message": "I think we usually still use `device-\u003eConsumedError` for this, but something like:\n\n```\n[[maybe_unused]] bool error \u003d device-\u003eConsumedError([\u0026]() {\n    ...\n}, \"waiting for work in %s.\", queue);\n```",
+      "range": {
+        "startLine": 161,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 43
+      },
+      "revId": "cc607789adad2c38b0670a170fa486ad6d7e2b76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
