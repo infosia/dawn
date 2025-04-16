@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4276329f_8b7f1cee",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-16T00:12:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94c66042_7f03ea81",
+      "range": {
+        "startLine": 428,
+        "startChar": 27,
+        "endLine": 428,
+        "endChar": 39
+      },
+      "revId": "5a87cafea6dc2bad22995d40810c7ebbd2204743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7eac781d_19c39dd5",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-04-15T23:50:52Z",
       "side": 1,
       "message": "This INVALID_IF won\u0027t trigger if the dimension is 3D and the format is ETC2 for example. I think it should be more like:\n\n```\nif (format-\u003eisCompressed) {\n  DAWN_INVALID_IF( 1D )\n  \n  if (format-\u003eisBC) {\n    DAWN_INVALID_IF( 3D \u0026\u0026 !TextureCompressionBCSliced3D )\n  } else {\n    DAWN_INVALID_IF( 3D )\n  }\n}\n```\n\nAlso note I didn\u0027t check for TextureCompressionBC. That should already be validated elsewhere.\n\nI think CTS should catch this. If not maybe we\u0027re either missing coverage, or there\u0027s already some redundant validation that\u0027s catching it, or I\u0027m misunderstanding this code.",
+      "range": {
+        "startLine": 744,
+        "startChar": 12,
+        "endLine": 746,
+        "endChar": 76
+      },
+      "revId": "5a87cafea6dc2bad22995d40810c7ebbd2204743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "564565da_7b64b480",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-16T00:12:26Z",
+      "side": 1,
+      "message": "Indeed, I updated the logic.\n\nIn the updated version, should I remove check for both features to be present at same time? I thought this would be validated at texture creation time. Thank you!",
+      "parentUuid": "7eac781d_19c39dd5",
       "range": {
         "startLine": 744,
         "startChar": 12,
