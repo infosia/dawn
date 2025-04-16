@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e53f0fe_1b70b34c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 25
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-16T11:37:25Z",
+      "side": 1,
+      "message": "FYI I\u0027ve started adding experimental texture-compression-bc-sliced-3d feature in Blink at https://chromium-review.googlesource.com/c/chromium/src/+/6459626 so that we can start writing tests in the CTS.",
+      "revId": "3447d1b9c67f430f5a08ae06bad2c8b7b5be108a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c80828eb_f9ac02c1",
