@@ -34,6 +34,24 @@
       "parentUuid": "a9335ef5_172b283b",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a58887e_a7357864",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T13:25:40Z",
+      "side": 1,
+      "message": "This has been in the spec for a long time but is [currently implemented in Blink](https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/modules/webgpu/gpu_adapter.h;drc\u003df667feb8a5c6f227b49328ce78a062acc4f81187;l\u003d80). +CC Kai, do we want to add that semantic to `webgpu.h`?",
+      "parentUuid": "20932d7d_5a1a31a9",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
