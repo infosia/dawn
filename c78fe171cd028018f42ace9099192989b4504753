@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b160d8e3_a050e7db",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-16T20:35:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c2b9b076_fce7a9ab",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fff5d345_df6ac6e5",
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "There are a bunch of other things that come in here as well `Access`, `Let`, `UserCall` can all have usages of an Atomic but we should have handled them before we get to this point.",
       "parentUuid": "651c4b9d_1c32e03f",
+      "revId": "c78fe171cd028018f42ace9099192989b4504753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "985351fb_52636d6e",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-16T20:35:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cf0c7e78_83b23bff",
       "revId": "c78fe171cd028018f42ace9099192989b4504753",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
