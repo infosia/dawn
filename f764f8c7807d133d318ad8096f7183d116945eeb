@@ -52,6 +52,24 @@
       "parentUuid": "20932d7d_5a1a31a9",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13c189ce_91625a13",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T23:36:01Z",
+      "side": 1,
+      "message": "It\u0027s going to be true in Wasm implementations since the browser imposes it on us, so I think it may as well be consistently true everywhere. According to the webgpu.h docs by default we stick to the rules in the JS spec, so this aligns with the docs.",
+      "parentUuid": "0a58887e_a7357864",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
