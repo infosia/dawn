@@ -16,6 +16,57 @@
       "message": "PTAL, though I will land only after the MSL code changes that are still a bit WIP",
       "revId": "5b8c6b16ff3f4b9aa68322d95265e585c978c095",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f44b477e_9cc5d05b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-16T17:17:58Z",
+      "side": 1,
+      "message": "LGTM, though I have a couple of comments about comments. 😊",
+      "revId": "5b8c6b16ff3f4b9aa68322d95265e585c978c095",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94d4cfc2_da94d1ff",
+        "filename": "src/dawn/tests/end2end/BindingArrayTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-16T17:17:58Z",
+      "side": 1,
+      "message": "Comment is slightly confusing, because the BGL array size matches the binding size, it\u0027s just that the last element isn\u0027t statically accessed in the shader.",
+      "revId": "5b8c6b16ff3f4b9aa68322d95265e585c978c095",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36a5c2dd_5b5684de",
+        "filename": "src/dawn/tests/end2end/BindingArrayTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-16T17:17:58Z",
+      "side": 1,
+      "message": "Comment feels inaccurate? Binding is still an array, just with a size of 1. Was the indent to test with a non-array binding?",
+      "revId": "5b8c6b16ff3f4b9aa68322d95265e585c978c095",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
