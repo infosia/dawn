@@ -16,6 +16,57 @@
       "message": "Please take a look, thanks!",
       "revId": "b9953f78fd1482cc290bf81af12b89be1e09658f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0431b85_03d0d169",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T08:35:56Z",
+      "side": 1,
+      "message": "LGTM, Geoff is OOO for now. Feel free to CQ after fixing the one u-nit.",
+      "revId": "b9953f78fd1482cc290bf81af12b89be1e09658f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47860966_31c626b2",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T08:35:56Z",
+      "side": 1,
+      "message": "u-nit: Can we hash the size first so it looks slightly more like a message format where the size comes first?",
+      "revId": "b9953f78fd1482cc290bf81af12b89be1e09658f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15e5ee0b_15d7d6fb",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1597,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T08:35:56Z",
+      "side": 1,
+      "message": "Maybe in a follow-up we could just return the first size_t from mHash? It\u0027s already a hash so we don\u0027t need to hash again.",
+      "revId": "b9953f78fd1482cc290bf81af12b89be1e09658f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
