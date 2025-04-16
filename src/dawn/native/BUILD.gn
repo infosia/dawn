@@ -32,6 +32,10 @@ import("${dawn_root}/generator/dawn_generator.gni")
 import("${dawn_root}/scripts/dawn_component.gni")
 import("${dawn_root}/scripts/dawn_features.gni")
 
+if (is_ios) {
+  import("//build/config/apple/mobile_config.gni")  # For `target_platform`
+}
+
 # The VVLs are an optional dependency, only use it if the path has been set.
 enable_vulkan_validation_layers = dawn_enable_vulkan_validation_layers &&
                                   dawn_vulkan_validation_layers_dir != ""
@@ -643,11 +647,13 @@ source_set("sources") {
 
   if (dawn_enable_metal) {
     frameworks = [
-      "IOKit.framework",
       "IOSurface.framework",
       "Metal.framework",
       "QuartzCore.framework",
     ]
+    if (is_mac || (is_ios && target_platform != "tvos")) {
+      frameworks += [ "IOKit.framework" ]
+    }
     if (is_mac) {
       frameworks += [ "Cocoa.framework" ]
     }
