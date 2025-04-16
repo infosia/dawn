@@ -327,8 +327,60 @@ struct State {
                         b.Call(ty.void_(), core::BuiltinFn::kAtomicStore, st->To(), st->From());
                     });
                     st->Destroy();
+                },
+                [&](core::ir::Access* access) {
+                    auto access_res = access->Result();
+                    if (usages_updated_.Add(access_res)) {
+                        if (AccessNeedsConversion(access)) {
+                            // only convert usage on access to members which are atomics
+                            ConvertUsages(access_res);
+                        }
+                    }
                 });
         }
+    }
+
+    bool AccessNeedsConversion(core::ir::Access* access) {
+        auto* cur_ty = access->Object()->Type();
+
+        bool needs_conversion = false;
+        for (auto& idx : access->Indices()) {
+            tint::Switch(  //
+                cur_ty,    //
+                [&](const core::type::Struct* str) {
+                    if (!forked_structs_.Contains(str)) {
+                        return;
+                    }
+
+                    auto* const_val = idx->As<core::ir::Constant>();
+                    TINT_ASSERT(const_val);
+
+                    auto const_idx = const_val->Value()->ValueAs<uint32_t>();
+
+                    const auto& info = forked_structs_.Get(str);
+
+                    printf("STRUCT\n");
+
+                    if (!info->atomic_members.Contains(const_idx)) {
+                        needs_conversion = false;
+                        return;
+                    }
+
+                    needs_conversion = true;
+
+                    // Walk though the destination struct
+                    cur_ty = str->Members()[const_idx]->Type();
+                },
+                [&](const core::type::Array* arr) { cur_ty = arr->ElemType(); },  //
+                [&](const core::type::Atomic*) { needs_conversion = true; }       //
+            );
+
+            if (!needs_conversion) {
+                break;
+            }
+        }
+        printf("NEEDS CONV %d\n", needs_conversion);
+        return needs_conversion;
     }
 
     void CheckForStructForking(core::ir::Access* access) {

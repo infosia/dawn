@@ -2033,7 +2033,7 @@ $B1: {  # root
     ASSERT_EQ(expect, str());
 }
 
-TEST_F(SpirvReader_AtomicsTest, DISABLED_ReplaceAssignsAndDecls_Struct) {
+TEST_F(SpirvReader_AtomicsTest, ReplaceAssignsAndDecls_Struct) {
     auto* f = b.ComputeFunction("main");
 
     auto* sb = ty.Struct(mod.symbols.New("S"), {
@@ -2046,7 +2046,7 @@ TEST_F(SpirvReader_AtomicsTest, DISABLED_ReplaceAssignsAndDecls_Struct) {
     b.Append(f->Block(), [&] {  //
         auto* b_ = b.Var("b", ty.ptr<function, u32, read_write>());
         auto* l1 = b.Access(ty.ptr<workgroup, u32, read_write>(), wg, 0_u);
-        b.Call<spirv::ir::BuiltinCall>(ty.u32(), spirv::BuiltinFn::kAtomicIAdd, l1, 1_u, 0_u, 0_u);
+        b.Call<spirv::ir::BuiltinCall>(ty.u32(), spirv::BuiltinFn::kAtomicIAdd, l1, 1_u, 0_u, 4_u);
 
         auto* l2 = b.Access(ty.ptr<workgroup, u32, read_write>(), wg, 0_u);
         b.Store(l2, 0_u);
@@ -2074,7 +2074,7 @@ $B1: {  # root
   $B2: {
     %b:ptr<function, u32, read_write> = var undef
     %4:ptr<workgroup, u32, read_write> = access %wg, 0u
-    %5:u32 = spirv.atomic_i_add %4, 1u, 0u, 0u
+    %5:u32 = spirv.atomic_i_add %4, 1u, 0u, 4u
     %6:ptr<workgroup, u32, read_write> = access %wg, 0u
     store %6, 0u
     %7:ptr<workgroup, u32, read_write> = access %wg, 0u
@@ -2092,7 +2092,34 @@ $B1: {  # root
     Run(Atomics);
 
     auto* expect = R"(
-UNIMPLEMENTED
+S = struct @align(4) {
+  a:u32 @offset(0)
+}
+
+S_atomic = struct @align(4) {
+  a:atomic<u32> @offset(0)
+}
+
+$B1: {  # root
+  %wg:ptr<workgroup, S_atomic, read_write> = var undef
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %b:ptr<function, u32, read_write> = var undef
+    %4:ptr<workgroup, atomic<u32>, read_write> = access %wg, 0u
+    %5:u32 = atomicAdd %4, 4u
+    %6:ptr<workgroup, atomic<u32>, read_write> = access %wg, 0u
+    %7:void = atomicStore %6, 0u
+    %8:ptr<workgroup, atomic<u32>, read_write> = access %wg, 0u
+    %9:u32 = atomicLoad %8
+    %10:u32 = let %9
+    %11:ptr<workgroup, atomic<u32>, read_write> = access %wg, 0u
+    %12:u32 = atomicLoad %11
+    store %b, %12
+    ret
+  }
+}
 )";
     ASSERT_EQ(expect, str());
 }
