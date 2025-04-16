@@ -778,6 +778,12 @@ if (DAWN_ENABLE_VULKAN)
     endif()
 endif()
 
+if (DAWN_USE_GLFW)
+    list(APPEND headers
+        "${DAWN_INCLUDE_DIR}/webgpu/webgpu_glfw.h"
+    )
+endif()
+
 set(dawn_component_srcs)
 list(APPEND dawn_component_srcs "DawnNative.cpp")
 if (DAWN_ENABLE_D3D11 OR DAWN_ENABLE_D3D12)
