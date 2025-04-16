@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7e40f21e_32ff3a3c",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3993625
+      },
+      "writtenOn": "2025-04-16T17:37:59Z",
+      "side": 1,
+      "message": "None of our other ports have optimization of debug control enabled.  Is there going to be enough code here that folks will want to be able to debug it?",
+      "parentUuid": "c7adac75_98b1248e",
+      "revId": "0303cb1c9417b1b73942ea8a41edb9228d04268d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "903de86c_d8045d7e",
         "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
         "patchSetId": 25
