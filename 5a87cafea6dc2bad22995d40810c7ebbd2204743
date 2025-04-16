@@ -117,6 +117,30 @@
       },
       "revId": "5a87cafea6dc2bad22995d40810c7ebbd2204743",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d228d03b_788afcb3",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-16T01:11:12Z",
+      "side": 1,
+      "message": "@kainino@chromium.org thank you for the explanation. I pushed an update to reduce the redundancy. Appreciated!",
+      "parentUuid": "a1c89bcc_045121bf",
+      "range": {
+        "startLine": 744,
+        "startChar": 12,
+        "endLine": 746,
+        "endChar": 76
+      },
+      "revId": "5a87cafea6dc2bad22995d40810c7ebbd2204743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
