@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dd001c5_59479229",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T08:15:15Z",
+      "side": 1,
+      "message": "```suggestion\nRemove SubstituteOverride AST config from Dawn.\n```",
+      "revId": "0bbee7fcf0953c8f759c8c8326c9364a283991a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c89cb58_4541d441",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T08:15:15Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "0bbee7fcf0953c8f759c8c8326c9364a283991a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b67f5148_3fd87459",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T08:15:15Z",
+      "side": 1,
+      "message": "Do we need to use an optional? It seems that we could just as well test that the map isn\u0027t empty.",
+      "revId": "0bbee7fcf0953c8f759c8c8326c9364a283991a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
