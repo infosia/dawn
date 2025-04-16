@@ -33,6 +33,24 @@
       "message": "Nit: I wonder if this should be FeatureInfo::FeatureState::Experimental so that developers are required to enable the AllowUnsafeAPIs toggle while it\u0027s being developed.",
       "revId": "3447d1b9c67f430f5a08ae06bad2c8b7b5be108a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91f363b1_4232326f",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-16T14:40:41Z",
+      "side": 1,
+      "message": "Marked as experimental, thank you! PLMK if any other adjustments would be better for this part of support for bc sliced 3d.",
+      "parentUuid": "c80828eb_f9ac02c1",
+      "revId": "3447d1b9c67f430f5a08ae06bad2c8b7b5be108a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
