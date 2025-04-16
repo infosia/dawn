@@ -93,6 +93,30 @@
       },
       "revId": "5a87cafea6dc2bad22995d40810c7ebbd2204743",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1c89bcc_045121bf",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T00:44:14Z",
+      "side": 1,
+      "message": "`TextureCompressionBC` is validated already in `device-\u003eGetInternalFormat(descriptor-\u003eformat)` (using the data computed as `bcFormatUnsupportedReason` in `Format.cpp`).\n\nThe check here only applies if `dimension\u003d\u003d3D`, so if this were our check for BC support, it would be wrong. We should check just the relevant extension `TextureCompressionBCSliced3D`, that way it\u0027s clear that this is not the code responsible for checking `TextureCompressionBC`.",
+      "parentUuid": "564565da_7b64b480",
+      "range": {
+        "startLine": 744,
+        "startChar": 12,
+        "endLine": 746,
+        "endChar": 76
+      },
+      "revId": "5a87cafea6dc2bad22995d40810c7ebbd2204743",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

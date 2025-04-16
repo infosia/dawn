@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fe2b3ca_0c09d1fa",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T00:44:14Z",
+      "side": 1,
+      "message": "nit: autoformat did something weird here",
+      "range": {
+        "startLine": 752,
+        "startChar": 0,
+        "endLine": 753,
+        "endChar": 39
+      },
+      "revId": "899ec78511fbf4fe588159d448c2598e4e835618",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
