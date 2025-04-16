@@ -16,6 +16,24 @@
       "message": "Doesn\u0027t this overlap with most of the cases in the switch below? i.e. should we just be changing all but `NoError` to `Reject` instead of `Resolve`?",
       "revId": "103f8f8fa41f0d0c33f91eed69a1accd387c8777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd12c19a_17b19adf",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-04-16T20:17:18Z",
+      "side": 1,
+      "message": "I thought of this but I am not sure what the difference is between status and type for these errors. One is a pop error scope status.\n\nPerhaps kai/gman knows better.",
+      "parentUuid": "cc6dffbe_796625c0",
+      "revId": "103f8f8fa41f0d0c33f91eed69a1accd387c8777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
