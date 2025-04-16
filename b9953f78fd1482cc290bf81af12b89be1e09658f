@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "40a02b25_2a8fcfb2",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-16T08:59:53Z",
+      "side": 1,
+      "message": "Yes, the size `shaderCodeByteSize` is hashed first at #1528",
+      "parentUuid": "47860966_31c626b2",
+      "revId": "b9953f78fd1482cc290bf81af12b89be1e09658f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15e5ee0b_15d7d6fb",
         "filename": "src/dawn/native/ShaderModule.cpp",
         "patchSetId": 15
