@@ -16,6 +16,24 @@
       "message": "There are improvements in https://github.com/kainino0x/webgpu-cross-platform-demo/issues/19 that I need to pick up.\n\n- Way to control optimization (and perhaps debug)\n- Consider making C++ an option of this package (Realistically I don\u0027t think the C++ bindings can be used with any other C implementation, but if they can, people can set that up themselves, it\u0027s just an include path.)",
       "revId": "e8bc2d45f57d92ae987243bf55b63c27722fae01",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c368a49c_51ded09b",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T05:38:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ddaa831_cf2318c6",
+      "revId": "e8bc2d45f57d92ae987243bf55b63c27722fae01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

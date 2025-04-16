@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2ca2113_1db0cf9d",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T05:38:49Z",
+      "side": 1,
+      "message": "Thanks to ypujante\u0027s feedback, I realized I wasn\u0027t setting any of these flags. I didn\u0027t want to make the user pass them, so I came up with this hack.\n\nOptimization and LTO are very important to us. Most of Emscripten\u0027s ports don\u0027t set these flags at all, which I find strange. Maybe Emscripten should provide suitable optimization/debug/LTO flags to ports? @sbc@google.com",
+      "revId": "0303cb1c9417b1b73942ea8a41edb9228d04268d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "903de86c_d8045d7e",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T05:38:49Z",
+      "side": 1,
+      "message": "This is a hack to prevent building the port when we don\u0027t need to, in particular building the port with different computed_flags than we\u0027re going to actually link with. It\u0027s not _really_ necessary. Is it too much of a hack? @sbc@google.com",
+      "revId": "0303cb1c9417b1b73942ea8a41edb9228d04268d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
