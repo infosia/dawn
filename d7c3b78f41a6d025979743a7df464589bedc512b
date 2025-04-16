@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8efbd7b3_78fe7826",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2025-04-16T18:52:41Z",
+      "side": 1,
+      "message": "All CI jobs are successful on GitHub Actions side :)",
+      "revId": "d7c3b78f41a6d025979743a7df464589bedc512b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
