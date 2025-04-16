@@ -70,6 +70,24 @@
       "parentUuid": "3edd843e_d956fab2",
       "revId": "103f8f8fa41f0d0c33f91eed69a1accd387c8777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a1591ba_7e867387",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-04-16T22:11:03Z",
+      "side": 1,
+      "message": "I\u0027m taking Kai\u0027s word for this. Thanks for the fix!!!\n\nBug here: https://issues.chromium.org/issues/410859901",
+      "parentUuid": "e2da2947_99b399e0",
+      "revId": "103f8f8fa41f0d0c33f91eed69a1accd387c8777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
