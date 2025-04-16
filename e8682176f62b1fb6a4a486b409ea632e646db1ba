@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19a0d01f_122075be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-16T21:09:39Z",
+      "side": 1,
+      "message": "PTAL! Seems large but all the real changes are in ityp_bitset.h, everything else is removals of now unnecessary IterateBitSet() calls and BitSetIterator.h includes.\n\nTakes a different approach from https://dawn-review.googlesource.com/c/dawn/+/232257 with the aim of simplifying how our bitset interactions work today before diving into a larger refactor. It\u0027s been a couple of weeks, but last I spoke with cwallez@ I believe he was in favor of Dawn having it\u0027s own BitSet not based on std::bitset, without pulling over ANGLE\u0027s implementation wholesale. This change doesn\u0027t explicitly move in that direction but would make that type of change easier by getting rid of the need for helper classes/functions. And like I said in the description, it does get rid of a copy! Though that doesn\u0027t appear to be making a difference on the profiling that I\u0027ve been doing. Still need to specialize the iterator for that, it seems.",
+      "revId": "e8682176f62b1fb6a4a486b409ea632e646db1ba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
