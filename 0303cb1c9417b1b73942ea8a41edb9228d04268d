@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0fbe1add_193d1297",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T22:05:46Z",
+      "side": 1,
+      "message": "Using ASSERTIONS makes sense, that doesn\u0027t even feel like a hack. The docs even say it affects \"system libraries\" which is almost what this is.\n\nI don\u0027t understand exactly how variants work, but they look like they need to be explicitly selected? Setting the flags automatically (based on ASSERTIONS) would be nicest.",
+      "parentUuid": "a0f10244_3da78b43",
+      "revId": "0303cb1c9417b1b73942ea8a41edb9228d04268d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "903de86c_d8045d7e",
         "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
         "patchSetId": 25
