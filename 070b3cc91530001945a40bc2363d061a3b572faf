@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5013804_99e9e294",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 26
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T15:32:17Z",
+      "side": 1,
+      "message": "Sorry I\u0027m struggling with the amount of reviews. Loko can you TAL instead of me?",
+      "revId": "070b3cc91530001945a40bc2363d061a3b572faf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
