@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3f22bc29_78fbc96f",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-16T18:22:09Z",
+      "side": 1,
+      "message": "Ok, yea that makes sense. WDYT about just crashing with `DAWN_UNREACHABLE` or using a `DAWN_UNIMPLEMENTED_ERROR` instead of generating a validation error for now then? Adding the validation error right now is a bit misleading.",
+      "parentUuid": "2771883c_abb958eb",
+      "range": {
+        "startLine": 227,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 75
+      },
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "313bdf9e_cce6c216",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 4
