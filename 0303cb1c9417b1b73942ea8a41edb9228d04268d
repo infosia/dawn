@@ -128,6 +128,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6b0dbb07_454c4875",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3993625
+      },
+      "writtenOn": "2025-04-16T22:10:06Z",
+      "side": 1,
+      "message": "Variants work by simply choosing a different library name based on some `-s` settings.   See `get_lib_name` in many of the existing ports.   If you make the library name vary based on settings then you can have any number of variants based on settings.",
+      "parentUuid": "0fbe1add_193d1297",
+      "revId": "0303cb1c9417b1b73942ea8a41edb9228d04268d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "903de86c_d8045d7e",
         "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
         "patchSetId": 25
