@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9baa07d_c516c5b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-16T17:05:14Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like the right approach to me - I\u0027m not aware of any other cases of service accounts being added to OWNERS files. The usual approach is to give service accounts bot override permissions, isn\u0027t it?",
+      "revId": "88b0a7ce2754f70c341b2f41dec60955ae38d3fa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
