@@ -101,6 +101,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3144cd2d_22245e70",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-16T20:32:35Z",
+      "side": 1,
+      "message": "Ah, that makes sense and means that the max length of this is much smaller given the `max*PerStage` limits! I did in fact confuse this with Bindless and was concerned with much large values in these arrays, thereby causing a huge memory footprint.\n\nThat said, do you know if my second point about whether `BindingInfo` needing to store `binding` is true? If so, we could maybe at least make it so that we have one `vector\u003cBindingInfo\u003e` and one `ityp::vector\u003cBindingIndex, BindingInfo*\u003e` such that the first one stores the actual backing `BindingInfo`s and the second one is the dense one that stores a pointer for each index?\n\nI don\u0027t feel too strongly about that optimization now though, given that the limits all added together is \u003c 64 in the default case. So leave it up to you to decide if we need it or not.",
+      "parentUuid": "133a562e_e9cf3590",
+      "range": {
+        "startLine": 458,
+        "startChar": 8,
+        "endLine": 467,
+        "endChar": 9
+      },
+      "revId": "29ec258bb2e8baf546457b3df8096eb2fb1a7a8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "81e6650c_c3e5ed78",
         "filename": "src/dawn/native/BindingInfo.h",
         "patchSetId": 3
