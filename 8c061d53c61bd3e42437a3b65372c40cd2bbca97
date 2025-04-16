@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0fe8fb4_89eb8d29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-16T18:09:57Z",
+      "side": 1,
+      "message": "DNS until DXC dlopen/dlclose issue is fixed.",
+      "revId": "8c061d53c61bd3e42437a3b65372c40cd2bbca97",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
