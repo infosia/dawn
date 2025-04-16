@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2771883c_abb958eb",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T16:56:59Z",
+      "side": 1,
+      "message": "In the future it will be added to storage/uniform buffers, samplers and storage textures so it so I put it in the common part of the code already.",
+      "parentUuid": "4793f6dd_0fbb878e",
+      "range": {
+        "startLine": 227,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 75
+      },
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "313bdf9e_cce6c216",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 4
@@ -112,6 +136,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0c539fdf_ae894aef",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T16:56:59Z",
+      "side": 1,
+      "message": "That\u0027s a bad cherry-pick during dev, sorry :X Yeah the last binding number should stay under maxBindingsPerGroup.",
+      "parentUuid": "e96a5f63_f26920af",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d96cff8c_4d55466f",
         "filename": "src/dawn/native/BindingInfo.cpp",
         "patchSetId": 4
@@ -123,6 +165,24 @@
       "writtenOn": "2025-04-14T17:45:01Z",
       "side": 1,
       "message": "Here and below, doesn\u0027t this conflict with the validation above that states that arraySize can only be used with sampled textures?",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca049fb0_e26cbecc",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T16:56:59Z",
+      "side": 1,
+      "message": "Ditto, it will be added for other bindings in future CLs so I preemptively modified this for all bindings.",
+      "parentUuid": "d96cff8c_4d55466f",
       "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
