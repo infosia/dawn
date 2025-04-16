@@ -382,21 +382,23 @@ TEST_F(DeviceToggleTest, DeviceSetToggles) {
     std::unique_ptr<native::Instance> instance;
     instance = std::make_unique<native::Instance>();
 
-    // Create a null adapter from the instance.
-    native::Adapter nullAdapter = CreateNullAdapter(instance.get(), nullptr);
-    Ref<native::AdapterBase> adapter = native::FromAPI(nullAdapter.Get());
-
     // DumpShader is a device toggle.
     const char* dumpShaderToggle = "dump_shaders";
 
     // Create device with no toggles descriptor.
     {
+        Ref<native::AdapterBase> adapter =
+            native::FromAPI(CreateNullAdapter(instance.get(), nullptr).Get());
+
         // DumpShader toggles is not set and treated as disabled in device.
         CreateDeviceAndValidateToggles(adapter.Get(), nullptr, {}, {dumpShaderToggle});
     }
 
     // Create device with a device toggle required enabled. This should always work.
     {
+        Ref<native::AdapterBase> adapter =
+            native::FromAPI(CreateNullAdapter(instance.get(), nullptr).Get());
+
         wgpu::DawnTogglesDescriptor deviceTogglesDesc = {};
         deviceTogglesDesc.enabledToggleCount = 1;
         deviceTogglesDesc.enabledToggles = &dumpShaderToggle;
@@ -407,6 +409,9 @@ TEST_F(DeviceToggleTest, DeviceSetToggles) {
 
     // Create device with a device toggle required disabled. This should always work.
     {
+        Ref<native::AdapterBase> adapter =
+            native::FromAPI(CreateNullAdapter(instance.get(), nullptr).Get());
+
         wgpu::DawnTogglesDescriptor deviceTogglesDesc = {};
         deviceTogglesDesc.disabledToggleCount = 1;
         deviceTogglesDesc.disabledToggles = &dumpShaderToggle;
@@ -454,86 +459,86 @@ TEST_F(DeviceToggleTest, DeviceOverridingInstanceToggle) {
         return resultAdapter;
     };
 
-    Ref<native::AdapterBase> adapterEnableAllowUnsafeAPIs =
-        CreateAdapterWithAllowUnsafeAPIsToggle(true, false);
-    Ref<native::AdapterBase> adapterDisableAllowUnsafeAPIs =
-        CreateAdapterWithAllowUnsafeAPIsToggle(false, false);
-    Ref<native::AdapterBase> adapterForcedEnableAllowUnsafeAPIs =
-        CreateAdapterWithAllowUnsafeAPIsToggle(true, true);
-    Ref<native::AdapterBase> adapterForcedDisableAllowUnsafeAPIs =
-        CreateAdapterWithAllowUnsafeAPIsToggle(false, true);
-
     // AllowUnsafeAPIs is an instance toggle, and can be overridden by device.
     const char* allowUnsafeApisToggle = "allow_unsafe_apis";
 
     // Create device with no toggles descriptor will inherite the adapter toggle.
     {
+        Ref<native::AdapterBase> defaultAdapter =
+            native::FromAPI(CreateNullAdapter(instance.get(), nullptr).Get());
+
         // The device created from default adapter should inherit disabled AllowUnsafeAPIs toggle
         // from adapter.
-        CreateDeviceAndValidateToggles(adapter.Get(), nullptr, {}, {allowUnsafeApisToggle});
+        CreateDeviceAndValidateToggles(defaultAdapter.Get(), nullptr, {}, {allowUnsafeApisToggle});
         // The device created from AllowUnsafeAPIs enabled/disabled adapter should inherit it.
-        CreateDeviceAndValidateToggles(adapterEnableAllowUnsafeAPIs.Get(), nullptr,
-                                       {allowUnsafeApisToggle}, {});
-        CreateDeviceAndValidateToggles(adapterDisableAllowUnsafeAPIs.Get(), nullptr, {},
-                                       {allowUnsafeApisToggle});
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(true, false).Get(),
+                                       nullptr, {allowUnsafeApisToggle}, {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(false, false).Get(),
+                                       nullptr, {}, {allowUnsafeApisToggle});
         // The device created from AllowUnsafeAPIs forced adapter should inherit forced
         // enabled/disabled toggle.
-        CreateDeviceAndValidateToggles(adapterForcedEnableAllowUnsafeAPIs.Get(), nullptr,
-                                       {allowUnsafeApisToggle}, {});
-        CreateDeviceAndValidateToggles(adapterForcedDisableAllowUnsafeAPIs.Get(), nullptr, {},
-                                       {allowUnsafeApisToggle});
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(true, true).Get(),
+                                       nullptr, {allowUnsafeApisToggle}, {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(false, true).Get(),
+                                       nullptr, {}, {allowUnsafeApisToggle});
     }
 
     // Create device trying to override instance toggle to enable. This should work as long as the
     // toggle is not forced.
     {
+        Ref<native::AdapterBase> defaultAdapter =
+            native::FromAPI(CreateNullAdapter(instance.get(), nullptr).Get());
+
         wgpu::DawnTogglesDescriptor deviceTogglesDesc = {};
         deviceTogglesDesc.enabledToggleCount = 1;
         deviceTogglesDesc.enabledToggles = &allowUnsafeApisToggle;
 
         // The device created from default adapter should have AllowUnsafeAPIs device toggle
         // enabled.
-        CreateDeviceAndValidateToggles(adapter.Get(), &deviceTogglesDesc, {allowUnsafeApisToggle},
-                                       {});
+        CreateDeviceAndValidateToggles(defaultAdapter.Get(), &deviceTogglesDesc,
+                                       {allowUnsafeApisToggle}, {});
         // The device created from UseDXC enabled/disabled adapter should have AllowUnsafeAPIs
         // device toggle overridden to enabled.
-        CreateDeviceAndValidateToggles(adapterEnableAllowUnsafeAPIs.Get(), &deviceTogglesDesc,
-                                       {allowUnsafeApisToggle}, {});
-        CreateDeviceAndValidateToggles(adapterDisableAllowUnsafeAPIs.Get(), &deviceTogglesDesc,
-                                       {allowUnsafeApisToggle}, {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(true, false).Get(),
+                                       &deviceTogglesDesc, {allowUnsafeApisToggle}, {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(false, false).Get(),
+                                       &deviceTogglesDesc, {allowUnsafeApisToggle}, {});
         // The device created from UseAllowUnsafeAPIs forced enabled adapter should have
         // AllowUnsafeAPIs device toggle enabled.
-        CreateDeviceAndValidateToggles(adapterForcedEnableAllowUnsafeAPIs.Get(), &deviceTogglesDesc,
-                                       {allowUnsafeApisToggle}, {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(true, true).Get(),
+                                       &deviceTogglesDesc, {allowUnsafeApisToggle}, {});
         // The device created from AllowUnsafeAPIs forced disabled adapter should have
         // AllowUnsafeAPIs device toggle disabled, since it can not override the forced toggle.
-        CreateDeviceAndValidateToggles(adapterForcedDisableAllowUnsafeAPIs.Get(),
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(false, true).Get(),
                                        &deviceTogglesDesc, {}, {allowUnsafeApisToggle});
     }
 
     // Create device trying to override instance toggle to disable. This should work as long as the
     // toggle is not forced.
     {
+        Ref<native::AdapterBase> defaultAdapter =
+            native::FromAPI(CreateNullAdapter(instance.get(), nullptr).Get());
+
         wgpu::DawnTogglesDescriptor deviceTogglesDesc = {};
         deviceTogglesDesc.disabledToggleCount = 1;
         deviceTogglesDesc.disabledToggles = &allowUnsafeApisToggle;
 
         // The device created from default adapter should have UseDXC device toggle enabled.
-        CreateDeviceAndValidateToggles(adapter.Get(), &deviceTogglesDesc, {},
+        CreateDeviceAndValidateToggles(defaultAdapter.Get(), &deviceTogglesDesc, {},
                                        {allowUnsafeApisToggle});
         // The device created from UseDXC enabled/disabled adapter should have UseDXC device toggle
         // overridden to disabled.
-        CreateDeviceAndValidateToggles(adapterEnableAllowUnsafeAPIs.Get(), &deviceTogglesDesc, {},
-                                       {allowUnsafeApisToggle});
-        CreateDeviceAndValidateToggles(adapterDisableAllowUnsafeAPIs.Get(), &deviceTogglesDesc, {},
-                                       {allowUnsafeApisToggle});
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(true, false).Get(),
+                                       &deviceTogglesDesc, {}, {allowUnsafeApisToggle});
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(false, false).Get(),
+                                       &deviceTogglesDesc, {}, {allowUnsafeApisToggle});
         // The device created from UseDXC forced enabled adapter should have UseDXC device toggle
         // enabled, since it can not override the forced toggle.
-        CreateDeviceAndValidateToggles(adapterForcedEnableAllowUnsafeAPIs.Get(), &deviceTogglesDesc,
-                                       {allowUnsafeApisToggle}, {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(true, true).Get(),
+                                       &deviceTogglesDesc, {allowUnsafeApisToggle}, {});
         // The device created from UseDXC forced disabled adapter should have UseDXC device toggle
         // disabled.
-        CreateDeviceAndValidateToggles(adapterForcedDisableAllowUnsafeAPIs.Get(),
+        CreateDeviceAndValidateToggles(CreateAdapterWithAllowUnsafeAPIsToggle(false, true).Get(),
                                        &deviceTogglesDesc, {}, {allowUnsafeApisToggle});
     }
 }
@@ -580,77 +585,87 @@ TEST_F(DeviceToggleTest, DeviceOverridingAdapterToggle) {
         return resultAdapter;
     };
 
-    Ref<native::AdapterBase> adapterEnableDXC = CreateAdapterWithDXCToggle(true, false);
-    Ref<native::AdapterBase> adapterDisableDXC = CreateAdapterWithDXCToggle(false, false);
-    Ref<native::AdapterBase> adapterForcedEnableDXC = CreateAdapterWithDXCToggle(true, true);
-    Ref<native::AdapterBase> adapterForcedDisableDXC = CreateAdapterWithDXCToggle(false, true);
-
     // UseDXC is an adapter toggle, and can be overridden by device.
     const char* useDXCToggle = "use_dxc";
 
     // Create device with no toggles descriptor.
     {
+        Ref<native::AdapterBase> defaultAdapter =
+            native::FromAPI(CreateNullAdapter(instance.get(), nullptr).Get());
+
         // The device created from default adapter should inherit enabled/disabled toggles from
         // adapter. All other toggles that are not set are also treated as disabled in device.
-        CreateDeviceAndValidateToggles(adapter.Get(), nullptr, {}, {useDXCToggle});
+        CreateDeviceAndValidateToggles(defaultAdapter.Get(), nullptr, {}, {useDXCToggle});
         // The device created from UseDXC enabled/disabled adapter should inherit forced
         // enabled/disabled UseDXC toggle.
-        CreateDeviceAndValidateToggles(adapterEnableDXC.Get(), nullptr, {useDXCToggle}, {});
-        CreateDeviceAndValidateToggles(adapterDisableDXC.Get(), nullptr, {}, {useDXCToggle});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(true, false).Get(), nullptr,
+                                       {useDXCToggle}, {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(false, false).Get(), nullptr, {},
+                                       {useDXCToggle});
         // The device created from UseDXC forced adapter should inherit forced enabled/disabled
         // UseDXC toggle.
-        CreateDeviceAndValidateToggles(adapterForcedEnableDXC.Get(), nullptr, {useDXCToggle}, {});
-        CreateDeviceAndValidateToggles(adapterForcedDisableDXC.Get(), nullptr, {}, {useDXCToggle});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(true, true).Get(), nullptr,
+                                       {useDXCToggle}, {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(false, true).Get(), nullptr, {},
+                                       {useDXCToggle});
     }
 
     // Create device trying to override adapter toggle to enable. This should work as long as the
     // toggle is not forced.
     {
+        Ref<native::AdapterBase> defaultAdapter =
+            native::FromAPI(CreateNullAdapter(instance.get(), nullptr).Get());
+
         wgpu::DawnTogglesDescriptor deviceTogglesDesc = {};
         deviceTogglesDesc.enabledToggleCount = 1;
         deviceTogglesDesc.enabledToggles = &useDXCToggle;
 
         // The device created from default adapter should have UseDXC device toggle enabled.
-        CreateDeviceAndValidateToggles(adapter.Get(), &deviceTogglesDesc, {useDXCToggle}, {});
+        CreateDeviceAndValidateToggles(defaultAdapter.Get(), &deviceTogglesDesc, {useDXCToggle},
+                                       {});
         // The device created from UseDXC enabled/disabled adapter should have UseDXC device toggle
         // overridden to enabled.
-        CreateDeviceAndValidateToggles(adapterEnableDXC.Get(), &deviceTogglesDesc, {useDXCToggle},
-                                       {});
-        CreateDeviceAndValidateToggles(adapterDisableDXC.Get(), &deviceTogglesDesc, {useDXCToggle},
-                                       {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(true, false).Get(),
+                                       &deviceTogglesDesc, {useDXCToggle}, {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(false, false).Get(),
+                                       &deviceTogglesDesc, {useDXCToggle}, {});
         // The device created from UseDXC forced enabled adapter should have UseDXC device toggle
         // enabled.
-        CreateDeviceAndValidateToggles(adapterForcedEnableDXC.Get(), &deviceTogglesDesc,
-                                       {useDXCToggle}, {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(true, true).Get(),
+                                       &deviceTogglesDesc, {useDXCToggle}, {});
         // The device created from UseDXC forced disabled adapter should have UseDXC device toggle
         // disabled, since it can not override the forced toggle.
-        CreateDeviceAndValidateToggles(adapterForcedDisableDXC.Get(), &deviceTogglesDesc, {},
-                                       {useDXCToggle});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(false, true).Get(),
+                                       &deviceTogglesDesc, {}, {useDXCToggle});
     }
 
     // Create device trying to override adapter toggle to disable. This should work as long as the
     // toggle is not forced.
     {
+        Ref<native::AdapterBase> defaultAdapter =
+            native::FromAPI(CreateNullAdapter(instance.get(), nullptr).Get());
+
         wgpu::DawnTogglesDescriptor deviceTogglesDesc = {};
         deviceTogglesDesc.disabledToggleCount = 1;
         deviceTogglesDesc.disabledToggles = &useDXCToggle;
 
         // The device created from default adapter should have UseDXC device toggle enabled.
-        CreateDeviceAndValidateToggles(adapter.Get(), &deviceTogglesDesc, {}, {useDXCToggle});
+        CreateDeviceAndValidateToggles(defaultAdapter.Get(), &deviceTogglesDesc, {},
+                                       {useDXCToggle});
         // The device created from UseDXC enabled/disabled adapter should have UseDXC device toggle
         // overridden to disabled.
-        CreateDeviceAndValidateToggles(adapterEnableDXC.Get(), &deviceTogglesDesc, {},
-                                       {useDXCToggle});
-        CreateDeviceAndValidateToggles(adapterDisableDXC.Get(), &deviceTogglesDesc, {},
-                                       {useDXCToggle});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(true, false).Get(),
+                                       &deviceTogglesDesc, {}, {useDXCToggle});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(false, false).Get(),
+                                       &deviceTogglesDesc, {}, {useDXCToggle});
         // The device created from UseDXC forced enabled adapter should have UseDXC device toggle
         // enabled, since it can not override the forced toggle.
-        CreateDeviceAndValidateToggles(adapterForcedEnableDXC.Get(), &deviceTogglesDesc,
-                                       {useDXCToggle}, {});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(true, true).Get(),
+                                       &deviceTogglesDesc, {useDXCToggle}, {});
         // The device created from UseDXC forced disabled adapter should have UseDXC device toggle
         // disabled.
-        CreateDeviceAndValidateToggles(adapterForcedDisableDXC.Get(), &deviceTogglesDesc, {},
-                                       {useDXCToggle});
+        CreateDeviceAndValidateToggles(CreateAdapterWithDXCToggle(false, true).Get(),
+                                       &deviceTogglesDesc, {}, {useDXCToggle});
     }
 }
 

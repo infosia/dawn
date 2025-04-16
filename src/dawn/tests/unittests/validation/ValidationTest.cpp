@@ -330,6 +330,8 @@ uint32_t ValidationTest::GetDeviceCreationDeprecationWarningExpectation(
 wgpu::Device ValidationTest::RequestDeviceSync(const wgpu::DeviceDescriptor& deviceDesc) {
     DAWN_ASSERT(adapter);
 
+    mBackendAdapter.ResetIsConsumedForTesting();
+
     wgpu::Device apiDevice;
     EXPECT_DEPRECATION_WARNINGS(
         adapter.RequestDevice(&deviceDesc, wgpu::CallbackMode::AllowSpontaneous,

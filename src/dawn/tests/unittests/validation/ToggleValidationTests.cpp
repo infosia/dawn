@@ -70,6 +70,8 @@ TEST_F(ToggleValidationTest, OverrideToggleUsage) {
         deviceTogglesDesc.enabledToggles = &kValidToggleName;
         deviceTogglesDesc.enabledToggleCount = 1;
 
+        GetBackendAdapter().ResetIsConsumedForTesting();
+
         wgpu::Device deviceWithToggle =
             wgpu::Device::Acquire(GetBackendAdapter().CreateDevice(&descriptor));
         std::vector<const char*> toggleNames = native::GetTogglesUsed(deviceWithToggle.Get());
@@ -91,6 +93,8 @@ TEST_F(ToggleValidationTest, OverrideToggleUsage) {
         deviceTogglesDesc.enabledToggles = &kInvalidToggleName;
         deviceTogglesDesc.enabledToggleCount = 1;
 
+        GetBackendAdapter().ResetIsConsumedForTesting();
+
         wgpu::Device deviceWithToggle =
             wgpu::Device::Acquire(GetBackendAdapter().CreateDevice(&descriptor));
         std::vector<const char*> toggleNames = native::GetTogglesUsed(deviceWithToggle.Get());
@@ -111,6 +115,8 @@ TEST_F(ToggleValidationTest, TurnOffVsyncWithToggle) {
     descriptor.nextInChain = &deviceTogglesDesc;
     deviceTogglesDesc.enabledToggles = &kValidToggleName;
     deviceTogglesDesc.enabledToggleCount = 1;
+
+    GetBackendAdapter().ResetIsConsumedForTesting();
 
     wgpu::Device deviceWithToggle =
         wgpu::Device::Acquire(GetBackendAdapter().CreateDevice(&descriptor));

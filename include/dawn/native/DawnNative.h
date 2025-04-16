@@ -107,6 +107,9 @@ class DAWN_NATIVE_EXPORT Adapter {
     // Reset the backend device object for testing purposes.
     void ResetInternalDeviceForTesting();
 
+    // Reset the adapter consumed state for testing purposes.
+    void ResetIsConsumedForTesting();
+
   private:
     AdapterBase* mImpl = nullptr;
 };

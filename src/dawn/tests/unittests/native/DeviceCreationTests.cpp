@@ -59,18 +59,11 @@ class DeviceCreationTest : public testing::Test {
     void SetUp() override {
         dawnProcSetProcs(&GetProcs());
 
-        // Create an instance with default toggles and create an adapter from it.
+        // Create an instance with default toggles.
         wgpu::InstanceDescriptor safeInstanceDesc = {};
         instance = std::make_unique<Instance>(&safeInstanceDesc);
 
-        wgpu::RequestAdapterOptions options = {};
-        options.backendType = wgpu::BackendType::Null;
-
-        // Get the null adapter with default toggles.
-        adapter = instance->EnumerateAdapters(&options)[0];
-
-        // Create an instance with toggle AllowUnsafeAPIs enabled, and create an unsafe adapter
-        // from it.
+        // Create an instance with toggle AllowUnsafeAPIs enabled.
         const char* allowUnsafeApisToggle = "allow_unsafe_apis";
         wgpu::DawnTogglesDescriptor unsafeInstanceTogglesDesc = {};
         unsafeInstanceTogglesDesc.enabledToggleCount = 1;
@@ -79,15 +72,28 @@ class DeviceCreationTest : public testing::Test {
         unsafeInstanceDesc.nextInChain = &unsafeInstanceTogglesDesc;
 
         unsafeInstance = std::make_unique<Instance>(&unsafeInstanceDesc);
-        unsafeAdapter = unsafeInstance->EnumerateAdapters(&options)[0];
+    }
 
-        ASSERT_NE(adapter.Get(), nullptr);
-        ASSERT_NE(unsafeAdapter.Get(), nullptr);
+    Adapter GetAdapter() {
+        wgpu::RequestAdapterOptions options = {};
+        options.backendType = wgpu::BackendType::Null;
+
+        // Get the null adapter with default toggles.
+        Adapter adapter = instance->EnumerateAdapters(&options)[0];
+
+        return adapter;
+    }
+
+    Adapter GetUnsafeAdapter() {
+        wgpu::RequestAdapterOptions options = {};
+        options.backendType = wgpu::BackendType::Null;
+
+        Adapter unsafeAdapter = unsafeInstance->EnumerateAdapters(&options)[0];
+
+        return unsafeAdapter;
     }
 
     void TearDown() override {
-        adapter = nullptr;
-        unsafeAdapter = nullptr;
         instance = nullptr;
         unsafeInstance = nullptr;
         dawnProcSetProcs(nullptr);
@@ -97,20 +103,18 @@ class DeviceCreationTest : public testing::Test {
 
     std::unique_ptr<Instance> instance;
     std::unique_ptr<Instance> unsafeInstance;
-    Adapter adapter;
-    Adapter unsafeAdapter;
 };
 
 // Test successful call to CreateDevice with no descriptor
 TEST_F(DeviceCreationTest, CreateDeviceNoDescriptorSuccess) {
-    wgpu::Device device = adapter.CreateDevice();
+    wgpu::Device device = GetAdapter().CreateDevice();
     EXPECT_NE(device, nullptr);
 }
 
 // Test successful call to CreateDevice with descriptor.
 TEST_F(DeviceCreationTest, CreateDeviceSuccess) {
     wgpu::DeviceDescriptor desc = {};
-    wgpu::Device device = adapter.CreateDevice(&desc);
+    wgpu::Device device = GetAdapter().CreateDevice(&desc);
     EXPECT_NE(device, nullptr);
 }
 
@@ -125,7 +129,7 @@ TEST_F(DeviceCreationTest, CreateDeviceWithAllocatorSuccess) {
     desc.requiredFeatureCount = 1;
     desc.nextInChain = &allocationDesc;
 
-    wgpu::Device device = unsafeAdapter.CreateDevice(&desc);
+    wgpu::Device device = GetUnsafeAdapter().CreateDevice(&desc);
     EXPECT_NE(device, nullptr);
 }
 
@@ -138,7 +142,7 @@ TEST_F(DeviceCreationTest, CreateDeviceWithAllocatorFailedMissingFeature) {
     wgpu::DeviceDescriptor desc = {};
     desc.nextInChain = &allocationDesc;
 
-    wgpu::Device device = adapter.CreateDevice(&desc);
+    wgpu::Device device = GetAdapter().CreateDevice(&desc);
     EXPECT_EQ(device, nullptr);
 }
 
@@ -154,7 +158,7 @@ TEST_F(DeviceCreationTest, CreateDeviceWithAllocatorFailedHeapBlockSize) {
     desc.requiredFeatureCount = 1;
     desc.nextInChain = &allocationDesc;
 
-    wgpu::Device device = unsafeAdapter.CreateDevice(&desc);
+    wgpu::Device device = GetUnsafeAdapter().CreateDevice(&desc);
     EXPECT_EQ(device, nullptr);
 }
 
@@ -168,7 +172,7 @@ TEST_F(DeviceCreationTest, CreateDeviceWithTogglesSuccess) {
     deviceTogglesDesc.enabledToggles = &toggle;
     deviceTogglesDesc.enabledToggleCount = 1;
 
-    wgpu::Device device = adapter.CreateDevice(&desc);
+    wgpu::Device device = GetAdapter().CreateDevice(&desc);
     EXPECT_NE(device, nullptr);
 
     auto toggles = GetTogglesUsed(device.Get());
@@ -179,9 +183,10 @@ TEST_F(DeviceCreationTest, CreateDeviceWithTogglesSuccess) {
 // instance but can be overriden by device toggles.
 TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
     // Ensure that unsafe apis are disallowed on safe adapter.
-    ASSERT_FALSE(FromAPI(adapter.Get())->GetTogglesState().IsEnabled(Toggle::AllowUnsafeAPIs));
+    ASSERT_FALSE(FromAPI(GetAdapter().Get())->GetTogglesState().IsEnabled(Toggle::AllowUnsafeAPIs));
     // Ensure that unsafe apis are allowed unsafe adapter(s).
-    ASSERT_TRUE(FromAPI(unsafeAdapter.Get())->GetTogglesState().IsEnabled(Toggle::AllowUnsafeAPIs));
+    ASSERT_TRUE(
+        FromAPI(GetUnsafeAdapter().Get())->GetTogglesState().IsEnabled(Toggle::AllowUnsafeAPIs));
 
     for (size_t i = 0; i < kTotalFeaturesCount; i++) {
         Feature feature = static_cast<Feature>(i);
@@ -198,7 +203,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
         // Test creating device on default adapter would fail.
         {
-            wgpu::Device device = adapter.CreateDevice(&deviceDescriptor);
+            wgpu::Device device = GetAdapter().CreateDevice(&deviceDescriptor);
             EXPECT_EQ(device, nullptr);
         }
 
@@ -206,7 +211,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
         {
             deviceDescriptor.nextInChain = nullptr;
 
-            wgpu::Device device = unsafeAdapter.CreateDevice(&deviceDescriptor);
+            wgpu::Device device = GetUnsafeAdapter().CreateDevice(&deviceDescriptor);
             EXPECT_NE(device, nullptr);
 
             wgpu::SupportedFeatures supportedFeatures;
@@ -228,7 +233,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
             // Test on adapter with AllowUnsafeApis disabled.
             {
-                wgpu::Device device = adapter.CreateDevice(&deviceDescriptor);
+                wgpu::Device device = GetAdapter().CreateDevice(&deviceDescriptor);
                 EXPECT_NE(device, nullptr);
 
                 wgpu::SupportedFeatures supportedFeatures;
@@ -241,7 +246,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
             // Test on adapter with AllowUnsafeApis disabled.
             {
-                wgpu::Device device = unsafeAdapter.CreateDevice(&deviceDescriptor);
+                wgpu::Device device = GetUnsafeAdapter().CreateDevice(&deviceDescriptor);
                 EXPECT_NE(device, nullptr);
 
                 wgpu::SupportedFeatures supportedFeatures;
@@ -264,13 +269,13 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
             // Test on adapter with DisallowUnsafeApis enabled.
             {
-                wgpu::Device device = adapter.CreateDevice(&deviceDescriptor);
+                wgpu::Device device = GetAdapter().CreateDevice(&deviceDescriptor);
                 EXPECT_EQ(device, nullptr);
             }
 
             // Test on adapter with DisallowUnsafeApis disabled.
             {
-                wgpu::Device device = unsafeAdapter.CreateDevice(&deviceDescriptor);
+                wgpu::Device device = GetUnsafeAdapter().CreateDevice(&deviceDescriptor);
                 EXPECT_EQ(device, nullptr);
             }
         }
@@ -282,12 +287,12 @@ TEST_F(DeviceCreationTest, CreateDeviceWithCacheSuccess) {
     // default cache descriptor.
     {
         wgpu::DeviceDescriptor desc = {};
-        wgpu::Device device1 = adapter.CreateDevice(&desc);
+        wgpu::Device device1 = GetAdapter().CreateDevice(&desc);
         EXPECT_NE(device1, nullptr);
 
         wgpu::DawnCacheDeviceDescriptor cacheDesc = {};
         desc.nextInChain = &cacheDesc;
-        wgpu::Device device2 = adapter.CreateDevice(&desc);
+        wgpu::Device device2 = GetAdapter().CreateDevice(&desc);
 
         EXPECT_EQ(FromAPI(device1.Get())->GetCacheKey(), FromAPI(device2.Get())->GetCacheKey());
     }
@@ -295,14 +300,14 @@ TEST_F(DeviceCreationTest, CreateDeviceWithCacheSuccess) {
     // a non-default cache descriptor.
     {
         wgpu::DeviceDescriptor desc = {};
-        wgpu::Device device1 = adapter.CreateDevice(&desc);
+        wgpu::Device device1 = GetAdapter().CreateDevice(&desc);
         EXPECT_NE(device1, nullptr);
 
         wgpu::DawnCacheDeviceDescriptor cacheDesc = {};
         desc.nextInChain = &cacheDesc;
         const char* isolationKey = "isolation key";
         cacheDesc.isolationKey = isolationKey;
-        wgpu::Device device2 = adapter.CreateDevice(&desc);
+        wgpu::Device device2 = GetAdapter().CreateDevice(&desc);
         EXPECT_NE(device2, nullptr);
 
         EXPECT_NE(FromAPI(device1.Get())->GetCacheKey(), FromAPI(device2.Get())->GetCacheKey());
@@ -316,11 +321,11 @@ TEST_F(DeviceCreationTest, CreateDeviceWithCacheSuccess) {
         desc.nextInChain = &cacheDesc;
 
         cacheDesc.isolationKey = isolationKey1;
-        wgpu::Device device1 = adapter.CreateDevice(&desc);
+        wgpu::Device device1 = GetAdapter().CreateDevice(&desc);
         EXPECT_NE(device1, nullptr);
 
         cacheDesc.isolationKey = isolationKey2;
-        wgpu::Device device2 = adapter.CreateDevice(&desc);
+        wgpu::Device device2 = GetAdapter().CreateDevice(&desc);
         EXPECT_NE(device2, nullptr);
 
         EXPECT_NE(FromAPI(device1.Get())->GetCacheKey(), FromAPI(device2.Get())->GetCacheKey());
@@ -331,7 +336,7 @@ class DeviceCreationFutureTest : public DeviceCreationTest,
                                  public ::testing::WithParamInterface<wgpu::CallbackMode> {
   protected:
     void RequestDevice(const wgpu::DeviceDescriptor* descriptor) {
-        wgpu::Adapter wgpuAdapter(adapter.Get());
+        wgpu::Adapter wgpuAdapter(GetAdapter().Get());
         wgpu::Future future = wgpuAdapter.RequestDevice(descriptor, GetParam(), mMockCb.Callback());
         wgpu::Instance wgpuInstance(instance->Get());
         switch (GetParam()) {
