@@ -230,6 +230,23 @@
       "parentUuid": "06838812_9450c702",
       "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ce54cc8_1f170ea1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2025-04-16T23:01:52Z",
+      "side": 1,
+      "message": "Submitter - would you be OK with us just taking the contents of this CL / PR and uploading it ourselves? We\u0027d certainly like to fix the mingw build, etc. Of course if you can just get set up to `git cl upload` it we\u0027re happy to shepherd this through that way too. Thanks.",
+      "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
