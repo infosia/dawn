@@ -16,6 +16,24 @@
       "message": "We should only publish a release if we\u0027re on `google/main`, that way forks don\u0027t autogenerate releases (unless they want to)",
       "revId": "3b032b160b0856759bdb5c20cede86d742629e7c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0b3ff12_bc3bd069",
+        "filename": ".github/workflows/release.yml",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T05:09:57Z",
+      "side": 1,
+      "message": "Decided not to do this.",
+      "parentUuid": "adc795dd_aedb1b30",
+      "revId": "3b032b160b0856759bdb5c20cede86d742629e7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

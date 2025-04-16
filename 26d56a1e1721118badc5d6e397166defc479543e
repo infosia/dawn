@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8306f393_a30f186f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T05:09:57Z",
+      "side": 1,
+      "message": "See example releases at https://github.com/kainino0x/dawn/releases",
+      "revId": "26d56a1e1721118badc5d6e397166defc479543e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

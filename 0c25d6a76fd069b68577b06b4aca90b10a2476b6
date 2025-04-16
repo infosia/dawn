@@ -16,6 +16,24 @@
       "message": "See examples of both at https://github.com/kainino0x/dawn/releases",
       "revId": "0c25d6a76fd069b68577b06b4aca90b10a2476b6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa1b171d_77a5e559",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T05:09:57Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ce18ff61_013bf503",
+      "revId": "0c25d6a76fd069b68577b06b4aca90b10a2476b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
