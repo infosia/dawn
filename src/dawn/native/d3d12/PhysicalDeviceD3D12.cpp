@@ -829,6 +829,10 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::D3D12ExpandShaderResourceStateTransitionsToCopySource, true);
     }
 
+    if (gpu_info::IsQualcomm_ACPI(vendorId) || gpu_info::IsQualcomm_PCI(vendorId)) {
+        deviceToggles->Default(Toggle::D3D12RobustnessTransformIgnoreNoBuffer, true);
+    }
+
     // Use the Tint IR backend by default if the corresponding platform feature is enabled.
     deviceToggles->Default(Toggle::UseTintIR,
                            platform->IsFeatureEnabled(platform::Features::kWebGPUUseTintIR));

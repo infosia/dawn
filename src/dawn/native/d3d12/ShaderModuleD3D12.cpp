@@ -299,9 +299,14 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
                 //     }
                 //     return 0u;
                 // }
+                // On some devices the OOB access of storage buffer may result in undefined result
+                // or possible device reset rather than expected robustness behavior. Robustness
+                // transform should be run on all buffer for these devices.
+                // (https://crbug.com/410985021)
                 if ((bufferBindingInfo->type == wgpu::BufferBindingType::Storage ||
                      bufferBindingInfo->type == wgpu::BufferBindingType::ReadOnlyStorage) &&
-                    !bindingLayout.hasDynamicOffset) {
+                    !bindingLayout.hasDynamicOffset &&
+                    !device->IsToggleEnabled(Toggle::D3D12RobustnessTransformIgnoreNoBuffer)) {
                     bindings.ignored_by_robustness_transform.emplace_back(srcBindingPoint);
                 }
             }
