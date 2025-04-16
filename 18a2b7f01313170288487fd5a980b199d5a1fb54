@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c12cfb4e_a9da1dcf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-16T17:45:40Z",
+      "side": 1,
+      "message": "Maybe by go-fu isn\u0027t great... where do we handle the restart?",
+      "range": {
+        "startLine": 10,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "18a2b7f01313170288487fd5a980b199d5a1fb54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
