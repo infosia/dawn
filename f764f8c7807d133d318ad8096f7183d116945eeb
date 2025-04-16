@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9335ef5_172b283b",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-16T10:12:29Z",
+      "side": 1,
+      "message": "@cwallez@chromium.org Before going much further with updating tests, can you confirm this is wanted in Dawn native?\nNote that the WebGPU spec says that one adapter should be able to request successfully only one device. See https://gpuweb.github.io/gpuweb/#ref-for-dom-adapter-state-consumed%E2%91%A1\n\nContext: https://github.com/gpuweb/cts/pull/4336",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
