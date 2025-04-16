@@ -1172,6 +1172,8 @@ WGPUDevice DawnTestBase::CreateDeviceImpl(std::string isolationKey,
     ParamTogglesHelper deviceTogglesHelper(mParam, native::ToggleStage::Device);
     cacheDesc.nextInChain = &deviceTogglesHelper.togglesDesc;
 
+    mBackendAdapter.ResetIsConsumedForTesting();
+
     WGPUDevice createdDevice;
     uint32_t deviceCreationDeprecatedWarningExpectation =
         GetDeviceCreationDeprecationWarningExpectation(deviceDescriptor);

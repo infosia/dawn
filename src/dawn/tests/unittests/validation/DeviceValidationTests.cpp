@@ -49,6 +49,7 @@ class RequestDeviceValidationTest : public ValidationTest {
     void SetUp() override {
         ValidationTest::SetUp();
         DAWN_SKIP_TEST_IF(UsesWire());
+        GetBackendAdapter().ResetIsConsumedForTesting();
     }
 
     MockCppCallback<void (*)(wgpu::RequestDeviceStatus, wgpu::Device, wgpu::StringView)>
@@ -116,6 +117,8 @@ TEST_F(RequestDeviceValidationTest, HigherIsBetter) {
                               mRequestDeviceCallback.Callback());
     }
 
+    GetBackendAdapter().ResetIsConsumedForTesting();
+
     // Test the max.
     limits.maxBindGroups = supportedLimits.maxBindGroups;
     EXPECT_CALL(mRequestDeviceCallback,
@@ -132,6 +135,8 @@ TEST_F(RequestDeviceValidationTest, HigherIsBetter) {
     adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                           mRequestDeviceCallback.Callback());
 
+    GetBackendAdapter().ResetIsConsumedForTesting();
+
     // Test above the max.
     limits.maxBindGroups = supportedLimits.maxBindGroups + 1;
     EXPECT_CALL(mRequestDeviceCallback,
@@ -139,6 +144,8 @@ TEST_F(RequestDeviceValidationTest, HigherIsBetter) {
         .Times(1);
     adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                           mRequestDeviceCallback.Callback());
+
+    GetBackendAdapter().ResetIsConsumedForTesting();
 
     // Test worse than the default
     limits.maxBindGroups = 3u;
@@ -172,6 +179,8 @@ TEST_F(RequestDeviceValidationTest, LowerIsBetter) {
     adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                           mRequestDeviceCallback.Callback());
 
+    GetBackendAdapter().ResetIsConsumedForTesting();
+
     // Test the min.
     limits.minUniformBufferOffsetAlignment = supportedLimits.minUniformBufferOffsetAlignment;
     EXPECT_CALL(mRequestDeviceCallback,
@@ -188,6 +197,8 @@ TEST_F(RequestDeviceValidationTest, LowerIsBetter) {
         }));
     adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                           mRequestDeviceCallback.Callback());
+
+    GetBackendAdapter().ResetIsConsumedForTesting();
 
     // IF we can support better than the default, test above the min.
     if (supportedLimits.minUniformBufferOffsetAlignment > 256u) {
@@ -208,6 +219,8 @@ TEST_F(RequestDeviceValidationTest, LowerIsBetter) {
         adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                               mRequestDeviceCallback.Callback());
     }
+
+    GetBackendAdapter().ResetIsConsumedForTesting();
 
     // Test worse than the default
     limits.minUniformBufferOffsetAlignment = 2u * 256u;
@@ -401,6 +414,8 @@ TEST_F(RequestDeviceWithImmediateDataValidationTest, HigherIsBetter) {
 
     uint32_t supportedImmediateDataLimit = GetMaxImmediateDataRangeByteSize(supportedLimits);
 
+    GetBackendAdapter().ResetIsConsumedForTesting();
+
     // If we can support better than the default, test below the max.
     if (supportedImmediateDataLimit >= kDefaultMaxImmediateDataBytes) {
         experimentalImmediateData.maxImmediateDataRangeByteSize = kDefaultMaxImmediateDataBytes;
@@ -420,6 +435,8 @@ TEST_F(RequestDeviceWithImmediateDataValidationTest, HigherIsBetter) {
                               mRequestDeviceCallback.Callback());
     }
 
+    GetBackendAdapter().ResetIsConsumedForTesting();
+
     // Test the max.
     experimentalImmediateData.maxImmediateDataRangeByteSize = supportedImmediateDataLimit;
     EXPECT_CALL(mRequestDeviceCallback,
@@ -438,6 +455,8 @@ TEST_F(RequestDeviceWithImmediateDataValidationTest, HigherIsBetter) {
     adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                           mRequestDeviceCallback.Callback());
 
+    GetBackendAdapter().ResetIsConsumedForTesting();
+
     // Test above the max.
     experimentalImmediateData.maxImmediateDataRangeByteSize = supportedImmediateDataLimit + 4;
     EXPECT_CALL(mRequestDeviceCallback,
@@ -445,6 +464,8 @@ TEST_F(RequestDeviceWithImmediateDataValidationTest, HigherIsBetter) {
         .Times(1);
     adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                           mRequestDeviceCallback.Callback());
+
+    GetBackendAdapter().ResetIsConsumedForTesting();
 
     // Test worse than the default
     experimentalImmediateData.maxImmediateDataRangeByteSize = kDefaultMaxImmediateDataBytes / 2;
