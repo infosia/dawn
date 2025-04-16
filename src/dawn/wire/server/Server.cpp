@@ -35,16 +35,22 @@ CallbackUserdata::CallbackUserdata(const std::weak_ptr<Server>& server) : server
 // static
 std::shared_ptr<Server> Server::Create(const DawnProcTable& procs,
                                        CommandSerializer* serializer,
-                                       MemoryTransferService* memoryTransferService) {
-    auto server = std::shared_ptr<Server>(new Server(procs, serializer, memoryTransferService));
+                                       MemoryTransferService* memoryTransferService,
+                                       bool forwardCallbackModes) {
+    auto server = std::shared_ptr<Server>(
+        new Server(procs, serializer, memoryTransferService, forwardCallbackModes));
     server->mSelf = server;
     return server;
 }
 
 Server::Server(const DawnProcTable& procs,
                CommandSerializer* serializer,
-               MemoryTransferService* memoryTransferService)
-    : mSerializer(serializer), mProcs(procs), mMemoryTransferService(memoryTransferService) {
+               MemoryTransferService* memoryTransferService,
+               bool forwardCallbackModes)
+    : mSerializer(serializer),
+      mProcs(procs),
+      mMemoryTransferService(memoryTransferService),
+      mForwardCallbackModes(forwardCallbackModes) {
     if (mMemoryTransferService == nullptr) {
         // If a MemoryTransferService is not provided, fallback to inline memory.
         mOwnedMemoryTransferService = CreateInlineMemoryTransferService();
