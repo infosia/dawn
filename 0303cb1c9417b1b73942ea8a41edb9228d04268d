@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a0f10244_3da78b43",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 3993625
+      },
+      "writtenOn": "2025-04-16T21:21:06Z",
+      "side": 1,
+      "message": "In that case you would add `debug` variant, along the lines of the `pthread` variant that does exist in many ports.\n\nSee `variants` in variants tools/ports/sdl2.py.\n\nIMHO you might as well tie this to `setttings.ASSERTIONS`.. at least initially, rather than trying to do anything more complex.",
+      "parentUuid": "43af25f5_e0a968de",
+      "revId": "0303cb1c9417b1b73942ea8a41edb9228d04268d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "903de86c_d8045d7e",
         "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
         "patchSetId": 25
