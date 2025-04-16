@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "43af25f5_e0a968de",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-16T21:14:36Z",
+      "side": 1,
+      "message": "I think so. There is some complicated code, especially the event system. But even for thin layers, it can be really annoying to debug something if one layer is undebuggable - it sits between two debuggable layers, the user\u0027s code and the unminified JS code.",
+      "parentUuid": "7e40f21e_32ff3a3c",
+      "revId": "0303cb1c9417b1b73942ea8a41edb9228d04268d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "903de86c_d8045d7e",
         "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
         "patchSetId": 25
