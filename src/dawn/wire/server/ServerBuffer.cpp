@@ -68,6 +68,7 @@ WireResult Server::PreHandleBufferDestroy(const BufferDestroyCmd& cmd) {
 
 WireResult Server::DoBufferMapAsync(Known<WGPUBuffer> buffer,
                                     ObjectHandle eventManager,
+                                    WGPUCallbackMode callbackMode,
                                     WGPUFuture future,
                                     WGPUMapMode mode,
                                     uint64_t offset64,
@@ -105,8 +106,8 @@ WireResult Server::DoBufferMapAsync(Known<WGPUBuffer> buffer,
 
     mProcs.bufferMapAsync(
         buffer->handle, mode, offset, size,
-        {nullptr, WGPUCallbackMode_AllowProcessEvents,
-         ForwardToServer<&Server::OnBufferMapAsyncCallback>, userdata.release(), nullptr});
+        MakeCallbackInfo<WGPUBufferMapCallbackInfo, &Server::OnBufferMapAsyncCallback>(
+            callbackMode, userdata.release()));
 
     return WireResult::Success;
 }

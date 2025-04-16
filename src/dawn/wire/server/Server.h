@@ -78,9 +78,11 @@ struct ForwardToServerHelper {
     struct ExtractedTypes;
 
     // An internal structure used to unpack the various types that compose the type of F
-    template <typename Return, typename Class, typename Userdata, typename... Args>
-    struct ExtractedTypes<Return (Class::*)(Userdata*, Args...)> {
+    template <typename Return, typename Class, typename UserdataT, typename... Args>
+    struct ExtractedTypes<Return (Class::*)(UserdataT*, Args...)> {
+        using Userdata = UserdataT;
         using UntypedCallback = Return (*)(Args..., void*, void*);
+
         static Return Callback(Args... args, void* userdata, void*) {
             // Acquire the userdata, and cast it to UserdataT.
             std::unique_ptr<Userdata> data(static_cast<Userdata*>(userdata));
@@ -97,10 +99,9 @@ struct ForwardToServerHelper {
     static constexpr typename ExtractedTypes<decltype(F)>::UntypedCallback Create() {
         return ExtractedTypes<decltype(F)>::Callback;
     }
-};
 
-template <auto F>
-constexpr auto ForwardToServer = ForwardToServerHelper<F>::Create();
+    using Userdata = typename ExtractedTypes<decltype(F)>::Userdata;
+};
 
 struct MapUserdata : CallbackUserdata {
     using CallbackUserdata::CallbackUserdata;
@@ -174,7 +175,8 @@ class Server : public ServerBase {
   public:
     static std::shared_ptr<Server> Create(const DawnProcTable& procs,
                                           CommandSerializer* serializer,
-                                          MemoryTransferService* memoryTransferService);
+                                          MemoryTransferService* memoryTransferService,
+                                          bool forwardCallbackModes);
     ~Server() override;
 
     // ChunkedCommandHandler implementation
@@ -196,10 +198,20 @@ class Server : public ServerBase {
         return std::unique_ptr<T>(new T(mSelf));
     }
 
+    template <typename CallbackInfo,
+              auto F,
+              WGPUCallbackMode DefaultMode = WGPUCallbackMode_AllowProcessEvents>
+    CallbackInfo MakeCallbackInfo(WGPUCallbackMode callbackMode,
+                                  ForwardToServerHelper<F>::Userdata* userdata) {
+        return {nullptr, mForwardCallbackModes ? callbackMode : DefaultMode,
+                ForwardToServerHelper<F>::Create(), userdata, nullptr};
+    }
+
   private:
     Server(const DawnProcTable& procs,
            CommandSerializer* serializer,
-           MemoryTransferService* memoryTransferService);
+           MemoryTransferService* memoryTransferService,
+           bool forwardCallbackModes);
 
     template <typename Cmd>
     void SerializeCommand(const Cmd& cmd) {
@@ -278,6 +290,7 @@ class Server : public ServerBase {
     DawnProcTable mProcs;
     std::unique_ptr<MemoryTransferService> mOwnedMemoryTransferService = nullptr;
     raw_ptr<MemoryTransferService> mMemoryTransferService = nullptr;
+    bool mForwardCallbackModes = false;
 
     // Weak pointer to self to facilitate creation of userdata.
     std::weak_ptr<Server> mSelf;
