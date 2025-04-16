@@ -16,6 +16,24 @@
       "message": "I get a 403 error when trying to modify the commit message, but since I also added a change to fetch_deps.py I suggest the following:\n\n```\nFix GitHub Actions\n\n* Upgrade the version of go used in go.mod and in CI:\nThe slices package was added in Go 1.21, but CI scripts tried to use\n1.18. This switched to 1.23 because only the 2 most recent major Go\nreleases are supported officially.\n\n* Update fetch_dawn_dependencies.py:\nReflect a recent change of the directory where googletest gets cloned\n```",
       "revId": "95e969b655a004f72840e51e784ccd79414198ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "442290f6_6634cb2c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-16T08:00:30Z",
+      "side": 1,
+      "message": "I did it for you, you needed to keep the Change-Id.",
+      "parentUuid": "bf7849b6_d3ec160f",
+      "revId": "95e969b655a004f72840e51e784ccd79414198ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
