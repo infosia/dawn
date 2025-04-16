@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efd9bcbd_b331865f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-16T19:31:12Z",
+      "side": 1,
+      "message": "This will require https://chromium-review.googlesource.com/c/chromium/src/+/6464191 to land upstream and then the protobuf DEPS to be rolled in this CL before it can build in CQ/land.",
+      "revId": "c4e6b26cd2ba40f524c1cd240872969798728559",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
