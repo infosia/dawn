@@ -38,8 +38,10 @@ namespace dawn::wire::server {
 
 WireResult Server::DoAdapterRequestDevice(Known<WGPUAdapter> adapter,
                                           ObjectHandle eventManager,
+                                          WGPUCallbackMode callbackMode,
                                           WGPUFuture future,
                                           ObjectHandle deviceHandle,
+                                          WGPUCallbackMode deviceLostCallbackMode,
                                           WGPUFuture deviceLostFuture,
                                           const WGPUDeviceDescriptor* descriptor) {
     Reserved<WGPUDevice> device;
@@ -57,9 +59,9 @@ WireResult Server::DoAdapterRequestDevice(Known<WGPUAdapter> adapter,
     deviceLostUserdata->future = deviceLostFuture;
 
     WGPUDeviceDescriptor desc = *descriptor;
-    desc.deviceLostCallbackInfo = {nullptr, WGPUCallbackMode_AllowProcessEvents,
-                                   ForwardToServer<&Server::OnDeviceLost>,
-                                   deviceLostUserdata.release(), nullptr};
+    desc.deviceLostCallbackInfo =
+        MakeCallbackInfo<WGPUDeviceLostCallbackInfo, &Server::OnDeviceLost>(
+            deviceLostCallbackMode, deviceLostUserdata.release());
     desc.uncapturedErrorCallbackInfo = {
         nullptr,
         [](WGPUDevice const*, WGPUErrorType type, WGPUStringView message, void*, void* userdata) {
@@ -70,8 +72,8 @@ WireResult Server::DoAdapterRequestDevice(Known<WGPUAdapter> adapter,
 
     mProcs.adapterRequestDevice(
         adapter->handle, &desc,
-        {nullptr, WGPUCallbackMode_AllowSpontaneous,
-         ForwardToServer<&Server::OnRequestDeviceCallback>, userdata.release(), nullptr});
+        MakeCallbackInfo<WGPURequestDeviceCallbackInfo, &Server::OnRequestDeviceCallback,
+                         WGPUCallbackMode_AllowSpontaneous>(callbackMode, userdata.release()));
     return WireResult::Success;
 }
 
