@@ -37,6 +37,7 @@ namespace dawn::wire::server {
 
 WireResult Server::DoInstanceRequestAdapter(Known<WGPUInstance> instance,
                                             ObjectHandle eventManager,
+                                            WGPUCallbackMode callbackMode,
                                             WGPUFuture future,
                                             ObjectHandle adapterHandle,
                                             const WGPURequestAdapterOptions* options) {
@@ -50,8 +51,8 @@ WireResult Server::DoInstanceRequestAdapter(Known<WGPUInstance> instance,
 
     mProcs.instanceRequestAdapter(
         instance->handle, options,
-        {nullptr, WGPUCallbackMode_AllowSpontaneous,
-         ForwardToServer<&Server::OnRequestAdapterCallback>, userdata.release(), nullptr});
+        MakeCallbackInfo<WGPURequestAdapterCallbackInfo, &Server::OnRequestAdapterCallback,
+                         WGPUCallbackMode_AllowSpontaneous>(callbackMode, userdata.release()));
     return WireResult::Success;
 }
 
