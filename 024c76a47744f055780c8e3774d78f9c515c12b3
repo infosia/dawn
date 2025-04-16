@@ -51,6 +51,24 @@
       "parentUuid": "96885274_b45914e0",
       "revId": "024c76a47744f055780c8e3774d78f9c515c12b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1d2abd4_f43b5e6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-16T15:37:34Z",
+      "side": 1,
+      "message": "Fixed by always running SubstituteOverrides.",
+      "parentUuid": "9ed57c47_b9bbb8dc",
+      "revId": "024c76a47744f055780c8e3774d78f9c515c12b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
