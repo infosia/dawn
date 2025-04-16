@@ -110,6 +110,7 @@ WGPUFuture Queue::APIOnSubmittedWorkDone(const WGPUQueueWorkDoneCallbackInfo& ca
     QueueOnSubmittedWorkDoneCmd cmd;
     cmd.queueId = GetWireId();
     cmd.eventManagerHandle = GetEventManagerHandle();
+    cmd.callbackMode = callbackInfo.mode;
     cmd.future = {futureIDInternal};
 
     client->SerializeCommand(cmd);
