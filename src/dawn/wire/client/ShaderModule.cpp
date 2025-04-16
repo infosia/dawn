@@ -134,6 +134,7 @@ WGPUFuture ShaderModule::GetCompilationInfo(const WGPUCompilationInfoCallbackInf
     ShaderModuleGetCompilationInfoCmd cmd;
     cmd.shaderModuleId = GetWireId();
     cmd.eventManagerHandle = GetEventManagerHandle();
+    cmd.callbackMode = callbackInfo.mode;
     cmd.future = {futureIDInternal};
 
     GetClient()->SerializeCommand(cmd);
