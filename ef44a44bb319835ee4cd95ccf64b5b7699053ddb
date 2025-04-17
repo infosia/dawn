@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "593a582b_55b336d2",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-17T21:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ec64c24_00793327",
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85162843_cf5bd516",
@@ -69,6 +87,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6429959_924d5a86",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-17T21:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85162843_cf5bd516",
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d15f8f8b_bb68a250",
@@ -82,6 +118,30 @@
       "writtenOn": "2025-04-17T17:28:21Z",
       "side": 1,
       "message": "nit: since these variables span the whole function (that does its own iterating), pick more specific names",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 44
+      },
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1a16206_8d1dc179",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-17T21:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d15f8f8b_bb68a250",
       "range": {
         "startLine": 74,
         "startChar": 28,
@@ -115,6 +175,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f870ca67_22a9fc28",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-17T21:37:44Z",
+      "side": 1,
+      "message": "Good catch re: the duplicate events. Some context: an earlier version of this CL used a recursive_mutex to get around the duplicate events multiple locking problem, but recursive_mutex doesn\u0027t have an efficient implementation at least on macOS libpthread compared to plain mutex (using a futex like ulock syscall).\n\nAlso, an earlier version had a non-atomic `mSignaled` protected by the lock. You\u0027re right that we can now do a separate loop to check for signaled events first before acquiring the locks.",
+      "parentUuid": "5e1130b0_c1a370e5",
+      "range": {
+        "startLine": 112,
+        "startChar": 46,
+        "endLine": 112,
+        "endChar": 52
+      },
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98a5deba_aaa50bc8",
@@ -132,6 +216,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a853c2c0_c2dcd1bc",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-17T21:37:44Z",
+      "side": 1,
+      "message": "Actually we need this loop because we want to keep the mutex acquired when we decide whether to enqueue a waiter or early out based on IsSignaled() and we want to have a consistent ready state value for multiple waits on the same event.\n\nI\u0027ve added a bunch of comments in the code to explain the rationale.",
+      "parentUuid": "98a5deba_aaa50bc8",
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7fdfbbfd_48b42f20",
@@ -145,6 +247,24 @@
       "writtenOn": "2025-04-17T17:28:21Z",
       "side": 1,
       "message": "It would still take the lock, and iterate over mSyncWaiters, more times than necessary, right? Is there a reason not to just keep using the same pattern to skip over waits on the same event?",
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0a572fb_c25cd21c",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-17T21:37:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fdfbbfd_48b42f20",
       "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
