@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "439ac3bf_33a28b5f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T16:40:46Z",
+      "side": 1,
+      "message": "James PTAL for second committer review",
+      "revId": "e94fad0aabc98226a2836e2adb3e851a75b5a09a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c648653_2fcb33b4",
+        "filename": "webgpu-cts/expectations.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1594,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T16:40:46Z",
+      "side": 1,
+      "message": "@hao.x.li@intel.com @alanbaker@google.com FYI",
+      "range": {
+        "startLine": 1590,
+        "startChar": 0,
+        "endLine": 1594,
+        "endChar": 168
+      },
+      "revId": "e94fad0aabc98226a2836e2adb3e851a75b5a09a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
