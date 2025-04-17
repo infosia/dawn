@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b085dd0b_27004bc2",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T23:05:49Z",
+      "side": 1,
+      "message": "For the record, IIUC what happened here is C++20 allows variadic macros `...` length to be 0, but before that, it had to have at least one item.",
+      "revId": "238e2eadb4877f9a6368fcb1bebd8e404122c24a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
