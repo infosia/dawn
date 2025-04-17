@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab423bc6_17f2da2c",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-17T15:44:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "150f8153_7e4a1a3a",
+      "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38c2f7e4_b4764e9a",
@@ -66,6 +84,24 @@
       "writtenOn": "2025-04-17T03:17:53Z",
       "side": 1,
       "message": "Nit: Use `new_ty`, instead of doing it twice.",
+      "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "955c2f53_b09bb46e",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-17T15:44:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38c2f7e4_b4764e9a",
       "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
