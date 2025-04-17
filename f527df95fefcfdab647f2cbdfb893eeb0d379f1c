@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "57c5c4ae_6a63912b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T13:20:04Z",
+      "side": 1,
+      "message": "It seems like this is part of larger work, can we have a Bug: to give the larger context?",
+      "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e4bd30ca_215ef892",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 8
@@ -14,6 +31,40 @@
       "writtenOn": "2025-04-17T00:06:46Z",
       "side": 1,
       "message": "Sending this out for a first pass. I plan to update tests in this change also so that we can actually test the functionality, but I wanted to get an opinion on how I set this up. Specifically, I know cwallez@chromium.org had some ideas of how the `ExecutionQueue` and stuff should work, and I wanted to make sure that this change makes sense w.r.t the long-term goal of cleaning the serial stuff up a bit.",
+      "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6610609_eae8af08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T13:20:04Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6008507_f1ccfa22",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T13:20:04Z",
+      "side": 1,
+      "message": "Is the plan to only have the new one eventually? Will this require spawning threads in some other backends to wait on events / fences? It would be ideal to have a single path as the serial tracking is a bit complex already.",
       "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
