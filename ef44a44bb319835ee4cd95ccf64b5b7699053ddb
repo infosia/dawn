@@ -199,6 +199,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e2c14a9_f7565520",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-17T21:41:35Z",
+      "side": 1,
+      "message": "Sorry - just realized that part of the above comment was outdated:\n\n\u003e You\u0027re right that we can now do a separate loop to check for signaled events first before acquiring the locks.\n\nThis is actually not quite correct because it causes a race between deciding to enqueue waiters and earlying out and also has issues with having the same ready value for multiple waits on the same event.",
+      "parentUuid": "f870ca67_22a9fc28",
+      "range": {
+        "startLine": 112,
+        "startChar": 46,
+        "endLine": 112,
+        "endChar": 52
+      },
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98a5deba_aaa50bc8",
