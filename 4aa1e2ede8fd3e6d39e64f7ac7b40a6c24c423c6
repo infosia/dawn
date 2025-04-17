@@ -16,6 +16,24 @@
       "message": "The fetch_dependencies script will need to be updated as well, it was just fixed to add the `src`.",
       "revId": "4aa1e2ede8fd3e6d39e64f7ac7b40a6c24c423c6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cf4ff9e_5014f639",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-17T15:13:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fe30ddf_e4fd99fa",
+      "revId": "4aa1e2ede8fd3e6d39e64f7ac7b40a6c24c423c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
