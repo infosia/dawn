@@ -67,6 +67,24 @@
       "message": "Do we only care about doing this for GN? We have a CMakeLists.txt file in the same folder which unconditionally adds `IOKit.framework` on enable of Metal.",
       "revId": "64ad62f9e4f455c06f1127607967fc0d0ee03641",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e209f21_b7bb0658",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-17T04:12:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7cebc5b_be361e06",
+      "revId": "64ad62f9e4f455c06f1127607967fc0d0ee03641",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
