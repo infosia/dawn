@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96e03e76_e99209bf",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-17T17:34:50Z",
+      "side": 1,
+      "message": "You got these flipped. It\u0027s the message below that should be labeled unsafe.",
+      "revId": "3c48b03fe13118cb9ae30fee8450edd5afe4a784",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
