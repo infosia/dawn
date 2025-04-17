@@ -16,6 +16,57 @@
       "message": "Please take a look, thanks! This CL help work around the storage buffer robustness access CTS issue on Qualcomm devices.",
       "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d00e921c_35ab530d",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T11:57:46Z",
+      "side": 1,
+      "message": "Do we have more info to comment about or all we know is that the driver has a bug there? Any hope for a fix?",
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1efefdcc_647f6942",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T11:57:46Z",
+      "side": 1,
+      "message": "This comment should explain that the root signature OOB check doesn\u0027t work.",
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8584b7eb_8380eb6d",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T11:57:46Z",
+      "side": 1,
+      "message": "Can we separate this in multiple booleans to aid comprehension?\n\n```\n                // On D3D12 backend all storage buffers without Dynamic Buffer Offset will always be\n                // bound to root descriptor tables, where D3D12 runtime can guarantee that OOB-read\n                // will always return 0 and OOB-write will always take no action, so we don\u0027t need\n                // to do robustness transform on them. Note that we still need to do robustness\n                // transform on uniform buffers because only sized array is allowed in uniform\n                // buffers, so FXC will report compilation error when the indexing to the array in a\n                // cBuffer is out of bound and can be checked at compilation time. Storage buffers\n                // are OK because they are always translated with RWByteAddressBuffers, which has no\n                // such sized arrays.\n                //\n                // For example below WGSL shader will cause compilation error when we skip\n                // robustness transform on uniform buffers:\n                //\n                // struct TestData {\n                //     data: array\u003cvec4\u003cu32\u003e, 3\u003e,\n                // };\n                // @group(0) @binding(0) var\u003cuniform\u003e s: TestData;\n                //\n                // fn test() -\u003e u32 {\n                //     let index \u003d 1000000u;\n                //     if (s.data[index][0] !\u003d 0u) {    // error X3504: array index out of bounds\n                //         return 0x1004u;\n                //     }\n                //     return 0u;\n                // }\n               \t\n                \u003cadd something that talks about the root signature? I\u0027m surprised this is not mentioned\u003e\n                bool isUserStorageBuffer \u003d bufferBindingInfo-\u003etype \u003d\u003d wgpu::BufferBindingType::Storage ||\n                     bufferBindingInfo-\u003etype \u003d\u003d wgpu::BufferBindingType::ReadOnlyStorage;\n                bool rootSignatureHandlesOOB \u003d bindingLayout.hasDynamicOffset;\n                \n                              // On some devices the OOB access of storage buffer may result in undefined result\n                // or possible device reset rather than expected robustness behavior. Robustness\n                // transform should be run on all buffer for these devices.\n                // (https://crbug.com/410985021)\n                if (device-\u003eIsToggleEnabled(Toggle::D3D12RootSignatureOOBCheckNotWorking)) {\n                    rootSignatureHandlesOOB \u003d false;\n                } \n                \n                if (isUserStorageBuffer \u0026\u0026 rootSignatureHandlesOOB) {\n                   // ...\n                }\n```\n\nNotice the renamed toggle as well.",
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
