@@ -247,6 +247,24 @@
       "message": "Submitter - would you be OK with us just taking the contents of this CL / PR and uploading it ourselves? We\u0027d certainly like to fix the mingw build, etc. Of course if you can just get set up to `git cl upload` it we\u0027re happy to shepherd this through that way too. Thanks.",
       "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "779f5ca1_f2d24afb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T01:57:26Z",
+      "side": 1,
+      "message": "I\u0027ve reuploaded this gerrit CL with the version from github (but squashed, amended with the commit message copied from gerrit, and also after running `git cl format`)\n\nDan, how do you check if the CLA is happy? I can\u0027t find it.",
+      "parentUuid": "587fa0d5_3856977c",
+      "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
