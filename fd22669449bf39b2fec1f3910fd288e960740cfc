@@ -16,6 +16,57 @@
       "message": "PTAL.",
       "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa74eb07_62509b84",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-17T03:17:53Z",
+      "side": 1,
+      "message": "There are other `let` instructions that will also need to be converted and have their usages replaced. e.g.\n\n```\n%a:ptr\u003catomic\u003ci32\u003e \u003d var\n...\n%1     \u003d atomicLoad %a\n%a_let \u003d let %a\n%2     \u003d load %a_let\n```\nYou won\u0027t see `%a_let` in this traversal back from all the atomic callsites. It\u0027s a usage of the `var`, but you currently just ignore `let` in the traversal over the usages. This is why I think we want to `TINT_ICE_ON_NO_MATCH` in that loop, so that we catch these sorts of cases instead of assuming they have already been handled.\n\nIt also makes me question whether we should be converting values in both the first traversal and the second. Maybe the first traversal could just find the root var/param declarations, and the second traversal does all of the actual conversions to keep the logic in once place? Not sure...",
+      "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38c2f7e4_b4764e9a",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-17T03:17:53Z",
+      "side": 1,
+      "message": "Nit: Use `new_ty`, instead of doing it twice.",
+      "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aafab7dc_9b87eaf2",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-17T03:17:53Z",
+      "side": 1,
+      "message": "Don\u0027t you also need to check that `const_idx` is one of the atomic members? Otherwise we shouldn\u0027t be replacing uses for this member, since it won\u0027t be atomic.",
+      "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
