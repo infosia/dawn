@@ -134,6 +134,24 @@
       "parentUuid": "e875be80_6ca8986e",
       "revId": "2f1e196ae656ffa33c2fd74bed4d42fc49a251d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "849dc9c5_b6b9ec8a",
+        "filename": "src/dawn/tests/unittests/validation/TextureValidationTests.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T01:21:30Z",
+      "side": 1,
+      "message": "Let\u0027s do it in a separate CL, this one is nicely contained right now.",
+      "parentUuid": "ef66aad9_47575f47",
+      "revId": "2f1e196ae656ffa33c2fd74bed4d42fc49a251d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
