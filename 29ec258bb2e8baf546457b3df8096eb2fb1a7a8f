@@ -125,6 +125,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cf4f2b69_0a5b0a16",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T11:35:52Z",
+      "side": 1,
+      "message": "I\u0027ll open an issue about it, yeah the BindingNumber is used in a few places (some shader modules, in the production of the helpful error message for BGs with unverified buffers sizes being bound) but only cold code so it makes sense to separate it.\n\nAnd I agree that we could use even smaller integer types to save memory and cache lines. That said I don\u0027t think that we should do the double indirection even in this case because implementation of fixed-size binding array should not slow down regular BG creation.",
+      "parentUuid": "3144cd2d_22245e70",
+      "range": {
+        "startLine": 458,
+        "startChar": 8,
+        "endLine": 467,
+        "endChar": 9
+      },
+      "revId": "29ec258bb2e8baf546457b3df8096eb2fb1a7a8f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "81e6650c_c3e5ed78",
         "filename": "src/dawn/native/BindingInfo.h",
         "patchSetId": 3
