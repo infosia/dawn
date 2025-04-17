@@ -106,6 +106,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "429a97ad_8739abba",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T14:27:42Z",
+      "side": 1,
+      "message": "Done, added some more explicit handling of each binding type as well as TODOs and new tests. I kept as validation errors as unimplemented causes a device loss and cannot be easily tested. PTAL!",
+      "parentUuid": "3f22bc29_78fbc96f",
+      "range": {
+        "startLine": 227,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 75
+      },
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "313bdf9e_cce6c216",
@@ -119,6 +143,24 @@
       "writtenOn": "2025-04-14T17:45:01Z",
       "side": 1,
       "message": "Phrasing on this strikes me as a bit awkward? I\u0027d suggest something like:\n\n\"BindGroupLayoutEntry arraySize (%u) is greater than 1 for an entry that is not a sampled texture.\"",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25718942_15b823f3",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T14:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "313bdf9e_cce6c216",
       "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -176,6 +218,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "776ec067_e536fd34",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T14:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c539fdf_ae894aef",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d96cff8c_4d55466f",
@@ -211,6 +271,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ec8af8a_2beb4044",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T14:27:42Z",
+      "side": 1,
+      "message": "Tentatively resolving.",
+      "parentUuid": "ca049fb0_e26cbecc",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "812dcad8_37bff245",
@@ -228,6 +306,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68843764_1c67121e",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1801,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T14:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "812dcad8_37bff245",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13d2e56b_1e61b3a9",
@@ -241,6 +337,30 @@
       "writtenOn": "2025-04-14T20:09:22Z",
       "side": 1,
       "message": "nit. Maybe name this constant (and below) as a placeholder value so its clear it\u0027s value doesn\u0027t matter here at initialization and will be overridden for the test cases?",
+      "range": {
+        "startLine": 1996,
+        "startChar": 27,
+        "endLine": 1996,
+        "endChar": 29
+      },
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82c5106a_a40d1841",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1996,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T14:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13d2e56b_1e61b3a9",
       "range": {
         "startLine": 1996,
         "startChar": 27,
@@ -282,6 +402,24 @@
       "side": 1,
       "message": "+1, but also, if we want to keep the entry which is fine, we would also need to make sure that the `.binding \u003d limits.maxSampledTexturesPerShaderStage` as to isolate the testing condition. Otherwise, the failure could also be caused by just overlapping binding number.",
       "parentUuid": "07d3e9e7_a8341629",
+      "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "539a9b5d_e1ef13be",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T14:27:42Z",
+      "side": 1,
+      "message": "The binding numbers here have no relation to limits other than `maxBingingsPerGroup`. The test checks that we correctly account for the limits against `maxSampledTexturesPerShaderStage`, which doesn\u0027t care about `BGLEntry.binding`. The copy pasted setup made this confusing. I replaced with bindings `0` and `1`.\n\nI\u0027d like to keep the first entry just to make sure that an addition is happening for the limits though.",
+      "parentUuid": "9c6dd0f8_897ced0f",
       "revId": "766f548f7bb94244fead0240c60abf9de88b9645",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
