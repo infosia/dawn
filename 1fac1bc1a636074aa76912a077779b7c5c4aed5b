@@ -73,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7af477ca_62db5bbb",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-04-17T12:52:22Z",
+      "side": 1,
+      "message": "Here: https://dawn-review.googlesource.com/c/dawn/+/233314/21/src/dawn/native/RenderPassWorkaroundsHelper.cpp#246",
+      "parentUuid": "b837e656_45985ca4",
+      "range": {
+        "startLine": 85,
+        "startChar": 13,
+        "endLine": 85,
+        "endChar": 35
+      },
+      "revId": "1fac1bc1a636074aa76912a077779b7c5c4aed5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f7a18033_3db1a945",
         "filename": "src/dawn/native/BlitColorToColorWithDraw.h",
         "patchSetId": 21
