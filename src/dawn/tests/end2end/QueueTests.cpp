@@ -50,6 +50,7 @@ DAWN_INSTANTIATE_TEST(QueueTests,
                       D3D12Backend(),
                       MetalBackend(),
                       NullBackend(),
+                      WebGPUBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend());
@@ -203,6 +204,9 @@ TEST_P(QueueWriteBufferTests, MaxBufferSizeWriteBuffer) {
 // Test a special code path: writing when dynamic uploader already contatins some unaligned
 // data, it might be necessary to use a ring buffer with properly aligned offset.
 TEST_P(QueueWriteBufferTests, UnalignedDynamicUploader) {
+    // TODO(crbug.com/413053623): implement DeviceWGPU::CopyFromStagingToTextureImpl
+    DAWN_SUPPRESS_TEST_IF(IsWebGPU());
+
     utils::UnalignDynamicUploader(device);
 
     wgpu::BufferDescriptor descriptor;
@@ -270,7 +274,8 @@ DAWN_INSTANTIATE_TEST(QueueWriteBufferTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 // For MinimumDataSpec bytesPerRow and rowsPerImage, compute a default from the copy extent.
 constexpr uint32_t kStrideComputeDefault = 0xFFFF'FFFEul;
