@@ -1636,5 +1636,5 @@ int main(int argc, const char** argv) {
         return RunServer();
     }
 
-    return Run(arguments, ExeMode::kServer);
+    return Run(arguments, ExeMode::kStandalone);
 }
