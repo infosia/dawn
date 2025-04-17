@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70efc155_fb566a3f",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 21
+      },
+      "lineNbr": 3058,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-17T11:59:13Z",
+      "side": 1,
+      "message": "Please use `render pass descriptor partial expand resolve rect` as discussed in the [comment](https://issues.chromium.org/issues/402810062#comment16).",
+      "range": {
+        "startLine": 3058,
+        "startChar": 5,
+        "endLine": 3058,
+        "endChar": 40
+      },
+      "revId": "1fac1bc1a636074aa76912a077779b7c5c4aed5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b837e656_45985ca4",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-17T11:59:13Z",
+      "side": 1,
+      "message": "I am kind of confused that `resolveOffset` is not used at all.",
+      "range": {
+        "startLine": 85,
+        "startChar": 13,
+        "endLine": 85,
+        "endChar": 35
+      },
+      "revId": "1fac1bc1a636074aa76912a077779b7c5c4aed5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7a18033_3db1a945",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-17T11:59:13Z",
+      "side": 1,
+      "message": "This is not needed. We take it always true now. Eventually we will remove the old code path.",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "1fac1bc1a636074aa76912a077779b7c5c4aed5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
