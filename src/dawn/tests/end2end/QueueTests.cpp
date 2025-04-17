@@ -50,6 +50,7 @@ DAWN_INSTANTIATE_TEST(QueueTests,
                       D3D12Backend(),
                       MetalBackend(),
                       NullBackend(),
+                      WebGPUBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend());
@@ -270,7 +271,8 @@ DAWN_INSTANTIATE_TEST(QueueWriteBufferTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 // For MinimumDataSpec bytesPerRow and rowsPerImage, compute a default from the copy extent.
 constexpr uint32_t kStrideComputeDefault = 0xFFFF'FFFEul;
