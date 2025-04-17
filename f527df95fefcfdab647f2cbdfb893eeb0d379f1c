@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1b6451b8_219c8eec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T22:40:35Z",
+      "side": 1,
+      "message": "+1, and the bug should have the design doc we were talking about",
+      "parentUuid": "57c5c4ae_6a63912b",
+      "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e4bd30ca_215ef892",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 8
@@ -65,6 +83,24 @@
       "writtenOn": "2025-04-17T13:20:04Z",
       "side": 1,
       "message": "Is the plan to only have the new one eventually? Will this require spawning threads in some other backends to wait on events / fences? It would be ideal to have a single path as the serial tracking is a bit complex already.",
+      "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c19d07aa_2d414b68",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T22:40:35Z",
+      "side": 1,
+      "message": "I believe yes, and yes. I have a diagram that we\u0027ll put in a design doc soon.",
+      "parentUuid": "f6008507_f1ccfa22",
       "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
