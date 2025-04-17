@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ab90d1d_131d37c5",
+        "filename": "src/dawn/samples/SampleUtils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T13:10:08Z",
+      "side": 1,
+      "message": "There should always be at least one format as https://webgpu-native.github.io/webgpu-headers/Surfaces.html says FIFO is always present. Do you not have that?",
+      "revId": "cce8bc53d1689547d0614016db222ef604c15487",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
