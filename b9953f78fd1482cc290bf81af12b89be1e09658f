@@ -103,6 +103,24 @@
       "message": "Maybe in a follow-up we could just return the first size_t from mHash? It\u0027s already a hash so we don\u0027t need to hash again.",
       "revId": "b9953f78fd1482cc290bf81af12b89be1e09658f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc45a055_0c9a2286",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1597,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-17T08:38:41Z",
+      "side": 1,
+      "message": "Will do in a follow CL.",
+      "parentUuid": "15e5ee0b_15d7d6fb",
+      "revId": "b9953f78fd1482cc290bf81af12b89be1e09658f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
