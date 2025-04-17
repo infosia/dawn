@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b87fb28f_5ac4e4e5",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T15:12:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f14fbfc_d2362529",
+      "range": {
+        "startLine": 383,
+        "startChar": 52,
+        "endLine": 383,
+        "endChar": 79
+      },
+      "revId": "5f5d52068611f03e43b50e4cb020e443beeb9c76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0bafdcb4_d923658c",
@@ -71,6 +95,30 @@
       "writtenOn": "2025-04-14T20:32:41Z",
       "side": 1,
       "message": "nit. Would it make sense to implement `operator\u003d\u003d`\u0027s for the subtypes so that we can just call them in each case here?",
+      "range": {
+        "startLine": 355,
+        "startChar": 4,
+        "endLine": 389,
+        "endChar": 11
+      },
+      "revId": "5f5d52068611f03e43b50e4cb020e443beeb9c76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abe3d77c_06c731c0",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T15:12:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bafdcb4_d923658c",
       "range": {
         "startLine": 355,
         "startChar": 4,
