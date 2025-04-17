@@ -139,6 +139,24 @@
       "parentUuid": "aafab7dc_9b87eaf2",
       "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d4c724e_938e2155",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-17T20:59:57Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t grok that this would be handled by the check for whether the result type changed. If it changed, we know we still have an atomic, or something that contains an atomic.",
+      "parentUuid": "bcf46a56_fb0d70fb",
+      "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

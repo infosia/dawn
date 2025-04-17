@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd019ad6_22f19a48",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-17T20:59:57Z",
+      "side": 1,
+      "message": "This isn\u0027t always true. You could pass a rewritten var to a function that does not use it with atomic builtins, in which case the parameter would never have been modified.\n\nWe\u0027d need to rewrite the function parameter and then continue walking in that function. You could probably detect this with the same sort of `new_ty \u003d\u003d orig_ty` trick here?\n\nHere\u0027s a test case that fails with this CL:\n```\nTEST_F(SpirvReader_AtomicsTest, FunctionParam_AnotherCallWithoutNonAtomicUse) {\n    core::ir::Var* wg \u003d nullptr;\n    b.Append(mod.root_block, [\u0026] { wg \u003d b.Var(\"wg\", ty.ptr\u003cworkgroup, u32\u003e()); });\n\n    auto* f_atomic \u003d b.Function(\"f_atomic\", ty.u32());\n    b.Append(f_atomic-\u003eBlock(), [\u0026] {\n        auto* p \u003d b.FunctionParam(\"param\", ty.ptr\u003cworkgroup, u32\u003e());\n        f_atomic-\u003eSetParams({p});\n\n        auto* ret \u003d\n            b.Call\u003cspirv::ir::BuiltinCall\u003e(ty.u32(), spirv::BuiltinFn::kAtomicLoad, p, 1_u, 0_u);\n        b.Return(f_atomic, ret);\n    });\n\n    auto* f_nonatomic \u003d b.Function(\"f_nonatomic\", ty.u32());\n    b.Append(f_nonatomic-\u003eBlock(), [\u0026] {\n        auto* p \u003d b.FunctionParam(\"param\", ty.ptr\u003cworkgroup, u32\u003e());\n        f_nonatomic-\u003eSetParams({p});\n\n        auto* ret \u003d b.Load(p);\n        b.Return(f_nonatomic, ret);\n    });\n\n    auto* main \u003d b.ComputeFunction(\"main\");\n    b.Append(main-\u003eBlock(), [\u0026] {  //\n        b.Call(ty.u32(), f_atomic, wg);\n        b.Call(ty.u32(), f_nonatomic, wg);\n        b.Return(main);\n    });\n    \n    \u003csnip\u003e\n}\n```",
+      "revId": "18f214e566bb09c4f1e7470cfe4b0a7daeac84f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
