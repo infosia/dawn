@@ -74,7 +74,7 @@ if (!build_with_chromium) {
 
   static_library("gtest") {
     testonly = true
-    sources = [ "${googletest_dir}/googletest/src/gtest-all.cc" ]
+    sources = [ "${googletest_dir}/googletest/gtest-all.cc" ]
     public_configs = [ ":gtest_config" ]
   }
 
