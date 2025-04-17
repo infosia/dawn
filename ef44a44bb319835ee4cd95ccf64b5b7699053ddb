@@ -67,6 +67,86 @@
       "message": "nit: Isn\u0027t this redundant since it does the same thing as the `const` version?",
       "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d15f8f8b_bb68a250",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T17:28:21Z",
+      "side": 1,
+      "message": "nit: since these variables span the whole function (that does its own iterating), pick more specific names",
+      "range": {
+        "startLine": 74,
+        "startChar": 28,
+        "endLine": 74,
+        "endChar": 44
+      },
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e1130b0_c1a370e5",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T17:28:21Z",
+      "side": 1,
+      "message": "This will only be set to true for entries that happen to be the first in the list for their WaitListEvent. Probably we want to set all of them. I think a version of the `WaitAnyDuplicateEvents` test that signals before waiting would catch this.\n\nMaybe we should for early exits before starting to take mutexes? Maybe even before sorting? (I don\u0027t think we need the mutex to check mSignaled.) It would require an extra loop though.",
+      "range": {
+        "startLine": 112,
+        "startChar": 46,
+        "endLine": 112,
+        "endChar": 52
+      },
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98a5deba_aaa50bc8",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T17:28:21Z",
+      "side": 1,
+      "message": "(this loop would no longer be needed)",
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fdfbbfd_48b42f20",
+        "filename": "src/dawn/native/WaitListEvent.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T17:28:21Z",
+      "side": 1,
+      "message": "It would still take the lock, and iterate over mSyncWaiters, more times than necessary, right? Is there a reason not to just keep using the same pattern to skip over waits on the same event?",
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
