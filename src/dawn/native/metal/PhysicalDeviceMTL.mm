@@ -566,6 +566,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
     if ([*mDevice supportsFeatureSet:MTLFeatureSet_iOS_GPUFamily2_v1]) {
         EnableFeature(Feature::TextureCompressionASTC);
+        EnableFeature(Feature::TextureCompressionASTCSliced3D);
     }
 #endif
 
@@ -576,6 +577,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     }
     if ([*mDevice supportsFamily:MTLGPUFamilyApple3]) {
         EnableFeature(Feature::TextureCompressionASTC);
+        EnableFeature(Feature::TextureCompressionASTCSliced3D);
     }
 
     auto ShouldLeakCounterSets = [this] {
