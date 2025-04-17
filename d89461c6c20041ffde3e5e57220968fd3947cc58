@@ -45,6 +45,30 @@
       },
       "revId": "d89461c6c20041ffde3e5e57220968fd3947cc58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "830f42fc_03e81f23",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2451,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-04-17T10:48:15Z",
+      "side": 1,
+      "message": "I didn\u0027t verify every pixel now. Maybe we can impl this feature in another pr?",
+      "parentUuid": "a018afc2_7805eabb",
+      "range": {
+        "startLine": 2434,
+        "startChar": 1,
+        "endLine": 2451,
+        "endChar": 65
+      },
+      "revId": "d89461c6c20041ffde3e5e57220968fd3947cc58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
