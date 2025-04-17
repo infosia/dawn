@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "150f8153_7e4a1a3a",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-17T04:01:22Z",
+      "side": 1,
+      "message": "We can ICE in the other loop, it just will end up having a bunch of empty cases for things we may not care about, like core builtin calls. It may not be as bad as I thought previously, less things that would actually be empty. I\u0027ll add it in and see.\n\nI thought I had a test case for `let` but that one the let comes before the atomic operation. I\u0027ll add one where it comes after.\n\nEven moving some of the logic into the other method, you\u0027ll still have some here as I don\u0027t think we\u0027d want to move the FunctionParam logic down there as we\u0027d have to find them again. So either way it\u0027s going to end up being split.",
+      "parentUuid": "fa74eb07_62509b84",
+      "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "38c2f7e4_b4764e9a",
         "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
         "patchSetId": 3
@@ -65,6 +83,24 @@
       "writtenOn": "2025-04-17T03:17:53Z",
       "side": 1,
       "message": "Don\u0027t you also need to check that `const_idx` is one of the atomic members? Otherwise we shouldn\u0027t be replacing uses for this member, since it won\u0027t be atomic.",
+      "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcf46a56_fb0d70fb",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-17T04:01:22Z",
+      "side": 1,
+      "message": "We won\u0027t, we\u0027ll end up creating the same type again, and when we return up the new type will be the same as the old type.\n\nIt\u0027s tricky to validate that each struct has a changed member, we\u0027d need to store a second hash because we map from original struct currently. But we\u0027re walking modified structs here, which means we\u0027d need a way to to from modified struct back to original.\n\nGiven that it seems easier to just always return a type, it will be de-dup\u0027d by the type manager, and then we change if it\u0027s new.",
+      "parentUuid": "aafab7dc_9b87eaf2",
       "revId": "fd22669449bf39b2fec1f3910fd288e960740cfc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
