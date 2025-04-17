@@ -16,6 +16,29 @@
       "message": "Peter, could you test this locally? I have built it with gn, but since I\u0027m not familiar with using dawn.node it would take extra effort to make sure this is behaving as expected.",
       "revId": "0094dd8767329ecdd69449ecabe3cfffed3e377b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "235c9482_48b4a37a",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-04-17T19:15:33Z",
+      "side": 1,
+      "message": "Is this the right type of assert?",
+      "range": {
+        "startLine": 593,
+        "startChar": 20,
+        "endLine": 593,
+        "endChar": 34
+      },
+      "revId": "0094dd8767329ecdd69449ecabe3cfffed3e377b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
