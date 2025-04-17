@@ -1374,6 +1374,11 @@ class MultiGeneratorFromDawnJSON(Generator):
                 FileRender('dawn/native/ObjectType.cpp',
                            'src/' + native_dir + '/ObjectType_autogen.cpp',
                            frontend_params))
+            renders.append(
+                FileRender(
+                    'dawn/native/DawnDynamicLibProcTable.cpp', 'src/' +
+                    native_dir + '/DawnDynamicLibProcTable_autogen.cpp',
+                    frontend_params))
 
         if 'wire' in targets:
             params_dawn_wire = parse_json(
