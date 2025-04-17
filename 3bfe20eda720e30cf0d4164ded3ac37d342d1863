@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "449f8d2e_a5c1f6a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-17T11:38:45Z",
+      "side": 1,
+      "message": "Great! Spec implies Sliced 3D for BC.",
+      "revId": "3bfe20eda720e30cf0d4164ded3ac37d342d1863",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
