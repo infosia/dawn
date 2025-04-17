@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5eceef6_1e91e6c3",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T11:29:34Z",
+      "side": 1,
+      "message": "We should probably have a switch here to force handling of all cases. In particular wgpu::PopErrorScopeStatus::CallbackCancelled should resolve with null (since that\u0027s what happens on device loss in the WebGPU spec).",
+      "revId": "1b440dc06a176e93f9e65ba4dcde46008dda2eb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
