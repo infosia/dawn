@@ -466,6 +466,7 @@ DAWN_INSTANTIATE_TEST(DeviceLifetimeTests,
                       D3D12Backend(),
                       MetalBackend(),
                       NullBackend(),
+                      WebGPUBackend(),  // temp test
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend());
