@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8abc9121_82dc72e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-17T18:25:19Z",
+      "side": 1,
+      "message": "This is a re-do of the IR Fuzzer/DEPS change that I had to revert + fixes that should allow it to roll into Skia \u0026 fix a variety of duplicate symbol issues that we were seeing.\n\nI have marked it -2, since I am going to be out next week, and don\u0027t want to accidently land a potentially breaking change while I am away. I would appreciate though if you have time, it getting reviewed while I am out, so I can hopefully get it in soon after I come back.",
+      "revId": "73fda2cbedd5a506d9cd9855b0b7ca0becbec7d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
