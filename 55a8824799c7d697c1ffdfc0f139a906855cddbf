@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "acdcf87a_e8972308",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-17T16:58:54Z",
+      "side": 1,
+      "message": "No concern! I just forgot this was in Math.h, thanks for the reminder!",
+      "parentUuid": "44fb5156_03e272e1",
+      "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6cda078f_dee46468",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-04-17T12:58:04Z",
       "side": 1,
       "message": "Can we port over the BitSetIterator tests? Right now this isn\u0027t tested.",
+      "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e5f2bc1_f10775e1",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-17T16:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cda078f_dee46468",
       "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "819ae63d_744f6613",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-17T16:58:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13d595a6_9721bff4",
+      "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "200bd449_fe51129d",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-04-17T12:58:04Z",
       "side": 1,
       "message": "Do we have numbers of how the perf improves? We skip one copy potentially but I\u0027d assume SSA form in LLVM IR would optimize it out. Another important optimization is that if N \u003c 32/64 then the iterator could contain just a uint32_t / uin64_t which removes a bunch of branches and logic from the iterator.",
+      "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dff0d6f_b5c35ea6",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-17T16:58:54Z",
+      "side": 1,
+      "message": "At this point I\u0027m not seeing this change make much of a difference in performance, but my primary goal was simplification, not optimization. I found from my previous attempt with https://dawn-review.googlesource.com/c/dawn/+/232257 that the structure that we had with ityp::bitset and BitSetIterator separately was complicating attempts to port Dawn to a more optimal bitset implementation (regardless of what we\u0027re focusing our optimization efforts on.)",
+      "parentUuid": "200bd449_fe51129d",
       "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
