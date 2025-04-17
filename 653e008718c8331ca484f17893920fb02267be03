@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "653e008718c8331ca484f17893920fb02267be03",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99806d00_2c66083f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-17T19:15:04Z",
+      "side": 1,
+      "message": "lgtm, but James should confirm those are the correct flags",
+      "revId": "653e008718c8331ca484f17893920fb02267be03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
