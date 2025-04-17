@@ -88,6 +88,24 @@
       "parentUuid": "e2da2947_99b399e0",
       "revId": "103f8f8fa41f0d0c33f91eed69a1accd387c8777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "24d19942_f8990dde",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-04-17T01:36:38Z",
+      "side": 1,
+      "message": "kai showed me where the problem was, I actually dont know this area of code at all.",
+      "parentUuid": "0a1591ba_7e867387",
+      "revId": "103f8f8fa41f0d0c33f91eed69a1accd387c8777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
