@@ -122,7 +122,7 @@ class ShaderModule::ConcurrentTransformedShaderModuleCache {
     }
     ModuleAndSpirv AddOrGet(const TransformedShaderModuleCacheKey& key,
                             VkShaderModule module,
-                            CompiledSpirv compilation,
+                            std::vector<uint32_t> spirv,
                             bool hasInputAttachment) {
         DAWN_ASSERT(module != VK_NULL_HANDLE);
         std::lock_guard<std::mutex> lock(mMutex);
@@ -131,7 +131,7 @@ class ShaderModule::ConcurrentTransformedShaderModuleCache {
         if (iter == mTransformedShaderModuleCache.end()) {
             bool added = false;
             std::tie(iter, added) = mTransformedShaderModuleCache.emplace(
-                key, Entry{module, std::move(compilation.spirv), hasInputAttachment});
+                key, Entry{module, std::move(spirv), hasInputAttachment});
             DAWN_ASSERT(added);
         } else {
             // No need to use FencedDeleter since this shader module was just created and does
@@ -507,8 +507,15 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         // Set the label on `newHandle` now, and not on `moduleAndSpirv.module` later
         // since `moduleAndSpirv.module` may be in use by multiple threads.
         SetDebugName(ToBackend(GetDevice()), newHandle, "Dawn_ShaderModule", GetLabel());
+
+        std::vector<uint32_t> storedSpirv;
+        if (!device->IsToggleEnabled(Toggle::VulkanMonolithicPipelineCache)) {
+            // If monolithic pipeline cache is enabled the SPIR-V data is never used again after
+            // constructing a VkShaderModule so it can be discarded.
+            storedSpirv = std::move(compilation->spirv);
+        }
         moduleAndSpirv = mTransformedShaderModuleCache->AddOrGet(
-            cacheKey, newHandle, compilation.Acquire(), hasInputAttachment);
+            cacheKey, newHandle, std::move(storedSpirv), hasInputAttachment);
     }
 
     return std::move(moduleAndSpirv);
