@@ -144,6 +144,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4349d95f_e3d93163",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 25
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T01:03:20Z",
+      "side": 1,
+      "message": "Thanks for the help Sam! After more discussion/consideration I\u0027ve simplified this (we don\u0027t need `-g` or `-flto`) but I think I\u0027m going to keep support for all the `-O` values, as it\u0027s simple to do.",
+      "parentUuid": "6b0dbb07_454c4875",
+      "revId": "0303cb1c9417b1b73942ea8a41edb9228d04268d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "903de86c_d8045d7e",
