@@ -75,6 +75,30 @@
       },
       "revId": "0094dd8767329ecdd69449ecabe3cfffed3e377b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "536d326f_f4e234e0",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T22:52:09Z",
+      "side": 1,
+      "message": "yes, dawn.node uses assert.h, we don\u0027t have DAWN_ASSERT here.",
+      "parentUuid": "235c9482_48b4a37a",
+      "range": {
+        "startLine": 593,
+        "startChar": 20,
+        "endLine": 593,
+        "endChar": 34
+      },
+      "revId": "0094dd8767329ecdd69449ecabe3cfffed3e377b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
