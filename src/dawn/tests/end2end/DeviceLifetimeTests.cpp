@@ -171,6 +171,9 @@ TEST_P(DeviceLifetimeTests, DroppedBeforeMappedBuffer) {
 
 // Test that the device can be dropped before a mapped at creation buffer created from it.
 TEST_P(DeviceLifetimeTests, DroppedBeforeMappedAtCreationBuffer) {
+    // TODO(crbug.com/413053623): implement BufferWGPU::MapAtCreationImpl
+    DAWN_SUPPRESS_TEST_IF(IsWebGPU());
+
     wgpu::BufferDescriptor desc = {};
     desc.size = 4;
     desc.usage = wgpu::BufferUsage::MapRead | wgpu::BufferUsage::CopyDst;
@@ -466,6 +469,7 @@ DAWN_INSTANTIATE_TEST(DeviceLifetimeTests,
                       D3D12Backend(),
                       MetalBackend(),
                       NullBackend(),
+                      WebGPUBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend());

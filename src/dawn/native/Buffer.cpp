@@ -560,6 +560,9 @@ Future BufferBase::APIMapAsync(wgpu::MapMode mode,
     // (note, not raise a validation error to the device) and return the null future.
     DAWN_ASSERT(callbackInfo.nextInChain == nullptr);
 
+    // temp: access by BufferWGPU
+    mCallbackInfo = callbackInfo;
+
     Ref<EventManager::TrackedEvent> event;
     {
         // TODO(crbug.com/dawn/831) Manually acquire device lock instead of relying on code-gen for
