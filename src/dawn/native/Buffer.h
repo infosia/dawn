@@ -46,6 +46,10 @@
 
 namespace dawn::native {
 
+namespace webgpu {
+class Buffer;
+}
+
 struct CopyTextureToBufferCmd;
 
 enum class MapType : uint32_t;
@@ -153,6 +157,7 @@ class BufferBase : public SharedResource {
     ExecutionSerial mLastUsageSerial = ExecutionSerial(0);
 
   private:
+    friend class webgpu::Buffer;
     virtual MaybeError MapAtCreationImpl() = 0;
     virtual MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) = 0;
     virtual void UnmapImpl() = 0;
@@ -171,7 +176,9 @@ class BufferBase : public SharedResource {
     const uint64_t mSize = 0;
     const wgpu::BufferUsage mUsage = wgpu::BufferUsage::None;
     const wgpu::BufferUsage mInternalUsage = wgpu::BufferUsage::None;
+
     BufferState mState;
+
     bool mIsDataInitialized = false;
 
     // mStagingBuffer is used to implement mappedAtCreation for

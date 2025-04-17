@@ -128,6 +128,8 @@ class EventManager::TrackedEvent : public RefCounted {
 
     bool IsReadyToComplete() const;
 
+    wgpu::CallbackMode GetCallbackMode() const { return mCallbackMode; }
+
     const QueueAndSerial* GetIfQueueAndSerial() const {
         return std::get_if<QueueAndSerial>(&mCompletionData);
     }
