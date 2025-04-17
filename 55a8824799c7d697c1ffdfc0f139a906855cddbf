@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44fb5156_03e272e1",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T12:58:04Z",
+      "side": 1,
+      "message": "This exists in Math.h https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/Math.h;drc\u003d0d16dc0bcd09a864a12e55ae672c5744d5bb971c;l\u003d54\n\nShould it be replaced with the template version or is there some other concern?",
+      "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6cda078f_dee46468",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T12:58:04Z",
+      "side": 1,
+      "message": "Can we port over the BitSetIterator tests? Right now this isn\u0027t tested.",
+      "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13d595a6_9721bff4",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T12:58:04Z",
+      "side": 1,
+      "message": "u-nit: the implementation could be moved below given that all other methods have their implementation separated.",
+      "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "200bd449_fe51129d",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T12:58:04Z",
+      "side": 1,
+      "message": "Do we have numbers of how the perf improves? We skip one copy potentially but I\u0027d assume SSA form in LLVM IR would optimize it out. Another important optimization is that if N \u003c 32/64 then the iterator could contain just a uint32_t / uin64_t which removes a bunch of branches and logic from the iterator.",
+      "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
