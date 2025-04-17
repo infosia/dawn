@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd2c171e_11183f4e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 21
+      },
+      "lineNbr": 3058,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-04-17T12:35:39Z",
+      "side": 1,
+      "message": "Ignore this per the [comment](https://issues.chromium.org/issues/402810062#comment20).",
+      "parentUuid": "70efc155_fb566a3f",
+      "range": {
+        "startLine": 3058,
+        "startChar": 5,
+        "endLine": 3058,
+        "endChar": 40
+      },
+      "revId": "1fac1bc1a636074aa76912a077779b7c5c4aed5b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b837e656_45985ca4",
