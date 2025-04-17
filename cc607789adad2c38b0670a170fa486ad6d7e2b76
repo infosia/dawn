@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b705af27_6c2faf63",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T13:22:48Z",
+      "side": 1,
+      "message": "I\u0027ll defer to Kai and Loko that know this part of the code a lot better.",
+      "parentUuid": "b4d87000_fc78e569",
+      "revId": "cc607789adad2c38b0670a170fa486ad6d7e2b76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "949db69c_41e9dfd8",
