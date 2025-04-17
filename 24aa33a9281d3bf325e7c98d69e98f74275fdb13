@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf7f21d5_c34c7a28",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-17T02:48:07Z",
+      "side": 1,
+      "message": "Given that the rest of the loop analysis above assumes 32-bit integers, we could presumable just always use `int64_t` here and in all of these new helper functions, which would simplify them a bit.\n\nIs there a good reason to maintain the `int64_t` vs `uint64_t` logic here?",
+      "revId": "24aa33a9281d3bf325e7c98d69e98f74275fdb13",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
