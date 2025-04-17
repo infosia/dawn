@@ -16,6 +16,57 @@
       "message": "Thanks!",
       "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "318eb118_b266d85f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T02:51:37Z",
+      "side": 1,
+      "message": "Looking great, reviewed except for WaitListEvent. Will get to that soon, not super likely to have comments on it though.",
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ec64c24_00793327",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T02:51:37Z",
+      "side": 1,
+      "message": "nit: Why separate `IsQueueAndSerial` from `GetQueueAndSerial`? The `std::get_if` based version seemed more concise, and we can still do that with `const QueueAndSerial* GetIfQueueAndSerial() { ... std::get_if ... }`. And it doesn\u0027t seem worse for SystemEvent and WaitListEvent either.",
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85162843_cf5bd516",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-17T02:51:37Z",
+      "side": 1,
+      "message": "nit: Isn\u0027t this redundant since it does the same thing as the `const` version?",
+      "revId": "ef44a44bb319835ee4cd95ccf64b5b7699053ddb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
