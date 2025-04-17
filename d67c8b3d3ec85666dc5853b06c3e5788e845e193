@@ -68,6 +68,23 @@
       "message": "I think this requires 2 +2\u0027s to satisfy the code review requirement?",
       "revId": "d67c8b3d3ec85666dc5853b06c3e5788e845e193",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6ffb796_6ad9fb36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-17T13:47:11Z",
+      "side": 1,
+      "message": "Weird, the config must have just changed.",
+      "revId": "d67c8b3d3ec85666dc5853b06c3e5788e845e193",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
