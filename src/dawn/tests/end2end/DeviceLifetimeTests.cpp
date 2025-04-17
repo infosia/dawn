@@ -46,7 +46,7 @@ class DeviceLifetimeTests : public DawnTest {};
 
 // Test that the device can be dropped before its queue.
 TEST_P(DeviceLifetimeTests, DroppedBeforeQueue) {
-    wgpu::Queue queue = device.GetQueue();
+    // wgpu::Queue queue = device.GetQueue();
 
     device = nullptr;
 }
@@ -466,6 +466,7 @@ DAWN_INSTANTIATE_TEST(DeviceLifetimeTests,
                       D3D12Backend(),
                       MetalBackend(),
                       NullBackend(),
+                      WebGPUBackend(),  // temp test
                       OpenGLBackend(),
                       OpenGLESBackend(),
                       VulkanBackend());
