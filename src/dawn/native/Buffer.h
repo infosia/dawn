@@ -152,6 +152,9 @@ class BufferBase : public SharedResource {
 
     ExecutionSerial mLastUsageSerial = ExecutionSerial(0);
 
+    // temp
+    WGPUBufferMapCallbackInfo mCallbackInfo;
+
   private:
     virtual MaybeError MapAtCreationImpl() = 0;
     virtual MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) = 0;
@@ -171,7 +174,11 @@ class BufferBase : public SharedResource {
     const uint64_t mSize = 0;
     const wgpu::BufferUsage mUsage = wgpu::BufferUsage::None;
     const wgpu::BufferUsage mInternalUsage = wgpu::BufferUsage::None;
+
+  public:  // temp
     BufferState mState;
+
+  private:
     bool mIsDataInitialized = false;
 
     // mStagingBuffer is used to implement mappedAtCreation for
