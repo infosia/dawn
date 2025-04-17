@@ -138,6 +138,10 @@ class BufferBase : public SharedResource {
     wgpu::BufferMapState APIGetMapState() const;
     uint64_t APIGetSize() const;
 
+    // temp
+    size_t mMapOffset = 0;
+    size_t mMapSize = 0;
+
   protected:
     BufferBase(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& descriptor);
     BufferBase(DeviceBase* device, const BufferDescriptor* descriptor, ObjectBase::ErrorTag tag);
@@ -151,6 +155,9 @@ class BufferBase : public SharedResource {
     uint64_t mAllocatedSize = 0;
 
     ExecutionSerial mLastUsageSerial = ExecutionSerial(0);
+
+    // temp
+    WGPUBufferMapCallbackInfo mCallbackInfo;
 
   private:
     virtual MaybeError MapAtCreationImpl() = 0;
@@ -171,7 +178,11 @@ class BufferBase : public SharedResource {
     const uint64_t mSize = 0;
     const wgpu::BufferUsage mUsage = wgpu::BufferUsage::None;
     const wgpu::BufferUsage mInternalUsage = wgpu::BufferUsage::None;
+
+  public:  // temp
     BufferState mState;
+
+  private:
     bool mIsDataInitialized = false;
 
     // mStagingBuffer is used to implement mappedAtCreation for
@@ -183,8 +194,8 @@ class BufferBase : public SharedResource {
     Ref<BufferBase> mStagingBuffer;
 
     wgpu::MapMode mMapMode = wgpu::MapMode::None;
-    size_t mMapOffset = 0;
-    size_t mMapSize = 0;
+    // size_t mMapOffset = 0;
+    // size_t mMapSize = 0;
 
     struct MapAsyncEvent;
     Ref<MapAsyncEvent> mPendingMapEvent;
