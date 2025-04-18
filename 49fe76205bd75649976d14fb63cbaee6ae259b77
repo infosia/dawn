@@ -51,6 +51,24 @@
       ],
       "revId": "49fe76205bd75649976d14fb63cbaee6ae259b77",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ce36985_6666d51f",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-04-18T02:45:02Z",
+      "side": 1,
+      "message": "Done\n\nCurrently `value-\u003eType()-\u003eIsAnyOf\u003ctype::I32, type::U32\u003e()` cannot be put in a `TINT_ASSERT` or it will cause a compilation error.",
+      "parentUuid": "20bb0844_1a540deb",
+      "revId": "49fe76205bd75649976d14fb63cbaee6ae259b77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
