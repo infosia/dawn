@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f64481f_3dace4c0",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-18T09:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96e03e76_e99209bf",
+      "revId": "3c48b03fe13118cb9ae30fee8450edd5afe4a784",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a85366a8_6f88b292",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-04-17T19:09:47Z",
       "side": 1,
       "message": "nit. BGL?",
+      "range": {
+        "startLine": 3657,
+        "startChar": 74,
+        "endLine": 3657,
+        "endChar": 77
+      },
+      "revId": "3c48b03fe13118cb9ae30fee8450edd5afe4a784",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2d7a957_e0755ad2",
+        "filename": "src/dawn/tests/unittests/validation/BindGroupValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3657,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-18T09:00:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a85366a8_6f88b292",
       "range": {
         "startLine": 3657,
         "startChar": 74,
