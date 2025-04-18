@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b58b20e0_686c7549",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-18T16:09:12Z",
+      "side": 1,
+      "message": "PTAL - the only change over the original is the correct initialization of the mSignaled atomic_bool which was responsible for the UBSAN failure - see diff from PS1.",
+      "revId": "c9a0a70087b49ccf733e084549cb527634883ecf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
