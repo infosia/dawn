@@ -422,13 +422,11 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
     // Using base limits for:
     // TODO(crbug.com/dawn/685):
     // - maxVertexBufferArrayStride
-
-    if (gpu_info::IsQualcomm_ACPI(GetVendorId())) {
-        // Due to a driver and hardware limitation, Raw Buffers can only address 2^27 WORDS instead
-        // of the guaranteeed 2^31 bytes. Probably because it uses some form of texel buffer of
-        // 32bit values to implement [RW]ByteAddressBuffer.
-        limits->v1.maxStorageBufferBindingSize = sizeof(uint32_t)
-                                                 << D3D12_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP;
+    if (gpu_info::IsQualcomm_ACPI(GetVendorId()) &&
+        gpu_info::GetGen(GetVendorId(), GetDeviceId()) <= 7) {
+        // Due to hardware limitation, Raw Buffers can only address 2^28 bytes instead of the
+        // guaranteed 2^31 bytes.
+        limits->v1.maxStorageBufferBindingSize = 1 << 28;
     }
 
     return {};

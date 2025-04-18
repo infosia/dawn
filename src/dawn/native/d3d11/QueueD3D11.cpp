@@ -157,7 +157,9 @@ class DelayFlushQueue final : public Queue {
 
 ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* descriptor) {
     const auto& deviceInfo = ToBackend(device->GetPhysicalDevice())->GetDeviceInfo();
-    if (device->IsToggleEnabled(Toggle::D3D11DelayFlushToGPU)) {
+    // Qualcomm D3D will hang with this toggle on
+    if (device->IsToggleEnabled(Toggle::D3D11DelayFlushToGPU) &&
+        !gpu_info::IsQualcomm_ACPI(device->GetPhysicalDevice()->GetVendorId())) {
         auto queue = AcquireRef(new DelayFlushQueue(device, descriptor));
         DAWN_TRY(queue->Initialize());
         return queue;
