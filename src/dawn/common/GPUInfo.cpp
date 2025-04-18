@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/GPUInfo_autogen.h"
 
 #include <algorithm>
 #include <array>
@@ -108,9 +109,34 @@ bool IsIrisPlus655(PCIDeviceID deviceId) {
     return std::find(IrisPlus655.cbegin(), IrisPlus655.cend(), deviceId) != IrisPlus655.cend();
 }
 
-bool IsIntelGen11OrOlder(PCIVendorID venderId, PCIDeviceID deviceId) {
-    return IsIntelGen7(venderId, deviceId) || IsIntelGen8(venderId, deviceId) ||
-           IsIntelGen9(venderId, deviceId) || IsIntelGen11(venderId, deviceId);
+int GetGen(PCIVendorID venderId, PCIDeviceID deviceId) {
+    if (gpu_info::IsQualcomm_ACPIAdreno6xx(venderId, deviceId)) {
+        return 6;
+    } else if (gpu_info::IsQualcomm_ACPIAdreno7xx(venderId, deviceId)) {
+        return 7;
+    } else if (gpu_info::IsIntelGen7(venderId, deviceId)) {
+        return 7;
+    } else if (gpu_info::IsIntelGen8(venderId, deviceId)) {
+        return 8;
+    } else if (gpu_info::IsIntelGen9(venderId, deviceId)) {
+        return 9;
+    } else if (gpu_info::IsIntelGen11(venderId, deviceId)) {
+        return 11;
+    } else if (gpu_info::IsIntelGen12LP(venderId, deviceId)) {
+        return 12;
+    } else if (gpu_info::IsIntelGen12HP(venderId, deviceId)) {
+        return 12;
+    } else if (gpu_info::IsIntelXeLPG(venderId, deviceId)) {
+        return 12;
+    } else if (gpu_info::IsIntelXe2LPG(venderId, deviceId)) {
+        return 13;
+    } else if (gpu_info::IsIntelXe2HPG(venderId, deviceId)) {
+        return 13;
+    } else if (gpu_info::IsIntelXe3LPG(venderId, deviceId)) {
+        return 14;
+    } else {
+        return 0;
+    }
 }
 
 }  // namespace dawn::gpu_info
