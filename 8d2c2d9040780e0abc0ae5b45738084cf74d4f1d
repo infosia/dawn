@@ -22,6 +22,30 @@
       },
       "revId": "8d2c2d9040780e0abc0ae5b45738084cf74d4f1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c538af04_c1d3dd9b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-18T07:50:35Z",
+      "side": 1,
+      "message": "Done, thanks for reminding!",
+      "parentUuid": "8c2c99d5_1895f1d8",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 164
+      },
+      "revId": "8d2c2d9040780e0abc0ae5b45738084cf74d4f1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
