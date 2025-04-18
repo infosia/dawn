@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/GPUInfo_autogen.h"
 
 #include <algorithm>
 #include <array>
@@ -108,9 +109,44 @@ bool IsIrisPlus655(PCIDeviceID deviceId) {
     return std::find(IrisPlus655.cbegin(), IrisPlus655.cend(), deviceId) != IrisPlus655.cend();
 }
 
-bool IsIntelGen11OrOlder(PCIVendorID venderId, PCIDeviceID deviceId) {
-    return IsIntelGen7(venderId, deviceId) || IsIntelGen8(venderId, deviceId) ||
-           IsIntelGen9(venderId, deviceId) || IsIntelGen11(venderId, deviceId);
+IntelGen GetIntelGen(PCIVendorID venderId, PCIDeviceID deviceId) {
+    DAWN_CHECK(gpu_info::IsIntel(venderId));
+
+    if (gpu_info::IsIntelGen7(venderId, deviceId)) {
+        return IntelGen::Gen7;
+    } else if (gpu_info::IsIntelGen8(venderId, deviceId)) {
+        return IntelGen::Gen8;
+    } else if (gpu_info::IsIntelGen9(venderId, deviceId)) {
+        return IntelGen::Gen9;
+    } else if (gpu_info::IsIntelGen11(venderId, deviceId)) {
+        return IntelGen::Gen11;
+    } else if (gpu_info::IsIntelGen12LP(venderId, deviceId)) {
+        return IntelGen::Gen12_LP;
+    } else if (gpu_info::IsIntelGen12HP(venderId, deviceId)) {
+        return IntelGen::Gen12_HP;
+    } else if (gpu_info::IsIntelXeLPG(venderId, deviceId)) {
+        return IntelGen::Gen12_XeLPG;
+    } else if (gpu_info::IsIntelXe2LPG(venderId, deviceId)) {
+        return IntelGen::Gen13_Xe2LPG;
+    } else if (gpu_info::IsIntelXe2HPG(venderId, deviceId)) {
+        return IntelGen::Gen13_Xe2HPG;
+    } else if (gpu_info::IsIntelXe3LPG(venderId, deviceId)) {
+        return IntelGen::Gen14_Xe3LPG;
+    } else {
+        return IntelGen::Unknown;
+    }
+}
+
+QualcommACPIGen GetQualcommACPIGen(PCIVendorID venderId, PCIDeviceID deviceId) {
+    DAWN_CHECK(gpu_info::IsQualcommACPI(venderId));
+
+    if (gpu_info::IsQualcommACPIAdreno6xx(venderId, deviceId)) {
+        return QualcommACPIGen::Gen6_Adreno6xx;
+    } else if (gpu_info::IsQualcommACPIAdreno7xx(venderId, deviceId)) {
+        return QualcommACPIGen::Gen7_Adreno7xx;
+    } else {
+        return QualcommACPIGen::Unknown;
+    }
 }
 
 }  // namespace dawn::gpu_info
