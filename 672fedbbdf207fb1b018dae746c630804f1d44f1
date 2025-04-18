@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "600b8e1f_68f1c09a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-18T05:47:16Z",
+      "side": 1,
+      "message": "Please take a look, thanks! This CL should fix the revert https://dawn-review.googlesource.com/c/dawn/+/237734.",
+      "revId": "672fedbbdf207fb1b018dae746c630804f1d44f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
