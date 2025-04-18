@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a05c557_91e3a466",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-18T08:09:01Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "9563a2104a549d3eae1a7b09ee87e93463ca63e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b03279f1_afda731c",
+        "filename": "src/dawn/common/Sha3.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-18T08:09:01Z",
+      "side": 1,
+      "message": "Same comment as in https://dawn-review.googlesource.com/c/dawn/+/237874",
+      "revId": "9563a2104a549d3eae1a7b09ee87e93463ca63e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
