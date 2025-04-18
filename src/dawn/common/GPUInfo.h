@@ -77,7 +77,9 @@ int CompareIntelMesaDriverVersion(const DriverVersion& version1, const DriverVer
 bool IsSkylake(PCIDeviceID deviceId);
 bool IsIrisPlus655(PCIDeviceID deviceId);
 
-bool IsIntelGen11OrOlder(PCIVendorID venderId, PCIDeviceID deviceId);
-
+// Get the generation of GPUs from specific vendors
+// Generation is an internal concept, rather than a value defined by vendors
+int GetIntelGen(PCIVendorID venderId, PCIDeviceID deviceId);
+int GetQualcomm_ACPIGen(PCIVendorID venderId, PCIDeviceID deviceId);
 }  // namespace dawn::gpu_info
 #endif  // SRC_DAWN_COMMON_GPUINFO_H_

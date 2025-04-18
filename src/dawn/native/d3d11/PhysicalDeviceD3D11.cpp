@@ -339,7 +339,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // The workaround still can't cover lazy clear,
     // TODO(crbug.com/364834368): Move handling of workaround at command submission time instead of
     // recording time.
-    if (gpu_info::IsIntelGen11OrOlder(vendorId, deviceId)) {
+    if (gpu_info::IsIntel(vendorId) && gpu_info::GetIntelGen(vendorId, deviceId) <= 11) {
         deviceToggles->Default(Toggle::ClearColorWithDraw, true);
     }
 
