@@ -579,6 +579,8 @@ class Printer : public tint::TextGenerator {
                         break;
                     }
                     case core::AddressSpace::kPushConstant:
+                        EmitPushConstantVariable(var);
+                        break;
                     default: {
                         TINT_ICE() << "unhandled address space " << space;
                     }
@@ -641,6 +643,40 @@ class Printer : public tint::TextGenerator {
         auto out = Line();
         EmitTypeAndName(out, var->Result()->Type(), NameOf(var->Result()));
         out << RegisterAndSpace(register_space, bp.value()) << ";";
+    }
+
+    void EmitPushConstantVariable(const core::ir::Var* var) {
+        auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
+        TINT_ASSERT(ptr);
+
+        BindingPoint bp = {};
+        if (options_.push_constant_binding_point.has_value()) {
+            // If options_.push_constant_binding holds a value, use it.
+            bp = *options_.push_constant_binding_point;
+        } else {
+            // Otherwise, use the binding 0 of the largest used group plus 1, or group 0 if no
+            // resources are bound.
+            uint32_t group = 0;
+            for (auto* inst : *ir_.root_block.Get()) {
+                if (auto* var_visited = inst->As<core::ir::Var>()) {
+                    if (const auto& bp_visited = var_visited->BindingPoint()) {
+                        if (bp_visited->group >= group) {
+                            group = bp_visited->group + 1;
+                        }
+                    }
+                }
+            }
+            bp = {group, 0};
+        }
+
+        Line() << "cbuffer cbuffer_" << NameOf(var->Result()) << RegisterAndSpace('b', bp) << " {";
+        {
+            const ScopedIndent si(this);
+            auto out = Line();
+            EmitTypeAndName(out, var->Result()->Type(), NameOf(var->Result()));
+            out << ";";
+        }
+        Line() << "};";
     }
 
     void EmitVar(StringStream& out, const core::ir::Var* var) {
