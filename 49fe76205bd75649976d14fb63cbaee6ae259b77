@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f398cef_f28a6a1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-18T00:46:19Z",
+      "side": 1,
+      "message": "LGTM with one more suggested simplification.",
+      "revId": "49fe76205bd75649976d14fb63cbaee6ae259b77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20bb0844_1a540deb",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-18T00:46:19Z",
+      "side": 1,
+      "message": "I think this whole function could just be:\n```\nTINT_ASSERT(value-\u003eType()-\u003eIsAnyOf\u003ctype::I32, type::U32\u003e());\nreturn value-\u003eValue()-\u003eValueAs\u003cint64_t\u003e();\n```",
+      "fixSuggestions": [
+        {
+          "fixId": "2a549fbc_9b0d58f1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+              "range": {
+                "startLine": 74,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": "    TINT_ASSERT(value-\u003eType()-\u003eIsAnyOf\u003ctype::I32, type::U32\u003e());\n    return value-\u003eValue()-\u003eValueAs\u003cint64_t\u003e();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "49fe76205bd75649976d14fb63cbaee6ae259b77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
