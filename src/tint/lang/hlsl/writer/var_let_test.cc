@@ -532,5 +532,69 @@ void unused_entry_point() {
 )");
 }
 
+TEST_F(HlslWriterTest, VarPushConstantWithoutOptionsAndGlobalVars) {
+    auto* s = b.Var("p", ty.ptr<push_constant>(ty.vec4<f32>()));
+
+    b.ir.root_block->Append(s);
+    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+cbuffer cbuffer_p : register(b0) {
+  float4 p;
+};
+[numthreads(1, 1, 1)]
+void unused_entry_point() {
+}
+
+)");
+}
+
+TEST_F(HlslWriterTest, VarPushConstantWithoutOptionsWithGlobalVars) {
+    auto* s = b.Var("p", ty.ptr<push_constant>(ty.vec4<f32>()));
+
+    // Create uniform global variable
+    auto* u = b.Var("u", ty.ptr<uniform>(ty.vec4<f32>()));
+    u->SetBindingPoint(2, 1);
+
+    // Create storage global variable
+    auto* r = b.Var("r", ty.ptr<storage, core::Access::kReadWrite>(ty.vec4<f32>()));
+    r->SetBindingPoint(2, 2);
+
+    b.ir.root_block->Append(u);
+    b.ir.root_block->Append(r);
+    b.ir.root_block->Append(s);
+    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+cbuffer cbuffer_u : register(b1, space2) {
+  uint4 u[1];
+};
+RWByteAddressBuffer r : register(u2, space2);
+cbuffer cbuffer_p : register(b0, space3) {
+  float4 p;
+};
+[numthreads(1, 1, 1)]
+void unused_entry_point() {
+}
+
+)");
+}
+
+TEST_F(HlslWriterTest, VarPushConstantWithOptions) {
+    auto* s = b.Var("p", ty.ptr<push_constant>(ty.vec4<f32>()));
+
+    b.ir.root_block->Append(s);
+    Options options = {};
+    options.push_constant_binding_point = tint::BindingPoint{3, 1};
+    ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+cbuffer cbuffer_p : register(b1, space3) {
+  float4 p;
+};
+[numthreads(1, 1, 1)]
+void unused_entry_point() {
+}
+
+)");
+}
+
 }  // namespace
 }  // namespace tint::hlsl::writer
