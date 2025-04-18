@@ -248,6 +248,9 @@ struct Options {
     /// Pixel local configuration
     PixelLocalOptions pixel_local;
 
+    /// Push constant binding point info
+    std::optional<BindingPoint> push_constant_binding_point;
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(Options,
                  remapped_entry_point_name,
