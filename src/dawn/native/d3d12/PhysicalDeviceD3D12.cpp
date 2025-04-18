@@ -397,10 +397,9 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
     // - maxVertexBufferArrayStride
 
     if (gpu_info::IsQualcomm_ACPI(GetVendorId())) {
-        // Due to a driver and hardware limitation, Raw Buffers can only address 2^27 WORDS instead
-        // of the guaranteeed 2^31 bytes. Probably because it uses some form of texel buffer of
-        // 32bit values to implement [RW]ByteAddressBuffer.
-        limits->v1.maxStorageBufferBindingSize = sizeof(uint32_t)
+        // Due to a driver and hardware limitation, Raw Buffers can only address 2^28 bytes instead
+        // of the guaranteeed 2^31 bytes.
+        limits->v1.maxStorageBufferBindingSize = uint64_t(2)
                                                  << D3D12_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP;
     }
 
