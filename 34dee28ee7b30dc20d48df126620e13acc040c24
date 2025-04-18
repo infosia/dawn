@@ -16,6 +16,24 @@
       "message": "Feel free to review/CR+2; I have set CR-2 to block it until ml_drift rolls.\n\nIt doesn\u0027t look like it\u0027s going to roll this week. I put a link to the ml_drift roll in the gardening log (and gardening playbook) so we can monitor it. I\u0027ll probably keep an eye on it next week too.",
       "revId": "34dee28ee7b30dc20d48df126620e13acc040c24",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c966754_3090e516",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-18T23:50:07Z",
+      "side": 1,
+      "message": "ml_drift rolled!",
+      "parentUuid": "e47c67d9_9060cfd9",
+      "revId": "34dee28ee7b30dc20d48df126620e13acc040c24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
