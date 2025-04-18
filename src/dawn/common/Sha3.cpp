@@ -53,6 +53,12 @@ constexpr uint32_t kRoundCount = 24;  // aka "nr"
 // The rotation of a lane by `offset` bits.
 Sha3Lane Rotl(Sha3Lane l, size_t offset) {
     DAWN_ASSERT(offset < kLaneBitWidth);
+    // Special case for offset == 0, as the expected result should be just identical and
+    // right-shifting (kLaneBitWidth - offset) == kLaneBitWidth bits on Sha3Lane (having
+    // kLaneBitWidth bits) results in undefined bahavior.
+    if (offset == 0) {
+        return l;
+    }
     return (l << offset) | (l >> (kLaneBitWidth - offset));
 }
 
