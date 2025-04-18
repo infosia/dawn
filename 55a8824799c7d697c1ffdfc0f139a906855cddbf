@@ -139,6 +139,24 @@
       "parentUuid": "200bd449_fe51129d",
       "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b459140f_761732a1",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-18T09:03:55Z",
+      "side": 1,
+      "message": "Ok, sounds good!",
+      "parentUuid": "6dff0d6f_b5c35ea6",
+      "revId": "55a8824799c7d697c1ffdfc0f139a906855cddbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
