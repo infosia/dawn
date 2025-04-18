@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20f7995d_b9d47640",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-18T19:58:27Z",
+      "side": 1,
+      "message": "Given that these are pretty much reused code, I think we should rewrite this to something like the following, adding in both `AddASTCCompressedFormat` and `AddETCCompressedFormat` helpers now also.\n\n```\nFormat BaseCompressedFormat(wgpu::TextureFormat format, ByteSize byteSize,\n                            Width width, Height height, \n                            UnsupportedReason unsupportedReason,\n                            ComponentCount componentCount,\n                            wgpu::TextureFormat baseFormat \u003d\n                              wgpu::TextureFormat::Undefined) {\n  // Do all the base compressed format stuff\n  return format;\n}\n\nauto Add*CompressedFormat(...) {\n  Format internalFormat \u003d BaseCompressedFormat(...);\n  internalFormat.is* \u003d true;\n  AddFormat(internalFormat);\n```",
+      "range": {
+        "startLine": 389,
+        "startChar": 4,
+        "endLine": 488,
+        "endChar": 10
+      },
+      "revId": "7d4af9bfd1a5a10575cf4ef3bc4703126620d312",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
