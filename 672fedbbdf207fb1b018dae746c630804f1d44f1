@@ -33,6 +33,24 @@
       "message": "Can we instead add an ASSERT of `offset !\u003d 0` in `Rotl` and start this loop at 1 by saying `kRhoOffsets[0]` is 0?",
       "revId": "672fedbbdf207fb1b018dae746c630804f1d44f1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd1b6237_a4d7040d",
+        "filename": "src/dawn/common/Sha3.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-18T08:00:27Z",
+      "side": 1,
+      "message": "Thanks for reviewing! As suggested by Kai, I will do the fixing in the relanding CL.",
+      "parentUuid": "0e09aab3_3426cbe8",
+      "revId": "672fedbbdf207fb1b018dae746c630804f1d44f1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
