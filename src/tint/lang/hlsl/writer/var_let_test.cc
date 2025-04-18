@@ -532,5 +532,21 @@ void unused_entry_point() {
 )");
 }
 
+TEST_F(HlslWriterTest, VarPushConstantWithoutOptionsAndGlobalVars) {
+    auto* s = b.Var("p", ty.ptr<push_constant>(ty.vec4<f32>()));
+
+    b.ir.root_block->Append(s);
+    ASSERT_TRUE(Generate()) << err_ << output_.hlsl;
+    EXPECT_EQ(output_.hlsl, R"(
+cbuffer cbuffer_p : register(b0) {
+  float4 p;
+};
+[numthreads(1, 1, 1)]
+void unused_entry_point() {
+}
+
+)");
+}
+
 }  // namespace
 }  // namespace tint::hlsl::writer
