@@ -1,11 +1,22 @@
-SKIP: INVALID
+struct main_outputs {
+  float4 tint_symbol : SV_Position;
+};
 
-..\..\src\tint\lang\hlsl\writer\printer\printer.cc:522 internal compiler error: unhandled address space push_constant
-********************************************************************
-*  The tint shader compiler has encountered an unexpected error.   *
-*                                                                  *
-*  Please help us fix this issue by submitting a bug report at     *
-*  crbug.com/tint with the source program that triggered the bug.  *
-********************************************************************
+struct main_inputs {
+  uint b : SV_InstanceID;
+};
 
-tint executable returned error: exit status 0xc000001d
+
+cbuffer cbuffer_a : register(b0) {
+  uint4 a[1];
+};
+float4 main_inner(uint b) {
+  float v = asfloat(a[0u].x);
+  return float4(((v + float(b))).xxxx);
+}
+
+main_outputs main(main_inputs inputs) {
+  main_outputs v_1 = {main_inner(inputs.b)};
+  return v_1;
+}
+

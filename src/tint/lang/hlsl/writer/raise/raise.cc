@@ -51,6 +51,7 @@
 #include "src/tint/lang/hlsl/writer/common/options.h"
 #include "src/tint/lang/hlsl/writer/raise/binary_polyfill.h"
 #include "src/tint/lang/hlsl/writer/raise/builtin_polyfill.h"
+#include "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.h"
 #include "src/tint/lang/hlsl/writer/raise/decompose_storage_access.h"
 #include "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.h"
 #include "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.h"
@@ -185,9 +186,17 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     }
     RUN_TRANSFORM(core::ir::transform::DirectVariableAccess, module,
                   core::ir::transform::DirectVariableAccessOptions{});
+
     // DecomposeStorageAccess must come after Robustness and DirectVariableAccess
     RUN_TRANSFORM(raise::DecomposeStorageAccess, module);
-    // Comes after DecomposeStorageAccess.
+
+    // ChangePushConstantToUniformConfig must come before DecomposeUniformAccess.
+    {
+        raise::ChangePushConstantToUniformConfig config = {};
+        config.push_constant_binding_point = options.push_constant_binding_point;
+        RUN_TRANSFORM(raise::ChangePushConstantToUniform, module, config);
+    }
+    // Comes after DecomposeStorageAccess and ChangePushConstantToUniform.
     RUN_TRANSFORM(raise::DecomposeUniformAccess, module);
 
     // PixelLocal must run after DirectVariableAccess to avoid chasing pointer parameters.

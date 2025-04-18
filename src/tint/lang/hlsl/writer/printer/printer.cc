@@ -27,6 +27,7 @@
 
 #include "src/tint/lang/hlsl/writer/printer/printer.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
@@ -579,6 +580,8 @@ class Printer : public tint::TextGenerator {
 
                         break;
                     }
+
+                    // All push_constant address space insts converts to uniform
                     case core::AddressSpace::kPushConstant:
                     default: {
                         TINT_ICE() << "unhandled address space " << space;
@@ -589,9 +592,6 @@ class Printer : public tint::TextGenerator {
     }
 
     void EmitUniformVariable(const core::ir::Var* var) {
-        auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
-        TINT_ASSERT(ptr);
-
         auto bp = var->BindingPoint();
         TINT_ASSERT(bp.has_value());
 
