@@ -248,6 +248,9 @@ struct Options {
     /// Pixel local configuration
     PixelLocalOptions pixel_local;
 
+    /// Push constant binding point info
+    std::optional<BindingPoint> push_constant_binding_point;
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(Options,
                  remapped_entry_point_name,
@@ -264,7 +267,8 @@ struct Options {
                  interstage_locations,
                  root_constant_binding_point,
                  bindings,
-                 pixel_local);
+                 pixel_local,
+                 push_constant_binding_point);
 };
 
 }  // namespace tint::hlsl::writer
