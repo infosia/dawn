@@ -37,6 +37,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a08feecd_8122b592",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-04-18T22:55:21Z",
+      "side": 1,
+      "message": "+1. @ygu@microsoft.com, let\u0027s push answers from QC to, at a minimum, provide us with a driver version which the issue fixed. \n\nSince we only recently got to our current level of conformance, drivers might be new enough that we could just wait for the fix instead of adding more workarounds/complexity to Dawn.",
+      "parentUuid": "d00e921c_35ab530d",
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c84d548_9c4acfb0",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-04-18T22:55:21Z",
+      "side": 1,
+      "message": "Since we\u0027re in the D3D12 backend, use `IsQualcomm_APCI` exclusively. IsQualcomm_PCI will only return true for the Vk backend.",
+      "range": {
+        "startLine": 832,
+        "startChar": 47,
+        "endLine": 832,
+        "endChar": 81
+      },
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1efefdcc_647f6942",
         "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
         "patchSetId": 1
@@ -65,6 +106,47 @@
       "writtenOn": "2025-04-17T11:57:46Z",
       "side": 1,
       "message": "Can we separate this in multiple booleans to aid comprehension?\n\n```\n                // On D3D12 backend all storage buffers without Dynamic Buffer Offset will always be\n                // bound to root descriptor tables, where D3D12 runtime can guarantee that OOB-read\n                // will always return 0 and OOB-write will always take no action, so we don\u0027t need\n                // to do robustness transform on them. Note that we still need to do robustness\n                // transform on uniform buffers because only sized array is allowed in uniform\n                // buffers, so FXC will report compilation error when the indexing to the array in a\n                // cBuffer is out of bound and can be checked at compilation time. Storage buffers\n                // are OK because they are always translated with RWByteAddressBuffers, which has no\n                // such sized arrays.\n                //\n                // For example below WGSL shader will cause compilation error when we skip\n                // robustness transform on uniform buffers:\n                //\n                // struct TestData {\n                //     data: array\u003cvec4\u003cu32\u003e, 3\u003e,\n                // };\n                // @group(0) @binding(0) var\u003cuniform\u003e s: TestData;\n                //\n                // fn test() -\u003e u32 {\n                //     let index \u003d 1000000u;\n                //     if (s.data[index][0] !\u003d 0u) {    // error X3504: array index out of bounds\n                //         return 0x1004u;\n                //     }\n                //     return 0u;\n                // }\n               \t\n                \u003cadd something that talks about the root signature? I\u0027m surprised this is not mentioned\u003e\n                bool isUserStorageBuffer \u003d bufferBindingInfo-\u003etype \u003d\u003d wgpu::BufferBindingType::Storage ||\n                     bufferBindingInfo-\u003etype \u003d\u003d wgpu::BufferBindingType::ReadOnlyStorage;\n                bool rootSignatureHandlesOOB \u003d bindingLayout.hasDynamicOffset;\n                \n                              // On some devices the OOB access of storage buffer may result in undefined result\n                // or possible device reset rather than expected robustness behavior. Robustness\n                // transform should be run on all buffer for these devices.\n                // (https://crbug.com/410985021)\n                if (device-\u003eIsToggleEnabled(Toggle::D3D12RootSignatureOOBCheckNotWorking)) {\n                    rootSignatureHandlesOOB \u003d false;\n                } \n                \n                if (isUserStorageBuffer \u0026\u0026 rootSignatureHandlesOOB) {\n                   // ...\n                }\n```\n\nNotice the renamed toggle as well.",
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fae3686_51262398",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-04-18T22:55:21Z",
+      "side": 1,
+      "message": "\"D3D12RobustnessTransformIgnoreNoBuffer\" is confusingly named to me, specifically the \"ignore no buffer\" part. Are we saying that we need to have robustness checks for all buffers on QC hardware, unconditionally?  If so, should rename to be \"ForceRobustnessCheckForAllBuffers\", or something like that.",
+      "range": {
+        "startLine": 309,
+        "startChar": 53,
+        "endLine": 309,
+        "endChar": 92
+      },
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6e199ad_01e1998f",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-04-18T22:55:21Z",
+      "side": 1,
+      "message": "To clarify, buffers bound in the root signature do NOT have out of bounds checking. [SetGraphicsRootUnorderedAccessView](https://learn.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootunorderedaccessview) and [SetGraphicsRootConstantBufferView](https://learn.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12graphicscommandlist-setgraphicsrootconstantbufferview) just accept a root parameter index and a GPU virtual address. Since no \"size\" or \"count of elements\" is passed in, the driver/hardware is not able to do bounds checking.\n\n[CreateUnorderedAccessView](https://learn.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12device-createunorderedaccessview) and [CreateConstantBufferView](https://learn.microsoft.com/en-us/windows/win32/api/d3d12/nf-d3d12-id3d12device-createconstantbufferview), on the other hand, accept a \"size in bytes\" parameter so the hardware/driver is able to do bounds checking.",
+      "parentUuid": "8584b7eb_8380eb6d",
       "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
