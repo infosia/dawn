@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2198bc91_0690a424",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-04-19T07:16:11Z",
+      "side": 1,
+      "message": "Fixed the WaitAny code to release waiterLock before we acquire event locks to fix a benign lock order inversion that TSAN doesn\u0027t like. Also, modified some comments to be more correct. See the diff from PS1.",
+      "revId": "6dc662720cc4aa09938082b833566ddc2710e6f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
