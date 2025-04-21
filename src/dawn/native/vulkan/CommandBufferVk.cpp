@@ -1260,10 +1260,12 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
 
     DescriptorSetTracker descriptorSets = {};
     RenderPipeline* lastPipeline = nullptr;
+    uint32_t drawCommandCount = 0;
 
     auto EncodeRenderBundleCommand = [&](CommandIterator* iter, Command type) {
         switch (type) {
             case Command::Draw: {
+                drawCommandCount++;
                 DrawCmd* draw = iter->NextCommand<DrawCmd>();
 
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_GRAPHICS);
@@ -1274,6 +1276,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             }
 
             case Command::DrawIndexed: {
+                drawCommandCount++;
                 DrawIndexedCmd* draw = iter->NextCommand<DrawIndexedCmd>();
 
                 descriptorSets.Apply(device, recordingContext, VK_PIPELINE_BIND_POINT_GRAPHICS);
@@ -1284,6 +1287,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             }
 
             case Command::DrawIndirect: {
+                drawCommandCount++;
                 DrawIndirectCmd* draw = iter->NextCommand<DrawIndirectCmd>();
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
 
@@ -1295,6 +1299,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             }
 
             case Command::DrawIndexedIndirect: {
+                drawCommandCount++;
                 DrawIndexedIndirectCmd* draw = iter->NextCommand<DrawIndexedIndirectCmd>();
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
                 DAWN_ASSERT(buffer != nullptr);
@@ -1308,6 +1313,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             }
 
             case Command::MultiDrawIndirect: {
+                drawCommandCount++;
                 MultiDrawIndirectCmd* cmd = iter->NextCommand<MultiDrawIndirectCmd>();
 
                 Buffer* indirectBuffer = ToBackend(cmd->indirectBuffer.Get());
@@ -1333,6 +1339,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
                 break;
             }
             case Command::MultiDrawIndexedIndirect: {
+                drawCommandCount++;
                 MultiDrawIndexedIndirectCmd* cmd = iter->NextCommand<MultiDrawIndexedIndirectCmd>();
 
                 Buffer* indirectBuffer = ToBackend(cmd->indirectBuffer.Get());
@@ -1476,6 +1483,17 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             case Command::EndRenderPass: {
                 mCommands.NextCommand<EndRenderPassCmd>();
 
+                // If no draw commands were executed during the render pass and the
+                // VulkanAddWorkToEmptyResolvePass toggle is enabled, add a small amound of work
+                // in the form of writing a timestamp before ending the pass. This works around a
+                // driver bug that fails to resolve render targets in or empty passes.
+                if (drawCommandCount == 0 &&
+                    device->IsToggleEnabled(Toggle::VulkanAddWorkToEmptyResolvePass)) {
+                    RecordWriteTimestampCmd(recordingContext, device,
+                                            device->GetEmptyPassQuerySet(), 0, true,
+                                            VK_PIPELINE_STAGE_ALL_COMMANDS_BIT);
+                }
+
                 device->fn.CmdEndRenderPass(commands);
 
                 // Write timestamp at the end of render pass if it's set.
@@ -1577,6 +1595,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
             }
 
             case Command::WriteTimestamp: {
+                drawCommandCount++;
                 WriteTimestampCmd* cmd = mCommands.NextCommand<WriteTimestampCmd>();
 
                 RecordWriteTimestampCmd(recordingContext, device, cmd->querySet.Get(),

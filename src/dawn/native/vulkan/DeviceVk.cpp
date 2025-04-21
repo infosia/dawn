@@ -1100,4 +1100,16 @@ bool Device::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage stor
     return true;
 }
 
+// Gets or creates a timestamp Query object for use with Toggle::VulkanAddWorkToEmptyResolvePass.
+QuerySetBase* Device::GetEmptyPassQuerySet() {
+    if (!mEmptyPassQuerySet) {
+        QuerySetDescriptor descriptor = {
+            .type = wgpu::QueryType::Timestamp,
+            .count = 1,
+        };
+        mEmptyPassQuerySet = APICreateQuerySet(&descriptor);
+    }
+    return mEmptyPassQuerySet.Get();
+}
+
 }  // namespace dawn::native::vulkan
