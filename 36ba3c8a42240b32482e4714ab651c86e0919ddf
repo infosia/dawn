@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80417f4d_caf2ea03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-21T10:26:41Z",
+      "side": 1,
+      "message": "Thanks for reviewing! Let\u0027s wait for the QC driver updates in the end of this month.",
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d00e921c_35ab530d",
@@ -183,6 +200,24 @@
       "side": 1,
       "message": "We also [don\u0027t set the flag](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/PipelineLayoutD3D12.cpp;drc\u003de8e3490269a003ae1f1e92c9ae0ae30cdbdd3de0;l\u003d238) on the root signature that will cause the OOB checks to be skipped.",
       "parentUuid": "f6e199ad_01e1998f",
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd3faf37_f2ede196",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-21T10:26:41Z",
+      "side": 1,
+      "message": "\u003e To clarify, buffers bound in the root signature do NOT have out of bounds checking. SetGraphicsRootUnorderedAccessView and SetGraphicsRootConstantBufferView just accept a root parameter index and a GPU virtual address.\n\nYes, but if I get it right Dawn [use descriptor table for non-dynamic-binding-offset buffer](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/PipelineLayoutD3D12.cpp;l\u003d206;drc\u003d5e01cdc5efe08fe9bedf7cc1523b8094b626559d?q\u003dDATA_VOLATILE\u0026ss\u003dchromium%2Fchromium%2Fsrc:third_party%2Fdawn%2Fsrc%2F) instead of directly bound them in the root signature. Only dynamic binding buffers are [directly bound to root signature without using descriptor table](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/PipelineLayoutD3D12.cpp;l\u003d256;drc\u003d5e01cdc5efe08fe9bedf7cc1523b8094b626559d?q\u003dDATA_VOLATILE\u0026ss\u003dchromium%2Fchromium%2Fsrc:third_party%2Fdawn%2Fsrc%2F), and currently we always do index clamping for these DBO buffers.\n\nAnd I concerned that if root signature 1.1 might allow skipping OOB checks by default (as opposite to root signature 1.0) if [DESCRIPTORS_VOLATILE is not set](https://learn.microsoft.com/en-us/windows/win32/direct3d12/root-signature-version-1-1#:~:text\u003dIf%20applications%20depend%20on%20safe%20out%20of%20bounds%20memory%20access%20behavior%20when%20accessing%20descriptors%2C%20they%20need%20to%20mark%20the%20descriptor%20ranges%20that%20access%20those%20descriptors%20as%20DESCRIPTORS_VOLATILE.), as I pasted in the [issue](https://issues.chromium.org/issues/410985021).",
+      "parentUuid": "9392709a_6f12d842",
       "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
