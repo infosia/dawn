@@ -26,6 +26,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # built_target_action() is like action, except that it runs a built target.
+import("//build/config/sanitizers/sanitizers.gni")
 template("built_target_action") {
   assert(defined(invoker.target), "must set 'target'")
   assert(defined(invoker.outputs), "must set 'outputs'")
@@ -43,6 +44,13 @@ template("built_target_action") {
     exe = get_label_info(invoker.target, "root_out_dir") + "/" +
           get_label_info(invoker.target, "name")
     deps = [ invoker.target ]
+    if (!defined(invoker.inputs)) {
+      inputs = []
+    }
+    if ((is_apple || is_win) && (is_asan || is_ubsan_any)) {
+      deps += [ "//build/config/sanitizers:copy_sanitizer_runtime" ]
+      inputs += [ "$root_out_dir/$clang_rt_dso" ]
+    }
     script = "build/run_built_binary.py"
     args = [
              "",
