@@ -820,6 +820,11 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
 
         // chromium:416088623: Some Qualcomm devices have issues with reusing VkFramebuffers.
         deviceToggles->Default(Toggle::VulkanDisableFramebufferCache, true);
+
+        // https://issues.chromium.org/393558555 (the tracking issue for binding_array).
+        // Qualcomm's shader compiler returns an internal error when binding_array<texture*> is
+        // passed by argument to functions.
+        deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
     }
 
     if (IsAndroidARM()) {
@@ -848,6 +853,17 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     if (IsAndroidSwiftshader()) {
         // Disable framebuffer caching to avoid timeout errors seen on some Android emulators.
         deviceToggles->Default(Toggle::VulkanDisableFramebufferCache, true);
+    }
+
+    if (IsSwiftshader()) {
+        // https://issues.chromium.org/393558555 (the tracking issue for binding_array).
+        // Qualcomm's shader compiler returns an internal error when binding_array<texture*> is
+        // passed by argument to functions.
+        //
+        // Swiftshader doesn't handle propagating decorations for descriptors through
+        // OpCompositeExtract which happens when a binding_array is indexed "by value" instead of
+        // through a pointer.
+        deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
     }
 
     if (IsIntelMesa() && gpu_info::IsIntelGen12LP(GetVendorId(), GetDeviceId())) {
@@ -1043,10 +1059,14 @@ bool PhysicalDevice::IsIntelMesa() const {
 
 bool PhysicalDevice::IsAndroidSwiftshader() const {
 #if DAWN_PLATFORM_IS(ANDROID)
-    return gpu_info::IsGoogle(GetVendorId());
+    return IsSwiftshader();
 #else
     return false;
 #endif
+}
+
+bool PhysicalDevice::IsSwiftshader() const {
+    return gpu_info::IsGoogleSwiftshader(GetVendorId(), GetDeviceId());
 }
 
 uint32_t PhysicalDevice::FindDefaultComputeSubgroupSize() const {
