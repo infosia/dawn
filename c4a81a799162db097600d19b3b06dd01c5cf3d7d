@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c542c2a_436f9f88",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-21T09:58:33Z",
+      "side": 1,
+      "message": "Is this compatible with making immidiates use D3D12 root constants on the API side?",
+      "revId": "c4a81a799162db097600d19b3b06dd01c5cf3d7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
