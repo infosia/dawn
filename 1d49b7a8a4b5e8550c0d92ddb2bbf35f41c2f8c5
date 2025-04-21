@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3987362_d9056461",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-21T23:59:31Z",
+      "side": 1,
+      "message": "Sam points out that if anyone really wants this control they can easily just edit the port file (since they control it). So to make things less fragile I simplified it.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 94
+      },
+      "revId": "1d49b7a8a4b5e8550c0d92ddb2bbf35f41c2f8c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
