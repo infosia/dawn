@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae6ba8d8_bc9e5a9e",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-21T11:24:06Z",
+      "side": 1,
+      "message": "Can we use `dawn_install_target` like [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CMakeLists.txt;l\u003d935?q\u003ddawn%2Fnative%2FCMak). It is defined [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/cmake/DawnLibrary.cmake;l\u003d29?q\u003ddawn_add_library).",
+      "revId": "62900c83d1d4d3d036c4d00b8b4ce0da56ac81aa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
