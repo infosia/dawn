@@ -352,7 +352,7 @@ TEST_P(FixedBindingArrayTests, BindingArraySize1CompatibleWithNonArrayedBGL) {
     EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(42, 0, 0, 0), rp.color, 0, 0);
 }
 
-DAWN_INSTANTIATE_TEST(FixedBindingArrayTests, MetalBackend());
+DAWN_INSTANTIATE_TEST(FixedBindingArrayTests, MetalBackend(), VulkanBackend());
 
 }  // anonymous namespace
 }  // namespace dawn
