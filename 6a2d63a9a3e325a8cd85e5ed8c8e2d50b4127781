@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43b812d2_270cb9c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 23
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-21T09:41:15Z",
+      "side": 1,
+      "message": "James, should I remove the end2end tests? They fail the fuzzer while they are not implemented in some writers. I didn\u0027t see a way to add a suppression in the code of `tools/src/cmd/fuzz/main.go`.",
+      "revId": "6a2d63a9a3e325a8cd85e5ed8c8e2d50b4127781",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
