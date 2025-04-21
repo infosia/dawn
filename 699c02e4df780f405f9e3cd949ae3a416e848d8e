@@ -16,6 +16,46 @@
       "message": "PTAL!",
       "revId": "699c02e4df780f405f9e3cd949ae3a416e848d8e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13a18d72_301e0f32",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-21T19:37:42Z",
+      "side": 1,
+      "message": "LGTM, but looks like it needs to wait for C++20 enabled to land.",
+      "revId": "699c02e4df780f405f9e3cd949ae3a416e848d8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "846a190c_0c00be08",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-21T19:37:42Z",
+      "side": 1,
+      "message": "nit. Maybe add an assert here that the toggle is enabled?",
+      "range": {
+        "startLine": 1104,
+        "startChar": 0,
+        "endLine": 1104,
+        "endChar": 46
+      },
+      "revId": "699c02e4df780f405f9e3cd949ae3a416e848d8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
