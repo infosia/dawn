@@ -167,6 +167,24 @@
       "parentUuid": "8584b7eb_8380eb6d",
       "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9392709a_6f12d842",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-21T09:46:46Z",
+      "side": 1,
+      "message": "We also [don\u0027t set the flag](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/PipelineLayoutD3D12.cpp;drc\u003de8e3490269a003ae1f1e92c9ae0ae30cdbdd3de0;l\u003d238) on the root signature that will cause the OOB checks to be skipped.",
+      "parentUuid": "f6e199ad_01e1998f",
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
