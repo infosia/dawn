@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27d7ab3c_8c8a16ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-21T20:35:41Z",
+      "side": 1,
+      "message": "Previous CL failed because I forgot that timestamps aren\u0027t universally enabled. Fortunately it looks like performing occlusion queries works just as well, and only required a minor code tweak.",
+      "revId": "902ed3935098c55e31ce54b250177b6196739ad3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
