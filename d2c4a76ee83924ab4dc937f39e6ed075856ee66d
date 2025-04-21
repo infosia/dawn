@@ -283,6 +283,24 @@
       "parentUuid": "779f5ca1_f2d24afb",
       "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "800db649_3b319571",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-04-21T08:55:25Z",
+      "side": 1,
+      "message": "For the record, I\u0027m ok with the Author line as set.",
+      "parentUuid": "5fac3bfa_bd736fda",
+      "revId": "d2c4a76ee83924ab4dc937f39e6ed075856ee66d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
