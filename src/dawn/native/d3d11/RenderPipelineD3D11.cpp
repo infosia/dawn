@@ -36,6 +36,7 @@
 
 #include "dawn/common/Range.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d/ShaderUtils.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
@@ -238,6 +239,27 @@ MaybeError RenderPipeline::InitializeImpl() {
     DAWN_TRY(InitializeBlendState());
     DAWN_TRY(InitializeShaders());
     DAWN_TRY(InitializeDepthStencilState());
+
+    if (UsesVertexIndex()) {
+        mImmediateMask |= GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, firstVertex), kImmediateConstantElementByteSize);
+    }
+
+    if (UsesInstanceIndex()) {
+        mImmediateMask |= GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, firstInstance), kImmediateConstantElementByteSize);
+
+        // ast transform access first instance and first vertex offset in a uniform buffer with
+        // fixed offset value. Workaround it by:
+        // - Disallow user immediate data when tint IR is not used.
+        // - setting the first instance bit with first vertex bit to get
+        //   the correct offset.
+        const bool useTintIR = GetDevice()->IsToggleEnabled(Toggle::UseTintIR);
+        if (!useTintIR) {
+            mImmediateMask |= GetImmediateConstantBlockBits(
+                offsetof(RenderImmediateConstants, firstVertex), kImmediateConstantElementByteSize);
+        }
+    }
 
     // RTVs and UAVs share the same resoure slots. Make sure here we are not going to run out of
     // slots.
@@ -462,11 +484,11 @@ MaybeError RenderPipeline::InitializeShaders() {
             additionalCompileFlags |= D3DCOMPILE_IEEE_STRICTNESS;
         }
 
-        DAWN_TRY_ASSIGN(
-            compiledShader[SingleShaderStage::Vertex],
-            ToBackend(programmableStage.module)
-                ->Compile(programmableStage, SingleShaderStage::Vertex, ToBackend(GetLayout()),
-                          compileFlags | additionalCompileFlags, usedInterstageVariables));
+        DAWN_TRY_ASSIGN(compiledShader[SingleShaderStage::Vertex],
+                        ToBackend(programmableStage.module)
+                            ->Compile(programmableStage, SingleShaderStage::Vertex,
+                                      ToBackend(GetLayout()), compileFlags | additionalCompileFlags,
+                                      GetImmediateMask(), usedInterstageVariables));
         const Blob& shaderBlob = compiledShader[SingleShaderStage::Vertex].shaderBlob;
         DAWN_TRY(CheckHRESULT(device->GetD3D11Device()->CreateVertexShader(
                                   shaderBlob.Data(), shaderBlob.Size(), nullptr, &mVertexShader),
@@ -530,11 +552,12 @@ MaybeError RenderPipeline::InitializeShaders() {
             additionalCompileFlags |= D3DCOMPILE_IEEE_STRICTNESS;
         }
 
-        DAWN_TRY_ASSIGN(compiledShader[SingleShaderStage::Fragment],
-                        ToBackend(programmableStage.module)
-                            ->Compile(programmableStage, SingleShaderStage::Fragment,
-                                      ToBackend(GetLayout()), compileFlags | additionalCompileFlags,
-                                      usedInterstageVariables, pixelLocalOptions));
+        DAWN_TRY_ASSIGN(
+            compiledShader[SingleShaderStage::Fragment],
+            ToBackend(programmableStage.module)
+                ->Compile(programmableStage, SingleShaderStage::Fragment, ToBackend(GetLayout()),
+                          compileFlags | additionalCompileFlags, GetImmediateMask(),
+                          usedInterstageVariables, pixelLocalOptions));
         DAWN_TRY(CheckHRESULT(device->GetD3D11Device()->CreatePixelShader(
                                   compiledShader[SingleShaderStage::Fragment].shaderBlob.Data(),
                                   compiledShader[SingleShaderStage::Fragment].shaderBlob.Size(),
