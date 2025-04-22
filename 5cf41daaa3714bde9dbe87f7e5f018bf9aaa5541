@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79291776_4b9966c3",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-22T14:26:16Z",
+      "side": 1,
+      "message": "nit: Move this up to 244 so it\u0027s grouped wit the root constant bind point.",
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "957bf1ea_52f4c9b0",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-22T14:26:16Z",
+      "side": 1,
+      "message": "Can some unit tests be added for this (probably to the hlsl/writer/var_let_test file). Probably something that tests with the option set, something without the option and  no vars and something with a bunch of vars",
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cee2bba_09cea788",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-22T14:26:16Z",
+      "side": 1,
+      "message": "nit: remove this comment",
+      "range": {
+        "startLine": 654,
+        "startChar": 0,
+        "endLine": 654,
+        "endChar": 71
+      },
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
