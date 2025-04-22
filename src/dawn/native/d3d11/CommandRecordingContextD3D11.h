@@ -168,9 +168,8 @@ class ScopedCommandRecordingContext : public CommandRecordingContext::Guard {
     void Flush() const;
     void Flush1(D3D11_CONTEXT_TYPE ContextType, HANDLE hEvent) const;
 
-    // Write the built-in variable value to the uniform buffer.
-    void WriteUniformBuffer(uint32_t offset, uint32_t element) const;
-    MaybeError FlushUniformBuffer() const;
+    // Write the immediate constants value to the uniform buffer.
+    MaybeError WriteUniformBuffer(uint32_t offset, const void* data, size_t size) const;
 
     MaybeError AcquireKeyedMutex(Ref<d3d::KeyedMutex> keyedMutex) const;
 
