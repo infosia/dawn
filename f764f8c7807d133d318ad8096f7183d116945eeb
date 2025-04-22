@@ -88,6 +88,24 @@
       "parentUuid": "13c189ce_91625a13",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcea467a_440b7242",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-22T12:40:22Z",
+      "side": 1,
+      "message": "\u003e WDYT of having a chained struct in DeviceDescriptor that says \"please don\u0027t consume the adapter\"?\n\nAnd I would make sure all `requestDevice()` in tests  calls that require it uses this new `DawnConsumeAdapterDeviceDescriptor` struct?\n\n\u003e Or an option in adapter creation to the same effect.\n\nWere you thinking of an optional boolean in RequestAdapterOptions struct, or a separate chained struct that would extend it?",
+      "parentUuid": "d2b9f49a_33751def",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
