@@ -130,6 +130,10 @@
                 "returns": "instance"
             },
             {
+                "name": "consume",
+                "tags": ["dawn"]
+            },
+            {
                 "name": "get limits",
                 "returns": "status",
                 "args": [

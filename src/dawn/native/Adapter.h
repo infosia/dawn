@@ -60,6 +60,7 @@ class AdapterBase : public RefCounted, public WeakRefSupport<AdapterBase> {
 
     // WebGPU API
     InstanceBase* APIGetInstance() const;
+    void APIConsume();
     wgpu::Status APIGetLimits(Limits* limits) const;
     wgpu::Status APIGetInfo(AdapterInfo* info) const;
     bool APIHasFeature(wgpu::FeatureName feature) const;
@@ -114,6 +115,10 @@ class AdapterBase : public RefCounted, public WeakRefSupport<AdapterBase> {
     TogglesState mTogglesState;
 
     wgpu::PowerPreference mPowerPreference;
+
+    // The adapter becomes "consumed" once it has successfully been used to
+    // create a device.
+    bool mAdapterIsConsumed = false;
 };
 
 std::vector<Ref<AdapterBase>> SortAdapters(std::vector<Ref<AdapterBase>> adapters,
