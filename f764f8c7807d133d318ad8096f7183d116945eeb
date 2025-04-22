@@ -106,6 +106,24 @@
       "parentUuid": "d2b9f49a_33751def",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65a76243_2aea6e16",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-22T18:31:12Z",
+      "side": 1,
+      "message": "If we add something, it would probably need to be a separate extension struct to make sure that `RequestAdapterOptions` remains the same as the one upstream.",
+      "parentUuid": "bcea467a_440b7242",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
