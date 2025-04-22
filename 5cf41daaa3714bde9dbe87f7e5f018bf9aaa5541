@@ -37,6 +37,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ff2e7328_a006c509",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-22T21:08:04Z",
+      "side": 1,
+      "message": "Nit: Doesn\u0027t look like `ptr` is used for anything other than this assertion, so can just remove these two lines.",
+      "range": {
+        "startLine": 649,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 25
+      },
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1cee2bba_09cea788",
         "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
         "patchSetId": 3
@@ -54,6 +77,51 @@
         "endLine": 654,
         "endChar": 71
       },
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b85135b8_6c992600",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-22T21:08:04Z",
+      "side": 1,
+      "message": "Nit: `group \u003d  std::max(group, bp_visited-\u003egroup + 1)`",
+      "fixSuggestions": [
+        {
+          "fixId": "a9ce59e7_5ca7fa0b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 33,
+                "startChar": 0,
+                "endLine": 33,
+                "endChar": 0
+              },
+              "replacement": "#include \u003calgorithm\u003e\n"
+            },
+            {
+              "path": "src/tint/lang/hlsl/writer/printer/printer.cc",
+              "range": {
+                "startLine": 663,
+                "startChar": 0,
+                "endLine": 666,
+                "endChar": 0
+              },
+              "replacement": "                        group \u003d std::max(group, bp_visited-\u003egroup + 1);\n"
+            }
+          ]
+        }
+      ],
       "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
