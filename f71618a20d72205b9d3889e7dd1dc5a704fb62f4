@@ -51,6 +51,23 @@
       "parentUuid": "bc5bb5ea_12c0e01e",
       "revId": "f71618a20d72205b9d3889e7dd1dc5a704fb62f4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdc1173c_dd1a0f1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-22T07:27:31Z",
+      "side": 1,
+      "message": "Now that https://skia-review.googlesource.com/c/skia/+/983136 is landed we are good to go with C++20!",
+      "revId": "f71618a20d72205b9d3889e7dd1dc5a704fb62f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
