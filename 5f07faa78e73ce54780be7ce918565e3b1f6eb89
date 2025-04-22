@@ -108,6 +108,23 @@
       },
       "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46ed50b7_7fb782ae",
+        "filename": "src/tint/cmd/bench/glsl/writer_bench.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-22T18:49:22Z",
+      "side": 1,
+      "message": "The GLSL changes seem unrelated to the entry point name change, should we split them to a separate CL?",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
