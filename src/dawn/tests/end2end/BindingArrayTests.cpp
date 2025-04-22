@@ -34,6 +34,14 @@ namespace {
 
 class SizedBindingArrayTests : public DawnTest {
   public:
+    void SetUp() override {
+        DawnTest::SetUp();
+
+        // TODO(411573959) Fails using WARP but not on real hardware. WARP 10.0.19031.4355 samples
+        // the wrong textures when indexing while WARP 1.0.12.0 fails pipeline creation.
+        DAWN_SUPPRESS_TEST_IF(IsD3D12() && IsWARP());
+    }
+
     wgpu::Texture MakeTestR8Texture(uint8_t value) {
         wgpu::TextureDescriptor desc;
         desc.size = {1, 1};
@@ -103,6 +111,9 @@ TEST_P(SizedBindingArrayTests, IndexingWithConstants) {
 
 // Test accessing a binding_array with dynamically uniform values.
 TEST_P(SizedBindingArrayTests, IndexingWithDynamicallyUniformValues) {
+    // Compat should disallow dynamically uniform indexing of binding_array of textures.
+    DAWN_TEST_UNSUPPORTED_IF(IsCompatibilityMode());
+
     // Make the test pipeline
     wgpu::ShaderModule module = utils::CreateShaderModule(device, R"(
         @vertex fn vs() -> @builtin(position) vec4f {
@@ -456,7 +467,11 @@ TEST_P(SizedBindingArrayTests, BindingArrayOfSampledTexturesPassedAsArgument) {
     EXPECT_PIXEL_RGBA8_EQ(utils::RGBA8(3, 2, 1, 0), rp.color, 0, 0);
 }
 
-DAWN_INSTANTIATE_TEST(SizedBindingArrayTests, MetalBackend(), VulkanBackend());
+DAWN_INSTANTIATE_TEST(SizedBindingArrayTests,
+                      D3D11Backend({"use_tint_ir"}, {}),
+                      D3D12Backend({"use_tint_ir"}, {}),
+                      MetalBackend(),
+                      VulkanBackend());
 
 }  // anonymous namespace
 }  // namespace dawn
