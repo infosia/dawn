@@ -118,6 +118,30 @@
       },
       "revId": "7d4af9bfd1a5a10575cf4ef3bc4703126620d312",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2b4764b_14b1c4e1",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-22T18:35:42Z",
+      "side": 1,
+      "message": "Yea looks like the change somehow got dropped. I think it\u0027s worth re-fixing it in a follow up.",
+      "parentUuid": "0a198b98_c5149c81",
+      "range": {
+        "startLine": 389,
+        "startChar": 4,
+        "endLine": 488,
+        "endChar": 10
+      },
+      "revId": "7d4af9bfd1a5a10575cf4ef3bc4703126620d312",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
