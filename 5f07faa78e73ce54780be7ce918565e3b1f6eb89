@@ -16,6 +16,63 @@
       "message": "Please take a look, thanks!",
       "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5118dae7_2557bd10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-22T15:23:23Z",
+      "side": 1,
+      "message": "LGTM overall, any way to test this in src/dawn/tests/end2end/PipelineCachingTests.cpp ?",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a8ea931_67b8c6ae",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-22T15:23:23Z",
+      "side": 1,
+      "message": "This should already be an unguessable token so why do we need to hash it?",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a514096d_88f9d507",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-22T15:23:23Z",
+      "side": 1,
+      "message": "nit: use a string_view so that we don\u0027t have to recompute the size later. Also \"secure\" is a bit weird. Maybe `GetIsolatedEntryPointName` since is has to do with the isolation key. Can we also have a comment about why this is useful?",
+      "range": {
+        "startLine": 431,
+        "startChar": 4,
+        "endLine": 431,
+        "endChar": 14
+      },
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
