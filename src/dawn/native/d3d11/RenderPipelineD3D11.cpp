@@ -36,6 +36,7 @@
 
 #include "dawn/common/Range.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d/ShaderUtils.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
@@ -238,6 +239,16 @@ MaybeError RenderPipeline::InitializeImpl() {
     DAWN_TRY(InitializeBlendState());
     DAWN_TRY(InitializeShaders());
     DAWN_TRY(InitializeDepthStencilState());
+
+    if (UsesVertexIndex()) {
+        mImmediateMask |= GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, firstVertex), kImmediateConstantElementByteSize);
+    }
+
+    if (UsesInstanceIndex()) {
+        mImmediateMask |= GetImmediateConstantBlockBits(
+            offsetof(RenderImmediateConstants, firstInstance), kImmediateConstantElementByteSize);
+    }
 
     // RTVs and UAVs share the same resoure slots. Make sure here we are not going to run out of
     // slots.

@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
 #include "dawn/native/d3d11/ShaderModuleD3D11.h"
@@ -50,6 +51,11 @@ ComputePipeline::~ComputePipeline() = default;
 MaybeError ComputePipeline::InitializeImpl() {
     Device* device = ToBackend(GetDevice());
     uint32_t compileFlags = 0;
+
+    if (UsesNumWorkgroups()) {
+        mImmediateMask |= GetImmediateConstantBlockBits(
+            offsetof(ComputeImmediateConstants, numWorkgroups), kImmediateConstantElementByteSize);
+    }
 
     if (!device->IsToggleEnabled(Toggle::UseDXC) &&
         !device->IsToggleEnabled(Toggle::FxcOptimizations)) {
