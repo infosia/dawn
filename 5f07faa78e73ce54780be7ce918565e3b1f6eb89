@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "341d6942_307ad343",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-22T18:45:19Z",
+      "side": 1,
+      "message": "LGTM for Dawn side changes.",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a8ea931_67b8c6ae",
@@ -48,6 +65,24 @@
       "writtenOn": "2025-04-22T15:23:23Z",
       "side": 1,
       "message": "This should already be an unguessable token so why do we need to hash it?",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56c374b7_f0a0d2de",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-22T18:45:19Z",
+      "side": 1,
+      "message": "It is from Chromium, but since it\u0027s passed into Dawn as a `wgpu::StringView` it doesn\u0027t always have to be a unguessable token. I think hashing it here is fine to make it work everywhere else also.",
+      "parentUuid": "9a8ea931_67b8c6ae",
       "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
