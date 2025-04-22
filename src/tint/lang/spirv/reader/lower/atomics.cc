@@ -30,6 +30,7 @@
 #include <utility>
 
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/clone_context.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/builtin_structs.h"
@@ -62,8 +63,17 @@ struct State {
     /// loads/stores updated to match. This maps to the root FunctionParam or Var for each atomic.
     Vector<core::ir::Value*, 8> values_to_fix_usages_{};
 
+    /// Any `ir::UserCall` instructions which have atomic params which need to
+    /// be updated.
+    Hashset<core::ir::UserCall*, 2> user_calls_to_convert_{};
+
     /// The `ir::Value`s which have been converted
     Hashset<core::ir::Value*, 8> converted_{};
+
+    /// Function to atomic replacements, this is done by hashcode since the
+    /// function pointer is combined with the parameters which are converted to
+    /// atomics.
+    Hashmap<size_t, core::ir::Function*, 4> func_hash_to_func_{};
 
     struct ForkedStruct {
         const core::type::Struct* src_struct = nullptr;
@@ -151,9 +161,22 @@ struct State {
         ProcessForkedStructs();
         ReplaceStructTypes();
 
+        // The double loop happens because when we convert user calls, that will
+        // add more values to convert, but those values can find user calls to
+        // convert, so we have to work until we stabilize
         while (!values_to_fix_usages_.IsEmpty()) {
-            auto* val = values_to_fix_usages_.Pop();
-            ConvertUsagesToAtomic(val);
+            while (!values_to_fix_usages_.IsEmpty()) {
+                auto* val = values_to_fix_usages_.Pop();
+                ConvertUsagesToAtomic(val);
+            }
+
+            auto user_calls = user_calls_to_convert_.Vector();
+            // Sort for deterministic output
+            user_calls.Sort();
+            for (auto& call : user_calls) {
+                ConvertUserCall(call);
+            }
+            user_calls_to_convert_.Clear();
         }
     }
 
@@ -353,9 +376,7 @@ struct State {
                         values_to_fix_usages_.Push(res);
                     }
                 },
-                [&](core::ir::UserCall*) {
-                    // This should have been handled as a function parameter above.
-                },
+                [&](core::ir::UserCall* uc) { user_calls_to_convert_.Add(uc); },
                 [&](core::ir::CoreBuiltinCall* bc) {
                     // This was converted when we switched from a SPIR-V intrinsic to core
                     TINT_ASSERT(core::IsAtomic(bc->Func()));
@@ -363,6 +384,55 @@ struct State {
                 },
                 TINT_ICE_ON_NO_MATCH);
         });
+    }
+
+    // The user calls need to check all of the parameters which were converted
+    // to atomics and create a forked function call for that combination of
+    // parameters.
+    void ConvertUserCall(core::ir::UserCall* uc) {
+        auto* target = uc->Target();
+        auto& params = target->Params();
+
+        Vector<size_t, 2> to_convert;
+        for (size_t i = 0; i < uc->Args().Length(); ++i) {
+            // If we already have an atomic type in that place then we converted
+            // it previously so we can ignore it.
+            if (params[i]->Type()->UnwrapPtr()->Is<core::type::Atomic>()) {
+                continue;
+            }
+
+            auto& arg = uc->Args()[i];
+            if (arg->Type()->UnwrapPtr()->Is<core::type::Atomic>()) {
+                to_convert.Push(i);
+            }
+        }
+        // Everything is already converted we're done.
+        if (to_convert.IsEmpty()) {
+            return;
+        }
+
+        // Hash based on the original function pointer and the specific
+        // parameters we're converting.
+        auto hash = Hash(target);
+        hash = HashCombine(hash, to_convert);
+
+        core::ir::Function* new_fn = nullptr;
+        auto v = func_hash_to_func_.Get(hash);
+        if (v) {
+            new_fn = *v;
+        } else {
+            core::ir::CloneContext ctx{ir};
+            new_fn = uc->Target()->Clone(ctx);
+            ir.functions.Push(new_fn);
+
+            for (auto idx : to_convert) {
+                auto* p = new_fn->Params()[idx];
+                p->SetType(AtomicTypeFor(nullptr, p->Type()));
+                values_to_fix_usages_.Push(p);
+            }
+            func_hash_to_func_.Add(hash, new_fn);
+        }
+        uc->SetTarget(new_fn);
     }
 
     const core::type::Type* TypeForAccess(core::ir::Access* access) {
