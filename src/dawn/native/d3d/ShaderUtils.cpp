@@ -217,7 +217,7 @@ ResultOrError<ComPtr<ID3DBlob>> CompileShaderFXC(const d3d::D3DBytecodeCompilati
 
     if (FAILED(result)) {
         const char* resultAsString = HRESULTAsString(result);
-        if (dumpShaders) {
+        if (true) {
             std::string errorMsg = errors ? static_cast<char*>(errors->GetBufferPointer()) : "";
             return DAWN_VALIDATION_ERROR(
                 "FXC compile failed with error: %s msg: %s\n/* Generated HLSL: */\n%s\n",
