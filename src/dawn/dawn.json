@@ -273,6 +273,15 @@
           {"name": "allocator heap block size", "type": "size_t", "default": 0}
       ]
     },
+    "dawn consume adapter device descriptor": {
+      "tags": ["dawn"],
+      "category": "structure",
+      "chained": "in",
+      "chain roots": ["device descriptor"],
+      "members": [
+          {"name": "consume adapter", "type": "bool", "default": "true"}
+      ]
+    },
     "dawn WGSL blocklist": {
         "tags": ["dawn", "native"],
         "category": "structure",
@@ -3845,7 +3854,8 @@
             {"value": 63, "name": "dawn compilation message utf16", "tags": ["dawn", "emscripten"]},
             {"value": 64, "name": "dawn fake buffer OOM for testing", "tags": ["dawn"]},
             {"value": 65, "name": "surface descriptor from windows WinUI swap chain panel", "tags": ["dawn"]},
-            {"value": 66, "name": "dawn device allocator control", "tags": ["dawn"]}
+            {"value": 66, "name": "dawn device allocator control", "tags": ["dawn"]},
+            {"value": 67, "name": "dawn consume adapter device descriptor", "tags": ["dawn"]}
         ]
     },
     "texture": {

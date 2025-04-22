@@ -300,6 +300,8 @@ ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
     Ref<DeviceBase::DeviceLostEvent> lostEvent) {
     DAWN_ASSERT(rawDescriptor != nullptr);
 
+    DAWN_INVALID_IF(mIsConsumed, "Adapter has been consumed already.");
+
     // Create device toggles state from required toggles descriptor and inherited adapter toggles
     // state.
     UnpackedPtr<DeviceDescriptor> descriptor;
@@ -356,7 +358,20 @@ ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
                         allocatorDesc->allocatorHeapBlockSize);
     }
 
-    return mPhysicalDevice->CreateDevice(this, descriptor, deviceToggles, std::move(lostEvent));
+    bool consumeAdapterAfterSuccess = true;
+    if (auto* consumeAdapterDesc = descriptor.Get<DawnConsumeAdapterDeviceDescriptor>()) {
+        consumeAdapterAfterSuccess = consumeAdapterDesc->consumeAdapter;
+    }
+
+    auto result =
+        mPhysicalDevice->CreateDevice(this, descriptor, deviceToggles, std::move(lostEvent));
+
+    if (consumeAdapterAfterSuccess && !result.IsError()) {
+        // The adapter won't be able to create another device anymore.
+        mIsConsumed = true;
+    }
+
+    return result;
 }
 
 std::pair<Ref<DeviceBase::DeviceLostEvent>, ResultOrError<Ref<DeviceBase>>>

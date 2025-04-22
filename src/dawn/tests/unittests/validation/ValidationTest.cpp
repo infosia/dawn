@@ -415,6 +415,10 @@ void ValidationTest::SetUp(const wgpu::InstanceDescriptor* nativeDesc,
     wgpu::Limits requiredLimits = GetRequiredLimits(supportedLimits);
     deviceDescriptor.requiredLimits = &requiredLimits;
 
+    wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc = {};
+    consumeAdapterDesc.consumeAdapter = false;
+    deviceDescriptor.nextInChain = &consumeAdapterDesc;
+
     device = RequestDeviceSync(deviceDescriptor);
     DAWN_ASSERT(device);
 

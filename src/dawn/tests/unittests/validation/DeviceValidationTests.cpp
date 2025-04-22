@@ -95,6 +95,10 @@ TEST_F(RequestDeviceValidationTest, HigherIsBetter) {
     wgpu::DeviceDescriptor descriptor;
     descriptor.requiredLimits = &limits;
 
+    wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc = {};
+    consumeAdapterDesc.consumeAdapter = false;
+    descriptor.nextInChain = &consumeAdapterDesc;
+
     wgpu::Limits supportedLimits;
     EXPECT_EQ(adapter.GetLimits(&supportedLimits), wgpu::Status::Success);
 
@@ -160,6 +164,10 @@ TEST_F(RequestDeviceValidationTest, LowerIsBetter) {
     wgpu::Limits limits = {};
     wgpu::DeviceDescriptor descriptor;
     descriptor.requiredLimits = &limits;
+
+    wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc = {};
+    consumeAdapterDesc.consumeAdapter = false;
+    descriptor.nextInChain = &consumeAdapterDesc;
 
     wgpu::Limits supportedLimits;
     EXPECT_EQ(adapter.GetLimits(&supportedLimits), wgpu::Status::Success);
@@ -392,6 +400,10 @@ TEST_F(RequestDeviceWithImmediateDataValidationTest, HigherIsBetter) {
     descriptor.requiredFeatures = requiredFeatures.data();
     descriptor.requiredFeatureCount = requiredFeatures.size();
     descriptor.requiredLimits = &limits;
+
+    wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc = {};
+    consumeAdapterDesc.consumeAdapter = false;
+    descriptor.nextInChain = &consumeAdapterDesc;
 
     wgpu::Limits supportedLimits;
     wgpu::DawnExperimentalImmediateDataLimits dawnExperimentalImmediateDataLimits =

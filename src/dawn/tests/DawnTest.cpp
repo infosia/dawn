@@ -1163,9 +1163,13 @@ WGPUDevice DawnTestBase::CreateDeviceImpl(std::string isolationKey,
     deviceDescriptor.requiredFeatures = requiredFeatures.data();
     deviceDescriptor.requiredFeatureCount = requiredFeatures.size();
 
+    wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc = {};
+    consumeAdapterDesc.consumeAdapter = false;
+    deviceDescriptor.nextInChain = &consumeAdapterDesc;
+
     wgpu::DawnCacheDeviceDescriptor cacheDesc = {};
-    deviceDescriptor.nextInChain = &cacheDesc;
     cacheDesc.isolationKey = isolationKey.c_str();
+    consumeAdapterDesc.nextInChain = &cacheDesc;
 
     // Note that AllowUnsafeAPIs is enabled when creating testing instance and would be
     // inherited to all adapters' toggles set.
