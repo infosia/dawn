@@ -299,9 +299,13 @@ class VulkanImageWrappingUsageTests : public VulkanImageWrappingTestBase {
             return;
         }
 
+        wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc = {};
+        consumeAdapterDesc.consumeAdapter = false;
+        deviceDescriptor.nextInChain = &consumeAdapterDesc;
+
         // Create another device based on the original
         adapterBase = native::FromAPI(device.Get())->GetAdapter();
-        deviceDescriptor.nextInChain = &deviceTogglesDesc;
+        consumeAdapterDesc.nextInChain = &deviceTogglesDesc;
         deviceTogglesDesc.enabledToggles = GetParam().forceEnabledWorkarounds.data();
         deviceTogglesDesc.enabledToggleCount = GetParam().forceEnabledWorkarounds.size();
         deviceTogglesDesc.disabledToggles = GetParam().forceDisabledWorkarounds.data();
