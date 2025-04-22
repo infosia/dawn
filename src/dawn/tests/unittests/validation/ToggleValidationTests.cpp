@@ -69,6 +69,9 @@ TEST_F(ToggleValidationTest, OverrideToggleUsage) {
         descriptor.nextInChain = &deviceTogglesDesc;
         deviceTogglesDesc.enabledToggles = &kValidToggleName;
         deviceTogglesDesc.enabledToggleCount = 1;
+        wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc;
+        consumeAdapterDesc.consumeAdapter = false;
+        deviceTogglesDesc.nextInChain = &consumeAdapterDesc;
 
         wgpu::Device deviceWithToggle =
             wgpu::Device::Acquire(GetBackendAdapter().CreateDevice(&descriptor));

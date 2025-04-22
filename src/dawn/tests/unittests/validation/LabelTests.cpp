@@ -341,9 +341,13 @@ TEST_F(LabelTest, QuerySet) {
 TEST_F(LabelTest, Queue) {
     std::string label = "test";
 
+    wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc = {};
+    consumeAdapterDesc.consumeAdapter = false;
+
     // The label should be empty if one was not set.
     {
         wgpu::DeviceDescriptor descriptor;
+        descriptor.nextInChain = &consumeAdapterDesc;
         wgpu::Device labelDevice =
             wgpu::Device::Acquire(GetBackendAdapter().CreateDevice(&descriptor));
         std::string readbackLabel = native::GetObjectLabelForTesting(labelDevice.GetQueue().Get());
@@ -353,6 +357,7 @@ TEST_F(LabelTest, Queue) {
     // Test setting a label through API
     {
         wgpu::DeviceDescriptor descriptor;
+        descriptor.nextInChain = &consumeAdapterDesc;
         wgpu::Device labelDevice =
             wgpu::Device::Acquire(GetBackendAdapter().CreateDevice(&descriptor));
         labelDevice.GetQueue().SetLabel(label.c_str());
@@ -363,6 +368,7 @@ TEST_F(LabelTest, Queue) {
     // Test setting a label through the descriptor.
     {
         wgpu::DeviceDescriptor descriptor;
+        descriptor.nextInChain = &consumeAdapterDesc;
         descriptor.defaultQueue.label = label.c_str();
         wgpu::Device labelDevice =
             wgpu::Device::Acquire(GetBackendAdapter().CreateDevice(&descriptor));
