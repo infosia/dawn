@@ -33,6 +33,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Log.h"
+#include "dawn/native/ImmediateConstantsLayout.h"
 #include "dawn/native/Pipeline.h"
 #include "dawn/native/TintUtils.h"
 #include "dawn/native/d3d/D3DCompilationRequest.h"
@@ -80,6 +81,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     SingleShaderStage stage,
     const PipelineLayout* layout,
     uint32_t compileFlags,
+    const ImmediateConstantMask& pipelineImmediateMask,
     const std::optional<dawn::native::d3d::InterStageShaderVariablesMask>& usedInterstageVariables,
     const std::optional<tint::hlsl::writer::PixelLocalOptions>& pixelLocalOptions) {
     Device* device = ToBackend(GetDevice());
@@ -223,6 +225,35 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.hlsl.tintOptions.disable_workgroup_init =
         device->IsToggleEnabled(Toggle::DisableWorkgroupInit);
     req.hlsl.tintOptions.bindings = std::move(bindings);
+
+    if (useTintIR) {
+        req.hlsl.tintOptions.immediate_binding_point =
+            tint::BindingPoint{0, PipelineLayout::kReservedConstantBufferSlot};
+
+        // Set internal immediate constant offsets
+        if (stage == SingleShaderStage::Compute) {
+            if (HasImmediateConstants(&ComputeImmediateConstants::numWorkgroups,
+                                      pipelineImmediateMask)) {
+                uint32_t offsetStartBytes = GetImmediateByteOffsetInPipeline(
+                    &ComputeImmediateConstants::numWorkgroups, pipelineImmediateMask);
+                req.hlsl.tintOptions.num_workgroups_start_offset = offsetStartBytes;
+            }
+        } else {
+            if (HasImmediateConstants(&RenderImmediateConstants::firstVertex,
+                                      pipelineImmediateMask)) {
+                uint32_t offsetStartBytes = GetImmediateByteOffsetInPipeline(
+                    &RenderImmediateConstants::firstVertex, pipelineImmediateMask);
+                req.hlsl.tintOptions.first_index_offset = offsetStartBytes;
+            }
+
+            if (HasImmediateConstants(&RenderImmediateConstants::firstInstance,
+                                      pipelineImmediateMask)) {
+                uint32_t offsetStartBytes = GetImmediateByteOffsetInPipeline(
+                    &RenderImmediateConstants::firstInstance, pipelineImmediateMask);
+                req.hlsl.tintOptions.first_instance_offset = offsetStartBytes;
+            }
+        }
+    }
 
     if (entryPoint.usesNumWorkgroups) {
         DAWN_ASSERT(stage == SingleShaderStage::Compute);
