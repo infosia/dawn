@@ -190,8 +190,10 @@ void ValidationTest::SetUp() {
         instanceToggles.enabledToggleCount = 1;
         instanceToggles.enabledToggles = &allowUnsafeApisToggle;
     }
-
-    wgpu::InstanceDescriptor instanceDesc = {};
+    static constexpr auto kMultipleDevicesPerAdapter =
+        wgpu::InstanceFeatureName::MultipleDevicesPerAdapter;
+    wgpu::InstanceDescriptor instanceDesc = {.requiredFeatureCount = 1,
+                                             .requiredFeatures = &kMultipleDevicesPerAdapter};
     instanceDesc.nextInChain = &instanceToggles;
     static constexpr auto kRequiredFeatures =
         std::array{wgpu::InstanceFeatureName::ShaderSourceSPIRV};
