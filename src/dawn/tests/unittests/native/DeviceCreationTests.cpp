@@ -59,8 +59,13 @@ class DeviceCreationTest : public testing::Test {
     void SetUp() override {
         dawnProcSetProcs(&GetProcs());
 
+        static constexpr auto kMultipleDevicesPerAdapter =
+            wgpu::InstanceFeatureName::MultipleDevicesPerAdapter;
         // Create an instance with default toggles and create an adapter from it.
-        wgpu::InstanceDescriptor safeInstanceDesc = {};
+        wgpu::InstanceDescriptor safeInstanceDesc = {
+            .requiredFeatureCount = 1,
+            .requiredFeatures = &kMultipleDevicesPerAdapter,
+        };
         instance = std::make_unique<Instance>(&safeInstanceDesc);
 
         wgpu::RequestAdapterOptions options = {};
@@ -75,7 +80,10 @@ class DeviceCreationTest : public testing::Test {
         wgpu::DawnTogglesDescriptor unsafeInstanceTogglesDesc = {};
         unsafeInstanceTogglesDesc.enabledToggleCount = 1;
         unsafeInstanceTogglesDesc.enabledToggles = &allowUnsafeApisToggle;
-        wgpu::InstanceDescriptor unsafeInstanceDesc = {};
+        wgpu::InstanceDescriptor unsafeInstanceDesc = {
+            .requiredFeatureCount = 1,
+            .requiredFeatures = &kMultipleDevicesPerAdapter,
+        };
         unsafeInstanceDesc.nextInChain = &unsafeInstanceTogglesDesc;
 
         unsafeInstance = std::make_unique<Instance>(&unsafeInstanceDesc);
@@ -360,6 +368,23 @@ TEST_F(DeviceCreationTest, AdapterMaxImmediateSize) {
                 EXPECT_NE(device.Get(), nullptr);
             });
     }
+}
+
+// Test failed call to CreateDevice when adapter has been consumed.
+TEST_F(DeviceCreationTest, AdapterIsConsumed) {
+    // Create an instance without MultipleDevicesPerAdapter feature and create an adapter from it.
+    auto instance = std::make_unique<Instance>();
+
+    wgpu::RequestAdapterOptions options = {};
+    options.backendType = wgpu::BackendType::Null;
+
+    auto adapter = instance->EnumerateAdapters(&options)[0];
+
+    wgpu::Device device1 = adapter.CreateDevice();
+    EXPECT_NE(device1, nullptr);
+
+    wgpu::Device device2 = adapter.CreateDevice();
+    EXPECT_EQ(device2, nullptr);
 }
 
 class DeviceCreationFutureTest : public DeviceCreationTest,
