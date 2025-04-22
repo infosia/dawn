@@ -51,6 +51,24 @@
       "message": "I think this is already covered by this existing timer?\nhttps://source.chromium.org/chromium/chromium/src/+/refs/tags/137.0.7140.0:third_party/dawn/src/dawn/native/d3d12/ShaderModuleD3D12.cpp;l\u003d385-386",
       "revId": "a309b1617feb6b30cf17279c7aef54ef2fecfa08",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "770766ee_b2a78660",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-04-22T16:55:14Z",
+      "side": 1,
+      "message": "You are correct and the data does appear correctly in finch. I will remove.",
+      "parentUuid": "42a7e2b7_8e508d09",
+      "revId": "a309b1617feb6b30cf17279c7aef54ef2fecfa08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
