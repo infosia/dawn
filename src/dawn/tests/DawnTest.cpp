@@ -426,10 +426,11 @@ std::unique_ptr<native::Instance> DawnTestEnvironment::CreateInstance(
 
     wgpu::InstanceDescriptor instanceDesc{};
     instanceDesc.nextInChain = &dawnInstanceDesc;
+    wgpu::InstanceFeatureName features[] = {wgpu::InstanceFeatureName::TimedWaitAny,
+                                            wgpu::InstanceFeatureName::MultipleDevicesPerAdapter};
     if (!UsesWire()) {
-        static constexpr auto kTimedWaitAny = wgpu::InstanceFeatureName::TimedWaitAny;
-        instanceDesc.requiredFeatureCount = 1;
-        instanceDesc.requiredFeatures = &kTimedWaitAny;
+        instanceDesc.requiredFeatureCount = 2;
+        instanceDesc.requiredFeatures = features;
     }
 
     auto instance = std::make_unique<native::Instance>(

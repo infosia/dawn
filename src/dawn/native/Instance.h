@@ -118,6 +118,7 @@ class InstanceBase final : public ErrorSink, public RefCountedWithExternalCount<
     BackendValidationLevel GetBackendValidationLevel() const;
 
     bool IsBeginCaptureOnStartupEnabled() const;
+    bool AllowMultipleDevicesPerAdapter() const;
 
     // Testing only API that is NOT thread-safe.
     void SetPlatformForTesting(dawn::platform::Platform* platform);
@@ -220,6 +221,11 @@ class InstanceBase final : public ErrorSink, public RefCountedWithExternalCount<
     std::unique_ptr<DeprecationWarnings> mDeprecationWarnings;
 
     MutexProtected<absl::flat_hash_set<DeviceBase*>> mDevicesList;
+
+    // Normally, an adapter can only create a single device. If this is true, then adapters won't
+    // immediately expire when they create a device, so can be reused to make multiple devices. They
+    // may still expire for other reasons.
+    bool mAllowMultipleDevicesPerAdapter = false;
 };
 
 }  // namespace dawn::native
