@@ -152,7 +152,11 @@ TEST_F(FeatureTests, RequireAndGetEnabledFeatures) {
                 requiredExperimentalFeature || IsExperimental(requiredFeature);
         }
 
+        wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc = {};
+        consumeAdapterDesc.consumeAdapter = false;
+
         wgpu::DeviceDescriptor deviceDescriptor;
+        deviceDescriptor.nextInChain = &consumeAdapterDesc;
         deviceDescriptor.requiredFeatures = features.data();
         deviceDescriptor.requiredFeatureCount = features.size();
 

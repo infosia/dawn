@@ -352,10 +352,14 @@ class DeviceToggleTest : public ToggleTest {
         const wgpu::DawnTogglesDescriptor* requiredDeviceToggles,
         std::initializer_list<const char*> expectedEnabledToggles,
         std::initializer_list<const char*> expectedDisabledToggles) {
-        native::DeviceDescriptor desc{};
-        desc.nextInChain = requiredDeviceToggles;
+        wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc = {};
+        consumeAdapterDesc.consumeAdapter = false;
+        consumeAdapterDesc.nextInChain = requiredDeviceToggles;
 
-        // Creater a device with given toggles descriptor from the adapter.
+        native::DeviceDescriptor desc{};
+        desc.nextInChain = &consumeAdapterDesc;
+
+        // Create a device with given toggles descriptor from the adapter.
         Ref<native::DeviceBase> device = AcquireRef(adapter->APICreateDevice(&desc));
 
         // Check device toggles state is as expected.
