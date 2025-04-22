@@ -587,9 +587,8 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
                             "Pipeline override substitution (IR) failed:\n%s",
                             substituteOverridesResult.Failure().reason);
 
-            const std::string remappedEntryPoint = "";
             // Generate GLSL from Tint IR.
-            auto result = tint::glsl::writer::Generate(ir.Get(), r.tintOptions, remappedEntryPoint);
+            auto result = tint::glsl::writer::Generate(ir.Get(), r.tintOptions);
             DAWN_INVALID_IF(result != tint::Success, "An error occurred while generating GLSL:\n%s",
                             result.Failure().reason);
 

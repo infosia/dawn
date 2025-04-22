@@ -428,6 +428,8 @@ class DeviceBase : public ErrorSink,
 
     bool HasFlexibleTextureViews() const;
 
+    const char* GetSecureEntryPointName() const;
+
   protected:
     // Constructor used only for mocking and testing.
     DeviceBase();
@@ -600,6 +602,7 @@ class DeviceBase : public ErrorSink,
     std::string mLabel;
 
     CacheKey mDeviceCacheKey;
+    std::string mSecureEntryPointName;
     std::unique_ptr<BlobCache> mBlobCache;
 
     // We cache this toggle so that we can check it without locking the device.
