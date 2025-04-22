@@ -224,6 +224,11 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         device->IsToggleEnabled(Toggle::DisableWorkgroupInit);
     req.hlsl.tintOptions.bindings = std::move(bindings);
 
+    if (useTintIR) {
+        req.hlsl.tintOptions.immediate_binding_point =
+            tint::BindingPoint{0, PipelineLayout::kReservedConstantBufferSlot};
+    }
+
     if (entryPoint.usesNumWorkgroups) {
         DAWN_ASSERT(stage == SingleShaderStage::Compute);
         req.hlsl.tintOptions.root_constant_binding_point =
