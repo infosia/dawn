@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "294f4e2d_5429c0b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-22T17:17:42Z",
+      "side": 1,
+      "message": "Actually, could you expand on this? Is there something in this CL that requires C++20 and I don\u0027t realize it, or is it simply anticipated to have a merge conflict once that lands?",
+      "parentUuid": "ce362b25_7fe9ad14",
+      "revId": "699c02e4df780f405f9e3cd949ae3a416e848d8e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "846a190c_0c00be08",

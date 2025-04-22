@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce5c5674_89b823bf",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-22T17:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7987af5_4c9bd8a2",
+      "range": {
+        "startLine": 1489,
+        "startChar": 76,
+        "endLine": 1489,
+        "endChar": 81
+      },
+      "revId": "074ae239ab80921f6cdcac3c56f724832c30f576",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "600bf44d_43cf465e",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-04-21T22:12:50Z",
       "side": 1,
       "message": "Probably shouldn\u0027t be called a draw command since queries also do it\n\n(especially since we have maxDrawCount which this could be confused with)",
+      "range": {
+        "startLine": 1600,
+        "startChar": 16,
+        "endLine": 1600,
+        "endChar": 32
+      },
+      "revId": "074ae239ab80921f6cdcac3c56f724832c30f576",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63cff62c_9e16a3d1",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-22T17:17:42Z",
+      "side": 1,
+      "message": "Good call. Changed to `workCommandCount` with a comment to explain what it tracks.",
+      "parentUuid": "600bf44d_43cf465e",
       "range": {
         "startLine": 1600,
         "startChar": 16,
