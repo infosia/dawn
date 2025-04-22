@@ -290,6 +290,11 @@ MaybeError InstanceBase::Initialize(const UnpackedPtr<InstanceDescriptor>& descr
     DAWN_TRY(mEventManager.Initialize(descriptor));
     GatherWGSLFeatures(descriptor.Get<DawnWGSLBlocklist>());
 
+    for (auto feature : std::span(descriptor->requiredFeatures, descriptor->requiredFeatureCount)) {
+        if (feature == wgpu::InstanceFeatureName::MultipleDevicesPerAdapter) {
+            mAllowMultipleDevicesPerAdapter = true;
+        }
+    }
     return {};
 }
 
@@ -546,6 +551,10 @@ BackendValidationLevel InstanceBase::GetBackendValidationLevel() const {
 
 bool InstanceBase::IsBeginCaptureOnStartupEnabled() const {
     return mBeginCaptureOnStartup;
+}
+
+bool InstanceBase::AllowMultipleDevicesPerAdapter() const {
+    return mAllowMultipleDevicesPerAdapter;
 }
 
 void InstanceBase::SetPlatform(dawn::platform::Platform* platform) {

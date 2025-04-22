@@ -305,7 +305,21 @@ ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
                         allocatorDesc->allocatorHeapBlockSize);
     }
 
-    return mPhysicalDevice->CreateDevice(this, descriptor, deviceToggles, std::move(lostEvent));
+    DAWN_INVALID_IF(mAdapterIsConsumed,
+                    "adapter is \"consumed\": it has already been used to create a device");
+
+    auto result =
+        mPhysicalDevice->CreateDevice(this, descriptor, deviceToggles, std::move(lostEvent));
+
+    // The adapter should be consumed only upon successful device creation if the instance doesn't
+    // allow multiple devices per adapter, or if the descriptor explicitly requests consumption.
+    auto* consumeAdapterDesc = descriptor.Get<DawnConsumeAdapterDescriptor>();
+    if (result.IsSuccess() && (!mInstance->AllowMultipleDevicesPerAdapter() ||
+                               (consumeAdapterDesc && consumeAdapterDesc->consumeAdapter))) {
+        mAdapterIsConsumed = true;
+    }
+
+    return result;
 }
 
 std::pair<Ref<DeviceBase::DeviceLostEvent>, ResultOrError<Ref<DeviceBase>>>
