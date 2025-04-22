@@ -52,9 +52,6 @@
 namespace dawn::native::metal {
 namespace {
 
-// The name to use when remapping entry points.
-constexpr char kRemappedEntryPointName[] = "dawn_entry_point";
-
 using OptionalVertexPullingTransformConfig = std::optional<tint::VertexPullingConfig>;
 using SubstituteOverrideConfig = std::unordered_map<tint::OverrideId, double>;
 
@@ -276,7 +273,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.platform = UnsafeUnkeyedValue(device->GetPlatform());
 
     req.tintOptions.strip_all_names = !req.disableSymbolRenaming;
-    req.tintOptions.remapped_entry_point_name = kRemappedEntryPointName;
+    req.tintOptions.remapped_entry_point_name = device->GetSecureEntryPointName();
     req.tintOptions.disable_robustness = !device->IsRobustnessEnabled();
     req.tintOptions.buffer_size_ubo_index = kBufferLengthBufferSlot;
     req.tintOptions.fixed_sample_mask = sampleMask;
@@ -358,10 +355,10 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
                   msl;
 
             auto workgroupAllocations =
-                std::move(result->workgroup_info.allocations.at(kRemappedEntryPointName));
+                std::move(result->workgroup_info.allocations.at(device->GetSecureEntryPointName()));
             return MslCompilation{{
                 std::move(msl),
-                std::move(kRemappedEntryPointName),
+                device->GetSecureEntryPointName(),
                 result->needs_storage_buffer_sizes,
                 result->has_invariant_attribute,
                 std::move(workgroupAllocations),
