@@ -90,7 +90,7 @@ MaybeError ComputePipeline::InitializeImpl() {
                                               /*emitPointSize*/ false, GetImmediateMask()));
 
     createInfo.stage.module = moduleAndSpirv.module;
-    createInfo.stage.pName = kRemappedEntryPointName;
+    createInfo.stage.pName = device->GetIsolatedEntryPointName().data();
     createInfo.stage.pSpecializationInfo = nullptr;
 
     // If the shader stage uses subgroup matrix types, we need to enable full subgroups to guarantee
