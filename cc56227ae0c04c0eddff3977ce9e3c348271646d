@@ -39,6 +39,72 @@
       },
       "revId": "cc56227ae0c04c0eddff3977ce9e3c348271646d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99c83217_8717dddb",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2025-04-22T14:45:23Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "697fbe75_e5b7f3b6",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "cc56227ae0c04c0eddff3977ce9e3c348271646d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3299ff7b_487b2d16",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2025-04-22T14:45:23Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "697fbe75_e5b7f3b6",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "09e0e0eb_e6861dd4",
+          "description": "User suggestion",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis.h",
+              "range": {
+                "startLine": 31,
+                "startChar": 0,
+                "endLine": 33,
+                "endChar": 17
+              },
+              "replacement": "#include \u003ccstdint\u003e\n#include \u003cmemory\u003e"
+            }
+          ]
+        }
+      ],
+      "revId": "cc56227ae0c04c0eddff3977ce9e3c348271646d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
