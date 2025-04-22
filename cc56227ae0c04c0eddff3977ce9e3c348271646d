@@ -16,6 +16,29 @@
       "message": "Adding Dan for a second +2.",
       "revId": "cc56227ae0c04c0eddff3977ce9e3c348271646d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "697fbe75_e5b7f3b6",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-22T14:24:24Z",
+      "side": 1,
+      "message": "```suggestion\n#include \u003ccstdint\u003e\n#include \u003cmemory\u003e\n```",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "cc56227ae0c04c0eddff3977ce9e3c348271646d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
