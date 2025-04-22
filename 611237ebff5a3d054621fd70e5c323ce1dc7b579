@@ -16,6 +16,100 @@
       "message": "PTAL, thanks!",
       "revId": "611237ebff5a3d054621fd70e5c323ce1dc7b579",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d5da10b_b07afadb",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-22T20:38:13Z",
+      "side": 1,
+      "message": "Nit: Slightly more readable and consistent to have these under the case statements like you did above.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 71
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "00a2f69f_068d7ec1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+              "range": {
+                "startLine": 125,
+                "startChar": 0,
+                "endLine": 125,
+                "endChar": 0
+              },
+              "replacement": "            case BinaryOp::kLessThan:\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+              "range": {
+                "startLine": 128,
+                "startChar": 0,
+                "endLine": 129,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+              "range": {
+                "startLine": 132,
+                "startChar": 0,
+                "endLine": 132,
+                "endChar": 0
+              },
+              "replacement": "            case BinaryOp::kGreaterThan:\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+              "range": {
+                "startLine": 135,
+                "startChar": 0,
+                "endLine": 136,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "611237ebff5a3d054621fd70e5c323ce1dc7b579",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad6b94af_d0e122f7",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-22T20:38:13Z",
+      "side": 1,
+      "message": "Once this is all landed I think it might be worth refactoring a little to fold this logic into the equivalent switch in `GetBinaryToCompareLoopControlVariableInLoopBody` (e.g. by having that function return the `CompareOpAndConstRHS` result). That keeps the checks next to the code that makes the assumptions, which feels more robust, and also makes things shorter by not doing this switch statement twice.",
+      "range": {
+        "startLine": 133,
+        "startChar": 35,
+        "endLine": 133,
+        "endChar": 71
+      },
+      "revId": "611237ebff5a3d054621fd70e5c323ce1dc7b579",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
