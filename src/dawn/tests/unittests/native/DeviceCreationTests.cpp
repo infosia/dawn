@@ -196,6 +196,10 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
         deviceDescriptor.requiredFeatures = &featureName;
         deviceDescriptor.requiredFeatureCount = 1;
 
+        wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc = {};
+        consumeAdapterDesc.consumeAdapter = false;
+        deviceDescriptor.nextInChain = &consumeAdapterDesc;
+
         // Test creating device on default adapter would fail.
         {
             wgpu::Device device = adapter.CreateDevice(&deviceDescriptor);
@@ -204,8 +208,6 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
         // Test creating device on the adapter with AllowUnsafeApis toggle enabled would succeed.
         {
-            deviceDescriptor.nextInChain = nullptr;
-
             wgpu::Device device = unsafeAdapter.CreateDevice(&deviceDescriptor);
             EXPECT_NE(device, nullptr);
 
@@ -224,7 +226,8 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
             wgpu::DawnTogglesDescriptor deviceTogglesDesc;
             deviceTogglesDesc.enabledToggles = enableToggles;
             deviceTogglesDesc.enabledToggleCount = 1;
-            deviceDescriptor.nextInChain = &deviceTogglesDesc;
+            consumeAdapterDesc.nextInChain = &deviceTogglesDesc;
+            deviceDescriptor.nextInChain = &consumeAdapterDesc;
 
             // Test on adapter with AllowUnsafeApis disabled.
             {
@@ -260,7 +263,8 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
             wgpu::DawnTogglesDescriptor deviceToggleDesc;
             deviceToggleDesc.disabledToggles = disableToggles;
             deviceToggleDesc.disabledToggleCount = 1;
-            deviceDescriptor.nextInChain = &deviceToggleDesc;
+            consumeAdapterDesc.nextInChain = &deviceToggleDesc;
+            deviceDescriptor.nextInChain = &consumeAdapterDesc;
 
             // Test on adapter with DisallowUnsafeApis enabled.
             {
@@ -278,15 +282,18 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 }
 
 TEST_F(DeviceCreationTest, CreateDeviceWithCacheSuccess) {
+    wgpu::DawnConsumeAdapterDeviceDescriptor consumeAdapterDesc = {};
+    consumeAdapterDesc.consumeAdapter = false;
     // Default device descriptor should have the same cache key as a device descriptor with a
     // default cache descriptor.
     {
         wgpu::DeviceDescriptor desc = {};
+        desc.nextInChain = &consumeAdapterDesc;
         wgpu::Device device1 = adapter.CreateDevice(&desc);
         EXPECT_NE(device1, nullptr);
 
         wgpu::DawnCacheDeviceDescriptor cacheDesc = {};
-        desc.nextInChain = &cacheDesc;
+        consumeAdapterDesc.nextInChain = &cacheDesc;
         wgpu::Device device2 = adapter.CreateDevice(&desc);
 
         EXPECT_EQ(FromAPI(device1.Get())->GetCacheKey(), FromAPI(device2.Get())->GetCacheKey());
@@ -295,11 +302,12 @@ TEST_F(DeviceCreationTest, CreateDeviceWithCacheSuccess) {
     // a non-default cache descriptor.
     {
         wgpu::DeviceDescriptor desc = {};
+        desc.nextInChain = &consumeAdapterDesc;
         wgpu::Device device1 = adapter.CreateDevice(&desc);
         EXPECT_NE(device1, nullptr);
 
         wgpu::DawnCacheDeviceDescriptor cacheDesc = {};
-        desc.nextInChain = &cacheDesc;
+        consumeAdapterDesc.nextInChain = &cacheDesc;
         const char* isolationKey = "isolation key";
         cacheDesc.isolationKey = isolationKey;
         wgpu::Device device2 = adapter.CreateDevice(&desc);
@@ -313,7 +321,8 @@ TEST_F(DeviceCreationTest, CreateDeviceWithCacheSuccess) {
         const char* isolationKey1 = "isolation key 1";
         const char* isolationKey2 = "isolation key 2";
         wgpu::DeviceDescriptor desc = {};
-        desc.nextInChain = &cacheDesc;
+        consumeAdapterDesc.nextInChain = &cacheDesc;
+        desc.nextInChain = &consumeAdapterDesc;
 
         cacheDesc.isolationKey = isolationKey1;
         wgpu::Device device1 = adapter.CreateDevice(&desc);
