@@ -424,6 +424,14 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
                 ->Result();
         }
         if (num_workgroups_index == idx) {
+            if (config.num_workgroups_start_offset.has_value()) {
+                auto* push_constants = config.push_constant_layout.var;
+                auto num_workgroup_idx = u32(config.push_constant_layout.IndexOf(
+                    config.num_workgroups_start_offset.value()));
+                auto* load = builder.Load(builder.Access<ptr<push_constant, vec3<u32>>>(
+                    push_constants, num_workgroup_idx));
+                return load->Result();
+            }
             return GetInputForNumWorkgroups(builder);
         }
 
@@ -438,20 +446,38 @@ struct StateImpl : core::ir::transform::ShaderIOBackendState {
             auto* div = builder.Divide(ty.f32(), 1.0_f, w);
             auto* swizzle = builder.Swizzle(ty.vec3<f32>(), v, {0, 1, 2});
             v = builder.Construct(ty.vec4<f32>(), swizzle, div)->Result();
-        } else if (config.first_index_offset_binding.has_value() &&
+        } else if (config.first_index_offset_binding.has_value()) {
+            if (inputs[idx].attributes.builtin == core::BuiltinValue::kVertexIndex) {
+                // Apply vertex_index offset
+                TINT_ASSERT(tint_first_index_offset);
+                auto* vertex_index_offset =
+                    builder.Access(ty.ptr<uniform, u32>(), tint_first_index_offset, 0_u);
+                v = builder.Add<u32>(v, builder.Load(vertex_index_offset))->Result();
+            }
+
+            if (inputs[idx].attributes.builtin == core::BuiltinValue::kInstanceIndex) {
+                // Apply instance_index offset
+                TINT_ASSERT(tint_first_index_offset);
+                auto* instance_index_offset =
+                    builder.Access(ty.ptr<uniform, u32>(), tint_first_index_offset, 1_u);
+                v = builder.Add<u32>(v, builder.Load(instance_index_offset))->Result();
+            }
+        } else if (config.first_index_offset.has_value() &&
                    inputs[idx].attributes.builtin == core::BuiltinValue::kVertexIndex) {
-            // Apply vertex_index offset
-            TINT_ASSERT(tint_first_index_offset);
-            auto* vertex_index_offset =
-                builder.Access(ty.ptr<uniform, u32>(), tint_first_index_offset, 0_u);
-            v = builder.Add<u32>(v, builder.Load(vertex_index_offset))->Result();
-        } else if (config.first_index_offset_binding.has_value() &&
+            auto* push_constants = config.push_constant_layout.var;
+            auto first_index_offset_idx =
+                u32(config.push_constant_layout.IndexOf(config.first_index_offset.value()));
+            auto first_index_offset =
+                builder.Access<ptr<push_constant, u32>>(push_constants, first_index_offset_idx);
+            v = builder.Add<u32>(v, builder.Load(first_index_offset))->Result();
+        } else if (config.first_instance_offset.has_value() &&
                    inputs[idx].attributes.builtin == core::BuiltinValue::kInstanceIndex) {
-            // Apply instance_index offset
-            TINT_ASSERT(tint_first_index_offset);
-            auto* instance_index_offset =
-                builder.Access(ty.ptr<uniform, u32>(), tint_first_index_offset, 1_u);
-            v = builder.Add<u32>(v, builder.Load(instance_index_offset))->Result();
+            auto* push_constants = config.push_constant_layout.var;
+            auto first_instance_offset_idx =
+                u32(config.push_constant_layout.IndexOf(config.first_instance_offset.value()));
+            auto first_instance_offset =
+                builder.Access<ptr<push_constant, u32>>(push_constants, first_instance_offset_idx);
+            v = builder.Add<u32>(v, builder.Load(first_instance_offset))->Result();
         }
 
         return v;
