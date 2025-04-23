@@ -45,7 +45,7 @@ def main(args):
     # Append overrides to the default .emscripten file for certain binaries.
     em_overrides = '''
 # Overrides from dawn/tools/activate-emsdk:
-del PYTHON
+PYTHON = ''
 '''
     if options.node:
         em_overrides += f"NODE_JS = emsdk_path + '/../../{options.node}'\n"
