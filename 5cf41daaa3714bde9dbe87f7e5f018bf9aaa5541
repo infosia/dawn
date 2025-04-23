@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eff02f7b_5418bc05",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-23T09:33:38Z",
+      "side": 1,
+      "message": "Ok, it seems that cbuffer requires a 16-byte row alignment. I think push constant also need this transforms.",
+      "parentUuid": "f65f5bd8_89ad6cae",
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff2e7328_a006c509",
         "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
         "patchSetId": 3
