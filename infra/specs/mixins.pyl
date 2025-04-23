@@ -36,16 +36,10 @@
 #
 # For more info see Chromium's mixins.pyl in testing/buildbot.
 
-{ 'chromium-tester-service-account': { 'fail_if_unused': False,
-                                       'swarming': { 'service_account': 'chromium-tester@chops-service-accounts.iam.gserviceaccount.com'}},
-  'gpu-swarming-pool': { 'fail_if_unused': False,
-                         'swarming': { 'dimensions': { 'pool': 'chromium.tests.gpu'}}},
-  'linux-jammy': { 'fail_if_unused': False,
-                   'swarming': {'dimensions': {'os': 'Ubuntu-22.04'}}},
-  'no_gpu': { 'fail_if_unused': False,
-              'swarming': {'dimensions': {'gpu': 'none'}}},
+{ 'chromium-tester-service-account': { 'swarming': { 'service_account': 'chromium-tester@chops-service-accounts.iam.gserviceaccount.com'}},
+  'gpu-swarming-pool': { 'swarming': { 'dimensions': { 'pool': 'chromium.tests.gpu'}}},
+  'linux-jammy': {'swarming': {'dimensions': {'os': 'Ubuntu-22.04'}}},
+  'no_gpu': {'swarming': {'dimensions': {'gpu': 'none'}}},
   'result_adapter_gtest_json': {'resultdb': {'result_format': 'gtest_json'}},
-  'swarming_containment_auto': { 'fail_if_unused': False,
-                                 'swarming': {'containment_type': 'AUTO'}},
-  'x86-64': { 'fail_if_unused': False,
-              'swarming': {'dimensions': {'cpu': 'x86-64'}}}}
+  'swarming_containment_auto': {'swarming': {'containment_type': 'AUTO'}},
+  'x86-64': {'swarming': {'dimensions': {'cpu': 'x86-64'}}}}
