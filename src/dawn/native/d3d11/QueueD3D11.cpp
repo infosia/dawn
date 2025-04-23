@@ -154,12 +154,7 @@ MaybeError Queue::InitializePendingContext() {
     Ref<BufferBase> uniformBuffer;
     DAWN_TRY_ASSIGN(uniformBuffer,
                     CommandRecordingContext::CreateInternalUniformBuffer(GetDevice()));
-
-    {
-        auto persistentCommandContext =
-            GetScopedSwapStatePendingCommandContext(SubmitMode::Passive);
-        DAWN_TRY(persistentCommandContext.SetInternalUniformBuffer(std::move(uniformBuffer)));
-    }
+    DAWN_TRY(mPendingCommands->SetInternalUniformBuffer(std::move(uniformBuffer)));
 
     return {};
 }
