@@ -365,6 +365,10 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
     mLimits.texelCopyBufferRowAlignmentLimits =
         GetPhysicalDevice()->GetLimits().texelCopyBufferRowAlignmentLimits;
 
+    // Get hostMappedPointerAlignmentLimits from physical device
+    mLimits.hostMappedPointerAlignmentLimits =
+        GetPhysicalDevice()->GetLimits().hostMappedPointerAlignmentLimits;
+
     // Handle maxXXXPerStage/maxXXXInStage.
     EnforceLimitSpecInvariants(&mLimits.v1, effectiveFeatureLevel);
 
@@ -1828,6 +1832,22 @@ wgpu::Status DeviceBase::APIGetLimits(Limits* limits) const {
 
         // Recover origin chain.
         texelCopyBufferRowAlignmentLimits->nextInChain = originalChain;
+    }
+
+    if (auto* hostMappedPointerAlignmentLimits =
+            unpacked.Get<DawnHostMappedPointerAlignmentLimits>()) {
+        wgpu::ChainedStructOut* originalChain = hostMappedPointerAlignmentLimits->nextInChain;
+        if (!HasFeature(Feature::HostMappedPointer)) {
+            // If the feature is not enabled, return the default-initialized
+            // DawnHostMappedPointerAlignmentLimits object, where hostMappedPointerAlignment is
+            // wgpu::kLimitU32Undefined.
+            *hostMappedPointerAlignmentLimits = DawnHostMappedPointerAlignmentLimits{};
+        } else {
+            *hostMappedPointerAlignmentLimits = mLimits.hostMappedPointerAlignmentLimits;
+        }
+
+        // Recover origin chain.
+        hostMappedPointerAlignmentLimits->nextInChain = originalChain;
     }
 
     return wgpu::Status::Success;

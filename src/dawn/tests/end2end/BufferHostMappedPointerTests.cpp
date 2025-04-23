@@ -50,12 +50,12 @@ void BufferHostMappedPointerTests::SetUp() {
     DawnTestWithParams<BufferHostMappedPointerTestParams>::SetUp();
     DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::HostMappedPointer}));
 
-    // TODO(crbug.com/dawn/2018): Expose a proper limit for the alignment.
-    if (IsD3D12()) {
-        mRequiredAlignment = 65536;
-    } else {
-        mRequiredAlignment = 4096;
-    }
+    wgpu::Limits limits;
+    wgpu::DawnHostMappedPointerAlignmentLimits hostAlignmentLimits;
+    limits.nextInChain = &hostAlignmentLimits;
+    device.GetLimits(&limits);
+
+    mRequiredAlignment = hostAlignmentLimits.hostMappedPointerAlignment;
 }
 
 GTEST_ALLOW_UNINSTANTIATED_PARAMETERIZED_TEST(BufferHostMappedPointerTests);

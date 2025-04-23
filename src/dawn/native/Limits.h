@@ -41,6 +41,7 @@ namespace dawn::native {
 struct CombinedLimits {
     Limits v1;
     DawnExperimentalImmediateDataLimits experimentalImmediateDataLimits;
+    DawnHostMappedPointerAlignmentLimits hostMappedPointerAlignmentLimits;
     DawnTexelCopyBufferRowAlignmentLimits texelCopyBufferRowAlignmentLimits;
 };
 

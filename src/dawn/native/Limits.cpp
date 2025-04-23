@@ -289,6 +289,11 @@ MaybeError ValidateAndUnpackLimitsIn(const Limits* chainedLimits,
             << "DawnTexelCopyBufferRowAlignmentLimits is not supported in required limits";
     }
 
+    if (unpacked.Get<DawnHostMappedPointerAlignmentLimits>()) {
+        dawn::WarningLog()
+            << "hostMappedPointerAlignmentLimits is not supported in required limits";
+    }
+
     return {};
 }
 

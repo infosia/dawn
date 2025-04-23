@@ -154,6 +154,22 @@ wgpu::Status AdapterBase::APIGetLimits(Limits* limits) const {
         texelCopyBufferRowAlignmentLimits->nextInChain = originalChain;
     }
 
+    if (auto* hostMappedPointerAlignmentLimits =
+            unpacked.Get<DawnHostMappedPointerAlignmentLimits>()) {
+        wgpu::ChainedStructOut* originalChain = hostMappedPointerAlignmentLimits->nextInChain;
+        if (!mSupportedFeatures.IsEnabled(wgpu::FeatureName::HostMappedPointer)) {
+            // If the feature is not enabled, hostMappedPointerAlignment is default-initialized to
+            // WGPU_LIMIT_U32_UNDEFINED.
+            *hostMappedPointerAlignmentLimits = DawnHostMappedPointerAlignmentLimits{};
+        } else {
+            hostMappedPointerAlignmentLimits->hostMappedPointerAlignment =
+                mLimits.hostMappedPointerAlignmentLimits.hostMappedPointerAlignment;
+        }
+
+        // Recover origin chain.
+        hostMappedPointerAlignmentLimits->nextInChain = originalChain;
+    }
+
     return wgpu::Status::Success;
 }
 
