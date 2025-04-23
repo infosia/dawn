@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "82cc98b7_6329bc53",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-23T14:45:15Z",
+      "side": 1,
+      "message": "Ah C++ :((((",
+      "parentUuid": "eba6e244_7b09de15",
+      "revId": "59050bb1ba2111572d831be04679145cb69c817d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73d51d02_e09aa540",
         "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
         "patchSetId": 5
