@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd4ae66a_0180aa2f",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-23T07:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79291776_4b9966c3",
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "957bf1ea_52f4c9b0",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-04-22T14:26:16Z",
       "side": 1,
       "message": "Can some unit tests be added for this (probably to the hlsl/writer/var_let_test file). Probably something that tests with the option set, something without the option and  no vars and something with a bunch of vars",
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f65f5bd8_89ad6cae",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-23T07:03:48Z",
+      "side": 1,
+      "message": "Done for this comments. But I find that for uniform buffer emitting in hlsl backend, it change all types into uint4 arrays and using transform to replace all access words. I don\u0027t know why we do this and wonder whether \"push constant\" block should adopt the same rules. Would you mind to tell me more thing about this?",
+      "parentUuid": "957bf1ea_52f4c9b0",
       "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4a4c1cc_7b8d40e6",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-23T07:03:48Z",
+      "side": 1,
+      "message": "(EmitUniformVarialbe has same issue. Delete them too.)\nDone.",
+      "parentUuid": "ff2e7328_a006c509",
+      "range": {
+        "startLine": 649,
+        "startChar": 0,
+        "endLine": 650,
+        "endChar": 25
+      },
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1cee2bba_09cea788",
@@ -71,6 +131,30 @@
       "writtenOn": "2025-04-22T14:26:16Z",
       "side": 1,
       "message": "nit: remove this comment",
+      "range": {
+        "startLine": 654,
+        "startChar": 0,
+        "endLine": 654,
+        "endChar": 71
+      },
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11f37eee_7dc43871",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-23T07:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cee2bba_09cea788",
       "range": {
         "startLine": 654,
         "startChar": 0,
@@ -122,6 +206,24 @@
           ]
         }
       ],
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8b02c5f_bf6fcf50",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-23T07:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b85135b8_6c992600",
       "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
