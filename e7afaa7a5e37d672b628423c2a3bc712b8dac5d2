@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "391cb817_751e1fb9",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 32
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-23T02:12:44Z",
+      "side": 1,
+      "message": "Done, and thanks for reminding me, the builds were broken.",
+      "parentUuid": "bd30bb62_3d09d3c7",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 54
+      },
+      "revId": "e7afaa7a5e37d672b628423c2a3bc712b8dac5d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a76d5b80_17d1a340",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-04-22T18:53:48Z",
       "side": 1,
       "message": "Thoughts on moving this in here or into gpuweb so that we can have this generated instead of checking it in?",
+      "range": {
+        "startLine": 8,
+        "startChar": 3,
+        "endLine": 8,
+        "endChar": 73
+      },
+      "revId": "e7afaa7a5e37d672b628423c2a3bc712b8dac5d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "564b889e_8aee8693",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu-externs.js",
+        "patchSetId": 32
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-23T02:12:44Z",
+      "side": 1,
+      "message": "Filed https://crbug.com/412738263",
+      "parentUuid": "a76d5b80_17d1a340",
       "range": {
         "startLine": 8,
         "startChar": 3,
