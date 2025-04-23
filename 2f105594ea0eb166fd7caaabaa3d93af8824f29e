@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "862ffbde_b450ea4d",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-23T15:05:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1132173a_60d6e241",
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "573eccad_aad5fc39",
