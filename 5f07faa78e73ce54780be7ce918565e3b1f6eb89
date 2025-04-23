@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9aaca6ce_47a5fe8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-23T17:32:53Z",
+      "side": 1,
+      "message": "The pipeline cache key includes the device cache key at construction. See example for `ComputePipeline` here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ComputePipeline.cpp;l\u003d68;drc\u003db6620a02fa498df5297e53241b54a31f488ca440;bpv\u003d1;bpt\u003d1",
+      "parentUuid": "9e6ea1d4_cb508dc7",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9a8ea931_67b8c6ae",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 4
@@ -173,6 +191,24 @@
       "side": 1,
       "message": "Yes if we print the bytes in isolation key as hex we don\u0027t need special handling.",
       "parentUuid": "bbeb652a_00b4f6d7",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69b1a772_553df85a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-23T17:32:53Z",
+      "side": 1,
+      "message": "Yea, I was imagining the hashing was basically a sanitation function in this case to make the string a known fixed length.",
+      "parentUuid": "fb5fe53b_df4ed1e2",
       "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
