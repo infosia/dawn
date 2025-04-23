@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2811eb4a_24cbcd99",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-23T01:03:18Z",
+      "side": 1,
+      "message": "Nit: Could just use a `UniqueVector`?",
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "573eccad_aad5fc39",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-23T01:03:18Z",
+      "side": 1,
+      "message": "Nit: `auto\u0026 arg \u003d uc-\u003eArgs();`",
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a7a1e25_494b9f46",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-23T01:03:18Z",
+      "side": 1,
+      "message": "Could probably just do `if (params[i]-\u003eType() !\u003d arg-\u003eType()) { to_convert.Push(i); }` for both checks at once?\n\nIf the parameter type is different to the argument type, it needs to be converted.",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 405,
+        "endChar": 69
+      },
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0f6fc76_2f5b7aa4",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-23T01:03:18Z",
+      "side": 1,
+      "message": "Nit: This looks like `auto* new_fn \u003d func_hash_to_func_.GetOrAdd(hash, ...);`.",
+      "range": {
+        "startLine": 419,
+        "startChar": 0,
+        "endLine": 423,
+        "endChar": 16
+      },
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab343a63_9641bbe6",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-23T01:03:18Z",
+      "side": 1,
+      "message": "Nit: `p-\u003eSetType(args[idx]-\u003eType())` saves having to re-create the type.",
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e83331bd_509f2afa",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2955,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-23T01:03:18Z",
+      "side": 1,
+      "message": "Nit: s/Without/With/\n(my fault)",
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
