@@ -46,6 +46,30 @@
       },
       "revId": "aab0c85e090518037b68ccdd5df2f9645947e575",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d4e9de4_2b177985",
+        "filename": "tools/activate-emsdk",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-23T22:24:27Z",
+      "side": 1,
+      "message": "I haven\u0027t added the option yet, since the CL I linked was blocked by all the DEPS stuff that Ryan was working on. But yea, I think it might be easier to just add the option now, and use it so we default to the system Python for now.",
+      "parentUuid": "fcaf02c6_834a4ba0",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 76
+      },
+      "revId": "aab0c85e090518037b68ccdd5df2f9645947e575",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
