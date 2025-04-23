@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "9e526ef71748ab2d483576191c7892e85093db36",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ebfaa46_4901c6dc",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-23T17:04:26Z",
+      "side": 1,
+      "message": "Maybe just make this `AddETCCompressedFomat`? I think that\u0027s the only other place we use this right now.",
+      "range": {
+        "startLine": 421,
+        "startChar": 9,
+        "endLine": 421,
+        "endChar": 28
+      },
+      "revId": "9e526ef71748ab2d483576191c7892e85093db36",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
