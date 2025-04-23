@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df98e74c_d775968d",
+        "filename": "src/dawn/tests/end2end/BindingArrayTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-23T21:02:05Z",
+      "side": 1,
+      "message": "nit. Is there any particular reason these aren\u0027t in reverse order w.r.t the binding numbers? Also, it might be easier to follow if we just use increasing values in the textures also since it makes it easier to understand the expected results.",
+      "range": {
+        "startLine": 388,
+        "startChar": 58,
+        "endLine": 391,
+        "endChar": 96
+      },
+      "revId": "6fdf8b601ac7203377224941def7a581229f00d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "191b6da1_3a979961",
+        "filename": "src/dawn/tests/end2end/BindingArrayTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-23T21:02:05Z",
+      "side": 1,
+      "message": "nit. Maybe just to make the distinction between the two tests a bit more clear:\n\"Test accessing a binding_array of sample textures when the entire binding array is passed as a function argument.\"",
+      "range": {
+        "startLine": 410,
+        "startChar": 3,
+        "endLine": 410,
+        "endChar": 82
+      },
+      "revId": "6fdf8b601ac7203377224941def7a581229f00d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fad760e4_2b4269f9",
+        "filename": "src/dawn/tests/end2end/BindingArrayTests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-23T21:02:05Z",
+      "side": 1,
+      "message": "nit. ditto here.",
+      "range": {
+        "startLine": 448,
+        "startChar": 58,
+        "endLine": 451,
+        "endChar": 97
+      },
+      "revId": "6fdf8b601ac7203377224941def7a581229f00d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
