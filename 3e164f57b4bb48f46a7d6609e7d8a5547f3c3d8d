@@ -16,6 +16,52 @@
       "message": "PTAL, thanks!",
       "revId": "3e164f57b4bb48f46a7d6609e7d8a5547f3c3d8d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5cf8810_55b4c041",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1627,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-23T17:25:06Z",
+      "side": 1,
+      "message": "Do you think that we will have more host mapped related limits? If so, maybe we can name the struct a bit more generically?",
+      "range": {
+        "startLine": 1627,
+        "startChar": 5,
+        "endLine": 1627,
+        "endChar": 46
+      },
+      "revId": "3e164f57b4bb48f46a7d6609e7d8a5547f3c3d8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6117c253_137346c5",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1792,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-23T17:25:06Z",
+      "side": 1,
+      "message": "Since this looks so similar to the one in `AdapterBase`, maybe we should try to create a helper to go from `CombinedLimits` to `Limit`? Otherwise it becomes easy to forget to update one side without the other.",
+      "range": {
+        "startLine": 1792,
+        "startChar": 25,
+        "endLine": 1792,
+        "endChar": 37
+      },
+      "revId": "3e164f57b4bb48f46a7d6609e7d8a5547f3c3d8d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
