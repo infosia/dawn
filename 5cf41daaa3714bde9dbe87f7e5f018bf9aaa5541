@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2fe85cae_647d43cb",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-23T15:17:30Z",
+      "side": 1,
+      "message": "The 16-byte field alignment is the main reason for that transform.\n\nAdding support for the `immediate` address space to `DecomposeUniformAccess` seems like a good approach. Alternatively you could run a separate transform beforehand the replaces `immediate` with `uniform` (and adds the binding point), and then nothing else after that has to handle the `immediate` address space at all.",
+      "parentUuid": "4d433d37_50847768",
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff2e7328_a006c509",
         "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
         "patchSetId": 3
