@@ -89,6 +89,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6ecc5e58_21bddacd",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-23T11:00:18Z",
+      "side": 1,
+      "message": "Even if not unguessable, what do we gain from hashing? If the token can be known, then the hash of it will be known as well. We are not gaining anything from hashing, except maybe getting from a variable length string (maybe too long) to a fixed, known, large length.",
+      "parentUuid": "56c374b7_f0a0d2de",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a514096d_88f9d507",
         "filename": "src/dawn/native/Device.h",
         "patchSetId": 4
