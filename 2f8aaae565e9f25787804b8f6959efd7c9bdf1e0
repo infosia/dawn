@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "daeb4174_a9a24b34",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-23T06:12:23Z",
+      "side": 1,
+      "message": "Release failed because of a merge conflict. I should have rebased and tested again before landing! PTAL\n\nRelease failure: https://github.com/google/dawn/actions/runs/14610993222/job/40988836650",
+      "revId": "2f8aaae565e9f25787804b8f6959efd7c9bdf1e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
