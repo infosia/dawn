@@ -110,6 +110,30 @@
       },
       "revId": "611237ebff5a3d054621fd70e5c323ce1dc7b579",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93759f5a_5e0788ec",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-04-23T06:09:29Z",
+      "side": 1,
+      "message": "Acknowledged\n\nI will refactor it in the next CL.",
+      "parentUuid": "ad6b94af_d0e122f7",
+      "range": {
+        "startLine": 133,
+        "startChar": 35,
+        "endLine": 133,
+        "endChar": 71
+      },
+      "revId": "611237ebff5a3d054621fd70e5c323ce1dc7b579",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
