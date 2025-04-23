@@ -32,6 +32,8 @@
 #include <optional>
 
 #include "src/tint/api/common/binding_point.h"
+#include "src/tint/lang/core/ir/transform/prepare_immediate_data.h"
+#include "src/tint/lang/hlsl/writer/common/options.h"
 #include "src/tint/utils/result.h"
 
 // Forward declarations.
@@ -42,6 +44,9 @@ class Module;
 namespace tint::hlsl::writer::raise {
 
 struct ShaderIOConfig {
+    /// immediate data layout information
+    const core::ir::transform::ImmediateDataLayout& immediate_data_layout;
+
     /// The binding point to use for the num_workgroups generated uniform buffer. If it contains
     /// no value, a free binding point will be used. Specifically, binding 0 of the largest used
     /// group plus 1 is used if at least one resource is bound, otherwise group 0 binding 0 is used.
@@ -63,6 +68,15 @@ struct ShaderIOConfig {
     /// Indicate which interstage io locations are actually used by the later stage.
     /// There can be at most 30 user defined interstage variables with locations.
     std::bitset<30> interstage_locations;
+
+    /// The offset of the first_index_offset push constant.
+    std::optional<uint32_t> first_index_offset{};
+
+    /// The offset of the first_instance_offset push constant.
+    std::optional<uint32_t> first_instance_offset{};
+
+    /// Offsets of num_workgroups push constant.
+    std::optional<uint32_t> num_workgroups_start_offset{};
 };
 
 /// ShaderIO is a transform that prepares entry point inputs and outputs for HLSL codegen.
