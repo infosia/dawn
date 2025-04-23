@@ -16,6 +16,23 @@
       "message": "Let\u0027s wait, we need confirmation of which libc++ features we can use on Android.",
       "revId": "486ab91edb36a24bed2b4d67ac192dd8487d5242",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b32ea82c_8806cbd1",
+        "filename": "src/dawn/common/Math.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-23T10:56:06Z",
+      "side": 1,
+      "message": "LGTM but assuming that we can use std::popcount, can we eventually inline uses of std::popcount or are TypedIntegers getting in the way?",
+      "revId": "486ab91edb36a24bed2b4d67ac192dd8487d5242",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
