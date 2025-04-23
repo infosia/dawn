@@ -22,6 +22,30 @@
       },
       "revId": "aab0c85e090518037b68ccdd5df2f9645947e575",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcaf02c6_834a4ba0",
+        "filename": "tools/activate-emsdk",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-23T22:16:26Z",
+      "side": 1,
+      "message": "Yes, it works fine if we don\u0027t override the file. The only reason to do it is to use the versions in our DEPS instead of the emsdk versions.\n\nForgot you had added an option for that. Actually, it\u0027s kind of what I\u0027m already doing, other than the PYTHON variable - I only override node/llvm if the corresponding args are passed. And I\u0027m not passing them in the GitHub workflow. (I\u0027d rather not change the behavior in DEPS/gclient right now.)\n\nMaybe I should just forget about clearing the PYTHON variable. It seems like other things like dawn_json_generator.py just use the system-installed Python, so I guess we don\u0027t care.\nAlternatively I could add a `--python\u003dthird_party/depot_tools/python-bin/python3` but that seems inconsistent, I\u0027m not sure anything else even uses that one.",
+      "parentUuid": "cc2ce8be_f1d1df9d",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 76
+      },
+      "revId": "aab0c85e090518037b68ccdd5df2f9645947e575",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
