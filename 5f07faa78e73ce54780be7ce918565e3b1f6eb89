@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e6ea1d4_cb508dc7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-23T11:13:07Z",
+      "side": 1,
+      "message": "I am not sure, as currently `PipelineCachingTests.cpp` already test frontend and blob cache with and without isolation key [1], and the backend shader compilation blob cache key already contains isolation key (from `Device::GetCacheKey()` [2]) so the tested behavior have no change with this CL. (Actually I am not quite sure where the pipeline blob cache key includes the isolation key, but it seems they did)\n\nI think this CL targeted at underlying drivers\u0027 compilation cache, e.g. D3D12 driver cache the result from compiled DXIL to actual ISA code, but that could go beyond Dawn\u0027s domain.\n\nMaybe we could add end-to-end tests to see devices with different isolation key yield different HLSL/MSL/SPIRV code?\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/PipelineCachingTests.cpp;drc\u003db6620a02fa498df5297e53241b54a31f488ca440;l\u003d274\n[2]:https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CacheRequest.h;l\u003d95;drc\u003db6620a02fa498df5297e53241b54a31f488ca440",
+      "parentUuid": "5118dae7_2557bd10",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9a8ea931_67b8c6ae",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 4
@@ -107,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6bbe65fe_b96e1de7",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-23T11:13:07Z",
+      "side": 1,
+      "message": "Yes, and I think hashing it can free us from having any assumption for key or handle any special char (space, dash, etc...)?",
+      "parentUuid": "56c374b7_f0a0d2de",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a514096d_88f9d507",
         "filename": "src/dawn/native/Device.h",
         "patchSetId": 4
@@ -118,6 +154,30 @@
       "writtenOn": "2025-04-22T15:23:23Z",
       "side": 1,
       "message": "nit: use a string_view so that we don\u0027t have to recompute the size later. Also \"secure\" is a bit weird. Maybe `GetIsolatedEntryPointName` since is has to do with the isolation key. Can we also have a comment about why this is useful?",
+      "range": {
+        "startLine": 431,
+        "startChar": 4,
+        "endLine": 431,
+        "endChar": 14
+      },
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57b5bd1c_3a9587de",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-23T11:13:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a514096d_88f9d507",
       "range": {
         "startLine": 431,
         "startChar": 4,
@@ -141,6 +201,24 @@
       "writtenOn": "2025-04-22T18:49:22Z",
       "side": 1,
       "message": "The GLSL changes seem unrelated to the entry point name change, should we split them to a separate CL?",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d196cfa_c17ad96d",
+        "filename": "src/tint/cmd/bench/glsl/writer_bench.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-23T11:13:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46ed50b7_7fb782ae",
       "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
