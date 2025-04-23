@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71a4f357_574ad68a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-23T10:16:03Z",
+      "side": 1,
+      "message": "Let\u0027s wait, we need confirmation of which libc++ features we can use on Android.",
+      "revId": "486ab91edb36a24bed2b4d67ac192dd8487d5242",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
