@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eba6e244_7b09de15",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-23T14:41:20Z",
+      "side": 1,
+      "message": "I am afraid that `std::stream \u003c\u003c uint8_t(byte)` will make `byte` interpreted as `char`, which will cause chaos...",
+      "parentUuid": "5ad9bfc2_9922026b",
+      "revId": "59050bb1ba2111572d831be04679145cb69c817d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73d51d02_e09aa540",
         "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
         "patchSetId": 5

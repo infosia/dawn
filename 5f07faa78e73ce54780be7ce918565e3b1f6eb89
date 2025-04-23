@@ -161,6 +161,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fb5fe53b_df4ed1e2",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-23T14:41:20Z",
+      "side": 1,
+      "message": "Yes if we print the bytes in isolation key as hex we don\u0027t need special handling.",
+      "parentUuid": "bbeb652a_00b4f6d7",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a514096d_88f9d507",
         "filename": "src/dawn/native/Device.h",
         "patchSetId": 4
