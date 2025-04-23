@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6db480f8_55ca6a69",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-23T09:41:19Z",
+      "side": 1,
+      "message": "Or meet wgsl alignment rule could also ensure we meet 16 byte row alignment in cbuffer?",
+      "parentUuid": "eff02f7b_5418bc05",
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff2e7328_a006c509",
         "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
         "patchSetId": 3
