@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5ad9bfc2_9922026b",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-23T14:33:51Z",
+      "side": 1,
+      "message": "```suggestion\n            ss \u003c\u003c std::hex \u003c\u003c std::setw(2) \u003c\u003c std::setfill(\u00270\u0027) \u003c\u003c static_cast\u003cuint8_t\u003e(byte);\n```",
+      "revId": "59050bb1ba2111572d831be04679145cb69c817d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "73d51d02_e09aa540",
         "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
         "patchSetId": 5
