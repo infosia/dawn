@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc2ce8be_f1d1df9d",
+        "filename": "tools/activate-emsdk",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-23T18:51:37Z",
+      "side": 1,
+      "message": "Hmm... do you know if it\u0027ll work if we just don\u0027t override the file? I\u0027m thinking that we will probably stop overriding at some point anyways so maybe you can cherry pick the related changes I have in https://dawn-review.googlesource.com/c/dawn/+/227136 to stop overriding the file?",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 76
+      },
+      "revId": "aab0c85e090518037b68ccdd5df2f9645947e575",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
