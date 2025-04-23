@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1132173a_60d6e241",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-23T14:10:46Z",
+      "side": 1,
+      "message": "We still need to sort to get deterministic output, the usages we\u0027re iterating aren\u0027t sorted so we get random output ordering of functions. `UniqueVector` doesn\u0027t appear to offer a `Sort` at the moment so this seems easier.",
+      "parentUuid": "2811eb4a_24cbcd99",
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "573eccad_aad5fc39",
         "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
         "patchSetId": 3
@@ -31,6 +49,24 @@
       "writtenOn": "2025-04-23T01:03:18Z",
       "side": 1,
       "message": "Nit: `auto\u0026 arg \u003d uc-\u003eArgs();`",
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10721a3d_29fee29e",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-23T14:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "573eccad_aad5fc39",
       "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -48,6 +84,30 @@
       "writtenOn": "2025-04-23T01:03:18Z",
       "side": 1,
       "message": "Could probably just do `if (params[i]-\u003eType() !\u003d arg-\u003eType()) { to_convert.Push(i); }` for both checks at once?\n\nIf the parameter type is different to the argument type, it needs to be converted.",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 405,
+        "endChar": 69
+      },
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ee69eb2_6d9e4080",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-23T14:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a7a1e25_494b9f46",
       "range": {
         "startLine": 400,
         "startChar": 0,
@@ -81,6 +141,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9a3833c_2d3730fa",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-23T14:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0f6fc76_2f5b7aa4",
+      "range": {
+        "startLine": 419,
+        "startChar": 0,
+        "endLine": 423,
+        "endChar": 16
+      },
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab343a63_9641bbe6",
@@ -98,6 +182,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3369ead4_1f463397",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-23T14:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab343a63_9641bbe6",
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e83331bd_509f2afa",
@@ -111,6 +213,24 @@
       "writtenOn": "2025-04-23T01:03:18Z",
       "side": 1,
       "message": "Nit: s/Without/With/\n(my fault)",
+      "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dee2bf72_4a940f2c",
+        "filename": "src/tint/lang/spirv/reader/lower/atomics_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2955,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-23T14:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e83331bd_509f2afa",
       "revId": "2f105594ea0eb166fd7caaabaa3d93af8824f29e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
