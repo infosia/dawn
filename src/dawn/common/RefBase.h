@@ -119,6 +119,8 @@ class RefBase {
     }
 
     explicit operator bool() const { return !!mValue; }
+    operator T() { return mValue; }
+    operator T() const { return mValue; }
 
     // Comparison operators.
     bool operator==(const T& other) const { return mValue == other; }

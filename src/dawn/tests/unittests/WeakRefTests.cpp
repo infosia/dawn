@@ -72,6 +72,66 @@ TEST(WeakRefTests, BasicPromote) {
     EXPECT_EQ(weak.Promote().Get(), nullptr);
 }
 
+// Tests that |Use| works with Ref<T>.
+TEST(WeakRefTests, BasicUseRef) {
+    Ref<WeakRefBaseA> base = AcquireRef(new WeakRefBaseA());
+    WeakRef<WeakRefBaseA> weak = GetWeakRef(base);
+
+    bool result = false;
+    auto Lambda = [&result](Ref<WeakRefBaseA>&) { result = true; };
+    weak.Use(Lambda);
+    EXPECT_TRUE(result);
+
+    // If we can't Promote, the function should not be ran.
+    result = false;
+    base = nullptr;
+    weak.Use(Lambda);
+    EXPECT_FALSE(result);
+}
+
+// Tests that |Use| works with pointers.
+TEST(WeakRefTests, BasicUsePointer) {
+    Ref<WeakRefBaseA> base = AcquireRef(new WeakRefBaseA());
+    WeakRef<WeakRefBaseA> weak = GetWeakRef(base);
+
+    bool result = false;
+    auto Lambda = [&result](WeakRefBaseA*) { result = true; };
+    weak.Use(Lambda);
+    EXPECT_TRUE(result);
+
+    // If we can't Promote, the function should not be ran.
+    result = false;
+    base = nullptr;
+    weak.Use(Lambda);
+    EXPECT_FALSE(result);
+}
+
+// Tests that returning |Use| works with Ref<T>.
+TEST(WeakRefTests, ReturningUseRef) {
+    Ref<WeakRefBaseA> base = AcquireRef(new WeakRefBaseA());
+    WeakRef<WeakRefBaseA> weak = GetWeakRef(base);
+
+    auto Lambda = [](Ref<WeakRefBaseA>&) { return true; };
+    EXPECT_TRUE(weak.Use<bool>(false, Lambda));
+
+    // If we can't Promote, the function should not be ran.
+    base = nullptr;
+    EXPECT_FALSE(weak.Use<bool>(false, Lambda));
+}
+
+// Tests that |Use| works with pointers.
+TEST(WeakRefTests, ReturningUsePointer) {
+    Ref<WeakRefBaseA> base = AcquireRef(new WeakRefBaseA());
+    WeakRef<WeakRefBaseA> weak = GetWeakRef(base);
+
+    auto Lambda = [](WeakRefBaseA*) { return true; };
+    EXPECT_TRUE(weak.Use(false, Lambda));
+
+    // If we can't Promote, the function should not be ran.
+    base = nullptr;
+    EXPECT_FALSE(weak.Use(false, Lambda));
+}
+
 // When the original refcounted object is destroyed, all WeakRefs, including upcasted ones, are no
 // longer able to Promote.
 TEST(WeakRefTests, DerivedPromote) {

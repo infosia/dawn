@@ -92,6 +92,23 @@ class WeakRef {
         return nullptr;
     }
 
+    // Takes a lambda that takes a pointer-like of T and invokes |fn| if we successfully promote.
+    template <typename Result, typename Fn>
+    Result Use(Result res, Fn&& fn) const {
+        Ref<T> ref = Promote();
+        if (ref) {
+            return fn(ref);
+        }
+        return res;
+    }
+    template <typename Fn>
+    void Use(Fn&& fn) const {
+        Ref<T> ref = Promote();
+        if (ref) {
+            fn(ref);
+        }
+    }
+
     // Returns the raw pointer to the RefCountedT if it has not been invalidated. Note that this
     // function is not thread-safe since the returned pointer can become invalid after being
     // retrieved.
