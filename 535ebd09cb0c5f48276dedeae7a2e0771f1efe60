@@ -16,6 +16,184 @@
       "message": "ping Goeff@ softly 😊",
       "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffdeba57_7e43ab53",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-23T21:32:36Z",
+      "side": 1,
+      "message": "Nice work getting the algorithm down. I just have a couple suggestions on refactoring it.",
+      "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efa19d29_c989672e",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-23T21:32:36Z",
+      "side": 1,
+      "message": "This also needs to copy mOffset and mSize.",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 27
+      },
+      "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88ca4848_ded9b5bf",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-23T21:32:36Z",
+      "side": 1,
+      "message": "Same for this.",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "803dfcb6_efd7c0d4",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-23T21:32:36Z",
+      "side": 1,
+      "message": "advance handles the empty set so no need to have this condition I think",
+      "range": {
+        "startLine": 97,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab3aa8c6_b9c284f5",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-23T21:32:36Z",
+      "side": 1,
+      "message": "In the refactored function below, this reset logic is no longer necessary (advance does it).\n\nIt makes a nice invariant: mBits always starts at the original mOffset+mSize bit.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 14
+      },
+      "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1e0a14b_4b659284",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-23T21:32:36Z",
+      "side": 1,
+      "message": "Both comparison operators should compare mOffset and mSize. Generally it\u0027s only valid to compare two iterators over the same collection (the bitset) so we don\u0027t need to compare that.\n\nThis should return true when two iterators represent the same range of bits.",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 115,
+        "endChar": 32
+      },
+      "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5be59aa2_eb351481",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-23T21:32:36Z",
+      "side": 1,
+      "message": "This should be constexpr if possible.",
+      "range": {
+        "startLine": 125,
+        "startChar": 4,
+        "endLine": 125,
+        "endChar": 10
+      },
+      "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d84b3e6_4fc46dd4",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-23T21:32:36Z",
+      "side": 1,
+      "message": "I think we can refactor some parts of this function. The part that scans a bitset and shifts it can be done together in a function like (untested):\n\n```\ntemplate \u003csize_t N\u003e\nsize_t ScanForwardAndShiftBits(std::bitset\u003cN\u003e\u0026 bits) {\n    if (bits.none()) {\n        return N; // Or some other indicator that there are no bits.\n    }\n\n    constexpr std::bitset\u003cN\u003e wordMask(std::numeric_limits\u003cuint64_t\u003e::max());\n    size_t offset \u003d 0;\n    while ((bits \u0026 wordMask).to_ullong() \u003d\u003d 0) {\n        offset +\u003d kBitsPerWord;\n        bits \u003e\u003e\u003d kBitsPerWord;\n    }\n\n    size_t nextBit \u003d ScanForward((bits \u0026 wordMask).to_ullong());\n    bits \u003e\u003e\u003d nextBit;\n    return offset + nextBit;\n}\n```\n\nThen I think we can write this function using that helper:\n\n```\n// Bits are currently shifted to mOffset + mSize.\nmOffset +\u003d mSize;\n\nsize_t rangeStart \u003d ScanForwardAndShiftBits(mBits);\nif (rangeStart \u003d\u003d N) {\n    // Reached the end, no more ranges.\n    mOffset \u003d\u003d N;\n    mSize \u003d\u003d 0;\n    return;\n}\n\nmOffset +\u003d rangeStart;\nmBits \u003d ~mBits;\n\nsize_t rangeCount \u003d ScanForwardAndShiftBits(mBits);\nif (rangeCount \u003d\u003d N) {\n    // All bits until the end of the set are set.\n    rangeEnd \u003d N - mOffset;\n}\n\nmSize \u003d rangeCount;\nmBits \u003d ~mBits;\n```",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 5
+      },
+      "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
