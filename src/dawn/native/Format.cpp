@@ -386,104 +386,67 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
         AddFormat(internalFormat);
     };
 
+    auto BaseCompressedFormat = [](wgpu::TextureFormat format, ByteSize byteSize, Width width,
+                                   Height height, UnsupportedReason unsupportedReason,
+                                   ComponentCount componentCount, wgpu::TextureFormat baseFormat) {
+        Format internalFormat;
+        internalFormat.format = format;
+        internalFormat.isRenderable = false;
+        internalFormat.isBlendable = false;
+        internalFormat.isCompressed = true;
+        internalFormat.unsupportedReason = unsupportedReason;
+        internalFormat.supportsStorageUsage = false;
+        internalFormat.supportsMultisample = false;
+        internalFormat.supportsResolveTarget = false;
+        internalFormat.aspects = Aspect::Color;
+        internalFormat.componentCount = static_cast<uint32_t>(componentCount);
+
+        // Default baseFormat of each compressed formats should be themselves.
+        if (baseFormat == wgpu::TextureFormat::Undefined) {
+            internalFormat.baseFormat = format;
+        } else {
+            internalFormat.baseFormat = baseFormat;
+        }
+
+        AspectInfo* firstAspect = internalFormat.aspectInfo.data();
+        firstAspect->block.byteSize = static_cast<uint32_t>(byteSize);
+        firstAspect->block.width = static_cast<uint32_t>(width);
+        firstAspect->block.height = static_cast<uint32_t>(height);
+        firstAspect->baseType = TextureComponentType::Float;
+        firstAspect->supportedSampleTypes = kAnyFloat;
+        firstAspect->format = format;
+        return internalFormat;
+    };
+
     auto AddCompressedFormat =
-        [&AddFormat](wgpu::TextureFormat format, ByteSize byteSize, Width width, Height height,
-                     UnsupportedReason unsupportedReason, ComponentCount componentCount,
-                     wgpu::TextureFormat baseFormat = wgpu::TextureFormat::Undefined) {
-            Format internalFormat;
-            internalFormat.format = format;
-            internalFormat.isRenderable = false;
-            internalFormat.isBlendable = false;
-            internalFormat.isCompressed = true;
-            internalFormat.unsupportedReason = unsupportedReason;
-            internalFormat.supportsStorageUsage = false;
-            internalFormat.supportsMultisample = false;
-            internalFormat.supportsResolveTarget = false;
-            internalFormat.aspects = Aspect::Color;
-            internalFormat.componentCount = static_cast<uint32_t>(componentCount);
-
-            // Default baseFormat of each compressed formats should be themselves.
-            if (baseFormat == wgpu::TextureFormat::Undefined) {
-                internalFormat.baseFormat = format;
-            } else {
-                internalFormat.baseFormat = baseFormat;
-            }
-
-            AspectInfo* firstAspect = internalFormat.aspectInfo.data();
-            firstAspect->block.byteSize = static_cast<uint32_t>(byteSize);
-            firstAspect->block.width = static_cast<uint32_t>(width);
-            firstAspect->block.height = static_cast<uint32_t>(height);
-            firstAspect->baseType = TextureComponentType::Float;
-            firstAspect->supportedSampleTypes = kAnyFloat;
-            firstAspect->format = format;
+        [&BaseCompressedFormat, &AddFormat](
+            wgpu::TextureFormat format, ByteSize byteSize, Width width, Height height,
+            UnsupportedReason unsupportedReason, ComponentCount componentCount,
+            wgpu::TextureFormat baseFormat = wgpu::TextureFormat::Undefined) {
+            Format internalFormat = BaseCompressedFormat(
+                format, byteSize, width, height, unsupportedReason, componentCount, baseFormat);
             AddFormat(internalFormat);
         };
 
     auto AddBCCompressedFormat =
-        [&AddFormat](wgpu::TextureFormat format, ByteSize byteSize, Width width, Height height,
-                     UnsupportedReason unsupportedReason, ComponentCount componentCount,
-                     wgpu::TextureFormat baseFormat = wgpu::TextureFormat::Undefined) {
-            Format internalFormat;
-            internalFormat.format = format;
-            internalFormat.isRenderable = false;
-            internalFormat.isBlendable = false;
+        [&BaseCompressedFormat, &AddFormat](
+            wgpu::TextureFormat format, ByteSize byteSize, Width width, Height height,
+            UnsupportedReason unsupportedReason, ComponentCount componentCount,
+            wgpu::TextureFormat baseFormat = wgpu::TextureFormat::Undefined) {
+            Format internalFormat = BaseCompressedFormat(
+                format, byteSize, width, height, unsupportedReason, componentCount, baseFormat);
             internalFormat.isBC = true;
-            internalFormat.isCompressed = true;
-            internalFormat.unsupportedReason = unsupportedReason;
-            internalFormat.supportsStorageUsage = false;
-            internalFormat.supportsMultisample = false;
-            internalFormat.supportsResolveTarget = false;
-            internalFormat.aspects = Aspect::Color;
-            internalFormat.componentCount = static_cast<uint32_t>(componentCount);
-
-            // Default baseFormat of each compressed formats should be themselves.
-            if (baseFormat == wgpu::TextureFormat::Undefined) {
-                internalFormat.baseFormat = format;
-            } else {
-                internalFormat.baseFormat = baseFormat;
-            }
-
-            AspectInfo* firstAspect = internalFormat.aspectInfo.data();
-            firstAspect->block.byteSize = static_cast<uint32_t>(byteSize);
-            firstAspect->block.width = static_cast<uint32_t>(width);
-            firstAspect->block.height = static_cast<uint32_t>(height);
-            firstAspect->baseType = TextureComponentType::Float;
-            firstAspect->supportedSampleTypes = kAnyFloat;
-            firstAspect->format = format;
             AddFormat(internalFormat);
         };
 
     auto AddASTCCompressedFormat =
-        [&AddFormat](wgpu::TextureFormat format, ByteSize byteSize, Width width, Height height,
-                     UnsupportedReason unsupportedReason, ComponentCount componentCount,
-                     wgpu::TextureFormat baseFormat = wgpu::TextureFormat::Undefined) {
-            Format internalFormat;
-            internalFormat.format = format;
-            internalFormat.isRenderable = false;
-            internalFormat.isBlendable = false;
+        [&BaseCompressedFormat, &AddFormat](
+            wgpu::TextureFormat format, ByteSize byteSize, Width width, Height height,
+            UnsupportedReason unsupportedReason, ComponentCount componentCount,
+            wgpu::TextureFormat baseFormat = wgpu::TextureFormat::Undefined) {
+            Format internalFormat = BaseCompressedFormat(
+                format, byteSize, width, height, unsupportedReason, componentCount, baseFormat);
             internalFormat.isASTC = true;
-            internalFormat.isCompressed = true;
-            internalFormat.unsupportedReason = unsupportedReason;
-            internalFormat.supportsStorageUsage = false;
-            internalFormat.supportsMultisample = false;
-            internalFormat.supportsResolveTarget = false;
-            internalFormat.aspects = Aspect::Color;
-            internalFormat.componentCount = static_cast<uint32_t>(componentCount);
-
-            // Default baseFormat of each compressed formats should be themselves.
-            if (baseFormat == wgpu::TextureFormat::Undefined) {
-                internalFormat.baseFormat = format;
-            } else {
-                internalFormat.baseFormat = baseFormat;
-            }
-
-            AspectInfo* firstAspect = internalFormat.aspectInfo.data();
-            firstAspect->block.byteSize = static_cast<uint32_t>(byteSize);
-            firstAspect->block.width = static_cast<uint32_t>(width);
-            firstAspect->block.height = static_cast<uint32_t>(height);
-            firstAspect->baseType = TextureComponentType::Float;
-            firstAspect->supportedSampleTypes = kAnyFloat;
-            firstAspect->format = format;
             AddFormat(internalFormat);
         };
 
