@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4d433d37_50847768",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-23T13:38:50Z",
+      "side": 1,
+      "message": "I\u0027d guess it\u0027s better to update the `decompose_uniform_access` transform to also decompose push constants as it uses the same underlying `cbuffer` implementation.\n\nI can\u0027t remember the original reason for adding the transform @jrprice@google.com may remember? But we\u0027ve run into various issues with correctness and performance over the years which have been handled by decomposing the structures for HLSL.",
+      "parentUuid": "6db480f8_55ca6a69",
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff2e7328_a006c509",
         "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
         "patchSetId": 3
