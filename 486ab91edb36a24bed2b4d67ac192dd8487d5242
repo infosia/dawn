@@ -33,6 +33,24 @@
       "message": "LGTM but assuming that we can use std::popcount, can we eventually inline uses of std::popcount or are TypedIntegers getting in the way?",
       "revId": "486ab91edb36a24bed2b4d67ac192dd8487d5242",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d849157_9791da3a",
+        "filename": "src/dawn/common/Math.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-04-24T02:15:15Z",
+      "side": 1,
+      "message": "Do you mean removing `BitCount()` at all (as I do in the newest patchset)?",
+      "parentUuid": "b32ea82c_8806cbd1",
+      "revId": "486ab91edb36a24bed2b4d67ac192dd8487d5242",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
