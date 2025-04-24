@@ -29,3 +29,5 @@ jobs:
           # Files to release (one per line)
           files: |
             ${{ steps.build.outputs.PKG_FILE }}
+          # Personal access token for release. Fall back to the default one, which works in forks.
+          token: ${{ secrets.DAWN_RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
