@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96c7cfd1_1ea88198",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-04-24T15:33:58Z",
+      "side": 1,
+      "message": "Don\u0027t know if manually adding reviewers is part of the workflow, but it seems stuck otherwise.\n\nLet me know what you think of a static libwebgpu_dawn build or if there were already plans to achieve that differently.",
+      "revId": "f2f633202f3195eecbc819d3021d18a4c7667162",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
