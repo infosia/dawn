@@ -52,6 +52,24 @@
       "parentUuid": "bf80a4ca_eb50ea4d",
       "revId": "e2a5ac926e7a9baf4e41b77e4939d64c9831ae59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dbb9d9d_a27ddded",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-24T19:51:01Z",
+      "side": 1,
+      "message": "I\u0027m guessing it:\n\n* Concepts, especially at API boundaries, increase code coupling, rigidity, and ossification.\n\n\nWe aren\u0027t really exposing the concept as part of our API, other then it ends up being visible because of the reflection macros. I don\u0027t expect anyone outside Tint would ever use this concept.",
+      "parentUuid": "06499524_1d92f96b",
+      "revId": "e2a5ac926e7a9baf4e41b77e4939d64c9831ae59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
