@@ -145,6 +145,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a2991bb8_e2bc7c65",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-24T01:41:44Z",
+      "side": 1,
+      "message": "Hmmm... That might be a easy way (switch immediate data to uniform and left all nice and clean). I\u0027ll go to this approach with comment that ensure all validations happens before this transform and run it in raise after shaderIO transform and before Decompose uniform access transform. Thanks!",
+      "parentUuid": "2fe85cae_647d43cb",
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff2e7328_a006c509",
         "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
         "patchSetId": 3
