@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c5634c7_7ddfc0ee",
+        "filename": "src/dawn/native/Limits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T13:29:06Z",
+      "side": 1,
+      "message": "Maybe `FillLimits` but especially have it return `MaybeError` so that the caller has to do the error handling? It\u0027s not clear that the error message will always go to the instance IMHO. That\u0027s a very nice cleanup otherwise!",
+      "range": {
+        "startLine": 101,
+        "startChar": 13,
+        "endLine": 101,
+        "endChar": 22
+      },
+      "revId": "abc6f271cbf3f91a720bf7483cf0dedcd413d230",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a073017_3fdf4437",
+        "filename": "src/dawn/native/vulkan/UtilsVulkan.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T13:29:06Z",
+      "side": 1,
+      "message": "Could we update the issue number for buganizer?",
+      "revId": "abc6f271cbf3f91a720bf7483cf0dedcd413d230",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5fe3582_82e6f7d5",
+        "filename": "src/dawn/tests/end2end/BufferHostMappedPointerTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T13:29:06Z",
+      "side": 1,
+      "message": "u-nit: can we check that it is a power of two?",
+      "revId": "abc6f271cbf3f91a720bf7483cf0dedcd413d230",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
