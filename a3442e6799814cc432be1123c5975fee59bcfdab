@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cce86e89_30e0f69b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T16:29:05Z",
+      "side": 1,
+      "message": "Can we have something a bit more descriptive explaining what happens and why?",
+      "revId": "a3442e6799814cc432be1123c5975fee59bcfdab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "37b237bc_d6029510",
         "filename": "src/dawn/node/binding/GPUBuffer.h",
         "patchSetId": 2
@@ -32,6 +49,24 @@
       "side": 1,
       "message": "As I mentioned earlier, I updated WebGPU.h and WebGPU.cpp to make it compile, but I’m not sure where it’s generated from (I couldn’t find getMappedRange in WebGPU.cpp.tmpl).",
       "parentUuid": "37b237bc_d6029510",
+      "revId": "a3442e6799814cc432be1123c5975fee59bcfdab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46f65c4d_faa81c0d",
+        "filename": "src/dawn/node/binding/GPUBuffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T16:29:05Z",
+      "side": 1,
+      "message": "Ah sorry I didn\u0027t see that message. These are generated from webgpu.idl and the https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/node/interop/\n\nThe getMappedRange comes from this part of the webgpu idl: https://github.com/gpuweb/gpuweb/blob/f177043de0977d71603dacb3e3b6a3e17abe3d46/webgpu.idl#L180 but we can\u0027t really modify the IDL.\n\nBasically it seems that we want a pointer to `this` as a JS object so that we can set it on a private symbol on the array buffer. We can modify the templates to have a ::CreateWithWeakThis that somehow passes the Napi::Object as the second argument of the constructor, or inject it a posteriori in GPUDevice::createBuffer.\n\nAlso can we have the symbols declared in a new file that will have versions for each env, similar to Wrapper::For in the templates? We are going to have more symbols in the future.",
+      "parentUuid": "02e90428_cd0460b8",
       "revId": "a3442e6799814cc432be1123c5975fee59bcfdab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
