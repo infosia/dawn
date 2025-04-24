@@ -61,6 +61,7 @@ class GPUBuffer final : public interop::GPUBuffer {
                                     interop::GPUSize64 offset,
                                     std::optional<interop::GPUSize64> size) override;
     interop::ArrayBuffer getMappedRange(Napi::Env env,
+                                        Napi::Object gpu_buffer,
                                         interop::GPUSize64 offset,
                                         std::optional<interop::GPUSize64> size) override;
     void unmap(Napi::Env) override;

@@ -108,6 +108,7 @@ interop::Promise<void> GPUBuffer::mapAsync(Napi::Env env,
 }
 
 interop::ArrayBuffer GPUBuffer::getMappedRange(Napi::Env env,
+                                               Napi::Object gpu_buffer,
                                                interop::GPUSize64 offset,
                                                std::optional<interop::GPUSize64> size) {
     uint64_t s = size.has_value() ? size.value().value : (desc_.size - offset);
@@ -128,9 +129,16 @@ interop::ArrayBuffer GPUBuffer::getMappedRange(Napi::Env env,
         Errors::OperationError(env).ThrowAsJavaScriptException();
         return {};
     }
+
+    static Napi::Symbol gpu_buffer_symbol;
+    if (gpu_buffer_symbol.IsEmpty()) {
+        gpu_buffer_symbol = Napi::Symbol::New(env, "gpu_buffer");
+    }
+
     auto array_buffer = Napi::ArrayBuffer::New(env, ptr, s);
-    // TODO(crbug.com/dawn/1135): Ownership here is the wrong way around.
-    mappings_.emplace_back(Mapping{start, end, Napi::Persistent(array_buffer)});
+    array_buffer.Set(gpu_buffer_symbol, gpu_buffer);
+
+    mappings_.emplace_back(Mapping{start, end, Napi::Weak(array_buffer)});
     return array_buffer;
 }
 
