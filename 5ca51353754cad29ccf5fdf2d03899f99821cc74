@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9ff0f70_ae6870f5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-04-24T00:19:45Z",
+      "side": 1,
+      "message": "Hello Loko and Corentin,\n\nI know I should be updating WebGPU.h and WebGPU.cpp, but I couldn’t find any references to getMappedRange in WebGPU.h.tmpl or WebGPU.cpp.tmpl. Otherwise, please take a look at this CL. \n\nThanks!",
+      "revId": "5ca51353754cad29ccf5fdf2d03899f99821cc74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
