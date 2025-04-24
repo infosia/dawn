@@ -16,6 +16,24 @@
       "message": "PTAL. This now requires anyone that includes the `tint.h` compiler to have a header which understands c++20 because the `concept` defined here gets pulled in through the reflection code into the header. (This is how I found the dawn.node was c++17 as it failed to compile).\n\nDo we want to push this, or hold off on anything that can leak out through the headers? (And if so, we probably need some kind of build which pulls in the headers but uses c++17 or something).",
       "revId": "e2a5ac926e7a9baf4e41b77e4939d64c9831ae59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf80a4ca_eb50ea4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T13:36:15Z",
+      "side": 1,
+      "message": "IMHO we can go forward with requiring Tint headers to be compiled with C++20, though it would be nice to have an actual public API at some point ^^",
+      "parentUuid": "c1b0ee67_067069bf",
+      "revId": "e2a5ac926e7a9baf4e41b77e4939d64c9831ae59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
