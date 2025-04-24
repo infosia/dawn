@@ -160,6 +160,24 @@
       "parentUuid": "fd9338a6_15cd613b",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72c373a1_748f4c63",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T13:54:04Z",
+      "side": 1,
+      "message": "Discussing with Francois, IDK that we should change the default behavior in native as a bunch of random code could rely on being able to create device from adapters repeatedly. IDK how we are going to not break them. Do we have agreement to do this at the webgpu.h level? Can we make the consumeAdapter part of the device descriptor so that everyone can easily ask for it to not happen (it would produce an error in WASM).",
+      "parentUuid": "d4d18053_f0d56737",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
