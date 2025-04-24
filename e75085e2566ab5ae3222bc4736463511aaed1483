@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ad78253_10989798",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T13:44:01Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "e75085e2566ab5ae3222bc4736463511aaed1483",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02298bba_2cf4bad7",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T13:44:01Z",
+      "side": 1,
+      "message": "Can we have a TODO to have a specialization for when the whole bitset fits in a uint32_t / uint64_t (whatever is the size_t)? It would be a lot more efficient because we don\u0027t need to have the while loop in Advance.",
+      "revId": "e75085e2566ab5ae3222bc4736463511aaed1483",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c97b1411_78077e33",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T13:44:01Z",
+      "side": 1,
+      "message": "```suggestion\n        void Advance();\n```",
+      "revId": "e75085e2566ab5ae3222bc4736463511aaed1483",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29003a38_f1c20ea0",
+        "filename": "src/dawn/tests/unittests/BitSetRangeIteratorTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T13:44:01Z",
+      "side": 1,
+      "message": "u-nit\n```suggestion\n    void RunSingleBitRangesTests() {\n```\n\nditto below",
+      "revId": "e75085e2566ab5ae3222bc4736463511aaed1483",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
