@@ -190,13 +190,14 @@ Future QueueBase::APIOnSubmittedWorkDone(const WGPUQueueWorkDoneCallbackInfo& ca
               mUserdata1(callbackInfo.userdata1),
               mUserdata2(callbackInfo.userdata2) {}
 
-        // Create an event that's ready at creation (for errors, etc.)
+        // Create an event that's ready at creation (for errors, etc). Note that because this isn't
+        // using the QueueAndSerial constructor of TrackedEvent anymore, this means that some cases
+        // of mixed sourced waiting validations may not be surfaced due to calling this on a queue
+        // whose device is dropped or destroyed.
         WorkDoneEvent(const WGPUQueueWorkDoneCallbackInfo& callbackInfo,
-                      QueueBase* queue,
                       wgpu::QueueWorkDoneStatus earlyStatus)
             : TrackedEvent(static_cast<wgpu::CallbackMode>(callbackInfo.mode),
-                           queue,
-                           kBeginningOfGPUTime),
+                           TrackedEvent::Completed{}),
               mEarlyStatus(ToAPI(earlyStatus)),
               mCallback(callbackInfo.callback),
               mUserdata1(callbackInfo.userdata1),
@@ -226,19 +227,16 @@ Future QueueBase::APIOnSubmittedWorkDone(const WGPUQueueWorkDoneCallbackInfo& ca
         // TODO(crbug.com/dawn/831) Manually acquire device lock instead of relying on code-gen for
         // re-entrancy.
         auto deviceLock(GetDevice()->GetScopedLock());
-
-        // Note: if the callback is spontaneous, it may get called in here.
         if (GetDevice()->ConsumedError(GetDevice()->ValidateIsAlive())) {
-            event = AcquireRef(
-                new WorkDoneEvent(callbackInfo, this, wgpu::QueueWorkDoneStatus::Success));
+            event = AcquireRef(new WorkDoneEvent(callbackInfo, wgpu::QueueWorkDoneStatus::Success));
         } else if (GetDevice()->ConsumedError(ValidateOnSubmittedWorkDone())) {
-            event =
-                AcquireRef(new WorkDoneEvent(callbackInfo, this, wgpu::QueueWorkDoneStatus::Error));
+            event = AcquireRef(new WorkDoneEvent(callbackInfo, wgpu::QueueWorkDoneStatus::Error));
         } else {
             event = AcquireRef(new WorkDoneEvent(callbackInfo, this, GetScheduledWorkDoneSerial()));
         }
     }
 
+    // Note: if the callback is spontaneous, it may get called in here.
     FutureID futureID = GetInstance()->GetEventManager()->TrackEvent(std::move(event));
 
     return {futureID};
