@@ -69,6 +69,24 @@
       "parentUuid": "02e90428_cd0460b8",
       "revId": "a3442e6799814cc432be1123c5975fee59bcfdab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10992734_223bd836",
+        "filename": "src/dawn/node/binding/GPUBuffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-04-24T19:19:10Z",
+      "side": 1,
+      "message": "Just to clarify, is there no way to change the binding \"getMappedRange\" function signature or it\u0027s implementation? \n\nMy plan was passing the JS object through the binding getMappedRange function \n```\nauto result \u003d impl-\u003egetMappedRange(info.Env(), info.This().As\u003cNapi::Object\u003e(), std::get\u003c0\u003e(args), std::get\u003c1\u003e(args));\n```\n\nAlso, I couldn’t find any reference to Wrapper::For in Dawn’s codebase.",
+      "parentUuid": "46f65c4d_faa81c0d",
+      "revId": "a3442e6799814cc432be1123c5975fee59bcfdab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
