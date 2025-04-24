@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "97ed77c6_84bb1d08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-24T20:18:12Z",
+      "side": 1,
+      "message": "PTAL! Trying a much simpler approach vs. https://dawn-review.googlesource.com/c/dawn/+/232257\n\nBig differences vs. the ANGLE iterators:\n  - Only have a single specialization for \u003c 64 bit bitset iterators.\n  - bitset itself is still std::bitset-based. Uses to_ullong when creating the 64 bit iterator.\n  \nCould add a 32 bit iterator if you\u0027d like, but it looks like the other bitsets that ANGLE defines (8/16 bit) are unused, and selection is based on system architecture rather than the number of elements (assuming they fit). See https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/src/common/bitset_utils.h;l\u003d496?q\u003dAngle%20BitSet\u0026ss\u003dchromium\u0026start\u003d11\n\nDid confirm that just this change is enough to entirely knock bitsets out of the top samples in my profiling!",
+      "revId": "f1ee3e533c9f9c191cd637de92db55677479e4fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
