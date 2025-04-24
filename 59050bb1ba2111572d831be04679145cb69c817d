@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31cea1ce_85fd903f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-24T08:18:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82cc98b7_6329bc53",
+      "revId": "59050bb1ba2111572d831be04679145cb69c817d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73d51d02_e09aa540",
@@ -67,6 +85,24 @@
       "writtenOn": "2025-04-23T13:42:37Z",
       "side": 1,
       "message": "A `string_view` does not require a trailing `\\0`. Should this create a `std::string` from the view before accessing the data to ensure there is a trailing `\\0`?",
+      "revId": "59050bb1ba2111572d831be04679145cb69c817d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "804d7dc7_d85ce55d",
+        "filename": "src/dawn/native/vulkan/ComputePipelineVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-24T08:18:44Z",
+      "side": 1,
+      "message": "Here I think the `device-\u003eGetIsolatedEntryPointName()` returns a `string_view` constructed from `std::string DeviceBase::mIsolatedEntryPointName`, which ensure null-terminated.\n\nComment added to note this.",
+      "parentUuid": "73d51d02_e09aa540",
       "revId": "59050bb1ba2111572d831be04679145cb69c817d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
