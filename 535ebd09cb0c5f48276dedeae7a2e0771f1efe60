@@ -82,6 +82,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be4caeac_59c984be",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-24T15:44:44Z",
+      "side": 1,
+      "message": "Sorry, yea, I thought this was the copy constructor for the iterator itself.",
+      "parentUuid": "37472943_5ff1ba4f",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 27
+      },
+      "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88ca4848_ded9b5bf",
@@ -95,6 +119,30 @@
       "writtenOn": "2025-04-23T21:32:36Z",
       "side": 1,
       "message": "Same for this.",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "417863af_f9ecffdb",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-24T15:44:44Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "88ca4848_ded9b5bf",
       "range": {
         "startLine": 91,
         "startChar": 4,
@@ -236,6 +284,30 @@
       "side": 1,
       "message": "Sry but does this comments means that we should compare the clamed bit set (using offset and size) instead of the new patch set comparation logic (compare all attributes)",
       "parentUuid": "f1e0a14b_4b659284",
+      "range": {
+        "startLine": 115,
+        "startChar": 4,
+        "endLine": 115,
+        "endChar": 32
+      },
+      "revId": "535ebd09cb0c5f48276dedeae7a2e0771f1efe60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a9e99f0_7d7905c6",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-24T15:44:44Z",
+      "side": 1,
+      "message": "It\u0027s fine to compare mBits too but not necessary I think. Iterators are only supposed to be compared when they iterate over the same data.",
+      "parentUuid": "4baa9d51_eab37855",
       "range": {
         "startLine": 115,
         "startChar": 4,

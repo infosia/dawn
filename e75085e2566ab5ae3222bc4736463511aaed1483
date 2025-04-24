@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3659f460_06d5591a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-24T15:44:44Z",
+      "side": 1,
+      "message": "LGTM too!",
+      "revId": "e75085e2566ab5ae3222bc4736463511aaed1483",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02298bba_2cf4bad7",
@@ -48,6 +65,29 @@
       "writtenOn": "2025-04-24T13:44:01Z",
       "side": 1,
       "message": "```suggestion\n        void Advance();\n```",
+      "revId": "e75085e2566ab5ae3222bc4736463511aaed1483",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de91cd57_08c8941e",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-24T15:44:44Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of these shifts?",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 22
+      },
       "revId": "e75085e2566ab5ae3222bc4736463511aaed1483",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
