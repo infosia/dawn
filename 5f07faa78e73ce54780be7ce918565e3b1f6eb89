@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f66ee7d1_4ab95edc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-24T13:32:25Z",
+      "side": 1,
+      "message": "\u003e I am not sure, as currently PipelineCachingTests.cpp already test frontend and blob cache with and without isolation key 1, and the backend shader compilation blob cache key already contains isolation key (from Device::GetCacheKey() 2) so the tested behavior have no change with this CL.\n\nAh that makes sense, we are doing something for the underlying driver but that is otherwise not testable at the Dawn level. IMHO that makes sense and I\u0027d be ok landing this with no tests.",
+      "parentUuid": "866674e2_2023d387",
+      "revId": "5f07faa78e73ce54780be7ce918565e3b1f6eb89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9a8ea931_67b8c6ae",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 4
