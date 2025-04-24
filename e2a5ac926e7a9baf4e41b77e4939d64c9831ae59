@@ -34,6 +34,24 @@
       "parentUuid": "c1b0ee67_067069bf",
       "revId": "e2a5ac926e7a9baf4e41b77e4939d64c9831ae59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06499524_1d92f96b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-24T19:47:44Z",
+      "side": 1,
+      "message": "The Google C++ style guide says:\n\"\"\"\nNew concept declarations should be rare, and only defined internally within a library, such that they are not exposed at API boundaries.\n\"\"\"\n\nThat said, I don\u0027t really understand the concern that led to that decision.",
+      "parentUuid": "bf80a4ca_eb50ea4d",
+      "revId": "e2a5ac926e7a9baf4e41b77e4939d64c9831ae59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
