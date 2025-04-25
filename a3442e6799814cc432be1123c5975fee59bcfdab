@@ -105,6 +105,24 @@
       "parentUuid": "10992734_223bd836",
       "revId": "a3442e6799814cc432be1123c5975fee59bcfdab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c307b9c_cbe861ca",
+        "filename": "src/dawn/node/binding/GPUBuffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3914188
+      },
+      "writtenOn": "2025-04-25T20:06:29Z",
+      "side": 1,
+      "message": "Oh sorry i was searching for ```Wrapper::For``` which was missing an \"s\" hence why I couldn\u0027t find any reference. \n\nWould CreateWithWeakThis be a method of the GPUBuffer class? If so, how would we obtain the JS object to pass into CreateWithWeakThis?\n\nyou also mentioned that we could inject the Napi::Object after creating the buffer. Again how would we obtain the JS object in that scenario?\n\nMy understanding is that we don\u0027t really have any way to get the underlaying JS object from the Create method:\n```\ninterop::GPUBuffer::Create\u003cGPUBuffer\u003e(env, device_.CreateBuffer(\u0026desc), desc, device_,\n                                                 async_)\n```\nIs this correct ?",
+      "parentUuid": "42509367_4861aa40",
+      "revId": "a3442e6799814cc432be1123c5975fee59bcfdab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
