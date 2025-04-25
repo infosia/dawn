@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "886b6713_3877db05",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T07:45:09Z",
+      "side": 1,
+      "message": "LGTM still, feel free to CQ after last comments",
+      "revId": "6fb7a2dfd3f3af47b070e9315d3d4e39557002da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c327afc_aa8045bd",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T07:45:09Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6fb7a2dfd3f3af47b070e9315d3d4e39557002da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "577fbd95_d49ff57e",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1794,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T07:45:09Z",
+      "side": 1,
+      "message": "```suggestion\n    if (GetAdapter()-\u003eGetInstance()-\u003eConsumedError(FillLimits(limits, mEnabledFeatures, mLimits))) {\n        return wgpu::Status::Error;\n```",
+      "range": {
+        "startLine": 1792,
+        "startChar": 0,
+        "endLine": 1794,
+        "endChar": 0
+      },
+      "revId": "6fb7a2dfd3f3af47b070e9315d3d4e39557002da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
