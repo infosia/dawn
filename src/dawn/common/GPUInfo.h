@@ -56,14 +56,14 @@ class DriverVersion {
     absl::InlinedVector<uint16_t, kMaxVersionFields> mDriverVersion;
 };
 
-// Do comparison between two driver versions. Currently we only support the comparison between
-// Intel Windows driver versions.
-// - Return -1 if build number of version1 is smaller
-// - Return 1 if build number of version1 is bigger
-// - Return 0 if version1 and version2 represent same driver version
-int CompareWindowsDriverVersion(PCIVendorID vendorId,
-                                const DriverVersion& version1,
-                                const DriverVersion& version2);
+class IntelWindowsDriverVersion {
+  public:
+    IntelWindowsDriverVersion(const DriverVersion& driverVersion);
+    auto operator<=>(const IntelWindowsDriverVersion& anotherVersion) const = default;
+
+  private:
+    uint32_t mBuildNumber = 0;
+};
 
 // Do comparison between two Intel Mesa driver versions.
 // - Return a negative number if build number of version1 is smaller
