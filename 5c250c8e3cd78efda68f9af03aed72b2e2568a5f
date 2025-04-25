@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa2c6a87_5c7df0f4",
+        "filename": "src/dawn/native/Subresource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-04-25T02:02:14Z",
+      "side": 1,
+      "message": "Oh we cannot do that as it will cause the \"invalid narrowing conversion from \"int\" to \"unsigned char\" error.",
+      "parentUuid": "fae98ce6_055d6f9a",
+      "revId": "5c250c8e3cd78efda68f9af03aed72b2e2568a5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1484b6c_401c3f40",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-04-24T10:19:35Z",
       "side": 1,
       "message": "```suggestion\n    int aspectCount \u003d std::popcount(static_cast\u003cuint8_t\u003e(range.aspects));\n```",
+      "range": {
+        "startLine": 430,
+        "startChar": 2,
+        "endLine": 431,
+        "endChar": 2
+      },
+      "revId": "5c250c8e3cd78efda68f9af03aed72b2e2568a5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41bf0d57_c586048f",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-04-25T02:02:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1484b6c_401c3f40",
       "range": {
         "startLine": 430,
         "startChar": 2,
