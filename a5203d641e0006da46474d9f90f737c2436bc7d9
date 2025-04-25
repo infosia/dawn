@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a6fdc42_5119182b",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:12:23Z",
+      "side": 1,
+      "message": "We don\u0027t even need to keep the current bit as we can use ScanForward to get it, and that should ideally convert to one assembly instruction.",
+      "revId": "a5203d641e0006da46474d9f90f737c2436bc7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7e5bcea_a85c2079",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:12:23Z",
+      "side": 1,
+      "message": "This only works on 32 bits at the moment, but it should be specializable on 64bit systems to work on 64 bit integers. (there\u0027s also C++20 std functions for that but IDK that they are available on all systems that we ship on yet)",
+      "revId": "a5203d641e0006da46474d9f90f737c2436bc7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
