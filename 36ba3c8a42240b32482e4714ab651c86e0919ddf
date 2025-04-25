@@ -135,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66034f68_db018808",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:16:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f7dfb042_7306a192",
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1efefdcc_647f6942",
@@ -148,6 +166,24 @@
       "writtenOn": "2025-04-17T11:57:46Z",
       "side": 1,
       "message": "This comment should explain that the root signature OOB check doesn\u0027t work.",
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a49203a5_c2c7f0d5",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:16:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1efefdcc_647f6942",
       "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -260,6 +296,48 @@
       "side": 1,
       "message": "Change the toggle name to `D3D12RunRobustnessTransformForAllBuffer`.\nNote that if `DisableRobustness` toggle is enabled, the robustness transform will not run at all. So I still think this name is not ideal.",
       "parentUuid": "7fae3686_51262398",
+      "range": {
+        "startLine": 309,
+        "startChar": 53,
+        "endLine": 309,
+        "endChar": 92
+      },
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "307617f3_641a0ebc",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:16:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cd3faf37_f2ede196",
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3bc7a8d_9aa400ee",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:16:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d762c58e_cd64a95a",
       "range": {
         "startLine": 309,
         "startChar": 53,
