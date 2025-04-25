@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96dedd47_558ff613",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-04-25T20:06:17Z",
+      "side": 1,
+      "message": "This addresses one of the issues in b/409071579. The other is Mac-specific: it fails to load dylibs when the current directory is not the output directory.",
+      "revId": "f05416169c9df70e5de371b39537c4423bcf9d8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
