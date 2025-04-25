@@ -94,6 +94,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "76d7a3ae_ff402569",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-25T02:15:32Z",
+      "side": 1,
+      "message": "mBits \u003d ~mBits will make bits before offset to \u00271\u0027. In next round, we handles mBits as a whole so we might get the scan return error index(when there is actually no bits). We check \"mBits.none()\" and \"return N\" to terminate the scanning but the \"invalid 1 bits\" will break this logic.",
+      "parentUuid": "de91cd57_08c8941e",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 22
+      },
+      "revId": "e75085e2566ab5ae3222bc4736463511aaed1483",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29003a38_f1c20ea0",
         "filename": "src/dawn/tests/unittests/BitSetRangeIteratorTests.cpp",
         "patchSetId": 12
