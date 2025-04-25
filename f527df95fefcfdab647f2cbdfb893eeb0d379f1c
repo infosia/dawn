@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c6b4849_944a1632",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-25T21:56:07Z",
+      "side": 1,
+      "message": "Yup, added the bug! Sorry for the delay, was focused on taking the information learned from prototyping this to flesh out the doc.",
+      "parentUuid": "1b6451b8_219c8eec",
+      "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e4bd30ca_215ef892",
@@ -66,6 +84,24 @@
       "writtenOn": "2025-04-17T13:20:04Z",
       "side": 1,
       "message": "LGTM",
+      "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b1346bf_fedfe5d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-25T21:56:07Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e4bd30ca_215ef892",
       "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "I believe yes, and yes. I have a diagram that we\u0027ll put in a design doc soon.",
       "parentUuid": "f6008507_f1ccfa22",
+      "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8a54286_ebc78e9e",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-25T21:56:07Z",
+      "side": 1,
+      "message": "Yup, addressed in the design doc.",
+      "parentUuid": "c19d07aa_2d414b68",
       "revId": "f527df95fefcfdab647f2cbdfb893eeb0d379f1c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
