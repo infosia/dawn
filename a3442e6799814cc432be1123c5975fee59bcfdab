@@ -87,6 +87,24 @@
       "parentUuid": "46f65c4d_faa81c0d",
       "revId": "a3442e6799814cc432be1123c5975fee59bcfdab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42509367_4861aa40",
+        "filename": "src/dawn/node/binding/GPUBuffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:38:38Z",
+      "side": 1,
+      "message": "[This is where one `Wrappers::For` is used in the autogen code for dawn.node.](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/node/interop/WebGPU.cpp.tmpl;drc\u003dae0962feee45454f985dd2fb8d6cba5369578920;l\u003d368)\n\nWhile it would certainly nice if we could pass `info.This()` as an extra argument, this would require a lot of template changes to happen as well as additional support for that in the go code for idlgen. It might be too much work compared to passing a WeakRef to this after the construction of the buffer.",
+      "parentUuid": "10992734_223bd836",
+      "revId": "a3442e6799814cc432be1123c5975fee59bcfdab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
