@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15b7b11f_b64e4a4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:54:04Z",
+      "side": 1,
+      "message": "Thank you for the contribution! Could you sign the CLA as described in https://dawn.googlesource.com/dawn/+/refs/heads/main/CONTRIBUTING.md ?",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c317ac29_5c93d0d9",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:54:04Z",
+      "side": 1,
+      "message": "`BUILD_SHARED_LIBS` should be the same information WDYT of using it instead?",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f19585db_500a89d6",
+        "filename": "src/cmake/BundleLibraries.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:54:04Z",
+      "side": 1,
+      "message": "Very nice comments, CMake can be quite difficult for developers to read and understand so this will certainly help future readers!",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "459056d3_8e39e019",
+        "filename": "src/cmake/BundleLibraries.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:54:04Z",
+      "side": 1,
+      "message": "Isn\u0027t the loop going to do 0 iterations if this is not found or empty? Ditto for `interface_link_libraries`.",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca11497a_9985eb09",
+        "filename": "src/cmake/BundleLibraries.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:54:04Z",
+      "side": 1,
+      "message": "While I\u0027ve found myself writing similar printf debugging in the past, can we avoid checking in commented out code? Or if you\u0027d like to keep it in, then maybe add a helper function `bundle_libraries_DEBUG` with a boolean set to false by default that skips printing.",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "948bbfa8_566123e3",
+        "filename": "src/cmake/BundleLibraries.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:54:04Z",
+      "side": 1,
+      "message": "What do you see this warning triggered on?\n\nThis is the only functional change with the addition of the target type?",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9476afc9_3e552e2e",
+        "filename": "src/cmake/BundleLibraries.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:54:04Z",
+      "side": 1,
+      "message": "I believe that if we don\u0027t specify a target type, then the default from `BUILD_SHARED_LIBS` will be used, so maybe we can just use that?",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1db3d536_0b9f3c9a",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-25T12:54:04Z",
+      "side": 1,
+      "message": "Can we add this one only if `BUILD_SHARED_LIBS` is on, so `$\u003c BUILD_SHARED_LIBS:WGPU_SHARED_LIBRARY\u003e`?",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
