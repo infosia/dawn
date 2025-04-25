@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56942e7a_7dc663cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-25T23:47:04Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s that helpful. For `MutexProtected` we do this to make holding the mutex type safe - `Use()` iirc passes a noncopyable nonmovable handle into the function. But here, `Promote()` returns a `Ref\u003cT\u003e` which safe because even if it does escape the scope, it still holds the ref. `Use()` seems the same except it gets us a `T*` instead.\n\nSo a pattern like this seems fine:\n\n```cpp\nif (auto /*Ref\u003cQueueBase\u003e*/ q \u003d queue.Promote()) {\n  return q-\u003eGetCompletedCommandSerial();\n} else {\n  return completionSerial;\n}\n```",
+      "revId": "c707a19fcdb1738645c66c819636d48c04ff88da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b085d458_44d80afb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-25T23:47:04Z",
+      "side": 1,
+      "message": "This part doesn\u0027t seem necessary, and usually we avoid implicit conversions. In this particular case it could make it easier to accidentally leave yourself holding only a `T*` when you really need a `Ref\u003cT\u003e` (in case another ref is dropped meanwhile).",
+      "revId": "c707a19fcdb1738645c66c819636d48c04ff88da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cb9e5f2_09218eb6",
+        "filename": "src/dawn/common/RefBase.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-25T23:47:04Z",
+      "side": 1,
+      "message": "nit: Do you need the non-const overload? I think having just a const one should work.",
+      "revId": "c707a19fcdb1738645c66c819636d48c04ff88da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5136ce8_fb94d614",
+        "filename": "src/dawn/common/WeakRef.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-25T23:47:04Z",
+      "side": 1,
+      "message": "name this something like \"defaultResult\"",
+      "range": {
+        "startLine": 97,
+        "startChar": 22,
+        "endLine": 97,
+        "endChar": 25
+      },
+      "revId": "c707a19fcdb1738645c66c819636d48c04ff88da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
