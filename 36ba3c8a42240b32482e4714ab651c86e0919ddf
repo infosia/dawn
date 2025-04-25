@@ -244,6 +244,30 @@
       "parentUuid": "9392709a_6f12d842",
       "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d762c58e_cd64a95a",
+        "filename": "src/dawn/native/d3d12/ShaderModuleD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-25T11:31:50Z",
+      "side": 1,
+      "message": "Change the toggle name to `D3D12RunRobustnessTransformForAllBuffer`.\nNote that if `DisableRobustness` toggle is enabled, the robustness transform will not run at all. So I still think this name is not ideal.",
+      "parentUuid": "7fae3686_51262398",
+      "range": {
+        "startLine": 309,
+        "startChar": 53,
+        "endLine": 309,
+        "endChar": 92
+      },
+      "revId": "36ba3c8a42240b32482e4714ab651c86e0919ddf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
