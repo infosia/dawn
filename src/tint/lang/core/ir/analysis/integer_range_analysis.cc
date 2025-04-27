@@ -151,8 +151,12 @@ struct IntegerRangeAnalysisImpl {
         return integer_var_range_info_map_.Get(var).value;
     }
 
+    const IntegerRangeInfo* GetInfo(const Load* load) {
+        return integer_load_range_info_map_.Get(load).value;
+    }
+
     /// Analyze a loop to compute the range of the loop control variable if possible.
-    void AnalyzeLoop(Loop* loop) {
+    void AnalyzeLoop(const Loop* loop) {
         const Var* index = GetLoopControlVariableFromConstantInitializer(loop);
         if (!index) {
             return;
@@ -184,6 +188,8 @@ struct IntegerRangeAnalysisImpl {
                                         static_cast<uint64_t>(max_value));
             }
         };
+
+        IntegerRangeInfo range_info;
         switch (compare_info.op) {
             case BinaryOp::kLessThanEqual: {
                 // for (var index = const_init; index <= const_rhs; index++)
@@ -196,8 +202,7 @@ struct IntegerRangeAnalysisImpl {
                 // - `index <= const_rhs` can correctly exit when `const_init + 1` is the maximum
                 //   value of `i32` or `u32`.
                 if (index_is_increasing && const_init <= compare_info.const_rhs) {
-                    IntegerRangeInfo range_info =
-                        to_integer_range_info(const_init, compare_info.const_rhs);
+                    range_info = to_integer_range_info(const_init, compare_info.const_rhs);
                     integer_var_range_info_map_.Add(index, range_info);
                 }
                 break;
@@ -212,14 +217,27 @@ struct IntegerRangeAnalysisImpl {
                 // - `index >= const_rhs` can correctly exit when `const_init - 1` is the minimum
                 //   value of `i32` or `u32`.
                 if (!index_is_increasing && const_init >= compare_info.const_rhs) {
-                    IntegerRangeInfo range_info =
-                        to_integer_range_info(compare_info.const_rhs, const_init);
+                    range_info = to_integer_range_info(compare_info.const_rhs, const_init);
                     integer_var_range_info_map_.Add(index, range_info);
                 }
                 break;
             }
             default:
                 break;
+        }
+
+        ComputeRangeWithLoopControlVariable(loop, index, range_info);
+    }
+
+    void ComputeRangeWithLoopControlVariable(const Loop* loop,
+                                             const Var* loop_control_variable,
+                                             const IntegerRangeInfo& range_info) {
+        const auto& uses = loop_control_variable->Result(0)->UsagesUnsorted();
+        for (auto& use : uses) {
+            const Load* load = use->instruction->As<Load>();
+            if (load != nullptr && use->instruction->Block() == loop->Body()) {
+                integer_load_range_info_map_.Add(load, range_info);
+            }
         }
     }
 
@@ -634,6 +652,7 @@ struct IntegerRangeAnalysisImpl {
     Hashmap<const FunctionParam*, Vector<IntegerRangeInfo, 3>, 4>
         integer_function_param_range_info_map_;
     Hashmap<const Var*, IntegerRangeInfo, 8> integer_var_range_info_map_;
+    Hashmap<const Load*, IntegerRangeInfo, 8> integer_load_range_info_map_;
 };
 
 IntegerRangeAnalysis::IntegerRangeAnalysis(Function* func)
@@ -664,6 +683,10 @@ const Binary* IntegerRangeAnalysis::GetBinaryToCompareLoopControlVariableInLoopB
 
 const IntegerRangeInfo* IntegerRangeAnalysis::GetInfo(const Var* var) {
     return impl_->GetInfo(var);
+}
+
+const IntegerRangeInfo* IntegerRangeAnalysis::GetInfo(const Load* load) {
+    return impl_->GetInfo(load);
 }
 
 }  // namespace tint::core::ir::analysis
