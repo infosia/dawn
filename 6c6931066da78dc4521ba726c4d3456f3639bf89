@@ -1,0 +1,226 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6d3d22a_cc55d430",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "```suggestion\n                    // All push_constant address space instructions should have been converted to uniform address space by the ChangePushConstantToUniform transform.\n```",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7644a034_76c54ad1",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "This comment is out of date and needs to be updated.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2da9fcc2_e37f6af5",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "```suggestion\n            // DecomposeStorageAccess maybe have converted the var pointers into ByteAddressBuffer\n```",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61d477f3_a0542395",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "Is this check even needed? We check for push constant below, and it won\u0027t have that address space if this happened will it?",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72f89653_59886603",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "```suggestion\n            // Only care about `push_constant` space variables.\n```",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "833e51bd_43edabc9",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "Can we move the calculation of `group` into the loop above? It doesn\u0027t seem expensive to calculate it and would save looping over all root block instructions a second time?",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "292e0870_bc102037",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "Doesn\u0027t this make it `uniform` address space, not `private`?",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2eacd06_ea9c5f4c",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "nit: remove, this is the same as the method comment",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee63fd23_fbcc9f9a",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "nit: remove this comment as it doesn\u0027t make sense for this transform.",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12df01fe_35deb5fb",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "```suggestion\n/// ChangePushConstantToUniform is a transform used to replace push_constant global var accesses to\n/// uniform address space. Doing this transform to leverage DecomposeUniformAccess to generate\n/// correct loading of the HLSL primitive objects. This transform should apply after all push_constant related\n/// transforms and before DecomposeUniformAccess transform.\n///\n```",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 3
+      },
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "210ed31d_19b4fc8e",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e31551a_1cffaf48",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T13:46:04Z",
+      "side": 1,
+      "message": "```suggestion\n        raise::ChangePushConstantToUniformConfig config \u003d {\n            .push_constant_binding_point \u003d options.push_constant_binding_point,\n        };\n```",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 81
+      },
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
