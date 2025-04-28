@@ -145,6 +145,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b292031c_f7ea5d4f",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-28T18:21:47Z",
+      "side": 1,
+      "message": "Should we call this `ChangeImmediateDataToUniform` such that we don\u0027t have to rename it in the future?",
+      "range": {
+        "startLine": 28,
+        "startChar": 47,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee63fd23_fbcc9f9a",
         "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.h",
         "patchSetId": 9
