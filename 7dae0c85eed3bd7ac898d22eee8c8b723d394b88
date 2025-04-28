@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce708ebf_fba1f62a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T11:40:17Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "7dae0c85eed3bd7ac898d22eee8c8b723d394b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e905e392_80f35e57",
@@ -49,6 +66,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b3895bc7_99d2d996",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T11:40:17Z",
+      "side": 1,
+      "message": "It took me 30 seconds to understand that this is handling the shutdown.\n\n```suggestion\n            // We are shut down, call spontaneous events immediately.\n```",
+      "revId": "7dae0c85eed3bd7ac898d22eee8c8b723d394b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ed2ef4d_51ee3ce0",
         "filename": "src/dawn/native/ExecutionQueue.cpp",
         "patchSetId": 3
@@ -66,6 +100,23 @@
         "endLine": 91,
         "endChar": 24
       },
+      "revId": "7dae0c85eed3bd7ac898d22eee8c8b723d394b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc407c9f_991f0e7d",
+        "filename": "src/dawn/native/Queue.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T11:40:17Z",
+      "side": 1,
+      "message": "I this a TODO without saying it?",
       "revId": "7dae0c85eed3bd7ac898d22eee8c8b723d394b88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
