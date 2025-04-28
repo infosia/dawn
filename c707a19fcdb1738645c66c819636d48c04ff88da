@@ -108,6 +108,23 @@
       },
       "revId": "c707a19fcdb1738645c66c819636d48c04ff88da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ee39087_706ffefa",
+        "filename": "src/dawn/common/WeakRef.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T11:25:22Z",
+      "side": 1,
+      "message": "Maybe this could return true if successful and false if promotion could not happen, such that\n\n```\nif (!queue.Use([\u0026](){\n    stuff\n   })) {\n      fallback stuff\n   }\n```\n\nWDYT?",
+      "revId": "c707a19fcdb1738645c66c819636d48c04ff88da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
