@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65567740_e99ec092",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T11:28:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "2500307d_79b6c683",
+      "revId": "a5203d641e0006da46474d9f90f737c2436bc7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7e5bcea_a85c2079",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "We have a 64 bit version of ScanForward in Dawn already. https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/Math.h;l\u003d273?q\u003ddawn%20math.h\u0026ss\u003dchromium",
       "parentUuid": "a7e5bcea_a85c2079",
+      "revId": "a5203d641e0006da46474d9f90f737c2436bc7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23d87688_de78d8f2",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T11:28:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "69a709b7_58075b86",
       "revId": "a5203d641e0006da46474d9f90f737c2436bc7d9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
