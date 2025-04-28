@@ -34,6 +34,24 @@
       "parentUuid": "de4fb28f_c5658cc8",
       "revId": "b9044717ad54ca406a1323a176dfa6263424570c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "609839d7_56143d4d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-28T13:23:10Z",
+      "side": 1,
+      "message": "Support is extensive: https://opengl.gpuinfo.org/listreports.php?extension\u003dGL_NV_texture_compression_vtc\nAnd explicitly mentions DXT1-DXT5: https://registry.khronos.org/OpenGL/extensions/NV/NV_texture_compression_vtc.txt",
+      "parentUuid": "6f856213_1a44da91",
+      "revId": "b9044717ad54ca406a1323a176dfa6263424570c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
