@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "81fc2a88_1c169172",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T11:20:13Z",
+      "side": 1,
+      "message": "I can see it signed, thank you!",
+      "parentUuid": "7f1dc05c_e89baf46",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c317ac29_5c93d0d9",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Previously, the monolithic library was being build shared at all times, so I thought it was best to keep it separate.",
       "parentUuid": "c317ac29_5c93d0d9",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a4bc6a4_b1d63885",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T11:20:13Z",
+      "side": 1,
+      "message": "Unless someone starts needing mixed build with all of Dawn as a shared lib except the monolithic lib as static, IMHO we should simplify the configuration and use `BUILD_SHARED_LIBS`.",
+      "parentUuid": "3cdf6270_bef8d91d",
       "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "yes but that\u0027s the point isn\u0027t it? that it does zero iterations\nedit: ah I see, you mean the if is superfluous?",
       "parentUuid": "459056d3_8e39e019",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33206e12_dbb689c5",
+        "filename": "src/cmake/BundleLibraries.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T11:20:13Z",
+      "side": 1,
+      "message": "Yeah I it should be superfluous.",
+      "parentUuid": "2a49de42_2ae4861d",
       "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -206,6 +260,24 @@
       "side": 1,
       "message": "I don\u0027t think it triggered, I transferred this practice from loops that can contain bogus elements.",
       "parentUuid": "948bbfa8_566123e3",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0abc2014_e4801ffe",
+        "filename": "src/cmake/BundleLibraries.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T11:20:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92c7cfe5_50ec941f",
       "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
