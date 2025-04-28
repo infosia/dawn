@@ -88,6 +88,24 @@
       "parentUuid": "d458c93d_213c47a0",
       "revId": "b9044717ad54ca406a1323a176dfa6263424570c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca8ec4c0_9e96726b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-28T14:09:54Z",
+      "side": 1,
+      "message": "Thanks Corentin. We can continue conversation at https://dawn-review.googlesource.com/c/dawn/+/239374.",
+      "parentUuid": "b8fad77c_1e5dc2fd",
+      "revId": "b9044717ad54ca406a1323a176dfa6263424570c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
