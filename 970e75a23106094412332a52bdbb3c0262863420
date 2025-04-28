@@ -22,6 +22,30 @@
       },
       "revId": "970e75a23106094412332a52bdbb3c0262863420",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d79d46a_34a64e3a",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-04-28T17:25:14Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "4bb595cf_a7a1c436",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 81
+      },
+      "revId": "970e75a23106094412332a52bdbb3c0262863420",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
