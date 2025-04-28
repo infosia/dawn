@@ -152,6 +152,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e00dd8c_849cefde",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-28T14:00:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "76d7a3ae_ff402569",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 22
+      },
+      "revId": "e75085e2566ab5ae3222bc4736463511aaed1483",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29003a38_f1c20ea0",
