@@ -70,6 +70,24 @@
       "parentUuid": "609839d7_56143d4d",
       "revId": "b9044717ad54ca406a1323a176dfa6263424570c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8fad77c_1e5dc2fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T14:01:09Z",
+      "side": 1,
+      "message": "I\u0027ll mark this as resolved because the open comment thread prevents landing this CL and I need to land this CL to unblock upgrading the CTS version used to test Dawn. We can discuss what it would take to reenable this on the issue or a CL that reenables the feature once the CTS has been rolled.",
+      "parentUuid": "d458c93d_213c47a0",
+      "revId": "b9044717ad54ca406a1323a176dfa6263424570c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
