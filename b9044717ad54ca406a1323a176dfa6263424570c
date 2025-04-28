@@ -16,6 +16,24 @@
       "message": "Does the fail also happen for BC7? Or is it more specific to BC1 to BC5? It might be due to specification difference for GL_ARB_texture_compression_bptc and others (GL_ARB_texture_compression_rgtc and GL_EXT_texture_compression_s3tc).",
       "revId": "b9044717ad54ca406a1323a176dfa6263424570c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f856213_1a44da91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-28T13:19:23Z",
+      "side": 1,
+      "message": "GL_NV_texture_compression_vtc might help for NVIDIA cards",
+      "parentUuid": "de4fb28f_c5658cc8",
+      "revId": "b9044717ad54ca406a1323a176dfa6263424570c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
