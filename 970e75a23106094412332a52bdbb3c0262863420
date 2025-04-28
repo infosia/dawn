@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bb595cf_a7a1c436",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-04-28T14:06:59Z",
+      "side": 1,
+      "message": "Could this do 64-bit chunks instead?",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 81
+      },
+      "revId": "970e75a23106094412332a52bdbb3c0262863420",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
