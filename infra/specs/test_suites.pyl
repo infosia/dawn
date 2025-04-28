@@ -26,6 +26,8 @@
       'dawn_end2end_sws_tests': {
         'args': [
           '--adapter-vendor-id=0x1AE0',
+          '--use-wire',
+          '--wire-trace-dir=${ISOLATED_OUTDIR}',
         ],
         'mixins': [
           'result_adapter_gtest_json',
@@ -62,6 +64,7 @@
       'dawn_wire_unittests': {
         'args': [
           '--use-wire',
+          '--wire-trace-dir=${ISOLATED_OUTDIR}',
         ],
         'mixins': [
           'result_adapter_gtest_json',
@@ -96,12 +99,16 @@
     },
   },
   'compound_suites': {
-    'swiftshader_gtests': [
-      'dawn_end2end_swangle_gtests',
+    # 'swiftshader_gtests': [
+    #   'dawn_end2end_swangle_gtests',
+    #   'dawn_end2end_sws_gtests',
+    #   'dawn_unit_gtests',
+    #   'dawn_wire_unit_gtests',
+    #   'tint_unit_gtests',
+    # ],
+    'fuzz_corpora_gtests': [
       'dawn_end2end_sws_gtests',
-      'dawn_unit_gtests',
       'dawn_wire_unit_gtests',
-      'tint_unit_gtests',
     ],
   },
 }

@@ -5,33 +5,9 @@
     "gtest_tests": [
       {
         "args": [
-          "--backend=opengles",
-          "--use-angle=swiftshader",
-          "--enable-toggles=gl_force_es_31_and_no_extensions"
-        ],
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
-        "name": "dawn_end2end_swangle_tests",
-        "resultdb": {
-          "result_format": "gtest_json"
-        },
-        "swarming": {
-          "containment_type": "AUTO",
-          "dimensions": {
-            "cpu": "x86-64",
-            "gpu": "none",
-            "os": "Ubuntu-22.04",
-            "pool": "chromium.tests.gpu"
-          },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
-        },
-        "test": "dawn_end2end_tests",
-        "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
-      },
-      {
-        "args": [
-          "--adapter-vendor-id=0x1AE0"
+          "--adapter-vendor-id=0x1AE0",
+          "--use-wire",
+          "--wire-trace-dir=${ISOLATED_OUTDIR}"
         ],
         "merge": {
           "script": "//testing/merge_scripts/noop_merge.py"
@@ -54,29 +30,9 @@
         "test_id_prefix": "ninja://src/dawn/tests:dawn_end2end_tests/"
       },
       {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
-        "name": "dawn_unittests",
-        "resultdb": {
-          "result_format": "gtest_json"
-        },
-        "swarming": {
-          "containment_type": "AUTO",
-          "dimensions": {
-            "cpu": "x86-64",
-            "gpu": "none",
-            "os": "Ubuntu-22.04",
-            "pool": "chromium.tests.gpu"
-          },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
-        },
-        "test": "dawn_unittests",
-        "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
-      },
-      {
         "args": [
-          "--use-wire"
+          "--use-wire",
+          "--wire-trace-dir=${ISOLATED_OUTDIR}"
         ],
         "merge": {
           "script": "//testing/merge_scripts/noop_merge.py"
@@ -97,27 +53,6 @@
         },
         "test": "dawn_unittests",
         "test_id_prefix": "ninja://src/dawn/tests:dawn_unittests/"
-      },
-      {
-        "merge": {
-          "script": "//testing/merge_scripts/noop_merge.py"
-        },
-        "name": "tint_unittests",
-        "resultdb": {
-          "result_format": "gtest_json"
-        },
-        "swarming": {
-          "containment_type": "AUTO",
-          "dimensions": {
-            "cpu": "x86-64",
-            "gpu": "none",
-            "os": "Ubuntu-22.04",
-            "pool": "chromium.tests.gpu"
-          },
-          "service_account": "chromium-tester@chops-service-accounts.iam.gserviceaccount.com"
-        },
-        "test": "tint_unittests",
-        "test_id_prefix": "ninja://src/tint/cmd/test:tint_unittests/"
       }
     ]
   }

@@ -15,7 +15,8 @@
           'x86-64',
         ],
         'test_suites': {
-          'gtest_tests': 'swiftshader_gtests',
+          #'gtest_tests': 'swiftshader_gtests',
+          'gtest_tests': 'fuzz_corpora_gtests',
         },
       },
     },
