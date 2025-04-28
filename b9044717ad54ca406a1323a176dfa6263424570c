@@ -52,6 +52,24 @@
       "parentUuid": "6f856213_1a44da91",
       "revId": "b9044717ad54ca406a1323a176dfa6263424570c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d458c93d_213c47a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-04-28T13:40:26Z",
+      "side": 1,
+      "message": "Another glance seems to reveal that VTC overrides some rules from base BC1-5, making it rather constrained (probably leading to errors)",
+      "parentUuid": "609839d7_56143d4d",
+      "revId": "b9044717ad54ca406a1323a176dfa6263424570c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
