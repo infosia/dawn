@@ -161,6 +161,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a0d047a_41dfbe76",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-28T04:32:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2991bb8_e2bc7c65",
+      "revId": "5cf41daaa3714bde9dbe87f7e5f018bf9aaa5541",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff2e7328_a006c509",

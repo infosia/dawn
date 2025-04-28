@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3af11fa6_9002d8a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-28T04:32:21Z",
+      "side": 1,
+      "message": "Adding a new transform in hlsl backend to transform all push_constant to uniform. And running it before decomposeUniformAccess.\n\nPTAL, thanks!",
+      "revId": "9533c74ecc0ab8121cdd6679e02f43aaab99fc97",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
