@@ -54,6 +54,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "658630b2_90b6bd7a",
+        "filename": "src/dawn/common/RefBase.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T10:15:54Z",
+      "side": 1,
+      "message": "Why do we need this implicit conversion? operators -\u003e and . should work, but an automatic conversion makes is less clear when you are taking a non-owning reference to the underlying pointer. .Get() is useful to denote that IMHO.",
+      "parentUuid": "2cb9e5f2_09218eb6",
+      "revId": "c707a19fcdb1738645c66c819636d48c04ff88da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be35591b_f11825fa",
+        "filename": "src/dawn/common/WeakRef.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-28T10:15:54Z",
+      "side": 1,
+      "message": "Code using this method would look confusing. What about `.UseOrDefault(F, default)`?",
+      "revId": "c707a19fcdb1738645c66c819636d48c04ff88da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b5136ce8_fb94d614",
         "filename": "src/dawn/common/WeakRef.h",
         "patchSetId": 1
