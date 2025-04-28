@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64e99153_3bd9d71a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-28T12:18:42Z",
+      "side": 1,
+      "message": "Please update commit message with TextureCompressionBCSliced3D",
+      "revId": "2798ea6f964ec420e7cdb32ea4b6059c6c4d3bb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
