@@ -28,8 +28,10 @@
 #include <atomic>
 #include <mutex>
 #include <utility>
+#include <vector>
 
 #include "absl/strings/str_format.h"
+#include "dawn/common/Assert.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectBase.h"
@@ -73,16 +75,21 @@ bool ApiObjectList::Untrack(ApiObjectBase* object) {
 }
 
 void ApiObjectList::Destroy() {
-    LinkedList<ApiObjectBase> objects;
+    std::vector<ApiObjectBase*> objects;
     mObjects.Use([&objects, this](auto lockedObjects) {
         mMarkedDestroyed.store(true, std::memory_order_release);
-        lockedObjects->MoveInto(&objects);
+
+        for (auto* node = lockedObjects->head(); node != lockedObjects->end();
+             node = node->next()) {
+            objects.push_back(node->value());
+            bool removed = node->RemoveFromList();
+            DAWN_ASSERT(removed);
+        }
+        DAWN_ASSERT(lockedObjects->empty());
     });
-    while (!objects.empty()) {
-        auto* head = objects.head();
-        bool removed = head->RemoveFromList();
-        DAWN_ASSERT(removed);
-        head->value()->DestroyImpl();
+
+    for (auto& object : objects) {
+        object->DestroyImpl();
     }
 }
 
