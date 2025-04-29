@@ -34,6 +34,24 @@
       "parentUuid": "e8b05ac1_41c4c866",
       "revId": "b898204a5459dc43379305d8c92057c73c6c76cd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b3e1d65_e6794788",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-29T08:15:26Z",
+      "side": 1,
+      "message": "Yeah that one seems better, thank you!",
+      "parentUuid": "23a62324_7ef19176",
+      "revId": "b898204a5459dc43379305d8c92057c73c6c76cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
