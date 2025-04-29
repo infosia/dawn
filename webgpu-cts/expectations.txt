@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-04-17 07:53:47AM
+# Last rolled: 2025-04-29 05:04:00AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -1025,7 +1025,6 @@ crbug.com/407159803 [ android-r qualcomm ] webgpu:api,validation,capability_chec
 
 # Mac AMD does not correctly respect lodMinClamp/lodMaxClamp
 crbug.com/409266267 [ amd mac ] webgpu:shader,execution,expression,call,builtin,textureSample:sampled_2d_coords,lodClamp:* [ Skip ]
-
 
 crbug.com/407801079 [ dawn-no-backend-validation no-asan nvidia target-cpu-32 webgpu-dxc-disabled win ] webgpu:shader,execution,expression,binary,af_matrix_scalar_multiplication:matrix_scalar:inputSource="const";cols=4;rows=4 [ Failure ]
 
