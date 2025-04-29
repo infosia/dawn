@@ -397,7 +397,7 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       "https://gpuweb.github.io/gpuweb/#dom-gpufeaturename-clip-distances",
       FeatureInfo::FeatureState::Stable}},
     {Feature::ChromiumExperimentalImmediateData,
-     {"Support the \"enable chromium_experimental_immediate_data;\" directive in WGSL.",
+     {"Support the \"enable chromium_experimental_immediate;\" directive in WGSL.",
       "https://github.com/gpuweb/gpuweb/blob/main/proposals/push-constants.md",
       FeatureInfo::FeatureState::Experimental}},
     {Feature::DawnTexelCopyBufferRowAlignment,
