@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76733276_be7e518a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-29T16:52:10Z",
+      "side": 1,
+      "message": "Blegh, of course MSVC doesn\u0027t support this flag, let me update the patch",
+      "revId": "c856ec941e7030090f5dff1fc9b40cb5898d617f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
