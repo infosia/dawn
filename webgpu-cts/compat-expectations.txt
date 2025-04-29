@@ -108,6 +108,7 @@
 
 # GLES doesn't give us a way to gracefully catch OOM errors, so we just lose the device.
 crbug.com/42241110 webgpu:api,operation,uncapturederror:iff_uncaptured:errorType="out-of-memory" [ Skip ]
+crbug.com/42241110 webgpu:api,operation,uncapturederror:iff_uncaptured:useOnuncapturederror=*;errorType="out-of-memory" [ Skip ]
 crbug.com/42241110 webgpu:api,validation,error_scope:balanced_nesting:errorFilter="out-of-memory";* [ Skip ]
 crbug.com/42241110 webgpu:api,validation,error_scope:current_scope:errorFilter="out-of-memory";* [ Skip ]
 crbug.com/42241110 webgpu:api,validation,error_scope:parent_scope:errorFilter="out-of-memory";* [ Skip ]
