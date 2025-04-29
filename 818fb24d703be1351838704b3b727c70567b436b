@@ -24,6 +24,72 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6565aaa4_ad941708",
+        "filename": "src/tint/lang/spirv/writer/construct_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-29T15:34:57Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "271bc2a8_251d387b",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "818fb24d703be1351838704b3b727c70567b436b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c391633f_8eadbb9d",
+        "filename": "src/tint/lang/spirv/writer/construct_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-29T15:34:57Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "271bc2a8_251d387b",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2de8d41e_766b0478",
+          "description": "User suggestion",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/construct_test.cc",
+              "range": {
+                "startLine": 187,
+                "startChar": 0,
+                "endLine": 188,
+                "endChar": 43
+              },
+              "replacement": "    Options options{\n        .use_vulkan_memory_model \u003d true,\n    };"
+            }
+          ]
+        }
+      ],
+      "revId": "818fb24d703be1351838704b3b727c70567b436b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "857f2fbd_2282f613",
@@ -43,6 +109,72 @@
         "endLine": 214,
         "endChar": 43
       },
+      "revId": "818fb24d703be1351838704b3b727c70567b436b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02afaf63_283d87ec",
+        "filename": "src/tint/lang/spirv/writer/construct_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-29T15:34:57Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "857f2fbd_2282f613",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 43
+      },
+      "revId": "818fb24d703be1351838704b3b727c70567b436b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c3d2082_5bc0bb5a",
+        "filename": "src/tint/lang/spirv/writer/construct_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-29T15:34:57Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "857f2fbd_2282f613",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 43
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b05ad43f_801b72eb",
+          "description": "User suggestion",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/construct_test.cc",
+              "range": {
+                "startLine": 213,
+                "startChar": 0,
+                "endLine": 214,
+                "endChar": 43
+              },
+              "replacement": "    Options options{\n        .use_vulkan_memory_model \u003d true,\n    };"
+            }
+          ]
+        }
+      ],
       "revId": "818fb24d703be1351838704b3b727c70567b436b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
