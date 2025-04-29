@@ -46,7 +46,7 @@ class PipelineLayout final : public PipelineLayoutBase {
         const UnpackedPtr<PipelineLayoutDescriptor>& descriptor);
 
     // Pipeline might use different amounts of immediate data internally which cause difference in
-    // VkPipelineLayout push constant range part. Pass internalImmediateDataSize to
+    // VkPipelineLayout immediate data range part. Pass internalImmediateDataSize to
     // get correct VkPipelineLayout.
     ResultOrError<Ref<RefCountedVkHandle<VkPipelineLayout>>> GetOrCreateVkLayoutObject(
         const ImmediateConstantMask& immediateConstantMask);

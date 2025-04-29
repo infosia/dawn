@@ -227,9 +227,9 @@ TEST_F(ImmediateDataTest, ValidatePipelineLayoutImmediateDataBytesAndShaders) {
     DAWN_SKIP_TEST_IF(!device.HasFeature(wgpu::FeatureName::ChromiumExperimentalImmediateData));
     constexpr uint32_t kShaderImmediateDataBytes = 12u;
     wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, R"(
-        enable chromium_experimental_push_constant;
-        var<push_constant> fragmentConstants: vec3f;
-        var<push_constant> computeConstants: vec3u;
+        enable chromium_experimental_immediate;
+        var<immediate> fragmentConstants: vec3f;
+        var<immediate> computeConstants: vec3u;
         @vertex fn vsMain(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4f {
             const pos = array(
                 vec2( 1.0, -1.0),
@@ -310,9 +310,9 @@ TEST_F(ImmediateDataTest, ValidatePipelineLayoutImmediateDataBytesAndShaders) {
 TEST_F(ImmediateDataTest, ValidateDefaultPipelineLayout) {
     DAWN_SKIP_TEST_IF(!device.HasFeature(wgpu::FeatureName::ChromiumExperimentalImmediateData));
     wgpu::ShaderModule shaderModule = utils::CreateShaderModule(device, R"(
-        enable chromium_experimental_push_constant;
-        var<push_constant> fragmentConstants: vec4f;
-        var<push_constant> computeConstants: vec4u;
+        enable chromium_experimental_immediate;
+        var<immediate> fragmentConstants: vec4f;
+        var<immediate> computeConstants: vec4u;
         @vertex fn vsMain(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4f {
             const pos = array(
                 vec2( 1.0, -1.0),
@@ -335,7 +335,7 @@ TEST_F(ImmediateDataTest, ValidateDefaultPipelineLayout) {
         })");
 
     wgpu::ShaderModule oobShaderModule = utils::CreateShaderModule(device, R"(
-            enable chromium_experimental_push_constant;
+            enable chromium_experimental_immediate;
             struct FragmentConstants {
                 constants: vec4f,
                 constantsOOB: f32,
@@ -345,8 +345,8 @@ TEST_F(ImmediateDataTest, ValidateDefaultPipelineLayout) {
                 constants: vec4u,
                 constantsOOB: u32,
             };
-            var<push_constant> fragmentConstants: FragmentConstants;
-            var<push_constant> computeConstants: ComputeConstants;
+            var<immediate> fragmentConstants: FragmentConstants;
+            var<immediate> computeConstants: ComputeConstants;
             @vertex fn vsMain(@builtin(vertex_index) VertexIndex : u32) -> @builtin(position) vec4f {
                 const pos = array(
                     vec2( 1.0, -1.0),

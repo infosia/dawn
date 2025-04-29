@@ -1533,7 +1533,7 @@ bool Converter::Convert(wgpu::FeatureName& out, interop::GPUFeatureName in) {
         case interop::GPUFeatureName::kDualSourceBlending:
             out = wgpu::FeatureName::DualSourceBlending;
             return true;
-        case interop::GPUFeatureName::kChromiumExperimentalImmediateData:
+        case interop::GPUFeatureName::kChromiumExperimentalImmediate:
             out = wgpu::FeatureName::ChromiumExperimentalImmediateData;
             return true;
         case interop::GPUFeatureName::kClipDistances:
@@ -1572,7 +1572,7 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         CASE(MultiDrawIndirect, kMultiDrawIndirect);
         CASE(DualSourceBlending, kDualSourceBlending);
         CASE(ClipDistances, kClipDistances);
-        CASE(ChromiumExperimentalImmediateData, kChromiumExperimentalImmediateData);
+        CASE(ChromiumExperimentalImmediateData, kChromiumExperimentalImmediate);
         CASE(ChromiumExperimentalSubgroupMatrix, kChromiumExperimentalSubgroupMatrix);
 
 #undef CASE
