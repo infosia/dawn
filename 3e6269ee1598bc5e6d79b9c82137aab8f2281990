@@ -16,6 +16,24 @@
       "message": "Argh, it looks like it has to be part of a CTS roll CL like https://dawn-review.googlesource.com/c/dawn/+/239437.\n@lokokung@google.com Please consider this as part of the WebGPU gardening as it\u0027s currently causing `android-dawn-arm64-rel` bots to fail: https://dawn-review.googlesource.com/c/dawn/+/239437?checksRunsSelected\u003dandroid-dawn-arm64-rel\u0026tab\u003dchecks",
       "revId": "3e6269ee1598bc5e6d79b9c82137aab8f2281990",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c719d0af_973aa12b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-29T18:11:20Z",
+      "side": 1,
+      "message": "Let me know if you can find a way to update cts compat expectations though without a CTS roll.",
+      "parentUuid": "04e81ebd_4540fa65",
+      "revId": "3e6269ee1598bc5e6d79b9c82137aab8f2281990",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
