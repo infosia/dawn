@@ -1690,7 +1690,7 @@ void DeviceBase::SetWGSLExtensionAllowList() {
     }
     if (mEnabledFeatures.IsEnabled(Feature::ChromiumExperimentalImmediateData)) {
         mWGSLAllowedFeatures.extensions.insert(
-            tint::wgsl::Extension::kChromiumExperimentalPushConstant);
+            tint::wgsl::Extension::kChromiumExperimentalImmediate);
     }
 
     // Language features are enabled instance-wide.
