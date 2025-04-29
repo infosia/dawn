@@ -16,6 +16,24 @@
       "message": "We can just turn this off everywhere, I don\u0027t think we need to do it specifically for protobuf.\n\nWe also have protobuf stuff in the top level cmake file now: https://dawn.googlesource.com/dawn/+/refs/heads/main/CMakeLists.txt#444 which seems to duplicate whats on the lines above?",
       "revId": "faae9ec33e252e05866e049b2c34d89c13d41855",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93adda40_c5f57496",
+        "filename": "third_party/protobuf.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-29T16:37:32Z",
+      "side": 1,
+      "message": "Done (with modifications).\n\nThat section specifically is for suppressing warnings that come from Dawn using abseil directly (and is restricted to clang only). The warnings that I was suppressing in this CL were from  coming from third_party/protobuf\u0027s usage of abseil, but as noted we want to just to suppress it everywhere.\n\nSo I have added it up higher in the root file before any includes/build rules, so that it affects the entire project. Additionally -Wc++20-compat is also available in GCC, so not putting it in a if clang guard.\n\n(I have also modernized how the existing compile options are set here)",
+      "parentUuid": "c3534f1d_614f0287",
+      "revId": "faae9ec33e252e05866e049b2c34d89c13d41855",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
