@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3534f1d_614f0287",
+        "filename": "third_party/protobuf.cmake",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-29T15:18:18Z",
+      "side": 1,
+      "message": "We can just turn this off everywhere, I don\u0027t think we need to do it specifically for protobuf.\n\nWe also have protobuf stuff in the top level cmake file now: https://dawn.googlesource.com/dawn/+/refs/heads/main/CMakeLists.txt#444 which seems to duplicate whats on the lines above?",
+      "revId": "faae9ec33e252e05866e049b2c34d89c13d41855",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
