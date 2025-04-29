@@ -39,6 +39,10 @@ set(protobuf_DISABLE_RTTI ON CACHE BOOL "Remove runtime type information in the 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-gcc-compat -Wno-unreachable-code-break -Wno-nullability-extension -Wno-shadow")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-gcc-compat -Wno-unreachable-code-break -Wno-nullability-extension -Wno-shadow")
 
+# Don't warn about C++20 only constructs, since Dawn requires C++20
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-c++20-compat")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-c++20-compat")
+
 add_subdirectory("${DAWN_PROTOBUF_DIR}")
 target_compile_definitions(libprotobuf PUBLIC "-DPROTOBUF_ENABLE_DEBUG_LOGGING_MAY_LEAK_PII=0")
 
