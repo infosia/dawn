@@ -16,6 +16,24 @@
       "message": "I saw your comment in https://crbug.com/411152029 after sending this out.\n\nI guess this change isn\u0027t needed if `ConcurrentTransformedShaderModuleCache` goes away? The `ModuleAndSpirv` returned from here would have ownership of both `std::vector\u003cuint32_t\u003e spriv` and `VkShaderModule module`. The caller would then be able to use and destroy both. Assuming that matches what you were thinking I can abandon this and send out a CL to make that change instead.",
       "revId": "b898204a5459dc43379305d8c92057c73c6c76cd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23a62324_7ef19176",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-29T00:59:33Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/239415 seems like a better approach.",
+      "parentUuid": "e8b05ac1_41c4c866",
+      "revId": "b898204a5459dc43379305d8c92057c73c6c76cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
