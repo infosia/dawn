@@ -348,6 +348,9 @@ if(DAWN_ENABLE_PIC)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
+# Don't warn about C++20 only constructs, since Dawn requires C++20
+add_compile_options(-Wno-c++20-compat)
+
 # Defines `CMAKE_INSTALL_*DIR` variables
 include(GNUInstallDirs)
 # The public config contains only the include paths for the Dawn headers.
