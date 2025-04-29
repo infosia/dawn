@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "271bc2a8_251d387b",
+        "filename": "src/tint/lang/spirv/writer/construct_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-29T14:40:29Z",
+      "side": 1,
+      "message": "```suggestion\n    Options options{\n        .use_vulkan_memory_model \u003d true,\n    };\n```",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 43
+      },
+      "revId": "818fb24d703be1351838704b3b727c70567b436b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "857f2fbd_2282f613",
+        "filename": "src/tint/lang/spirv/writer/construct_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-04-29T14:40:29Z",
+      "side": 1,
+      "message": "```suggestion\n    Options options{\n        .use_vulkan_memory_model \u003d true,\n    };\n```",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 43
+      },
+      "revId": "818fb24d703be1351838704b3b727c70567b436b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
