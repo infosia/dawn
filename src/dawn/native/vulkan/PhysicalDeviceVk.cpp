@@ -547,7 +547,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::DawnDrmFormatCapabilities);
     }
 
-    EnableFeature(Feature::ChromiumExperimentalImmediateData);
+    EnableFeature(Feature::ChromiumExperimentalImmediate);
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
@@ -737,7 +737,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
         }
     }
 
-    // vulkan needs to have enough push constant range size for all
+    // vulkan needs to have enough immediate data range size for all
     // internal and external immediate data usages.
     constexpr uint32_t kMinVulkanPushConstants = 128;
     DAWN_ASSERT(vkLimits.maxPushConstantsSize >= kMinVulkanPushConstants);
