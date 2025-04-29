@@ -168,6 +168,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "feb6e599_77840a77",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-04-29T01:11:04Z",
+      "side": 1,
+      "message": "Fully agree. Renaming is a work I postpone for a long time. I think this is the day to make it. I\u0027ll upload a new CL to rename push_constant to immediate as the base of this CL",
+      "parentUuid": "b292031c_f7ea5d4f",
+      "range": {
+        "startLine": 28,
+        "startChar": 47,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ee63fd23_fbcc9f9a",
         "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.h",
         "patchSetId": 9
