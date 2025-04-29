@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "fab59f7921c50cf2e970d27e8a12f95808ff6958",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c2dd27a_b0e5ae69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-29T15:13:26Z",
+      "side": 1,
+      "message": "FYI @kainino@chromium.org",
+      "revId": "fab59f7921c50cf2e970d27e8a12f95808ff6958",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
