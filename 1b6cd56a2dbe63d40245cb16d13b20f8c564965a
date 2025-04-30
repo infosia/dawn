@@ -50,6 +50,23 @@
       "message": "LGTM. Ditto `git grep abseil-cpp:string_view`",
       "revId": "1b6cd56a2dbe63d40245cb16d13b20f8c564965a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "642d1c21_c2b89e97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-30T18:27:17Z",
+      "side": 1,
+      "message": "Ehhh I\u0027m a bit more hesitant to land this one as is. Mainly because I know in google3, they are still using absl::StringView and although in most platforms that\u0027s just an alias to std::string_view, I remember there was at least one platform that I ran into issues when trying to do something similar to this before. Let me look into it a bit first.",
+      "revId": "1b6cd56a2dbe63d40245cb16d13b20f8c564965a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
