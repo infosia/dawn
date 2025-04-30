@@ -88,7 +88,12 @@ class [[nodiscard]] ErrorData {
     }
 
     InternalErrorType GetType() const;
+
+    // Undef GetMessage to prevent possible conflict macro definition
+#pragma push_macro("GetMessage")
+#undef GetMessage
     const std::string& GetMessage() const;
+#pragma pop_macro("GetMessage")
     const std::vector<BacktraceRecord>& GetBacktrace() const;
     const std::vector<std::string>& GetContexts() const;
     const std::vector<std::string>& GetDebugGroups() const;
