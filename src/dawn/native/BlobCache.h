@@ -65,6 +65,13 @@ class BlobCache {
         }
     }
 
+    // EnsureStored for CacheResult<void>
+    void EnsureStored(const CacheResult<void>& cacheResult, const Blob& blob) {
+        if (!cacheResult.IsCached()) {
+            Store(cacheResult.GetCacheKey(), blob);
+        }
+    }
+
   private:
     // Non-thread safe internal implementations of load and store. Exposed callers that use
     // these helpers need to make sure that these are entered with `mMutex` held.

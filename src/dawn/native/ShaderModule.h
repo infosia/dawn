@@ -69,6 +69,7 @@ class Program;
 namespace dawn::native {
 
 struct EntryPointMetadata;
+class ShaderModuleParseRequest;
 
 // Base component type of an inter-stage variable
 enum class InterStageComponentType {
@@ -134,11 +135,9 @@ struct ShaderModuleEntryPoint {
 
 // Parse a shader module from a validated ShaderModuleDescriptor, and generate reflection
 // information if required. Errors are returned only if the shader code itself is invalid.
-MaybeError ParseShaderModule(DeviceBase* device,
-                             const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
-                             const std::vector<tint::wgsl::Extension>& internalExtensions,
-                             bool needReflection,
-                             ShaderModuleParseResult* parseResult);
+// Note that ParseShaderModule directly modifies the ShaderModuleParseResult pointed by
+// req.outputParseResult, and return the very pointer if succeed.
+MaybeError ParseShaderModule(ShaderModuleParseRequest req);
 
 MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
                                                    const EntryPointMetadata& entryPoint,
