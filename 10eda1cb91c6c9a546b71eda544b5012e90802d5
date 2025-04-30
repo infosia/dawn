@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44dcfe12_768da818",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-30T11:03:33Z",
+      "side": 1,
+      "message": "We should try to avoid recursion here otherwise a long chain of `let` instructions could cause a stack overflow. The typical pattern that we\u0027re starting to use is something like:\n```\nVector\u003ccore::ir::Instruction*, 8\u003e to_replace;\nto_replace.Push(inst);\n...\nwhile (!to_replace.IsEmpty()) {\n  auto* inst \u003d to_replace.Pop();\n  // replace the type\n  // push all uses of inst to `to_replace`\n}\n```",
+      "revId": "10eda1cb91c6c9a546b71eda544b5012e90802d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c65b293_cc71627b",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-30T11:03:33Z",
+      "side": 1,
+      "message": "Nit: Rename all of these tests to use `Immediate`",
+      "revId": "10eda1cb91c6c9a546b71eda544b5012e90802d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0ce5e0a_a77944df",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-04-30T11:03:33Z",
+      "side": 1,
+      "message": "Please also document that it must come *after* `DirectVariableAccess`, since it does not handle immediate pointers being passed as function parameters.",
+      "revId": "10eda1cb91c6c9a546b71eda544b5012e90802d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
