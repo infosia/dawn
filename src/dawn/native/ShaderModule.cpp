@@ -46,6 +46,7 @@
 #include "dawn/native/PipelineLayout.h"
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/Sampler.h"
+#include "dawn/native/ShaderModuleParseRequest.h"
 #include "dawn/native/TintUtils.h"
 
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
@@ -377,11 +378,11 @@ ResultOrError<PixelLocalMemberType> FromTintPixelLocalMemberType(
 }
 
 ResultOrError<tint::Program> ParseWGSL(const tint::Source::File* file,
-                                       const tint::wgsl::AllowedFeatures& allowedFeatures,
+                                       const WGSLAllowedFeatures& allowedFeatures,
                                        const std::vector<tint::wgsl::Extension>& internalExtensions,
                                        ParsedCompilationMessages* outMessages) {
     tint::wgsl::reader::Options options;
-    options.allowed_features = allowedFeatures;
+    options.allowed_features = allowedFeatures.ToTint();
     options.allowed_features.extensions.insert(internalExtensions.begin(),
                                                internalExtensions.end());
     tint::Program program = tint::wgsl::reader::Parse(file, options);
@@ -397,14 +398,13 @@ ResultOrError<tint::Program> ParseWGSL(const tint::Source::File* file,
 
 #if TINT_BUILD_SPV_READER
 ResultOrError<tint::Program> ParseSPIRV(const std::vector<uint32_t>& spirv,
-                                        const tint::wgsl::AllowedFeatures& allowedFeatures,
+                                        const WGSLAllowedFeatures& allowedFeatures,
                                         ParsedCompilationMessages* outMessages,
-                                        const DawnShaderModuleSPIRVOptionsDescriptor* optionsDesc) {
+                                        const ShaderModuleParseSpirvOption& parseOptions) {
     tint::spirv::reader::Options options;
-    if (optionsDesc) {
-        options.allow_non_uniform_derivatives = optionsDesc->allowNonUniformDerivatives;
-    }
-    options.allowed_features = allowedFeatures;
+    options.allow_non_uniform_derivatives = parseOptions.allowNonUniformDerivatives;
+    options.allowed_features = allowedFeatures.ToTint();
+
     tint::Program program = tint::spirv::reader::Read(spirv, options);
     if (outMessages != nullptr) {
         DAWN_TRY(outMessages->AddMessages(program.Diagnostics()));
@@ -661,7 +661,7 @@ MaybeError ValidateCompatibilityWithBindGroupLayout(DeviceBase* device,
 }
 
 ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
-    const DeviceBase* device,
+    const ShaderModuleParseDeviceInfo& deviceInfo,
     tint::inspector::Inspector* inspector,
     const tint::inspector::EntryPoint& entryPoint) {
     std::unique_ptr<EntryPointMetadata> metadata = std::make_unique<EntryPointMetadata>();
@@ -725,9 +725,9 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
     metadata->usesDepthTextureWithNonComparisonSampler =
         entryPoint.has_depth_texture_with_non_comparison_sampler;
 
-    const CombinedLimits& limits = device->GetLimits();
-    const uint32_t maxVertexAttributes = limits.v1.maxVertexAttributes;
-    const uint32_t maxInterStageShaderVariables = limits.v1.maxInterStageShaderVariables;
+    const LimitsForShaderModuleParseRequest& limits = deviceInfo.limits;
+    const uint32_t maxVertexAttributes = limits.maxVertexAttributes;
+    const uint32_t maxInterStageShaderVariables = limits.maxInterStageShaderVariables;
 
     metadata->usedInterStageVariables.resize(maxInterStageShaderVariables);
     metadata->interStageVariables.resize(maxInterStageShaderVariables);
@@ -900,7 +900,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
         }
 
         // Fragment output reflection.
-        uint32_t maxColorAttachments = limits.v1.maxColorAttachments;
+        uint32_t maxColorAttachments = limits.maxColorAttachments;
         for (const auto& outputVar : entryPoint.output_variables) {
             EntryPointMetadata::FragmentRenderAttachmentInfo variable;
             DAWN_TRY_ASSIGN(variable.baseType,
@@ -944,7 +944,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
 
             // Tint should disallow using @color(N) without the respective enable, which is gated
             // on the extension.
-            DAWN_ASSERT(device->HasFeature(Feature::FramebufferFetch));
+            DAWN_ASSERT(deviceInfo.hasFeatureFramebufferFetch);
 
             EntryPointMetadata::FragmentRenderAttachmentInfo variable;
             DAWN_TRY_ASSIGN(variable.baseType,
@@ -989,12 +989,11 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
         info.name = resource.variable_name;
 
         info.arraySize = BindingIndex(resource.array_size.value_or(1));
-        DAWN_INVALID_IF(resource.array_size.has_value() &&
-                            device->IsToggleEnabled(Toggle::DisableBindGroupLayoutEntryArraySize),
-                        "Use of binding_array is disabled.");
         DAWN_INVALID_IF(
-            resource.array_size.has_value() && !device->IsToggleEnabled(Toggle::AllowUnsafeAPIs),
-            "Use of binding_array is disabled as an unsafe API.");
+            resource.array_size.has_value() && deviceInfo.disableBindGroupLayoutEntryArraySize,
+            "Use of binding_array is disabled.");
+        DAWN_INVALID_IF(resource.array_size.has_value() && !deviceInfo.allowUnsafeAPIs,
+                        "Use of binding_array is disabled as an unsafe API.");
         DAWN_INVALID_IF(info.arraySize == BindingIndex(0), "binding_array size is 0.");
         if (DelayedInvalidIf(
                 info.arraySize >= BindingIndex(kMaxBindingsPerBindGroup),
@@ -1138,7 +1137,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
     metadata->usesSubgroupMatrix = entryPoint.uses_subgroup_matrix;
 
     // Compute the texture+sampler combination count.
-    if (device->IsCompatibilityMode()) {
+    if (deviceInfo.isCompatibilityMode) {
         // separate sampled from non-sampled and put sampled in set
         std::set<tint::BindingPoint> sampledTextures;
         std::set<tint::BindingPoint> sampledExternalTextures;
@@ -1179,7 +1178,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
     return std::move(metadata);
 }
 
-MaybeError ReflectShaderUsingTint(DeviceBase* device,
+MaybeError ReflectShaderUsingTint(const ShaderModuleParseDeviceInfo& deviceInfo,
                                   const tint::Program* program,
                                   EntryPointMetadataTable* entryPointMetadataTable) {
     DAWN_ASSERT(program->IsValid());
@@ -1193,7 +1192,7 @@ MaybeError ReflectShaderUsingTint(DeviceBase* device,
     for (const tint::inspector::EntryPoint& entryPoint : entryPoints) {
         std::unique_ptr<EntryPointMetadata> metadata;
         DAWN_TRY_ASSIGN_CONTEXT(metadata,
-                                ReflectEntryPointUsingTint(device, &inspector, entryPoint),
+                                ReflectEntryPointUsingTint(deviceInfo, &inspector, entryPoint),
                                 "processing entry point \"%s\".", entryPoint.name);
 
         DAWN_ASSERT(!entryPointMetadataTable->contains(entryPoint.name));
@@ -1299,72 +1298,73 @@ bool ShaderModuleParseResult::HasTintProgram() const {
            tintProgram.UnsafeGetValue().value() != nullptr;
 }
 
-MaybeError ParseShaderModule(DeviceBase* device,
-                             const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
-                             const std::vector<tint::wgsl::Extension>& internalExtensions,
-                             bool needReflection,
-                             ShaderModuleParseResult* parseResult) {
-    DAWN_ASSERT(parseResult != nullptr);
+MaybeError ParseShaderModule(ShaderModuleParseRequest req) {
+    // Output the parse result via pointer.
+    ShaderModuleParseResult* outputParseResult = req.outputParseResult.UnsafeGetValue();
+    DAWN_ASSERT(outputParseResult != nullptr);
 
-    ParsedCompilationMessages* outMessages = &parseResult->compilationMessages;
+    ParsedCompilationMessages* outMessages = &outputParseResult->compilationMessages;
+    const ShaderModuleParseDeviceInfo& deviceInfo = req.deviceInfo;
+    const DeviceLogEmitter& deviceLogEmitter = req.deviceLogEmitter.UnsafeGetValue();
 
-    // Parse shader module to generate uncacheable part of parse result. Assuming the descriptor
-    // chain has already been validated.
+    // Parse the shader module.
 #if TINT_BUILD_SPV_READER
     // Handling SPIR-V if enabled.
-    if (const auto* spirvDesc = descriptor.Get<ShaderSourceSPIRV>()) {
+    if (std::holds_alternative<ShaderModuleParseSpirvDescription>(req.shaderDescription)) {
         // SpirV toggle should have been validated before chacking cache.
-        DAWN_ASSERT(!device->IsToggleEnabled(Toggle::DisallowSpirv));
-        // Descriptor should not contain WGSL part.
-        DAWN_ASSERT(descriptor.Get<ShaderSourceWGSL>() == nullptr);
+        DAWN_ASSERT(!deviceInfo.disallowSpirv);
 
-        const auto* spirvOptions = descriptor.Get<DawnShaderModuleSPIRVOptionsDescriptor>();
-        DAWN_ASSERT(spirvDesc != nullptr);
-
-        // TODO(dawn:2033): Avoid unnecessary copies of the SPIR-V code.
-        std::vector<uint32_t> spirv(spirvDesc->code, spirvDesc->code + spirvDesc->codeSize);
+        ShaderModuleParseSpirvDescription& spirvDesc =
+            std::get<ShaderModuleParseSpirvDescription>(req.shaderDescription);
+        const std::vector<uint32_t>& spirvCode = spirvDesc.spirvCode.UnsafeGetValue();
 
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
-        const bool dumpSpirv = device->IsToggleEnabled(Toggle::DumpShaders);
-        DAWN_TRY(ValidateSpirv(device, spirv.data(), spirv.size(), dumpSpirv));
+        const bool dumpSpirv = deviceInfo.dumpShaders;
+        DAWN_TRY(ValidateSpirv(deviceLogEmitter, spirvCode.data(), spirvCode.size(), dumpSpirv));
 #endif  // DAWN_ENABLE_SPIRV_VALIDATION
         tint::Program program;
-        DAWN_TRY_ASSIGN(program, ParseSPIRV(spirv, device->GetWGSLAllowedFeatures(), outMessages,
-                                            spirvOptions));
-        parseResult->tintProgram = UnsafeUnserializedValue<std::optional<Ref<TintProgram>>>(
+        DAWN_TRY_ASSIGN(program, ParseSPIRV(spirvCode, deviceInfo.wgslAllowedFeatures, outMessages,
+                                            spirvDesc.option));
+        outputParseResult->tintProgram = UnsafeUnserializedValue<std::optional<Ref<TintProgram>>>(
             AcquireRef(new TintProgram(std::move(program), nullptr)));
     }
 #else   // TINT_BUILD_SPV_READER
     // SPIR-V is not enabled, so the descriptor should not contain it.
-    DAWN_ASSERT(descriptor.Get<ShaderSourceSPIRV>() == nullptr);
+    DAWN_ASSERT(!std::holds_alternative<ShaderModuleParseSpirvDescription>(req.shaderDescription));
 #endif  // TINT_BUILD_SPV_READER
 
     // Handling WGSL.
-    if (const ShaderSourceWGSL* wgslDesc = descriptor.Get<ShaderSourceWGSL>()) {
-        auto tintFile = std::make_unique<tint::Source::File>("", wgslDesc->code);
+    if (std::holds_alternative<ShaderModuleParseWGSLDescription>(req.shaderDescription)) {
+        ShaderModuleParseWGSLDescription wgslDesc =
+            std::get<ShaderModuleParseWGSLDescription>(req.shaderDescription);
+        const StringView& wgsl = wgslDesc.wgsl.UnsafeGetValue();
+        const std::vector<tint::wgsl::Extension>& internalExtensions =
+            wgslDesc.internalExtensions.UnsafeGetValue();
 
-        if (device->IsToggleEnabled(Toggle::DumpShaders)) {
+        auto tintFile = std::make_unique<tint::Source::File>("", wgsl);
+
+        if (deviceInfo.dumpShaders) {
             std::ostringstream dumpedMsg;
-            dumpedMsg << "// Dumped WGSL:\n" << std::string_view(wgslDesc->code) << "\n";
-            device->EmitLog(WGPULoggingType_Info, dumpedMsg.str().c_str());
+            dumpedMsg << "// Dumped WGSL:\n" << std::string_view(wgsl) << "\n";
+            deviceLogEmitter.EmitLog(WGPULoggingType_Info, dumpedMsg.str().c_str());
         }
 
         tint::Program program;
-        DAWN_TRY_ASSIGN(program, ParseWGSL(tintFile.get(), device->GetWGSLAllowedFeatures(),
+        DAWN_TRY_ASSIGN(program, ParseWGSL(tintFile.get(), deviceInfo.wgslAllowedFeatures,
                                            internalExtensions, outMessages));
-        parseResult->tintProgram = UnsafeUnserializedValue<std::optional<Ref<TintProgram>>>(
+        outputParseResult->tintProgram = UnsafeUnserializedValue<std::optional<Ref<TintProgram>>>(
             AcquireRef(new TintProgram(std::move(program), std::move(tintFile))));
     }
 
     // Assert parsed shader are correctly generated.
-    DAWN_ASSERT(parseResult->HasTintProgram());
+    DAWN_ASSERT(outputParseResult->HasTintProgram());
 
     // Generate reflection information if required.
-    if (needReflection) {
-        parseResult->metadataTable.emplace();
-        DAWN_TRY(ReflectShaderUsingTint(device,
-                                        &parseResult->tintProgram.UnsafeGetValue().value()->program,
-                                        &parseResult->metadataTable.value()));
+    if (req.needReflection) {
+        outputParseResult->metadataTable.emplace();
+        DAWN_TRY(ReflectShaderUsingTint(
+            deviceInfo, &outputParseResult->tintProgram.UnsafeGetValue().value()->program,
+            &outputParseResult->metadataTable.value()));
     }
 
     return {};
@@ -1669,8 +1669,9 @@ Ref<TintProgram> ShaderModuleBase::GetTintProgram() {
         }
 
         ShaderModuleParseResult regeneratedParseResult;
-        ParseShaderModule(GetDevice(), Unpack(&descriptor), mInternalExtensions,
-                          /* needReflection */ false, &regeneratedParseResult)
+        ParseShaderModule(BuildShaderModuleParseRequest(
+                              GetDevice(), mHash, Unpack(&descriptor), mInternalExtensions,
+                              /* needReflection */ false, &regeneratedParseResult))
             .AcquireSuccess();
         DAWN_ASSERT(regeneratedParseResult.HasTintProgram());
 

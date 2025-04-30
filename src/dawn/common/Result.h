@@ -87,7 +87,9 @@ class [[nodiscard]] Result<void, E> {
     bool IsError() const;
     bool IsSuccess() const;
 
-    void AcquireSuccess();
+    // AcquireSuccess return std::nullptr_t so that it can be used in the same way like other
+    // Result<T, E>::AcquireSuccess().
+    std::nullptr_t AcquireSuccess();
     std::unique_ptr<E> AcquireError();
 
   private:
@@ -276,7 +278,9 @@ bool Result<void, E>::IsSuccess() const {
 }
 
 template <typename E>
-void Result<void, E>::AcquireSuccess() {}
+std::nullptr_t Result<void, E>::AcquireSuccess() {
+    return nullptr;
+}
 
 template <typename E>
 std::unique_ptr<E> Result<void, E>::AcquireError() {
