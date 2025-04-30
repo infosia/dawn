@@ -33,16 +33,18 @@
 #include <string>
 
 #include "dawn/native/Device.h"
+#include "dawn/native/ShaderModuleParseRequest.h"
 
 namespace dawn::native {
 
-MaybeError ValidateSpirv(DeviceBase* device,
+MaybeError ValidateSpirv(const DeviceLogEmitter& deviceLogEmitter,
                          const uint32_t* spirv,
                          size_t wordCount,
                          bool dumpSpirv) {
     spvtools::SpirvTools spirvTools(SPV_ENV_VULKAN_1_1);
-    spirvTools.SetMessageConsumer([device](spv_message_level_t level, const char*,
-                                           const spv_position_t& position, const char* message) {
+    spirvTools.SetMessageConsumer([deviceLogEmitter](spv_message_level_t level, const char*,
+                                                     const spv_position_t& position,
+                                                     const char* message) {
         WGPULoggingType wgpuLogLevel;
         switch (level) {
             case SPV_MSG_FATAL:
@@ -63,7 +65,7 @@ MaybeError ValidateSpirv(DeviceBase* device,
 
         std::ostringstream ss;
         ss << "SPIRV line " << position.index << ": " << message << "\n";
-        device->EmitLog(wgpuLogLevel, ss.str().c_str());
+        deviceLogEmitter.EmitLog(wgpuLogLevel, ss.str().c_str());
     });
 
     // Don't prepare to emit friendly names. The preparation costs
@@ -82,7 +84,7 @@ MaybeError ValidateSpirv(DeviceBase* device,
         } else {
             dumpedMsg << "/* Failed to disassemble generated SPIRV */";
         }
-        device->EmitLog(WGPULoggingType_Info, dumpedMsg.str().c_str());
+        deviceLogEmitter.EmitLog(WGPULoggingType_Info, dumpedMsg.str().c_str());
     }
 
     DAWN_INVALID_IF(!valid, "Produced invalid SPIRV. Please file a bug at https://crbug.com/tint.");
