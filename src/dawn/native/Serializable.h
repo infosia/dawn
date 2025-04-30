@@ -63,6 +63,34 @@ class Serializable {
         return CreateBlob(std::move(sink));
     }
 };
+
+// UnserializedValue<T> holds a underlying std::optional<T> value. When StreamIn it, nothing will
+// get streamed. When StreamOut, the target's underlying optional value will get reset.
+template <typename T>
+class UnserializedValue {
+  public:
+    UnserializedValue() = default;
+    // NOLINTNEXTLINE(runtime/explicit) allow implicit construction to decrease verbosity
+    UnserializedValue(T&& value) : mValue(std::forward<T>(value)) {}
+
+    const T& GetValue() const {
+        DAWN_ASSERT(mValue.has_value());
+        return *mValue;
+    }
+
+    bool HasValue() const { return mValue.has_value(); }
+
+    // Friend definition of StreamIn and StreamOut which can be found by ADL to override
+    // stream::StreamIn<T> and stream::StreamOut<T>.
+    friend constexpr void StreamIn(stream::Sink*, const UnserializedValue<T>&) {}
+    friend MaybeError StreamOut(stream::Source* s, UnserializedValue<T>* out) {
+        out->mValue.reset();
+        return {};
+    }
+
+  private:
+    std::optional<T> mValue;
+};
 }  // namespace dawn::native
 
 // Helper macro to define a struct or class along with VisitAll methods to call

@@ -2160,6 +2160,7 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
     const size_t blueprintHash = blueprint.ComputeContentHash();
     blueprint.SetContentHash(blueprintHash);
 
+    // Check in-memory shader module cache first, and if missed check the blob cache.
     return GetOrCreate(
         mCaches->shaderModules, &blueprint, [&]() -> ResultOrError<Ref<ShaderModuleBase>> {
             std::unique_ptr<OwnedCompilationMessages> inplaceCompilationMessages;
@@ -2176,13 +2177,40 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
             SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetPlatform(), "CreateShaderModuleUS");
 
             auto resultOrError = [&]() -> ResultOrError<Ref<ShaderModuleBase>> {
-                // Shader parsing and validating are always delayed until cache missed.
-                ShaderModuleParseResult parseResult;
-                // Try to validate and parse the shader code, and if an error occurred return it
-                // without updating the cache.
-                DAWN_TRY(ParseShaderModule(this, unpacked, internalExtensions, &parseResult,
-                                           unownedMessages));
+                ShaderModuleParseResultCombo parseResult{};
 
+                // Check on-disk blob cache first before calling ParseShaderModule.
+                Blob blob = LoadCachedBlob(blueprint.GetCacheKey());
+                bool blobCacheHit = !blob.Empty();
+                if (blobCacheHit) {
+                    // On-disk cache hit, return the cached parse result. Note that the
+                    // compilation messages, if any, are not cached and therefore the shader
+                    // module will always have empty compilationMessages.
+                    auto cachedResult = ShaderModuleCacheableParseResult::FromBlob(std::move(blob));
+                    if (cachedResult.IsError()) {
+                        // The cached result is invalid, ignore it.
+                        blobCacheHit = false;
+                        cachedResult.AcquireError();
+                    } else {
+                        parseResult.cacheableParseResult = cachedResult.AcquireSuccess();
+                        DAWN_ASSERT(parseResult.cacheableParseResult.has_value());
+                    }
+                }
+                if (!blobCacheHit) {
+                    parseResult = {ShaderModuleUncachedParseResult{},
+                                   ShaderModuleCacheableParseResult{}};
+                    // On-disk cache also missed, so we need to parse and validate the shader.
+                    DAWN_TRY(ParseShaderModule(this, unpacked, internalExtensions, &parseResult,
+                                               unownedMessages));
+                    DAWN_ASSERT(parseResult.cacheableParseResult.has_value());
+                    // Update the on-disk cache if no error.
+                    StoreCachedBlob(blueprint.GetCacheKey(),
+                                    parseResult.cacheableParseResult.value().ToBlob());
+                }
+                DAWN_HISTOGRAM_BOOLEAN(GetPlatform(), "CreateShaderModuleBlobCacheHit",
+                                       blobCacheHit);
+
+                // Create the shader module with cached or computed parsed result.
                 Ref<ShaderModuleBase> shaderModule;
                 // If created successfully, compilation messages are moved into the shader module.
                 DAWN_TRY_ASSIGN(shaderModule,
