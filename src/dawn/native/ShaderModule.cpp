@@ -1294,18 +1294,6 @@ ResultOrError<Extent3D> ValidateComputeStageWorkgroupSize(
     return Extent3D{x, y, z};
 }
 
-ShaderModuleParseResult::ShaderModuleParseResult() = default;
-ShaderModuleParseResult::~ShaderModuleParseResult() = default;
-
-ShaderModuleParseResult::ShaderModuleParseResult(ShaderModuleParseResult&& rhs) = default;
-
-ShaderModuleParseResult& ShaderModuleParseResult::operator=(ShaderModuleParseResult&& rhs) =
-    default;
-
-bool ShaderModuleParseResult::HasParsedShader() const {
-    return tintProgram != nullptr;
-}
-
 MaybeError ParseShaderModule(DeviceBase* device,
                              const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
                              const std::vector<tint::wgsl::Extension>& internalExtensions,
@@ -1313,7 +1301,12 @@ MaybeError ParseShaderModule(DeviceBase* device,
                              OwnedCompilationMessages* outMessages) {
     DAWN_ASSERT(parseResult != nullptr);
 
-    // We assume that the descriptor chain has already been validated.
+    auto& uncacheableParseResult = parseResult->uncacheableParseResult;
+    auto& cacheableParseResult = parseResult->cacheableParseResult;
+
+    // Parse shader module to generate uncacheable part of parse result. Assuming the descriptor
+    // chain has already been validated.
+    DAWN_ASSERT(uncacheableParseResult.has_value());
 #if TINT_BUILD_SPV_READER
     // Handling SPIR-V if enabled.
     if (const auto* spirvDesc = descriptor.Get<ShaderSourceSPIRV>()) {
@@ -1335,9 +1328,8 @@ MaybeError ParseShaderModule(DeviceBase* device,
         tint::Program program;
         DAWN_TRY_ASSIGN(program, ParseSPIRV(spirv, device->GetWGSLAllowedFeatures(), outMessages,
                                             spirvOptions));
-        parseResult->tintProgram = AcquireRef(new TintProgram(std::move(program), nullptr));
-
-        return {};
+        uncacheableParseResult->tintProgram =
+            AcquireRef(new TintProgram(std::move(program), nullptr));
     }
 #else   // TINT_BUILD_SPV_READER
     // SPIR-V is not enabled, so the descriptor should not contain it.
@@ -1345,22 +1337,30 @@ MaybeError ParseShaderModule(DeviceBase* device,
 #endif  // TINT_BUILD_SPV_READER
 
     // Handling WGSL.
-    const ShaderSourceWGSL* wgslDesc = descriptor.Get<ShaderSourceWGSL>();
-    DAWN_ASSERT(wgslDesc != nullptr);
+    if (const ShaderSourceWGSL* wgslDesc = descriptor.Get<ShaderSourceWGSL>()) {
+        auto tintFile = std::make_unique<tint::Source::File>("", wgslDesc->code);
 
-    auto tintFile = std::make_unique<tint::Source::File>("", wgslDesc->code);
+        if (device->IsToggleEnabled(Toggle::DumpShaders)) {
+            std::ostringstream dumpedMsg;
+            dumpedMsg << "// Dumped WGSL:\n" << std::string_view(wgslDesc->code) << "\n";
+            device->EmitLog(WGPULoggingType_Info, dumpedMsg.str().c_str());
+        }
 
-    if (device->IsToggleEnabled(Toggle::DumpShaders)) {
-        std::ostringstream dumpedMsg;
-        dumpedMsg << "// Dumped WGSL:\n" << std::string_view(wgslDesc->code) << "\n";
-        device->EmitLog(WGPULoggingType_Info, dumpedMsg.str().c_str());
+        tint::Program program;
+        DAWN_TRY_ASSIGN(program, ParseWGSL(tintFile.get(), device->GetWGSLAllowedFeatures(),
+                                           internalExtensions, outMessages));
+        uncacheableParseResult->tintProgram =
+            AcquireRef(new TintProgram(std::move(program), std::move(tintFile)));
     }
 
-    tint::Program program;
-    DAWN_TRY_ASSIGN(program, ParseWGSL(tintFile.get(), device->GetWGSLAllowedFeatures(),
-                                       internalExtensions, outMessages));
+    // Assert uncacheable part is correctly generated.
+    DAWN_ASSERT(uncacheableParseResult->HasParsedShader());
 
-    parseResult->tintProgram = AcquireRef(new TintProgram(std::move(program), std::move(tintFile)));
+    // Generate cacheable part of parse result if required.
+    if (cacheableParseResult.has_value()) {
+        DAWN_TRY(ReflectShaderUsingTint(device, &uncacheableParseResult->tintProgram->program,
+                                        &cacheableParseResult->metadataTable));
+    }
 
     return {};
 }
@@ -1543,6 +1543,9 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
     hasher.Update(shaderCode, shaderCodeByteSize);
 
     mHash = hasher.Finalize();
+
+    // Stream mHash into mCacheKey as well as device's cache key.
+    StreamIn(&mCacheKey, CacheKey::Type::Shader, device->GetCacheKey(), mHash);
 }
 
 ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
@@ -1663,13 +1666,17 @@ Ref<TintProgram> ShaderModuleBase::GetTintProgram() {
                 DAWN_UNREACHABLE();
         }
 
-        ShaderModuleParseResult parseResult;
-        ParseShaderModule(GetDevice(), Unpack(&descriptor), mInternalExtensions, &parseResult,
+        ShaderModuleParseResult regeneratedParseResult = {ShaderModuleUncacheableParseResult{},
+                                                          std::nullopt};
+        ParseShaderModule(GetDevice(), Unpack(&descriptor), mInternalExtensions,
+                          &regeneratedParseResult,
                           /*compilationMessages*/ nullptr)
             .AcquireSuccess();
-        DAWN_ASSERT(parseResult.tintProgram != nullptr);
+        DAWN_ASSERT(regeneratedParseResult.uncacheableParseResult.has_value() &&
+                    regeneratedParseResult.uncacheableParseResult->tintProgram != nullptr);
 
-        tintData->tintProgram = std::move(parseResult.tintProgram);
+        tintData->tintProgram =
+            std::move(regeneratedParseResult.uncacheableParseResult->tintProgram);
         tintData->tintProgramRecreateCount++;
 
         return tintData->tintProgram;
@@ -1746,13 +1753,14 @@ std::string ShaderModuleBase::GetCompilationLog() const {
 MaybeError ShaderModuleBase::InitializeBase(
     ShaderModuleParseResult* parseResult,
     std::unique_ptr<OwnedCompilationMessages>* compilationMessages) {
-    DAWN_TRY(mTintData.Use([&](auto tintData) -> MaybeError {
-        tintData->tintProgram = std::move(parseResult->tintProgram);
-
-        DAWN_TRY(
-            ReflectShaderUsingTint(GetDevice(), &(tintData->tintProgram->program), &mEntryPoints));
-        return {};
-    }));
+    if (parseResult->uncacheableParseResult.has_value()) {
+        DAWN_TRY(mTintData.Use([&](auto tintData) -> MaybeError {
+            tintData->tintProgram = std::move(parseResult->uncacheableParseResult->tintProgram);
+            return {};
+        }));
+    }
+    DAWN_ASSERT(parseResult->cacheableParseResult.has_value());
+    mEntryPoints = std::move(parseResult->cacheableParseResult->metadataTable);
 
     for (auto stage : IterateStages(kAllStages)) {
         mEntryPointCounts[stage] = 0;
