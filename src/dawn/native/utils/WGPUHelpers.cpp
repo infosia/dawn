@@ -33,6 +33,7 @@
 #include <memory>
 #include <mutex>
 #include <sstream>
+#include <utility>
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
@@ -58,7 +59,11 @@ ResultOrError<Ref<ShaderModuleBase>> CreateShaderModule(
     descriptor.nextInChain = &wgslDesc;
     std::unique_ptr<OwnedCompilationMessages> compilationMessages =
         std::make_unique<OwnedCompilationMessages>();
-    return device->CreateShaderModule(&descriptor, internalExtensions, &compilationMessages);
+    Ref<ShaderModuleBase> shaderModule;
+    auto result = device->CreateShaderModule(&descriptor, internalExtensions, &shaderModule);
+    // Error shader module get dropped here.
+    return result.IsSuccess() ? ResultOrError<Ref<ShaderModuleBase>>(std::move(shaderModule))
+                              : result.AcquireError();
 }
 
 ResultOrError<Ref<BufferBase>> CreateBufferFromData(DeviceBase* device,
