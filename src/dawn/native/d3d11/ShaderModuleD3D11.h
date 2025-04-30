@@ -54,7 +54,7 @@ class ShaderModule final : public ShaderModuleBase {
         Device* device,
         const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
         const std::vector<tint::wgsl::Extension>& internalExtensions,
-        ShaderModuleParseResult* parseResult,
+        ShaderModuleParseResultCombo* parseResult,
         std::unique_ptr<OwnedCompilationMessages>* compilationMessages);
 
     ResultOrError<d3d::CompiledShader> Compile(
@@ -71,7 +71,7 @@ class ShaderModule final : public ShaderModuleBase {
                  const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
                  std::vector<tint::wgsl::Extension> internalExtensions);
     ~ShaderModule() override = default;
-    MaybeError Initialize(ShaderModuleParseResult* parseResult,
+    MaybeError Initialize(ShaderModuleParseResultCombo* parseResult,
                           std::unique_ptr<OwnedCompilationMessages>* compilationMessages);
 };
 
