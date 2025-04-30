@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "98c2e6e2_04ce4fd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-30T04:44:19Z",
+      "side": 1,
+      "message": "I am pretty sure this is fine. I haven\u0027t been able to find any context where Dawn needs to build that is limited to old toolchains. Sorry for blocking.",
+      "parentUuid": "a7b1c017_4a44dd66",
+      "revId": "486ab91edb36a24bed2b4d67ac192dd8487d5242",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b32ea82c_8806cbd1",
