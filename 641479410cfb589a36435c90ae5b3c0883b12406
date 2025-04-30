@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2555196_de334d3d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-04-30T18:40:11Z",
+      "side": 1,
+      "message": "PTAL\n\nVersion updated properly after a sync locally, so this should be good to go.",
+      "revId": "641479410cfb589a36435c90ae5b3c0883b12406",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
