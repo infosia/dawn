@@ -633,6 +633,29 @@ class IgnoreLazyClearCountScope : public NonMovable, public StackAllocated {
     size_t mLazyClearCountForTesting;
 };
 
+// DeviceLogEmitter is a wrapper of DeviceBase* that only expose its EmitLog method. This is used in
+// shader module parsing to prevent accidentally using information of DeviceBase other than those
+// provided in the cache request.
+class DeviceLogEmitter {
+  public:
+    DeviceLogEmitter() : mDevice(nullptr) {}
+    explicit DeviceLogEmitter(DeviceBase* device) : mDevice(device) {}
+
+    void EmitLog(std::string_view message) const {
+        if (mDevice) {
+            mDevice->EmitLog(message);
+        }
+    }
+
+    void EmitLog(WGPULoggingType loggingType, std::string_view message) const {
+        if (mDevice) {
+            mDevice->EmitLog(loggingType, message);
+        }
+    }
+
+  private:
+    DeviceBase* mDevice;
+};
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_DEVICE_H_
