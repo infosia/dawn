@@ -85,6 +85,39 @@ class CacheResult {
     bool mIsValid;
 };
 
+// CacheResult<void> holds no value but only cache key and status. This is for CacheHitFn and
+// CacheMissFn that return MaybeError instead of ResultOrError.
+template <>
+class CacheResult<void> {
+  public:
+    static CacheResult CacheHit(CacheKey key, std::nullptr_t) {
+        return CacheResult(std::move(key), true);
+    }
+
+    static CacheResult CacheMiss(CacheKey key, std::nullptr_t) {
+        return CacheResult(std::move(key), false);
+    }
+
+    CacheResult() : mKey(), mIsCached(false), mIsValid(false) {}
+
+    bool IsCached() const {
+        DAWN_ASSERT(mIsValid);
+        return mIsCached;
+    }
+    const CacheKey& GetCacheKey() const {
+        DAWN_ASSERT(mIsValid);
+        return mKey;
+    }
+
+  private:
+    CacheResult(CacheKey key, bool isCached)
+        : mKey(std::move(key)), mIsCached(isCached), mIsValid(true) {}
+
+    CacheKey mKey;
+    bool mIsCached;
+    bool mIsValid;
+};
+
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_CACHERESULT_H_
