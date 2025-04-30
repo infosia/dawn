@@ -106,11 +106,13 @@ MaybeError StreamOut(Source* s, T* v, Ts*... vs) {
 
 // Helper to call StreamIn on an empty parameter pack, e.g. for a DAWN_SERIALIZABLE struct with no
 // member. Do nothing.
-constexpr void StreamIn(Sink* s);
+inline constexpr void StreamIn(Sink* s) {}
 
 // Helper to call StreamOut on an empty parameter pack, e.g. for a DAWN_SERIALIZABLE struct with no
 // member. Do nothing and return success.
-MaybeError StreamOut(Source* s);
+inline MaybeError StreamOut(Source* s) {
+    return {};
+}
 
 // Stream specialization for fundamental types.
 template <typename T>

@@ -65,6 +65,13 @@ class BlobCache {
         }
     }
 
+    enum QueryResult {
+        CacheHit,
+        CacheMiss,
+        ResultInvalid,
+        EnumCount  // Enum boundary value
+    };
+
   private:
     // Non-thread safe internal implementations of load and store. Exposed callers that use
     // these helpers need to make sure that these are entered with `mMutex` held.
