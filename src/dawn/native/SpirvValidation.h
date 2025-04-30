@@ -32,9 +32,9 @@
 
 namespace dawn::native {
 
-class DeviceBase;
+class DeviceLogEmitter;
 
-MaybeError ValidateSpirv(DeviceBase* device,
+MaybeError ValidateSpirv(const DeviceLogEmitter& deviceLogEmitter,
                          const uint32_t* spirv,
                          size_t wordCount,
                          bool dumpSpirv);
