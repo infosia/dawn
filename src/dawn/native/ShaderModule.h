@@ -113,15 +113,25 @@ struct TintProgram : public RefCounted {
     const std::unique_ptr<tint::Source::File> file;  // Keep the tint::Source::File alive
 };
 
-struct ShaderModuleParseResult {
-    ShaderModuleParseResult();
-    ~ShaderModuleParseResult();
-    ShaderModuleParseResult(ShaderModuleParseResult&& rhs);
-    ShaderModuleParseResult& operator=(ShaderModuleParseResult&& rhs);
+struct ShaderModuleUncachedParseResult {
+    ShaderModuleUncachedParseResult() = default;
+    ~ShaderModuleUncachedParseResult() = default;
+    ShaderModuleUncachedParseResult(ShaderModuleUncachedParseResult&& rhs) = default;
+    ShaderModuleUncachedParseResult& operator=(ShaderModuleUncachedParseResult&& rhs) = default;
 
-    bool HasParsedShader() const;
-
+    bool HasParsedShader() const { return tintProgram != nullptr; }
     Ref<TintProgram> tintProgram;
+};
+
+#define SHADER_MODULE_CACHEABLE_PARSE_RESULT_MEMBER(X) X(EntryPointMetadataTable, metadataTable)
+DAWN_SERIALIZABLE(struct,
+                  ShaderModuleCacheableParseResult,
+                  SHADER_MODULE_CACHEABLE_PARSE_RESULT_MEMBER){};
+#undef SHADER_MODULE_CACHEABLE_PARSE_RESULT_MEMBER
+
+struct ShaderModuleParseResultCombo {
+    std::optional<ShaderModuleUncachedParseResult> uncachedParseResult;
+    std::optional<ShaderModuleCacheableParseResult> cacheableParseResult;
 };
 
 struct ShaderModuleEntryPoint {
@@ -134,7 +144,7 @@ struct ShaderModuleEntryPoint {
 MaybeError ParseShaderModule(DeviceBase* device,
                              const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
                              const std::vector<tint::wgsl::Extension>& internalExtensions,
-                             ShaderModuleParseResult* parseResult,
+                             ShaderModuleParseResultCombo* parseResultCombo,
                              OwnedCompilationMessages* outMessages);
 
 MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
@@ -396,7 +406,7 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
   protected:
     void DestroyImpl() override;
 
-    MaybeError InitializeBase(ShaderModuleParseResult* parseResult,
+    MaybeError InitializeBase(ShaderModuleParseResultCombo* parseResult,
                               std::unique_ptr<OwnedCompilationMessages>* compilationMessages);
 
   private:
