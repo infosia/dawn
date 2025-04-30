@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ca212b7_e7b26993",
+        "filename": "third_party/gn/abseil-cpp/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-30T17:55:43Z",
+      "side": 1,
+      "message": "This probably should just be a raw source set not an absl_source_set, since the original version is a raw component.",
+      "revId": "953d77527ab8f2c970fed3d8b343a2c5216a8e08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00928a45_f5367305",
+        "filename": "third_party/gn/abseil-cpp/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-30T17:55:43Z",
+      "side": 1,
+      "message": "In the upstream version here there is a big blob of logic related to including the correct symbol definitions on Windows that isn\u0027t needed, since this isn\u0027t a component.",
+      "revId": "953d77527ab8f2c970fed3d8b343a2c5216a8e08",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
