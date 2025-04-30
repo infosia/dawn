@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9456b70c_6c0ba590",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-30T08:17:22Z",
+      "side": 1,
+      "message": "Any chance this can be moved to `src/cmake/DawnCompilerExtraFlags.cmake` instead?",
+      "revId": "46be080d4953191734591b329a92c74300d36d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ca38d50_06d00ae9",
+        "filename": "third_party/protobuf.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-30T08:17:22Z",
+      "side": 1,
+      "message": "Could we scope the addition of compile options to specific targets, CMake tends to have global state that\u0027s hard to reason about when using commands like this one. `target_compile_options` should help.",
+      "revId": "46be080d4953191734591b329a92c74300d36d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
