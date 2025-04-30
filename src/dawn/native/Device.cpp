@@ -48,6 +48,8 @@
 #include "dawn/native/BlitBufferToDepthStencil.h"
 #include "dawn/native/BlobCache.h"
 #include "dawn/native/Buffer.h"
+#include "dawn/native/CacheRequest.h"
+#include "dawn/native/CacheResult.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
@@ -70,6 +72,7 @@
 #include "dawn/native/RenderBundleEncoder.h"
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/Sampler.h"
+#include "dawn/native/ShaderModuleParseRequest.h"
 #include "dawn/native/SharedBufferMemory.h"
 #include "dawn/native/SharedFence.h"
 #include "dawn/native/SharedTextureMemory.h"
@@ -2167,17 +2170,40 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
     const size_t blueprintHash = blueprint.ComputeContentHash();
     blueprint.SetContentHash(blueprintHash);
 
-    // Check in-memory shader module cache first, and if missed call ParseShaderModule.
+    // Check in-memory shader module cache first, and if missed check the blob cache, and if missed
+    // again call ParseShaderModule.
     return GetOrCreate(
         mCaches->shaderModules, &blueprint, [&]() -> ResultOrError<Ref<ShaderModuleBase>> {
             SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetPlatform(), "CreateShaderModuleUS");
 
             auto resultOrError = [&]() -> ResultOrError<Ref<ShaderModuleBase>> {
-                // Try to validate and parse the shader code, and if an error occurred return it
-                // without updating the cache.
-                DAWN_TRY(ParseShaderModule(this, unpacked, internalExtensions,
-                                           /* needReflection */ true, outputParseResult));
+                ShaderModuleParseRequest req = BuildShaderModuleParseRequest(
+                    this, blueprint.GetHash(), unpacked, internalExtensions,
+                    /* needReflection */ true, outputParseResult);
 
+                // Check on-disk blob cache first before calling ParseShaderModule. Note that
+                // both CacheHitFn and CacheMissFn write to the parse result via pointer at best
+                // effort whether succeed or not, so in case of error we could still have
+                // meaningful parseResult to create error shader module.
+                auto cacheHitFn = [&](Blob&& blob) -> ResultOrError<ShaderModuleParseResult*> {
+                    DAWN_TRY_ASSIGN(*outputParseResult,
+                                    ShaderModuleParseResult::FromBlob(std::move(blob)));
+                    return outputParseResult;
+                };
+                // If succeed, the parseResult will be filled with the requiring results, and
+                // the returned CacheResult would be used to ensure the parse result is cached.
+                CacheResult<ShaderModuleParseResult*> result;
+                DAWN_TRY_LOAD_OR_RUN(result, this, std::move(req), cacheHitFn, ParseShaderModule,
+                                     "ShaderModuleParsing");
+                // Ensure the parse result is cached. Not using BlobCache::EnsureStored here
+                // because the result doesn't hold the parse result itself.
+                if (!result.IsCached()) {
+                    GetBlobCache()->Store(result.GetCacheKey(), outputParseResult->ToBlob());
+                }
+                result.Acquire();
+
+                // Create the shader module with cached or computed parsed result. If created
+                // successfully, compilation messages are moved into the shader module.
                 Ref<ShaderModuleBase> shaderModule;
                 // If created successfully, outputParseResult are moved into the shader module.
                 DAWN_TRY_ASSIGN(shaderModule, CreateShaderModuleImpl(unpacked, internalExtensions,
