@@ -240,7 +240,7 @@ ResultOrError<Ref<SamplerBase>> Device::CreateSamplerImpl(const SamplerDescripto
 ResultOrError<Ref<ShaderModuleBase>> Device::CreateShaderModuleImpl(
     const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
     const std::vector<tint::wgsl::Extension>& internalExtensions,
-    ShaderModuleParseResult* parseResult,
+    ShaderModuleParseResultCombo* parseResult,
     std::unique_ptr<OwnedCompilationMessages>* compilationMessages) {
     Ref<ShaderModule> module = AcquireRef(new ShaderModule(this, descriptor, internalExtensions));
     DAWN_TRY(module->Initialize(parseResult, compilationMessages));
@@ -581,7 +581,7 @@ void SwapChain::DetachFromSurfaceImpl() {
 // ShaderModule
 
 MaybeError ShaderModule::Initialize(
-    ShaderModuleParseResult* parseResult,
+    ShaderModuleParseResultCombo* parseResult,
     std::unique_ptr<OwnedCompilationMessages>* compilationMessages) {
     return InitializeBase(parseResult, compilationMessages);
 }

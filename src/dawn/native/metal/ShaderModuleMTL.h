@@ -55,7 +55,7 @@ class ShaderModule final : public ShaderModuleBase {
         Device* device,
         const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
         const std::vector<tint::wgsl::Extension>& internalExtensions,
-        ShaderModuleParseResult* parseResult,
+        ShaderModuleParseResultCombo* parseResult,
         std::unique_ptr<OwnedCompilationMessages>* compilationMessages);
 
     struct MetalFunctionData {
@@ -77,7 +77,7 @@ class ShaderModule final : public ShaderModuleBase {
                  const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
                  std::vector<tint::wgsl::Extension> internalExtensions);
     ~ShaderModule() override;
-    MaybeError Initialize(ShaderModuleParseResult* parseResult,
+    MaybeError Initialize(ShaderModuleParseResultCombo* parseResult,
                           std::unique_ptr<OwnedCompilationMessages>* compilationMessages);
 };
 

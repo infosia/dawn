@@ -282,7 +282,7 @@ ResultOrError<Ref<SamplerBase>> Device::CreateSamplerImpl(const SamplerDescripto
 ResultOrError<Ref<ShaderModuleBase>> Device::CreateShaderModuleImpl(
     const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
     const std::vector<tint::wgsl::Extension>& internalExtensions,
-    ShaderModuleParseResult* parseResult,
+    ShaderModuleParseResultCombo* parseResult,
     std::unique_ptr<OwnedCompilationMessages>* compilationMessages) {
     return ShaderModule::Create(this, descriptor, internalExtensions, parseResult,
                                 compilationMessages);
