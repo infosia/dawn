@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34528942_9529203a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-30T18:32:24Z",
+      "side": 1,
+      "message": "I am pretty confident that the CL this is building ontop of won\u0027t be reverted at this point, so sending to the CQ.",
+      "revId": "1526e1491b8c476b49fd8ccc3288f5ba882e5929",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
