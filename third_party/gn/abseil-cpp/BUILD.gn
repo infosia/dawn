@@ -80,10 +80,38 @@ template("absl_source_set") {
 # This exists only for third party dependencies that need it. When
 # using abseil in Dawn, use depend directly on the target that is
 # needed
-absl_source_set("absl") {
+source_set("absl") {
   public_deps = [ ":absl_component_deps" ]
   if (is_component_build) {
     public_configs = [ ":absl_component_build" ]
+
+    if (is_win && is_clang) {
+      if (current_cpu == "x64") {
+        if (is_debug) {
+          sources = [ "${dawn_abseil_dir}/symbols_x64_dbg.def" ]
+        } else {
+          if (is_asan) {
+            sources = [ "${dawn_abseil_dir}/symbols_x64_rel_asan.def" ]
+          } else {
+            sources = [ "${dawn_abseil_dir}/symbols_x64_rel.def" ]
+          }
+        }
+      }
+      if (current_cpu == "x86") {
+        if (is_debug) {
+          sources = [ "${dawn_abseil_dir}/symbols_x86_dbg.def" ]
+        } else {
+          sources = [ "${dawn_abseil_dir}/symbols_x86_rel.def" ]
+        }
+      }
+      if (current_cpu == "arm64") {
+        if (is_debug) {
+          sources = [ "${dawn_abseil_dir}/symbols_arm64_dbg.def" ]
+        } else {
+          sources = [ "${dawn_abseil_dir}/symbols_arm64_rel.def" ]
+        }
+      }
+    }
   }
 }
 
