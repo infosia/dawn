@@ -347,6 +347,10 @@ DAWN_NATIVE_EXPORT bool ReduceMemoryUsage(WGPUDevice device);
 // caches, etc.
 DAWN_NATIVE_EXPORT void PerformIdleTasks(const wgpu::Device& device);
 
+// Flush the commands that were submitted to a queue, sending them to the GPU for real.
+// This function is no-op if the toggle "d3d11_defer_flush_to_gpu" is disabled.
+DAWN_NATIVE_EXPORT void FlushCommandsToGPU(WGPUQueue queue);
+
 }  // namespace dawn::native
 
 #endif  // INCLUDE_DAWN_NATIVE_DAWNNATIVE_H_

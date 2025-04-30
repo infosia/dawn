@@ -34,6 +34,7 @@
 #include "dawn/native/Buffer.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/Instance.h"
+#include "dawn/native/Queue.h"
 #include "dawn/native/Texture.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "tint/tint.h"
@@ -295,6 +296,10 @@ void PerformIdleTasks(const wgpu::Device& device) {
     auto* deviceBase = FromAPI(device.Get());
     auto deviceLock(deviceBase->GetScopedLock());
     deviceBase->PerformIdleTasks();
+}
+
+void FlushCommandsToGPU(WGPUQueue queue) {
+    FromAPI(queue)->FlushToGPU();
 }
 
 }  // namespace dawn::native
