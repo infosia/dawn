@@ -48,6 +48,7 @@
 #include "dawn/native/BlitBufferToDepthStencil.h"
 #include "dawn/native/BlobCache.h"
 #include "dawn/native/Buffer.h"
+#include "dawn/native/CacheRequest.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/CommandEncoder.h"
@@ -2115,6 +2116,7 @@ ResultOrError<Ref<SamplerBase>> DeviceBase::CreateSampler(const SamplerDescripto
     return GetOrCreateSampler(&descriptor);
 }
 
+// TODO: get rid of compilationMessages.
 ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
     const ShaderModuleDescriptor* descriptor,
     const std::vector<tint::wgsl::Extension>& internalExtensions,
@@ -2126,9 +2128,9 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
     DAWN_TRY_ASSIGN_CONTEXT(unpacked, ValidateAndUnpack(descriptor), "validating and unpacking %s",
                             descriptor);
 
-    wgpu::SType moduleType = wgpu::SType(0u);
-    // A WGSL (or SPIR-V, if enabled) subdescriptor is required, and a Dawn-specific SPIR-V options
+    // A WGSL (xor SPIR-V, if enabled) subdescriptor is required, and a Dawn-specific SPIR-V options
     // descriptor is allowed when using SPIR-V.
+    wgpu::SType moduleType = wgpu::SType(0u);
     DAWN_TRY_ASSIGN(
         moduleType,
         (unpacked.ValidateBranches<Branch<ShaderSourceWGSL, ShaderModuleCompilationOptions>,
@@ -2160,6 +2162,9 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
     const size_t blueprintHash = blueprint.ComputeContentHash();
     blueprint.SetContentHash(blueprintHash);
 
+    ShaderModuleParseResult parseResult{};
+
+    // Check in-memory shader module cache first, and if missed check the blob cache.
     return GetOrCreate(
         mCaches->shaderModules, &blueprint, [&]() -> ResultOrError<Ref<ShaderModuleBase>> {
             std::unique_ptr<OwnedCompilationMessages> inplaceCompilationMessages;
@@ -2171,29 +2176,63 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
                 inplaceCompilationMessages = std::make_unique<OwnedCompilationMessages>();
                 compilationMessages = &inplaceCompilationMessages;
             }
-            auto* unownedMessages = compilationMessages->get();
 
             SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetPlatform(), "CreateShaderModuleUS");
 
             auto resultOrError = [&]() -> ResultOrError<Ref<ShaderModuleBase>> {
-                // Shader parsing and validating are always delayed until cache missed.
-                ShaderModuleParseResult parseResult;
-                // Try to validate and parse the shader code, and if an error occurred return it
-                // without updating the cache.
-                DAWN_TRY(ParseShaderModule(this, unpacked, internalExtensions, &parseResult,
-                                           unownedMessages));
+                // TODO:
+                // Create a cache request struct and use DAWN_TRY_LOAD_OR_RUN();
 
+                // Check on-disk blob cache first before calling ParseShaderModule.
+                Blob blob = LoadCachedBlob(blueprint.GetCacheKey());
+                bool blobCacheHit = !blob.Empty();
+                bool needParsing = true;
+                if (blobCacheHit) {
+                    // On-disk cache hit, return the cached parse result. Note that the
+                    // compilation messages, if any, are not cached and therefore the shader
+                    // module will always have empty compilationMessages.
+                    auto cachedResult = ShaderModuleParseResult::FromBlob(std::move(blob));
+                    if (cachedResult.IsError()) {
+                        // The cached result is invalid, ignore it.
+                        blobCacheHit = false;
+                        needParsing = true;
+                        cachedResult.AcquireError();
+                    } else {
+                        needParsing = false;
+                        parseResult = cachedResult.AcquireSuccess();
+                        DAWN_ASSERT(!parseResult.HasTintProgram());
+                        DAWN_ASSERT(parseResult.compilationMessages != nullptr);
+                        DAWN_ASSERT(parseResult.metadataTable.has_value());
+                    }
+                }
+                // Call ParseShaderModule if cache missed or result is invalid.
+                if (needParsing) {
+                    // On-disk cache also missed, so we need to parse and validate the shader.
+                    DAWN_TRY(ParseShaderModule(this, unpacked, internalExtensions,
+                                               /* needReflection */ true, &parseResult));
+                    DAWN_ASSERT(parseResult.HasTintProgram());
+                    DAWN_ASSERT(parseResult.compilationMessages != nullptr);
+                    DAWN_ASSERT(parseResult.metadataTable.has_value());
+                    // Update the on-disk cache if no error.
+                    StoreCachedBlob(blueprint.GetCacheKey(), parseResult.ToBlob());
+                }
+                DAWN_HISTOGRAM_BOOLEAN(GetPlatform(), "CreateShaderModuleBlobCacheHit",
+                                       blobCacheHit);
+
+                // Create the shader module with cached or computed parsed result.
                 Ref<ShaderModuleBase> shaderModule;
                 // If created successfully, compilation messages are moved into the shader module.
                 DAWN_TRY_ASSIGN(shaderModule,
-                                CreateShaderModuleImpl(unpacked, internalExtensions, &parseResult,
-                                                       compilationMessages));
+                                CreateShaderModuleImpl(unpacked, internalExtensions, &parseResult));
                 shaderModule->SetContentHash(blueprintHash);
                 return shaderModule;
             }();
 
             DAWN_HISTOGRAM_BOOLEAN(GetPlatform(), "CreateShaderModuleSuccess",
                                    resultOrError.IsSuccess());
+            // Output the compilationMessages that might contains error messages if shader creation
+            // failed.
+            *compilationMessages = std::move(parseResult.compilationMessages);
 
             return resultOrError;
         });

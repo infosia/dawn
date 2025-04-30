@@ -144,8 +144,7 @@ class MutexProtected {
     MutexProtected() : mMutex(Traits::CreateMutex()) {}
 
     template <typename... Args>
-    // NOLINTNEXTLINE(runtime/explicit) allow implicit construction
-    MutexProtected(Args&&... args)
+    explicit MutexProtected(Args&&... args)
         : mMutex(Traits::CreateMutex()), mObj(std::forward<Args>(args)...) {}
 
     Usage operator->() { return Use(); }
