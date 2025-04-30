@@ -80,7 +80,7 @@ template("absl_source_set") {
 # This exists only for third party dependencies that need it. When
 # using abseil in Dawn, use depend directly on the target that is
 # needed
-absl_source_set("absl") {
+component("absl") {
   public_deps = [ ":absl_component_deps" ]
   if (is_component_build) {
     public_configs = [ ":absl_component_build" ]
