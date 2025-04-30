@@ -35,6 +35,7 @@
 #include "dawn/common/NonCopyable.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
+#include "dawn/native/DawnNative.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Forward.h"
 #include "dawn/native/IntegerTypes.h"
