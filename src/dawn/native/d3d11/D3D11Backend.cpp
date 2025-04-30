@@ -35,11 +35,16 @@
 #include "dawn/native/d3d/d3d_platform.h"
 #include "dawn/native/d3d11/DeviceD3D11.h"
 #include "dawn/native/d3d11/Forward.h"
+#include "dawn/native/d3d11/QueueD3D11.h"
 
 namespace dawn::native::d3d11 {
 
 Microsoft::WRL::ComPtr<ID3D11Device> GetD3D11Device(WGPUDevice device) {
     return ToBackend(FromAPI(device))->GetD3D11Device();
+}
+
+void FlushCommandsToGPU(WGPUQueue queue) {
+    ToBackend(FromAPI(queue))->FlushToGPU();
 }
 
 }  // namespace dawn::native::d3d11
