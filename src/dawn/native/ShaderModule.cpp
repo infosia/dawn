@@ -1545,6 +1545,9 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
     hasher.Update(shaderCode, shaderCodeByteSize);
 
     mHash = hasher.Finalize();
+
+    // Stream mHash into mCacheKey as well as device's cache key.
+    StreamIn(&mCacheKey, CacheKey::Type::Shader, device->GetCacheKey(), mHash);
 }
 
 ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
