@@ -16,6 +16,24 @@
       "message": "FYI I\u0027ve filed https://github.com/gpuweb/cts/issues/4377 for textureSampleLevel that fails for bc7-rgba-unorm-srgb on macOS for AMD Radeon Pro 560X #4377",
       "revId": "35d4ca4ff4259e6eb68c7058b2d8159fd07eb8a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "05b23712_691b405f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-30T07:36:03Z",
+      "side": 1,
+      "message": "And https://github.com/gpuweb/cts/issues/4378 for image_copy:mip_levels tests that fail for bc1-rgba-unorm and bc4-r-unorm formats with AMD Radeon RX 5500 XT on macOS",
+      "parentUuid": "e4d28287_3a005337",
+      "revId": "35d4ca4ff4259e6eb68c7058b2d8159fd07eb8a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
