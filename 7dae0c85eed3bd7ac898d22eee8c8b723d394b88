@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "80878dc6_8cd2cbf3",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-30T01:11:45Z",
+      "side": 1,
+      "message": "Before, I was breaking the cycle by using just the `futureID`, but I realized that it doesn\u0027t work for `AllowSpontaneous` because the way that events are implemented in native is that they require a reference to them to not call their dtor which just completes the callback.\n\nRight now, the `EventManager` drops all events when the `Instance` is dropped, and the only reference to queue based events right now is in the `EventManager`. So somewhere else needs to hold a reference to the queue events, hence the weak reference to avoid the cycle.\n\nIf we wanted to avoid this, we would need to (1) update queues such that they have an external ref count, and (2) make the device hold an external queue reference until it\u0027s gone (because you can always get a new external queue reference from the device). I didn\u0027t want to add ways to hold external references in internal code, hence the use of weak refs instead.",
+      "parentUuid": "e905e392_80f35e57",
+      "range": {
+        "startLine": 197,
+        "startChar": 25,
+        "endLine": 198,
+        "endChar": 26
+      },
+      "revId": "7dae0c85eed3bd7ac898d22eee8c8b723d394b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ca9b02f1_289dec1a",
         "filename": "src/dawn/native/EventManager.cpp",
         "patchSetId": 3
@@ -54,6 +78,30 @@
       "writtenOn": "2025-04-26T00:51:50Z",
       "side": 1,
       "message": "Would be nice to avoid two parallel data structures. I think we could use `Ref\u003cQueueBase\u003e` as the map key instead of `QueueBase*` but this is a bit of work, so maybe a followup?",
+      "range": {
+        "startLine": 199,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 39
+      },
+      "revId": "7dae0c85eed3bd7ac898d22eee8c8b723d394b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecb9d15e_65ffa2ec",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-30T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca9b02f1_289dec1a",
       "range": {
         "startLine": 199,
         "startChar": 0,
@@ -81,6 +129,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f5fab6c_cc493a10",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-30T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3895bc7_99d2d996",
+      "revId": "7dae0c85eed3bd7ac898d22eee8c8b723d394b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ed2ef4d_51ee3ce0",
@@ -104,6 +170,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fa8cb4a_afb342aa",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-30T01:11:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ed2ef4d_51ee3ce0",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "7dae0c85eed3bd7ac898d22eee8c8b723d394b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc407c9f_991f0e7d",
@@ -117,6 +207,24 @@
       "writtenOn": "2025-04-28T11:40:17Z",
       "side": 1,
       "message": "I this a TODO without saying it?",
+      "revId": "7dae0c85eed3bd7ac898d22eee8c8b723d394b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1a5f342_72668292",
+        "filename": "src/dawn/native/Queue.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-30T01:11:45Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "fc407c9f_991f0e7d",
       "revId": "7dae0c85eed3bd7ac898d22eee8c8b723d394b88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
