@@ -29,12 +29,11 @@
 #define SRC_DAWN_NATIVE_SPIRVVALIDATION_H_
 
 #include "dawn/native/Error.h"
+#include "dawn/native/LogEmitter.h"
 
 namespace dawn::native {
 
-class DeviceBase;
-
-MaybeError ValidateSpirv(DeviceBase* device,
+MaybeError ValidateSpirv(LogEmitter* logEmitter,
                          const uint32_t* spirv,
                          size_t wordCount,
                          bool dumpSpirv);
