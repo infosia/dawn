@@ -28,16 +28,23 @@
 #ifndef SRC_DAWN_NATIVE_D3D_D3DCOMPILATIONREQUEST_H_
 #define SRC_DAWN_NATIVE_D3D_D3DCOMPILATIONREQUEST_H_
 
+// Include windows.h with certain macros removed (specifically, GetMessage) before d3dcompiler.h to
+// prevent conflict which causes compilation errors. Otherwise, d3dcompiler.h will include the
+// original windows.h and introduce the GetMessage macro that break the code when including the
+// following Adapter.h.
+// NOLINTBEGIN(build/include_order)
+#include "dawn/common/windows_with_undefs.h"
+
 #include <d3dcompiler.h>
 
 #include <string_view>
 #include <unordered_map>
+// NOLINTEND(build/include_order)
 
 #include "dawn/native/Adapter.h"
 #include "dawn/native/CacheRequest.h"
 #include "dawn/native/Serializable.h"
 #include "dawn/native/d3d/d3d_platform.h"
-
 #include "tint/tint.h"
 
 namespace dawn::native::stream {
