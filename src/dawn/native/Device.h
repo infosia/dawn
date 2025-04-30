@@ -79,7 +79,7 @@ class SharedTextureMemory;
 class OwnedCompilationMessages;
 struct CallbackTask;
 struct InternalPipelineStore;
-struct ShaderModuleParseResult;
+struct ShaderModuleParseResultCombo;
 
 class DeviceBase : public ErrorSink,
                    public RefCountedWithExternalCount<RefCounted>,
@@ -482,7 +482,7 @@ class DeviceBase : public ErrorSink,
     virtual ResultOrError<Ref<ShaderModuleBase>> CreateShaderModuleImpl(
         const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
         const std::vector<tint::wgsl::Extension>& internalExtensions,
-        ShaderModuleParseResult* parseResult,
+        ShaderModuleParseResultCombo* parseResult,
         std::unique_ptr<OwnedCompilationMessages>* compilationMessages) = 0;
     // Note that previousSwapChain may be nullptr, or come from a different backend.
     virtual ResultOrError<Ref<SwapChainBase>> CreateSwapChainImpl(
