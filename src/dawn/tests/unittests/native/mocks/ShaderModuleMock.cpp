@@ -49,7 +49,8 @@ ShaderModuleMock::~ShaderModuleMock() = default;
 Ref<ShaderModuleMock> ShaderModuleMock::Create(
     DeviceMock* device,
     const UnpackedPtr<ShaderModuleDescriptor>& descriptor) {
-    ShaderModuleParseResult parseResult;
+    ShaderModuleParseResultCombo parseResult = {ShaderModuleUncachedParseResult{},
+                                                ShaderModuleCacheableParseResult{}};
     std::unique_ptr<OwnedCompilationMessages> compilationMessages =
         std::make_unique<OwnedCompilationMessages>();
     ParseShaderModule(device, descriptor, {}, &parseResult, compilationMessages.get())

@@ -105,7 +105,7 @@ ResultOrError<Ref<ShaderModule>> ShaderModule::Create(
     Device* device,
     const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
     const std::vector<tint::wgsl::Extension>& internalExtensions,
-    ShaderModuleParseResult* parseResult,
+    ShaderModuleParseResultCombo* parseResult,
     std::unique_ptr<OwnedCompilationMessages>* compilationMessages) {
     Ref<ShaderModule> module = AcquireRef(new ShaderModule(device, descriptor, internalExtensions));
     DAWN_TRY(module->Initialize(parseResult, compilationMessages));
@@ -120,7 +120,7 @@ ShaderModule::ShaderModule(Device* device,
 ShaderModule::~ShaderModule() = default;
 
 MaybeError ShaderModule::Initialize(
-    ShaderModuleParseResult* parseResult,
+    ShaderModuleParseResultCombo* parseResult,
     std::unique_ptr<OwnedCompilationMessages>* compilationMessages) {
     return InitializeBase(parseResult, compilationMessages);
 }
