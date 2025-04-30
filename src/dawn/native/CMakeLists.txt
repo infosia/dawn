@@ -129,6 +129,7 @@ set(private_headers
     "ScratchBuffer.h"
     "Serializable.h"
     "ShaderModule.h"
+    "ShaderModuleParseRequest.h"
     "SharedBufferMemory.h"
     "SharedFence.h"
     "SharedResourceMemory.h"

@@ -69,6 +69,7 @@ class Program;
 namespace dawn::native {
 
 struct EntryPointMetadata;
+class ShaderModuleParseRequest;
 
 // Base component type of an inter-stage variable
 enum class InterStageComponentType {
@@ -120,13 +121,11 @@ struct TintProgram : public RefCounted {
     /* EntryPointMetadataTable might be unnecessary in cases like Tint Program recreation. */ \
     X(std::optional<EntryPointMetadataTable>, metadataTable)                                  \
     X(ParsedCompilationMessages, compilationMessages)
-
 DAWN_SERIALIZABLE(struct, ShaderModuleParseResult, SHADER_MODULE_PARSE_RESULT_MEMBER) {
     // Check if ShaderModuleParseResult holds a valid tintProgram. A ShaderModuleParseResult loaded
     // from blob cache holds no tintProgram but other information.
     bool HasTintProgram() const;
 };
-
 #undef SHADER_MODULE_PARSE_RESULT_MEMBER
 
 struct ShaderModuleEntryPoint {
@@ -136,11 +135,9 @@ struct ShaderModuleEntryPoint {
 
 // Parse a shader module from a validated ShaderModuleDescriptor, and generate reflection
 // information if required. Errors are returned only if the shader code itself is invalid.
-MaybeError ParseShaderModule(DeviceBase* device,
-                             const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
-                             const std::vector<tint::wgsl::Extension>& internalExtensions,
-                             bool needReflection,
-                             ShaderModuleParseResult* parseResult);
+// Note that ParseShaderModule directly modifies the ShaderModuleParseResult pointed by
+// req.outputParseResult, and return the very pointer if succeed.
+ResultOrError<ShaderModuleParseResult*> ParseShaderModule(ShaderModuleParseRequest req);
 
 MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
                                                    const EntryPointMetadata& entryPoint,
