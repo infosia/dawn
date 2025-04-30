@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91b906ea_8bd912a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-30T17:26:31Z",
+      "side": 1,
+      "message": "Apologies, I won\u0027t be able to re-review this for until I\u0027m back from vacation. Maybe Geoff would be interested?",
+      "revId": "03634f92b3c71622bd336a688d5a8481a7c8fd46",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
