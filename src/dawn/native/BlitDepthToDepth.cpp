@@ -79,7 +79,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateDepthBlitPipeline(DeviceBase* 
     wgslDesc.code = kBlitToDepthShaders;
 
     Ref<ShaderModuleBase> shaderModule;
-    DAWN_TRY_ASSIGN(shaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    DAWN_TRY(device->CreateShaderModule(&shaderModuleDesc, {}, &shaderModule));
 
     FragmentState fragmentState = {};
     fragmentState.module = shaderModule.Get();
