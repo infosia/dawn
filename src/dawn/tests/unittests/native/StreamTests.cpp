@@ -29,6 +29,7 @@
 #include <cstring>
 #include <iomanip>
 #include <limits>
+#include <list>
 #include <memory>
 #include <string>
 #include <tuple>
@@ -38,6 +39,7 @@
 #include <variant>
 #include <vector>
 
+#include "dawn/common/MutexProtected.h"
 #include "dawn/common/TypedInteger.h"
 #include "dawn/native/Blob.h"
 #include "dawn/native/Serializable.h"
@@ -426,6 +428,16 @@ TEST(SerializeTests, AbslFlatHashSet) {
     EXPECT_CACHE_KEY_EQ(input, expected);
 }
 
+// Test that ByteVectorSink serializes dawn::MutexProtected as expected.
+TEST(SerializeTests, DawnMutexProtected) {
+    MutexProtected<uint32_t> m(123);
+
+    ByteVectorSink expected;
+    StreamIn(&expected, 123);
+
+    EXPECT_CACHE_KEY_EQ(m, expected);
+}
+
 // Test that ByteVectorSink serializes tint::BindingPoint as expected.
 TEST(SerializeTests, TintSemBindingPoint) {
     tint::BindingPoint bp{3, 6};
@@ -585,6 +597,40 @@ TEST(StreamTests, SerializeDeserializeItypArray) {
     }
 }
 
+// Test that serializing then deserializing a dawn::MutexProtected yields the same data inside.
+// Tested here instead of in the type-parameterized tests since dawn::MutexProtected is neither
+// copyable nor movable.
+TEST(StreamTests, SerializeDeserializeDawnMutexProtected) {
+    uint32_t u32 = 456;
+    std::string str = "hello";
+
+    {
+        MutexProtected<uint32_t> in(u32);
+
+        ByteVectorSink sink;
+        StreamIn(&sink, in);
+
+        BlobSource src(CreateBlob(sink));
+        MutexProtected<uint32_t> out;
+        auto err = StreamOut(&src, &out);
+        EXPECT_FALSE(err.IsError());
+        out.Use([&](auto data) { EXPECT_EQ(u32, *data); });
+    }
+
+    {
+        MutexProtected<std::string> in(str);
+
+        ByteVectorSink sink;
+        StreamIn(&sink, in);
+
+        BlobSource src(CreateBlob(sink));
+        MutexProtected<std::string> out;
+        auto err = StreamOut(&src, &out);
+        EXPECT_FALSE(err.IsError());
+        out.Use([&](auto data) { EXPECT_EQ(str, *data); });
+    }
+}
+
 template <size_t N>
 std::bitset<N - 1> BitsetFromBitString(const char (&str)[N]) {
     // N - 1 because the last character is the null terminator.
@@ -614,6 +660,8 @@ static auto kStreamValueVectorParams = std::make_tuple(
         BitsetFromBitString("100110010101011001100110101011001100101010110011001011011"),
         BitsetFromBitString("000110010101011000100110101011001100101010010011001010100"),
         BitsetFromBitString("111111111111111111111111111111111111111111111111111111111"), 0},
+    // Test std::optional.
+    std::vector<std::optional<std::string>>{std::nullopt, "", "abc"},
     // Test unordered_maps.
     std::vector<std::unordered_map<int, int>>{{},
                                               {{4, 5}, {6, 8}, {99, 42}, {0, 0}},
@@ -628,6 +676,8 @@ static auto kStreamValueVectorParams = std::make_tuple(
     std::vector<absl::flat_hash_set<int>>{{}, {4, 6, 99, 0}, {100, 300, 300}},
     // Test vectors.
     std::vector<std::vector<int>>{{}, {1, 5, 2, 7, 4}, {3, 3, 3, 3, 3, 3, 3}},
+    // Test lists.
+    std::vector<std::list<int>>{{}, {1, 5, 2, 7, 4}, {3, 3, 3, 3, 3, 3, 3}},
     // Test variants.
     std::vector<std::variant<uint32_t, std::string, std::vector<std::bitset<7>>>>{
         uint32_t{123}, std::string{"1, 5, 2, 7, 4"},
