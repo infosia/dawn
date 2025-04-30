@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fabacce5_a1915ebb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-30T18:30:50Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/239834",
+      "parentUuid": "9456b70c_6c0ba590",
+      "revId": "46be080d4953191734591b329a92c74300d36d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ca38d50_06d00ae9",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-04-30T08:17:22Z",
       "side": 1,
       "message": "Could we scope the addition of compile options to specific targets, CMake tends to have global state that\u0027s hard to reason about when using commands like this one. `target_compile_options` should help.",
+      "revId": "46be080d4953191734591b329a92c74300d36d1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77f4f7a9_5909cff1",
+        "filename": "third_party/protobuf.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-04-30T18:30:50Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/239834",
+      "parentUuid": "7ca38d50_06d00ae9",
       "revId": "46be080d4953191734591b329a92c74300d36d1f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
