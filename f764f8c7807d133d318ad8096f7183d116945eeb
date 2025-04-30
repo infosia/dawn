@@ -196,6 +196,24 @@
       "parentUuid": "72c373a1_748f4c63",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ace24ef7_61d6e115",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-04-30T06:33:21Z",
+      "side": 1,
+      "message": "Thanks for filing this issue! I assume it will be discussed in next webgpu.h meeting.",
+      "parentUuid": "4db8da3f_8e83a596",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
