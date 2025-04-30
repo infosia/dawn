@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "841bd6b1_0555674c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-30T18:08:20Z",
+      "side": 1,
+      "message": "Failures seem to be coming from `textureSampleGrad:sampled_array_2d_coords` tests. Maybe we need to skip those also? Previously it looks like all of `textureSampleGrad:*` tests were suppressed.",
+      "revId": "c552dcbd50b70be502238c93d2771e128ac53d0b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
