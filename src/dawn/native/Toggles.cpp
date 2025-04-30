@@ -677,6 +677,13 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
      {"d3d11_disable_fence",
       "Disable d3d11 fence. Fences are not always available on every D3D11 device.",
       "https://crbug.com/chromium/390441217", ToggleStage::Device}},
+    {Toggle::D3D11DeferFlushToGPU,
+     {"d3d11_defer_flush_to_gpu",
+      "When this toggle is enabled, Queue::Submit()'s won't send the commands to GPU immediately. "
+      "Instead the client is required to explicitly call dawn::native::d3d11::FlushCommandsToGPU() "
+      "to flush explicitly. Calling IDXGISwapChain::Present() also triggers the flush. This toggle "
+      "is intended to reduce the constant overhead associated with each flushing.",
+      "https://crbug.com/chromium/377716220", ToggleStage::Device}},
     {Toggle::IgnoreImportedAHardwareBufferVulkanImageSize,
      {"ignore_imported_ahardwarebuffer_vulkan_image_size",
       "Don't validate the required VkImage size against the size of the AHardwareBuffer on import. "

@@ -39,6 +39,8 @@ namespace dawn::native::d3d11 {
 
 DAWN_NATIVE_EXPORT Microsoft::WRL::ComPtr<ID3D11Device> GetD3D11Device(WGPUDevice device);
 
+DAWN_NATIVE_EXPORT void FlushCommandsToGPU(WGPUQueue queue);
+
 // May be chained on RequestAdapterOptions
 struct DAWN_NATIVE_EXPORT RequestAdapterOptionsD3D11Device : wgpu::ChainedStruct {
     RequestAdapterOptionsD3D11Device() {
