@@ -1328,6 +1328,8 @@ std::ostringstream& DawnTestBase::AddBufferExpectation(const char* file,
     wgpu::CommandBuffer commands = encoder.Finish();
     queue.Submit(1, &commands);
 
+    dawn::native::FlushCommandsToGPU(queue.Get());
+
     DeferredExpectation deferred;
     deferred.file = file;
     deferred.line = line;
@@ -1382,6 +1384,8 @@ std::ostringstream& DawnTestBase::AddTextureExpectationImpl(const char* file,
 
     wgpu::CommandBuffer commands = encoder.Finish();
     targetDevice.GetQueue().Submit(1, &commands);
+
+    dawn::native::FlushCommandsToGPU(targetDevice.GetQueue().Get());
 
     DeferredExpectation deferred;
     deferred.file = file;

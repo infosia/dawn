@@ -592,4 +592,9 @@ MaybeError QueueBase::SubmitInternal(uint32_t commandCount, CommandBufferBase* c
     return {};
 }
 
+void QueueBase::FlushToGPU() {
+    // Default implementation: do nothing since the commands are already flushed to GPU
+    // as part of SubmitImpl().
+}
+
 }  // namespace dawn::native

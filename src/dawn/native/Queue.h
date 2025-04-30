@@ -107,6 +107,10 @@ class QueueBase : public ApiObjectBase, public ExecutionQueueBase {
     void Tick(ExecutionSerial finishedSerial);
     void HandleDeviceLoss();
 
+    // Flush commands submitted to this queue, sending them to the GPU.
+    // This is intended for "d3d11_defer_flush_to_gpu" toggle.
+    virtual void FlushToGPU();
+
   protected:
     QueueBase(DeviceBase* device, const QueueDescriptor* descriptor);
     QueueBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
