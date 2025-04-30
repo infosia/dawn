@@ -48,6 +48,7 @@ class Queue : public d3d::Queue {
         SubmitMode submitMode);
     MaybeError SubmitPendingCommands() override;
     virtual MaybeError NextSerial() = 0;
+    virtual void FlushToGPU();
 
     // Separated from creation because it creates resources, which is not valid before the
     // DeviceBase is fully created.
@@ -65,8 +66,8 @@ class Queue : public d3d::Queue {
 
     ~Queue() override = default;
 
-    MaybeError Initialize(bool isMonitored);
-    MaybeError InitializeD3DFence(bool isMonitored);
+    MaybeError Initialize(bool useMonitoredFence);
+    MaybeError InitializeD3DFence(bool useMonitoredFence);
 
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;
     MaybeError WriteBufferImpl(BufferBase* buffer,

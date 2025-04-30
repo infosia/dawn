@@ -68,6 +68,10 @@
 #include "dawn/native/OpenGLBackend.h"
 #endif  // DAWN_ENABLE_BACKEND_OPENGL
 
+#if defined(DAWN_ENABLE_BACKEND_D3D11)
+#include "dawn/native/D3D11Backend.h"
+#endif  // DAWN_ENABLE_BACKEND_D3D11
+
 namespace dawn {
 namespace {
 
@@ -1328,6 +1332,10 @@ std::ostringstream& DawnTestBase::AddBufferExpectation(const char* file,
     wgpu::CommandBuffer commands = encoder.Finish();
     queue.Submit(1, &commands);
 
+#if defined(DAWN_ENABLE_BACKEND_D3D11)
+    dawn::native::d3d11::FlushCommandsToGPU(queue.Get());
+#endif
+
     DeferredExpectation deferred;
     deferred.file = file;
     deferred.line = line;
@@ -1382,6 +1390,10 @@ std::ostringstream& DawnTestBase::AddTextureExpectationImpl(const char* file,
 
     wgpu::CommandBuffer commands = encoder.Finish();
     targetDevice.GetQueue().Submit(1, &commands);
+
+#if defined(DAWN_ENABLE_BACKEND_D3D11)
+    dawn::native::d3d11::FlushCommandsToGPU(targetDevice.GetQueue().Get());
+#endif
 
     DeferredExpectation deferred;
     deferred.file = file;

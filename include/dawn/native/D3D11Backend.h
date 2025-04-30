@@ -39,6 +39,10 @@ namespace dawn::native::d3d11 {
 
 DAWN_NATIVE_EXPORT Microsoft::WRL::ComPtr<ID3D11Device> GetD3D11Device(WGPUDevice device);
 
+// Flush the commands that were submitted to a queue, sending them to the GPU for real.
+// This function is no-op if the toggle "d3d11_defer_flush_to_gpu" is disabled.
+DAWN_NATIVE_EXPORT void FlushCommandsToGPU(WGPUQueue queue);
+
 // May be chained on RequestAdapterOptions
 struct DAWN_NATIVE_EXPORT RequestAdapterOptionsD3D11Device : wgpu::ChainedStruct {
     RequestAdapterOptionsD3D11Device() {
