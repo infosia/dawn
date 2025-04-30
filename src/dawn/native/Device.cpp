@@ -2126,9 +2126,9 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
     DAWN_TRY_ASSIGN_CONTEXT(unpacked, ValidateAndUnpack(descriptor), "validating and unpacking %s",
                             descriptor);
 
-    wgpu::SType moduleType = wgpu::SType(0u);
-    // A WGSL (or SPIR-V, if enabled) subdescriptor is required, and a Dawn-specific SPIR-V options
+    // A WGSL (xor SPIR-V, if enabled) subdescriptor is required, and a Dawn-specific SPIR-V options
     // descriptor is allowed when using SPIR-V.
+    wgpu::SType moduleType = wgpu::SType(0u);
     DAWN_TRY_ASSIGN(
         moduleType,
         (unpacked.ValidateBranches<Branch<ShaderSourceWGSL, ShaderModuleCompilationOptions>,
@@ -2160,40 +2160,36 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
     const size_t blueprintHash = blueprint.ComputeContentHash();
     blueprint.SetContentHash(blueprintHash);
 
+    // ShaderModuleParseResult also holds OwnedCompilationMessages, which should be passed out if
+    // creation failed.
+    ShaderModuleParseResult parseResult{};
+
     return GetOrCreate(
         mCaches->shaderModules, &blueprint, [&]() -> ResultOrError<Ref<ShaderModuleBase>> {
-            std::unique_ptr<OwnedCompilationMessages> inplaceCompilationMessages;
-            // If the compilationMessages is nullptr, caller of this function assumes that the
-            // shader creation will succeed and doesn't care the compilation messages. However we
-            // still use a inplace compile messages to ensure every shader module in the cache have
-            // a valid OwnedCompilationMessages.
-            if (compilationMessages == nullptr) {
-                inplaceCompilationMessages = std::make_unique<OwnedCompilationMessages>();
-                compilationMessages = &inplaceCompilationMessages;
-            }
-            auto* unownedMessages = compilationMessages->get();
-
             SCOPED_DAWN_HISTOGRAM_TIMER_MICROS(GetPlatform(), "CreateShaderModuleUS");
 
             auto resultOrError = [&]() -> ResultOrError<Ref<ShaderModuleBase>> {
-                // Shader parsing and validating are always delayed until cache missed.
-                ShaderModuleParseResult parseResult;
                 // Try to validate and parse the shader code, and if an error occurred return it
                 // without updating the cache.
-                DAWN_TRY(ParseShaderModule(this, unpacked, internalExtensions, &parseResult,
-                                           unownedMessages));
+                DAWN_TRY(ParseShaderModule(this, unpacked, internalExtensions,
+                                           /* needReflection */ true, &parseResult));
 
                 Ref<ShaderModuleBase> shaderModule;
                 // If created successfully, compilation messages are moved into the shader module.
                 DAWN_TRY_ASSIGN(shaderModule,
-                                CreateShaderModuleImpl(unpacked, internalExtensions, &parseResult,
-                                                       compilationMessages));
+                                CreateShaderModuleImpl(unpacked, internalExtensions, &parseResult));
                 shaderModule->SetContentHash(blueprintHash);
                 return shaderModule;
             }();
 
             DAWN_HISTOGRAM_BOOLEAN(GetPlatform(), "CreateShaderModuleSuccess",
                                    resultOrError.IsSuccess());
+
+            // Output the compilationMessages that might contains error messages if shader creation
+            // failed.
+            if (compilationMessages) {
+                *compilationMessages = std::move(parseResult.compilationMessages);
+            }
 
             return resultOrError;
         });
