@@ -424,21 +424,12 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
             device->fn.CreateShaderModule(device->GetVkDevice(), &createInfo, nullptr, &*newHandle),
             "CreateShaderModule"));
     }
+    DAWN_CHECK(newHandle != VK_NULL_HANDLE);
 
-    ModuleAndSpirv moduleAndSpirv;
-    if (newHandle != VK_NULL_HANDLE) {
-        device->GetBlobCache()->EnsureStored(compilation);
+    device->GetBlobCache()->EnsureStored(compilation);
+    SetDebugName(ToBackend(GetDevice()), newHandle, "Dawn_ShaderModule", GetLabel());
 
-        // Set the label on `newHandle` now, and not on `moduleAndSpirv.module` later
-        // since `moduleAndSpirv.module` may be in use by multiple threads.
-        SetDebugName(ToBackend(GetDevice()), newHandle, "Dawn_ShaderModule", GetLabel());
-
-        moduleAndSpirv.module = newHandle;
-        moduleAndSpirv.spirv = std::move(compilation->spirv);
-        moduleAndSpirv.hasInputAttachment = hasInputAttachment;
-    }
-
-    return std::move(moduleAndSpirv);
+    return ModuleAndSpirv{newHandle, std::move(compilation->spirv), hasInputAttachment};
 #else
     return DAWN_INTERNAL_ERROR("TINT_BUILD_SPV_WRITER is not defined.");
 #endif
