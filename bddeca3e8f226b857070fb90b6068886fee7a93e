@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e20a7605_3a2474e6",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-30T17:28:33Z",
+      "side": 0,
+      "message": "This comment is no longer correct either since the VkShaperModule is only used once now.",
+      "revId": "bddeca3e8f226b857070fb90b6068886fee7a93e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
