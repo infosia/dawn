@@ -161,7 +161,7 @@ class Device final : public DeviceBase {
     ResultOrError<Ref<ShaderModuleBase>> CreateShaderModuleImpl(
         const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
         const std::vector<tint::wgsl::Extension>& internalExtensions,
-        ShaderModuleParseResult* parseResult,
+        ShaderModuleParseResultCombo* parseResult,
         std::unique_ptr<OwnedCompilationMessages>* compilationMessages) override;
     ResultOrError<Ref<SwapChainBase>> CreateSwapChainImpl(
         Surface* surface,
@@ -323,7 +323,7 @@ class ShaderModule final : public ShaderModuleBase {
   public:
     using ShaderModuleBase::ShaderModuleBase;
 
-    MaybeError Initialize(ShaderModuleParseResult* parseResult,
+    MaybeError Initialize(ShaderModuleParseResultCombo* parseResult,
                           std::unique_ptr<OwnedCompilationMessages>* compilationMessages);
 };
 
