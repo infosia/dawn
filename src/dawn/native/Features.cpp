@@ -32,6 +32,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/ityp_array.h"
+#include "dawn/native/stream/Stream.h"
 
 namespace dawn::native {
 namespace {
