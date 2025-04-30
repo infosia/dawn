@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b531aeb0_1399a3dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-30T18:23:36Z",
+      "side": 1,
+      "message": "The roller timed out, but it looks like it still succeeded in creating a roll!",
+      "revId": "19824fcd0490ff5eba0d4a39db406694dde5c88e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
