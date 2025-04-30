@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "e5ae54b8330fa8b8a36241c5879babf9b11fa381",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2823161_2cffc9fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-04-30T10:22:41Z",
+      "side": 1,
+      "message": "LGTM, can we also remove references in GN files? See `git grep abseil-cpp:span`.",
+      "revId": "e5ae54b8330fa8b8a36241c5879babf9b11fa381",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
