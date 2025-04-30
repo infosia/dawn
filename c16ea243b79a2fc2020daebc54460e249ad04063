@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeb3a202_d5a73065",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-04-30T09:55:40Z",
+      "side": 1,
+      "message": "The OOB accessing issue is verified fixed in the latest Qualcomm driver 105.0.\n\nSince currently WebGPU is not enabled for QC devices, and we can always choose to only enable WebGPU after a qualified driver version (definitely no older than 105.0), this issue might not get exposed to WebGPU user and thus this workaround is unnecessary.\n\nThanks for your time!\n\n-2 to prevent incidentally submit.",
+      "revId": "c16ea243b79a2fc2020daebc54460e249ad04063",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
