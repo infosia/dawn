@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa495ce5_e9d54606",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-04-30T09:45:52Z",
+      "side": 1,
+      "message": "Drive by: Not all GPUs support constant buffers\u0027 partial updates [1]. You might want to create a fallback path for them or probably only enable immediate constants if partial update is possible.\n\n[1] https://learn.microsoft.com/en-us/windows/win32/api/d3d11/ns-d3d11-d3d11_feature_data_d3d11_options#:~:text\u003dthese%20feature%20levels.-,ConstantBufferPartialUpdate,-Specifies%20whether%20the",
+      "range": {
+        "startLine": 126,
+        "startChar": 36,
+        "endLine": 126,
+        "endChar": 41
+      },
+      "revId": "4ab7768b7386e167bbbdc3c332373fee7297a0bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
