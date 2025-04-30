@@ -22,6 +22,30 @@
       },
       "revId": "53669c5bb993283ee31a46a8fd6fcc95f1fa14cf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f72e9e02_34caa31d",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-04-30T18:33:45Z",
+      "side": 1,
+      "message": "Yes, C++20 is here! Although this is initializing all the struct members so designated initializers aren\u0027t needed?",
+      "parentUuid": "577b3012_e46912ec",
+      "range": {
+        "startLine": 432,
+        "startChar": 11,
+        "endLine": 432,
+        "endChar": 88
+      },
+      "revId": "53669c5bb993283ee31a46a8fd6fcc95f1fa14cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
