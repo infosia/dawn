@@ -30,12 +30,12 @@
 
 #include <dxgi1_4.h>
 #include <webgpu/webgpu_cpp_chained_struct.h>
-#include <windows.h>
 #include <wrl/client.h>
 
 #include <memory>
 #include <vector>
 
+#include "dawn/common/windows_with_undefs.h"
 #include "dawn/native/DawnNative.h"
 
 namespace dawn::native::d3d {

@@ -33,6 +33,7 @@
 #include <string>
 
 #include "dawn/native/Device.h"
+#include "dawn/native/ShaderModuleParseRequest.h"
 
 namespace dawn::native {
 

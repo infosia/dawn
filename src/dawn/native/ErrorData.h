@@ -88,6 +88,7 @@ class [[nodiscard]] ErrorData {
     }
 
     InternalErrorType GetType() const;
+
     const std::string& GetMessage() const;
     const std::vector<BacktraceRecord>& GetBacktrace() const;
     const std::vector<std::string>& GetContexts() const;
