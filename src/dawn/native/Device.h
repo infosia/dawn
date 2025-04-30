@@ -333,6 +333,7 @@ class DeviceBase : public ErrorSink,
     const tint::wgsl::AllowedFeatures& GetWGSLAllowedFeatures() const;
     bool IsToggleEnabled(Toggle toggle) const;
     const TogglesState& GetTogglesState() const;
+    const FeaturesSet& GetEnabledFeatures() const;
     bool IsValidationEnabled() const;
     bool IsRobustnessEnabled() const;
     bool IsCompatibilityMode() const;
@@ -639,7 +640,6 @@ class IgnoreLazyClearCountScope : public NonMovable, public StackAllocated {
     raw_ptr<DeviceBase> mDevice;
     size_t mLazyClearCountForTesting;
 };
-
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_DEVICE_H_
