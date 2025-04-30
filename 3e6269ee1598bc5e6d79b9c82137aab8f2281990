@@ -52,6 +52,24 @@
       "parentUuid": "c719d0af_973aa12b",
       "revId": "3e6269ee1598bc5e6d79b9c82137aab8f2281990",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eae6414c_a85b07cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-04-30T00:40:42Z",
+      "side": 1,
+      "message": "Ah, this is the issue Loko was mentioning. We can just let the roller deal with this, as it automatically removes expectations that don\u0027t apply anymore and generates new ones. You can see this in the previous roll, which actually got to the point of updating its expectations (unlike that one): https://dawn-review.googlesource.com/c/dawn/+/239295\nThis process loses the bug association, but we can manually add it back afterward.\n\nBased on https://dawn-review.googlesource.com/c/dawn/+/239295/3..4 I think what\u0027s blocking the CTS roll is the usual issue, flakes. For tests with lots of cases, if different cases flake each time, the roller can\u0027t catch all of them. We need to manually add a wildcard expectation.",
+      "parentUuid": "5d9b5d04_635fb870",
+      "revId": "3e6269ee1598bc5e6d79b9c82137aab8f2281990",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
