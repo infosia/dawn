@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4bdc0349_66de63eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-04-30T01:03:07Z",
+      "side": 1,
+      "message": "Abandoning this change since I don\u0027t think it\u0027s actually needed anymore.",
+      "revId": "c707a19fcdb1738645c66c819636d48c04ff88da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2cb9e5f2_09218eb6",
         "filename": "src/dawn/common/RefBase.h",
         "patchSetId": 1
