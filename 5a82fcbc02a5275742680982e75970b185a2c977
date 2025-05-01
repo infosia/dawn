@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46e78f11_9b7ae4f0",
+        "filename": "include/dawn/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-01T04:07:01Z",
+      "side": 1,
+      "message": "Is it important (like for include_dirs below) that these are at the end? If so, comment. If not, maybe flatten these into the original definitions at lines 68/69.",
+      "revId": "5a82fcbc02a5275742680982e75970b185a2c977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e1ce7f5_98383e72",
+        "filename": "include/dawn/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-01T04:07:01Z",
+      "side": 1,
+      "message": "This isn\u0027t ideal, we should probably have a TODO and bug for it.",
+      "revId": "5a82fcbc02a5275742680982e75970b185a2c977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36f7bea7_9c5b1c29",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-01T04:07:01Z",
+      "side": 1,
+      "message": "nit: oops I forgot to remove this",
+      "range": {
+        "startLine": 65,
+        "startChar": 25,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "5a82fcbc02a5275742680982e75970b185a2c977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3509b935_70069396",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-01T04:07:01Z",
+      "side": 1,
+      "message": "nit: you can just remove this from both section titles since they\u0027re the same now",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "5a82fcbc02a5275742680982e75970b185a2c977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
