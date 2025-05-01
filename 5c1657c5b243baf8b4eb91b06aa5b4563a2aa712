@@ -212,6 +212,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4b93653_f471ef79",
+        "filename": "src/cmake/BundleLibraries.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-01T13:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33206e12_dbb689c5",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca11497a_9985eb09",
@@ -243,6 +261,24 @@
       "side": 1,
       "message": "Yeah I think that can be removed",
       "parentUuid": "ca11497a_9985eb09",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaaf2949_035204b8",
+        "filename": "src/cmake/BundleLibraries.cmake",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-01T13:21:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bfcfe91_6cfd4467",
       "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
