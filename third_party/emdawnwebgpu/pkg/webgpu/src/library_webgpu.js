@@ -2246,7 +2246,7 @@ var LibraryWebGPU = {
     pass.multiDrawIndirect(indirectBuffer, indirectOffset, maxDrawCount, drawCountBuffer, drawCountBufferOffset);
   },
 
-  wgpuRenderPassEncoderMultiDrawIndexedIndirect: (passPtr, indirectBufferPtr, indirectOffset, maxDrawCount, drawCountBufferPtr, drawCountBufferOffset) => {
+  wgpuRenderPassEncoderMultiDrawIndexedIndirectREMOVETHISSUFFIX: (passPtr, indirectBufferPtr, indirectOffset, maxDrawCount, drawCountBufferPtr, drawCountBufferOffset) => {
     var pass = WebGPU.getJsObject(passPtr);
     var indirectBuffer = WebGPU.getJsObject(indirectBufferPtr);
     var drawCountBuffer = WebGPU.getJsObject(drawCountBufferPtr);
