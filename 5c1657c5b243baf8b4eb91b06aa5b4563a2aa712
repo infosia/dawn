@@ -124,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f46d432_1bfe9f27",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-01T11:54:26Z",
+      "side": 1,
+      "message": "hmm, how would you propose building all dawn libraries static except the monolithic if they use the same option?\u003d",
+      "parentUuid": "2a4bc6a4_b1d63885",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f19585db_500a89d6",
