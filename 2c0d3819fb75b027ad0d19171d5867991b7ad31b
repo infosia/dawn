@@ -16,6 +16,24 @@
       "message": "Also test using GetWeakRef again instead of copying an existing one? (Or is that trivially similar?)",
       "revId": "2c0d3819fb75b027ad0d19171d5867991b7ad31b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0e32640_3ef15bf2",
+        "filename": "src/dawn/tests/unittests/WeakRefTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-01T01:11:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d1fed41_218d0bc7",
+      "revId": "2c0d3819fb75b027ad0d19171d5867991b7ad31b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
