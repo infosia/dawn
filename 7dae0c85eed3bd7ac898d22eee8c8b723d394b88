@@ -113,6 +113,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da218bf2_3a39c839",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-01T03:35:13Z",
+      "side": 1,
+      "message": "Ohh, of course. Neat!",
+      "parentUuid": "72d3aba4_b2f0538e",
+      "range": {
+        "startLine": 197,
+        "startChar": 25,
+        "endLine": 198,
+        "endChar": 26
+      },
+      "revId": "7dae0c85eed3bd7ac898d22eee8c8b723d394b88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca9b02f1_289dec1a",
