@@ -2590,10 +2590,16 @@ void Validator::CheckVar(const Var* var) {
         }
     }
 
-    // Check that non-handle variables don't have @input_attachment_index set
-    if (var->InputAttachmentIndex().has_value() && mv->AddressSpace() != AddressSpace::kHandle) {
-        AddError(var) << "'@input_attachment_index' is not valid for non-handle var";
-        return;
+    if (var->InputAttachmentIndex().has_value()) {
+        if (mv->AddressSpace() != AddressSpace::kHandle) {
+            AddError(var) << "'@input_attachment_index' is not valid for non-handle var";
+            return;
+        }
+        if (!mv->UnwrapPtrOrRef()->Is<core::type::InputAttachment>()) {
+            AddError(var)
+                << "'@input_attachment_index' is only valid for 'input_attachment' type var";
+            return;
+        }
     }
 
     if (var->Block() == mod_.root_block) {
