@@ -160,6 +160,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb554799_c4532fa6",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2025-05-01T18:46:19Z",
+      "side": 1,
+      "message": "I vote for keeping it simple as it is far easier to build the single monolithic lib as either shared/static :) I have yet to find a real use case where a myriad of dlls/static libs or mixed shared and static are needed.",
+      "parentUuid": "24421852_cf907045",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f19585db_500a89d6",
