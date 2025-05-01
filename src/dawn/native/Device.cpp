@@ -547,6 +547,7 @@ void DeviceBase::DestroyObjects() {
         ObjectType::BindGroupLayout,
         ObjectType::BindGroupLayoutInternal,
         ObjectType::ShaderModule,
+        ObjectType::SharedBufferMemory,
         ObjectType::SharedTextureMemory,
         ObjectType::SharedFence,
         ObjectType::ExternalTexture,
