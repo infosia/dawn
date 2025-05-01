@@ -142,6 +142,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "24421852_cf907045",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2025-05-01T13:29:17Z",
+      "side": 1,
+      "message": "Maybe we want to be able to build either:\n\n- as a myriad of dlls (`DAWN_BUILD_MONOLITHIC_LIBRARY\u003dFALSE`, `BUILD_SHARED_LIBS\u003dTRUE`)\n- as a single monolithic dll (`DAWN_BUILD_MONOLITHIC_LIBRARY\u003dTRUE`, `BUILD_SHARED_LIBS\u003dTRUE`)\n- as a myriad of static libs (`DAWN_BUILD_MONOLITHIC_LIBRARY\u003dFALSE`, `BUILD_SHARED_LIBS\u003dFALSE`)\n- or as a single monolithic static lib (`DAWN_BUILD_MONOLITHIC_LIBRARY\u003dTRUE`, `BUILD_SHARED_LIBS\u003dFALSE`)\n\nMonolithic shared/static libs make redistribution of prebuilt lib much easier I think. I\u0027m not sure how the myriad of dlls is useful, but why not.",
+      "parentUuid": "2f46d432_1bfe9f27",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f19585db_500a89d6",
