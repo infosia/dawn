@@ -51,6 +51,23 @@
       "parentUuid": "e2823161_2cffc9fc",
       "revId": "e5ae54b8330fa8b8a36241c5879babf9b11fa381",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e4d793d_618cbda8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-01T00:25:34Z",
+      "side": 1,
+      "message": "Actually... removing my +2 for this also because as I was investigating `std::string_view`, I also noticed that `std::span` is actually not allowed in google3 atm... Let me check and get back to you on these changes.",
+      "revId": "e5ae54b8330fa8b8a36241c5879babf9b11fa381",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
