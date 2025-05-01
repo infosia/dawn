@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bd206cb_08f87d24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-05-01T13:57:24Z",
+      "side": 1,
+      "message": "It does fix asyncMethodTestValidationPasses on +34 Android devices (b/406779989) when combined with the CL above it in the stack, \"Attach JVM to the current thread on callback\".",
+      "parentUuid": "028d95f8_9af4b987",
+      "revId": "5c9aec0786bc1c7adbacb27b4e26926ae2843999",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e67c3c35_c69c368a",
@@ -59,6 +77,72 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d662f624_0b2f138a",
+        "filename": "generator/templates/art/JNIClasses.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-05-01T13:57:24Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "e67c3c35_c69c368a",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c5206a5e_98f6911f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "generator/templates/art/JNIClasses.cpp",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 2,
+                "endChar": 0
+              },
+              "replacement": "//* Copyright 2025 The Dawn \u0026 Tint Authors\n"
+            }
+          ]
+        }
+      ],
+      "revId": "5c9aec0786bc1c7adbacb27b4e26926ae2843999",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49193f5f_05f8c26f",
+        "filename": "generator/templates/art/JNIClasses.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-05-01T13:57:24Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "e67c3c35_c69c368a",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 18
+      },
+      "revId": "5c9aec0786bc1c7adbacb27b4e26926ae2843999",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c882efa_cbaa9838",
@@ -90,6 +174,24 @@
           ]
         }
       ],
+      "revId": "5c9aec0786bc1c7adbacb27b4e26926ae2843999",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f72f4528_a7f6c50b",
+        "filename": "generator/templates/art/JNIClasses.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-05-01T13:57:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c882efa_cbaa9838",
       "revId": "5c9aec0786bc1c7adbacb27b4e26926ae2843999",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
