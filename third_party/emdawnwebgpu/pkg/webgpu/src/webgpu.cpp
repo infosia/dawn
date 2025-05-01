@@ -1661,7 +1661,7 @@ void wgpuSupportedFeaturesFreeMembers(WGPUSupportedFeatures value) {
   free(const_cast<WGPUFeatureName*>(value.features));
 }
 
-void wgpuSupportedWGSLLanguageFeaturesFreeMembers(
+void wgpuSupportedWGSLLanguageFeaturesFreeMembersREMOVETHISSUFFIX(
     WGPUSupportedWGSLLanguageFeatures value) {
   free(const_cast<WGPUWGSLLanguageFeatureName*>(value.features));
 }
