@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9faf1b8_f6c69224",
+        "filename": "include/dawn/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-01T22:44:43Z",
+      "side": 1,
+      "message": "Probably not actually. Updated.",
+      "parentUuid": "46e78f11_9b7ae4f0",
+      "revId": "5a82fcbc02a5275742680982e75970b185a2c977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e1ce7f5_98383e72",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-05-01T04:07:01Z",
       "side": 1,
       "message": "This isn\u0027t ideal, we should probably have a TODO and bug for it.",
+      "revId": "5a82fcbc02a5275742680982e75970b185a2c977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f1f5305_62f2c257",
+        "filename": "include/dawn/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-01T22:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e1ce7f5_98383e72",
       "revId": "5a82fcbc02a5275742680982e75970b185a2c977",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f50ae740_bd8d4880",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-01T22:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36f7bea7_9c5b1c29",
+      "range": {
+        "startLine": 65,
+        "startChar": 25,
+        "endLine": 65,
+        "endChar": 54
+      },
+      "revId": "5a82fcbc02a5275742680982e75970b185a2c977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3509b935_70069396",
@@ -71,6 +131,30 @@
       "writtenOn": "2025-05-01T04:07:01Z",
       "side": 1,
       "message": "nit: you can just remove this from both section titles since they\u0027re the same now",
+      "range": {
+        "startLine": 83,
+        "startChar": 22,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "5a82fcbc02a5275742680982e75970b185a2c977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae827c99_e3a4ee5a",
+        "filename": "src/emdawnwebgpu/README.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-01T22:44:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3509b935_70069396",
       "range": {
         "startLine": 83,
         "startChar": 22,
