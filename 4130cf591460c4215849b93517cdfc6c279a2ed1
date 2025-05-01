@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "080a42bd_882f596d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-05-01T17:35:48Z",
+      "side": 1,
+      "message": "Ran a shadow bot against this CL, and it\u0027s now failing as expected: https://ci.chromium.org/ui/p/dawn/builders/try.shadow/linux-clang-rel-x64/b8716053482100633761/overview",
+      "revId": "4130cf591460c4215849b93517cdfc6c279a2ed1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
