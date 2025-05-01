@@ -285,8 +285,15 @@ if (EMSCRIPTEN)
     )
 
     if (${DAWN_BUILD_TESTS})
+        DawnJSONGenerator(
+            TARGET "emdawnwebgpu_link_test_cpp"
+            PRINT_NAME "emdawnwebgpu LinkTest.cpp"
+            OUTPUT_SOURCES EMDAWNWEBGPU_LINK_TEST_CPP_SOURCES
+        )
+
         set(emdawnwebgpu_test_sources
             "tests/FuturesTests.cpp"
+            ${EMDAWNWEBGPU_LINK_TEST_CPP_SOURCES}
         )
         set(emdawnwebgpu_test_deps
             dawn::dawn_wgpu_utils
@@ -303,6 +310,8 @@ if (EMSCRIPTEN)
                 ${emdawnwebgpu_test_deps}
         )
         target_link_options(emdawnwebgpu_tests_asyncify PUBLIC
+            # Enable Closure to make sure it can parse the JS.
+            "$<$<NOT:$<CONFIG:Debug>>:--closure=1>"
             # We need Asyncify or JSPI for Future tests.
             "-sASYNCIFY=1"
         )
@@ -316,6 +325,8 @@ if (EMSCRIPTEN)
                 ${emdawnwebgpu_test_deps}
         )
         target_link_options(emdawnwebgpu_tests_jspi PUBLIC
+            # Enable Closure to make sure it can parse the JS.
+            "$<$<NOT:$<CONFIG:Debug>>:--closure=1>"
             # We need Asyncify or JSPI for Future tests.
             "-sJSPI=1"
         )

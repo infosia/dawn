@@ -1282,6 +1282,15 @@ class MultiGeneratorFromDawnJSON(Generator):
                     'src/emdawnwebgpu/library_webgpu_generated_sig_info.js',
                     [RENDER_PARAMS_BASE, params_emscripten]))
 
+        if 'emdawnwebgpu_link_test_cpp' in targets:
+            assert api == 'webgpu'
+            params_emscripten = parse_json(
+                loaded_json, enabled_tags=['compat', 'emscripten'])
+            renders.append(
+                FileRender('emdawnwebgpu/tests/LinkTest.cpp',
+                           'src/emdawnwebgpu/tests/LinkTest.cpp',
+                           [RENDER_PARAMS_BASE, params_emscripten]))
+
         if 'mock_api' in targets:
             mock_params = [
                 RENDER_PARAMS_BASE, params_dawn, {
