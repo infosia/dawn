@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "add84def_069435a3",
+        "filename": "tools/src/cmd/gen/build/build.go",
+        "patchSetId": 3
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1003366
+      },
+      "writtenOn": "2025-05-02T00:41:08Z",
+      "side": 1,
+      "message": "nit: `gn` doesn\u0027t need `vpython3`. `python3` would be sufficient, I think.",
+      "range": {
+        "startLine": 710,
+        "startChar": 24,
+        "endLine": 710,
+        "endChar": 32
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "893a1ec6_3585f00e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/src/cmd/gen/build/build.go",
+              "range": {
+                "startLine": 710,
+                "startChar": 0,
+                "endLine": 711,
+                "endChar": 0
+              },
+              "replacement": "\t\t\t\tgn :\u003d exec.Command(\"python3\", gn_path, \"format\", \"--stdin\")\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4dcce86c1e056c55187d843b4b9bda5faf75af76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
