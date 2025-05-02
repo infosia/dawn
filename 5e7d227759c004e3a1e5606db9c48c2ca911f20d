@@ -16,6 +16,24 @@
       "message": "Initial pass, I\u0027m not too fond of adding the new API for this. Do you already have metrics on how often the `Flush` calls are happening and how much time we are spending in them? This feels like a pretty big hammer solution.\n\nI\u0027m wondering if it would be possible to do this internally in Dawn instead, i.e. have Dawn decide when to actually call the `Flush` instead of relying on an external signal. Or alternatively, make Dawn know when it doesn\u0027t need to flush yet, and wait until something that comes in needs to be flush and then calling `Flush` then?",
       "revId": "5e7d227759c004e3a1e5606db9c48c2ca911f20d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5c91902_48b2b589",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-02T21:24:04Z",
+      "side": 1,
+      "message": "I added the new API `FlushCommandsToGPU` just for the tests to flush the commands in fine-grained manner. In practice, chrome uses a swapchain, and calling `IDXGISwapChain::Present` also triggers `Flush` in D3D11 driver. In other words, chrome doesn\u0027t need to use `FlushCommandsToGPU` at all, because the flush will implicitly triggered by `Present` (which will be once at the end of the frame).\n\nThere is a long history of back and forth discussions already. About how D3D11\u0027s `Flush` is expensive and `Queue::Submit` does 2 things:\n- Issue D3D11 commands.\n- Flush.\n\nWhat this CL does is eliminating the `Flush` part from `Submit` and let the application controls when to flush. Ideally that is already done implicitly by swapchain\u0027s present. Furthermore, this is only a toggle, that means it doesn\u0027t change the default behavior if clients don\u0027t want to.\n\n\u003e Do you already have metrics on how often the Flush calls are happening and how much time we are spending in them?\n\nBased on this profiling [1], `Flush` (call stack `MonitoredQueue::NextSerial` -\u003e ... -\u003e `CDevice::Flush`) took majority of `Queue::Submit` time. It defeats any gains we could get from Dawn or Skia\u0027s algorithms compared to Ganesh.\n\nI understand that this new solution doesn\u0027t adhere to Dawn\u0027s model. But we want Graphite to replace Ganesh. In order to do that, we want Graphite to win against Ganesh in every metrics if possible. Right now, Ganesh wins against Graphite in composition `DrawToSwap` metrics:\n- Graphite has to:\n  - Queue::Submit\n    - issue D3D11 commands.\n    - Flush.\n  - Present.\n-  Ganesh only needs to:\n  - issue D3D11 commands.\n  - Present.\n- Ganesh\u0027s GL state managements might be more expensive than Dawn\u0027s. However, `Flush`\u0027s cost outweighs that. And most of composition draw calls are just simple `drawRect`.\n  \nIn some rasterization scenarios, where renderer calls `RasterInterface::Flush` multiple times.\n- Graphite has to call `Queue::Submit` -\u003e `Flush` multiple times.\n- Ganesh doesn\u0027t need to call `Flush` multiple times. Its `RasterInterface::Flush` implementation is just issuing D3D11 commands without `Flush`.\n\n\u003e I\u0027m wondering if it would be possible to do this internally in Dawn instead, i.e. have Dawn decide when to actually call the Flush instead of relying on an external signal\n\nDawn already can control when to `Flush` on its own. There is a timer/counter in this CL. `FlushCommandsToGPU` is not strictly required. However, without using that function, some tests took too long to finish because of delays. That\u0027s because the tests use a busy-wait loop of calling `device.Tick()` [2]. And from Dawn\u0027s pov, we cannot just simply flush in every `Tick` call.\n\n[1] https://pprof.corp.google.com/?id\u003d5b7cd7eab85b59de395a15371f6fd6a5\u0026pivot\u003d%5Edawn::native::d3d11::Queue::SubmitImpl$\n[2] https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/DawnTest.cpp;drc\u003d4341cc4e529444bd201ad3aeeed0ec561e04103f;l\u003d1732",
+      "parentUuid": "2e55392e_997147c5",
+      "revId": "5e7d227759c004e3a1e5606db9c48c2ca911f20d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
