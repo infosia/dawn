@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8da9a7b8_e7db7692",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-02T19:53:54Z",
+      "side": 1,
+      "message": "LGTM for the change, but as I\u0027m not super familiar with Kotlin\u0027s threading, is the thread that the env is attached to a virtual thread? What I\u0027m assuming is happening is that the WebGPU implementations are calling a callback that gets scheduled on a virtual thread or something, but I\u0027m not sure if that\u0027s the correct understanding?",
+      "revId": "795fb81a3e2303f606c18aaa0737238664e28d20",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
