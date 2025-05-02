@@ -34,6 +34,24 @@
       "parentUuid": "2e55392e_997147c5",
       "revId": "5e7d227759c004e3a1e5606db9c48c2ca911f20d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62c031ae_57b9bad7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-02T21:37:06Z",
+      "side": 1,
+      "message": "Here is another screenshot of `Queue::Submit`\u0027s timing recorded in `chrome::tracing`:\nhttps://screenshot.googleplex.com/ArBSLhsu6f9k7X7\n\nIn this scenario, we called `Queue::Submit` 3 times during rasterizations, and `Flush` (red colored rects) took majority of `Queue::Submit` time.",
+      "parentUuid": "b5c91902_48b2b589",
+      "revId": "5e7d227759c004e3a1e5606db9c48c2ca911f20d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
