@@ -78,6 +78,8 @@ TEST_F(IR_VarTest, Clone) {
         .location = 3,
         .blend_src = 4,
         .color = 5,
+        .id = 6,
+        .buffer_id = 7,
         .builtin = core::BuiltinValue::kFragDepth,
         .interpolation =
             Interpolation{core::InterpolationType::kFlat, core::InterpolationSampling::kCentroid},
@@ -110,6 +112,12 @@ TEST_F(IR_VarTest, Clone) {
 
     EXPECT_TRUE(attrs.color.has_value());
     EXPECT_EQ(5u, attrs.color.value());
+
+    EXPECT_TRUE(attrs.id.has_value());
+    EXPECT_EQ(6u, attrs.id.value());
+
+    EXPECT_TRUE(attrs.buffer_id.has_value());
+    EXPECT_EQ(7u, attrs.buffer_id.value());
 
     EXPECT_TRUE(attrs.builtin.has_value());
     EXPECT_EQ(core::BuiltinValue::kFragDepth, attrs.builtin.value());
