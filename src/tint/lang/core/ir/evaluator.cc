@@ -133,21 +133,25 @@ Evaluator::EvalResult Evaluator::EvalAccess(core::ir::Access* a) {
             return val;
         }
         // Check if the value could be evaluated
-        if (!val.Get()) {
-            return nullptr;
-        }
-        TINT_ASSERT(val.Get()->Is<core::constant::Value>());
+        uint32_t default_index_const = 0;
+        if (val.Get()) {
+            TINT_ASSERT(val.Get()->Is<core::constant::Value>());
 
-        auto res = const_eval_.Index(obj, access_obj_type, val.Get(), SourceOf(a));
-        if (res != Success) {
-            return Failure();
+            auto res = const_eval_.Index(obj, access_obj_type, val.Get(), SourceOf(a));
+            if (res != Success) {
+                return Failure();
+            }
+            default_index_const = val.Get()->ValueAs<u32>();
+            obj = res.Get();
+        } else {
+            // No constant array evaluation possible for non-const (dynamic) indices. Only
+            // validation of bounds is possible at this stage.
+            obj = nullptr;
         }
 
         // Index element to type to support type nested access.
-        access_obj_type = access_obj_type->Element(val.Get()->ValueAs<u32>());
+        access_obj_type = access_obj_type->Element(default_index_const);
         TINT_ASSERT(access_obj_type);
-
-        obj = res.Get();
     }
     return obj;
 }
