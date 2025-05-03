@@ -651,6 +651,8 @@ enum class IOAnnotation : uint8_t {
     kWorkgroup,
     /// @color
     kColor,
+    /// @buffer
+    kBufferId,
 };
 
 /// @returns text describing the annotation for error logging
@@ -666,6 +668,8 @@ std::string ToString(IOAnnotation value) {
             return "<workgroup>";
         case IOAnnotation::kColor:
             return "@color";
+        case IOAnnotation::kBufferId:
+            return "@buffer";
     }
     TINT_ICE() << "Unknown enum passed to ToString(IOAnnotation)";
 }
@@ -713,6 +717,13 @@ Result<SuccessType, IOAnnotation> AddIOAnnotationsFromIOAttributes(
             return IOAnnotation::kColor;
         }
         annotations.Add(IOAnnotation::kColor);
+    }
+
+    if (attr.buffer_id.has_value()) {
+        if (annotations.Contains(IOAnnotation::kBufferId)) {
+            return IOAnnotation::kBufferId;
+        }
+        annotations.Add(IOAnnotation::kBufferId);
     }
 
     return Success;

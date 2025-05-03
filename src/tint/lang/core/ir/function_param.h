@@ -116,6 +116,13 @@ class FunctionParam : public Castable<FunctionParam, Value> {
     /// @returns the optional color attribute value
     std::optional<uint32_t> Color() const { return attributes_.color; }
 
+    /// Sets the buffer id.
+    /// @param id the optional buffer id value
+    void SetBufferId(std::optional<uint32_t> id) { attributes_.buffer_id = id; }
+
+    /// @returns the optional buffer id attribute value
+    std::optional<uint32_t> BufferId() const { return attributes_.buffer_id; }
+
     /// Sets the interpolation.
     /// @param interpolation the optional location interpolation settings
     void SetInterpolation(std::optional<core::Interpolation> interpolation) {
