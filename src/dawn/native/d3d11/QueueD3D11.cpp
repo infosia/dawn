@@ -460,7 +460,6 @@ ResultOrError<bool> SystemEventQueue::WaitForQueueSerial(ExecutionSerial serial,
     }
 
     bool didComplete = false;
-    std::vector<SystemEventReceiver> returnedReceivers;
     DAWN_TRY_ASSIGN(didComplete, mPendingEvents.Use([&](auto pendingEvents) -> ResultOrError<bool> {
         DAWN_ASSERT(!pendingEvents->empty());
         DAWN_ASSERT(serial >= pendingEvents->front().serial);
@@ -476,24 +475,10 @@ ResultOrError<bool> SystemEventQueue::WaitForQueueSerial(ExecutionSerial serial,
             WaitForSingleObject(it->receiver.GetPrimitive().Get(), ToMilliseconds(timeout));
         DAWN_INTERNAL_ERROR_IF(result == WAIT_FAILED, "WaitForSingleObject() failed");
 
-        if (result != WAIT_OBJECT_0) {
-            return false;
-        }
-
-        // Events before |it| should be signalled as well.
-        const size_t completedEvents = std::distance(pendingEvents->begin(), it) + 1;
-        returnedReceivers.reserve(completedEvents);
-        std::for_each_n(pendingEvents->begin(), completedEvents, [&returnedReceivers](auto& e) {
-            returnedReceivers.emplace_back(std::move(e.receiver));
-        });
-        pendingEvents->erase(pendingEvents->begin(), pendingEvents->begin() + completedEvents);
-        return true;
+        return result == WAIT_OBJECT_0;
     }));
 
-    if (!returnedReceivers.empty()) {
-        DAWN_TRY(ReturnSystemEventReceivers(std::move(returnedReceivers)));
-    }
-
+    // Events will be recycled in CheckAndUpdateCompletedSerials().
     return didComplete;
 }
 

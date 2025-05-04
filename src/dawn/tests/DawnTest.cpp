@@ -1790,26 +1790,39 @@ void DawnTestBase::MapSlotsSynchronously() {
     for (size_t slotIndex = 0; slotIndex < mReadbackSlots.size(); ++slotIndex) {
         auto& slot = mReadbackSlots[slotIndex];
 
-        slot.buffer.MapAsync(wgpu::MapMode::Read, 0, wgpu::kWholeMapSize,
-                             wgpu::CallbackMode::AllowProcessEvents,
-                             [this, &slot](wgpu::MapAsyncStatus status, wgpu::StringView) {
-                                 DAWN_ASSERT(status == wgpu::MapAsyncStatus::Success);
-                                 Mutex::AutoLock lg(&mMutex);
+        auto callback = [this, &slot](wgpu::MapAsyncStatus status, wgpu::StringView) {
+            DAWN_ASSERT(status == wgpu::MapAsyncStatus::Success);
+            Mutex::AutoLock lg(&mMutex);
 
-                                 if (status == wgpu::MapAsyncStatus::Success) {
-                                     slot.mappedData = slot.buffer.GetConstMappedRange();
-                                     DAWN_ASSERT(slot.mappedData != nullptr);
-                                 } else {
-                                     slot.mappedData = nullptr;
-                                 }
+            if (status == wgpu::MapAsyncStatus::Success) {
+                slot.mappedData = slot.buffer.GetConstMappedRange();
+                DAWN_ASSERT(slot.mappedData != nullptr);
+            } else {
+                slot.mappedData = nullptr;
+            }
 
-                                 mNumPendingMapOperations.fetch_sub(1, std::memory_order_release);
-                             });
+            mNumPendingMapOperations.fetch_sub(1, std::memory_order_release);
+        };
+
+        if (UsesWire()) {
+            slot.buffer.MapAsync(wgpu::MapMode::Read, 0, wgpu::kWholeMapSize,
+                                 wgpu::CallbackMode::AllowProcessEvents, callback);
+        } else {
+            ASSERT_EQ(
+                instance.WaitAny(slot.buffer.MapAsync(wgpu::MapMode::Read, 0, wgpu::kWholeMapSize,
+                                                      wgpu::CallbackMode::WaitAnyOnly, callback),
+                                 UINT64_MAX),
+                wgpu::WaitStatus::Success);
+        }
     }
 
-    // Busy wait until all map operations are done.
-    while (mNumPendingMapOperations.load(std::memory_order_acquire) != 0) {
-        WaitABit();
+    if (UsesWire()) {
+        // Busy wait until all map operations are done.
+        while (mNumPendingMapOperations.load(std::memory_order_acquire) != 0) {
+            WaitABit();
+        }
+    } else {
+        ASSERT_EQ(mNumPendingMapOperations.load(std::memory_order_acquire), 0u);
     }
 }
 
