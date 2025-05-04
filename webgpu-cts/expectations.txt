@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-04-30 11:02:49AM
+# Last rolled: 2025-05-04 05:03:53AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -667,7 +667,6 @@ crbug.com/381246932 [ amd-0x7340 ] webgpu:shader,execution,value_init:array:addr
 crbug.com/381246932 [ amd-0x7340 mac ] webgpu:shader,execution,value_init:mat:addressSpace="function";type="f16" [ Failure ]
 crbug.com/381246932 [ amd-0x7340 mac ] webgpu:shader,execution,value_init:mat:addressSpace="private";type="f16" [ Failure ]
 
-
 crbug.com/42241269 [ intel-0x3e9b mac ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ Failure ]
 crbug.com/42241269 [ amd mac ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ Failure ]
 
@@ -828,7 +827,6 @@ crbug.com/42241502 [ dawn-backend-validation nvidia-0x2184 release-x64 target-cp
 crbug.com/42241502 [ dawn-backend-validation nvidia-0x2184 release-x64 target-cpu-64 win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="premultiply";orientation="none";colorSpaceConversion="none";* [ Failure ]
 crbug.com/42241502 [ dawn-backend-validation nvidia-0x2184 release-x64 target-cpu-64 webgpu-adapter-default win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_canvas:orientation="none";colorSpaceConversion="default";* [ Failure ]
 crbug.com/42241502 [ dawn-backend-validation nvidia-0x2184 release-x64 target-cpu-64 webgpu-adapter-default win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_canvas:orientation="none";colorSpaceConversion="none";* [ Failure ]
-
 
 # Other assorted color_space_conversion failures
 crbug.com/407076128 [ angle-d3d11 dawn-backend-validation graphite-enabled no-asan no-clang-coverage nvidia-0x2184 release-x64 target-cpu-64 webgpu-adapter-default ] webgpu:web_platform,copyToTexture,canvas:color_space_conversion:srcColorSpace="srgb";dstColorSpace="display-p3";* [ RetryOnFailure ]
