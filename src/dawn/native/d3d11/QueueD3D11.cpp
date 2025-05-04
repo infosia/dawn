@@ -79,6 +79,9 @@ class SystemEventQueue final : public Queue {
     };
     // Events associated with submitted commands. They are in old to recent order.
     MutexProtected<std::deque<SerialEventReceiverPair>> mPendingEvents;
+
+    // List of completed events to be recycled in CheckAndUpdateCompletedSerials().
+    MutexProtected<std::vector<SerialEventReceiverPair>> mCompletedEvents;
 };
 
 ResultOrError<Ref<Queue>> Queue::Create(Device* device, const QueueDescriptor* descriptor) {
@@ -393,6 +396,7 @@ MaybeError SystemEventQueue::NextSerial() {
 ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials() {
     ExecutionSerial completedSerial;
     std::vector<SystemEventReceiver> returnedReceivers;
+    // Check for completed events in the pending list.
     DAWN_TRY_ASSIGN(
         completedSerial,
         mPendingEvents.Use([&](auto pendingEvents) -> ResultOrError<ExecutionSerial> {
@@ -437,6 +441,16 @@ ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials(
             return completedSerial;
         }));
 
+    // Also check for completed events processed by WaitForQueueSerial()
+    mCompletedEvents.Use([&](auto completedEvents) {
+        returnedReceivers.reserve(returnedReceivers.size() + completedEvents->size());
+        for (auto& event : *completedEvents) {
+            completedSerial = std::max(completedSerial, event.serial);
+            returnedReceivers.emplace_back(std::move(event.receiver));
+        }
+        completedEvents->clear();
+    });
+
     DAWN_TRY(CheckAndMapReadyBuffers(completedSerial));
 
     if (!returnedReceivers.empty()) {
@@ -460,8 +474,8 @@ ResultOrError<bool> SystemEventQueue::WaitForQueueSerial(ExecutionSerial serial,
     }
 
     bool didComplete = false;
-    std::vector<SystemEventReceiver> returnedReceivers;
-    DAWN_TRY_ASSIGN(didComplete, mPendingEvents.Use([&](auto pendingEvents) -> ResultOrError<bool> {
+    DAWN_TRY_ASSIGN(didComplete, mPendingEvents.Use([=, &completedEventsList = mCompletedEvents](
+                                                        auto pendingEvents) -> ResultOrError<bool> {
         DAWN_ASSERT(!pendingEvents->empty());
         DAWN_ASSERT(serial >= pendingEvents->front().serial);
         DAWN_ASSERT(serial <= pendingEvents->back().serial);
@@ -482,17 +496,18 @@ ResultOrError<bool> SystemEventQueue::WaitForQueueSerial(ExecutionSerial serial,
 
         // Events before |it| should be signalled as well.
         const size_t completedEvents = std::distance(pendingEvents->begin(), it) + 1;
-        returnedReceivers.reserve(completedEvents);
-        std::for_each_n(pendingEvents->begin(), completedEvents, [&returnedReceivers](auto& e) {
-            returnedReceivers.emplace_back(std::move(e.receiver));
+        std::for_each_n(pendingEvents->begin(), completedEvents, [&completedEventsList](auto& e) {
+            // Note: we don't recycle the event immediately here, because
+            // CheckAndUpdateCompletedSerials() needs to know the completed serial to notify the
+            // parent Queue class.
+            // Instead we enqueue the event into the mCompletedEvents list and recycle them in
+            // CheckAndUpdateCompletedSerials().
+            completedEventsList->push_back({e.serial, std::move(e.receiver)});
         });
         pendingEvents->erase(pendingEvents->begin(), pendingEvents->begin() + completedEvents);
+
         return true;
     }));
-
-    if (!returnedReceivers.empty()) {
-        DAWN_TRY(ReturnSystemEventReceivers(std::move(returnedReceivers)));
-    }
 
     return didComplete;
 }
