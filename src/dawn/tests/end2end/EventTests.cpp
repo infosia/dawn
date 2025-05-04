@@ -36,6 +36,7 @@
 
 #include "dawn/common/FutureUtils.h"
 #include "dawn/tests/DawnTest.h"
+#include "dawn/utils/WGPUHelpers.h"
 
 namespace dawn {
 namespace {
@@ -483,7 +484,45 @@ DAWN_INSTANTIATE_TEST_P(EventCompletionTests,
 
 // WaitAnyTests
 
-class WaitAnyTests : public DawnTest {};
+class WaitAnyTests : public DawnTest {
+  protected:
+    void SetUp() override {
+        DawnTest::SetUp();
+
+        wgpu::TextureDescriptor descriptor;
+        descriptor.size.width = kTextureSize;
+        descriptor.size.height = kTextureSize;
+        descriptor.size.depthOrArrayLayers = 1;
+        descriptor.sampleCount = 4;
+        descriptor.format = wgpu::TextureFormat::RGBA8Unorm;
+        descriptor.mipLevelCount = 1;
+        descriptor.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc |
+                           wgpu::TextureUsage::CopyDst;
+
+        textures[0] = device.CreateTexture(&descriptor);
+        textures[1] = device.CreateTexture(&descriptor);
+    }
+
+    void HeavySubmit() {
+        auto encoder = device.CreateCommandEncoder();
+
+        for (int i = 0; i < 3; ++i) {
+            wgpu::TexelCopyTextureInfo src =
+                utils::CreateTexelCopyTextureInfo(textures[i % 2], 0, {0, 0, 0});
+            wgpu::TexelCopyTextureInfo dst =
+                utils::CreateTexelCopyTextureInfo(textures[1 - i % 2], 0, {0, 0, 0});
+
+            wgpu::Extent3D size = {kTextureSize, kTextureSize, 1};
+            encoder.CopyTextureToTexture(&src, &dst, &size);
+        }
+
+        wgpu::CommandBuffer cb = encoder.Finish();
+        queue.Submit(1, &cb);
+    }
+
+    wgpu::Texture textures[2];
+    static constexpr uint32_t kTextureSize = 8096;
+};
 
 TEST_P(WaitAnyTests, UnsupportedTimeout) {
     wgpu::Instance instance2;
@@ -606,6 +645,22 @@ TEST_P(WaitAnyTests, UnsupportedMixedSources) {
         } else {
             ASSERT_EQ(status, wgpu::WaitStatus::Error);
         }
+    }
+}
+
+// Test that submitting multiple heavy works then waiting one by one works.
+// This is a regression test for crbug.com/dawn/415561579
+TEST_P(WaitAnyTests, WaitHeavyWorksOneByOne) {
+    std::vector<wgpu::Future> futures(5);
+    for (auto& future : futures) {
+        HeavySubmit();
+        future = queue.OnSubmittedWorkDone(wgpu::CallbackMode::WaitAnyOnly,
+                                           [](wgpu::QueueWorkDoneStatus) {});
+    }
+
+    for (const auto& future : futures) {
+        wgpu::WaitStatus status = instance.WaitAny(future, UINT64_MAX);
+        ASSERT_EQ(status, wgpu::WaitStatus::Success);
     }
 }
 
