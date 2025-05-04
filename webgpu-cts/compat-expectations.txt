@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-04-30 11:02:49AM
+# Last rolled: 2025-05-04 10:32:16AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -335,7 +335,6 @@ crbug.com/342840940 webgpu:api,validation,createTexture:dimension_type_and_forma
 
 # Generates GL_OUT_OF_MEMORY
 crbug.com/361372970 [ android arm ] webgpu:api,validation,image_copy,layout_related:copy_end_overflows_u64:method="WriteTexture" [ Failure ]
-
 
 # Flaky memory_sync failures on Intel
 crbug.com/42241023 [ intel-0x9bc5 linux ] webgpu:api,operation,memory_sync,buffer,multiple_buffers:ww:boundary="command-buffer";writeOps=["storage","b2b-copy"];contexts=["render-bundle-encoder","command-encoder"] [ Failure ]
@@ -788,7 +787,6 @@ crbug.com/407076123 [ android-14 android-pixel-6 ] webgpu:api,validation,createB
 crbug.com/407076123 [ android-14 android-pixel-6 ] webgpu:api,validation,createBindGroup:buffer,resource_binding_size:type="storage" [ Failure ]
 crbug.com/407076123 [ linux nvidia ] webgpu:api,validation,createBindGroup:buffer,resource_binding_size:type="read-only-storage" [ Failure ]
 crbug.com/407076123 [ linux nvidia ] webgpu:api,validation,createBindGroup:buffer,resource_binding_size:type="storage" [ Failure ]
-
 
 # Test bug, tests require implementation to provide "core" but fails when not available
 crbug.com/366151404 [ android android-chromium android-pixel-6 angle-opengles arm compat-default mobile ] webgpu:api,operation,adapter,requestAdapter:requestAdapter_invalid_featureLevel:featureLevel="_undef_" [ Failure ]
