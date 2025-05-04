@@ -232,18 +232,20 @@ tint_arg_buffer_struct_3 = struct @align(1) {
   c:ptr<storage, i32, read_write> @offset(0), @id(2)
 }
 
-%foo = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B1: {
-    %4:ptr<storage, i32, read> = access %tint_arg_buffer_1, 0u
-    %5:i32 = load %4
-    %6:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
+    %4:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %6:ptr<storage, i32, read> = access %5, 0u
     %7:i32 = load %6
-    %8:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 1u
+    %8:ptr<storage, i32, read_write> = access %4, 0u
     %9:i32 = load %8
-    %10:i32 = add %5, %7
-    %11:i32 = add %10, %9
-    %12:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
-    store %12, %11
+    %10:ptr<storage, i32, read_write> = access %4, 1u
+    %11:i32 = load %10
+    %12:i32 = add %7, %9
+    %13:i32 = add %12, %11
+    %14:ptr<storage, i32, read_write> = access %4, 0u
+    store %14, %13
     ret
   }
 }
@@ -296,13 +298,15 @@ tint_arg_buffer_struct_3 = struct @align(1) {
   b:ptr<uniform, i32, read> @offset(0), @id(4)
 }
 
-%foo = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B1: {
-    %4:ptr<uniform, i32, read> = access %tint_arg_buffer_1, 0u
-    %5:i32 = load %4
-    %6:ptr<uniform, i32, read> = access %tint_arg_buffer_3, 0u
+    %4:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %6:ptr<uniform, i32, read> = access %5, 0u
     %7:i32 = load %6
-    %8:i32 = add %5, %7
+    %8:ptr<uniform, i32, read> = access %4, 0u
+    %9:i32 = load %8
+    %10:i32 = add %7, %9
     ret
   }
 }
@@ -356,11 +360,13 @@ tint_arg_buffer_struct_3 = struct @align(1) {
   s:sampler @offset(0), @id(4)
 }
 
-%foo = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B1: {
-    %4:texture_2d<f32> = access %tint_arg_buffer_1, 0u
-    %5:sampler = access %tint_arg_buffer_3, 0u
-    %6:vec4<f32> = textureSample %4, %5, vec2<f32>(0.0f)
+    %4:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %6:texture_2d<f32> = access %5, 0u
+    %7:sampler = access %4, 0u
+    %8:vec4<f32> = textureSample %6, %7, vec2<f32>(0.0f)
     ret
   }
 }
@@ -416,13 +422,15 @@ tint_arg_buffer_struct_3 = struct @align(1) {
   s:binding_array<sampler, 3> @offset(0), @id(4)
 }
 
-%foo = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B1: {
-    %4:binding_array<texture_2d<f32>, 3> = access %tint_arg_buffer_1, 0u
-    %5:texture_2d<f32> = access %4, 0i
-    %6:binding_array<sampler, 3> = access %tint_arg_buffer_3, 0u
-    %7:sampler = access %6, 0i
-    %8:vec4<f32> = textureSample %5, %7, vec2<f32>(0.0f)
+    %4:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %6:binding_array<texture_2d<f32>, 3> = access %5, 0u
+    %7:texture_2d<f32> = access %6, 0i
+    %8:binding_array<sampler, 3> = access %4, 0u
+    %9:sampler = access %8, 0i
+    %10:vec4<f32> = textureSample %7, %9, vec2<f32>(0.0f)
     ret
   }
 }
@@ -486,17 +494,19 @@ $B1: {  # root
   %c:ptr<private, i32, read_write> = var undef
 }
 
-%foo = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B2: {
-    %5:ptr<uniform, i32, read> = access %tint_arg_buffer_1, 0u
-    %6:i32 = load %5
-    %7:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
+    %5:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %6:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %7:ptr<uniform, i32, read> = access %6, 0u
     %8:i32 = load %7
-    %9:i32 = load %c
-    %10:i32 = add %8, %9
-    %11:i32 = add %6, %10
-    %12:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
-    store %12, %11
+    %9:ptr<storage, i32, read_write> = access %5, 0u
+    %10:i32 = load %9
+    %11:i32 = load %c
+    %12:i32 = add %10, %11
+    %13:i32 = add %8, %12
+    %14:ptr<storage, i32, read_write> = access %5, 0u
+    store %14, %13
     ret
   }
 }
@@ -555,16 +565,18 @@ tint_arg_buffer_struct_3 = struct @align(1) {
   b:ptr<storage, i32, read_write> @offset(0), @id(4)
 }
 
-%foo = @fragment func(%param:i32 [@location(1), @interpolate(flat)], %tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%foo = @fragment func(%param:i32 [@location(1), @interpolate(flat)], %tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B1: {
-    %5:ptr<storage, i32, read> = access %tint_arg_buffer_1, 0u
-    %6:i32 = load %5
-    %7:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
+    %5:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %6:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %7:ptr<storage, i32, read> = access %6, 0u
     %8:i32 = load %7
-    %9:i32 = add %8, %param
-    %10:i32 = add %6, %9
-    %11:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
-    store %11, %10
+    %9:ptr<storage, i32, read_write> = access %5, 0u
+    %10:i32 = load %9
+    %11:i32 = add %10, %param
+    %12:i32 = add %8, %11
+    %13:ptr<storage, i32, read_write> = access %5, 0u
+    store %13, %12
     ret
   }
 }
@@ -639,11 +651,13 @@ tint_arg_buffer_struct_3 = struct @align(1) {
     ret
   }
 }
-%main = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B2: {
-    %10:ptr<storage, i32, read> = access %tint_arg_buffer_1, 0u
-    %11:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
-    %12:void = call %foo, %10, %11
+    %10:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %11:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %12:ptr<storage, i32, read> = access %11, 0u
+    %13:ptr<storage, i32, read_write> = access %10, 0u
+    %14:void = call %foo, %12, %13
     ret
   }
 }
@@ -722,11 +736,13 @@ tint_arg_buffer_struct_3 = struct @align(1) {
     ret
   }
 }
-%main = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B2: {
-    %12:ptr<storage, i32, read> = access %tint_arg_buffer_1, 0u
-    %13:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
-    %14:void = call %foo, 42i, %12, %13
+    %12:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %13:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %14:ptr<storage, i32, read> = access %13, 0u
+    %15:ptr<storage, i32, read_write> = access %12, 0u
+    %16:void = call %foo, 42i, %14, %15
     ret
   }
 }
@@ -801,11 +817,13 @@ tint_arg_buffer_struct_3 = struct @align(1) {
     ret %5
   }
 }
-%main = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B2: {
-    %9:texture_2d<f32> = access %tint_arg_buffer_1, 0u
-    %10:sampler = access %tint_arg_buffer_3, 0u
-    %11:vec4<f32> = call %foo, 42i, %9, %10
+    %9:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %10:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %11:texture_2d<f32> = access %10, 0u
+    %12:sampler = access %9, 0u
+    %13:vec4<f32> = call %foo, 42i, %11, %12
     ret
   }
 }
@@ -884,11 +902,13 @@ tint_arg_buffer_struct_3 = struct @align(1) {
     ret %7
   }
 }
-%main = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B2: {
-    %11:binding_array<texture_2d<f32>, 3> = access %tint_arg_buffer_1, 0u
-    %12:binding_array<sampler, 3> = access %tint_arg_buffer_3, 0u
-    %13:vec4<f32> = call %foo, 42i, %11, %12
+    %11:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %12:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %13:binding_array<texture_2d<f32>, 3> = access %12, 0u
+    %14:binding_array<sampler, 3> = access %11, 0u
+    %15:vec4<f32> = call %foo, 42i, %13, %14
     ret
   }
 }
@@ -955,20 +975,22 @@ tint_arg_buffer_struct_3 = struct @align(1) {
   b:ptr<storage, i32, read_write> @offset(0), @id(4)
 }
 
-%main = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B1: {
-    %4:ptr<storage, i32, read> = access %tint_arg_buffer_1, 0u
-    %5:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
-    %6:void = call %foo, %4, %5
+    %4:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %5:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %6:ptr<storage, i32, read> = access %5, 0u
+    %7:ptr<storage, i32, read_write> = access %4, 0u
+    %8:void = call %foo, %6, %7
     ret
   }
 }
 %foo = func(%a:ptr<storage, i32, read>, %b:ptr<storage, i32, read_write>):void {
   $B2: {
-    %10:i32 = load %a
-    %11:i32 = load %b
-    %12:i32 = add %10, %11
-    store %b, %12
+    %12:i32 = load %a
+    %13:i32 = load %b
+    %14:i32 = add %12, %13
+    store %b, %14
     ret
   }
 }
@@ -1040,17 +1062,19 @@ tint_arg_buffer_struct_3 = struct @align(1) {
     ret 42i
   }
 }
-%main = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B2: {
-    %5:ptr<storage, i32, read> = access %tint_arg_buffer_1, 0u
-    %6:i32 = load %5
-    %7:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
+    %5:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %6:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %7:ptr<storage, i32, read> = access %6, 0u
     %8:i32 = load %7
-    %9:i32 = call %foo
-    %10:i32 = add %8, %9
-    %11:i32 = add %6, %10
-    %12:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
-    store %12, %11
+    %9:ptr<storage, i32, read_write> = access %5, 0u
+    %10:i32 = load %9
+    %11:i32 = call %foo
+    %12:i32 = add %10, %11
+    %13:i32 = add %8, %12
+    %14:ptr<storage, i32, read_write> = access %5, 0u
+    store %14, %13
     ret
   }
 }
@@ -1141,18 +1165,20 @@ tint_arg_buffer_struct_3 = struct @align(1) {
     ret %6
   }
 }
-%main = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B3: {
-    %10:ptr<storage, i32, read> = access %tint_arg_buffer_1, 0u
-    %11:i32 = load %10
-    %12:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
+    %10:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %11:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %12:ptr<storage, i32, read> = access %11, 0u
     %13:i32 = load %12
-    %14:ptr<storage, i32, read> = access %tint_arg_buffer_1, 0u
-    %15:i32 = call %foo, %14
-    %16:i32 = add %13, %15
-    %17:i32 = add %11, %16
-    %18:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
-    store %18, %17
+    %14:ptr<storage, i32, read_write> = access %10, 0u
+    %15:i32 = load %14
+    %16:ptr<storage, i32, read> = access %11, 0u
+    %17:i32 = call %foo, %16
+    %18:i32 = add %15, %17
+    %19:i32 = add %13, %18
+    %20:ptr<storage, i32, read_write> = access %10, 0u
+    store %20, %19
     ret
   }
 }
@@ -1245,18 +1271,20 @@ tint_arg_buffer_struct_3 = struct @align(1) {
     ret %6
   }
 }
-%main = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B3: {
-    %10:ptr<storage, i32, read> = access %tint_arg_buffer_1, 0u
-    %11:i32 = load %10
-    %12:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
+    %10:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %11:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %12:ptr<storage, i32, read> = access %11, 0u
     %13:i32 = load %12
-    %14:ptr<storage, i32, read> = access %tint_arg_buffer_1, 0u
-    %15:i32 = call %foo, %14
-    %16:i32 = add %13, %15
-    %17:i32 = add %11, %16
-    %18:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
-    store %18, %17
+    %14:ptr<storage, i32, read_write> = access %10, 0u
+    %15:i32 = load %14
+    %16:ptr<storage, i32, read> = access %11, 0u
+    %17:i32 = call %foo, %16
+    %18:i32 = add %15, %17
+    %19:i32 = add %13, %18
+    %20:ptr<storage, i32, read_write> = access %10, 0u
+    store %20, %19
     ret
   }
 }
@@ -1354,18 +1382,20 @@ $B1: {  # root
     ret %7
   }
 }
-%main = @fragment func(%tint_arg_buffer_1:tint_arg_buffer_struct_1 [@buffer(1)], %tint_arg_buffer_3:tint_arg_buffer_struct_3 [@buffer(3)]):void {
+%main = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read_write> [@buffer(1)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read_write> [@buffer(3)]):void {
   $B4: {
-    %11:ptr<uniform, i32, read> = access %tint_arg_buffer_1, 0u
-    %12:i32 = load %11
-    %13:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
+    %11:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %12:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %13:ptr<uniform, i32, read> = access %12, 0u
     %14:i32 = load %13
-    %15:ptr<uniform, i32, read> = access %tint_arg_buffer_1, 0u
-    %16:i32 = call %foo, %15
-    %17:i32 = add %14, %16
-    %18:i32 = add %12, %17
-    %19:ptr<storage, i32, read_write> = access %tint_arg_buffer_3, 0u
-    store %19, %18
+    %15:ptr<storage, i32, read_write> = access %11, 0u
+    %16:i32 = load %15
+    %17:ptr<uniform, i32, read> = access %12, 0u
+    %18:i32 = call %foo, %17
+    %19:i32 = add %16, %18
+    %20:i32 = add %14, %19
+    %21:ptr<storage, i32, read_write> = access %11, 0u
+    store %21, %20
     ret
   }
 }

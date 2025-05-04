@@ -52,13 +52,13 @@ struct State {
 
     /// The type of the structures that will contain the argument buffers. One entry per binding
     /// group.
-    Hashmap<uint32_t, const core::type::Struct*, 4> arg_buffers{};
+    Hashmap<uint32_t, const core::type::Pointer*, 4> arg_buffers{};
 
     /// The list of module-scope variables.
     Vector<core::ir::Var*, 8> module_vars{};
 
     /// Maps a binding argument buffer index to the function param
-    Hashmap<uint32_t, core::ir::FunctionParam*, 8> id_to_arg_buffer{};
+    Hashmap<uint32_t, core::ir::Value*, 8> id_to_arg_buffer{};
 
     /// Maps from variable to the argument buffer index
     Hashmap<core::ir::Var*, uint32_t, 4> var_to_struct_idx{};
@@ -195,7 +195,10 @@ struct State {
             // Create the structure.
             auto name = ir.symbols.New(std::string(kArgBufferName) + "_" + std::to_string(k));
             auto members = group_to_members.Get(k);
-            arg_buffers.Add(k, ty.Struct(name, std::move(*members)));
+
+            auto* strct = ty.Struct(name, std::move(*members));
+            auto* type = ty.ptr(uniform, strct, read_write);
+            arg_buffers.Add(k, type);
         }
     }
 
@@ -210,7 +213,10 @@ struct State {
             param->SetBufferId(buffer_id);
             func->AppendParam(param);
 
-            id_to_arg_buffer.Add(buffer_id, param);
+            auto* ld = b.Load(param);
+            func->Block()->Prepend(ld);
+
+            id_to_arg_buffer.Add(buffer_id, ld->Result());
         }
     }
 
