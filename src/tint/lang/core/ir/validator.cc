@@ -651,6 +651,8 @@ enum class IOAnnotation : uint8_t {
     kWorkgroup,
     /// @color
     kColor,
+    /// @buffer
+    kBufferId,
 };
 
 /// @returns text describing the annotation for error logging
@@ -666,6 +668,8 @@ std::string ToString(IOAnnotation value) {
             return "<workgroup>";
         case IOAnnotation::kColor:
             return "@color";
+        case IOAnnotation::kBufferId:
+            return "@buffer";
     }
     TINT_ICE() << "Unknown enum passed to ToString(IOAnnotation)";
 }
@@ -713,6 +717,13 @@ Result<SuccessType, IOAnnotation> AddIOAnnotationsFromIOAttributes(
             return IOAnnotation::kColor;
         }
         annotations.Add(IOAnnotation::kColor);
+    }
+
+    if (attr.buffer_id.has_value()) {
+        if (annotations.Contains(IOAnnotation::kBufferId)) {
+            return IOAnnotation::kBufferId;
+        }
+        annotations.Add(IOAnnotation::kBufferId);
     }
 
     return Success;
@@ -1090,6 +1101,7 @@ class Validator {
     /// @returns Success if a valid usage, or reason for invalidity in Failure
     Result<SuccessType, std::string> ValidateBindingPoint(
         const std::optional<struct BindingPoint>& binding_point,
+        const std::optional<uint32_t>& buffer_id,
         AddressSpace address_space,
         const std::string& target_str = "variable");
 
@@ -1845,9 +1857,8 @@ void Validator::CheckType(const core::type::Type* root,
 
                 if (type != root) {
                     // Nesting pointer types inside structures is guarded by a capability.
-                    if (!(root->Is<core::type::Struct>() &&
-                          capabilities_.Contains(
-                              Capability::kAllowPointersAndHandlesInStructures))) {
+                    if (!(capabilities_.Contains(
+                            Capability::kAllowPointersAndHandlesInStructures))) {
                         diag() << "nested pointer types are not permitted";
                         return false;
                     }
@@ -2144,8 +2155,8 @@ void Validator::CheckFunction(const Function* func) {
                 }
             }
             {
-                auto result =
-                    ValidateBindingPoint(param->BindingPoint(), address_space, "input param");
+                auto result = ValidateBindingPoint(param->BindingPoint(), param->BufferId(),
+                                                   address_space, "input param");
                 if (result != Success) {
                     AddError(param) << result.Failure();
                 }
@@ -2562,7 +2573,7 @@ void Validator::CheckVar(const Var* var) {
         }
     }
 
-    if (auto result = ValidateBindingPoint(var->BindingPoint(), mv->AddressSpace());
+    if (auto result = ValidateBindingPoint(var->BindingPoint(), {}, mv->AddressSpace());
         result != Success) {
         AddError(var) << result.Failure();
         return;
@@ -2573,7 +2584,7 @@ void Validator::CheckVar(const Var* var) {
         return;
     }
 
-    if (auto result = ValidateBindingPoint(var->BindingPoint(), mv->AddressSpace());
+    if (auto result = ValidateBindingPoint(var->BindingPoint(), {}, mv->AddressSpace());
         result != Success) {
         AddError(var) << result.Failure();
         return;
@@ -2632,6 +2643,7 @@ void Validator::CheckVar(const Var* var) {
 
 Result<SuccessType, std::string> Validator::ValidateBindingPoint(
     const std::optional<struct BindingPoint>& binding_point,
+    const std::optional<uint32_t>& buffer_id,
     AddressSpace address_space,
     const std::string& target_str) {
     switch (address_space) {
@@ -2643,8 +2655,12 @@ Result<SuccessType, std::string> Validator::ValidateBindingPoint(
             }
             break;
         case AddressSpace::kStorage:
-        case AddressSpace::kUniform:
             if (!binding_point.has_value()) {
+                return "a resource " + target_str + " is missing binding point";
+            }
+            break;
+        case AddressSpace::kUniform:
+            if (!binding_point.has_value() && !buffer_id.has_value()) {
                 return "a resource " + target_str + " is missing binding point";
             }
             break;

@@ -44,6 +44,10 @@ struct IOAttributes {
     std::optional<uint32_t> blend_src = std::nullopt;
     /// The value of a `@color` attribute.
     std::optional<uint32_t> color = std::nullopt;
+    /// The value of a `@id` attribute
+    std::optional<uint32_t> id = std::nullopt;
+    /// The value of a `@buffer` attribute
+    std::optional<uint32_t> buffer_id = std::nullopt;
     /// The value of a `@builtin` attribute.
     std::optional<core::BuiltinValue> builtin = std::nullopt;
     /// The values of a `@interpolate` attribute.

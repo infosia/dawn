@@ -235,7 +235,7 @@ void Disassembler::EmitInterpolation(Interpolation interp) {
 
 void Disassembler::EmitParamAttributes(const FunctionParam* p) {
     if (!p->Invariant() && !p->Location().has_value() && !p->Color().has_value() &&
-        !p->BindingPoint().has_value() && !p->Builtin().has_value()) {
+        !p->BindingPoint().has_value() && !p->Builtin().has_value() && !p->BufferId().has_value()) {
         return;
     }
 
@@ -263,6 +263,12 @@ void Disassembler::EmitParamAttributes(const FunctionParam* p) {
         out_ << StyleAttribute("@color") << "(" << p->Color().value() << ")";
         need_comma = true;
     }
+    if (p->BufferId().has_value()) {
+        comma();
+        out_ << StyleAttribute("@buffer") << "(" << p->BufferId().value() << ")";
+        need_comma = true;
+    }
+
     if (p->Interpolation().has_value()) {
         comma();
         EmitInterpolation(p->Interpolation().value());
@@ -992,6 +998,10 @@ void Disassembler::EmitStructDecl(const core::type::Struct* str) {
         if (member->Attributes().builtin.has_value()) {
             out_ << ", " << StyleAttribute("@builtin") << "("
                  << StyleLiteral(member->Attributes().builtin.value()) << ")";
+        }
+        if (member->Attributes().id.has_value()) {
+            out_ << ", " << StyleAttribute("@id") << "("
+                 << StyleLiteral(member->Attributes().id.value()) << ")";
         }
         EmitLine();
     }
