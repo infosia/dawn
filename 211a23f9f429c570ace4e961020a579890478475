@@ -16,6 +16,24 @@
       "message": "Nit: `default_` in the name seems a bit strange here. The default is zero, but if there was a value we use that value instead of using the default. As this line is currently written it looks like you always index using the \"default\".",
       "revId": "211a23f9f429c570ace4e961020a579890478475",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ce83dca_71442c4f",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-05T18:43:11Z",
+      "side": 1,
+      "message": "I agree that semantically it would be better if i had a default as a constant and then did \u0027index_const\u0027",
+      "parentUuid": "3a46cbf1_d10bc777",
+      "revId": "211a23f9f429c570ace4e961020a579890478475",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
