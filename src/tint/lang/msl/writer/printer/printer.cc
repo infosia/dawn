@@ -381,7 +381,9 @@ class Printer : public tint::TextGenerator {
                     out << " [[" << name << "]]";
                 }
 
-                if (param->Type()->Is<core::type::Struct>() && func->IsEntryPoint()) {
+                if (param->BufferId().has_value()) {
+                    out << " [[buffer(" << param->BufferId().value() << ")]]";
+                } else if (param->Type()->Is<core::type::Struct>() && func->IsEntryPoint()) {
                     out << " [[stage_in]]";
                 }
 
@@ -1511,7 +1513,8 @@ class Printer : public tint::TextGenerator {
         // temporary text buffer, then anything it depends on will emit to the preamble first,
         // and then it copies the text buffer into the preamble.
         TextBuffer str_buf;
-        Line(&str_buf) << "\n" << "struct " << StructName(str) << " {";
+        Line(&str_buf) << "\n";
+        Line(&str_buf) << "struct " << StructName(str) << " {";
 
         bool is_host_shareable = host_shareable_structs_.Contains(str);
 
@@ -1535,11 +1538,17 @@ class Printer : public tint::TextGenerator {
 
         str_buf.IncrementIndent();
 
+        bool emitted_id = false;
         uint32_t msl_offset = 0;
         for (auto* mem : str->Members()) {
             auto out = Line(&str_buf);
             auto mem_name = NameOf(mem);
             auto ir_offset = mem->Offset();
+
+            /// TODO(dsinclair): HACK ...
+            if (mem->Type()->Is<core::type::Pointer>()) {
+                ir_offset = msl_offset;
+            }
 
             if (is_host_shareable) {
                 if (DAWN_UNLIKELY(ir_offset < msl_offset)) {
@@ -1581,6 +1590,11 @@ class Printer : public tint::TextGenerator {
                     TINT_IR_ICE(ir_) << "unknown builtin";
                 }
                 out << " [[" << name << "]]";
+            }
+
+            if (attributes.id.has_value()) {
+                out << " [[id(" << attributes.id.value() << ")]]";
+                emitted_id = true;
             }
 
             if (auto location = attributes.location) {
@@ -1654,7 +1668,8 @@ class Printer : public tint::TextGenerator {
             }
         }
 
-        if (is_host_shareable && str->Size() != msl_offset) {
+        // TODO(dsinclair): HACK emitted_id
+        if (!emitted_id && is_host_shareable && str->Size() != msl_offset) {
             add_padding(str->Size() - msl_offset, msl_offset);
         }
 
