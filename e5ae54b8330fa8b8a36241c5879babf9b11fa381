@@ -104,6 +104,24 @@
       "parentUuid": "bd1044c7_bce87b95",
       "revId": "e5ae54b8330fa8b8a36241c5879babf9b11fa381",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0556279b_253cf839",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-05T18:42:36Z",
+      "side": 1,
+      "message": "The g3 restrictions don\u0027t typically apply to `third_party` code. So this should be fine to land as long as we\u0027re ok with the library usage.",
+      "parentUuid": "8da611ff_005cb7fa",
+      "revId": "e5ae54b8330fa8b8a36241c5879babf9b11fa381",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
