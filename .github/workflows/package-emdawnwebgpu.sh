@@ -2,6 +2,7 @@
 set -euo pipefail
 
 # Version format: vYYYYMMDD.HHMMSS or vYYYYMMDD.HHMMSS-FORKOWNER.dawn.BRANCHNAME
+DAWN_REVISION=$(git rev-parse HEAD)
 VERSION_DATETIME=$(git show -s --date=format:'%Y%m%d.%H%M%S' --format=%cd)
 VERSION_SUFFIX=${GITHUB_REPOSITORY/\//.}.${GITHUB_REF_NAME}
 if [[ "$VERSION_SUFFIX" != "google.dawn.main" ]] ; then
@@ -11,16 +12,14 @@ else
 fi
 PKG_FILE=emdawnwebgpu_pkg-${PKG_VERSION}.zip
 
-# Variables for documentation.
-SHA=$(git rev-parse HEAD)
-EMSDK_VERSION=$(python3 tools/activate-emsdk --get-emsdk-version)
-
-# Initialize dependencies. We could use gclient for this, but then we still have to
-# install gclient, and it takes a long time. We only need a few deps for emdawnwebgpu.
+# Initialize dependencies.
+git submodule update --init --depth=1 third_party/depot_tools
+EMSDK_RELEASE=$(third_party/depot_tools/gclient getdep --var=dawn_emscripten_release)
+# We could use gclient to install all deps, but we only need these three.
 git submodule update --init --depth=1 third_party/abseil-cpp
 git submodule update --init --depth=1 third_party/googletest
 git submodule update --init --depth=1 third_party/emsdk
-python3 tools/activate-emsdk
+python3 tools/activate-emsdk "${EMSDK_RELEASE}"
 
 # Build
 mkdir -p out/wasm
@@ -29,8 +28,8 @@ make -j4 -C out/wasm emdawnwebgpu_pkg
 
 # Create zip
 cat << EOF > out/wasm/emdawnwebgpu_pkg/VERSION.txt
-Dawn release ${PKG_VERSION} at revision <https://dawn.googlesource.com/dawn/+/${SHA}>.
-Built/tested with emsdk release ${EMSDK_VERSION}.
+Dawn release ${PKG_VERSION} at revision <https://dawn.googlesource.com/dawn/+/${DAWN_REVISION}>.
+Built/tested with emsdk release ${EMSDK_RELEASE}.
 EOF
 (cd out/wasm && zip -9 -r ../../${PKG_FILE} emdawnwebgpu_pkg)
 

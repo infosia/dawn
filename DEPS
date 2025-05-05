@@ -26,6 +26,8 @@ vars = {
   # https://chrome-infra-packages.appspot.com/p/infra/3pp/tools/ninja
   'dawn_ninja_version': 'version:3@1.12.1.chromium.4',
   'dawn_go_version': 'version:2@1.21.3',
+  # This is both the emsdk tag and the toolchain version to install.
+  'dawn_emscripten_release': '4.0.8',
 
   'node_darwin_arm64_sha': '864780996d3be6c9aca03f371a4bd672728f0a75',
   'node_darwin_x64_sha': '85ccc2202fd4f1615a443248c01a866ae227ba78',
@@ -366,7 +368,7 @@ deps = {
 
   # Dependencies required to build / run WebAssembly bindings
   'third_party/emsdk': {
-    'url': '{github_git}/emscripten-core/emsdk.git@4.0.8',
+    'url': '{github_git}/emscripten-core/emsdk.git@' + Var('dawn_emscripten_release'),
     'condition': 'dawn_wasm',
   },
 
@@ -668,7 +670,7 @@ hooks = [
     'name': 'activate_emsdk_linux',
     'pattern': '.',
     'condition': 'dawn_wasm',
-    'action': [ 'python3', 'tools/activate-emsdk' ],
+    'action': [ 'python3', 'tools/activate-emsdk', Var('dawn_emscripten_release') ],
   },
 
   # Configure remote exec cfg files

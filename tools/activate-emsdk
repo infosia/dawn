@@ -17,25 +17,19 @@ EMSDK_ROOT = os.path.join('third_party', 'emsdk')
 EMSDK_PATH = os.path.join(EMSDK_ROOT, 'emsdk.py')
 EMSDK_CONFIG_PATH = os.path.join(EMSDK_ROOT, '.emscripten')
 
-EMSDK_VERSION = '4.0.8'
-
 def main(args):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--get-emsdk-version', help='Print emsdk version and exit.', action='store_true')
+    parser.add_argument('emsdk_version', help='emsdk/emscripten release version to install')
     options = parser.parse_args()
-
-    if options.get_emsdk_version:
-        print(EMSDK_VERSION)
-        return 0
 
     # Install and activate the default dependencies for emsdk.
     try:
-        subprocess.check_call([sys.executable, EMSDK_PATH, 'install', EMSDK_VERSION])
+        subprocess.check_call([sys.executable, EMSDK_PATH, 'install', options.emsdk_version])
     except subprocess.CalledProcessError:
         print ('Failed to install emsdk')
         return 1
     try:
-        subprocess.check_call([sys.executable, EMSDK_PATH, 'activate', EMSDK_VERSION])
+        subprocess.check_call([sys.executable, EMSDK_PATH, 'activate', options.emsdk_version])
     except subprocess.CalledProcessError:
         print ('Failed to activate emsdk')
         return 1
