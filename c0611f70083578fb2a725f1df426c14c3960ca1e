@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9eb2a1fe_5256feec",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-05T20:56:56Z",
+      "side": 1,
+      "message": "We should invert this a bit, and do something like the following instead because otherwise, we will keep acquiring and releasing the lock on `mCompletedEvents`:\n\n```\ncompletedEventList.Use([\u0026](auto completedEventsList) {\n    completedEventsList.insert(completedEventsList.end(), \n                               std::make_move_iterator(pendingEvents-\u003ebegin()), \n                               std::make_move_iterator(completedEvents));\n});\npendingEvents-\u003eerase(pendingEvents-\u003ebegin(), \n                     pendingEvents-\u003ebegin() + completedEvents);\n```",
+      "range": {
+        "startLine": 499,
+        "startChar": 8,
+        "endLine": 506,
+        "endChar": 11
+      },
+      "revId": "c0611f70083578fb2a725f1df426c14c3960ca1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e3ea1b5_8a4a7e12",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1825,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-05T20:56:56Z",
+      "side": 1,
+      "message": "Is this change needed for the changes to work? From what I can tell, the previous implementation should still have worked, and is probably faster because we make all the `MapAsync` calls before we start polling for work to be done. If this change isn\u0027t necessary, I would prefer to leave it as it was before for now.",
+      "range": {
+        "startLine": 1793,
+        "startChar": 8,
+        "endLine": 1825,
+        "endChar": 80
+      },
+      "revId": "c0611f70083578fb2a725f1df426c14c3960ca1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
