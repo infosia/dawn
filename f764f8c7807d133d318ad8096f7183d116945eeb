@@ -214,6 +214,24 @@
       "parentUuid": "4db8da3f_8e83a596",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "413487da_b4e524ce",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-05T07:09:07Z",
+      "side": 1,
+      "message": "I\u0027ll wait for a spec PR following https://github.com/webgpu-native/webgpu-headers/issues/535 to update this CL.",
+      "parentUuid": "ace24ef7_61d6e115",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
