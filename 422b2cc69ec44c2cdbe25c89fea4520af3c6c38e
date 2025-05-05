@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "017cdcb5_6117a59f",
+        "filename": "src/tint/lang/spirv/writer/raise/raise.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-05T20:27:16Z",
+      "side": 1,
+      "message": "```suggestion\n    RUN_TRANSFORM(raise::ExpandImplicitSplats, module);\n    // kAllowAnyInputAttachmentIndexType required after ExpandImplicitSplats \n```\n\nMaybe something like the above to make it a bit clearer?",
+      "range": {
+        "startLine": 170,
+        "startChar": 3,
+        "endLine": 171,
+        "endChar": 89
+      },
+      "revId": "422b2cc69ec44c2cdbe25c89fea4520af3c6c38e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
