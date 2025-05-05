@@ -85,6 +85,24 @@
       "parentUuid": "642d1c21_c2b89e97",
       "revId": "1b6cd56a2dbe63d40245cb16d13b20f8c564965a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ca9cd54_0bef4537",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-05T18:41:44Z",
+      "side": 1,
+      "message": "Same comment as in the other CL. Looks like there are some usages of these in google3 `third_party` so we can try to land this and if we have issues with the roll, we can revert.",
+      "parentUuid": "900b5e3c_595e63cf",
+      "revId": "1b6cd56a2dbe63d40245cb16d13b20f8c564965a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
