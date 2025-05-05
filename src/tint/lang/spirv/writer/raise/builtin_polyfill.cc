@@ -30,6 +30,7 @@
 #include <utility>
 
 #include "spirv/unified1/spirv.h"
+#include "src/tint/lang/core/builtin_fn.h"
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/module.h"
@@ -156,6 +157,8 @@ struct State {
     /// If we should use the vulkan memory model
     bool use_vulkan_memory_model = false;
 
+    bool scalarize_clamp_builtin = false;
+
     /// The IR builder.
     core::ir::Builder b{ir};
 
@@ -198,6 +201,7 @@ struct State {
                     case core::BuiltinFn::kAtomicStore:
                     case core::BuiltinFn::kAtomicSub:
                     case core::BuiltinFn::kAtomicXor:
+
                     case core::BuiltinFn::kDot:
                     case core::BuiltinFn::kDot4I8Packed:
                     case core::BuiltinFn::kDot4U8Packed:
@@ -228,6 +232,11 @@ struct State {
                         break;
                     case core::BuiltinFn::kQuantizeToF16:
                         if (builtin->Result()->Type()->Is<core::type::Vector>()) {
+                            worklist.Push(builtin);
+                        }
+                        break;
+                    case core::BuiltinFn::kClamp:
+                        if (scalarize_clamp_builtin) {
                             worklist.Push(builtin);
                         }
                         break;
@@ -268,6 +277,9 @@ struct State {
                     break;
                 case core::BuiltinFn::kSelect:
                     Select(builtin);
+                    break;
+                case core::BuiltinFn::kClamp:
+                    Clamp(builtin);
                     break;
                 case core::BuiltinFn::kSubgroupBroadcast:
                     SubgroupBroadcast(builtin);
@@ -544,6 +556,35 @@ struct State {
         auto* call = b.CallWithResult<spirv::ir::BuiltinCall>(
             builtin->DetachResult(), spirv::BuiltinFn::kSelect, std::move(args));
         call->InsertBefore(builtin);
+        builtin->Destroy();
+    }
+
+    /// Handle a `clamp()` builtin when scalarization is required.
+    /// @param builtin the builtin call instruction
+    void Clamp(core::ir::CoreBuiltinCall* builtin) {
+        auto* e = builtin->Args()[0];
+        auto* vec = e->Type()->As<core::type::Vector>();
+        if (!vec) {
+            // Already is a scalar
+            return;
+        }
+
+        b.InsertBefore(builtin, [&] {
+            auto* low = builtin->Args()[1];
+            auto* high = builtin->Args()[2];
+            auto* type = vec->DeepestElement();
+            // Replace the builtin call with a call to th daf intrinsic.
+            Vector<core::ir::Value*, 4> args;
+            for (uint32_t i = 0; i < vec->Width(); i++) {
+                auto* access_e = b.Access(type, e, u32(i));
+                auto* access_low = b.Access(type, low, u32(i));
+                auto* access_high = b.Access(type, high, u32(i));
+                auto* scalar_call =
+                    b.Call(type, core::BuiltinFn::kClamp, access_e, access_low, access_high);
+                args.Push(scalar_call->Result());
+            }
+            b.ConstructWithResult(builtin->DetachResult(), std::move(args));
+        });
         builtin->Destroy();
     }
 
@@ -1238,13 +1279,13 @@ struct State {
 
 }  // namespace
 
-Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir, bool use_vulkan_memory_model) {
+Result<SuccessType> BuiltinPolyfill(core::ir::Module& ir, PolyfillConfig config) {
     auto result = ValidateAndDumpIfNeeded(ir, "spirv.BuiltinPolyfill");
     if (result != Success) {
         return result.Failure();
     }
 
-    State{ir, use_vulkan_memory_model}.Process();
+    State{ir, config.use_vulkan_memory_model, config.scalarize_clamp_builtin}.Process();
 
     return Success;
 }
