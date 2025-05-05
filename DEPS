@@ -366,7 +366,7 @@ deps = {
 
   # Dependencies required to build / run WebAssembly bindings
   'third_party/emsdk': {
-    'url': '{github_git}/emscripten-core/emsdk.git@127ce42cd5f0aabe2d9b5d636041ccef7c66d165',
+    'url': '{github_git}/emscripten-core/emsdk.git@4.0.8',
     'condition': 'dawn_wasm',
   },
 
