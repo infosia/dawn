@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "518d2557_e47dd5a5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-05T07:40:07Z",
+      "side": 1,
+      "message": "@alanbaker@google.com FYI This is blocking https://chromium-review.googlesource.com/c/chromium/src/+/6470184?checksRunsSelected\u003ddawn-mac-arm64-deps-rel\u0026tab\u003dchecks. Hopefully this will be merged if everything goes well.",
+      "revId": "04b8e464cb0b0854c17965f987c4608852457394",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
