@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a46cbf1_d10bc777",
+        "filename": "src/tint/lang/core/ir/evaluator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-05T18:22:53Z",
+      "side": 1,
+      "message": "Nit: `default_` in the name seems a bit strange here. The default is zero, but if there was a value we use that value instead of using the default. As this line is currently written it looks like you always index using the \"default\".",
+      "revId": "211a23f9f429c570ace4e961020a579890478475",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
