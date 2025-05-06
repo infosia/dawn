@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a40adaa_2eef8a2b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-06T05:39:03Z",
+      "side": 1,
+      "message": "PTAL.\n\nNote that this is the last one that prevents me to land https://chromium-review.googlesource.com/c/chromium/src/+/6470184?checksPatchset\u003d3\u0026tab\u003dchecks",
+      "revId": "d856c794068bc1fd9a86338d5597e244c346fe49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
