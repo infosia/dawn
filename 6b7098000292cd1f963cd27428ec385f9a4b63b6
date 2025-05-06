@@ -16,6 +16,29 @@
       "message": "Being able to build a redistributable static version of Dawn would indeed be great, I get regularly asked about whether it is possible!",
       "revId": "6b7098000292cd1f963cd27428ec385f9a4b63b6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31cbfab8_55581573",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-06T13:15:00Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nAnalyzer Description: Validates that changes do not have discouraged expressions in them.\nOwner: ayeaye-team@google.com\n\nPlease remove the trailing whitespace.\n\nTo rerun the analyzer locally, run: `alint -c CheckContents`\n\nFor more information, see go/alint.",
+      "range": {
+        "startLine": 931,
+        "startChar": 9,
+        "endLine": 931,
+        "endChar": 13
+      },
+      "revId": "6b7098000292cd1f963cd27428ec385f9a4b63b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

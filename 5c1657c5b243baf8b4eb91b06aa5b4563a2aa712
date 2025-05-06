@@ -178,6 +178,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "026e0f9d_cc814836",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-06T13:15:00Z",
+      "side": 1,
+      "message": "+1 to keeping things only monolithic if we can. What is the concern with tying the SHARED/STATIC of the monolithic lib to the `BUILD_SHARED_LIBS` (for even more YAGNI)? Do you have a usecase with all static + only the monolithic shared needed in the same build?",
+      "parentUuid": "bb554799_c4532fa6",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f19585db_500a89d6",
