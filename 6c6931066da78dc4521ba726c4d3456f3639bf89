@@ -155,6 +155,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "80244534_cba86a2a",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:48:07Z",
+      "side": 1,
+      "message": "It seems that this check is still needed. For DecomposeStorageAccess transform changes something.",
+      "parentUuid": "120b24ab_af5ace9d",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "72f89653_59886603",
         "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
         "patchSetId": 9
