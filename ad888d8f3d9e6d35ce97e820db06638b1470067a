@@ -50,6 +50,57 @@
       "message": "```suggestion\n    // VkPipelineLayout push constant range part. Pass internalImmediateDataSize to\n```",
       "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "325b0720_9f74a0b2",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-06T11:25:30Z",
+      "side": 1,
+      "message": "```suggestion\n    // Immediate data Offset must be 4-byte aligned.\n```",
+      "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a0f42b2_e8918d00",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-06T11:25:30Z",
+      "side": 1,
+      "message": "```suggestion\n    // Immediate data Offset must be 4-byte aligned.\n```",
+      "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b068af5_51700ce3",
+        "filename": "src/tint/lang/core/address_space.def",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-06T11:25:30Z",
+      "side": 1,
+      "message": "This will break anyone which happens to be using `push_constant` at the moment, is that ok? Should we add both for a while to allow people to migrate?",
+      "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
