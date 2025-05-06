@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+
+# Copyright 2025 Google LLC
+#
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import argparse
+import sys
+
+def main(args):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--input', required=True, help='Input C/C++ file to remove comments from')
+    parser.add_argument('-o', '--output', required=True, help='Output C/C++ file with comments removed')
+    options = parser.parse_args()
+
+    with open(options.input, 'r') as input, open(options.output, 'w') as output:
+        last_line_was_comment = False
+        in_comment_block = False
+        for line in input:
+            stripped = line.strip()
+
+            # If we are in a comment block, skip until we find the end.
+            if in_comment_block:
+                if stripped.endswith("*/"):
+                    in_comment_block = False
+                    last_line_was_comment = True
+                continue
+
+            # Drop empty lines directly following comments.
+            if not stripped and last_line_was_comment:
+                continue
+
+            if stripped.startswith('//'):
+                # Simple single line comment case, just skip the line.
+                last_line_was_comment = True
+                continue
+
+            if stripped.startswith("/*") and stripped.endswith("*/"):
+                # Simple single line comment with multi-line syntax, just skip the line.
+                last_line_was_comment = True
+                continue
+
+            if stripped.startswith("/*") and "*/" not in stripped:
+                # Otherwise, if we are a multi-line comment that isn't inlined.
+                in_comment_block = True
+                continue
+
+            last_line_was_comment = False
+            output.write(line)
+
+if __name__ == '__main__':
+  sys.exit(main(sys.argv))
