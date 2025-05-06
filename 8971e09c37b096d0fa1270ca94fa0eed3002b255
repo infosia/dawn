@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "8971e09c37b096d0fa1270ca94fa0eed3002b255",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d2b14b7_d365ed23",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-06T20:37:00Z",
+      "side": 1,
+      "message": "The changes in this file seem worse to me? Assuming we\u0027re keeping SetAttributes around for the other reasons anyway.",
+      "revId": "8971e09c37b096d0fa1270ca94fa0eed3002b255",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
