@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b3747c5_7d6d8e1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-06T11:12:42Z",
+      "side": 1,
+      "message": "Dawn LGTM",
+      "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2e5c6d8_519c3a7b",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-06T11:12:42Z",
+      "side": 1,
+      "message": "```suggestion\n    // vulkan needs to have enough push constant range size for all\n```",
+      "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "375ee546_ada14dd1",
+        "filename": "src/dawn/native/vulkan/PipelineLayoutVk.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-06T11:12:42Z",
+      "side": 1,
+      "message": "```suggestion\n    // VkPipelineLayout push constant range part. Pass internalImmediateDataSize to\n```",
+      "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
