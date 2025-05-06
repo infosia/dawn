@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d97e969_7ea2a07d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-05-06T18:40:26Z",
+      "side": 1,
+      "message": "Could you please add here:\nBug: 42242119",
+      "revId": "a337358dad486546465a817a051405a14072114d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "479ae67f_fb26d836",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-05-06T18:40:26Z",
+      "side": 1,
+      "message": "Thank you!",
+      "revId": "a337358dad486546465a817a051405a14072114d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0cc00cd_33932ded",
+        "filename": "src/dawn/tests/end2end/DepthStencilCopyTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-05-06T18:40:26Z",
+      "side": 1,
+      "message": "I think crbug.com/42242119 is most commonly used, but just TODO(42242119) is also acceptable.",
+      "range": {
+        "startLine": 1150,
+        "startChar": 12,
+        "endLine": 1150,
+        "endChar": 27
+      },
+      "revId": "a337358dad486546465a817a051405a14072114d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
