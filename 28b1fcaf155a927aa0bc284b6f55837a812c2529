@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f31e1ad_ddd98658",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:10:56Z",
+      "side": 1,
+      "message": "Renaming affect both dawn and tint part. PTAL",
+      "revId": "28b1fcaf155a927aa0bc284b6f55837a812c2529",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
