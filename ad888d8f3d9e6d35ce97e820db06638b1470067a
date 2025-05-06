@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d655aa2_6da317ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-06T15:52:22Z",
+      "side": 1,
+      "message": "LGTM for Tint with nits (+ Dan\u0027s nits).\n\nI personally don\u0027t think we should worry about breakage since you already have to write Chrome specific code (to enable the extension), and I don\u0027t expect many users yet.",
+      "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2e5c6d8_519c3a7b",
@@ -99,6 +116,94 @@
       "writtenOn": "2025-05-06T11:25:30Z",
       "side": 1,
       "message": "This will break anyone which happens to be using `push_constant` at the moment, is that ok? Should we add both for a while to allow people to migrate?",
+      "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ce4f2d9_d906ee56",
+        "filename": "src/tint/lang/core/address_space.def",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-06T15:52:22Z",
+      "side": 1,
+      "message": "It\u0027s probably OK since we\u0027re not shipping? I don\u0027t know that we have (m)any users of this right now, since it only recently started working at all.",
+      "parentUuid": "8b068af5_51700ce3",
+      "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ec16deb_10059862",
+        "filename": "src/tint/lang/hlsl/writer/writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-06T15:52:22Z",
+      "side": 1,
+      "message": "Nit: s/are/is/",
+      "fixSuggestions": [
+        {
+          "fixId": "b3304a61_e04b2169",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/writer.cc",
+              "range": {
+                "startLine": 57,
+                "startChar": 0,
+                "endLine": 58,
+                "endChar": 0
+              },
+              "replacement": "            return Failure(\"immediate data is not supported by the HLSL backend\");\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad9a0dba_a44146f5",
+        "filename": "src/tint/lang/msl/writer/writer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-06T15:52:22Z",
+      "side": 1,
+      "message": "Nit: s/are/is/",
+      "fixSuggestions": [
+        {
+          "fixId": "8496bb08_72c55b95",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/msl/writer/writer.cc",
+              "range": {
+                "startLine": 57,
+                "startChar": 0,
+                "endLine": 58,
+                "endChar": 0
+              },
+              "replacement": "            return Failure(\"immediate data is not supported by the MSL backend\");\n"
+            }
+          ]
+        }
+      ],
       "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
