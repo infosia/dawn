@@ -28,6 +28,7 @@
 #include "dawn/common/Math.h"
 
 #include <algorithm>
+#include <bit>
 #include <cmath>
 #include <limits>
 
@@ -100,7 +101,7 @@ bool IsAligned(uint32_t value, size_t alignment) {
 }
 
 uint16_t Float32ToFloat16(float fp32) {
-    uint32_t fp32i = BitCast<uint32_t>(fp32);
+    uint32_t fp32i = std::bit_cast<uint32_t>(fp32);
     uint32_t sign16 = (fp32i & 0x80000000) >> 16;
     uint32_t mantissaAndExponent = fp32i & 0x7FFFFFFF;
 
