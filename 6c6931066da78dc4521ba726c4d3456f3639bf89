@@ -135,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "120b24ab_af5ace9d",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:13:44Z",
+      "side": 1,
+      "message": "I think not needed. Remove the check.",
+      "parentUuid": "61d477f3_a0542395",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72f89653_59886603",
