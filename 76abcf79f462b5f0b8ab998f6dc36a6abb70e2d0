@@ -16,6 +16,24 @@
       "message": "I don\u0027t understand how this rolled.\n\nPatchset 1 - the roller gets CL #\nPatchset 2 - the roller adds the latest cts / test-list\nPatchset 3 - the roller adds suppressions for fails from run of patchset 2\n\nLooking at patchset 3, a 50ish suppressions were added but looking at the checks tab for patchset 2, none of those tests failed when running patchset 2. How did those suppressions get added?",
       "revId": "76abcf79f462b5f0b8ab998f6dc36a6abb70e2d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d06bd79a_40411547",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-06T19:59:50Z",
+      "side": 1,
+      "message": "It\u0027s a bit odd, but if I go into the test pages further I see the failures: https://ci.chromium.org/ui/p/chromium/builders/try/linux-dawn-rel/45522/overview\n\nNot sure why Gerrit isn\u0027t displaying the failures.",
+      "parentUuid": "12c9ce6d_b89f8927",
+      "revId": "76abcf79f462b5f0b8ab998f6dc36a6abb70e2d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
