@@ -2406,14 +2406,20 @@ class Parser {
         std::optional<uint32_t> group;
         std::optional<uint32_t> binding;
         core::Access access_mode = core::Access::kUndefined;
-        core::IOAttributes io_attributes;
-        auto interpolation = [&]() -> core::Interpolation& {
+
+        std::optional<core::Interpolation> interpolation = std::nullopt;
+        std::optional<core::BuiltinValue> builtin = std::nullopt;
+        std::optional<uint32_t> location = std::nullopt;
+        std::optional<uint32_t> blend_src = std::nullopt;
+        bool invariant = false;
+
+        auto get_interpolation = [&]() -> core::Interpolation& {
             // Create the interpolation field with the default values on first call.
-            if (!io_attributes.interpolation.has_value()) {
-                io_attributes.interpolation = core::Interpolation{
-                    core::InterpolationType::kPerspective, core::InterpolationSampling::kCenter};
+            if (!interpolation.has_value()) {
+                interpolation = core::Interpolation{core::InterpolationType::kPerspective,
+                                                    core::InterpolationSampling::kCenter};
             }
-            return io_attributes.interpolation.value();
+            return interpolation.value();
         };
         for (auto* deco :
              spirv_context_->get_decoration_mgr()->GetDecorationsFor(inst.result_id(), false)) {
@@ -2429,28 +2435,28 @@ class Parser {
                     binding = deco->GetSingleWordOperand(2);
                     break;
                 case spv::Decoration::BuiltIn:
-                    io_attributes.builtin = Builtin(spv::BuiltIn(deco->GetSingleWordOperand(2)));
+                    builtin = Builtin(spv::BuiltIn(deco->GetSingleWordOperand(2)));
                     break;
                 case spv::Decoration::Invariant:
-                    io_attributes.invariant = true;
+                    invariant = true;
                     break;
                 case spv::Decoration::Location:
-                    io_attributes.location = deco->GetSingleWordOperand(2);
+                    location = deco->GetSingleWordOperand(2);
                     break;
                 case spv::Decoration::NoPerspective:
-                    interpolation().type = core::InterpolationType::kLinear;
+                    get_interpolation().type = core::InterpolationType::kLinear;
                     break;
                 case spv::Decoration::Flat:
-                    interpolation().type = core::InterpolationType::kFlat;
+                    get_interpolation().type = core::InterpolationType::kFlat;
                     break;
                 case spv::Decoration::Centroid:
-                    interpolation().sampling = core::InterpolationSampling::kCentroid;
+                    get_interpolation().sampling = core::InterpolationSampling::kCentroid;
                     break;
                 case spv::Decoration::Sample:
-                    interpolation().sampling = core::InterpolationSampling::kSample;
+                    get_interpolation().sampling = core::InterpolationSampling::kSample;
                     break;
                 case spv::Decoration::Index:
-                    io_attributes.blend_src = deco->GetSingleWordOperand(2);
+                    blend_src = deco->GetSingleWordOperand(2);
                     break;
                 default:
                     TINT_UNIMPLEMENTED() << "unhandled decoration " << d;
@@ -2466,7 +2472,13 @@ class Parser {
             TINT_ASSERT(group && binding);
             var->SetBindingPoint(group.value(), binding.value());
         }
-        var->SetAttributes(std::move(io_attributes));
+        var->SetInterpolation(interpolation);
+        if (builtin.has_value()) {
+            var->SetBuiltin(builtin.value());
+        }
+        var->SetLocation(location);
+        var->SetBlendSrc(blend_src);
+        var->SetInvariant(invariant);
 
         Emit(var, inst.result_id());
     }
