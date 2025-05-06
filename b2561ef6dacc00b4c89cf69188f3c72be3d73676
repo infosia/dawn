@@ -1,0 +1,117 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe885fe7_20882d56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-06T15:56:58Z",
+      "side": 1,
+      "message": "Couple of nits and looks like an E2E test failure on the bots.",
+      "revId": "b2561ef6dacc00b4c89cf69188f3c72be3d73676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "053cfa1e_28e9e621",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-06T15:56:58Z",
+      "side": 1,
+      "message": "Nit: \"may have converted\"",
+      "fixSuggestions": [
+        {
+          "fixId": "296fc45b_72c29e75",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+              "range": {
+                "startLine": 73,
+                "startChar": 0,
+                "endLine": 74,
+                "endChar": 0
+              },
+              "replacement": "            // DecomposeStorageAccess may have converted the var pointers into ByteAddressBuffer\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b2561ef6dacc00b4c89cf69188f3c72be3d73676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf096ba3_7489598e",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-06T15:56:58Z",
+      "side": 1,
+      "message": "Nit: If you do this in the loop after `Pop()` then you don\u0027t need to duplicate the code.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 47
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "84787b24_1c3a8696",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+              "range": {
+                "startLine": 113,
+                "startChar": 0,
+                "endLine": 116,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+              "range": {
+                "startLine": 120,
+                "startChar": 0,
+                "endLine": 120,
+                "endChar": 0
+              },
+              "replacement": "            auto* new_ptr_type \u003d\n                ty.ptr(core::AddressSpace::kUniform, inst-\u003eResult()-\u003eType()-\u003eUnwrapPtr());\n            inst-\u003eResult()-\u003eSetType(new_ptr_type);\n\n"
+            },
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+              "range": {
+                "startLine": 126,
+                "startChar": 0,
+                "endLine": 129,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "b2561ef6dacc00b4c89cf69188f3c72be3d73676",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
