@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f3a565f_23b19b25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-06T00:35:37Z",
+      "side": 1,
+      "message": "I filed bug 415825174, you can link it.",
+      "revId": "2a35250e9d0ba493a3e68df235ff52d11a319bd2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
