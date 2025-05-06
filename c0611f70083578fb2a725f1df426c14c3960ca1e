@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e25e957_9444c88e",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-06T07:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eb2a1fe_5256feec",
+      "range": {
+        "startLine": 499,
+        "startChar": 8,
+        "endLine": 506,
+        "endChar": 11
+      },
+      "revId": "c0611f70083578fb2a725f1df426c14c3960ca1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e3ea1b5_8a4a7e12",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-05-05T20:56:56Z",
       "side": 1,
       "message": "Is this change needed for the changes to work? From what I can tell, the previous implementation should still have worked, and is probably faster because we make all the `MapAsync` calls before we start polling for work to be done. If this change isn\u0027t necessary, I would prefer to leave it as it was before for now.",
+      "range": {
+        "startLine": 1793,
+        "startChar": 8,
+        "endLine": 1825,
+        "endChar": 80
+      },
+      "revId": "c0611f70083578fb2a725f1df426c14c3960ca1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "21150b93_2455faf6",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1825,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-06T07:32:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure this change makes the wait slower than the previous polling loop. Both ways have to wait for all the maps to finish. Between the `MapAsync` calls and the polling starts, there is no other works, hence IMO there is no benefit of splitting the calls.\n\nThere were also 2 more reasons to switch to use `WaitAny` here:\n- Using `ProcessEvent/Tick` wouldn\u0027t be able to catch the bug in the CL. The bug here related to incorrect recycling in D3D11 being triggered by `WaitAny`. It\u0027s not triggered by `ProcessEvent/Tick`.\n- The next CL which adds an option to delay D3D11 flush has a bit longer delay with these Tick() loops. Though it\u0027s not much.\n\nNevertheless, those reasons are minor. I have reverted this change and added a dedicated regression test instead.",
+      "parentUuid": "4e3ea1b5_8a4a7e12",
       "range": {
         "startLine": 1793,
         "startChar": 8,
