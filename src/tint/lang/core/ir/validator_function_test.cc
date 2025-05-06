@@ -1107,4 +1107,22 @@ TEST_F(IR_ValidatorTest, Function_BoolInputWithoutFrontFacing_via_MSV) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Function_EntryPoint_PtrToWorkgroup) {
+    auto* f = FragmentEntryPoint();
+    auto* p = b.FunctionParam("invalid", ty.ptr<workgroup, i32>());
+    f->AppendParam(p);
+
+    b.Append(f->Block(), [&] { b.Unreachable(); });
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(
+        res.Failure().reason,
+        testing::HasSubstr(
+            R"(:1:21 error: input param to entry point cannot be a ptr in the 'workgroup' address space
+%f = @fragment func(%invalid:ptr<workgroup, i32, read_write>):void {
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+)")) << res.Failure();
+}
+
 }  // namespace tint::core::ir
