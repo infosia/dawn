@@ -22,6 +22,30 @@
       },
       "revId": "c5b7bf6d5dec3a27b7669e440e64b041681d3aed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41136af5_f51ebf0b",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-06T20:23:24Z",
+      "side": 1,
+      "message": "Yeah, that would be better.",
+      "parentUuid": "7c3050ec_5b3aa5a6",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 54
+      },
+      "revId": "c5b7bf6d5dec3a27b7669e440e64b041681d3aed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
