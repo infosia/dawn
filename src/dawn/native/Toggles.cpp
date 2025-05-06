@@ -639,6 +639,9 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::UseVulkanMemoryModel,
      {"use_vulkan_memory_model", "Use the Vulkan Memory Model if available.",
       "https://crbug.com/392606604", ToggleStage::Adapter}},
+    {Toggle::ScalarizeClampBuiltin,
+     {"use_vulkan_memory_model", "Scalarize calls to the clamp builtin.",
+      "https://crbug.com/407109052", ToggleStage::Adapter}},
     {Toggle::VulkanAddWorkToEmptyResolvePass,
      {"vulkan_add_work_to_empty_resolve_pass",
       "Adds a small amount of work to empty render passes which perform a resolve. This toggle is "
