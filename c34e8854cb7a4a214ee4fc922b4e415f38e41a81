@@ -16,6 +16,47 @@
       "message": "@lokokung@google.com A few questions for this:\n- What sets is_wasm?\n- Will we be able to do wasm builds in the same output directory as native? I think we said this would be possible with GN (but not CMake).\n- Do you have any build rules drafted yet for FuturesTests?",
       "revId": "c34e8854cb7a4a214ee4fc922b4e415f38e41a81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e74fa47_9dc830b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-06T20:12:55Z",
+      "side": 1,
+      "message": "Answering the questions a bit out of order:\n\n\u003e Will we be able to do wasm builds in the same output directory as native? I think we said this would be possible with GN (but not CMake).\n\nYes, we can (and already) do it with GN, but not CMake.\n\n\u003e What sets is_wasm?\n\nThis is set by the gn args + `BUILD.gn` files. The samples are explicitly told to use the `wasm` toolchain. See https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/BUILD.gn;l\u003d84;drc\u003de28fc3cafb3655a19805ad714e2ccc3f905d1a5e\n\n\u003e Do you have any build rules drafted yet for FuturesTests?\n\nIn CMake, yes: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/emdawnwebgpu/CMakeLists.txt;l\u003d287;drc\u003dd85792ce64974ebe772d46315f6f671eff1430df\n\nIn GN, not yet, but it shouldn\u0027t be too hard to do. I can try to do that soon. Running them automatically will be the tricky part since we need a compatible browser. I was imagining trying to hook it such that they could be ran like the CTS tests, but that will be a pretty large project.",
+      "parentUuid": "87b7fae4_847f0d25",
+      "revId": "c34e8854cb7a4a214ee4fc922b4e415f38e41a81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b473e340_30a57eb3",
+        "filename": "generator/templates/emdawnwebgpu/LinkTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-06T20:12:55Z",
+      "side": 1,
+      "message": "I think instead of making this a binary file like this, we should make it a test like `FuturesTests.cpp`, and just check that the function pointer !\u003d nullptr or something.",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 12
+      },
+      "revId": "c34e8854cb7a4a214ee4fc922b4e415f38e41a81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
