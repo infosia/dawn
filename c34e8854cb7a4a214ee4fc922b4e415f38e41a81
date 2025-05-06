@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87b7fae4_847f0d25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-06T02:28:56Z",
+      "side": 1,
+      "message": "@lokokung@google.com A few questions for this:\n- What sets is_wasm?\n- Will we be able to do wasm builds in the same output directory as native? I think we said this would be possible with GN (but not CMake).\n- Do you have any build rules drafted yet for FuturesTests?",
+      "revId": "c34e8854cb7a4a214ee4fc922b4e415f38e41a81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
