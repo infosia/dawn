@@ -138,6 +138,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "021e19a0_ff5cd895",
+        "filename": "src/tint/lang/core/address_space.def",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-06T16:19:38Z",
+      "side": 1,
+      "message": "sgtm.",
+      "parentUuid": "2ce4f2d9_d906ee56",
+      "revId": "ad888d8f3d9e6d35ce97e820db06638b1470067a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6ec16deb_10059862",
