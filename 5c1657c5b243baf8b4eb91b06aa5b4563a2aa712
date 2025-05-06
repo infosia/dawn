@@ -196,6 +196,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ba36890_5842c1f3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2025-05-06T13:34:28Z",
+      "side": 1,
+      "message": "thanks. As a best practice, the shared/static\u0027ness of the monolithic library should be governed by the `BUILD_SHARED_LIBS` option, rather than `DAWN_BUILD_MONOLITHIC_LIBRARY`. @penner.pennhaft@gmail.com i agree with Corentin\u0027s suggestion, but the devil is in the details. IIRC, I thnk you might run into some issues on widnows while generating `dawn_native.dll`. I have documented the issue here - https://issues.chromium.org/issues/345919922. I hope we can arrive at a fix for that. Also, unsure if this PR fixes https://issues.chromium.org/issues/357633422",
+      "parentUuid": "026e0f9d_cc814836",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f19585db_500a89d6",
