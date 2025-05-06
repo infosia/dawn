@@ -93,6 +93,30 @@
       },
       "revId": "c0611f70083578fb2a725f1df426c14c3960ca1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b129c7b6_91004a86",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1825,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-06T18:58:48Z",
+      "side": 1,
+      "message": "Ah, thanks for the justification! Would it have worked if we called all the `MapAsync`s then waiting on all of them? (i.e. loop and check if there\u0027s any futures left after each call and see if we need to wait again on a subset?)\n\nFrom what I understand, that should trigger the issue as well?",
+      "parentUuid": "21150b93_2455faf6",
+      "range": {
+        "startLine": 1793,
+        "startChar": 8,
+        "endLine": 1825,
+        "endChar": 80
+      },
+      "revId": "c0611f70083578fb2a725f1df426c14c3960ca1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
