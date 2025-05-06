@@ -117,6 +117,30 @@
       },
       "revId": "c0611f70083578fb2a725f1df426c14c3960ca1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de834ad8_3cbe8392",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1825,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-06T21:13:49Z",
+      "side": 1,
+      "message": "I think that would work. Though we can do that in future patches. For now the regression test is good enough.",
+      "parentUuid": "b129c7b6_91004a86",
+      "range": {
+        "startLine": 1793,
+        "startChar": 8,
+        "endLine": 1825,
+        "endChar": 80
+      },
+      "revId": "c0611f70083578fb2a725f1df426c14c3960ca1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
