@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9aadacc_14b3b781",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d3d22a_cc55d430",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7644a034_76c54ad1",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7b03d1b_b8185337",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7644a034_76c54ad1",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2da9fcc2_e37f6af5",
@@ -54,6 +96,24 @@
       "writtenOn": "2025-04-28T13:46:04Z",
       "side": 1,
       "message": "```suggestion\n            // DecomposeStorageAccess maybe have converted the var pointers into ByteAddressBuffer\n```",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29b94809_4f9fc0c9",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da9fcc2_e37f6af5",
       "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +152,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cd2dd3b_89691f7c",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72f89653_59886603",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "833e51bd_43edabc9",
@@ -105,6 +183,24 @@
       "writtenOn": "2025-04-28T13:46:04Z",
       "side": 1,
       "message": "Can we move the calculation of `group` into the loop above? It doesn\u0027t seem expensive to calculate it and would save looping over all root block instructions a second time?",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48608e82_95632038",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "833e51bd_43edabc9",
       "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -126,6 +222,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b516e0c1_24662bd0",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "292e0870_bc102037",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2eacd06_ea9c5f4c",
@@ -139,6 +253,24 @@
       "writtenOn": "2025-04-28T13:46:04Z",
       "side": 1,
       "message": "nit: remove, this is the same as the method comment",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "226ba7af_a5949545",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2eacd06_ea9c5f4c",
       "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -190,6 +322,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f687c0cb_1fe844a3",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feb6e599_77840a77",
+      "range": {
+        "startLine": 28,
+        "startChar": 47,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee63fd23_fbcc9f9a",
@@ -203,6 +359,24 @@
       "writtenOn": "2025-04-28T13:46:04Z",
       "side": 1,
       "message": "nit: remove this comment as it doesn\u0027t make sense for this transform.",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12cc81b4_262ea2ce",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee63fd23_fbcc9f9a",
       "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -230,6 +404,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a16b4752_f00b926b",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12df01fe_35deb5fb",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 3
+      },
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "210ed31d_19b4fc8e",
@@ -247,6 +445,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91cec15a_2d9c359e",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_push_constant_to_uniform_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "210ed31d_19b4fc8e",
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e31551a_1cffaf48",
@@ -260,6 +476,30 @@
       "writtenOn": "2025-04-28T13:46:04Z",
       "side": 1,
       "message": "```suggestion\n        raise::ChangePushConstantToUniformConfig config \u003d {\n            .push_constant_binding_point \u003d options.push_constant_binding_point,\n        };\n```",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 81
+      },
+      "revId": "6c6931066da78dc4521ba726c4d3456f3639bf89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef91f20c_757edcd7",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e31551a_1cffaf48",
       "range": {
         "startLine": 195,
         "startChar": 0,

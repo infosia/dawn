@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64d1972c_bd686b45",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "44dcfe12_768da818",
+      "revId": "10eda1cb91c6c9a546b71eda544b5012e90802d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c65b293_cc71627b",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70d266df_feb4e623",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c65b293_cc71627b",
+      "revId": "10eda1cb91c6c9a546b71eda544b5012e90802d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b0ce5e0a_a77944df",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-04-30T11:03:33Z",
       "side": 1,
       "message": "Please also document that it must come *after* `DirectVariableAccess`, since it does not handle immediate pointers being passed as function parameters.",
+      "revId": "10eda1cb91c6c9a546b71eda544b5012e90802d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efad6391_19c99111",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-06T08:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0ce5e0a_a77944df",
       "revId": "10eda1cb91c6c9a546b71eda544b5012e90802d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
