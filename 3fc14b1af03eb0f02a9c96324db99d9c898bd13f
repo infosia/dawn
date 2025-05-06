@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a79c34cb_fe24fbc6",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-06T17:58:55Z",
+      "side": 1,
+      "message": "Do we need this to be a dawn toggle? Won\u0027t we just set to based on GPU? (This is also a bit misleading as this won\u0027t do anything in MSL, HLSL, GLSL, it\u0027s SPIR-V specific.",
+      "revId": "3fc14b1af03eb0f02a9c96324db99d9c898bd13f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "35a15a8f_3747b4e5",
         "filename": "src/dawn/native/Toggles.cpp",
         "patchSetId": 4
@@ -37,6 +54,23 @@
         "endLine": 644,
         "endChar": 57
       },
+      "revId": "3fc14b1af03eb0f02a9c96324db99d9c898bd13f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72834ed3_8583558f",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-06T17:58:55Z",
+      "side": 1,
+      "message": "We usually just set the Config here instead of passing each flag individually (e.g. https://dawn.googlesource.com/dawn/+/refs/heads/main/src/tint/lang/core/ir/transform/binary_polyfill.cc#44)",
       "revId": "3fc14b1af03eb0f02a9c96324db99d9c898bd13f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
