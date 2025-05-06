@@ -46,6 +46,30 @@
       },
       "revId": "c5b7bf6d5dec3a27b7669e440e64b041681d3aed",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a179e183_ce8a8098",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-06T21:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41136af5_f51ebf0b",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 54
+      },
+      "revId": "c5b7bf6d5dec3a27b7669e440e64b041681d3aed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

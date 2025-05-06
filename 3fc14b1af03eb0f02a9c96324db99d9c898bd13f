@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9eb8c084_9ec022c8",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-06T21:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e44fcfab_d54d52e8",
+      "revId": "3fc14b1af03eb0f02a9c96324db99d9c898bd13f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "35a15a8f_3747b4e5",
@@ -76,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "18c7fedc_ffde8396",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-06T21:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35a15a8f_3747b4e5",
+      "range": {
+        "startLine": 644,
+        "startChar": 50,
+        "endLine": 644,
+        "endChar": 57
+      },
+      "revId": "3fc14b1af03eb0f02a9c96324db99d9c898bd13f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72834ed3_8583558f",
@@ -89,6 +131,24 @@
       "writtenOn": "2025-05-06T17:58:55Z",
       "side": 1,
       "message": "We usually just set the Config here instead of passing each flag individually (e.g. https://dawn.googlesource.com/dawn/+/refs/heads/main/src/tint/lang/core/ir/transform/binary_polyfill.cc#44)",
+      "revId": "3fc14b1af03eb0f02a9c96324db99d9c898bd13f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c423ce5_731e6590",
+        "filename": "src/tint/lang/spirv/writer/raise/builtin_polyfill.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-06T21:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72834ed3_8583558f",
       "revId": "3fc14b1af03eb0f02a9c96324db99d9c898bd13f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
