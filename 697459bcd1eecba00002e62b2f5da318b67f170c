@@ -34,6 +34,24 @@
       ],
       "revId": "697459bcd1eecba00002e62b2f5da318b67f170c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4873a62c_ba75647b",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-07T20:57:42Z",
+      "side": 1,
+      "message": "Yes we discussed this and yes i will add.\nAny worries around compat?",
+      "parentUuid": "2b5d6caf_2ffe277e",
+      "revId": "697459bcd1eecba00002e62b2f5da318b67f170c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
