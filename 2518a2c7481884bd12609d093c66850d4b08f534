@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bb8e29d_d239d153",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-07T14:01:17Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "2518a2c7481884bd12609d093c66850d4b08f534",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8292218e_d3dcd7aa",
+        "filename": "src/tint/lang/core/type/pointer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-07T14:01:17Z",
+      "side": 1,
+      "message": "Which seems weirder, setting these here so they apply to all pointers, or creating an msl pointer type which has a sign/align. I don\u0027t really care what the values are, but the number used in the msl printer support.",
+      "revId": "2518a2c7481884bd12609d093c66850d4b08f534",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
