@@ -52,6 +52,24 @@
       "parentUuid": "2b5d6caf_2ffe277e",
       "revId": "697459bcd1eecba00002e62b2f5da318b67f170c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ded575a5_749b78a8",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-07T20:58:54Z",
+      "side": 1,
+      "message": "Yeah we should test `OpenGLESBackend()` backend too, might encounter the same issue.",
+      "parentUuid": "4873a62c_ba75647b",
+      "revId": "697459bcd1eecba00002e62b2f5da318b67f170c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
