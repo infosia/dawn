@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b5d6caf_2ffe277e",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-07T20:35:50Z",
+      "side": 1,
+      "message": "I think we should add a `VulkanBackend({\u0027vulkan_scalarize_clamp_builtin\u0027})` entry too to ensure that we always coverage for this codepath. This is the guidance I\u0027ve got from the Dawn team when adding other device-specific workarounds.",
+      "fixSuggestions": [
+        {
+          "fixId": "71787f8b_a1ae8413",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+              "range": {
+                "startLine": 109,
+                "startChar": 0,
+                "endLine": 110,
+                "endChar": 0
+              },
+              "replacement": "DAWN_INSTANTIATE_TEST(PolyfillBuiltinSimpleTests,\n                      D3D12Backend(),\n                      MetalBackend(),\n                      VulkanBackend(),\n                      VulkanBackend({\u0027vulkan_scalarize_clamp_builtin\u0027}));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "697459bcd1eecba00002e62b2f5da318b67f170c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
