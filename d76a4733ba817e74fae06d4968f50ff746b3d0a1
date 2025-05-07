@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5db55368_9c982d25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-07T19:45:56Z",
+      "side": 1,
+      "message": "Hello Stephen,\nThere are many compat tests failing when adding TextureCompressionASTCSliced3D feature support to OpenGL as you can see in https://ci.chromium.org/ui/p/chromium/builders/try/android-dawn-arm64-rel/22930/overview\n\nSince you\u0027ve added many failure expectations in https://issues.chromium.org/issues/364917742 and https://issues.chromium.org/issues/364595481, do you recommend I do the same there or is there a root issue you\u0027re aware of we could try to fix?",
+      "revId": "d76a4733ba817e74fae06d4968f50ff746b3d0a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
