@@ -41,6 +41,7 @@
 #include "dawn/native/CommandValidation.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/EnumMaskIterator.h"
+#include "dawn/native/ObjectContentHasher.h"
 #include "dawn/native/ObjectType_autogen.h"
 #include "dawn/native/PassResourceUsage.h"
 #include "dawn/native/PhysicalDevice.h"
@@ -1437,7 +1438,8 @@ wgpu::TextureUsage TextureBase::APIGetUsage() const {
 // TextureViewBase
 
 TextureViewBase::TextureViewBase(TextureBase* texture,
-                                 const UnpackedPtr<TextureViewDescriptor>& descriptor)
+                                 const UnpackedPtr<TextureViewDescriptor>& descriptor,
+                                 ApiObjectBase::UntrackedByDeviceTag tag)
     : ApiObjectBase(texture->GetDevice(), descriptor->label),
       mTexture(texture),
       mFormat(GetDevice()->GetValidInternalFormat(descriptor->format)),
@@ -1454,8 +1456,6 @@ TextureViewBase::TextureViewBase(TextureBase* texture,
                             texture->GetSampleCount(),
                             texture->GetNumMipLevels(),
                             texture->GetArrayLayers())) {
-    GetObjectTrackingList()->Track(this);
-
     // Emit a warning if invalid usages were removed for this view.
     // TODO(363903526): Remove this warning after deprecation period.
     wgpu::TextureUsage inheritedUsage = GetTextureViewUsage(texture->GetUsage(), descriptor->usage);
@@ -1468,6 +1468,12 @@ TextureViewBase::TextureViewBase(TextureBase* texture,
             this, mFormat->format, inheritedUsage);
         GetDevice()->EmitWarningOnce(warning.c_str());
     }
+}
+
+TextureViewBase::TextureViewBase(TextureBase* texture,
+                                 const UnpackedPtr<TextureViewDescriptor>& descriptor)
+    : TextureViewBase(texture, descriptor, kUntrackedByDevice) {
+    GetObjectTrackingList()->Track(this);
 }
 
 TextureViewBase::TextureViewBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label)
@@ -1575,6 +1581,38 @@ bool TextureViewBase::IsYCbCr() const {
 YCbCrVkDescriptor TextureViewBase::GetYCbCrVkDescriptor() const {
     DAWN_UNREACHABLE();
     return {};
+}
+
+size_t TextureViewBase::ComputeContentHash() {
+    ObjectContentHasher recorder;
+    recorder.Record(mFormat->format);
+    recorder.Record(mDimension);
+    recorder.Record(mRange.aspects);
+    recorder.Record(mRange.baseMipLevel);
+    recorder.Record(mRange.levelCount);
+    recorder.Record(mRange.baseArrayLayer);
+    recorder.Record(mRange.layerCount);
+    recorder.Record(mUsage);
+    recorder.Record(mInternalUsage);
+    return recorder.GetContentHash();
+}
+
+bool TextureViewBase::EqualityFunc::operator()(const TextureViewBase* a,
+                                               const TextureViewBase* b) const {
+    if (a->mFormat->format != b->mFormat->format || a->mDimension != b->mDimension ||
+        a->mUsage != b->mUsage || a->mInternalUsage != b->mInternalUsage) {
+        return false;
+    }
+
+    if (a->mRange.aspects != b->mRange.aspects ||
+        a->mRange.baseMipLevel != b->mRange.baseMipLevel ||
+        a->mRange.levelCount != b->mRange.levelCount ||
+        a->mRange.baseArrayLayer != b->mRange.baseArrayLayer ||
+        a->mRange.layerCount != b->mRange.layerCount) {
+        return false;
+    }
+
+    return true;
 }
 
 ApiObjectList* TextureViewBase::GetObjectTrackingList() {

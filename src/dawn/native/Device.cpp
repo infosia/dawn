@@ -2240,7 +2240,19 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
     } else {
         descriptor = Unpack(&desc);
     }
-    return CreateTextureViewImpl(texture, descriptor);
+
+    TextureViewBase blueprint(texture, descriptor, ApiObjectBase::kUntrackedByDevice);
+
+    const size_t blueprintHash = blueprint.ComputeContentHash();
+    blueprint.SetContentHash(blueprintHash);
+
+    return GetOrCreate(texture->GetViewCache(), &blueprint,
+                       [&]() -> ResultOrError<Ref<TextureViewBase>> {
+                           Ref<TextureViewBase> result;
+                           DAWN_TRY_ASSIGN(result, CreateTextureViewImpl(texture, descriptor));
+                           result->SetContentHash(blueprintHash);
+                           return result;
+                       });
 }
 
 // Other implementation details
