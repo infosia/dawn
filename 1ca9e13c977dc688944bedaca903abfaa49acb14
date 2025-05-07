@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c21c648_c0f12ffd",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2162,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-07T02:09:11Z",
+      "side": 1,
+      "message": "Should this check `mv-\u003eIs\u003ccore::type::Pointer\u003e()` ?",
+      "revId": "1ca9e13c977dc688944bedaca903abfaa49acb14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
