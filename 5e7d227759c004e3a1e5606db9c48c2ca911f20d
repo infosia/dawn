@@ -88,6 +88,24 @@
       "parentUuid": "e2a30421_40ae28ee",
       "revId": "5e7d227759c004e3a1e5606db9c48c2ca911f20d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5448392_4576ab0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T09:23:58Z",
+      "side": 1,
+      "message": "Yes the tests still work. Earlier I found that repeatedly calling Tick() might have significant delays. But the latest patchset can work relative well enough even if busy loop of Tick() is used to wait. So that\u0027s not a concern anymore.",
+      "parentUuid": "15f3b5b1_cb3a374d",
+      "revId": "5e7d227759c004e3a1e5606db9c48c2ca911f20d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
