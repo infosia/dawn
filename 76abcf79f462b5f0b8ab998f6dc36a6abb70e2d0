@@ -52,6 +52,24 @@
       "parentUuid": "d06bd79a_40411547",
       "revId": "76abcf79f462b5f0b8ab998f6dc36a6abb70e2d0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "385ee632_ac60dbdd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-07T00:00:20Z",
+      "side": 1,
+      "message": "If you manually look at, for example, step (97. webgpu_cts_with_validation_tests on Intel GPU on Linux (with patch) on Ubuntu-22.04) in that link you will see the failures.\n\nLike I said though, it\u0027s definitely not clear why it\u0027s not shown at the top of the overview.",
+      "parentUuid": "2cc408aa_8fbc7278",
+      "revId": "76abcf79f462b5f0b8ab998f6dc36a6abb70e2d0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
