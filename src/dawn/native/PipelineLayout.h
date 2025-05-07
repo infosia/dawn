@@ -115,7 +115,7 @@ class PipelineLayoutBase : public ApiObjectBase,
         bool operator()(const PipelineLayoutBase* a, const PipelineLayoutBase* b) const;
     };
 
-    uint32_t GetImmediateDataRangeByteSize() const;
+    uint32_t GetImmediateSize() const;
 
   protected:
     PipelineLayoutBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
@@ -129,7 +129,7 @@ class PipelineLayoutBase : public ApiObjectBase,
     uint32_t mNumStorageBufferBindingsInFragmentStage = 0;
     uint32_t mNumStorageTextureBindingsInFragmentStage = 0;
     std::vector<wgpu::TextureFormat> mStorageAttachmentSlots;
-    uint32_t mImmediateDataRangeByteSize = 0;
+    uint32_t mImmediateSize = 0;
 };
 
 }  // namespace dawn::native

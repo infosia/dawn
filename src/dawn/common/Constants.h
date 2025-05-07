@@ -62,7 +62,7 @@ static constexpr uint32_t kMaxImmediateConstantsPerPipeline = 32u;
 static constexpr uint32_t kMaxSupportedImmediateDataBytes = 64u;
 
 // Device Default limitation for user immediate constants is 16 bytes.
-static constexpr uint32_t kDefaultMaxImmediateDataBytes = 16u;
+static constexpr uint32_t kDefaultMaxImmediateSize = 16u;
 
 // Per stage maximum limits used to optimized Dawn internals.
 static constexpr uint32_t kMaxSampledTexturesPerShaderStage = 16;

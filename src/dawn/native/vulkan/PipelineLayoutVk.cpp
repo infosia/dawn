@@ -110,7 +110,7 @@ MaybeError PipelineLayout::Initialize() {
     uint32_t numSetLayoutsWithHoles =
         static_cast<uint32_t>(GetHighestBitIndexPlusOne(bindGroupMask));
     StreamIn(&mCacheKey, stream::Iterable(cachedObjects.data(), numSetLayoutsWithHoles),
-             GetImmediateDataRangeByteSize());
+             GetImmediateSize());
 
     return {};
 }

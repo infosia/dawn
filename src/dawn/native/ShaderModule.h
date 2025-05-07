@@ -319,7 +319,7 @@ struct EntryPointMetadata {
     bool usesSubgroupMatrix = false;
 
     // Immediate Data block byte size
-    uint32_t immediateDataRangeByteSize = 0;
+    uint32_t immediateSize = 0;
 
     // Number of texture+sampler combinations, computed as
     // 1 for every texture+sampler combination + 1 for every texture used
