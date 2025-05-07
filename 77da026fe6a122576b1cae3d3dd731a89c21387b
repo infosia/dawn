@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd1afe2a_1f1e2fa8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-07T15:09:30Z",
+      "side": 1,
+      "message": "This seems to be causing build failurs inside google3.\n\nIn this code in src/dawn/native/Pipepline.cpp\n\n        DAWN_INVALID_IF(!metadata.overrides.contains(key),\n                        \"Pipeline overridable constant \\\"%s\\\" not found in %s.\", constants[i].key,\n                        module);\n                        \n                       \nThe overrides object looks like a  `using OverridesMap \u003d absl::flat_hash_map\u003cstd::string, Override\u003e;`\n\nThe error looks like this:\n\n```\nIn file included from third_party/dawn/src/dawn/native/Pipeline.cpp:28:\nIn file included from third_party/dawn/src/dawn/native/Pipeline.h:37:\nIn file included from third_party/dawn/src/dawn/native/CachedObject.h:34:\nIn file included from third_party/dawn/src/dawn/native/CacheKey.h:34:\nIn file included from third_party/dawn/src/dawn/native/stream/Stream.h:44:\nIn file included from third_party/dawn/src/dawn/native/Error.h:37:\nIn file included from third_party/dawn/src/dawn/native/Toggles.h:35:\nIn file included from ./third_party/absl/container/flat_hash_map.h:48:\nIn file included from ./third_party/absl/container/internal/raw_hash_map.h:27:\n./third_party/absl/container/internal/raw_hash_set.h:3001:51: error: no matching function for call to object of type \u0027const key_equal\u0027 (aka \u0027const absl::container_internal::StringEq\u0027)\n 3001 |       ABSL_SWISSTABLE_IGNORE_UNINITIALIZED_RETURN(eq(lhs, rhs));\n      |                                                   ^~\n./third_party/absl/container/internal/raw_hash_set.h:869:63: note: expanded from macro \u0027ABSL_SWISSTABLE_IGNORE_UNINITIALIZED_RETURN\u0027\n  869 | #define ABSL_SWISSTABLE_IGNORE_UNINITIALIZED_RETURN(x) return x\n      |                                                               ^\n      \n...\nthird_party/dawn/src/dawn/native/Pipeline.cpp:121:45: note: in instantiation of function template specialization \u0027absl::container_internal::raw_hash_set\u003cabsl::container_internal::FlatHashMapPolicy\u003cstd::string, dawn::native::EntryPointMetadata::Override\u003e, absl::container_internal::StringHash, absl::container_internal::StringEq, std::allocator\u003cstd::pair\u003cconst std::string, dawn::native::EntryPointMetadata::Override\u003e\u003e\u003e::contains\u003cstd::string_view\u003e\u0027 requested here\n  121 |         DAWN_INVALID_IF(!metadata.overrides.contains(key),\n      |                                             ^\n      \n      \n```",
+      "revId": "77da026fe6a122576b1cae3d3dd731a89c21387b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
