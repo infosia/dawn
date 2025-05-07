@@ -1106,8 +1106,11 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                 viewDesc.usage = wgpu::TextureUsage::RenderAttachment;
 
                 ColorAttachmentIndex ca0(uint8_t(0));
-                DAWN_TRY_ASSIGN(beginCmd.colorAttachments[ca0].view,
-                                TextureView::Create(this, Unpack(&viewDesc)));
+
+                Ref<TextureView> textureView;
+                DAWN_TRY_ASSIGN(textureView, TextureView::Create(this, Unpack(&viewDesc)));
+
+                beginCmd.colorAttachments[ca0].view = new TextureViewBase(this, textureView, "");
 
                 RenderPassColorAttachment colorAttachment{};
                 colorAttachment.view = beginCmd.colorAttachments[ca0].view.Get();
@@ -1939,7 +1942,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         return {};
     }
 
-    Device* device = ToBackend(GetTexture()->GetDevice());
+    Device* device = ToBackend(GetDevice());
     VkImageViewCreateInfo createInfo = GetCreateInfo(descriptor->format, descriptor->dimension);
 
     VkImageViewUsageCreateInfo usageInfo = {};
@@ -1985,7 +1988,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
 TextureView::~TextureView() {}
 
 void TextureView::DestroyImpl() {
-    Device* device = ToBackend(GetTexture()->GetDevice());
+    Device* device = ToBackend(GetDevice());
 
     if (mSamplerYCbCrConversion != VK_NULL_HANDLE) {
         device->GetFencedDeleter()->DeleteWhenUnused(mSamplerYCbCrConversion);
@@ -2021,7 +2024,7 @@ VkImageView TextureView::GetHandleForBGRA8UnormStorage() const {
 VkImageViewCreateInfo TextureView::GetCreateInfo(wgpu::TextureFormat format,
                                                  wgpu::TextureViewDimension dimension,
                                                  uint32_t depthSlice) const {
-    Device* device = ToBackend(GetTexture()->GetDevice());
+    Device* device = ToBackend(GetDevice());
 
     VkImageViewCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
@@ -2068,7 +2071,7 @@ ResultOrError<VkImageView> TextureView::GetOrCreate2DViewOn3D(uint32_t depthSlic
         return static_cast<VkImageView>(mHandlesFor2DViewOn3D[depthSlice]);
     }
 
-    Device* device = ToBackend(GetTexture()->GetDevice());
+    Device* device = ToBackend(GetDevice());
     VkImageViewCreateInfo createInfo =
         GetCreateInfo(GetFormat().format, wgpu::TextureViewDimension::e2D, depthSlice);
 

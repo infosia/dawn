@@ -284,7 +284,7 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureImpl(
     return Texture::Create(this, descriptor);
 }
 
-ResultOrError<Ref<TextureViewBase>> Device::CreateTextureViewImpl(
+ResultOrError<Ref<TextureViewInternalBase>> Device::CreateTextureViewImpl(
     TextureBase* texture,
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
     return TextureView::Create(texture, descriptor);

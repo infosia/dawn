@@ -37,6 +37,7 @@
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/PassResourceUsage.h"
 #include "dawn/native/Texture.h"
+#include "dawn/native/TextureView.h"
 #include "dawn/native/d3d12/IntegerTypes.h"
 #include "dawn/native/d3d12/ResourceHeapAllocationD3D12.h"
 #include "dawn/native/d3d12/d3d12_platform.h"
@@ -169,7 +170,7 @@ class Texture final : public TextureBase {
     SubresourceStorage<StateAndDecay> mSubresourceStateAndDecay;
 };
 
-class TextureView final : public TextureViewBase {
+class TextureView final : public TextureViewInternalBase {
   public:
     static Ref<TextureView> Create(TextureBase* texture,
                                    const UnpackedPtr<TextureViewDescriptor>& descriptor);

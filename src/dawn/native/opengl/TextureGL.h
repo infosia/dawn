@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_OPENGL_TEXTUREGL_H_
 
 #include "dawn/native/Texture.h"
+#include "dawn/native/TextureView.h"
 
 #include "dawn/native/opengl/opengl_platform.h"
 
@@ -75,7 +76,7 @@ class Texture final : public TextureBase {
     GLenum mTarget;
 };
 
-class TextureView final : public TextureViewBase {
+class TextureView final : public TextureViewInternalBase {
   public:
     static ResultOrError<Ref<TextureView>> Create(
         TextureBase* texture,

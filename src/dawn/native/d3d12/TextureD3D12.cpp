@@ -897,7 +897,7 @@ Ref<TextureView> TextureView::Create(TextureBase* texture,
 }
 
 TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor)
-    : TextureViewBase(texture, descriptor) {
+    : TextureViewInternalBase(texture, descriptor) {
     const Aspect aspects = GetAspects();
     const Format& textureFormat = texture->GetFormat();
 
@@ -935,7 +935,7 @@ TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDesc
         // D3D12_SRV_DIMENSION_TEXTURE2DMS.
         // https://docs.microsoft.com/en-us/windows/desktop/api/d3d12/ns-d3d12-d3d12_tex2d_srv
         // https://docs.microsoft.com/en-us/windows/desktop/api/d3d12/ns-d3d12-d3d12_tex2d_array_srv
-        if (GetTexture()->IsMultisampledTexture()) {
+        if (texture->IsMultisampledTexture()) {
             switch (descriptor->dimension) {
                 case wgpu::TextureViewDimension::e2DArray:
                     DAWN_ASSERT(texture->GetArrayLayers() == 1);
@@ -1005,6 +1005,7 @@ const D3D12_SHADER_RESOURCE_VIEW_DESC& TextureView::GetSRVDescriptor() const {
 
 D3D12_RENDER_TARGET_VIEW_DESC TextureView::GetRTVDescriptor(uint32_t depthSlice) const {
     DAWN_ASSERT(depthSlice < GetSingleSubresourceVirtualSize().depthOrArrayLayers);
+
     // We have validated that the depthSlice in render pass's colorAttachments must be undefined for
     // 2d RTVs, which value is set to 0. For 3d RTVs, the baseArrayLayer must be 0. So here we can
     // simply use baseArrayLayer + depthSlice to specify the slice in RTVs without checking the
@@ -1017,6 +1018,7 @@ D3D12_RENDER_TARGET_VIEW_DESC TextureView::GetRTVDescriptor(uint32_t depthSlice)
 D3D12_DEPTH_STENCIL_VIEW_DESC TextureView::GetDSVDescriptor(bool depthReadOnly,
                                                             bool stencilReadOnly) const {
     DAWN_ASSERT(GetLevelCount() == 1);
+
     return ToBackend(GetTexture())
         ->GetDSVDescriptor(GetBaseMipLevel(), GetBaseArrayLayer(), GetLayerCount(), GetAspects(),
                            depthReadOnly, stencilReadOnly);
