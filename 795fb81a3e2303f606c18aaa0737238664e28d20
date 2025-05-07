@@ -52,6 +52,24 @@
       "parentUuid": "01517f9b_09e311b1",
       "revId": "795fb81a3e2303f606c18aaa0737238664e28d20",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "268afb31_30e9c66e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-05-07T07:18:27Z",
+      "side": 1,
+      "message": "Resolving comment for presubmit check.",
+      "parentUuid": "83615b31_916bbf82",
+      "revId": "795fb81a3e2303f606c18aaa0737238664e28d20",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
