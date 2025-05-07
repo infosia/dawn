@@ -45,6 +45,9 @@ class Pointer final : public Castable<Pointer, MemoryView> {
     /// Destructor
     ~Pointer() override;
 
+    uint32_t Size() const override { return 4; }
+    uint32_t Align() const override { return 4; }
+
     /// @param other the other node to compare against
     /// @returns true if the this type is equal to @p other
     bool Equals(const UniqueNode& other) const override;
