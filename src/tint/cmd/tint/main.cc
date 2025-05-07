@@ -393,6 +393,42 @@ violations that may be produced)",
             opts->spirv_reader_options.allow_non_uniform_derivatives = true;
         }
     });
+
+    auto str_to_bp = [](const std::string_view& str) {
+        auto parts = tint::Split(str, ",");
+        TINT_ASSERT(parts.Length() == 2);
+
+        uint32_t group = 0;
+        std::from_chars(parts[0].data(), parts[0].data() + parts[0].size(), group);
+
+        uint32_t binding = 0;
+        std::from_chars(parts[1].data(), parts[1].data() + parts[0].size(), binding);
+
+        return tint::BindingPoint{group, binding};
+    };
+
+    auto& sampler_mapping = options.Add<StringOption>(
+        "sampler-mapping",
+        "Allows remapping the binding points of samplers from the SPIR-V file. "
+        "This allows setting a correct binding point for samplers which were part of a combined "
+        "texture/sampler pair. Entries are provided as binding point pairs (group, binding) and "
+        "each provides a (source:destination) mapping. (e.g. 1,2:3,4) Multiple entries should "
+        "be separated with a space.",
+        Default{""});
+    TINT_DEFER({
+        if (!sampler_mapping.value->empty()) {
+            for (auto mapping : tint::Split(*sampler_mapping.value, " ")) {
+                auto parts = tint::Split(mapping, ":");
+                TINT_ASSERT(parts.Length() == 2);
+
+                tint::BindingPoint src_bp = str_to_bp(parts[0]);
+                tint::BindingPoint dst_bp = str_to_bp(parts[1]);
+
+                opts->spirv_reader_options.sampler_mappings.insert({src_bp, dst_bp});
+            }
+        }
+    });
+
 #endif
 
 #if TINT_BUILD_SPV_WRITER
