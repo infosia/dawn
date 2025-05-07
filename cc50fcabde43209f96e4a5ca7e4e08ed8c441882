@@ -22,6 +22,30 @@
       },
       "revId": "cc50fcabde43209f96e4a5ca7e4e08ed8c441882",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4eab4af0_357a4df7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-07T07:32:07Z",
+      "side": 1,
+      "message": "Does this mean immediate data moves from extension to core? If yes, I think I need to change dawn native side.\n\nNote, I think there is no other project depends on this feature, including graphite.",
+      "parentUuid": "8f17113a_5718baab",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "cc50fcabde43209f96e4a5ca7e4e08ed8c441882",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
