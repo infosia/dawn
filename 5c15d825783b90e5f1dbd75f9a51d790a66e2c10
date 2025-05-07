@@ -16,6 +16,24 @@
       "message": "Discussed offline, we can just rely on the SPIR-V opt transform to split these instead.",
       "revId": "5c15d825783b90e5f1dbd75f9a51d790a66e2c10",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73092367_28f51cba",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-07T02:38:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d1999a0_e961fd3e",
+      "revId": "5c15d825783b90e5f1dbd75f9a51d790a66e2c10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
