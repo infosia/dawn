@@ -236,7 +236,7 @@ class Texture final : public TextureBase {
     ViewCache<SRVKey, ID3D11ShaderResourceView1> mCachedSRVs;
 };
 
-class TextureView final : public TextureViewBase {
+class TextureView final : public TextureViewInternalBase {
   public:
     static Ref<TextureView> Create(TextureBase* texture,
                                    const UnpackedPtr<TextureViewDescriptor>& descriptor);
@@ -249,7 +249,7 @@ class TextureView final : public TextureViewBase {
     ResultOrError<ID3D11UnorderedAccessView*> GetOrCreateD3D11UnorderedAccessView();
 
   private:
-    using TextureViewBase::TextureViewBase;
+    using TextureViewInternalBase::TextureViewInternalBase;
 
     ~TextureView() override;
     void DestroyImpl() override;

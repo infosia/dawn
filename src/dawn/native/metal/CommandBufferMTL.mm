@@ -202,7 +202,7 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                 break;
         }
 
-        auto colorAttachment = ToBackend(attachmentInfo.view)->GetAttachmentInfo();
+        auto colorAttachment = ToBackend(attachmentInfo.view->GetInternal())->GetAttachmentInfo();
         descriptor.colorAttachments[i].texture = colorAttachment.texture.Get();
         descriptor.colorAttachments[i].level = colorAttachment.baseMipLevel;
         descriptor.colorAttachments[i].slice = colorAttachment.baseArrayLayer;
@@ -211,7 +211,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
 
         bool hasResolveTarget = attachmentInfo.resolveTarget != nullptr;
         if (hasResolveTarget) {
-            auto resolveAttachment = ToBackend(attachmentInfo.resolveTarget)->GetAttachmentInfo();
+            auto resolveAttachment =
+                ToBackend(attachmentInfo.resolveTarget->GetInternal())->GetAttachmentInfo();
             descriptor.colorAttachments[i].resolveTexture = resolveAttachment.texture.Get();
             descriptor.colorAttachments[i].resolveLevel = resolveAttachment.baseMipLevel;
             descriptor.colorAttachments[i].resolveSlice = resolveAttachment.baseArrayLayer;
@@ -246,7 +247,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
     if (renderPass->attachmentState->HasDepthStencilAttachment()) {
         auto& attachmentInfo = renderPass->depthStencilAttachment;
 
-        auto depthStencilAttachment = ToBackend(attachmentInfo.view)->GetAttachmentInfo();
+        auto depthStencilAttachment =
+            ToBackend(attachmentInfo.view->GetInternal())->GetAttachmentInfo();
         const Format& format = attachmentInfo.view->GetFormat();
 
         if (format.HasDepth()) {
@@ -402,7 +404,8 @@ NSRef<MTLRenderPassDescriptor> CreateMTLRenderPassDescriptor(
                     break;
             }
 
-            auto storageAttachment = ToBackend(attachmentInfo.storage)->GetAttachmentInfo();
+            auto storageAttachment =
+                ToBackend(attachmentInfo.storage->GetInternal())->GetAttachmentInfo();
             mtlAttachment.texture = storageAttachment.texture.Get();
             mtlAttachment.level = storageAttachment.baseMipLevel;
             mtlAttachment.slice = storageAttachment.baseArrayLayer;
@@ -573,7 +576,8 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
             }
 
             auto HandleTextureBinding = [&]() {
-                auto textureView = ToBackend(group->GetBindingAsTextureView(bindingIndex));
+                auto textureView =
+                    ToBackend(group->GetBindingAsTextureView(bindingIndex)->GetInternal());
                 id<MTLTexture> texture = textureView->GetMTLTexture();
                 if (hasVertStage &&
                     mBoundTextures[SingleShaderStage::Vertex][vertIndex] != texture) {

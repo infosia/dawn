@@ -149,7 +149,7 @@ MaybeError BindGroup::InitializeImpl() {
                 }
             },
             [&](const TextureBindingInfo&) {
-                auto* view = ToBackend(GetBindingAsTextureView(bindingIndex));
+                auto* view = ToBackend(GetBindingAsTextureView(bindingIndex)->GetInternal());
                 auto& srv = view->GetSRVDescriptor();
 
                 ID3D12Resource* resource = ToBackend(view->GetTexture())->GetD3D12Resource();
@@ -166,7 +166,7 @@ MaybeError BindGroup::InitializeImpl() {
                                                   descriptorHeapOffsets[bindingIndex]));
             },
             [&](const StorageTextureBindingInfo& layout) {
-                TextureView* view = ToBackend(GetBindingAsTextureView(bindingIndex));
+                TextureView* view = ToBackend(GetBindingAsTextureView(bindingIndex)->GetInternal());
 
                 ID3D12Resource* resource = ToBackend(view->GetTexture())->GetD3D12Resource();
                 if (resource == nullptr) {

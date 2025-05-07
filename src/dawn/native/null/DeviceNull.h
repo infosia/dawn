@@ -69,7 +69,7 @@ using Sampler = SamplerBase;
 class ShaderModule;
 class SwapChain;
 class Texture;
-using TextureView = TextureViewBase;
+using TextureView = TextureViewInternalBase;
 
 struct NullBackendTraits {
     using BindGroupType = BindGroup;
@@ -169,7 +169,7 @@ class Device final : public DeviceBase {
         const SurfaceConfiguration* config) override;
     ResultOrError<Ref<TextureBase>> CreateTextureImpl(
         const UnpackedPtr<TextureDescriptor>& descriptor) override;
-    ResultOrError<Ref<TextureViewBase>> CreateTextureViewImpl(
+    ResultOrError<Ref<TextureViewInternalBase>> CreateTextureViewImpl(
         TextureBase* texture,
         const UnpackedPtr<TextureViewDescriptor>& descriptor) override;
 

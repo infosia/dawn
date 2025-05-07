@@ -1182,7 +1182,8 @@ ResultOrError<ComPtr<ID3D11ShaderResourceView>> Texture::GetStencilSRV(
     DAWN_TRY_ASSIGN(textureView, mTextureForStencilSampling->CreateView(&viewDesc));
 
     ComPtr<ID3D11ShaderResourceView> srv;
-    DAWN_TRY_ASSIGN(srv, ToBackend(textureView)->GetOrCreateD3D11ShaderResourceView());
+    DAWN_TRY_ASSIGN(srv,
+                    ToBackend(textureView->GetInternal())->GetOrCreateD3D11ShaderResourceView());
     return srv;
 }
 
@@ -1274,7 +1275,7 @@ Ref<TextureView> TextureView::Create(TextureBase* texture,
 TextureView::~TextureView() = default;
 
 void TextureView::DestroyImpl() {
-    TextureViewBase::DestroyImpl();
+    TextureViewInternalBase::DestroyImpl();
     mD3d11SharedResourceView = nullptr;
     mD3d11RenderTargetViews.clear();
     mD3d11DepthStencilView = nullptr;

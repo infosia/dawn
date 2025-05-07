@@ -399,7 +399,7 @@ ResultOrError<ComPtr<ID3D11ShaderResourceView>> BindGroupTracker::GetTextureShad
                     wgpu::StorageTextureAccess::ReadOnly);
     }
 
-    TextureView* view = ToBackend(group->GetBindingAsTextureView(bindingIndex));
+    TextureView* view = ToBackend(group->GetBindingAsTextureView(bindingIndex)->GetInternal());
     ComPtr<ID3D11ShaderResourceView> srv;
 
     if (DAWN_UNLIKELY(view->GetAspects() == Aspect::Stencil)) {
@@ -425,7 +425,7 @@ ResultOrError<ComPtr<ID3D11UnorderedAccessView>> BindGroupTracker::GetTextureUno
     DAWN_ASSERT(layout.access == wgpu::StorageTextureAccess::ReadWrite ||
                 layout.access == wgpu::StorageTextureAccess::WriteOnly);
 
-    TextureView* view = ToBackend(group->GetBindingAsTextureView(bindingIndex));
+    TextureView* view = ToBackend(group->GetBindingAsTextureView(bindingIndex)->GetInternal());
     ComPtr<ID3D11UnorderedAccessView> uav;
 
     DAWN_TRY_ASSIGN(uav, view->GetOrCreateD3D11UnorderedAccessView());
