@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59b60fe8_78b25e02",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-07T02:36:47Z",
+      "side": 1,
+      "message": "If I understand correctly, is this case convertible to one of the other ones where we can wait? (Maybe not always depending on whether the related commands have been flushed already or not from another call?)",
+      "range": {
+        "startLine": 713,
+        "startChar": 8,
+        "endLine": 727,
+        "endChar": 9
+      },
+      "revId": "1311802ed822d229b21ab713d76f92de9ee3202e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c32cab4_cff7d1e4",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-07T02:36:47Z",
+      "side": 1,
+      "message": "nit. I think you can do something like:\n```\ncompletedQueries.insert(\n    completedQueries.end(), \n    std::make_move_iterator(mPendingQueries.begin()), \n    std::make_move_iterator(mPendingQueries.begin() + numCompletedQueries)\n);\nmPendingQueries.erase(mPendingQueries.begin(),\n                      mPendingQueries.begin() + numCompletedQueries);\n```",
+      "range": {
+        "startLine": 741,
+        "startChar": 4,
+        "endLine": 744,
+        "endChar": 23
+      },
+      "revId": "1311802ed822d229b21ab713d76f92de9ee3202e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

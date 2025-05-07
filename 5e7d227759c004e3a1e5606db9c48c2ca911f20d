@@ -70,6 +70,24 @@
       "parentUuid": "62c031ae_57b9bad7",
       "revId": "5e7d227759c004e3a1e5606db9c48c2ca911f20d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15f3b5b1_cb3a374d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-07T02:36:47Z",
+      "side": 1,
+      "message": "Thank you for both explaining the reasoning and updating! Really appreciate the context and justification.\n\nJust to verify though, since I commented in the previous CL to revert the changes to use WaitAny, are the tests still working fine?",
+      "parentUuid": "e2a30421_40ae28ee",
+      "revId": "5e7d227759c004e3a1e5606db9c48c2ca911f20d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
