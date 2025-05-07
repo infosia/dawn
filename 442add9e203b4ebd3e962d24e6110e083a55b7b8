@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc493098_91a84599",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-07T09:16:34Z",
+      "side": 1,
+      "message": "I think the bots failure is due to missing Device default limits setup.\n\nBTW, I used to remove validate limit descriptor has chain validation rules here https://dawn-review.googlesource.com/c/dawn/+/235154/11/src/dawn/native/Adapter.cpp\n\nShall we add that back?",
+      "revId": "442add9e203b4ebd3e962d24e6110e083a55b7b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
