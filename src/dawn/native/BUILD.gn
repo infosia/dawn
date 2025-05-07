@@ -387,6 +387,8 @@ source_set("sources") {
     "SystemHandle.h",
     "Texture.cpp",
     "Texture.h",
+    "TextureView.cpp",
+    "TextureView.h",
     "TintUtils.cpp",
     "TintUtils.h",
     "ToBackend.h",

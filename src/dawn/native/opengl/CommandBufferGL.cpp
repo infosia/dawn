@@ -376,9 +376,11 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                     return {};
                 },
                 [&](const TextureBindingInfo&) -> MaybeError {
-                    TextureView* view = ToBackend(group->GetBindingAsTextureView(bindingIndex));
-                    GLuint handle = view->GetHandle();
-                    GLenum target = view->GetGLTarget();
+                    TextureViewBase* view = group->GetBindingAsTextureView(bindingIndex);
+                    TextureView* viewGl = ToBackend(view->GetInternal());
+
+                    GLuint handle = viewGl->GetHandle();
+                    GLenum target = viewGl->GetGLTarget();
                     GLuint viewIndex = indices[bindingIndex];
 
                     for (auto unit : mPipeline->GetTextureUnitsForTextureView(viewIndex)) {
@@ -421,7 +423,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                     return {};
                 },
                 [&](const StorageTextureBindingInfo& layout) -> MaybeError {
-                    TextureView* view = ToBackend(group->GetBindingAsTextureView(bindingIndex));
+                    TextureViewBase* view = group->GetBindingAsTextureView(bindingIndex);
                     Texture* texture = ToBackend(view->GetTexture());
                     GLuint handle = texture->GetHandle();
                     GLuint imageIndex = indices[bindingIndex];

@@ -117,9 +117,10 @@ MaybeError BindGroup::InitializeImpl() {
                 return false;
             },
             [&](const TextureBindingInfo&) -> bool {
-                TextureView* view = ToBackend(GetBindingAsTextureView(bindingIndex));
+                TextureViewBase* view = GetBindingAsTextureView(bindingIndex);
+                TextureView* viewVk = ToBackend(view->GetInternal());
 
-                VkImageView handle = view->GetHandle();
+                VkImageView handle = viewVk->GetHandle();
                 if (handle == VK_NULL_HANDLE) {
                     // The Texture was destroyed before the TextureView was created.
                     // Skip this descriptor write since it would be
@@ -150,13 +151,14 @@ MaybeError BindGroup::InitializeImpl() {
                 return true;
             },
             [&](const StorageTextureBindingInfo&) -> bool {
-                TextureView* view = ToBackend(GetBindingAsTextureView(bindingIndex));
+                TextureViewBase* view = GetBindingAsTextureView(bindingIndex);
+                TextureView* viewVk = ToBackend(view->GetInternal());
 
                 VkImageView handle = VK_NULL_HANDLE;
                 if (view->GetTexture()->GetFormat().format == wgpu::TextureFormat::BGRA8Unorm) {
-                    handle = view->GetHandleForBGRA8UnormStorage();
+                    handle = viewVk->GetHandleForBGRA8UnormStorage();
                 } else {
-                    handle = view->GetHandle();
+                    handle = viewVk->GetHandle();
                 }
                 if (handle == VK_NULL_HANDLE) {
                     // The Texture was destroyed before the TextureView was created.
@@ -173,7 +175,8 @@ MaybeError BindGroup::InitializeImpl() {
                 return true;
             },
             [&](const InputAttachmentBindingInfo&) -> bool {
-                TextureView* view = ToBackend(GetBindingAsTextureView(bindingIndex));
+                TextureViewBase* view = GetBindingAsTextureView(bindingIndex);
+                TextureView* viewVk = ToBackend(view->GetInternal());
 
                 VkImageView handle = view->GetHandle();
                 if (handle == VK_NULL_HANDLE) {

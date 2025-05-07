@@ -76,6 +76,7 @@
 #include "dawn/native/Surface.h"
 #include "dawn/native/SwapChain.h"
 #include "dawn/native/Texture.h"
+#include "dawn/native/TextureView.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/native/WaitListEvent.h"
 #include "dawn/native/utils/WGPUHelpers.h"
@@ -2246,7 +2247,23 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
     } else {
         descriptor = Unpack(&desc);
     }
-    return CreateTextureViewImpl(texture, descriptor);
+
+    TextureViewInternalBase blueprint(texture, descriptor, ApiObjectBase::kUntrackedByDevice);
+
+    const size_t blueprintHash = blueprint.ComputeContentHash();
+    blueprint.SetContentHash(blueprintHash);
+
+    Ref<BindGroupLayoutInternalBase> internal;
+    DAWN_TRY_ASSIGN(internal, GetOrCreate(texture->GetViewCache(), &blueprint,
+                                          [&]() -> ResultOrError<Ref<TextureViewInternalBase>> {
+                                              Ref<TextureViewInternalBase> result;
+                                              DAWN_TRY_ASSIGN(result, CreateTextureViewImpl(
+                                                                          texture, descriptor));
+                                              result->SetContentHash(blueprintHash);
+                                              return result;
+                                          }));
+
+    return AcquireRef(new TextureViewBase(this, internal, descriptor->label));
 }
 
 // Other implementation details

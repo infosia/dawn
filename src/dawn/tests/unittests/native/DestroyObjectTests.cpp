@@ -375,8 +375,11 @@ TEST_F(DestroyObjectTests, ExternalTextureNativeExplicit) {
 
     TextureViewDescriptor textureViewDesc = {};
     textureViewDesc.format = wgpu::TextureFormat::RGBA8Unorm;
-    Ref<TextureViewMock> textureViewMock =
+    Ref<TextureViewInternalMock> textureViewInternalMock =
         AcquireRef(new NiceMock<TextureViewMock>(textureMock.Get(), Unpack(&textureViewDesc)));
+
+    Ref<TextureViewBase> textureViewMock =
+        AcquireRef(new TextureViewBase(textureMock.Get(), textureViewInternalMock.Get(), ""));
 
     ExternalTextureDescriptor desc = {};
     std::array<float, 12> placeholderConstantArray;

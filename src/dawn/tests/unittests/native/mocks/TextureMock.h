@@ -31,6 +31,7 @@
 #include "gmock/gmock.h"
 
 #include "dawn/native/Texture.h"
+#include "dawn/native/TextureView.h"
 #include "dawn/tests/unittests/native/mocks/DeviceMock.h"
 
 namespace dawn::native {
@@ -46,10 +47,11 @@ class TextureMock : public TextureBase {
     MOCK_METHOD(void, DestroyImpl, (), (override));
 };
 
-class TextureViewMock : public TextureViewBase {
+class TextureViewInternalMock : public TextureViewInternalBase {
   public:
-    TextureViewMock(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor);
-    ~TextureViewMock() override;
+    TextureViewInternalMock(TextureBase* texture,
+                            const UnpackedPtr<TextureViewDescriptor>& descriptor);
+    ~TextureViewInternalMock() override;
 
     MOCK_METHOD(void, DestroyImpl, (), (override));
 };

@@ -31,15 +31,19 @@
 #include <string>
 #include <vector>
 
+#include "dawn/common/ContentLessObjectCache.h"
+#include "dawn/common/ContentLessObjectCacheable.h"
 #include "dawn/common/WeakRef.h"
 #include "dawn/common/ityp_array.h"
 #include "dawn/common/ityp_bitset.h"
+#include "dawn/native/CachedObject.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/Format.h"
 #include "dawn/native/Forward.h"
 #include "dawn/native/ObjectBase.h"
 #include "dawn/native/SharedTextureMemory.h"
 #include "dawn/native/Subresource.h"
+#include "dawn/native/TextureView.h"
 #include "partition_alloc/pointers/raw_ref.h"
 
 #include "dawn/native/dawn_platform.h"
@@ -57,12 +61,6 @@ MaybeError ValidateTextureDescriptor(
     const UnpackedPtr<TextureDescriptor>& descriptor,
     AllowMultiPlanarTextureFormat allowMultiPlanar = AllowMultiPlanarTextureFormat::No,
     std::optional<wgpu::TextureUsage> allowedSharedTextureMemoryUsage = std::nullopt);
-MaybeError ValidateTextureViewDescriptor(const DeviceBase* device,
-                                         const TextureBase* texture,
-                                         const UnpackedPtr<TextureViewDescriptor>& descriptor);
-ResultOrError<TextureViewDescriptor> GetTextureViewDescriptorWithDefaults(
-    const TextureBase* texture,
-    const TextureViewDescriptor* descriptor);
 
 bool IsValidSampleCount(uint32_t sampleCount);
 
@@ -84,7 +82,9 @@ static constexpr wgpu::TextureUsage kTextureViewOnlyUsages =
     kShaderTextureUsages | kResolveTextureLoadAndStoreUsages |
     wgpu::TextureUsage::TransientAttachment | wgpu::TextureUsage::StorageAttachment;
 
-class TextureBase : public SharedResource {
+// Textures are not cached, but inherit from CachedObject so that their hash can be used as part of
+// the TextureView hash.
+class TextureBase : public SharedResource, public WeakRefSupport<TextureBase> {
   public:
     enum class ClearValue { Zero, NonZero };
 
@@ -177,6 +177,10 @@ class TextureBase : public SharedResource {
     wgpu::TextureFormat APIGetFormat() const;
     wgpu::TextureUsage APIGetUsage() const;
 
+    ContentLessObjectCache<TextureViewInternalBase>& GetViewCache() {
+        return mTextureViewInternalCache;
+    }
+
   protected:
     TextureBase(DeviceBase* device, const UnpackedPtr<TextureDescriptor>& descriptor);
     ~TextureBase() override;
@@ -221,58 +225,8 @@ class TextureBase : public SharedResource {
 
     // TODO(crbug.com/dawn/845): Use a more optimized data structure to save space
     std::vector<bool> mIsSubresourceContentInitializedAtIndex;
-};
 
-class TextureViewBase : public ApiObjectBase {
-  public:
-    TextureViewBase(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor);
-    ~TextureViewBase() override;
-
-    static Ref<TextureViewBase> MakeError(DeviceBase* device, StringView label = nullptr);
-
-    ObjectType GetType() const override;
-    void FormatLabel(absl::FormatSink* s) const override;
-
-    const TextureBase* GetTexture() const;
-    TextureBase* GetTexture();
-
-    Aspect GetAspects() const;
-    const Format& GetFormat() const;
-    wgpu::TextureViewDimension GetDimension() const;
-    uint32_t GetBaseMipLevel() const;
-    uint32_t GetLevelCount() const;
-    uint32_t GetBaseArrayLayer() const;
-    uint32_t GetLayerCount() const;
-    const SubresourceRange& GetSubresourceRange() const;
-
-    // Returns the size of the texture's subresource at this view's base mip level and aspect.
-    Extent3D GetSingleSubresourceVirtualSize() const;
-
-    // |GetUsage| returns the usage with which the texture view was created using the base WebGPU
-    // API. The dawn-internal-usages extension may add additional usages. |GetInternalUsage|
-    // returns the union of base usage and the usages added by the extension.
-    wgpu::TextureUsage GetUsage() const;
-    wgpu::TextureUsage GetInternalUsage() const;
-
-    virtual bool IsYCbCr() const;
-    // Valid to call only if `IsYCbCr()` is true.
-    virtual YCbCrVkDescriptor GetYCbCrVkDescriptor() const;
-
-  protected:
-    void DestroyImpl() override;
-
-  private:
-    TextureViewBase(DeviceBase* device, ObjectBase::ErrorTag tag, StringView label);
-
-    ApiObjectList* GetObjectTrackingList() override;
-
-    Ref<TextureBase> mTexture;
-
-    const raw_ref<const Format> mFormat;
-    wgpu::TextureViewDimension mDimension;
-    SubresourceRange mRange;
-    const wgpu::TextureUsage mUsage = wgpu::TextureUsage::None;
-    const wgpu::TextureUsage mInternalUsage = wgpu::TextureUsage::None;
+    ContentLessObjectCache<TextureViewInternalBase> mTextureViewInternalCache;
 };
 
 }  // namespace dawn::native
