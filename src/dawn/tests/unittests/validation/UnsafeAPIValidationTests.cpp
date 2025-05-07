@@ -101,6 +101,12 @@ TEST_F(UnsafeAPIValidationTest, BindingArrayInWGSL) {
     )"));
 }
 
+TEST_F(UnsafeAPIValidationTest, AdapterMaxImmediateSize) {
+    wgpu::Limits adapterLimits;
+    adapter.GetLimits(&adapterLimits);
+    EXPECT_EQ(adapterLimits.maxImmediateSize, 0u);
+}
+
 class TimestampQueryUnsafeAPIValidationTest : public ValidationTest {
   protected:
     std::vector<const char*> GetDisabledToggles() override { return {"allow_unsafe_apis"}; }
