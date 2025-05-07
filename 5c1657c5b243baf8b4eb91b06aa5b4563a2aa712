@@ -232,6 +232,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "a14ab9db_ac5134d1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-07T08:09:48Z",
+      "side": 1,
+      "message": "Yes you are both correct however what I want is a clear way to achieve the status quo: small static libs and one big shared one. I also only use the monolithic but I don\u0027t want to break the current setup.",
+      "parentUuid": "1b6b18fd_6a4d8343",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f19585db_500a89d6",
