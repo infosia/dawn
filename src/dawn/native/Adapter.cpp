@@ -303,6 +303,14 @@ ResultOrError<Ref<DeviceBase>> AdapterBase::CreateDeviceInternal(
                                                    &requiredLimits),
                          "Validating and unpacking descriptor->requiredLimits");
 
+        if (descriptor->requiredLimits->maxImmediateSize != wgpu::kLimitU32Undefined &&
+            descriptor->requiredLimits->maxImmediateSize != 0) {
+            DAWN_INVALID_IF(
+                !requiredFeatureSet.contains(wgpu::FeatureName::ChromiumExperimentalImmediateData),
+                "maxImmediateSize is set (not Undefined), but %s is not enabled",
+                wgpu::FeatureName::ChromiumExperimentalImmediateData);
+        }
+
         DAWN_TRY_CONTEXT(ValidateLimits(GetLimits(), requiredLimits), "validating required limits");
     }
 

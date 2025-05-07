@@ -99,19 +99,17 @@ ResultOrError<UnpackedPtr<PipelineLayoutDescriptor>> ValidatePipelineLayoutDescr
 
     DAWN_TRY(ValidateBindingCounts(device->GetLimits(), bindingCounts, device->GetAdapter()));
 
-    // Validate immediateDataRangeByteSize.
-    if (descriptor->immediateDataRangeByteSize) {
+    // Validate immediateSize.
+    if (descriptor->immediateSize) {
         DAWN_INVALID_IF(!device->HasFeature(Feature::ChromiumExperimentalImmediateData),
-                        "Set non-zero immediateDatRangeByteSize without "
-                        "%s feature is not allowed.",
+                        "Setting non-zero immediateSize without %s feature is not allowed.",
                         ToAPI(Feature::ChromiumExperimentalImmediateData));
 
-        uint32_t maxImmediateDataRangeByteSize =
-            device->GetLimits().experimentalImmediateDataLimits.maxImmediateDataRangeByteSize;
+        uint32_t maxImmediateSize = device->GetLimits().v1.maxImmediateSize;
 
-        DAWN_INVALID_IF(descriptor->immediateDataRangeByteSize > maxImmediateDataRangeByteSize,
-                        "immediateDataRangeByteSize (%i) is larger than the maximum allowed (%i).",
-                        descriptor->immediateDataRangeByteSize, maxImmediateDataRangeByteSize);
+        DAWN_INVALID_IF(descriptor->immediateSize > maxImmediateSize,
+                        "immediateSize (%i) is larger than the maximum allowed (%i).",
+                        descriptor->immediateSize, maxImmediateSize);
     }
 
     return unpacked;
@@ -133,8 +131,7 @@ StageAndDescriptor::StageAndDescriptor(SingleShaderStage shaderStage,
 PipelineLayoutBase::PipelineLayoutBase(DeviceBase* device,
                                        const UnpackedPtr<PipelineLayoutDescriptor>& descriptor,
                                        ApiObjectBase::UntrackedByDeviceTag tag)
-    : ApiObjectBase(device, descriptor->label),
-      mImmediateDataRangeByteSize(descriptor->immediateDataRangeByteSize) {
+    : ApiObjectBase(device, descriptor->label), mImmediateSize(descriptor->immediateSize) {
     DAWN_ASSERT(descriptor->bindGroupLayoutCount <= kMaxBindGroups);
 
     // According to WebGPU SPEC of CreatePipelineLayout(), if bindGroupLayouts[i] is null or
@@ -372,7 +369,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
     // there's no issue with using the same struct multiple times.
     ExternalTextureBindingLayout externalTextureBindingLayout;
 
-    uint32_t immediateDataRangeByteSize = 0;
+    uint32_t immediateSize = 0;
 
     // Loops over all the reflected BindGroupLayoutEntries from shaders.
     for (const StageAndDescriptor& stage : stages) {
@@ -419,8 +416,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
         // fragment stages, it is possible that each stage has their own immediate data variable
         // shares the same immediate data block. Pick the max size of immediate data variable from
         // vertex and fragment stage as the pipelineLayout immediate data block size.
-        immediateDataRangeByteSize =
-            std::max(immediateDataRangeByteSize, metadata.immediateDataRangeByteSize);
+        immediateSize = std::max(immediateSize, metadata.immediateSize);
     }
 
     // Create the bind group layouts, including the empty ones as all the bind group layouts should
@@ -441,7 +437,7 @@ ResultOrError<Ref<PipelineLayoutBase>> PipelineLayoutBase::CreateDefault(
     PipelineLayoutDescriptor desc = {};
     desc.bindGroupLayouts = bgls.data();
     desc.bindGroupLayoutCount = static_cast<uint32_t>(kMaxBindGroupsTyped);
-    desc.immediateDataRangeByteSize = immediateDataRangeByteSize;
+    desc.immediateSize = immediateSize;
 
     Ref<PipelineLayoutBase> result;
     DAWN_TRY_ASSIGN(result, device->CreatePipelineLayout(&desc, pipelineCompatibilityToken));
@@ -536,7 +532,7 @@ size_t PipelineLayoutBase::ComputeContentHash() {
     }
 
     // Hash the immediate data range byte size
-    recorder.Record(mImmediateDataRangeByteSize);
+    recorder.Record(mImmediateSize);
 
     return recorder.GetContentHash();
 }
@@ -567,15 +563,15 @@ bool PipelineLayoutBase::EqualityFunc::operator()(const PipelineLayoutBase* a,
     }
 
     // Check immediate data range
-    if (a->mImmediateDataRangeByteSize != b->mImmediateDataRangeByteSize) {
+    if (a->mImmediateSize != b->mImmediateSize) {
         return false;
     }
 
     return true;
 }
 
-uint32_t PipelineLayoutBase::GetImmediateDataRangeByteSize() const {
-    return mImmediateDataRangeByteSize;
+uint32_t PipelineLayoutBase::GetImmediateSize() const {
+    return mImmediateSize;
 }
 
 uint32_t PipelineLayoutBase::GetNumStorageBufferBindingsInVertexStage() const {
