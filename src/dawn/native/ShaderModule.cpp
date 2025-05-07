@@ -730,7 +730,7 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
     // Immediate data byte size must be 4-byte aligned.
     if (entryPoint.immediate_data_size) {
         DAWN_ASSERT(IsAligned(entryPoint.immediate_data_size, 4u));
-        metadata->immediateDataRangeByteSize = entryPoint.immediate_data_size;
+        metadata->immediateSize = entryPoint.immediate_data_size;
     }
 
     // Vertex shader specific reflection.
@@ -1481,11 +1481,10 @@ MaybeError ValidateCompatibilityWithPipelineLayout(DeviceBase* device,
 
     // Validate that immediate data used by programmable state are smaller than pipelineLayout
     // immediate data range bytes.
-    DAWN_INVALID_IF(entryPoint.immediateDataRangeByteSize > layout->GetImmediateDataRangeByteSize(),
+    DAWN_INVALID_IF(entryPoint.immediateSize > layout->GetImmediateSize(),
                     "The entry-point uses more bytes of immediate data (%u) than the reserved "
                     "amount (%u) in %s.",
-                    entryPoint.immediateDataRangeByteSize, layout->GetImmediateDataRangeByteSize(),
-                    layout);
+                    entryPoint.immediateSize, layout->GetImmediateSize(), layout);
 
     return {};
 }
