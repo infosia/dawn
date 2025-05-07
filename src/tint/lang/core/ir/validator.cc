@@ -1084,6 +1084,7 @@ class Validator {
 
     /// Validates binding_point usage for pointers
     /// @param binding_point the binding information associated with pointer
+    /// @param buffer_id the buffer id if associated to the pointer
     /// @param address_space the address space of pointer
     /// @param target_str string to insert in error message describing what has a binding_point,
     /// defaults to 'variable'
