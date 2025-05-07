@@ -263,6 +263,7 @@ void Disassembler::EmitParamAttributes(const FunctionParam* p) {
         out_ << StyleAttribute("@color") << "(" << p->Color().value() << ")";
         need_comma = true;
     }
+
     if (p->Interpolation().has_value()) {
         comma();
         EmitInterpolation(p->Interpolation().value());
@@ -992,6 +993,10 @@ void Disassembler::EmitStructDecl(const core::type::Struct* str) {
         if (member->Attributes().builtin.has_value()) {
             out_ << ", " << StyleAttribute("@builtin") << "("
                  << StyleLiteral(member->Attributes().builtin.value()) << ")";
+        }
+        if (member->Attributes().binding_point.has_value()) {
+            out_ << ", ";
+            EmitBindingPoint(member->Attributes().binding_point.value());
         }
         EmitLine();
     }
