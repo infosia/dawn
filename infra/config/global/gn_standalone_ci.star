@@ -69,7 +69,7 @@ def generate_properties_for_project(project):
     }
     return properties
 
-def parent_builder(name, dimensions, **kwargs):
+def parent_builder(name, dimensions, category, short_name, **kwargs):
     """Adds a CI parent builder.
 
     Args:
@@ -79,9 +79,7 @@ def parent_builder(name, dimensions, **kwargs):
     luci.builder(
         name = name,
         bucket = "ci",
-        # TODO(crbug.com/385317083): Switch this to be triggered by
-        # "primary-poller" once we're ready to begin migration to this recipe.
-        triggered_by = None,
+        triggered_by = ["primary-poller"],
         schedule = "triggered",
         executable = "recipe:dawn/gn_v2",
         dimensions = dimensions,
@@ -93,8 +91,9 @@ def parent_builder(name, dimensions, **kwargs):
         service_account = CI_SERVICE_ACCOUNT,
         shadow_service_account = CI_SHADOW_SERVICE_ACCOUNT,
     )
+    add_console_entry(name, category, short_name)
 
-def child_tester(name, parent_builder):
+def child_tester(name, parent_builder, category, short_name):
     """Adds a CI child tester.
 
     Args:
@@ -120,7 +119,16 @@ def child_tester(name, parent_builder):
         service_account = CI_SERVICE_ACCOUNT,
         shadow_service_account = CI_SHADOW_SERVICE_ACCOUNT,
     )
+    add_console_entry(name, category, short_name)
 
-parent_builder("dawn-linux-x64-builder-rel", LINUX_BUILDER_DIMENSIONS)
+def add_console_entry(name, category, short_name):
+    luci.console_view_entry(
+        console_view = "ci",
+        builder = "ci/" + name,
+        category = category,
+        short_name = short_name,
+    )
 
-child_tester("dawn-linux-x64-sws-rel", "ci/dawn-linux-x64-builder-rel")
+parent_builder("dawn-linux-x64-builder-rel", LINUX_BUILDER_DIMENSIONS, "linux|clang|rel", "x64")
+
+child_tester("dawn-linux-x64-sws-rel", "ci/dawn-linux-x64-builder-rel", "linux|test|rel|x64", "sws")
