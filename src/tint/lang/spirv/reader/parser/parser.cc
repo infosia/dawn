@@ -395,7 +395,7 @@ class Parser {
                 case spvtools::opt::analysis::Type::kPointer: {
                     auto* ptr_ty = type->AsPointer();
                     return ty_.ptr(AddressSpace(ptr_ty->storage_class()),
-                                   Type(ptr_ty->pointee_type()), access_mode);
+                                   Type(ptr_ty->pointee_type(), access_mode), access_mode);
                 }
                 case spvtools::opt::analysis::Type::kSampler: {
                     return ty_.sampler();
@@ -412,7 +412,10 @@ class Parser {
                                                      : type::Multisampled::kSingleSampled;
                     auto sampled = static_cast<type::Sampled>(img->sampled());
                     auto texel_format = ToTexelFormat(img->format());
-                    auto access = ToAccess(img->access_qualifier());
+
+                    // If the access mode is undefined then default to read for the image
+                    access_mode =
+                        access_mode == core::Access::kUndefined ? core::Access::kRead : access_mode;
 
                     if (img->dim() != spv::Dim::Dim1D && img->dim() != spv::Dim::Dim2D &&
                         img->dim() != spv::Dim::Dim3D && img->dim() != spv::Dim::Cube &&
@@ -425,7 +428,7 @@ class Parser {
                     }
 
                     return ty_.Get<spirv::type::Image>(sampled_ty, dim, depth, arrayed, ms, sampled,
-                                                       texel_format, access);
+                                                       texel_format, access_mode);
                 }
                 case spvtools::opt::analysis::Type::kSampledImage: {
                     TINT_UNREACHABLE() << "OpTypeSampledImage should have been removed by the "
@@ -436,20 +439,6 @@ class Parser {
                 }
             }
         });
-    }
-
-    core::Access ToAccess(spv::AccessQualifier access) {
-        switch (access) {
-            case spv::AccessQualifier::ReadOnly:
-                return core::Access::kRead;
-            case spv::AccessQualifier::WriteOnly:
-                return core::Access::kWrite;
-            case spv::AccessQualifier::ReadWrite:
-                return core::Access::kReadWrite;
-            default:
-                break;
-        }
-        TINT_ICE() << "unknown access qualifier: " << static_cast<uint32_t>(access);
     }
 
     core::TexelFormat ToTexelFormat(spv::ImageFormat fmt) {
@@ -2428,6 +2417,9 @@ class Parser {
              spirv_context_->get_decoration_mgr()->GetDecorationsFor(inst.result_id(), false)) {
             auto d = deco->GetSingleWordOperand(1);
             switch (spv::Decoration(d)) {
+                case spv::Decoration::NonReadable:
+                    access_mode = core::Access::kWrite;
+                    break;
                 case spv::Decoration::NonWritable:
                     access_mode = core::Access::kRead;
                     break;
