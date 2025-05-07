@@ -36,6 +36,7 @@
 #include "src/tint/lang/core/type/f32.h"
 #include "src/tint/lang/core/type/i32.h"
 #include "src/tint/lang/core/type/matrix.h"
+#include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/struct.h"
 #include "src/tint/lang/core/type/u32.h"
 #include "src/tint/lang/core/type/vector.h"
@@ -220,6 +221,7 @@ SizeAndAlign MslPackedTypeSizeAndAlign(const core::type::Type* ty) {
 
         [&](const core::type::Atomic* atomic) { return MslPackedTypeSizeAndAlign(atomic->Type()); },
 
+        [&](const core::type::Pointer*) { return SizeAndAlign{4, 4}; },  //
         TINT_ICE_ON_NO_MATCH);
 }
 
