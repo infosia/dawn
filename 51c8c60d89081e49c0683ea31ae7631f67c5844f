@@ -16,6 +16,310 @@
       "message": "PTAL",
       "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a2b7e4b_921ebd5a",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 3077,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "I think the `docs/dawn/features/dawn_partial_load_resolve_texture.md` is not updated to describe this rect yet.",
+      "range": {
+        "startLine": 3077,
+        "startChar": 5,
+        "endLine": 3077,
+        "endChar": 40
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cec62e1d_1c7945f4",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "nit: instead of binding the uniform buffer after the textures, maybe we should bind it at index\u003d0, and bind all textures starting from 1. It would make the code easier to read.",
+      "range": {
+        "startLine": 86,
+        "startChar": 10,
+        "endLine": 86,
+        "endChar": 22
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef196f81_a5da9066",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "Consider using `device-\u003eGetOrCreateTemporaryUniformBuffer` for buffer reuses.\n\nFor `GetOrCreateTemporaryUniformBuffer`, we should use 4 integers for buffer size to avoid the device creating another buffer. Because many other workarounds also use 4 integers in uniform buffer.\n\n```\n            DAWN_TRY_ASSIGN(paramsBuffer,\n                            device-\u003eGetOrCreateTemporaryUniformBuffer(sizeof(int32_t) * 4));\n\n            int32_t params[4];\n            params[0] \u003d resolveRect-\u003eresolveOffsetX - resolveRect-\u003ecolorOffsetX;\n            params[1] \u003d resolveRect-\u003eresolveOffsetY - resolveRect-\u003ecolorOffsetY;\n            params[2] \u003d 0; // unused\n            params[3] \u003d 0; // unused\n            commandEncoder-\u003eAPIWriteBuffer(paramsBuffer.Get(), 0,\n                                           reinterpret_cast\u003cconst uint8_t*\u003e(\u0026params[0]),\n                                           sizeof(params));\n```\n\nYou can see an example here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlitBufferToTexture.cpp;drc\u003d81e4ab4dec47df836df1975d9ba09b1caa0f38fb;l\u003d456",
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa473c7b_b3577ff8",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "I think we talked about this bug before, after expanding the resolve texture, we should reset the scissor rect to be full color attachment\u0027s size. To avoid the scissor rect above affecting all subsequent user draws.\n\nFYI @jie.a.chen@intel.com",
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86af57b8_aff6eead",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "instead of passing `renderPassDescriptor`, I think you can pass `RenderPassDescriptorResolveRect` directly here. Remove the `rect` argument below.",
+      "range": {
+        "startLine": 108,
+        "startChar": 79,
+        "endLine": 108,
+        "endChar": 99
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6391c3a_44fda11d",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "I think we don\u0027t need to pass the resolveRect here. Instead we should move the validation at [1] to [2].",
+      "range": {
+        "startLine": 121,
+        "startChar": 68,
+        "endLine": 121,
+        "endChar": 79
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "677e323e_9879bf13",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "[1]. This validation should be moved to [2] where the old rect is validated.",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 80
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa36ea99_bdd374d0",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "I think with this extension, we can remove this limit check. I.e we allow the resolve target to be smaller or larger than the MSAA attachment.",
+      "range": {
+        "startLine": 218,
+        "startChar": 24,
+        "endLine": 224,
+        "endChar": 43
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f25e91c5_59c715c7",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "[2]. This is a legacy rect. Consider convert it to `RenderPassDescriptorResolveRect` and do the validation here for both of them.",
+      "range": {
+        "startLine": 864,
+        "startChar": 4,
+        "endLine": 864,
+        "endChar": 83
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de6d099e_f0c61722",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "Consider convert the old rect to the new rect. So we don\u0027t need to handle them separately.\n\n```\nstd::optional expandResolveRect;\nif (auto* legacyResolveRect \u003d renderPassDescriptor.Get\u003cRenderPassDescriptorExpandResolveRect\u003e()) {\n\texpandResolveRect \u003d {\n\t\t.colorOffsetX \u003d legacyResolveRect-\u003ex,\n\t\t.colorOffsetY \u003d legacyResolveRect-\u003ey,\n\t\t.resolveOffsetX \u003d legacyResolveRect-\u003ex,\n\t\t.resolveOffsetX \u003d legacyResolveRect-\u003ey,\n\t\t.width \u003d legacyResolveRect-\u003ewidth,\n\t\t.height \u003d legacyResolveRect-\u003eheight,\n\t};\n} else if (resolveRect \u003d renderPassDescriptor.Get\u003cRenderPassDescriptorResolveRect\u003e()) {\n\texpandResolveRect \u003d *resolveRect;\n}\n\n```",
+      "range": {
+        "startLine": 221,
+        "startChar": 4,
+        "endLine": 222,
+        "endChar": 84
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8632d6f_8c34aa39",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "This should be changed to\n```\nif (resolveRect)\n```\nWe should now do partial resolve even if the client doesn\u0027t use `wgpu::LoadOp::ExpandResolveTexture`.",
+      "range": {
+        "startLine": 227,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 74
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40fa304e_fc3c9259",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "This is a legacy, I think you can remove all tests using it and migrate them to use the new rect instead.",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "866f982a_f36e56ba",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "This test doesn\u0027t use `DawnPartialLoadResolveTexture` feature, so no need to make it `DawnTestWithParams`.\nInstead we should change `DawnLoadResolveTextureTest` to\n```\nclass DawnLoadResolveTextureTest:\n\tpublic MultisampledRenderingTest,\n\tpublic ::testing::TestWithParam\u003cMultisampledRenderingTestParams\u003e {\n...\n```\n\nAlternative, we can just remove the legacy rect option and just test using the new ResolveRect.",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 31
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eac91b7e_5e217d31",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2651,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-07T10:18:33Z",
+      "side": 1,
+      "message": "I think we should add a test where MSAA texture is smaller than the resolve texture.",
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
