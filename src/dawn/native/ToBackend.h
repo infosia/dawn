@@ -133,7 +133,7 @@ struct ToBackendTraits<SwapChainBase, BackendTraits> {
 };
 
 template <typename BackendTraits>
-struct ToBackendTraits<TextureViewBase, BackendTraits> {
+struct ToBackendTraits<TextureViewInternalBase, BackendTraits> {
     using BackendType = typename BackendTraits::TextureViewType;
 };
 

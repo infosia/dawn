@@ -463,7 +463,7 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
 
         for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
             auto& attachmentInfo = renderPass->colorAttachments[i];
-            TextureView* view = ToBackend(attachmentInfo.view.Get());
+            TextureView* view = ToBackend(attachmentInfo.view->GetInternal());
             if (view == nullptr) {
                 continue;
             }
@@ -508,7 +508,7 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
 
         if (renderPass->attachmentState->HasDepthStencilAttachment()) {
             auto& attachmentInfo = renderPass->depthStencilAttachment;
-            TextureView* view = ToBackend(attachmentInfo.view.Get());
+            TextureView* view = ToBackend(attachmentInfo.view->GetInternal());
 
             attachments[attachmentCount] = view->GetHandle();
 
@@ -520,7 +520,8 @@ MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
 
         for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
             if (renderPass->colorAttachments[i].resolveTarget != nullptr) {
-                TextureView* view = ToBackend(renderPass->colorAttachments[i].resolveTarget.Get());
+                TextureView* view =
+                    ToBackend(renderPass->colorAttachments[i].resolveTarget->GetInternal());
 
                 attachments[attachmentCount] = view->GetHandle();
 

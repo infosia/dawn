@@ -145,7 +145,7 @@ ResultOrError<SwapChainTextureInfo> SwapChainEGL::GetCurrentTextureImpl() {
     DAWN_TRY_ASSIGN(view, GetDevice()->CreateTextureView(texture.Get()));
 
     mTexture = std::move(ToBackend(texture));
-    mTextureView = std::move(ToBackend(view));
+    mTextureView = std::move(ToBackend(view->GetInternal()));
 
     SwapChainTextureInfo info;
     info.texture = mTexture;

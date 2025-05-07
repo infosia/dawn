@@ -1106,8 +1106,11 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* recordingContext,
                 viewDesc.usage = wgpu::TextureUsage::RenderAttachment;
 
                 ColorAttachmentIndex ca0(uint8_t(0));
-                DAWN_TRY_ASSIGN(beginCmd.colorAttachments[ca0].view,
-                                TextureView::Create(this, Unpack(&viewDesc)));
+
+                Ref<TextureView> textureView;
+                DAWN_TRY_ASSIGN(textureView, TextureView::Create(this, Unpack(&viewDesc)));
+
+                beginCmd.colorAttachments[ca0].view = new TextureViewBase(this, textureView, "");
 
                 RenderPassColorAttachment colorAttachment{};
                 colorAttachment.view = beginCmd.colorAttachments[ca0].view.Get();
@@ -1934,12 +1937,14 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         return {};
     }
 
+    Ref<TextureBase> texture = GetTexture().Promote();
+
     // Texture could be destroyed by the time we make a view.
-    if (GetTexture()->IsDestroyed()) {
+    if (!texture || texture->IsDestroyed()) {
         return {};
     }
 
-    Device* device = ToBackend(GetTexture()->GetDevice());
+    Device* device = ToBackend(GetDevice());
     VkImageViewCreateInfo createInfo = GetCreateInfo(descriptor->format, descriptor->dimension);
 
     VkImageViewUsageCreateInfo usageInfo = {};
@@ -1970,7 +1975,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
     // We should create an image view with format RGBA8Unorm on the BGRA8Unorm texture when the
     // texture is used as storage texture. See http://crbug.com/dawn/1641 for more details.
     if (createInfo.format == VK_FORMAT_B8G8R8A8_UNORM &&
-        (GetTexture()->GetInternalUsage() & wgpu::TextureUsage::StorageBinding)) {
+        (texture->GetInternalUsage() & wgpu::TextureUsage::StorageBinding)) {
         createInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
         DAWN_TRY(CheckVkSuccess(device->fn.CreateImageView(device->GetVkDevice(), &createInfo,
                                                            nullptr, &*mHandleForBGRA8UnormStorage),
@@ -1985,7 +1990,7 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
 TextureView::~TextureView() {}
 
 void TextureView::DestroyImpl() {
-    Device* device = ToBackend(GetTexture()->GetDevice());
+    Device* device = ToBackend(GetDevice());
 
     if (mSamplerYCbCrConversion != VK_NULL_HANDLE) {
         device->GetFencedDeleter()->DeleteWhenUnused(mSamplerYCbCrConversion);
@@ -2021,16 +2026,19 @@ VkImageView TextureView::GetHandleForBGRA8UnormStorage() const {
 VkImageViewCreateInfo TextureView::GetCreateInfo(wgpu::TextureFormat format,
                                                  wgpu::TextureViewDimension dimension,
                                                  uint32_t depthSlice) const {
-    Device* device = ToBackend(GetTexture()->GetDevice());
+    Device* device = ToBackend(GetDevice());
+
+    Ref<TextureBase> texture = GetTexture().Promote();
+    DAWN_ASSERT(texture);
 
     VkImageViewCreateInfo createInfo;
     createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
     createInfo.pNext = nullptr;
     createInfo.flags = 0;
-    createInfo.image = ToBackend(GetTexture())->GetHandle();
+    createInfo.image = ToBackend(texture)->GetHandle();
     createInfo.viewType = VulkanImageViewType(dimension);
 
-    const Format& textureFormat = GetTexture()->GetFormat();
+    const Format& textureFormat = texture->GetFormat();
     if (textureFormat.HasStencil() &&
         (textureFormat.HasDepth() || !device->IsToggleEnabled(Toggle::VulkanUseS8))) {
         // Unlike multi-planar formats, depth-stencil formats have multiple aspects but are not
@@ -2057,7 +2065,9 @@ VkImageViewCreateInfo TextureView::GetCreateInfo(wgpu::TextureFormat format,
 }
 
 ResultOrError<VkImageView> TextureView::GetOrCreate2DViewOn3D(uint32_t depthSlice) {
-    DAWN_ASSERT(GetTexture()->GetDimension() == wgpu::TextureDimension::e3D);
+    Ref<TextureBase> texture = GetTexture().Promote();
+    DAWN_ASSERT(texture);
+    DAWN_ASSERT(texture->GetDimension() == wgpu::TextureDimension::e3D);
     DAWN_ASSERT(depthSlice < GetSingleSubresourceVirtualSize().depthOrArrayLayers);
 
     if (mHandlesFor2DViewOn3D.empty()) {
@@ -2068,7 +2078,7 @@ ResultOrError<VkImageView> TextureView::GetOrCreate2DViewOn3D(uint32_t depthSlic
         return static_cast<VkImageView>(mHandlesFor2DViewOn3D[depthSlice]);
     }
 
-    Device* device = ToBackend(GetTexture()->GetDevice());
+    Device* device = ToBackend(GetDevice());
     VkImageViewCreateInfo createInfo =
         GetCreateInfo(GetFormat().format, wgpu::TextureViewDimension::e2D, depthSlice);
 

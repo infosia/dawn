@@ -491,7 +491,7 @@ class DeviceBase : public ErrorSink,
         const SurfaceConfiguration* config) = 0;
     virtual ResultOrError<Ref<TextureBase>> CreateTextureImpl(
         const UnpackedPtr<TextureDescriptor>& descriptor) = 0;
-    virtual ResultOrError<Ref<TextureViewBase>> CreateTextureViewImpl(
+    virtual ResultOrError<Ref<TextureViewInternalBase>> CreateTextureViewImpl(
         TextureBase* texture,
         const UnpackedPtr<TextureViewDescriptor>& descriptor) = 0;
     virtual Ref<ComputePipelineBase> CreateUninitializedComputePipelineImpl(

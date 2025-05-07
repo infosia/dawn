@@ -376,9 +376,11 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                     return {};
                 },
                 [&](const TextureBindingInfo&) -> MaybeError {
-                    TextureView* view = ToBackend(group->GetBindingAsTextureView(bindingIndex));
-                    GLuint handle = view->GetHandle();
-                    GLenum target = view->GetGLTarget();
+                    TextureViewBase* view = group->GetBindingAsTextureView(bindingIndex);
+                    TextureView* glView = ToBackend(view->GetInternal());
+
+                    GLuint handle = glView->GetHandle();
+                    GLenum target = glView->GetGLTarget();
                     GLuint viewIndex = indices[bindingIndex];
 
                     for (auto unit : mPipeline->GetTextureUnitsForTextureView(viewIndex)) {
@@ -417,11 +419,11 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
 
                     // Some texture builtin function data needs emulation to update into the
                     // internal uniform buffer.
-                    UpdateTextureBuiltinsUniformData(gl, view, groupIndex, bindingIndex);
+                    UpdateTextureBuiltinsUniformData(gl, glView, groupIndex, bindingIndex);
                     return {};
                 },
                 [&](const StorageTextureBindingInfo& layout) -> MaybeError {
-                    TextureView* view = ToBackend(group->GetBindingAsTextureView(bindingIndex));
+                    TextureViewBase* view = group->GetBindingAsTextureView(bindingIndex);
                     Texture* texture = ToBackend(view->GetTexture());
                     GLuint handle = texture->GetHandle();
                     GLuint imageIndex = indices[bindingIndex];
@@ -479,6 +481,9 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
             return;
         }
 
+        Ref<TextureBase> texture = view->GetTexture().Promote();
+        DAWN_ASSERT(texture);
+
         // Update data by retrieving information from texture view object.
         const BindPointFunction field = iter->second.first;
         const size_t byteOffset = static_cast<size_t>(iter->second.second);
@@ -489,7 +494,7 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
                 data = view->GetLevelCount();
                 break;
             case BindPointFunction::kTextureNumSamples:
-                data = view->GetTexture()->GetSampleCount();
+                data = texture->GetSampleCount();
                 break;
         }
 
@@ -634,13 +639,13 @@ MaybeError ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
                 DAWN_GL_TRY(gl, GenFramebuffers(1, &writeFbo));
             }
 
-            TextureView* colorView = ToBackend(renderPass->colorAttachments[i].view.Get());
+            TextureView* colorView = ToBackend(renderPass->colorAttachments[i].view->GetInternal());
 
             DAWN_GL_TRY(gl, BindFramebuffer(GL_READ_FRAMEBUFFER, readFbo));
             DAWN_TRY(colorView->BindToFramebuffer(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
 
             TextureView* resolveView =
-                ToBackend(renderPass->colorAttachments[i].resolveTarget.Get());
+                ToBackend(renderPass->colorAttachments[i].resolveTarget->GetInternal());
             DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, writeFbo));
             DAWN_TRY(resolveView->BindToFramebuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
             DAWN_GL_TRY(gl, BlitFramebuffer(0, 0, renderPass->width, renderPass->height, 0, 0,
@@ -1178,7 +1183,8 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass) {
 
         ColorAttachmentIndex attachmentCount{};
         for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
-            TextureView* textureView = ToBackend(renderPass->colorAttachments[i].view.Get());
+            TextureView* textureView =
+                ToBackend(renderPass->colorAttachments[i].view->GetInternal());
             GLenum glAttachment = GL_COLOR_ATTACHMENT0 + static_cast<uint8_t>(i);
 
             // Attach color buffers.
@@ -1190,8 +1196,10 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass) {
         DAWN_GL_TRY(gl, DrawBuffers(static_cast<uint8_t>(attachmentCount), drawBuffers.data()));
 
         if (renderPass->attachmentState->HasDepthStencilAttachment()) {
-            TextureView* textureView = ToBackend(renderPass->depthStencilAttachment.view.Get());
-            const Format& format = textureView->GetTexture()->GetFormat();
+            TextureView* textureView =
+                ToBackend(renderPass->depthStencilAttachment.view->GetInternal());
+            const Format& format =
+                renderPass->depthStencilAttachment.view->GetTexture()->GetFormat();
 
             // Attach depth/stencil buffer.
             GLenum glAttachment = 0;

@@ -650,14 +650,14 @@ TextureView::TextureView(TextureBase* texture,
                          const UnpackedPtr<TextureViewDescriptor>& descriptor,
                          GLuint handle,
                          OwnsHandle ownsHandle)
-    : TextureViewBase(texture, descriptor), mHandle(handle), mOwnsHandle(ownsHandle) {
+    : TextureViewInternalBase(texture, descriptor), mHandle(handle), mOwnsHandle(ownsHandle) {
     mTarget = TargetForTextureViewDimension(descriptor->dimension, texture->GetSampleCount());
 }
 
 TextureView::~TextureView() {}
 
 void TextureView::DestroyImpl() {
-    TextureViewBase::DestroyImpl();
+    TextureViewInternalBase::DestroyImpl();
     if (mOwnsHandle == OwnsHandle::Yes) {
         const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
         DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &mHandle));
@@ -679,9 +679,12 @@ MaybeError TextureView::BindToFramebuffer(GLenum target, GLenum attachment, GLui
 
     const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
 
+    Ref<TextureBase> texture = GetTexture().Promote();
+    DAWN_ASSERT(texture);
+
     // Use the base texture where possible to minimize the amount of copying required on GLES.
-    bool useOwnView = GetFormat().format != GetTexture()->GetFormat().format &&
-                      !GetTexture()->GetFormat().HasDepthOrStencil();
+    bool useOwnView = GetFormat().format != texture->GetFormat().format &&
+                      !texture->GetFormat().HasDepthOrStencil();
 
     GLenum textarget;
     GLuint textureHandle, mipLevel, arrayLayer;
@@ -695,8 +698,8 @@ MaybeError TextureView::BindToFramebuffer(GLenum target, GLenum attachment, GLui
     } else {
         // Use the texture's handle and target, with the view's base mip level and base array
 
-        textureHandle = ToBackend(GetTexture())->GetHandle();
-        textarget = ToBackend(GetTexture())->GetGLTarget();
+        textureHandle = ToBackend(texture)->GetHandle();
+        textarget = ToBackend(texture)->GetGLTarget();
         mipLevel = GetBaseMipLevel();
         // We have validated that the depthSlice in render pass's colorAttachments must be undefined
         // for 2d RTVs, which value is set to 0. For 3d RTVs, the baseArrayLayer must be 0. So here
@@ -712,10 +715,12 @@ MaybeError TextureView::BindToFramebuffer(GLenum target, GLenum attachment, GLui
 }
 
 GLenum TextureView::GetInternalFormat() const {
+    Ref<TextureBase> texture = GetTexture().Promote();
+    DAWN_ASSERT(texture);
+
     // Depth/stencil don't support reinterpretation, and the aspect is specified at
     // bind time. In that case, we use the base texture format.
-    const Format& format =
-        GetFormat().HasDepthOrStencil() ? GetTexture()->GetFormat() : GetFormat();
+    const Format& format = GetFormat().HasDepthOrStencil() ? texture->GetFormat() : GetFormat();
     const GLFormat& glFormat = ToBackend(GetDevice())->GetGLFormat(format);
     return glFormat.internalFormat;
 }
