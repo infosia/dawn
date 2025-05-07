@@ -62,6 +62,10 @@
 #include "dawn/native/OpenGLBackend.h"
 #endif  // defined(DAWN_ENABLE_BACKEND_OPENGL)
 
+#if defined(DAWN_ENABLE_BACKEND_WEBGPU)
+#include "dawn/native/webgpu/PhysicalDeviceWGPU.h"
+#endif  // defined(DAWN_ENABLE_BACKEND_WEBGPU)
+
 #if defined(DAWN_USE_X11)
 #include "dawn/native/X11Functions.h"
 #endif  // defined(DAWN_USE_X11)
@@ -319,6 +323,20 @@ Future InstanceBase::APIRequestAdapter(const RequestAdapterOptions* options,
         options = &kDefaultOptions;
     }
     auto adapters = EnumerateAdapters(options);
+
+#if defined(DAWN_ENABLE_BACKEND_WEBGPU)
+    // The adapters vector is sorted by SortAdapters in Adapter.cpp
+    // in the order of Core -> Compat -> Testing while preferring OS-specific backends.
+    DAWN_ASSERT(adapters[0]->GetPhysicalDevice()->GetBackendType() != wgpu::BackendType::WebGPU);
+    for (auto adapter : adapters) {
+        if (adapter->GetPhysicalDevice()->GetBackendType() != wgpu::BackendType::WebGPU) {
+            continue;
+        }
+        reinterpret_cast<webgpu::PhysicalDevice*>(adapter->GetPhysicalDevice())
+            ->InitializeAdapterImpl(adapters[0]);
+        break;
+    }
+#endif
 
     FutureID futureID = GetEventManager()->TrackEvent(AcquireRef(new RequestAdapterEvent(
         callbackInfo, adapters.empty() ? nullptr : std::move(adapters[0]))));

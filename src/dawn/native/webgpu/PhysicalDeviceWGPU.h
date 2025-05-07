@@ -63,8 +63,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
     const DawnProcTable& GetFunctions() const;
 
     // const RequestAdapterOptions* GetRequestAdapterOptions() const;
-
-    // AdapterBase* GetAdapterImpl() const;
+    void InitializeAdapterImpl(Ref<AdapterBase> adapterImpl);
 
   private:
     explicit PhysicalDevice(Backend* backend, const UnpackedPtr<RequestAdapterOptions>& options);
@@ -93,7 +92,11 @@ class PhysicalDevice : public PhysicalDeviceBase {
 
     RequestAdapterOptions mRequestAdapterOptions = {};
 
-    Ref<AdapterBase> mAdapterImpl;
+    // Use GetAdapterImpl as the getter method of mAdapterImpl
+    // to make sure it is initialized at the first access.
+    AdapterBase* GetAdapterImpl();
+    Ref<AdapterBase> mAdapterImpl = nullptr;
+    // bool mInitialized = false;
 };
 
 }  // namespace dawn::native::webgpu

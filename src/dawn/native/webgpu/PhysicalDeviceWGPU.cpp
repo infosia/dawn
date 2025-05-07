@@ -78,36 +78,70 @@ const DawnProcTable& PhysicalDevice::GetFunctions() const {
 //     return &mRequestAdapterOptions;
 // }
 
-// AdapterBase* PhysicalDevice::GetAdapterImpl() const {
-//     return mAdapterImpl.Get();
-// }
+AdapterBase* PhysicalDevice::GetAdapterImpl() {
+    if (!mAdapterImpl.Get()) {
+        auto adapters = mBackend->GetInstance()->EnumerateAdapters(&mRequestAdapterOptions);
+        // The adapters vector is sorted by SortAdapters in Adapter.cpp
+        // in the order of Core -> Compat -> Testing while preferring OS-specific backends.
+        mAdapterImpl = std::move(adapters[0]);
+        DAWN_ASSERT(mAdapterImpl->GetPhysicalDevice()->GetBackendType() !=
+                    wgpu::BackendType::WebGPU);
 
-bool PhysicalDevice::SupportsExternalImages() const {
-    // TODO(crbug.com/413053623): query the implementation adapter.
-    return false;
+        // TODO(crbug.com/413053623): Enable features, limits etc. bases on mAdapterImpl
+    }
+    return mAdapterImpl.Get();
 }
 
-bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel, InstanceBase*) const {
-    // TODO(crbug.com/413053623): query the implementation adapter.
+void PhysicalDevice::InitializeAdapterImpl(Ref<AdapterBase> adapterImpl) {
+    if (mAdapterImpl.Get()) {
+        return;
+    }
+    mAdapterImpl = std::move(adapterImpl);
+    DAWN_ASSERT(mAdapterImpl->GetPhysicalDevice()->GetBackendType() != wgpu::BackendType::WebGPU);
+
+    // TODO(crbug.com/413053623): Enable features, limits etc. bases on mAdapterImpl
+}
+
+bool PhysicalDevice::SupportsExternalImages() const {
+    // if(mAdapterImpl.Get()) {
+    //     return mAdapterImpl->GetPhysicalDevice()->SupportsExternalImages();
+    // }
+    return true;
+}
+
+bool PhysicalDevice::SupportsFeatureLevel(wgpu::FeatureLevel featureLevel,
+                                          InstanceBase* instance) const {
+    // if(mAdapterImpl.Get()) {
+    //     return mAdapterImpl->GetPhysicalDevice()->SupportsFeatureLevel(featureLevel, instance);
+    // }
     return true;
 }
 
 ResultOrError<PhysicalDeviceSurfaceCapabilities> PhysicalDevice::GetSurfaceCapabilities(
     InstanceBase* instance,
     const Surface* surface) const {
-    PhysicalDeviceSurfaceCapabilities capabilities;
-    capabilities.usages = wgpu::TextureUsage::RenderAttachment;
-    capabilities.formats = {wgpu::TextureFormat::BGRA8Unorm};
-    capabilities.presentModes = {wgpu::PresentMode::Fifo};
-    capabilities.alphaModes = {wgpu::CompositeAlphaMode::Opaque};
-    return capabilities;
+    // PhysicalDeviceSurfaceCapabilities capabilities;
+    // capabilities.usages = wgpu::TextureUsage::RenderAttachment;
+    // capabilities.formats = {wgpu::TextureFormat::BGRA8Unorm};
+    // capabilities.presentModes = {wgpu::PresentMode::Fifo};
+    // capabilities.alphaModes = {wgpu::CompositeAlphaMode::Opaque};
+    // return capabilities;
+    DAWN_ASSERT(mAdapterImpl.Get());
+    return mAdapterImpl->GetPhysicalDevice()->GetSurfaceCapabilities(instance, surface);
 }
 
 MaybeError PhysicalDevice::InitializeImpl() {
+    // We cannot initialize the mAdapterImpl here as this is called inside
+    // EnumerateAdapters. Doing so ends in an infinite recursion.
     return {};
 }
 
 void PhysicalDevice::InitializeSupportedFeaturesImpl() {
+    if (mAdapterImpl.Get()) {
+    }
+    // We cannot initialize the mAdapterImpl here as this is called inside
+    // EnumerateAdapters. Doing so ends in an infinite recursion.
+
     // Enable all features by default for the convenience of tests.
     for (uint32_t i = 0; i < kEnumCount<Feature>; i++) {
         EnableFeature(static_cast<Feature>(i));
@@ -115,6 +149,9 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
+    // We cannot initialize the mAdapterImpl here as this is called inside
+    // EnumerateAdapters. Doing so ends in an infinite recursion.
+
     GetDefaultLimitsForSupportedFeatureLevel(limits);
     // Set the subgroups limit, as DeviceWGPU should support subgroups feature.
     limits->experimentalImmediateDataLimits.maxImmediateDataRangeByteSize =
@@ -133,20 +170,19 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     const UnpackedPtr<DeviceDescriptor>& descriptor,
     const TogglesState& deviceToggles,
     Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
-    if (!mAdapterImpl.Get()) {
-        auto adapters = adapter->GetInstance()->EnumerateAdapters(&mRequestAdapterOptions);
-        // The adapters vector is sorted by SortAdapters in Adapter.cpp
-        // in the order of Core -> Compat -> Testing while preferring OS-specific backends.
-        mAdapterImpl = std::move(adapters[0]);
-        DAWN_ASSERT(mAdapterImpl->GetPhysicalDevice()->GetBackendType() !=
-                    wgpu::BackendType::WebGPU);
-    }
-
+    // return Device::Create(adapter, GetAdapterImpl(), descriptor, deviceToggles,
+    //                       std::move(lostEvent));
+    DAWN_ASSERT(mAdapterImpl.Get());
     return Device::Create(adapter, mAdapterImpl.Get(), descriptor, deviceToggles,
                           std::move(lostEvent));
 }
 
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {
+    if (mAdapterImpl.Get()) {
+        mAdapterImpl->GetPhysicalDevice()->PopulateBackendProperties(info);
+        return;
+    }
+
     if (auto* subgroupProperties = info.Get<AdapterPropertiesSubgroups>()) {
         subgroupProperties->subgroupMinSize = 4;
         subgroupProperties->subgroupMaxSize = 128;
@@ -163,6 +199,9 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) c
     if (auto* d3dProperties = info.Get<AdapterPropertiesD3D>()) {
         d3dProperties->shaderModel = 0;
     }
+
+    // DAWN_ASSERT(mAdapterImpl.Get());
+    // mAdapterImpl->GetPhysicalDevice()->PopulateBackendProperties(info);
 }
 
 FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(

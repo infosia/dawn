@@ -38,6 +38,10 @@
 #include "dawn/platform/DawnPlatform.h"
 #include "tint/tint.h"
 
+#if defined(DAWN_ENABLE_BACKEND_WEBGPU)
+#include "dawn/native/webgpu/PhysicalDeviceWGPU.h"
+#endif  // defined(DAWN_ENABLE_BACKEND_WEBGPU)
+
 // Contains the entry-points into dawn_native
 
 namespace dawn::native {
@@ -164,6 +168,22 @@ std::vector<Adapter> Instance::EnumerateAdapters(const WGPURequestAdapterOptions
     for (const Ref<AdapterBase>& adapter : mImpl->EnumerateAdapters(FromAPI(options))) {
         adapters.push_back(Adapter(adapter.Get()));
     }
+#if defined(DAWN_ENABLE_BACKEND_WEBGPU)
+    // The adapters vector is sorted by SortAdapters in Adapter.cpp
+    // in the order of Core -> Compat -> Testing while preferring OS-specific backends.
+    auto adapterImpl = FromAPI(adapters[0].Get());
+    DAWN_ASSERT(FromAPI(adapters[0].Get())->GetPhysicalDevice()->GetBackendType() !=
+                wgpu::BackendType::WebGPU);
+    for (auto adapter : adapters) {
+        if (FromAPI(adapter.Get())->GetPhysicalDevice()->GetBackendType() !=
+            wgpu::BackendType::WebGPU) {
+            continue;
+        }
+        reinterpret_cast<webgpu::PhysicalDevice*>(FromAPI(adapter.Get())->GetPhysicalDevice())
+            ->InitializeAdapterImpl(AcquireRef(adapterImpl));
+        break;
+    }
+#endif
     return adapters;
 }
 
