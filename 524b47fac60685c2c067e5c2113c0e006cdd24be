@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06ca87e7_5b875a76",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-07T00:04:17Z",
+      "side": 1,
+      "message": "nit. I think that since theres already parenthesis, you can do:\n```\nraise Exception(\"emdawnwebgpu.port.py may only be used from a \"\n                \"packaged emdawnwebgpu_pkg, not from Dawn\u0027s source \"\n                \"tree. You can use pre-built packages from \"\n                \"https://github.com/google/dawn/releases or build it locally.\")\n```\nor something of that sort?",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 76
+      },
+      "revId": "524b47fac60685c2c067e5c2113c0e006cdd24be",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
