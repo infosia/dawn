@@ -2157,6 +2157,14 @@ void Validator::CheckFunction(const Function* func) {
             }
         }
 
+        if (!capabilities_.Contains(Capability::kAllowWorkspacePointerInputToEntryPoint) &&
+            func->IsEntryPoint()) {
+            if (mv && mv->Is<core::type::Pointer>() && address_space == AddressSpace::kWorkgroup) {
+                AddError(param) << "input param to entry point cannot be a ptr in the 'workgroup' "
+                                   "address space";
+            }
+        }
+
         scope_stack_.Add(param);
     }
 
@@ -3771,11 +3779,12 @@ Result<SuccessType> Validate(const Module& mod, Capabilities capabilities) {
 
 Result<SuccessType> ValidateAndDumpIfNeeded([[maybe_unused]] const Module& ir,
                                             [[maybe_unused]] const char* msg,
-                                            [[maybe_unused]] Capabilities capabilities) {
+                                            [[maybe_unused]] Capabilities capabilities,
+                                            [[maybe_unused]] std::string_view timing) {
 #if TINT_DUMP_IR_WHEN_VALIDATING
     auto printer = StyledTextPrinter::Create(stdout);
     std::cout << "=========================================================\n";
-    std::cout << "== IR dump before " << msg << ":\n";
+    std::cout << "== IR dump " << timing << " " << msg << ":\n";
     std::cout << "=========================================================\n";
     printer->Print(Disassembler(ir).Text());
 #endif
