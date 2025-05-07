@@ -109,7 +109,7 @@ class ImmediateDataTests : public DawnTest {
         wgpu::PipelineLayoutDescriptor pipelineLayoutDesc;
         pipelineLayoutDesc.bindGroupLayoutCount = 1;
         pipelineLayoutDesc.bindGroupLayouts = &bindGroupLayout;
-        pipelineLayoutDesc.immediateDataRangeByteSize = kDefaultMaxImmediateDataBytes;
+        pipelineLayoutDesc.immediateSize = kDefaultMaxImmediateSize;
         return device.CreatePipelineLayout(&pipelineLayoutDesc);
     }
 
