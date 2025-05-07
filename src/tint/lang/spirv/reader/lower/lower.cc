@@ -46,6 +46,14 @@ Result<SuccessType> Lower(core::ir::Module& mod) {
         }                                \
     } while (false)
 
+    auto res = core::ir::ValidateAndDumpIfNeeded(mod, "spirv.Lower",
+                                                 core::ir::Capabilities{
+                                                     core::ir::Capability::kAllowOverrides,
+                                                 });
+    if (res != Success) {
+        return res.Failure();
+    }
+
     RUN_TRANSFORM(lower::VectorElementPointer, mod);
     RUN_TRANSFORM(lower::ShaderIO, mod);
     RUN_TRANSFORM(lower::Builtins, mod);
@@ -59,14 +67,6 @@ Result<SuccessType> Lower(core::ir::Module& mod) {
     // transform is also complicated because of the way it currently detects multi element `&&` and
     // `||` statements.
     RUN_TRANSFORM(core::ir::transform::RemoveTerminatorArgs, mod);
-
-    auto res = core::ir::ValidateAndDumpIfNeeded(mod, "spirv.Lower",
-                                                 core::ir::Capabilities{
-                                                     core::ir::Capability::kAllowOverrides,
-                                                 });
-    if (res != Success) {
-        return res.Failure();
-    }
 
     return Success;
 }
