@@ -100,7 +100,7 @@ class Texture final : public TextureBase {
     CFRef<IOSurfaceRef> mIOSurface = nullptr;
 };
 
-class TextureView final : public TextureViewBase {
+class TextureView final : public TextureViewInternalBase {
   public:
     static ResultOrError<Ref<TextureView>> Create(
         TextureBase* texture,
@@ -116,7 +116,7 @@ class TextureView final : public TextureViewBase {
     AttachmentInfo GetAttachmentInfo() const;
 
   private:
-    using TextureViewBase::TextureViewBase;
+    using TextureViewInternalBase::TextureViewInternalBase;
     MaybeError Initialize(const UnpackedPtr<TextureViewDescriptor>& descriptor);
     void DestroyImpl() override;
     void SetLabelImpl() override;

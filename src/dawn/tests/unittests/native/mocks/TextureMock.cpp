@@ -41,12 +41,15 @@ TextureMock::TextureMock(DeviceMock* device, const TextureDescriptor* descriptor
 
 TextureMock::~TextureMock() = default;
 
-TextureViewMock::TextureViewMock(TextureBase* texture,
-                                 const UnpackedPtr<TextureViewDescriptor>& descriptor)
-    : TextureViewBase(texture, descriptor) {
-    ON_CALL(*this, DestroyImpl).WillByDefault([this] { this->TextureViewBase::DestroyImpl(); });
+TextureViewInternalMock::TextureViewInternalMock(
+    TextureBase* texture,
+    const UnpackedPtr<TextureViewDescriptor>& descriptor)
+    : TextureViewInternalBase(texture, descriptor) {
+    ON_CALL(*this, DestroyImpl).WillByDefault([this] {
+        this->TextureViewInternalBase::DestroyImpl();
+    });
 }
 
-TextureViewMock::~TextureViewMock() = default;
+TextureViewInternalMock::~TextureViewInternalMock() = default;
 
 }  // namespace dawn::native

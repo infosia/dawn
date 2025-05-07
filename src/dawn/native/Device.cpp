@@ -76,6 +76,7 @@
 #include "dawn/native/Surface.h"
 #include "dawn/native/SwapChain.h"
 #include "dawn/native/Texture.h"
+#include "dawn/native/TextureView.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/native/WaitListEvent.h"
 #include "dawn/native/utils/WGPUHelpers.h"
@@ -2246,7 +2247,10 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
     } else {
         descriptor = Unpack(&desc);
     }
-    return CreateTextureViewImpl(texture, descriptor);
+
+    Ref<TextureViewInternalBase> internal;
+    DAWN_TRY_ASSIGN(internal, CreateTextureViewImpl(texture, descriptor));
+    return internal->CreateTextureView();
 }
 
 // Other implementation details

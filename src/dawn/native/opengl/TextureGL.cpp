@@ -650,14 +650,14 @@ TextureView::TextureView(TextureBase* texture,
                          const UnpackedPtr<TextureViewDescriptor>& descriptor,
                          GLuint handle,
                          OwnsHandle ownsHandle)
-    : TextureViewBase(texture, descriptor), mHandle(handle), mOwnsHandle(ownsHandle) {
+    : TextureViewInternalBase(texture, descriptor), mHandle(handle), mOwnsHandle(ownsHandle) {
     mTarget = TargetForTextureViewDimension(descriptor->dimension, texture->GetSampleCount());
 }
 
 TextureView::~TextureView() {}
 
 void TextureView::DestroyImpl() {
-    TextureViewBase::DestroyImpl();
+    TextureViewInternalBase::DestroyImpl();
     if (mOwnsHandle == OwnsHandle::Yes) {
         const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
         DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteTextures(1, &mHandle));

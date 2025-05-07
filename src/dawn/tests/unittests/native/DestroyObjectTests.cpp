@@ -375,8 +375,11 @@ TEST_F(DestroyObjectTests, ExternalTextureNativeExplicit) {
 
     TextureViewDescriptor textureViewDesc = {};
     textureViewDesc.format = wgpu::TextureFormat::RGBA8Unorm;
-    Ref<TextureViewMock> textureViewMock =
-        AcquireRef(new NiceMock<TextureViewMock>(textureMock.Get(), Unpack(&textureViewDesc)));
+    Ref<TextureViewInternalMock> textureViewInternalMock = AcquireRef(
+        new NiceMock<TextureViewInternalMock>(textureMock.Get(), Unpack(&textureViewDesc)));
+
+    Ref<TextureViewBase> textureViewMock =
+        AcquireRef(new TextureViewBase(textureMock.Get(), textureViewInternalMock.Get(), ""));
 
     ExternalTextureDescriptor desc = {};
     std::array<float, 12> placeholderConstantArray;
@@ -406,8 +409,11 @@ TEST_F(DestroyObjectTests, ExternalTextureApiExplicit) {
 
     TextureViewDescriptor textureViewDesc = {};
     textureViewDesc.format = wgpu::TextureFormat::RGBA8Unorm;
-    Ref<TextureViewMock> textureViewMock =
-        AcquireRef(new NiceMock<TextureViewMock>(textureMock.Get(), Unpack(&textureViewDesc)));
+    Ref<TextureViewInternalMock> textureViewInternalMock = AcquireRef(
+        new NiceMock<TextureViewInternalMock>(textureMock.Get(), Unpack(&textureViewDesc)));
+
+    Ref<TextureViewBase> textureViewMock =
+        AcquireRef(new TextureViewBase(textureMock.Get(), textureViewInternalMock.Get(), ""));
 
     ExternalTextureDescriptor desc = {};
     std::array<float, 12> placeholderConstantArray;
@@ -441,8 +447,11 @@ TEST_F(DestroyObjectTests, ExternalTextureImplicit) {
 
     TextureViewDescriptor textureViewDesc = {};
     textureViewDesc.format = wgpu::TextureFormat::RGBA8Unorm;
-    Ref<TextureViewMock> textureViewMock =
-        AcquireRef(new NiceMock<TextureViewMock>(textureMock.Get(), Unpack(&textureViewDesc)));
+    Ref<TextureViewInternalMock> textureViewInternalMock = AcquireRef(
+        new NiceMock<TextureViewInternalMock>(textureMock.Get(), Unpack(&textureViewDesc)));
+
+    Ref<TextureViewBase> textureViewMock =
+        AcquireRef(new TextureViewBase(textureMock.Get(), textureViewInternalMock.Get(), ""));
 
     ExternalTextureDescriptor desc = {};
     std::array<float, 12> placeholderConstantArray;
@@ -736,8 +745,9 @@ TEST_F(DestroyObjectTests, TextureViewNativeExplicit) {
     desc.format = wgpu::TextureFormat::RGBA8Unorm;
     {
         // Explicitly destroy the texture view.
-        Ref<TextureViewMock> textureViewMock =
-            AcquireRef(new TextureViewMock(textureMock.Get(), Unpack(&desc)));
+        Ref<TextureViewInternalMock> textureViewMock =
+            AcquireRef(new TextureViewInternalMock(textureMock.Get(), Unpack(&desc)));
+
         EXPECT_CALL(*textureViewMock.Get(), DestroyImpl).Times(1);
 
         EXPECT_TRUE(textureViewMock->IsAlive());
@@ -746,8 +756,11 @@ TEST_F(DestroyObjectTests, TextureViewNativeExplicit) {
     }
     {
         // Destroying the owning texture should cause the view to be destroyed as well.
-        Ref<TextureViewMock> textureViewMock =
-            AcquireRef(new TextureViewMock(textureMock.Get(), Unpack(&desc)));
+        Ref<TextureViewInternalMock> textureViewMock =
+            AcquireRef(new TextureViewInternalMock(textureMock.Get(), Unpack(&desc)));
+
+        Ref<TextureViewBase> textureViewBase =
+            AcquireRef(new TextureViewBase(textureMock.Get(), textureViewMock, ""));
         EXPECT_CALL(*textureViewMock.Get(), DestroyImpl).Times(1);
 
         EXPECT_TRUE(textureViewMock->IsAlive());
@@ -766,8 +779,9 @@ TEST_F(DestroyObjectTests, TextureViewApiExplicit) {
 
     TextureViewDescriptor viewDesc = {};
     viewDesc.format = wgpu::TextureFormat::RGBA8Unorm;
-    Ref<TextureViewMock> textureViewMock =
-        AcquireRef(new TextureViewMock(textureMock.Get(), Unpack(&viewDesc)));
+
+    Ref<TextureViewInternalMock> textureViewMock =
+        AcquireRef(new TextureViewInternalMock(textureMock.Get(), Unpack(&viewDesc)));
     EXPECT_CALL(*textureViewMock.Get(), DestroyImpl).Times(1);
 
     EXPECT_CALL(*mDeviceMock, CreateTextureViewImpl(textureMock.Get(), _))
@@ -794,8 +808,9 @@ TEST_F(DestroyObjectTests, TextureViewImplicit) {
     TextureViewDescriptor viewDesc = {};
     viewDesc.format = wgpu::TextureFormat::RGBA8Unorm;
 
-    Ref<TextureViewMock> textureViewMock =
-        AcquireRef(new TextureViewMock(textureMock.Get(), Unpack(&viewDesc)));
+    Ref<TextureViewInternalMock> textureViewMock =
+        AcquireRef(new TextureViewInternalMock(textureMock.Get(), Unpack(&viewDesc)));
+
     EXPECT_CALL(*textureViewMock.Get(), DestroyImpl).Times(1);
     {
         ScopedRawPtrExpectation scoped(textureViewMock.Get());
@@ -987,14 +1002,14 @@ TEST_F(DestroyObjectTests, DestroyObjectsApiExplicit) {
         texture = device.CreateTexture(ToCppAPI(&desc));
     }
 
-    Ref<TextureViewMock> textureViewMock;
+    Ref<TextureViewInternalMock> textureViewMock;
     wgpu::TextureView textureView;
     {
         TextureViewDescriptor desc = {};
         desc.format = wgpu::TextureFormat::RGBA8Unorm;
 
         ScopedRawPtrExpectation scoped(mDeviceMock);
-        textureViewMock = AcquireRef(new TextureViewMock(textureMock.Get(), Unpack(&desc)));
+        textureViewMock = AcquireRef(new TextureViewInternalMock(textureMock.Get(), Unpack(&desc)));
         EXPECT_CALL(*mDeviceMock, CreateTextureViewImpl).WillOnce(Return(textureViewMock));
         textureView = texture.CreateView(ToCppAPI(&desc));
     }
@@ -1002,6 +1017,8 @@ TEST_F(DestroyObjectTests, DestroyObjectsApiExplicit) {
     Ref<ExternalTextureMock> externalTextureMock;
     wgpu::ExternalTexture externalTexture;
     {
+        Ref<TextureViewBase> textureViewBase = textureViewMock->CreateTextureView();
+
         ExternalTextureDescriptor desc = {};
         std::array<float, 12> placeholderConstantArray;
         desc.yuvToRgbConversionMatrix = placeholderConstantArray.data();
@@ -1010,7 +1027,7 @@ TEST_F(DestroyObjectTests, DestroyObjectsApiExplicit) {
         desc.dstTransferFunctionParameters = placeholderConstantArray.data();
         desc.cropSize = {1, 1};
         desc.apparentSize = {1, 1};
-        desc.plane0 = textureViewMock.Get();
+        desc.plane0 = textureViewBase.Get();
 
         ScopedRawPtrExpectation scoped(mDeviceMock);
         externalTextureMock = ExternalTextureMock::Create(mDeviceMock, &desc);

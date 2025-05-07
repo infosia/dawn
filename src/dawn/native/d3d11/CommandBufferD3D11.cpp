@@ -156,8 +156,9 @@ HandlePixelLocalStorageAndGetPixelLocalStorageUAVs(
             ++nextImplicitAttachmentIndex;
 
             // Get and clear the UAV of the implicit pixel local storage attachment
-            DAWN_TRY_ASSIGN(pixelLocalStorageUAV, ToBackend(implicitPixelLocalStorageTextureView)
-                                                      ->GetOrCreateD3D11UnorderedAccessView());
+            DAWN_TRY_ASSIGN(pixelLocalStorageUAV,
+                            ToBackend(implicitPixelLocalStorageTextureView->GetInternal())
+                                ->GetOrCreateD3D11UnorderedAccessView());
 
             // TODO(dawn:1704): investigate if we can only clear it when necessary.
             uint32_t clearValue[4] = {0, 0, 0, 0};
@@ -166,9 +167,8 @@ HandlePixelLocalStorageAndGetPixelLocalStorageUAVs(
         } else {
             // Get the UAV of the explicit pixel local storage attachment
             auto& attachmentInfo = renderPass->storageAttachments[attachment];
-            DAWN_TRY_ASSIGN(
-                pixelLocalStorageUAV,
-                ToBackend(attachmentInfo.storage.Get())->GetOrCreateD3D11UnorderedAccessView());
+            DAWN_TRY_ASSIGN(pixelLocalStorageUAV, ToBackend(attachmentInfo.storage->GetInternal())
+                                                      ->GetOrCreateD3D11UnorderedAccessView());
 
             // Execute the load operation of the pixel local storage attachment
             switch (attachmentInfo.loadOp) {
@@ -605,7 +605,8 @@ MaybeError CommandBuffer::ExecuteRenderPass(
     ColorAttachmentIndex attachmentCount{};
     // TODO(dawn:1815): Shrink the sparse attachments to accommodate more UAVs.
     for (auto i : renderPass->attachmentState->GetColorAttachmentsMask()) {
-        TextureView* colorTextureView = ToBackend(renderPass->colorAttachments[i].view.Get());
+        TextureView* colorTextureView =
+            ToBackend(renderPass->colorAttachments[i].view->GetInternal());
         DAWN_TRY_ASSIGN(d3d11RenderTargetViews[i],
                         colorTextureView->GetOrCreateD3D11RenderTargetView(
                             renderPass->colorAttachments[i].depthSlice));
@@ -623,7 +624,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
         const Format& attachmentFormat = attachmentInfo->view->GetTexture()->GetFormat();
 
         TextureView* depthStencilTextureView =
-            ToBackend(renderPass->depthStencilAttachment.view.Get());
+            ToBackend(renderPass->depthStencilAttachment.view->GetInternal());
         DAWN_TRY_ASSIGN(d3d11DepthStencilView,
                         depthStencilTextureView->GetOrCreateD3D11DepthStencilView(
                             attachmentInfo->depthReadOnly, attachmentInfo->stencilReadOnly));

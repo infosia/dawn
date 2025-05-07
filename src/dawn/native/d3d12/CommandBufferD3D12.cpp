@@ -1367,7 +1367,7 @@ MaybeError CommandBuffer::SetupRenderPass(CommandRecordingContext* commandContex
     for (auto i : Range(kMaxColorAttachmentsTyped)) {
         if (colorAttachmentsMaskBitSet.test(i)) {
             RenderPassColorAttachmentInfo& attachmentInfo = renderPass->colorAttachments[i];
-            TextureView* view = ToBackend(attachmentInfo.view.Get());
+            TextureView* view = ToBackend(attachmentInfo.view->GetInternal());
 
             // Set view attachment.
             CPUDescriptorHeapAllocation rtvAllocation;
@@ -1380,7 +1380,8 @@ MaybeError CommandBuffer::SetupRenderPass(CommandRecordingContext* commandContex
             const D3D12_CPU_DESCRIPTOR_HANDLE baseDescriptor = rtvAllocation.GetBaseDescriptor();
 
             device->GetD3D12Device()->CreateRenderTargetView(
-                ToBackend(view->GetTexture())->GetD3D12Resource(), &viewDesc, baseDescriptor);
+                ToBackend(attachmentInfo.view->GetTexture())->GetD3D12Resource(), &viewDesc,
+                baseDescriptor);
 
             renderPassBuilder->SetRenderTargetView(i, baseDescriptor, false);
 
@@ -1390,9 +1391,10 @@ MaybeError CommandBuffer::SetupRenderPass(CommandRecordingContext* commandContex
 
             // Set color store operation.
             if (attachmentInfo.resolveTarget != nullptr) {
-                TextureView* resolveDestinationView = ToBackend(attachmentInfo.resolveTarget.Get());
+                TextureView* resolveDestinationView =
+                    ToBackend(attachmentInfo.resolveTarget->GetInternal());
                 Texture* resolveDestinationTexture =
-                    ToBackend(resolveDestinationView->GetTexture());
+                    ToBackend(attachmentInfo.resolveTarget->GetTexture());
 
                 resolveDestinationTexture->TrackUsageAndTransitionNow(
                     commandContext, D3D12_RESOURCE_STATE_RESOLVE_DEST,
@@ -1423,7 +1425,8 @@ MaybeError CommandBuffer::SetupRenderPass(CommandRecordingContext* commandContex
 
     if (renderPass->attachmentState->HasDepthStencilAttachment()) {
         RenderPassDepthStencilAttachmentInfo& attachmentInfo = renderPass->depthStencilAttachment;
-        TextureView* view = ToBackend(renderPass->depthStencilAttachment.view.Get());
+        Texture* texture = ToBackend(renderPass->depthStencilAttachment.view->GetTexture());
+        TextureView* view = ToBackend(renderPass->depthStencilAttachment.view->GetInternal());
 
         // Set depth attachment.
         CPUDescriptorHeapAllocation dsvAllocation;
@@ -1434,14 +1437,14 @@ MaybeError CommandBuffer::SetupRenderPass(CommandRecordingContext* commandContex
             view->GetDSVDescriptor(attachmentInfo.depthReadOnly, attachmentInfo.stencilReadOnly);
         const D3D12_CPU_DESCRIPTOR_HANDLE baseDescriptor = dsvAllocation.GetBaseDescriptor();
 
-        device->GetD3D12Device()->CreateDepthStencilView(
-            ToBackend(view->GetTexture())->GetD3D12Resource(), &viewDesc, baseDescriptor);
+        device->GetD3D12Device()->CreateDepthStencilView(texture->GetD3D12Resource(), &viewDesc,
+                                                         baseDescriptor);
 
         renderPassBuilder->SetDepthStencilView(baseDescriptor, attachmentInfo.depthReadOnly,
                                                attachmentInfo.stencilReadOnly);
 
-        const bool hasDepth = view->GetTexture()->GetFormat().HasDepth();
-        const bool hasStencil = view->GetTexture()->GetFormat().HasStencil();
+        const bool hasDepth = texture->GetFormat().HasDepth();
+        const bool hasStencil = texture->GetFormat().HasStencil();
 
         // Set depth/stencil load operations.
         if (hasDepth) {

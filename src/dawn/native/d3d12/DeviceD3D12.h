@@ -202,7 +202,7 @@ class Device final : public d3d::Device {
         const SurfaceConfiguration* config) override;
     ResultOrError<Ref<TextureBase>> CreateTextureImpl(
         const UnpackedPtr<TextureDescriptor>& descriptor) override;
-    ResultOrError<Ref<TextureViewBase>> CreateTextureViewImpl(
+    ResultOrError<Ref<TextureViewInternalBase>> CreateTextureViewImpl(
         TextureBase* texture,
         const UnpackedPtr<TextureViewDescriptor>& descriptor) override;
     Ref<ComputePipelineBase> CreateUninitializedComputePipelineImpl(

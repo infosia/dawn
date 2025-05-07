@@ -108,8 +108,8 @@ DeviceMock::DeviceMock(AdapterBase* adapter,
     ON_CALL(*this, CreateTextureViewImpl)
         .WillByDefault(WithArgs<0, 1>(
             [](TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor)
-                -> ResultOrError<Ref<TextureViewBase>> {
-                return AcquireRef(new NiceMock<TextureViewMock>(texture, descriptor));
+                -> ResultOrError<Ref<TextureViewInternalBase>> {
+                return AcquireRef(new NiceMock<TextureViewInternalMock>(texture, descriptor));
             }));
     ON_CALL(*this, CreateUninitializedComputePipelineImpl)
         .WillByDefault(WithArgs<0>([this](const UnpackedPtr<ComputePipelineDescriptor>& descriptor)

@@ -308,7 +308,7 @@ class SharedTexture final : public ImportedTextureBase {
     SharedTextureMemoryObjects mSharedTextureMemoryObjects;
 };
 
-class TextureView final : public TextureViewBase {
+class TextureView final : public TextureViewInternalBase {
   public:
     static ResultOrError<Ref<TextureView>> Create(
         TextureBase* texture,
@@ -324,7 +324,7 @@ class TextureView final : public TextureViewBase {
   private:
     ~TextureView() override;
     void DestroyImpl() override;
-    using TextureViewBase::TextureViewBase;
+    using TextureViewInternalBase::TextureViewInternalBase;
     MaybeError Initialize(const UnpackedPtr<TextureViewDescriptor>& descriptor);
 
     VkImageViewCreateInfo GetCreateInfo(wgpu::TextureFormat format,
