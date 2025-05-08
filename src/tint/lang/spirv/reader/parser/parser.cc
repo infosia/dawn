@@ -486,8 +486,8 @@ class Parser {
                                                        texel_format, access_mode);
                 }
                 case spvtools::opt::analysis::Type::kSampledImage: {
-                    TINT_UNREACHABLE() << "OpTypeSampledImage should have been removed by the "
-                                          "SplitCombinedImageSamplerPass";
+                    auto* sampled = type->AsSampledImage();
+                    return ty_.Get<spirv::type::SampledImage>(Type(sampled->image_type()));
                 }
                 default: {
                     TINT_UNIMPLEMENTED() << "unhandled SPIR-V type: " << type->str();
@@ -1362,6 +1362,12 @@ class Parser {
                 case spv::Op::OpArrayLength:
                     EmitArrayLength(inst);
                     break;
+                case spv::Op::OpSampledImage:
+                    EmitSampledImage(inst);
+                    break;
+                case spv::Op::OpImageGather:
+                    EmitImageGather(inst);
+                    break;
                 default:
                     TINT_UNIMPLEMENTED()
                         << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
@@ -1385,6 +1391,31 @@ class Parser {
             const auto& merge_bb = current_spirv_function_->FindBlock(merge_id);
             EmitBlock(dst, *merge_bb);
         }
+    }
+
+    void EmitSampledImage(const spvtools::opt::Instruction& inst) {
+        auto* tex = Value(inst.GetSingleWordInOperand(0));
+        Emit(b_.CallExplicit<spirv::ir::BuiltinCall>(Type(inst.type_id()),
+                                                     spirv::BuiltinFn::kSampledImage,
+                                                     Vector{tex->Type()}, Args(inst, 2)),
+             inst.result_id());
+    }
+
+    void EmitImageGather(const spvtools::opt::Instruction& inst) {
+        Vector<core::ir::Value*, 4> args;
+
+        auto sampled_image = Value(inst.GetSingleWordInOperand(0));
+        auto* coord = Value(inst.GetSingleWordInOperand(1));
+        auto* comp = Value(inst.GetSingleWordInOperand(2));
+
+        core::ir::Value* operands = b_.Zero(ty_.i32());
+        if (inst.NumInOperands() > 3) {
+            operands = Value(inst.GetSingleWordInOperand(3));
+        }
+
+        Emit(b_.Call<spirv::ir::BuiltinCall>(Type(inst.type_id()), spirv::BuiltinFn::kImageGather,
+                                             Vector{sampled_image, coord, comp, operands}),
+             inst.result_id());
     }
 
     void EmitAtomicSigned(const spvtools::opt::Instruction& inst, spirv::BuiltinFn fn) {
@@ -1524,7 +1555,8 @@ class Parser {
         // merge block in the case of an `if` breaking out of a `switch` or `loop`.
         if (auto* ctrl_inst = StopWalkingAt(dest_id)) {
             if (auto* loop = ctrl_inst->As<core::ir::Loop>()) {
-                // Going to the merge in a loop body has to be a break regardless of nesting level.
+                // Going to the merge in a loop body has to be a break regardless of nesting
+                // level.
                 if (InBlock(loop->Body()) && !InBlock(loop->Continuing())) {
                     EmitWithoutResult(b_.Exit(ctrl_inst));
                 }
@@ -1540,15 +1572,15 @@ class Parser {
         EmitBlock(current_block_, *bb);
     }
 
-    // Given a true and false branch find if there is a common convergence point before the merge
-    // block.
+    // Given a true and false branch find if there is a common convergence point before the
+    // merge block.
     std::optional<uint32_t> FindPremergeId(uint32_t true_id,
                                            uint32_t false_id,
                                            std::optional<uint32_t> merge_id) {
         auto* cfg = spirv_context_->cfg();
 
-        // We need a merge block, the true and false to be unique and the true and false to not be
-        // the merge.
+        // We need a merge block, the true and false to be unique and the true and false to not
+        // be the merge.
         if (!merge_id || true_id == false_id || true_id == merge_id || false_id == merge_id) {
             return std::nullopt;
         }
@@ -1761,8 +1793,8 @@ class Parser {
         // Determine if there is a premerge block to handle
         std::optional<uint32_t> premerge_start_id = FindPremergeId(true_id, false_id, merge_id);
 
-        // If we found the start of a premerge, push it onto the merge stack so this ends up being a
-        // temporary merge block for the if branches.
+        // If we found the start of a premerge, push it onto the merge stack so this ends up
+        // being a temporary merge block for the if branches.
         core::ir::If* premerge_if_ = nullptr;
         if (premerge_start_id.has_value()) {
             // Must have a merge to have a premerge
@@ -1787,9 +1819,9 @@ class Parser {
             EmitIfBranch(false_id, if_, if_->False());
         }
 
-        // There was a premerge, remove it from the merge stack and then emit the premerge into an
-        // `if true` block in order to maintain re-convergence guarantees. The premerge will contain
-        // all the blocks up to the merge block.
+        // There was a premerge, remove it from the merge stack and then emit the premerge into
+        // an `if true` block in order to maintain re-convergence guarantees. The premerge will
+        // contain all the blocks up to the merge block.
         if (premerge_start_id.has_value()) {
             EmitPremergeBlock(merge_id.value(), premerge_start_id.value(), premerge_if_);
         }
@@ -1809,9 +1841,9 @@ class Parser {
         auto* loop = b_.Loop();
         EmitWithoutResult(loop);
 
-        // A `loop` header block can also be the merge block for an `if`. In that the case, replace
-        // the `if` information in the stop blocks with the loop as this must be the `if` merge
-        // block and the `if` is complete.
+        // A `loop` header block can also be the merge block for an `if`. In that the case,
+        // replace the `if` information in the stop blocks with the loop as this must be the
+        // `if` merge block and the `if` is complete.
         walk_stop_blocks_[bb.id()] = loop;
     }
 
@@ -1962,18 +1994,18 @@ class Parser {
     }
 
     /// @param inst the SPIR-V instruction
-    /// Note: This isn't technically correct, but there is no `kill` equivalent in WGSL. The closets
-    /// we have is `discard` which maps to `OpDemoteToHelperInvocation` in SPIR-V.
+    /// Note: This isn't technically correct, but there is no `kill` equivalent in WGSL. The
+    /// closets we have is `discard` which maps to `OpDemoteToHelperInvocation` in SPIR-V.
     void EmitKill([[maybe_unused]] const spvtools::opt::Instruction& inst) {
         EmitWithoutResult(b_.Discard());
 
-        // An `OpKill` is a terminator in SPIR-V. `discard` is not a terminator in WGSL. After the
-        // `discard` we inject a `return` for the current function. This is similar in spirit to
-        // what `OpKill` does although not totally correct (i.e. we don't early return from calling
-        // functions, just the function where `OpKill` was emitted. There are also limited places in
-        // which `OpKill` can be used. So, we don't have to worry about it in a `continuing` block
-        // because the continuing must end with a branching terminator which `OpKill` does not
-        // branch.
+        // An `OpKill` is a terminator in SPIR-V. `discard` is not a terminator in WGSL. After
+        // the `discard` we inject a `return` for the current function. This is similar in
+        // spirit to what `OpKill` does although not totally correct (i.e. we don't early return
+        // from calling functions, just the function where `OpKill` was emitted. There are also
+        // limited places in which `OpKill` can be used. So, we don't have to worry about it in
+        // a `continuing` block because the continuing must end with a branching terminator
+        // which `OpKill` does not branch.
         if (current_function_->ReturnType()->Is<core::type::Void>()) {
             EmitWithoutResult(b_.Return(current_function_));
         } else {
@@ -2012,9 +2044,9 @@ class Parser {
                              << inst.GetSingleWordInOperand(0);
     }
 
-    // Returns the WGSL standard library function for the given GLSL.std.450 extended instruction
-    // operation code. This handles GLSL functions which directly translate to the WGSL equivalent.
-    // Any non-direct translation is returned as `kNone`.
+    // Returns the WGSL standard library function for the given GLSL.std.450 extended
+    // instruction operation code. This handles GLSL functions which directly translate to the
+    // WGSL equivalent. Any non-direct translation is returned as `kNone`.
     core::BuiltinFn GetGlslStd450WgslEquivalentFuncName(uint32_t ext_opcode) {
         switch (ext_opcode) {
             case GLSLstd450Acos:
@@ -2580,7 +2612,8 @@ class Parser {
     core::ir::Block* current_block_ = nullptr;
     /// A map from a SPIR-V type declaration to the corresponding Tint type object.
     Hashmap<TypeKey, const core::type::Type*, 16> types_;
-    /// A map from a SPIR-V function definition result ID to the corresponding Tint function object.
+    /// A map from a SPIR-V function definition result ID to the corresponding Tint function
+    /// object.
     Hashmap<uint32_t, core::ir::Function*, 8> functions_;
     /// A map from a SPIR-V result ID to the corresponding Tint value object.
     Hashmap<uint32_t, core::ir::Value*, 8> values_;
@@ -2605,8 +2638,8 @@ class Parser {
     // Map of SPIR-V Struct IDs to a list of member string names
     std::unordered_map<uint32_t, std::vector<std::string>> struct_to_member_names_;
 
-    // Set of SPIR-V block ids where we'll stop a `Branch` instruction walk. These could be merge
-    // blocks, premerge blocks, continuing blocks, etc.
+    // Set of SPIR-V block ids where we'll stop a `Branch` instruction walk. These could be
+    // merge blocks, premerge blocks, continuing blocks, etc.
     std::unordered_map<uint32_t, core::ir::ControlInstruction*> walk_stop_blocks_;
     // Map of continue target ID to the controlling IR loop.
     std::unordered_map<uint32_t, core::ir::Loop*> continue_targets_;
@@ -2626,6 +2659,15 @@ class Parser {
     // If we're in a switch, is populated with the IDs of the blocks for each of the switch
     // selectors. This lets us watch for fallthrough when emitting branch instructions.
     std::vector<std::unordered_set<uint32_t>> current_switch_blocks_;
+
+    // Maps from OpSampledImage result Id's to the sampler/texture pair used to create the
+    // combined sampler.
+    struct SampledImage {
+        core::ir::Value* tex;
+        core::ir::Value* sampler;
+    };
+
+    std::unordered_map<uint32_t, SampledImage> sampled_images_;
 };
 
 }  // namespace
