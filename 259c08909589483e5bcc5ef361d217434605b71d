@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9880f73_85cbab31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-08T19:54:01Z",
+      "side": 1,
+      "message": "PTAL! Note that I\u0027ve got a related CL in progress (https://dawn-review.googlesource.com/c/dawn/+/241139) that should make this more effective by de-duping texture views on creation, but that\u0027s not required to land this.",
+      "revId": "259c08909589483e5bcc5ef361d217434605b71d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
