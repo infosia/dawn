@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c6627ed_db3e9840",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-08T13:28:23Z",
+      "side": 1,
+      "message": "I think we should use the `Sampled \u003d\u003d 2` for this check instead. I believe it is valid in SPIR-V to specify the format when using a sampled image.",
+      "revId": "59092f82ed77baa9d387766d096cc01e10dfca63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bcf02b83_a9d76b5e",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-08T13:28:23Z",
+      "side": 1,
+      "message": "Remove dead code after return.",
+      "fixSuggestions": [
+        {
+          "fixId": "68bdf381_343df236",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/texture.cc",
+              "range": {
+                "startLine": 124,
+                "startChar": 0,
+                "endLine": 126,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "59092f82ed77baa9d387766d096cc01e10dfca63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26ebb891_b509465e",
+        "filename": "src/tint/lang/spirv/reader/lower/texture_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-08T13:28:23Z",
+      "side": 1,
+      "message": "This one uses read-write op compatible so should be a storage texture, but has an undefined format. We can\u0027t support this case in WGSL yet. So maybe change the format of this one, and leave the test that you changed below as it was so we can test the \"sampled + specific format\" case?",
+      "revId": "59092f82ed77baa9d387766d096cc01e10dfca63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
