@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1dce3ab_7f2f8d9d",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-08T13:41:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c6627ed_db3e9840",
+      "revId": "59092f82ed77baa9d387766d096cc01e10dfca63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bcf02b83_a9d76b5e",
@@ -53,6 +71,60 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf0c89b8_37d25afd",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-08T13:41:29Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "bcf02b83_a9d76b5e",
+      "fixSuggestions": [
+        {
+          "fixId": "7833cf9c_c44146e6",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/texture.cc",
+              "range": {
+                "startLine": 124,
+                "startChar": 0,
+                "endLine": 126,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "59092f82ed77baa9d387766d096cc01e10dfca63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aad7fbc7_041b11f9",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-08T13:41:29Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "bcf02b83_a9d76b5e",
+      "revId": "59092f82ed77baa9d387766d096cc01e10dfca63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "26ebb891_b509465e",
@@ -66,6 +138,24 @@
       "writtenOn": "2025-05-08T13:28:23Z",
       "side": 1,
       "message": "This one uses read-write op compatible so should be a storage texture, but has an undefined format. We can\u0027t support this case in WGSL yet. So maybe change the format of this one, and leave the test that you changed below as it was so we can test the \"sampled + specific format\" case?",
+      "revId": "59092f82ed77baa9d387766d096cc01e10dfca63",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d39818a_b63bf4f3",
+        "filename": "src/tint/lang/spirv/reader/lower/texture_test.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-08T13:41:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26ebb891_b509465e",
       "revId": "59092f82ed77baa9d387766d096cc01e10dfca63",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
