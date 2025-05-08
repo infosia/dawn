@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7da6857_e6cf6054",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-05-08T11:44:19Z",
+      "side": 1,
+      "message": "Please remove the blank line, some scripts aren\u0027t happy when all the footers aren\u0027t a single block.",
+      "revId": "1d389c9d5700fcba3ee58b3371e7d55901a3a1cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "e0f14aee_4f027fd7",
@@ -14,6 +31,23 @@
       "writtenOn": "2025-05-08T08:55:39Z",
       "side": 1,
       "message": "Thanks for the review! I just updated the CL and skipped all the failed cases on D3D11. Tests passed on driver 96.0 and 105.0 (internal).\nNot sure if skipped cases are too many and how important QC D3D11 backend is. Feel free to decide if we\u0027ll merge this.",
+      "revId": "1d389c9d5700fcba3ee58b3371e7d55901a3a1cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3207f371_7caeca7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-05-08T11:44:19Z",
+      "side": 1,
+      "message": "Looks consistent with what I saw in https://dawn-review.googlesource.com/c/dawn/+/215896.\n\nSince Corentin is OOO, maybe David can take a look.",
       "revId": "1d389c9d5700fcba3ee58b3371e7d55901a3a1cf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
