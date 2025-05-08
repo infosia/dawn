@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6f0f833f_4ca2e220",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T22:07:34Z",
+      "side": 1,
+      "message": "Also, roll to https://github.com/webgpu-native/webgpu-headers/commit/f2c7b3a916f5fdb2a9ca7f483276108968c7f9bf",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a66d35ee_8b575a21",
         "filename": "PRESUBMIT.py",
         "patchSetId": 2
@@ -48,6 +65,63 @@
       "writtenOn": "2025-05-08T21:46:12Z",
       "side": 1,
       "message": "nit: pass as a named arg:\n```suggestion\n            input_api, output_api, source_file_filter\u003d_HasNoStrayWhitespaceFilter))\n```",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b0d18da_f1657495",
+        "filename": "third_party/webgpu-headers/cli",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T22:07:34Z",
+      "side": 1,
+      "message": "I\u0027d prefer if the presubmit check didn\u0027t put any files on disk in the repo, it feels a bit fragile. For example if you ctrl-c during the presubmit it could leave behind untracked files.\n\nI\u0027d like to do it fully in memory, but since this relies on the generator that\u0027s probably not so easy. Could we do it with `tempfile.TemporaryDirectory`?\n\nAlternatively we could do this during build (after `webgpu_headers_gen`) instead of on presubmit, then we have a built file already. Also eliminates all of the python dependency stuff in this script. I would probably prefer this.",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "171cf9f9_80de0b79",
+        "filename": "third_party/webgpu-headers/cli",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T22:07:34Z",
+      "side": 1,
+      "message": "nit: Maybe do this in memory using python difflib",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0dddcc6_acd7d921",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T22:07:34Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem stable but I\u0027m not sure what these hashes are",
+      "range": {
+        "startLine": 2,
+        "startChar": 6,
+        "endLine": 2,
+        "endChar": 28
+      },
       "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
