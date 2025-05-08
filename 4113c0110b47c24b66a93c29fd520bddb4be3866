@@ -16,6 +16,41 @@
       "message": "```suggestion\n                AddError(var) \u003c\u003c \"runtime arrays must be in a struct in the \u0027storage\u0027 address space\";\n```",
       "revId": "4113c0110b47c24b66a93c29fd520bddb4be3866",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "055ebc43_a37ef058",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2620,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-08T20:51:29Z",
+      "side": 1,
+      "message": "Not true, they don\u0027t have to be inside structures.",
+      "parentUuid": "0e378580_19748978",
+      "revId": "4113c0110b47c24b66a93c29fd520bddb4be3866",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44e120be_af209e3d",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2630,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-08T20:51:29Z",
+      "side": 1,
+      "message": "I think this would only catch them at the top-level. We would need to recurse to catch nested uses.\n\nThe other issue is that this only catches issues for `var` instructions. You could have an unused function that has a parameter with pointer type that also violates these rules.\n\nSo perhaps we should check these rules in `CheckType()` instead, which is called from all places where a type appears and also already handles the recursion. You\u0027d need to extract the address space from the pointer, but I believe the root type should always be the pointer so that should be doable.",
+      "revId": "4113c0110b47c24b66a93c29fd520bddb4be3866",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
