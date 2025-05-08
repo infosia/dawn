@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "efcd4490_8289ac3e",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2620,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-08T20:53:20Z",
+      "side": 1,
+      "message": "Huh, which language am I confusing this with? GLSL maybe.",
+      "parentUuid": "055ebc43_a37ef058",
+      "revId": "4113c0110b47c24b66a93c29fd520bddb4be3866",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44e120be_af209e3d",
