@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "473b21c1_53f82fd4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-08T21:25:24Z",
+      "side": 1,
+      "message": "Note I manually tested that the presubmit checks fail on a CL on top of this one that changes the Dawn generated version without updating the diff file.",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
