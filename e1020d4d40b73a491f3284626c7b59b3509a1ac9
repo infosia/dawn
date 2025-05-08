@@ -51,6 +51,24 @@
       "parentUuid": "055ab31e_eff6578e",
       "revId": "e1020d4d40b73a491f3284626c7b59b3509a1ac9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f244fba1_dbebe441",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-08T20:33:59Z",
+      "side": 1,
+      "message": "Storage textures is the only place this actually matters. The old reader does read-write for storage textures based on the usage, rather than based NonReadable/NonWritable.\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/spirv/reader/ast_parser/ast_parser.cc;l\u003d2674-2675?q\u003dast_parser.c\u0026ss\u003dchromium",
+      "parentUuid": "ff9ad8bb_b6112fbf",
+      "revId": "e1020d4d40b73a491f3284626c7b59b3509a1ac9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
