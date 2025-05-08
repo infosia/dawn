@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94da1a2c_e50a9c33",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-08T14:29:57Z",
+      "side": 1,
+      "message": "Would be nice to give a useful error message on bad user input instead of crashing.",
+      "revId": "fc762edd46bb0211e9419fe2493ca56efd6aff71",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "362bb4a7_55cda5d1",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-08T14:29:57Z",
+      "side": 1,
+      "message": "Would be nice to give a useful error message on bad user input instead of crashing.",
+      "revId": "fc762edd46bb0211e9419fe2493ca56efd6aff71",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
