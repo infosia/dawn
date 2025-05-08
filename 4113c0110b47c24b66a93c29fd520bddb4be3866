@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e378580_19748978",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2620,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-08T20:35:44Z",
+      "side": 1,
+      "message": "```suggestion\n                AddError(var) \u003c\u003c \"runtime arrays must be in a struct in the \u0027storage\u0027 address space\";\n```",
+      "revId": "4113c0110b47c24b66a93c29fd520bddb4be3866",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
