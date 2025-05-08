@@ -1,0 +1,49 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4807d7c5_0f5ba925",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-08T13:33:59Z",
+      "side": 1,
+      "message": "You need to allow the `kAllowClipDistancesOnF32` capability here since modules coming into this transform will be doing this. That will fix the E2E test failure.\n\n\n```\ncore::ir::Capabilities{\n  core::ir::Capability::kAllowClipDistancesOnF32,\n}\n```",
+      "fixSuggestions": [
+        {
+          "fixId": "219f2da3_489d6331",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+              "range": {
+                "startLine": 30,
+                "startChar": 0,
+                "endLine": 30,
+                "endChar": 0
+              },
+              "replacement": "#include \"src/tint/lang/core/ir/capabilities.h\"\n"
+            },
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+              "range": {
+                "startLine": 136,
+                "startChar": 0,
+                "endLine": 137,
+                "endChar": 0
+              },
+              "replacement": "    auto result \u003d ValidateAndDumpIfNeeded(\n        ir, \"hlsl.ChangeImmediateToUniform\",\n        core::ir::Capabilities{core::ir::Capability::kAllowClipDistancesOnF32});\n"
+            }
+          ]
+        }
+      ],
+      "revId": "95b409b2fb44944ac7ed03be439b18526f1ff568",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
