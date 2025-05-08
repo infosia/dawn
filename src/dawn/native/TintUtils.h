@@ -53,8 +53,8 @@ std::unordered_map<tint::OverrideId, double> BuildSubstituteOverridesTransformCo
     const ProgrammableStage& stage);
 
 // Uses tint::ForeachField when available to implement the stream::Stream trait for types.
-template <typename T>
-class stream::Stream<T, std::enable_if_t<tint::HasReflection<T>>> {
+template <tint::HasReflection T>
+class stream::Stream<T> {
   public:
     static void Write(Sink* s, const T& v) {
         tint::ForeachField(v, [&](const auto& f) { StreamIn(s, f); });
