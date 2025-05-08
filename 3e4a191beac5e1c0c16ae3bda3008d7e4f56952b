@@ -33,6 +33,24 @@
       "message": "The style guide says to avoid the use of concepts as template parameters (https://google.github.io/styleguide/cppguide.html#Concepts `Avoid legacy template metaprogramming constructs (such as std::enable_if\u003cCondition\u003e) as well as the template\u003cConcept T\u003e syntax.`) instead use requires statements, so can this be done as a `requires(HasReflection(T))` instead?",
       "revId": "3e4a191beac5e1c0c16ae3bda3008d7e4f56952b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e2d7fe0_3e72fb46",
+        "filename": "src/tint/utils/bytes/decoder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-05-08T12:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd23bc96_79cdbd90",
+      "revId": "3e4a191beac5e1c0c16ae3bda3008d7e4f56952b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
