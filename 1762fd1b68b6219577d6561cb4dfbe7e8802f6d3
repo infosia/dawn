@@ -16,6 +16,57 @@
       "message": "Note I manually tested that the presubmit checks fail on a CL on top of this one that changes the Dawn generated version without updating the diff file.",
       "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da832eda_cf377fcd",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T21:46:12Z",
+      "side": 1,
+      "message": "This needs to be the chromium_git mirror, especially since it\u0027s checked out by default (not conditional).\nFortunately this has already been set up, you can basically just revert (reland) https://dawn-review.googlesource.com/c/dawn/+/221254\n\nI forgot we are going to need to do this for emsdk too in order to test it on CQ.",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a66d35ee_8b575a21",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T21:46:12Z",
+      "side": 1,
+      "message": "nit: pass as a named arg:\n```suggestion\n            input_api, output_api, source_file_filter\u003d_HasNoStrayWhitespaceFilter))\n```",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b066456_04357ffc",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T21:46:12Z",
+      "side": 1,
+      "message": "note: Need to make sure we resolve the conflict between this CL and my CL otherwise it\u0027ll break the build if they both pass CQ and then both land",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
