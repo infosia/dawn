@@ -27,6 +27,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <set>
@@ -64,6 +65,10 @@ class WireServerTraceLayer : public dawn::wire::CommandHandler {
         // directory.
         std::replace(filename.begin(), filename.end(), '/', '_');
         std::replace(filename.begin(), filename.end(), '\\', '_');
+
+        if (!std::filesystem::is_directory(mDir)) {
+            DAWN_ASSERT(std::filesystem::create_directories(mDir));
+        }
 
         // Prepend the filename with the directory.
         filename = mDir + filename;
