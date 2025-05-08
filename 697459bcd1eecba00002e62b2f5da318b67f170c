@@ -70,6 +70,24 @@
       "parentUuid": "4873a62c_ba75647b",
       "revId": "697459bcd1eecba00002e62b2f5da318b67f170c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15f2302b_65e6b3ff",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-08T02:06:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ded575a5_749b78a8",
+      "revId": "697459bcd1eecba00002e62b2f5da318b67f170c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
