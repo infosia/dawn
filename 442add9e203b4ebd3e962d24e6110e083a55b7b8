@@ -34,6 +34,24 @@
       "parentUuid": "fc493098_91a84599",
       "revId": "442add9e203b4ebd3e962d24e6110e083a55b7b8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c3b7fa6_21b9d871",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T00:45:04Z",
+      "side": 1,
+      "message": "Oh, it was mostly build failures, the real thing was just Vulkan was broken. Which is the only backend that implements it, so that\u0027s why it passed locally until I enabled SwiftShader.\n\n\u003e Shall we add that back?\n\nAre you suggesting we just remove `ValidateAndUnpackLimitsIn`? We could, I\u0027m not sure if we\u0027re going to want it again in the future.",
+      "parentUuid": "b8eead3c_c4d006c8",
+      "revId": "442add9e203b4ebd3e962d24e6110e083a55b7b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
