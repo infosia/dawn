@@ -22,6 +22,30 @@
       },
       "revId": "dfe3855e5d0b5367a598e60674766ffa1c894c71",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94334090_39b0e67b",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T20:40:53Z",
+      "side": 0,
+      "message": "It\u0027s not used outside Dawn at all (in fact it just got renamed yesterday without issue)",
+      "parentUuid": "ba345f46_e48573db",
+      "range": {
+        "startLine": 399,
+        "startChar": 4,
+        "endLine": 402,
+        "endChar": 48
+      },
+      "revId": "dfe3855e5d0b5367a598e60674766ffa1c894c71",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
