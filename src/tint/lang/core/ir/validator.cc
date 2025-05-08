@@ -2614,6 +2614,26 @@ void Validator::CheckVar(const Var* var) {
         }
     }
 
+    if (mv->AddressSpace() != AddressSpace::kStorage) {
+        if (auto* ary = result_type->UnwrapPtr()->As<core::type::Array>()) {
+            if (ary->Count()->Is<core::type::RuntimeArrayCount>()) {
+                AddError(var) << "runtime arrays must be in the 'storage' address space";
+                return;
+            }
+        }
+
+        if (auto* struct_ty = result_type->UnwrapPtr()->As<core::type::Struct>()) {
+            for (auto* mem : struct_ty->Members()) {
+                if (auto* ary = mem->Type()->UnwrapPtr()->As<core::type::Array>()) {
+                    if (ary->Count()->Is<core::type::RuntimeArrayCount>()) {
+                        AddError(var) << "runtime arrays must be in the 'storage' address space";
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
     if (mv->AddressSpace() == AddressSpace::kStorage) {
         if (mv->StoreType() && !mv->StoreType()->IsHostShareable()) {
             AddError(var) << "vars in the 'storage' address space must be host-shareable";
