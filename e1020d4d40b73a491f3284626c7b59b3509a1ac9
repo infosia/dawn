@@ -87,6 +87,24 @@
       "parentUuid": "f244fba1_dbebe441",
       "revId": "e1020d4d40b73a491f3284626c7b59b3509a1ac9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5520990_47374040",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-08T20:53:02Z",
+      "side": 1,
+      "message": "I realize that it should probably actually depend on the `sampled` mode, i.e. default for sampled\u003d2 is read write otherwise its read. But probably doesn\u0027t make a difference since you\u0027ll set the access mode based on usage anyway.",
+      "parentUuid": "cef06240_d716fb8c",
+      "revId": "e1020d4d40b73a491f3284626c7b59b3509a1ac9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
