@@ -486,8 +486,8 @@ class Parser {
                                                        texel_format, access_mode);
                 }
                 case spvtools::opt::analysis::Type::kSampledImage: {
-                    TINT_UNREACHABLE() << "OpTypeSampledImage should have been removed by the "
-                                          "SplitCombinedImageSamplerPass";
+                    auto* sampled = type->AsSampledImage();
+                    return ty_.Get<spirv::type::SampledImage>(Type(sampled->image_type()));
                 }
                 default: {
                     TINT_UNIMPLEMENTED() << "unhandled SPIR-V type: " << type->str();
@@ -1362,6 +1362,12 @@ class Parser {
                 case spv::Op::OpArrayLength:
                     EmitArrayLength(inst);
                     break;
+                case spv::Op::OpSampledImage:
+                    EmitSampledImage(inst);
+                    break;
+                case spv::Op::OpImageGather:
+                    EmitImageGather(inst);
+                    break;
                 default:
                     TINT_UNIMPLEMENTED()
                         << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
@@ -1385,6 +1391,31 @@ class Parser {
             const auto& merge_bb = current_spirv_function_->FindBlock(merge_id);
             EmitBlock(dst, *merge_bb);
         }
+    }
+
+    void EmitSampledImage(const spvtools::opt::Instruction& inst) {
+        auto* tex = Value(inst.GetSingleWordInOperand(0));
+        Emit(b_.CallExplicit<spirv::ir::BuiltinCall>(Type(inst.type_id()),
+                                                     spirv::BuiltinFn::kSampledImage,
+                                                     Vector{tex->Type()}, Args(inst, 2)),
+             inst.result_id());
+    }
+
+    void EmitImageGather(const spvtools::opt::Instruction& inst) {
+        Vector<core::ir::Value*, 4> args;
+
+        auto sampled_image = Value(inst.GetSingleWordInOperand(0));
+        auto* coord = Value(inst.GetSingleWordInOperand(1));
+        auto* comp = Value(inst.GetSingleWordInOperand(2));
+
+        core::ir::Value* operands = b_.Zero(ty_.i32());
+        if (inst.NumInOperands() > 3) {
+            operands = Value(inst.GetSingleWordInOperand(3));
+        }
+
+        Emit(b_.Call<spirv::ir::BuiltinCall>(Type(inst.type_id()), spirv::BuiltinFn::kImageGather,
+                                             Vector{sampled_image, coord, comp, operands}),
+             inst.result_id());
     }
 
     void EmitAtomicSigned(const spvtools::opt::Instruction& inst, spirv::BuiltinFn fn) {
@@ -2626,6 +2657,15 @@ class Parser {
     // If we're in a switch, is populated with the IDs of the blocks for each of the switch
     // selectors. This lets us watch for fallthrough when emitting branch instructions.
     std::vector<std::unordered_set<uint32_t>> current_switch_blocks_;
+
+    // Maps from OpSampledImage result Id's to the sampler/texture pair used to create the
+    // combined sampler.
+    struct SampledImage {
+        core::ir::Value* tex;
+        core::ir::Value* sampler;
+    };
+
+    std::unordered_map<uint32_t, SampledImage> sampled_images_;
 };
 
 }  // namespace
