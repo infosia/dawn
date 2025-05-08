@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f510f25b_e1abd6a6",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-08T21:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64c1a076_09e768c7",
+      "revId": "b9f911db1a4172242e92ca11bd93c48496ffb1fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39f19f75_e72eb54f",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f41b09f_f2b991d5",
+        "filename": "src/dawn/native/vulkan/FramebufferCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-08T21:26:00Z",
+      "side": 1,
+      "message": "Yup, I realized that shortly after pushing the last patch. Latest deletes the framebuffer on eviction with a fenced deleter.",
+      "parentUuid": "39f19f75_e72eb54f",
+      "revId": "b9f911db1a4172242e92ca11bd93c48496ffb1fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac1c1095_9ee6f34f",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-05-08T21:14:55Z",
       "side": 1,
       "message": "Aside from the fact that you implemented LRU here, it\u0027s extremely similar to RenderPassCache. Maybe in a followup we could templatize this and use it for both, which would add LRU for RenderPassCache?",
+      "revId": "b9f911db1a4172242e92ca11bd93c48496ffb1fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a23ee9e9_0265148e",
+        "filename": "src/dawn/native/vulkan/FramebufferCache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-08T21:26:00Z",
+      "side": 1,
+      "message": "Yeah, I was considering that for a followup.",
+      "parentUuid": "ac1c1095_9ee6f34f",
       "revId": "b9f911db1a4172242e92ca11bd93c48496ffb1fe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
