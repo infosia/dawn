@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64c1a076_09e768c7",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T21:14:55Z",
+      "side": 1,
+      "message": "Remove commented-out code",
+      "revId": "b9f911db1a4172242e92ca11bd93c48496ffb1fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39f19f75_e72eb54f",
+        "filename": "src/dawn/native/vulkan/FramebufferCache.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T21:14:55Z",
+      "side": 1,
+      "message": "Need to DestroyFramebuffer? (Might actually need to put it in a tracker to destroy when it\u0027s done being used)",
+      "revId": "b9f911db1a4172242e92ca11bd93c48496ffb1fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac1c1095_9ee6f34f",
+        "filename": "src/dawn/native/vulkan/FramebufferCache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T21:14:55Z",
+      "side": 1,
+      "message": "Aside from the fact that you implemented LRU here, it\u0027s extremely similar to RenderPassCache. Maybe in a followup we could templatize this and use it for both, which would add LRU for RenderPassCache?",
+      "revId": "b9f911db1a4172242e92ca11bd93c48496ffb1fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
