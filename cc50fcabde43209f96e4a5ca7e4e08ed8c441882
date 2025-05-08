@@ -94,6 +94,30 @@
       },
       "revId": "cc50fcabde43209f96e4a5ca7e4e08ed8c441882",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d116a0f6_29831215",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-08T07:04:40Z",
+      "side": 1,
+      "message": "I realized keeping the feature actually introduces too many open questions about how it interacts with the limit. What do you think of removing the feature and having only the limit (which can be 0) which is gated by EnableUnsafeAPIs? See latest revision.",
+      "parentUuid": "8dcd664a_571ffc8d",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "cc50fcabde43209f96e4a5ca7e4e08ed8c441882",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
