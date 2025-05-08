@@ -16,6 +16,60 @@
       "message": "```suggestion\n#define TINT_DUMP_IR_WHEN_VALIDATING 0\n```",
       "revId": "8c223a4574e5384c484007357965a194e91b61bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31e8d2d0_72abe98a",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-08T20:32:20Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "8b33e5d9_3e6c9803",
+      "fixSuggestions": [
+        {
+          "fixId": "473339a0_cf103407",
+          "description": "User suggestion",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/validator.cc",
+              "range": {
+                "startLine": 115,
+                "startChar": 0,
+                "endLine": 115,
+                "endChar": 38
+              },
+              "replacement": "#define TINT_DUMP_IR_WHEN_VALIDATING 0"
+            }
+          ]
+        }
+      ],
+      "revId": "8c223a4574e5384c484007357965a194e91b61bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58108863_e4c5e247",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-08T20:32:20Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "8b33e5d9_3e6c9803",
+      "revId": "8c223a4574e5384c484007357965a194e91b61bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
