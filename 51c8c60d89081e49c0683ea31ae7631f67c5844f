@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "61de0906_1fe08f9e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 3077,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a2b7e4b_921ebd5a",
+      "range": {
+        "startLine": 3077,
+        "startChar": 5,
+        "endLine": 3077,
+        "endChar": 40
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cec62e1d_1c7945f4",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-05-07T10:18:33Z",
       "side": 1,
       "message": "nit: instead of binding the uniform buffer after the textures, maybe we should bind it at index\u003d0, and bind all textures starting from 1. It would make the code easier to read.",
+      "range": {
+        "startLine": 86,
+        "startChar": 10,
+        "endLine": 86,
+        "endChar": 22
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8dde9d9_2a1e0fad",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "This will fail validation:\nunknown file: error: Uninteresting mock function call - returning directly.\n    Function call: Call(@000000413B3EDEB8 8-byte object \u003cF0-B6 34-12 3C-02 00-00\u003e, ErrorType::Validation, Color target has no corresponding fragment stage output but writeMask (ColorWriteMask::(Red|Green|Blue|Alpha)) is not zero.\n - While validating targets[0] framebuffer output.\n - While validating fragment state.\n)",
+      "parentUuid": "cec62e1d_1c7945f4",
       "range": {
         "startLine": 86,
         "startChar": 10,
@@ -83,6 +131,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ebf2b98_3521d9a0",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "I tried this before, but got below error:\nunknown file: error: Uninteresting mock function call - returning directly.\n    Function call: Call(@00000067C391E898 8-byte object \u003c10-C7 20-2B 9E-01 00-00\u003e, ErrorType::Validation, Recording in [CommandEncoder (unlabeled)] which is locked while [RenderPassEncoder (unlabeled)] is open.\n- While encoding [CommandEncoder (unlabeled)].WriteBuffer([Buffer \"Internal_TemporaryUniform\"], 0, ..., 8).\n- While finishing [CommandEncoder (unlabeled)].\n)\n\nCan I do this in a follow up PR?",
+      "parentUuid": "ef196f81_a5da9066",
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa473c7b_b3577ff8",
         "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
         "patchSetId": 8
@@ -94,6 +160,24 @@
       "writtenOn": "2025-05-07T10:18:33Z",
       "side": 1,
       "message": "I think we talked about this bug before, after expanding the resolve texture, we should reset the scissor rect to be full color attachment\u0027s size. To avoid the scissor rect above affecting all subsequent user draws.\n\nFYI @jie.a.chen@intel.com",
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d05dc20f_9a26c452",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "Updated, But I don\u0027t understand why this is necessary, it seems the result before and after restore scissor are the same.",
+      "parentUuid": "aa473c7b_b3577ff8",
       "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -121,6 +205,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e7fc3af_55aef89b",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86af57b8_aff6eead",
+      "range": {
+        "startLine": 108,
+        "startChar": 79,
+        "endLine": 108,
+        "endChar": 99
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6391c3a_44fda11d",
@@ -134,6 +242,30 @@
       "writtenOn": "2025-05-07T10:18:33Z",
       "side": 1,
       "message": "I think we don\u0027t need to pass the resolveRect here. Instead we should move the validation at [1] to [2].",
+      "range": {
+        "startLine": 121,
+        "startChar": 68,
+        "endLine": 121,
+        "endChar": 79
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3244fd4a_b3a7257e",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "I add validation here, because the offset and w/h from RenderPassDescriptorResolveRect should match the size of color attachment and resolve target. And color attachment and resolve target may possibly have different size.",
+      "parentUuid": "d6391c3a_44fda11d",
       "range": {
         "startLine": 121,
         "startChar": 68,
@@ -190,6 +322,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dee25821_72e49cb3",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa36ea99_bdd374d0",
+      "range": {
+        "startLine": 218,
+        "startChar": 24,
+        "endLine": 224,
+        "endChar": 43
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f25e91c5_59c715c7",
@@ -236,6 +392,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78077de1_eff5e442",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de6d099e_f0c61722",
+      "range": {
+        "startLine": 221,
+        "startChar": 4,
+        "endLine": 222,
+        "endChar": 84
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d8632d6f_8c34aa39",
@@ -249,6 +429,30 @@
       "writtenOn": "2025-05-07T10:18:33Z",
       "side": 1,
       "message": "This should be changed to\n```\nif (resolveRect)\n```\nWe should now do partial resolve even if the client doesn\u0027t use `wgpu::LoadOp::ExpandResolveTexture`.",
+      "range": {
+        "startLine": 227,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 74
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39cd9033_690f2b28",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8632d6f_8c34aa39",
       "range": {
         "startLine": 227,
         "startChar": 4,
@@ -282,6 +486,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d051fd93_9d19e510",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40fa304e_fc3c9259",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "866f982a_f36e56ba",
@@ -305,6 +533,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "126be91d_d2e1fbe2",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "866f982a_f36e56ba",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 31
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eac91b7e_5e217d31",
@@ -318,6 +570,24 @@
       "writtenOn": "2025-05-07T10:18:33Z",
       "side": 1,
       "message": "I think we should add a test where MSAA texture is smaller than the resolve texture.",
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e1bb970_85b5270d",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2651,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-08T08:24:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eac91b7e_5e217d31",
       "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
