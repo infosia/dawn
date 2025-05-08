@@ -109,9 +109,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<private, i32, read_write> @offset(0)
-  b:ptr<private, i32, read_write> @offset(0)
+  b:ptr<private, i32, read_write> @offset(4)
 }
 
 %foo = @fragment func():void {
@@ -170,9 +170,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<private, i32, read_write> @offset(0)
-  b:ptr<private, i32, read_write> @offset(0)
+  b:ptr<private, i32, read_write> @offset(4)
 }
 
 %foo = @fragment func():void {
@@ -233,9 +233,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<storage, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
 }
 
 %foo = @fragment func(%a:ptr<storage, i32, read> [@binding_point(1, 2)], %b:ptr<storage, i32, read_write> [@binding_point(3, 4)]):void {
@@ -293,9 +293,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<uniform, i32, read> @offset(0)
-  b:ptr<uniform, i32, read> @offset(0)
+  b:ptr<uniform, i32, read> @offset(4)
 }
 
 %foo = @fragment func(%a:ptr<uniform, i32, read> [@binding_point(1, 2)], %b:ptr<uniform, i32, read> [@binding_point(3, 4)]):void {
@@ -468,9 +468,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<workgroup, i32, read_write> @offset(0)
-  b:ptr<workgroup, i32, read_write> @offset(0)
+  b:ptr<workgroup, i32, read_write> @offset(4)
 }
 
 tint_symbol_2 = struct @align(4) {
@@ -541,10 +541,10 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<uniform, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
-  c:ptr<private, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
+  c:ptr<private, i32, read_write> @offset(8)
 }
 
 %foo = @fragment func(%a:ptr<uniform, i32, read> [@binding_point(1, 2)], %b:ptr<storage, i32, read_write> [@binding_point(3, 4)]):void {
@@ -612,9 +612,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<storage, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
 }
 
 %foo = @fragment func(%param:i32 [@location(1), @interpolate(flat)], %a:ptr<storage, i32, read> [@binding_point(1, 2)], %b:ptr<storage, i32, read_write> [@binding_point(3, 4)]):void {
@@ -686,9 +686,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<storage, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
 }
 
 %foo = func(%tint_module_vars:tint_module_vars_struct):void {
@@ -768,9 +768,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<storage, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
 }
 
 %foo = func(%param:i32, %tint_module_vars:tint_module_vars_struct):void {
@@ -1009,9 +1009,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<storage, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
 }
 
 %main = @fragment func(%a:ptr<storage, i32, read> [@binding_point(1, 2)], %b:ptr<storage, i32, read_write> [@binding_point(3, 4)]):void {
@@ -1089,9 +1089,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<storage, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
 }
 
 %foo = func():i32 {
@@ -1182,9 +1182,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<storage, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
 }
 
 %bar = func(%tint_module_vars:tint_module_vars_struct):i32 {
@@ -1285,9 +1285,9 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<storage, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
 }
 
 %foo = func(%tint_module_vars:tint_module_vars_struct):i32 {
@@ -1387,10 +1387,10 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<uniform, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
-  c:ptr<private, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
+  c:ptr<private, i32, read_write> @offset(8)
 }
 
 %main_a = @fragment func(%a:ptr<uniform, i32, read> [@binding_point(1, 2)], %b:ptr<storage, i32, read_write> [@binding_point(3, 4)]):void {
@@ -1491,10 +1491,10 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<uniform, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
-  c:ptr<private, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
+  c:ptr<private, i32, read_write> @offset(8)
 }
 
 %main_a = @fragment func(%a:ptr<uniform, i32, read> [@binding_point(1, 2)], %b:ptr<storage, i32, read_write> [@binding_point(3, 4)]):void {
@@ -1597,10 +1597,10 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   a:ptr<uniform, i32, read> @offset(0)
-  b:ptr<storage, i32, read_write> @offset(0)
-  c:ptr<private, i32, read_write> @offset(0)
+  b:ptr<storage, i32, read_write> @offset(4)
+  c:ptr<private, i32, read_write> @offset(8)
 }
 
 %foo = func(%tint_module_vars:tint_module_vars_struct):i32 {
@@ -1685,10 +1685,10 @@ $B1: {  # root
     EXPECT_EQ(src, str());
 
     auto* expect = R"(
-tint_module_vars_struct = struct @align(1) {
+tint_module_vars_struct = struct @align(4) {
   tint_symbol:ptr<uniform, i32, read> @offset(0)
-  tint_symbol_1:ptr<storage, i32, read_write> @offset(0)
-  tint_symbol_2:ptr<private, i32, read_write> @offset(0)
+  tint_symbol_1:ptr<storage, i32, read_write> @offset(4)
+  tint_symbol_2:ptr<private, i32, read_write> @offset(8)
 }
 
 %foo = @fragment func(%2:ptr<uniform, i32, read> [@binding_point(1, 2)], %3:ptr<storage, i32, read_write> [@binding_point(3, 4)]):void {
