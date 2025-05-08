@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "e1020d4d40b73a491f3284626c7b59b3509a1ac9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "055ab31e_eff6578e",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-08T20:25:51Z",
+      "side": 1,
+      "message": "Not sure about this. If the object has neither `NonReadable` nor `NonWritable` shouldn\u0027t it be read-write?",
+      "revId": "e1020d4d40b73a491f3284626c7b59b3509a1ac9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
