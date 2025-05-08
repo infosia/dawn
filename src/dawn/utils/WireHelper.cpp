@@ -27,11 +27,13 @@
 
 #include <algorithm>
 #include <cstring>
+#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <set>
 #include <sstream>
 #include <string>
+#include <system_error>
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Log.h"
@@ -64,6 +66,15 @@ class WireServerTraceLayer : public dawn::wire::CommandHandler {
         // directory.
         std::replace(filename.begin(), filename.end(), '/', '_');
         std::replace(filename.begin(), filename.end(), '\\', '_');
+
+        if (!std::filesystem::is_directory(mDir)) {
+            dawn::ErrorLog() << "ASDF " << mDir << " does not exist yet";
+            std::error_code ec;
+            std::filesystem::create_directories(mDir, ec);
+            dawn::ErrorLog() << "ASDF dir exists after creating? " << std::filesystem::is_directory(mDir) << " ec: " << ec;
+        } else {
+            dawn::ErrorLog() << "ASDF " << mDir << " already exists";
+        }
 
         // Prepend the filename with the directory.
         filename = mDir + filename;
