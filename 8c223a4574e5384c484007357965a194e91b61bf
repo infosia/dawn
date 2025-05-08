@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b33e5d9_3e6c9803",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-08T20:30:16Z",
+      "side": 1,
+      "message": "```suggestion\n#define TINT_DUMP_IR_WHEN_VALIDATING 0\n```",
+      "revId": "8c223a4574e5384c484007357965a194e91b61bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
