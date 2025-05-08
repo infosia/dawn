@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba345f46_e48573db",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-08T19:05:10Z",
+      "side": 0,
+      "message": "Do you know if removing this will break Blink/Chromium upstream? Or is the implication that it\u0027s not used at all upstream (from your comment in the description).",
+      "range": {
+        "startLine": 399,
+        "startChar": 4,
+        "endLine": 402,
+        "endChar": 48
+      },
+      "revId": "dfe3855e5d0b5367a598e60674766ffa1c894c71",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

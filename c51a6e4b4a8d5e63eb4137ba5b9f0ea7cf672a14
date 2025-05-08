@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac6901be_82608e4a",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-08T19:05:10Z",
+      "side": 1,
+      "message": "This happens when we validated with the unsafe api toggle right? Could we add some text here to let users know what they need to do to make it work? Otherwise it could be a bit confusing.",
+      "range": {
+        "startLine": 125,
+        "startChar": 32,
+        "endLine": 125,
+        "endChar": 86
+      },
+      "revId": "c51a6e4b4a8d5e63eb4137ba5b9f0ea7cf672a14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a24a19d2_1574e716",
+        "filename": "src/dawn/tests/unittests/native/LimitsTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-08T19:05:10Z",
+      "side": 1,
+      "message": "I think we could just remove this entirely for now? Maybe leave a comment to the PS that removed it? Seems weird to have this here with removed commented stuff.",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 1
+      },
+      "revId": "c51a6e4b4a8d5e63eb4137ba5b9f0ea7cf672a14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
