@@ -33,6 +33,24 @@
       "message": "Not sure about this. If the object has neither `NonReadable` nor `NonWritable` shouldn\u0027t it be read-write?",
       "revId": "e1020d4d40b73a491f3284626c7b59b3509a1ac9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff9ad8bb_b6112fbf",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-08T20:31:38Z",
+      "side": 1,
+      "message": "Possibly? I _think_ read is what the old reader was doing here, so I was trying to mimic that. This may end up getting adjusted as I enable more examples in other tests.",
+      "parentUuid": "055ab31e_eff6578e",
+      "revId": "e1020d4d40b73a491f3284626c7b59b3509a1ac9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
