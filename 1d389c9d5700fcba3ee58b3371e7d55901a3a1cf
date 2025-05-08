@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0f14aee_4f027fd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-05-08T08:55:39Z",
+      "side": 1,
+      "message": "Thanks for the review! I just updated the CL and skipped all the failed cases on D3D11. Tests passed on driver 96.0 and 105.0 (internal).\nNot sure if skipped cases are too many and how important QC D3D11 backend is. Feel free to decide if we\u0027ll merge this.",
+      "revId": "1d389c9d5700fcba3ee58b3371e7d55901a3a1cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
