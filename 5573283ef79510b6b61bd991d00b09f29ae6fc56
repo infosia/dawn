@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b74d140_1fee6e7b",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1536,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-09T21:40:07Z",
+      "side": 1,
+      "message": "Actually, why not? I\u0027m thinking we could update `DeviceLostEvent::ReadyHook` to additionally take a pointer to `WGPUDevice`, and if it\u0027s `null` always take that as precedence. I think in Emscripten we should be able to handle device lost without making `TrackedEvents` ref counted also. It should be a lot like how wire does it.",
+      "range": {
+        "startLine": 1534,
+        "startChar": 5,
+        "endLine": 1536,
+        "endChar": 77
+      },
+      "revId": "5573283ef79510b6b61bd991d00b09f29ae6fc56",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
