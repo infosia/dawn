@@ -32,6 +32,7 @@
 #include <string>
 #include <utility>
 
+#include "src/tint/lang/core/access.h"
 #include "src/tint/lang/core/constant/composite.h"
 #include "src/tint/lang/core/constant/splat.h"
 #include "src/tint/lang/core/fluent_types.h"
@@ -146,7 +147,14 @@ class Printer : public tint::TextGenerator {
         }
 
         // Module-scope declarations should have all been moved into the entry points.
-        TINT_ASSERT(ir_.root_block->IsEmpty());
+        // TINT_ASSERT(ir_.root_block->IsEmpty());
+
+        for (auto* inst : *ir_.root_block) {
+            if (auto var = inst->As<core::ir::Var>()) {
+                // ir_.NameOf(var);
+                EmitVar(var);
+            }
+        }
 
         // Determine which structures will need to be emitted with host-shareable memory layouts.
         FindHostShareableStructs();
@@ -630,7 +638,11 @@ class Printer : public tint::TextGenerator {
             case core::AddressSpace::kHandle:
                 break;
             case core::AddressSpace::kPrivate:
-                out << "thread ";
+                if (ptr->Access() == core::Access::kRead) {
+                    out << "constexpr constant ";
+                } else {
+                    out << "thread ";
+                }
                 break;
             case core::AddressSpace::kWorkgroup:
                 out << "threadgroup ";

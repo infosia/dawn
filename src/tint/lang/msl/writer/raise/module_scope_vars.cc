@@ -29,10 +29,12 @@
 
 #include <utility>
 
+#include "src/tint/lang/core/ir/access.h"
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/referenced_module_vars.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/binding_array.h"
+#include "src/tint/utils/result.h"
 
 namespace tint::msl::writer::raise {
 namespace {
@@ -63,7 +65,19 @@ struct State {
     Hashmap<core::ir::Block*, core::ir::Function*, 64> block_to_function{};
 
     /// The mapping from functions to their transitively referenced workgroup variables.
-    core::ir::ReferencedModuleVars<core::ir::Module> referenced_module_vars{ir};
+    core::ir::ReferencedModuleVars<core::ir::Module> referenced_module_vars{
+        ir, [](const core::ir::Var* var) {
+            auto* type = var->Result()->Type();
+
+            // Handle types drop the pointer and are passed around by value.
+            auto* ptr = type->As<core::type::Pointer>();
+            if (ptr->Access() == core::Access::kRead &&
+                ptr->AddressSpace() == core::AddressSpace::kPrivate) {
+                return false;
+                ;
+            }
+            return true;
+        }};
 
     // The name of the module-scope variables structure.
     static constexpr const char* kModuleVarsName = "tint_module_vars";
@@ -151,6 +165,11 @@ struct State {
 
                 // Handle types drop the pointer and are passed around by value.
                 auto* ptr = type->As<core::type::Pointer>();
+                if (ptr->Access() == core::Access::kRead &&
+                    ptr->AddressSpace() == core::AddressSpace::kPrivate) {
+                    continue;
+                }
+
                 if (ptr->AddressSpace() == core::AddressSpace::kHandle) {
                     type = ptr->StoreType();
                 }
