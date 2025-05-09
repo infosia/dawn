@@ -33,6 +33,29 @@
       "message": "Please take a look, thanks!",
       "revId": "c66d5bf7cba992b84ecf3251790baf1d78dc9589",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c225959_8dba7bbb",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-09T20:42:46Z",
+      "side": 1,
+      "message": "For maps and sets, you can use `concepts` to de-duplicate the code for the `std` versions and the `absl` versions, i.e (for maps):\n\n```\ntemplate \u003ctypename M\u003e\nconcept IsMapLike \u003d \n    std::is_same_v\u003cM, std::unordered_map\u003c\n        typename M::key_type,\n        typename M::mapped_type,\n        typename M::hasher,\n        typename M::key_equal,\n        typename M::allocator_type\u003e\u003e ||\n    std::is_same_v\u003cM, absl::flat_hash_map\u003c\n        typename M::key_type,\n        typename M::mapped_type,\n        typename M::hasher,\n        typename M::key_equal,\n        typename M::allocator_type\u003e\u003e;\n\ntemplate \u003cIsMapLike M\u003e\nclass Stream\u003cM\u003e {\n    ...\n};\n```",
+      "range": {
+        "startLine": 424,
+        "startChar": 0,
+        "endLine": 425,
+        "endChar": 40
+      },
+      "revId": "c66d5bf7cba992b84ecf3251790baf1d78dc9589",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
