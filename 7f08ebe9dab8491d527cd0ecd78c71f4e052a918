@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8deaac1_3bacb5b7",
+        "filename": "docs/dawn/features/dawn_partial_load_resolve_texture.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-09T11:08:54Z",
+      "side": 0,
+      "message": "We should keep this comment. And add additional comments like:\n- This feature is also useful to some scenarios where the applications want to use a smaller MSAA texture to render to a larger single sampled texture.\n- If the color Attachment\u0027s loadOp is `Load` or `Clear`, then `RenderPassDescriptorExpandResolveRect` will be ignored in the loading step. It will still be used in the resolve step to do a partial resolve.\n- There is also an existing rect `RenderPassDescriptorExpandResolveRect` which only defines the same offset for both color \u0026 resolve textures. This rect is deprecated and should not be used in future applications. It will be removed at some point.",
+      "range": {
+        "startLine": 74,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 536
+      },
+      "revId": "7f08ebe9dab8491d527cd0ecd78c71f4e052a918",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
