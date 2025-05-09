@@ -262,6 +262,38 @@ class Ref {
     mValue = value;
   }
 
+  // Friend is needed so that instances of Ref<U> can call AddRef and Release on
+  // Ref<T>.
+  template <typename U>
+  friend class Ref;
+
+  // Constructors from a Ref<U>. Note that in the *-assignment operators this
+  // cannot be the
+  // same as `other` because overload resolution rules would have chosen the
+  // *-assignement operators defined with `other` == Ref<T>.
+  template <typename U, typename = typename std::is_convertible<U, T>::type>
+  Ref(const Ref<U>& other) : mValue(other.mValue) {
+    AddRef(other.mValue);
+  }
+
+  template <typename U, typename = typename std::is_convertible<U, T>::type>
+  Ref<T>& operator=(const Ref<U>& other) {
+    Set(other.mValue);
+    return *this;
+  }
+
+  template <typename U, typename = typename std::is_convertible<U, T>::type>
+  Ref(Ref<U>&& other) {
+    mValue = other.Detach();
+  }
+
+  template <typename U, typename = typename std::is_convertible<U, T>::type>
+  Ref<T>& operator=(Ref<U>&& other) {
+    Release(mValue);
+    mValue = other.Detach();
+    return *this;
+  }
+
  private:
   static void AddRef(T value) {
     if (value != nullptr) {
@@ -382,9 +414,8 @@ enum class EventType {
 };
 
 class EventManager;
-class TrackedEvent;
 
-class TrackedEvent : NonMovable {
+class TrackedEvent : public RefCounted {
  public:
   virtual ~TrackedEvent() = default;
   virtual EventType GetType() = 0;
@@ -467,7 +498,7 @@ class EventManager : NonMovable {
 
   void ProcessEvents(InstanceID instance) {
     assert(instance);
-    std::vector<std::pair<FutureID, std::unique_ptr<TrackedEvent>>> completable;
+    std::vector<std::pair<FutureID, Ref<TrackedEvent*>>> completable;
     {
       std::unique_lock<std::mutex> lock(mMutex);
       auto instanceIt = mPerInstanceEvents.find(instance);
@@ -534,7 +565,7 @@ class EventManager : NonMovable {
       }
       futureIdToInfo[completedId]->completed = true;
 
-      std::unique_ptr<TrackedEvent> completed;
+      Ref<TrackedEvent*> completed;
       {
         std::unique_lock<std::mutex> lock(mMutex);
         auto eventIt = mEvents.find(completedId);
@@ -556,7 +587,7 @@ class EventManager : NonMovable {
       return WGPUWaitStatus_Success;
     }
 
-    std::map<FutureID, std::unique_ptr<TrackedEvent>> completable;
+    std::map<FutureID, Ref<TrackedEvent*>> completable;
     bool anyCompleted = false;
     {
       std::unique_lock<std::mutex> lock(mMutex);
@@ -591,7 +622,7 @@ class EventManager : NonMovable {
     return anyCompleted ? WGPUWaitStatus_Success : WGPUWaitStatus_TimedOut;
   }
 
-  std::pair<FutureID, bool> TrackEvent(std::unique_ptr<TrackedEvent> event) {
+  std::pair<FutureID, bool> TrackEvent(Ref<TrackedEvent*> event) {
     FutureID futureId = mNextFutureId++;
     InstanceID instance = event->mInstanceId;
     std::unique_lock<std::mutex> lock(mMutex);
@@ -624,7 +655,7 @@ class EventManager : NonMovable {
   template <typename Event, typename... ReadyArgs>
   void SetFutureReady(FutureID futureId, ReadyArgs&&... readyArgs) {
     assert(futureId != kNullFutureId);
-    std::unique_ptr<TrackedEvent> spontaneousEvent;
+    Ref<TrackedEvent*> spontaneousEvent;
     {
       std::unique_lock<std::mutex> lock(mMutex);
       auto eventIt = mEvents.find(futureId);
@@ -634,7 +665,7 @@ class EventManager : NonMovable {
 
       auto& event = eventIt->second;
       assert(event->GetType() == Event::kType);
-      static_cast<Event*>(event.get())
+      static_cast<Event*>(event.Get())
           ->ReadyHook(std::forward<ReadyArgs>(readyArgs)...);
       event->mIsReady = true;
 
@@ -662,7 +693,7 @@ class EventManager : NonMovable {
   // The EventManager separates events based on the WGPUInstance that the event
   // stems from.
   std::unordered_map<InstanceID, std::set<FutureID>> mPerInstanceEvents;
-  std::unordered_map<FutureID, std::unique_ptr<TrackedEvent>> mEvents;
+  std::unordered_map<FutureID, Ref<TrackedEvent*>> mEvents;
 };
 
 static EventManager& GetEventManager() {
@@ -1416,7 +1447,7 @@ WGPUFuture WGPUBufferImpl::MapAsync(WGPUMapMode mode,
                                     size_t size,
                                     WGPUBufferMapCallbackInfo callbackInfo) {
   auto [futureId, tracked] = GetEventManager().TrackEvent(
-      std::make_unique<MapAsyncEvent>(GetInstanceId(), this, callbackInfo));
+      AcquireRef(new MapAsyncEvent(GetInstanceId(), this, callbackInfo)));
   if (!tracked) {
     return WGPUFuture{kNullFutureId};
   }
@@ -1479,8 +1510,8 @@ WGPUDeviceImpl::WGPUDeviceImpl(const EventSource* source,
       mUncapturedErrorCallbackInfo(descriptor->uncapturedErrorCallbackInfo) {
   // Create the DeviceLostEvent now.
   std::tie(mDeviceLostFutureId, std::ignore) =
-      GetEventManager().TrackEvent(std::make_unique<DeviceLostEvent>(
-          source->GetInstanceId(), this, descriptor->deviceLostCallbackInfo));
+      GetEventManager().TrackEvent(AcquireRef(new DeviceLostEvent(
+          source->GetInstanceId(), this, descriptor->deviceLostCallbackInfo)));
   mQueue.Acquire(queue);
 }
 
@@ -1592,9 +1623,8 @@ WGPUShaderModuleImpl::WGPUShaderModuleImpl(const EventSource* source)
 
 WGPUFuture WGPUShaderModuleImpl::GetCompilationInfo(
     WGPUCompilationInfoCallbackInfo callbackInfo) {
-  auto [futureId, tracked] =
-      GetEventManager().TrackEvent(std::make_unique<CompilationInfoEvent>(
-          GetInstanceId(), this, callbackInfo));
+  auto [futureId, tracked] = GetEventManager().TrackEvent(AcquireRef(
+      new CompilationInfoEvent(GetInstanceId(), this, callbackInfo)));
   if (!tracked) {
     return WGPUFuture{kNullFutureId};
   }
@@ -1700,9 +1730,8 @@ WGPUFuture wgpuAdapterRequestDevice(
     WGPUAdapter adapter,
     const WGPUDeviceDescriptor* descriptor,
     WGPURequestDeviceCallbackInfo callbackInfo) {
-  auto [futureId, tracked] =
-      GetEventManager().TrackEvent(std::make_unique<RequestDeviceEvent>(
-          adapter->GetInstanceId(), callbackInfo));
+  auto [futureId, tracked] = GetEventManager().TrackEvent(AcquireRef(
+      new RequestDeviceEvent(adapter->GetInstanceId(), callbackInfo)));
   if (!tracked) {
     return WGPUFuture{kNullFutureId};
   }
@@ -1814,9 +1843,8 @@ WGPUFuture wgpuDeviceCreateComputePipelineAsync(
     WGPUDevice device,
     const WGPUComputePipelineDescriptor* descriptor,
     WGPUCreateComputePipelineAsyncCallbackInfo callbackInfo) {
-  auto [futureId, tracked] =
-      GetEventManager().TrackEvent(std::make_unique<CreateComputePipelineEvent>(
-          device->GetInstanceId(), callbackInfo));
+  auto [futureId, tracked] = GetEventManager().TrackEvent(AcquireRef(
+      new CreateComputePipelineEvent(device->GetInstanceId(), callbackInfo)));
   if (!tracked) {
     return WGPUFuture{kNullFutureId};
   }
@@ -1831,9 +1859,8 @@ WGPUFuture wgpuDeviceCreateRenderPipelineAsync(
     WGPUDevice device,
     const WGPURenderPipelineDescriptor* descriptor,
     WGPUCreateRenderPipelineAsyncCallbackInfo callbackInfo) {
-  auto [futureId, tracked] =
-      GetEventManager().TrackEvent(std::make_unique<CreateRenderPipelineEvent>(
-          device->GetInstanceId(), callbackInfo));
+  auto [futureId, tracked] = GetEventManager().TrackEvent(AcquireRef(
+      new CreateRenderPipelineEvent(device->GetInstanceId(), callbackInfo)));
   if (!tracked) {
     return WGPUFuture{kNullFutureId};
   }
@@ -1865,9 +1892,8 @@ WGPUQueue wgpuDeviceGetQueue(WGPUDevice device) {
 
 WGPUFuture wgpuDevicePopErrorScope(WGPUDevice device,
                                    WGPUPopErrorScopeCallbackInfo callbackInfo) {
-  auto [futureId, tracked] =
-      GetEventManager().TrackEvent(std::make_unique<PopErrorScopeEvent>(
-          device->GetInstanceId(), callbackInfo));
+  auto [futureId, tracked] = GetEventManager().TrackEvent(AcquireRef(
+      new PopErrorScopeEvent(device->GetInstanceId(), callbackInfo)));
   if (!tracked) {
     return WGPUFuture{kNullFutureId};
   }
@@ -1888,9 +1914,8 @@ WGPUFuture wgpuInstanceRequestAdapter(
     WGPUInstance instance,
     WGPURequestAdapterOptions const* options,
     WGPURequestAdapterCallbackInfo callbackInfo) {
-  auto [futureId, tracked] =
-      GetEventManager().TrackEvent(std::make_unique<RequestAdapterEvent>(
-          instance->GetInstanceId(), callbackInfo));
+  auto [futureId, tracked] = GetEventManager().TrackEvent(AcquireRef(
+      new RequestAdapterEvent(instance->GetInstanceId(), callbackInfo)));
   if (!tracked) {
     return WGPUFuture{kNullFutureId};
   }
@@ -1923,7 +1948,7 @@ WGPUFuture wgpuQueueOnSubmittedWorkDone(
     WGPUQueue queue,
     WGPUQueueWorkDoneCallbackInfo callbackInfo) {
   auto [futureId, tracked] = GetEventManager().TrackEvent(
-      std::make_unique<WorkDoneEvent>(queue->GetInstanceId(), callbackInfo));
+      AcquireRef(new WorkDoneEvent(queue->GetInstanceId(), callbackInfo)));
   if (!tracked) {
     return WGPUFuture{kNullFutureId};
   }
