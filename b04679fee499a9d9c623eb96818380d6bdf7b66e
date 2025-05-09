@@ -16,6 +16,149 @@
       "message": "ping",
       "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5550661_afc0ee7f",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-09T21:24:11Z",
+      "side": 1,
+      "message": "The `var_to_struct_idx` map needs to be updated as well, otherwise your indices will be wrong. See unittest at [1] for an example.\n\nProbably need to combine the maps somehow so that you can sort them together.",
+      "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "067c57dc_bffc7386",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-09T21:24:11Z",
+      "side": 1,
+      "message": "Uniform buffers should be read-only.",
+      "fixSuggestions": [
+        {
+          "fixId": "89acf909_fe753835",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+              "range": {
+                "startLine": 203,
+                "startChar": 0,
+                "endLine": 204,
+                "endChar": 0
+              },
+              "replacement": "            auto* type \u003d ty.ptr(uniform, strct, read);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bb35356_d8e279e0",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-09T21:24:11Z",
+      "side": 1,
+      "message": "Nit: double //",
+      "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0f5ab4c_08daaa8b",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-09T21:24:11Z",
+      "side": 1,
+      "message": "The comment says that the parameter receives the argument buffer, but it looks to me like you\u0027re splitting out the vars and passing them separately.\n\nIs there a reason for not passing the whole argument buffers around instead (similar to how the module-scope-vars transform works)? This makes it less likely that we\u0027ll generate functions with too many parameters.",
+      "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07c599b9_379fb884",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-09T21:24:11Z",
+      "side": 1,
+      "message": "Nit: double //",
+      "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8d1ea94_c2c88a62",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-09T21:24:11Z",
+      "side": 1,
+      "message": "Suggest making these have different scalar types so that the validator catches the fact that the access indices are wrong.",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 67
+      },
+      "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11d3c9f6_a0eb2713",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-09T21:24:11Z",
+      "side": 1,
+      "message": "[1] This is a test that shows the incorrect index. The input shader is storing to `b`, but index `0` of the argument buffer structure is `c`.",
+      "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
