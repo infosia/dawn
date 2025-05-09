@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "58173520_6270f8a4",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-09T17:48:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1210ff6c_e5d1f634",
+      "range": {
+        "startLine": 713,
+        "startChar": 8,
+        "endLine": 727,
+        "endChar": 9
+      },
+      "revId": "1311802ed822d229b21ab713d76f92de9ee3202e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5c32cab4_cff7d1e4",
