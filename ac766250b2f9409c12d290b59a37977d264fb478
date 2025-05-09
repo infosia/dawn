@@ -16,6 +16,24 @@
       "message": "PTAL",
       "revId": "ac766250b2f9409c12d290b59a37977d264fb478",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb5ede3e_b0442ca4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-05-09T17:26:27Z",
+      "side": 1,
+      "message": "This has been tested via led as far as trying to actually upload to the bucket, which is failing because the service account doesn\u0027t have the necessary permissions.\n\nSince we probably don\u0027t want to give those permissions to a trybot service account, I think we\u0027ll have to wait until the replacement for `cron-linux-clang-rel-x64` is set up to actually confirm that this uploads correctly.",
+      "parentUuid": "6c2cc3e7_00612fd0",
+      "revId": "ac766250b2f9409c12d290b59a37977d264fb478",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
