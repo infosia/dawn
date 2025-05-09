@@ -634,25 +634,32 @@ MaybeError DelayFlushQueue::CheckPendingQueries(
         return {};
     }
 
-    // Check queries' status starting from oldest to most recent.
-    // TODO(416736350): Consider using a binary search.
-    size_t completedQueriesCount = 0;
-    for (size_t i = 0; i < mPendingQueries.size(); ++i) {
-        bool done;
-        DAWN_TRY_ASSIGN(
-            done, IsQueryCompleted(commandContext, /*requireFlush=*/false, &mPendingQueries[i]));
-        if (!done) {
-            // We stop at 1st incompleted query.
-            break;
+    // Find 1st incomplete query.
+    DAWN_CHECK(mPendingQueries.size() <= std::numeric_limits<int64_t>::max());
+    size_t firstIncompleteIdx = mPendingQueries.size();
+    int64_t left = 0;
+    int64_t right = mPendingQueries.size() - 1;
+    while (left <= right) {
+        int64_t mid = (left + right) / 2;
+        bool complete;
+        DAWN_TRY_ASSIGN(complete, IsQueryCompleted(commandContext, /*requireFlush=*/false,
+                                                   &mPendingQueries[mid]));
+
+        if (!complete) {
+            firstIncompleteIdx = static_cast<size_t>(mid);
+            // Continue search for smaller index on left side
+            right = mid - 1;
+        } else {
+            // Continue search on the right side.
+            left = mid + 1;
         }
-        completedQueriesCount++;
     }
 
-    if (completedQueriesCount == 0) {
+    if (firstIncompleteIdx == 0) {
         return {};
     }
 
-    MarkPendingQueriesAsComplete(completedQueriesCount);
+    MarkPendingQueriesAsComplete(firstIncompleteIdx);
 
     return {};
 }
