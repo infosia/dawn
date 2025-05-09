@@ -210,10 +210,10 @@ class RefCountedWithExternalCount : public RefCounted {
 template <typename T>
 class Ref {
  public:
-  static_assert(std::is_convertible_v<T, RefCounted*>,
-                "Cannot make a Ref<T> when T is not a Refcounted type.");
-
-  Ref() : mValue(nullptr) {}
+  Ref() : mValue(nullptr) {
+    static_assert(std::is_convertible_v<T, RefCounted*>,
+                  "Cannot make a Ref<T> when T is not a Refcounted type.");
+  }
   ~Ref() { Release(mValue); }
 
   // Constructors from nullptr.
@@ -382,7 +382,6 @@ enum class EventType {
 };
 
 class EventManager;
-class TrackedEvent;
 
 class TrackedEvent : NonMovable {
  public:
@@ -936,7 +935,17 @@ class DeviceLostEvent final : public TrackedEvent {
 
   EventType GetType() override { return kType; }
 
-  void ReadyHook(WGPUDeviceLostReason reason, const char* message) {
+  enum class DropDevice : bool { No, Yes };
+
+  // Pass `device` to override mDevice. This must be done if the device is freed
+  // to ensure the callback doesn't receive an invalid pointer.
+  void ReadyHook(DropDevice dropDevice,
+                 WGPUDeviceLostReason reason,
+                 const char* message) {
+    if (dropDevice == DropDevice::Yes) {
+      mDevice = nullptr;
+    }
+
     mReason = reason;
     if (message) {
       mMessage = message;
@@ -949,12 +958,13 @@ class DeviceLostEvent final : public TrackedEvent {
       mMessage = "A valid external Instance reference no longer exists.";
     }
     if (mCallback) {
-      WGPUDevice device = mReason != WGPUDeviceLostReason_FailedCreation
-                              ? mDevice.Get()
-                              : nullptr;
+      WGPUDevice device = mDevice.Get();
       mCallback(&device, mReason, ToOutputStringView(mMessage), mUserdata1,
                 mUserdata2);
     }
+
+    // Break the ref cycle between WGPUDeviceImpl and DeviceLostEvent.
+    mDevice = nullptr;
   }
 
  private:
@@ -1270,7 +1280,8 @@ void emwgpuOnCreateRenderPipelineCompleted(double futureId,
 void emwgpuOnDeviceLostCompleted(double futureId,
                                  WGPUDeviceLostReason reason,
                                  const char* message) {
-  GetEventManager().SetFutureReady<DeviceLostEvent>(futureId, reason, message);
+  GetEventManager().SetFutureReady<DeviceLostEvent>(
+      futureId, DeviceLostEvent::DropDevice::No, reason, message);
 }
 void emwgpuOnMapAsyncCompleted(double futureId,
                                WGPUMapAsyncStatus status,
@@ -1311,8 +1322,12 @@ void emwgpuOnRequestDeviceCompleted(double futureId,
     GetEventManager().SetFutureReady<RequestDeviceEvent>(futureId, status,
                                                          nullptr, message);
     GetEventManager().SetFutureReady<DeviceLostEvent>(
-        device->GetLostFuture().id, WGPUDeviceLostReason_FailedCreation,
-        "Device failed at creation.");
+        device->GetLostFuture().id, DeviceLostEvent::DropDevice::Yes,
+        WGPUDeviceLostReason_FailedCreation, "Device creation failed.");
+
+    // Free the device now that there should be no pointers to it.
+    [[maybe_unused]] bool deviceFreed = device->Release();
+    assert(deviceFreed);
   }
 }
 void emwgpuOnWorkDoneCompleted(double futureId,
@@ -1490,6 +1505,9 @@ WGPUDeviceImpl::WGPUDeviceImpl(const EventSource* source, WGPUQueue queue)
 }
 
 void WGPUDeviceImpl::Destroy() {
+  // Note we don't ready the DeviceLostEvent immediately like in native,
+  // we just rely on the browser's device.lost promise to resolve.
+  // If it's AllowSpontaneous, this will be have slightly different behavior.
   emwgpuDeviceDestroy(this);
 }
 
@@ -1515,6 +1533,13 @@ void WGPUDeviceImpl::OnUncapturedError(WGPUErrorType type,
 }
 
 void WGPUDeviceImpl::WillDropLastExternalRef() {
+  // Ready the DeviceLostEvent now to make sure it won't try to pass an invalid
+  // device pointer to the callback.
+  GetEventManager().SetFutureReady<DeviceLostEvent>(
+      mDeviceLostFutureId, DeviceLostEvent::DropDevice::Yes,
+      WGPUDeviceLostReason_Destroyed,
+      "Device's last external ref was dropped.");
+
   if (!IsImported()) {
     Destroy();
   }
