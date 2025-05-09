@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea24bf60_0921d07c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-09T22:17:48Z",
+      "side": 1,
+      "message": "Leaving some notes for myself following a conversation in office with Loko today:\n\n - There\u0027s some tricky issues here with the strong references needed for a cache. BindGroupLayout is the most directly comprable situation, so look at how that is handled.\n - The cache really ought to be an LRU with a small (~4? Maybe 6 for cube maps?) capacity to prevent buildup of one-time-use views for things like mip generation.",
+      "revId": "12a5b217a61ad330f2aed3fbfc31f0c4182189fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
