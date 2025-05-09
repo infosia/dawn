@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3bbb4bc_60693afc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-09T00:46:43Z",
+      "side": 1,
+      "message": "This CL is a start of setting up the WebGPU backend. Most objects are minimally implemented or placeholders. For this CL please focus on webgpu::Device and how it gets created (webgpu::Backend, webgpu::PhysicalDevice).",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e936b6c_06bd00ee",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-09T00:46:43Z",
+      "side": 1,
+      "message": "The webgpu::PhysicalDevice requires to be backed by a \"lower layer\" implementation adapter or physical device to create the underlying apiDevice and query the features, limits, etc.\n\nWe cannot initialize such adapter inside InitializeImpl etc. as these are called inside `EnumerateAdapters` and doing so ends in an infinte recursion.\n\n[Some attempts](https://dawn-review.googlesource.com/c/dawn/+/241174/) on reuse the adapter populated by `EnumerateAdapters` to init the adapterImpl after the enumerating for loop. but this breaks the frontend/backend isolation. It also has other bugs probably because adapters are abstract layer objects that are have multiple instances per physical device.\n\nAnother attempt idea is to create the \"lower layer\" physical device inside webgpu::physicalDevice by maybe duplicate some logic from instance/backendconnection (`DiscoverPhysicalDevices`). Is PhysicalDevice created once per backend on a dawn instance?\n\nWould like to hear your inputs.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
