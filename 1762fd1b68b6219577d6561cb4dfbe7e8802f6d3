@@ -194,6 +194,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70d2b15a_226e733c",
+        "filename": "third_party/webgpu-headers/cli",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-09T21:41:45Z",
+      "side": 1,
+      "message": "Yup, I also considered making it a test, but it was actually harder to do that than just doing the presubmit stuff. But yea, will just use `tempfile` for now.",
+      "parentUuid": "e3ea6ede_1e8670b3",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "171cf9f9_80de0b79",
