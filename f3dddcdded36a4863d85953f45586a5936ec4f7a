@@ -93,6 +93,30 @@
       },
       "revId": "f3dddcdded36a4863d85953f45586a5936ec4f7a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac3c72c6_3fa92e71",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-09T18:23:32Z",
+      "side": 1,
+      "message": "I did some tests locally and for scenarios where we submits many times before an actual flush, a binary search makes the tests much slower than simple iteration which stops at 1st incomplete query.",
+      "parentUuid": "ab2aba3c_0c5b2869",
+      "range": {
+        "startLine": 637,
+        "startChar": 4,
+        "endLine": 637,
+        "endChar": 65
+      },
+      "revId": "f3dddcdded36a4863d85953f45586a5936ec4f7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
