@@ -210,10 +210,10 @@ class RefCountedWithExternalCount : public RefCounted {
 template <typename T>
 class Ref {
  public:
-  static_assert(std::is_convertible_v<T, RefCounted*>,
-                "Cannot make a Ref<T> when T is not a Refcounted type.");
-
-  Ref() : mValue(nullptr) {}
+  Ref() : mValue(nullptr) {
+    static_assert(std::is_convertible_v<T, RefCounted*>,
+                  "Cannot make a Ref<T> when T is not a Refcounted type.");
+  }
   ~Ref() { Release(mValue); }
 
   // Constructors from nullptr.
@@ -414,6 +414,7 @@ enum class EventType {
 };
 
 class EventManager;
+class DeviceLostEvent;
 
 class TrackedEvent : public RefCounted {
  public:
@@ -782,6 +783,7 @@ struct WGPUDeviceImpl final : public EventSource,
   void WillDropLastExternalRef() override;
 
   Ref<WGPUQueue> mQueue;
+  Ref<DeviceLostEvent*> mDeviceLostEvent;
   WGPUUncapturedErrorCallbackInfo mUncapturedErrorCallbackInfo =
       WGPU_UNCAPTURED_ERROR_CALLBACK_INFO_INIT;
   FutureID mDeviceLostFutureId = kNullFutureId;
@@ -986,7 +988,12 @@ class DeviceLostEvent final : public TrackedEvent {
       mCallback(&device, mReason, ToOutputStringView(mMessage), mUserdata1,
                 mUserdata2);
     }
+
+    // Break the ref cycle between WGPUDeviceImpl and DeviceLostEvent.
+    DropDevice();
   }
+
+  void DropDevice() { mDevice = nullptr; }
 
  private:
   WGPUDeviceLostCallback mCallback = nullptr;
@@ -1507,11 +1514,14 @@ WGPUDeviceImpl::WGPUDeviceImpl(const EventSource* source,
                                const WGPUDeviceDescriptor* descriptor,
                                WGPUQueue queue)
     : EventSource(source),
+      mDeviceLostEvent(
+          AcquireRef(new DeviceLostEvent(source->GetInstanceId(),
+                                         this,
+                                         descriptor->deviceLostCallbackInfo))),
       mUncapturedErrorCallbackInfo(descriptor->uncapturedErrorCallbackInfo) {
   // Create the DeviceLostEvent now.
   std::tie(mDeviceLostFutureId, std::ignore) =
-      GetEventManager().TrackEvent(AcquireRef(new DeviceLostEvent(
-          source->GetInstanceId(), this, descriptor->deviceLostCallbackInfo)));
+      GetEventManager().TrackEvent(mDeviceLostEvent);
   mQueue.Acquire(queue);
 }
 
@@ -1521,6 +1531,9 @@ WGPUDeviceImpl::WGPUDeviceImpl(const EventSource* source, WGPUQueue queue)
 }
 
 void WGPUDeviceImpl::Destroy() {
+  // Note we don't ready the DeviceLostEvent immediately like in native,
+  // we just rely on the browser's device.lost promise to resolve.
+  // If it's AllowSpontaneous, this will be have slightly different behavior.
   emwgpuDeviceDestroy(this);
 }
 
@@ -1546,6 +1559,10 @@ void WGPUDeviceImpl::OnUncapturedError(WGPUErrorType type,
 }
 
 void WGPUDeviceImpl::WillDropLastExternalRef() {
+  // Remove the device from the DeviceLostEvent so it won't pass it to the
+  // callback.
+  mDeviceLostEvent->DropDevice();
+
   if (!IsImported()) {
     Destroy();
   }
