@@ -104,6 +104,24 @@
       "parentUuid": "ac1c1095_9ee6f34f",
       "revId": "b9f911db1a4172242e92ca11bd93c48496ffb1fe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e49657e8_adff9c73",
+        "filename": "src/dawn/native/vulkan/FramebufferCache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-09T21:30:31Z",
+      "side": 1,
+      "message": "+1 to this! Would be great to even try to use the LRU in more places, maybe like the `ContentLessObjectCache` thing too.",
+      "parentUuid": "a23ee9e9_0265148e",
+      "revId": "b9f911db1a4172242e92ca11bd93c48496ffb1fe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
