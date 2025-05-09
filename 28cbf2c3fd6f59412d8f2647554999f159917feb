@@ -16,6 +16,24 @@
       "message": "Thanks for the reviews! Changed enough that it needs you both to re-review, sorry. Primary change is addition of a toggle to circumvent the cache that\u0027s apparently needed for Qualcomm (at least Pixel 4).",
       "revId": "28cbf2c3fd6f59412d8f2647554999f159917feb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a95fc011_08bcc3c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-09T23:27:41Z",
+      "side": 1,
+      "message": "Unfortunate, maybe we can lift it or do something lighter-weight to work around it in the future.",
+      "parentUuid": "ae458c92_c9ea931f",
+      "revId": "28cbf2c3fd6f59412d8f2647554999f159917feb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
