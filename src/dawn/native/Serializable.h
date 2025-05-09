@@ -62,6 +62,9 @@ class Serializable {
         StreamIn(&sink, static_cast<const Derived&>(*this));
         return CreateBlob(std::move(sink));
     }
+
+    // Allowing the Derived class to use default equality comparison.
+    bool operator==(const Serializable<Derived>& other) const = default;
 };
 }  // namespace dawn::native
 
@@ -82,6 +85,26 @@ class Serializable {
     struct Name##__Contents {                       \
         DAWN_VISITABLE_MEMBERS(MEMBERS)             \
     };                                              \
+    qualifier Name : Name##__Contents, public ::dawn::native::Serializable<Name>
+
+// Helper macro to define a struct or class like DAWN_SERIALIZABLE with its base class having
+// default equality comparison operator (assuming available), which allows having default equality
+// comparison for the whole struct or class. Example usage:
+//   #define MEMBERS(X) \
+//       X(int, a)              \
+//       X(float, b)            \
+//       X(Foo, foo)            \
+//       X(Bar, bar)
+//   DAWN_SERIALIZABLE_WITH_DEFAULT_EQ_COMP(struct, MyStruct, MEMBERS) {
+//      void SomeAdditionalMethod();
+//      bool operator==(const MyStruct& other) const = default;
+//   };
+//   #undef MEMBERS
+#define DAWN_SERIALIZABLE_WITH_DEFAULT_EQ_COMP(qualifier, Name, MEMBERS) \
+    struct Name##__Contents {                                            \
+        DAWN_VISITABLE_MEMBERS(MEMBERS)                                  \
+        bool operator==(const Name##__Contents& other) const = default;  \
+    };                                                                   \
     qualifier Name : Name##__Contents, public ::dawn::native::Serializable<Name>
 
 #endif  // SRC_DAWN_NATIVE_SERIALIZABLE_H_
