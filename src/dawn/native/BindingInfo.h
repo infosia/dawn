@@ -39,6 +39,7 @@
 #include "dawn/native/Format.h"
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/PerStage.h"
+#include "dawn/native/Serializable.h"
 
 #include "dawn/native/dawn_platform.h"
 
@@ -69,51 +70,67 @@ enum class BindingInfoType {
 };
 
 // A mirror of wgpu::BufferBindingLayout for use inside dawn::native.
-struct BufferBindingInfo {
+#define BUFFER_BINDING_INFO_MEMBER(X)                           \
+    X(wgpu::BufferBindingType, type)                            \
+    X(uint64_t, minBindingSize)                                 \
+    /* hasDynamicOffset is always false in shader reflection */ \
+    X(bool, hasDynamicOffset)
+DAWN_SERIALIZABLE(struct, BufferBindingInfo, BUFFER_BINDING_INFO_MEMBER) {
     static BufferBindingInfo From(const BufferBindingLayout& layout);
-
-    wgpu::BufferBindingType type;
-    uint64_t minBindingSize;
-
-    // Always false in shader reflection.
-    bool hasDynamicOffset = false;
-
     bool operator==(const BufferBindingInfo& other) const;
 };
+#undef BUFFER_BINDING_INFO_MEMBER
 
 // A mirror of wgpu::TextureBindingLayout for use inside dawn::native.
-struct TextureBindingInfo {
+#define TEXTURE_BINDING_INFO_MEMBER(X)                                                       \
+    /* For shader reflection UnfilterableFloat is never used and the sample type is Float */ \
+    /* for any texture_Nd<f32>.                                                           */ \
+    X(wgpu::TextureSampleType, sampleType)                                                   \
+    X(wgpu::TextureViewDimension, viewDimension)                                             \
+    X(bool, multisampled)
+DAWN_SERIALIZABLE(struct, TextureBindingInfo, TEXTURE_BINDING_INFO_MEMBER) {
     static TextureBindingInfo From(const TextureBindingLayout& layout);
-
-    // For shader reflection UnfilterableFloat is never used and the sample type is Float for any
-    // texture_Nd<f32>.
-    wgpu::TextureSampleType sampleType;
-    wgpu::TextureViewDimension viewDimension;
-    bool multisampled;
-
     bool operator==(const TextureBindingInfo& other) const;
 };
+#undef TEXTURE_BINDING_INFO_MEMBER
 
 // A mirror of wgpu::StorageTextureBindingLayout for use inside dawn::native.
-struct StorageTextureBindingInfo {
+#define STORAGE_TEXTURE_BINDING_INFO_MEMBER(X)   \
+    X(wgpu::TextureFormat, format)               \
+    X(wgpu::TextureViewDimension, viewDimension) \
+    X(wgpu::StorageTextureAccess, access)
+DAWN_SERIALIZABLE(struct, StorageTextureBindingInfo, STORAGE_TEXTURE_BINDING_INFO_MEMBER) {
     static StorageTextureBindingInfo From(const StorageTextureBindingLayout& layout);
-
-    wgpu::TextureFormat format;
-    wgpu::TextureViewDimension viewDimension;
-    wgpu::StorageTextureAccess access;
-
     bool operator==(const StorageTextureBindingInfo& other) const;
 };
+#undef STORAGE_TEXTURE_BINDING_INFO_MEMBER
 
 // A mirror of wgpu::SamplerBindingLayout for use inside dawn::native.
-struct SamplerBindingInfo {
+#define SAMPLER_BINDING_INFO_MEMBER(X)                                               \
+    /* For shader reflection NonFiltering is never used and Filtering is used for */ \
+    /* any `sampler`.                                                             */ \
+    X(wgpu::SamplerBindingType, type)
+DAWN_SERIALIZABLE(struct, SamplerBindingInfo, SAMPLER_BINDING_INFO_MEMBER) {
     static SamplerBindingInfo From(const SamplerBindingLayout& layout);
-
-    // For shader reflection NonFiltering is never used and Filtering is used for any `sampler`.
-    wgpu::SamplerBindingType type;
-
     bool operator==(const SamplerBindingInfo& other) const;
 };
+#undef SAMPLER_BINDING_INFO_MEMBER
+
+// A mirror of wgpu::ExternalTextureBindingLayout for use inside dawn::native.
+// Not using DAWN_SERIALIZABLE macro as ExternalTextureBindingInfo has no member.
+struct ExternalTextureBindingInfo {
+    bool operator==(const ExternalTextureBindingInfo& other) const;
+    // Stream in and out is no-op for ExternalTextureBindingInfo, which have no member.
+    friend void StreamIn(stream::Sink* sink, const ExternalTextureBindingInfo& togglesState) {}
+    friend MaybeError StreamOut(stream::Source* s, ExternalTextureBindingInfo* out) { return {}; }
+};
+
+// Internal to vulkan only.
+#define INPUT_ATTACHMENT_BINDING_INFO_MEMBER(X) X(wgpu::TextureSampleType, sampleType)
+DAWN_SERIALIZABLE(struct, InputAttachmentBindingInfo, INPUT_ATTACHMENT_BINDING_INFO_MEMBER) {
+    bool operator==(const InputAttachmentBindingInfo& other) const;
+};
+#undef INPUT_ATTACHMENT_BINDING_INFO_MEMBER
 
 // A mirror of wgpu::StaticSamplerBindingLayout for use inside dawn::native.
 struct StaticSamplerBindingInfo {
@@ -128,18 +145,6 @@ struct StaticSamplerBindingInfo {
     bool isUsedForSingleTextureBinding = false;
 
     bool operator==(const StaticSamplerBindingInfo& other) const;
-};
-
-// A mirror of wgpu::ExternalTextureBindingLayout for use inside dawn::native.
-struct ExternalTextureBindingInfo {
-    bool operator==(const ExternalTextureBindingInfo& other) const;
-};
-
-// Internal to vulkan only.
-struct InputAttachmentBindingInfo {
-    wgpu::TextureSampleType sampleType;
-
-    bool operator==(const InputAttachmentBindingInfo& other) const;
 };
 
 struct BindingInfo {
@@ -165,14 +170,15 @@ struct BindingInfo {
 BindingInfoType GetBindingInfoType(const BindingInfo& bindingInfo);
 
 // Match tint::BindingPoint, can convert to/from tint::BindingPoint using ToTint and FromTint.
-struct BindingSlot {
-    BindGroupIndex group;
-    BindingNumber binding;
-
-    constexpr bool operator==(const BindingSlot& rhs) const {
-        return group == rhs.group && binding == rhs.binding;
+#define BINDING_SLOT_MEMBER(X) \
+    X(BindGroupIndex, group)   \
+    X(BindingNumber, binding)
+DAWN_SERIALIZABLE(struct, BindingSlot, BINDING_SLOT_MEMBER){
+    constexpr bool operator==(const BindingSlot& rhs)
+        const {return group == rhs.group && binding == rhs.binding;
     }
 };
+#undef BINDING_SLOT_MEMBER
 
 struct PerStageBindingCounts {
     uint32_t sampledTextureCount;
