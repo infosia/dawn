@@ -52,6 +52,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "474f68f6_9626559f",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-09T01:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da832eda_cf377fcd",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31082192_e0b1289b",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-09T01:08:17Z",
+      "side": 1,
+      "message": "Can\u0027t atm because the chromium mirror hasn\u0027t gotten that change yet for some reason? I will wait and see if I can get that updated and update it here before submitting this.",
+      "parentUuid": "6f0f833f_4ca2e220",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a66d35ee_8b575a21",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-05-08T21:46:12Z",
       "side": 1,
       "message": "nit: pass as a named arg:\n```suggestion\n            input_api, output_api, source_file_filter\u003d_HasNoStrayWhitespaceFilter))\n```",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dffe7c00_180ab76e",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-09T01:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a66d35ee_8b575a21",
       "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -88,6 +142,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6fd6c62f_63df4530",
+        "filename": "third_party/webgpu-headers/cli",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-09T01:08:17Z",
+      "side": 1,
+      "message": "It seemed to work with `tempfile`, so doing it that way instead of during build to make sure the checks happen ASAP.",
+      "parentUuid": "2b0d18da_f1657495",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "171cf9f9_80de0b79",
         "filename": "third_party/webgpu-headers/cli",
         "patchSetId": 2
@@ -99,6 +171,24 @@
       "writtenOn": "2025-05-08T22:07:34Z",
       "side": 1,
       "message": "nit: Maybe do this in memory using python difflib",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cfe8e752_81c1fc17",
+        "filename": "third_party/webgpu-headers/cli",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-09T01:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "171cf9f9_80de0b79",
       "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -126,6 +216,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fd47d10_744791e7",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-09T01:08:17Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "b0dddcc6_acd7d921",
+      "range": {
+        "startLine": 2,
+        "startChar": 6,
+        "endLine": 2,
+        "endChar": 28
+      },
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b066456_04357ffc",
@@ -139,6 +253,24 @@
       "writtenOn": "2025-05-08T21:46:12Z",
       "side": 1,
       "message": "note: Need to make sure we resolve the conflict between this CL and my CL otherwise it\u0027ll break the build if they both pass CQ and then both land",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b97a77e_ed41f55f",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 2
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-09T01:08:17Z",
+      "side": 1,
+      "message": "I will wait for you CL to land first and rebase / update once that\u0027s in.",
+      "parentUuid": "0b066456_04357ffc",
       "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
