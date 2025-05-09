@@ -45,6 +45,54 @@
       },
       "revId": "ad1a57f5d976175965833d725d80122dbf0fc763",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ab415df_b6f50027",
+        "filename": "src/dawn/native/d3d/ShaderUtils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1004156
+      },
+      "writtenOn": "2025-05-09T19:01:40Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "50d49c34_fe28cc35",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 2
+      },
+      "revId": "ad1a57f5d976175965833d725d80122dbf0fc763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bff0dd62_a867a2c6",
+        "filename": "src/dawn/native/d3d/ShaderUtils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1004156
+      },
+      "writtenOn": "2025-05-09T19:01:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51060e37_3d082c59",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 2
+      },
+      "revId": "ad1a57f5d976175965833d725d80122dbf0fc763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
