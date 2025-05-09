@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "49aa0144_b2feb853",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-09T03:46:38Z",
+      "side": 1,
+      "message": "Huh, most mirrors don\u0027t take more than about 15 minutes. Wonder if this one is configured differently - for some reason it has `upstream/main` instead of `main` also.\n\n(link to page to check if it\u0027s updated https://chromium.googlesource.com/external/github.com/webgpu-native/webgpu-headers/+log/refs/heads/upstream/main )\n\nI haven\u0027t reviewed `webgpu.h.diff`, I\u0027ll do that after the roll.",
+      "parentUuid": "31082192_e0b1289b",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a66d35ee_8b575a21",
         "filename": "PRESUBMIT.py",
         "patchSetId": 2
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "It seemed to work with `tempfile`, so doing it that way instead of during build to make sure the checks happen ASAP.",
       "parentUuid": "2b0d18da_f1657495",
+      "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3ea6ede_1e8670b3",
+        "filename": "third_party/webgpu-headers/cli",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-09T03:46:38Z",
+      "side": 1,
+      "message": "Is the concern basically people wouldn\u0027t build the target that tests it and then not find out until CQ that it\u0027s stale? I guess that would be pretty annoying, I usually rely on just `dawn_unittests`/`dawn_end2end_tests` or `chrome`.\n\nMaybe later we could make the generator able to output to stdout so we can do the diff fully in memory. tempfile is probably fine though.",
+      "parentUuid": "6fd6c62f_63df4530",
       "revId": "1762fd1b68b6219577d6561cb4dfbe7e8802f6d3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
