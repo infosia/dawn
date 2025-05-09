@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed27c382_5c38c130",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-05-09T16:01:33Z",
+      "side": 1,
+      "message": "What about also recording the serial of the last flush? It would let us know that  we never need to flush when checking an EventQuery that is lower than that serial and avoids re-flushing for the same EventQuery if it\u0027s checked too often.",
+      "range": {
+        "startLine": 98,
+        "startChar": 72,
+        "endLine": 99,
+        "endChar": 47
+      },
+      "revId": "f3dddcdded36a4863d85953f45586a5936ec4f7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e624b0d_b8429f11",
+        "filename": "src/dawn/native/d3d11/QueueD3D11.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-05-09T16:01:33Z",
+      "side": 1,
+      "message": "Given that IsQueryCompleted is the most expensive part of this loop, I wonder if we can minimize the call count. I don\u0027t think we have a good indication that they will either be all finished or none are finished so maybe a binary search? \n\nThis is optional, a comment for future improvement could be nice.",
+      "range": {
+        "startLine": 637,
+        "startChar": 4,
+        "endLine": 637,
+        "endChar": 65
+      },
+      "revId": "f3dddcdded36a4863d85953f45586a5936ec4f7a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
