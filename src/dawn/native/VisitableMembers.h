@@ -39,6 +39,8 @@
 
 // Helper for X macro for visiting a visitable member.
 #define DAWN_INTERNAL_VISITABLE_MEMBER_ARG(type, name) , name
+// Helper for X macro for listing each member's type.
+#define DAWN_INTERNAL_VISITABLE_MEMBER_TYPE(type, name) , type
 
 namespace dawn::native::detail {
 constexpr int kInternalVisitableUnusedForComma = 0;
