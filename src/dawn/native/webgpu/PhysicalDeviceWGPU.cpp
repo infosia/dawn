@@ -136,11 +136,6 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
 }
 
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {
-    if (auto* subgroupProperties = info.Get<AdapterPropertiesSubgroups>()) {
-        subgroupProperties->subgroupMinSize = mSubgroupMinSize;
-        subgroupProperties->subgroupMaxSize = mSubgroupMaxSize;
-    }
-
     // TODO(crbug.com/413053623): Populate other AdapterInfo Chained extensions when necessary.
 }
 
