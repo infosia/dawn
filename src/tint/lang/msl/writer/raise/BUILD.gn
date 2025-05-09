@@ -49,6 +49,7 @@ if (tint_build_msl_writer) {
       "binary_polyfill.h",
       "builtin_polyfill.cc",
       "builtin_polyfill.h",
+      "module_constant.cc",
       "module_scope_vars.cc",
       "module_scope_vars.h",
       "packed_vec3.cc",

@@ -42,6 +42,7 @@ cc_library(
     "binary_polyfill.cc",
     "builtin_polyfill.cc",
     "module_scope_vars.cc",
+    "module_constant.cc",
     "packed_vec3.cc",
     "raise.cc",
     "shader_io.cc",

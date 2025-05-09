@@ -48,6 +48,7 @@
 #include "src/tint/lang/msl/writer/common/option_helpers.h"
 #include "src/tint/lang/msl/writer/raise/binary_polyfill.h"
 #include "src/tint/lang/msl/writer/raise/builtin_polyfill.h"
+#include "src/tint/lang/msl/writer/raise/module_constant.h"
 #include "src/tint/lang/msl/writer/raise/module_scope_vars.h"
 #include "src/tint/lang/msl/writer/raise/packed_vec3.h"
 #include "src/tint/lang/msl/writer/raise/shader_io.h"
@@ -146,6 +147,7 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
                   raise::ShaderIOConfig{options.emit_vertex_point_size, options.fixed_sample_mask});
     RUN_TRANSFORM(raise::PackedVec3, module);
     RUN_TRANSFORM(raise::SimdBallot, module);
+    RUN_TRANSFORM(raise::ModuleConstant, module);
     RUN_TRANSFORM(raise::ModuleScopeVars, module);
     RUN_TRANSFORM(raise::UnaryPolyfill, module);
     RUN_TRANSFORM(raise::BinaryPolyfill, module);

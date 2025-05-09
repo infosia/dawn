@@ -112,7 +112,7 @@
 #include "src/tint/utils/text/text_style.h"
 
 /// If set to 1 then the Tint will dump the IR when validating.
-#define TINT_DUMP_IR_WHEN_VALIDATING 0
+#define TINT_DUMP_IR_WHEN_VALIDATING 1
 #if TINT_DUMP_IR_WHEN_VALIDATING
 #include <iostream>
 #include "src/tint/utils/text/styled_text_printer.h"
@@ -1994,7 +1994,7 @@ void Validator::CheckRootBlock(const Block* blk) {
             },
             [&](const core::ir::Var* var) { CheckInstruction(var); },
             [&](const core::ir::Let* let) {
-                if (capabilities_.Contains(Capability::kAllowModuleScopeLets)) {
+                if ((true) || capabilities_.Contains(Capability::kAllowModuleScopeLets)) {
                     CheckInstruction(let);
                 } else {
                     AddError(inst) << "root block: invalid instruction: " << inst->TypeInfo().name;

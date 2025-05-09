@@ -46,6 +46,7 @@ tint_add_target(tint_lang_msl_writer_raise lib
   lang/msl/writer/raise/builtin_polyfill.cc
   lang/msl/writer/raise/builtin_polyfill.h
   lang/msl/writer/raise/module_scope_vars.cc
+  lang/msl/writer/raise/module_constant.cc
   lang/msl/writer/raise/module_scope_vars.h
   lang/msl/writer/raise/packed_vec3.cc
   lang/msl/writer/raise/packed_vec3.h
