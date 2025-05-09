@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "68ef1d9b_8aaeda51",
+        "filename": "src/dawn/native/vulkan/FramebufferCache.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-09T22:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f234438_34d68116",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "4bea95e9a5e26f05a0fc7f9e6fced6e9881c0e79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9cb3abc0_ea9db2d4",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-05-09T21:30:31Z",
       "side": 1,
       "message": "Chatted offline with you about this, but linking some doc or explanation as to why we can guarantee that this iterator is stable would be helpful to convince future readers that this is valid behavior.",
+      "range": {
+        "startLine": 80,
+        "startChar": 61,
+        "endLine": 80,
+        "endChar": 71
+      },
+      "revId": "4bea95e9a5e26f05a0fc7f9e6fced6e9881c0e79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "797f499d_e3cf527f",
+        "filename": "src/dawn/native/vulkan/FramebufferCache.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-09T22:19:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cb3abc0_ea9db2d4",
       "range": {
         "startLine": 80,
         "startChar": 61,
