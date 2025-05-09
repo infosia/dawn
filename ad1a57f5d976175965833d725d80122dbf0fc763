@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50d49c34_fe28cc35",
+        "filename": "src/dawn/native/d3d/ShaderUtils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1004156
+      },
+      "writtenOn": "2025-05-09T17:40:11Z",
+      "side": 1,
+      "message": "clang-format does not handle these function bodies being inside a macro-defined struct very well.  It removes all tabs and seems to either assume it\u0027s still in a macro (so removes some newlines) or that the {} are part of an anonymous namespace.\n\nI did this manual formatting, but now I see that this will block the CQ as well, so any thoughts on how to address that?",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 2
+      },
+      "revId": "ad1a57f5d976175965833d725d80122dbf0fc763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
