@@ -22,6 +22,29 @@
       },
       "revId": "ad1a57f5d976175965833d725d80122dbf0fc763",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51060e37_3d082c59",
+        "filename": "src/dawn/native/d3d/ShaderUtils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-09T17:42:04Z",
+      "side": 1,
+      "message": "```suggestion\n// clang-format off\nDAWN_SERIALIZABLE(struct, CompiledShader, COMPILED_SHADER_MEMBERS){\n    static ResultOrError\u003cCompiledShader\u003e FromValidatedBlob(Blob blob) {\n        CompiledShader result;\n        DAWN_TRY_ASSIGN(result, FromBlob(std::move(blob)));\n        // Only confirm there\u0027s a shader blob, the hlslSource is not necessarily preserved.\n        DAWN_INVALID_IF(result.shaderBlob.Empty(),\n                        \"Cached CompiledShader result has empty shader blob\");\n        return result;\n    }\n};\n// clang-format on\n```",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 2
+      },
+      "revId": "ad1a57f5d976175965833d725d80122dbf0fc763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
