@@ -83,7 +83,15 @@ using WorkgroupAllocations = std::vector<uint32_t>;
     X(WorkgroupAllocations, workgroupAllocations) \
     X(Extent3D, localWorkgroupSize)
 
-DAWN_SERIALIZABLE(struct, MslCompilation, MSL_COMPILATION_MEMBERS){};
+DAWN_SERIALIZABLE(struct, MslCompilation, MSL_COMPILATION_MEMBERS){
+    static ResultOrError<MslCompilation> FromValidatedBlob(Blob blob) {
+        MslCompilation result;
+        DAWN_TRY_ASSIGN(result, FromBlob(std::move(blob)));
+        DAWN_INVALID_IF(result.msl.empty() || result.remappedEntryPointName.empty(),
+                        "Cached MslCompilation result has no MSL");
+        return result;
+    }
+};
 #undef MSL_COMPILATION_MEMBERS
 
 }  // namespace
@@ -303,7 +311,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
 
     CacheResult<MslCompilation> mslCompilation;
     DAWN_TRY_LOAD_OR_RUN(
-        mslCompilation, device, std::move(req), MslCompilation::FromBlob,
+        mslCompilation, device, std::move(req), MslCompilation::FromValidatedBlob,
         [](MslCompilationRequest r) -> ResultOrError<MslCompilation> {
             TRACE_EVENT0(r.platform.UnsafeGetValue(), General, "tint::msl::writer::Generate");
             // Convert the AST program to an IR module.

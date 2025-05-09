@@ -70,7 +70,14 @@ namespace dawn::native::vulkan {
 #define COMPILED_SPIRV_MEMBERS(X) X(std::vector<uint32_t>, spirv)
 
 // Represents the result and metadata for a SPIR-V compilation.
-DAWN_SERIALIZABLE(struct, CompiledSpirv, COMPILED_SPIRV_MEMBERS){};
+DAWN_SERIALIZABLE(struct, CompiledSpirv, COMPILED_SPIRV_MEMBERS){
+    static ResultOrError<CompiledSpirv> FromValidatedBlob(Blob blob) {
+        CompiledSpirv result;
+        DAWN_TRY_ASSIGN(result, FromBlob(std::move(blob)));
+        DAWN_INVALID_IF(result.spirv.empty(), "Cached CompiledSpirv result has no instructions");
+        return result;
+    }
+};
 #undef COMPILED_SPIRV_MEMBERS
 
 bool TransformedShaderModuleCacheKey::operator==(
@@ -406,7 +413,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
 
     CacheResult<CompiledSpirv> compilation;
     DAWN_TRY_LOAD_OR_RUN(
-        compilation, GetDevice(), std::move(req), CompiledSpirv::FromBlob,
+        compilation, GetDevice(), std::move(req), CompiledSpirv::FromValidatedBlob,
         [](SpirvCompilationRequest r) -> ResultOrError<CompiledSpirv> {
             TRACE_EVENT0(r.platform.UnsafeGetValue(), General, "tint::spirv::writer::Generate()");
 
