@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "17f9c928_22eb10a7",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-10T14:23:24Z",
+      "side": 1,
+      "message": "Great, thanks!",
+      "parentUuid": "cc855a00_4cba8ad7",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 89
+      },
+      "revId": "b9cc52bc94004db7078a84c9a05a0abe1145e4e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "00e983b8_f50a644e",
         "filename": "src/dawn/native/CommandEncoder.cpp",
         "patchSetId": 12
@@ -60,6 +84,30 @@
       "writtenOn": "2025-05-09T11:08:54Z",
       "side": 1,
       "message": "nit: name this `ExpandResolveWithSmallerMSAATexture`.",
+      "range": {
+        "startLine": 2603,
+        "startChar": 35,
+        "endLine": 2603,
+        "endChar": 57
+      },
+      "revId": "b9cc52bc94004db7078a84c9a05a0abe1145e4e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95e47ee4_a1e0a732",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2603,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-10T14:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c44194f0_17d0b37c",
       "range": {
         "startLine": 2603,
         "startChar": 35,
@@ -106,6 +154,30 @@
       "writtenOn": "2025-05-09T11:08:54Z",
       "side": 1,
       "message": "This should be removed since we want to allow the application to use any loadOp with `RenderPassDescriptorResolveRect`. It will be used for resolve step in that case.",
+      "range": {
+        "startLine": 2254,
+        "startChar": 52,
+        "endLine": 2254,
+        "endChar": 76
+      },
+      "revId": "b9cc52bc94004db7078a84c9a05a0abe1145e4e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad2a2df4_02889d4f",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2254,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-10T14:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69ba4c9e_abd0128e",
       "range": {
         "startLine": 2254,
         "startChar": 52,

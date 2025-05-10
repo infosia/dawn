@@ -136,6 +136,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d2d7838_0441eb17",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-10T14:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c437338e_ac4f22b1",
+      "range": {
+        "startLine": 86,
+        "startChar": 10,
+        "endLine": 86,
+        "endChar": 22
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef196f81_a5da9066",
@@ -238,6 +262,24 @@
       "side": 1,
       "message": "What do you mean by \"the scissor are the same\".\n\n`{0, 0, colorAttachmentWidth, colorAttachmentHeight}` is not the same as `{rect-\u003ecolorOffsetX, rect-\u003ecolorOffsetY, rect-\u003ewidth, rect-\u003eheight}`. is it?\n\nWe have to do that because the current spec of `dawn-partial-load-resolve-texture` doesn\u0027t say that all the draws have to be within the `expandResolveRect`. It only says that the expanding and the resolve have to be done in that region. If we don\u0027t restore the scissor rect, every subsequent user draw will be constrained inside the `expandResolveRect` only. See our discussion here https://chromium.slack.com/archives/C087HTPGJG2/p1742900620106219?thread_ts\u003d1742887711.096209\u0026cid\u003dC087HTPGJG2",
       "parentUuid": "d05dc20f_9a26c452",
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66983098_111f112e",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-10T14:23:24Z",
+      "side": 1,
+      "message": "Thanks for your info.",
+      "parentUuid": "2a976abc_ce2e2bc1",
       "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -360,6 +402,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fffcc09_c5ff7286",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-10T14:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b1735a8_c6154b57",
+      "range": {
+        "startLine": 121,
+        "startChar": 68,
+        "endLine": 121,
+        "endChar": 79
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "677e323e_9879bf13",
@@ -373,6 +439,30 @@
       "writtenOn": "2025-05-07T10:18:33Z",
       "side": 1,
       "message": "[1]. This validation should be moved to [2] where the old rect is validated.",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 80
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69a7b09f_3902b7bb",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-10T14:23:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "677e323e_9879bf13",
       "range": {
         "startLine": 159,
         "startChar": 8,
@@ -467,6 +557,30 @@
       "side": 1,
       "message": "Convert this rect to the new rect. Remove the validation code below (except the feature check), we will do unified validation in the `ValidateRenderPassColorAttachment` with your new code.\n\n```\n    std::optional\u003cRenderPassDescriptorResolveRect\u003e expandResolveRect;\n    if (auto* legacyResolveRect \u003d\n            renderPassDescriptor.Get\u003cRenderPassDescriptorExpandResolveRect\u003e()) {\n        // This is a deprecated option.\n        // TODO(402810062): remove this once the all the call sites are updated to use the new rect.\n        RenderPassDescriptorResolveRect rect;\n        rect.colorOffsetX \u003d legacyResolveRect-\u003ex;\n        rect.colorOffsetY \u003d legacyResolveRect-\u003ey;\n        rect.resolveOffsetX \u003d legacyResolveRect-\u003ex;\n        rect.resolveOffsetY \u003d legacyResolveRect-\u003ey;\n        rect.width \u003d legacyResolveRect-\u003ewidth;\n        rect.height \u003d legacyResolveRect-\u003eheight;\n        expandResolveRect \u003d rect;\n\n    } else if (auto* resolveRect \u003d renderPassDescriptor.Get\u003cRenderPassDescriptorResolveRect\u003e()) {\n        expandResolveRect \u003d *resolveRect;\n    }\n    \n    ...\n        DAWN_TRY_CONTEXT(ValidateRenderPassColorAttachment(device, attachment, usageValidationMode,\n                                                           validationState, expandResolveRect),\n    ...\n    if (expandResolveRect) {\n        DAWN_INVALID_IF(!device-\u003eHasFeature(Feature::DawnPartialLoadResolveTexture),\n                        \"RenderPassDescriptorResolveRect can\u0027t be used without %s.\",\n                        ToAPI(Feature::DawnPartialLoadResolveTexture));\n```\n\nI think you can also store the `expandResolveRect` inside the `RenderPassValidationState` to retrieve it later if needed.",
       "parentUuid": "f25e91c5_59c715c7",
+      "range": {
+        "startLine": 864,
+        "startChar": 4,
+        "endLine": 864,
+        "endChar": 83
+      },
+      "revId": "51c8c60d89081e49c0683ea31ae7631f67c5844f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca6cf64d_3b8d66c2",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-10T14:23:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5e051af_7a842566",
       "range": {
         "startLine": 864,
         "startChar": 4,
