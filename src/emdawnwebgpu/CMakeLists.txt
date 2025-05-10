@@ -242,6 +242,7 @@ if (EMSCRIPTEN)
             emdawnwebgpu_c
     )
 
+    # FIXME: this is not getting rebuilt when dawn.json changes
     add_custom_target(emdawnwebgpu_pkg
         DEPENDS
             # Note emdawnwebgpu_headers_gen generates all the files we need. We don't want
