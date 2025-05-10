@@ -55,8 +55,8 @@ BindingInfoType GetBindingInfoType(const BindingInfo& info) {
 void IncrementBindingCounts(BindingCounts* bindingCounts,
                             const UnpackedPtr<BindGroupLayoutEntry>& entry) {
     uint32_t arraySize = 1;
-    if (const auto* arraySizeInfo = entry.Get<BindGroupLayoutEntryArraySize>()) {
-        arraySize = arraySizeInfo->arraySize;
+    if (entry->bindingArraySize != 0) {
+        arraySize = entry->bindingArraySize;
     }
 
     bindingCounts->totalCount += arraySize;
