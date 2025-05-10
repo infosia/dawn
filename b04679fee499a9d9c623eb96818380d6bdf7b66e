@@ -70,6 +70,60 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f7b90d8_65b9b4a7",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-10T02:27:23Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "067c57dc_bffc7386",
+      "fixSuggestions": [
+        {
+          "fixId": "6ba89669_db57af1d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+              "range": {
+                "startLine": 203,
+                "startChar": 0,
+                "endLine": 204,
+                "endChar": 0
+              },
+              "replacement": "            auto* type \u003d ty.ptr(uniform, strct, read);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d357d9e_af3ab65d",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-10T02:27:23Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "067c57dc_bffc7386",
+      "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bb35356_d8e279e0",
@@ -157,6 +211,24 @@
       "writtenOn": "2025-05-09T21:24:11Z",
       "side": 1,
       "message": "[1] This is a test that shows the incorrect index. The input shader is storing to `b`, but index `0` of the argument buffer structure is `c`.",
+      "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df6568bd_2625c86a",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-10T02:27:23Z",
+      "side": 1,
+      "message": "Ah, nice catch. I added the sorting at the end and missed that it was doing the wrong thing now.",
+      "parentUuid": "11d3c9f6_a0eb2713",
       "revId": "b04679fee499a9d9c623eb96818380d6bdf7b66e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
