@@ -983,13 +983,14 @@ ResultOrError<std::unique_ptr<EntryPointMetadata>> ReflectEntryPointUsingTint(
 
         info.name = resource.variable_name;
 
-        info.arraySize = BindingIndex(resource.array_size.value_or(1));
         DAWN_INVALID_IF(resource.array_size.has_value() &&
                             device->IsToggleEnabled(Toggle::DisableBindGroupLayoutEntryArraySize),
                         "Use of binding_array is disabled.");
         DAWN_INVALID_IF(
             resource.array_size.has_value() && !device->IsToggleEnabled(Toggle::AllowUnsafeAPIs),
             "Use of binding_array is disabled as an unsafe API.");
+
+        info.arraySize = BindingIndex(resource.array_size.value_or(1));
         DAWN_INVALID_IF(info.arraySize == BindingIndex(0), "binding_array size is 0.");
         if (DelayedInvalidIf(
                 info.arraySize >= BindingIndex(kMaxBindingsPerBindGroup),
