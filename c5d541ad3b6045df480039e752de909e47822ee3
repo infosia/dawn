@@ -20,6 +20,241 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed2e6eda_b62bf2bb",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "I think this name will end up being confusing, and we should call it `ENABLE_WEBGPU_BACKEND` or `ENABLE_WEBGPU_ON_WEBGPU`, even though that\u0027s inconsistent with the flags for other backends.\n\nSame for GN. Could even change the name of the backend (the directory and namespace) but I think those are fine, they\u0027re clear enough in context.\n\nAlternative names could be \"dawn on dawn\", \"dawn on webgpu\", \"loopback\"",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e86ac173_63198da7",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "This seems to be infallible. Just remove Initialize and mIsInitialized and inline the initialization into the constructor (in the initializer list)?\nWe can always bring it back if we need it later.",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4103ae61_04e1bc7f",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "Outdated? We\u0027re not using libdawn_proc anymore right?",
+      "range": {
+        "startLine": 64,
+        "startChar": 14,
+        "endLine": 67,
+        "endChar": 63
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92c0bd7c_deb114c2",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "nit: should be BACKENDWGPU to match filename",
+      "range": {
+        "startLine": 28,
+        "startChar": 31,
+        "endLine": 28,
+        "endChar": 44
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21f714dc_64489f5f",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "nit: IIUC this will always be non-null",
+      "range": {
+        "startLine": 90,
+        "startChar": 20,
+        "endLine": 90,
+        "endChar": 30
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6727f1ed_ae013ce1",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "Vulkan backend stores the functions into a field on the device, probably to reduce the number of pointer indirections, but it also reduces the verbosity a bit. Might want to do that for this backend too, eventually if not now.\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/DeviceVk.h;l\u003d69;drc\u003dcf7d8a70bd8d3f9caab2a9e7a306210400ccb9bd",
+      "range": {
+        "startLine": 101,
+        "startChar": 17,
+        "endLine": 101,
+        "endChar": 31
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6853192_4df934d9",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "nit: isn\u0027t this the same as just `GetFunctions()`?",
+      "range": {
+        "startLine": 139,
+        "startChar": 36,
+        "endLine": 140,
+        "endChar": 56
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47aa9d1d_32ea1d38",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "nit: no need for this TODO, we\u0027ll do it as we go as it seems necessary.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7b4146d_764aa12b",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "It would be helpful to coin a distinct term for the lower layer objects, so it can be used consistently. \"lower\" can be awkward because it\u0027s also a verb, maybe \"inner\", like `buffer-\u003eGetInner()` / `FromAPI(buffer-\u003eGetInner())`.\n\nYou\u0027ve mostly used \"api\" for this so far, but I think having a more distinct term would be good (e.g. it\u0027s already used in `ToAPI` which means something a bit different).",
+      "range": {
+        "startLine": 260,
+        "startChar": 19,
+        "endLine": 260,
+        "endChar": 31
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cad35285_f0dbc8be",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "nit: seems to be unused. Could use it in GetMappedPointer, but probably just remove.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "203bc6ad_db9d7236",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "nit: add TODO to set these based on the lower layer",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 42
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8e936b6c_06bd00ee",
         "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
         "patchSetId": 15
@@ -31,6 +266,24 @@
       "writtenOn": "2025-05-09T00:46:43Z",
       "side": 1,
       "message": "The webgpu::PhysicalDevice requires to be backed by a \"lower layer\" implementation adapter or physical device to create the underlying apiDevice and query the features, limits, etc.\n\nWe cannot initialize such adapter inside InitializeImpl etc. as these are called inside `EnumerateAdapters` and doing so ends in an infinte recursion.\n\n[Some attempts](https://dawn-review.googlesource.com/c/dawn/+/241174/) on reuse the adapter populated by `EnumerateAdapters` to init the adapterImpl after the enumerating for loop. but this breaks the frontend/backend isolation. It also has other bugs probably because adapters are abstract layer objects that are have multiple instances per physical device.\n\nAnother attempt idea is to create the \"lower layer\" physical device inside webgpu::physicalDevice by maybe duplicate some logic from instance/backendconnection (`DiscoverPhysicalDevices`). Is PhysicalDevice created once per backend on a dawn instance?\n\nWould like to hear your inputs.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "775c4a52_6855cc3d",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-10T02:34:52Z",
+      "side": 1,
+      "message": "Seems to me that DiscoverPhysicalDevices should find adapters before creating PhysicalDevices. That would also allow us to make one webgpu::PhysicalDevice for each other backend.\n\nThe recursion gets complicated if we do that in `webgpu::Backend::DiscoverPhysicalDevices`, but what if we special case it in `InstanceBase::EnumeratePhysicalDevices` so that it first discovers all the non-webgpu-backend `PhysicalDevice`s, and then makes a webgpu-backend `PhysicalDevice` wrapping each one (or just the first one) and adds it to the return list?\n\nI don\u0027t know super well how PhysicalDevice works so that might require caching (so we only create one wrapper for each real PhysicalDevice).\n\nThis will require the webgpu backend to know about PhysicalDevice which isn\u0027t part of the API, but I think that\u0027s fine.\n\n(I\u0027ve reviewed everything except for the rest of this file since it seems like it might change significantly)",
+      "parentUuid": "8e936b6c_06bd00ee",
       "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
