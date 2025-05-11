@@ -36,6 +36,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14fe38c5_3ce3334f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2025-05-11T06:13:39Z",
+      "side": 1,
+      "message": "My bad, now that github proxies my email address, I no longer receive emails for CLs imported by Copybara, sorry!",
+      "revId": "7b99d9923d7e40afd24bec55fdbf0f891e7f68e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "699ceced_fdea2373",
@@ -49,6 +66,24 @@
       "writtenOn": "2025-05-01T12:06:56Z",
       "side": 1,
       "message": "This requires the abseil dependency which was just moved, so this should probably also move?",
+      "revId": "7b99d9923d7e40afd24bec55fdbf0f891e7f68e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b3e2d86_aafdcd1d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2025-05-11T06:13:39Z",
+      "side": 1,
+      "message": "Indeed, moved it!",
+      "parentUuid": "699ceced_fdea2373",
       "revId": "7b99d9923d7e40afd24bec55fdbf0f891e7f68e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
