@@ -1710,6 +1710,65 @@ TEST_P(ReadWriteStorageTextureTests, ReadMipLevel1AndWriteLevel2AtTheSameTime) {
     }
 }
 
+TEST_P(ReadWriteStorageTextureTests, ReadWriteStorageTexture_WriteAfterReadHazard) {
+    constexpr uint32_t kDepth = 256;
+    constexpr uint32_t kSize = kWidth * kHeight * kDepth;
+
+    std::array<uint32_t, kSize> inputData;
+    for (size_t i = 0; i < inputData.size(); ++i) {
+        inputData[i] = i + 1;
+    }
+
+    wgpu::Texture readWriteStorageTexture = CreateTextureWithTestData(
+        reinterpret_cast<const uint8_t*>(inputData.data()), inputData.size() * sizeof(uint32_t),
+        wgpu::TextureFormat::R32Uint, wgpu::TextureViewDimension::e3D);
+
+    wgpu::BufferDescriptor bufferDesc;
+    bufferDesc.size = sizeof(uint32_t);
+    bufferDesc.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage;
+    wgpu::Buffer buffer = device.CreateBuffer(&bufferDesc);
+
+    std::ostringstream sstream;
+    sstream << "const kWidth = " << kWidth << ";\n";
+    sstream << "const kHeight = " << kHeight << ";\n";
+    sstream << R"(
+@group(0) @binding(0) var rwImage : texture_storage_3d<r32uint, read_write>;
+@group(0) @binding(1) var<storage, read_write> buffer : atomic<u32>;
+
+@compute @workgroup_size(4, 4, 4)
+fn main(@builtin(global_invocation_id) gid: vec3<u32>) {
+  // We read a value from the texture.
+  let value = textureLoad(rwImage, gid).x;
+
+  // We then write a zero value back to the texture.
+  textureStore(rwImage, gid, vec4(0));
+
+  // We then increment an atomic counter for any non-zero value that was read from the texture.
+  if (value == 0) {
+    return;
+  }
+  atomicAdd(&buffer, 1u);
+})";
+
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(sstream.str().c_str());
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {
+                                                         {0, readWriteStorageTexture.CreateView()},
+                                                         {1, buffer},
+                                                     });
+
+    wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+    wgpu::ComputePassEncoder computePassEncoder = encoder.BeginComputePass();
+    computePassEncoder.SetBindGroup(0, bindGroup);
+    computePassEncoder.SetPipeline(pipeline);
+    computePassEncoder.DispatchWorkgroups(kWidth / 4, kHeight / 4, kDepth / 4);
+    computePassEncoder.End();
+    wgpu::CommandBuffer commandBuffer = encoder.Finish();
+    queue.Submit(1, &commandBuffer);
+
+    EXPECT_BUFFER_U32_EQ(kSize, buffer, 0);
+}
+
 DAWN_INSTANTIATE_TEST(ReadWriteStorageTextureTests,
                       D3D11Backend(),
                       D3D12Backend(),
