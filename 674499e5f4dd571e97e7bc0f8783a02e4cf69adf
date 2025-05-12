@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "09a43798_a9804f06",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-12T18:09:07Z",
+      "side": 1,
+      "message": "Possibly not, but seems a bit nicer this way?",
+      "parentUuid": "ea7c6996_d8af210c",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b8481881_4c4a5a9a",
         "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2025-05-12T17:58:14Z",
       "side": 1,
       "message": "Why are you requiring the coordinates to be constants? That\u0027s not a SPIR-V or a WGSL restriction.",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c468b2dc_57cb469b",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-12T18:09:07Z",
+      "side": 1,
+      "message": "Currently yes, will expand this when I get to examples which don\u0027t have this restriction.",
+      "parentUuid": "b8481881_4c4a5a9a",
       "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -71,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "91e4a95e_7762f316",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-12T18:09:07Z",
+      "side": 1,
+      "message": "Conversion functions should be `const-expressions`\u0027s no? The value isn\u0027t an `i32`, it depends on the type, but it\u0027s a `vec{2,3,4}`",
+      "parentUuid": "c726eca9_8aa7e2db",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0a3e192a_7d76e616",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 2
@@ -82,6 +136,24 @@
       "writtenOn": "2025-05-12T17:58:14Z",
       "side": 1,
       "message": "Should we just omit the image operands mask entirely when it\u0027s not provided? Saves a whole unnecessary argument in what may be a common case.",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bebea74_16820fbb",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-12T18:09:07Z",
+      "side": 1,
+      "message": "Means an entire set of duplicate entries in the `def` file. Extra argument seems a lot lighter.",
+      "parentUuid": "0a3e192a_7d76e616",
       "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
