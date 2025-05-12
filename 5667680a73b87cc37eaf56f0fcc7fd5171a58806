@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d48aab6_a82e0ac4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-12T11:42:26Z",
+      "side": 1,
+      "message": "Thanks for reviewing!",
+      "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d07e911_e3d5fe6c",
@@ -31,6 +48,24 @@
       "writtenOn": "2025-05-12T11:26:10Z",
       "side": 1,
       "message": "Why is this one needed? I don\u0027t see a serializable use of std::unique_ptr in ShaderModule.h. IMHO pointers are a nice barrier to denote what shouldn\u0027t be serialized so it would be nice to not add this.",
+      "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa24fba9_2fbfa881",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-12T11:42:26Z",
+      "side": 1,
+      "message": "`EntryPointMetadataTable` itself is a map of entry point name -\u003e `unique_ptr\u003cEntryPointMetadata\u003e`. [1]\n\n```\nusing EntryPointMetadataTable \u003d\n    absl::flat_hash_map\u003cstd::string, std::unique_ptr\u003cEntryPointMetadata\u003e\u003e;\n```\n\nI think for items that should not get serialized we should have something like `UnsafeUnkeyed` wrapper, since currently raw pointer can also get serialized [2] (but not deserialized).\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/ShaderModule.h;l\u003d105\n[2]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/stream/Stream.h;l\u003d213",
+      "parentUuid": "5d07e911_e3d5fe6c",
       "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
