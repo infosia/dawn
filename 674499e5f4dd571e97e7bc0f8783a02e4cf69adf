@@ -16,6 +16,74 @@
       "message": "PTAL.",
       "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea7c6996_d8af210c",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-12T17:58:14Z",
+      "side": 1,
+      "message": "Is this map really needed? Could just do `sampled-\u003eAs\u003cInstructionResult\u003e()-\u003eInstruction()`?",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8481881_4c4a5a9a",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-12T17:58:14Z",
+      "side": 1,
+      "message": "Why are you requiring the coordinates to be constants? That\u0027s not a SPIR-V or a WGSL restriction.",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c726eca9_8aa7e2db",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-12T17:58:14Z",
+      "side": 1,
+      "message": "I think this is the one that we can require to be const, since you check for `ConstOffset` in the operands mask. WGSL requires the offset to be const too.\n\nThat would mean just convert the constant value to an i32 directly instead of using a new instruction.",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a3e192a_7d76e616",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-12T17:58:14Z",
+      "side": 1,
+      "message": "Should we just omit the image operands mask entirely when it\u0027s not provided? Saves a whole unnecessary argument in what may be a common case.",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
