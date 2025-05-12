@@ -129,7 +129,10 @@ ResultOrError<Ref<BufferBase>> Device::CreateBufferImpl(
 ResultOrError<Ref<CommandBufferBase>> Device::CreateCommandBuffer(
     CommandEncoder* encoder,
     const CommandBufferDescriptor* descriptor) {
-    return AcquireRef(new CommandBuffer(encoder, descriptor));
+    // This is called by CommandEncoder::Finish
+    // TODO(crbug.com/413053623): Store CommandEncoderDescriptor and assign here.
+    WGPUCommandEncoder innerEncoder = mWGPU.deviceCreateCommandEncoder(mInnerDevice, nullptr);
+    return AcquireRef(new CommandBuffer(encoder, descriptor, innerEncoder));
 }
 Ref<ComputePipelineBase> Device::CreateUninitializedComputePipelineImpl(
     const UnpackedPtr<ComputePipelineDescriptor>& descriptor) {
@@ -228,13 +231,23 @@ float Device::GetTimestampPeriodInNS() const {
 // static
 ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
                                           const UnpackedPtr<BufferDescriptor>& descriptor) {
-    Ref<Buffer> buffer = AcquireRef(new Buffer(device, descriptor));
+    auto desc = ToAPI(*descriptor);
+    WGPUBuffer apiBuffer =
+        device->GetFunctions().deviceCreateBuffer(device->GetInnerHandle(), desc);
+
+    Ref<Buffer> buffer = AcquireRef(new Buffer(device, descriptor, apiBuffer));
     return std::move(buffer);
 }
 
-Buffer::Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor)
-    : BufferBase(device, descriptor) {
+Buffer::Buffer(Device* device,
+               const UnpackedPtr<BufferDescriptor>& descriptor,
+               WGPUBuffer apiBuffer)
+    : BufferBase(device, descriptor), mApiBuffer(apiBuffer) {
     mAllocatedSize = GetSize();
+}
+
+WGPUBuffer Buffer::GetApiBuffer() const {
+    return mApiBuffer;
 }
 
 bool Buffer::IsCPUWritableAtCreation() const {
@@ -255,15 +268,42 @@ void Buffer::CopyFromStaging(BufferBase* staging,
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {
     GetDevice()->GetQueue()->IncrementLastSubmittedCommandSerial();
 
-    // TODO(crbug.com/413053623): implement.
+    // TODO(crbug.com/413053623): implement map async callback.
+    WGPUBufferMapCallbackInfo apiCallbackInfo = {};
+    apiCallbackInfo.mode = WGPUCallbackMode_AllowProcessEvents;
+    apiCallbackInfo.callback = [](WGPUMapAsyncStatus status, WGPUStringView message,
+                                  void* callback_param, void* userdata_param) {};
+    apiCallbackInfo.userdata1 = nullptr;
+    apiCallbackInfo.userdata2 = this;
+
+    // For now we simply wait on the future.
+    WGPUFutureWaitInfo waitInfo = {};
+    waitInfo.future = ToBackend(GetDevice())
+                          ->GetFunctions()
+                          .bufferMapAsync(mApiBuffer, static_cast<WGPUMapMode>(mode), offset, size,
+                                          apiCallbackInfo);
+    ToBackend(GetDevice())
+        ->GetFunctions()
+        .instanceWaitAny(ToAPI(GetDevice()->GetInstance()), 1, &waitInfo, UINT64_MAX);
+
+    mMappedData =
+        ToBackend(GetDevice())->GetFunctions().bufferGetMappedRange(mApiBuffer, 0, GetSize());
+
     return {};
 }
 
 void* Buffer::GetMappedPointer() {
-    DAWN_UNREACHABLE();
+    // TODO(crbug.com/413053623): temporary implementation.
+    return const_cast<void*>(
+        ToBackend(GetDevice())->GetFunctions().bufferGetConstMappedRange(mApiBuffer, 0, GetSize()));
 }
 
-void Buffer::UnmapImpl() {}
+void Buffer::UnmapImpl() {
+    if (mApiBuffer) {
+        ToBackend(GetDevice())->GetFunctions().bufferUnmap(mApiBuffer);
+    }
+    mMappedData = nullptr;
+}
 
 void Buffer::DestroyImpl() {
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
@@ -274,23 +314,82 @@ void Buffer::DestroyImpl() {
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the buffer since there are no other live refs.
 
+    if (mApiBuffer) {
+        ToBackend(GetDevice())->GetFunctions().bufferRelease(mApiBuffer);
+        mApiBuffer = nullptr;
+    }
+
     BufferBase::DestroyImpl();
 }
 
 // CommandBuffer
 
-CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor)
-    : CommandBufferBase(encoder, descriptor) {}
+CommandBuffer::CommandBuffer(CommandEncoder* encoder,
+                             const CommandBufferDescriptor* descriptor,
+                             WGPUCommandEncoder apiEncoder)
+    : CommandBufferBase(encoder, descriptor), mApiEncoder(apiEncoder) {}
 
-CommandBuffer::~CommandBuffer() = default;
+CommandBuffer::~CommandBuffer() {
+    if (mApiEncoder) {
+        ToBackend(GetDevice())->GetFunctions().commandEncoderRelease(mApiEncoder);
+        mApiEncoder = nullptr;
+    }
+}
+
+WGPUCommandBuffer CommandBuffer::Execute() {
+    Command type;
+    while (mCommands.NextCommandId(&type)) {
+        switch (type) {
+            case Command::CopyBufferToBuffer: {
+                CopyBufferToBufferCmd* copy = mCommands.NextCommand<CopyBufferToBufferCmd>();
+                ToBackend(GetDevice())
+                    ->GetFunctions()
+                    .commandEncoderCopyBufferToBuffer(
+                        mApiEncoder, ToBackend(copy->source)->GetApiBuffer(), copy->sourceOffset,
+                        ToBackend(copy->destination)->GetApiBuffer(), copy->destinationOffset,
+                        copy->size);
+                break;
+            }
+            default:
+                DAWN_UNREACHABLE();
+        }
+    }
+
+    // TODO(crbug.com/413053623): Store WGPUCommandBufferDescriptor and assign here.
+    return ToBackend(GetDevice())->GetFunctions().commandEncoderFinish(mApiEncoder, nullptr);
+}
 
 // Queue
 
-Queue::Queue(Device* device, const QueueDescriptor* descriptor) : QueueBase(device, descriptor) {}
+Queue::Queue(Device* device, const QueueDescriptor* descriptor) : QueueBase(device, descriptor) {
+    mApiQueue = device->GetFunctions().deviceGetQueue(device->GetInnerHandle());
+}
 
-Queue::~Queue() = default;
+Queue::~Queue() {
+    if (mApiQueue) {
+        ToBackend(GetDevice())->GetFunctions().queueRelease(mApiQueue);
+        mApiQueue = nullptr;
+    }
+}
 
 MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) {
+    if (commandCount == 0 || commands == nullptr) {
+        return {};
+    }
+
+    auto procs = ToBackend(GetDevice())->GetFunctions();
+
+    std::vector<WGPUCommandBuffer> apiCommands(commandCount);
+    for (uint32_t i = 0; i < commandCount; ++i) {
+        apiCommands[i] = ToBackend(commands[i])->Execute();
+    }
+
+    ToBackend(GetDevice())->GetFunctions().queueSubmit(mApiQueue, commandCount, apiCommands.data());
+
+    for (uint32_t i = 0; i < commandCount; ++i) {
+        procs.commandBufferRelease(apiCommands[i]);
+    }
+
     return {};
 }
 
@@ -298,6 +397,10 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
                                   uint64_t bufferOffset,
                                   const void* data,
                                   size_t size) {
+    auto apiBuffer = ToBackend(buffer)->GetApiBuffer();
+    ToBackend(GetDevice())
+        ->GetFunctions()
+        .queueWriteBuffer(mApiQueue, apiBuffer, bufferOffset, data, size);
     return {};
 }
 
@@ -322,7 +425,7 @@ ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanosecond
 }
 
 MaybeError Queue::WaitForIdleForDestruction() {
-    return {};
+    return FromAPI(mApiQueue)->WaitForIdleForDestruction();
 }
 
 // BindGroupDataHolder
