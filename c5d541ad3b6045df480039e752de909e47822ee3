@@ -330,6 +330,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1b01eab0_23313975",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-12T21:39:29Z",
+      "side": 1,
+      "message": "Yea, as I was writing that I was thinking that also, but I realized that if we can set the table, as per 2), then it\u0027s fine to leave it as `DawnProcTable` since we could always just pass a table that only implements core `webgpu` features if we wanted a \"true\" WebGPU backend.\n\n(Note I am thinking about whether we could potentially use this to make these tests run against Emscripten.)",
+      "parentUuid": "a84fd219_6437519e",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ff6a9002_738477c4",
         "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
         "patchSetId": 15
