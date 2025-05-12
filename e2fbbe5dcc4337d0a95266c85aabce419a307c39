@@ -34,6 +34,24 @@
       "parentUuid": "9240dab8_2b70c0a6",
       "revId": "e2fbbe5dcc4337d0a95266c85aabce419a307c39",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e9612f8_f99dabf7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-05-12T08:53:57Z",
+      "side": 1,
+      "message": "I\u0027ve discovered more places that can use default comparisons.\n\nPTAL, thanks!",
+      "parentUuid": "488c64de_99dca0ab",
+      "revId": "e2fbbe5dcc4337d0a95266c85aabce419a307c39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
