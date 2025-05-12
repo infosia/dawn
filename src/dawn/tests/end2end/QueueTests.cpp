@@ -53,7 +53,8 @@ DAWN_INSTANTIATE_TEST(QueueTests,
                       NullBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 class QueueWriteBufferTests : public DawnTest {};
 
@@ -993,7 +994,8 @@ DAWN_INSTANTIATE_TEST(QueueWriteTextureSimpleTests,
                       MetalBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn
