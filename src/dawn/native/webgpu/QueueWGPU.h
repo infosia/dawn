@@ -54,6 +54,8 @@ class Queue final : public QueueBase {
     MaybeError SubmitPendingCommands() override;
     ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
     MaybeError WaitForIdleForDestruction() override;
+
+    WGPUQueue mInnerQueue = nullptr;
 };
 
 }  // namespace dawn::native::webgpu
