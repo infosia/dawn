@@ -41,6 +41,7 @@ import (
 
 	"dawn.googlesource.com/dawn/tools/src/container"
 	"dawn.googlesource.com/dawn/tools/src/fileutils"
+	"dawn.googlesource.com/dawn/tools/src/oswrapper"
 	"dawn.googlesource.com/dawn/tools/src/text"
 	"dawn.googlesource.com/dawn/tools/src/transform"
 )
@@ -169,15 +170,16 @@ func (g *generator) eval(template string, args ...any) (string, error) {
 	return sb.String(), nil
 }
 
+// TODO(crbug.com/344014313): Add unittest coverage.
 // importTmpl parses the template at the given project-relative path, merging
 // the template definitions into the global namespace.
 // Note: The body of the template is not executed.
-func (g *generator) importTmpl(path string) (string, error) {
+func (g *generator) importTmpl(path string, fsReader oswrapper.FilesystemReader) (string, error) {
 	if strings.Contains(path, "..") {
 		return "", fmt.Errorf("import path must not contain '..'")
 	}
-	path = filepath.Join(fileutils.DawnRoot(), path)
-	data, err := ioutil.ReadFile(path)
+	path = filepath.Join(fileutils.DawnRoot(fsReader), path)
+	data, err := fsReader.ReadFile(path)
 	if err != nil {
 		return "", fmt.Errorf("failed to open '%v': %w", path, err)
 	}
