@@ -40,17 +40,14 @@ dictionary EventInit {
 
 [LegacyNoInterfaceObject] interface Navigator {};
 
-[LegacyNoInterfaceObject] interface Event {
-  readonly attribute boolean bubbles;
-  readonly attribute boolean cancelable;
-  attribute boolean returnValue;
-};
-
 [LegacyNoInterfaceObject] interface WorkerNavigator{};
 
-[LegacyNoInterfaceObject] interface EventListener {
+[LegacyNoInterfaceObject] interface EventListenerInterface {
   undefined handleEvent(Event event);
 };
+callback EventListenerCallback = undefined (Event event);
+typedef(EventListenerInterface or EventListenerCallback) EventListener;
+typedef EventListenerCallback? EventHandler;
 
 [LegacyNoInterfaceObject] interface EventTarget {
   undefined addEventListener(DOMString type, EventListener? callback, optional (AddEventListenerOptions or boolean) options);
@@ -86,3 +83,8 @@ typedef (ArrayBuffer or /* SharedArrayBuffer or [AllowShared] */ ArrayBufferView
 [LegacyNoInterfaceObject] interface VideoFrame {};
 
 enum PredefinedColorSpace { "srgb", "display-p3" };
+
+// Add this annotation to GPUUncapturedErrorEvent as we need to treat it special.
+[ManualConstructor]
+interface GPUUncapturedErrorEvent {};
+
