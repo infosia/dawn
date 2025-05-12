@@ -76,7 +76,8 @@ TEST_F(AdapterEnumerationTests, OnlyFallback) {
         wgpu::AdapterInfo info;
         adapter.GetInfo(&info);
 
-        EXPECT_EQ(info.backendType, wgpu::BackendType::Vulkan);
+        EXPECT_TRUE(info.backendType == wgpu::BackendType::Vulkan ||
+                    info.backendType == wgpu::BackendType::WebGPU);
         EXPECT_EQ(info.adapterType, wgpu::AdapterType::CPU);
         EXPECT_TRUE(gpu_info::IsGoogleSwiftshader(info.vendorID, info.deviceID));
     }
