@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6f878aa_14017701",
+        "filename": "test/tint/bug/tint/1737.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-12T15:23:45Z",
+      "side": 0,
+      "message": "I don\u0027t think you want to change this, the test case comes from a bug, so we want to make sure it continues to work.",
+      "revId": "54078a38465856e2f35ccff2cae75671940da77a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
