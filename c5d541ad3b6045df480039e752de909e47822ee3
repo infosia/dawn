@@ -52,6 +52,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da4b0fd7_e5f1745a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-12T21:52:10Z",
+      "side": 1,
+      "message": "Thanks for the thorough reviews and inputs.\nI\u0027ve further splitted this CL into smaller chunks as suggested. Please take a look at [this new chain](https://dawn-review.googlesource.com/c/dawn/+/241814) instead of of this one.\n\nThe first commit is adding a BackendWGPU that returns no physical device in `Backend::DiscoverPhysicalDevices`. This one should be with more certainty and ready for review.\n\nI will work on later ones (PhysicalDevice, Device, Queue/Buffer/etc.) which require bigger changes at the same time and send out for review when ready.\n\nI will keep this CL for referencing the review comments and abandon after the new chain lands.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed2e6eda_b62bf2bb",
@@ -69,6 +86,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3702ad2_9bd2923d",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-12T21:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed2e6eda_b62bf2bb",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54bead13_fdb113f0",
@@ -82,6 +117,30 @@
       "writtenOn": "2025-05-12T13:13:33Z",
       "side": 1,
       "message": "```suggestion\n#include \"dawn/native/DawnNative.h\"\n\n```",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a96886cd_9d71065c",
+        "filename": "include/dawn/native/WebGPUBackend.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-12T21:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54bead13_fdb113f0",
       "range": {
         "startLine": 31,
         "startChar": 1,
@@ -195,6 +254,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa8221c7_8005a6f2",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-12T21:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e86ac173_63198da7",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4103ae61_04e1bc7f",
@@ -248,6 +331,30 @@
       "writtenOn": "2025-05-10T02:34:52Z",
       "side": 1,
       "message": "nit: should be BACKENDWGPU to match filename",
+      "range": {
+        "startLine": 28,
+        "startChar": 31,
+        "endLine": 28,
+        "endChar": 44
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d37c266_89830f31",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-12T21:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92c0bd7c_deb114c2",
       "range": {
         "startLine": 28,
         "startChar": 31,
@@ -833,6 +940,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7577f862_19877d0a",
+        "filename": "src/dawn/native/webgpu/Forward.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-12T21:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45ca8e51_b8e20bd6",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9aff8b5_1febc827",
@@ -1081,6 +1212,48 @@
       "writtenOn": "2025-05-12T21:16:23Z",
       "side": 1,
       "message": "nit. Probably unintentional addition here.",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfc6bc67_cbec45b1",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-12T21:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83edcf20_b6b55cef",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d38c7b45_a7df3865",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-12T21:52:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cf8f295_edc08480",
       "range": {
         "startLine": 1,
         "startChar": 2,
