@@ -16,6 +16,24 @@
       "message": "I don\u0027t think you want to change this, the test case comes from a bug, so we want to make sure it continues to work.",
       "revId": "54078a38465856e2f35ccff2cae75671940da77a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1213cbb_a644b700",
+        "filename": "test/tint/bug/tint/1737.wgsl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-12T20:11:53Z",
+      "side": 0,
+      "message": "You are correct :) I just modified this locally to have a look at the IR generated",
+      "parentUuid": "d6f878aa_14017701",
+      "revId": "54078a38465856e2f35ccff2cae75671940da77a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
