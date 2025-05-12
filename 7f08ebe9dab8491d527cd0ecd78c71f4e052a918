@@ -22,6 +22,30 @@
       },
       "revId": "7f08ebe9dab8491d527cd0ecd78c71f4e052a918",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "336eb839_a330496f",
+        "filename": "docs/dawn/features/dawn_partial_load_resolve_texture.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-12T03:18:02Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "b8deaac1_3bacb5b7",
+      "range": {
+        "startLine": 74,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 536
+      },
+      "revId": "7f08ebe9dab8491d527cd0ecd78c71f4e052a918",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

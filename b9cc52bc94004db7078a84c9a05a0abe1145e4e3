@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0cca445_5c55e158",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-12T03:18:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "17f9c928_22eb10a7",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 89
+      },
+      "revId": "b9cc52bc94004db7078a84c9a05a0abe1145e4e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "00e983b8_f50a644e",
@@ -61,6 +85,30 @@
       "writtenOn": "2025-05-09T11:08:54Z",
       "side": 1,
       "message": "Actually we should remove this restriction. The application can use `Load` \u0026 `Clear` loadOp with `RenderPassDescriptorResolveRect`, in that case that rect will only be used for resolve step, and will be ignored in the loading step.\n\nIt\u0027s valid for the application to do something like this:\n- Create a render pass with MSAA texture size 3x3, resolve target 5x5\n- Clear the entire MSAA texture. (loadOp\u003dClear).\n- Draw some stuffs to the MSAA texture.\n- Resolve MSAA (1, 1, 2, 2) region to the resolve texture\u0027s (3, 3, 2, 2).",
+      "range": {
+        "startLine": 879,
+        "startChar": 30,
+        "endLine": 879,
+        "endChar": 54
+      },
+      "revId": "b9cc52bc94004db7078a84c9a05a0abe1145e4e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5883502_eb6a09c4",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-12T03:18:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "00e983b8_f50a644e",
       "range": {
         "startLine": 879,
         "startChar": 30,
@@ -131,6 +179,30 @@
       "writtenOn": "2025-05-09T11:08:54Z",
       "side": 1,
       "message": "nit: Use non-zero offsets and non-identical offsets to increase coverage. Alternatively, you can keep zero here and add another test with non-zero offsets.\nProbably can write a common function and reuse it in multiple tests.\ne.g.\n```\nvoid testPartialRect(wgpu::RenderPassDescriptorResolveRect rect, ...)\n\nTEST_P(DawnLoadResolveTextureTest, ExpandResolveWithSmallerMSAATexture) {\n    testPartialRect({0, 0, 0, 0, .width \u003d 3, .height \u003d 3}, ...);\n}\n\nTEST_P(DawnLoadResolveTextureTest, ExpandResolveDifferentNonZeroOffsetsWithSmallerMSAATexture) {\n    testPartialRect({1, 2, 3, 4, .width \u003d 3, .height \u003d 3}, ...);\n}\n```",
+      "range": {
+        "startLine": 2667,
+        "startChar": 13,
+        "endLine": 2667,
+        "endChar": 25
+      },
+      "revId": "b9cc52bc94004db7078a84c9a05a0abe1145e4e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d1acaa5_da952a6b",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 2667,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-12T03:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37587d62_fd344171",
       "range": {
         "startLine": 2667,
         "startChar": 13,
