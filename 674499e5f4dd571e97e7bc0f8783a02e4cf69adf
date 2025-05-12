@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd0254bc_20ca73a0",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-12T20:22:21Z",
+      "side": 1,
+      "message": "Disagree, but you since you need to track them to delete them later you\u0027d still need some structure, so this is OK.",
+      "parentUuid": "09a43798_a9804f06",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8481881_4c4a5a9a",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Currently yes, will expand this when I get to examples which don\u0027t have this restriction.",
       "parentUuid": "b8481881_4c4a5a9a",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb1601b3_d56da1ff",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-12T20:22:21Z",
+      "side": 1,
+      "message": "I was actually thinking that we would simplify everything below by making it operate on a generic value, rather than specializing for constant. But sure, we can do that later.",
+      "parentUuid": "c468b2dc_57cb469b",
       "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -141,6 +177,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fc026d2_c4978dca",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-12T20:22:21Z",
+      "side": 1,
+      "message": "In the case of texture gather it\u0027s always a `vec2\u003ci32\u003e`, but I see now that you\u0027re going to generalize this code for other builtins in a later patch so I guess `b.Convert` is a little easier than manually constructing the new constant value.",
+      "parentUuid": "171ee16d_df393933",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a3e192a_7d76e616",
@@ -172,6 +226,41 @@
       "side": 1,
       "message": "Means an entire set of duplicate entries in the `def` file. Extra argument seems a lot lighter.",
       "parentUuid": "0a3e192a_7d76e616",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36a0a820_b0c150bd",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-12T20:22:21Z",
+      "side": 1,
+      "message": "I don\u0027t quite follow. IIUC this path is using the overloads that have an image operands parameter with nothing else after them. I\u0027m proposing that we remove that parameter from those overloads, rather than creating new overloads.",
+      "parentUuid": "5bebea74_16820fbb",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f0efced_7bd8c950",
+        "filename": "src/tint/lang/spirv/reader/texture_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-12T20:22:21Z",
+      "side": 1,
+      "message": "What\u0027s the difference between this texture and the `SignedSamplerTest` one? I\u0027m not sure I understand what the signed vs unsigned prefix is referring to.",
       "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
