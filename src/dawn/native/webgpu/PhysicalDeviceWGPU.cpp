@@ -40,7 +40,7 @@
 #include "dawn/native/ErrorData.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/webgpu/BackendWGPU.h"
-// #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/DeviceWGPU.h"
 
 namespace {
 std::string GetBackendName(WGPUBackendType backendType) {
@@ -183,9 +183,7 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
     const UnpackedPtr<DeviceDescriptor>& descriptor,
     const TogglesState& deviceToggles,
     Ref<DeviceBase::DeviceLostEvent>&& lostEvent) {
-    // return Device::Create(adapter, mInnerAdapter, descriptor, deviceToggles,
-    //                       std::move(lostEvent));
-    DAWN_UNREACHABLE();
+    return Device::Create(adapter, mInnerAdapter, descriptor, deviceToggles, std::move(lostEvent));
 }
 
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {
