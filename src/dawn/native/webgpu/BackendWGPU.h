@@ -39,7 +39,7 @@ class PhysicalDevice;
 class Backend : public BackendConnection {
   public:
     Backend(InstanceBase* instance, wgpu::BackendType backendType);
-    ~Backend() override = default;
+    ~Backend() override;
 
     std::vector<Ref<PhysicalDeviceBase>> DiscoverPhysicalDevices(
         const UnpackedPtr<RequestAdapterOptions>& options) override;
@@ -50,6 +50,9 @@ class Backend : public BackendConnection {
     // The dawn proc table used as the underlying backend. It can be specified when creating the
     // backend. This is different from the static global gProcTable.
     DawnProcTable mDawnProcs;
+    WGPUInstance mInnerInstance = nullptr;
+
+    Ref<PhysicalDevice> mPhysicalDevice;
 };
 
 }  // namespace dawn::native::webgpu
