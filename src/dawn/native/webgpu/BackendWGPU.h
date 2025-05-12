@@ -52,6 +52,8 @@ class Backend : public BackendConnection {
     // The dawn proc table used as the underlying backend. It can be dynamically setting at runtime.
     // This is different from the static global gProcTable.
     DawnProcTable mDawnProcs;
+
+    Ref<PhysicalDevice> mPhysicalDevice;
 };
 
 }  // namespace dawn::native::webgpu

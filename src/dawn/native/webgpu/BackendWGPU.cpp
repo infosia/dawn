@@ -39,6 +39,7 @@
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/DawnNative.h"
 #include "dawn/native/Instance.h"
+#include "dawn/native/webgpu/PhysicalDeviceWGPU.h"
 
 namespace dawn::native::webgpu {
 
@@ -50,7 +51,17 @@ Backend::Backend(InstanceBase* instance, wgpu::BackendType backendType)
 std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
     const UnpackedPtr<RequestAdapterOptions>& options) {
     // TODO(crbug.com/413053623): placeholder implementation for now.
-    return {};
+
+    if (options->forceFallbackAdapter) {
+        // TODO(crbug.com/413053623): support fallback mode when fallback adapter is available.
+        return {};
+    }
+
+    if (mPhysicalDevice == nullptr) {
+        mPhysicalDevice = PhysicalDevice::Create(this, options);
+    }
+
+    return {mPhysicalDevice};
 }
 
 const DawnProcTable& Backend::GetFunctions() const {
