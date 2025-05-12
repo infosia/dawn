@@ -266,6 +266,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "781379f6_252bc698",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-12T20:40:36Z",
+      "side": 1,
+      "message": "Ah OK, that\u0027s what I was missing.",
+      "parentUuid": "fbe42c3b_19ae062c",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f0efced_7bd8c950",
@@ -297,6 +315,24 @@
       "side": 1,
       "message": "We require a conversion in this one `    %6:vec2\u003ci32\u003e \u003d convert vec2\u003cu32\u003e(20u, 21u)`",
       "parentUuid": "1f0efced_7bd8c950",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53c140cc_2e17f471",
+        "filename": "src/tint/lang/spirv/reader/texture_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-12T20:40:36Z",
+      "side": 1,
+      "message": "Ah, it\u0027s the *offset* that is signed vs unsigned. That was subtle.\n\nNit: Maybe `SignedOffset` / `UnsignedOffset` would make that clearer.",
+      "parentUuid": "bc513745_59159cab",
       "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
