@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "247beaf9_60c42c08",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-12T21:16:23Z",
+      "side": 1,
+      "message": "Sorry it took me a while to get to this. Had a bunch of other reviews and stuff last week, plus this is a pretty big change so needed some time to read through it!",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed2e6eda_b62bf2bb",
@@ -94,6 +111,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "733aebc7_9303a42b",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-12T21:16:23Z",
+      "side": 1,
+      "message": "What is the friend for? It would be nice if we didn\u0027t need this and the forward declaration of the internal class here.",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 32
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "718279b3_b120de0c",
         "filename": "src/dawn/native/EventManager.h",
         "patchSetId": 15
@@ -105,6 +145,29 @@
       "writtenOn": "2025-05-12T13:13:33Z",
       "side": 1,
       "message": "TODO what is it used for?",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3659b3e0_3e26c714",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-12T21:16:23Z",
+      "side": 1,
+      "message": "nit. I don\u0027t think I see where this is used?",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 72
+      },
       "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -190,6 +253,52 @@
         "startChar": 31,
         "endLine": 28,
         "endChar": 44
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c0e35d4_24ba9eed",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-12T21:16:23Z",
+      "side": 1,
+      "message": "nit. set",
+      "range": {
+        "startLine": 54,
+        "startChar": 81,
+        "endLine": 54,
+        "endChar": 88
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e823f31_053dbfca",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-12T21:16:23Z",
+      "side": 1,
+      "message": "Hmm, so I\u0027m looking at this and thinking a couple of things:\n\n1) We should probably take the chance here and instead of using `DawnProcTable`, introduce a new proc table that is `webgpu` compliant, i.e. it would try to use the upstream header instead. This would make more sense w.r.t this being a `WebGPU` backend. It would make this backend\u0027s capabilities a subset of the native\u0027s capabilities, but that should be fine?\n\n2) I\u0027m thinking that we should have a way to specify this table also. I\u0027m imagining that in Dawn, we could have a `RequestAdapterOptions` extension that allows specifying the specific table overrides we want to use here. This would make it fairly similar to the wire where we have `WireServerDescriptor` which sets the procs for the wire server. If we have the extension, it could be a way to get rid of the recursion issues you saw as well, since we could hide the WebGPU backend unless we see that extension, and remove that chain when we recurse the first time?",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 29
       },
       "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
@@ -631,6 +740,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "45ca8e51_b8e20bd6",
+        "filename": "src/dawn/native/webgpu/Forward.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-12T21:16:23Z",
+      "side": 1,
+      "message": "nit. 2025",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f9aff8b5_1febc827",
         "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
         "patchSetId": 15
@@ -826,6 +958,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d14c4b0c_3793c23a",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-12T21:16:23Z",
+      "side": 1,
+      "message": "From what I understand, this is the backend implemented `Adapter` right? I think this is a bit confusing because usually we have a hierarchy of `Adapter -[refs]-\u003e PhysicalDevice`, and this makes it look like we could have a ref-cycle (though we probably don\u0027t because this is a ref to something entirely outside of this frontend).\n\nI assume this is like this because we are omitting creating an `Adapter` class for the `WebGPU` backend? Would it be better to just create that class also and then have that `webgpu::Adapter` hold the ref to the underlying `AdapterBase` instead? Or is that not possible?",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 34
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "83edcf20_b6b55cef",
         "filename": "src/dawn/tests/end2end/BasicTests.cpp",
         "patchSetId": 15
@@ -837,6 +992,29 @@
       "writtenOn": "2025-05-12T13:13:33Z",
       "side": 1,
       "message": "```suggestion\n// Copyright 2017 The Dawn \u0026 Tint Authors\n```",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cf8f295_edc08480",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-12T21:16:23Z",
+      "side": 1,
+      "message": "nit. Probably unintentional addition here.",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 3
+      },
       "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
