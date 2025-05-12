@@ -206,4 +206,20 @@ std::ostream& operator<<(std::ostream& o, const UndefinedType&) {
     return o;
 }
 
+void SetBasePrototypeIfBaseClassIsFunction(Napi::Value baseClassValue, Napi::Function func) {
+    if (baseClassValue.IsFunction()) {
+        Napi::Function baseClassConstructor = baseClassValue.As<Napi::Function>();
+
+        Napi::Value baseClassPrototypeValue = baseClassConstructor.Get("prototype");
+        Napi::Object baseClassPrototype = baseClassPrototypeValue.As<Napi::Object>();
+
+        Napi::Object ourPrototype = func.Get("prototype").As<Napi::Object>();
+        Napi::Object global = func.Env().Global();
+        Napi::Function setProtoType =
+            global.Get("Object").ToObject().Get("setPrototypeOf").As<Napi::Function>();
+        setProtoType.Call({func, baseClassConstructor});
+        setProtoType.Call({ourPrototype, baseClassPrototype});
+    }
+}
+
 }  // namespace wgpu::interop

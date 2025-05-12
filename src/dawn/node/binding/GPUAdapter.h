@@ -57,6 +57,7 @@ class GPUAdapter final : public interop::GPUAdapter {
     wgpu::Adapter adapter_;
     const Flags& flags_;
     std::shared_ptr<AsyncRunner> async_;
+    std::unique_ptr<interop::Interface<interop::GPUDevice>> device_;
 
     // The adapter becomes invalid after the first successful requestDevice and all subsequent
     // requestDevice calls will return an already lost device.
