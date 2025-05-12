@@ -44,6 +44,24 @@
       ],
       "revId": "95b409b2fb44944ac7ed03be439b18526f1ff568",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffa84d9d_ba6b628d",
+        "filename": "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-12T09:25:43Z",
+      "side": 1,
+      "message": "Thanks, I think that\u0027s the problem. Just curious, why only cmake-linux-clang bots caught this?",
+      "parentUuid": "4807d7c5_0f5ba925",
+      "revId": "95b409b2fb44944ac7ed03be439b18526f1ff568",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
