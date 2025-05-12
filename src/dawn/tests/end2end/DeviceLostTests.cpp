@@ -282,6 +282,9 @@ TEST_P(DeviceLostTest, BufferMapAsyncBeforeLossFailsForWriting) {
 
 // Test that buffer.Unmap after device is lost
 TEST_P(DeviceLostTest, BufferUnmapAfterDeviceLost) {
+    // TODO(crbug.com/413053623): implement BufferWGPU::MapAtCreationImpl
+    DAWN_SUPPRESS_TEST_IF(IsWebGPU());
+
     wgpu::BufferDescriptor bufferDescriptor;
     bufferDescriptor.size = sizeof(float);
     bufferDescriptor.usage = wgpu::BufferUsage::MapWrite;
@@ -396,6 +399,9 @@ TEST_P(DeviceLostTest, WriteBufferAfterDeviceLost) {
 
 // Test it's possible to GetMappedRange on a buffer created mapped after device loss
 TEST_P(DeviceLostTest, GetMappedRange_CreateBufferMappedAtCreationAfterLoss) {
+    // TODO(crbug.com/413053623): implement BufferWGPU::MapAtCreationImpl
+    DAWN_SUPPRESS_TEST_IF(IsWebGPU());
+
     LoseDeviceForTesting();
 
     wgpu::BufferDescriptor desc;
@@ -410,6 +416,9 @@ TEST_P(DeviceLostTest, GetMappedRange_CreateBufferMappedAtCreationAfterLoss) {
 
 // Test that device loss doesn't change the result of GetMappedRange, mappedAtCreation version.
 TEST_P(DeviceLostTest, GetMappedRange_CreateBufferMappedAtCreationBeforeLoss) {
+    // TODO(crbug.com/413053623): implement BufferWGPU::MapAtCreationImpl
+    DAWN_SUPPRESS_TEST_IF(IsWebGPU());
+
     wgpu::BufferDescriptor desc;
     desc.size = 4;
     desc.usage = wgpu::BufferUsage::CopySrc;
@@ -613,7 +622,8 @@ DAWN_INSTANTIATE_TEST(DeviceLostTest,
                       NullBackend(),
                       OpenGLBackend(),
                       OpenGLESBackend(),
-                      VulkanBackend());
+                      VulkanBackend(),
+                      WebGPUBackend());
 
 }  // anonymous namespace
 }  // namespace dawn

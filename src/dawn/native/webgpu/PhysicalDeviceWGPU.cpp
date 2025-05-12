@@ -39,7 +39,7 @@
 #include "dawn/native/ErrorData.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/webgpu/BackendWGPU.h"
-// #include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/DeviceWGPU.h"
 
 namespace dawn::native::webgpu {
 
@@ -158,9 +158,8 @@ ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(
         // mAdapterImpl
     }
 
-    // return Device::Create(adapter, mAdapterImpl.Get(), descriptor, deviceToggles,
-    //                       std::move(lostEvent));
-    DAWN_UNREACHABLE();
+    return Device::Create(adapter, mAdapterImpl.Get(), descriptor, deviceToggles,
+                          std::move(lostEvent));
 }
 
 void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {
