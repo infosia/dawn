@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "3a984a86da6a8397ecf3092cc4e61bcbddcff35d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ce299a1_dcf1c18c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004156
+      },
+      "writtenOn": "2025-05-12T17:29:51Z",
+      "side": 1,
+      "message": "Adding Loko for an extra +2 to submit since Corentin is out for the rest of the day.",
+      "revId": "3a984a86da6a8397ecf3092cc4e61bcbddcff35d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
