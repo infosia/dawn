@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cee6301_f24ede17",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-12T21:52:58Z",
+      "side": 1,
+      "message": "Chose name \"WEBGPU_ON_WEBGPU\" for the webgpu backend flag.",
+      "revId": "0ca56201124b18abec9e5558369bdc9adae6e69d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
