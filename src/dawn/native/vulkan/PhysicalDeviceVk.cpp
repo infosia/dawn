@@ -797,6 +797,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // Vulkan SPEC and drivers.
     deviceToggles->Default(Toggle::UseTemporaryBufferInCompressedTextureToTextureCopy, true);
 
+    // TODO: Not for landing, just to test failing bot.
+    deviceToggles->Default(Toggle::VulkanDisableFramebufferCache, true);
+
     if (IsAndroidQualcomm()) {
         // dawn:1564, dawn:1897: Recording a compute pass after a render pass in the same command
         // buffer frequently causes a crash on Qualcomm GPUs. To work around that bug, split the
@@ -817,6 +820,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // chromium:407109052: Qualcomm devices have a bug where the spirv extended op NClamp
         // modifies other components of a vector when one of the components is nan.
         deviceToggles->Default(Toggle::VulkanScalarizeClampBuiltin, true);
+
+        // chromium:416088623: Some Qualcomm devices have issues with reusing VkFramebuffers.
+        deviceToggles->Default(Toggle::VulkanDisableFramebufferCache, true);
     }
 
     if (IsAndroidARM()) {
