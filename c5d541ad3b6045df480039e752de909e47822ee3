@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d62613c9_e04ca763",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "To make forward progress, let\u0027s land things piece-meal, starting with a BackendWGPU.h that returns 0 physicalDevices. There looks like there will be a lot of iterations on the device code itself. (and even the Backend code)",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed2e6eda_b62bf2bb",
@@ -31,6 +48,63 @@
       "writtenOn": "2025-05-10T02:34:52Z",
       "side": 1,
       "message": "I think this name will end up being confusing, and we should call it `ENABLE_WEBGPU_BACKEND` or `ENABLE_WEBGPU_ON_WEBGPU`, even though that\u0027s inconsistent with the flags for other backends.\n\nSame for GN. Could even change the name of the backend (the directory and namespace) but I think those are fine, they\u0027re clear enough in context.\n\nAlternative names could be \"dawn on dawn\", \"dawn on webgpu\", \"loopback\"",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54bead13_fdb113f0",
+        "filename": "include/dawn/native/WebGPUBackend.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "```suggestion\n#include \"dawn/native/DawnNative.h\"\n\n```",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c76ec2e5_2d8ddb09",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Let\u0027s avoid adding friend classes as much as possible so that the interface between the frontend and the backends doesn\u0027t leak everywhere. What is this used for?",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "718279b3_b120de0c",
+        "filename": "src/dawn/native/EventManager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "TODO what is it used for?",
       "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -83,6 +157,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f7edfd5b_36095b8e",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "nit: maybe add a TODO to support this if there is an underlying fallback adapter?",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "92c0bd7c_deb114c2",
         "filename": "src/dawn/native/webgpu/BackendWGPU.h",
         "patchSetId": 15
@@ -100,6 +191,40 @@
         "endLine": 28,
         "endChar": 44
       },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff6a9002_738477c4",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Please trim includes as needed.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9489af57_20d5c21f",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "?",
       "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -175,6 +300,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7cab383c_43903f85",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Let\u0027s return fixed values matching the WebGPU spec instead of calling dawn::native reentrantly.",
+      "range": {
+        "startLine": 216,
+        "startChar": 1,
+        "endLine": 236,
+        "endChar": 1
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "47aa9d1d_32ea1d38",
         "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
         "patchSetId": 15
@@ -186,6 +334,23 @@
       "writtenOn": "2025-05-10T02:34:52Z",
       "side": 1,
       "message": "nit: no need for this TODO, we\u0027ll do it as we go as it seems necessary.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bd8e424_c2ffa5e2",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "nit: can the initialization code move in some Initialize method for regularity with all other backends?",
       "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -215,6 +380,47 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d000ec98_4bdc1dd4",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "+1 for inner. GetInner/GetInnerHandle/GetInnerDevice?",
+      "parentUuid": "d7b4146d_764aa12b",
+      "range": {
+        "startLine": 260,
+        "startChar": 19,
+        "endLine": 260,
+        "endChar": 31
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e85a488_9a730649",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Let\u0027s not use dawn::native reentrantly as we might be on any WebGPU implementation. Instead we can always return false here IMHO.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cad35285_f0dbc8be",
         "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
         "patchSetId": 15
@@ -226,6 +432,233 @@
       "writtenOn": "2025-05-10T02:34:52Z",
       "side": 1,
       "message": "nit: seems to be unused. Could use it in GetMappedPointer, but probably just remove.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e73b60d3_199dff48",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Can the TODOs be a bit more explicit about what is temporary and what needs to happen?",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d87d4793_88c81470",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "When is this check necessary? IIRC we should never have DestroyImpl called before this.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53ac6f60_a48c8866",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Since this is implemented, let\u0027s move it to its own file.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ddf376d_ee31b2c9",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "nit: in other C backends (GL, Vk) we have these storead as a public member on the device so it looks like: `device-\u003ewgpu.commandEncoder...`.",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 36
+      },
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e47d24b6_ae868395",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Ditto should move to its own file.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac707848_ff8a8bdc",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Can we have a TODO to check for actual completion?",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a83d9a27_6e137744",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Please never use FromAPI to call dawn::native reetrantly. Here we\u0027d need to use Instance.WaitAny on the future for OnSubmittedWorkDone.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fef58173_2b08c0a2",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "ditto for both includes",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03baf128_cc1b202a",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5216eb18_ebacd1ed",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Why is this public? Ditto for `Impl` methods.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0eefc0c8_898627b7",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Please make sure that the first time any of these classes are touched to become more than placeholders, they move to their own file. Buffers should already move to their own files in this CL.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9aff8b5_1febc827",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "nit: outdated.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31519f0f_4127ee60",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Why do we have this check, can\u0027t we ever fail? It seems that we should be able to fail if RequestAdapter does for example.",
       "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -284,6 +717,160 @@
       "side": 1,
       "message": "Seems to me that DiscoverPhysicalDevices should find adapters before creating PhysicalDevices. That would also allow us to make one webgpu::PhysicalDevice for each other backend.\n\nThe recursion gets complicated if we do that in `webgpu::Backend::DiscoverPhysicalDevices`, but what if we special case it in `InstanceBase::EnumeratePhysicalDevices` so that it first discovers all the non-webgpu-backend `PhysicalDevice`s, and then makes a webgpu-backend `PhysicalDevice` wrapping each one (or just the first one) and adds it to the return list?\n\nI don\u0027t know super well how PhysicalDevice works so that might require caching (so we only create one wrapper for each real PhysicalDevice).\n\nThis will require the webgpu backend to know about PhysicalDevice which isn\u0027t part of the API, but I think that\u0027s fine.\n\n(I\u0027ve reviewed everything except for the rest of this file since it seems like it might change significantly)",
       "parentUuid": "8e936b6c_06bd00ee",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e834bb9c_5089ea56",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "+1 on creating the underlying `WGPUAdapter` in `BackendWGPU` and not here. But also something looks very wrong in this file as we are using dawn::native reentrantly directly instead of going through `webgpu.h`. We should instead create a `WGPUInstance` using the procs in `BackendWGPU` (with option to use adapters for multiple device creations) and use that to enumerate a bunch of adapters. Likewise I\u0027ll wait to review the rest of this file.\n\n@Kai, the concept of an Adapter is purely frontend and backends instead list PhysicalDevices. You are right that in the WebGPU backend there should be a 1-1 relationship between `dawn::native::webgpu::PhysicalDevice` and the loopback `WGPUAdapter`.",
+      "parentUuid": "775c4a52_6855cc3d",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4c2ac68_7b6fd572",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "This is leftover code from the null backend and is not true in this backend.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f79add2_094f57f9",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0dcac9f_d07029f7",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "nit: unused",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20df5764_73fdca34",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "Is this include needed?",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e96d838_7ea4f03b",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "nit: can be in the same block of includes. It is not a special include.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83edcf20_b6b55cef",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2017 The Dawn \u0026 Tint Authors\n```",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01596e0a_e6581f10",
+        "filename": "src/dawn/tests/end2end/DeviceLifetimeTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "nit: please keep the backend names sorted.",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4afd3722_122ddd68",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T13:13:33Z",
+      "side": 1,
+      "message": "ditto and in other files",
       "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
