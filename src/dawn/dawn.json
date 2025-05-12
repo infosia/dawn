@@ -89,6 +89,15 @@
             {"name": "xr compatible", "type": "bool"}
         ]
     },
+    "request adapter WebGPU backend options": {
+        "category": "structure",
+        "chained": "in",
+        "chain roots": ["request adapter options"],
+        "tags": ["dawn", "native"],
+        "members": [
+            {"name": "backend type", "type": "backend type"}
+        ]
+    },
     "request adapter callback": {
         "category": "callback function",
         "args": [
@@ -3858,7 +3867,8 @@
             {"value": 64, "name": "dawn fake buffer OOM for testing", "tags": ["dawn"]},
             {"value": 65, "name": "surface descriptor from windows WinUI swap chain panel", "tags": ["dawn"]},
             {"value": 66, "name": "dawn device allocator control", "tags": ["dawn"]},
-            {"value": 67, "name": "dawn host mapped pointer limits", "tags": ["dawn"]}
+            {"value": 67, "name": "dawn host mapped pointer limits", "tags": ["dawn"]},
+            {"value": 68, "name": "request adapter WebGPU backend options", "tags": ["dawn", "native"]}
         ]
     },
     "texture": {

@@ -468,6 +468,23 @@ std::vector<Ref<PhysicalDeviceBase>> InstanceBase::EnumeratePhysicalDevices(
         backendsToFind.set();
     }
 
+    if (auto webgpuBackendOption = options.Get<RequestAdapterWebGPUBackendOptions>()) {
+        auto webgpuBackendType = webgpuBackendOption->backendType;
+        if (webgpuBackendType != wgpu::BackendType::Undefined) {
+            backendsToFind = {};
+            if (webgpuBackendType == wgpu::BackendType::WebGPU) {
+                ConsumedErrorAndWarnOnce(
+                    DAWN_VALIDATION_ERROR("Select WebGPUBackend on WebGPUBackend is invalid."));
+            } else if (!ConsumedErrorAndWarnOnce(ValidateBackendType(webgpuBackendType))) {
+                backendsToFind.set(webgpuBackendType);
+            }
+        } else {
+            // Find backends other than WebGPU backend to avoid an infinite recursion.
+            backendsToFind.set();
+            backendsToFind.flip(wgpu::BackendType::WebGPU);
+        }
+    }
+
     std::vector<Ref<PhysicalDeviceBase>> discoveredPhysicalDevices;
     for (wgpu::BackendType b : backendsToFind) {
         BackendConnection* backend = GetBackendConnection(b);
