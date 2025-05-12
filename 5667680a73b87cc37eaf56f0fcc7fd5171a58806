@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "170ff16e_2473720b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T11:26:10Z",
+      "side": 1,
+      "message": "LGTM too overall",
+      "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d07e911_e3d5fe6c",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T11:26:10Z",
+      "side": 1,
+      "message": "Why is this one needed? I don\u0027t see a serializable use of std::unique_ptr in ShaderModule.h. IMHO pointers are a nice barrier to denote what shouldn\u0027t be serialized so it would be nice to not add this.",
+      "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a79babcd_bfb65662",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T11:26:10Z",
+      "side": 1,
+      "message": "Is Size ever 0? I would think it would be a compilation error to declare such an array.",
+      "range": {
+        "startLine": 388,
+        "startChar": 46,
+        "endLine": 388,
+        "endChar": 74
+      },
+      "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dc41ad8_8cfecd6e",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T11:26:10Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcd761b3_4f0c17de",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T11:26:10Z",
+      "side": 1,
+      "message": "It seems that this could be a static_assert even no? Ditto for Read.",
+      "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
