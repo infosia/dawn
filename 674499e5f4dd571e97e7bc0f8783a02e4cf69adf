@@ -125,6 +125,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "171ee16d_df393933",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-12T18:12:05Z",
+      "side": 1,
+      "message": "er, it\u0027s a `vec2` this is offset not coords, heh.",
+      "parentUuid": "91e4a95e_7762f316",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0a3e192a_7d76e616",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 2
