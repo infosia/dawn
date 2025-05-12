@@ -167,7 +167,9 @@ class Buffer final : public BufferBase {
   public:
     static ResultOrError<Ref<Buffer>> Create(Device* device,
                                              const UnpackedPtr<BufferDescriptor>& descriptor);
-    Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor);
+    Buffer(Device* device, const UnpackedPtr<BufferDescriptor>& descriptor, WGPUBuffer apiBuffer);
+
+    WGPUBuffer GetApiBuffer() const;
 
     void CopyFromStaging(BufferBase* staging,
                          uint64_t sourceOffset,
@@ -181,14 +183,23 @@ class Buffer final : public BufferBase {
     bool IsCPUWritableAtCreation() const override;
     MaybeError MapAtCreationImpl() override;
     void* GetMappedPointer() override;
+
+    WGPUBuffer mApiBuffer = nullptr;
+
+    raw_ptr<void> mMappedData = nullptr;
 };
 
 class CommandBuffer final : public CommandBufferBase {
   public:
-    CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor);
+    CommandBuffer(CommandEncoder* encoder,
+                  const CommandBufferDescriptor* descriptor,
+                  WGPUCommandEncoder apiEncoder);
+    WGPUCommandBuffer Execute();
 
   private:
     ~CommandBuffer() override;
+
+    WGPUCommandEncoder mApiEncoder = nullptr;
 };
 
 class Queue final : public QueueBase {
@@ -208,6 +219,8 @@ class Queue final : public QueueBase {
     MaybeError SubmitPendingCommands() override;
     ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
     MaybeError WaitForIdleForDestruction() override;
+
+    WGPUQueue mApiQueue = nullptr;
 };
 
 class QuerySet final : public QuerySetBase {
