@@ -29,18 +29,68 @@
 
 #include "dawn/dawn_proc_table.h"
 #include "dawn/native/Instance.h"
+#include "dawn/native/webgpu/PhysicalDeviceWGPU.h"
 
 namespace dawn::native::webgpu {
 
 Backend::Backend(InstanceBase* instance, wgpu::BackendType backendType)
     : BackendConnection(instance, backendType) {
     mDawnProcs = dawn::native::GetProcs();
+
+    WGPUInstanceDescriptor instanceDesc = {};
+    instanceDesc.capabilities.timedWaitAnyEnable = true;
+    mInnerInstance = mDawnProcs.createInstance(&instanceDesc);
+}
+
+Backend::~Backend() {
+    if (mInnerInstance) {
+        mDawnProcs.instanceRelease(mInnerInstance);
+        mInnerInstance = nullptr;
+    }
 }
 
 std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
     const UnpackedPtr<RequestAdapterOptions>& options) {
-    // TODO(crbug.com/413053623): placeholder implementation for now.
-    return {};
+    // if (options->forceFallbackAdapter) {
+    //     // TODO(crbug.com/413053623): support fallback mode when fallback adapter is available.
+    //     return {};
+    // }
+
+    // auto adapters = GetInstance()->EnumerateAdapters(options);
+
+    // WGPUInstanceDescriptor instanceDesc = {};
+    // instanceDesc.capabilities.timedWaitAnyEnable = true;
+    // WGPUInstance instance = mDawnProcs.createInstance(&instanceDesc);
+
+    // const WGPURequestAdapterOptions* apiOptions = ToAPI(*options);
+    WGPURequestAdapterOptions innerAdapterOption = *ToAPI(*options);
+    innerAdapterOption.backendType = WGPUBackendType_Vulkan;  // temp
+    WGPUAdapter innerAdapter = nullptr;
+
+    WGPURequestAdapterCallbackInfo callbackInfo = {};
+    callbackInfo.mode = WGPUCallbackMode_WaitAnyOnly;
+    // auto callback = [](WGPURequestAdapterStatus status, WGPUAdapter adapter, WGPUStringView
+    // message, void* userdata1, void* userdata2) {
+    // };
+    // callbackInfo.callback = +callback;
+    callbackInfo.callback = [](WGPURequestAdapterStatus status, WGPUAdapter adapter,
+                               WGPUStringView message, void* userdata1, void* userdata2) {
+        *static_cast<WGPUAdapter*>(userdata2) = adapter;
+    };
+    callbackInfo.userdata1 = nullptr;
+    callbackInfo.userdata2 = static_cast<void*>(&innerAdapter);
+
+    WGPUFutureWaitInfo waitInfo = {};
+    waitInfo.future =
+        mDawnProcs.instanceRequestAdapter(mInnerInstance, &innerAdapterOption, callbackInfo);
+    mDawnProcs.instanceWaitAny(mInnerInstance, 1, &waitInfo, UINT64_MAX);
+
+    if (mPhysicalDevice == nullptr) {
+        // mPhysicalDevice = PhysicalDevice::Create(this, options);
+        mPhysicalDevice = PhysicalDevice::Create(this, innerAdapter);
+    }
+
+    return {mPhysicalDevice};
 }
 
 const DawnProcTable& Backend::GetFunctions() const {

@@ -469,7 +469,15 @@ std::vector<Ref<PhysicalDeviceBase>> InstanceBase::EnumeratePhysicalDevices(
     }
 
     std::vector<Ref<PhysicalDeviceBase>> discoveredPhysicalDevices;
+    bool setupWebGPUBackend = false;
     for (wgpu::BackendType b : backendsToFind) {
+        if (b == wgpu::BackendType::WebGPU) {
+            // Special case for WebGPU backend,
+            // Defer creating the PhysicalDeviceWGPU until finish initializing all other backends.
+            setupWebGPUBackend = true;
+            continue;
+        }
+
         BackendConnection* backend = GetBackendConnection(b);
 
         if (backend != nullptr) {
@@ -479,6 +487,19 @@ std::vector<Ref<PhysicalDeviceBase>> InstanceBase::EnumeratePhysicalDevices(
                                              physicalDevices.begin(), physicalDevices.end());
         }
     }
+
+    if (setupWebGPUBackend) {
+        constexpr wgpu::BackendType b = wgpu::BackendType::WebGPU;
+        BackendConnection* backend = GetBackendConnection(b);
+
+        if (backend != nullptr) {
+            std::vector<Ref<PhysicalDeviceBase>> physicalDevices =
+                mBackends[b]->DiscoverPhysicalDevices(options);
+            discoveredPhysicalDevices.insert(discoveredPhysicalDevices.end(),
+                                             physicalDevices.begin(), physicalDevices.end());
+        }
+    }
+
     return discoveredPhysicalDevices;
 }
 
