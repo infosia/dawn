@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2106d8d_7b2bd33c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T09:59:30Z",
+      "side": 1,
+      "message": "Still LGTM!",
+      "revId": "fa258c58d025044a273dbcebb8e44a98d497a4c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91175939_e17cac6c",
+        "filename": "src/dawn/native/PassResourceUsage.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T09:59:30Z",
+      "side": 1,
+      "message": "This file will need to be removed from build files.",
+      "revId": "fa258c58d025044a273dbcebb8e44a98d497a4c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
