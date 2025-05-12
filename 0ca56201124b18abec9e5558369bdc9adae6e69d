@@ -16,6 +16,23 @@
       "message": "Chose name \"WEBGPU_ON_WEBGPU\" for the webgpu backend flag.",
       "revId": "0ca56201124b18abec9e5558369bdc9adae6e69d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40651159_3aa0ba92",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-12T23:29:59Z",
+      "side": 1,
+      "message": "Probably want to use `IsWebGPUOnWebGPU` or `IsWebGPUBackend` here too since in context it\u0027ll be confusing.",
+      "revId": "0ca56201124b18abec9e5558369bdc9adae6e69d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
