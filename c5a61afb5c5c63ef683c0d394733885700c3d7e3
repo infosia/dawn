@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1219a87_d36d6518",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-12T23:27:16Z",
+      "side": 1,
+      "message": "(So how do you usually find the architecture id? on gpuinfo.org and wikipedia?)",
+      "revId": "c5a61afb5c5c63ef683c0d394733885700c3d7e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
