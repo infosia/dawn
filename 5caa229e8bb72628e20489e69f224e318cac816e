@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "274207ad_7f5a173e",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-12T13:05:14Z",
+      "side": 1,
+      "message": "Use designated initializers to make this clearer. Why was it moved into the RUN call? Seems like it would be clearer to create the config before as was done previously?",
+      "revId": "5caa229e8bb72628e20489e69f224e318cac816e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59571710_852d6134",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-12T13:05:14Z",
+      "side": 1,
+      "message": "Why remove the `else`, I don\u0027t think an entry can be both a `vertex_index` and a `instance_index` ?",
+      "revId": "5caa229e8bb72628e20489e69f224e318cac816e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60a0992c_6f1ed9a3",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-12T13:05:14Z",
+      "side": 1,
+      "message": "Do we still need this if we\u0027re using immediate data?",
+      "revId": "5caa229e8bb72628e20489e69f224e318cac816e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
