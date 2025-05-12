@@ -74,6 +74,23 @@ const char* str(wgpu::LoggingType ty) {
     }
 }
 
+// Returns a string representation of the wgpu::ErrorType
+const char* str(wgpu::ErrorType ty) {
+    switch (ty) {
+        case wgpu::ErrorType::NoError:
+            return "no error";
+        case wgpu::ErrorType::Validation:
+            return "validation";
+        case wgpu::ErrorType::OutOfMemory:
+            return "out of memory";
+        case wgpu::ErrorType::Internal:
+            return "internal";
+        case wgpu::ErrorType::Unknown:
+        default:
+            return "unknown";
+    }
+}
+
 // There's something broken with Node when attempting to write more than 65536 bytes to cout.
 // Split the string up into writes of 4k chunks.
 // Likely related: https://github.com/nodejs/node/issues/12921
@@ -90,37 +107,44 @@ void chunkedWrite(wgpu::StringView msg) {
     }
 }
 
-class OOMError : public interop::GPUOutOfMemoryError {
-  public:
-    explicit OOMError(std::string message) : message_(std::move(message)) {}
-
-    std::string getMessage(Napi::Env) override { return message_; }
-
-  private:
-    std::string message_;
-};
-
-class ValidationError : public interop::GPUValidationError {
-  public:
-    explicit ValidationError(std::string message) : message_(std::move(message)) {}
-
-    std::string getMessage(Napi::Env) override { return message_; }
-
-  private:
-    std::string message_;
-};
-
-class InternalError : public interop::GPUInternalError {
-  public:
-    explicit InternalError(std::string message) : message_(std::move(message)) {}
-
-    std::string getMessage(Napi::Env) override { return message_; }
-
-  private:
-    std::string message_;
-};
-
 }  // namespace
+
+
+std::optional<interop::Interface<interop::GPUError>> createErrorFromWGPUError(
+    Napi::Env env,
+    wgpu::ErrorType type,
+    wgpu::StringView message) {
+
+this code needs to call the JS constructors, not this interop stuff.
+
+    switch (type) {
+        case wgpu::ErrorType::NoError:
+            return {};
+        case wgpu::ErrorType::OutOfMemory: {
+            interop::Interface<interop::GPUError> err{
+                interop::GPUOutOfMemoryError::Create<GPUOutOfMemoryError>(env, std::string(message))};
+            return err;
+        }
+        case wgpu::ErrorType::Validation: {
+            interop::Interface<interop::GPUError> err{
+                interop::GPUValidationError::Create<GPUValidationError>(env,
+                                                                     std::string(message))};
+            return err;
+        }
+        case wgpu::ErrorType::Internal: {
+            interop::Interface<interop::GPUError> err{
+                interop::GPUInternalError::Create<GPUInternalError>(env,
+                                                                 std::string(message))};
+            return err;
+        }
+        case wgpu::ErrorType::Unknown:
+            // This error type is reserved for when translating an error type from a newer
+            // implementation (e.g. the browser added a new error type) to another (e.g.
+            // you're using an older version of Emscripten). It shouldn't happen in Dawn.
+            assert(false);
+            return {};
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // wgpu::bindings::GPUDeviceLostInfo
@@ -144,7 +168,8 @@ GPUDevice::GPUDevice(Napi::Env env,
                      wgpu::Device device,
                      interop::Promise<interop::Interface<interop::GPUDeviceLostInfo>> lost_promise,
                      std::shared_ptr<AsyncRunner> async)
-    : env_(env),
+    : binding::EventTarget(env),
+      env_(env),
       device_(device),
       async_(async),
       lost_promise_(lost_promise),
@@ -153,6 +178,10 @@ GPUDevice::GPUDevice(Napi::Env env,
         printf("%s:\n", str(type));
         chunkedWrite(message);
     });
+    {
+        std::lock_guard<std::mutex> lock(s_device_to_js_map_mutex_);
+        s_device_to_js_map_.insert({device_.Get(), this});
+    }
 }
 
 GPUDevice::~GPUDevice() {
@@ -164,6 +193,53 @@ GPUDevice::~GPUDevice() {
         lost_promise_.Discard();
         device_.Destroy();
         destroyed_ = true;
+    }
+    {
+        std::lock_guard<std::mutex> lock(s_device_to_js_map_mutex_);
+        s_device_to_js_map_.erase(device_.Get());
+    }
+}
+
+std::mutex GPUDevice::s_device_to_js_map_mutex_;
+std::unordered_map<WGPUDevice, GPUDevice*> GPUDevice::s_device_to_js_map_;
+
+GPUDevice* GPUDevice::Lookup(wgpu::Device device) {
+    std::lock_guard<std::mutex> lock(s_device_to_js_map_mutex_);
+    auto it = s_device_to_js_map_.find(device.Get());
+    if (it != s_device_to_js_map_.end()) {
+        return it->second;
+    }
+    return nullptr;
+}
+
+void GPUDevice::handleUncapturedError(ErrorType type, wgpu::StringView message) {
+    Napi::HandleScope scope(env_);
+
+fprintf(stderr, "h1\n");
+    auto error = createErrorFromWGPUError(env_, type, message);
+fprintf(stderr, "h2\n");
+    if (!error.has_value()) {
+        fprintf(stderr,
+                "GPUDevice::handleUncapturedError: Failed to create GPUError object for error type %s.\n",
+                str(type));
+        return;
+    }
+
+    Napi::Object global = env_.Global();
+    Napi::Value eventConstructorValue = global.Get("GPUUncapturedErrorEvent");
+    Napi::Function eventConstructor = eventConstructorValue.As<Napi::Function>();
+
+    Napi::Object event_init_dict = Napi::Object::New(env_);
+    event_init_dict.Set("error", error.value());
+
+    Napi::Object eventObj = eventConstructor.New({Napi::String::New(env_, "uncapturederror"), event_init_dict});
+
+    dispatchEvent(env_, eventObj);
+
+    bool defaultPrevented = eventObj.Get("defaultPrevented").As<Napi::Boolean>().Value();
+    if (!defaultPrevented) {
+        printf("%s:\n", str(type));
+        chunkedWrite(message);
     }
 }
 
@@ -550,37 +626,7 @@ interop::Promise<std::optional<interop::Interface<interop::GPUError>>> GPUDevice
                     break;
             }
 
-            switch (type) {
-                case wgpu::ErrorType::NoError:
-                    ctx->promise.Resolve({});
-                    break;
-                case wgpu::ErrorType::OutOfMemory: {
-                    interop::Interface<interop::GPUError> err{
-                        interop::GPUOutOfMemoryError::Create<OOMError>(env, std::string(message))};
-                    ctx->promise.Resolve(err);
-                    break;
-                }
-                case wgpu::ErrorType::Validation: {
-                    interop::Interface<interop::GPUError> err{
-                        interop::GPUValidationError::Create<ValidationError>(env,
-                                                                             std::string(message))};
-                    ctx->promise.Resolve(err);
-                    break;
-                }
-                case wgpu::ErrorType::Internal: {
-                    interop::Interface<interop::GPUError> err{
-                        interop::GPUInternalError::Create<InternalError>(env,
-                                                                         std::string(message))};
-                    ctx->promise.Resolve(err);
-                    break;
-                }
-                case wgpu::ErrorType::Unknown:
-                    // This error type is reserved for when translating an error type from a newer
-                    // implementation (e.g. the browser added a new error type) to another (e.g.
-                    // you're using an older version of Emscripten). It shouldn't happen in Dawn.
-                    assert(false);
-                    break;
-            }
+            ctx->promise.Resolve(createErrorFromWGPUError(env, type, message));
         });
 
     return promise;
@@ -604,29 +650,6 @@ void GPUDevice::setOnuncapturederror(Napi::Env env,
                                      interop::Interface<interop::EventHandler> value) {
     // TODO(dawn:1348): Implement support for the "unhandlederror" event.
     UNIMPLEMENTED(env);
-}
-
-void GPUDevice::addEventListener(
-    Napi::Env env,
-    std::string type,
-    std::optional<interop::Interface<interop::EventListener>> callback,
-    std::optional<std::variant<interop::AddEventListenerOptions, bool>> options) {
-    // TODO(dawn:1348): Implement support for the "unhandlederror" event.
-    UNIMPLEMENTED(env);
-}
-
-void GPUDevice::removeEventListener(
-    Napi::Env env,
-    std::string type,
-    std::optional<interop::Interface<interop::EventListener>> callback,
-    std::optional<std::variant<interop::EventListenerOptions, bool>> options) {
-    // TODO(dawn:1348): Implement support for the "unhandlederror" event.
-    UNIMPLEMENTED(env);
-}
-
-bool GPUDevice::dispatchEvent(Napi::Env env, interop::Interface<interop::Event> event) {
-    // TODO(dawn:1348): Implement support for the "unhandlederror" event.
-    UNIMPLEMENTED(env, {});
 }
 
 }  // namespace wgpu::binding

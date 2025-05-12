@@ -48,9 +48,15 @@ See:
 #include <unordered_map>
 
 #include "src/dawn/node/utils/Debug.h"
+#include "src/dawn/node/binding/Errors.h"
 
 namespace wgpu {
 namespace interop {
+
+// This is passed to constructors so that constructor can
+// check if it's being called legitimately from C++ or
+// illegitimately from JavaScript.
+static void* const kInternalConstructionMarker = nullptr;
 
 namespace {
 
@@ -59,7 +65,8 @@ namespace {
 }  // namespace
 
 {{ range $ := .Declarations}}
-{{-        if IsDictionary $}}{{template "Dictionary" $}}
+{{-   if eq $.Name "GPUUncapturedErrorEvent"}}
+{{-   else if IsDictionary $}}{{template "Dictionary" $}}
 {{-   else if IsInterface  $}}{{template "Interface"  $}}
 {{-   else if IsEnum       $}}{{template "Enum"       $}}
 {{-   end}}
@@ -70,7 +77,8 @@ Napi::Object Initialize(Napi::Env env) {
   auto* wrapper = Wrappers::Init(env);
   auto exports = Napi::Object::New(env);
 {{- range $ := .Declarations}}
-{{-   if IsInterfaceOrNamespace $}}
+{{-   if eq $.Name "GPUUncapturedErrorEvent"}}
+{{-   else if IsInterfaceOrNamespace $}}
 {{-     if not (HasAnnotation $ "LegacyNoInterfaceObject")}}
   exports.Set(Napi::String::New(env, "{{$.Name}}"), wrapper->{{$.Name}}_ctor.Value());
 {{-     end}}
@@ -95,8 +103,23 @@ Napi::Object Initialize(Napi::Env env) {
 class Wrappers {
   Wrappers(Napi::Env env) {
 {{-   range $ := .Declarations}}
-{{-     if IsInterfaceOrNamespace $}}
+{{-     if eq $.Name "GPUUncapturedErrorEvent"}}
+{{-     else if IsInterfaceOrNamespace $}}
+{{-      if and (IsInterface $) ($.Inherits) }}
+    {
+{{-       if or (HasAnnotation $ "LegacyNoInterfaceObject") (eq $.Inherits "Event")}}
+      Napi::Object global = env.Global();
+      Napi::Value baseClassValue = global.Get("{{$.Inherits}}");
+      Napi::Function baseClassConstructor = baseClassValue.As<Napi::Function>();
+      Napi::Value baseClassPrototypeValue = baseClassConstructor.Get("prototype");
+{{-       else}}
+      Napi::Value baseClassValue = {{$.Inherits}}_ctor.Value();
+{{-       end}}
+      {{$.Name}}_ctor = Napi::Persistent(W{{$.Name}}::Class(env, baseClassValue));
+    }
+{{-      else}}
     {{$.Name}}_ctor = Napi::Persistent(W{{$.Name}}::Class(env));
+{{-      end}}
 {{-     end}}
 {{-   end}}
   }
@@ -105,7 +128,8 @@ class Wrappers {
 
 public:
 {{-   range $ := .Declarations}}
-{{-     if IsInterfaceOrNamespace $}}{{template "Wrapper" $}}
+{{-     if eq $.Name "GPUUncapturedErrorEvent"}}
+{{-     else if IsInterfaceOrNamespace $}}{{template "Wrapper" $}}
 {{-     end}}
 {{-   end}}
 
@@ -128,7 +152,8 @@ public:
   }
 
 {{   range $ := .Declarations}}
-{{-     if IsInterfaceOrNamespace $}}
+{{-     if eq $.Name "GPUUncapturedErrorEvent"}}
+{{-     else if IsInterfaceOrNamespace $}}
   Napi::FunctionReference {{$.Name}}_ctor;
 {{-     end}}
 {{-   end}}
@@ -158,8 +183,12 @@ Wrappers* Wrappers::instance = nullptr;
 {{-  if IsInterface $}}
     std::unique_ptr<{{$.Name}}> impl;
 {{-  end}}
+{{-  if and (IsInterface $) ($.Inherits) }}
+    static Napi::Function Class(Napi::Env env, Napi::Value baseClassValue) {
+{{-  else}}
     static Napi::Function Class(Napi::Env env) {
-      return DefineClass(env, "{{$.Name}}", {
+{{-  end}}
+      auto func = DefineClass(env, "{{$.Name}}", {
 {{   if $s := SetlikeOf $}}
         InstanceMethod("has", &W{{$.Name}}::has),
         InstanceMethod("keys", &W{{$.Name}}::keys),
@@ -180,9 +209,51 @@ Wrappers* Wrappers::instance = nullptr;
         StaticValue("{{$c.Name}}", ToJS(env, {{$.Name}}::{{$c.Name}}), napi_default_jsproperty),
 {{-  end}}
       });
+
+{{-  if IsInterface $}}
+{{-   if $.Inherits }}
+      if (baseClassValue.IsFunction()) {
+        Napi::Function baseClassConstructor = baseClassValue.As<Napi::Function>();
+
+        Napi::Value baseClassPrototypeValue = baseClassConstructor.Get("prototype");
+        Napi::Object baseClassPrototype = baseClassPrototypeValue.As<Napi::Object>();
+
+        Napi::Object ourPrototype = func.Get("prototype").As<Napi::Object>();
+        Napi::Object global = env.Global();
+        Napi::Function setProtoType = global
+                                    .Get("Object")
+                                    .ToObject()
+                                    .Get("setPrototypeOf")
+                                    .As<Napi::Function>();
+        setProtoType.Call({func, baseClassConstructor});
+        setProtoType.Call({ourPrototype, baseClassPrototype});
+      }
+{{-   end}}
+{{-  end}}
+      return func;
     }
 
-    W{{$.Name}}(const Napi::CallbackInfo& info) : ObjectWrap(info) {}
+    W{{$.Name}}(const Napi::CallbackInfo& info) : ObjectWrap(info) {
+{{-  if IsInterface $}}
+{{-  if not (eq $.Name "GPUPipelineError")}}
+{{-   if HasConstructor $}}
+
+        if (info.Length() == 1 && info[0].IsString()) {
+            std::string message = info[0].As<Napi::String>().Utf8Value();
+            impl = std::make_unique<wgpu::binding::{{$.Name}}>(message);
+        } else {
+            Napi::TypeError::New(info.Env(), "{{$.Name}} constructor: DOMString message argument expected.").ThrowAsJavaScriptException();
+        }
+
+{{-   else}}
+        // Check if the first argument is our internal Napi::External<void> marker
+        if (info.Length() < 1 || !info[0].IsExternal() || info[0].As<Napi::External<void>>().Data() != kInternalConstructionMarker) {
+           Napi::TypeError::New(info.Env(), "Failed to construct '{{$.Name}}': Illegal constructor").ThrowAsJavaScriptException();
+         }
+{{-   end}}
+{{-  end}}
+{{-  end}}
+    }
 
 {{-  if $s := SetlikeOf $}}
     Napi::Value has(const Napi::CallbackInfo& info) {
@@ -366,7 +437,9 @@ std::ostream& operator<<(std::ostream& o, const {{$.Name}}& dict) {
 
 Interface<{{$.Name}}> {{$.Name}}::Bind(Napi::Env env, std::unique_ptr<{{$.Name}}>&& impl) {
   auto* wrappers = Wrappers::For(env);
-  auto object = wrappers->{{$.Name}}_ctor.New({});
+  auto object = wrappers->{{$.Name}}_ctor.New({
+    Napi::External<void>::New(env, kInternalConstructionMarker)
+  });
   auto* wrapper = Wrappers::W{{$.Name}}::Unwrap(object);
   wrapper->impl = std::move(impl);
 

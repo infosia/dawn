@@ -56,11 +56,13 @@ namespace interop {
 Napi::Object Initialize(Napi::Env env);
 
 {{  range $ := .Declarations}}
-{{-        if IsDictionary $}}{{template "Dictionary" $}}
+{{-   if eq $.Name "GPUUncapturedErrorEvent"}}
+{{-   else if IsDictionary $}}{{template "Dictionary" $}}
 {{-   else if IsNamespace  $}}{{template "Namespace" $}}
 {{-   else if IsInterface  $}}{{template "Interface" $}}
 {{-   else if IsEnum       $}}{{template "Enum" $}}
 {{-   else if IsTypedef    $}}{{template "Typedef" $}}
+{{-   else if IsCallback   $}}{{template "Callback" $}}
 {{-   end}}
 {{- end}}
 
@@ -125,7 +127,7 @@ public:
 */ -}}
 {{- define "Interface"}}
 // interface {{$.Name}}
-class {{$.Name}} {{- if $.Inherits }} : public {{$.Inherits}}{{end}} {
+class {{$.Name}} {{- if $.Inherits }} : public virtual {{$.Inherits}}{{end}} {
 public:
   static Interface<{{$.Name}}> Bind(Napi::Env, std::unique_ptr<{{$.Name}}>&&);
   static {{$.Name}}* Unwrap(Napi::Object);
@@ -191,6 +193,16 @@ public:
 };
 
 std::ostream& operator<<(std::ostream& o, {{$.Name}});
+{{end}}
+
+{{- /*
+--------------------------------------------------------------------------------
+-- Callback emits the C++ header declaration that defines the interop type for
+-- the given ast.Callback
+--------------------------------------------------------------------------------
+*/ -}}
+{{- define "Callback"}}
+using {{$.Name}} = Napi::Function;
 {{end}}
 
 

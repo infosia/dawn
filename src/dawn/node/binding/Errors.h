@@ -31,6 +31,7 @@
 #include <string>
 
 #include "src/dawn/node/interop/NodeAPI.h"
+#include "src/dawn/node/interop/WebGPU.h"
 
 namespace wgpu::binding {
 
@@ -70,6 +71,49 @@ class Errors {
     static Napi::Error NotAllowedError(Napi::Env, std::string message = {});
     static Napi::Error GPUPipelineError(Napi::Env, std::string message = {});
 };
+
+class GPUOutOfMemoryError : public interop::GPUOutOfMemoryError {
+  public:
+    explicit GPUOutOfMemoryError(std::string message) : message_(std::move(message)) {}
+
+    std::string getMessage(Napi::Env) override { return message_; }
+
+  private:
+    std::string message_;
+};
+
+class GPUValidationError : public interop::GPUValidationError {
+  public:
+    explicit GPUValidationError(std::string message) : message_(std::move(message)) {}
+
+    std::string getMessage(Napi::Env) override { return message_; }
+
+  private:
+    std::string message_;
+};
+
+class GPUInternalError : public interop::GPUInternalError {
+  public:
+    explicit GPUInternalError(std::string message) : message_(std::move(message)) {}
+
+    std::string getMessage(Napi::Env) override { return message_; }
+
+  private:
+    std::string message_;
+};
+
+/*
+class GPUPipelineError : public interop::GPUPipelineError {
+  public:
+    explicit GPUPipelineError(std::string message) : message_(std::move(message)) {}
+
+    std::string getMessage(Napi::Env) override { return message_; }
+
+  private:
+    std::string message_;
+};
+*/
+
 
 }  // namespace wgpu::binding
 

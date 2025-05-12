@@ -113,6 +113,27 @@ NAPI_MODULE_EXPORT Napi::Object Initialize(Napi::Env env, Napi::Object exports) 
     // Export function that creates and returns the wgpu::interop::GPU interface
     exports.Set(Napi::String::New(env, "create"), Napi::Function::New<CreateGPU>(env));
 
+    // Define GPUUncapturedErrorEvent as a JavaScript object because it
+    // must inherit from Event and this is impossible if it's a C++ based object.
+    // Define GPUUncapturedErrorEvent in JavaScript
+    // This class must extend Event and will be instantiated from C++
+    // TODO: Move this to wrappers->GPUUncapturedErrorEvent_ctor
+    const char* gpuUncapturedErrorEventJs = R"(
+        if (!globalThis.GPUUncapturedErrorEvent) {
+          class GPUUncapturedErrorEvent extends Event {
+            constructor(type, eventInitDict) {
+              super(type, eventInitDict);
+              if (!eventInitDict || eventInitDict.error === undefined) {
+                throw new TypeError("Failed to construct 'GPUUncapturedErrorEvent': Required member 'error' in 'eventInitDict' is undefined.");
+              }
+              this.error = eventInitDict.error;
+            }
+          }
+          globalThis.GPUUncapturedErrorEvent = GPUUncapturedErrorEvent;
+        }
+    )";
+    env.RunScript(Napi::String::New(env, gpuUncapturedErrorEventJs));
+
 #ifdef DAWN_EMIT_COVERAGE
     Coverage* coverage = new Coverage();
     auto coverage_provider = Napi::Object::New(env);

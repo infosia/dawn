@@ -67,6 +67,7 @@ namespace wgpu::interop {
 // Primitive JavaScript types
 ////////////////////////////////////////////////////////////////////////////////
 using Object = Napi::Object;
+using Event = Napi::Object;
 using ArrayBuffer = Napi::ArrayBuffer;
 using Int8Array = Napi::TypedArrayOf<int8_t>;
 using Int16Array = Napi::TypedArrayOf<int16_t>;
@@ -389,6 +390,19 @@ class Converter<Napi::TypedArrayOf<T>> {
         return Error("value is not a TypedArray");
     }
     static inline Napi::Value ToJS(Napi::Env, ArrayBuffer value) { return value; }
+};
+
+template <>
+class Converter<Napi::Function> {
+  public:
+    static inline Result FromJS(Napi::Env, Napi::Value value, Napi::Function& out) {
+        if (value.IsFunction()) {
+            out = value.As<Napi::Function>();
+            return Success;
+        }
+        return Error("value is not a Function");
+    }
+    static inline Napi::Value ToJS(Napi::Env, Napi::Function value) { return value; }
 };
 
 template <>

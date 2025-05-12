@@ -126,11 +126,13 @@ func run() error {
 		"EnumEntryName":              enumEntryName,
 		"Eval":                       g.eval,
 		"HasAnnotation":              hasAnnotation,
+		"HasConstructor":             hasConstructor,
 		"FlattenedAttributesOf":      g.flattenedAttributesOf,
 		"FlattenedConstantsOf":       g.flattenedConstantsOf,
 		"FlattenedMethodsOf":         g.flattenedMethodsOf,
 		"Include":                    g.include,
 		"IsBasicLiteral":             is(ast.BasicLiteral{}),
+		"IsCallback":                 is(ast.Callback{}),
 		"IsInitializer":              isInitializer,
 		"IsDefaultDictionaryLiteral": is(ast.DefaultDictionaryLiteral{}),
 		"IsDictionary":               is(ast.Dictionary{}),
@@ -193,6 +195,8 @@ func nameOf(n ast.Node) string {
 	case *ast.Typedef:
 		return n.Name
 	case *ast.Mixin:
+		return n.Name
+	case *ast.Callback:
 		return n.Name
 	case *ast.Includes:
 		return ""
@@ -380,6 +384,10 @@ func (s *simplifier) visit(d ast.Decl) {
 	case *ast.Includes:
 		if register(d.Name) {
 			return
+		}
+	case *ast.Callback:
+		for _, p := range d.Parameters {
+			s.visitType(p.Type)
 		}
 	default:
 		panic(fmt.Errorf("unhandled AST declaration %T", d))
@@ -585,6 +593,17 @@ type Method struct {
 	Name string
 	// The list of overloads of the method
 	Overloads []*ast.Member
+}
+
+func hasConstructor(obj interface{}) bool {
+	iface := obj.(*ast.Interface)
+	for _, member := range iface.Members {
+		member := member.(*ast.Member)
+		if isInitializer(member) {
+			return true
+		}
+	}
+	return false
 }
 
 // methodsOf returns all the methods of the given WebIDL interface.
