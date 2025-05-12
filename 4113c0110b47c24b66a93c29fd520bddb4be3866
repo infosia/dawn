@@ -105,6 +105,24 @@
       "parentUuid": "44e120be_af209e3d",
       "revId": "4113c0110b47c24b66a93c29fd520bddb4be3866",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "383a3d6b_c5c0f29f",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2630,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-12T18:39:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54106824_c90c9146",
+      "revId": "4113c0110b47c24b66a93c29fd520bddb4be3866",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
