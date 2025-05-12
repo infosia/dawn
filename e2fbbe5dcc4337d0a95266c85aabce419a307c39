@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9240dab8_2b70c0a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-12T07:21:53Z",
+      "side": 1,
+      "message": "That seems like a mistake xD can we use the default comparison operator for it as well?",
+      "revId": "e2fbbe5dcc4337d0a95266c85aabce419a307c39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
