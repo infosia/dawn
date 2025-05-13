@@ -36,7 +36,6 @@
 
 #include "dawn/common/FutureUtils.h"
 #include "dawn/tests/DawnTest.h"
-#include "dawn/utils/SystemUtils.h"
 
 namespace dawn {
 namespace {
@@ -91,7 +90,6 @@ enum class WaitType {
     TimedWaitAny,
     SpinWaitAny,
     SpinProcessEvents,
-    Spin,
 };
 
 enum class WaitTypeAndCallbackMode {
@@ -101,7 +99,6 @@ enum class WaitTypeAndCallbackMode {
     SpinWaitAny_AllowSpontaneous,
     SpinProcessEvents_AllowProcessEvents,
     SpinProcessEvents_AllowSpontaneous,
-    Spin_AllowSpontaneous,
 };
 
 std::ostream& operator<<(std::ostream& o, WaitTypeAndCallbackMode waitMode) {
@@ -118,8 +115,6 @@ std::ostream& operator<<(std::ostream& o, WaitTypeAndCallbackMode waitMode) {
             return o << "SpinWaitAny_AllowSpontaneous";
         case WaitTypeAndCallbackMode::SpinProcessEvents_AllowSpontaneous:
             return o << "SpinProcessEvents_AllowSpontaneous";
-        case WaitTypeAndCallbackMode::Spin_AllowSpontaneous:
-            return o << "Spin_AllowSpontaneous";
     }
 }
 
@@ -141,11 +136,7 @@ class EventCompletionTests : public DawnTestWithParams<EventCompletionTestParams
         if (UsesWire()) {
             DAWN_TEST_UNSUPPORTED_IF(mode == WaitTypeAndCallbackMode::TimedWaitAny_WaitAnyOnly ||
                                      mode ==
-                                         WaitTypeAndCallbackMode::TimedWaitAny_AllowSpontaneous ||
-                                     mode == WaitTypeAndCallbackMode::Spin_AllowSpontaneous);
-        }
-        if (!IsMetal()) {
-            DAWN_TEST_UNSUPPORTED_IF(mode == WaitTypeAndCallbackMode::Spin_AllowSpontaneous);
+                                         WaitTypeAndCallbackMode::TimedWaitAny_AllowSpontaneous);
         }
         testInstance = GetInstance();
         testDevice = device;
@@ -185,23 +176,7 @@ class EventCompletionTests : public DawnTestWithParams<EventCompletionTestParams
             case WaitTypeAndCallbackMode::TimedWaitAny_AllowSpontaneous:
             case WaitTypeAndCallbackMode::SpinWaitAny_AllowSpontaneous:
             case WaitTypeAndCallbackMode::SpinProcessEvents_AllowSpontaneous:
-            case WaitTypeAndCallbackMode::Spin_AllowSpontaneous:
                 return wgpu::CallbackMode::AllowSpontaneous;
-        }
-    }
-    WaitType GetWaitType() {
-        switch (GetParam().mWaitTypeAndCallbackMode) {
-            case WaitTypeAndCallbackMode::TimedWaitAny_WaitAnyOnly:
-            case WaitTypeAndCallbackMode::TimedWaitAny_AllowSpontaneous:
-                return WaitType::TimedWaitAny;
-            case WaitTypeAndCallbackMode::SpinWaitAny_WaitAnyOnly:
-            case WaitTypeAndCallbackMode::SpinWaitAny_AllowSpontaneous:
-                return WaitType::SpinWaitAny;
-            case WaitTypeAndCallbackMode::SpinProcessEvents_AllowProcessEvents:
-            case WaitTypeAndCallbackMode::SpinProcessEvents_AllowSpontaneous:
-                return WaitType::SpinProcessEvents;
-            case WaitTypeAndCallbackMode::Spin_AllowSpontaneous:
-                return WaitType::Spin;
         }
     }
 
@@ -219,7 +194,6 @@ class EventCompletionTests : public DawnTestWithParams<EventCompletionTestParams
                 break;
             case WaitTypeAndCallbackMode::SpinProcessEvents_AllowProcessEvents:
             case WaitTypeAndCallbackMode::SpinProcessEvents_AllowSpontaneous:
-            case WaitTypeAndCallbackMode::Spin_AllowSpontaneous:
                 break;
         }
     }
@@ -243,8 +217,19 @@ class EventCompletionTests : public DawnTestWithParams<EventCompletionTestParams
             case WaitTypeAndCallbackMode::SpinProcessEvents_AllowProcessEvents:
             case WaitTypeAndCallbackMode::SpinProcessEvents_AllowSpontaneous:
                 return TestWaitImpl(WaitType::SpinProcessEvents, loopOnlyOnce);
-            case WaitTypeAndCallbackMode::Spin_AllowSpontaneous:
-                return TestWaitImpl(WaitType::Spin, loopOnlyOnce);
+        }
+    }
+
+    void TestWaitIncorrectly() {
+        switch (GetParam().mWaitTypeAndCallbackMode) {
+            case WaitTypeAndCallbackMode::TimedWaitAny_WaitAnyOnly:
+            case WaitTypeAndCallbackMode::TimedWaitAny_AllowSpontaneous:
+            case WaitTypeAndCallbackMode::SpinWaitAny_WaitAnyOnly:
+            case WaitTypeAndCallbackMode::SpinWaitAny_AllowSpontaneous:
+                return TestWaitImpl(WaitType::SpinProcessEvents);
+            case WaitTypeAndCallbackMode::SpinProcessEvents_AllowProcessEvents:
+            case WaitTypeAndCallbackMode::SpinProcessEvents_AllowSpontaneous:
+                return TestWaitImpl(WaitType::SpinWaitAny);
         }
     }
 
@@ -319,12 +304,6 @@ class EventCompletionTests : public DawnTestWithParams<EventCompletionTestParams
                     if (loopOnlyOnce) {
                         break;
                     }
-                } while (mCallbacksCompletedCount < mCallbacksIssuedCount);
-            } break;
-            case WaitType::Spin: {
-                do {
-                    ASSERT_FALSE(testTimeExceeded());
-                    utils::USleep(100);
                 } while (mCallbacksCompletedCount < mCallbacksIssuedCount);
             } break;
         }
@@ -421,41 +400,40 @@ TEST_P(EventCompletionTests, WorkDoneOutOfOrder) {
     TestWaitAll(/*loopOnlyOnce=*/true);
 }
 
+constexpr wgpu::QueueWorkDoneStatus kStatusUninitialized =
+    static_cast<wgpu::QueueWorkDoneStatus>(INT32_MAX);
+
 TEST_P(EventCompletionTests, WorkDoneDropInstanceBeforeEvent) {
     // TODO(crbug.com/dawn/1987): Wire does not implement instance destruction correctly yet.
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
-    // Spontaneous events only make sense with WaitType::Spin since we are dropping the instance.
-    DAWN_TEST_UNSUPPORTED_IF(IsSpontaneous() && GetWaitType() != WaitType::Spin);
+    // TODO(crbug.com/412761228): Spontaneous events are not implemented correctly yet.
+    DAWN_TEST_UNSUPPORTED_IF(IsSpontaneous());
 
     UseSecondInstance();
     testInstance = nullptr;  // Drop the last external ref to the instance.
 
-    if (IsSpontaneous()) {
-        TrackForTest(OnSubmittedWorkDone(wgpu::QueueWorkDoneStatus::Success));
-        TestWaitAll();
-    } else {
-        TrackForTest(OnSubmittedWorkDone(wgpu::QueueWorkDoneStatus::CallbackCancelled));
-        EXPECT_EQ(mCallbacksCompletedCount, 1u);
-    }
+    wgpu::QueueWorkDoneStatus status = kStatusUninitialized;
+    testQueue.OnSubmittedWorkDone(GetCallbackMode(),
+                                  [&status](wgpu::QueueWorkDoneStatus result) { status = result; });
+
+    ASSERT_EQ(status, wgpu::QueueWorkDoneStatus::CallbackCancelled);
 }
 
 TEST_P(EventCompletionTests, WorkDoneDropInstanceAfterEvent) {
     // TODO(crbug.com/dawn/1987): Wire does not implement instance destruction correctly yet.
     DAWN_TEST_UNSUPPORTED_IF(UsesWire());
-    // Spontaneous events only make sense with WaitType::Spin since we are dropping the instance.
-    DAWN_TEST_UNSUPPORTED_IF(IsSpontaneous() && GetWaitType() != WaitType::Spin);
+    // TODO(crbug.com/412761228): Spontaneous events are not implemented correctly yet.
+    DAWN_TEST_UNSUPPORTED_IF(IsSpontaneous());
 
     UseSecondInstance();
 
-    if (IsSpontaneous()) {
-        TrackForTest(OnSubmittedWorkDone(wgpu::QueueWorkDoneStatus::Success));
-        testInstance = nullptr;  // Drop the last external ref to the instance.
-        TestWaitAll();
-    } else {
-        TrackForTest(OnSubmittedWorkDone(wgpu::QueueWorkDoneStatus::CallbackCancelled));
-        testInstance = nullptr;  // Drop the last external ref to the instance.
-        EXPECT_EQ(mCallbacksCompletedCount, 1u);
-    }
+    wgpu::QueueWorkDoneStatus status = kStatusUninitialized;
+    testQueue.OnSubmittedWorkDone(GetCallbackMode(),
+                                  [&status](wgpu::QueueWorkDoneStatus result) { status = result; });
+
+    ASSERT_EQ(status, kStatusUninitialized);
+    testInstance = nullptr;  // Drop the last external ref to the instance.
+    ASSERT_EQ(status, wgpu::QueueWorkDoneStatus::CallbackCancelled);
 }
 
 // TODO(crbug.com/dawn/1987):
@@ -474,7 +452,6 @@ DAWN_INSTANTIATE_TEST_P(EventCompletionTests,
                             WaitTypeAndCallbackMode::SpinWaitAny_AllowSpontaneous,
                             WaitTypeAndCallbackMode::SpinProcessEvents_AllowProcessEvents,
                             WaitTypeAndCallbackMode::SpinProcessEvents_AllowSpontaneous,
-                            WaitTypeAndCallbackMode::Spin_AllowSpontaneous,
 
                             // TODO(crbug.com/dawn/2059): The cases with the Spontaneous flag
                             // enabled were added before we implemented all of the spontaneous
