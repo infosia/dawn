@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "895d801b_37212521",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-13T12:29:46Z",
+      "side": 1,
+      "message": "Ah I missed that. Mmmh ok let\u0027s keep unique_ptr then.",
+      "parentUuid": "aa24fba9_2fbfa881",
+      "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a79babcd_bfb65662",
@@ -165,6 +183,24 @@
       "side": 1,
       "message": "This two templates were served as the ending condition of template reduction.\n\nRefactor the template to try making it clearer.",
       "parentUuid": "fcd761b3_4f0c17de",
+      "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dffb0419_f7c2e99f",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-13T12:29:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "434be4ee_18bc73cd",
       "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
