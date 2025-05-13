@@ -491,6 +491,26 @@ TEST_F(ResolverValueConstructorValidationTest, ConversionConstructorInvalid_Inva
                 HasSubstr("12:34 error: no matching constructor for 'f32(array<f32, 4>)"));
 }
 
+TEST_F(ResolverValueConstructorValidationTest, ConversionConstructorInvalid_ConstructI8) {
+    auto* a = Var("a", ty.i8(), Call(Source{{12, 34}}, ty.i8()));
+    WrapInFunction(a);
+
+    ASSERT_FALSE(r()->Resolve());
+    EXPECT_THAT(r()->error(),
+                HasSubstr("error: 'i8' type used without 'chromium_experimental_subgroup_matrix' "
+                          "extension enabled"));
+}
+
+TEST_F(ResolverValueConstructorValidationTest, ConversionConstructorInvalid_ConstructU8) {
+    auto* a = Var("a", ty.u8(), Call(Source{{12, 34}}, ty.u8()));
+    WrapInFunction(a);
+
+    ASSERT_FALSE(r()->Resolve());
+    EXPECT_THAT(r()->error(),
+                HasSubstr("error: 'u8' type used without 'chromium_experimental_subgroup_matrix' "
+                          "extension enabled"));
+}
+
 }  // namespace ConversionConstructTest
 
 namespace ArrayConstructor {
