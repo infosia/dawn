@@ -16,6 +16,86 @@
       "message": "Forget to click done for some comments, PTAL, thanks!",
       "revId": "53ae46b9d0531873d33cf108b219bcda7b39e0ef",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1f1b238_73e54cd0",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T12:54:22Z",
+      "side": 1,
+      "message": "nit: Should be named `inputIndex`. `attachmentIndex` sounds like it is the index in the render pass descriptor. The resolve texture has index\u003d`i` in the render pass but in this expansion step, we bind it to the `i+1` location as the input texture. So that should have a different name.",
+      "range": {
+        "startLine": 75,
+        "startChar": 13,
+        "endLine": 75,
+        "endChar": 28
+      },
+      "revId": "53ae46b9d0531873d33cf108b219bcda7b39e0ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6c4873e_e12db967",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T12:54:22Z",
+      "side": 1,
+      "message": "```suggestion\n        if (mExpandResolveRect) {\n            if (attachmentType \u003d\u003d AttachmentType::ColorAttachment) {\n                DAWN_INVALID_IF(static_cast\u003cuint64_t\u003e(mExpandResolveRect-\u003ecolorOffsetX) +\n                                        static_cast\u003cuint64_t\u003e(mExpandResolveRect-\u003ewidth) \u003e\n                                    renderSize.width,\n                                \"The color\u0027s x (%u) and width (%u) of ExpandResolveRect is out of the render \"\n                                \"area width(% u).\",\n                                mExpandResolveRect-\u003ecolorOffsetX, mExpandResolveRect-\u003ewidth,\n                                renderSize.width);\n                DAWN_INVALID_IF(\n                    static_cast\u003cuint64_t\u003e(mExpandResolveRect-\u003ecolorOffsetY) +\n                            static_cast\u003cuint64_t\u003e(mExpandResolveRect-\u003eheight) \u003e\n                        renderSize.height,\n                    \"The color\u0027s y (%u) and height (%u) of ExpandResolveRect is out of the render area \"\n                    \"height(% u).\",\n                    mExpandResolveRect-\u003ecolorOffsetY, mExpandResolveRect-\u003eheight, renderSize.height);\n            }\n            else if (attachmentType \u003d\u003d AttachmentType::ResolveTarget) {\n                DAWN_INVALID_IF(static_cast\u003cuint64_t\u003e(mExpandResolveRect-\u003eresolveOffsetX) +\n                                        static_cast\u003cuint64_t\u003e(mExpandResolveRect-\u003ewidth) \u003e\n                                    renderSize.width,\n                                \"The resolve\u0027s x (%u) and width (%u) of ExpandResolveRect is out of the resolve \"\n                                \"area width(% u).\",\n                                mExpandResolveRect-\u003eresolveOffsetX, mExpandResolveRect-\u003ewidth,\n                                renderSize.width);\n                DAWN_INVALID_IF(\n                    static_cast\u003cuint64_t\u003e(mExpandResolveRect-\u003eresolveOffsetY) +\n                            static_cast\u003cuint64_t\u003e(mExpandResolveRect-\u003eheight) \u003e\n                        renderSize.height,\n                    \"The resolve\u0027s y (%u) and height (%u) of ExpandResolveRect is out of the resolve area \"\n                    \"height(% u).\",\n                    mExpandResolveRect-\u003eresolveOffsetY, mExpandResolveRect-\u003eheight, renderSize.height);\n            }\n        }\n```",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 9
+      },
+      "revId": "53ae46b9d0531873d33cf108b219bcda7b39e0ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62582bb2_5107885d",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T12:54:22Z",
+      "side": 1,
+      "message": "```suggestion\n\t    DAWN_ASSERT(attachmentType !\u003d AttachmentType::ResolveTarget);\n            mRenderWidth \u003d renderSize.width;\n```",
+      "revId": "53ae46b9d0531873d33cf108b219bcda7b39e0ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd964df1_d82733ab",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 2677,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T12:54:22Z",
+      "side": 1,
+      "message": "Sorry forgot to mention that we should have a test where:\n- We use a render pass with MSAA size\u003d3x3, resolve size\u003d4x4\n- we load the MSAA texture with `wgpu::LoadOp::Clear` and red color. This should clear the whole MSAA texture.\n- we store with `wgpu::StoreOp::Store` and `RenderPassDescriptorResolveRect`\u003d{1, 2, 2, 2, 1, 1}.\n- Check that the whole MSAA texture is red, and the resolve texture\u0027s {2, 2, 1, 1} region is red. Outside that region should be black.",
+      "revId": "53ae46b9d0531873d33cf108b219bcda7b39e0ef",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
