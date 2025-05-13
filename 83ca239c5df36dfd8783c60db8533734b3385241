@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0695f3e0_cd04b332",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-13T08:30:28Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "83ca239c5df36dfd8783c60db8533734b3385241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e2a4379_0e18999a",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-13T08:30:28Z",
+      "side": 1,
+      "message": "Please trim these, also we only need a single block for all dawn/ includes.",
+      "revId": "83ca239c5df36dfd8783c60db8533734b3385241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3336b205_a644b497",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-13T08:30:28Z",
+      "side": 1,
+      "message": "nit: unused, same for `Ref`",
+      "revId": "83ca239c5df36dfd8783c60db8533734b3385241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69350ebd_80a7cb8b",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-13T08:30:28Z",
+      "side": 1,
+      "message": "```suggestion\n    // The dawn proc table used as the underlying backend. It can be dynamically set at runtime.\n```\n\nBut also this sound like it can change after things like device creation. Maybe \"can be specified when creating the backend\"? We might need to do something like Vulkan eventually where we have a cache of \"instances\" that correspond to the various libraries that we opened. But for now this looks fine.",
+      "revId": "83ca239c5df36dfd8783c60db8533734b3385241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f02c8289_035f2200",
+        "filename": "src/dawn/native/webgpu/Forward.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-13T08:30:28Z",
+      "side": 1,
+      "message": "I don\u0027t believe that the PL / Sampler / TextureView will only be the frontend objects since they will have an inner object. So they shouldn\u0027t be type aliases but proper forward declarations.",
+      "revId": "83ca239c5df36dfd8783c60db8533734b3385241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
