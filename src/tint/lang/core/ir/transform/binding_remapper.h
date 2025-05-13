@@ -31,6 +31,7 @@
 #include <unordered_map>
 
 #include "src/tint/api/common/binding_point.h"
+#include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/utils/result.h"
 
 // Forward declarations.
@@ -39,6 +40,15 @@ class Module;
 }
 
 namespace tint::core::ir::transform {
+
+/// The capabilities that the transform can support.
+///
+/// Note: BindingRemapper the transform that potentially introduces duplicate
+/// bindings come from, so in theory shouldn't need the capability to allow
+/// them. Except that in the MSL backend BindingRemapper is invoked multiple
+/// times, in FlattenBindings and Raise specifically, so may encounter IR with
+/// duplicate bindings.
+const Capabilities kBindingRemapperCapabilities{Capability::kAllowDuplicateBindings};
 
 /// BindingRemapper is a transform that remaps binding point indices and access controls.
 /// @param module the module to transform
