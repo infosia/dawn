@@ -124,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2583d35_a0f0c5b0",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-13T04:13:55Z",
+      "side": 1,
+      "message": "That\u0027s nicer. Done.",
+      "parentUuid": "fb1601b3_d56da1ff",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c726eca9_8aa7e2db",
@@ -333,6 +351,24 @@
       "side": 1,
       "message": "Ah, it\u0027s the *offset* that is signed vs unsigned. That was subtle.\n\nNit: Maybe `SignedOffset` / `UnsignedOffset` would make that clearer.",
       "parentUuid": "bc513745_59159cab",
+      "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8858310_8178c99e",
+        "filename": "src/tint/lang/spirv/reader/texture_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-13T04:13:55Z",
+      "side": 1,
+      "message": "The swizzle changes from constant -\u003e value made me merge these all back together as I had to make the wgsl_fn a more complicated string in most cases.",
+      "parentUuid": "53c140cc_2e17f471",
       "revId": "674499e5f4dd571e97e7bc0f8783a02e4cf69adf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
