@@ -1405,5 +1405,77 @@ TEST_F(ResolverVariableTest, Let_UseTemplatedIdent) {
 56:78 note: 'let a' declared here)");
 }
 
+TEST_F(ResolverVariableTest, ScalarI8) {
+    GlobalVar("v", ty.i8(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverVariableTest, ScalarU8) {
+    GlobalVar("v", ty.u8(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverVariableTest, Vec2I8) {
+    GlobalVar("v", ty.vec2<i8>(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverVariableTest, Vec2U8) {
+    GlobalVar("v", ty.vec2<u8>(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverVariableTest, Vec3I8) {
+    GlobalVar("v", ty.vec2<i8>(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverVariableTest, Vec3U8) {
+    GlobalVar("v", ty.vec2<u8>(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverVariableTest, Vec4I8) {
+    GlobalVar("v", ty.vec2<i8>(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverVariableTest, Vec4U8) {
+    GlobalVar("v", ty.vec2<u8>(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverVariableTest, ArrayI8) {
+    GlobalVar("v", ty.array<i8, 4>(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverVariableTest, ArrayU8) {
+    GlobalVar("v", ty.array<u8, 4>(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverVariableTest, MatrixI8) {
+    GlobalVar("v", ty.mat4x4<i8>(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
+TEST_F(ResolverVariableTest, MatrixU8) {
+    GlobalVar("v", ty.mat2x2<u8>(), core::AddressSpace::kPrivate);
+
+    EXPECT_FALSE(r()->Resolve()) << r()->error();
+}
+
 }  // namespace
 }  // namespace tint::resolver
