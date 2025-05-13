@@ -16,6 +16,24 @@
       "message": "(So how do you usually find the architecture id? on gpuinfo.org and wikipedia?)",
       "revId": "c5a61afb5c5c63ef683c0d394733885700c3d7e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5062b8a_46c359b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-13T17:17:07Z",
+      "side": 1,
+      "message": "Using the script described the the markdown file displays any of the gpuinfo.org records that should be WebGPU-capable and don\u0027t have an associated entry in gpu_info.json. It gives you the device ID and the name from the driver, which is usually something like \"ARM Mali G710 \u003csome random numbers\u003e\" so then I go searching for \"Mali G710 GPU architecture\" and find a resource like this one from ARM that identifies is as their Valhall architecture:\n\nhttps://www.arm.com/products/silicon-ip-multimedia/gpu/mali-g710#:~:text\u003dof%20Silicon%20Success-,Valhall,The%20Valhall%20architecture%20is%20the%20basis%20of%20Mali%2DG710,-and%20future%20Mali\n\nIt\u0027s definitely not an exact science.",
+      "parentUuid": "b1219a87_d36d6518",
+      "revId": "c5a61afb5c5c63ef683c0d394733885700c3d7e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
