@@ -16,6 +16,24 @@
       "message": "Should we check/assert that the operand mask \u003d\u003d `ImageOperandsMask::kConstOffset` here?",
       "revId": "4859408bd36db5f29ca17428b16e3526ce57df6c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9537847_f10d1e03",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-13T20:58:29Z",
+      "side": 1,
+      "message": "See next CL",
+      "parentUuid": "6c83b89f_590bc969",
+      "revId": "4859408bd36db5f29ca17428b16e3526ce57df6c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
