@@ -39,6 +39,8 @@
 #include "gtest/gtest.h"
 #include "src/tint/lang/core/type/abstract_float.h"
 #include "src/tint/lang/core/type/abstract_int.h"
+#include "src/tint/lang/core/type/i8.h"
+#include "src/tint/lang/core/type/u8.h"
 #include "src/tint/lang/wgsl/program/program_builder.h"
 #include "src/tint/lang/wgsl/resolver/resolver.h"
 #include "src/tint/lang/wgsl/sem/array.h"
@@ -159,8 +161,15 @@ using alias3 = alias<TO, 3>;
 /// Scalar represents a scalar value
 struct Scalar {
     /// The possible types of a scalar value.
-    using Value =
-        std::variant<core::i32, core::u32, core::f32, core::f16, core::AInt, core::AFloat, bool>;
+    using Value = std::variant<core::i32,
+                               core::u32,
+                               core::f32,
+                               core::f16,
+                               core::AInt,
+                               core::AFloat,
+                               bool,
+                               core::i8,
+                               core::u8>;
 
     /// Constructor
     /// @param val the value used to construct this Scalar
@@ -324,6 +333,72 @@ struct DataType<core::u32> {
     }
     /// @returns the WGSL name for the type
     static inline std::string Name() { return "u32"; }
+};
+
+/// Helper for building i8 types and expressions
+template <>
+struct DataType<core::i8> {
+    /// The element type
+    using ElementType = core::i8;
+
+    /// false as i8 is not a composite type
+    static constexpr bool is_composite = false;
+
+    /// @param b the ProgramBuilder
+    /// @return a new AST i8 type
+    static inline ast::Type AST(ProgramBuilder& b) { return b.ty.i8(); }
+    /// @param b the ProgramBuilder
+    /// @return the semantic i8 type
+    static inline const core::type::Type* Sem(ProgramBuilder& b) {
+        return b.create<core::type::I8>();
+    }
+    /// @param b the ProgramBuilder
+    /// @param args args of size 1 with the i8 value to init with
+    /// @return a new AST i8 literal value expression
+    static inline const ast::Expression* Expr(ProgramBuilder& b, VectorRef<Scalar> args) {
+        return b.Expr(std::get<core::i8>(args[0].value));
+    }
+    /// @param b the ProgramBuilder
+    /// @param v arg of type double that will be cast to i8.
+    /// @return a new AST i8 literal value expression
+    static inline const ast::Expression* ExprFromDouble(ProgramBuilder& b, double v) {
+        return Expr(b, Vector<Scalar, 1>{static_cast<ElementType>(v)});
+    }
+    /// @returns the WGSL name for the type
+    static inline std::string Name() { return "i8"; }
+};
+
+/// Helper for building u8 types and expressions
+template <>
+struct DataType<core::u8> {
+    /// The element type
+    using ElementType = core::u8;
+
+    /// false as u8 is not a composite type
+    static constexpr bool is_composite = false;
+
+    /// @param b the ProgramBuilder
+    /// @return a new AST u8 type
+    static inline ast::Type AST(ProgramBuilder& b) { return b.ty.u8(); }
+    /// @param b the ProgramBuilder
+    /// @return the semantic u8 type
+    static inline const core::type::Type* Sem(ProgramBuilder& b) {
+        return b.create<core::type::U8>();
+    }
+    /// @param b the ProgramBuilder
+    /// @param args args of size 1 with the u8 value to init with
+    /// @return a new AST i8 literal value expression
+    static inline const ast::Expression* Expr(ProgramBuilder& b, VectorRef<Scalar> args) {
+        return b.Expr(std::get<core::u8>(args[0].value));
+    }
+    /// @param b the ProgramBuilder
+    /// @param v arg of type double that will be cast to u8.
+    /// @return a new AST u8 literal value expression
+    static inline const ast::Expression* ExprFromDouble(ProgramBuilder& b, double v) {
+        return Expr(b, Vector<Scalar, 1>{static_cast<ElementType>(v)});
+    }
+    /// @returns the WGSL name for the type
+    static inline std::string Name() { return "u8"; }
 };
 
 /// Helper for building f32 types and expressions

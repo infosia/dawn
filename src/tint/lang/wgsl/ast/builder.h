@@ -512,6 +512,20 @@ class Builder {
         /// @returns a 'u32' type
         ast::Type u32(const Source& source) const { return (*this)(source, "u32"); }
 
+        /// @returns a 'i8' type
+        ast::Type i8() const { return (*this)("i8"); }
+
+        /// @param source the Source of the node
+        /// @returns a 'i8' type
+        ast::Type i8(const Source& source) const { return (*this)(source, "i8"); }
+
+        /// @returns a 'u8' type
+        ast::Type u8() const { return (*this)("u8"); }
+
+        /// @param source the Source of the node
+        /// @returns a 'u8' type
+        ast::Type u8(const Source& source) const { return (*this)(source, "u8"); }
+
         /// @param type vector subtype
         /// @param n vector width in elements
         /// @return a @p n element vector of @p type
@@ -1513,6 +1527,22 @@ class Builder {
     /// @param value the unsigned int value
     /// @return an unsigned 'u'-suffixed IntLiteralExpression for the u32 value
     const ast::IntLiteralExpression* Expr(const Source& source, core::u32 value) {
+        return create<ast::IntLiteralExpression>(source, value,
+                                                 ast::IntLiteralExpression::Suffix::kU);
+    }
+
+    /// @param source the source information
+    /// @param value the unsigned int value
+    /// @return an unsigned 'i'-suffixed IntLiteralExpression for the i8 value
+    const ast::IntLiteralExpression* Expr(const Source& source, core::i8 value) {
+        return create<ast::IntLiteralExpression>(source, value,
+                                                 ast::IntLiteralExpression::Suffix::kI);
+    }
+
+    /// @param source the source information
+    /// @param value the unsigned int value
+    /// @return an unsigned 'u'-suffixed IntLiteralExpression for the u8 value
+    const ast::IntLiteralExpression* Expr(const Source& source, core::u8 value) {
         return create<ast::IntLiteralExpression>(source, value,
                                                  ast::IntLiteralExpression::Suffix::kU);
     }
@@ -3609,6 +3639,14 @@ struct Builder::TypesBuilder::CToAST<core::f16> {
 template <>
 struct Builder::TypesBuilder::CToAST<bool> {
     static ast::Type get(const Builder::TypesBuilder* t) { return t->bool_(); }
+};
+template <>
+struct Builder::TypesBuilder::CToAST<core::i8> {
+    static ast::Type get(const Builder::TypesBuilder* t) { return t->i8(); }
+};
+template <>
+struct Builder::TypesBuilder::CToAST<core::u8> {
+    static ast::Type get(const Builder::TypesBuilder* t) { return t->u8(); }
 };
 template <typename T, uint32_t N>
 struct Builder::TypesBuilder::CToAST<core::fluent_types::array<T, N>> {
