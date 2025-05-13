@@ -70,9 +70,9 @@ func (cmd) Desc() string {
 }
 
 func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, error) {
-	flag.StringVar(&c.flags.ctsDir, "cts", common.DefaultCTSPath(), "path to the CTS")
-	flag.StringVar(&c.flags.nodePath, "node", fileutils.NodePath(), "path to node")
-	flag.StringVar(&c.flags.output, "out", common.DefaultTestListPath(), "output testlist path")
+	flag.StringVar(&c.flags.ctsDir, "cts", common.DefaultCTSPath(cfg.OsWrapper), "path to the CTS")
+	flag.StringVar(&c.flags.nodePath, "node", fileutils.NodePath(cfg.OsWrapper), "path to node")
+	flag.StringVar(&c.flags.output, "out", common.DefaultTestListPath(cfg.OsWrapper), "output testlist path")
 	flag.StringVar(&c.flags.testQuery, "test-query", "webgpu:*", "cts test query to generate test list")
 
 	return nil, nil
