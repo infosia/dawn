@@ -6593,7 +6593,7 @@ TEST_F(IR_DirectVariableAccessTest_Complex, IndexingDualPointers) {
                  S = b.Var<storage, array<array<array<i32, 9>, 9>, 50>, read>("S");
                  S->SetBindingPoint(0, 0);
                  U = b.Var<uniform, array<array<array<vec4<i32>, 9>, 9>, 50>, read>("U");
-                 U->SetBindingPoint(0, 0);
+                 U->SetBindingPoint(0, 1);
              });
 
     auto* fn_a = b.Function("a", ty.i32());
@@ -6630,7 +6630,7 @@ TEST_F(IR_DirectVariableAccessTest_Complex, IndexingDualPointers) {
     auto* src = R"(
 $B1: {  # root
   %S:ptr<storage, array<array<array<i32, 9>, 9>, 50>, read> = var undef @binding_point(0, 0)
-  %U:ptr<uniform, array<array<array<vec4<i32>, 9>, 9>, 50>, read> = var undef @binding_point(0, 0)
+  %U:ptr<uniform, array<array<array<vec4<i32>, 9>, 9>, 50>, read> = var undef @binding_point(0, 1)
 }
 
 %a = func(%i:i32):i32 {
@@ -6667,7 +6667,7 @@ $B1: {  # root
     auto* expect = R"(
 $B1: {  # root
   %S:ptr<storage, array<array<array<i32, 9>, 9>, 50>, read> = var undef @binding_point(0, 0)
-  %U:ptr<uniform, array<array<array<vec4<i32>, 9>, 9>, 50>, read> = var undef @binding_point(0, 0)
+  %U:ptr<uniform, array<array<array<vec4<i32>, 9>, 9>, 50>, read> = var undef @binding_point(0, 1)
 }
 
 %a = func(%i:i32):i32 {

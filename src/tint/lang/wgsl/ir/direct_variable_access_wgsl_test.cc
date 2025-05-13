@@ -2441,7 +2441,7 @@ fn c() {
 TEST_F(IR_DirectVariableAccessWgslTest_Complex, IndexingDualPointers) {
     auto* src = R"(
 @group(0) @binding(0) var<storage> S : array<array<array<i32, 9>, 9>, 50>;
-@group(0) @binding(0) var<uniform> U : array<array<array<vec4<i32>, 9>, 9>, 50>;
+@group(0) @binding(1) var<uniform> U : array<array<array<vec4<i32>, 9>, 9>, 50>;
 
 fn a(i : i32) -> i32 { return i; }
 
@@ -2459,7 +2459,7 @@ fn c() {
     auto* expect = R"(
 @group(0u) @binding(0u) var<storage, read> S : array<array<array<i32, 9u>, 9u>, 50u>;
 
-@group(0u) @binding(0u) var<uniform> U : array<array<array<vec4<i32>, 9u>, 9u>, 50u>;
+@group(0u) @binding(1u) var<uniform> U : array<array<array<vec4<i32>, 9u>, 9u>, 50u>;
 
 fn a(i : i32) -> i32 {
   return i;

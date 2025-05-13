@@ -1385,8 +1385,8 @@ class Validator {
     core::ir::ReferencedModuleVars<const Module> referenced_module_vars_;
     Hashset<OverrideId, 8> seen_override_ids_;
     Hashset<std::string, 4> entry_point_names_;
-
     Hashset<ValidatedType, 16> validated_types_{};
+    Hashset<BindingPoint, 4> binding_points_{};
 };
 
 Validator::Validator(const Module& mod, Capabilities capabilities)
@@ -2663,6 +2663,14 @@ void Validator::CheckVar(const Var* var) {
     }
 
     if (var->Block() == mod_.root_block) {
+        if (!capabilities_.Contains(Capability::kAllowDuplicateBindings) &&
+            var->BindingPoint().has_value()) {
+            auto bp = var->BindingPoint().value();
+            if (!binding_points_.Add(bp)) {
+                AddError(var) << "found non-unique binding point " << bp;
+            }
+        }
+
         if (mv->AddressSpace() == AddressSpace::kIn || mv->AddressSpace() == AddressSpace::kOut) {
             auto result = ValidateShaderIOAnnotations(var->Result()->Type(), var->BindingPoint(),
                                                       var->Attributes(), "module scope variable");

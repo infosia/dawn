@@ -521,6 +521,38 @@ TEST_F(IR_ValidatorTest, Var_Storage_NotHostShareable) {
 )")) << res.Failure();
 }
 
+TEST_F(IR_ValidatorTest, Var_DuplicateBindingPoints) {
+    auto* var_a = b.Var<uniform, f32>();
+    var_a->SetBindingPoint(1, 2);
+    mod.root_block->Append(var_a);
+
+    auto* var_b = b.Var<uniform, i32>();
+    var_b->SetBindingPoint(1, 2);
+    mod.root_block->Append(var_b);
+
+    auto res = ir::Validate(mod);
+    ASSERT_NE(res, Success);
+    EXPECT_THAT(res.Failure().reason,
+                testing::HasSubstr(
+                    R"(:3:32 error: var: found non-unique binding point [group: 1, binding: 2]
+  %2:ptr<uniform, i32, read> = var undef @binding_point(1, 2)
+                               ^^^
+)")) << res.Failure();
+}
+
+TEST_F(IR_ValidatorTest, Var_DuplicateBindingPoints_CapabilityOverride) {
+    auto* var_a = b.Var<uniform, f32>();
+    var_a->SetBindingPoint(1, 2);
+    mod.root_block->Append(var_a);
+
+    auto* var_b = b.Var<uniform, i32>();
+    var_b->SetBindingPoint(1, 2);
+    mod.root_block->Append(var_b);
+
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowDuplicateBindings});
+    ASSERT_EQ(res, Success);
+}
+
 TEST_F(IR_ValidatorTest, Var_MultipleIOAnnotations) {
     auto* v = b.Var<AddressSpace::kIn, vec4<f32>>();
     v->SetBuiltin(BuiltinValue::kPosition);
