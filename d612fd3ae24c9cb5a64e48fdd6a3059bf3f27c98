@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea76f47a_10d43e44",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-13T18:40:59Z",
+      "side": 1,
+      "message": "\u0027TARGET libprotobuf\u0027 will always be false at this point (unless there is a system version installed, maybe?), because the third_party directory hasn\u0027t been walked at this point. Cannot easily move that walk to earlier, since the custom cmake rules depend on some of the values that are set here.",
+      "revId": "d612fd3ae24c9cb5a64e48fdd6a3059bf3f27c98",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
