@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8978756e_3670cc6f",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-13T13:41:51Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "22f536653821a171b1e3faaa44658792d0af53ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1cd16ea_dde7b025",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-13T13:41:51Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "22f536653821a171b1e3faaa44658792d0af53ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02e520f2_bf6e70ba",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-13T13:41:51Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"stuct\" is a possible misspelling of \"struct\".\n\nAnalyzer Description: Checks for common typos.\nOwner: chops-source-team@google.com\n\n\"stuct\" is a possible misspelling of \"struct\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 70,
+        "startChar": 30,
+        "endLine": 70,
+        "endChar": 35
+      },
+      "revId": "22f536653821a171b1e3faaa44658792d0af53ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78eb304b_9fc558f6",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-13T13:41:51Z",
+      "side": 1,
+      "message": "```suggestion\n            if (!curr_const-\u003eType()-\u003eIsAnyOf\u003ccore::type::Array, core::type::Struct\u003e()) {\n```",
+      "range": {
+        "startLine": 72,
+        "startChar": 16,
+        "endLine": 73,
+        "endChar": 61
+      },
+      "revId": "22f536653821a171b1e3faaa44658792d0af53ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71f338c0_1f868a0f",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-13T13:41:51Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 41
+      },
+      "revId": "22f536653821a171b1e3faaa44658792d0af53ed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
