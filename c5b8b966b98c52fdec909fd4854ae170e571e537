@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "609cbdc2_ecfb37e2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-13T17:14:08Z",
+      "side": 1,
+      "message": "Sigh, looks like this may have broken something in the CMake build with the IR fuzzer enabled. I will look into it and see if it is a simple fix that I can land",
+      "revId": "c5b8b966b98c52fdec909fd4854ae170e571e537",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
