@@ -1076,6 +1076,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f998b1a5_e666e430",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-13T21:15:49Z",
+      "side": 1,
+      "message": "Does this [chart](https://www.mermaidchart.com/play?utm_source\u003dmermaid_live_editor\u0026utm_medium\u003dtoggle#pako:eNqtk19vgjAUxb8KYXFxyXygxAdYssRpsvg0s2zuQXxoykUIWEjb-SfLvvvAUgTBDRZ8UHo959fTS--XTmIXdFvfMJz42tvMoVr6mSSJNho9anPKBaYEHmRZLdP_tJc95SfNEyYhUHcaUwpEBDE1VrXSMlx3QqA64uN58a4g9S0z3CzgJN4B49rtGb3wjzwgOJrBLiBgrKrrc656hJZIdIH8NecJOmWABVSQqito5ejzVMxUwdGbGqcImXXi4kQAM1Knehwuw7vWRnQ2omEWvsGKrnhNFbd5Z1XN3K_gZW0UcdNbqerRX3qU6weDIkhmmW-TCLZAhcyYa-tRygdR10L-rhuC1NWoWW02q4seyWW1QxfnqgyFwubSkmSBORc-iz83fnkjh0ql_ObiGMFpkL0giuwbz_LuuWBxCPaNaZr582gfuMK3UXIou4orI62EdLeiNl4jOaiCi7mPGcNHWxtr4zKxYdglGgD6RqPe0Bc3POe6rtsrF_XGLQZEAq0Or7yYln9bzTbWVseottsiVuso1YZ2d5ptnFfPoH__AIUffMo) look more correct?\n\n@Corentin IIUC your point is to separate the \"Outer\" and \"Inner\" layer more explicitly, so that the webgpu-on-webgpu backend assumes no extra knowledge of the \"Inner\" layer webgpu implementation.\n\nI used to think the boundary of \"Outer\" and \"Inner\" layer is lower: everything below Inner Adapter starts passing through, `PhysicalDeviceWGPU` still has access to \"Outer\" Dawn native stuffs. This only seems to work when both \"Outer\" and \"Inner\" impl are the same version of Dawn.\n\nAlso talked with Kai and Loko offline a bit and recap here for the next step for initializing the backend/physical device:\n- `EnumerateAdapters` is not exposed in `DawnProcTable`. Just use `wgpuInstanceRequestAdapter` and pass down the `RequestAdapterOptions` in `BackendWGPU` to create **one** `WGPUAdapter` for now. Pass down this adapter to `PhysicalDeviceWGPU` to make webgpu calls and query capabilities.\n- Make an extension chained struct for `RequestAdapterOptions` to indicate whether to select WebGPU backend or not, besieds the `WGPUBackendType`, to avoid infinite recursion in `EnumerateAdapters`. This struct can also contain an entrypoint for the proc table in the future.",
+      "parentUuid": "e834bb9c_5089ea56",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a4c2ac68_7b6fd572",
         "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
         "patchSetId": 15
