@@ -157,6 +157,24 @@
       "parentUuid": "54d2b8b8_66e11e9e",
       "revId": "5caa229e8bb72628e20489e69f224e318cac816e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0ee853b_c3b1f40e",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-13T11:26:03Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t catch that Dawn wasn\u0027t changed in this CL.",
+      "parentUuid": "9ea7d369_6f0c2473",
+      "revId": "5caa229e8bb72628e20489e69f224e318cac816e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
