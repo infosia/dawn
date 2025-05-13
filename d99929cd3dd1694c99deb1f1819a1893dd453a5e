@@ -22,6 +22,30 @@
       },
       "revId": "d99929cd3dd1694c99deb1f1819a1893dd453a5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62e7c2b9_5cd89b11",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-05-13T18:32:37Z",
+      "side": 1,
+      "message": "\u003e I think serial should be unique per MapAsyncEvent which was why it was used before?\n\nIf you have two different Buffers that had MapAsync() called within the same queue submit wouldn\u0027t they have the same pending command serial? A MapAsyncEvent is created for each and they both do TRACE_EVENT_ASYNC_BEGIN0() with the same serial which confuses trace viewer. If it\u0027s not possible to have two Buffer::MapAsync() calls in the same queue submit then potentially something is wrong as I\u0027m seeing that.\n\n\u003e Hmm, can\u0027t pointers be reused and cause what would appear to be the same event happening more than once? \n\nYes, memory can be reused but only one MapAsyncEvent can be active in that memory location at one time. It\u0027s fine for same MapAsyncEvent, or at least a different one in the same memory, to reuse the same id as long as there is no overlap in the begin/end timing. \n\nI guess if there is a risk that MapAsyncEvent doesn\u0027t record the end trace it might produce wrong results if another MapAsyncEvent had the same this and recorded begin/end. I think the only way MapAsyncEvent skips recording end is if queue is destroyed which probably means the device is also destroyed? If so we probably don\u0027t care too much.\n\nIf you look at any of the traces in [this pinpoint](https://pinpoint-dot-chromeperf.appspot.com/job/14e0d9a8110000) you\u0027ll see hundreds of Buffer::APIMapAsync events that don\u0027t end. This fixes it when I record locally with it patched in.",
+      "parentUuid": "1dbf9601_65de9bfc",
+      "range": {
+        "startLine": 206,
+        "startChar": 42,
+        "endLine": 206,
+        "endChar": 46
+      },
+      "revId": "d99929cd3dd1694c99deb1f1819a1893dd453a5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
