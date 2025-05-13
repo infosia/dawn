@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84abe9e6_1eeb44b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004156
+      },
+      "writtenOn": "2025-05-13T13:32:52Z",
+      "side": 1,
+      "message": "Sorry, the votes got reset after addressing nits.",
+      "revId": "d34fe0c37b3275fb2dac9d0e8927186ababf7f5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
