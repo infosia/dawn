@@ -34,6 +34,24 @@
       "parentUuid": "b1219a87_d36d6518",
       "revId": "c5a61afb5c5c63ef683c0d394733885700c3d7e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3912ddb_b3cfbf21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-13T17:25:49Z",
+      "side": 1,
+      "message": "Thanks for the explanation. (I only looked at the highlighted change part and ignored the existing language, facepalm)",
+      "parentUuid": "c5062b8a_46c359b0",
+      "revId": "c5a61afb5c5c63ef683c0d394733885700c3d7e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
