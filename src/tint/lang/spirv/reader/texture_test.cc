@@ -323,16 +323,15 @@ TEST_P(SamplerTest, Handle) {
 $B1: {  # root
   %1:ptr<handle, sampler, read> = var undef @binding_point(0, 0)
   %wg:ptr<handle, )" +
-                  params.wgsl_type + R"(<f32>, read> = var undef @binding_point(2, 0)
+                  params.wgsl_type + R"(, read> = var undef @binding_point(2, 0)
 }
 
 %main = @fragment func():void {
   $B2: {
-    %4:)" + params.wgsl_type +
-                  R"(<f32> = load %wg
-    %5:sampler = load %1
-    %6:vec4<f32> = )" +
-                  params.wgsl_fn + R"(
+    %4:sampler = load %1
+    %5:)" + params.wgsl_type +
+                  R"( = load %wg)" + params.wgsl_fn +
+                  R"(
     ret
   }
 }
@@ -340,7 +339,7 @@ $B1: {  # root
 }
 
 INSTANTIATE_TEST_SUITE_P(
-    DISABLED_SpirvReaderTest_ImageGather,
+    SpirvReaderTest_ImageGather,
     SamplerTest,
     ::testing::Values(
         ImgData{
@@ -348,7 +347,8 @@ INSTANTIATE_TEST_SUITE_P(
             .spirv_type = "%float 2D 0 0 0 1 Unknown",
             .spirv_fn = "OpImageGather %v4float %sampled_image %coords2 %int_1",
             .wgsl_type = "texture_2d<f32>",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f)",
+            .wgsl_fn = R"(
+    %6:vec4<f32> = textureGather 1i, %5, %4, vec2<f32>(1.0f, 2.0f))",
         },
         ImgData{
             .name = "2D ConstOffset Signed",
@@ -356,7 +356,8 @@ INSTANTIATE_TEST_SUITE_P(
             .spirv_fn =
                 "OpImageGather %v4float %sampled_image %coords2 %int_1 ConstOffset %offset2i",
             .wgsl_type = "texture_2d<f32>",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f), vec2<i32>(10i, 11i)",
+            .wgsl_fn = R"(
+    %6:vec4<f32> = textureGather 1i, %5, %4, vec2<f32>(1.0f, 2.0f), vec2<i32>(10i, 11i))",
         },
         ImgData{
             .name = "2D ConstOffset Unsigned",
@@ -364,14 +365,20 @@ INSTANTIATE_TEST_SUITE_P(
             .spirv_fn =
                 "OpImageGather %v4float %sampled_image %coords2 %int_1 ConstOffset %offset2u",
             .wgsl_type = "texture_2d<f32>",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f), vec2<u32>(20u, 21u)",
+            .wgsl_fn = R"(
+    %6:vec2<i32> = convert vec2<u32>(20u, 21u)
+    %7:vec4<f32> = textureGather 1i, %5, %4, vec2<f32>(1.0f, 2.0f), %6)",
         },
         ImgData{
             .name = "2D Array",
             .spirv_type = "%float 2D 0 1 0 1 Unknown",
             .spirv_fn = "OpImageGather %v4float %sampled_image %coords3 %int_1",
             .wgsl_type = "texture_2d_array<f32>",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f), 3i",
+            .wgsl_fn = R"(
+    %6:vec2<f32> = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), xy
+    %7:f32 = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), z
+    %8:i32 = convert %7
+    %9:vec4<f32> = textureGather 1i, %5, %4, %6, %8)",
         },
         ImgData{
             .name = "2D Array ConstOffset Signed",
@@ -379,7 +386,11 @@ INSTANTIATE_TEST_SUITE_P(
             .spirv_fn =
                 "OpImageGather %v4float %sampled_image %coords3 %int_1 ConstOffset %offset2i",
             .wgsl_type = "texture_2d_array<f32>",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f), 3i, vec2<i32>(10i, 11i)",
+            .wgsl_fn = R"(
+    %6:vec2<f32> = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), xy
+    %7:f32 = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), z
+    %8:i32 = convert %7
+    %9:vec4<f32> = textureGather 1i, %5, %4, %6, %8, vec2<i32>(10i, 11i))",
         },
         ImgData{
             .name = "2D Array ConstOffset Unsigned",
@@ -387,28 +398,20 @@ INSTANTIATE_TEST_SUITE_P(
             .spirv_fn =
                 "OpImageGather %v4float %sampled_image %coords3 %int_1 ConstOffset %offset2u",
             .wgsl_type = "texture_2d_array<f32>",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f), 3i, vec2<u32>(20u, 21u)",
-        },
-        ImgData{
-            .name = "Cube",
-            .spirv_type = "%float Cube 0 0 0 1 Unknown",
-            .spirv_fn = "OpImageGather %v4float %sampled_image %coords3 %int_1",
-            .wgsl_type = "texture_cube<f32>",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec3<f32>(1.0f, 2.0f, 3.0f)",
-        },
-        ImgData{
-            .name = "Cube Array",
-            .spirv_type = "%float Cube 0 1 0 1 Unknown",
-            .spirv_fn = "OpImageGather %v4float %sampled_image %coords4 %int_1",
-            .wgsl_type = "texture_cube_array<f32>",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec3<f32>(1.0f, 2.0f, 3.0f), 4i",
+            .wgsl_fn = R"(
+    %6:vec2<f32> = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), xy
+    %7:f32 = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), z
+    %8:i32 = convert %7
+    %9:vec2<i32> = convert vec2<u32>(20u, 21u)
+    %10:vec4<f32> = textureGather 1i, %5, %4, %6, %8, %9)",
         },
         ImgData{
             .name = "2D Depth",
             .spirv_type = "%float 2D 1 0 0 1 Unknown",
             .spirv_fn = "OpImageGather %v4float %sampled_image %coords2 %int_1",
             .wgsl_type = "texture_depth_2d",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f)",
+            .wgsl_fn = R"(
+    %6:vec4<f32> = textureGather %5, %4, vec2<f32>(1.0f, 2.0f))",
         },
         ImgData{
             .name = "2D Depth ConstOffset Signed",
@@ -416,22 +419,29 @@ INSTANTIATE_TEST_SUITE_P(
             .spirv_fn =
                 "OpImageGather %v4float %sampled_image %coords2 %int_1 ConstOffset %offset2i",
             .wgsl_type = "texture_depth_2d",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f), vec2<i32>(10i, 11i)",
+            .wgsl_fn = R"(
+    %6:vec4<f32> = textureGather %5, %4, vec2<f32>(1.0f, 2.0f), vec2<i32>(10i, 11i))",
         },
         ImgData{
-            .name = "2D Depth ConstOffset Unigned",
+            .name = "2D Depth ConstOffset Unsigned",
             .spirv_type = "%float 2D 1 0 0 1 Unknown",
             .spirv_fn =
                 "OpImageGather %v4float %sampled_image %coords2 %int_1 ConstOffset %offset2u",
             .wgsl_type = "texture_depth_2d",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f), vec2<u32>(20u, 21u)",
+            .wgsl_fn = R"(
+    %6:vec2<i32> = convert vec2<u32>(20u, 21u)
+    %7:vec4<f32> = textureGather %5, %4, vec2<f32>(1.0f, 2.0f), %6)",
         },
         ImgData{
             .name = "2D Depth Array",
             .spirv_type = "%float 2D 1 1 0 1 Unknown",
             .spirv_fn = "OpImageGather %v4float %sampled_image %coords3 %int_1",
             .wgsl_type = "texture_depth_2d_array",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f), 3i",
+            .wgsl_fn = R"(
+    %6:vec2<f32> = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), xy
+    %7:f32 = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), z
+    %8:i32 = convert %7
+    %9:vec4<f32> = textureGather %5, %4, %6, %8)",
         },
         ImgData{
             .name = "2D Depth Array ConstOffset Signed",
@@ -439,29 +449,62 @@ INSTANTIATE_TEST_SUITE_P(
             .spirv_fn =
                 "OpImageGather %v4float %sampled_image %coords3 %int_1 ConstOffset %offset2i",
             .wgsl_type = "texture_depth_2d_array",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f), 3i, vec2<i32>(10i, 11i)",
+            .wgsl_fn = R"(
+    %6:vec2<f32> = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), xy
+    %7:f32 = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), z
+    %8:i32 = convert %7
+    %9:vec4<f32> = textureGather %5, %4, %6, %8, vec2<i32>(10i, 11i))",
         },
         ImgData{
-            .name = "2D Depth Array ConstOffset Unigned",
+            .name = "2D Depth Array ConstOffset Unsigned",
             .spirv_type = "%float 2D 1 1 0 1 Unknown",
             .spirv_fn =
                 "OpImageGather %v4float %sampled_image %coords3 %int_1 ConstOffset %offset2u",
             .wgsl_type = "texture_depth_2d_array",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec2<f32>(1.0f, 2.0f), 3i, vec2<u32>(20u, 21u)",
+            .wgsl_fn = R"(
+    %6:vec2<f32> = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), xy
+    %7:f32 = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), z
+    %8:i32 = convert %7
+    %9:vec2<i32> = convert vec2<u32>(20u, 21u)
+    %10:vec4<f32> = textureGather %5, %4, %6, %8, %9)",
+        },
+        ImgData{
+            .name = "Cube",
+            .spirv_type = "%float Cube 0 0 0 1 Unknown",
+            .spirv_fn = "OpImageGather %v4float %sampled_image %coords3 %int_1",
+            .wgsl_type = "texture_cube<f32>",
+            .wgsl_fn = R"(
+    %6:vec4<f32> = textureGather 1i, %5, %4, vec3<f32>(1.0f, 2.0f, 3.0f))",
         },
         ImgData{
             .name = "Cube Depth",
             .spirv_type = "%float Cube 1 0 0 1 Unknown",
             .spirv_fn = "OpImageGather %v4float %sampled_image %coords3 %int_1",
             .wgsl_type = "texture_depth_cube",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec3<f32>(1.0f, 2.0f, 3.0f)",
+            .wgsl_fn = R"(
+    %6:vec4<f32> = textureGather %5, %4, vec3<f32>(1.0f, 2.0f, 3.0f))",
+        },
+        ImgData{
+            .name = "Cube Array",
+            .spirv_type = "%float Cube 0 1 0 1 Unknown",
+            .spirv_fn = "OpImageGather %v4float %sampled_image %coords4 %int_1",
+            .wgsl_type = "texture_cube_array<f32>",
+            .wgsl_fn = R"(
+    %6:vec3<f32> = swizzle vec4<f32>(1.0f, 2.0f, 3.0f, 4.0f), xyz
+    %7:f32 = swizzle vec4<f32>(1.0f, 2.0f, 3.0f, 4.0f), w
+    %8:i32 = convert %7
+    %9:vec4<f32> = textureGather 1i, %5, %4, %6, %8)",
         },
         ImgData{
             .name = "Cube Depth Array",
             .spirv_type = "%float Cube 1 1 0 1 Unknown",
             .spirv_fn = "OpImageGather %v4float %sampled_image %coords4 %int_1",
-            .wgsl_type = "texture_depth_2d_array",
-            .wgsl_fn = "textureGather 1i, %4, %5, vec3<f32>(1.0f, 2.0f, 3.0f), 4i",
+            .wgsl_type = "texture_depth_cube_array",
+            .wgsl_fn = R"(
+    %6:vec3<f32> = swizzle vec4<f32>(1.0f, 2.0f, 3.0f, 4.0f), xyz
+    %7:f32 = swizzle vec4<f32>(1.0f, 2.0f, 3.0f, 4.0f), w
+    %8:i32 = convert %7
+    %9:vec4<f32> = textureGather %5, %4, %6, %8)",
         }));
 
 INSTANTIATE_TEST_SUITE_P(
