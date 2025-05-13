@@ -95,6 +95,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8d914304_c26c5222",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-13T11:01:50Z",
+      "side": 1,
+      "message": "Since the code should work just fine even if `Size \u003d\u003d 0`, I remove this condition.\n\nI tried and something like `ityp::array\u003cuint32_t, uint32_t, 0\u003e array{};` can get compiled, although the member function like `Value\u0026 at(Index i)` have runtime validation `DAWN_ASSERT(index \u003e\u003d 0 \u0026\u0026 index \u003c I(Size));` which will always failed with `Size \u003d\u003d 0`.",
+      "parentUuid": "a79babcd_bfb65662",
+      "range": {
+        "startLine": 388,
+        "startChar": 46,
+        "endLine": 388,
+        "endChar": 74
+      },
+      "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7dc41ad8_8cfecd6e",
         "filename": "src/dawn/native/stream/Stream.h",
         "patchSetId": 3
@@ -123,6 +147,24 @@
       "writtenOn": "2025-05-12T11:26:10Z",
       "side": 1,
       "message": "It seems that this could be a static_assert even no? Ditto for Read.",
+      "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "434be4ee_18bc73cd",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-13T11:01:50Z",
+      "side": 1,
+      "message": "This two templates were served as the ending condition of template reduction.\n\nRefactor the template to try making it clearer.",
+      "parentUuid": "fcd761b3_4f0c17de",
       "revId": "5667680a73b87cc37eaf56f0fcc7fd5171a58806",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
