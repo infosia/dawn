@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dee8b4d4_0861d024",
+        "filename": "scripts/dawn_overrides_with_defaults.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-13T15:04:26Z",
+      "side": 1,
+      "message": "The other solution is to have \u0027if not define set to false\u0027 logic whereever dawn_wasm is used, but I believe it is used in more then one location in the GN files.",
+      "revId": "c806a7f9d1ccf29f133924a8bc6aca33723dab7c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
