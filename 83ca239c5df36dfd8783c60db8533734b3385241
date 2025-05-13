@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa4a3a67_658299d5",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-13T17:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e2a4379_0e18999a",
+      "revId": "83ca239c5df36dfd8783c60db8533734b3385241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3336b205_a644b497",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-05-13T08:30:28Z",
       "side": 1,
       "message": "nit: unused, same for `Ref`",
+      "revId": "83ca239c5df36dfd8783c60db8533734b3385241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "341a7c71_fe579764",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-13T17:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3336b205_a644b497",
       "revId": "83ca239c5df36dfd8783c60db8533734b3385241",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ad280ec_eb1ce9c5",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-13T17:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69350ebd_80a7cb8b",
+      "revId": "83ca239c5df36dfd8783c60db8533734b3385241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f02c8289_035f2200",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-05-13T08:30:28Z",
       "side": 1,
       "message": "I don\u0027t believe that the PL / Sampler / TextureView will only be the frontend objects since they will have an inner object. So they shouldn\u0027t be type aliases but proper forward declarations.",
+      "revId": "83ca239c5df36dfd8783c60db8533734b3385241",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe589b3f_1ee8325b",
+        "filename": "src/dawn/native/webgpu/Forward.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-13T17:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f02c8289_035f2200",
       "revId": "83ca239c5df36dfd8783c60db8533734b3385241",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
