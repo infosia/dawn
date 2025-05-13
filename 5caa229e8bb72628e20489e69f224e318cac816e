@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f995b684_c5d2b949",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-13T05:30:22Z",
+      "side": 1,
+      "message": "Done. Thanks for catching this.",
+      "parentUuid": "1f136775_b87d4ca7",
+      "revId": "5caa229e8bb72628e20489e69f224e318cac816e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "274207ad_7f5a173e",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc35675b_d9eee5ed",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-13T05:30:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274207ad_7f5a173e",
+      "revId": "5caa229e8bb72628e20489e69f224e318cac816e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59571710_852d6134",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-05-12T13:05:14Z",
       "side": 1,
       "message": "Why remove the `else`, I don\u0027t think an entry can be both a `vertex_index` and a `instance_index` ?",
+      "revId": "5caa229e8bb72628e20489e69f224e318cac816e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2076778a_ea60f9e3",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-13T05:30:22Z",
+      "side": 1,
+      "message": "Done. Yes, it is not possible that an entry can be both a `vertex_index` and a `instance_index`",
+      "parentUuid": "59571710_852d6134",
       "revId": "5caa229e8bb72628e20489e69f224e318cac816e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -83,6 +137,24 @@
       "side": 1,
       "message": "We will need to support both paths until Dawn is switched over to use the new one.",
       "parentUuid": "60a0992c_6f1ed9a3",
+      "revId": "5caa229e8bb72628e20489e69f224e318cac816e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ea7d369_6f0c2473",
+        "filename": "src/tint/lang/hlsl/writer/raise/shader_io.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-13T05:30:22Z",
+      "side": 1,
+      "message": "Yes, need to cleanup d3d12 backend.",
+      "parentUuid": "54d2b8b8_66e11e9e",
       "revId": "5caa229e8bb72628e20489e69f224e318cac816e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
