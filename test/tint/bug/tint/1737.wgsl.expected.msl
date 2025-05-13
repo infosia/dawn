@@ -12,13 +12,13 @@ struct tint_array {
   const threadgroup T& operator[](size_t i) const threadgroup { return elements[i]; }
   T elements[N];
 };
+constexpr constant tint_array<int, 3> v = tint_array<int, 3>{1, 2, 3};
 
-struct tint_module_vars_struct {
-  threadgroup tint_array<float, 10>* a;
-  threadgroup tint_array<float, 20>* b;
-};
+void f() {
+  int const t = 0;
+  int const k = v[min(uint(t), 2u)];
+}
 
-void f(tint_module_vars_struct tint_module_vars) {
-  float const x = (*tint_module_vars.a)[0u];
-  float const y = (*tint_module_vars.b)[0u];
+kernel void v_1() {
+  f();
 }
