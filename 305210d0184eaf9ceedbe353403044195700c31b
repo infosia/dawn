@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "161882c6_06c16fdf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-13T00:03:07Z",
+      "side": 1,
+      "message": "lgtm since it matches Adapter.cpp, but ideally we should put these in Constants.h and refactor the several places that currently hardcode these values. https://source.chromium.org/search?q\u003df:%5Ethird_party%2Fdawn%2Fsrc%20SubgroupMaxSize%20128\u0026ss\u003dchromium",
+      "revId": "305210d0184eaf9ceedbe353403044195700c31b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
