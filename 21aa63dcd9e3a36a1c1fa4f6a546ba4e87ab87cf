@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c23bd5f_583583ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-13T14:33:05Z",
+      "side": 1,
+      "message": "LGTM, but Mac might be unhappy",
+      "revId": "21aa63dcd9e3a36a1c1fa4f6a546ba4e87ab87cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
