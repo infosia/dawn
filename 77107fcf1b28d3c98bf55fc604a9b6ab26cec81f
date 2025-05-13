@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eea7856b_2ba23d26",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-13T17:43:26Z",
+      "side": 1,
+      "message": "Wait, shouldn\u0027t this be a `CallWithResult` that takes the old call\u0027s result?\n\nMaybe worth having the test do something with the result (e.g. OpCopyObject) so that IR validation would catch this.",
+      "revId": "77107fcf1b28d3c98bf55fc604a9b6ab26cec81f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
