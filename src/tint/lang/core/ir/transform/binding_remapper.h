@@ -31,6 +31,7 @@
 #include <unordered_map>
 
 #include "src/tint/api/common/binding_point.h"
+#include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/utils/result.h"
 
 // Forward declarations.
@@ -39,6 +40,9 @@ class Module;
 }
 
 namespace tint::core::ir::transform {
+
+/// The capabilities that may be needed after the transform.
+const Capabilities kBindingRemapperCapabilities{Capability::kAllowDuplicateBindings};
 
 /// BindingRemapper is a transform that remaps binding point indices and access controls.
 /// @param module the module to transform
