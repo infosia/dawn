@@ -577,7 +577,7 @@ INSTANTIATE_TEST_SUITE_P(
         }));
 
 INSTANTIATE_TEST_SUITE_P(
-    DISABLED_SpirvReaderTest_ImageSampleImplicitLod,
+    SpirvReaderTest_ImageSampleImplicitLod,
     SamplerTest,
     ::testing::Values(
         ImgData{
@@ -585,7 +585,8 @@ INSTANTIATE_TEST_SUITE_P(
             .spirv_type = "%float 2D 0 0 0 1 Unknown",
             .spirv_fn = "OpImageSampleImplicitLod %v4float %sampled_image %coords2",
             .wgsl_type = "texture_2d<f32>",
-            .wgsl_fn = "textureSample %4, %5, vec2<f32>(1.0f, 2.0f)",
+            .wgsl_fn = R"(
+    %6:vec4<f32> = textureSample %5, %4, vec2<f32>(1.0f, 2.0f))",
         },
         ImgData{
             .name = "2D ConstOffset",
@@ -593,36 +594,16 @@ INSTANTIATE_TEST_SUITE_P(
             .spirv_fn =
                 "OpImageSampleImplicitLod %v4float %sampled_image %coords2 ConstOffset %offset2i",
             .wgsl_type = "texture_2d<f32>",
-            .wgsl_fn = "textureSample %4, %5, vec2<f32>(1.0f, 2.0f), vec2<i32>(10i, 11i)",
-        },
-        ImgData{
-            .name = "2D Array",
-            .spirv_type = "%float 2D 0 1 0 1 Unknown",
-            .spirv_fn = "OpImageSampleImplicitLod %v4float %sampled_image %coords3",
-            .wgsl_type = "texture_2d_array<f32>",
-            .wgsl_fn = "textureSample %4, %5, vec2<f32>(1.0f, 2.0f), 3i",
-        },
-        ImgData{
-            .name = "2D Array ConstOffset",
-            .spirv_type = "%float 2D 0 1 0 1 Unknown",
-            .spirv_fn =
-                "OpImageSampleImplicitLod %v4float %sampled_image %coords3 ConstOffset %offset2i",
-            .wgsl_type = "texture_2d_array<f32>",
-            .wgsl_fn = "textureSample %4, %5, vec2<f32>(1.0f, 2.0f), 3i, vec2<i32>(10i, 11i)",
+            .wgsl_fn = R"(
+    %6:vec4<f32> = textureSample %5, %4, vec2<f32>(1.0f, 2.0f), vec2<i32>(10i, 11i))",
         },
         ImgData{
             .name = "2D Bias",
             .spirv_type = "%float 2D 0 0 0 1 Unknown",
             .spirv_fn = "OpImageSampleImplicitLod %v4float %sampled_image %coords2 Bias %float_5",
             .wgsl_type = "texture_2d<f32>",
-            .wgsl_fn = "textureSampleBias %4, %5, vec2<f32>(1.0f, 2.0f), 5.0f",
-        },
-        ImgData{
-            .name = "2D Array Bias",
-            .spirv_type = "%float 2D 0 1 0 1 Unknown",
-            .spirv_fn = "OpImageSampleImplicitLod %v4float %sampled_image %coords3 Bias %float_5",
-            .wgsl_type = "texture_2d_array<f32>",
-            .wgsl_fn = "textureSampleBias %4, %5, vec2<f32>(1.0f, 2.0f), 3i, 5.0f",
+            .wgsl_fn = R"(
+    %6:vec4<f32> = textureSampleBias %5, %4, vec2<f32>(1.0f, 2.0f), 5.0f)",
         },
         ImgData{
             .name = "2D Bias ConstOffset Signed",
@@ -630,15 +611,64 @@ INSTANTIATE_TEST_SUITE_P(
             .spirv_fn = "OpImageSampleImplicitLod %v4float %sampled_image %coords2 "
                         "Bias|ConstOffset %float_5 %offset2i",
             .wgsl_type = "texture_2d<f32>",
-            .wgsl_fn = "textureSampleBias %4, %5, vec2<f32>(1.0f, 2.0f), 5.0f, vec2<i32>(10i, 11i)",
+            .wgsl_fn = R"(
+    %6:vec4<f32> = textureSampleBias %5, %4, vec2<f32>(1.0f, 2.0f), 5.0f, vec2<i32>(10i, 11i))",
         },
         ImgData{
-            .name = "2D Bias ConstOffset Unigned",
+            .name = "2D Bias ConstOffset Unsigned",
             .spirv_type = "%float 2D 0 0 0 1 Unknown",
             .spirv_fn = "OpImageSampleImplicitLod %v4float %sampled_image %coords2 "
                         "Bias|ConstOffset %float_5 %offset2u",
             .wgsl_type = "texture_2d<f32>",
-            .wgsl_fn = "textureSampleBias %4, %5, vec2<f32>(1.0f, 2.0f), 5.0f, vec2<u32>(20i, 21i)",
+            .wgsl_fn = R"(
+    %6:vec2<i32> = convert vec2<u32>(20u, 21u)
+    %7:vec4<f32> = textureSampleBias %5, %4, vec2<f32>(1.0f, 2.0f), 5.0f, %6)",
+        },
+        ImgData{
+            .name = "2D Array",
+            .spirv_type = "%float 2D 0 1 0 1 Unknown",
+            .spirv_fn = "OpImageSampleImplicitLod %v4float %sampled_image %coords3",
+            .wgsl_type = "texture_2d_array<f32>",
+            .wgsl_fn = R"(
+    %6:vec2<f32> = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), xy
+    %7:f32 = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), z
+    %8:i32 = convert %7
+    %9:vec4<f32> = textureSample %5, %4, %6, %8)",
+        },
+        ImgData{
+            .name = "2D Array ConstOffset",
+            .spirv_type = "%float 2D 0 1 0 1 Unknown",
+            .spirv_fn =
+                "OpImageSampleImplicitLod %v4float %sampled_image %coords3 ConstOffset %offset2i",
+            .wgsl_type = "texture_2d_array<f32>",
+            .wgsl_fn = R"(
+    %6:vec2<f32> = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), xy
+    %7:f32 = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), z
+    %8:i32 = convert %7
+    %9:vec4<f32> = textureSample %5, %4, %6, %8, vec2<i32>(10i, 11i))",
+        },
+        ImgData{
+            .name = "2D Array Bias",
+            .spirv_type = "%float 2D 0 1 0 1 Unknown",
+            .spirv_fn = "OpImageSampleImplicitLod %v4float %sampled_image %coords3 Bias %float_5",
+            .wgsl_type = "texture_2d_array<f32>",
+            .wgsl_fn = R"(
+    %6:vec2<f32> = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), xy
+    %7:f32 = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), z
+    %8:i32 = convert %7
+    %9:vec4<f32> = textureSampleBias %5, %4, %6, %8, 5.0f)",
+        },
+        ImgData{
+            .name = "2D Array Bias ConstOffset",
+            .spirv_type = "%float 2D 0 1 0 1 Unknown",
+            .spirv_fn = "OpImageSampleImplicitLod %v4float %sampled_image %coords3 "
+                        "Bias|ConstOffset %float_5 %offset2i",
+            .wgsl_type = "texture_2d_array<f32>",
+            .wgsl_fn = R"(
+    %6:vec2<f32> = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), xy
+    %7:f32 = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), z
+    %8:i32 = convert %7
+    %9:vec4<f32> = textureSampleBias %5, %4, %6, %8, 5.0f, vec2<i32>(10i, 11i))",
         },
         ImgData{
             .name = "2D Array Bias ConstOffset",
@@ -647,8 +677,17 @@ INSTANTIATE_TEST_SUITE_P(
                         "Bias|ConstOffset %float_5 %offset2i",
             .wgsl_type = "texture_2d_array<f32>",
             .wgsl_fn =
-                "textureSampleBias %4, %5, vec2<f32>(1.0f, 2.0f), 3i, 5.0f, vec2<i32>(10i, 11i)",
-        },
+                R"(
+    %6:vec2<f32> = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), xy
+    %7:f32 = swizzle vec3<f32>(1.0f, 2.0f, 3.0f), z
+    %8:i32 = convert %7
+    %9:vec4<f32> = textureSampleBias %5, %4, %6, %8, 5.0f, vec2<i32>(10i, 11i))",
+        }));
+
+INSTANTIATE_TEST_SUITE_P(
+    DISABLED_SpirvReaderTest_ImageSampleProjImplicitLod,
+    SamplerTest,
+    ::testing::Values(
         ImgData{
             .name = "1D",
             .spirv_type = "%float 1D 0 0 0 1 Unknown",
