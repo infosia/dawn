@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "482fdcb5_aa06f0b5",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-13T21:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "614614a3_11fbd7c2",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 46
+      },
+      "revId": "b1ff89d9e80b3ff25f51d06e2c14a7456aee6927",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88bec3f4_e697ee4a",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-05-13T20:42:46Z",
       "side": 1,
       "message": "Nit: Both unused AFAICT",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "b1ff89d9e80b3ff25f51d06e2c14a7456aee6927",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44c7add9_1a28f1e1",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-13T21:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88bec3f4_e697ee4a",
       "range": {
         "startLine": 40,
         "startChar": 0,
@@ -64,6 +112,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a65d87b6_332ea081",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-13T21:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "931945be_b14410c8",
+      "revId": "b1ff89d9e80b3ff25f51d06e2c14a7456aee6927",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a958fd2_0f8654be",
@@ -77,6 +143,24 @@
       "writtenOn": "2025-05-13T20:42:46Z",
       "side": 1,
       "message": "Prefer to run this before these \"need to be run last\" transforms.",
+      "revId": "b1ff89d9e80b3ff25f51d06e2c14a7456aee6927",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2b0de4c_889b01bb",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-13T21:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a958fd2_0f8654be",
       "revId": "b1ff89d9e80b3ff25f51d06e2c14a7456aee6927",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
