@@ -16,6 +16,178 @@
       "message": "Updated, PTAL",
       "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c6e5f22_67c43cc9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T18:41:31Z",
+      "side": 1,
+      "message": "Would need extra reviews from @cwallez@chromium.org since I am not the owner of these files.",
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "834f48a5_d3be2af4",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2679,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T18:41:31Z",
+      "side": 1,
+      "message": "```suggestion\n// Test that RenderPassDescriptorResolveRect works with LoadOp\u003dClear\n```",
+      "range": {
+        "startLine": 2678,
+        "startChar": 0,
+        "endLine": 2679,
+        "endChar": 37
+      },
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d6f5e18_a8bce7b9",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2680,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T18:41:31Z",
+      "side": 1,
+      "message": "should name this `ClearThenPartialResolve`\n```suggestion\nTEST_P(DawnLoadResolveTextureTest, ClearThenPartialResolve) {\n```",
+      "range": {
+        "startLine": 2680,
+        "startChar": 35,
+        "endLine": 2680,
+        "endChar": 57
+      },
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c5119fc_5883bac3",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2722,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T18:41:31Z",
+      "side": 1,
+      "message": "This pass is not needed because we will clear the MSAA texture in the next pass.",
+      "range": {
+        "startLine": 2721,
+        "startChar": 4,
+        "endLine": 2722,
+        "endChar": 25
+      },
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d2383ee_fe4091cc",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2731,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T18:41:31Z",
+      "side": 1,
+      "message": "```suggestion\n    // We clear the MSAA texture and partially resolve to the resolve texture.\n```",
+      "range": {
+        "startLine": 2731,
+        "startChar": 4,
+        "endLine": 2731,
+        "endChar": 93
+      },
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "684f83cb_7bb375a7",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2744,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T18:41:31Z",
+      "side": 1,
+      "message": "You didn\u0027t set the clear color to green.",
+      "range": {
+        "startLine": 2744,
+        "startChar": 8,
+        "endLine": 2744,
+        "endChar": 18
+      },
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5111ba4a_424e47e2",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2751,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T18:41:31Z",
+      "side": 1,
+      "message": "verify that the MSAA texture is green.",
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "414c01fa_dadf89ab",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2755,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-13T18:41:31Z",
+      "side": 1,
+      "message": "We also need to verify that the region outside {2, 2, 1, 1} are black.",
+      "range": {
+        "startLine": 2755,
+        "startChar": 4,
+        "endLine": 2755,
+        "endChar": 16
+      },
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
