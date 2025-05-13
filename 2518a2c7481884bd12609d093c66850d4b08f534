@@ -33,6 +33,24 @@
       "message": "Which seems weirder, setting these here so they apply to all pointers, or creating an msl pointer type which has a sign/align. I don\u0027t really care what the values are, but the number used in the msl printer support.",
       "revId": "2518a2c7481884bd12609d093c66850d4b08f534",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4323b7e_2decbadf",
+        "filename": "src/tint/lang/core/type/pointer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-13T17:19:13Z",
+      "side": 1,
+      "message": "Discussed offline with James. Instead of doing this, use the struct flag for explicit layout, then skip the layout checks in the msl backend for these buffers.",
+      "parentUuid": "8292218e_d3dcd7aa",
+      "revId": "2518a2c7481884bd12609d093c66850d4b08f534",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
