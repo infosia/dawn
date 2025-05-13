@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "614614a3_11fbd7c2",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-13T20:42:46Z",
+      "side": 1,
+      "message": "Nit: All unused (except struct)",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 46
+      },
+      "revId": "b1ff89d9e80b3ff25f51d06e2c14a7456aee6927",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88bec3f4_e697ee4a",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-13T20:42:46Z",
+      "side": 1,
+      "message": "Nit: Both unused AFAICT",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "b1ff89d9e80b3ff25f51d06e2c14a7456aee6927",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "931945be_b14410c8",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-13T20:42:46Z",
+      "side": 1,
+      "message": "Worth adding a unit test with the same constant used in multiple access instructions, to cover this map lookup.",
+      "revId": "b1ff89d9e80b3ff25f51d06e2c14a7456aee6927",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a958fd2_0f8654be",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-13T20:42:46Z",
+      "side": 1,
+      "message": "Prefer to run this before these \"need to be run last\" transforms.",
+      "revId": "b1ff89d9e80b3ff25f51d06e2c14a7456aee6927",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
