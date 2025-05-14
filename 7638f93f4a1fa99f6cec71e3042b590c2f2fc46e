@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ed3324a_2699ddb2",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-14T13:16:54Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand this. Per my understanding, they should be already supported.",
+      "range": {
+        "startLine": 881,
+        "startChar": 8,
+        "endLine": 881,
+        "endChar": 99
+      },
+      "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
