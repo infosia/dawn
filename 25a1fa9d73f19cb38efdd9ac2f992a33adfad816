@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d87f9980_490d06e0",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1770,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-14T21:38:53Z",
+      "side": 1,
+      "message": "Note that this behavior is different than Dawn atm when passing `descriptor \u003d nullptr` as default. I think that we should either make the default callback mode for device lost `AllowSpontaneous` so that it\u0027s set in `WGPU_DEVICE_DESCRIPTOR_INIT`, or we should override it here. It feels silly to allow users to default `nullptr` but that will cause a validation error.\n\nAlso, I caught this issue last because I built and ran the WASM tests. I think this change will break it again. Can you run it to make sure it\u0027s passing?",
+      "range": {
+        "startLine": 1767,
+        "startChar": 2,
+        "endLine": 1770,
+        "endChar": 3
+      },
+      "revId": "25a1fa9d73f19cb38efdd9ac2f992a33adfad816",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
