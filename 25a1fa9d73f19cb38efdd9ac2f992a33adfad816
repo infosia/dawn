@@ -22,6 +22,30 @@
       },
       "revId": "25a1fa9d73f19cb38efdd9ac2f992a33adfad816",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11800048_5d45cba3",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1770,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-14T22:51:43Z",
+      "side": 1,
+      "message": "It passes emdawnwebgpu_tests_asyncify. ValidateCallbackMode doesn\u0027t fail on when we default-init, as it allows `mode\u003d\u003d0` if `callback\u003d\u003dnullptr`. I think this is effectively the same as what Dawn does in release builds.\n\nFor reference:\nin Dawn we also default the device descriptor to the default struct:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Adapter.cpp;l\u003d390;drc\u003dede56a97b66cd6305865582b0b0d5336db71682c\nbut for the DeviceLost callback we default to either AllowSpontaneous + a debug printer, or AllowProcessEvents + nullptr:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.cpp;l\u003d190;drc\u003d02446d66622a0a811448be7bb4ac8939c5b00aa9",
+      "parentUuid": "d87f9980_490d06e0",
+      "range": {
+        "startLine": 1767,
+        "startChar": 2,
+        "endLine": 1770,
+        "endChar": 3
+      },
+      "revId": "25a1fa9d73f19cb38efdd9ac2f992a33adfad816",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
