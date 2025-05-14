@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ed1d6c43_5ebceac0",
+        "filename": "test/tint/const/array/array_of_array_of_array.wgsl",
+        "patchSetId": 16
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-14T17:09:07Z",
+      "side": 1,
+      "message": "For new, hand-written E2E tests we should try to protect against future DCE passes by writing out values to storage buffers where possible.",
+      "revId": "f1513ad16052fb0288a38f31c3096cd54b59bb77",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fb8fe0d5_6121a624",
         "filename": "test/tint/const/array/array_of_struct_exp_val.wgsl.expected.msl",
         "patchSetId": 16
