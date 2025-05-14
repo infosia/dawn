@@ -3,6 +3,125 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8292fda2_883ffc1a",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T16:24:43Z",
+      "side": 1,
+      "message": "nit: it could be mildly simpler to but the buffer in a separate bindgroup. Also TODO to use immediates in the future maybe?",
+      "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b8319c0_5bcdfbc5",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T16:24:43Z",
+      "side": 1,
+      "message": "This could be replaced with `CreateBufferFromData` and maybe even the function inlined?\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/utils/WGPUHelpers.h;drc\u003d5cd3b7384150e68e8a31431a9dd4a5cdd8d9047b;l\u003d53",
+      "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a7e92f0_6a0e8da6",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T16:24:43Z",
+      "side": 1,
+      "message": "nit: Can we have a TODO to remove this once Skia uses the new struct (here and in all other places we added this code)?",
+      "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5248048_0b99b6cb",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T16:24:43Z",
+      "side": 1,
+      "message": "nit: explain that this is necessary because we run at the start of the render pass and that this is the default scissor when beginning a render pass.",
+      "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "620ab456_7b89056e",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T16:24:43Z",
+      "side": 1,
+      "message": "```suggestion\n                    \"area width(%u).\",\n```\n\nAnd ditto below",
+      "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca899c30_aa4fd02d",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T16:24:43Z",
+      "side": 1,
+      "message": "```suggestion\n                                \"height(%u).\",\n```\n\nAlso please reflow the string as the last line could be concatenated with the one before, ditto below.",
+      "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8c2c8a8_3e82b7cd",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T16:24:43Z",
+      "side": 1,
+      "message": "Can we have a comment explaining why there is this condition so that it\u0027s more clear to future readers that don\u0027t have the context?",
+      "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3ed3324a_2699ddb2",
         "filename": "src/dawn/native/CommandEncoder.cpp",
         "patchSetId": 20
@@ -20,6 +139,40 @@
         "endLine": 881,
         "endChar": 99
       },
+      "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb797f51_9940cbb0",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 2365,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T16:24:43Z",
+      "side": 1,
+      "message": "Since we removing testing of the previous code path, we should move Skia to the new struct ASAP after this lands, I assume this is planned?",
+      "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56c9c780_e4f16d11",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 2221,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T16:24:43Z",
+      "side": 1,
+      "message": "Can we have the same for `resolveOffset`?",
       "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
