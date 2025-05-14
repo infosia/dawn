@@ -147,6 +147,30 @@
       },
       "revId": "c34e8854cb7a4a214ee4fc922b4e415f38e41a81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26699c8c_d472de0d",
+        "filename": "generator/templates/emdawnwebgpu/LinkTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-14T00:41:18Z",
+      "side": 1,
+      "message": "We could, but I don\u0027t want the code size test to take an unnecessary dependency on gtest. Then we\u0027ll need to rebase whenever we roll gtest too (and idk what else).\n\nCould make it an object file that\u0027s linked into both a size test and the test target, but at that point what\u0027s the point of linking it into the test target? It doesn\u0027t test anything at runtime anyway.",
+      "parentUuid": "e0341359_6a96c8ae",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 12
+      },
+      "revId": "c34e8854cb7a4a214ee4fc922b4e415f38e41a81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
