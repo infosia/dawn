@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc9e4491_c5039102",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-14T21:33:32Z",
+      "side": 1,
+      "message": "PTAL! This is my solution to the issue I was pointing out yesterday about WeakRef not working with forward definitions. As you both suspected, killing friends solves all the problems! (This is not good general life advice.)\n\nSeparated out from my TextureView cache CL because I didn\u0027t want it to get lost in the noise.",
+      "revId": "785fd2a97fc3d2f9a740622de68102a4c64a1af5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
