@@ -171,6 +171,30 @@
       },
       "revId": "c34e8854cb7a4a214ee4fc922b4e415f38e41a81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c06185e_f336edb2",
+        "filename": "generator/templates/emdawnwebgpu/LinkTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-14T01:06:51Z",
+      "side": 1,
+      "message": "My concern with it being a binary is that chances are it will never be run. If it\u0027s a test, at least once we set stuff up, it should be ran periodically. Otherwise, we could have something that builds but crashes for all we know.",
+      "parentUuid": "26699c8c_d472de0d",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 12
+      },
+      "revId": "c34e8854cb7a4a214ee4fc922b4e415f38e41a81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
