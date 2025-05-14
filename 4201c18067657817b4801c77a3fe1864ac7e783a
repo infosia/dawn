@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "719e3bd0_f795a0d4",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-14T06:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3014689e_0630a87b",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "4201c18067657817b4801c77a3fe1864ac7e783a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99cae291_5abf7b17",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-05-14T05:29:10Z",
       "side": 1,
       "message": "Reading this I realize we can do it more straightforwardly than I suggested earlier because we can safely operate in uint64_t, in particular to make it easier to tell that the cast is not going to overflow:\n```\nuint64_t timeoutMS64 \u003d timeoutNS / kNsInMs;\nbool hasTimeout \u003d timeoutMS \u003c\u003d INT32_MAX;\nint32_t timeoutMS \u003d static_cast\u003cint32_t\u003e(timeoutMS64);\n```",
+      "range": {
+        "startLine": 538,
+        "startChar": 44,
+        "endLine": 538,
+        "endChar": 63
+      },
+      "revId": "4201c18067657817b4801c77a3fe1864ac7e783a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8526e6c0_b1caa47e",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-14T06:50:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99cae291_5abf7b17",
       "range": {
         "startLine": 538,
         "startChar": 44,
