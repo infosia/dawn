@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "16a1dc9c_e77b7fac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-14T12:00:29Z",
+      "side": 1,
+      "message": "Updated, also file a new bug as follow up:\nhttps://issues.chromium.org/issues/417631315",
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "834f48a5_d3be2af4",
@@ -81,6 +98,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3924ed3_c1470d09",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2680,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-14T12:00:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9d6f5e18_a8bce7b9",
+      "range": {
+        "startLine": 2680,
+        "startChar": 35,
+        "endLine": 2680,
+        "endChar": 57
+      },
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c5119fc_5883bac3",
@@ -94,6 +135,30 @@
       "writtenOn": "2025-05-13T18:41:31Z",
       "side": 1,
       "message": "This pass is not needed because we will clear the MSAA texture in the next pass.",
+      "range": {
+        "startLine": 2721,
+        "startChar": 4,
+        "endLine": 2722,
+        "endChar": 25
+      },
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f132588_d69e0bdd",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2722,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-14T12:00:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6c5119fc_5883bac3",
       "range": {
         "startLine": 2721,
         "startChar": 4,
@@ -127,6 +192,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82c944f8_555abd56",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2731,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-14T12:00:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5d2383ee_fe4091cc",
+      "range": {
+        "startLine": 2731,
+        "startChar": 4,
+        "endLine": 2731,
+        "endChar": 93
+      },
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "684f83cb_7bb375a7",
@@ -140,6 +229,30 @@
       "writtenOn": "2025-05-13T18:41:31Z",
       "side": 1,
       "message": "You didn\u0027t set the clear color to green.",
+      "range": {
+        "startLine": 2744,
+        "startChar": 8,
+        "endLine": 2744,
+        "endChar": 18
+      },
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4eb440e_7150b56a",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2744,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-14T12:00:29Z",
+      "side": 1,
+      "message": "This case is removed, will do in a followup pr.",
+      "parentUuid": "684f83cb_7bb375a7",
       "range": {
         "startLine": 2744,
         "startChar": 8,
@@ -167,6 +280,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "894a9553_b43a3f40",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2751,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-14T12:00:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5111ba4a_424e47e2",
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "414c01fa_dadf89ab",
@@ -180,6 +311,30 @@
       "writtenOn": "2025-05-13T18:41:31Z",
       "side": 1,
       "message": "We also need to verify that the region outside {2, 2, 1, 1} are black.",
+      "range": {
+        "startLine": 2755,
+        "startChar": 4,
+        "endLine": 2755,
+        "endChar": 16
+      },
+      "revId": "17a0f1ef5c53ffe70c4f277775180567a53d65e1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1edb5a8a_87720d15",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2755,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-14T12:00:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "414c01fa_dadf89ab",
       "range": {
         "startLine": 2755,
         "startChar": 4,
