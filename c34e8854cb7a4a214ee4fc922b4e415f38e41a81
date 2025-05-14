@@ -195,6 +195,30 @@
       },
       "revId": "c34e8854cb7a4a214ee4fc922b4e415f38e41a81",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e23b652_e1c3bb7a",
+        "filename": "generator/templates/emdawnwebgpu/LinkTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-14T05:25:21Z",
+      "side": 1,
+      "message": "It doesn\u0027t actually do anything though, the original test just printed all the function pointers. But they\u0027re statically linked, printing them can\u0027t possibly fail. The point of the test is to make sure it\u0027s possible to statically link, so it might be easier (for readers of the dawn source) to understand the purpose if it never runs in the first place.",
+      "parentUuid": "3c06185e_f336edb2",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 12
+      },
+      "revId": "c34e8854cb7a4a214ee4fc922b4e415f38e41a81",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
