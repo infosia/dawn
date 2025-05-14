@@ -70,6 +70,30 @@
       },
       "revId": "25a1fa9d73f19cb38efdd9ac2f992a33adfad816",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53527df6_5a25ad5e",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1770,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-14T22:59:56Z",
+      "side": 1,
+      "message": "Ah, that makes sense. I think that the event will be leaked though (if passing nullptr for descriptor)? Since it\u0027s callback mode is 0, it won\u0027t be handled as a spontaneous event, nor can it be handled via process events. It would only be cleaned up if the user explicitly waits for the future id but that\u0027s unlikely since they never specified a callback.\n\nI think it should just be spontaneous since it doesn\u0027t do anything? Otherwise, the event will become ready and just never happen.",
+      "parentUuid": "13e37d66_21fc537b",
+      "range": {
+        "startLine": 1767,
+        "startChar": 2,
+        "endLine": 1770,
+        "endChar": 3
+      },
+      "revId": "25a1fa9d73f19cb38efdd9ac2f992a33adfad816",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
