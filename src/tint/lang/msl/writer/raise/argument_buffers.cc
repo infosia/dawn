@@ -206,6 +206,8 @@ struct State {
             auto members = group_to_members.Get(k);
 
             auto* strct = ty.Struct(name, std::move(*members));
+            strct->SetStructFlag(core::type::kExplicitLayout);
+
             auto* type = ty.ptr(uniform, strct, read);
             arg_buffers.Add(k, type);
         }
