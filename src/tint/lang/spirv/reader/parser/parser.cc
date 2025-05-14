@@ -1396,6 +1396,9 @@ class Parser {
                 case spv::Op::OpImageGather:
                     EmitImageGather(inst);
                     break;
+                case spv::Op::OpImageQuerySize:
+                    EmitImageQuerySize(inst);
+                    break;
                 case spv::Op::OpImageSampleImplicitLod:
                     EmitImageSampleImplicitLod(inst);
                     break;
@@ -1525,6 +1528,14 @@ class Parser {
         }
 
         Emit(b_.Call<spirv::ir::BuiltinCall>(ty_.void_(), spirv::BuiltinFn::kImageWrite, args),
+             inst.result_id());
+    }
+
+    void EmitImageQuerySize(const spvtools::opt::Instruction& inst) {
+        auto* image = Value(inst.GetSingleWordInOperand(0));
+
+        Emit(b_.Call<spirv::ir::BuiltinCall>(Type(inst.type_id()),
+                                             spirv::BuiltinFn::kImageQuerySize, image),
              inst.result_id());
     }
 
