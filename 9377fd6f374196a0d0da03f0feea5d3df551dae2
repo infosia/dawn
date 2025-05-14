@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da8854d9_d2284dfd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T13:23:07Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "081dc55e_0dbf5b8d",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T13:23:07Z",
+      "side": 1,
+      "message": "nit: using `DAWN_SERIALIZABLE` even empty would be nice for consistency. Also it avoids the need to define the StreamIn/Out methods.",
+      "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e1a74ff_52cac121",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T13:23:07Z",
+      "side": 1,
+      "message": "What do you think of always adding this default operator \u003d\u003d? If we know how to serialize/deserialize, then I believe all types should know how to compare themselves (except unsafeunkeyed that should always return true as it doesn\u0027t modify the semantic of the serialized struct).",
+      "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b52177d_29f8e52d",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T13:23:07Z",
+      "side": 1,
+      "message": "Can we define this enum somewhere else to avoid the COMMA hack?",
+      "range": {
+        "startLine": 233,
+        "startChar": 6,
+        "endLine": 233,
+        "endChar": 83
+      },
+      "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21260acd_d20d051f",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T13:23:07Z",
+      "side": 1,
+      "message": "```suggestion\n// serializable and doesn\u0027t depend on the shader program, thus it can outlive the shader program and\n```",
+      "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fa531ab_656f9d0a",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T13:23:07Z",
+      "side": 1,
+      "message": "nit: leftover from a copy paste?",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 36
+      },
+      "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
