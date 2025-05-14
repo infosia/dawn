@@ -1094,6 +1094,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6d16a551_b3879c77",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-14T07:42:57Z",
+      "side": 1,
+      "message": "The chart looks somewhat correct though it\u0027s not 100% clear exactly what each box means given that they are not directly C/C++ types.\n\nI\u0027m confused by the notion of inner and outer here. There it the dawn::native::webgpu backend code, and the inner object using the webgpu.h header and nothing else. This way we can run on any WebGPU implementation: dawn::wire, dawn::native, wgpu-rs (even if that\u0027s not very likely to be done in practice), etc. This keeps using webgpu.h as the one true interface between all things WebGPU and ensures correctness and composability of the software we build.\n\nThe suggestions from Kai and Loko seem good. Alternatively we could have the BackendWGPU explicitly try each known backend except the WebGPU one when discovering devices.",
+      "parentUuid": "f998b1a5_e666e430",
+      "revId": "c5d541ad3b6045df480039e752de909e47822ee3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a4c2ac68_7b6fd572",
         "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
         "patchSetId": 15
