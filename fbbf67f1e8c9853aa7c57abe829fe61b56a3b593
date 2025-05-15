@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "276a95e5_16db833b",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-15T08:45:31Z",
+      "side": 1,
+      "message": "nit: This only has one entry so you don\u0027t need an InlinedVector for it.",
+      "range": {
+        "startLine": 404,
+        "startChar": 66,
+        "endLine": 404,
+        "endChar": 75
+      },
+      "revId": "fbbf67f1e8c9853aa7c57abe829fe61b56a3b593",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
