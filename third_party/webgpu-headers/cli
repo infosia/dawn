@@ -103,10 +103,13 @@ def _gen_header_diff(temp_dir, output_dir):
     with open(os.path.join(temp_dir, DAWN_GENERATED_HEADER), 'r') as dawn_header, \
          open(os.path.join(temp_dir, WEBGPU_GENERATED_HEADER), 'r') as webgpu_header, \
          open(os.path.join(output_dir, GENERATED_DIFF), 'w') as diff_file:
+        # `n` is the amount of context for each diff line. Setting it large
+        # prevents folding of matching sections so the diff is more stable
+        # (line numbers don't change constantly).
         diff = difflib.unified_diff(webgpu_header.readlines(),
                                     dawn_header.readlines(),
                                     fromfile='webgpu_header',
-                                    tofile='dawn_header')
+                                    tofile='dawn_header', n=999999)
         diff_file.writelines(diff)
 
 
