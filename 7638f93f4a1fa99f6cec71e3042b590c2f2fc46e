@@ -143,6 +143,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff2b7fe1_33642556",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-15T03:18:41Z",
+      "side": 1,
+      "message": "Discussed this offline. It should be a new feature like partial clear and store.",
+      "parentUuid": "3ed3324a_2699ddb2",
+      "range": {
+        "startLine": 881,
+        "startChar": 8,
+        "endLine": 881,
+        "endChar": 99
+      },
+      "revId": "7638f93f4a1fa99f6cec71e3042b590c2f2fc46e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb797f51_9940cbb0",
