@@ -22,6 +22,30 @@
       },
       "revId": "4ab7768b7386e167bbbdc3c332373fee7297a0bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8524d4a9_577f71c9",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-15T01:51:53Z",
+      "side": 1,
+      "message": "Almost forget one thing. \"mUniformBuffer\" uses \"GPUUsableBuffer\" mechanism. I assume this will handle partial uploading things correctly. But let\u0027s keep current logic as we discussed yesterday to ensure less uploading burdern and possible d3d11 runtime copy and queue update when buffer is still in used.",
+      "parentUuid": "aa495ce5_e9d54606",
+      "range": {
+        "startLine": 126,
+        "startChar": 36,
+        "endLine": 126,
+        "endChar": 41
+      },
+      "revId": "4ab7768b7386e167bbbdc3c332373fee7297a0bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
