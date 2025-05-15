@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1db24749_60ab50aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3788053
+      },
+      "writtenOn": "2025-05-15T07:30:25Z",
+      "side": 1,
+      "message": "@rafael.cintron@microsoft.com Please help review this change. Based on this, I\u0027m going to work around the storage buffer binding size issue.",
+      "revId": "243638e126b41819ef84ddbf5e6a16ebeff8488a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
