@@ -118,6 +118,30 @@
       },
       "revId": "25a1fa9d73f19cb38efdd9ac2f992a33adfad816",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b6edf1f_91e88f3e",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1770,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-15T01:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "235f02a9_77ee090a",
+      "range": {
+        "startLine": 1767,
+        "startChar": 2,
+        "endLine": 1770,
+        "endChar": 3
+      },
+      "revId": "25a1fa9d73f19cb38efdd9ac2f992a33adfad816",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
