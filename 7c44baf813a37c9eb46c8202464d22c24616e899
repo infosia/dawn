@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0c9a970_fcc074bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-15T20:27:46Z",
+      "side": 1,
+      "message": "In my local repository these are all tracked as file renames with small modifications. I guess either Git or Gerrit decided it was more efficient to do the new/delete thing, which makes review impossible. Sorry.\n\nThe only actual non-auto-generated change is in `permutate.go` right at the bottom.",
+      "revId": "7c44baf813a37c9eb46c8202464d22c24616e899",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
