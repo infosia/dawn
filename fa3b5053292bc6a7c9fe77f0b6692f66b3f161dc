@@ -137,6 +137,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d3278148_4b563c6d",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-15T17:48:36Z",
+      "side": 1,
+      "message": "Oh sorry, I totally misunderstood.\n\nI don\u0027t think we should automatically pass through all the options. WGPUDawnTogglesDescriptor for example probably should not be passed through.",
+      "parentUuid": "6225a726_3eb50d35",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f9e36c7_2861152f",
         "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
         "patchSetId": 10
