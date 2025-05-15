@@ -70,6 +70,30 @@
       },
       "revId": "d99929cd3dd1694c99deb1f1819a1893dd453a5e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e255da0e_492f1485",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-05-15T21:16:57Z",
+      "side": 1,
+      "message": "\u003e Ah... the un-ended events are likely a result of the use of kBeginningOfGPUTime also\n\nThat was also my thought so I removed that trace event and rerecorded the trace to find there were still hundreds of unterminated traces. So I guess we often map multiple buffers per submit?\n\nAdded a comment.",
+      "parentUuid": "b8bf2b41_077b9912",
+      "range": {
+        "startLine": 206,
+        "startChar": 42,
+        "endLine": 206,
+        "endChar": 46
+      },
+      "revId": "d99929cd3dd1694c99deb1f1819a1893dd453a5e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
