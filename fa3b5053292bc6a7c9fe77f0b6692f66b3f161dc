@@ -77,6 +77,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6225a726_3eb50d35",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-15T17:14:28Z",
+      "side": 1,
+      "message": "Question: intention here is: if there\u0027s any extensions on the adapterOptions, chain them to the next of the new webgpuBackendOptionsDesc. then adapterOptions points to adapterOptions.\n\nDoes this make sense?",
+      "parentUuid": "f3cdd959_708c049b",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f9e36c7_2861152f",
         "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
         "patchSetId": 10
