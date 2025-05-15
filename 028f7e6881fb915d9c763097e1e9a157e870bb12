@@ -16,6 +16,71 @@
       "message": "PTAL, thanks!",
       "revId": "028f7e6881fb915d9c763097e1e9a157e870bb12",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a405704_1c663ee2",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10659,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-15T21:43:10Z",
+      "side": 1,
+      "message": "Nit: `Multiply`, same in some tests below.",
+      "fixSuggestions": [
+        {
+          "fixId": "1c594f50_0f753782",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+              "range": {
+                "startLine": 10659,
+                "startChar": 0,
+                "endLine": 10660,
+                "endChar": 0
+              },
+              "replacement": "TEST_F(IR_IntegerRangeAnalysisTest, BinaryMultiply_Failure_Overflow_MaxBound_I32) {\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+              "range": {
+                "startLine": 10736,
+                "startChar": 0,
+                "endLine": 10737,
+                "endChar": 0
+              },
+              "replacement": "TEST_F(IR_IntegerRangeAnalysisTest, BinaryMultiply_Failure_Overflow_MinBound_I32) {\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+              "range": {
+                "startLine": 10813,
+                "startChar": 0,
+                "endLine": 10814,
+                "endChar": 0
+              },
+              "replacement": "TEST_F(IR_IntegerRangeAnalysisTest, BinaryMultiply_Failure_Overflow_MaxBound_U32) {\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/analysis/integer_range_analysis_test.cc",
+              "range": {
+                "startLine": 10890,
+                "startChar": 0,
+                "endLine": 10891,
+                "endChar": 0
+              },
+              "replacement": "TEST_F(IR_IntegerRangeAnalysisTest, BinaryMultiply_Failure_Overflow_MinBound_U32) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "028f7e6881fb915d9c763097e1e9a157e870bb12",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
