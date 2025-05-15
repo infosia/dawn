@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ec97a97c_9252201f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-15T21:30:13Z",
+      "side": 1,
+      "message": "Do you mean descriptors/options like `WGPUAdapterInfo` -\u003e `wgpu::AdapterInfo`, `WGPURequestAdapterOptions` -\u003e `wgpu::RequestAdapterOptions`. And cast them to C types when passing to C procs?",
+      "parentUuid": "8ee8f4a8_530c154c",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e18df06e_e199e4dd",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 10
@@ -100,6 +118,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ac2ce7e_cbd17816",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-15T21:30:13Z",
+      "side": 1,
+      "message": "Oops sorry I was wrong. Make the extensions struct empty and fixed. Also Added an AdapterEnumerationTests.",
+      "parentUuid": "1c1bc535_e45ea703",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f3cdd959_708c049b",
@@ -153,6 +189,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64b12723_e47d2875",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-15T21:30:13Z",
+      "side": 1,
+      "message": "It\u0027s unsure whether other chained extensions struct should be passed down. (Toggles::DumpShaders should likely get passed down)\n\nFor now set the chain.next \u003d nullptr and added a comment to reivist when implementing related functionality.",
+      "parentUuid": "d3278148_4b563c6d",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f9e36c7_2861152f",
@@ -166,6 +220,30 @@
       "writtenOn": "2025-05-15T00:53:35Z",
       "side": 1,
       "message": "nit: If you use the INIT struct then you don\u0027t have to set sType explicitly. (Not that it\u0027s much simpler, but it\u0027s more \"idiomatic\".)\n```suggestion\n    WGPURequestAdapterWebGPUBackendOptions webgpuBackendOptionsDesc \u003d\n        WGPU_REQUEST_ADAPTER_WEBGPU_BACKEND_OPTIONS_INIT;\n    if (options.Get\u003cRequestAdapterWebGPUBackendOptions\u003e() \u003d\u003d nullptr) {\n```",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 92
+      },
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f7a55a0_a9bd28b7",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-15T21:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f9e36c7_2861152f",
       "range": {
         "startLine": 60,
         "startChar": 0,
@@ -216,6 +294,48 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34378d40_0a848bc6",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-15T21:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "296b97e3_8b677689",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b797455_57d72a04",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-15T21:30:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b487d61b_df4c3eb2",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 68
+      },
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "144426d9_585332a6",
@@ -229,6 +349,30 @@
       "writtenOn": "2025-05-15T00:53:35Z",
       "side": 1,
       "message": "The `innerSurface` should probably be owned by the outer `surface`, rather than creating one on demand here. The capabilities could be different for different surfaces.\n\nAlso I think creating a surface with no descriptor should be an error? (Maybe nothing is hitting this yet, in which case it could just be left unimplemented.)",
+      "range": {
+        "startLine": 118,
+        "startChar": 16,
+        "endLine": 118,
+        "endChar": 28
+      },
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5943339a_a7ffec69",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-15T21:30:13Z",
+      "side": 1,
+      "message": "Yes descriptor cannot be null. Add a descriptor and left a TODO to revisit when implementing surface.\n\n(`GetSurfaceCapabilities` seems to only get called in `AdapterSurfaceCapCache`, and `Surface` don\u0027t have backend objects, it handles different display windows. Is this good reason to create `innerSurface` here?)",
+      "parentUuid": "144426d9_585332a6",
       "range": {
         "startLine": 118,
         "startChar": 16,
