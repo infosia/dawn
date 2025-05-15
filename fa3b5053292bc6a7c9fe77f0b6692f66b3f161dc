@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ee8f4a8_530c154c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-15T00:55:49Z",
+      "side": 1,
+      "message": "I think in general, especially with structs, we should just use the C++ types, and only do the cast when we call into the proc table. The C structs are more error prone since they don\u0027t have default ctors and stuff.",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e18df06e_e199e4dd",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 10
@@ -14,6 +31,29 @@
       "writtenOn": "2025-05-15T00:53:35Z",
       "side": 1,
       "message": "Having two BackendTypes (one in WGPURequestAdapterOptions and one in WGPURequestAdapterWebGPUBackendOptions) makes it unclear what they both do. I would probably suggest using only the WGPURequestAdapterOptions one and leaving this extension struct empty for now. (Just its presence implies that webgpu-on-webgpu should be used.)\n\nAn alternate design would be to use `WGPURequestAdapterOptions.backendType\u003d\u003dWebGPU` to request the WebGPU backend, which (optionally) can get extra options via an extension struct (including an inner-layer backendType request).",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8595c8a_fd9615c5",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-15T00:55:49Z",
+      "side": 1,
+      "message": "I thought the idea was to reuse the `backend type` in `RequestAdapterOptions` for this, and this struct would just have the proc table instead?",
+      "range": {
+        "startLine": 98,
+        "startChar": 12,
+        "endLine": 98,
+        "endChar": 60
+      },
       "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -71,6 +111,29 @@
       "writtenOn": "2025-05-15T00:53:35Z",
       "side": 1,
       "message": "nit: If you use something like `absl::StrFormat(\"WebGPU backend on %s\", wgpu::BackendType(info.backendType))` then you can rely on the generated table in `webgpu_absl_format_autogen.cpp` instead of adding a new one.",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b487d61b_df4c3eb2",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-15T00:55:49Z",
+      "side": 1,
+      "message": "nit. Might be able to do something like:\n`mName \u003d absl::StrFormat(\"WebGPU backend on %s\", info.backendType)`. (assuming we use C++ types and include `native/webgpu_absl_format.h`)",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 68
+      },
       "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
