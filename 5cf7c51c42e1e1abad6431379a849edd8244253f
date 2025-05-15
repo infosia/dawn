@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab4d6572_b7ce5a50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-15T00:22:20Z",
+      "side": 1,
+      "message": "Definitely some diffs to burn down. LGTM!",
+      "revId": "5cf7c51c42e1e1abad6431379a849edd8244253f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
