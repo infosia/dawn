@@ -184,6 +184,11 @@ constexpr SkippedMessage kSkippedMessages[] = {
      "Detected overlap between source and dest regions in memory"},
     {"VUID-vkCmdCopyImageToBuffer-pRegions-00184",
      "Detected overlap between src and dst regions in memory"},
+    // https://crbug.com/dawn/416091465
+    {"READ_AFTER_WRITE hazard detected",
+     "The current synchronization allows VK_ACCESS_2_TRANSFER_WRITE_BIT accesses at "
+     "VK_PIPELINE_STAGE_2_ALL_TRANSFER_BIT, but to prevent this hazard, it must allow "
+     "VK_ACCESS_2_TRANSFER_READ_BIT accesses at VK_PIPELINE_STAGE_2_COPY_BIT."},
 };
 
 namespace dawn::native::vulkan {
