@@ -60,6 +60,48 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1c1bc535_e45ea703",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-15T17:34:15Z",
+      "side": 1,
+      "message": "[1] I am using the alternate design at this place. When user is choosing webgpu backend, they can specify the \"inner\" backend backing the webgpu backend. I will rename the \"backend type\" to \"webgpu on backend type\"/\"implementation backend type\". (open naming suggestions)",
+      "parentUuid": "e18df06e_e199e4dd",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "975a17d4_1e4ae019",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-15T17:34:15Z",
+      "side": 1,
+      "message": "[1]",
+      "parentUuid": "d8595c8a_fd9615c5",
+      "range": {
+        "startLine": 98,
+        "startChar": 12,
+        "endLine": 98,
+        "endChar": 60
+      },
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f3cdd959_708c049b",
         "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
         "patchSetId": 10
