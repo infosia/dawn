@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e18df06e_e199e4dd",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-15T00:53:35Z",
+      "side": 1,
+      "message": "Having two BackendTypes (one in WGPURequestAdapterOptions and one in WGPURequestAdapterWebGPUBackendOptions) makes it unclear what they both do. I would probably suggest using only the WGPURequestAdapterOptions one and leaving this extension struct empty for now. (Just its presence implies that webgpu-on-webgpu should be used.)\n\nAn alternate design would be to use `WGPURequestAdapterOptions.backendType\u003d\u003dWebGPU` to request the WebGPU backend, which (optionally) can get extra options via an extension struct (including an inner-layer backendType request).",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3cdd959_708c049b",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-15T00:53:35Z",
+      "side": 1,
+      "message": "This looks like a pointer cycle. This should be nullptr.",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f9e36c7_2861152f",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-15T00:53:35Z",
+      "side": 1,
+      "message": "nit: If you use the INIT struct then you don\u0027t have to set sType explicitly. (Not that it\u0027s much simpler, but it\u0027s more \"idiomatic\".)\n```suggestion\n    WGPURequestAdapterWebGPUBackendOptions webgpuBackendOptionsDesc \u003d\n        WGPU_REQUEST_ADAPTER_WEBGPU_BACKEND_OPTIONS_INIT;\n    if (options.Get\u003cRequestAdapterWebGPUBackendOptions\u003e() \u003d\u003d nullptr) {\n```",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 92
+      },
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "296b97e3_8b677689",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-15T00:53:35Z",
+      "side": 1,
+      "message": "nit: If you use something like `absl::StrFormat(\"WebGPU backend on %s\", wgpu::BackendType(info.backendType))` then you can rely on the generated table in `webgpu_absl_format_autogen.cpp` instead of adding a new one.",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "144426d9_585332a6",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-15T00:53:35Z",
+      "side": 1,
+      "message": "The `innerSurface` should probably be owned by the outer `surface`, rather than creating one on demand here. The capabilities could be different for different surfaces.\n\nAlso I think creating a surface with no descriptor should be an error? (Maybe nothing is hitting this yet, in which case it could just be left unimplemented.)",
+      "range": {
+        "startLine": 118,
+        "startChar": 16,
+        "endLine": 118,
+        "endChar": 28
+      },
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
