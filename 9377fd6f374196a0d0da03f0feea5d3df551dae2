@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e93d2771_95fa857d",
+        "filename": "src/dawn/native/BindingInfo.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-15T09:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "081dc55e_0dbf5b8d",
+      "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e1a74ff_52cac121",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-05-14T13:23:07Z",
       "side": 1,
       "message": "What do you think of always adding this default operator \u003d\u003d? If we know how to serialize/deserialize, then I believe all types should know how to compare themselves (except unsafeunkeyed that should always return true as it doesn\u0027t modify the semantic of the serialized struct).",
+      "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a140d8fe_bc5c424b",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-15T09:05:15Z",
+      "side": 1,
+      "message": "Done, add more `operator\u003d\u003d` in necessary structs to enable always generating the default equality comparison.",
+      "parentUuid": "2e1a74ff_52cac121",
       "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9de3616d_d842c30a",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-15T09:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b52177d_29f8e52d",
+      "range": {
+        "startLine": 233,
+        "startChar": 6,
+        "endLine": 233,
+        "endChar": 83
+      },
+      "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21260acd_d20d051f",
@@ -92,6 +152,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd651991_e2d714a0",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-15T09:05:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21260acd_d20d051f",
+      "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3fa531ab_656f9d0a",
@@ -105,6 +183,30 @@
       "writtenOn": "2025-05-14T13:23:07Z",
       "side": 1,
       "message": "nit: leftover from a copy paste?",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 36
+      },
+      "revId": "9377fd6f374196a0d0da03f0feea5d3df551dae2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f330cdd_a52cea22",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-15T09:05:15Z",
+      "side": 1,
+      "message": "Oops.. Removed.",
+      "parentUuid": "3fa531ab_656f9d0a",
       "range": {
         "startLine": 305,
         "startChar": 0,
