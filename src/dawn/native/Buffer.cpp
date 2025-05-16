@@ -255,12 +255,11 @@ struct BufferBase::MapAsyncEvent final : public EventManager::TrackedEvent {
                 error = true;
             } else if (auto** buffer = std::get_if<BufferBase*>(&*bufferOrError)) {
                 // Set the buffer state to Mapped if this pending map succeeded.
-                // TODO(crbug.com/dawn/831): in order to be thread safe, mutation of the
-                // state and pending map event needs to be atomic w.r.t. UnmapInternal.
-                DAWN_ASSERT((*buffer)->mState == BufferState::PendingMap);
-                (*buffer)->mState = BufferState::Mapped;
-
-                pendingMapEvent = std::move((*buffer)->mPendingMapEvent);
+                (*buffer)->mState.Use([&](auto state) {
+                    DAWN_ASSERT(state->bufferState == BufferState::PendingMap);
+                    state->bufferState = BufferState::Mapped;
+                    pendingMapEvent = std::move(state->mapEvent);
+                });
             }
         });
         if (error) {
@@ -352,9 +351,12 @@ BufferBase::BufferBase(DeviceBase* device, const UnpackedPtr<BufferDescriptor>& 
     : SharedResource(device, descriptor->label),
       mSize(descriptor->size),
       mUsage(descriptor->usage),
-      mInternalUsage(ComputeInternalBufferUsages(device, descriptor->usage, descriptor->size)),
-      mState(descriptor.Get<BufferHostMappedPointer>() ? BufferState::HostMappedPersistent
-                                                       : BufferState::Unmapped) {
+      mInternalUsage(ComputeInternalBufferUsages(device, descriptor->usage, descriptor->size)) {
+    mState.Use([&](auto state) {
+        state->bufferState = descriptor.Get<BufferHostMappedPointer>()
+                                 ? BufferState::HostMappedPersistent
+                                 : BufferState::Unmapped;
+    });
     GetObjectTrackingList()->Track(this);
 }
 
@@ -364,8 +366,9 @@ BufferBase::BufferBase(DeviceBase* device,
     : SharedResource(device, tag, descriptor->label),
       mSize(descriptor->size),
       mUsage(descriptor->usage),
-      mInternalUsage(descriptor->usage),
-      mState(BufferState::Unmapped) {
+      mInternalUsage(descriptor->usage) {
+    mState.Use([&](auto state) { state->bufferState = BufferState::Unmapped; });
+
     // Track the ErrorBuffer for destruction so it can be unmapped on destruction.
     // Don't do this if the device is already destroyed, so that CreateBuffer can still return
     // a mappedAtCreation buffer after device destroy (per spec).
@@ -378,35 +381,34 @@ BufferBase::BufferBase(DeviceBase* device,
 }
 
 BufferBase::~BufferBase() {
-    DAWN_ASSERT(mState == BufferState::Unmapped || mState == BufferState::Destroyed ||
-                // Happens if the buffer was created mappedAtCreation *after* device destroy.
-                // TODO(crbug.com/42241190): This shouldn't be needed once the issue above is fixed,
-                // because then mState will just be Destroyed.
-                (mState == BufferState::MappedAtCreation &&
-                 GetDevice()->GetState() == DeviceBase::State::Destroyed));
+    DAWN_ASSERT(mState.Use([&](auto state) {
+        auto bufferState = state->bufferState;
+        return bufferState == BufferState::Unmapped || bufferState == BufferState::Destroyed ||
+               // Happens if the buffer was created mappedAtCreation *after* device destroy.
+               // TODO(crbug.com/42241190): This shouldn't be needed once the issue above is fixed,
+               // because then bufferState will just be Destroyed.
+               (bufferState == BufferState::MappedAtCreation &&
+                GetDevice()->GetState() == DeviceBase::State::Destroyed);
+    }));
 }
 
 void BufferBase::DestroyImpl() {
-    // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
-    // - It may be called if the buffer is explicitly destroyed with APIDestroy.
-    //   This case is NOT thread-safe and needs proper synchronization with other
-    //   simultaneous uses of the buffer.
-    // - It may be called when the last ref to the buffer is dropped and the buffer
-    //   is implicitly destroyed. This case is thread-safe because there are no
-    //   other threads using the buffer since there are no other live refs.
-    if (mState == BufferState::Mapped || mState == BufferState::PendingMap) {
-        UnmapInternal(WGPUMapAsyncStatus_Aborted,
-                      "Buffer was destroyed before mapping was resolved.");
-    } else if (mState == BufferState::MappedAtCreation) {
-        if (mStagingBuffer != nullptr) {
-            mStagingBuffer = nullptr;
-        } else if (mSize != 0) {
-            UnmapInternal(WGPUMapAsyncStatus_Aborted,
+    mState.Use([&](auto state) {
+        auto bufferState = state->bufferState;
+        if (bufferState == BufferState::Mapped || bufferState == BufferState::PendingMap) {
+            UnmapInternal(state, WGPUMapAsyncStatus_Aborted,
                           "Buffer was destroyed before mapping was resolved.");
+        } else if (bufferState == BufferState::MappedAtCreation) {
+            if (mStagingBuffer != nullptr) {
+                mStagingBuffer = nullptr;
+            } else if (mSize != 0) {
+                UnmapInternal(state, WGPUMapAsyncStatus_Aborted,
+                              "Buffer was destroyed before mapping was resolved.");
+            }
         }
-    }
 
-    mState = BufferState::Destroyed;
+        state->bufferState = BufferState::Destroyed;
+    });
 }
 
 // static
@@ -443,7 +445,7 @@ wgpu::BufferUsage BufferBase::APIGetUsage() const {
 }
 
 wgpu::BufferMapState BufferBase::APIGetMapState() const {
-    switch (mState) {
+    switch (mState->bufferState) {
         case BufferState::Mapped:
         case BufferState::MappedAtCreation:
             return wgpu::BufferMapState::Mapped;
@@ -499,10 +501,7 @@ MaybeError BufferBase::MapAtCreation() {
 }
 
 MaybeError BufferBase::MapAtCreationInternal() {
-    DAWN_ASSERT(mState == BufferState::Unmapped);
-
-    mMapOffset = 0;
-    mMapSize = mSize;
+    DAWN_ASSERT(mState->bufferState == BufferState::Unmapped);
 
     // 0-sized buffers are not supposed to be written to. Return back any non-null pointer.
     // Skip handling 0-sized buffers so we don't try to map them in the backend.
@@ -530,14 +529,18 @@ MaybeError BufferBase::MapAtCreationInternal() {
     // Only set the state to mapped at creation if we did no fail any point in this helper.
     // Otherwise, if we override the default unmapped state before succeeding to create a
     // staging buffer, we will have issues when we try to destroy the buffer.
-    mState = BufferState::MappedAtCreation;
+    mState.Use([&](auto state) {
+        state->mapOffset = 0;
+        state->mapSize = mSize;
+        state->bufferState = BufferState::MappedAtCreation;
+    });
     return {};
 }
 
 MaybeError BufferBase::ValidateCanUseOnQueueNow() const {
     DAWN_ASSERT(!IsError());
 
-    switch (mState) {
+    switch (mState->bufferState) {
         case BufferState::Destroyed:
             return DAWN_VALIDATION_ERROR("%s used in submit while destroyed.", this);
         case BufferState::Mapped:
@@ -635,18 +638,20 @@ wgpu::Status BufferBase::APIReadMappedRange(size_t offset, void* data, size_t si
 }
 
 void* BufferBase::GetMappedRange(size_t offset, size_t size, bool writable) {
-    if (!CanGetMappedRange(writable, offset, size)) {
-        return nullptr;
-    }
+    return mState.Use([&](auto state) {
+        if (!CanGetMappedRange(state, writable, offset, size)) {
+            return nullptr;
+        }
 
-    if (mStagingBuffer != nullptr) {
-        return static_cast<uint8_t*>(mStagingBuffer->GetMappedPointer()) + offset;
-    }
-    if (mSize == 0) {
-        return &sZeroSizedMappingData;
-    }
-    uint8_t* start = static_cast<uint8_t*>(GetMappedPointer());
-    return start == nullptr ? nullptr : start + offset;
+        if (mStagingBuffer != nullptr) {
+            return static_cast<uint8_t*>(mStagingBuffer->GetMappedPointer()) + offset;
+        }
+        if (mSize == 0) {
+            return &sZeroSizedMappingData;
+        }
+        uint8_t* start = static_cast<uint8_t*>(GetMappedPointer());
+        return start == nullptr ? nullptr : start + offset;
+    });
 }
 
 void BufferBase::APIDestroy() {
@@ -677,27 +682,35 @@ void BufferBase::APIUnmap() {
 }
 
 MaybeError BufferBase::Unmap() {
-    if (mState == BufferState::Destroyed) {
-        return {};
-    }
+    return mState.Use([&](auto state) -> MaybeError {
+        if (state->bufferState == BufferState::Destroyed) {
+            return {};
+        }
 
-    // Make sure writes are now visible to the GPU if we used a staging buffer.
-    if (mState == BufferState::MappedAtCreation && mStagingBuffer != nullptr) {
-        DAWN_TRY(CopyFromStagingBuffer());
-    }
-    UnmapInternal(WGPUMapAsyncStatus_Aborted, "Buffer was unmapped before mapping was resolved.");
-    return {};
+        // Make sure writes are now visible to the GPU if we used a staging buffer.
+        if (state->bufferState == BufferState::MappedAtCreation &&
+            state->stagingBuffer != nullptr) {
+            DAWN_TRY(CopyFromStagingBuffer());
+        }
+        UnmapInternal(state, WGPUMapAsyncStatus_Aborted,
+                      "Buffer was unmapped before mapping was resolved.");
+        return {};
+    });
 }
 
-void BufferBase::UnmapInternal(WGPUMapAsyncStatus status, std::string_view message) {
+void BufferBase::UnmapInternal(typename MutexProtected<SynchronizedState>::Usage& state,
+                               WGPUMapAsyncStatus status,
+                               std::string_view message) {
+    Ref<MapAsyncEvent> event = nullptr;
+
     // Unmaps resources on the backend.
-    switch (mState) {
+    switch (state->bufferState) {
         case BufferState::PendingMap: {
-            // TODO(crbug.com/dawn/831): in order to be thread safe, mutation of the
-            // state and pending map event needs to be atomic w.r.t. MapAsyncEvent::Complete.
-            Ref<MapAsyncEvent> pendingMapEvent = std::move(mPendingMapEvent);
-            pendingMapEvent->UnmapEarly(status, message);
-            GetInstance()->GetEventManager()->SetFutureReady(pendingMapEvent.Get());
+            Ref<MapAsyncEvent> event = std::move(state->mapEvent);
+            event->UnmapEarly(status, message);
+            state.Defer([eventManager = GetInstance()->GetEventManager(), e = std::move(event)]() {
+                eventManager->SetFutureReady(e.Get());
+            });
             UnmapImpl();
         } break;
         case BufferState::Mapped:
@@ -716,7 +729,7 @@ void BufferBase::UnmapInternal(WGPUMapAsyncStatus status, std::string_view messa
             DAWN_UNREACHABLE();
     }
 
-    mState = BufferState::Unmapped;
+    state->bufferState = BufferState::Unmapped;
 }
 
 MaybeError BufferBase::ValidateMapAsync(wgpu::MapMode mode,
@@ -739,7 +752,7 @@ MaybeError BufferBase::ValidateMapAsync(wgpu::MapMode mode,
                     "Mapping range (offset:%u, size: %u) doesn't fit in the size (%u) of %s.",
                     offset, size, mSize, this);
 
-    switch (mState) {
+    switch (mState->bufferState) {
         case BufferState::Mapped:
         case BufferState::MappedAtCreation:
             return DAWN_VALIDATION_ERROR("%s is already mapped.", this);
@@ -775,19 +788,22 @@ MaybeError BufferBase::ValidateMapAsync(wgpu::MapMode mode,
     return {};
 }
 
-bool BufferBase::CanGetMappedRange(bool writable, size_t offset, size_t size) const {
-    if (offset % 8 != 0 || offset < mMapOffset || offset > mSize) {
+bool BufferBase::CanGetMappedRange(typename MutexProtected<SynchronizedState>::Usage& state,
+                                   bool writable,
+                                   size_t offset,
+                                   size_t size) const {
+    if (offset % 8 != 0 || offset < state->mapOffset || offset > mSize) {
         return false;
     }
 
     size_t rangeSize = size == WGPU_WHOLE_MAP_SIZE ? mSize - offset : size;
 
-    if (rangeSize % 4 != 0 || rangeSize > mMapSize) {
+    if (rangeSize % 4 != 0 || rangeSize > state->mapSize) {
         return false;
     }
 
-    size_t offsetInMappedRange = offset - mMapOffset;
-    if (offsetInMappedRange > mMapSize - rangeSize) {
+    size_t offsetInMappedRange = offset - state->mapOffset;
+    if (offsetInMappedRange > state->mapSize - rangeSize) {
         return false;
     }
 
@@ -799,7 +815,7 @@ bool BufferBase::CanGetMappedRange(bool writable, size_t offset, size_t size) co
     //   - We don't check that the object is alive because we need to return mapped pointers
     //     for error buffers too.
 
-    switch (mState) {
+    switch (state->bufferState) {
         // It is never valid to call GetMappedRange on a host-mapped buffer.
         // TODO(crbug.com/dawn/2018): consider returning the same pointer here.
         case BufferState::HostMappedPersistent:
@@ -825,7 +841,7 @@ bool BufferBase::CanGetMappedRange(bool writable, size_t offset, size_t size) co
 
 MaybeError BufferBase::ValidateUnmap() const {
     DAWN_TRY(GetDevice()->ValidateIsAlive());
-    DAWN_INVALID_IF(mState == BufferState::HostMappedPersistent,
+    DAWN_INVALID_IF(mState->bufferState == BufferState::HostMappedPersistent,
                     "Persistently mapped buffer cannot be unmapped.");
     return {};
 }
@@ -858,22 +874,22 @@ MaybeError BufferBase::UploadData(uint64_t bufferOffset, const void* data, size_
 }
 
 ExecutionSerial BufferBase::OnEndAccess() {
-    mState = BufferState::SharedMemoryNoAccess;
+    mState->bufferState = BufferState::SharedMemoryNoAccess;
     ExecutionSerial lastUsageSerial = mLastUsageSerial;
     mLastUsageSerial = kBeginningOfGPUTime;
     return lastUsageSerial;
 }
 
 void BufferBase::OnBeginAccess() {
-    mState = BufferState::Unmapped;
+    mState->bufferState = BufferState::Unmapped;
 }
 
 bool BufferBase::HasAccess() const {
-    return mState != BufferState::SharedMemoryNoAccess;
+    return mState->bufferState != BufferState::SharedMemoryNoAccess;
 }
 
 bool BufferBase::IsDestroyed() const {
-    return mState == BufferState::Destroyed;
+    return mState->bufferState == BufferState::Destroyed;
 }
 
 void BufferBase::SetInitialized(bool initialized) {
