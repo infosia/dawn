@@ -881,9 +881,11 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
                         "RenderPassDescriptorExpandResolveRect can't be used without %s.",
                         ToAPI(Feature::DawnPartialLoadResolveTexture));
         // TODO(417631315): Support other load ops like wgpu::LoadOp::Load and wgpu::LoadOp::Clear.
+#if 0
         DAWN_INVALID_IF(
             !validationState->WillExpandResolveTexture(),
             "ExpandResolveRect is invalid to use without wgpu::LoadOp::ExpandResolveTexture.");
+#endif
     }
 
     return descriptor;

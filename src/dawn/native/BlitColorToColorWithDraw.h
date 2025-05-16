@@ -84,6 +84,7 @@ MaybeError ExpandResolveTextureWithDraw(
 struct ResolveMultisampleWithDrawPipelineKey {
     wgpu::TextureFormat colorTargetFormat = wgpu::TextureFormat::Undefined;
     uint32_t sampleCount = 1;
+    bool isClear = false;
 
     struct HashFunc {
         size_t operator()(const ResolveMultisampleWithDrawPipelineKey& key) const;
@@ -107,7 +108,9 @@ MaybeError ResolveMultisampleWithDraw(DeviceBase* device,
                                       CommandEncoder* encoder,
                                       const RenderPassDescriptorResolveRect& rect,
                                       TextureViewBase* src,
-                                      TextureViewBase* dst);
+                                      TextureViewBase* dst,
+                                      wgpu::LoadOp loadOp,
+                                      const dawn::native::Color& clearValue);
 }  // namespace dawn::native
 
 #endif  // SRC_DAWN_NATIVE_BLITCOLORTOCOLORWITHDRAW_H_
