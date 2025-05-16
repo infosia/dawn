@@ -46,6 +46,30 @@
       },
       "revId": "ba48c303bc94fcad11b9c39fe9ac1049453e05ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae9ca68b_f6f883cd",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-16T07:28:05Z",
+      "side": 1,
+      "message": "I am handling this comment in https://dawn-review.googlesource.com/c/dawn/+/242654, please take a look. Thanks!",
+      "parentUuid": "2df08065_f4808117",
+      "range": {
+        "startLine": 836,
+        "startChar": 44,
+        "endLine": 836,
+        "endChar": 80
+      },
+      "revId": "ba48c303bc94fcad11b9c39fe9ac1049453e05ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
