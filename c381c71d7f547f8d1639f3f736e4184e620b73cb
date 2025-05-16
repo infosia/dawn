@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e6328b4_d69ed20a",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-16T19:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1b79de5_fd345761",
+      "revId": "c381c71d7f547f8d1639f3f736e4184e620b73cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "668a869b_8e0f40a5",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2cc6b206_911bd0d1",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-16T19:06:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "668a869b_8e0f40a5",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 491,
+        "endChar": 5
+      },
+      "revId": "c381c71d7f547f8d1639f3f736e4184e620b73cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40ccdc9a_5afeb7c5",
@@ -54,6 +96,30 @@
       "writtenOn": "2025-05-16T01:22:28Z",
       "side": 1,
       "message": "I missed this before but: why do we need a `WGPURequestAdapterWebGPUBackendOptions` on the `innerAdapterOption` at all? We just need it not to enumerate webgpu-on-webgpu backends, but it does that by default. And this also requires the inner implementation to support `WGPURequestAdapterWebGPUBackendOptions` but it shouldn\u0027t need to.\n\nCan this just be:\n\n```suggestion\n    // Pass through all of the core options. Note if backendType\u003dWebGPU,\n    // RequestAdapter will return null since it\u0027s not enabled by default.\n    WGPURequestAdapterOptions innerAdapterOption \u003d *ToAPI(*options);\n    // Don\u0027t pass through any of the extension options.\n    innerAdapterOption.nextInChain \u003d nullptr;\n```\n\nThen we can simplify other code, see comments above.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 74
+      },
+      "revId": "c381c71d7f547f8d1639f3f736e4184e620b73cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ddd52e9_0d21c893",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-16T19:06:23Z",
+      "side": 1,
+      "message": "You are right about it being clearer with easier code.\n\nIIUC the logic is:\n\nUser can specify:\n- `backendType \u003d other`: default old cases. Select other (other can be undefined)\n- `backendType \u003d WebGPU`: invalid\n- `backendType \u003d other \u0026\u0026 RequestAdapterWebGPUBackendOptions`: selecting WebGPU on \"other\" backend (other can be undefined meaning user doesn\u0027t care which implementation backend it selects)\n- `backendType \u003d WebGPU \u0026\u0026 RequestAdapterWebGPUBackendOptions`: invalid\n\n`RequestAdapterWebGPUBackendOptions` never gets passed down to inner adapter options.\n\nInner physical device discover:\n- `backendType \u003d other`: default old cases. Select other (other can be undefined)\n- `backendType \u003d WebGPU`: invalid\n\n2 unsure issues:\n- `wgpu::BackendType::WebGPU` seems to be invalid all the time. Feels a bit weird.\n- when `backendType \u003d wgpu::BackendType::Undefined`, it\u0027s not gonna select WebGPU-on-WebGPU backend. This is the intention.\n  - In DawnTest we may need to specialize to enumerate all adapters including WebGPU-on-WebGPU ones. This should be fine.",
+      "parentUuid": "40ccdc9a_5afeb7c5",
       "range": {
         "startLine": 57,
         "startChar": 0,

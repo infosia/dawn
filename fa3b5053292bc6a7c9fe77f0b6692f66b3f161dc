@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "29a2690b_86eb5aea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-16T19:06:23Z",
+      "side": 1,
+      "message": "Ack. Will do in a seperate CL.",
+      "parentUuid": "1e2526b6_3e0df0d6",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e18df06e_e199e4dd",
@@ -433,6 +451,30 @@
       "side": 1,
       "message": "I wouldn\u0027t expect even an empty WGPUSurfaceDescriptor to be accepted (usually there has to be some platform-specific extension).\n\n`AdapterSurfaceCapCache` seems to only call this if a surface actually gets created (and besides this must be true since this function takes a surface). Are you testing with a sample that creates a surface?\n\nIf this really needs to be implemented at all, could we just expose some basic defaults (like what the null backend does)? I\u0027d prefer not to try to implement this until we do it more or less correctly.",
       "parentUuid": "5943339a_a7ffec69",
+      "range": {
+        "startLine": 118,
+        "startChar": 16,
+        "endLine": 118,
+        "endChar": 28
+      },
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae3120f8_c8b86a42",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-16T19:06:23Z",
+      "side": 1,
+      "message": "No I don\u0027t have surface/texture implemented for testing.\nJust left removed the implementation and leave a TODO for revisit when implementing surface related part.",
+      "parentUuid": "b1977f40_7c8ea8b3",
       "range": {
         "startLine": 118,
         "startChar": 16,
