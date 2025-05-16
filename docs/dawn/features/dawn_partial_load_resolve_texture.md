@@ -5,7 +5,13 @@ The `dawn-partial-load-resolve-texture` feature is an extension to `dawn-load-re
 Additional functionalities:
  - Adds `wgpu::RenderPassDescriptorResolveRect` as chained struct for `wgpu::RenderPassDescriptor`. It defines an expanding  rect of {`colorOffsetX`, `colorOffsetY`, `width`, `height`} and a resolving rect {`resolveOffsetX`, `resolveOffsetY`, `width`, `height`} to indicate that expanding and resolving are only performed partially on the texels within this rect region of texture. The texels outside of the rect are not impacted.
 
-Example Usage:
+Example Usage 1, ExpandResolveTexture and RenderPassDescriptorResolveRect:
+
+When the load operation is set to wgpu::LoadOp::ExpandResolveTexture:
+1. Blit the resolve texture's region {resolveOffsetX, resolveOffsetY, width, height} into the MSAA texture's region {colorOffsetX, colorOffsetY, width, height}.
+2. Optional user draws to the MSAA texture.
+3. Resolve the MSAA texture's region {colorOffsetX, colorOffsetY, width, height} into the resolve texture's region {resolveOffsetX, resolveOffsetY, width, height}.
+
 ```
 // Create MSAA texture
 wgpu::TextureDescriptor desc = ...;
@@ -69,6 +75,48 @@ renderPassEncoder2.SetPipeline(pipeline);
 renderPassEncoder2.Draw(3);
 renderPassEncoder2.End();
 
+```
+Example Usage 2, Clear and RenderPassDescriptorResolveRect:
+
+In the above example, when the load operation is set to wgpu::LoadOp::Clear with a specified clearValue:
+1. Clear the entire MSAA texture using the clearValue.
+2. Optional user draws to the MSAA texture.
+3. Resolve the MSAA texture's region {colorOffsetX, colorOffsetY, width, height} into the resolve texture's region {resolveOffsetX, resolveOffsetY, width, height}.
+```
+// Create another render pass with "Clear" LoadOp.
+wgpu::RenderPassDescriptor renderPassDesc2 = ...;
+renderPassDesc2.colorAttachments[0].view = msaaTexture.CreateView();
+renderPassDesc2.colorAttachments[0].resolveTarget
+ = resolveTexture.CreateView();
+renderPassDesc2.colorAttachments[0].loadOp = wgpu::LoadOp::Clear;
+renderPassDesc2.colorAttachments[0].clearValue = clearValue;
+
+wgpu::RenderPassDescriptorResolveRect rect{};
+rect.colorOffsetX = rect.colorOffsetY = 1;
+rect.resolveOffsetX = rect.resolveOffsetY = 1;
+rect.width = rect.height = 32;
+renderPassDesc2.nextInChain = &rect;
+```
+
+Example Usage 3, Load and RenderPassDescriptorResolveRect:
+
+In the above example, when the load operation is set to wgpu::LoadOp::Load:
+1. Load the MSAA texture.
+2. Optional user draws to the MSAA texture.
+3. Resolve the MSAA texture's region {colorOffsetX, colorOffsetY, width, height} into the resolve texture's region {resolveOffsetX, resolveOffsetY, width, height}.
+```
+// Create another render pass with "Load" LoadOp.
+wgpu::RenderPassDescriptor renderPassDesc2 = ...;
+renderPassDesc2.colorAttachments[0].view = msaaTexture.CreateView();
+renderPassDesc2.colorAttachments[0].resolveTarget
+ = resolveTexture.CreateView();
+renderPassDesc2.colorAttachments[0].loadOp = wgpu::LoadOp::Load;
+
+wgpu::RenderPassDescriptorResolveRect rect{};
+rect.colorOffsetX = rect.colorOffsetY = 1;
+rect.resolveOffsetX = rect.resolveOffsetY = 1;
+rect.width = rect.height = 32;
+renderPassDesc2.nextInChain = &rect;
 ```
 
 Notes:
