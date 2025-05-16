@@ -16,6 +16,24 @@
       "message": "Failing for \n```\nld64.lld: error: undefined symbol: wgpuAdapterInfoFreeMembers\n\u003e\u003e\u003e referenced by webgpu_cpp.h:7452 (gen/include/dawn/webgpu_cpp.h:7452)\n\u003e\u003e\u003e               obj/src/dawn/native/sources/PhysicalDeviceWGPU.o:(symbol dawn::native::webgpu::PhysicalDevice::PhysicalDevice(dawn::native::webgpu::Backend*, WGPUAdapterImpl*)+0x2a4)\nclang++: error: linker command failed with exit code 1 (use -v to see invocation)\nTraceback (most recent call last):\n  File \"/Volumes/Work/s/w/ir/cache/builder/dawn/out/ab6d721a64ee72e503591556058cfa5283761a56/../../build/toolchain/apple/linker_driver.py\", line 543, in \u003cmodule\u003e\n    LinkerDriver(sys.argv).run()\n  File \"/Volumes/Work/s/w/ir/cache/builder/dawn/out/ab6d721a64ee72e503591556058cfa5283761a56/../../build/toolchain/apple/linker_driver.py\", line 198, in run\n    subprocess.check_call([self._driver_path] +\n  File \"/Volumes/Work/s/w/ir/cipd_bin_packages/cpython3/lib/python3.11/subprocess.py\", line 413, in check_call\n    raise CalledProcessError(retcode, cmd)\nsubprocess.CalledProcessError: Command \u0027[\u0027../../third_party/llvm-build/Release+Asserts/bin/clang++\u0027, \u0027-shared\u0027, \u0027-Wl,-install_name,@rpath/libdawn_native.dylib\u0027, \u0027-install_name\u0027, \u0027@rpath/libnative.dylib\u0027, \u0027-Wl,--no-warn-duplicate-rpath\u0027, \u0027-Wl,-no_warn_duplicate_libraries\u0027, \u0027-Werror\u0027, \u0027-fuse-ld\u003dlld\u0027, \u0027-Wl,-fatal_warnings\u0027, \u0027-Wl,--icf\u003dall\u0027, \u0027-Wl,--color-diagnostics\u0027, \u0027-Wl,--strict-auto-link\u0027, \u0027-Wl,--no-call-graph-profile-sort\u0027, \u0027--target\u003dx86_64-apple-macos\u0027, \u0027-no-canonical-prefixes\u0027, \u0027-Wl,-dead_strip\u0027, \u0027-nostdlib++\u0027, \u0027-isysroot\u0027, \u0027sdk/xcode_links/MacOSX14.2.sdk\u0027, \u0027-mmacos-version-min\u003d11.0\u0027, \u0027-Wl,-ObjC\u0027, \u0027-Wl,-rpath,@loader_path/.\u0027, \u0027-Wl,-rpath,@loader_path/../../..\u0027, \u0027-rpath\u0027, \u0027@executable_path/\u0027, \u0027-rpath\u0027, \u0027@executable_path/\u0027, \u0027-rpath\u0027, \u0027@executable_path/\u0027, \u0027-o\u0027, \u0027./libdawn_native.dylib\u0027, \u0027@./libdawn_native.dylib.rsp\u0027]\u0027 returned non-zero exit status 1.\n\n\nbuild failed\n```\n\nCould it be unsafe to cast non const pointer with members need free manually in C API like stringview?",
       "revId": "267e28adbc8d51ec7aa72581367ac78604ebdc6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd8c0058_744975d0",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-16T21:41:04Z",
+      "side": 1,
+      "message": "Oh, for structs with `FreeMembers` function, we have an open issue regarding whether it should call `FreeMembers` or not depending on the user\u0027s use case. Fine to just use the C API for this case, but now that you have this, I think you probably need to call `GetFunctions().adapterInfoFreeMembers` at the end of this function to clean up the allocated members. Otherwise they are probably leaked.",
+      "parentUuid": "949ac434_204e61c5",
+      "revId": "267e28adbc8d51ec7aa72581367ac78604ebdc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
