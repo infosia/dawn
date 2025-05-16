@@ -601,6 +601,7 @@
             },
             {
                 "name": "get mapped range",
+                "no autolock": true,
                 "returns": "void *",
                 "args": [
                     {"name": "offset", "type": "size_t", "default": 0},
@@ -609,6 +610,7 @@
             },
             {
                 "name": "get const mapped range",
+                "no autolock": true,
                 "returns": "void const *",
                 "args": [
                     {"name": "offset", "type": "size_t", "default": 0},
@@ -617,6 +619,7 @@
             },
             {
                 "name": "write mapped range",
+                "no autolock": true,
                 "returns": "status",
                 "args": [
                     {"name": "offset", "type": "size_t"},
@@ -626,6 +629,7 @@
             },
             {
                 "name": "read mapped range",
+                "no autolock": true,
                 "returns": "status",
                 "args": [
                     {"name": "offset", "type": "size_t"},
