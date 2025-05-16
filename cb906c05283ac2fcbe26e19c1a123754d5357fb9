@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92a99eb4_b21c8aee",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-16T16:09:43Z",
+      "side": 1,
+      "message": "Changed to \"increase\".",
+      "parentUuid": "32733aab_eb59ff5c",
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "07c62a01_995744ab",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-05-16T11:53:25Z",
       "side": 1,
       "message": "Is this comment wrong, or are there more types to come? It seems like the answer is always 1 at the moment?",
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dd21b5e_ef8743fd",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-16T16:09:43Z",
+      "side": 1,
+      "message": "`U8` and `I8` are coming, and for them the answer will be `4`. I wanted to get a `TINT_ICE` for other types in early to make sure we don\u0027t forget when we add those types.\n\nThe `TINT_ASSERT` you have below is probably better though.",
+      "parentUuid": "07c62a01_995744ab",
       "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -58,6 +94,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c78afca7_8235f4f2",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-16T16:09:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc924467_311b13b6",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 34
+      },
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36431c6e_8e4fb630",
@@ -71,6 +131,24 @@
       "writtenOn": "2025-05-16T11:53:25Z",
       "side": 1,
       "message": "Arraylength is polyfilled on some platform, is this transform setup to always run before the transform which swaps out array length?",
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "348f894f_1f6b5098",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-16T16:09:43Z",
+      "side": 1,
+      "message": "Yes, because this transform already introduces `arrayLength` calls for clamping array accesses.",
+      "parentUuid": "36431c6e_8e4fb630",
       "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "925e9d8d_474d86f7",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-16T16:09:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33bb7f1f_48707ce6",
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d22fa61_ff5554cd",
@@ -105,6 +201,24 @@
       "writtenOn": "2025-05-16T11:53:25Z",
       "side": 1,
       "message": "Is this safe? I guess the insertion point is already set, just seems weird to remove it while working with it?",
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c865c4f_84748061",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-16T16:09:43Z",
+      "side": 1,
+      "message": "I think it was safe but definitely felt risky. I\u0027ve pulled it out of the insertion helper.",
+      "parentUuid": "6d22fa61_ff5554cd",
       "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
