@@ -37,9 +37,10 @@ Backend::Backend(InstanceBase* instance, wgpu::BackendType backendType)
     : BackendConnection(instance, backendType) {
     mDawnProcs = dawn::native::GetProcs();
 
-    WGPUInstanceDescriptor instanceDesc = {};
+    wgpu::InstanceDescriptor instanceDesc = {};
     instanceDesc.capabilities.timedWaitAnyEnable = true;
-    mInnerInstance = mDawnProcs.createInstance(&instanceDesc);
+    mInnerInstance =
+        mDawnProcs.createInstance(&static_cast<const WGPUInstanceDescriptor&>(instanceDesc));
 }
 
 Backend::~Backend() {
@@ -56,7 +57,7 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
 
     // Pass through all of the core options. Note if backendType=WebGPU,
     // RequestAdapter will return null since it's not enabled by default.
-    WGPURequestAdapterOptions innerAdapterOption = *ToAPI(*options);
+    wgpu::RequestAdapterOptions innerAdapterOption = *ToCppAPI(*options);
     // Don't pass through any of the extension options.
     // TODO(crbug.com/413053623): revisit to see if chaining any other extensions of
     // RequestAdapterOptions is needed.
@@ -75,10 +76,13 @@ std::vector<Ref<PhysicalDeviceBase>> Backend::DiscoverPhysicalDevices(
     callbackInfo.userdata1 = nullptr;
     callbackInfo.userdata2 = static_cast<void*>(&innerAdapter);
 
-    WGPUFutureWaitInfo waitInfo = {};
-    waitInfo.future =
-        mDawnProcs.instanceRequestAdapter(mInnerInstance, &innerAdapterOption, callbackInfo);
-    mDawnProcs.instanceWaitAny(mInnerInstance, 1, &waitInfo, UINT64_MAX);
+    wgpu::FutureWaitInfo waitInfo = {};
+    WGPUFuture wgpuFuture = mDawnProcs.instanceRequestAdapter(
+        mInnerInstance, &static_cast<const WGPURequestAdapterOptions&>(innerAdapterOption),
+        callbackInfo);
+    waitInfo.future = *ToCppAPI(FromAPI(&wgpuFuture));
+    mDawnProcs.instanceWaitAny(mInnerInstance, 1, reinterpret_cast<WGPUFutureWaitInfo*>(&waitInfo),
+                               UINT64_MAX);
 
     if (innerAdapter == nullptr) {
         return {};
