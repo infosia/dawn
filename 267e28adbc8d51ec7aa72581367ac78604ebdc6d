@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f27893de_1ca6908b",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-16T23:03:02Z",
+      "side": 1,
+      "message": "Does ToAPI work on structs?",
+      "revId": "267e28adbc8d51ec7aa72581367ac78604ebdc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "949ac434_204e61c5",
         "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
         "patchSetId": 3
