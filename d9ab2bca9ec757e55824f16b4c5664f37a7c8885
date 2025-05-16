@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "364bc588_03053b5c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-16T17:39:00Z",
+      "side": 1,
+      "message": "This comment does not reflect the code.",
+      "range": {
+        "startLine": 7,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "d9ab2bca9ec757e55824f16b4c5664f37a7c8885",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
