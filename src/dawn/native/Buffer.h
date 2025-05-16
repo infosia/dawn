@@ -32,6 +32,7 @@
 #include <memory>
 
 #include "dawn/common/FutureUtils.h"
+#include "dawn/common/MutexProtected.h"
 #include "dawn/common/NonCopyable.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
@@ -165,29 +166,43 @@ class BufferBase : public SharedResource {
                                 size_t size,
                                 WGPUMapAsyncStatus* status) const;
     MaybeError ValidateUnmap() const;
-    bool CanGetMappedRange(bool writable, size_t offset, size_t size) const;
-    void UnmapInternal(WGPUMapAsyncStatus status, std::string_view message);
 
     const uint64_t mSize = 0;
     const wgpu::BufferUsage mUsage = wgpu::BufferUsage::None;
     const wgpu::BufferUsage mInternalUsage = wgpu::BufferUsage::None;
-    BufferState mState;
     bool mIsDataInitialized = false;
 
-    // mStagingBuffer is used to implement mappedAtCreation for
-    // buffers with non-mappable usage. It is transiently allocated
-    // and released when the mappedAtCreation-buffer is unmapped.
-    // Because `mStagingBuffer` itself is directly mappable, it will
-    // not create another staging buffer.
-    // i.e. buffer->mStagingBuffer->mStagingBuffer... is not possible.
+    // mStagingBuffer is used to implement mappedAtCreation for buffers with non-mappable usage. It
+    // is transiently allocated and released when the mappedAtCreation-buffer is unmapped. Because
+    // `mStagingBuffer` itself is directly mappable, it will not create another staging buffer. i.e.
+    // buffer->mStagingBuffer->mStagingBuffer... is not possible.
+    // Technically, this might need to be a part of the SynchronizedState below, but as of writing,
+    // it seems to be fine because the access is often implicitly guarded by checking the
+    // bufferState.
     Ref<BufferBase> mStagingBuffer;
 
-    wgpu::MapMode mMapMode = wgpu::MapMode::None;
-    size_t mMapOffset = 0;
-    size_t mMapSize = 0;
-
     struct MapAsyncEvent;
-    Ref<MapAsyncEvent> mPendingMapEvent;
+
+    // State that can mutate across threads and needs to be synchronized for the buffer.
+    struct SynchronizedState {
+        // General state of the buffer.
+        BufferState bufferState;
+
+        // Mapping specific states.
+        wgpu::MapMode mapMode = wgpu::MapMode::None;
+        size_t mapOffset = 0;
+        size_t mapSize = 0;
+        Ref<MapAsyncEvent> mapEvent;
+    };
+    MutexProtected<SynchronizedState> mState;
+
+    bool CanGetMappedRange(typename MutexProtected<SynchronizedState>::Usage& state,
+                           bool writable,
+                           size_t offset,
+                           size_t size) const;
+    void UnmapInternal(typename MutexProtected<SynchronizedState>::Usage& state,
+                       WGPUMapAsyncStatus status,
+                       std::string_view message);
 };
 
 }  // namespace dawn::native
