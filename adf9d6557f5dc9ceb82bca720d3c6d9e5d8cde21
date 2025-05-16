@@ -16,6 +16,24 @@
       "message": "The actual change is in `wgsl.def`.",
       "revId": "adf9d6557f5dc9ceb82bca720d3c6d9e5d8cde21",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f7bfef4_780b9cf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-16T16:01:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bd5fce33_93785ae4",
+      "revId": "adf9d6557f5dc9ceb82bca720d3c6d9e5d8cde21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
