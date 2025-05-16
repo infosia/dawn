@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4e779ba_e01d21ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-16T00:29:59Z",
+      "side": 1,
+      "message": "I realized there is one case this will break: non-designated initializers of WGPUPipelineLayoutDescriptor. Leaving a note here just in case anyone runs into it.",
+      "revId": "f96ad409a3d1cb32d898c70b4af36a9541048b17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
