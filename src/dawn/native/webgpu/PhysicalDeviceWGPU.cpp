@@ -47,22 +47,21 @@ PhysicalDevice::PhysicalDevice(Backend* backend, WGPUAdapter innerAdapter)
     : PhysicalDeviceBase(wgpu::BackendType::WebGPU),
       mBackend(backend),
       mInnerAdapter(innerAdapter) {
-    WGPUAdapterInfo info = {};
-    WGPUStatus status = GetFunctions().adapterGetInfo(mInnerAdapter, &info);
-    DAWN_ASSERT(status == WGPUStatus_Success);
-    DAWN_ASSERT(info.backendType != WGPUBackendType_WebGPU);
+    wgpu::AdapterInfo info = {};
+    wgpu::Status status = FromAPI(
+        GetFunctions().adapterGetInfo(mInnerAdapter, reinterpret_cast<WGPUAdapterInfo*>(&info)));
+    DAWN_ASSERT(status == wgpu::Status::Success);
+    DAWN_ASSERT(info.backendType != wgpu::BackendType::WebGPU);
 
-    mVendorName = ToString(info.vendor);
-    mArchitectureName = ToString(info.architecture);
+    mVendorName = info.vendor;
+    mArchitectureName = info.architecture;
     mVendorId = info.vendorID;
     mDeviceId = info.deviceID;
-    mName = absl::StrFormat("WebGPU backend on %s", FromAPI(info.backendType));
-    mAdapterType = FromAPI(info.adapterType);
-    mDriverDescription = ToString(info.description);
+    mName = absl::StrFormat("WebGPU backend on %s", info.backendType);
+    mAdapterType = info.adapterType;
+    mDriverDescription = info.description;
     mSubgroupMinSize = info.subgroupMinSize;
     mSubgroupMaxSize = info.subgroupMaxSize;
-
-    GetFunctions().adapterInfoFreeMembers(info);
 }
 
 PhysicalDevice::~PhysicalDevice() {
@@ -110,8 +109,9 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 }
 
 MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits) {
-    WGPUStatus status = GetFunctions().adapterGetLimits(mInnerAdapter, ToAPI(&limits->v1));
-    if (status != WGPUStatus_Success) {
+    wgpu::Status status =
+        FromAPI(GetFunctions().adapterGetLimits(mInnerAdapter, ToAPI(&limits->v1)));
+    if (status != wgpu::Status::Success) {
         return DAWN_INTERNAL_ERROR("Fail to get inner adapter limits");
     }
     return {};
