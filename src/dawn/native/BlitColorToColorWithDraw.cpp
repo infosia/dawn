@@ -68,7 +68,7 @@ std::string GenerateExpandFS(const BlitColorToColorWithDrawPipelineKey& pipeline
     std::ostringstream finalStream;
     finalStream << absl::StrFormat(
         "struct Params {\n"
-        "offset: vec2i,\n"
+        "offset : vec2i,\n"
         "};\n"
         "@group(1) @binding(0) var<uniform> params : Params;\n");
     for (auto i : pipelineKey.attachmentsToExpandResolve) {
@@ -96,25 +96,34 @@ std::string GenerateExpandFS(const BlitColorToColorWithDrawPipelineKey& pipeline
 }
 
 // Generate the fragment shader to average multiple samples into one.
-std::string GenerateResolveFS(uint32_t sampleCount) {
+std::string GenerateResolveFS(uint32_t sampleCount, bool isClear) {
     std::ostringstream ss;
-
+    std::ostringstream paramsStream;
+    paramsStream << "struct Params {" << "\n";
+    if (isClear) {
+        paramsStream << "  clearValue : vec4f," << "\n";
+    } else {
+        paramsStream << "  offset : vec2i," << "\n";
+    }
+    paramsStream << "}" << "\n";
     ss << R"(
 @group(0) @binding(0) var<uniform> params : Params;
-@group(0) @binding(1) var srcTex : texture_multisampled_2d<f32>;
-struct Params {
-  offset: vec2i,
-};
+@group(0) @binding(1) var srcTex : texture_multisampled_2d<f32>;)"
+       << "\n"
+       << paramsStream.str() << R"(
 @fragment
-fn resolve_multisample(@builtin(position) position : vec4f) -> @location(0) vec4f {
-    var sum = vec4f(0.0, 0.0, 0.0, 0.0);
-    var offsetPos = vec2i(position.xy) - params.offset;)";
-    ss << "\n";
-    for (uint32_t sample = 0; sample < sampleCount; ++sample) {
-        ss << absl::StrFormat("    sum += textureLoad(srcTex, offsetPos, %u);\n", sample);
+fn resolve_multisample(@builtin(position) position : vec4f) -> @location(0) vec4f {)"
+       << "\n";
+    if (!isClear) {
+        ss << "  var sum = vec4f(0.0, 0.0, 0.0, 0.0);\n";
+        ss << "  var offsetPos = vec2i(position.xy) - params.offset;\n";
+        for (uint32_t sample = 0; sample < sampleCount; ++sample) {
+            ss << absl::StrFormat("  sum += textureLoad(srcTex, offsetPos, %u);\n", sample);
+        }
+        ss << absl::StrFormat("  return sum / %u;\n", sampleCount) << "}\n";
+    } else {
+        ss << "  return params.clearValue; \n}\n";
     }
-    ss << absl::StrFormat("    return sum / %u;\n", sampleCount) << "}\n";
-
     return ss.str();
 }
 
@@ -258,7 +267,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateResolveMultisamplePipeline(
     DAWN_TRY_ASSIGN(vshaderModule, device->CreateShaderModule(&shaderModuleDesc));
 
     // fragment shader's source will depend on sample count.
-    std::string fsCode = GenerateResolveFS(pipelineKey.sampleCount);
+    std::string fsCode = GenerateResolveFS(pipelineKey.sampleCount, pipelineKey.isClear);
     wgslDesc.code = fsCode.c_str();
     Ref<ShaderModuleBase> fshaderModule;
     DAWN_TRY_ASSIGN(fshaderModule, device->CreateShaderModule(&shaderModuleDesc));
@@ -390,12 +399,13 @@ MaybeError ExpandResolveTextureWithDraw(
         // TODO(417770951): Use immediates as offsets.
         Ref<BufferBase> paramsBuffer;
         if (expandResolveRect) {
-            DAWN_TRY_ASSIGN(
-                paramsBuffer,
-                utils::CreateBufferFromData(
-                    device, wgpu::BufferUsage::Uniform,
-                    {expandResolveRect->resolveOffsetX - expandResolveRect->colorOffsetX,
-                     expandResolveRect->resolveOffsetY - expandResolveRect->colorOffsetY}));
+            DAWN_TRY_ASSIGN(paramsBuffer,
+                            utils::CreateBufferFromData(
+                                device, wgpu::BufferUsage::Uniform,
+                                {static_cast<int32_t>(expandResolveRect->resolveOffsetX) -
+                                     static_cast<int32_t>(expandResolveRect->colorOffsetX),
+                                 static_cast<int32_t>(expandResolveRect->resolveOffsetY) -
+                                     static_cast<int32_t>(expandResolveRect->colorOffsetY)}));
         } else {
             DAWN_TRY_ASSIGN(paramsBuffer, utils::CreateBufferFromData(
                                               device, wgpu::BufferUsage::Uniform, {0, 0}));
@@ -473,28 +483,42 @@ MaybeError ResolveMultisampleWithDraw(DeviceBase* device,
                                       CommandEncoder* encoder,
                                       const RenderPassDescriptorResolveRect& rect,
                                       TextureViewBase* src,
-                                      TextureViewBase* dst) {
+                                      TextureViewBase* dst,
+                                      wgpu::LoadOp loadOp,
+                                      const dawn::native::Color& clearValue) {
     DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
 
     ResolveMultisampleWithDrawPipelineKey pipelineKey{dst->GetFormat().format,
-                                                      src->GetTexture()->GetSampleCount()};
+                                                      src->GetTexture()->GetSampleCount(),
+                                                      loadOp == wgpu::LoadOp::Clear};
     Ref<RenderPipelineBase> pipeline;
     DAWN_TRY_ASSIGN(pipeline, GetOrCreateResolveMultisamplePipeline(device, pipelineKey));
 
     Ref<BindGroupLayoutBase> bindGroupLayout;
     DAWN_TRY_ASSIGN(bindGroupLayout, pipeline->GetBindGroupLayout(0));
-
     Ref<BufferBase> paramsBuffer;
-    DAWN_TRY_ASSIGN(paramsBuffer,
-                    utils::CreateBufferFromData(device, wgpu::BufferUsage::Uniform,
-                                                {rect.resolveOffsetX - rect.colorOffsetX,
-                                                 rect.resolveOffsetY - rect.colorOffsetY}));
-
     Ref<BindGroupBase> bindGroup;
-    DAWN_TRY_ASSIGN(bindGroup,
-                    utils::MakeBindGroup(device, bindGroupLayout, {{0, paramsBuffer}, {1, src}},
-                                         UsageValidationMode::Internal));
+    if (pipelineKey.isClear) {
+        DAWN_TRY_ASSIGN(paramsBuffer,
+                        utils::CreateBufferFromData(
+                            device, wgpu::BufferUsage::Uniform,
+                            {static_cast<float>(clearValue.r), static_cast<float>(clearValue.g),
+                             static_cast<float>(clearValue.b), static_cast<float>(clearValue.a)}));
 
+        DAWN_TRY_ASSIGN(bindGroup,
+                        utils::MakeBindGroup(device, bindGroupLayout, {{0, paramsBuffer}},
+                                             UsageValidationMode::Internal));
+    } else {
+        DAWN_TRY_ASSIGN(paramsBuffer,
+                        utils::CreateBufferFromData(device, wgpu::BufferUsage::Uniform,
+                                                    {static_cast<int32_t>(rect.resolveOffsetX) -
+                                                         static_cast<int32_t>(rect.colorOffsetX),
+                                                     static_cast<int32_t>(rect.resolveOffsetY) -
+                                                         static_cast<int32_t>(rect.colorOffsetY)}));
+        DAWN_TRY_ASSIGN(bindGroup,
+                        utils::MakeBindGroup(device, bindGroupLayout, {{0, paramsBuffer}, {1, src}},
+                                             UsageValidationMode::Internal));
+    }
     // Color attachment descriptor.
     RenderPassColorAttachment colorAttachmentDesc;
     colorAttachmentDesc.view = dst;
@@ -524,6 +548,7 @@ size_t ResolveMultisampleWithDrawPipelineKey::HashFunc::operator()(
 
     HashCombine(&hash, key.colorTargetFormat);
     HashCombine(&hash, key.sampleCount);
+    HashCombine(&hash, key.isClear);
 
     return hash;
 }
@@ -531,7 +556,8 @@ size_t ResolveMultisampleWithDrawPipelineKey::HashFunc::operator()(
 bool ResolveMultisampleWithDrawPipelineKey::EqualityFunc::operator()(
     const ResolveMultisampleWithDrawPipelineKey& a,
     const ResolveMultisampleWithDrawPipelineKey& b) const {
-    return a.colorTargetFormat == b.colorTargetFormat && a.sampleCount == b.sampleCount;
+    return a.colorTargetFormat == b.colorTargetFormat && a.sampleCount == b.sampleCount &&
+           a.isClear == b.isClear;
 }
 
 }  // namespace dawn::native

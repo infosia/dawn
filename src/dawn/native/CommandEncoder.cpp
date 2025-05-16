@@ -303,6 +303,8 @@ class RenderPassValidationState final : public NonMovable {
         mImplicitSampleCount = implicitSampleCount;
     }
 
+    bool WillClear() const { return mWillClear; }
+    void SetWillClear(bool enabled) { mWillClear = enabled; }
     bool WillExpandResolveTexture() const { return mWillExpandResolveTexture; }
     void SetWillExpandResolveTexture(bool enabled) { mWillExpandResolveTexture = enabled; }
     void SetExpandResolveRect(
@@ -326,6 +328,7 @@ class RenderPassValidationState final : public NonMovable {
     // The records of the attachments that were validated in render pass.
     absl::InlinedVector<RecordedAttachment, kMaxColorAttachments> mRecords;
 
+    bool mWillClear = false;
     bool mWillExpandResolveTexture = false;
     std::optional<RenderPassDescriptorResolveRect> mExpandResolveRect;
 };
@@ -637,6 +640,8 @@ MaybeError ValidateRenderPassColorAttachment(DeviceBase* device,
 
         if (colorAttachment.loadOp == wgpu::LoadOp::ExpandResolveTexture) {
             DAWN_TRY(ValidateExpandResolveTextureLoadOp(device, colorAttachment, validationState));
+        } else if (colorAttachment.loadOp == wgpu::LoadOp::Clear) {
+            validationState->SetWillClear(true);
         }
         // Add resolve target after adding color attachment to make sure there is already a color
         // attachment for the comparation of with and height.
@@ -880,10 +885,11 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
         DAWN_INVALID_IF(!device->HasFeature(Feature::DawnPartialLoadResolveTexture),
                         "RenderPassDescriptorExpandResolveRect can't be used without %s.",
                         ToAPI(Feature::DawnPartialLoadResolveTexture));
-        // TODO(417631315): Support other load ops like wgpu::LoadOp::Load and wgpu::LoadOp::Clear.
+        // TODO(417631315): Support wgpu::LoadOp::Load.
         DAWN_INVALID_IF(
-            !validationState->WillExpandResolveTexture(),
-            "ExpandResolveRect is invalid to use without wgpu::LoadOp::ExpandResolveTexture.");
+            !(validationState->WillExpandResolveTexture() || validationState->WillClear()),
+            "ExpandResolveRect is invalid to use without wgpu::LoadOp::Clear or "
+            "wgpu::LoadOp::ExpandResolveTexture.");
     }
 
     return descriptor;

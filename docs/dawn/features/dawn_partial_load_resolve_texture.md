@@ -5,7 +5,7 @@ The `dawn-partial-load-resolve-texture` feature is an extension to `dawn-load-re
 Additional functionalities:
  - Adds `wgpu::RenderPassDescriptorResolveRect` as chained struct for `wgpu::RenderPassDescriptor`. It defines an expanding  rect of {`colorOffsetX`, `colorOffsetY`, `width`, `height`} and a resolving rect {`resolveOffsetX`, `resolveOffsetY`, `width`, `height`} to indicate that expanding and resolving are only performed partially on the texels within this rect region of texture. The texels outside of the rect are not impacted.
 
-Example Usage:
+Example Usage 1, ExpandResolveTexture LoadOp and RenderPassDescriptorResolveRect:
 ```
 // Create MSAA texture
 wgpu::TextureDescriptor desc = ...;
@@ -70,6 +70,25 @@ renderPassEncoder2.Draw(3);
 renderPassEncoder2.End();
 
 ```
+Example Usage 2, Clear and RenderPassDescriptorResolveRect:
+
+In the above example, when you set the load operation to wgpu::LoadOp::Clear and specify a clearValue, the entire MSAA texture is cleared with that value, and the defined region {resolveOffsetX, resolveOffsetY, width, height} in the single-sampled resolve texture is also cleared with the same value. Note that colorOffsetX and colorOffsetY are ignored in this operation.
+```
+// Create another render pass with "Clear" LoadOp.
+wgpu::RenderPassDescriptor renderPassDesc2 = ...;
+renderPassDesc2.colorAttachments[0].view = msaaTexture.CreateView();
+renderPassDesc2.colorAttachments[0].resolveTarget
+ = resolveTexture.CreateView();
+renderPassDesc2.colorAttachments[0].loadOp = wgpu::LoadOp::Clear;
+renderPassDesc2.colorAttachments[0].clearValue = clearValue;
+
+wgpu::RenderPassDescriptorResolveRect rect{};
+rect.colorOffsetX = rect.colorOffsetY = 1;
+rect.resolveOffsetX = rect.resolveOffsetY = 1;
+rect.width = rect.height = 32;
+renderPassDesc2.nextInChain = &rect;
+```
+
 
 Notes:
  - In case that the target size of a render pass is very large, the cost of using `wgpu::LoadOp::ExpandResolveTexture` can be rather expensive, as it always assumes full-size expand and resolve. More commonly in reality, each frame we only need to re-draw a small damage region, of which UI frameworks usually have the knowledge, instead of the full window, or webpage. This feature aims to eliminate the waste by doing partial expand and resolve with the hint of `wgpu::RenderPassDescriptorResolveRect`, the actual damage region.
