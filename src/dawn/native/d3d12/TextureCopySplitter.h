@@ -78,7 +78,7 @@ struct TextureCopySplits {
 // details in Compute{2D|3D}TextureCopySplits about how we generate copy regions for 2D array
 // and 3D textures based on this function.
 // The resulting copies triggered by API like CopyTextureRegion are equivalent to the copy
-// regions defines by the arguments of TextureCopySubresource returned by this function and its
+// regions defined by the arguments of TextureCopySubresource returned by this function and its
 // counterparts. These arguments should strictly conform to particular invariants. Otherwise,
 // D3D12 driver may report validation errors when we call CopyTextureRegion. Some important
 // invariants are listed below. For more details

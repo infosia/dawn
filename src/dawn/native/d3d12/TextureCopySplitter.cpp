@@ -608,12 +608,12 @@ TextureCopySubresource Compute3DTextureCopySplits(BufferTextureCopyDirection dir
     // and become a 3D copy. However, this doesn't work as easily as that due to some corner
     // cases.
     //
-    // For example, if bufferSize.height is greater than rowsPerImage in the generated copy
+    // For example, if bufferHeight is greater than rowsPerImage in each generated copy
     // region and we simply extend the 2D copy region to all copied depth slices, copied data
     // will be incorrectly offset for each depth slice except the first one.
     //
-    // For these special cases, we need to recompute the copy regions for 3D textures via
-    // split the incorrect copy region to a couple more copy regions.
+    // For these special cases, we need to recompute the copy regions for 3D textures by
+    // splitting the incorrect copy region to a couple more copy regions.
 
     // Call Compute2DTextureCopySubresource and get copy regions. This function has already
     // forwarded "copySize.depthOrArrayLayers" to all depth slices.
