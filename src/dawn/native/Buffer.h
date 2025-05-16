@@ -28,10 +28,12 @@
 #ifndef SRC_DAWN_NATIVE_BUFFER_H_
 #define SRC_DAWN_NATIVE_BUFFER_H_
 
+#include <atomic>
 #include <functional>
 #include <memory>
 
 #include "dawn/common/FutureUtils.h"
+#include "dawn/common/MutexProtected.h"
 #include "dawn/common/NonCopyable.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
@@ -117,7 +119,7 @@ class BufferBase : public SharedResource {
     void SetInitialized(bool initialized) override;
     bool IsInitialized() const override;
 
-    virtual void* GetMappedPointer() = 0;
+    void* GetMappedPointer();
     void* GetMappedRange(size_t offset, size_t size, bool writable = true);
     MaybeError Unmap();
 
@@ -146,7 +148,9 @@ class BufferBase : public SharedResource {
 
     ~BufferBase() override;
 
-    MaybeError MapAtCreationInternal();
+    // If no errors occur, returns true iff a staging buffer was used to implement the map at
+    // creation. Otherwise, returns false indicating that backend specific mapping was used instead.
+    ResultOrError<bool> MapAtCreationInternal();
 
     uint64_t mAllocatedSize = 0;
 
@@ -155,39 +159,71 @@ class BufferBase : public SharedResource {
   private:
     virtual MaybeError MapAtCreationImpl() = 0;
     virtual MaybeError MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) = 0;
+    virtual void* GetMappedPointerImpl() = 0;
     virtual void UnmapImpl() = 0;
 
     virtual bool IsCPUWritableAtCreation() const = 0;
-    MaybeError CopyFromStagingBuffer();
-
     MaybeError ValidateMapAsync(wgpu::MapMode mode,
                                 size_t offset,
                                 size_t size,
                                 WGPUMapAsyncStatus* status) const;
+
     MaybeError ValidateUnmap() const;
-    bool CanGetMappedRange(bool writable, size_t offset, size_t size) const;
-    void UnmapInternal(WGPUMapAsyncStatus status, std::string_view message);
 
     const uint64_t mSize = 0;
     const wgpu::BufferUsage mUsage = wgpu::BufferUsage::None;
     const wgpu::BufferUsage mInternalUsage = wgpu::BufferUsage::None;
-    BufferState mState;
     bool mIsDataInitialized = false;
 
-    // mStagingBuffer is used to implement mappedAtCreation for
-    // buffers with non-mappable usage. It is transiently allocated
-    // and released when the mappedAtCreation-buffer is unmapped.
-    // Because `mStagingBuffer` itself is directly mappable, it will
-    // not create another staging buffer.
-    // i.e. buffer->mStagingBuffer->mStagingBuffer... is not possible.
-    Ref<BufferBase> mStagingBuffer;
-
-    wgpu::MapMode mMapMode = wgpu::MapMode::None;
-    size_t mMapOffset = 0;
-    size_t mMapSize = 0;
-
     struct MapAsyncEvent;
-    Ref<MapAsyncEvent> mPendingMapEvent;
+
+    // State that can mutate across threads and needs to be synchronized for the buffer.
+    struct SynchronizedState : public MutexProtectedSupport<SynchronizedState> {
+      public:
+        using MutexProtectedSupport<SynchronizedState>::Usage;
+
+        explicit SynchronizedState(BufferState state);
+
+        // Reads the buffer state without acquiring any locks. This is unsafe, and should be used
+        // with care.
+        BufferState GetState(std::memory_order order = std::memory_order::acquire) const;
+
+        // Returns whether we can return mapped range given the current state without acquiring the
+        // lock. Note that this function may race with Unmap, but should be consistent w.r.t
+        // MapAsync's callback.
+        bool CanGetMappedRange(bool writable, size_t offset, size_t size, size_t bufferSize) const;
+
+        // Returns the mapped pointer without any checks.
+        void* GetMappedPointer();
+
+      private:
+        friend typename MutexProtectedSupport<SynchronizedState>::Traits;
+        struct {
+            // General state of the buffer.
+            std::atomic<BufferState> bufferState = BufferState::Unmapped;
+
+            // A recursive buffer used to implement mappedAtCreation for buffers with non-mappable
+            // usage. It is transiently allocated and released when the mappedAtCreation-buffer is
+            // unmapped. Because this buffer itself is directly mappable, it will not create another
+            // staging buffer recursively.
+            Ref<BufferBase> stagingBuffer = nullptr;
+
+            // Mapping specific states.
+            wgpu::MapMode mapMode = wgpu::MapMode::None;
+            size_t mapOffset = 0;
+            size_t mapSize = 0;
+
+            std::variant<void*, Ref<MapAsyncEvent>> mapData;
+        } mImpl;
+    };
+    SynchronizedState mState;
+
+    using ScopedSynchronizedState = typename SynchronizedState::Usage&;
+
+    MaybeError CopyFromStagingBuffer(ScopedSynchronizedState state);
+    void UnmapInternal(ScopedSynchronizedState state,
+                       WGPUMapAsyncStatus status,
+                       std::string_view message);
 };
 
 }  // namespace dawn::native
