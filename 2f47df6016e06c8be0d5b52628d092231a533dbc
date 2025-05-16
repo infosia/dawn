@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8572f2bb_88ecad44",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-16T20:55:25Z",
+      "side": 1,
+      "message": "cpplint don\u0027t like this:\n(cpplint) Are you taking an address of a cast?  This is dangerous: could be a temp var.  Take the address before doing the cast, rather than after  [runtime/casting] [4]",
+      "revId": "2f47df6016e06c8be0d5b52628d092231a533dbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
