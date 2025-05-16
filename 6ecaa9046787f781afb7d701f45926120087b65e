@@ -68,6 +68,24 @@
       "parentUuid": "d3b93c16_b5e29fae",
       "revId": "6ecaa9046787f781afb7d701f45926120087b65e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e75d2b88_6ead0f73",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1003611
+      },
+      "writtenOn": "2025-05-16T23:34:20Z",
+      "side": 1,
+      "message": "It was not clear to me whether I could safely move this so I preferred not to, in case `protobuf_HAVE_BUILTIN_ATOMICS` is used before `third_party` subdirectory is added.\n\nActually I even assumed that the most likely reason why Abseil add_subdirectory had been placed here initially was because something needs that variable (there must have been a reason not to place it in third_party).",
+      "parentUuid": "629aebaa_6a9c2504",
+      "revId": "6ecaa9046787f781afb7d701f45926120087b65e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
