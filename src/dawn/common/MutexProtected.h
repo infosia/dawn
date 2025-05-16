@@ -31,6 +31,7 @@
 #include <mutex>
 #include <utility>
 
+#include "dawn/common/Defer.h"
 #include "dawn/common/Mutex.h"
 #include "dawn/common/NonMovable.h"
 #include "dawn/common/Ref.h"
@@ -77,6 +78,8 @@ class Guard : public NonMovable, StackAllocated {
     auto* operator->() const { return Get(); }
     auto& operator*() const { return *Get(); }
 
+    void Defer(std::function<void()> f) { mDefer.Append(std::move(f)); }
+
   protected:
     Guard(T* obj, typename Traits::MutexType& mutex) : mLock(Traits::GetMutex(mutex)), mObj(obj) {}
     Guard(Guard&& other) : mLock(std::move(other.mLock)), mObj(std::move(other.mObj)) {
@@ -92,6 +95,10 @@ class Guard : public NonMovable, StackAllocated {
   private:
     using NonConstT = typename std::remove_const<T>::type;
     friend class MutexProtected<NonConstT, Guard>;
+
+    // Defer type must be declared before the lock to ensure that the cleanup functions are called
+    // after releasing the lock.
+    class Defer mDefer;
 
     typename Traits::LockType mLock;
     // RAW_PTR_EXCLUSION: This pointer is created/destroyed on each access to a MutexProtected.
