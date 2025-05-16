@@ -106,7 +106,7 @@ class EventManager final : NonMovable {
 
 struct QueueAndSerial {
     WeakRef<QueueBase> queue;
-    ExecutionSerial completionSerial;
+    std::atomic<ExecutionSerial> completionSerial;
 
     // Returns the most recently completed serial on |queue|. Otherwise, returns |completionSerial|.
     ExecutionSerial GetCompletedSerial() const;
