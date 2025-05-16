@@ -213,9 +213,11 @@ wgpu::WaitStatus WaitImpl(const InstanceBase* instance,
         }
         if (const auto* queueAndSerial = future.event->GetIfQueueAndSerial()) {
             auto [it, inserted] = queueLowestWaitSerials.insert(
-                {queueAndSerial->queue, queueAndSerial->completionSerial});
+                {queueAndSerial->queue,
+                 queueAndSerial->completionSerial.load(std::memory_order_acquire)});
             if (!inserted) {
-                it->second = std::min(it->second, queueAndSerial->completionSerial);
+                it->second = std::min(
+                    it->second, queueAndSerial->completionSerial.load(std::memory_order_acquire));
             }
         }
     }
@@ -582,8 +584,16 @@ EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode,
 EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode,
                                          QueueBase* queue,
                                          ExecutionSerial completionSerial)
-    : mCallbackMode(callbackMode),
-      mCompletionData(QueueAndSerial{GetWeakRef(queue), completionSerial}) {}
+    : mCallbackMode(callbackMode) {
+    // For some reason, some older Mac builds don't fully support the constructors for std::variant
+    // when dealing with non-copyables such as std::atomic. As a workaround, we just initialize in
+    // the constructor.
+    mCompletionData.emplace<QueueAndSerial>();
+    if (auto* queueAndSerial = GetIfQueueAndSerial()) {
+        queueAndSerial->queue = GetWeakRef(queue);
+        queueAndSerial->completionSerial = completionSerial;
+    }
+}
 
 EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode, Completed tag)
     : mCallbackMode(callbackMode), mCompletionData(AcquireRef(new WaitListEvent())) {
@@ -625,8 +635,12 @@ void EventManager::TrackedEvent::SetReadyToComplete() {
     if (auto event = GetIfWaitListEvent()) {
         event->Signal();
     }
-    if (auto* queueAndSerial = std::get_if<QueueAndSerial>(&mCompletionData)) {
-        queueAndSerial->completionSerial = queueAndSerial->GetCompletedSerial();
+    if (auto* queueAndSerial = GetIfQueueAndSerial()) {
+        ExecutionSerial current = queueAndSerial->completionSerial.load(std::memory_order_acquire);
+        for (auto completed = queueAndSerial->GetCompletedSerial();
+             current > completed && !queueAndSerial->completionSerial.compare_exchange_weak(
+                                        current, completed, std::memory_order_acq_rel);) {
+        }
     }
 }
 

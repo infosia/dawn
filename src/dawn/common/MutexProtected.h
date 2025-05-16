@@ -31,10 +31,12 @@
 #include <mutex>
 #include <utility>
 
+#include "dawn/common/Defer.h"
 #include "dawn/common/Mutex.h"
 #include "dawn/common/NonMovable.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/StackAllocated.h"
+#include "partition_alloc/pointers/raw_ptr.h"
 #include "partition_alloc/pointers/raw_ptr_exclusion.h"
 
 namespace dawn {
@@ -77,9 +79,18 @@ class Guard : public NonMovable, StackAllocated {
     auto* operator->() const { return Get(); }
     auto& operator*() const { return *Get(); }
 
+    void Defer(std::function<void()> f) {
+        DAWN_ASSERT(mDefer);
+        mDefer->Append(std::move(f));
+    }
+
   protected:
-    Guard(T* obj, typename Traits::MutexType& mutex) : mLock(Traits::GetMutex(mutex)), mObj(obj) {}
-    Guard(Guard&& other) : mLock(std::move(other.mLock)), mObj(std::move(other.mObj)) {
+    Guard(T* obj, typename Traits::MutexType& mutex, class Defer* defer = nullptr)
+        : mLock(Traits::GetMutex(mutex)), mObj(obj), mDefer(defer) {}
+    Guard(Guard&& other)
+        : mLock(std::move(other.mLock)),
+          mObj(std::move(other.mObj)),
+          mDefer(std::move(other.mDefer)) {
         other.mObj = nullptr;
     }
 
@@ -98,6 +109,7 @@ class Guard : public NonMovable, StackAllocated {
     // The pointer is always transiently used while the MutexProtected is in scope so it is
     // unlikely to be used after it is freed.
     RAW_PTR_EXCLUSION T* mObj = nullptr;
+    raw_ptr<class Defer> mDefer = nullptr;
 };
 
 }  // namespace detail
@@ -159,6 +171,22 @@ class MutexProtected {
     auto Use(Fn&& fn) const {
         return fn(Use());
     }
+
+    // Alternative to |Use()| that is useful when there are operations that are dependent on the
+    // results of the usage of the protected value that need to be completed without holding the
+    // mutex. This is especially common in cases where we need to deal with callbacks that might be
+    // spontaneous and as a result may be re-entrant.
+    template <typename Fn>
+    auto UseWithDefer(Fn&& fn) {
+        Defer defer;
+        return fn(Usage(&mObj, mMutex, &defer));
+    }
+
+    // Provides an unsafe way to directly access the MutexProtected object for a read without
+    // acquiring the mutex. Note that the object being read is not thread-safe, and reading the
+    // fields themselves may trigger TSAN or other sanitizer builds if the fields are not atomic or
+    // externally synchronized.
+    const T& ConstRead() const { return mObj; }
 
   private:
     Usage Use() { return Usage(&mObj, mMutex); }
