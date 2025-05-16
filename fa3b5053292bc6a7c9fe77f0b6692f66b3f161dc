@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1e2526b6_3e0df0d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-16T01:22:28Z",
+      "side": 1,
+      "message": "Yes, I think so. I think it\u0027s a good idea, it\u0027ll set the default values correctly and it should let us use capturing lambdas to define callbacks, which is nice.\n\nIMO it would be fine to do this in a later CL though.",
+      "parentUuid": "ec97a97c_9252201f",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e18df06e_e199e4dd",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 10
@@ -203,6 +221,24 @@
       "side": 1,
       "message": "It\u0027s unsure whether other chained extensions struct should be passed down. (Toggles::DumpShaders should likely get passed down)\n\nFor now set the chain.next \u003d nullptr and added a comment to reivist when implementing related functionality.",
       "parentUuid": "d3278148_4b563c6d",
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "851cfe92_7faf570e",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-16T01:22:28Z",
+      "side": 1,
+      "message": "There might be some, but in most cases I think it doesn\u0027t make sense. For DumpShaders for example, normally that would instruct Dawn to dump the shader that Tint produced, not the driver to dump the shader binary it produced. If we think of the inner WebGPU implementation as a driver, then passing it through doesn\u0027t make sense.\n\nThere are some things where we _do_ translate a toggle to a driver setting (like DisableRobustness) that make sense here too, but I think we would do those on an individual basis.",
+      "parentUuid": "64b12723_e47d2875",
       "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -373,6 +409,30 @@
       "side": 1,
       "message": "Yes descriptor cannot be null. Add a descriptor and left a TODO to revisit when implementing surface.\n\n(`GetSurfaceCapabilities` seems to only get called in `AdapterSurfaceCapCache`, and `Surface` don\u0027t have backend objects, it handles different display windows. Is this good reason to create `innerSurface` here?)",
       "parentUuid": "144426d9_585332a6",
+      "range": {
+        "startLine": 118,
+        "startChar": 16,
+        "endLine": 118,
+        "endChar": 28
+      },
+      "revId": "fa3b5053292bc6a7c9fe77f0b6692f66b3f161dc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1977f40_7c8ea8b3",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-16T01:22:28Z",
+      "side": 1,
+      "message": "I wouldn\u0027t expect even an empty WGPUSurfaceDescriptor to be accepted (usually there has to be some platform-specific extension).\n\n`AdapterSurfaceCapCache` seems to only call this if a surface actually gets created (and besides this must be true since this function takes a surface). Are you testing with a sample that creates a surface?\n\nIf this really needs to be implemented at all, could we just expose some basic defaults (like what the null backend does)? I\u0027d prefer not to try to implement this until we do it more or less correctly.",
+      "parentUuid": "5943339a_a7ffec69",
       "range": {
         "startLine": 118,
         "startChar": 16,

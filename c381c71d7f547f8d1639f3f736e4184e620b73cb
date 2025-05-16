@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1b79de5_fd345761",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-16T01:22:28Z",
+      "side": 1,
+      "message": "(see below for context)\n\nI think Backend::DiscoverPhysicalDevices should be the one to reject this. Specifically if it gets a request for webgpu-on-webgpu-on-webgpu, it just returns zero physical devices. This will happen automatically if RequestAdapterWebGPUBackendOptions is not passed through.",
+      "revId": "c381c71d7f547f8d1639f3f736e4184e620b73cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "668a869b_8e0f40a5",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-16T01:22:28Z",
+      "side": 1,
+      "message": "(see below for context)\n\n```suggestion\n    BackendsBitset backendsToFind;\n    if (options.Get\u003cRequestAdapterWebGPUBackendOptions\u003e()) {\n        // User is selecting WebGPU-on-WebGPU. Ignore the backendType, it will\n        // be passed through to the inner WebGPU implementation.\n        backendsToFind.set(wgpu::BackendType::WebGPU);\n    } else if (options-\u003ebackendType !\u003d wgpu::BackendType::Undefined) {\n        // User is selecting a specific backend.\n        if (!ConsumedErrorAndWarnOnce(ValidateBackendType(options-\u003ebackendType))) {\n            backendsToFind.set(options-\u003ebackendType);\n        }\n    } else {\n        // User doesn\u0027t care about the backend.\n        backendsToFind.set();\n        // Don\u0027t return WebGPU-on-WebGPU by default.\n        backendsToFind.flip(wgpu::BackendType::WebGPU);\n    }\n```",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 491,
+        "endChar": 5
+      },
+      "revId": "c381c71d7f547f8d1639f3f736e4184e620b73cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40ccdc9a_5afeb7c5",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-16T01:22:28Z",
+      "side": 1,
+      "message": "I missed this before but: why do we need a `WGPURequestAdapterWebGPUBackendOptions` on the `innerAdapterOption` at all? We just need it not to enumerate webgpu-on-webgpu backends, but it does that by default. And this also requires the inner implementation to support `WGPURequestAdapterWebGPUBackendOptions` but it shouldn\u0027t need to.\n\nCan this just be:\n\n```suggestion\n    // Pass through all of the core options. Note if backendType\u003dWebGPU,\n    // RequestAdapter will return null since it\u0027s not enabled by default.\n    WGPURequestAdapterOptions innerAdapterOption \u003d *ToAPI(*options);\n    // Don\u0027t pass through any of the extension options.\n    innerAdapterOption.nextInChain \u003d nullptr;\n```\n\nThen we can simplify other code, see comments above.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 74
+      },
+      "revId": "c381c71d7f547f8d1639f3f736e4184e620b73cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
