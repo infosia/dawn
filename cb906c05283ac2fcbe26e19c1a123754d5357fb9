@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32733aab_eb59ff5c",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-16T11:53:25Z",
+      "side": 1,
+      "message": "```suggestion\n        // Expand the stride so that it is at least `min_stride` if necessary.\n```\n\nThis seems more like an anti-clamp as you\u0027re just making it bigger (I think of clamp as shoving it into a given range, which I guess is technically true but feels weird here?) Feel free to ignore me if you think clamp is a better word here.",
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07c62a01_995744ab",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-16T11:53:25Z",
+      "side": 1,
+      "message": "Is this comment wrong, or are there more types to come? It seems like the answer is always 1 at the moment?",
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc924467_311b13b6",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-16T11:53:25Z",
+      "side": 1,
+      "message": "```suggestion\n        TINT_ASSERT(matrix_ty-\u003eIsAnyOf\u003ctype::F16, type::F32, type::I32, type::U32\u003e());\n        uint32_t components_per_element \u003d 1u;\n```\n\nSeems simpler as they all return 1?",
+      "range": {
+        "startLine": 403,
+        "startChar": 0,
+        "endLine": 409,
+        "endChar": 34
+      },
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36431c6e_8e4fb630",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-16T11:53:25Z",
+      "side": 1,
+      "message": "Arraylength is polyfilled on some platform, is this transform setup to always run before the transform which swaps out array length?",
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33bb7f1f_48707ce6",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-16T11:53:25Z",
+      "side": 1,
+      "message": "```suggestion\n            uint32_t const_end \u003d const_offset + (const_stride * (major_dim - 1)) + min_stride;\n```\n\nYes, I know, redundant, but just easier to read.",
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d22fa61_ff5554cd",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-16T11:53:25Z",
+      "side": 1,
+      "message": "Is this safe? I guess the insertion point is already set, just seems weird to remove it while working with it?",
+      "revId": "cb906c05283ac2fcbe26e19c1a123754d5357fb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
