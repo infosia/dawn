@@ -16,6 +16,24 @@
       "message": "After the last manual roll [1], we\u0027re seeing some TSAN failures in Skia: https://logs.chromium.org/logs/skia/70e8488bf9d1b311/+/steps/dm/0/stdout\n\nI suspected they\u0027re related to this CL, PTAL.\n\n[1] https://skia-review.googlesource.com/c/skia/+/993521",
       "revId": "82eadb32af6827abc1bda78e5f9ebcce5979bfea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ccda51ea_cf434b90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004661
+      },
+      "writtenOn": "2025-05-16T14:11:32Z",
+      "side": 1,
+      "message": "I was able to repro/bisect locally, my guess was wrong: it\u0027s not this CL, but https://dawn-review.googlesource.com/c/dawn/+/236935.\n\nFiled https://issues.skia.org/issues/418165343.",
+      "parentUuid": "83d2939e_da058b86",
+      "revId": "82eadb32af6827abc1bda78e5f9ebcce5979bfea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
