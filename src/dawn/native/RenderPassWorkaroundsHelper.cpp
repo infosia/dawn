@@ -50,12 +50,20 @@ namespace {
 struct TemporaryResolveAttachment {
     TemporaryResolveAttachment(Ref<TextureViewBase> src,
                                Ref<TextureViewBase> dst,
-                               wgpu::StoreOp storeOp = wgpu::StoreOp::Store)
-        : copySrc(std::move(src)), copyDst(std::move(dst)), storeOp(storeOp) {}
+                               wgpu::LoadOp loadOp = wgpu::LoadOp::Load,
+                               wgpu::StoreOp storeOp = wgpu::StoreOp::Store,
+                               dawn::native::Color clearValue = {0.0f, 0.0f, 0.0f, 0.0f})
+        : copySrc(std::move(src)),
+          copyDst(std::move(dst)),
+          loadOp(loadOp),
+          storeOp(storeOp),
+          clearValue(clearValue) {}
 
     Ref<TextureViewBase> copySrc;
     Ref<TextureViewBase> copyDst;
+    wgpu::LoadOp loadOp;
     wgpu::StoreOp storeOp;
+    dawn::native::Color clearValue;
 };
 
 void CopyTextureView(CommandEncoder* encoder, TextureViewBase* src, TextureViewBase* dst) {
@@ -243,12 +251,13 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
         for (auto i : cmd->attachmentState->GetColorAttachmentsMask()) {
             auto& attachmentInfo = cmd->colorAttachments[i];
             TextureViewBase* resolveTarget = attachmentInfo.resolveTarget.Get();
-            if (attachmentInfo.loadOp == wgpu::LoadOp::ExpandResolveTexture) {
+            if (attachmentInfo.loadOp != wgpu::LoadOp::Undefined) {
                 // Save the color and resolve targets together for an explicit resolve pass
                 // after this one ends, then remove the resolve target from this pass and
                 // force the storeOp to Store.
-                temporaryResolveAttachments.emplace_back(attachmentInfo.view.Get(), resolveTarget,
-                                                         attachmentInfo.storeOp);
+                temporaryResolveAttachments.emplace_back(
+                    attachmentInfo.view.Get(), resolveTarget, attachmentInfo.loadOp,
+                    attachmentInfo.storeOp, attachmentInfo.clearColor);
                 attachmentInfo.storeOp = wgpu::StoreOp::Store;
                 attachmentInfo.resolveTarget = nullptr;
             }
@@ -257,9 +266,10 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
             passEndOperations.emplace_back([device, encoder, resolveRect = *expandResolveRect,
                                             deferredResolve]() -> MaybeError {
                 // Do partial resolve first in one render pass.
-                DAWN_TRY(ResolveMultisampleWithDraw(device, encoder, resolveRect,
-                                                    deferredResolve.copySrc.Get(),
-                                                    deferredResolve.copyDst.Get()));
+                DAWN_TRY(ResolveMultisampleWithDraw(
+                    device, encoder, resolveRect, deferredResolve.copySrc.Get(),
+                    deferredResolve.copyDst.Get(), deferredResolve.loadOp,
+                    deferredResolve.clearValue));
 
                 switch (deferredResolve.storeOp) {
                     case wgpu::StoreOp::Store:
@@ -307,7 +317,8 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
                     // after this one ends, then remove the resolve target from this pass and
                     // force the storeOp to Store.
                     temporaryResolveAttachments.emplace_back(attachmentInfo.view.Get(),
-                                                             resolveTarget, attachmentInfo.storeOp);
+                                                             resolveTarget, attachmentInfo.loadOp,
+                                                             attachmentInfo.storeOp);
                     attachmentInfo.storeOp = wgpu::StoreOp::Store;
                     attachmentInfo.resolveTarget = nullptr;
                 }
