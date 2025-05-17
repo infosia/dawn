@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c1ad29c_7de135f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-17T06:52:58Z",
+      "side": 1,
+      "message": "Overall TBH not sure this is worth it, we can use it for a few things where it\u0027s especially helpful (callback info structs especially), but even if we make the C\u003c-\u003eC++ conversions more ergonomic I\u0027m not sure it will be a net win to do everywhere",
+      "revId": "267e28adbc8d51ec7aa72581367ac78604ebdc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f27893de_1ca6908b",
@@ -32,6 +49,24 @@
       "side": 1,
       "message": "No... somehow `\u0026instanceDesc` don\u0027t auto derive to WGPUPointer type.\nCompiler seem to deduct pointer type to WGPUOptionalBool",
       "parentUuid": "f27893de_1ca6908b",
+      "revId": "267e28adbc8d51ec7aa72581367ac78604ebdc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07c23af2_ee74a8bd",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-17T06:52:58Z",
+      "side": 1,
+      "message": "I guess ToAPI is for native-\u003eC, not C++-\u003eC. C++-\u003eC would go in webgpu_cpp.h. Actually, webgpu_cpp.h already has implicit conversions:\n```\n    inline operator const WGPUBufferDescriptor\u0026() const noexcept;\n```\nThat would work with an explicit cast like `\u0026static_cast\u003cWGPUInstanceDescriptor\u0026\u003e(instanceDesc)` but but I\u0027m not sure if they can be used to do an implicit conversion from `wgpu::Descriptor*` to `WGPUDescriptor*` (behind a pointer). \n\nIf not, we should:\n- add something that does that implicit conversion if possible (probably not)\n- or add a named method on the C++ struct that casts it to C\n\nin order to avoid needing so many reinterpret_casts.",
+      "parentUuid": "026fff6d_501bd31a",
       "revId": "267e28adbc8d51ec7aa72581367ac78604ebdc6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
