@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "026fff6d_501bd31a",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-17T04:45:14Z",
+      "side": 1,
+      "message": "No... somehow `\u0026instanceDesc` don\u0027t auto derive to WGPUPointer type.\nCompiler seem to deduct pointer type to WGPUOptionalBool",
+      "parentUuid": "f27893de_1ca6908b",
+      "revId": "267e28adbc8d51ec7aa72581367ac78604ebdc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "949ac434_204e61c5",
         "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
         "patchSetId": 3
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "You could use `absl::NoDestructor` to prevent the destructor from running, then you can use the C++ struct but still call FreeMembers manually.\n\nBut the C++ versions of those structs don\u0027t give us much anyway, so I think easier to just use the C structs for them.",
       "parentUuid": "cd8c0058_744975d0",
+      "revId": "267e28adbc8d51ec7aa72581367ac78604ebdc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a04b579b_2234300c",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-17T04:45:14Z",
+      "side": 1,
+      "message": "Gotcha. I thought C++ struct don\u0027t need to call the freeMembers.\n\nYeah. Maybe just use C++ struct for easier types then",
+      "parentUuid": "0f592969_c6ab5ab4",
       "revId": "267e28adbc8d51ec7aa72581367ac78604ebdc6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
