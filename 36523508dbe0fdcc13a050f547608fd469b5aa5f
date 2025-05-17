@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c68090a9_a9a1f4c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-17T02:03:39Z",
+      "side": 1,
+      "message": "Please don\u0027t bother with this till Monday, I just wanted to get the review request in so that it would hit reasonable working hours for Corentin on Monday.\n\nThis is a much bigger CL than I would have liked, but it turns out that lots of stuff touch TextureViews! I\u0027m already doing some duplication of functionality between the View/InternalView to reduce the scope of what needs to be touched, and I\u0027m happy to take suggestions for limiting the scope even further.\n\nOne thing that comes to mind is to add a ToBackend specialization for TextureViewBase that automatically does the -\u003eGetInternal() for you, which may remove the need to touch some files entirely. Unfortunately my initial attempts to add that failed, likely because I don\u0027t quite follow how the BackendTraits works and need to read up on that bit of C++ template voodoo.\n\nAnother area that I think is worth paying closer attention to: ViewInternal has a GetTexture() which internally does the Promote from the WeakPtr and asserts that it\u0027s still valid. This feels a bit iffy (and possibly expensive?) but having it return the WeakPtr directly resulted in simply copying the Promote()/Assert to dozens of other places in the code. 😞\n\nHappy to iterate on the design with your feedback!",
+      "revId": "36523508dbe0fdcc13a050f547608fd469b5aa5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
