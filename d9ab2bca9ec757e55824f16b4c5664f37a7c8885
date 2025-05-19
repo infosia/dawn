@@ -22,6 +22,23 @@
       },
       "revId": "d9ab2bca9ec757e55824f16b4c5664f37a7c8885",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4264a36_b9748142",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-05-19T19:44:21Z",
+      "side": 1,
+      "message": "Looks like it passed our bots when you deleted the lines, so +2 to land as is.",
+      "revId": "d9ab2bca9ec757e55824f16b4c5664f37a7c8885",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
