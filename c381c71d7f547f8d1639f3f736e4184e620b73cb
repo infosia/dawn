@@ -128,6 +128,30 @@
       },
       "revId": "c381c71d7f547f8d1639f3f736e4184e620b73cb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1695cec_d8125cb7",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-19T20:07:52Z",
+      "side": 1,
+      "message": "Mark as resolved.",
+      "parentUuid": "1ddd52e9_0d21c893",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 74
+      },
+      "revId": "c381c71d7f547f8d1639f3f736e4184e620b73cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

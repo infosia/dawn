@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d95bac43_8109e053",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-19T20:07:52Z",
+      "side": 1,
+      "message": "Thanks for catching this. Use the autogened `kFeatureNameAndInfoList` and `wgpu::Feature ToAPI(Feature)` instead.\n\nFor the `webgpu::ToC`, what is the boundary of that to the existing `ToAPI`?\n\nIs it a superset of `ToAPI`? And in webgpu-on-webgpu backend we only use the `webgpu::ToC` version to do the casting?",
+      "parentUuid": "2e3e670a_6c3d8381",
+      "range": {
+        "startLine": 106,
+        "startChar": 60,
+        "endLine": 106,
+        "endChar": 91
+      },
+      "revId": "afae18ffbb3c03108df6f71ed16266b33e59bd54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "10518471_dce2858b",
         "filename": "src/dawn/tests/DawnTest.cpp",
         "patchSetId": 13
@@ -60,6 +84,24 @@
       "writtenOn": "2025-05-17T07:01:39Z",
       "side": 1,
       "message": "I didn\u0027t think about this, it\u0027s a bit more special casing than I realized, but I think it is fine.\n\nIf we _did_ want to avoid it, we could go back to having two BackendTypes. This would allow enumerating both regular and webgpu-on-webgpu backends at once (by specifying .backendType\u003dUndefined while still using RequestAdapterWebGPUBackendOptions and ignoring it for other backends).",
+      "revId": "afae18ffbb3c03108df6f71ed16266b33e59bd54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bed8163e_fd3d85c7",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-19T20:07:52Z",
+      "side": 1,
+      "message": "I think specializing for DawnTests is fine. Mark as resolved.",
+      "parentUuid": "10518471_dce2858b",
       "revId": "afae18ffbb3c03108df6f71ed16266b33e59bd54",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
