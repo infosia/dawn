@@ -37,6 +37,7 @@ DawnJSONGenerator(
 
 dawn_add_library(
     dawn_headers
+    ENABLE_EMSCRIPTEN
     HEADER_ONLY
     UTILITY_TARGET dawn_internal_config
     HEADERS
@@ -63,6 +64,7 @@ DawnJSONGenerator(
 )
 dawn_add_library(
     dawncpp_headers
+    ENABLE_EMSCRIPTEN
     HEADER_ONLY
     UTILITY_TARGET dawn_internal_config
     HEADERS
