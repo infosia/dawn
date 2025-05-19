@@ -826,6 +826,8 @@ source_set("sources") {
       "vulkan/FencedDeleter.cpp",
       "vulkan/FencedDeleter.h",
       "vulkan/Forward.h",
+      "vulkan/ImageViewCache.cpp",
+      "vulkan/ImageViewCache.h",
       "vulkan/PhysicalDeviceVk.cpp",
       "vulkan/PhysicalDeviceVk.h",
       "vulkan/PipelineCacheVk.cpp",
