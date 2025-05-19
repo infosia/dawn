@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ead84ea6_26dad7bc",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-19T23:41:34Z",
+      "side": 1,
+      "message": "No strong opinion really. It doesn\u0027t have to be treated as a sentinel value, as any very large timeout will effectively do the same thing. (Actually in Wasm we\u0027re limited to a timeout of `INT32_MAX` ms \u003d 24.8 days so anything greater than that becomes infinite.)\n\nWe could provide a #define, it would avoid needing to remember the type of the timeout, and slightly help guide people toward the special-case paths in Dawn for `UINT64_MAX`.\n\nhttps://github.com/webgpu-native/webgpu-headers/issues/543",
+      "parentUuid": "0be8e6c4_085bf919",
+      "range": {
+        "startLine": 81,
+        "startChar": 61,
+        "endLine": 81,
+        "endChar": 71
+      },
+      "revId": "afae18ffbb3c03108df6f71ed16266b33e59bd54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2e3e670a_6c3d8381",
