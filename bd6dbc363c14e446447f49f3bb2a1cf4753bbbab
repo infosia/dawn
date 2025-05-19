@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d5559ba_f71dd7af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T08:56:44Z",
+      "side": 1,
+      "message": "Technically more than emscripten ^^",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "145c202a_3525e5d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T08:56:44Z",
+      "side": 1,
+      "message": "Turns out we can kinda safely assume that given that single bindings in shader/API can be used with arrayed bindings of size 1 in shader/API!",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ef54880_aa9ec50b",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T08:56:44Z",
+      "side": 1,
+      "message": "ditto std::max",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df7d0cb9_c70bf957",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T08:56:44Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fab1f9aa_41511014",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T08:56:44Z",
+      "side": 1,
+      "message": "We could do std::max(1, entry-\u003ebindingArraySize) as well since this is now always present.",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3b0efde_7b9d799d",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T08:56:44Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed, we can just pass bindingArraySize \u003d 1",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "094f9636_bd63dddc",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T08:56:44Z",
+      "side": 1,
+      "message": "nit: Proper TODO with a bug?",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
