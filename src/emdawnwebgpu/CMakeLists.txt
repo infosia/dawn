@@ -198,6 +198,12 @@ if (EMSCRIPTEN)
     )
     add_dependencies(emdawnwebgpu_c_include emdawnwebgpu_headers_gen)
 
+    # Copy the webgpu_glfw.h file
+    file(
+        COPY "${DAWN_INCLUDE_DIR}/webgpu/webgpu_glfw.h"
+        DESTINATION "${EM_BUILD_GEN_DIR}/include/webgpu/"
+    )
+
     dawn_add_library(
         emdawnwebgpu_c
         ENABLE_EMSCRIPTEN
@@ -274,6 +280,11 @@ if (EMSCRIPTEN)
         COMMAND ${CMAKE_COMMAND} -E copy
             "${DAWN_INCLUDE_DIR}/webgpu/webgpu_enum_class_bitmasks.h"
             "${CMAKE_BINARY_DIR}/emdawnwebgpu_pkg/webgpu_cpp/include/webgpu/"
+
+        # Copy webgpu_glfw.h
+        COMMAND ${CMAKE_COMMAND} -E copy
+            "${EM_BUILD_GEN_DIR}/include/webgpu/webgpu_glfw.h"
+            "${CMAKE_BINARY_DIR}/emdawnwebgpu_pkg/webgpu/include/webgpu/"
 
         # Copy generated files
         COMMAND ${CMAKE_COMMAND} -E copy
