@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0be8e6c4_085bf919",
+        "filename": "src/dawn/native/webgpu/BackendWGPU.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T09:09:06Z",
+      "side": 1,
+      "message": "Kai WDYT of having a define for this in webgpu.h?",
+      "range": {
+        "startLine": 81,
+        "startChar": 61,
+        "endLine": 81,
+        "endChar": 71
+      },
+      "revId": "afae18ffbb3c03108df6f71ed16266b33e59bd54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e3e670a_6c3d8381",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T09:09:06Z",
+      "side": 1,
+      "message": "I don\u0027t know that this does what you expect: the order of features in webgpu.h is not the same as the Feature enum.\n\nAlso WDYT of autogen-ing ToC helpers just for this backend to make the casts more safe? The ToC helpers would be generated only for safe conversions to do so either ToC(stuff) works and we know it is safe, or it produces a compile error, showing more care is needed.",
+      "range": {
+        "startLine": 106,
+        "startChar": 60,
+        "endLine": 106,
+        "endChar": 91
+      },
+      "revId": "afae18ffbb3c03108df6f71ed16266b33e59bd54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "10518471_dce2858b",
         "filename": "src/dawn/tests/DawnTest.cpp",
         "patchSetId": 13
