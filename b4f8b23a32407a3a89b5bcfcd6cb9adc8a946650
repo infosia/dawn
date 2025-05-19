@@ -33,6 +33,149 @@
       "message": "Sry, the bots guide me for a bug. Let me handle it first",
       "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "effc1903_3aed6943",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T11:12:46Z",
+      "side": 1,
+      "message": "Don\u0027t we have this iterator now?",
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31533cc9_3151d381",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T11:12:46Z",
+      "side": 1,
+      "message": "```suggestion\n                vertexBufferTracker.Apply(lastPipeline);\n                DAWN_TRY(immediates.Apply(commandContext));\n\n```",
+      "range": {
+        "startLine": 767,
+        "startChar": 2,
+        "endLine": 770,
+        "endChar": 0
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dc9e248_b53dfbc8",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T11:12:46Z",
+      "side": 1,
+      "message": "```suggestion\n                vertexBufferTracker.Apply(lastPipeline);\n                DAWN_TRY(immediates.Apply(commandContext));\n```",
+      "range": {
+        "startLine": 799,
+        "startChar": 5,
+        "endLine": 801,
+        "endChar": 5
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05e0399b_602f1b33",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T11:12:46Z",
+      "side": 1,
+      "message": "```suggestion\n    // Create a uniform buffer for user and internal ImmediateConstants.\n```\n\nUnfortunately they don\u0027t pay us to use WebGPU :P",
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc715389_4c976325",
+        "filename": "src/dawn/native/d3d11/RenderPipelineD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T11:12:46Z",
+      "side": 1,
+      "message": "Won\u0027t this end up doing nothing when tintIR is off? So we don\u0027t need to do a check here, only in ShaderModuleD3D11",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 25
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a58514a9_76f92a15",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T11:12:46Z",
+      "side": 1,
+      "message": "Can we group this with usesNumWorkgpoups?",
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "322326b9_0bbc69ef",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T11:12:46Z",
+      "side": 1,
+      "message": "Maybe we could have a helper that returns an offset or nullopt if not present, so we can do `tintOptions.foo \u003d GetImmediateByteOffsetInPipelineIfAny(...)`\n\n(also these names are verboooooooose, but IDK how to fix that).",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 80
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

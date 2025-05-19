@@ -46,6 +46,30 @@
       },
       "revId": "4ab7768b7386e167bbbdc3c332373fee7297a0bd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1434c5b0_0c8a98cf",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T11:12:46Z",
+      "side": 1,
+      "message": "We want to enable immediate unconditionally (after HLSL IR is the only path). We could do full updates every time, the D3D11 driver should be able to optimize that.\n\nThough I don\u0027t recall enough about D3D11 or our backend to know exactly how to get the fastest path here. (it is a buffer that\u0027s just for immediates so special casing should be ok IMHO)",
+      "parentUuid": "8524d4a9_577f71c9",
+      "range": {
+        "startLine": 126,
+        "startChar": 36,
+        "endLine": 126,
+        "endChar": 41
+      },
+      "revId": "4ab7768b7386e167bbbdc3c332373fee7297a0bd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
