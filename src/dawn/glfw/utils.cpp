@@ -34,6 +34,7 @@
 #include "dawn/common/Platform.h"
 #include "webgpu/webgpu_glfw.h"
 
+#if !DAWN_PLATFORM_IS(EMSCRIPTEN)
 #if DAWN_PLATFORM_IS(WINDOWS)
 #define GLFW_EXPOSE_NATIVE_WIN32
 #endif
@@ -44,6 +45,7 @@
 #define GLFW_EXPOSE_NATIVE_WAYLAND
 #endif
 #include "GLFW/glfw3native.h"
+#endif  // !DAWN_PLATFORM_IS(EMSCRIPTEN)
 
 WGPU_GLFW_EXPORT WGPUSurface wgpuGlfwCreateSurfaceForWindow(const WGPUInstance instance,
                                                             GLFWwindow* window) {
@@ -74,7 +76,16 @@ SetupWindowAndGetSurfaceDescriptor(GLFWwindow* window) {
                             "setting the GLFW_CLIENT_API hint to GLFW_NO_API.";
         return {nullptr, [](wgpu::ChainedStruct*) {}};
     }
-#if DAWN_PLATFORM_IS(WINDOWS)
+#if DAWN_PLATFORM_IS(EMSCRIPTEN)
+    wgpu::EmscriptenSurfaceSourceCanvasHTMLSelector* desc =
+        new wgpu::EmscriptenSurfaceSourceCanvasHTMLSelector();
+    // Map "!canvas" CSS selector to the canvas held in the Module.canvas object.
+    EM_ASM({ specialHTMLTargets["!canvas"] = Module.canvas; });
+    desc->selector = "!canvas";
+    return {desc, [](wgpu::ChainedStruct* desc) {
+                delete reinterpret_cast<wgpu::EmscriptenSurfaceSourceCanvasHTMLSelector*>(desc);
+            }};
+#elif DAWN_PLATFORM_IS(WINDOWS)
     wgpu::SurfaceSourceWindowsHWND* desc = new wgpu::SurfaceSourceWindowsHWND();
     desc->hwnd = glfwGetWin32Window(window);
     desc->hinstance = GetModuleHandle(nullptr);
