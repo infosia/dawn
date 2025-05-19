@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce638378_09883ee9",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T08:33:37Z",
+      "side": 1,
+      "message": "Maybe this could be a separate boolean or a toggle that says why this is broken?",
+      "revId": "c315409a56fe4ecce7f3ee49b7f7075a298d4e03",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
