@@ -238,6 +238,7 @@ if (EMSCRIPTEN)
             "${EM_BUILD_GEN_DIR}/include/webgpu/webgpu_cpp.h"
             "${EM_BUILD_GEN_DIR}/include/webgpu/webgpu_cpp_chained_struct.h"
             "${DAWN_INCLUDE_DIR}/webgpu/webgpu_enum_class_bitmasks.h"
+            "${DAWN_INCLUDE_DIR}/webgpu/webgpu_glfw.h"
         DEPENDS
             emdawnwebgpu_c
     )
@@ -261,9 +262,10 @@ if (EMSCRIPTEN)
             "${CMAKE_BINARY_DIR}/emdawnwebgpu_pkg/webgpu_cpp/include/webgpu/"
             "${CMAKE_BINARY_DIR}/emdawnwebgpu_pkg/webgpu_cpp/include/dawn/"
 
-        # Copy webgpu_enum_class_bitmasks.h
+        # Copy webgpu_enum_class_bitmasks.h and webgpu_glfw.h
         COMMAND ${CMAKE_COMMAND} -E copy
             "${DAWN_INCLUDE_DIR}/webgpu/webgpu_enum_class_bitmasks.h"
+            "${DAWN_INCLUDE_DIR}/webgpu/webgpu_glfw.h"
             "${CMAKE_BINARY_DIR}/emdawnwebgpu_pkg/webgpu_cpp/include/webgpu/"
 
         # Copy generated files
