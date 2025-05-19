@@ -16,6 +16,167 @@
       "message": "PTAL.",
       "revId": "ebf8c276f865a6ba9bec880d24d6d3ec669eebaa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c566f79c_b828ff9b",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-19T13:46:49Z",
+      "side": 1,
+      "message": "draws",
+      "range": {
+        "startLine": 230,
+        "startChar": 45,
+        "endLine": 230,
+        "endChar": 49
+      },
+      "revId": "ebf8c276f865a6ba9bec880d24d6d3ec669eebaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92724e10_106bc273",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-19T13:46:49Z",
+      "side": 1,
+      "message": "to",
+      "range": {
+        "startLine": 245,
+        "startChar": 39,
+        "endLine": 245,
+        "endChar": 41
+      },
+      "revId": "ebf8c276f865a6ba9bec880d24d6d3ec669eebaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e4385f2_a43f913b",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-19T13:46:49Z",
+      "side": 1,
+      "message": "This doesn\u0027t match your code lines exactly, which fill in this pattern.\n\n// # ... #-\n// --------\n...\n...\n// # ... #-\n//---------",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 12
+      },
+      "revId": "ebf8c276f865a6ba9bec880d24d6d3ec669eebaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d65b2d35_524b45b2",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-19T13:46:49Z",
+      "side": 1,
+      "message": "IIUC, this should be `(textureHeight - 2) * textureWidth`. You are getting the expected result probably just because height and width are same in all your cases.",
+      "range": {
+        "startLine": 269,
+        "startChar": 28,
+        "endLine": 269,
+        "endChar": 63
+      },
+      "revId": "ebf8c276f865a6ba9bec880d24d6d3ec669eebaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b960aaba_14eaeaf9",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-19T13:46:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 273,
+        "startChar": 28,
+        "endLine": 273,
+        "endChar": 69
+      },
+      "revId": "ebf8c276f865a6ba9bec880d24d6d3ec669eebaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21d32b30_4450fab9",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-19T13:46:49Z",
+      "side": 1,
+      "message": "draws",
+      "range": {
+        "startLine": 434,
+        "startChar": 32,
+        "endLine": 434,
+        "endChar": 36
+      },
+      "revId": "ebf8c276f865a6ba9bec880d24d6d3ec669eebaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f69d6a9a_bc9d89f9",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2811,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-19T13:46:49Z",
+      "side": 1,
+      "message": "The test case seems unnecessarily complicated, and hard to read. Maybe we can work out a simpler one for the same purpose.",
+      "range": {
+        "startLine": 2810,
+        "startChar": 0,
+        "endLine": 2811,
+        "endChar": 32
+      },
+      "revId": "ebf8c276f865a6ba9bec880d24d6d3ec669eebaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

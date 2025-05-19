@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9abc9755_9352c9a3",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-19T13:46:49Z",
+      "side": 1,
+      "message": "A brief comment would be helpful to read this function.",
+      "range": {
+        "startLine": 244,
+        "startChar": 9,
+        "endLine": 244,
+        "endChar": 24
+      },
+      "revId": "a5ffc3ccdb90984babc3256c157904d436c87571",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
