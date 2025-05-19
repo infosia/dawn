@@ -36,6 +36,7 @@
 #include "dawn/native/ResourceMemoryAllocation.h"
 #include "dawn/native/Texture.h"
 #include "dawn/native/vulkan/ExternalHandle.h"
+#include "dawn/native/vulkan/ImageViewCache.h"
 #include "dawn/native/vulkan/SharedTextureMemoryVk.h"
 #include "dawn/native/vulkan/external_memory/MemoryService.h"
 #include "dawn/native/vulkan/external_semaphore/SemaphoreService.h"
@@ -107,6 +108,8 @@ class Texture : public TextureBase {
     // Cleans up after the submit.
     virtual MaybeError OnAfterSubmit();
 
+    ImageViewCache* GetImageViewCache();
+
     void SetLabelHelper(const char* prefix);
 
     // Dawn API
@@ -163,6 +166,8 @@ class Texture : public TextureBase {
 
     SubresourceStorage<TextureSyncInfo> mSubresourceLastSyncInfos;
     VkImage mHandle = VK_NULL_HANDLE;
+
+    ImageViewCache mImageViewCache;
 };
 
 // A texture created and fully owned by Dawn. Typically the result of device.CreateTexture.
@@ -327,19 +332,19 @@ class TextureView final : public TextureViewBase {
     using TextureViewBase::TextureViewBase;
     MaybeError Initialize(const UnpackedPtr<TextureViewDescriptor>& descriptor);
 
-    VkImageViewCreateInfo GetCreateInfo(wgpu::TextureFormat format,
-                                        wgpu::TextureViewDimension dimension,
-                                        uint32_t depthSlice = 0u) const;
-
     // Dawn API
     void SetLabelImpl() override;
 
-    VkImageView mHandle = VK_NULL_HANDLE;
-    VkImageView mHandleForBGRA8UnormStorage = VK_NULL_HANDLE;
+    using ImageViewRef = Ref<RefCountedVkHandle<VkImageView>>;
+
+    // The primary handle is ref counted because it's cached by the texture. All others are
+    // recreated as needed.
+    ImageViewRef mHandle = VK_NULL_HANDLE;
+    ImageViewRef mHandleForBGRA8UnormStorage = VK_NULL_HANDLE;
     VkSamplerYcbcrConversion mSamplerYCbCrConversion = VK_NULL_HANDLE;
     bool mIsYCbCr = false;
     YCbCrVkDescriptor mYCbCrVkDescriptor;
-    std::vector<VkImageView> mHandlesFor2DViewOn3D;
+    std::vector<ImageViewRef> mHandlesFor2DViewOn3D;
 };
 
 }  // namespace dawn::native::vulkan

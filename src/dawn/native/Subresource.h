@@ -105,6 +105,8 @@ struct SubresourceRange {
                                        uint32_t baseMipLevel);
 
     static SubresourceRange MakeFull(Aspect aspects, uint32_t layerCount, uint32_t levelCount);
+
+    bool operator==(const SubresourceRange& b) const = default;
 };
 
 // Helper function to use aspects as linear indices in arrays.
