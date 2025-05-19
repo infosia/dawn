@@ -60,7 +60,7 @@ struct State {
     core::type::Manager& ty{ir.Types()};
 
     /// For integer range analysis when needed
-    std::optional<ir::analysis::IntegerRangeAnalysis> integer_range_analysis;
+    std::optional<ir::analysis::IntegerRangeAnalysis> integer_range_analysis = {};
 
     /// Process the module.
     void Process() {
