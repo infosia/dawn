@@ -41,6 +41,7 @@
 #include "dawn/native/vulkan/CommandRecordingContextVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
+#include "dawn/native/vulkan/ImageViewCache.h"
 #include "dawn/native/vulkan/PhysicalDeviceVk.h"
 #include "dawn/native/vulkan/QueueVk.h"
 #include "dawn/native/vulkan/ResourceHeapVk.h"
@@ -52,28 +53,6 @@
 namespace dawn::native::vulkan {
 
 namespace {
-// Converts an Dawn texture dimension to a Vulkan image view type.
-// Contrary to image types, image view types include arrayness and cubemapness
-VkImageViewType VulkanImageViewType(wgpu::TextureViewDimension dimension) {
-    switch (dimension) {
-        case wgpu::TextureViewDimension::e1D:
-            return VK_IMAGE_VIEW_TYPE_1D;
-        case wgpu::TextureViewDimension::e2D:
-            return VK_IMAGE_VIEW_TYPE_2D;
-        case wgpu::TextureViewDimension::e2DArray:
-            return VK_IMAGE_VIEW_TYPE_2D_ARRAY;
-        case wgpu::TextureViewDimension::Cube:
-            return VK_IMAGE_VIEW_TYPE_CUBE;
-        case wgpu::TextureViewDimension::CubeArray:
-            return VK_IMAGE_VIEW_TYPE_CUBE_ARRAY;
-        case wgpu::TextureViewDimension::e3D:
-            return VK_IMAGE_VIEW_TYPE_3D;
-
-        case wgpu::TextureViewDimension::Undefined:
-            break;
-    }
-    DAWN_UNREACHABLE();
-}
 
 // Reserved texture usages to represent mixed read-only/writable depth-stencil texture usages
 // when combining the planes of depth-stencil textures. They can be combined with other in-pass
@@ -803,7 +782,9 @@ Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descripto
           mCombinedAspect != Aspect::None ? mCombinedAspect : GetFormat().aspects,
           GetArrayLayers(),
           GetNumMipLevels(),
-          TextureSyncInfo{wgpu::TextureUsage::None, wgpu::ShaderStage::None}) {}
+          TextureSyncInfo{wgpu::TextureUsage::None, wgpu::ShaderStage::None}) {
+    mImageViewCache = std::make_unique<ImageViewCache>(this);
+}
 
 void Texture::SetLabelHelper(const char* prefix) {
     SetDebugName(ToBackend(GetDevice()), mHandle, prefix, GetLabel());
@@ -814,6 +795,8 @@ void Texture::SetLabelImpl() {
 }
 
 void Texture::DestroyImpl() {
+    mImageViewCache = nullptr;
+
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
     // - It may be called if the texture is explicitly destroyed with APIDestroy.
     //   This case is NOT thread-safe and needs proper synchronization with other
@@ -1939,15 +1922,15 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         return {};
     }
 
-    Device* device = ToBackend(GetTexture()->GetDevice());
-    VkImageViewCreateInfo createInfo = GetCreateInfo(descriptor->format, descriptor->dimension);
+    Texture* texture = ToBackend(GetTexture());
+    Device* device = ToBackend(texture->GetDevice());
 
-    VkImageViewUsageCreateInfo usageInfo = {};
-    usageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_USAGE_CREATE_INFO;
-    usageInfo.usage = VulkanImageUsage(device, GetInternalUsage(), GetFormat());
-    createInfo.pNext = &usageInfo;
+    ImageViewCacheQuery query;
+    query.format = descriptor->format;
+    query.dimension = descriptor->dimension;
+    query.subresources = GetSubresourceRange();
+    query.usage = VulkanImageUsage(device, GetInternalUsage(), GetFormat());
 
-    VkSamplerYcbcrConversionInfo samplerYCbCrInfo = {};
     if (auto* yCbCrVkDescriptor = descriptor.Get<YCbCrVkDescriptor>()) {
         mIsYCbCr = true;
         mYCbCrVkDescriptor = yCbCrVkDescriptor->WithTrivialFrontendDefaults();
@@ -1956,25 +1939,19 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
         DAWN_TRY_ASSIGN(mSamplerYCbCrConversion,
                         CreateSamplerYCbCrConversionCreateInfo(mYCbCrVkDescriptor, device));
 
-        samplerYCbCrInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO;
-        samplerYCbCrInfo.pNext = nullptr;
-        samplerYCbCrInfo.conversion = mSamplerYCbCrConversion;
-
-        createInfo.pNext = &samplerYCbCrInfo;
+        query.isYCbCr = true;
+        query.samplerYCbCrConversion = mSamplerYCbCrConversion;
     }
 
-    DAWN_TRY(CheckVkSuccess(
-        device->fn.CreateImageView(device->GetVkDevice(), &createInfo, nullptr, &*mHandle),
-        "CreateImageView"));
+    DAWN_TRY_ASSIGN(mHandle, texture->GetImageViewCache()->GetImageView(query));
 
     // We should create an image view with format RGBA8Unorm on the BGRA8Unorm texture when the
     // texture is used as storage texture. See http://crbug.com/dawn/1641 for more details.
-    if (createInfo.format == VK_FORMAT_B8G8R8A8_UNORM &&
+    if (query.format == wgpu::TextureFormat::BGRA8Unorm &&
         (GetTexture()->GetInternalUsage() & wgpu::TextureUsage::StorageBinding)) {
-        createInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
-        DAWN_TRY(CheckVkSuccess(device->fn.CreateImageView(device->GetVkDevice(), &createInfo,
-                                                           nullptr, &*mHandleForBGRA8UnormStorage),
-                                "CreateImageView for BGRA8Unorm storage"));
+        query.format = wgpu::TextureFormat::RGBA8Unorm;
+        DAWN_TRY_ASSIGN(mHandleForBGRA8UnormStorage,
+                        texture->GetImageViewCache()->GetImageView(query));
     }
 
     SetLabelImpl();
@@ -1992,15 +1969,17 @@ void TextureView::DestroyImpl() {
         mSamplerYCbCrConversion = VK_NULL_HANDLE;
     }
 
-    if (mHandle != VK_NULL_HANDLE) {
+    /*if (mHandle != VK_NULL_HANDLE) {
         device->GetFencedDeleter()->DeleteWhenUnused(mHandle);
         mHandle = VK_NULL_HANDLE;
-    }
+    }*/
+    mHandle = VK_NULL_HANDLE;
 
-    if (mHandleForBGRA8UnormStorage != VK_NULL_HANDLE) {
+    /*if (mHandleForBGRA8UnormStorage != VK_NULL_HANDLE) {
         device->GetFencedDeleter()->DeleteWhenUnused(mHandleForBGRA8UnormStorage);
         mHandleForBGRA8UnormStorage = VK_NULL_HANDLE;
-    }
+    }*/
+    mHandleForBGRA8UnormStorage = VK_NULL_HANDLE;
 
     for (auto& handle : mHandlesFor2DViewOn3D) {
         if (handle != VK_NULL_HANDLE) {
@@ -2011,49 +1990,17 @@ void TextureView::DestroyImpl() {
 }
 
 VkImageView TextureView::GetHandle() const {
-    return mHandle;
+    if (!mHandle) {
+        return VK_NULL_HANDLE;
+    }
+    return mHandle->Get();
 }
 
 VkImageView TextureView::GetHandleForBGRA8UnormStorage() const {
-    return mHandleForBGRA8UnormStorage;
-}
-
-VkImageViewCreateInfo TextureView::GetCreateInfo(wgpu::TextureFormat format,
-                                                 wgpu::TextureViewDimension dimension,
-                                                 uint32_t depthSlice) const {
-    Device* device = ToBackend(GetTexture()->GetDevice());
-
-    VkImageViewCreateInfo createInfo;
-    createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-    createInfo.pNext = nullptr;
-    createInfo.flags = 0;
-    createInfo.image = ToBackend(GetTexture())->GetHandle();
-    createInfo.viewType = VulkanImageViewType(dimension);
-
-    const Format& textureFormat = GetTexture()->GetFormat();
-    if (textureFormat.HasStencil() &&
-        (textureFormat.HasDepth() || !device->IsToggleEnabled(Toggle::VulkanUseS8))) {
-        // Unlike multi-planar formats, depth-stencil formats have multiple aspects but are not
-        // created with VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT.
-        // https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImageViewCreateInfo.html#VUID-VkImageViewCreateInfo-image-01762
-        // Without, VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT, the view format must match the texture
-        // format.
-        createInfo.format = VulkanImageFormat(device, textureFormat.format);
-    } else {
-        createInfo.format = VulkanImageFormat(device, format);
+    if (!mHandleForBGRA8UnormStorage) {
+        return VK_NULL_HANDLE;
     }
-
-    createInfo.components = VkComponentMapping{VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G,
-                                               VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A};
-
-    const SubresourceRange& subresources = GetSubresourceRange();
-    createInfo.subresourceRange.baseMipLevel = subresources.baseMipLevel;
-    createInfo.subresourceRange.levelCount = subresources.levelCount;
-    createInfo.subresourceRange.baseArrayLayer = subresources.baseArrayLayer + depthSlice;
-    createInfo.subresourceRange.layerCount = subresources.layerCount;
-    createInfo.subresourceRange.aspectMask = VulkanAspectMask(subresources.aspects);
-
-    return createInfo;
+    return mHandleForBGRA8UnormStorage->Get();
 }
 
 ResultOrError<VkImageView> TextureView::GetOrCreate2DViewOn3D(uint32_t depthSlice) {
@@ -2068,9 +2015,19 @@ ResultOrError<VkImageView> TextureView::GetOrCreate2DViewOn3D(uint32_t depthSlic
         return static_cast<VkImageView>(mHandlesFor2DViewOn3D[depthSlice]);
     }
 
-    Device* device = ToBackend(GetTexture()->GetDevice());
-    VkImageViewCreateInfo createInfo =
-        GetCreateInfo(GetFormat().format, wgpu::TextureViewDimension::e2D, depthSlice);
+    Texture* texture = ToBackend(GetTexture());
+    Device* device = ToBackend(texture->GetDevice());
+
+    ImageViewCacheQuery query;
+    query.format = GetFormat().format;
+    query.dimension = wgpu::TextureViewDimension::e2D;
+    query.subresources = GetSubresourceRange();
+    query.usage = VulkanImageUsage(device, GetInternalUsage(), GetFormat());
+    query.depthSlice = depthSlice;
+
+    VkImageViewCreateInfo createInfo = texture->GetImageViewCache()->GetCreateInfo(query);
+    /*VkImageViewCreateInfo createInfo =
+        GetCreateInfo(GetFormat().format, wgpu::TextureViewDimension::e2D, depthSlice);*/
 
     VkImageView view;
     DAWN_TRY(CheckVkSuccess(
@@ -2092,7 +2049,7 @@ YCbCrVkDescriptor TextureView::GetYCbCrVkDescriptor() const {
 }
 
 void TextureView::SetLabelImpl() {
-    SetDebugName(ToBackend(GetDevice()), mHandle, "Dawn_TextureView", GetLabel());
+    SetDebugName(ToBackend(GetDevice()), mHandle->Get(), "Dawn_TextureView", GetLabel());
 }
 
 }  // namespace dawn::native::vulkan
