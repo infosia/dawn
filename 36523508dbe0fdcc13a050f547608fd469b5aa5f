@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f2661fa_f9055a9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T11:31:19Z",
+      "side": 1,
+      "message": "Splitting object between internal and external ones is pretty expensive unfortunately, have you considered the following alternatives to try to make it less expensive. For BGL we need an internal object because it has more data than what the backends need with the pipelineCompatToken but even that I\u0027d love to get rid of with some of the pipeline defaulting improvement suggested in the group. TextureViews don\u0027t contain any additional data so we could avoid the external/internal split. Potential options could be:\n\n - Use a map\u003cdesc, WeakRef\u003cTextureView\u003e\u003e to break the reference cycle.\n - Cache at the VkImageView level by making the dawn::native::vulkan::TextureView ask it\u0027s parent texture to create a view based on a descriptor / notify one is no longer needed.",
+      "revId": "36523508dbe0fdcc13a050f547608fd469b5aa5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c68090a9_a9a1f4c9",
