@@ -196,6 +196,7 @@ if (EMSCRIPTEN)
     add_library(emdawnwebgpu_config INTERFACE)
     target_include_directories(emdawnwebgpu_config BEFORE INTERFACE
         "${EM_BUILD_GEN_DIR}/include"
+        "$<BUILD_INTERFACE:${DAWN_INCLUDE_DIR}>"
     )
     add_dependencies(emdawnwebgpu_config
         webgpu_generated_struct_info_js
@@ -239,6 +240,7 @@ if (EMSCRIPTEN)
             "${EM_BUILD_GEN_DIR}/include/webgpu/webgpu_cpp_chained_struct.h"
             "${DAWN_INCLUDE_DIR}/webgpu/webgpu_enum_class_bitmasks.h"
         DEPENDS
+            dawn_glfw
             emdawnwebgpu_c
     )
 
