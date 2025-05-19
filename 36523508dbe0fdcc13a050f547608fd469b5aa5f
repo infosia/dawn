@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "84512208_0af00668",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-19T17:35:54Z",
+      "side": 1,
+      "message": "The concern about the WeakRef map is that we expect a lot of uses like:\n\ncolorAttachments: [{\n  view: texture.createView()\n}]\n\nWhich feasibly derefs and destroys the view before the next frame, meaning you\u0027ll always get a cache miss even though this is the exact scenario that we\u0027re trying to improve.\n\nCaching at the VkImageView level seems more tractable. I was hoping to implement something that benefits all backends, but I agree that this approach feels heavyweight, and it\u0027s really Android that I\u0027m trying to improve anyway. I\u0027ll take a look at how well that approach will work.",
+      "parentUuid": "6f2661fa_f9055a9c",
+      "revId": "36523508dbe0fdcc13a050f547608fd469b5aa5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c68090a9_a9a1f4c9",
