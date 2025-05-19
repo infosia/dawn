@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "65321f34_a343c22c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "Really nice work figuring out how to make things appear as much as possible like the browser environment given the constraints of node.js\n\nI wonder if it could have been split up a bit, it was hard to understand how some parts of it related to one another.",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "148bf33c_be876ceb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "There\u0027s a number of bugs that could be associated with this CL IIRC",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6c374f57_3f28a9a8",
@@ -14,6 +48,245 @@
       "writtenOn": "2025-05-16T07:34:16Z",
       "side": 1,
       "message": "Hey, hope this is ok. Trying to get more dawn.node stuff to pass CTS and be compatible with more libraries",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b33781f6_26690fb7",
+        "filename": "src/dawn/node/ManualConstructors.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "```suggestion\n// Some constructors can not (yet?) be auto-generated so implement them manually.\n```",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59cf8fc5_d0cc8d26",
+        "filename": "src/dawn/node/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "nit: unused, did you mean to call it in Initialize?",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81067c6f_74397bca",
+        "filename": "src/dawn/node/binding/Errors.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "These seem like they might not be used either?",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b01bbdbc_a51fb874",
+        "filename": "src/dawn/node/binding/GPUAdapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "nit: leftover from earlier experimentation?",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "076fab16_173eb4f2",
+        "filename": "src/dawn/node/binding/GPUDevice.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "```suggestion\n    static GPUDevice* Lookup(wgpu::Device wgpu_device);\n```",
+      "range": {
+        "startLine": 130,
+        "startChar": 42,
+        "endLine": 130,
+        "endChar": 52
+      },
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db5295d2_c0e280d4",
+        "filename": "src/dawn/node/binding/GPUDevice.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "u-nit: these could be declared in the cpp file.",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb3ac2ee_9e070b72",
+        "filename": "src/dawn/node/interop/Browser.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "Any reason this is different from https://html.spec.whatwg.org/multipage/webappapis.html#eventhandler in which only the `EventListenerCallback` is used?",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c01f3a01_83790a0b",
+        "filename": "src/dawn/node/interop/Core.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "nit: we can early return, also can we have in a comment (on the header) the JS equivalent of what we are doing here? It\u0027s hard to figure out.",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60fd79b2_bf1899db",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "nit: This seems more like a manually implemented than just manual for the constructor.",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 50
+      },
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8ed76af_164b95b3",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "Can you explain what\u0027s going on here? It seems we use `LegacyNoInterfaceObject` to decide where to get the prototype from, which seems kinda backwards?",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f59b197_8eb0d925",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 82
+      },
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa8d03e3_e7a919c0",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "What is this special casing used for? Any way to avoid the special casing?",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55d4e5ab_01c60d74",
+        "filename": "src/dawn/node/interop/WebGPU.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-19T10:12:12Z",
+      "side": 1,
+      "message": "```suggestion\nconst Constructors* ConstructorsFor(Napi::Env env);\n```",
       "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
