@@ -11,10 +11,6 @@ else
 fi
 PKG_FILE=emdawnwebgpu_pkg-${PKG_VERSION}.zip
 
-# Variables for documentation.
-SHA=$(git rev-parse HEAD)
-EMSDK_VERSION=$(python3 tools/activate-emsdk --get-emsdk-version)
-
 # Initialize dependencies. We could use gclient for this, but then we still have to
 # install gclient, and it takes a long time. We only need a few deps for emdawnwebgpu.
 git submodule update --init --depth=1 third_party/abseil-cpp
@@ -26,6 +22,10 @@ python3 tools/activate-emsdk
 mkdir -p out/wasm
 third_party/emsdk/upstream/emscripten/emcmake cmake -S=. -B=out/wasm
 make -j4 -C out/wasm emdawnwebgpu_pkg
+
+# Variables for documentation.
+SHA=$(git rev-parse HEAD)
+EMSDK_VERSION=$(python3 -c 'import json; print(json.load(open("third_party/emsdk/emscripten-releases-tags.json"))["aliases"]["latest"])')
 
 # Create zip
 cat << EOF > out/wasm/emdawnwebgpu_pkg/VERSION.txt
