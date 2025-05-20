@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b855f19b_8f4ba81a",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-20T07:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9d67df0_f6a230cf",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 8
+      },
+      "revId": "db2180fd06ef802618eda505630376f0af2ca22c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2bd9bac8_760026dc",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-05-19T15:03:47Z",
       "side": 1,
       "message": "Please add // !defined(FOO) after all the #endif to help follow the structure as there is no indentation.",
+      "revId": "db2180fd06ef802618eda505630376f0af2ca22c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96c5d6b0_57227125",
+        "filename": "src/dawn/glfw/utils.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-20T07:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bd9bac8_760026dc",
       "revId": "db2180fd06ef802618eda505630376f0af2ca22c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

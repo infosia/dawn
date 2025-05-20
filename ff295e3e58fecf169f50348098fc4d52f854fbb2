@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f5e7cad3_9fa12e4f",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-20T07:59:45Z",
+      "side": 1,
+      "message": "Building webgpu-cross-platform-app with emdawnwebgpu without `dawn::dawn_common` and `dawn::dawncpp_headers` result in the following error:\n\n```\n-- Build files have been written to: /Users/fbeaufort/github/webgpu-cross-platform-app/build-web\n[  0%] Built target emdawnwebgpu_js_gen\n[  0%] Built target emdawnwebgpu_headers_gen\n[  0%] Built target emdawnwebgpu_cpp\n[  0%] Built target webgpu_generated_struct_info32\n[  0%] Built target webgpu_generated_struct_info64\n[  0%] Built target webgpu_generated_struct_info_js\n[ 50%] Built target emdawnwebgpu_c\n[ 50%] Building CXX object dawn/src/dawn/glfw/CMakeFiles/dawn_glfw.dir/utils.cpp.o\n[ 50%] Linking CXX static library libdawn_glfw.a\n[ 50%] Built target dawn_glfw\n[ 50%] Building CXX object CMakeFiles/app.dir/main.cpp.o\n/Users/fbeaufort/github/webgpu-cross-platform-app/main.cpp:9:10: fatal error: \u0027webgpu/webgpu_glfw.h\u0027 file not found\n    9 | #include \u003cwebgpu/webgpu_glfw.h\u003e\n      |          ^~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\nmake[2]: *** [CMakeFiles/app.dir/main.cpp.o] Error 1\nmake[1]: *** [CMakeFiles/app.dir/all] Error 2\nmake: *** [all] Error 2\n```\n\nI don\u0027t understand how `webgpu/webgpu_glfw.h` is related to `dawn::dawn_common` and  `dawn::dawncpp_headers`. Any idea?",
+      "parentUuid": "dbdde06f_65c4a79e",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "ff295e3e58fecf169f50348098fc4d52f854fbb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1fa7a72b_c6edd7ab",
         "filename": "src/dawn/glfw/utils.cpp",
         "patchSetId": 1
