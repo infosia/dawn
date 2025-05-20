@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6bd2f92_634b4f7f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-20T12:25:38Z",
+      "side": 1,
+      "message": "Another alternative would be to cache VkImageView for renderable textures in dawn::native::vulkan::Texture and keep them alive for a long time (until the texture is destroyed or TrimMemory is called?)",
+      "parentUuid": "84512208_0af00668",
+      "revId": "36523508dbe0fdcc13a050f547608fd469b5aa5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c68090a9_a9a1f4c9",
