@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47152a1c_af0994fc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-20T19:54:06Z",
+      "side": 1,
+      "message": "nit. Maybe wrong link? Right now this is just a self-link.",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 65
+      },
+      "revId": "d27d9565c617bc60bcaec9c0994c5d521514dfeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef7c897b_a4ea2d74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-20T19:54:06Z",
+      "side": 1,
+      "message": "Nice! I tried to fix this a while back but couldn\u0027t figure out the issue. I think we have the same/similar problem in the gn build as well? Do you think you could take a look there at some point and see if we could fix that too?",
+      "revId": "d27d9565c617bc60bcaec9c0994c5d521514dfeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
