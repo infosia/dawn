@@ -70,6 +70,24 @@
       "parentUuid": "2015298a_6ab2d16b",
       "revId": "657b4fa6fc3e771f296b9570adbf21fe9d4e0a7f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7879e50_183377ee",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-20T12:01:25Z",
+      "side": 1,
+      "message": "Ah that\u0027s mildly annoying that using that file requires the public config. Can we add just that file to EMDAWNWGPU? Kai?",
+      "parentUuid": "daf09d53_9c01a8c6",
+      "revId": "657b4fa6fc3e771f296b9570adbf21fe9d4e0a7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
