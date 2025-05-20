@@ -34,6 +34,24 @@
       "parentUuid": "69f11cde_786ced9c",
       "revId": "657b4fa6fc3e771f296b9570adbf21fe9d4e0a7f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2015298a_6ab2d16b",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-20T11:49:33Z",
+      "side": 1,
+      "message": "It seems you still link against the Dawn public config when in WASM it should just be emwgpudawn?",
+      "parentUuid": "814849a9_db1c7be4",
+      "revId": "657b4fa6fc3e771f296b9570adbf21fe9d4e0a7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
