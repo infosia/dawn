@@ -69,6 +69,24 @@
       "parentUuid": "72a5b9ba_db8f8a61",
       "revId": "c3733b3a2c91533d7c51e05f46a1cc83ac164316",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5689bade_e98ad30f",
+        "filename": "src/dawn/native/metal/RenderPipelineMTL.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-20T17:12:17Z",
+      "side": 1,
+      "message": "Ah, found it:\n\n```\nIf you construct your shaders dynamically at runtime, you can still construct\nargument buffers as parameters for the shader. Define each argument separately\nand then add it to an array of MTLArgumentDescriptor objects. To create an\nencoder for this type of argument buffer, call the\nnewArgumentEncoderWithArguments: method of the MTLDevice class.\n```\n\nSo, I just need to do that to create the encoder dynamically and then I don\u0027t need the function.",
+      "parentUuid": "c17dd87b_16f773dc",
+      "revId": "c3733b3a2c91533d7c51e05f46a1cc83ac164316",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
