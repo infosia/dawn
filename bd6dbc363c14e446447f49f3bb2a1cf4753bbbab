@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "05cea19c_ffe60011",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-20T06:15:26Z",
+      "side": 1,
+      "message": "I\u0027ve been using [dawn] to mean src/dawn and [emscripten] to mean */emdawnwebgpu. Didn\u0027t realize that wasn\u0027t the usual. What would I use here, [dawn][native][emscripten]? Do we have any documented conventions?",
+      "parentUuid": "2d5559ba_f71dd7af",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "145c202a_3525e5d0",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-05-19T08:56:44Z",
       "side": 1,
       "message": "Turns out we can kinda safely assume that given that single bindings in shader/API can be used with arrayed bindings of size 1 in shader/API!",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc934561_9044160e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-20T06:15:26Z",
+      "side": 1,
+      "message": "Did not realize. I looked at the tests just now and realized that was already tested :)",
+      "parentUuid": "145c202a_3525e5d0",
       "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0acd1ab6_686267a8",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-20T06:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ef54880_aa9ec50b",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df7d0cb9_c70bf957",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-05-19T08:56:44Z",
       "side": 1,
       "message": "ditto",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34e79592_390e5fd1",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-20T06:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df7d0cb9_c70bf957",
       "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -103,6 +175,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80c1a323_b99b31dc",
+        "filename": "src/dawn/native/BindingInfo.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-20T06:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab1f9aa_41511014",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e3b0efde_7b9d799d",
@@ -120,6 +210,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b76acc46_87ade60f",
+        "filename": "src/dawn/native/PipelineLayout.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-20T06:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b0efde_7b9d799d",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "094f9636_bd63dddc",
@@ -133,6 +241,24 @@
       "writtenOn": "2025-05-19T08:56:44Z",
       "side": 1,
       "message": "nit: Proper TODO with a bug?",
+      "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9d0448e_e51ea4a1",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-20T06:15:26Z",
+      "side": 1,
+      "message": "whoops, I intended to fix this in a separate CL.\nhttps://dawn-review.googlesource.com/c/dawn/+/242954",
+      "parentUuid": "094f9636_bd63dddc",
       "revId": "bd6dbc363c14e446447f49f3bb2a1cf4753bbbab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
