@@ -647,6 +647,9 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Adds a small amount of work to empty render passes which perform a resolve. This toggle is "
       "enabled by default on Qualcomm GPUs, where it is needed to force the resolve to complete.",
       "https://crbug.com/411656647", ToggleStage::Device}},
+    {Toggle::MetalUseArgumentBuffers,
+     {"metal_use_argument_buffers", "Enables the use of Argument Buffers on Metal.",
+      "https://crbug.com/dawn/363031535", ToggleStage::Device}},
     {Toggle::NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
      {"no_workaround_sample_mask_becomes_zero_for_all_but_last_color_target",
       "MacOS 12.0+ Intel has a bug where the sample mask is only applied for the last color "

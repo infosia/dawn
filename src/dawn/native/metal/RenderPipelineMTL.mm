@@ -380,7 +380,7 @@ MaybeError RenderPipeline::InitializeImpl() {
 
     const PerStage<ProgrammableStage>& allStages = GetAllStages();
     const ProgrammableStage& vertexStage = allStages[wgpu::ShaderStage::Vertex];
-    ShaderModule::MetalFunctionData vertexData;
+
     DAWN_TRY_CONTEXT(ToBackend(vertexStage.module.Get())
                          ->CreateFunction(SingleShaderStage::Vertex, vertexStage,
                                           ToBackend(GetLayout()), &vertexData, 0xFFFFFFFF, this),
@@ -391,9 +391,12 @@ MaybeError RenderPipeline::InitializeImpl() {
         mStagesRequiringStorageBufferLength |= wgpu::ShaderStage::Vertex;
     }
 
+    if (GetDevice()->IsToggleEnabled(Toggle::MetalUseArgumentBuffers)) {
+        mVertexFunction = AcquireNSPRef(vertexData.function.Get());
+    }
+
     if (GetStageMask() & wgpu::ShaderStage::Fragment) {
         const ProgrammableStage& fragmentStage = allStages[wgpu::ShaderStage::Fragment];
-        ShaderModule::MetalFunctionData fragmentData;
         DAWN_TRY_CONTEXT(
             ToBackend(fragmentStage.module.Get())
                 ->CreateFunction(SingleShaderStage::Fragment, fragmentStage, ToBackend(GetLayout()),
@@ -403,6 +406,10 @@ MaybeError RenderPipeline::InitializeImpl() {
         descriptorMTL.fragmentFunction = fragmentData.function.Get();
         if (fragmentData.needsStorageBufferLength) {
             mStagesRequiringStorageBufferLength |= wgpu::ShaderStage::Fragment;
+        }
+
+        if (GetDevice()->IsToggleEnabled(Toggle::MetalUseArgumentBuffers)) {
+            mFragmentFunction = AcquireNSPRef(fragmentData.function.Get());
         }
 
         const auto& fragmentOutputMask = fragmentStage.metadata->fragmentOutputMask;
@@ -492,6 +499,14 @@ MTLWinding RenderPipeline::GetMTLFrontFace() const {
 
 MTLCullMode RenderPipeline::GetMTLCullMode() const {
     return mMtlCullMode;
+}
+
+id<MTLFunction> RenderPipeline::GetVertexFunction() {
+    return mVertexFunction.Get();
+}
+
+id<MTLFunction> RenderPipeline::GetFragmentFunction() {
+    return mFragmentFunction.Get();
 }
 
 void RenderPipeline::Encode(id<MTLRenderCommandEncoder> encoder) {
