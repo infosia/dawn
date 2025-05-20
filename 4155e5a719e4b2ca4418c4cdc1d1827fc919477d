@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c49cea2_e4c4fac3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-20T18:26:09Z",
+      "side": 1,
+      "message": "I like the change, but am hesitant to do it atm because Skia pins their emsdk version. My plan was to keep this pinned in Dawn as well until we migrate Skia to our pinned version, then ask further about making this updated based on hash. The main reason is because when I asked them about it, they said they had specific users that are using pinned versions of emsdk and needed things to work on those versions. I\u0027m not sure if anything has changed since then, but assuming not, I would want to hold off on this a bit until we get ok\u0027s from them. WDYT?",
+      "revId": "4155e5a719e4b2ca4418c4cdc1d1827fc919477d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
