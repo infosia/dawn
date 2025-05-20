@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "62aa8267_a77c3c32",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-20T19:47:39Z",
+      "side": 1,
+      "message": "So Brandon and I brainstormed about this for a while last week. I\u0027m thinking about it again now, and I don\u0027t remember if we considered just having a `LRUMap\u003cdesc, Ref\u003cTextureView\u003e, max_size\u003d4?\u003e` in `Texture` and dropping that map when we either (1) lose the last reference to the `Texture`, or (2) explicitly call `texture.destroy()`. So while we do have a ref-cycle, there\u0027s a clear way for the cycle to get cleaned up. This would solve the common `{ view: texture.CreateView() }` usage because if a user can call that, they MUST have an external reference to `texture` which means we can potentially hit the cache. If the user dropped the last reference to `texture`, but have a view, then they must be using the same view because they can\u0027t make another one, i.e.\n\n```\ntextureView \u003d texture.createView();\ntexture \u003d nullptr;\n\ndoSomething({ view: textureView });\n...\n\n// Can\u0027t make another view here because texture \u003d\u003d nullptr.\ndoSomethingElse({ view: textureView });\n```\n\nIf we did consider it, do you remember why we decided it wouldn\u0027t work? The only downside of this (that I can think of right now) is that we would need to make `TextureBase` have an external ref count also, but that\u0027s probably fine since we do that for quite a few other types already?",
+      "parentUuid": "f6bd2f92_634b4f7f",
+      "revId": "36523508dbe0fdcc13a050f547608fd469b5aa5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c68090a9_a9a1f4c9",
