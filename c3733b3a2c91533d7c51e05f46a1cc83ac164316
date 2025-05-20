@@ -33,6 +33,24 @@
       "message": "I had to keep these alive because they hold the `library` and in order to get access to the function we need the library to be alive.",
       "revId": "c3733b3a2c91533d7c51e05f46a1cc83ac164316",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72a5b9ba_db8f8a61",
+        "filename": "src/dawn/native/metal/RenderPipelineMTL.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-20T16:40:35Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need them because all the information to create the encoders are in the BGLs. What we should do is:\n\n - Make all resources use manual tracking, and manually track them in TrackUsage. (that can be done before the argument buffer change). See https://developer.apple.com/documentation/metal/tracking-the-resource-residency-of-argument-buffers?language\u003dobjc and https://developer.apple.com/documentation/metal/mtlresource/hazardtrackingmode?language\u003dobjc that should be untracked for all resources.\n - Samplers should have argument buffer enabled on them (careful of maxAniso, we can talk about it later)\n - In the BGL create an array of [MTLArgumentDescriptor](https://developer.apple.com/documentation/metal/mtlargumentdescriptor?language\u003dobjc)\n   - Dynamic buffers would be hoisted out. Or we change code to apply the offset in the shader.\n - In the BG creation, use the BGL argument descriptors to encode an argument buffer.\n   - Ideally the argument buffers are pooled in larger buffers to avoid doing 10000s of allocations, similar to VulkanDescriptorPoolAllocator.\n - In the ComandBuffer call setBuffer on SetBindGroup (or when applying them).\n\nAll of the cost of BGs is moved to BG creation and things pooled / reused as much as possible.",
+      "parentUuid": "7f83e842_dee20daf",
+      "revId": "c3733b3a2c91533d7c51e05f46a1cc83ac164316",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

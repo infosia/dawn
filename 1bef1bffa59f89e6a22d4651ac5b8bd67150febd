@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5c8f022_4bba018e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-20T16:40:35Z",
+      "side": 1,
+      "message": "Nice work getting something running, it shows that the Tint part is very far along.",
+      "revId": "1bef1bffa59f89e6a22d4651ac5b8bd67150febd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
