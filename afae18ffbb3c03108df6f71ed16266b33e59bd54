@@ -95,6 +95,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4be0a2ee_011bc5e9",
+        "filename": "src/dawn/native/webgpu/PhysicalDeviceWGPU.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-20T12:16:35Z",
+      "side": 1,
+      "message": "Ah yes I guess it is the same as `ToAPI` so we don\u0027t need to add a `ToC` necessarily.",
+      "parentUuid": "d95bac43_8109e053",
+      "range": {
+        "startLine": 106,
+        "startChar": 60,
+        "endLine": 106,
+        "endChar": 91
+      },
+      "revId": "afae18ffbb3c03108df6f71ed16266b33e59bd54",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10518471_dce2858b",
