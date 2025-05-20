@@ -33,6 +33,23 @@
       "message": "LGTM",
       "revId": "b686708874b00ba0930d4a958124839cf5c9d401",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f57534d0_89dd323f",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-20T20:19:40Z",
+      "side": 1,
+      "message": "Please also add this to the `FuzzedOptions` struct in `writer_fuzz.cc` so that we get fuzzer coverage. We don\u0027t automatically fuzz every writer option in the HLSL backend.",
+      "revId": "b686708874b00ba0930d4a958124839cf5c9d401",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
