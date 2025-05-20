@@ -122,6 +122,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7e856ecc_37451d53",
+        "filename": "src/dawn/node/binding/EventTarget.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-20T07:50:56Z",
+      "side": 1,
+      "message": "Ah! I forgot to comment about this yesterday. I believe could also lead to a live leak if the device is captured in the closures for the listeners for examples. The Reference here is a GC root and would do eventTargetRef-\u003eEventTarget-\u003eclosure-\u003eJS GPUDevice-\u003ebinding::GPUDevice-\u003ebindings::EventTargetRef-\u003eeventTargetRef.\n\nCan we have at least a TODO to fix it?",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b01bbdbc_a51fb874",
         "filename": "src/dawn/node/binding/GPUAdapter.h",
         "patchSetId": 3
