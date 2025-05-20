@@ -16,6 +16,46 @@
       "message": "PTAL.",
       "revId": "7eae16f9f3f6c5a9fb9f537ae1847c49da35b0a4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92436ec8_0ff2a654",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-20T20:34:26Z",
+      "side": 1,
+      "message": "Don\u0027t need to handle it in this CL, but I\u0027ve just noticed that the SPIR-V spec says this of the coordinates vector for the sampling instructions:\n```\nIt may be a vector larger than needed, but all unused components appear after all used components.\n```\ne.g. you could have a vec4 when sampling from a non-arrayed 2D image, and it would just ignore the last two components (IIUC).",
+      "revId": "7eae16f9f3f6c5a9fb9f537ae1847c49da35b0a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fe796a7_849d4885",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-20T20:34:26Z",
+      "side": 1,
+      "message": "Nit: use `new_coords_width` in these two places, since you\u0027ve defined it.\n\nActually, could just do `auto* new_coords_ty \u003d ty.MatchWidth(coords_ty-\u003eType(), new_coords_width);`",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 78
+      },
+      "revId": "7eae16f9f3f6c5a9fb9f537ae1847c49da35b0a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
