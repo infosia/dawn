@@ -34,6 +34,24 @@
       "parentUuid": "2c49cea2_e4c4fac3",
       "revId": "4155e5a719e4b2ca4418c4cdc1d1827fc919477d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc0a5705_bb709ecf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-20T19:51:08Z",
+      "side": 1,
+      "message": "I think that it\u0027s not THAT unlikely? I can imagine that eventually we set up a bot to autoroll `emsdk` into Dawn, but we would only manually roll the version at which point we would have a newer `emsdk` but potentially an older pinned version?\n\nIf we land this, then it would limit us in that we can\u0027t set up an autoroller for `emsdk` and only do manual rolls of it. Maybe that\u0027s fine? But I was hoping we could potentially leave the option open.",
+      "parentUuid": "cc9f10e1_eeb19240",
+      "revId": "4155e5a719e4b2ca4418c4cdc1d1827fc919477d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
