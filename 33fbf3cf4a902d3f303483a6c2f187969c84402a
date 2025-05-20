@@ -16,6 +16,29 @@
       "message": "Please help to review Yulong\u0027s work, Thanks!\n@Yulong, would you mind to provide more details about why this CL? (Better to create an issue and link to this CL)",
       "revId": "33fbf3cf4a902d3f303483a6c2f187969c84402a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48f8b213_39d0b6bd",
+        "filename": "src/cmake/DawnCompilerPlatformFlags.cmake",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-20T06:30:15Z",
+      "side": 1,
+      "message": "I think it should work to just remove `FORCE` here. That tells CMake to take the value from the user\u0027s `-DCMAKE_OSX_DEPLOYMENT_TARGET`. (Because `CACHE` is used, the value `\"11.0\"` here is only the default when CMake build is first set up. `-D` initializes the cache before this runs.)\n\nI am not sure why we have `FORCE` here to begin with, but it doesn\u0027t seem needed.",
+      "range": {
+        "startLine": 68,
+        "startChar": 80,
+        "endLine": 68,
+        "endChar": 85
+      },
+      "revId": "33fbf3cf4a902d3f303483a6c2f187969c84402a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
