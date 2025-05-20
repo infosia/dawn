@@ -88,6 +88,24 @@
       "parentUuid": "daf09d53_9c01a8c6",
       "revId": "657b4fa6fc3e771f296b9570adbf21fe9d4e0a7f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60e8f17d_c7c01763",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-20T22:09:04Z",
+      "side": 1,
+      "message": "I\u0027d be fine with having webgpu_glfw in emdawnwebgpu.\n\nBTW, I think we should make it work with `--use-port\u003dcontrib.glfw3`, rather than actually compiling our copy of glfw. (I am not sure which way you currently have it set up, but I\u0027m guessing that the dependency below on `glfw` is `dawn/third_party/glfw`.)",
+      "parentUuid": "c7879e50_183377ee",
+      "revId": "657b4fa6fc3e771f296b9570adbf21fe9d4e0a7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
