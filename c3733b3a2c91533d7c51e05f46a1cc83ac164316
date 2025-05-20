@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4df1fe7_0fa878a2",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-20T15:39:02Z",
+      "side": 1,
+      "message": "This is where about 45% of my time goes (another 30% goes to creating the buffer for the argument buffer).\n\nI\u0027m guessing this is the wrong place to do this, also it leaks as I\u0027m guessing I can\u0027t clean this up until the command buffer is done processing.  Where would be the right place to create the encoder and buffers? I need to create an encoder/buffer for each bind group (we probably want a single allocation for the buffers that we suballocate from, but that can come later).",
+      "revId": "c3733b3a2c91533d7c51e05f46a1cc83ac164316",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f83e842_dee20daf",
+        "filename": "src/dawn/native/metal/RenderPipelineMTL.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-20T15:39:02Z",
+      "side": 1,
+      "message": "I had to keep these alive because they hold the `library` and in order to get access to the function we need the library to be alive.",
+      "revId": "c3733b3a2c91533d7c51e05f46a1cc83ac164316",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
