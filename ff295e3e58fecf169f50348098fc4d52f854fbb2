@@ -111,6 +111,24 @@
       "message": "TODO: Expose an API in Emscripten to get the CSS selector of the canvas.",
       "revId": "ff295e3e58fecf169f50348098fc4d52f854fbb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bec92bd5_2da9dd9a",
+        "filename": "src/dawn/glfw/utils.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-20T09:40:51Z",
+      "side": 1,
+      "message": "I now use `EM_ASM({ specialHTMLTargets[\"!canvas\"] \u003d Module.canvas; });` to get Module.canvas.",
+      "parentUuid": "1fa7a72b_c6edd7ab",
+      "revId": "ff295e3e58fecf169f50348098fc4d52f854fbb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
