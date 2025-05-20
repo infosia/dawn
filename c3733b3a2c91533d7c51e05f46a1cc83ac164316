@@ -51,6 +51,24 @@
       "parentUuid": "7f83e842_dee20daf",
       "revId": "c3733b3a2c91533d7c51e05f46a1cc83ac164316",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c17dd87b_16f773dc",
+        "filename": "src/dawn/native/metal/RenderPipelineMTL.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-20T16:56:31Z",
+      "side": 1,
+      "message": "Hm, I\u0027ll have to re-read the metal docs, current to write into the argument buffer, I use an argument buffer encoder, but to get that, I need the `MTLFunction`.  ` vertEncoder \u003d [vFunc newArgumentEncoderWithBufferIndex:binding_group];`\n\nSo, for each group I create an enocder which comes from the associated MTLFunction. I\u0027ll check the docs to see if there is a way to get the encoder without going through the function.",
+      "parentUuid": "72a5b9ba_db8f8a61",
+      "revId": "c3733b3a2c91533d7c51e05f46a1cc83ac164316",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
