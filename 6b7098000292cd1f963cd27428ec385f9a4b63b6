@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b399fb7e_bb904111",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-20T14:47:16Z",
+      "side": 1,
+      "message": "BUILD_SHARED_LIBS\u003dON reproduces status qui\nBUILD_SHARED_LIBS\u003dOFF builds dawn statically",
+      "revId": "6b7098000292cd1f963cd27428ec385f9a4b63b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31cbfab8_55581573",
