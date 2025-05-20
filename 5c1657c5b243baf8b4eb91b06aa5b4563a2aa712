@@ -252,6 +252,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "650210a8_a32fe36b",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-20T15:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a14ab9db_ac5134d1",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f19585db_500a89d6",
         "filename": "src/cmake/BundleLibraries.cmake",
         "patchSetId": 4
@@ -492,6 +510,24 @@
       "writtenOn": "2025-04-25T12:54:04Z",
       "side": 1,
       "message": "Can we add this one only if `BUILD_SHARED_LIBS` is on, so `$\u003c BUILD_SHARED_LIBS:WGPU_SHARED_LIBRARY\u003e`?",
+      "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c1fcf46_1c864906",
+        "filename": "src/dawn/native/CMakeLists.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 920,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-20T15:19:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1db3d536_0b9f3c9a",
       "revId": "5c1657c5b243baf8b4eb91b06aa5b4563a2aa712",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
