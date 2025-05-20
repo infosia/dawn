@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69f11cde_786ced9c",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-20T09:04:35Z",
+      "side": 1,
+      "message": "Mmmmh we should not rely on dawn_common in Emscripten mode if possible. WDYT of making a special utils_emscripten.cc which is the only cc file added when compiling with emscripten. It then wouldn\u0027t depend on dawn_common.",
+      "revId": "657b4fa6fc3e771f296b9570adbf21fe9d4e0a7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
