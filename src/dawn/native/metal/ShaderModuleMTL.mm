@@ -299,6 +299,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.tintOptions.disable_polyfill_integer_div_mod =
         device->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
     req.tintOptions.vertex_pulling_config = std::move(vertexPullingTransformConfig);
+    req.tintOptions.use_argument_buffers = device->IsToggleEnabled(Toggle::MetalUseArgumentBuffers);
 
     req.limits = LimitsForCompilationRequest::Create(device->GetLimits().v1);
     req.adapterSupportedLimits =
