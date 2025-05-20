@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "161db485_22860e85",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-20T18:12:27Z",
+      "side": 1,
+      "message": "LGTM with one nit.",
+      "revId": "b41f2c4cf06d1292896c100f243f22c0c2738bab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7206ac6c_0ff4adcc",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/pass_workgroup_id_as_argument.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-20T18:12:27Z",
+      "side": 1,
+      "message": "Nit: Our canonical pattern for this would be to use a `Hashset` and make use of the fact that the `Add` function returns `true` iff the entry was added:\n```\nif (replaced_idxexpr.Add(user-\u003eDeclaration)) {\n  // do replacement\n}\n```\n\nAI suggestion LGTM.",
+      "fixSuggestions": [
+        {
+          "fixId": "719cd9a7_d860cc50",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/ast_lower/pass_workgroup_id_as_argument.cc",
+              "range": {
+                "startLine": 38,
+                "startChar": 0,
+                "endLine": 38,
+                "endChar": 0
+              },
+              "replacement": "#include \"src/tint/utils/containers/hashset.h\"\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/ast_lower/pass_workgroup_id_as_argument.cc",
+              "range": {
+                "startLine": 58,
+                "startChar": 0,
+                "endLine": 59,
+                "endChar": 0
+              },
+              "replacement": "    /// Set of identifier expressions that have been replaced.\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/ast_lower/pass_workgroup_id_as_argument.cc",
+              "range": {
+                "startLine": 61,
+                "startChar": 0,
+                "endLine": 62,
+                "endChar": 0
+              },
+              "replacement": "    Hashset\u003cconst ast::Expression*, 16\u003e replaced_idexpr;\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/ast_lower/pass_workgroup_id_as_argument.cc",
+              "range": {
+                "startLine": 153,
+                "startChar": 0,
+                "endLine": 154,
+                "endChar": 0
+              },
+              "replacement": "            if (replaced_idexpr.Add(user-\u003eDeclaration())) {\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/reader/ast_lower/pass_workgroup_id_as_argument.cc",
+              "range": {
+                "startLine": 156,
+                "startChar": 0,
+                "endLine": 158,
+                "endChar": 0
+              },
+              "replacement": "            }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b41f2c4cf06d1292896c100f243f22c0c2738bab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
