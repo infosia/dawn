@@ -102,6 +102,10 @@ if (EMSCRIPTEN)
             COMMAND ${ARGS}
             OUTPUT ${OUTPUT}
             COMMENT "Dawn Emscripten: Generating ${PRINT_NAME}."
+            DEPENDS
+                "${EMSCRIPTEN_ROOT_PATH}/tools/gen_struct_info.py"
+                ${EMDAWNWEBGPU_HEADERS_GEN_HEADERS}  # for webgpu.h
+                ${EMDAWNWEBGPU_STRUCT_INFO_JSON_GEN_SOURCES}  # for struct_info_webgpu.json
         )
 
         # Prior to CMake 3.20 the GENERATED property is local to a directory which means that putting
@@ -125,14 +129,16 @@ if (EMSCRIPTEN)
         WASM64 OFF
     )
     add_custom_target(webgpu_generated_struct_info32
-        DEPENDS emdawnwebgpu_headers_gen ${EMDAWNWEBGPU_STRUCT_INFO_JSON_GEN_SOURCES} ${WEBGPU_STRUCT_INFO_GEN32}
+        DEPENDS
+            ${WEBGPU_STRUCT_INFO_GEN32}
     )
     webgpu_gen_struct_info(
         OUTPUT_JSON WEBGPU_STRUCT_INFO_GEN64
         WASM64 ON
     )
     add_custom_target(webgpu_generated_struct_info64
-        DEPENDS emdawnwebgpu_headers_gen ${EMDAWNWEBGPU_STRUCT_INFO_JSON_GEN_SOURCES} ${WEBGPU_STRUCT_INFO_GEN64}
+        DEPENDS
+            ${WEBGPU_STRUCT_INFO_GEN64}
     )
 
     # TODO(crbug.com/346806934): Consider using CMake builtin `cat` as per https://stackoverflow.com/a/62362885,
@@ -151,15 +157,18 @@ if (EMSCRIPTEN)
 
         set(PRINT_NAME library_webgpu_generated_struct_info.js)
         set(OUTPUT "${EM_BUILD_GEN_DIR}/${PRINT_NAME}")
-        set(ARGS
-            ${Python3_EXECUTABLE}
-            "${EM_SRC_DIR}/concat.py"
-            "${OUTPUT}"
+        set(SRCS
             "${EM_SRC_DIR}/snippets/library_webgpu_struct_info_part1.txt"
             "${EM_BUILD_GEN_DIR}/webgpu_generated_struct_info32.json"
             "${EM_SRC_DIR}/snippets/library_webgpu_struct_info_part2.txt"
             "${EM_BUILD_GEN_DIR}/webgpu_generated_struct_info64.json"
             "${EM_SRC_DIR}/snippets/library_webgpu_struct_info_part3.txt"
+        )
+        set(ARGS
+            ${Python3_EXECUTABLE}
+            "${EM_SRC_DIR}/concat.py"
+            "${OUTPUT}"
+            ${SRCS}
         )
         set(${arg_OUTPUT_JS} "${OUTPUT}" PARENT_SCOPE)
 
@@ -167,6 +176,9 @@ if (EMSCRIPTEN)
             COMMAND ${ARGS}
             OUTPUT ${OUTPUT}
             COMMENT "Dawn Emscripten: Generating ${PRINT_NAME}."
+            DEPENDS
+                "${EM_SRC_DIR}/concat.py"
+                ${SRCS}
         )
 
         # Prior to CMake 3.20 the GENERATED property is local to a directory which means that putting
@@ -188,8 +200,6 @@ if (EMSCRIPTEN)
     )
     add_custom_target(webgpu_generated_struct_info_js
         DEPENDS
-            webgpu_generated_struct_info32
-            webgpu_generated_struct_info64
             ${EMDAWNWEBGPU_STRUCT_INFO_JS}
     )
 
