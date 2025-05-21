@@ -104,6 +104,24 @@
       "parentUuid": "ddfd4a73_b2abb924",
       "revId": "2dc48514983142417c438a2a7da2fd4e3ee903f7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94c4ae02_504d54c0",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-21T11:22:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f16d4e_2b35df55",
+      "revId": "2dc48514983142417c438a2a7da2fd4e3ee903f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
