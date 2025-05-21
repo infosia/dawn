@@ -16,6 +16,24 @@
       "message": "Is there an example release that I can take a look at to see what the results look like?",
       "revId": "16b6d7fb85e237f7ee9e88f549bf4457cc54d435",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9eb03dbd_1c9a5a6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-21T18:36:10Z",
+      "side": 1,
+      "message": "https://github.com/kainino0x/dawn/releases/tag/v20250520.202419-kainino0x.dawn.remoteport\n\nhttps://github.com/kainino0x/dawn/actions/runs/15169724871/job/42656515516",
+      "parentUuid": "e121217a_8ce7684e",
+      "revId": "16b6d7fb85e237f7ee9e88f549bf4457cc54d435",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
