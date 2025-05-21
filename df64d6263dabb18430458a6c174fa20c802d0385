@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a2124dc_4ee5893b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-21T21:52:48Z",
+      "side": 1,
+      "message": "LGTM, I think the failing unittest can be changed to avoid generating a collision before `BindingRemapper` (e.g. set `ubo_bindingpoint_ordering` to a different value).\n\nI *think* that\u0027s fine and that Dawn would never pass values to this transform that should cause a collision.",
+      "revId": "df64d6263dabb18430458a6c174fa20c802d0385",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
