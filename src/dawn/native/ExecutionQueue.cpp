@@ -30,6 +30,8 @@
 #include <atomic>
 #include <utility>
 
+#include "dawn/common/Log.h"
+
 namespace dawn::native {
 
 ExecutionSerial ExecutionQueueBase::GetPendingCommandSerial() const {
@@ -70,12 +72,20 @@ void ExecutionQueueBase::UpdateCompletedSerial(ExecutionSerial completedSerial) 
            !mCompletedSerial.compare_exchange_weak(current, uint64_t(completedSerial),
                                                    std::memory_order_acq_rel)) {
     }
+    DAWN_DEBUG() << "Updated internal completedSerial value: "
+                 << static_cast<uint64_t>(completedSerial);
+
+    // Complete all pending tasks before updating the serial, otherwise, we can potentially race on
+    // another thread that sees an updated serial, but the expected tasks are not yet complete.
+    DAWN_DEBUG() << "Trying to update to completedSerial = "
+                 << static_cast<uint64_t>(completedSerial);
     mWaitingTasks.Use([&](auto tasks) {
         for (auto task : tasks->IterateUpTo(completedSerial)) {
             task();
         }
         tasks->ClearUpTo(completedSerial);
     });
+    DAWN_DEBUG() << "Ran all tasks to update serial";
 }
 
 MaybeError ExecutionQueueBase::EnsureCommandsFlushed(ExecutionSerial serial) {

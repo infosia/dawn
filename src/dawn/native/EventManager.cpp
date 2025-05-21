@@ -135,7 +135,7 @@ using WaitListEventAndReadyStateIterator =
 bool PollFutures(std::vector<TrackedFutureWaitInfo>& futures) {
     bool success = false;
     for (auto& future : futures) {
-        if (future.event->IsReadyToComplete()) {
+        if (future.event->IsComplete()) {
             success = true;
             future.ready = true;
         }
@@ -160,6 +160,7 @@ void WaitQueueSerials(const QueueWaitSerialsMap& queueWaitSerials, Nanoseconds t
             continue;
         }
         auto waitSerial = queueAndSerial.second;
+        DAWN_DEBUG() << "min waitSerial = " << static_cast<uint64_t>(waitSerial);
 
         auto* device = queue->GetDevice();
         {
@@ -213,11 +214,9 @@ wgpu::WaitStatus WaitImpl(const InstanceBase* instance,
         }
         if (const auto* queueAndSerial = future.event->GetIfQueueAndSerial()) {
             auto [it, inserted] = queueLowestWaitSerials.insert(
-                {queueAndSerial->queue,
-                 queueAndSerial->completionSerial.load(std::memory_order_acquire)});
+                {queueAndSerial->queue, queueAndSerial->completionSerial});
             if (!inserted) {
-                it->second = std::min(
-                    it->second, queueAndSerial->completionSerial.load(std::memory_order_acquire));
+                it->second = std::min(it->second, queueAndSerial->completionSerial);
             }
         }
     }
@@ -255,6 +254,7 @@ wgpu::WaitStatus WaitImpl(const InstanceBase* instance,
         // This is a no-op if `queueLowestWaitSerials` is empty.
         WaitQueueSerials(queueLowestWaitSerials, timeout);
         success = PollFutures(futures);
+        DAWN_DEBUG() << "Finished WaitQueueSerial";
     }
     return success ? wgpu::WaitStatus::Success : wgpu::WaitStatus::TimedOut;
 }
@@ -349,16 +349,19 @@ FutureID EventManager::TrackEvent(Ref<TrackedEvent>&& event) {
 
     if (const auto* queueAndSerial = event->GetIfQueueAndSerial()) {
         if (auto q = queueAndSerial->queue.Promote()) {
-            q->TrackSerialTask(queueAndSerial->completionSerial, [this, event]() {
-                // If this is executed, we can be sure that the raw pointer to this EventManager is
-                // valid because the Queue is alive and:
-                //   Queue -[refs]->
-                //     Device -[refs]->
-                //       Adapter -[refs]->
-                //         Instance -[owns]->
-                //           EventManager.
-                SetFutureReady(event.Get());
-            });
+            q->TrackSerialTask(queueAndSerial->completionSerial,
+                               [this, event, serial = queueAndSerial->completionSerial]() {
+                                   // If this is executed, we can be sure that the raw pointer to
+                                   // this EventManager is valid because the Queue is alive and:
+                                   //   Queue -[refs]->
+                                   //     Device -[refs]->
+                                   //       Adapter -[refs]->
+                                   //         Instance -[owns]->
+                                   //           EventManager.
+                                   DAWN_DEBUG() << "Setting serial ready in serial task: "
+                                                << static_cast<uint64_t>(serial);
+                                   SetFutureReady(event.Get());
+                               });
         }
     }
 
@@ -615,18 +618,16 @@ void EventManager::TrackedEvent::SetReadyToComplete() {
         event->Signal();
     }
     if (auto* queueAndSerial = std::get_if<QueueAndSerial>(&mCompletionData)) {
-        ExecutionSerial current = queueAndSerial->completionSerial.load(std::memory_order_acquire);
-        for (auto completed = queueAndSerial->GetCompletedSerial();
-             current > completed && !queueAndSerial->completionSerial.compare_exchange_weak(
-                                        current, completed, std::memory_order_acq_rel);) {
-        }
+        queueAndSerial->completionSerial = queueAndSerial->GetCompletedSerial();
     }
 }
 
 void EventManager::TrackedEvent::EnsureComplete(EventCompletionType completionType) {
-    bool alreadyComplete = mCompleted.exchange(true);
+    bool alreadyComplete = mCallbackCalled.exchange(true);
     if (!alreadyComplete) {
+        // Only 1 thread will ever enter this block.
         Complete(completionType);
+        mCompleted = true;
     }
 }
 

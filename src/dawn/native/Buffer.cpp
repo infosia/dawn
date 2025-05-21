@@ -31,6 +31,7 @@
 #include <cstring>
 #include <limits>
 #include <string>
+#include <type_traits>
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
@@ -38,6 +39,7 @@
 #include "dawn/common/Alloc.h"
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/CallbackTaskManager.h"
@@ -256,6 +258,7 @@ struct BufferBase::MapAsyncEvent final : public EventManager::TrackedEvent {
                 // Set the buffer state to Mapped if this pending map succeeded.
                 (*buffer)->mState.Use([&](auto state) {
                     DAWN_ASSERT(state->bufferState == BufferState::PendingMap);
+                    DAWN_DEBUG() << "About to set buffer state to mapped";
                     state->bufferState = BufferState::Mapped;
                     pendingMapEvent = std::move(state->mapEvent);
                 });
@@ -642,6 +645,7 @@ wgpu::Status BufferBase::APIReadMappedRange(size_t offset, void* data, size_t si
 void* BufferBase::GetMappedRange(size_t offset, size_t size, bool writable) {
     return mState.Use([&](auto state) -> void* {
         if (!CanGetMappedRange(state, writable, offset, size)) {
+            DAWN_DEBUG() << "Was not able to get mapped range because CanGetMappedRange failed.";
             return nullptr;
         }
 
@@ -793,17 +797,20 @@ bool BufferBase::CanGetMappedRange(ScopedSynchronizedState state,
                                    size_t offset,
                                    size_t size) const {
     if (offset % 8 != 0 || offset < state->mapOffset || offset > mSize) {
+        DAWN_DEBUG() << "1";
         return false;
     }
 
     size_t rangeSize = size == WGPU_WHOLE_MAP_SIZE ? mSize - offset : size;
 
     if (rangeSize % 4 != 0 || rangeSize > state->mapSize) {
+        DAWN_DEBUG() << "2";
         return false;
     }
 
     size_t offsetInMappedRange = offset - state->mapOffset;
     if (offsetInMappedRange > state->mapSize - rangeSize) {
+        DAWN_DEBUG() << "3";
         return false;
     }
 
@@ -819,6 +826,7 @@ bool BufferBase::CanGetMappedRange(ScopedSynchronizedState state,
         // It is never valid to call GetMappedRange on a host-mapped buffer.
         // TODO(crbug.com/dawn/2018): consider returning the same pointer here.
         case BufferState::HostMappedPersistent:
+            DAWN_DEBUG() << "4";
             return false;
 
         // Writeable Buffer::GetMappedRange is always allowed when mapped at creation.
@@ -828,12 +836,15 @@ bool BufferBase::CanGetMappedRange(ScopedSynchronizedState state,
         case BufferState::Mapped:
             DAWN_ASSERT(bool{state->mapMode & wgpu::MapMode::Read} ^
                         bool{state->mapMode & wgpu::MapMode::Write});
+            DAWN_DEBUG() << "5";
             return !writable || (state->mapMode & wgpu::MapMode::Write);
 
         case BufferState::PendingMap:
         case BufferState::Unmapped:
         case BufferState::SharedMemoryNoAccess:
         case BufferState::Destroyed:
+            DAWN_DEBUG() << "Bad state when checking in CanGetMappedRange "
+                         << static_cast<std::underlying_type_t<BufferState>>(state->bufferState);
             return false;
     }
     DAWN_UNREACHABLE();

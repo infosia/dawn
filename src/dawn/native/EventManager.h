@@ -106,7 +106,7 @@ class EventManager final : NonMovable {
 
 struct QueueAndSerial {
     WeakRef<QueueBase> queue;
-    std::atomic<ExecutionSerial> completionSerial;
+    ExecutionSerial completionSerial;
 
     // Returns the most recently completed serial on |queue|. Otherwise, returns |completionSerial|.
     ExecutionSerial GetCompletedSerial() const;
@@ -130,7 +130,7 @@ class EventManager::TrackedEvent : public RefCounted {
     Future GetFuture() const;
 
     bool IsProgressing() const { return mIsProgressing; }
-
+    bool IsComplete() const { return mCompleted; }
     bool IsReadyToComplete() const;
 
     const QueueAndSerial* GetIfQueueAndSerial() const {
@@ -207,7 +207,10 @@ class EventManager::TrackedEvent : public RefCounted {
   private:
     CompletionData mCompletionData;
     const bool mIsProgressing = true;
-    // Callback has been called.
+    // We need two boolean variables to track whether the callback has been started, and when it is
+    // completed. Otherwise, when we previously only had one boolean, we can race with setting the
+    // state and actually calling and completing the callback.
+    std::atomic<bool> mCallbackCalled = false;
     std::atomic<bool> mCompleted = false;
 };
 

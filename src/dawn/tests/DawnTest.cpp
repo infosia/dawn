@@ -1758,7 +1758,7 @@ void DawnTestBase::WaitABit(wgpu::Instance targetInstance) {
     }
     FlushWire();
 
-    utils::USleep(100);
+    utils::USleep(1000);
 }
 
 void DawnTestBase::FlushWire() {
