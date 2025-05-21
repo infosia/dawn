@@ -52,6 +52,24 @@
       "parentUuid": "9eb03dbd_1c9a5a6a",
       "revId": "16b6d7fb85e237f7ee9e88f549bf4457cc54d435",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "042e757b_c9922797",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-21T22:05:12Z",
+      "side": 1,
+      "message": "I decided the remote port also needed a README especially for all the options that it forwards, so tweaked the README contents and included them in there too: https://github.com/kainino0x/dawn/releases/tag/v20250521.145231-kainino0x.dawn.remoteport (tested this version locally)",
+      "parentUuid": "0a3f5152_ee5b89fb",
+      "revId": "16b6d7fb85e237f7ee9e88f549bf4457cc54d435",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
