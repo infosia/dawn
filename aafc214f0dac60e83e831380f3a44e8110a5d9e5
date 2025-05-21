@@ -16,6 +16,29 @@
       "message": "ptal",
       "revId": "aafc214f0dac60e83e831380f3a44e8110a5d9e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bb2fe4d_002c47b8",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:08:16Z",
+      "side": 1,
+      "message": "Here we are checking for nullptr did you mean to pass a pointer to `kInternalConstructionMarker` and check against `\u0026kInternalConstructionMarker`",
+      "range": {
+        "startLine": 213,
+        "startChar": 103,
+        "endLine": 213,
+        "endChar": 130
+      },
+      "revId": "aafc214f0dac60e83e831380f3a44e8110a5d9e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
