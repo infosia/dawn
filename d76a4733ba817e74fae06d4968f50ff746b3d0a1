@@ -34,6 +34,24 @@
       "parentUuid": "5db55368_9c982d25",
       "revId": "d76a4733ba817e74fae06d4968f50ff746b3d0a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "152d735a_bf11045c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-05-21T15:13:12Z",
+      "side": 1,
+      "message": "1. If the issues are specific to Intel Linux, I\u0027d suggest just skipping the tests on that platform for now. It\u0027s not a high priority since we\u0027re not planning to ship on Linux yet.\n\n2. The Pixel6 failures with offset\u003dtrue are a known issue affecting many tests. We don\u0027t plan to block shipping Compat due to that issue, so it shouldn\u0027t block TextureCompressionASTCSliced3D either. As long as the failures fall into the same pattern (offset\u003dtrue or certain offsetInBlocks values), suppress them in compat-expectations.txt on Pixel6.",
+      "parentUuid": "80388e48_b6376751",
+      "revId": "d76a4733ba817e74fae06d4968f50ff746b3d0a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
