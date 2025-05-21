@@ -16,6 +16,24 @@
       "message": "My current theory on why this is passing is that we no longer run/support dx12 for this config",
       "revId": "45e2cb461b3141e3a86ff7939ddbfa046d683417",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d9435b3_885340b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-21T14:37:14Z",
+      "side": 1,
+      "message": "Generally accepted that we should just commit this.",
+      "parentUuid": "91b52996_d4c99615",
+      "revId": "45e2cb461b3141e3a86ff7939ddbfa046d683417",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
