@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6fd0c58_f5059114",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-21T23:08:21Z",
+      "side": 1,
+      "message": "Skimmed, no additional comments, will review more after revision",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb7a9de3_b79b278a",
@@ -14,6 +31,24 @@
       "writtenOn": "2025-05-21T12:22:50Z",
       "side": 1,
       "message": "Can we do the trick like in the Vulkan backend where device.vk is a public member used to access the proc table? It\u0027s been relatively nice to use.",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36705459_d0a97fd4",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-21T23:08:21Z",
+      "side": 1,
+      "message": "+1 (I think we can just rename mWGPU to wgpu, and delete GetFunctions.)",
+      "parentUuid": "eb7a9de3_b79b278a",
       "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -105,6 +140,24 @@
       "writtenOn": "2025-05-21T12:22:50Z",
       "side": 1,
       "message": "Can we avoid adding all these placeholders before moving them to their own file? You can return nullptr from all the `Create*Impl` methods.\n\nQueue will still be required, so can we have it in its own file already? Includes can be cleaned up as well.",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbb483e0_089ba492",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-21T23:08:21Z",
+      "side": 1,
+      "message": "Will review after this is done",
+      "parentUuid": "8f0f51e6_f905b337",
       "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
