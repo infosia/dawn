@@ -231,6 +231,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4cd05ead_71b52edd",
+        "filename": "src/dawn/node/interop/Browser.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T10:23:43Z",
+      "side": 1,
+      "message": "Ah now I remember that I based my WIP off MDN so maybe that\u0027s where I saw the dual interface + callback version.",
+      "parentUuid": "9bdc5aac_b67ba6b7",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c01f3a01_83790a0b",
         "filename": "src/dawn/node/interop/Core.cpp",
         "patchSetId": 3
