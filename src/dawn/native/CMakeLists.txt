@@ -941,7 +941,12 @@ if (DAWN_BUILD_MONOLITHIC_LIBRARY)
     )
     # Bundle all objects of dawn_native, it's public dependencies and private dependencies.
     include(BundleLibraries)
-    bundle_libraries(webgpu_dawn dawn::dawn_native_objects)
+    if(BUILD_SHARED_LIBS)
+        bundle_libraries(webgpu_dawn SHARED dawn::dawn_native_objects)
+    else()
+        bundle_libraries(webgpu_dawn STATIC dawn::dawn_native_objects)
+    endif()
+
     add_library(dawn::webgpu_dawn ALIAS webgpu_dawn)
     # Compile backend specific sources along with webgpu_dawn_native_proc sources for export macros to get applied.
     target_sources(webgpu_dawn
@@ -954,8 +959,8 @@ if (DAWN_BUILD_MONOLITHIC_LIBRARY)
             "WGPU_IMPLEMENTATION"
             "DAWN_NATIVE_IMPLEMENTATION"
         PUBLIC
-            "WGPU_SHARED_LIBRARY"
-            "DAWN_NATIVE_SHARED_LIBRARY"
+            "$<BUILD_SHARED_LIBS:WGPU_SHARED_LIBRARY>"
+            "$<BUILD_SHARED_LIBS:DAWN_NATIVE_SHARED_LIBRARY>"
     )
     # Apart from dawn_public_config, everything else goes inside PRIVATE, otherwise install rules will complain that they were not exported.
     target_link_libraries(webgpu_dawn
