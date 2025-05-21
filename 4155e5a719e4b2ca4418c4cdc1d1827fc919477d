@@ -52,6 +52,24 @@
       "parentUuid": "cc9f10e1_eeb19240",
       "revId": "4155e5a719e4b2ca4418c4cdc1d1827fc919477d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7294737_928b1ce8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-21T00:56:55Z",
+      "side": 1,
+      "message": "What\u0027s the point of autorolling emsdk if we still manually roll the toolchain version? emsdk doesn\u0027t really do anything except download the toolchain. May as well just manually roll emsdk. Or autoroll the whole thing.",
+      "parentUuid": "cc0a5705_bb709ecf",
+      "revId": "4155e5a719e4b2ca4418c4cdc1d1827fc919477d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
