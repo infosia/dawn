@@ -109,6 +109,24 @@
       "parentUuid": "7206ac6c_0ff4adcc",
       "revId": "b41f2c4cf06d1292896c100f243f22c0c2738bab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e80154e3_ccb7916b",
+        "filename": "src/tint/lang/spirv/reader/ast_lower/pass_workgroup_id_as_argument.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-21T15:53:59Z",
+      "side": 1,
+      "message": "Thanks for the feedback!  I knew it felt icky when I originally wrote it.",
+      "parentUuid": "afd3e9c5_1972dfdb",
+      "revId": "b41f2c4cf06d1292896c100f243f22c0c2738bab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
