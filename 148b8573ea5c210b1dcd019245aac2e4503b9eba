@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "148b8573ea5c210b1dcd019245aac2e4503b9eba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1b6cc180_9f6d6711",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-21T20:45:55Z",
+      "side": 1,
+      "message": "Looks like there\u0027s a lot of stuff in this CL unrelated to the commit description?",
+      "revId": "148b8573ea5c210b1dcd019245aac2e4503b9eba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
