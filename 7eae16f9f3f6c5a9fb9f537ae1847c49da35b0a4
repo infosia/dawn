@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca9b8e47_2cebaa7a",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-21T13:51:46Z",
+      "side": 1,
+      "message": "Filed crbug.com/419238644 to track this. Good catch.",
+      "parentUuid": "92436ec8_0ff2a654",
+      "revId": "7eae16f9f3f6c5a9fb9f537ae1847c49da35b0a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7fe796a7_849d4885",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-05-20T20:34:26Z",
       "side": 1,
       "message": "Nit: use `new_coords_width` in these two places, since you\u0027ve defined it.\n\nActually, could just do `auto* new_coords_ty \u003d ty.MatchWidth(coords_ty-\u003eType(), new_coords_width);`",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 78
+      },
+      "revId": "7eae16f9f3f6c5a9fb9f537ae1847c49da35b0a4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5e88d08_02f0e98b",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-21T13:51:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fe796a7_849d4885",
       "range": {
         "startLine": 188,
         "startChar": 0,
