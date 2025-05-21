@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1e080e7_5d01a48f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T03:26:40Z",
+      "side": 1,
+      "message": "Alternate route for view caching as suggested in https://dawn-review.googlesource.com/c/dawn/+/241139 I still want to tweak a few things and test it out on Android devices but wanted to get thoughts on if this feels like the right direction before putting too much more time into it.",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
