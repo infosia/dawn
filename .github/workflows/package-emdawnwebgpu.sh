@@ -22,9 +22,10 @@ git submodule update --init --depth=1 third_party/googletest
 git submodule update --init --depth=1 third_party/emsdk
 python3 tools/activate-emsdk
 
-# Build the package, and also test that the bindings can link.
+# Build the package, and also test that the bindings can link in release mode
+# (which enables Closure which ensures the generated JS is processable)
 mkdir -p out/wasm
-third_party/emsdk/upstream/emscripten/emcmake cmake -S=. -B=out/wasm
+third_party/emsdk/upstream/emscripten/emcmake cmake -S=. -B=out/wasm -DCMAKE_BUILD_TYPE=Release
 make -j4 -C out/wasm emdawnwebgpu_pkg emdawnwebgpu_link_test
 
 # Create zip
