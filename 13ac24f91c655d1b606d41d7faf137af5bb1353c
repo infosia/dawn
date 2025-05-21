@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cb2a198_30c78646",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1db9cb8d_d0edf322",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e22c0af_7ff0763d",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-05-21T12:51:10Z",
       "side": 1,
       "message": "Leftover debug code?",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "281beda1_f6576870",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e22c0af_7ff0763d",
       "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +122,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b622abf6_0fc328a4",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68acdcea_ca45ed0f",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0530b722_d010ef66",
@@ -99,6 +153,24 @@
       "writtenOn": "2025-05-21T12:51:10Z",
       "side": 1,
       "message": "It could be worth adding the C++20 default comparison operators to Subresource and the Query type so only the hashing needs to be added for the internal hash map.",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d292a7b_b5c8e6d3",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0530b722_d010ef66",
       "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -120,6 +192,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74e12d12_920a2ff3",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44dd6e3c_ff8c7fd4",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "90b7af60_32b94d1e",
@@ -133,6 +223,30 @@
       "writtenOn": "2025-05-21T12:51:10Z",
       "side": 1,
       "message": "Since we are doing things multithreaded, can this be const member so that we know that they are thread safe, as well as making the mTexture pointer a const pointer?",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 12
+      },
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "053834d3_94bba59b",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90b7af60_32b94d1e",
       "range": {
         "startLine": 94,
         "startChar": 2,
@@ -183,6 +297,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14957dc7_2d1d95a1",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c14fbd66_372c7d50",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73cee1d3_3b981da7",
@@ -196,6 +328,24 @@
       "writtenOn": "2025-05-21T12:51:10Z",
       "side": 1,
       "message": "Any cases where this would happen? We would fail texture view creation if the handle creation fails (and the view shouldn\u0027t be accessed after desctruction). Can we replace it with an ASSERT? Ditto for BGRA8.",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78979c79_b824f4b7",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "This was to fix an error that was coming up in some of the DestroyTests. These handles are cleared when texture.destroy() is called.",
+      "parentUuid": "73cee1d3_3b981da7",
       "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -217,6 +367,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf235541_7b6fd795",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "743ca8fb_19956b08",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6d391a6_9f5940fc",
@@ -230,6 +398,24 @@
       "writtenOn": "2025-05-21T12:51:10Z",
       "side": 1,
       "message": "ditto",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa4ff1e5_b0a59316",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2029,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6d391a6_9f5940fc",
       "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -251,6 +437,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "05c60b5e_f46e1c32",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f16b5e45_087b65c3",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5f84b00_b0524f49",
@@ -264,6 +468,24 @@
       "writtenOn": "2025-05-21T12:51:10Z",
       "side": 1,
       "message": "nit: we don\u0027t really need an indirection here, to avoid pointer chasing we could turn the cache into a by-value member.",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42040840_530a88e6",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-21T21:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5f84b00_b0524f49",
       "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
