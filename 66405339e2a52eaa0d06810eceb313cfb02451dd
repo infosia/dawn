@@ -33,6 +33,24 @@
       "message": "Let\u0027s do that in a roll of the IDL please, the way the GPUBindingResource is overwritten is weird TBH.",
       "revId": "66405339e2a52eaa0d06810eceb313cfb02451dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19d9e3f5_a88b4968",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-21T16:11:57Z",
+      "side": 1,
+      "message": "I\u0027ll wait for the IDL roll then.\n\nOut of curiosity, what is weird about how GPUBindingResource is overwritten?",
+      "parentUuid": "684d78f0_65886421",
+      "revId": "66405339e2a52eaa0d06810eceb313cfb02451dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
