@@ -142,6 +142,24 @@
       "parentUuid": "3a4522e7_c50c6d55",
       "revId": "657b4fa6fc3e771f296b9570adbf21fe9d4e0a7f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4baf63c8_7539208c",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-21T08:46:43Z",
+      "side": 1,
+      "message": "I was able to make it work eventually. See updates in `src/emdawnwebgpu/CMakeLists.txt`\n\nMoreover, it\u0027s also working locally with `-sUSE_GLFW\u003d3` and `--use-port\u003dcontrib.glfw3` as well. See https://github.com/beaufortfrancois/webgpu-cross-platform-app/pull/18",
+      "parentUuid": "b72d3075_bbe933ba",
+      "revId": "657b4fa6fc3e771f296b9570adbf21fe9d4e0a7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

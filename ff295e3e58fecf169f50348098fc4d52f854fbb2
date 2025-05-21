@@ -96,6 +96,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "87231811_5b60669e",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-21T08:46:43Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "4e1767b5_fbf0a163",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "ff295e3e58fecf169f50348098fc4d52f854fbb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fa7a72b_c6edd7ab",
