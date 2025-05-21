@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30600baa_ce8bd2a1",
+        "filename": ".github/workflows/package-emdawnwebgpu.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-21T01:12:28Z",
+      "side": 1,
+      "message": "Is it fine to just test release and not debug? Is it possible to test both?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 95
+      },
+      "revId": "54cd6369d127450ebb2da66bfad6e7f1c114a1ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
