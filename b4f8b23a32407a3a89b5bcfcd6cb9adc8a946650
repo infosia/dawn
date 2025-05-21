@@ -54,6 +54,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7fd7c130_40af7427",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-21T09:18:52Z",
+      "side": 1,
+      "message": "Do we need to set these values even if the pipeline doesn\u0027t use vertex_index nor instance_index?\n\nNot sure if avoiding that would have noticeable performance win since we already track the values and skip the update in case they are unchanged.",
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "31533cc9_3151d381",
         "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
         "patchSetId": 28
