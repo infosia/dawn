@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ec748c4_61180409",
+        "filename": "src/dawn/glfw/utils_emscripten.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-21T11:01:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40922db9_a9010454",
+      "revId": "2dc48514983142417c438a2a7da2fd4e3ee903f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "743e632a_62755cee",
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "44198ffe_7f943171",
+        "filename": "src/dawn/glfw/utils_emscripten.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-21T11:01:11Z",
+      "side": 1,
+      "message": "FYI This is actually coming from https://emscripten.org/docs/api_reference/html5.h.html#:~:text\u003dIf%20the%20above%20are%20insufficient%20for%20you%2C%20you%20can%20add%20custom%20mappings%20in%20JavaScript%20using%20something%20like\nI think this should be enough for this helper. \nAnother approach like https://github.com/floooh/sokol-zig/blob/9300d1a8d6d16f9201782ceae0cdf874fea673fe/src/sokol/app.zig#L1025 could also work but would require Emscripten plumbling which creates complexity for simple cases like https://github.com/beaufortfrancois/webgpu-cross-platform-app/pull/18/files.",
+      "parentUuid": "743e632a_62755cee",
+      "revId": "2dc48514983142417c438a2a7da2fd4e3ee903f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ddfd4a73_b2abb924",
         "filename": "src/emdawnwebgpu/CMakeLists.txt",
         "patchSetId": 13
@@ -48,6 +84,24 @@
       "writtenOn": "2025-05-21T10:26:22Z",
       "side": 1,
       "message": "That\u0027s going to cause problems. Can we instead copy webgpu_glfw.h in the EM_BUILD_GEN_DIR ?",
+      "revId": "2dc48514983142417c438a2a7da2fd4e3ee903f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87f16d4e_2b35df55",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-21T11:01:11Z",
+      "side": 1,
+      "message": "I wasn\u0027t able to find how to do this. I\u0027ll keep trying.",
+      "parentUuid": "ddfd4a73_b2abb924",
       "revId": "2dc48514983142417c438a2a7da2fd4e3ee903f7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
