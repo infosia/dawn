@@ -16,6 +16,256 @@
       "message": "Alternate route for view caching as suggested in https://dawn-review.googlesource.com/c/dawn/+/241139 I still want to tweak a few things and test it out on Android devices but wanted to get thoughts on if this feels like the right direction before putting too much more time into it.",
       "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c61f436f_974a6b1e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1db9cb8d_d0edf322",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "Isn\u0027t the clear done automatically on destruction of these types?",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e22c0af_7ff0763d",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "Leftover debug code?",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68acdcea_ca45ed0f",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "It should, can we use PNextInChainBuilder to help with that as well?",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0530b722_d010ef66",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "It could be worth adding the C++20 default comparison operators to Subresource and the Query type so only the hashing needs to be added for the internal hash map.",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44dd6e3c_ff8c7fd4",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "Maybe explain the motivation for it, because driver creation of image views is not expected to be as expensive as to require a cache (unless we find it is?)",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90b7af60_32b94d1e",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "Since we are doing things multithreaded, can this be const member so that we know that they are thread safe, as well as making the mTexture pointer a const pointer?",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 12
+      },
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02ca85fb_22cbe0c0",
+        "filename": "src/dawn/native/vulkan/ImageViewCache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "We should use MutexProtected if possible to ensure correct mutexing.",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 17
+      },
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c14fbd66_372c7d50",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "Leftover commented code?",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73cee1d3_3b981da7",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "Any cases where this would happen? We would fail texture view creation if the handle creation fails (and the view shouldn\u0027t be accessed after desctruction). Can we replace it with an ASSERT? Ditto for BGRA8.",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "743ca8fb_19956b08",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2028,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "2D on 3D views are often used for rendering, so we should probably cache them as well. If we do this, then `GetCreateInfo` becomes an implementation detail of the cache.",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6d391a6_9f5940fc",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2029,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f16b5e45_087b65c3",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "optional nit: move this to the .cpp to minimize the header processing time? (though it seems we lost the battle for that in Dawn already 😞)",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5f84b00_b0524f49",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:51:10Z",
+      "side": 1,
+      "message": "nit: we don\u0027t really need an indirection here, to avoid pointer chasing we could turn the cache into a by-value member.",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
