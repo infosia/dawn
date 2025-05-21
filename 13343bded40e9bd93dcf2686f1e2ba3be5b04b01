@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fae7f77_3913d9bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-21T08:00:56Z",
+      "side": 1,
+      "message": "There\u0027s the next smaller CL for adding events to dawn.node. It\u0027s dependant on the previous one.",
+      "revId": "13343bded40e9bd93dcf2686f1e2ba3be5b04b01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
