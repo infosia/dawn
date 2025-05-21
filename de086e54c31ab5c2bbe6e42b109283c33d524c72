@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5508cca7_4a4143ad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:03:10Z",
+      "side": 1,
+      "message": "LGTM but I\u0027d like Kai to check on that last thread.",
+      "revId": "de086e54c31ab5c2bbe6e42b109283c33d524c72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
