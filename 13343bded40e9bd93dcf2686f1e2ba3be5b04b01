@@ -16,6 +16,40 @@
       "message": "There\u0027s the next smaller CL for adding events to dawn.node. It\u0027s dependant on the previous one.",
       "revId": "13343bded40e9bd93dcf2686f1e2ba3be5b04b01",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0345e263_5a74c4d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T08:07:27Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "13343bded40e9bd93dcf2686f1e2ba3be5b04b01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19a0700d_fd51a491",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T08:07:27Z",
+      "side": 1,
+      "message": "It\u0027s funny how we use a Go file to generate C++ code implementing a JS interface but the template language used has some Haskell vibes.\n\nSuch polyglotism!",
+      "revId": "13343bded40e9bd93dcf2686f1e2ba3be5b04b01",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
