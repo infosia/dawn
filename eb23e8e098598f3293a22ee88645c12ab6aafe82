@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdb49fbf_49758462",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:26:07Z",
+      "side": 1,
+      "message": "LGTM, thank you for the iteration!",
+      "revId": "eb23e8e098598f3293a22ee88645c12ab6aafe82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03b451e5_0707cb17",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:26:07Z",
+      "side": 1,
+      "message": "nit: leftover from previous approach is still there.",
+      "revId": "eb23e8e098598f3293a22ee88645c12ab6aafe82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
