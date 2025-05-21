@@ -124,6 +124,24 @@
       "parentUuid": "60e8f17d_c7c01763",
       "revId": "657b4fa6fc3e771f296b9570adbf21fe9d4e0a7f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b72d3075_bbe933ba",
+        "filename": "src/dawn/glfw/CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-21T04:28:11Z",
+      "side": 1,
+      "message": "Kai, how would you add webgpu_glfw in emdawnwebgpu? I wasn\u0027t able to make it work.\n\nI\u0027ll see how we can avoid building our own version of glfw as well.",
+      "parentUuid": "3a4522e7_c50c6d55",
+      "revId": "657b4fa6fc3e771f296b9570adbf21fe9d4e0a7f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
