@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb7a9de3_b79b278a",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:22:50Z",
+      "side": 1,
+      "message": "Can we do the trick like in the Vulkan backend where device.vk is a public member used to access the proc table? It\u0027s been relatively nice to use.",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebffe426_e326e44e",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:22:50Z",
+      "side": 1,
+      "message": "Let\u0027s have a static `Create` method for regularity with all other objects in all other backends.",
+      "range": {
+        "startLine": 112,
+        "startChar": 45,
+        "endLine": 112,
+        "endChar": 54
+      },
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe1dbb98_e6e17235",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:22:50Z",
+      "side": 1,
+      "message": "Maybe note that webgpu.h guarantees that losing this reference will cause all internal resources to be freed and wait on the GPU if needed to do so.",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "beb354a7_787a60a7",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:22:50Z",
+      "side": 1,
+      "message": "```suggestion\n    DAWN_UNIMPLEMENTED();\n```\n\nditto everywhere else.",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "802edb5f_3493e9fb",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:22:50Z",
+      "side": 1,
+      "message": "Please add Unimplemented as needed on the Queue, but also at least a big TODO on `CheckAndUpdateCompletedSerials` that\u0027s very incorrect right now.",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f0f51e6_f905b337",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T12:22:50Z",
+      "side": 1,
+      "message": "Can we avoid adding all these placeholders before moving them to their own file? You can return nullptr from all the `Create*Impl` methods.\n\nQueue will still be required, so can we have it in its own file already? Includes can be cleaned up as well.",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
