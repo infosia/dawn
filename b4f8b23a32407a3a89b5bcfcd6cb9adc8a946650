@@ -71,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7e64d9a8_038cf935",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-21T09:36:09Z",
+      "side": 1,
+      "message": "The mechanism is that pipeline mask should know whether we used such internal constants in uploading phase.\n\nAnd if those bits in pipeline mask is not dirty, values set here are ignored.",
+      "parentUuid": "7fd7c130_40af7427",
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "31533cc9_3151d381",
         "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
         "patchSetId": 28
