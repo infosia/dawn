@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40922db9_a9010454",
+        "filename": "src/dawn/glfw/utils_emscripten.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T10:26:22Z",
+      "side": 1,
+      "message": "We shoud remove this header as we don\u0027t even use it and don\u0027t link against dawn_common.",
+      "revId": "2dc48514983142417c438a2a7da2fd4e3ee903f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "743e632a_62755cee",
+        "filename": "src/dawn/glfw/utils_emscripten.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T10:26:22Z",
+      "side": 1,
+      "message": "Maybe this will need to be updated to be more robust, not sure.",
+      "revId": "2dc48514983142417c438a2a7da2fd4e3ee903f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddfd4a73_b2abb924",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-21T10:26:22Z",
+      "side": 1,
+      "message": "That\u0027s going to cause problems. Can we instead copy webgpu_glfw.h in the EM_BUILD_GEN_DIR ?",
+      "revId": "2dc48514983142417c438a2a7da2fd4e3ee903f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
