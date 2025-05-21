@@ -87,3 +87,9 @@ interface GPUSupportedLimits {
     readonly attribute (unsigned long or undefined) maxStorageBuffersInVertexStage;
     readonly attribute (unsigned long or undefined) maxStorageTexturesInVertexStage;
 };
+
+typedef (GPUSampler or
+         GPUTextureView or
+         GPUBuffer or
+         GPUBufferBinding or
+         GPUExternalTexture) GPUBindingResource;
