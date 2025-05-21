@@ -16,6 +16,24 @@
       "message": "Should this one have changed? I don\u0027t think there should be duplicate bindings *before* the binding remapper has run, unless there\u0027s another transform that\u0027s doing this too?",
       "revId": "e377c5e7e322510cda321c1f846273dc474ba36b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20e7f9f3_bfdac35b",
+        "filename": "src/tint/lang/core/ir/transform/binding_remapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-21T21:19:42Z",
+      "side": 1,
+      "message": "You are correct, I was probably thinking this validation occured after the transform ran.",
+      "parentUuid": "ae5b1628_9eb5a5a7",
+      "revId": "e377c5e7e322510cda321c1f846273dc474ba36b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
