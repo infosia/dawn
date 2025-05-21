@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "569a92a4_71843567",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-21T06:01:30Z",
+      "side": 1,
+      "message": "Here\u0027s a smaller CL from the big \"add events\" CL. Hopefully it\u0027s self explanatory. PTAL.",
+      "revId": "a2de9375ab61669e07f8253b79a3d41d258c99b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
