@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e333362_987446a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-21T13:47:16Z",
+      "side": 1,
+      "message": "Reviewed",
+      "revId": "eb23e8e098598f3293a22ee88645c12ab6aafe82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03b451e5_0707cb17",
@@ -31,6 +48,24 @@
       "writtenOn": "2025-05-21T12:26:07Z",
       "side": 1,
       "message": "nit: leftover from previous approach is still there.",
+      "revId": "eb23e8e098598f3293a22ee88645c12ab6aafe82",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0db70867_f92081e1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-21T13:47:16Z",
+      "side": 1,
+      "message": "note: only\nstring(TOUPPER \"${DAWN_BUILD_MONOLITHIC_LIBRARY}\" _option_upper)\nis a leftover, and I removed it",
+      "parentUuid": "03b451e5_0707cb17",
       "revId": "eb23e8e098598f3293a22ee88645c12ab6aafe82",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
