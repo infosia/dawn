@@ -1,10 +1,12 @@
-# emdawnwebgpu
+# Emdawnwebgpu
 
-emdawnwebgpu is Dawn's implementation of webgpu.h for Emscripten (on top of the
-WebGPU JS API). This package includes all of the necessary files to use
-<webgpu/webgpu.h> and Dawn's <webgpu/webgpu_cpp.h> in Emscripten.
+Emdawnwebgpu is Dawn's implementation of webgpu.h for Emscripten (on top of the
+WebGPU JS API). It is a fork of Emscripten's original `USE_WEBGPU` bindings,
+and while it is maintained in Dawn, it still works cross-browser.
 
-(Note, this is meant only to be used from a pre-built package directory.
+If you downloaded this package as a zip file, it includes all of the necessary
+files to use <webgpu/webgpu.h> and Dawn's <webgpu/webgpu_cpp.h> in Emscripten.
+(Note, this package is meant only to be used from a pre-built package directory.
 It won't work if included directly from Dawn's source tree.)
 
 Find new versions of this package at <https://github.com/google/dawn/releases>.
@@ -20,6 +22,9 @@ pass this flag to `emcc` during both compile and link:
 If (and only if) using Emscripten `<=4.0.7`, also pass this flag during link:
 
     --closure-args=--externs=path/to/emdawnwebgpu_pkg/webgpu/src/webgpu-externs.js
+
+In Emscripten 4.0.10+, you can alternatively use the "remote" port which
+automatically downloads the zip. It can be downloaded from the release page.
 
 ## Port options
 
