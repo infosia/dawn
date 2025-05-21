@@ -213,6 +213,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9bdc5aac_b67ba6b7",
+        "filename": "src/dawn/node/interop/Browser.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-21T08:22:04Z",
+      "side": 1,
+      "message": "This is your code from that CL you sent me before 😂\n\nThis is valid usage of EventTarget\n\n```js\nconst target \u003d new EventTarget();\ntarget.addEventListener(\u0027foo\u0027, {\n  handleEvent(event) {\n    console.log(\u0027hello from object with handleEvent method\u0027);\n  },\n});\ntarget.dispatchEvent(new Event(\u0027foo\u0027));\n```\n\nhttps://dom.spec.whatwg.org/#interface-eventtarget",
+      "parentUuid": "cb3ac2ee_9e070b72",
+      "revId": "57243a764aa7dbc171b4d848ce30f2034f59047e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c01f3a01_83790a0b",
         "filename": "src/dawn/node/interop/Core.cpp",
         "patchSetId": 3
