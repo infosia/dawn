@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc52e306_9abe2796",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-21T07:24:26Z",
+      "side": 1,
+      "message": "Overall I don\u0027t quite understand why we need to do so.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "ffdcdcc6839013b02a8573fe909a15fbe838c353",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e11612e_2e8200bd",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-21T07:24:26Z",
+      "side": 1,
+      "message": "Looks like a bug. the `if` makes no difference.",
+      "range": {
+        "startLine": 1719,
+        "startChar": 0,
+        "endLine": 1722,
+        "endChar": 70
+      },
+      "revId": "ffdcdcc6839013b02a8573fe909a15fbe838c353",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
