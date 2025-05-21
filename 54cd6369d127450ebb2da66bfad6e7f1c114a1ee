@@ -22,6 +22,30 @@
       },
       "revId": "54cd6369d127450ebb2da66bfad6e7f1c114a1ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0d83d3f_7c078b8f",
+        "filename": ".github/workflows/package-emdawnwebgpu.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-21T02:43:12Z",
+      "side": 1,
+      "message": "Sure, we can build both. Really this is just a spot check until we have something on CQ but it doesn\u0027t hurt to have a bit better coverage.",
+      "parentUuid": "30600baa_ce8bd2a1",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 95
+      },
+      "revId": "54cd6369d127450ebb2da66bfad6e7f1c114a1ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
