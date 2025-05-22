@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99ede4db_0a0a77a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-22T13:23:53Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "8bca71d14782ae29a45a593d21a3855d765b0330",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17fe3af5_18ad3205",
+        "filename": "src/tint/lang/spirv/reader/texture_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2505,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-22T13:23:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure why the old reader made these non-storage types? They\u0027re marked as `compatible with read/write operations (a storage or subpass data image)` and have a format attached to them so I think they _should_ be storage types.",
+      "revId": "8bca71d14782ae29a45a593d21a3855d765b0330",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
