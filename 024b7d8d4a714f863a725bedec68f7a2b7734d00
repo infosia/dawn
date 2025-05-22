@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c7a6a69_877e65c9",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-22T02:06:27Z",
+      "side": 1,
+      "message": "Updated the comment at the site of where we check, and also added some more details to make it more clear.",
+      "parentUuid": "eed8a94e_2ab5a30b",
+      "range": {
+        "startLine": 397,
+        "startChar": 17,
+        "endLine": 397,
+        "endChar": 97
+      },
+      "revId": "024b7d8d4a714f863a725bedec68f7a2b7734d00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2181795_2df179f7",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-05-22T01:20:52Z",
       "side": 1,
       "message": "I don\u0027t understand this existing comment. Is it outdated? (what comparison? what id?)",
+      "revId": "024b7d8d4a714f863a725bedec68f7a2b7734d00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "295feac6_69e3ba70",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-22T02:06:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2181795_2df179f7",
       "revId": "024b7d8d4a714f863a725bedec68f7a2b7734d00",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
