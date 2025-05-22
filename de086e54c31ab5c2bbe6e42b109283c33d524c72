@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b4d840f1_c797fd4d",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-22T07:27:07Z",
+      "side": 1,
+      "message": "`EM_BUILD_GEN_DIR` is not defined yet.",
+      "parentUuid": "89f2d873_798e9ffa",
+      "revId": "de086e54c31ab5c2bbe6e42b109283c33d524c72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3ebe2455_7f4a83fa",
         "filename": "src/emdawnwebgpu/CMakeLists.txt",
         "patchSetId": 15

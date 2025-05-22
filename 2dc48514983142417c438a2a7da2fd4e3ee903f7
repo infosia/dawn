@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f18d209_2f39ab8c",
+        "filename": "src/dawn/glfw/utils_emscripten.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-22T07:27:07Z",
+      "side": 1,
+      "message": "I\u0027ve changed it to `!canvas`",
+      "parentUuid": "40cb9cd0_e7084252",
+      "revId": "2dc48514983142417c438a2a7da2fd4e3ee903f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddfd4a73_b2abb924",
