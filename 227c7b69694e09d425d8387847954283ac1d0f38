@@ -22,6 +22,30 @@
       },
       "revId": "227c7b69694e09d425d8387847954283ac1d0f38",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a709511_88590a6a",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-22T02:08:13Z",
+      "side": 1,
+      "message": "Best guess is it\u0027s using a different (older) compiler instead of the hermetic one from build/.",
+      "parentUuid": "5eb14d36_afe7c4d2",
+      "range": {
+        "startLine": 582,
+        "startChar": 4,
+        "endLine": 582,
+        "endChar": 81
+      },
+      "revId": "227c7b69694e09d425d8387847954283ac1d0f38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
