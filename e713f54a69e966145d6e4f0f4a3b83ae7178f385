@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5e22808_bdcedc0d",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-22T12:23:32Z",
+      "side": 1,
+      "message": "This comment seems misleading. I speculate you probably wanted to mean the color msaa texture instead.",
+      "range": {
+        "startLine": 1727,
+        "startChar": 8,
+        "endLine": 1727,
+        "endChar": 55
+      },
+      "revId": "e713f54a69e966145d6e4f0f4a3b83ae7178f385",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdf45615_32ae1f7d",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1772,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-22T12:23:32Z",
+      "side": 1,
+      "message": "This works just because for the clear test cases you use the same clear color and draw color Red. On the one hand, this makes the code lines hard to read, and on the other hand, such implicit logic is usually fragile.",
+      "range": {
+        "startLine": 1772,
+        "startChar": 30,
+        "endLine": 1772,
+        "endChar": 59
+      },
+      "revId": "e713f54a69e966145d6e4f0f4a3b83ae7178f385",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c78102c_662786cf",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-22T12:23:32Z",
+      "side": 1,
+      "message": "The magic values seem worth a bit more explanation.",
+      "range": {
+        "startLine": 1775,
+        "startChar": 38,
+        "endLine": 1775,
+        "endChar": 56
+      },
+      "revId": "e713f54a69e966145d6e4f0f4a3b83ae7178f385",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
