@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c73a0fab_d9b2ddfa",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-22T07:34:35Z",
+      "side": 1,
+      "message": "Shall I define `EM_BUILD_GEN_DIR` at the top of this file? Use `\"${DAWN_BUILD_GEN_DIR}/src/emdawnwebgpu\"` instead? Leave it as is?",
+      "parentUuid": "b4d840f1_c797fd4d",
+      "revId": "de086e54c31ab5c2bbe6e42b109283c33d524c72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3ebe2455_7f4a83fa",
         "filename": "src/emdawnwebgpu/CMakeLists.txt",
         "patchSetId": 15
