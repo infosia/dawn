@@ -32,6 +32,7 @@
 #include <utility>
 
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/clone_context.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
@@ -68,6 +69,21 @@ struct State {
     /// Map of all OpSampledImages seen
     Hashmap<core::ir::Value*, core::ir::Instruction*, 4> sampled_images_{};
 
+    /// Any `ir::UserCall` instructions which have texture params which need to be updated.
+    Hashset<core::ir::UserCall*, 2> user_calls_to_convert_{};
+
+    /// The `ir::Values`s which have had their types changed, they then need to have their
+    /// usages updated to match. This maps to the root FunctionParam or Var for each texture.
+    Vector<core::ir::Value*, 8> values_to_fix_usages_{};
+
+    /// The `ir::Value`s which have been converted
+    Hashset<core::ir::Value*, 8> converted_{};
+
+    /// Function to texture replacements, this is done by hashcode since the
+    /// function pointer is combined with the parameters which are converted to
+    /// textures.
+    Hashmap<size_t, core::ir::Function*, 4> func_hash_to_func_{};
+
     /// Process the module.
     void Process() {
         for (auto* inst : *ir.root_block) {
@@ -86,8 +102,7 @@ struct State {
 
             auto* new_ty = TypeFor(type);
             var->Result()->SetType(ty.ptr(ptr->AddressSpace(), new_ty, ptr->Access()));
-
-            // TODO(dsinclair): Propagate through functions
+            values_to_fix_usages_.Push(var->Result());
 
             for (auto& usage : var->Result()->UsagesUnsorted()) {
                 if (usage->instruction->Is<core::ir::Load>()) {
@@ -95,9 +110,6 @@ struct State {
                 }
             }
         }
-
-        // TODO(dsinclair): Propagate OpTypeSampledImage through function params by replacing with
-        // the texture/sampler
 
         Vector<spirv::ir::BuiltinCall*, 4> builtin_worklist;
         for (auto* inst : ir.Instructions()) {
@@ -122,6 +134,30 @@ struct State {
                 }
             }
         }
+
+        // TODO(dsinclair): Propagate OpTypeSampledImage through function params by replacing with
+        // the texture/sampler
+
+        // The double loop happens because when we convert user calls, that will
+        // add more values to convert, but those values can find user calls to
+        // convert, so we have to work until we stabilize
+        while (!values_to_fix_usages_.IsEmpty()) {
+            while (!values_to_fix_usages_.IsEmpty()) {
+                auto* val = values_to_fix_usages_.Pop();
+                ConvertUsagesToTexture(val);
+            }
+
+            auto user_calls = user_calls_to_convert_.Vector();
+            // Sort for deterministic output
+            user_calls.Sort();
+            for (auto& call : user_calls) {
+                ConvertUserCall(call);
+            }
+            user_calls_to_convert_.Clear();
+        }
+
+        TINT_ASSERT(values_to_fix_usages_.IsEmpty());
+        TINT_ASSERT(user_calls_to_convert_.IsEmpty());
 
         for (auto* builtin : builtin_worklist) {
             switch (builtin->Func()) {
@@ -162,6 +198,86 @@ struct State {
         for (auto res : sampled_images_) {
             res.value->Destroy();
         }
+    }
+
+    void ConvertUsagesToTexture(core::ir::Value* val) {
+        val->ForEachUseUnsorted([&](const core::ir::Usage& usage) {
+            auto* inst = usage.instruction;
+
+            tint::Switch(  //
+                inst,
+                [&](core::ir::Let* l) {
+                    auto* res = l->Result();
+                    auto* orig_ty = res->Type();
+                    auto* new_ty = val->Type();
+
+                    if (new_ty == orig_ty) {
+                        return;
+                    }
+
+                    res->SetType(new_ty);
+                    if (converted_.Add(res)) {
+                        values_to_fix_usages_.Push(res);
+                    }
+                },
+                [&](core::ir::Load* l) {
+                    auto* res = l->Result();
+                    auto* orig_ty = res->Type();
+                    auto* new_ty = val->Type()->UnwrapPtr();
+
+                    if (new_ty == orig_ty) {
+                        return;
+                    }
+
+                    res->SetType(new_ty);
+                    if (converted_.Add(res)) {
+                        values_to_fix_usages_.Push(res);
+                    }
+                },  //
+                [&](core::ir::UserCall* uc) { user_calls_to_convert_.Add(uc); },
+                [&](core::ir::BuiltinCall*) {},  //
+                TINT_ICE_ON_NO_MATCH);
+        });
+    }
+
+    // The user calls need to check all of the parameters which were converted
+    // to textures and create a forked function call for that combination of
+    // parameters.
+    void ConvertUserCall(core::ir::UserCall* uc) {
+        auto* target = uc->Target();
+        auto& params = target->Params();
+        const auto& args = uc->Args();
+
+        Vector<size_t, 2> to_convert;
+        for (size_t i = 0; i < args.Length(); ++i) {
+            if (params[i]->Type() != args[i]->Type()) {
+                to_convert.Push(i);
+            }
+        }
+        // Everything is already converted we're done.
+        if (to_convert.IsEmpty()) {
+            return;
+        }
+
+        // Hash based on the original function pointer and the specific
+        // parameters we're converting.
+        auto hash = Hash(target);
+        hash = HashCombine(hash, to_convert);
+
+        auto* new_fn = func_hash_to_func_.GetOrAdd(hash, [&] {
+            core::ir::CloneContext ctx{ir};
+            auto* fn = uc->Target()->Clone(ctx);
+            ir.functions.Push(fn);
+
+            for (auto idx : to_convert) {
+                auto* p = fn->Params()[idx];
+                p->SetType(args[idx]->Type());
+
+                values_to_fix_usages_.Push(p);
+            }
+            return fn;
+        });
+        uc->SetTarget(new_fn);
     }
 
     // Record the sampled image so we can extract the texture/sampler information as we process the
