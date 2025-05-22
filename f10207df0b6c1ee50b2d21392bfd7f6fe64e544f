@@ -16,6 +16,24 @@
       "message": "Could also just `EXPECT_INST` with a block of instructions that shows the whole `f` function accessing the texture directly.",
       "revId": "f10207df0b6c1ee50b2d21392bfd7f6fe64e544f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd6ae546_ba7b718b",
+        "filename": "src/tint/lang/spirv/writer/var_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-22T21:02:17Z",
+      "side": 1,
+      "message": "I did that initially but I felt like I wanted to shape the code to make sure it was not using any parameters.",
+      "parentUuid": "31d08a77_30ec6337",
+      "revId": "f10207df0b6c1ee50b2d21392bfd7f6fe64e544f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
