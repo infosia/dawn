@@ -51,6 +51,24 @@
       "parentUuid": "1b6cc180_9f6d6711",
       "revId": "148b8573ea5c210b1dcd019245aac2e4503b9eba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcc405a0_0d32f6dd",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-22T14:00:32Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "59159e34_67527585",
+      "revId": "148b8573ea5c210b1dcd019245aac2e4503b9eba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

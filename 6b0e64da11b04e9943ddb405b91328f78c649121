@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be7a7591_b7ef0c02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-22T14:00:32Z",
+      "side": 1,
+      "message": "The coordinates part LGTM if you wanted to pull that out and land it separately.",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5eb37e5_0cae561d",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-22T14:00:32Z",
+      "side": 1,
+      "message": "Can this ever happen? We\u0027re starting at spirv.image vars which always need to be converted, so I would\u0027ve thought that any time you see a `let` the type will change.",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f3e3d6c_8415a23b",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-22T14:00:32Z",
+      "side": 1,
+      "message": "Similarly, I\u0027m not sure that you can ever hit the same instruction twice in this transform (it\u0027s a simpler situation than with atomics), so I\u0027m not sure you need this `converted_` map.\n\nMaybe I\u0027m missing a scenario though?",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b98965c6_535fe3fc",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-22T14:00:32Z",
+      "side": 1,
+      "message": "As above, maybe not needed? Every load you hit should be loading a spirv.image that needs to be converted.",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bde5a80_1496a42d",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-22T14:00:32Z",
+      "side": 1,
+      "message": "As above, maybe not needed?",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ccaa5d43_100e437b",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-22T14:00:32Z",
+      "side": 1,
+      "message": "Do we have test cases that show the need to multi-version functions? Is that something that can actually happen?\n\nUnlike the atomics transform, we already know that every single spirv.image parameter will need to be converted, so if there\u0027s no cases where the same function would need to have two different signatures then I think we could simplify a lot of this logic for user calls.",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "708a054c_efab2201",
+        "filename": "src/tint/lang/spirv/reader/texture_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3356,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-22T14:00:32Z",
+      "side": 1,
+      "message": "I think the point of the test was to ensure that this sort of thing *doesn\u0027t* happen.\n\nWGSL doesn\u0027t support creating pointers to handle types, so we wouldn\u0027t be able to convert these `let` instructions to WGSL.\n\nSo we should probably just have the handling of `let` remove the instruction completely.",
+      "range": {
+        "startLine": 3355,
+        "startChar": 0,
+        "endLine": 3356,
+        "endChar": 42
+      },
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d3b5cbf_c841a4c7",
+        "filename": "src/tint/lang/spirv/reader/texture_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3442,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-22T14:00:32Z",
+      "side": 1,
+      "message": "Do these get inlined when converting to WGSL? I fear that ValueToLet does not inline across control flow boundaries, which would cause them to get stored in `let` declarations. This is what the test was supposed to be guarding against AFAICT, so we probably need to do something like defer the `load` until the point of use (bearing in mind that the load may have multiple uses...).",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
