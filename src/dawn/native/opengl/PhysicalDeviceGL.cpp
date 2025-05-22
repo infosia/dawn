@@ -34,6 +34,7 @@
 #include <utility>
 
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/opengl/ContextEGL.h"
@@ -229,9 +230,17 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
                             mFunctions.IsGLExtensionSupported("GL_ARB_texture_compression_bptc") ||
                             mFunctions.IsGLExtensionSupported("GL_EXT_texture_compression_bptc");
 
+        // 3D support is core in ES 3.0 but requires GL_ARB_ES3_compatibility in desktop OpenGL.
+        bool supportsBCSliced3D = mFunctions.IsAtLeastGLES(3, 0) ||
+                                  mFunctions.IsGLExtensionSupported("GL_ARB_ES3_compatibility");
+
+        dawn::ErrorLog() << "supportsBCSliced3D: " << supportsBCSliced3D;
         if (supportsS3TC && (supportsTextureSRGB || supportsS3TCSRGB) && supportsRGTC &&
             supportsBPTC) {
             EnableFeature(Feature::TextureCompressionBC);
+            if (supportsBCSliced3D) {
+                EnableFeature(Feature::TextureCompressionBCSliced3D);
+            }
         }
     }
 
