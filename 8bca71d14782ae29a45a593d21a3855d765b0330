@@ -87,6 +87,24 @@
       "parentUuid": "b5700a3f_f5e42bc9",
       "revId": "8bca71d14782ae29a45a593d21a3855d765b0330",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c91fd54_e266ef73",
+        "filename": "src/tint/lang/spirv/reader/texture_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2505,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-22T20:14:36Z",
+      "side": 1,
+      "message": "File crbug.com/419601532",
+      "parentUuid": "44b7bdb7_c056001d",
+      "revId": "8bca71d14782ae29a45a593d21a3855d765b0330",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
