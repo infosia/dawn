@@ -33,6 +33,7 @@
 
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Device.h"
@@ -145,6 +146,10 @@ MaybeError AllocateTexture(const OpenGLFunctions& gl,
             case GL_TEXTURE_2D_ARRAY:
             case GL_TEXTURE_CUBE_MAP_ARRAY:
             case GL_TEXTURE_3D:
+                dawn::ErrorLog() << "TexStorage3D target: " << target << " levels: " << levels
+                                 << " format.internalFormat: " << format.internalFormat
+                                 << " size.width: " << size.width << " size.height: " << size.height
+                                 << " size.depthOrArrayLayers: " << size.depthOrArrayLayers;
                 DAWN_GL_TRY_ALWAYS_CHECK(
                     gl, TexStorage3D(target, levels, format.internalFormat, size.width, size.height,
                                      size.depthOrArrayLayers));

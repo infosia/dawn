@@ -34,6 +34,7 @@
 #include <utility>
 
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/opengl/ContextEGL.h"
@@ -229,9 +230,31 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
                             mFunctions.IsGLExtensionSupported("GL_ARB_texture_compression_bptc") ||
                             mFunctions.IsGLExtensionSupported("GL_EXT_texture_compression_bptc");
 
+        bool supportsBCSliced3D = true;
+        dawn::ErrorLog() << "0. supportsBCSliced3D: " << supportsBCSliced3D;
+        if (mVendorId == gpu_info::kVendorID_Nvidia) {
+            supportsBCSliced3D &= mFunctions.IsAtLeastGL(4, 2);
+            dawn::ErrorLog() << "1. supportsBCSliced3D: " << supportsBCSliced3D;
+        } else if (gpu_info::IsMesaSoftware(mVendorId, mDeviceId)) {
+            // Mesa 24.0 allows S3TC for 3D textures
+            // https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/26389/diffs
+            const gpu_info::DriverVersion kFixedDriverVersion = {24, 0, 0, 0};
+            if (gpu_info::CompareIntelMesaDriverVersion(mDriverVersion, kFixedDriverVersion) < 0) {
+                dawn::ErrorLog() << "2. supportsBCSliced3D: " << supportsBCSliced3D;
+                supportsBCSliced3D = false;
+            }
+            supportsBCSliced3D &= mFunctions.IsGLExtensionSupported("GL_ARB_ES3_compatibility");
+            dawn::ErrorLog() << "3. supportsBCSliced3D: " << supportsBCSliced3D;
+        }
+
+        dawn::ErrorLog() << "4. supportsBCSliced3D: " << supportsBCSliced3D;
         if (supportsS3TC && (supportsTextureSRGB || supportsS3TCSRGB) && supportsRGTC &&
             supportsBPTC) {
             EnableFeature(Feature::TextureCompressionBC);
+            dawn::ErrorLog() << "5. supportsBCSliced3D: " << supportsBCSliced3D;
+            if (supportsBCSliced3D) {
+                EnableFeature(Feature::TextureCompressionBCSliced3D);
+            }
         }
     }
 
