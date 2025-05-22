@@ -3285,7 +3285,7 @@ INSTANTIATE_TEST_SUITE_P(DISABLED_SpirvReaderTest_ConvertUintCoords_Arrayed,
 // An ad-hoc test to prove we never had the issue feared in crbug.com/tint/265.
 // Never create a const-declaration for a pointer to a texture or sampler. Code generation always
 // traces back to the memory object declaration.
-TEST_F(SpirvReaderTest, DISABLED_NeverGenerateConstDeclForHandle_UseVariableDirectly) {
+TEST_F(SpirvReaderTest, NeverGenerateConstDeclForHandle_UseVariableDirectly) {
     EXPECT_IR(R"(
     OpCapability Shader
     OpCapability Sampled1D
