@@ -33,6 +33,24 @@
       "message": "I tried the latest tree for this and it still gives a libwebgpu_dawn.a with ~5mb and trying to link it in a project gives me a lot missing symbols for abseil and tint. It seems to me this is not fully monolithic? The monolithic dynamic lib includes abseil and tint and I don\u0027t need other dependencies. I am configuring with `cmake -S . -B out/Release -DDAWN_FETCH_DEPENDENCIES\u003dON -DCMAKE_BUILD_TYPE\u003dRelease -DBUILD_SHARED_LIBS\u003dOFF`, am I missing something?\n\nI do not get the errors when I manually just override addLibrary to static in BundleLibraries.cmake, it builds and I can run my project. \n\nThis is what the errors look like.\nerror: undefined symbol: __ZN4absl13base_internal18ThrowStdOutOfRangeEPKc\n    note: referenced by ../../dawn/libs/aarch64-macos/libwebgpu_dawn.a(Adapter.cpp.o):__ZNK4dawn6native11AdapterBase10APIGetInfoEPNS0_11AdapterInfoE\n    note: referenced by ../../dawn/libs/aarch64-macos/libwebgpu_dawn.a(BindGroup.cpp.o):__ZN4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyIjjEENS_13hash_internal4HashIjEENSt3__18equal_toIjEENS7_9allocatorINS7_4pairIKjjEEEEE2atIjS3_EEDTclsrT0_5valueclL_ZNS7_9addressofB8un170006ISD_EEPT_RSJ_EclL_ZNS7_7declvalIRSD_EEDTclsr3stdE9__declvalISJ_ELi0EEEvEEEEERSC_\n    note: referenced by ../../dawn/libs/aarch64-macos/libwebgpu_dawn.a(Pipeline.cpp.o):__ZNK4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyINSt3__112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEEN4dawn6native6detail8OverrideEEENS0_10StringHashENS0_8StringEqENS7_INS3_4pairIKS9_SD_EEEEE2atINS3_17basic_string_viewIcS6_EESE_EEDTclsrT0_5valueclL_ZNS3_9addressofB8un170006IKSJ_EEPT_RSS_EclL_ZNS3_7declvalIRSR_EEDTclsr3stdE9__declvalISS_ELi0EEEvEEEEERKSS_\n    note: referenced by ../../dawn/libs/aarch64-macos/libwebgpu_dawn.a(ShaderModule.cpp.o):__ZNK4absl18container_internal12raw_hash_mapINS0_17FlatHashMapPolicyINSt3__112basic_stringIcNS3_11char_traitsIcEENS3_9allocatorIcEEEENS3_10unique_ptrIN4dawn6native18EntryPointMetadataENS3_14default_deleteISD_EEEEEENS0_10StringHashENS0_8StringEqENS7_INS3_4pairIKS9_SG_EEEEE2atINS3_17basic_string_viewIcS6_EESH_EEDTclsrT0_5valueclL_ZNS3_9addressofB8un170006IKSM_EEPT_RSV_EclL_ZNS3_7declvalIRSU_EEDTclsr3stdE9__declvalISV_ELi0EEEvEEEEERKSV_\n    note: referenced 1 more times",
       "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d12da2ec_c4ebc209",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-22T08:46:54Z",
+      "side": 1,
+      "message": "Interesting, it worked for me both for separate projects and the samples. Can you send a reproducible setup so I can debug this? Thanks a lot by the way for testing it!",
+      "parentUuid": "8a160e7d_0ac22499",
+      "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
