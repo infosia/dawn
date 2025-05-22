@@ -919,6 +919,17 @@ if (DAWN_BUILD_MONOLITHIC_LIBRARY)
     # Bundle all objects of dawn_native, it's public dependencies and private dependencies.
     include(BundleLibraries)
     bundle_libraries(webgpu_dawn dawn::dawn_native_objects)
+
+    target_link_options(webgpu_dawn
+        PRIVATE
+        -Wl,--version-script,${CMAKE_CURRENT_SOURCE_DIR}/webgpu_dawn.map.txt
+        -Wl,--no-undefined-version
+    )
+    set_target_properties(webgpu_dawn
+        PROPERTIES
+        LINK_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/webgpu_dawn.map.txt
+    )
+
     add_library(dawn::webgpu_dawn ALIAS webgpu_dawn)
     # Compile backend specific sources along with webgpu_dawn_native_proc sources for export macros to get applied.
     target_sources(webgpu_dawn
