@@ -51,6 +51,24 @@
       "parentUuid": "8a160e7d_0ac22499",
       "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56d192fa_6b53f1cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4067298
+      },
+      "writtenOn": "2025-05-22T11:37:24Z",
+      "side": 1,
+      "message": "Sure thing! I am dabbling in static builds on my github fork. Here is a build running with `-DBUILD_SHARED_LIBS\u003dOFF` - https://github.com/kommander/dawn/actions/runs/15184261328\n\n(Note I have to set `-DDAWN_ENABLE_INSTALL\u003dOFF` as well, otherwise configuration will fail)\n\nIt yields the small libwebgpu_dawn.a which misses some dependencies. I also found that when forcing static builds like here https://github.com/kommander/dawn/actions/runs/15145289538 - overriding the `addLibrary` call with a hard coded `STATIC`, the linux build is missing the Vulkan loader, as I get this on ubuntu then (where the dynamic lib works as expected):\n\n```\n     81627:     calling init: /lib/x86_64-linux-gnu/libVkLayer_MESA_device_select.so\n     81627:\n     81627:     /lib/x86_64-linux-gnu/libVkLayer_MESA_device_select.so: error: symbol lookup error: undefined symbol: vkGetDeviceProcAddr (fatal)\n```",
+      "parentUuid": "d12da2ec_c4ebc209",
+      "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
