@@ -229,9 +229,25 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
                             mFunctions.IsGLExtensionSupported("GL_ARB_texture_compression_bptc") ||
                             mFunctions.IsGLExtensionSupported("GL_EXT_texture_compression_bptc");
 
+        bool supportsBCSliced3D = true;
+        if (mVendorId == gpu_info::kVendorID_Nvidia) {
+            supportsBCSliced3D &= mFunctions.IsAtLeastGL(4, 2);
+        } else if (gpu_info::IsMesaSoftware(mVendorId, mDeviceId)) {
+            // Mesa 24.0 allows S3TC for 3D textures
+            // https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/26389/diffs
+            const gpu_info::DriverVersion kFixedDriverVersion = {24, 0, 0, 0};
+            if (gpu_info::CompareIntelMesaDriverVersion(mDriverVersion, kFixedDriverVersion) < 0) {
+                supportsBCSliced3D = false;
+            }
+            supportsBCSliced3D &= mFunctions.IsGLExtensionSupported("GL_ARB_ES3_compatibility");
+        }
+
         if (supportsS3TC && (supportsTextureSRGB || supportsS3TCSRGB) && supportsRGTC &&
             supportsBPTC) {
             EnableFeature(Feature::TextureCompressionBC);
+            if (supportsBCSliced3D) {
+                EnableFeature(Feature::TextureCompressionBCSliced3D);
+            }
         }
     }
 
