@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "40cb9cd0_e7084252",
+        "filename": "src/dawn/glfw/utils_emscripten.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-22T00:14:57Z",
+      "side": 1,
+      "message": "Huh, I didn\u0027t realize Emscripten had deprecated that behavior of `findCanvasEventTarget`.\n\nI don\u0027t have a better suggestion. It seems the USE_GLFW implementation only supports one canvas, so this is fine there. contrib.glfw3 supports multiple so we would ideally want to get the canvas from the `GLFWwindow`, but there doesn\u0027t seem to be a way to do that. This should be fine too because the default is Module.canvas which I\u0027m sure most applications use.\n\nLet\u0027s change this from `#canvas` to `!canvas` as suggested by the docs though, to avoid shadowing any real `#canvas` (even though that\u0027s the old deprecated behavior).",
+      "parentUuid": "44198ffe_7f943171",
+      "revId": "2dc48514983142417c438a2a7da2fd4e3ee903f7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ddfd4a73_b2abb924",
         "filename": "src/emdawnwebgpu/CMakeLists.txt",
         "patchSetId": 13

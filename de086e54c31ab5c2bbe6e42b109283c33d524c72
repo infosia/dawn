@@ -16,6 +16,46 @@
       "message": "LGTM but I\u0027d like Kai to check on that last thread.",
       "revId": "de086e54c31ab5c2bbe6e42b109283c33d524c72",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89f2d873_798e9ffa",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-22T00:14:57Z",
+      "side": 1,
+      "message": "I\u0027d suggest adding the new file copy to this target, so it is in the dependency chain of emdawnwebgpu_config. (`file(COPY)` probably works fine too but it makes sense to group this with the target that populates the rest of the include files.)\n\n```suggestion\n)\n# Also copy the webgpu_glfw.h file.\nadd_custom_command(TARGET emdawnwebgpu_headers_gen POST_BUILD\n    COMMAND ${CMAKE_COMMAND} -E copy\n        \"${DAWN_INCLUDE_DIR}/webgpu/webgpu_glfw.h\"\n        \"${EM_BUILD_GEN_DIR}/include/webgpu/\"\n)\n```",
+      "revId": "de086e54c31ab5c2bbe6e42b109283c33d524c72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ebe2455_7f4a83fa",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-22T00:14:57Z",
+      "side": 1,
+      "message": "(... and delete this.)\n\n```suggestion\n```",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 0
+      },
+      "revId": "de086e54c31ab5c2bbe6e42b109283c33d524c72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
