@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "12442503_b33439f6",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-22T20:13:42Z",
+      "side": 1,
+      "message": "You can define `EM_BUILD_GEN_DIR` at the top of the file. It was only farther down because we didn\u0027t need it up here.",
+      "parentUuid": "c73a0fab_d9b2ddfa",
+      "revId": "de086e54c31ab5c2bbe6e42b109283c33d524c72",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3ebe2455_7f4a83fa",
         "filename": "src/emdawnwebgpu/CMakeLists.txt",
         "patchSetId": 15
