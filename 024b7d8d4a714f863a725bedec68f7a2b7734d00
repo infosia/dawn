@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eed8a94e_2ab5a30b",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-22T01:20:52Z",
+      "side": 1,
+      "message": "Can you clarify the comment to say what code uses this presence? I don\u0027t quite understand.",
+      "range": {
+        "startLine": 397,
+        "startChar": 17,
+        "endLine": 397,
+        "endChar": 97
+      },
+      "revId": "024b7d8d4a714f863a725bedec68f7a2b7734d00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2181795_2df179f7",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-22T01:20:52Z",
+      "side": 1,
+      "message": "I don\u0027t understand this existing comment. Is it outdated? (what comparison? what id?)",
+      "revId": "024b7d8d4a714f863a725bedec68f7a2b7734d00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
