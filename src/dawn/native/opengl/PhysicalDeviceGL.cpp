@@ -28,10 +28,13 @@
 #include "dawn/native/opengl/PhysicalDeviceGL.h"
 
 #include <algorithm>
+#include <cctype>
+#include <charconv>
 #include <memory>
 #include <string>
 #include <string_view>
 #include <utility>
+#include <vector>
 
 #include "dawn/common/GPUInfo.h"
 #include "dawn/native/ChainUtils.h"
@@ -89,6 +92,64 @@ uint32_t GetDeviceIdFromRender(std::string_view render) {
 
     return deviceId;
 }
+gpu_info::DriverVersion GetMesaDriverVersionFromRenderer(std::string_view renderer) {
+    gpu_info::DriverVersion version = {0, 0, 0, 0};
+
+    size_t mesaPos = renderer.find_last_of("Mesa ");
+
+    if (mesaPos == std::string_view::npos) {
+        return version;
+    }
+
+    std::string_view versionString = renderer.substr(mesaPos + 1);
+
+    // Find the end of the version number. This could be a space, a hyphen,
+    // or simply the end of the string. We're looking for the first character
+    // that isn't a digit or a dot.
+    size_t endOfVersion = 0;
+    while (endOfVersion < versionString.length() &&
+           (std::isdigit(versionString[endOfVersion]) || versionString[endOfVersion] == '.')) {
+        endOfVersion++;
+    }
+    // Trim the versionString to only include the numeric part (e.g., "23.2.1").
+    versionString = versionString.substr(0, endOfVersion);
+
+    size_t currentPos = 0;
+    int componentIndex = 0;
+
+    // Iterate through the version string to extract components.
+    // We aim for major, minor, and patch (3 components).
+    while (currentPos < versionString.length() && componentIndex < 3) {
+        size_t dotPos = versionString.find('.', currentPos);
+        std::string_view componentStr;
+
+        if (dotPos == std::string_view::npos) {
+            // This is the last component (no more dots).
+            componentStr = versionString.substr(currentPos);
+            currentPos = versionString.length();
+        } else {
+            // Extract the component up to the next dot.
+            componentStr = versionString.substr(currentPos, dotPos - currentPos);
+            currentPos = dotPos + 1;
+        }
+
+        int val = 0;
+        auto result =
+            std::from_chars(componentStr.data(), componentStr.data() + componentStr.size(), val);
+
+        // Check if the conversion was successful and consumed the whole component string.
+        if (result.ec == std::errc() && result.ptr == componentStr.data() + componentStr.size()) {
+            version[componentIndex] = val;
+        } else {
+            // Conversion failed or didn't consume the entire component.
+            // This indicates malformed input, so we stop parsing.
+            break;
+        }
+        componentIndex++;
+    }
+
+    return version;
+}
 
 bool IsANGLEDesktopGL(std::string_view renderer) {
     return renderer.find("ANGLE") != std::string::npos &&
@@ -98,6 +159,10 @@ bool IsANGLEDesktopGL(std::string_view renderer) {
 
 bool IsSwiftShader(std::string_view renderer) {
     return renderer.find("SwiftShader") != std::string::npos;
+}
+
+bool IsIntelMesa(std::string_view renderer) {
+    return renderer.find("Intel, Mesa") != std::string::npos;
 }
 
 }  // anonymous namespace
@@ -188,6 +253,10 @@ MaybeError PhysicalDevice::InitializeImpl() {
         mAdapterType = wgpu::AdapterType::CPU;
     }
 
+    if (IsIntelMesa(mName)) {
+        mDriverVersion = GetMesaDriverVersionFromRenderer(mName);
+    }
+
     return {};
 }
 
@@ -229,9 +298,26 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
                             mFunctions.IsGLExtensionSupported("GL_ARB_texture_compression_bptc") ||
                             mFunctions.IsGLExtensionSupported("GL_EXT_texture_compression_bptc");
 
+        // 3D support is core in ES 3.0 but requires GL_ARB_ES3_compatibility in desktop OpenGL.
+        bool supportsBCSliced3D = mFunctions.IsAtLeastGLES(3, 0) ||
+                                  mFunctions.IsGLExtensionSupported("GL_ARB_ES3_compatibility");
+        if (mVendorId == gpu_info::kVendorID_Nvidia) {
+            supportsBCSliced3D &= mFunctions.IsAtLeastGL(4, 2);
+        } else if (IsIntelMesa(mName)) {
+            // Mesa 24.0 allows S3TC for 3D textures
+            // https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/26389/diffs
+            const gpu_info::DriverVersion kFixedDriverVersion = {24, 0, 0, 0};
+            if (gpu_info::CompareIntelMesaDriverVersion(mDriverVersion, kFixedDriverVersion) < 0) {
+                supportsBCSliced3D = false;
+            }
+        }
+
         if (supportsS3TC && (supportsTextureSRGB || supportsS3TCSRGB) && supportsRGTC &&
             supportsBPTC) {
             EnableFeature(Feature::TextureCompressionBC);
+            if (supportsBCSliced3D) {
+                EnableFeature(Feature::TextureCompressionBCSliced3D);
+            }
         }
     }
 
