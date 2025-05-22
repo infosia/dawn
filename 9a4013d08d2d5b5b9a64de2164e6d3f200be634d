@@ -16,6 +16,23 @@
       "message": "This CL handles the comment https://dawn-review.googlesource.com/c/dawn/+/237554/comment/c07161a3_5673a313/. Please take a look, thanks!\n\nNote that as described in the issue 411268750, current CTS depth-stencil failures (without workaround) on Qualcomm devices includes both `depth24plus-stencil8` and `depth32float-stencil8` format, and I believe these two formats\u0027 failures reflect the same driver issue since (without this workaround) `depth24plus-stencil8` use the same underlying depth-stencil format `DXGI_FORMAT_D32_FLOAT_S8X24_UINT` as `depth32float-stencil8`.\nThis workaround only fixes the failure of `depth24plus-stencil8` by making it use `DXGI_FORMAT_D24_UNORM_S8_UINT` instead, so the potential driver issue should still get caught by CTS on `depth32float-stencil8` format.",
       "revId": "9a4013d08d2d5b5b9a64de2164e6d3f200be634d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c615be77_f7b5159b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-22T02:24:03Z",
+      "side": 1,
+      "message": "Thanks for reviewing!",
+      "revId": "9a4013d08d2d5b5b9a64de2164e6d3f200be634d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
