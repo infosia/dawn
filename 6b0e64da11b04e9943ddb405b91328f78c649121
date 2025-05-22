@@ -105,6 +105,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a4b2de6d_a3317b22",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-22T14:08:10Z",
+      "side": 1,
+      "message": "I\u0027ll see if I can make one but I was thinking along the lines of:\n\n```\ntexture_2d a;\ntexture_2d b;  // A depth texture from spir-v but depth is 0 because vulkan\n\nfn x(texture_2d c) {\n  textureSample(c);\n}\n\nfn y(texture_2d c) {\n  textureSampleDref(c);\n}\n\nfn main() {\n  x(a);\n  \n  y(b);  // b has to turn to a texture_depth_2d\n  x(b);\n}\n```\n\nI\u0027ll have to see if I can turn that into a real SPIR-V example though.",
+      "parentUuid": "ccaa5d43_100e437b",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "708a054c_efab2201",
         "filename": "src/tint/lang/spirv/reader/texture_test.cc",
         "patchSetId": 4
@@ -139,6 +157,24 @@
       "writtenOn": "2025-05-22T14:00:32Z",
       "side": 1,
       "message": "Do these get inlined when converting to WGSL? I fear that ValueToLet does not inline across control flow boundaries, which would cause them to get stored in `let` declarations. This is what the test was supposed to be guarding against AFAICT, so we probably need to do something like defer the `load` until the point of use (bearing in mind that the load may have multiple uses...).",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbb1e96f_c803ecd5",
+        "filename": "src/tint/lang/spirv/reader/texture_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3442,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-22T14:08:10Z",
+      "side": 1,
+      "message": "Looks like the original bug was it turned into a `var` without an initializer? I\u0027ll  see what we spit out in WGSL to see if this IR is workable.",
+      "parentUuid": "4d3b5cbf_c841a4c7",
       "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
