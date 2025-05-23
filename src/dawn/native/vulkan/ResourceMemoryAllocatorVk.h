@@ -83,8 +83,12 @@ class ResourceMemoryAllocator {
 
     int FindBestTypeIndex(VkMemoryRequirements requirements, MemoryKind kind);
 
+    // Reports the total vulkan allocated and vulkan used memories with the lazy allocated and used
+    // memories subtracted from the sizes.
     uint64_t GetTotalUsedMemory() const;
     uint64_t GetTotalAllocatedMemory() const;
+    // Reports the total lazy allocated vulkan memory.
+    uint64_t GetTotalLazyAllocatedMemory() const;
 
   protected:
     void RecordHeapAllocation(VkDeviceSize size);
@@ -103,6 +107,8 @@ class ResourceMemoryAllocator {
 
     VkDeviceSize mTotalAllocatedMemory = 0;
     VkDeviceSize mTotalUsedMemory = 0;
+    VkDeviceSize mTotalLazyAllocatedMemory = 0;
+    VkDeviceSize mTotalLazyUsedMemory = 0;
 };
 
 }  // namespace dawn::native::vulkan

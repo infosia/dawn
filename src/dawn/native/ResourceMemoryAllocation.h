@@ -62,6 +62,9 @@ struct AllocationInfo {
 
     // Represents the requested memory allocation size (without padding) by the allocator.
     uint64_t mRequestedSize = 0;
+
+    // Tracks whether the allocation is done lazily for transient attachments.
+    bool mIsLazyAllocated = false;
 };
 
 // Handle into a resource heap pool.
@@ -81,6 +84,8 @@ class ResourceMemoryAllocation {
     uint64_t GetOffset() const;
     uint8_t* GetMappedPointer() const;
     AllocationInfo GetInfo() const;
+
+    void SetInfo(AllocationInfo info);
 
     virtual void Invalidate();
 
