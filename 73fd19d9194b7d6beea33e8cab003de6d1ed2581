@@ -33,6 +33,42 @@
       "message": "Nit: Says `For` but this is a `loop`?",
       "revId": "73fd19d9194b7d6beea33e8cab003de6d1ed2581",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a24b619c_127c8fd3",
+        "filename": "src/tint/lang/wgsl/ir_roundtrip_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2773,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-23T00:00:12Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "9a562bc9_d9040bea",
+      "fixSuggestions": [
+        {
+          "fixId": "3d5d9bd0_ecbf5b33",
+          "description": "GET_AI_FIX_FOR_COMMENT prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/wgsl/ir_roundtrip_test.cc",
+              "range": {
+                "startLine": 2773,
+                "startChar": 0,
+                "endLine": 2774,
+                "endChar": 0
+              },
+              "replacement": "TEST_F(IRToProgramRoundtripTest, Loop_WithRequiredContinues) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "73fd19d9194b7d6beea33e8cab003de6d1ed2581",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
