@@ -57,6 +57,10 @@ uint8_t* ResourceMemoryAllocation::GetMappedPointer() const {
     return mMappedPointer;
 }
 
+void ResourceMemoryAllocation::SetInfo(AllocationInfo info) {
+    mInfo = info;
+}
+
 void ResourceMemoryAllocation::Invalidate() {
     mResourceHeap = nullptr;
     mInfo = {};
