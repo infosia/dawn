@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a363fa39_1f47375e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-23T17:18:19Z",
+      "side": 1,
+      "message": "This is detected by TSAN bots, and causes apparent flakes in other tests in the same process.",
+      "revId": "02190c35cc8cf4749bb394e022d95b590fc9661d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
