@@ -37,6 +37,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fa7d0d54_4503d7b6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T20:19:04Z",
+      "side": 1,
+      "message": "https://crbug.com/417604769",
+      "parentUuid": "036c3071_13881b52",
+      "revId": "26edc4047f10a3d8804417dbad748f5a096e614f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11d97e4b_06d058c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T20:19:04Z",
+      "side": 1,
+      "message": "Ah, that\u0027s more like the number of instances I expected to see on [[likely]]. Of course we use [[unlikely]] more often, I didn\u0027t think about it.",
+      "revId": "26edc4047f10a3d8804417dbad748f5a096e614f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5a656b8d_e7bd2405",
         "filename": "src/dawn/native/CommandAllocator.cpp",
         "patchSetId": 1
@@ -48,6 +83,30 @@
       "writtenOn": "2025-05-23T18:16:32Z",
       "side": 1,
       "message": "For this one, we could probably invert the check? i.e. check that `requestedBlockSize \u003c std::numeric_limits\u003cstd::size_t\u003e::max() - kWorstCaseAdditionalSize` ? We could probably make that a constant somewhere as well?",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 5
+      },
+      "revId": "26edc4047f10a3d8804417dbad748f5a096e614f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c236fe4a_b642168e",
+        "filename": "src/dawn/native/CommandAllocator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T20:19:04Z",
+      "side": 1,
+      "message": "IMO let\u0027s just fix the toolchain and not work around anything.",
+      "parentUuid": "5a656b8d_e7bd2405",
       "range": {
         "startLine": 207,
         "startChar": 4,
