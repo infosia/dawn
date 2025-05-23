@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "b9bb02eb4fcd670ccee91eb397a5f5b451f557b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0550d40_65212df6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-23T14:57:57Z",
+      "side": 1,
+      "message": "Nice, thank you!",
+      "revId": "b9bb02eb4fcd670ccee91eb397a5f5b451f557b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31d25be4_969fbb21",
+        "filename": "src/tint/lang/wgsl/ast/transform/renamer_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1801,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-23T14:57:57Z",
+      "side": 1,
+      "message": "I checked that things like `vec2\u003ci8\u003e` are not included in the `core::kBuiltinStrings` list.\nSo this looks good to me.",
+      "revId": "b9bb02eb4fcd670ccee91eb397a5f5b451f557b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
