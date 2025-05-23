@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40cc972a_806018a2",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T00:44:23Z",
+      "side": 1,
+      "message": "Just `Defer mDefer` for style consistency",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea112a7c_169af998",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T00:44:23Z",
+      "side": 1,
+      "message": "MutexProtected has a forwarding constructor that I think you could use here to avoid taking the lock. Maybe trigger the implicit copy constructor with something like\n`mState(SynchronizedState{.bufferState \u003d /*...*/})`",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f982fc39_2e53a10f",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T00:44:23Z",
+      "side": 1,
+      "message": "Same, or just default `bufferState` to `Unmapped` in the struct definition.",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df441898_528a75ef",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T00:44:23Z",
+      "side": 1,
+      "message": "This whole thing will still run in release builds (taking the lock unnecessarily). It should be gated on `#ifdef DAWN_ENABLE_ASSERTS`, I guess.",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11761296_2344cbb0",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T00:44:23Z",
+      "side": 1,
+      "message": "Took me a while to understand that MapAtCreationInternal was faking SetInitialized in order to skip initialization here. It\u0027s unintuitive that IsInitialized is true when initialization hasn\u0027t occurred yet (it actually happens when the staging buffer gets copied into the main buffer), though this was already how it worked (via SetInitialized just below). But at least we could localize that logic to just this one function. WDYT of instead passing a bool out from MapAtCreationInternal telling us whether a staging buffer is in use?\n\n```\n// If a staging buffer is in use, the main buffer will actually get initialized when\n// the staging data is copied in. (But we mark the main buffer as initialized now.)\nif (!usingStagingBuffer) {\n```",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d227acf9_ab942b06",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T00:44:23Z",
+      "side": 1,
+      "message": "(And removing this.)",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c5f19c8_b73a343a",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T00:44:23Z",
+      "side": 1,
+      "message": "```suggestion\n    // Only set the state to mapped at creation if we did not fail any point in this helper.\n```",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92b7b624_58a18c59",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T00:44:23Z",
+      "side": 1,
+      "message": "FWIW this is a public method so changing its behavior could have some other effects. Looks like it\u0027s only used in DynamicUploader.cpp and DeviceNull.cpp where it should be OK.",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0d5fcd6_6a333a28",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T00:44:23Z",
+      "side": 1,
+      "message": "This (and GetMappedPointer) take a lock which wasn\u0027t previously necessary, and IIRC Corentin was concerned about overhead in GetMappedRange (when we were discussing adding range overlap validation). I wonder if we can have a `std::atomic\u003cvoid*\u003e mMappedPointer` (pointing to either the staging buffer or the main buffer) which we keep in sync with mState (during the locked sections) but then doesn\u0027t need a lock here?\n\nThis is probably a followup change.",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b20b2efe_6eecd72f",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T00:44:23Z",
+      "side": 1,
+      "message": "Making each of these take the lock individually seems possibly not right. At least, it\u0027s an unnecessary amount of lock-taking, but it likely also implies the callers of these should be taking longer locks for correctness.",
+      "range": {
+        "startLine": 885,
+        "startChar": 0,
+        "endLine": 902,
+        "endChar": 1
+      },
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49046d54_eba94697",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-23T00:44:23Z",
+      "side": 1,
+      "message": "nit: I think this should still be called pendingMapEvent",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
