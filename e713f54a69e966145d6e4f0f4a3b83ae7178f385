@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "89b434ea_9e48ddad",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1727,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-23T00:08:49Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "c5e22808_bdcedc0d",
+      "range": {
+        "startLine": 1727,
+        "startChar": 8,
+        "endLine": 1727,
+        "endChar": 55
+      },
+      "revId": "e713f54a69e966145d6e4f0f4a3b83ae7178f385",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cdf45615_32ae1f7d",
         "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
         "patchSetId": 1
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "da58ff8b_649b77ac",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1772,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-23T00:08:49Z",
+      "side": 1,
+      "message": "Remove the MSAA checking when user draws.",
+      "parentUuid": "cdf45615_32ae1f7d",
+      "range": {
+        "startLine": 1772,
+        "startChar": 30,
+        "endLine": 1772,
+        "endChar": 59
+      },
+      "revId": "e713f54a69e966145d6e4f0f4a3b83ae7178f385",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4c78102c_662786cf",
         "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
         "patchSetId": 1
@@ -60,6 +108,30 @@
       "writtenOn": "2025-05-22T12:23:32Z",
       "side": 1,
       "message": "The magic values seem worth a bit more explanation.",
+      "range": {
+        "startLine": 1775,
+        "startChar": 38,
+        "endLine": 1775,
+        "endChar": 56
+      },
+      "revId": "e713f54a69e966145d6e4f0f4a3b83ae7178f385",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "143d523f_e376980e",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1775,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-23T00:08:49Z",
+      "side": 1,
+      "message": "I think no need to check the MSAA when user draws, so this else is removed.",
+      "parentUuid": "4c78102c_662786cf",
       "range": {
         "startLine": 1775,
         "startChar": 38,
