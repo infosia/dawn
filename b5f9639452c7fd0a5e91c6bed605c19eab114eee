@@ -39,6 +39,30 @@
       },
       "revId": "b5f9639452c7fd0a5e91c6bed605c19eab114eee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64614a47_32556062",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-23T15:21:20Z",
+      "side": 1,
+      "message": "The final pixel of the resolve texture depends on: the initial color or MSAA and the user draw to MSAA, and offsets. In this case, it is not impacted. I also add a case that\u0027s impacted by the user draw and offsets.",
+      "parentUuid": "a9729758_f7cccdaf",
+      "range": {
+        "startLine": 2818,
+        "startChar": 0,
+        "endLine": 2819,
+        "endChar": 26
+      },
+      "revId": "b5f9639452c7fd0a5e91c6bed605c19eab114eee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
