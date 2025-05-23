@@ -16,6 +16,29 @@
       "message": "Thanks Jie, PTAL",
       "revId": "b5f9639452c7fd0a5e91c6bed605c19eab114eee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9729758_f7cccdaf",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2819,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-23T13:15:13Z",
+      "side": 1,
+      "message": "The pixel is not affected by the user draw, right?\nIt would be better to add a comment for that to improve readability.",
+      "range": {
+        "startLine": 2818,
+        "startChar": 0,
+        "endLine": 2819,
+        "endChar": 26
+      },
+      "revId": "b5f9639452c7fd0a5e91c6bed605c19eab114eee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
