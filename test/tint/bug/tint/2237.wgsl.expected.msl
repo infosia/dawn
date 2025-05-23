@@ -16,7 +16,7 @@ struct tint_array {
 struct tint_module_vars_struct {
   device uint* tint_member;
 };
-constexpr constant tint_array<uint, 4> v_1 = tint_array<uint, 4>{0u, 1u, 2u, 4u};
+const constant tint_array<uint, 4> v_1 = tint_array<uint, 4>{0u, 1u, 2u, 4u};
 
 uint foo(tint_module_vars_struct tint_module_vars) {
   return v_1[min((*tint_module_vars.tint_member), 3u)];
