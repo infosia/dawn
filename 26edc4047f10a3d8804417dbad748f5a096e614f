@@ -16,6 +16,46 @@
       "message": "PTAL, thanks!",
       "revId": "26edc4047f10a3d8804417dbad748f5a096e614f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "036c3071_13881b52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-23T18:16:32Z",
+      "side": 1,
+      "message": "I\u0027m not actually sure how you could fix the compilation errors in the cmake build except the first one.",
+      "revId": "26edc4047f10a3d8804417dbad748f5a096e614f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a656b8d_e7bd2405",
+        "filename": "src/dawn/native/CommandAllocator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-23T18:16:32Z",
+      "side": 1,
+      "message": "For this one, we could probably invert the check? i.e. check that `requestedBlockSize \u003c std::numeric_limits\u003cstd::size_t\u003e::max() - kWorstCaseAdditionalSize` ? We could probably make that a constant somewhere as well?",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 5
+      },
+      "revId": "26edc4047f10a3d8804417dbad748f5a096e614f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
