@@ -474,7 +474,7 @@ TEST_P(DeviceLostTest, QueueOnSubmittedWorkDoneAfterDeviceLost) {
     LoseDeviceForTesting();
 
     // Callback should have success status
-    EXPECT_CALL(mWorkDoneCb, Call(wgpu::QueueWorkDoneStatus::Success));
+    EXPECT_CALL(mWorkDoneCb, Call(wgpu::QueueWorkDoneStatus::Success, _));
     queue.OnSubmittedWorkDone(wgpu::CallbackMode::AllowProcessEvents, mWorkDoneCb.Callback());
     WaitABit();
 }
@@ -482,7 +482,7 @@ TEST_P(DeviceLostTest, QueueOnSubmittedWorkDoneAfterDeviceLost) {
 // Test QueueOnSubmittedWorkDone when the device is lost after calling OnSubmittedWorkDone
 TEST_P(DeviceLostTest, QueueOnSubmittedWorkDoneBeforeLossFails) {
     // Callback should have success status
-    EXPECT_CALL(mWorkDoneCb, Call(wgpu::QueueWorkDoneStatus::Success));
+    EXPECT_CALL(mWorkDoneCb, Call(wgpu::QueueWorkDoneStatus::Success, _));
     queue.OnSubmittedWorkDone(wgpu::CallbackMode::AllowProcessEvents, mWorkDoneCb.Callback());
 
     LoseDeviceForTesting();

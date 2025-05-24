@@ -1232,14 +1232,20 @@ class WorkDoneEvent final : public TrackedEvent {
 
   EventType GetType() override { return kType; }
 
-  void ReadyHook(WGPUQueueWorkDoneStatus status) { mStatus = status; }
+  void ReadyHook(WGPUQueueWorkDoneStatus status, const char* message) {
+    mStatus = status;
+    if (message) {
+      mMessage = message;
+    }
+  }
 
   void Complete(FutureID, EventCompletionType type) override {
     if (type == EventCompletionType::Shutdown) {
       mStatus = WGPUQueueWorkDoneStatus_CallbackCancelled;
+      mMessage = "A valid external Instance reference no longer exists.";
     }
     if (mCallback) {
-      mCallback(mStatus, mUserdata1, mUserdata2);
+      mCallback(mStatus, ToOutputStringView(mMessage), mUserdata1, mUserdata2);
     }
   }
 
@@ -1249,6 +1255,7 @@ class WorkDoneEvent final : public TrackedEvent {
   void* mUserdata2 = nullptr;
 
   WGPUQueueWorkDoneStatus mStatus;
+  std::string mMessage;
 };
 
 // ----------------------------------------------------------------------------
@@ -1372,7 +1379,7 @@ void emwgpuOnRequestDeviceCompleted(double futureId,
 }
 void emwgpuOnWorkDoneCompleted(double futureId,
                                WGPUQueueWorkDoneStatus status) {
-  GetEventManager().SetFutureReady<WorkDoneEvent>(futureId, status);
+  GetEventManager().SetFutureReady<WorkDoneEvent>(futureId, status, nullptr);
 }
 
 // Uncaptured error handler is similar to the Future event callbacks, but it
