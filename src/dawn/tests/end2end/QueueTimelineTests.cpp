@@ -38,8 +38,8 @@ using testing::_;
 using testing::InSequence;
 using testing::MockCppCallback;
 
-using MockMapAsyncCallback = MockCppCallback<void (*)(wgpu::MapAsyncStatus, wgpu::StringView)>;
-using MockQueueWorkDoneCallback = MockCppCallback<void (*)(wgpu::QueueWorkDoneStatus)>;
+using MockMapAsyncCallback = MockCppCallback<wgpu::BufferMapCallback<void>*>;
+using MockQueueWorkDoneCallback = MockCppCallback<wgpu::QueueWorkDoneCallback<void>*>;
 
 class QueueTimelineTests : public DawnTest {
   protected:
@@ -64,7 +64,7 @@ TEST_P(QueueTimelineTests, MapRead_OnWorkDone) {
 
     InSequence sequence;
     EXPECT_CALL(mockMapAsyncCb, Call(wgpu::MapAsyncStatus::Success, _)).Times(1);
-    EXPECT_CALL(mockQueueWorkDoneCb, Call(wgpu::QueueWorkDoneStatus::Success)).Times(1);
+    EXPECT_CALL(mockQueueWorkDoneCb, Call(wgpu::QueueWorkDoneStatus::Success, _)).Times(1);
 
     mMapReadBuffer.MapAsync(wgpu::MapMode::Read, 0, wgpu::kWholeMapSize,
                             wgpu::CallbackMode::AllowProcessEvents, mockMapAsyncCb.Callback());
@@ -81,8 +81,8 @@ TEST_P(QueueTimelineTests, OnWorkDone_OnWorkDone) {
     MockQueueWorkDoneCallback mockQueueWorkDoneCb2;
 
     InSequence sequence;
-    EXPECT_CALL(mockQueueWorkDoneCb1, Call(wgpu::QueueWorkDoneStatus::Success)).Times(1);
-    EXPECT_CALL(mockQueueWorkDoneCb2, Call(wgpu::QueueWorkDoneStatus::Success)).Times(1);
+    EXPECT_CALL(mockQueueWorkDoneCb1, Call(wgpu::QueueWorkDoneStatus::Success, _)).Times(1);
+    EXPECT_CALL(mockQueueWorkDoneCb2, Call(wgpu::QueueWorkDoneStatus::Success, _)).Times(1);
 
     queue.OnSubmittedWorkDone(wgpu::CallbackMode::AllowProcessEvents,
                               mockQueueWorkDoneCb1.Callback());

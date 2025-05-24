@@ -691,7 +691,7 @@ TEST_P(BufferMappingCallbackTests, EmptySubmissionAndThenMap) {
     // 1. submission without using buffer.
     SubmitCommandBuffer({});
     wgpu::Future f1 = queue.OnSubmittedWorkDone(
-        GetParam().mFutureCallbackMode, [&](wgpu::QueueWorkDoneStatus status) {
+        GetParam().mFutureCallbackMode, [&](wgpu::QueueWorkDoneStatus status, wgpu::StringView) {
             ASSERT_EQ(status, wgpu::QueueWorkDoneStatus::Success);
             done[0] = true;
 
@@ -742,7 +742,7 @@ TEST_P(BufferMappingCallbackTests, MapThenWaitWorkDone) {
 
     // 2. Wait for command completion.
     wgpu::Future f2 = queue.OnSubmittedWorkDone(
-        GetParam().mFutureCallbackMode, [&](wgpu::QueueWorkDoneStatus status) {
+        GetParam().mFutureCallbackMode, [&](wgpu::QueueWorkDoneStatus status, wgpu::StringView) {
             ASSERT_EQ(status, wgpu::QueueWorkDoneStatus::Success);
             done[1] = true;
 
@@ -766,7 +766,7 @@ TEST_P(BufferMappingCallbackTests, EmptySubmissionWriteAndThenMap) {
     // 1. submission without using buffer.
     SubmitCommandBuffer({});
     wgpu::Future f1 = queue.OnSubmittedWorkDone(
-        GetParam().mFutureCallbackMode, [&](wgpu::QueueWorkDoneStatus status) {
+        GetParam().mFutureCallbackMode, [&](wgpu::QueueWorkDoneStatus status, wgpu::StringView) {
             ASSERT_EQ(status, wgpu::QueueWorkDoneStatus::Success);
             done[0] = true;
 
