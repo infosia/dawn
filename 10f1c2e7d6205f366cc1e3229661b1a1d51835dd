@@ -16,6 +16,29 @@
       "message": "Updated, PTAL",
       "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dea0b5ca_03d94bf1",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2826,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-24T01:05:49Z",
+      "side": 1,
+      "message": "Please move the `rect` to its parent scope, so that we could reduce code duplication for the below user draw, and make `rect.colorOffsetY` value change more apparent.",
+      "range": {
+        "startLine": 2820,
+        "startChar": 0,
+        "endLine": 2826,
+        "endChar": 24
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
