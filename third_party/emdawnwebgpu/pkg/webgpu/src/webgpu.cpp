@@ -323,6 +323,7 @@ auto ReturnToAPI(Ref<T*>&& object) {
 WGPUStringView ToOutputStringView(const std::string& s) {
   return {s.data(), s.size()};
 }
+static constexpr WGPUStringView kEmptyOutputStringView = {nullptr, 0};
 
 // clang-format off
 // X Macro to help generate boilerplate code for all refcounted object types.
@@ -1235,11 +1236,13 @@ class WorkDoneEvent final : public TrackedEvent {
   void ReadyHook(WGPUQueueWorkDoneStatus status) { mStatus = status; }
 
   void Complete(FutureID, EventCompletionType type) override {
+    std::string message;
     if (type == EventCompletionType::Shutdown) {
       mStatus = WGPUQueueWorkDoneStatus_CallbackCancelled;
+      message = "A valid external Instance reference no longer exists.";
     }
     if (mCallback) {
-      mCallback(mStatus, mUserdata1, mUserdata2);
+      mCallback(mStatus, ToOutputStringView(message), mUserdata1, mUserdata2);
     }
   }
 
