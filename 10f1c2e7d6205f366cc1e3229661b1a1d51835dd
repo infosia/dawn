@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d57da8a3_9966df24",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-25T11:14:05Z",
+      "side": 1,
+      "message": "nit: You don\u0027t need to state `with a specified clearValue` in the comment. It sounds as if a clear only happens if you explicitly set a clearValue.\n\nIn fact, even if you don\u0027t set a clearValue, a default clearValue will be used. A clear will happen regardless.",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 81
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "996be510_7829922d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-25T11:14:05Z",
+      "side": 1,
+      "message": "If you remove `with a specified clearValue` part above, this sentence can be shorten to:\n```suggestion\n1. Clear the entire MSAA texture.\n```",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c6a49121_78dcaf90",
