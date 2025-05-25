@@ -16,6 +16,115 @@
       "message": "Please take a look, thanks!\nNote that MacOS 12 or earlier will fail to build this CL, so some Mac trybot might get failed. I am not sure what to do...",
       "revId": "31d567589e3842bb3655253cc6a5fc83975fb8ce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d552f63_6a5baf95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-05-25T08:33:01Z",
+      "side": 1,
+      "message": "Really nice!",
+      "revId": "31d567589e3842bb3655253cc6a5fc83975fb8ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c18ec8c_8f739979",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2193,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-05-25T08:33:01Z",
+      "side": 1,
+      "message": "Distinguishing this case from a cache miss would be great in the histogram. It would indicate that our caches get corrupted or give us the rate that they fail to load due to old versions of data. Could you make this an enum histogram instead?",
+      "range": {
+        "startLine": 2191,
+        "startChar": 0,
+        "endLine": 2193,
+        "endChar": 52
+      },
+      "revId": "31d567589e3842bb3655253cc6a5fc83975fb8ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "701c9645_74c99ebb",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-05-25T08:33:01Z",
+      "side": 1,
+      "message": "std::optional has an `operator bool` (prefer `has_value` though) and `operator-\u003e` so there\u0027s no need to unpack them to pointers.",
+      "range": {
+        "startLine": 1305,
+        "startChar": 0,
+        "endLine": 1310,
+        "endChar": 22
+      },
+      "revId": "31d567589e3842bb3655253cc6a5fc83975fb8ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b5f9194_6d8de757",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-05-25T08:33:01Z",
+      "side": 1,
+      "message": "Could this keep the `ShaderModuleParseResult` name? It\u0027s passed around the same way.",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 35
+      },
+      "revId": "31d567589e3842bb3655253cc6a5fc83975fb8ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d521364_f070e87e",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-05-25T08:33:01Z",
+      "side": 1,
+      "message": "It looks like `uncachedParseResult` is never used as optional, It\u0027s always asserted to have a value and the constructors always set a value. Could it\u0027s members be inlined here?",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 71
+      },
+      "revId": "31d567589e3842bb3655253cc6a5fc83975fb8ce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
