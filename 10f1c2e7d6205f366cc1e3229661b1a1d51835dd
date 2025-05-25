@@ -20,6 +20,167 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3cfb481e_aa399ddd",
+        "filename": "docs/dawn/features/dawn_partial_load_resolve_texture.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-25T10:09:24Z",
+      "side": 1,
+      "message": "```suggestion\n1. Expand the resolve texture\u0027s region {resolveOffsetX, resolveOffsetY, width, height} into the MSAA texture\u0027s region {colorOffsetX, colorOffsetY, width, height}.\n```\n`Blit` seems like an implementation detail. This doc is only about API perspective, we shouldn\u0027t talk about the implementation details.",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 160
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f8f32a2_75dd2b24",
+        "filename": "docs/dawn/features/dawn_partial_load_resolve_texture.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-25T10:09:24Z",
+      "side": 1,
+      "message": "```suggestion\nSimilar to the above example, but using wgpu::LoadOp::Clear:\n```",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 26
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5d589ce_f7fb6bdc",
+        "filename": "docs/dawn/features/dawn_partial_load_resolve_texture.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-25T10:09:24Z",
+      "side": 1,
+      "message": "```suggestion\nSimilar to the 1st example, but using wgpu::LoadOp::Load:\n```",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 74
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60dea28c_501606d3",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-25T10:09:24Z",
+      "side": 1,
+      "message": "Should skip this if `resolveTarget` is null.\n```suggestion\n            TextureViewBase* resolveTarget \u003d attachmentInfo.resolveTarget.Get();\n            if (!resolveTarget) {\n            \tcontinue;\n            }\n```",
+      "range": {
+        "startLine": 245,
+        "startChar": 29,
+        "endLine": 245,
+        "endChar": 42
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a0e2a4e_58d4ece1",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-25T10:09:24Z",
+      "side": 1,
+      "message": "```suggestion\n    void TestExpandAndResolveWithRect(const wgpu::RenderPassDescriptorResolveRect\u0026 rect,\n```\nShould rename to `TestExpandAndResolveWithRect` to be clearer.",
+      "range": {
+        "startLine": 1610,
+        "startChar": 9,
+        "endLine": 1610,
+        "endChar": 24
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9fbfcdb_4b9ece74",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1685,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-25T10:09:24Z",
+      "side": 1,
+      "message": "```suggestion\n    void TestLoadOrClearThenPartialResolve(const wgpu::RenderPassDescriptorResolveRect\u0026 rect,\n```",
+      "range": {
+        "startLine": 1685,
+        "startChar": 9,
+        "endLine": 1685,
+        "endChar": 24
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5478df5_dcddc137",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1760,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-25T10:09:24Z",
+      "side": 1,
+      "message": "When loadOp\u003dLoad, can we also verify the MSAA texture have a mixture of clear values \u0026 user draw color?",
+      "range": {
+        "startLine": 1760,
+        "startChar": 12,
+        "endLine": 1760,
+        "endChar": 42
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dea0b5ca_03d94bf1",
         "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
         "patchSetId": 3
