@@ -350,6 +350,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca957c9d_eeea2475",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-26T14:02:05Z",
+      "side": 1,
+      "message": "Do you remember why they were queried even after the texture was destroyed? It seems that should never happen.",
+      "parentUuid": "78979c79_b824f4b7",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "743ca8fb_19956b08",
