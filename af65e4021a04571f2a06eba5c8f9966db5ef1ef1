@@ -77,6 +77,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "61af7a31_6b3924ea",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-26T15:35:14Z",
+      "side": 1,
+      "message": "I would love to make `CompilationMessages` combined into `ShaderModuleParseResult` and cacheable, but I think that might lead to significantly more refactor. I will have a try.",
+      "parentUuid": "85c63dc1_9b5d5f91",
+      "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "38fe3771_de5baac9",
         "filename": "src/dawn/native/ShaderModule.h",
         "patchSetId": 11
