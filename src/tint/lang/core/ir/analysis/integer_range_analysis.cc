@@ -716,10 +716,9 @@ struct IntegerRangeAnalysisImpl {
 
             switch (*param->Builtin()) {
                 case BuiltinValue::kLocalInvocationIndex: {
-                    // We shouldn't be trying to use range analysis on a module that has
-                    // non-constant workgroup sizes, since we will always have replaced pipeline
-                    // overrides with constant values early in the pipeline.
-                    TINT_ASSERT(func->WorkgroupSizeAsConst().has_value());
+                    if (!func->WorkgroupSizeAsConst().has_value()) {
+                        return;
+                    }
                     std::array<uint32_t, 3> workgroup_size = func->WorkgroupSizeAsConst().value();
                     uint64_t max_bound =
                         workgroup_size[0] * workgroup_size[1] * workgroup_size[2] - 1u;
@@ -730,7 +729,9 @@ struct IntegerRangeAnalysisImpl {
                     break;
                 }
                 case BuiltinValue::kLocalInvocationId: {
-                    TINT_ASSERT(func->WorkgroupSizeAsConst().has_value());
+                    if (!func->WorkgroupSizeAsConst().has_value()) {
+                        return;
+                    }
                     std::array<uint32_t, 3> workgroup_size = func->WorkgroupSizeAsConst().value();
 
                     constexpr uint64_t kMinBound = 0;
@@ -739,9 +740,9 @@ struct IntegerRangeAnalysisImpl {
                         integerRanges.Push({kMinBound, size_x_y_z - 1u});
                     }
                     integer_function_param_range_info_map_.Add(param, integerRanges);
+                    break;
                 }
 
-                break;
                 default:
                     break;
             }
