@@ -16,6 +16,80 @@
       "message": "Thanks for reviewing!",
       "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e166daa_c33e9e63",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 2136,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-26T15:13:16Z",
+      "side": 1,
+      "message": "```suggestion\n    // A WGSL (xor SPIR-V, if enabled) subdescriptor is required, and a Dawn-specific SPIR-V options\n    // descriptor is allowed when using SPIR-V.\n    wgpu::SType moduleType \u003d wgpu::SType(0u);\n    DAWN_TRY_ASSIGN(\n        moduleType,\n        (unpacked.ValidateBranches\u003cBranch\u003cShaderSourceWGSL, ShaderModuleCompilationOptions\u003e,\n                                   Branch\u003cShaderSourceSPIRV, DawnShaderModuleSPIRVOptionsDescriptor,\n                                          ShaderModuleCompilationOptions\u003e\u003e()));\n```",
+      "range": {
+        "startLine": 2129,
+        "startChar": 1,
+        "endLine": 2136,
+        "endChar": 12
+      },
+      "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "007fb8d1_1defaf1c",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-26T15:13:16Z",
+      "side": 1,
+      "message": "I am very concerned about the bespoke logic doing cache handling. Could we use `DAWN_TRY_LOAD_OR_RUN` here instead of duplicating the logic here? It also handles the various metrics etc.\n\nIf the problem is that the compilation messages are not cached, then let\u0027s cache them.\n\nIf the problem is that we want to exfiltrate the tint::Program, then let\u0027s make it unsafe::Uncached and add handling of the deserialization of such values.",
+      "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85c63dc1_9b5d5f91",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-26T15:13:16Z",
+      "side": 1,
+      "message": "This should be a serializable / deserializable struct with\n\n```\n#define SHADER_MODULE_PARSE_RESULT_MEMBER(X) \\\n   X(EntryPointMetadataTable, metadataTable) \\\n   X(CompilationMessages, messages) \\\n   X(UnsafeUnKeyed\u003ctint::Program\u003e, program)\nDAWN_SERIALIZABLE(struct,\n                  ShaderModuleParseResult,\n                  SHADER_MODULE_PARSE_RESULT_MEMBER){};\n#undef SHADER_MODULE_PARSE_RESULT_MEMBER\n```",
+      "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38fe3771_de5baac9",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-26T15:13:16Z",
+      "side": 1,
+      "message": "This would become infallible as errors would become part of the compilation messages returned.",
+      "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
