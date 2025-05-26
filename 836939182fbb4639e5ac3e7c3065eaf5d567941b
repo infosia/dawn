@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d77ef5e_ff850b69",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-05-26T15:38:21Z",
+      "side": 1,
+      "message": "I think you\u0027re missing incrementing mTotalLazyAllocatedMemory for the BuddyAllocator memory heaps used for suballocation.",
+      "revId": "836939182fbb4639e5ac3e7c3065eaf5d567941b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b8650ef2_e9734a45",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
         "patchSetId": 3
@@ -54,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6fea3fd1_e1b8b61c",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-05-26T15:38:21Z",
+      "side": 1,
+      "message": "Or even just the memory type index should work if we track which index (or I guess indicies if there can be multiple) includes LAZILY_ALLOCATED_BIT.",
+      "parentUuid": "e5eee65c_12d5fd83",
+      "revId": "836939182fbb4639e5ac3e7c3065eaf5d567941b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6449fac4_58297541",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
         "patchSetId": 3
@@ -82,6 +117,24 @@
       "writtenOn": "2025-05-26T15:24:15Z",
       "side": 1,
       "message": "Aren\u0027t we going to do the same type of serial tracking for lazily freed memory?",
+      "revId": "836939182fbb4639e5ac3e7c3065eaf5d567941b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13770b9b_16040f77",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-05-26T15:38:21Z",
+      "side": 1,
+      "message": "+1 we should be consistent either way.",
+      "parentUuid": "003656e7_4e80e34e",
       "revId": "836939182fbb4639e5ac3e7c3065eaf5d567941b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
