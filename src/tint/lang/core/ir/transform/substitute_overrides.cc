@@ -389,16 +389,25 @@ SubstituteOverridesConfig::SubstituteOverridesConfig() = default;
 
 Result<SuccessType> SubstituteOverrides(Module& ir, const SubstituteOverridesConfig& cfg) {
     {
-        auto result = ValidateAndDumpIfNeeded(ir, "core.SubstituteOverrides",
+        auto result = ValidateAndDumpIfNeeded(ir, "core.SubstituteOverrides122",
                                               kSubstituteOverridesCapabilities);
         if (result != Success) {
             return result.Failure();
         }
     }
+
     {
         auto result = State{ir, cfg}.Process();
         if (result != Success) {
             return Failure{result.Failure().reason.Str()};
+        }
+    }
+
+    {
+        auto result = ValidateAndDumpIfNeeded(ir, "core.SubstituteOverrides2",
+                                              kSubstituteOverridesCapabilities);
+        if (result != Success) {
+            return result.Failure();
         }
     }
 
