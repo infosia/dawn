@@ -33,6 +33,24 @@
       "message": "```\nIn file included from ../../src/dawn/samples/SampleUtils.cpp:43:\n../../src/dawn/utils/CommandLineParser.h:261:33: error: ISO C++ requires the name after \u0027::~\u0027 to be found in the same scope as the name before \u0027::~\u0027 [-Werror,-Wdtor-name]\n  261 | CommandLineParser::EnumOption\u003cE\u003e::~EnumOption() \u003d default;\n      | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~\n      |                                 ::EnumOption\n1 error generated.\n```\n\nLooks like this makes clang unhappy?",
       "revId": "0b6f8af0c663f0d84234f55e3bdaf7f152915ed5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da8de7e5_b6ed901a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003586
+      },
+      "writtenOn": "2025-05-26T16:44:18Z",
+      "side": 1,
+      "message": "Yes, it looks liks Clang and GCC have conflicting ideas about this. Clang requires `~EnumOption\u003cE\u003e()` (when using `-pedantic`) and GCC requires `~EnumOption()` (when using `-std\u003dc++20`). The only option found to make both happy is to combine definition and declaration.\n\nHere\u0027s a minimal reproducer: https://gcc.godbolt.org/z/W5v4vj1a4",
+      "parentUuid": "63487f43_e73e443b",
+      "revId": "0b6f8af0c663f0d84234f55e3bdaf7f152915ed5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
