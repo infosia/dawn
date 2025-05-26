@@ -379,6 +379,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dfcb2e48_0889c491",
+        "filename": "src/dawn/native/d3d11/RenderPipelineD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-26T12:05:06Z",
+      "side": 1,
+      "message": "Instead of querying from the transform if these are used [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d/ShaderUtils.cpp;drc\u003ddff5178488191268e4266f093e932e2ca4343d7f;l\u003d283), we should use the EntryPointMetadata for that.",
+      "parentUuid": "1f8568d9_779f0dfc",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 25
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a58514a9_76f92a15",
         "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
         "patchSetId": 28
