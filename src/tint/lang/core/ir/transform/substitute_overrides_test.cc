@@ -975,7 +975,51 @@ $B1: {  # root
 
     SubstituteOverridesConfig cfg{};
     cfg.map[OverrideId{2}] = 5;
-    cfg.map[OverrideId{3}] = 7;
+    cfg.map[OverrideId{3}] = 3;
+    auto result = RunWithFailure(SubstituteOverrides, cfg);
+    ASSERT_NE(result, Success);
+    EXPECT_EQ(result.Failure().reason, R"(error: index 7 out of bounds [0..4])");
+}
+
+TEST_F(IR_SubstituteOverridesTest, OverrideArraySizeLetOutOfBounds) {
+    ir::Var* v = nullptr;
+    b.Append(mod.root_block, [&] {
+        auto* x = b.Override("x", ty.u32());
+        x->SetOverrideId({2});
+
+        auto* cnt = ty.Get<core::ir::type::ValueArrayCount>(x->Result());
+        auto* ary = ty.Get<core::type::Array>(ty.u32(), cnt, 4_u, 4_u, 4_u, 4_u);
+        v = b.Var("v", ty.ptr(core::AddressSpace::kWorkgroup, ary, core::Access::kReadWrite));
+    });
+
+    auto* func = b.Function("foo", ty.u32());
+    b.Append(func->Block(), [&] {
+        // auto* p = b.Let("p", v);
+        auto* access = b.Access(ty.ptr<workgroup, u32>(), v, 7_u);
+        auto* load = b.Load(access);
+        b.Return(func, load);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %x:u32 = override undef @id(2)
+  %y:u32 = override undef @id(3)
+  %v:ptr<workgroup, array<u32, %x>, read_write> = var undef
+}
+
+%foo = func():u32 {
+  $B2: {
+    %l:ptr<workgroup, array<u32, %x>, read_write> = let %v
+    %6:ptr<workgroup, u32, read_write> = access %l, %y
+    %7:u32 = load %6
+    ret %7
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    SubstituteOverridesConfig cfg{};
+    cfg.map[OverrideId{2}] = 5;
     auto result = RunWithFailure(SubstituteOverrides, cfg);
     ASSERT_NE(result, Success);
     EXPECT_EQ(result.Failure().reason, R"(error: index 7 out of bounds [0..4])");
