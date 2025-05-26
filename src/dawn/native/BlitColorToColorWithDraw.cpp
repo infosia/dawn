@@ -27,6 +27,7 @@
 
 #include "dawn/native/BlitColorToColorWithDraw.h"
 
+#include <limits>
 #include <sstream>
 #include <string>
 #include <utility>
@@ -50,15 +51,52 @@ namespace dawn::native {
 namespace {
 
 constexpr char kBlitToColorVS[] = R"(
+struct VertexOutputs {
+  @builtin(position) position : vec4<f32>,
+  @location(0) @interpolate(flat) offsets : u32,
+};
 
 @vertex fn vert_fullscreen_quad(
   @builtin(vertex_index) vertex_index : u32,
-) -> @builtin(position) vec4f {
+  @builtin(instance_index) offsets: u32
+) -> VertexOutputs {
+  var output : VertexOutputs;
   const pos = array(
       vec2f(-1.0, -1.0),
       vec2f( 3.0, -1.0),
       vec2f(-1.0,  3.0));
-  return vec4f(pos[vertex_index], 0.0, 1.0);
+  output.offsets = offsets;
+  output.position = vec4f(pos[vertex_index], 0.0, 1.0);
+  return output;
+}
+)";
+
+constexpr char kUnpackOffsets[] = R"(
+// Sign-extend an unsigned integer (stored in lower 16 bits) to a 32-bit signed
+// integer.
+fn bits16_to_i32(bits_16: u32) -> i32{
+    // First convert to i32, this does zero extension.
+    var extended_i32  = i32(bits_16);
+    // If the high bit of the 16-bit value is set (negative number), we need to
+    // sign-extend by setting the upper 16 bits to 1s.
+    extended_i32  = select(
+        extended_i32 ,
+        // Equivalent to 0xFFFF0000 but WGSL-safe.
+        extended_i32  | (-65536i),
+        // Check if negative.
+        (bits_16 & 0x8000u) != 0u,
+    );
+    return extended_i32;
+}
+
+// Unpack a u32 into two i32 values, each was originally two 16-bit signed
+// integer.
+fn unpack_offsets(offsets: u32) -> vec2<i32> {
+    // Extract high and low 16-bit, convert each 16-bit to sign-extended 32-bit
+    // integers.
+    var high_i32 = bits16_to_i32((offsets >> 16) & 0xFFFFu);
+    var low_i32 = bits16_to_i32(offsets & 0xFFFFu);
+    return vec2<i32>(high_i32, low_i32);
 }
 )";
 
@@ -66,11 +104,7 @@ std::string GenerateExpandFS(const BlitColorToColorWithDrawPipelineKey& pipeline
     std::ostringstream outputStructStream;
     std::ostringstream assignOutputsStream;
     std::ostringstream finalStream;
-    finalStream << absl::StrFormat(
-        "struct Params {\n"
-        "offset: vec2i,\n"
-        "};\n"
-        "@group(1) @binding(0) var<uniform> params : Params;\n");
+
     for (auto i : pipelineKey.attachmentsToExpandResolve) {
         finalStream << absl::StrFormat("@group(0) @binding(%u) var srcTex%u : texture_2d<f32>;\n",
                                        i, i);
@@ -78,14 +112,21 @@ std::string GenerateExpandFS(const BlitColorToColorWithDrawPipelineKey& pipeline
         outputStructStream << absl::StrFormat("@location(%u) output%u : vec4f,\n", i, i);
 
         assignOutputsStream << absl::StrFormat(
-            "\toutputColor.output%u = textureLoad(srcTex%u, vec2i(position.xy) + "
-            "params.offset, 0);\n",
+            "\toutputColor.output%u = textureLoad(srcTex%u, vec2i(input.position.xy) + "
+            "offsets, 0);\n",
             i, i);
     }
 
+    finalStream << kUnpackOffsets << "\n";
     finalStream << "struct OutputColor {\n" << outputStructStream.str() << "}\n\n";
     finalStream << R"(
-@fragment fn expand_multisample(@builtin(position) position : vec4f) -> OutputColor {
+struct VertexOutputs {
+  @builtin(position) position : vec4<f32>,
+  @location(0) @interpolate(flat) offsets : u32,
+};
+
+@fragment fn expand_multisample(input: VertexOutputs) -> OutputColor {
+    let offsets = unpack_offsets(input.offsets);
     var outputColor : OutputColor;
 )" << assignOutputsStream.str()
                 << R"(
@@ -98,17 +139,19 @@ std::string GenerateExpandFS(const BlitColorToColorWithDrawPipelineKey& pipeline
 // Generate the fragment shader to average multiple samples into one.
 std::string GenerateResolveFS(uint32_t sampleCount) {
     std::ostringstream ss;
-
+    ss << kUnpackOffsets << "\n";
     ss << R"(
-@group(0) @binding(0) var<uniform> params : Params;
-@group(0) @binding(1) var srcTex : texture_multisampled_2d<f32>;
-struct Params {
-  offset: vec2i,
+struct VertexOutputs {
+  @builtin(position) position : vec4<f32>,
+  @location(0) @interpolate(flat) offsets : u32,
 };
+@group(0) @binding(0) var srcTex : texture_multisampled_2d<f32>;
+
 @fragment
-fn resolve_multisample(@builtin(position) position : vec4f) -> @location(0) vec4f {
+fn resolve_multisample(input: VertexOutputs) -> @location(0) vec4f {
     var sum = vec4f(0.0, 0.0, 0.0, 0.0);
-    var offsetPos = vec2i(position.xy) - params.offset;)";
+    let offsets = unpack_offsets(input.offsets);
+    var offsetPos = vec2i(input.position.xy) - offsets;)";
     ss << "\n";
     for (uint32_t sample = 0; sample < sampleCount; ++sample) {
         ss << absl::StrFormat("    sum += textureLoad(srcTex, offsetPos, %u);\n", sample);
@@ -210,22 +253,8 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateExpandMultisamplePipeline(
     DAWN_TRY_ASSIGN(bindGroupLayout,
                     device->CreateBindGroupLayout(&bglDesc, /* allowInternalBinding */ true));
 
-    Ref<BindGroupLayoutBase> bindGroupLayout1;
-    DAWN_TRY_ASSIGN(bindGroupLayout1,
-                    utils::MakeBindGroupLayout(
-                        device,
-                        {
-                            {0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Uniform},
-                        },
-                        /* allowInternalBinding */ true));
-
-    std::array<BindGroupLayoutBase*, 2> bindGroupLayouts = {bindGroupLayout.Get(),
-                                                            bindGroupLayout1.Get()};
     Ref<PipelineLayoutBase> pipelineLayout;
-    PipelineLayoutDescriptor descriptor;
-    descriptor.bindGroupLayoutCount = bindGroupLayouts.size();
-    descriptor.bindGroupLayouts = bindGroupLayouts.data();
-    DAWN_TRY_ASSIGN(pipelineLayout, device->CreatePipelineLayout(&descriptor));
+    DAWN_TRY_ASSIGN(pipelineLayout, utils::MakeBasicPipelineLayout(device, bindGroupLayout));
 
     renderPipelineDesc.layout = pipelineLayout.Get();
 
@@ -288,6 +317,17 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateResolveMultisamplePipeline(
 }
 
 }  // namespace
+
+// Pack two signed offset values (never exceeds 16 bits) into a single 32-bit unsigned integer.
+uint32_t PackOffsets(const RenderPassDescriptorResolveRect& expandResolveRect) {
+    const auto offsetX = static_cast<int32_t>(expandResolveRect.resolveOffsetX) -
+                         static_cast<int32_t>(expandResolveRect.colorOffsetX);
+    const auto offsetY = static_cast<int32_t>(expandResolveRect.resolveOffsetY) -
+                         static_cast<int32_t>(expandResolveRect.colorOffsetY);
+    DAWN_ASSERT(std::abs(offsetX) < std::numeric_limits<int16_t>::max());
+    DAWN_ASSERT(std::abs(offsetY) < std::numeric_limits<int16_t>::max());
+    return static_cast<uint32_t>(offsetX & 0xffff) | static_cast<uint32_t>(offsetY << 16);
+}
 
 MaybeError ExpandResolveTextureWithDraw(
     DeviceBase* device,
@@ -383,36 +423,6 @@ MaybeError ExpandResolveTextureWithDraw(
         expandResolveRect = *resolveRect;
     }
 
-    Ref<BindGroupLayoutBase> bgl1;
-    DAWN_TRY_ASSIGN(bgl1, pipeline->GetBindGroupLayout(1));
-    Ref<BindGroupBase> bindGroup1;
-    {
-        // TODO(417770951): Use immediates as offsets.
-        Ref<BufferBase> paramsBuffer;
-        if (expandResolveRect) {
-            DAWN_TRY_ASSIGN(
-                paramsBuffer,
-                utils::CreateBufferFromData(
-                    device, wgpu::BufferUsage::Uniform,
-                    {expandResolveRect->resolveOffsetX - expandResolveRect->colorOffsetX,
-                     expandResolveRect->resolveOffsetY - expandResolveRect->colorOffsetY}));
-        } else {
-            DAWN_TRY_ASSIGN(paramsBuffer, utils::CreateBufferFromData(
-                                              device, wgpu::BufferUsage::Uniform, {0, 0}));
-        }
-
-        BindGroupEntry bgEntry = {};
-        bgEntry.binding = 0;
-        bgEntry.buffer = paramsBuffer.Get();
-        BindGroupDescriptor bgDesc = {};
-
-        bgDesc.layout = bgl1.Get();
-        bgDesc.entryCount = 1;
-        bgDesc.entries = &bgEntry;
-        DAWN_TRY_ASSIGN(bindGroup1,
-                        device->CreateBindGroup(&bgDesc, UsageValidationMode::Internal));
-    }
-    renderEncoder->APISetBindGroup(1, bindGroup1.Get());
     renderEncoder->APISetPipeline(pipeline.Get());
 
     if (expandResolveRect) {
@@ -422,8 +432,15 @@ MaybeError ExpandResolveTextureWithDraw(
                                          expandResolveRect->colorOffsetY, expandResolveRect->width,
                                          expandResolveRect->height);
     }
+    // The texture size never exceeds 16 bits. We pack two values {offsetX, offsetY} into a 32-bit
+    // firstInstance value, which avoids creating a uniform buffer.
+    const auto offsets = expandResolveRect ? PackOffsets(expandResolveRect.value()) : 0;
     // Draw to perform the blit.
-    renderEncoder->APIDraw(3);
+    renderEncoder->APIDraw(/*vertexCount=*/3,
+                           /*instanceCount=*/1,
+                           /*firstVertex=*/0,
+                           /*firstInstance=*/offsets);
+
     // After expanding the resolve texture, we reset the scissor rect to the full size of the color
     // attachment to prevent the previous scissor rect from affecting all subsequent user draws.
     if (expandResolveRect) {
@@ -484,17 +501,9 @@ MaybeError ResolveMultisampleWithDraw(DeviceBase* device,
     Ref<BindGroupLayoutBase> bindGroupLayout;
     DAWN_TRY_ASSIGN(bindGroupLayout, pipeline->GetBindGroupLayout(0));
 
-    Ref<BufferBase> paramsBuffer;
-    DAWN_TRY_ASSIGN(paramsBuffer,
-                    utils::CreateBufferFromData(device, wgpu::BufferUsage::Uniform,
-                                                {rect.resolveOffsetX - rect.colorOffsetX,
-                                                 rect.resolveOffsetY - rect.colorOffsetY}));
-
     Ref<BindGroupBase> bindGroup;
-    DAWN_TRY_ASSIGN(bindGroup,
-                    utils::MakeBindGroup(device, bindGroupLayout, {{0, paramsBuffer}, {1, src}},
-                                         UsageValidationMode::Internal));
-
+    DAWN_TRY_ASSIGN(bindGroup, utils::MakeBindGroup(device, bindGroupLayout, {{0, src}},
+                                                    UsageValidationMode::Internal));
     // Color attachment descriptor.
     RenderPassColorAttachment colorAttachmentDesc;
     colorAttachmentDesc.view = dst;
@@ -512,7 +521,13 @@ MaybeError ResolveMultisampleWithDraw(DeviceBase* device,
     renderEncoder->APISetPipeline(pipeline.Get());
     renderEncoder->APISetScissorRect(rect.resolveOffsetX, rect.resolveOffsetY, rect.width,
                                      rect.height);
-    renderEncoder->APIDraw(3);
+    // The texture size never exceeds 16 bits. We pack two values {offsetX, offsetY} into a 32-bit
+    // firstInstance value, which avoids creating a uniform buffer.
+    const auto offsets = PackOffsets(rect);
+    renderEncoder->APIDraw(/*vertexCount=*/3,
+                           /*instanceCount=*/1,
+                           /*firstVertex=*/0,
+                           /*firstInstance=*/offsets);
     renderEncoder->End();
 
     return {};
