@@ -33,6 +33,24 @@
       "message": "I wonder if this should be validation errors on the IR validator instead of changing here. It looks like the input IR isn\u0027t really valid, as the `local_invocation_id` has to be used in a `compute` entry point but there is no entry point in the fuzzer test case.",
       "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d240e64b_de3cf381",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-26T23:41:48Z",
+      "side": 1,
+      "message": "Agreed, IR validation should reject any builtin on a function parameter that is not an entry point.",
+      "parentUuid": "7a314cc6_5968a4e1",
+      "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
