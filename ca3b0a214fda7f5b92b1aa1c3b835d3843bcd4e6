@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c429767b_03a78f3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-26T05:30:47Z",
+      "side": 1,
+      "message": "Thanks Jie and Quyen, PTAL",
+      "revId": "ca3b0a214fda7f5b92b1aa1c3b835d3843bcd4e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

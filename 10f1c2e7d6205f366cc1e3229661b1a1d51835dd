@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a24bb63_d0b3a51c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-26T05:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d57da8a3_9966df24",
+      "range": {
+        "startLine": 9,
+        "startChar": 54,
+        "endLine": 9,
+        "endChar": 81
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "996be510_7829922d",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-05-25T11:14:05Z",
       "side": 1,
       "message": "If you remove `with a specified clearValue` part above, this sentence can be shorten to:\n```suggestion\n1. Clear the entire MSAA texture.\n```",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5706621_0fb51f56",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-26T05:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "996be510_7829922d",
       "range": {
         "startLine": 10,
         "startChar": 3,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d998cc3_a601d404",
+        "filename": "docs/dawn/features/dawn_partial_load_resolve_texture.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-26T05:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cfb481e_aa399ddd",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 160
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f8f32a2_75dd2b24",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-05-25T10:09:24Z",
       "side": 1,
       "message": "```suggestion\nSimilar to the above example, but using wgpu::LoadOp::Clear:\n```",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 26
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9d98c75_2ad16fb7",
+        "filename": "docs/dawn/features/dawn_partial_load_resolve_texture.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-26T05:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f8f32a2_75dd2b24",
       "range": {
         "startLine": 80,
         "startChar": 0,
@@ -133,6 +229,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcf7b97c_97023000",
+        "filename": "docs/dawn/features/dawn_partial_load_resolve_texture.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-26T05:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5d589ce_f7fb6bdc",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 74
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "60dea28c_501606d3",
@@ -146,6 +266,30 @@
       "writtenOn": "2025-05-25T10:09:24Z",
       "side": 1,
       "message": "Should skip this if `resolveTarget` is null.\n```suggestion\n            TextureViewBase* resolveTarget \u003d attachmentInfo.resolveTarget.Get();\n            if (!resolveTarget) {\n            \tcontinue;\n            }\n```",
+      "range": {
+        "startLine": 245,
+        "startChar": 29,
+        "endLine": 245,
+        "endChar": 42
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e72d0ab8_a0280785",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-26T05:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60dea28c_501606d3",
       "range": {
         "startLine": 245,
         "startChar": 29,
@@ -179,6 +323,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab24acf4_5a48c5a5",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1610,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-26T05:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a0e2a4e_58d4ece1",
+      "range": {
+        "startLine": 1610,
+        "startChar": 9,
+        "endLine": 1610,
+        "endChar": 24
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f9fbfcdb_4b9ece74",
@@ -192,6 +360,30 @@
       "writtenOn": "2025-05-25T10:09:24Z",
       "side": 1,
       "message": "```suggestion\n    void TestLoadOrClearThenPartialResolve(const wgpu::RenderPassDescriptorResolveRect\u0026 rect,\n```",
+      "range": {
+        "startLine": 1685,
+        "startChar": 9,
+        "endLine": 1685,
+        "endChar": 24
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e77dce45_af6d14f2",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1685,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-26T05:30:47Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f9fbfcdb_4b9ece74",
       "range": {
         "startLine": 1685,
         "startChar": 9,
@@ -225,6 +417,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af7869dc_720a404a",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1760,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-26T05:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5478df5_dcddc137",
+      "range": {
+        "startLine": 1760,
+        "startChar": 12,
+        "endLine": 1760,
+        "endChar": 42
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dea0b5ca_03d94bf1",
@@ -238,6 +454,30 @@
       "writtenOn": "2025-05-24T01:05:49Z",
       "side": 1,
       "message": "Please move the `rect` to its parent scope, so that we could reduce code duplication for the below user draw, and make `rect.colorOffsetY` value change more apparent.",
+      "range": {
+        "startLine": 2820,
+        "startChar": 0,
+        "endLine": 2826,
+        "endChar": 24
+      },
+      "revId": "10f1c2e7d6205f366cc1e3229661b1a1d51835dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cab052b2_91ff2eb6",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2826,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-26T05:30:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dea0b5ca_03d94bf1",
       "range": {
         "startLine": 2820,
         "startChar": 0,
