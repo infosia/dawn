@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4f22941d_4e5b397e",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-26T15:34:58Z",
+      "side": 1,
+      "message": "I have concerns about adding the defer in every lock guard: there is overhead that seems like it will be unoptimizable by the compiler as well as complexity in the caller side that needs to be ready for random operations to happen in its call stack. What about passing the Defer as argument separately, or even return pending operations from UnmapInternal?",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ea112a7c_169af998",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 13
