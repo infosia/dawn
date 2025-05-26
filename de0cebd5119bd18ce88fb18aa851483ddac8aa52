@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6d20ab5_176c2d4e",
+        "filename": "src/dawn/common/ityp_bitset.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-26T08:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d5863af_ff22853f",
+      "revId": "de0cebd5119bd18ce88fb18aa851483ddac8aa52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0c1c6ba_d8d71315",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-05-26T07:28:08Z",
       "side": 1,
       "message": "Now we no longer need to check if compute or non-compute since we\u0027ll have the bits in the pipeline immediate mask.\n\n```suggestion\n            req.hlsl.tintOptions.num_workgroups_start_offset \u003d\n                GetImmediateByteOffsetInPipelineIfAny(\u0026ComputeImmediateConstants::numWorkgroups,\n                                                      pipelineImmediateMask);\n            req.hlsl.tintOptions.first_index_offset \u003d GetImmediateByteOffsetInPipelineIfAny(\n                \u0026RenderImmediateConstants::firstVertex, pipelineImmediateMask);\n            req.hlsl.tintOptions.first_instance_offset \u003d GetImmediateByteOffsetInPipelineIfAny(\n                \u0026RenderImmediateConstants::firstInstance, pipelineImmediateMask);\n```",
+      "range": {
+        "startLine": 246,
+        "startChar": 32,
+        "endLine": 255,
+        "endChar": 9
+      },
+      "revId": "de0cebd5119bd18ce88fb18aa851483ddac8aa52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06860ae0_144ab438",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-26T08:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0c1c6ba_d8d71315",
       "range": {
         "startLine": 246,
         "startChar": 32,
