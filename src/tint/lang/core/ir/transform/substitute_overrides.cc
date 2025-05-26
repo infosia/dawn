@@ -229,6 +229,12 @@ struct State {
             while (!to_replace.IsEmpty()) {
                 auto* inst = to_replace.Pop();
                 for (auto usage : inst->Result()->UsagesUnsorted()) {
+                    if (NeedsEval(usage->instruction)) {
+                        auto r = eval::Eval(b, usage->instruction);
+                        if (r != Success) {
+                            return r.Failure();
+                        }
+                    }
                     if (!usage->instruction->Is<core::ir::Let>()) {
                         continue;
                     }
@@ -389,16 +395,25 @@ SubstituteOverridesConfig::SubstituteOverridesConfig() = default;
 
 Result<SuccessType> SubstituteOverrides(Module& ir, const SubstituteOverridesConfig& cfg) {
     {
-        auto result = ValidateAndDumpIfNeeded(ir, "core.SubstituteOverrides",
+        auto result = ValidateAndDumpIfNeeded(ir, "core.SubstituteOverrides122",
                                               kSubstituteOverridesCapabilities);
         if (result != Success) {
             return result.Failure();
         }
     }
+
     {
         auto result = State{ir, cfg}.Process();
         if (result != Success) {
             return Failure{result.Failure().reason.Str()};
+        }
+    }
+
+    {
+        auto result = ValidateAndDumpIfNeeded(ir, "core.SubstituteOverrides2",
+                                              kSubstituteOverridesCapabilities);
+        if (result != Success) {
+            return result.Failure();
         }
     }
 
