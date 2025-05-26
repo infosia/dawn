@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a3025cc_d8514be3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 32
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-26T08:54:38Z",
+      "side": 1,
+      "message": "Bots are happy. PTAL.\n\nNote: Still investigated which transform added firstVertex/InstanceIndex builtin",
+      "revId": "63919636ff50d6ebfe03eed4440797009d4f26c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
