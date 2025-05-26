@@ -327,7 +327,7 @@ struct State {
             for (auto usage : value->UsagesSorted()) {
                 // If the instruction has no results, then it was destroyed already and we can just
                 // skip it.
-                if (!usage.instruction->Result(0)) {
+                if (!usage.instruction->Result()) {
                     continue;
                 }
 
