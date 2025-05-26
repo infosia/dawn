@@ -184,6 +184,52 @@ TEST_F(IR_IntegerRangeAnalysisTest, LocalInvocationIndex_1_1_Z) {
     EXPECT_EQ(15u, range.max_bound);
 }
 
+TEST_F(IR_IntegerRangeAnalysisTest, LocalInvocationIndex_Failure_NoWorkgroupSize) {
+    auto* func = b.ComputeFunction("my_func");
+    auto* localInvocationIndex = b.FunctionParam("localInvocationIndex", mod.Types().u32());
+    localInvocationIndex->SetBuiltin(tint::core::BuiltinValue::kLocalInvocationIndex);
+    func->SetParams({localInvocationIndex});
+
+    func->ClearWorkgroupSize();
+
+    b.Append(func->Block(), [&] { b.Return(func); });
+
+    auto* src = R"(
+%my_func = @compute func(%localInvocationIndex:u32 [@local_invocation_index]):void {
+  $B1: {
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    IntegerRangeAnalysis analysis(&mod);
+    ASSERT_EQ(nullptr, analysis.GetInfo(localInvocationIndex));
+}
+
+TEST_F(IR_IntegerRangeAnalysisTest, LocalInvocationID_Failure_NoWorkgroupSize) {
+    auto* func = b.ComputeFunction("my_func");
+    auto* localInvocationId = b.FunctionParam("localInvocationId", mod.Types().vec3<u32>());
+    localInvocationId->SetBuiltin(tint::core::BuiltinValue::kLocalInvocationId);
+    func->SetParams({localInvocationId});
+
+    func->ClearWorkgroupSize();
+
+    b.Append(func->Block(), [&] { b.Return(func); });
+
+    auto* src = R"(
+%my_func = @compute func(%localInvocationId:vec3<u32> [@local_invocation_id]):void {
+  $B1: {
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    IntegerRangeAnalysis analysis(&mod);
+    ASSERT_EQ(nullptr, analysis.GetInfo(localInvocationId));
+}
+
 TEST_F(IR_IntegerRangeAnalysisTest, LocalInvocationID_u32_XYZ) {
     auto* func = b.ComputeFunction("my_func", 4_u, 3_u, 2_u);
     auto* localInvocationId = b.FunctionParam("localInvocationId", mod.Types().vec3<u32>());
