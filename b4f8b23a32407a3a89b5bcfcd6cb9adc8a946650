@@ -305,6 +305,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8824bb6_033e9253",
+        "filename": "src/dawn/native/d3d11/RenderPipelineD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-26T07:31:18Z",
+      "side": 1,
+      "message": "\u003ewhat other transform needs it?\n\nI still need to find it but tests  help me to catch this exception.\n\nNote: Pls see this https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/third_party/dawn/src/dawn/native/d3d/ShaderUtils.cpp;drc\u003d10d3d949c664f74bce91db34f417bdd4b7fbaf4c;l\u003d321. It updates the attributes after compilation.",
+      "parentUuid": "e598afc7_5ace6a74",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 25
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a58514a9_76f92a15",
