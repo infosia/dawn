@@ -73,6 +73,10 @@ struct State {
     /// A set of control instructions that transitively hold a return instruction
     Hashset<core::ir::ControlInstruction*, 8> holds_return_{};
 
+    /// The current loop/switch nesting depth. Used to determine whether we can exit from an outer
+    /// loop or switch instead of exiting from an if instruction.
+    uint32_t loop_switch_nesting_depth = 0;
+
     /// Process the function.
     /// @param fn the function to process
     void Process(core::ir::Function* fn) {
@@ -172,11 +176,31 @@ struct State {
             // to be created to hold the instructions that are between the control instruction and
             // the block's terminating instruction.
             if (auto* ctrl = inst->As<core::ir::ControlInstruction>()) {
+                const bool is_loop_or_switch = ctrl->IsAnyOf<core::ir::Loop, core::ir::Switch>();
+                TINT_SCOPED_ASSIGNMENT(loop_switch_nesting_depth,
+                                       loop_switch_nesting_depth + (is_loop_or_switch ? 1 : 0));
+
                 if (holds_return_.Contains(ctrl)) {
-                    // Control instruction transitively holds a return.
-                    ctrl->ForeachBlock(
-                        [&](core::ir::Block* ctrl_block) { ProcessBlock(ctrl_block); });
-                    if (next && (next != fn_return || fn_return->Value()) &&
+                    // Control instruction transitively holds a return. Recurse into its blocks.
+                    ctrl->ForeachBlock([&](core::ir::Block* ctrl_block) {  //
+                        ProcessBlock(ctrl_block);
+                    });
+
+                    // Conditionalize the instructions after the control instruction, if all of the
+                    // following are true:
+                    //   - There is at least one more instruction.
+                    //   - If the next instruction is the function return, it has a value.
+                    //       * This avoids wrapping the final return instruction unnecessarily.
+                    //       * The value of the final return still needs to be conditionalized.
+                    //   - We are not nested in a loop or switch.
+                    //       * We always jump out of these with exit_loop or exit_switch.
+                    //   - The next instruction is not an exit or unreachable.
+                    //       * Exit instructions are special-cased as they may have arguments that
+                    //         need to be propagated.
+                    //       * Unreachable instructions are just removed.
+                    if (next &&                                       //
+                        (next != fn_return || fn_return->Value()) &&  //
+                        loop_switch_nesting_depth == 0 &&             //
                         !tint::IsAnyOf<core::ir::Exit, core::ir::Unreachable>(next)) {
                         inner_if = CreateIfContinueExecution(ctrl);
                         inner_if_stack.Push(inner_if);
@@ -290,9 +314,23 @@ struct State {
     /// Append an instruction to @p block that will exit from its containing control instruction.
     /// @param block the instruction to exit from
     void ExitFromBlock(core::ir::Block* block) {
+        // Determine which control instruction we can exit to.
+        // If there is a loop or switch in the control flow stack, exit from that. Otherwise, just
+        // exit from the if.
+        auto* ctrl = block->Parent();
+        while (ctrl != nullptr) {
+            if (ctrl->IsAnyOf<core::ir::Loop, core::ir::Switch>()) {
+                break;
+            }
+            ctrl = ctrl->Block()->Parent();
+        }
+        if (ctrl == nullptr) {
+            ctrl = block->Parent();
+            TINT_ASSERT(ctrl->Is<core::ir::If>());
+        }
+
         // If the outermost control instruction is expecting exit values, then return them as
         // 'undef' values.
-        auto* ctrl = block->Parent();
         Vector<core::ir::Value*, 8> exit_args;
         exit_args.Resize(ctrl->Results().Length());
 
