@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa658edd_8b6b2ef7",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-26T05:15:43Z",
+      "side": 1,
+      "message": "Absolutely! Done.",
+      "parentUuid": "effc1903_3aed6943",
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7fd7c130_40af7427",
@@ -110,6 +128,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec2dc514_6294d608",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-26T05:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31533cc9_3151d381",
+      "range": {
+        "startLine": 767,
+        "startChar": 2,
+        "endLine": 770,
+        "endChar": 0
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4dc9e248_b53dfbc8",
@@ -123,6 +165,30 @@
       "writtenOn": "2025-05-19T11:12:46Z",
       "side": 1,
       "message": "```suggestion\n                vertexBufferTracker.Apply(lastPipeline);\n                DAWN_TRY(immediates.Apply(commandContext));\n```",
+      "range": {
+        "startLine": 799,
+        "startChar": 5,
+        "endLine": 801,
+        "endChar": 5
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1151dce3_33cef7e1",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-26T05:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dc9e248_b53dfbc8",
       "range": {
         "startLine": 799,
         "startChar": 5,
@@ -150,6 +216,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c62e743_93075db1",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-26T05:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05e0399b_602f1b33",
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc715389_4c976325",
@@ -163,6 +247,30 @@
       "writtenOn": "2025-05-19T11:12:46Z",
       "side": 1,
       "message": "Won\u0027t this end up doing nothing when tintIR is off? So we don\u0027t need to do a check here, only in ShaderModuleD3D11",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 25
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f30f5f71_f050451a",
+        "filename": "src/dawn/native/d3d11/RenderPipelineD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-26T05:15:43Z",
+      "side": 1,
+      "message": "Don\u0027t need this anymore. It is hard to know whether final hlsl uses firstVertex or firstInstance attribute due to wgsl-\u003ehlsl transforms may add such usages.",
+      "parentUuid": "bc715389_4c976325",
       "range": {
         "startLine": 252,
         "startChar": 0,
@@ -203,6 +311,30 @@
       "writtenOn": "2025-05-19T11:12:46Z",
       "side": 1,
       "message": "Maybe we could have a helper that returns an offset or nullopt if not present, so we can do `tintOptions.foo \u003d GetImmediateByteOffsetInPipelineIfAny(...)`\n\n(also these names are verboooooooose, but IDK how to fix that).",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 80
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b81bcda0_1f2839cf",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-26T05:15:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "322326b9_0bbc69ef",
       "range": {
         "startLine": 237,
         "startChar": 0,
