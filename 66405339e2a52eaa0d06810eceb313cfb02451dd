@@ -69,6 +69,24 @@
       "parentUuid": "19d9e3f5_a88b4968",
       "revId": "66405339e2a52eaa0d06810eceb313cfb02451dd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ecab044_e901be75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-26T08:02:28Z",
+      "side": 1,
+      "message": "https://github.com/gpuweb/gpuweb/pull/5193 has been merged. Here\u0027s the IDL roll then.",
+      "parentUuid": "479ec774_5ce52641",
+      "revId": "66405339e2a52eaa0d06810eceb313cfb02451dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
