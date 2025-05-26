@@ -1,0 +1,97 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9beb2a7f_5523c5a2",
+        "filename": "src/tint/lang/core/ir/transform/binding_remapper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-26T23:34:35Z",
+      "side": 1,
+      "message": "Nit: I know what you are trying to say but the words in this sentence are not quite right.",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "eb0ba1247b532209da3d3efb11be7adac0793c38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13032d10_6c93e549",
+        "filename": "src/tint/lang/core/ir/transform/binding_remapper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-26T23:34:35Z",
+      "side": 1,
+      "message": "TODO(crbug.com/363031535): Remove kAllowDuplicateBindings when MSL no longer needs FlattenBindings.",
+      "fixSuggestions": [
+        {
+          "fixId": "902f1323_ad56666e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/binding_remapper.h",
+              "range": {
+                "startLine": 51,
+                "startChar": 0,
+                "endLine": 51,
+                "endChar": 0
+              },
+              "replacement": "// TODO(crbug.com/363031535): Remove kAllowDuplicateBindings when MSL no\n// longer needs FlattenBindings.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "eb0ba1247b532209da3d3efb11be7adac0793c38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68477716_6f4a1905",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-26T23:34:35Z",
+      "side": 1,
+      "message": "TODO(crbug.com/363031535): Remove kAllowDuplicateBindings when MSL no longer needs FlattenBindings.",
+      "fixSuggestions": [
+        {
+          "fixId": "1640daf2_2f71cd48",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/vertex_pulling.h",
+              "range": {
+                "startLine": 43,
+                "startChar": 0,
+                "endLine": 43,
+                "endChar": 0
+              },
+              "replacement": "// TODO(crbug.com/363031535): Remove kAllowDuplicateBindings when MSL no\n// longer needs FlattenBindings.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "eb0ba1247b532209da3d3efb11be7adac0793c38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
