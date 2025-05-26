@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "670b3e36_3046727e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-26T20:52:41Z",
+      "side": 1,
+      "message": "I have figured out why all the MSL tests are barfing, msl\u0027s FlattenBindings transforms invokes BindingRemapper very early on, so BindingRemapper and VertexPulling need to have the capability set.\n\nMy accidental inclusion of the capability in the BindingRemapper before is why these were passing.",
+      "revId": "60e0d28dc5f0e90def5ee30b4321b246bec603b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
