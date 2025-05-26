@@ -329,6 +329,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c87dd945_6e529305",
+        "filename": "src/dawn/native/d3d11/RenderPipelineD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-26T10:28:21Z",
+      "side": 1,
+      "message": "Turns out it is not due to \"some transform adding something in wgsl-\u003ehlsl\" but a backend implementation of pipeline (RenderPipelineD3D11/ComputePipelineD3D11) overloaded the info. See https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/RenderPipelineD3D11.h;drc\u003d68ed0f41391398d37f698fc9faead659c46b2bd1;l\u003d57. Base RenderPipeline/ComputePipeline get the correct info. I\u0027ll remove this overload and see what happens to the tests.",
+      "parentUuid": "c8824bb6_033e9253",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 25
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a58514a9_76f92a15",
