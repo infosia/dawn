@@ -281,6 +281,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e598afc7_5ace6a74",
+        "filename": "src/dawn/native/d3d11/RenderPipelineD3D11.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-26T07:28:08Z",
+      "side": 1,
+      "message": "The tint reflection should provide enough information to know that so we can determine in Dawn if we need to add the constants. https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/third_party/dawn/src/dawn/native/ShaderModule.h;drc\u003d10d3d949c664f74bce91db34f417bdd4b7fbaf4c;l\u003d295\n\nwhat other transform needs it?",
+      "parentUuid": "f30f5f71_f050451a",
+      "range": {
+        "startLine": 252,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 25
+      },
+      "revId": "b4f8b23a32407a3a89b5bcfcd6cb9adc8a946650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a58514a9_76f92a15",
