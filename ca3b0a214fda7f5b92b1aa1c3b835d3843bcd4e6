@@ -16,6 +16,29 @@
       "message": "Thanks Jie and Quyen, PTAL",
       "revId": "ca3b0a214fda7f5b92b1aa1c3b835d3843bcd4e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e77c978d_06eef25f",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2812,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-05-26T11:49:26Z",
+      "side": 1,
+      "message": "Why can\u0027t this simply be a method function of DawnLoadResolveTextureTest?",
+      "range": {
+        "startLine": 2812,
+        "startChar": 5,
+        "endLine": 2812,
+        "endChar": 45
+      },
+      "revId": "ca3b0a214fda7f5b92b1aa1c3b835d3843bcd4e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
