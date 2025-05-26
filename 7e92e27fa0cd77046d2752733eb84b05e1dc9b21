@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5cf7114_bdf69a33",
+        "filename": "src/tint/lang/core/ir/transform/substitute_overrides.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-26T20:57:06Z",
+      "side": 1,
+      "message": "Comment on why this is required.",
+      "range": {
+        "startLine": 232,
+        "startChar": 20,
+        "endLine": 232,
+        "endChar": 22
+      },
+      "revId": "7e92e27fa0cd77046d2752733eb84b05e1dc9b21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
