@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a314cc6_5968a4e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-26T13:20:34Z",
+      "side": 1,
+      "message": "I wonder if this should be validation errors on the IR validator instead of changing here. It looks like the input IR isn\u0027t really valid, as the `local_invocation_id` has to be used in a `compute` entry point but there is no entry point in the fuzzer test case.",
+      "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
