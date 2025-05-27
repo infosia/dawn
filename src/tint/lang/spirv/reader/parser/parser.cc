@@ -1006,6 +1006,8 @@ class Parser {
     void EmitBlock(core::ir::Block* dst, const spvtools::opt::BasicBlock& src) {
         TINT_SCOPED_ASSIGNMENT(current_block_, dst);
 
+        spirv_id_to_block_.insert({src.id(), dst});
+
         auto* loop_merge_inst = src.GetLoopMergeInst();
         // This is a loop merge block, so we need to treat it as a Loop.
         if (loop_merge_inst) {
@@ -1429,6 +1431,9 @@ class Parser {
                 case spv::Op::OpImageWrite:
                     EmitImageWrite(inst);
                     break;
+                case spv::Op::OpPhi:
+                    EmitPhi(inst);
+                    break;
                 default:
                     TINT_UNIMPLEMENTED()
                         << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
@@ -1451,6 +1456,33 @@ class Parser {
             auto merge_id = loop_merge_inst->GetSingleWordInOperand(0);
             const auto& merge_bb = current_spirv_function_->FindBlock(merge_id);
             EmitBlock(dst, *merge_bb);
+        }
+    }
+
+    void EmitPhi(const spvtools::opt::Instruction& inst) {
+        auto num_ops = inst.NumInOperands();
+
+        // If there are only 2 arguments, that means we came directly from a block, so just emit as
+        // a `let` with that blocks value.
+        if (num_ops == 2) {
+            Emit(b_.Let(Value(inst.GetSingleWordInOperand(0))), inst.result_id());
+        }
+
+        for (uint32_t i = 0; i < num_ops; i += 2) {
+            auto value_id = inst.GetSingleWordInOperand(i);
+            auto blk_id = inst.GetSingleWordInOperand(i + 1);
+
+            auto blk_iter = spirv_id_to_block_.find(blk_id);
+
+            // The referenced block hasn't been emitted yet (continue blocks have this behaviour).
+            // So, store the fact that it needs to return a given value away for when we do emit the
+            // block.
+            if (blk_iter == spirv_id_to_block_.end()) {
+                // TODO(dsinclair): store ...
+                continue;
+            }
+
+            auto* ir_blk = blk_iter->second;
         }
     }
 
@@ -2814,7 +2846,7 @@ class Parser {
     std::unordered_map<uint32_t, core::ir::ControlInstruction*> walk_stop_blocks_;
     // Map of continue target ID to the controlling IR loop.
     std::unordered_map<uint32_t, core::ir::Loop*> continue_targets_;
-    // Map of continue target ID to the controlling IR loop.
+    // Map of header target ID to the controlling IR loop.
     std::unordered_map<uint32_t, core::ir::Loop*> loop_headers_;
 
     struct PremergeInfo {
@@ -2830,6 +2862,9 @@ class Parser {
     // If we're in a switch, is populated with the IDs of the blocks for each of the switch
     // selectors. This lets us watch for fallthrough when emitting branch instructions.
     std::vector<std::unordered_set<uint32_t>> current_switch_blocks_;
+
+    /// Maps from a spirv-v block id to the corresponding block in the IR
+    std::unordered_map<uint32_t, core::ir::Block*> spirv_id_to_block_;
 };
 
 }  // namespace
