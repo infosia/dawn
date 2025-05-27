@@ -87,6 +87,24 @@
       "parentUuid": "56d192fa_6b53f1cc",
       "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c53fac7b_4da0d785",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-27T12:02:18Z",
+      "side": 1,
+      "message": "This was marked resolved? At any rate, I can\u0027t reproduce the error on your fork, the samples build fine.",
+      "parentUuid": "7d5da711_a159c774",
+      "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
