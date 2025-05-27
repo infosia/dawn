@@ -58,6 +58,7 @@
 #include "dawn/utils/SystemUtils.h"
 #include "dawn/utils/TerribleCommandBuffer.h"
 #include "dawn/utils/TestUtils.h"
+#include "dawn/utils/Timer.h"
 #include "dawn/utils/WGPUHelpers.h"
 #include "dawn/utils/WireHelper.h"
 #include "dawn/wire/WireClient.h"
@@ -1310,6 +1311,12 @@ void DawnTestBase::TearDown() {
     if (!UsesWire()) {
         EXPECT_EQ(mLastWarningCount, GetDeprecationWarningCountForTesting());
     }
+
+    if (mTimeout != 0.0f) {
+        float time_delta = mTimer->GetElapsedTime();
+        printf("\n delta time %f \n", time_delta);
+        // EXPECT_GE(mTimeout, time_delta);
+    }
 }
 
 void DawnTestBase::DestroyDevice(wgpu::Device deviceToDestroy) {
@@ -1888,6 +1895,12 @@ void DawnTestBase::ResolveExpectations() {
 
 std::unique_ptr<platform::Platform> DawnTestBase::CreateTestPlatform() {
     return nullptr;
+}
+
+void DawnTestBase::StartTimer(float timeout) {
+    mTimer.reset(utils::CreateTimer());
+    mTimeout = timeout;
+    mTimer->Start();
 }
 
 void DawnTestBase::ResolveDeferredExpectationsNow() {
