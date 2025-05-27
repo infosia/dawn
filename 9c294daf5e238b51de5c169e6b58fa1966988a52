@@ -33,6 +33,24 @@
       "message": "The cleaner but less performant way of doing this is to verify all access in the program in the const_param_validator",
       "revId": "9c294daf5e238b51de5c169e6b58fa1966988a52",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90bc6b01_b772c4b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-27T15:43:27Z",
+      "side": 1,
+      "message": "Yeah, that was my first thought on seeing this patch. I do think it\u0027s a cleaner separation of concerns that we should pursue at some point.",
+      "parentUuid": "20c37147_bfb1469b",
+      "revId": "9c294daf5e238b51de5c169e6b58fa1966988a52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
