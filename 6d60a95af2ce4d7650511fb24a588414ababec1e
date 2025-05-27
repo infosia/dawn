@@ -123,6 +123,24 @@
       "parentUuid": "c53fac7b_4da0d785",
       "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44360345_cfdbe600",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-27T15:11:51Z",
+      "side": 1,
+      "message": "Aaah I see. \n\nI can actually reproduce that with \n\nclang++ -O3 -DNDEBUG -Xlinker src/dawn/samples/CMakeFiles/HelloTriangle.dir/HelloTriangle.cpp.o src/dawn/native/libwebgpu_dawn.a src/dawn/samples/libdawn_sample_utils.a src/dawn/utils/libdawn_system_utils.a  src/dawn/utils/libdawn_wgpu_utils.a  src/dawn/utils/libdawn_test_utils.a  src/dawn/glfw/libdawn_glfw.a third_party/glfw/src/libglfw3.a -o HelloTriangle\n\nWhich causes linker errors like \nundefined reference to `absl::ByString::Find` etc. etc.\n\nHowever they are caused by src/dawn/utils/libdawn_system_utils.a which is not part of standard dawn (but required for the samples).",
+      "parentUuid": "a1e5151f_90180d8f",
+      "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
