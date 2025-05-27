@@ -87,6 +87,24 @@
       "parentUuid": "824e85c8_c43dfa3b",
       "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cce31ab2_dda5c5bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-27T12:53:14Z",
+      "side": 1,
+      "message": "Right, we also need to check the other builtins. This one isn\u0027t using `workgroup_size` but `local_invocation_id`. There is no shader stage in the example so builtins shouldn\u0027t be allowed.",
+      "parentUuid": "5e74a2aa_a53a42ab",
+      "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
