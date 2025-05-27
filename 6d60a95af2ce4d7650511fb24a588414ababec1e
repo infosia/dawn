@@ -105,6 +105,24 @@
       "parentUuid": "7d5da711_a159c774",
       "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1e5151f_90180d8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4067298
+      },
+      "writtenOn": "2025-05-27T12:49:52Z",
+      "side": 1,
+      "message": "I didn\u0027t want this to be a blocker as I might be wrong. When you take the libwebgpu_dawn.a and use it standalone the issues appear. I\u0027ll setup a separate repo with a reproduction.",
+      "parentUuid": "c53fac7b_4da0d785",
+      "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
