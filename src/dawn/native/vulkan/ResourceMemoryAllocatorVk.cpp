@@ -102,12 +102,14 @@ class ResourceMemoryAllocator::SingleTypeAllocator : public ResourceHeapAllocato
   public:
     SingleTypeAllocator(Device* device,
                         size_t memoryTypeIndex,
+                        bool isLazyMemoryType,
                         VkDeviceSize maxHeapSize,
                         VkDeviceSize heapBlockSize,
                         ResourceMemoryAllocator* memoryAllocator)
         : mDevice(device),
           mResourceMemoryAllocator(memoryAllocator),
           mMemoryTypeIndex(memoryTypeIndex),
+          mIsLazyMemoryType(isLazyMemoryType),
           mMaxHeapSize(maxHeapSize),
           mPooledMemoryAllocator(this),
           mBuddySystem(
@@ -125,7 +127,7 @@ class ResourceMemoryAllocator::SingleTypeAllocator : public ResourceHeapAllocato
     void FreeRecycledMemory() { mPooledMemoryAllocator.FreeRecycledAllocations(); }
 
     ResultOrError<ResourceMemoryAllocation> AllocateMemory(uint64_t size, uint64_t alignment) {
-        return mBuddySystem.Allocate(size, alignment);
+        return mBuddySystem.Allocate(size, alignment, mIsLazyMemoryType);
     }
 
     void DeallocateMemory(const ResourceMemoryAllocation& allocation) {
@@ -154,18 +156,20 @@ class ResourceMemoryAllocator::SingleTypeAllocator : public ResourceHeapAllocato
                                   "vkAllocateMemory"));
 
         DAWN_ASSERT(allocatedMemory != VK_NULL_HANDLE);
-        mResourceMemoryAllocator->RecordHeapAllocation(size);
+        mResourceMemoryAllocator->RecordHeapAllocation(size, mIsLazyMemoryType);
         return {std::make_unique<ResourceHeap>(allocatedMemory, mMemoryTypeIndex, size)};
     }
 
     void DeallocateResourceHeap(std::unique_ptr<ResourceHeapBase> allocation) override {
-        mResourceMemoryAllocator->DeallocateResourceHeap(ToBackend(allocation.get()));
+        mResourceMemoryAllocator->DeallocateResourceHeap(ToBackend(allocation.get()),
+                                                         mIsLazyMemoryType);
     }
 
   private:
     raw_ptr<Device> mDevice;
     raw_ptr<ResourceMemoryAllocator> mResourceMemoryAllocator;
     size_t mMemoryTypeIndex;
+    bool mIsLazyMemoryType;
     VkDeviceSize mMaxHeapSize;
     PooledResourceMemoryAllocator mPooledMemoryAllocator;
     BuddyMemoryAllocator mBuddySystem;
@@ -188,8 +192,12 @@ ResourceMemoryAllocator::ResourceMemoryAllocator(Device* device, VkDeviceSize he
     mAllocatorsPerType.reserve(info.memoryTypes.size());
 
     for (size_t i = 0; i < info.memoryTypes.size(); i++) {
+        bool isLazyMemoryType =
+            (info.memoryTypes[i].propertyFlags & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT) != 0u;
         mAllocatorsPerType.emplace_back(std::make_unique<SingleTypeAllocator>(
-            mDevice, i, info.memoryHeaps[info.memoryTypes[i].heapIndex].size, heapBlockSize, this));
+            mDevice, i, isLazyMemoryType, info.memoryHeaps[info.memoryTypes[i].heapIndex].size,
+            heapBlockSize, this));
+        mMemoryTypeWithLazilyAllocatedBit |= isLazyMemoryType ? (1u << i) : 0u;
     }
 }
 
@@ -201,6 +209,7 @@ ResultOrError<ResourceMemoryAllocation> ResourceMemoryAllocator::Allocate(
     bool forceDisableSubAllocation) {
     // The Vulkan spec guarantees at least one memory type is valid.
     int memoryType = FindBestTypeIndex(requirements, kind);
+    bool isLazyMemoryType = (1 << memoryType) & mMemoryTypeWithLazilyAllocatedBit;
     DAWN_ASSERT(memoryType >= 0);
 
     VkDeviceSize size = requirements.size;
@@ -239,6 +248,7 @@ ResultOrError<ResourceMemoryAllocation> ResourceMemoryAllocator::Allocate(
                                            requirements.size, alignment));
         if (subAllocation.GetInfo().mMethod != AllocationMethod::kInvalid) {
             mTotalUsedMemory += requirements.size;
+            mTotalLazyUsedMemory += isLazyMemoryType ? requirements.size : 0;
             return subAllocation;
         }
     }
@@ -258,15 +268,19 @@ ResultOrError<ResourceMemoryAllocation> ResourceMemoryAllocator::Allocate(
     }
 
     mTotalUsedMemory += size;
+    mTotalLazyUsedMemory += isLazyMemoryType ? size : 0;
+
     AllocationInfo info;
     info.mMethod = AllocationMethod::kDirect;
     info.mRequestedSize = size;
+    info.mIsLazyAllocated = isLazyMemoryType;
     return ResourceMemoryAllocation(info, /*offset*/ 0, resourceHeap.release(),
                                     static_cast<uint8_t*>(mappedPointer));
 }
 
 void ResourceMemoryAllocator::Deallocate(ResourceMemoryAllocation* allocation) {
-    switch (allocation->GetInfo().mMethod) {
+    AllocationInfo info = allocation->GetInfo();
+    switch (info.mMethod) {
         // Some memory allocation can never be initialized, for example when wrapping
         // swapchain VkImages with a Texture.
         case AllocationMethod::kInvalid:
@@ -278,11 +292,16 @@ void ResourceMemoryAllocator::Deallocate(ResourceMemoryAllocation* allocation) {
             ResourceHeap* heap = ToBackend(allocation->GetResourceHeap());
             // Track the direct allocation that will be deallocated for both allocated and used
             // memory sizes.
-            DAWN_ASSERT(mTotalUsedMemory >= allocation->GetInfo().mRequestedSize);
-            mUsedMemoryToDecrement[mDevice->GetFencedDeleter()->GetCurrentDeletionSerial()] +=
-                allocation->GetInfo().mRequestedSize;
+            DAWN_ASSERT(mTotalUsedMemory >= info.mRequestedSize);
+            auto currentDeletionSerial = mDevice->GetFencedDeleter()->GetCurrentDeletionSerial();
+            mUsedMemoryToDecrement[currentDeletionSerial] += info.mRequestedSize;
+            // Update tracking for lazy allocation sizes.
+            if (info.mIsLazyAllocated) {
+                DAWN_ASSERT(mTotalLazyUsedMemory >= info.mRequestedSize);
+                mUsedLazyMemoryToDecrement[currentDeletionSerial] += info.mRequestedSize;
+            }
             allocation->Invalidate();
-            DeallocateResourceHeap(heap);
+            DeallocateResourceHeap(heap, info.mIsLazyAllocated);
             delete heap;
             break;
         }
@@ -296,8 +315,13 @@ void ResourceMemoryAllocator::Deallocate(ResourceMemoryAllocation* allocation) {
                 mDevice->GetFencedDeleter()->GetCurrentDeletionSerial();
             mSubAllocationsToDelete.Enqueue(*allocation, deletionSerial);
             // Track suballocation that will be deallocated for used memory sizes.
-            DAWN_ASSERT(mTotalUsedMemory >= allocation->GetInfo().mRequestedSize);
-            mUsedMemoryToDecrement[deletionSerial] += allocation->GetInfo().mRequestedSize;
+            DAWN_ASSERT(mTotalUsedMemory >= info.mRequestedSize);
+            mUsedMemoryToDecrement[deletionSerial] += info.mRequestedSize;
+            // Update tracking for lazy allocation sizes.
+            if (info.mIsLazyAllocated) {
+                DAWN_ASSERT(mTotalLazyUsedMemory >= info.mRequestedSize);
+                mUsedLazyMemoryToDecrement[deletionSerial] += info.mRequestedSize;
+            }
             break;
         }
 
@@ -322,14 +346,22 @@ ExecutionSerial ResourceMemoryAllocator::GetLastPendingDeletionSerial() {
     return lastSerial;
 }
 
-void ResourceMemoryAllocator::RecordHeapAllocation(VkDeviceSize size) {
+void ResourceMemoryAllocator::RecordHeapAllocation(VkDeviceSize size, bool isLazyMemoryType) {
     mTotalAllocatedMemory += size;
+    mTotalLazyAllocatedMemory += isLazyMemoryType ? size : 0;
 }
 
-void ResourceMemoryAllocator::DeallocateResourceHeap(ResourceHeap* heap) {
-    DAWN_ASSERT(mTotalAllocatedMemory >= heap->GetSize());
+void ResourceMemoryAllocator::DeallocateResourceHeap(ResourceHeap* heap, bool isLazyMemoryType) {
+    VkDeviceSize heapSize = heap->GetSize();
     MutexProtected<FencedDeleter>& fencedDeleter = mDevice->GetFencedDeleter();
-    mAllocatedMemoryToDecrement[fencedDeleter->GetCurrentDeletionSerial()] += heap->GetSize();
+    auto currentDeletionSerial = fencedDeleter->GetCurrentDeletionSerial();
+
+    DAWN_ASSERT(mTotalAllocatedMemory >= heapSize);
+    mAllocatedMemoryToDecrement[currentDeletionSerial] += heapSize;
+    if (isLazyMemoryType) {
+        DAWN_ASSERT(mTotalLazyAllocatedMemory >= heapSize);
+        mAllocatedLazyMemoryToDecrement[currentDeletionSerial] += heapSize;
+    }
     fencedDeleter->DeleteWhenUnused(heap->GetMemory());
 }
 
@@ -344,7 +376,7 @@ void ResourceMemoryAllocator::Tick(ExecutionSerial completedSerial) {
 
     auto it = mUsedMemoryToDecrement.begin();
     while (it != mUsedMemoryToDecrement.end() && it->first <= completedSerial) {
-        // Track the direct allocation memory as used memory that will be deallocated.
+        // Track the allocation/suballocation memory as used memory that will be deallocated.
         DAWN_ASSERT(mTotalUsedMemory >= it->second);
         mTotalUsedMemory -= it->second;
         it++;
@@ -354,13 +386,33 @@ void ResourceMemoryAllocator::Tick(ExecutionSerial completedSerial) {
 
     it = mAllocatedMemoryToDecrement.begin();
     while (it != mAllocatedMemoryToDecrement.end() && it->first <= completedSerial) {
-        // Track the direct allocation memory as used memory that will be deallocated.
+        // Track the direct allocation memory as allocated memory that will be deallocated.
         DAWN_ASSERT(mTotalAllocatedMemory >= it->second);
         mTotalAllocatedMemory -= it->second;
         it++;
     }
     // Erase the map serials up to the completed serial.
     mAllocatedMemoryToDecrement.erase(mAllocatedMemoryToDecrement.begin(), it);
+
+    it = mUsedLazyMemoryToDecrement.begin();
+    while (it != mUsedLazyMemoryToDecrement.end() && it->first <= completedSerial) {
+        // Track the allocation/suballocation memory as lazily used memory that will be deallocated.
+        DAWN_ASSERT(mTotalLazyUsedMemory >= it->second);
+        mTotalLazyUsedMemory -= it->second;
+        it++;
+    }
+    // Erase the map serials up to the completed serial.
+    mUsedLazyMemoryToDecrement.erase(mUsedLazyMemoryToDecrement.begin(), it);
+
+    it = mAllocatedLazyMemoryToDecrement.begin();
+    while (it != mAllocatedLazyMemoryToDecrement.end() && it->first <= completedSerial) {
+        // Track the direct allocation memory as lazily allocated memory that will be deallocated.
+        DAWN_ASSERT(mTotalLazyAllocatedMemory >= it->second);
+        mTotalLazyAllocatedMemory -= it->second;
+        it++;
+    }
+    // Erase the map serials up to the completed serial.
+    mAllocatedLazyMemoryToDecrement.erase(mAllocatedLazyMemoryToDecrement.begin(), it);
 }
 
 int ResourceMemoryAllocator::FindBestTypeIndex(VkMemoryRequirements requirements, MemoryKind kind) {
@@ -452,6 +504,14 @@ uint64_t ResourceMemoryAllocator::GetTotalUsedMemory() const {
 
 uint64_t ResourceMemoryAllocator::GetTotalAllocatedMemory() const {
     return mTotalAllocatedMemory;
+}
+
+uint64_t ResourceMemoryAllocator::GetTotalLazyAllocatedMemory() const {
+    return mTotalLazyAllocatedMemory;
+}
+
+uint64_t ResourceMemoryAllocator::GetTotalLazyUsedMemory() const {
+    return mTotalLazyUsedMemory;
 }
 
 }  // namespace dawn::native::vulkan
