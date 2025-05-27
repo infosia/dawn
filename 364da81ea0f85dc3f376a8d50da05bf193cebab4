@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "38b17cd8_f4e1e6e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-27T23:22:24Z",
+      "side": 1,
+      "message": "if you have the warning text please include it here",
+      "revId": "364da81ea0f85dc3f376a8d50da05bf193cebab4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "65ba234c_dde5446d",
