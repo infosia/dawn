@@ -81,6 +81,30 @@
       },
       "revId": "de0cebd5119bd18ce88fb18aa851483ddac8aa52",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0c5bb83_709fad21",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-27T05:12:00Z",
+      "side": 1,
+      "message": "(Tests help to catch an issue)\nWe cannot skip the stage check due to bits conflicts in ComputeImmediateConstants and RenderImmediateConstants. For example, numworkgroup bits living in ComputeImmediateConstants has the same offset of firstVertex bits. It generates different layout immediates in tint side (which might become {numworkgroups, firstVertex}) and fail to calculate correct offset.",
+      "parentUuid": "06860ae0_144ab438",
+      "range": {
+        "startLine": 246,
+        "startChar": 32,
+        "endLine": 255,
+        "endChar": 9
+      },
+      "revId": "de0cebd5119bd18ce88fb18aa851483ddac8aa52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
