@@ -525,7 +525,7 @@ void Recompute3DTextureCopyRegionWithEmptyFirstRowAndEvenCopyHeight(
         OffsetToFirstCopiedTexel(blockInfo, bytesPerRow, copy0.GetAlignedOffset(), bufferOffset0);
     uint64_t offsetForLastRowOfLastImage =
         offsetForCopy0 +
-        bytesPerRow * (copySize0.height + rowsPerImage * (copySize.depthOrArrayLayers - 1));
+        bytesPerRow * (copySize0.height/blockInfo.height + rowsPerImage * (copySize.depthOrArrayLayers - 1));
     uint64_t alignedOffsetForLastRowOfLastImage =
         AlignDownForDataPlacement(offsetForLastRowOfLastImage);
     Origin3D texelOffsetForLastRowOfLastImage = ComputeTexelOffsets(

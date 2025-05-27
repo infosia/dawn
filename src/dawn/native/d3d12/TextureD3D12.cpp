@@ -853,7 +853,7 @@ MaybeError Texture::ClearTexture(CommandRecordingContext* commandContext,
                             RecordBufferTextureCopyWithBufferHandle(
                                 BufferTextureCopyDirection::B2T, commandList,
                                 ToBackend(reservation.buffer)->GetD3D12Resource(),
-                                reservation.offsetInBuffer, bytesPerRow, largestMipSize.height,
+                                reservation.offsetInBuffer, bytesPerRow, largestMipSize.height / blockInfo.height,
                                 textureCopy, copySize);
                         }
                     }

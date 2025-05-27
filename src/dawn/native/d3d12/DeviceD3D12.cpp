@@ -783,7 +783,8 @@ uint32_t Device::GetOptimalBytesPerRowAlignment() const {
 // Current implementations would try to allocate additional 511 bytes,
 // so we return 1 and let ComputeTextureCopySplits take care of the alignment.
 uint64_t Device::GetOptimalBufferToTextureCopyOffsetAlignment() const {
-    return 1;
+    // return 1;
+    return 512;
 }
 
 float Device::GetTimestampPeriodInNS() const {
