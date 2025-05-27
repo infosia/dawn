@@ -368,6 +368,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d70e418_8975524f",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-05-27T18:43:24Z",
+      "side": 1,
+      "message": "So going back and testing some more the specific failure I saw was in BindGroupTests.CreateWithDestroyedResource, where it\u0027s running a few variants of the following sequence:\n\n```\nwgpu::Texture texture \u003d device.CreateTexture(\u0026textureDesc);\nwgpu::TextureView textureView \u003d texture.CreateView();\n\ntexture.Destroy();\nwgpu::BindGroup bg \u003d utils::MakeBindGroup(device, bgl, {{0, textureView}});\n```\n\nInternally, this ends up calling down to https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BindGroupVk.cpp;l\u003d93?q\u003dBindGroup::InitializeImpl()\u0026ss\u003dchromium where `GetHandle()` is called on the view and THEN the return value is checked for VK_NULL_HANDLE as the mechanism for testing for a destroyed texture. Because I added the indirection through the Ref here this check was needed to preserve that behavior.\n\nI could go through the code and look for any locations that are doing a similar check and have them test for a destroyed texture in a different way, but this felt cleaner in terms of preserving the current behavior.",
+      "parentUuid": "ca957c9d_eeea2475",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "743ca8fb_19956b08",
