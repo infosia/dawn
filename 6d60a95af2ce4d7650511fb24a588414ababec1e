@@ -141,6 +141,24 @@
       "parentUuid": "a1e5151f_90180d8f",
       "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7711911a_53090498",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4067298
+      },
+      "writtenOn": "2025-05-27T20:05:11Z",
+      "side": 1,
+      "message": "Like this: https://github.com/kommander/dawn-mono-repro\nI can only speak for osx and linux, I don\u0027t deal with windows other than in CI currently. In a project I would expect to pull in the monolithic static lib including everything needed like the dynamic libs. Mind the filesize difference of the static libs broken vs. working. I just included them in the repo for simplicity, the readme documents where I got them from.",
+      "parentUuid": "44360345_cfdbe600",
+      "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
