@@ -33,6 +33,29 @@
       "message": "LGTM, thanks!",
       "revId": "dc99d7b3056a8ed2baf48998d2b33f5f4ae6718b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "526c17e7_ae85c670",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1816,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-27T14:40:11Z",
+      "side": 1,
+      "message": "nit: I think this function name is too verbose. We could rename it to `TestLoadOrClearThenPartialResolve`. The same as above function just different parameters.\n```suggestion\n    // Test that wgpu::LoadOp::Clear or wgpu::LoadOp::Load works with\n    // wgpu::RenderPassDescriptorResolveRect.\n    // We test both scenarios when user draws are used and when they are not.\n    void TestLoadOrClearThenPartialResolve(wgpu::LoadOp loadOp,\n```",
+      "range": {
+        "startLine": 1816,
+        "startChar": 9,
+        "endLine": 1816,
+        "endChar": 49
+      },
+      "revId": "dc99d7b3056a8ed2baf48998d2b33f5f4ae6718b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
