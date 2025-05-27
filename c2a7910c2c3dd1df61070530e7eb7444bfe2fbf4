@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "609503d3_8c36e9a6",
+        "filename": "src/tint/lang/spirv/writer/raise/merge_return_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-27T13:38:03Z",
+      "side": 1,
+      "message": "This store still needs to be conditional, as we should not get here in the case of $B5. We\u0027ve hit the `ret`, this store comes after the loop, so it should not happen.",
+      "revId": "c2a7910c2c3dd1df61070530e7eb7444bfe2fbf4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
