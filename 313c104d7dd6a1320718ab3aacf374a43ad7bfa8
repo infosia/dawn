@@ -51,6 +51,24 @@
       "parentUuid": "7a314cc6_5968a4e1",
       "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "824e85c8_c43dfa3b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-05-27T08:35:11Z",
+      "side": 1,
+      "message": "Below are the Tint IRs used in the failed tint_ir_fuzzer cases. You can see I have to make this check to eliminate the tint assertion failure in these cases:\n```\n%1 \u003d func(%2:i32 [@local_invocation_id]):i32 {\n  $B1: {\n    unreachable\n  }\n}\n```\n```\n%1 \u003d func(%2:u32 [@local_invocation_index]):void {\n  $B1: {\n    unreachable\n  }\n}\n```",
+      "parentUuid": "d240e64b_de3cf381",
+      "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
