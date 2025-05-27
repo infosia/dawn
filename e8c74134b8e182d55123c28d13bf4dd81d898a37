@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b5ded0b_b64e5e6a",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-05-27T09:37:07Z",
+      "side": 1,
+      "message": "Without this line, I get errors like:\n\n```\nDebug: ../../third_party/dawn/src/dawn/native/opengl/TextureGL.cpp:150(AllocateTexture)glTexStorage3D(target, levels, format.internalFormat, size.width, size.height, size.depthOrArrayLayers) failed with GL_INVALID_OPERATION\n[56327:56327:0526/090816.251175:INFO:CONSOLE:0] \"glTexStorage3D(target, levels, format.internalFormat, size.width, size.height, size.depthOrArrayLayers) failed with GL_INVALID_OPERATION\n - While handling unexpected error type Internal when allowed errors are (Validation|DeviceLost|OutOfMemory).\n    at CheckError (../../third_party/dawn/src/dawn/native/opengl/UtilsGL.cpp:253)\n    at AllocateTexture (../../third_party/dawn/src/dawn/native/opengl/TextureGL.cpp:150)\n    at Create (../../third_party/dawn/src/dawn/native/opengl/TextureGL.cpp:265)\n\", source: http://127.0.0.1:39109/webgpu-cts/test_page.html (0)\n```\n\nSource: https://chromium-swarm.appspot.com/task?id\u003d71260441ace39711\u0026w\u003dtrue",
+      "revId": "e8c74134b8e182d55123c28d13bf4dd81d898a37",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
