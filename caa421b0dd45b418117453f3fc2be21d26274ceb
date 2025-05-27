@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ce9f3ea_4e9e47c2",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-27T23:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36705459_d0a97fd4",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ebffe426_e326e44e",
@@ -66,6 +84,30 @@
       "writtenOn": "2025-05-21T12:22:50Z",
       "side": 1,
       "message": "Let\u0027s have a static `Create` method for regularity with all other objects in all other backends.",
+      "range": {
+        "startLine": 112,
+        "startChar": 45,
+        "endLine": 112,
+        "endChar": 54
+      },
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c868d394_9e940add",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-27T23:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebffe426_e326e44e",
       "range": {
         "startLine": 112,
         "startChar": 45,
@@ -93,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "78dcf82f_3f4c762a",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-27T23:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe1dbb98_e6e17235",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "beb354a7_787a60a7",
@@ -110,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb195c19_63e34165",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-27T23:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beb354a7_787a60a7",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "802edb5f_3493e9fb",
@@ -123,6 +201,24 @@
       "writtenOn": "2025-05-21T12:22:50Z",
       "side": 1,
       "message": "Please add Unimplemented as needed on the Queue, but also at least a big TODO on `CheckAndUpdateCompletedSerials` that\u0027s very incorrect right now.",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c659a49_c4ee6ac0",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-27T23:17:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "802edb5f_3493e9fb",
       "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -158,6 +254,24 @@
       "side": 1,
       "message": "Will review after this is done",
       "parentUuid": "8f0f51e6_f905b337",
+      "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86dd4013_66e1fcd0",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-27T23:17:44Z",
+      "side": 1,
+      "message": "Done (CreateBindGroupLayoutImpl and CreatePipelineLayoutImpl returns the base objects as device creation creates empty objects and getting content hash)",
+      "parentUuid": "fbb483e0_089ba492",
       "revId": "caa421b0dd45b418117453f3fc2be21d26274ceb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
