@@ -23,16 +23,19 @@ struct SB_RO {
 struct tint_module_vars_struct {
   device uint* prevent_dce;
   const device SB_RO* sb_ro;
+  thread uint* tint_array_length_1;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
 };
 
 uint arrayLength_bf7d97(tint_module_vars_struct tint_module_vars) {
-  uint res = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u);
+  uint res = (*tint_module_vars.tint_array_length_1);
   return res;
 }
 
 fragment void fragment_main(device uint* prevent_dce [[buffer(0)]], const device SB_RO* sb_ro [[buffer(1)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce, .sb_ro=sb_ro, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  thread uint tint_array_length_1 = 0u;
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce, .sb_ro=sb_ro, .tint_array_length_1=(&tint_array_length_1), .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  (*tint_module_vars.tint_array_length_1) = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u);
   (*tint_module_vars.prevent_dce) = arrayLength_bf7d97(tint_module_vars);
 }
 //
@@ -60,16 +63,19 @@ struct SB_RO {
 struct tint_module_vars_struct {
   device uint* prevent_dce;
   const device SB_RO* sb_ro;
+  thread uint* tint_array_length_1;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
 };
 
 uint arrayLength_bf7d97(tint_module_vars_struct tint_module_vars) {
-  uint res = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u);
+  uint res = (*tint_module_vars.tint_array_length_1);
   return res;
 }
 
 kernel void compute_main(device uint* prevent_dce [[buffer(0)]], const device SB_RO* sb_ro [[buffer(1)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce, .sb_ro=sb_ro, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  thread uint tint_array_length_1 = 0u;
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.prevent_dce=prevent_dce, .sb_ro=sb_ro, .tint_array_length_1=(&tint_array_length_1), .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  (*tint_module_vars.tint_array_length_1) = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u);
   (*tint_module_vars.prevent_dce) = arrayLength_bf7d97(tint_module_vars);
 }
 //
@@ -96,6 +102,7 @@ struct SB_RO {
 
 struct tint_module_vars_struct {
   const device SB_RO* sb_ro;
+  thread uint* tint_array_length_0;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
 };
 
@@ -110,11 +117,12 @@ struct vertex_main_outputs {
 };
 
 uint arrayLength_bf7d97(tint_module_vars_struct tint_module_vars) {
-  uint res = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u);
+  uint res = (*tint_module_vars.tint_array_length_0);
   return res;
 }
 
 VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
+  (*tint_module_vars.tint_array_length_0) = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u);
   VertexOutput out = {};
   out.pos = float4(0.0f);
   out.prevent_dce = arrayLength_bf7d97(tint_module_vars);
@@ -122,7 +130,8 @@ VertexOutput vertex_main_inner(tint_module_vars_struct tint_module_vars) {
 }
 
 vertex vertex_main_outputs vertex_main(const device SB_RO* sb_ro [[buffer(0)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.sb_ro=sb_ro, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  thread uint tint_array_length_0 = 0u;
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.sb_ro=sb_ro, .tint_array_length_0=(&tint_array_length_0), .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
   VertexOutput const v = vertex_main_inner(tint_module_vars);
   vertex_main_outputs tint_wrapper_result = {};
   tint_wrapper_result.VertexOutput_pos = v.pos;

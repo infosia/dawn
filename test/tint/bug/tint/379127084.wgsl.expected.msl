@@ -47,6 +47,7 @@ struct tint_module_vars_struct {
   texture2d<float, access::sample> permutationsSampler_1_Texture;
   sampler noiseSampler_1_Sampler;
   texture2d<float, access::sample> noiseSampler_1_Texture;
+  thread uint* tint_array_length_0;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
 };
 
@@ -61,10 +62,10 @@ struct main_inputs {
 
 void _skslMain(FSIn _stageIn, thread FSOut* const _stageOut, tint_module_vars_struct tint_module_vars) {
   (*tint_module_vars.shadingSsboIndex) = _stageIn.ssboIndicesVar.y;
-  int const _56_d = (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u) - 1u))].noiseType_1;
-  float2 _57_k = float2(((_stageIn.localCoordsVar + 0.5f) * (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u) - 1u))].baseFrequency_1));
+  int const _56_d = (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((*tint_module_vars.tint_array_length_0) - 1u))].noiseType_1;
+  float2 _57_k = float2(((_stageIn.localCoordsVar + 0.5f) * (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((*tint_module_vars.tint_array_length_0) - 1u))].baseFrequency_1));
   float4 _58_l = float4(0.0f);
-  float2 _59_m = float2((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u) - 1u))].stitchData_1);
+  float2 _59_m = float2((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((*tint_module_vars.tint_array_length_0) - 1u))].stitchData_1);
   float _60_n = 1.0f;
   int _61_o = 0;
   {
@@ -73,12 +74,12 @@ void _skslMain(FSIn _stageIn, thread FSOut* const _stageOut, tint_module_vars_st
       if (all((tint_loop_idx == uint2(0u)))) {
         break;
       }
-      if ((_61_o < (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u) - 1u))].numOctaves_1)) {
+      if ((_61_o < (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((*tint_module_vars.tint_array_length_0) - 1u))].numOctaves_1)) {
         float4 _62_f = 0.0f;
         float2 const _skTemp2 = floor(_57_k);
         _62_f = float4(_skTemp2, _62_f.zw);
         _62_f = float4(_62_f.xy, (_62_f.xy + float2(1.0f)));
-        if (bool((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u) - 1u))].stitching_1)) {
+        if (bool((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((*tint_module_vars.tint_array_length_0) - 1u))].stitching_1)) {
           float4 const _skTemp3 = step(_59_m.xyxy, _62_f);
           _62_f = (_62_f - (_skTemp3 * _59_m.xyxy));
         }
@@ -180,7 +181,7 @@ void _skslMain(FSIn _stageIn, thread FSOut* const _stageOut, tint_module_vars_st
   float const _skTemp16 = dot(float3(0.21259999275207519531f, 0.71520000696182250977f, 0.07220000028610229492f), float4(v_11, float(float(_58_l.w))).xyz);
   float const _skTemp17 = saturate(_skTemp16);
   float4 _84_a = float4(0.0f, 0.0f, 0.0f, _skTemp17);
-  int const _85_d = (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u) - 1u))].inHSL_4;
+  int const _85_d = (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((*tint_module_vars.tint_array_length_0) - 1u))].inHSL_4;
   if (bool(_85_d)) {
     float4 _skTemp18 = 0.0f;
     if ((_84_a.y < _84_a.z)) {
@@ -210,9 +211,9 @@ void _skslMain(FSIn _stageIn, thread FSOut* const _stageOut, tint_module_vars_st
     float const _skTemp23 = max(_84_a.w, 0.00009999999747378752f);
     _84_a = float4((_84_a.xyz / _skTemp23), _84_a.w);
   }
-  float4x4 const v_12 = (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u) - 1u))].matrix_4;
+  float4x4 const v_12 = (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((*tint_module_vars.tint_array_length_0) - 1u))].matrix_4;
   float4 const v_13 = (v_12 * float4(_84_a));
-  float4 _94_f = float4((v_13 + (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u) - 1u))].translate_4));
+  float4 _94_f = float4((v_13 + (*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((*tint_module_vars.tint_array_length_0) - 1u))].translate_4));
   if (bool(_85_d)) {
     float const _skTemp24 = abs(((2.0f * _94_f.z) - 1.0f));
     float const _95_b = ((1.0f - _skTemp24) * _94_f.y);
@@ -224,7 +225,7 @@ void _skslMain(FSIn _stageIn, thread FSOut* const _stageOut, tint_module_vars_st
     float4 const _skTemp28 = saturate(float4(((((_97_d - 0.5f) * _95_b) + _94_f.z) * _94_f.w), _94_f.w));
     _94_f = _skTemp28;
   } else {
-    if (bool((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u) - 1u))].clampRGB_4)) {
+    if (bool((*tint_module_vars._storage1).fsUniformData[min((*tint_module_vars.shadingSsboIndex), ((*tint_module_vars.tint_array_length_0) - 1u))].clampRGB_4)) {
       float4 const _skTemp29 = saturate(_94_f);
       _94_f = _skTemp29;
     } else {
@@ -238,6 +239,7 @@ void _skslMain(FSIn _stageIn, thread FSOut* const _stageOut, tint_module_vars_st
 }
 
 FSOut main_inner(FSIn _stageIn, tint_module_vars_struct tint_module_vars) {
+  (*tint_module_vars.tint_array_length_0) = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 128u);
   FSOut _stageOut = {};
   _skslMain(_stageIn, (&_stageOut), tint_module_vars);
   return _stageOut;
@@ -245,7 +247,8 @@ FSOut main_inner(FSIn _stageIn, tint_module_vars_struct tint_module_vars) {
 
 fragment main_outputs v_14(main_inputs inputs [[stage_in]], const device FSUniforms* _storage1 [[buffer(0)]], sampler permutationsSampler_1_Sampler [[sampler(0)]], texture2d<float, access::sample> permutationsSampler_1_Texture [[texture(0)]], sampler noiseSampler_1_Sampler [[sampler(1)]], texture2d<float, access::sample> noiseSampler_1_Texture [[texture(1)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
   thread uint shadingSsboIndex = 0u;
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{._storage1=_storage1, .shadingSsboIndex=(&shadingSsboIndex), .permutationsSampler_1_Sampler=permutationsSampler_1_Sampler, .permutationsSampler_1_Texture=permutationsSampler_1_Texture, .noiseSampler_1_Sampler=noiseSampler_1_Sampler, .noiseSampler_1_Texture=noiseSampler_1_Texture, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  thread uint tint_array_length_0 = 0u;
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{._storage1=_storage1, .shadingSsboIndex=(&shadingSsboIndex), .permutationsSampler_1_Sampler=permutationsSampler_1_Sampler, .permutationsSampler_1_Texture=permutationsSampler_1_Texture, .noiseSampler_1_Sampler=noiseSampler_1_Sampler, .noiseSampler_1_Texture=noiseSampler_1_Texture, .tint_array_length_0=(&tint_array_length_0), .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
   main_outputs tint_wrapper_result = {};
   tint_wrapper_result.FSOut_sk_FragColor = main_inner(FSIn{.ssboIndicesVar=inputs.FSIn_ssboIndicesVar, .localCoordsVar=inputs.FSIn_localCoordsVar}, tint_module_vars).sk_FragColor;
   return tint_wrapper_result;

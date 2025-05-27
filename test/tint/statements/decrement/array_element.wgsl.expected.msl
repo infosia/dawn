@@ -15,11 +15,11 @@ struct tint_array {
 
 struct tint_module_vars_struct {
   device tint_array<uint, 1>* a;
-  const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
+  thread uint* tint_array_length_0;
 };
 
 void v(tint_module_vars_struct tint_module_vars) {
-  uint const v_1 = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x / 4u) - 1u);
+  uint const v_1 = ((*tint_module_vars.tint_array_length_0) - 1u);
   device uint* const v_2 = (&(*tint_module_vars.a)[min(uint(1), v_1)]);
   (*v_2) = ((*v_2) - 1u);
 }

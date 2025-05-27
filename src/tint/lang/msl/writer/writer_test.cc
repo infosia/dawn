@@ -168,12 +168,15 @@ struct tint_array {
 
 struct tint_module_vars_struct {
   device tint_array<uint, 1>* a;
+  thread uint* tint_array_length_0_0;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
 };
 
 kernel void foo(device tint_array<uint, 1>* a [[buffer(0)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=a, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
-  (*tint_module_vars.a)[0u] = ((*tint_module_vars.tint_storage_buffer_sizes)[0u].x / 4u);
+  thread uint tint_array_length_0_0 = 0u;
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.a=a, .tint_array_length_0_0=(&tint_array_length_0_0), .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  (*tint_module_vars.tint_array_length_0_0) = ((*tint_module_vars.tint_storage_buffer_sizes)[0u].x / 4u);
+  (*tint_module_vars.a)[0u] = (*tint_module_vars.tint_array_length_0_0);
 }
 )");
     EXPECT_TRUE(output_.needs_storage_buffer_sizes);
@@ -271,6 +274,7 @@ struct tint_array {
 
 struct tint_module_vars_struct {
   const device tint_array<uint, 1>* tint_vertex_buffer_0;
+  thread uint* tint_array_length_0_1;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
 };
 
@@ -279,11 +283,13 @@ struct main_outputs {
 };
 
 float4 main_inner(uint tint_vertex_index, tint_module_vars_struct tint_module_vars) {
-  return float4(as_type<float>((*tint_module_vars.tint_vertex_buffer_0)[min(tint_vertex_index, (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x / 4u) - 1u))]), 0.0f, 0.0f, 1.0f);
+  (*tint_module_vars.tint_array_length_0_1) = ((*tint_module_vars.tint_storage_buffer_sizes)[0u].x / 4u);
+  return float4(as_type<float>((*tint_module_vars.tint_vertex_buffer_0)[min(tint_vertex_index, ((*tint_module_vars.tint_array_length_0_1) - 1u))]), 0.0f, 0.0f, 1.0f);
 }
 
 vertex main_outputs v(uint tint_vertex_index [[vertex_id]], const device tint_array<uint, 1>* tint_vertex_buffer_0 [[buffer(1)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.tint_vertex_buffer_0=tint_vertex_buffer_0, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  thread uint tint_array_length_0_1 = 0u;
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.tint_vertex_buffer_0=tint_vertex_buffer_0, .tint_array_length_0_1=(&tint_array_length_0_1), .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
   main_outputs tint_wrapper_result = {};
   tint_wrapper_result.tint_symbol = main_inner(tint_vertex_index, tint_module_vars);
   return tint_wrapper_result;

@@ -271,11 +271,13 @@ TEST_F(HlslWriterTest, ArrayLength_RobustnessAndArrayLengthFromUniform) {
     ASSERT_TRUE(Generate(options)) << err_ << output_.hlsl;
     EXPECT_EQ(output_.hlsl, R"(
 RWByteAddressBuffer dest : register(u1);
+static uint tint_array_length_0_1 = 0u;
 cbuffer cbuffer_tint_storage_buffer_sizes : register(b0, space30) {
   uint4 tint_storage_buffer_sizes[1];
 };
 void foo() {
-  dest.Store((0u + (min(0u, ((tint_storage_buffer_sizes[0u].x / 4u) - 1u)) * 4u)), 123u);
+  tint_array_length_0_1 = (tint_storage_buffer_sizes[0u].x / 4u);
+  dest.Store((0u + (min(0u, (tint_array_length_0_1 - 1u)) * 4u)), 123u);
 }
 
 )");

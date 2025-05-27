@@ -45,6 +45,7 @@ struct Simulation {
 struct tint_module_vars_struct {
   const device Particles_packed_vec3* particles;
   const constant Simulation* sim;
+  thread uint* tint_array_length_0;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
 };
 
@@ -58,8 +59,10 @@ Particle tint_load_struct_packed_vec3(const device Particle_packed_vec3* const f
 }
 
 kernel void v_1(const device Particles_packed_vec3* particles [[buffer(0)]], const constant Simulation* sim [[buffer(1)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.particles=particles, .sim=sim, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
-  uint const v_2 = ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 176u) - 1u);
+  thread uint tint_array_length_0 = 0u;
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.particles=particles, .sim=sim, .tint_array_length_0=(&tint_array_length_0), .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  (*tint_module_vars.tint_array_length_0) = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 176u);
+  uint const v_2 = ((*tint_module_vars.tint_array_length_0) - 1u);
   Particle particle = tint_load_struct_packed_vec3((&(*tint_module_vars.particles).p[min(uint(0), v_2)]));
   particle.position[min((*tint_module_vars.sim).i, 7u)] = particle.position[min((*tint_module_vars.sim).i, 7u)];
 }

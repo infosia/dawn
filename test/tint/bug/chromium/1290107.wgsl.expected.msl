@@ -19,10 +19,13 @@ struct S {
 
 struct tint_module_vars_struct {
   const device tint_array<S, 1>* arr;
+  thread uint* tint_array_length_0;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
 };
 
 kernel void v(const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.tint_storage_buffer_sizes=tint_storage_buffer_sizes};
-  uint const len = ((*tint_module_vars.tint_storage_buffer_sizes)[0u].x / 4u);
+  thread uint tint_array_length_0 = 0u;
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.tint_array_length_0=(&tint_array_length_0), .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  (*tint_module_vars.tint_array_length_0) = ((*tint_module_vars.tint_storage_buffer_sizes)[0u].x / 4u);
+  uint const len = (*tint_module_vars.tint_array_length_0);
 }

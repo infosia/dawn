@@ -20,10 +20,12 @@ struct Result {
 struct tint_module_vars_struct {
   texture2d_array<float, access::sample> myTexture;
   device Result* result;
+  thread uint* tint_array_length_0;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
 };
 
 void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_vars) {
+  (*tint_module_vars.tint_array_length_0) = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u);
   uint flatIndex = (((4u * GlobalInvocationID.z) + (2u * GlobalInvocationID.y)) + GlobalInvocationID.x);
   flatIndex = (flatIndex * 1u);
   int2 const v = int2(GlobalInvocationID.xy);
@@ -38,7 +40,7 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
       } else {
         break;
       }
-      (*tint_module_vars.result).values[min((flatIndex + i), ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u) - 1u))] = texel.x;
+      (*tint_module_vars.result).values[min((flatIndex + i), ((*tint_module_vars.tint_array_length_0) - 1u))] = texel.x;
       {
         i = (i + 1u);
       }
@@ -48,6 +50,7 @@ void main_inner(uint3 GlobalInvocationID, tint_module_vars_struct tint_module_va
 }
 
 kernel void v_4(uint3 GlobalInvocationID [[thread_position_in_grid]], texture2d_array<float, access::sample> myTexture [[texture(0)]], device Result* result [[buffer(0)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.myTexture=myTexture, .result=result, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  thread uint tint_array_length_0 = 0u;
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.myTexture=myTexture, .result=result, .tint_array_length_0=(&tint_array_length_0), .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
   main_inner(GlobalInvocationID, tint_module_vars);
 }

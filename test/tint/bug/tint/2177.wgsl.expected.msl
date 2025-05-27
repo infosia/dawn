@@ -15,6 +15,7 @@ struct tint_array {
 
 struct tint_module_vars_struct {
   device tint_array<uint, 1>* arr;
+  thread uint* tint_array_length_0;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
 };
 
@@ -31,8 +32,10 @@ uint f0(device tint_array<uint, 1>* const p, uint tint_array_length) {
 }
 
 kernel void v(device tint_array<uint, 1>* arr [[buffer(0)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arr=arr, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
-  uint const v_1 = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x / 4u) - 1u);
+  thread uint tint_array_length_0 = 0u;
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.arr=arr, .tint_array_length_0=(&tint_array_length_0), .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  (*tint_module_vars.tint_array_length_0) = ((*tint_module_vars.tint_storage_buffer_sizes)[0u].x / 4u);
+  uint const v_1 = ((*tint_module_vars.tint_array_length_0) - 1u);
   device uint* const v_2 = (&(*tint_module_vars.arr)[min(uint(0), v_1)]);
-  (*v_2) = f0(tint_module_vars.arr, ((*tint_module_vars.tint_storage_buffer_sizes)[0u].x / 4u));
+  (*v_2) = f0(tint_module_vars.arr, (*tint_module_vars.tint_array_length_0));
 }

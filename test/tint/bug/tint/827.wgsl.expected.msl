@@ -20,11 +20,13 @@ struct Result {
 struct tint_module_vars_struct {
   depth2d<float, access::sample> tex;
   device Result* result;
+  thread uint* tint_array_length_0;
   const constant tint_array<uint4, 1>* tint_storage_buffer_sizes;
 };
 
 void main_inner(uint3 GlobalInvocationId, tint_module_vars_struct tint_module_vars) {
-  device float* const v = (&(*tint_module_vars.result).values[min(((GlobalInvocationId.y * 128u) + GlobalInvocationId.x), ((((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u) - 1u))]);
+  (*tint_module_vars.tint_array_length_0) = (((*tint_module_vars.tint_storage_buffer_sizes)[0u].x - 0u) / 4u);
+  device float* const v = (&(*tint_module_vars.result).values[min(((GlobalInvocationId.y * 128u) + GlobalInvocationId.x), ((*tint_module_vars.tint_array_length_0) - 1u))]);
   int const v_1 = int(GlobalInvocationId.x);
   int2 const v_2 = int2(v_1, int(GlobalInvocationId.y));
   uint const v_3 = min(uint(0), (tint_module_vars.tex.get_num_mip_levels() - 1u));
@@ -33,6 +35,7 @@ void main_inner(uint3 GlobalInvocationId, tint_module_vars_struct tint_module_va
 }
 
 kernel void v_5(uint3 GlobalInvocationId [[thread_position_in_grid]], depth2d<float, access::sample> tex [[texture(0)]], device Result* result [[buffer(0)]], const constant tint_array<uint4, 1>* tint_storage_buffer_sizes [[buffer(30)]]) {
-  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.tex=tex, .result=result, .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
+  thread uint tint_array_length_0 = 0u;
+  tint_module_vars_struct const tint_module_vars = tint_module_vars_struct{.tex=tex, .result=result, .tint_array_length_0=(&tint_array_length_0), .tint_storage_buffer_sizes=tint_storage_buffer_sizes};
   main_inner(GlobalInvocationId, tint_module_vars);
 }

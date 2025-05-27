@@ -64,6 +64,16 @@ struct State {
     /// A map from an array function parameter to the function parameter that holds its length.
     Hashmap<FunctionParam*, FunctionParam*, 8> array_param_to_length_param{};
 
+    /// A pair that holds a storage buffer and a private variable that contains its length.
+    struct LengthDescriptor {
+        Var* storage_var = nullptr;
+        Var* private_var = nullptr;
+    };
+
+    /// A map from an binding point to its length descriptor that holds the storage buffer
+    /// declaration alongside the module-scope private variable that will hold its length.
+    Hashmap<BindingPoint, LengthDescriptor, 8> bindpoint_to_private_length_var{};
+
     /// Process the module.
     void Process() {
         // Look for and replace calls to the array length builtin.
@@ -72,6 +82,13 @@ struct State {
                 if (call->Func() == BuiltinFn::kArrayLength) {
                     MaybeReplace(call);
                 }
+            }
+        }
+
+        // Initialize the module-scope private length variables in each entry point.
+        for (auto func : ir.functions) {
+            if (func->IsEntryPoint()) {
+                InitializePrivateLengthVars(func);
             }
         }
     }
@@ -167,37 +184,20 @@ struct State {
             return nullptr;
         }
 
-        Value* result = nullptr;
-        b.InsertBefore(insertion_point, [&] {
-            // Load the total storage buffer size from the uniform buffer.
-            // The sizes are packed into vec4s to satisfy the 16-byte alignment requirement for
-            // array elements in uniform buffers, so we have to find the vector and element that
-            // correspond to the index that we want.
-            const uint32_t size_index = idx_it->second;
-            const uint32_t array_index = size_index / 4;
-            const uint32_t vec_index = size_index % 4;
-            auto* vec_ptr = b.Access<ptr<uniform, vec4<u32>>>(BufferSizes(), u32(array_index));
-            auto* total_buffer_size = b.LoadVectorElement(vec_ptr, u32(vec_index))->Result();
-
-            // Calculate actual array length:
-            //                total_buffer_size - array_offset
-            // array_length = --------------------------------
-            //                             array_stride
-            auto* array_size = total_buffer_size;
-            auto* storage_buffer_type = var->Result()->Type()->UnwrapPtr();
-            const type::Array* array_type = nullptr;
-            if (auto* str = storage_buffer_type->As<core::type::Struct>()) {
-                // The variable is a struct, so subtract the byte offset of the array member.
-                auto* member = str->Members().Back();
-                array_type = member->Type()->As<core::type::Array>();
-                array_size = b.Subtract<u32>(total_buffer_size, u32(member->Offset()))->Result();
-            } else {
-                array_type = storage_buffer_type->As<core::type::Array>();
-            }
-            TINT_ASSERT(array_type);
-            result = b.Divide<u32>(array_size, u32(array_type->Stride()))->Result();
+        // Get or create the module-scope private variable that will hold the array length for the
+        // storage buffer.
+        auto desc = bindpoint_to_private_length_var.GetOrAdd(*binding, [&]() {
+            auto name = "tint_array_length_" + std::to_string(binding->group) + "_" +
+                        std::to_string(binding->binding);
+            auto* private_var = b.Var(name, ty.ptr<private_, u32>());
+            ir.root_block->Append(private_var);
+            return LengthDescriptor{var, private_var};
         });
-        return result;
+
+        // Load the length from the module-scope private var.
+        auto* length = b.Load(desc.private_var);
+        length->InsertBefore(insertion_point);
+        return length->Result(0);
     }
 
     /// Get (or create, on first call) the uniform buffer that contains the storage buffer sizes.
@@ -222,6 +222,48 @@ struct State {
         });
         buffer_sizes_var->SetBindingPoint(ubo_binding.group, ubo_binding.binding);
         return buffer_sizes_var->Result();
+    }
+
+    void InitializePrivateLengthVars(Function* entry_point) {
+        // Insert code at the beginning of the entry point to initialize the array length variables.
+        for (auto desc : bindpoint_to_private_length_var) {
+            auto bp = desc.key;
+            TINT_ASSERT(bindpoint_to_size_index.contains(bp));
+
+            b.InsertBefore(entry_point->Block()->Front(), [&] {
+                // Load the total storage buffer size from the uniform buffer.
+                // The sizes are packed into vec4s to satisfy the 16-byte alignment requirement for
+                // array elements in uniform buffers, so we have to find the vector and element that
+                // correspond to the index that we want.
+                const uint32_t size_index = bindpoint_to_size_index.at(bp);
+                const uint32_t array_index = size_index / 4;
+                const uint32_t vec_index = size_index % 4;
+                auto* vec_ptr = b.Access<ptr<uniform, vec4<u32>>>(BufferSizes(), u32(array_index));
+                auto* total_buffer_size = b.LoadVectorElement(vec_ptr, u32(vec_index))->Result();
+
+                // Calculate actual array length:
+                //                total_buffer_size - array_offset
+                // array_length = --------------------------------
+                //                             array_stride
+                auto* array_size = total_buffer_size;
+                auto* storage_buffer_type = desc.value.storage_var->Result()->Type()->UnwrapPtr();
+                const type::Array* array_type = nullptr;
+                if (auto* str = storage_buffer_type->As<core::type::Struct>()) {
+                    // The variable is a struct, so subtract the byte offset of the array member.
+                    auto* member = str->Members().Back();
+                    array_type = member->Type()->As<core::type::Array>();
+                    array_size =
+                        b.Subtract<u32>(total_buffer_size, u32(member->Offset()))->Result();
+                } else {
+                    array_type = storage_buffer_type->As<core::type::Array>();
+                }
+                TINT_ASSERT(array_type);
+                auto* length = b.Divide<u32>(array_size, u32(array_type->Stride()))->Result();
+
+                // Store the length in the module-scope private variable.
+                b.Store(desc.value.private_var, length);
+            });
+        }
     }
 
     /// @returns true if the transformed module needs a storage buffer sizes UBO
