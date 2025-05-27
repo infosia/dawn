@@ -37,6 +37,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "cdc30b10_f5619e10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-05-27T01:59:11Z",
+      "side": 1,
+      "message": "Hi James, could you take a look at this CL?",
+      "revId": "b9bb02eb4fcd670ccee91eb397a5f5b451f557b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "31d25be4_969fbb21",
         "filename": "src/tint/lang/wgsl/ast/transform/renamer_test.cc",
         "patchSetId": 1
