@@ -119,15 +119,13 @@ $B1: {  # root
     auto* expect = R"(
 $B1: {  # root
   %buffer:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 1>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
 }
 
 %foo = func():u32 {
   $B2: {
-    %4:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %5:u32 = load_vector_element %4, 0u
-    %6:u32 = div %5, 4u
-    ret %6
+    %4:u32 = load %tint_array_length_0
+    ret %4
   }
 }
 )";
@@ -170,15 +168,13 @@ $B1: {  # root
     auto* expect = R"(
 $B1: {  # root
   %buffer:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 2>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
 }
 
 %foo = func():u32 {
   $B2: {
-    %4:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 1u
-    %5:u32 = load_vector_element %4, 3u
-    %6:u32 = div %5, 4u
-    ret %6
+    %4:u32 = load %tint_array_length_0
+    ret %4
   }
 }
 )";
@@ -282,17 +278,14 @@ MyStruct = struct @align(4) {
 
 $B1: {  # root
   %buffer:ptr<storage, MyStruct, read_write> = var undef @binding_point(0, 0)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 1>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
 }
 
 %foo = func():u32 {
   $B2: {
     %4:ptr<storage, array<i32>, read_write> = access %buffer, 0u
-    %5:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %6:u32 = load_vector_element %5, 0u
-    %7:u32 = sub %6, 0u
-    %8:u32 = div %7, 4u
-    ret %8
+    %5:u32 = load %tint_array_length_0
+    ret %5
   }
 }
 )";
@@ -363,17 +356,14 @@ MyStruct = struct @align(4) {
 
 $B1: {  # root
   %buffer:ptr<storage, MyStruct, read_write> = var undef @binding_point(0, 0)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 1>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
 }
 
 %foo = func():u32 {
   $B2: {
     %4:ptr<storage, array<i32>, read_write> = access %buffer, 5u
-    %5:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %6:u32 = load_vector_element %5, 0u
-    %7:u32 = sub %6, 20u
-    %8:u32 = div %7, 4u
-    ret %8
+    %5:u32 = load %tint_array_length_0
+    ret %5
   }
 }
 )";
@@ -417,16 +407,14 @@ $B1: {  # root
     auto* expect = R"(
 $B1: {  # root
   %buffer:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 1>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
 }
 
 %foo = func():u32 {
   $B2: {
     %let:ptr<storage, array<i32>, read_write> = let %buffer
-    %5:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %6:u32 = load_vector_element %5, 0u
-    %7:u32 = div %6, 4u
-    ret %7
+    %5:u32 = load %tint_array_length_0
+    ret %5
   }
 }
 )";
@@ -483,7 +471,7 @@ $B1: {  # root
     auto* expect = R"(
 $B1: {  # root
   %buffer:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 1>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
 }
 
 %bar = func(%param:ptr<storage, array<i32>, read_write>, %tint_array_length:u32):u32 {
@@ -493,11 +481,9 @@ $B1: {  # root
 }
 %foo = func():u32 {
   $B3: {
-    %7:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %8:u32 = load_vector_element %7, 0u
-    %9:u32 = div %8, 4u
-    %10:u32 = call %bar, %buffer, %9
-    ret %10
+    %7:u32 = load %tint_array_length_0
+    %8:u32 = call %bar, %buffer, %7
+    ret %8
   }
 }
 )";
@@ -568,7 +554,7 @@ $B1: {  # root
     auto* expect = R"(
 $B1: {  # root
   %buffer:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 1>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
 }
 
 %foo = func(%param_zoo:ptr<storage, array<i32>, read_write>, %tint_array_length:u32):u32 {
@@ -584,11 +570,9 @@ $B1: {  # root
 }
 %foo_2 = func():u32 {  # %foo_2: 'foo'
   $B4: {
-    %11:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %12:u32 = load_vector_element %11, 0u
-    %13:u32 = div %12, 4u
-    %14:u32 = call %foo_1, %buffer, %13
-    ret %14
+    %11:u32 = load %tint_array_length_0
+    %12:u32 = call %foo_1, %buffer, %11
+    ret %12
   }
 }
 )";
@@ -722,7 +706,7 @@ $B1: {  # root
     auto* expect = R"(
 $B1: {  # root
   %buffer:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 1>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
 }
 
 %bar = func(%param:ptr<storage, array<i32>, read_write>, %tint_array_length:u32):u32 {
@@ -734,11 +718,9 @@ $B1: {  # root
 }
 %foo = func():u32 {
   $B3: {
-    %9:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %10:u32 = load_vector_element %9, 0u
-    %11:u32 = div %10, 4u
-    %12:u32 = call %bar, %buffer, %11
-    ret %12
+    %9:u32 = load %tint_array_length_0
+    %10:u32 = call %bar, %buffer, %9
+    ret %10
   }
 }
 )";
@@ -803,7 +785,7 @@ $B1: {  # root
     auto* expect = R"(
 $B1: {  # root
   %buffer:ptr<storage, array<i32>, read_write> = var undef @binding_point(0, 0)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 1>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
 }
 
 %bar = func(%param_a:ptr<storage, array<i32>, read_write>, %param_b:ptr<storage, array<i32>, read_write>, %param_c:ptr<storage, array<i32>, read_write>, %tint_array_length:u32, %tint_array_length_1:u32, %tint_array_length_2:u32):u32 {  # %tint_array_length_1: 'tint_array_length', %tint_array_length_2: 'tint_array_length'
@@ -815,17 +797,11 @@ $B1: {  # root
 }
 %foo = func():u32 {
   $B3: {
-    %13:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %14:u32 = load_vector_element %13, 0u
-    %15:u32 = div %14, 4u
-    %16:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %17:u32 = load_vector_element %16, 0u
-    %18:u32 = div %17, 4u
-    %19:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %20:u32 = load_vector_element %19, 0u
-    %21:u32 = div %20, 4u
-    %22:u32 = call %bar, %buffer, %buffer, %buffer, %15, %18, %21
-    ret %22
+    %13:u32 = load %tint_array_length_0
+    %14:u32 = load %tint_array_length_0
+    %15:u32 = load %tint_array_length_0
+    %16:u32 = call %bar, %buffer, %buffer, %buffer, %13, %14, %15
+    ret %16
   }
 }
 )";
@@ -905,7 +881,7 @@ MyStruct = struct @align(4) {
 
 $B1: {  # root
   %buffer:ptr<storage, MyStruct, read_write> = var undef @binding_point(0, 0)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 1>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
 }
 
 %bar = func(%param:ptr<storage, array<i32>, read_write>, %tint_array_length:u32):u32 {
@@ -919,12 +895,9 @@ $B1: {  # root
   $B3: {
     %9:ptr<storage, array<i32>, read_write> = access %buffer, 1u
     %let:ptr<storage, array<i32>, read_write> = let %9
-    %11:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %12:u32 = load_vector_element %11, 0u
-    %13:u32 = sub %12, 4u
-    %14:u32 = div %13, 4u
-    %15:u32 = call %bar, %let, %14
-    ret %15
+    %11:u32 = load %tint_array_length_0
+    %12:u32 = call %bar, %let, %11
+    ret %12
   }
 }
 )";
@@ -967,15 +940,13 @@ $B1: {  # root
     auto* expect = R"(
 $B1: {  # root
   %buffer:ptr<storage, array<vec3<i32>>, read_write> = var undef @binding_point(0, 0)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 1>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
 }
 
 %foo = func():u32 {
   $B2: {
-    %4:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %5:u32 = load_vector_element %4, 0u
-    %6:u32 = div %5, 16u
-    ret %6
+    %4:u32 = load %tint_array_length_0
+    ret %4
   }
 }
 )";
@@ -1046,26 +1017,20 @@ $B1: {  # root
   %buffer_c:ptr<storage, array<i32>, read_write> = var undef @binding_point(1, 0)
   %buffer_d:ptr<storage, array<i32>, read_write> = var undef @binding_point(1, 1)
   %buffer_e:ptr<storage, array<i32>, read_write> = var undef @binding_point(2, 3)
-  %tint_storage_buffer_sizes:ptr<uniform, array<vec4<u32>, 2>, read> = var undef @binding_point(1, 2)
+  %tint_array_length_0:ptr<private, u32, read_write> = var undef
+  %tint_array_length_1:ptr<private, u32, read_write> = var undef
+  %tint_array_length_0_1:ptr<private, u32, read_write> = var undef  # %tint_array_length_0_1: 'tint_array_length_0'
+  %tint_array_length_1_1:ptr<private, u32, read_write> = var undef  # %tint_array_length_1_1: 'tint_array_length_1'
+  %tint_array_length_3:ptr<private, u32, read_write> = var undef
 }
 
 %foo = func():void {
   $B2: {
-    %8:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %9:u32 = load_vector_element %8, 0u
-    %10:u32 = div %9, 4u
-    %11:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 1u
-    %12:u32 = load_vector_element %11, 1u
-    %13:u32 = div %12, 4u
-    %14:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %15:u32 = load_vector_element %14, 3u
-    %16:u32 = div %15, 4u
-    %17:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 0u
-    %18:u32 = load_vector_element %17, 2u
-    %19:u32 = div %18, 4u
-    %20:ptr<uniform, vec4<u32>, read> = access %tint_storage_buffer_sizes, 1u
-    %21:u32 = load_vector_element %20, 0u
-    %22:u32 = div %21, 4u
+    %12:u32 = load %tint_array_length_0
+    %13:u32 = load %tint_array_length_1
+    %14:u32 = load %tint_array_length_0_1
+    %15:u32 = load %tint_array_length_1_1
+    %16:u32 = load %tint_array_length_3
     ret
   }
 }
