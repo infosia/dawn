@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "17520fdd_be9c20d2",
+        "filename": "src/tint/lang/core/ir/transform/binding_remapper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-27T14:07:05Z",
+      "side": 1,
+      "message": "Yeah, that was a bit gibberish... I think I rewrote it, but didn\u0027t remove part of the of the original text, Fixed.",
+      "parentUuid": "9beb2a7f_5523c5a2",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 47,
+        "endChar": 23
+      },
+      "revId": "eb0ba1247b532209da3d3efb11be7adac0793c38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "13032d10_6c93e549",
@@ -59,6 +83,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57de536e_06c62961",
+        "filename": "src/tint/lang/core/ir/transform/binding_remapper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-27T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13032d10_6c93e549",
+      "revId": "eb0ba1247b532209da3d3efb11be7adac0793c38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68477716_6f4a1905",
@@ -90,6 +132,24 @@
           ]
         }
       ],
+      "revId": "eb0ba1247b532209da3d3efb11be7adac0793c38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abb45b98_b5a55dbb",
+        "filename": "src/tint/lang/core/ir/transform/vertex_pulling.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-27T14:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68477716_6f4a1905",
       "revId": "eb0ba1247b532209da3d3efb11be7adac0793c38",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
