@@ -69,6 +69,24 @@
       "parentUuid": "d240e64b_de3cf381",
       "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e74a2aa_a53a42ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-05-27T08:53:03Z",
+      "side": 1,
+      "message": "I see in the IR validator we have already had the check on the declaration of workgroup size:\n\n\"compute entry point requires @workgroup_size\"\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/core/ir/validator.cc;l\u003d2301",
+      "parentUuid": "824e85c8_c43dfa3b",
+      "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
