@@ -83,12 +83,16 @@ class ResourceMemoryAllocator {
 
     int FindBestTypeIndex(VkMemoryRequirements requirements, MemoryKind kind);
 
+    // Reports the total vulkan allocated and vulkan used memories.
     uint64_t GetTotalUsedMemory() const;
     uint64_t GetTotalAllocatedMemory() const;
+    // Reports the total lazy allocated and used vulkan memory.
+    uint64_t GetTotalLazyAllocatedMemory() const;
+    uint64_t GetTotalLazyUsedMemory() const;
 
   protected:
-    void RecordHeapAllocation(VkDeviceSize size);
-    void DeallocateResourceHeap(ResourceHeap* heap);
+    void RecordHeapAllocation(VkDeviceSize size, bool isLazyMemoryType);
+    void DeallocateResourceHeap(ResourceHeap* heap, bool isLazyMemoryType);
 
   private:
     raw_ptr<Device> mDevice;
@@ -96,13 +100,18 @@ class ResourceMemoryAllocator {
 
     class SingleTypeAllocator;
     std::vector<std::unique_ptr<SingleTypeAllocator>> mAllocatorsPerType;
+    uint64_t mMemoryTypeWithLazilyAllocatedBit = 0u;
 
     SerialQueue<ExecutionSerial, ResourceMemoryAllocation> mSubAllocationsToDelete;
     std::map<ExecutionSerial, VkDeviceSize> mUsedMemoryToDecrement;
     std::map<ExecutionSerial, VkDeviceSize> mAllocatedMemoryToDecrement;
+    std::map<ExecutionSerial, VkDeviceSize> mUsedLazyMemoryToDecrement;
+    std::map<ExecutionSerial, VkDeviceSize> mAllocatedLazyMemoryToDecrement;
 
     VkDeviceSize mTotalAllocatedMemory = 0;
     VkDeviceSize mTotalUsedMemory = 0;
+    VkDeviceSize mTotalLazyAllocatedMemory = 0;
+    VkDeviceSize mTotalLazyUsedMemory = 0;
 };
 
 }  // namespace dawn::native::vulkan
