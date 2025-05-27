@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ec5fd9c6_6f544043",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-27T15:30:41Z",
+      "side": 1,
+      "message": "```suggestion\nArray sizes in workgroup address space can be specified at pipeline\n```",
+      "revId": "9c294daf5e238b51de5c169e6b58fa1966988a52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "20c37147_bfb1469b",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 6
