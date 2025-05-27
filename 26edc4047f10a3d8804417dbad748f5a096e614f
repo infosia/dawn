@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4b78dc2c_550ebba9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-05-27T08:54:27Z",
+      "side": 1,
+      "message": "Oh I cannot fix the errors on the bots as they are using too old Xcode and I have to abandon the change.",
+      "parentUuid": "fa7d0d54_4503d7b6",
+      "revId": "26edc4047f10a3d8804417dbad748f5a096e614f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5a656b8d_e7bd2405",
         "filename": "src/dawn/native/CommandAllocator.cpp",
         "patchSetId": 1
