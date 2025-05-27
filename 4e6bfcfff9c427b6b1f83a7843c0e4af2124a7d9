@@ -16,6 +16,46 @@
       "message": "Addressed feedback, PTAL.",
       "revId": "4e6bfcfff9c427b6b1f83a7843c0e4af2124a7d9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "746a04b6_0f17b3f3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-05-27T21:20:43Z",
+      "side": 1,
+      "message": "One suggestion but I didn\u0027t have time to fully reivew.",
+      "revId": "4e6bfcfff9c427b6b1f83a7843c0e4af2124a7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81f0ea01_423f65e2",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-05-27T21:20:43Z",
+      "side": 1,
+      "message": "Rather than having 4x map and 4x size we could combine map+size into a wrapper class with Increment(size), Decrement(size, serial) and Tick(serial). That would remove a bunch of duplicated code.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 42
+      },
+      "revId": "4e6bfcfff9c427b6b1f83a7843c0e4af2124a7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
