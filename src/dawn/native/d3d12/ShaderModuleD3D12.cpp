@@ -134,7 +134,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     const bool useTintIR = device->IsToggleEnabled(Toggle::UseTintIR);
 
     d3d::D3DCompilationRequest req = {};
-    req.tracePlatform = UnsafeUnkeyedValue(device->GetPlatform());
+    req.tracePlatform = device->GetPlatform();
     req.hlsl.shaderModel = ToBackend(device->GetPhysicalDevice())
                                ->GetAppliedShaderModelUnderToggles(device->GetTogglesState());
     req.hlsl.disableSymbolRenaming = device->IsToggleEnabled(Toggle::DisableSymbolRenaming);
