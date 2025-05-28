@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "49eacaa9_d78559c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-05-28T19:24:54Z",
+      "side": 1,
+      "message": "There seem to be some issues with latest patchset and not calculate the lazy used/allocated memory properly. Marking as WIP to fix it first.",
+      "revId": "4e6bfcfff9c427b6b1f83a7843c0e4af2124a7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5837236d_0c562670",
