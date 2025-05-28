@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "980cbf7d_46b74287",
+        "filename": "src/dawn/tests/end2end/DeviceLostTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T21:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45d14070_2ac1d0b5",
+      "range": {
+        "startLine": 477,
+        "startChar": 70,
+        "endLine": 477,
+        "endChar": 71
+      },
+      "revId": "32a67464fe566341bbb71acf43b05b9cd975c668",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "39d16f14_4d910bdf",
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f205b43a_f5599690",
+        "filename": "src/dawn/tests/end2end/QueueTimelineTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T21:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39d16f14_4d910bdf",
+      "range": {
+        "startLine": 66,
+        "startChar": 68,
+        "endLine": 67,
+        "endChar": 79
+      },
+      "revId": "32a67464fe566341bbb71acf43b05b9cd975c668",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "525eb1b2_3fc80a22",
@@ -77,6 +125,30 @@
       "writtenOn": "2025-05-28T19:53:02Z",
       "side": 1,
       "message": "nit. For errors, we should probably invoke with an error message and check that the results are equal. Ditto below for errors.",
+      "range": {
+        "startLine": 80,
+        "startChar": 67,
+        "endLine": 80,
+        "endChar": 89
+      },
+      "revId": "32a67464fe566341bbb71acf43b05b9cd975c668",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0603cea_d7534612",
+        "filename": "src/dawn/tests/unittests/wire/WireQueueTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T21:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "525eb1b2_3fc80a22",
       "range": {
         "startLine": 80,
         "startChar": 67,
