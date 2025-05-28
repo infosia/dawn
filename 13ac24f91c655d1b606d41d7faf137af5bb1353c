@@ -386,6 +386,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c72e22f0_dc461eeb",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T11:41:40Z",
+      "side": 1,
+      "message": "Ahh that makes sense. Ok it would be nice to have one less branch in BindGroup creation code, but it\u0027s not clear that we can fix it easily so we\u0027ll see later if that becomes visible in profiles.",
+      "parentUuid": "0d70e418_8975524f",
+      "revId": "13ac24f91c655d1b606d41d7faf137af5bb1353c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "743ca8fb_19956b08",
