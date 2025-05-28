@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd146ece_be212e0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-28T07:49:11Z",
+      "side": 1,
+      "message": "Thanks for reviewing! Refactoring in progress and get split into multiple CLs for convenience of reviewing.",
+      "revId": "e261812ecc7962735b8e08da0d149f1de2491dc7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

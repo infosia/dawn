@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e9236f9_5842f4ef",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 2136,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-28T07:49:11Z",
+      "side": 1,
+      "message": "Done in https://dawn-review.googlesource.com/c/dawn/+/244115",
+      "parentUuid": "9e166daa_c33e9e63",
+      "range": {
+        "startLine": 2129,
+        "startChar": 1,
+        "endLine": 2136,
+        "endChar": 12
+      },
+      "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "007fb8d1_1defaf1c",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-05-26T15:13:16Z",
       "side": 1,
       "message": "I am very concerned about the bespoke logic doing cache handling. Could we use `DAWN_TRY_LOAD_OR_RUN` here instead of duplicating the logic here? It also handles the various metrics etc.\n\nIf the problem is that the compilation messages are not cached, then let\u0027s cache them.\n\nIf the problem is that we want to exfiltrate the tint::Program, then let\u0027s make it unsafe::Uncached and add handling of the deserialization of such values.",
+      "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ff4c715_45ca3d4b",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-28T07:49:11Z",
+      "side": 1,
+      "message": "Work in progress.",
+      "parentUuid": "007fb8d1_1defaf1c",
       "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -89,6 +131,24 @@
       "side": 1,
       "message": "I would love to make `CompilationMessages` combined into `ShaderModuleParseResult` and cacheable, but I think that might lead to significantly more refactor. I will have a try.",
       "parentUuid": "85c63dc1_9b5d5f91",
+      "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cdac694_2dfe8995",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-28T07:49:11Z",
+      "side": 1,
+      "message": "Done in https://dawn-review.googlesource.com/c/dawn/+/244115.",
+      "parentUuid": "61af7a31_6b3924ea",
       "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
