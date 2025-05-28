@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f3d77d3_c2072250",
+        "filename": "src/emdawnwebgpu/pkg/emdawnwebgpu.port.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-28T18:10:12Z",
+      "side": 1,
+      "message": "Just noticed this, should we do c++20? Given that the rest of Dawn is expected to be on c++20?",
+      "range": {
+        "startLine": 207,
+        "startChar": 25,
+        "endLine": 207,
+        "endChar": 35
+      },
+      "revId": "e521227c743a9c9c7bba0bb9334858562ba9d18a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
