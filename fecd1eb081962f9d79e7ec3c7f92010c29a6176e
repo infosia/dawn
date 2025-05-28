@@ -22,6 +22,30 @@
       },
       "revId": "fecd1eb081962f9d79e7ec3c7f92010c29a6176e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54dd858d_211ec1db",
+        "filename": "src/dawn/native/d3d11/CommandRecordingContextD3D11.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-28T02:27:31Z",
+      "side": 1,
+      "message": "Right. We don\u0027t need this anymore.",
+      "parentUuid": "f4e9e4b4_01fd019b",
+      "range": {
+        "startLine": 137,
+        "startChar": 36,
+        "endLine": 137,
+        "endChar": 54
+      },
+      "revId": "fecd1eb081962f9d79e7ec3c7f92010c29a6176e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
