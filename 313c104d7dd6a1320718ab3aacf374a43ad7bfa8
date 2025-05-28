@@ -105,6 +105,24 @@
       "parentUuid": "5e74a2aa_a53a42ab",
       "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b879f92a_2165c6ca",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-05-28T05:53:12Z",
+      "side": 1,
+      "message": "Got it.\n\nI\u0027ve updated this CL to check if a builtin parameter is used on a non-entry-point function. PTAL, thanks!",
+      "parentUuid": "cce31ab2_dda5c5bd",
+      "revId": "313c104d7dd6a1320718ab3aacf374a43ad7bfa8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
