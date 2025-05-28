@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4ae9e75_9eda0f64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-28T07:56:17Z",
+      "side": 1,
+      "message": "Please take a look, thanks! This CL is step 1/4 of enabling shader module front-end blob cache.",
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
