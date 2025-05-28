@@ -27,6 +27,8 @@
 
 #include "dawn/native/CompilationMessages.h"
 
+#include <utility>
+
 #include "dawn/common/Assert.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/dawn_platform.h"
@@ -83,18 +85,12 @@ ResultOrError<uint64_t> CountUTF16CodeUnitsFromUTF8String(const std::string_view
     return numberOfUTF16CodeUnits;
 }
 
-OwnedCompilationMessages::OwnedCompilationMessages() = default;
-
-OwnedCompilationMessages::~OwnedCompilationMessages() = default;
-
 void OwnedCompilationMessages::AddUnanchoredMessage(std::string_view message,
                                                     wgpu::CompilationMessageType type) {
-    CompilationMessage m = {};
+    CompilationMessageContent m = {};
     m.message = message;
     m.type = type;
-    AddMessage(m);
-
-    mUtf16.push_back({});
+    AddMessage(std::move(m));
 }
 
 void OwnedCompilationMessages::AddMessageForTesting(std::string_view message,
@@ -103,20 +99,18 @@ void OwnedCompilationMessages::AddMessageForTesting(std::string_view message,
                                                     uint64_t linePos,
                                                     uint64_t offset,
                                                     uint64_t length) {
-    CompilationMessage m = {};
-    m.message = message;
-    m.type = type;
-    m.lineNum = lineNum;
-    m.linePos = linePos;
-    m.offset = offset;
-    m.length = length;
-    AddMessage(m);
-
-    DawnCompilationMessageUtf16 utf16 = {};
-    utf16.linePos = linePos;
-    utf16.offset = offset;
-    utf16.length = length;
-    mUtf16.push_back(utf16);
+    AddMessage({{
+        .message = std::string(message),
+        .type = type,
+        .lineNum = lineNum,
+        .linePosInBytes = linePos,
+        .offsetInBytes = offset,
+        .lengthInBytes = length,
+        // Incorrect for non-ACSII strings
+        .linePosInUTF16 = linePos,
+        .offsetInUTF16 = offset,
+        .lengthInUTF16 = length,
+    }});
 }
 
 MaybeError OwnedCompilationMessages::AddMessage(const tint::diag::Diagnostic& diagnostic) {
@@ -175,42 +169,34 @@ MaybeError OwnedCompilationMessages::AddMessage(const tint::diag::Diagnostic& di
 
     std::string plainMessage = diagnostic.message.Plain();
 
-    CompilationMessage m = {};
-    m.message = std::string_view(plainMessage);
-    m.type = TintSeverityToMessageType(diagnostic.severity);
-    m.lineNum = lineNum;
-    m.linePos = linePosInBytes;
-    m.offset = offsetInBytes;
-    m.length = lengthInBytes;
-    AddMessage(m);
-
-    DawnCompilationMessageUtf16 utf16 = {};
-    utf16.linePos = linePosInUTF16;
-    utf16.offset = offsetInUTF16;
-    utf16.length = lengthInUTF16;
-    mUtf16.push_back(utf16);
+    AddMessage({{
+        .message = plainMessage,
+        .type = TintSeverityToMessageType(diagnostic.severity),
+        .lineNum = lineNum,
+        .linePosInBytes = linePosInBytes,
+        .offsetInBytes = offsetInBytes,
+        .lengthInBytes = lengthInBytes,
+        .linePosInUTF16 = linePosInUTF16,
+        .offsetInUTF16 = offsetInUTF16,
+        .lengthInUTF16 = lengthInUTF16,
+    }});
 
     return {};
 }
 
-void OwnedCompilationMessages::AddMessage(const CompilationMessage& message) {
+void OwnedCompilationMessages::AddMessage(CompilationMessageContent&& message) {
     // Cannot add messages after GetCompilationInfo has been called.
-    DAWN_ASSERT(!mCompilationInfo->has_value());
-
-    DAWN_ASSERT(message.nextInChain == nullptr);
-
-    mMessages.push_back(message);
-
-    // Own the contents of the message as it might be freed afterwards.
-    // Note that we use make_unique here as moving strings doesn't guarantee that the data pointer
-    // stays the same, for example if there's some small string optimization.
-    mMessageStrings.push_back(std::make_unique<std::string>(message.message));
-    mMessages.back().message = ToOutputStringView(*mMessageStrings.back());
+    DAWN_ASSERT(!mCompilationInfoCombo->HasValue());
+    if (message.type == wgpu::CompilationMessageType::Error ||
+        message.type == wgpu::CompilationMessageType::Warning) {
+        mHasWarningsOrErrors = true;
+    }
+    mMessageContents.push_back(message);
 }
 
 MaybeError OwnedCompilationMessages::AddMessages(const tint::diag::List& diagnostics) {
     // Cannot add messages after GetCompilationInfo has been called.
-    DAWN_ASSERT(!mCompilationInfo->has_value());
+    DAWN_ASSERT(!mCompilationInfoCombo->HasValue());
 
     for (const auto& diag : diagnostics) {
         DAWN_TRY(AddMessage(diag));
@@ -223,29 +209,46 @@ MaybeError OwnedCompilationMessages::AddMessages(const tint::diag::List& diagnos
 
 void OwnedCompilationMessages::ClearMessages() {
     // Cannot clear messages after GetCompilationInfo has been called.
-    DAWN_ASSERT(!mCompilationInfo->has_value());
-
-    mMessageStrings.clear();
-    mMessages.clear();
-    mUtf16.clear();
+    DAWN_ASSERT(!mCompilationInfoCombo->HasValue());
+    mMessageContents.clear();
 }
 
 const CompilationInfo* OwnedCompilationMessages::GetCompilationInfo() {
-    return mCompilationInfo.Use([&](auto info) {
-        if (info->has_value()) {
-            return &info->value();
+    return mCompilationInfoCombo.Use([&](auto optionalCombo) -> CompilationInfo* {
+        // If compilation info combo has been generated, return the cached compilationInfo.
+        if (optionalCombo->HasValue()) {
+            return &optionalCombo->Value().compilationInfo;
         }
 
-        // Append the UTF16 extension now.
-        DAWN_ASSERT(mMessages.size() == mUtf16.size());
-        for (size_t i = 0; i < mMessages.size(); i++) {
-            mMessages[i].nextInChain = &mUtf16[i];
+        // Otherwise, create the required CompilationInfo and pointed CompilationMessage and
+        // DawnCompilationMessageUtf16 objects.
+        (*optionalCombo).Emplace();
+        CompilationInfoCombo& combo = optionalCombo->Value();
+        combo.messages.reserve(mMessageContents.size());
+        for (auto& m : mMessageContents) {
+            DawnCompilationMessageUtf16 utf16{};
+            utf16.linePos = m.linePosInUTF16;
+            utf16.offset = m.offsetInUTF16;
+            utf16.length = m.lengthInUTF16;
+            combo.utf16.push_back(std::move(utf16));
+
+            CompilationMessage message{};
+            message.message = ToOutputStringView(m.message);
+            message.type = m.type;
+            message.lineNum = m.lineNum;
+            message.linePos = m.linePosInBytes;
+            message.offset = m.offsetInBytes;
+            message.length = m.lengthInBytes;
+            // Points to the back of utf16 list, should work as expected since pointers to elements
+            // of std::list won't get invalid when changing the list.
+            message.nextInChain = &combo.utf16.back();
+            combo.messages.push_back(std::move(message));
         }
 
-        (*info).emplace();
-        (*info)->messageCount = mMessages.size();
-        (*info)->messages = mMessages.data();
-        return &info->value();
+        combo.compilationInfo.messageCount = combo.messages.size();
+        combo.compilationInfo.messages = combo.messages.data();
+
+        return &optionalCombo->Value().compilationInfo;
     });
 }
 
@@ -254,13 +257,7 @@ const std::vector<std::string>& OwnedCompilationMessages::GetFormattedTintMessag
 }
 
 bool OwnedCompilationMessages::HasWarningsOrErrors() const {
-    for (const auto& message : mMessages) {
-        if (message.type == wgpu::CompilationMessageType::Error ||
-            message.type == wgpu::CompilationMessageType::Warning) {
-            return true;
-        }
-    }
-    return false;
+    return mHasWarningsOrErrors;
 }
 
 void OwnedCompilationMessages::AddFormattedTintMessages(const tint::diag::List& diagnostics) {
@@ -305,6 +302,13 @@ void OwnedCompilationMessages::AddFormattedTintMessages(const tint::diag::List& 
     t << "generated while compiling the shader:\n"
       << tint::diag::Formatter{style}.Format(messageList).Plain();
     mFormattedTintMessages.push_back(t.str());
+}
+
+bool operator==(
+    const MutexProtected<UnsafeUnserializedOptional<detail::CompilationInfoCombo>>& lhs,
+    const MutexProtected<UnsafeUnserializedOptional<detail::CompilationInfoCombo>>& rhs) {
+    DAWN_UNREACHABLE();
+    return true;
 }
 
 }  // namespace dawn::native

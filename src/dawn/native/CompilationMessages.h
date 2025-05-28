@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_COMPILATIONMESSAGES_H_
 #define SRC_DAWN_NATIVE_COMPILATIONMESSAGES_H_
 
+#include <list>
 #include <memory>
 #include <string>
 #include <vector>
@@ -35,6 +36,7 @@
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/NonCopyable.h"
 #include "dawn/native/Error.h"
+#include "dawn/native/Serializable.h"
 #include "dawn/native/dawn_platform.h"
 
 namespace tint::diag {
@@ -46,24 +48,63 @@ namespace dawn::native {
 
 ResultOrError<uint64_t> CountUTF16CodeUnitsFromUTF8String(const std::string_view& utf8String);
 
-class OwnedCompilationMessages : public NonCopyable {
-  public:
-    OwnedCompilationMessages();
-    ~OwnedCompilationMessages();
+namespace detail {
+// Hold the content of each compilation message
+#define COMPILATION_MESSAGE_CONTENT_MEMBER(X) \
+    X(std::string, message)                   \
+    X(wgpu::CompilationMessageType, type)     \
+    X(uint64_t, lineNum)                      \
+    X(uint64_t, linePosInBytes)               \
+    X(uint64_t, offsetInBytes)                \
+    X(uint64_t, lengthInBytes)                \
+    X(uint64_t, linePosInUTF16)               \
+    X(uint64_t, offsetInUTF16)                \
+    X(uint64_t, lengthInUTF16)
+DAWN_SERIALIZABLE(struct, CompilationMessageContent, COMPILATION_MESSAGE_CONTENT_MEMBER){};
+#undef COMPILATION_MESSAGE_CONTENT_MEMBER
 
+// The non-copyable and unserializable part of OwnedCompilationMessages which contains raw pointers
+// to data in OwnedCompilationMessages. Should be MutexProtected.
+struct CompilationInfoCombo : public NonCopyable {
+    // Own the DawnCompilationMessageUtf16 that pointed to by mMessages, need to be stable.
+    std::list<DawnCompilationMessageUtf16> utf16;
+    // Each CompilationMessage points to a message string and also hold position info and chained
+    // pointer to DawnCompilationMessageUtf16, needs to be continuous.
+    std::vector<CompilationMessage> messages;
+    // Hold CompilationInfo that points to all CompilationMessage, i.e. mMessages.
+    CompilationInfo compilationInfo;
+};
+}  // namespace detail
+
+// Make a trivial equality comparison for
+// MutexProtected<UnsafeUnserializedOptional<detail::CompilationInfoCombo>> that always return
+// true. This comparison is required to generate default equality comparison of
+// OwnedCompilationMessages and is not intended to be actually used.
+bool operator==(
+    const MutexProtected<UnsafeUnserializedOptional<detail::CompilationInfoCombo>>& lhs,
+    const MutexProtected<UnsafeUnserializedOptional<detail::CompilationInfoCombo>>& rhs);
+
+#define OWNED_COMPILATION_MESSAGES_MEMBER(X)                                                  \
+    X(bool, mHasWarningsOrErrors)                                                             \
+    /* mMessageContents own the message string and other information of each message. */      \
+    X(std::list<detail::CompilationMessageContent>, mMessageContents)                         \
+    /* mCompilationInfoCombo holds the CompilationInfo and its pointing CompilationMessage */ \
+    /* and DawnCompilationMessageUtf16 objects, lazily created right before using.         */ \
+    X(MutexProtected<UnsafeUnserializedOptional<detail::CompilationInfoCombo>>,               \
+      mCompilationInfoCombo)                                                                  \
+    /* Used by GetFormattedTintMessages */                                                    \
+    X(std::vector<std::string>, mFormattedTintMessages)
+DAWN_SERIALIZABLE(class, OwnedCompilationMessages, OWNED_COMPILATION_MESSAGES_MEMBER) {
+  public:
     // Adds a message on line 0 (before the first line).
-    void AddUnanchoredMessage(
-        std::string_view message,
-        wgpu::CompilationMessageType type = wgpu::CompilationMessageType::Info);
+    void AddUnanchoredMessage(std::string_view message, wgpu::CompilationMessageType type =
+                                                            wgpu::CompilationMessageType::Info);
     // For testing only. Uses the linePos/offset/length for both utf8 and utf16
     // (which is incorrect for non-ASCII strings).
     void AddMessageForTesting(
         std::string_view message,
         wgpu::CompilationMessageType type = wgpu::CompilationMessageType::Info,
-        uint64_t lineNum = 0,
-        uint64_t linePos = 0,
-        uint64_t offset = 0,
-        uint64_t length = 0);
+        uint64_t lineNum = 0, uint64_t linePos = 0, uint64_t offset = 0, uint64_t length = 0);
     MaybeError AddMessages(const tint::diag::List& diagnostics);
     void ClearMessages();
 
@@ -71,17 +112,22 @@ class OwnedCompilationMessages : public NonCopyable {
     const std::vector<std::string>& GetFormattedTintMessages() const;
     bool HasWarningsOrErrors() const;
 
+    using CompilationMessageContent = detail::CompilationMessageContent;
+    using CompilationInfoCombo = detail::CompilationInfoCombo;
+
+    // Make StreamIn and StreamOut friends to allow calling VisitAll.
+    friend void StreamIn(stream::Sink*, const OwnedCompilationMessages&);
+    friend MaybeError StreamOut(stream::Source*, OwnedCompilationMessages*);
+
+  protected:
+    using OwnedCompilationMessages__Contents::VisitAll;
+
   private:
     MaybeError AddMessage(const tint::diag::Diagnostic& diagnostic);
-    void AddMessage(const CompilationMessage& message);
+    void AddMessage(CompilationMessageContent && message);
     void AddFormattedTintMessages(const tint::diag::List& diagnostics);
-
-    MutexProtected<std::optional<CompilationInfo>> mCompilationInfo = std::nullopt;
-    std::vector<std::unique_ptr<std::string>> mMessageStrings;
-    std::vector<CompilationMessage> mMessages;
-    std::vector<DawnCompilationMessageUtf16> mUtf16;
-    std::vector<std::string> mFormattedTintMessages;
 };
+#undef OWNED_COMPILATION_MESSAGES_MEMBER
 
 }  // namespace dawn::native
 
