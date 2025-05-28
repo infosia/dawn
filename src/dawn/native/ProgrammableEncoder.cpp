@@ -120,6 +120,7 @@ void ProgrammableEncoder::APISetImmediateData(uint32_t offset, const void* data,
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
             if (IsValidationEnabled()) {
+                const bool useTintIR = GetDevice()->IsToggleEnabled(Toggle::UseTintIR);
                 uint32_t maxImmediateSize = GetDevice()->GetLimits().v1.maxImmediateSize;
                 DAWN_INVALID_IF(maxImmediateSize == 0,
                                 "immediates are not enabled (the device's maxImmediateSize is 0; "
@@ -136,6 +137,9 @@ void ProgrammableEncoder::APISetImmediateData(uint32_t offset, const void* data,
                 DAWN_INVALID_IF(size > maxImmediateSize - offset,
                                 "offset (%u) + size (%u): is larger than maxImmediateSize (%u).",
                                 offset, size, maxImmediateSize);
+
+                // TODO(crbug.com/366291600): Remove this validation rules after tint ir used.
+                DAWN_INVALID_IF(!useTintIR, "SetImmediateData should not be used without tint ir.");
             }
 
             // Skip SetImmediateData when uploading constants are empty.
