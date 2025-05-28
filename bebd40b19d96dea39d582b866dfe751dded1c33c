@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "206fbc3b_c313c3d7",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-28T19:53:02Z",
+      "side": 0,
+      "message": "Huh... where is this diff coming from? I don\u0027t see any changes to dawn.json that I\u0027d expect to see this?",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 1
+      },
+      "revId": "bebd40b19d96dea39d582b866dfe751dded1c33c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
