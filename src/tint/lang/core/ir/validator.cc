@@ -2192,6 +2192,9 @@ void Validator::CheckFunction(const Function* func) {
                 AddError(param)
                     << "input param to non-entry point function has a binding point set";
             }
+            if (param->Builtin().has_value()) {
+                AddError(param) << "builtins can only be decorated on entry point params";
+            }
         }
 
         if (!capabilities_.Contains(Capability::kAllowWorkspacePointerInputToEntryPoint) &&
