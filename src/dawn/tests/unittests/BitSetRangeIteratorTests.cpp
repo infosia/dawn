@@ -38,7 +38,7 @@ namespace {
 class BitSetRangeIteratorTest : public testing::Test {
   protected:
     template <size_t N>
-    void RunSingleBitRangesTests() {
+    void RunSingleBitTests() {
         std::bitset<N> stateBits;
         uint32_t bitSize = stateBits.size();
 
@@ -139,20 +139,20 @@ class BitSetRangeIteratorTest : public testing::Test {
 };
 
 // Test basic range iteration with single bits (each range has size 1)
-TEST_F(BitSetRangeIteratorTest, SingleBitRanges) {
+TEST_F(BitSetRangeIteratorTest, SingleBit) {
     // Smaller than 1 word
     {
-        RunSingleBitRangesTests<kBitsPerWord - 1>();
+        RunSingleBitTests<kBitsPerWord - 1>();
     }
 
     // Equal to 1 word
     {
-        RunSingleBitRangesTests<kBitsPerWord>();
+        RunSingleBitTests<kBitsPerWord>();
     }
 
     // Larger than 1 word
     {
-        RunSingleBitRangesTests<kBitsPerWord * 2 - 1>();
+        RunSingleBitTests<kBitsPerWord * 2 - 1>();
     }
 }
 
@@ -215,6 +215,31 @@ TEST_F(BitSetRangeIteratorTest, CrossWordBoundaryRanges) {
     EXPECT_EQ(1u, foundRanges.size());
     EXPECT_EQ(kBitsPerWord - 2, foundRanges[0].first);
     EXPECT_EQ(4u, foundRanges[0].second);
+}
+
+// Test ranges that start from first bit.
+TEST_F(BitSetRangeIteratorTest, BitRangeStartingFromFirstBit) {
+    std::bitset<kBitsPerWord> stateBits;
+
+    std::vector<std::pair<uint32_t, size_t>> expectedRanges;
+    expectedRanges.push_back({0, 2});
+
+    for (const auto& range : expectedRanges) {
+        for (uint32_t i = 0; i < range.second; ++i) {
+            stateBits.set(range.first + i);
+        }
+    }
+
+    std::vector<std::pair<uint32_t, size_t>> foundRanges;
+    for (auto range : IterateBitSetRanges(stateBits)) {
+        foundRanges.push_back(range);
+    }
+
+    EXPECT_EQ(expectedRanges.size(), foundRanges.size());
+    for (size_t i = 0; i < expectedRanges.size(); ++i) {
+        EXPECT_EQ(expectedRanges[i].first, foundRanges[i].first);
+        EXPECT_EQ(expectedRanges[i].second, foundRanges[i].second);
+    }
 }
 
 }  // anonymous namespace

@@ -152,8 +152,12 @@ void BitSetRangeIterator<N, T>::Iterator::Advance() {
 
     mSize = rangeCount;
     mBits = ~mBits;
-    mBits <<= mOffset;
-    mBits >>= mOffset;
+
+    // The last ScanForwardAndShiftBits() call calculated the rangeCount and shift the whole bits
+    // right. It introduced rangeCount tail "1"s after flip operation. And these tail "1"s construct
+    // an extra fake bit set range. Using left shift and right shift to remove these tail "1"s.
+    mBits <<= rangeCount;
+    mBits >>= rangeCount;
 }
 
 // Helper to avoid needing to specify the template parameter size
