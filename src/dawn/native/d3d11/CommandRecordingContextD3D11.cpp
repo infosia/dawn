@@ -139,7 +139,6 @@ void ScopedCommandRecordingContext::WriteUniformBufferRange(uint32_t offset,
                                                             size_t size) const {
     DAWN_ASSERT(offset < kMaxImmediateConstantsPerPipeline);
     DAWN_ASSERT(size <= sizeof(uint32_t) * (kMaxImmediateConstantsPerPipeline - offset));
-    std::memcpy(&Get()->mUniformBufferData[offset], data, size);
     Get()->mUniformBufferDirty = true;
 }
 
@@ -215,6 +214,8 @@ MaybeError ScopedSwapStateCommandRecordingContext::SetInternalUniformBuffer(
     Get()->mD3D11DeviceContext3->VSSetConstantBuffers(PipelineLayout::kReservedConstantBufferSlot,
                                                       1, &bufferPtr);
     Get()->mD3D11DeviceContext3->CSSetConstantBuffers(PipelineLayout::kReservedConstantBufferSlot,
+                                                      1, &bufferPtr);
+    Get()->mD3D11DeviceContext3->PSSetConstantBuffers(PipelineLayout::kReservedConstantBufferSlot,
                                                       1, &bufferPtr);
 
     return {};
