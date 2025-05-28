@@ -66,6 +66,12 @@ namespace tint::spirv::reader {
 
 namespace {
 
+struct ReplacementValue {
+    core::ir::Terminator* terminator;
+    uint32_t idx;
+    uint32_t value_id;
+};
+
 /// The SPIR-V environment that we validate against.
 constexpr auto kTargetEnv = SPV_ENV_VULKAN_1_1;
 
@@ -786,24 +792,12 @@ class Parser {
 
     /// @param id a SPIR-V result ID
     /// @returns a Tint value object
-    core::ir::Value* Value(uint32_t id) {
+    core::ir::Value* ValueNoPropagate(uint32_t id) {
+        printf("GET VAL %d\n", id);
+
         auto v = values_.Get(id);
         if (v) {
-            if (!(*v)->Is<core::ir::InstructionResult>()) {
-                return *v;
-            }
-            if (IdIsInScope(id)) {
-                return *v;
-            }
-
-            // The Value is not in scope, so we need to find the originating Value, and then
-            // propagate it up through the control instructions. That will then change the
-            // `Value` which is returned so, set it into the values map as the new "Value" and
-            // return it.
-
-            auto* new_v = Propagate(id, *v);
-            values_.Replace(id, new_v);
-            return new_v;
+            return *v;
         }
 
         if (auto* c = spirv_context_->get_constant_mgr()->FindDeclaredConstant(id)) {
@@ -811,10 +805,32 @@ class Parser {
             values_.Add(id, val);
             return val;
         }
+
         TINT_UNREACHABLE() << "missing value for result ID " << id;
     }
 
-    /// @param constant a SPIR-V constant object
+    /// @param id a SPIR-V result ID
+    /// @returns a Tint value object
+    core::ir::Value* Value(uint32_t id) {
+        auto v = ValueNoPropagate(id);
+        TINT_ASSERT(v);
+
+        if (v->Is<core::ir::Constant>() || IdIsInScope(id)) {
+            return v;
+        }
+
+        // The Value is not in scope, so we need to find the originating Value, and then
+        // propagate it up through the control instructions. That will then change the
+        // `Value` which is returned so, set it into the values map as the new "Value" and
+        // return it.
+
+        auto* new_v = Propagate(id, v);
+        values_.Replace(id, new_v);
+        return new_v;
+    }
+
+    /// @param constant a SPIR-V constant object, will propagate the value up
+    /// through blocks if it is not currently in scope
     /// @returns a Tint constant value
     const core::constant::Value* Constant(const spvtools::opt::analysis::Constant* constant) {
         // Handle OpConstantNull for all types.
@@ -1020,7 +1036,7 @@ class Parser {
 
     // A block parent is a container for a scope, like a `{}`d section in code. It controls the
     // block addition to the current blocks and the ID stack entry for the block.
-    void EmitBlockParent(core::ir::Block* dst, const spvtools::opt::BasicBlock& src) {
+    void EmitBlockParent(core::ir::Block* dst, spvtools::opt::BasicBlock& src) {
         TINT_ASSERT(!InBlock(dst));
 
         id_stack_.emplace_back();
@@ -1035,8 +1051,13 @@ class Parser {
     /// Emit the contents of SPIR-V block @p src into Tint IR block @p dst.
     /// @param dst the Tint IR block to append to
     /// @param src the SPIR-V block to emit
-    void EmitBlock(core::ir::Block* dst, const spvtools::opt::BasicBlock& src) {
+    void EmitBlock(core::ir::Block* dst, spvtools::opt::BasicBlock& src) {
         TINT_SCOPED_ASSIGNMENT(current_block_, dst);
+
+        printf("EMIT %d\n", src.id());
+
+        values_to_replace_.push_back({});
+        spirv_id_to_block_.insert({src.id(), dst});
 
         auto* loop_merge_inst = src.GetLoopMergeInst();
         // This is a loop merge block, so we need to treat it as a Loop.
@@ -1461,6 +1482,9 @@ class Parser {
                 case spv::Op::OpImageWrite:
                     EmitImageWrite(inst);
                     break;
+                case spv::Op::OpPhi:
+                    EmitPhi(inst);
+                    break;
                 default:
                     TINT_UNIMPLEMENTED()
                         << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
@@ -1494,12 +1518,277 @@ class Parser {
                 loop->Continuing()->Append(b_.NextIteration(loop));
             }
 
+            // If this continue block needs to pass any `phi` instructions back to
+            // the main loop body.
+            //
+            // We have to do this here because we need to have emitted the loop
+            // body before we can get the values used in the continue block.
+            auto phis = continue_blk_phis_.find(continue_id);
+            if (phis != continue_blk_phis_.end()) {
+                for (auto value_id : phis->second) {
+                    printf("ADDING %d\n", value_id);
+                    auto* value = Value(value_id);
+
+                    tint::Switch(
+                        loop->Continuing()->Terminator(),
+                        [&](core::ir::NextIteration* ni) { ni->PushOperand(value); },
+                        [&](core::ir::BreakIf*) {
+                            // TODO(dsinclair): Need to add the value to the NextIterValues of the
+                            // break-if
+                            TINT_UNIMPLEMENTED();
+                        },
+                        TINT_ICE_ON_NO_MATCH);
+                }
+            }
+        }
+
+        // For any `OpPhi` values we say, insert their `Value` now. We do this
+        // at the end of the loop because a phi can refer to instructions
+        // defined after it in the block.
+        auto replace = values_to_replace_.back();
+        for (auto& val : replace) {
+            auto* value = ValueNoPropagate(val.value_id);
+            val.terminator->SetOperand(val.idx, value);
+        }
+        values_to_replace_.pop_back();
+
+        if (loop_merge_inst) {
+            auto* loop = StopWalkingAt(src.id())->As<core::ir::Loop>();
+            TINT_ASSERT(loop);
+
             current_blocks_.erase(loop->Body());
             id_stack_.pop_back();
 
+            // If we added phi's to the continuing block, we may have exits from
+            // the body which aren't valid. These all have to be unreachable as
+            // otherwise a phi would have been required. (This can happen when
+            // we insert the terminating `Continue` in a loop for example).
+            auto cnt = loop->Continuing()->Params().Length();
+            if (cnt > 0) {
+                printf("COUNT %zu\n", cnt);
+                std::vector<core::ir::Terminator*> to_remove;
+                for (auto incoming : loop->Continuing()->InboundSiblingBranches()) {
+                    if (incoming->Operands().Length() != cnt) {
+                        to_remove.push_back(incoming);
+                    }
+                }
+
+                for (auto* incoming : to_remove) {
+                    printf("UPDATE %s\n", incoming->TypeInfo().name);
+                    b_.InsertBefore(incoming, [&] { b_.Unreachable(); });
+                    incoming->Destroy();
+                }
+            }
+
+            // Emit the merge block
             auto merge_id = loop_merge_inst->GetSingleWordInOperand(0);
             const auto& merge_bb = current_spirv_function_->FindBlock(merge_id);
             EmitBlock(dst, *merge_bb);
+        }
+    }
+
+    struct IfBranchValue {
+        core::ir::Value* value;
+        core::ir::If* if_;
+    };
+
+    void EmitPhi(spvtools::opt::Instruction& inst) {
+        auto num_ops = inst.NumInOperands();
+
+        // If there are only 2 arguments, that means we came directly from a block, so just emit as
+        // a `let` with that blocks value.
+        if (num_ops == 2) {
+            Emit(b_.Let(Value(inst.GetSingleWordInOperand(0))), inst.result_id());
+            return;
+        }
+
+        std::unordered_map<core::ir::ControlInstruction*, const core::type::Type*>
+            ctrl_inst_result_types;
+        std::unordered_map<core::ir::MultiInBlock*, const core::type::Type*> blk_to_param_types;
+
+        std::optional<IfBranchValue> if_to_update_branch;
+
+        auto add_ctrl_inst = [&](core::ir::ControlInstruction* inst, const core::type::Type* type) {
+            auto iter = ctrl_inst_result_types.find(inst);
+            if (iter != ctrl_inst_result_types.end()) {
+                TINT_ASSERT(iter->second == type);
+                return;
+            }
+            ctrl_inst_result_types.insert({inst, type});
+        };
+        auto add_blk_inst = [&](core::ir::MultiInBlock* blk, const core::type::Type* type) {
+            auto iter = blk_to_param_types.find(blk);
+            if (iter != blk_to_param_types.end()) {
+                TINT_ASSERT(iter->second == type);
+                return;
+            }
+            blk_to_param_types.insert({blk, type});
+        };
+
+        auto* phi_spirv_block = spirv_context_->get_instr_block(&inst);
+
+        for (uint32_t i = 0; i < num_ops; i += 2) {
+            auto value_id = inst.GetSingleWordInOperand(i);
+            auto blk_id = inst.GetSingleWordInOperand(i + 1);
+
+            auto blk_iter = spirv_id_to_block_.find(blk_id);
+
+            auto* type = Type(inst.type_id());
+
+            printf("BLK %d\n", blk_id);
+
+            // The referenced block hasn't been emitted yet (continue blocks have this behaviour).
+            // So, store the fact that it needs to return a given value away for when we do emit the
+            // block.
+            if (blk_iter == spirv_id_to_block_.end()) {
+                auto* loop_merge_inst = phi_spirv_block->GetLoopMergeInst();
+                TINT_ASSERT(loop_merge_inst);
+
+                auto continue_id = loop_merge_inst->GetSingleWordInOperand(1);
+
+                // Note, we push it to the `continue_id` as the block and not
+                // `blk_id` so that we can emit them into the continuing block as
+                // a group.
+                continue_blk_phis_[continue_id].push_back(value_id);
+
+                // Add the phi to the current block set of input parameters
+                auto* mb = current_block_->As<core::ir::MultiInBlock>();
+                TINT_ASSERT(mb);
+                add_blk_inst(mb, type);
+
+                printf("ADD BLK %d\n", blk_id);
+
+                continue;
+            }
+
+            core::ir::Terminator* term = nullptr;
+            auto* ir_blk = blk_iter->second;
+            if (!ir_blk->Terminator()) {
+                tint::Switch(
+                    ir_blk->Back(),  //
+                    [&](core::ir::If* if_) {
+                        // No block terminator means the block that the `phi` is referencing isn't
+                        // finished (in IR-land). This can only happen with an `if` instruction
+                        // where you've branched directly to the `phi` as either the `then` or
+                        // `else` clause.
+
+                        TINT_ASSERT(!if_to_update_branch.has_value());
+
+                        auto* value = ValueNoPropagate(value_id);
+                        if_to_update_branch = IfBranchValue{
+                            .value = value,
+                            .if_ = if_,
+                        };
+                    },
+                    [&](core::ir::Loop* l) {
+                        // No the continue target, so we're in the loop header
+
+                        // We only have to deal with two cases here:
+                        //  1. the block is the loop header
+                        //  2. the block is the calling block
+                        //
+                        // In the case of a `continuing` block we should have hit the case where
+                        // there is no spirv id mapping for the block and stored the information
+                        // away to deal with later.
+
+                        if (blk_id == phi_spirv_block->id()) {
+                            // The phi is coming from the continue and header is the continue.
+                            if (l->Continuing()->IsEmpty()) {
+                                b_.Append(l->Continuing(), [&] { term = b_.NextIteration(l); });
+                                add_blk_inst(l->Body(), type);
+                            } else {
+                                term = l->Continuing()->Terminator();
+                                TINT_ASSERT(term->Is<core::ir::NextIteration>());
+                            }
+
+                        } else {
+                            // The `phi` is coming from the calling block
+                            printf("THIS %d\n", blk_id);
+                            if (continue_targets_.contains(phi_spirv_block->id())) {
+                                // We're the continue target ...
+                            } else if (l->Initializer()->IsEmpty()) {
+                                b_.Append(l->Initializer(), [&] { term = b_.NextIteration(l); });
+                                add_blk_inst(l->Body(), type);
+                            } else {
+                                term = l->Initializer()->Terminator();
+                                TINT_ASSERT(term->Is<core::ir::NextIteration>());
+                            }
+                        }
+                    },
+                    TINT_ICE_ON_NO_MATCH);
+
+                if (!term) {
+                    continue;
+                }
+            } else {
+                term = ir_blk->Terminator();
+            }
+
+            // Push a placeholder for the operand value at this point. We'll
+            // store away the terminator/index pair along with the required
+            // value and then fill it in at the end of the block emission.
+            auto operand_idx = term->PushOperand(nullptr);
+            values_to_replace_.back().push_back(ReplacementValue{
+                .terminator = term,
+                .idx = operand_idx,
+                .value_id = value_id,
+            });
+
+            // For each incoming block to the phi, store either the control
+            // instruction to be updated, or the block to be updated and the
+            // type of result to return.
+            tint::Switch(
+                term,  //
+                [&](core::ir::Exit* exit) { add_ctrl_inst(exit->ControlInstruction(), type); },
+                [&](core::ir::BreakIf* bi) { add_ctrl_inst(bi->Loop(), type); },
+                [&](core::ir::Continue* cont) { add_blk_inst(cont->Loop()->Continuing(), type); },
+                [&](core::ir::NextIteration* ni) { add_blk_inst(ni->Loop()->Body(), type); },
+                TINT_ICE_ON_NO_MATCH);
+        }
+
+        // We need to update one of the two `if` branches with the return value.
+        // Find the one where the terminator has less operands and update that
+        // one.
+        if (if_to_update_branch.has_value()) {
+            auto* value = if_to_update_branch->value;
+            auto* if_ = if_to_update_branch->if_;
+
+            core::ir::Terminator* term = nullptr;
+
+            if (if_->True()->Terminator()->Operands().Length() <
+                if_->False()->Terminator()->Operands().Length()) {
+                term = if_->True()->Terminator();
+            } else {
+                term = if_->False()->Terminator();
+            }
+
+            term->PushOperand(value);
+            add_ctrl_inst(if_, value->Type());
+        }
+
+        // Update control instruction results to contain the new type.
+        for (auto info : ctrl_inst_result_types) {
+            auto* ctrl = info.first;
+            auto* type = info.second;
+            auto* res = b_.InstructionResult(type);
+            ctrl->AddResult(res);
+            values_.Replace(inst.result_id(), res);
+        }
+
+        // Update block params to contain the new type.
+        for (auto info : blk_to_param_types) {
+            auto* blk = info.first;
+            auto* type = info.second;
+
+            auto* p = b_.BlockParam(type);
+            blk->AddParam(p);
+
+            // If this block is the current block, then this param ends up being
+            // the result
+            if (blk == current_block_) {
+                printf("ADD %d\n", inst.result_id());
+                AddValue(inst.result_id(), p);
+            }
         }
     }
 
@@ -2854,7 +3143,7 @@ class Parser {
     std::unordered_map<uint32_t, core::ir::ControlInstruction*> walk_stop_blocks_;
     // Map of continue target ID to the controlling IR loop.
     std::unordered_map<uint32_t, core::ir::Loop*> continue_targets_;
-    // Map of continue target ID to the controlling IR loop.
+    // Map of header target ID to the controlling IR loop.
     std::unordered_map<uint32_t, core::ir::Loop*> loop_headers_;
 
     struct PremergeInfo {
@@ -2870,6 +3159,18 @@ class Parser {
     // If we're in a switch, is populated with the IDs of the blocks for each of the switch
     // selectors. This lets us watch for fallthrough when emitting branch instructions.
     std::vector<std::unordered_set<uint32_t>> current_switch_blocks_;
+
+    /// Maps from a spirv-v block id to the corresponding block in the IR
+    std::unordered_map<uint32_t, core::ir::Block*> spirv_id_to_block_;
+
+    // Map of continue block id to the phi types which need to be returned by
+    // the continue target
+    std::unordered_map<uint32_t, std::vector<uint32_t>> continue_blk_phis_;
+
+    // A stack of values which need to be replaced as we finish processing a
+    // block. Used to store `phi` information so we can retrieve values which
+    // are defined after the `OpPhi` instruction.
+    std::vector<std::vector<ReplacementValue>> values_to_replace_;
 };
 
 }  // namespace
