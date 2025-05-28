@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "032d0304_a9f15e8c",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T04:03:51Z",
+      "side": 1,
+      "message": "nit: IMO don\u0027t name unused parameters `device` and `callbackParam`, it makes it slightly harder to follow the logic.",
+      "range": {
+        "startLine": 91,
+        "startChar": 29,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fd2733d_44d840c2",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T04:03:51Z",
+      "side": 1,
+      "message": "nit: include \"outer\" in this name",
+      "range": {
+        "startLine": 92,
+        "startChar": 38,
+        "endLine": 92,
+        "endChar": 49
+      },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07e4bb58_f99de9bc",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T04:03:51Z",
+      "side": 1,
+      "message": "this should be passed as an owning ref to avoid the possibility of a dangling pointer. Since you can\u0027t easily pass a `Ref\u003cDevice\u003e`, I think you can use `APIAddRef`/`APIRelease` directly.\n\nThough ideally (if possible) we could use the C++ `wgpu::DeviceDescriptor` and `wgpu::DeviceDescriptor::SetDeviceLostCallback`, which can handle capturing lambdas, and just capture a `Ref\u003cDevice\u003e`.",
+      "range": {
+        "startLine": 102,
+        "startChar": 17,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
