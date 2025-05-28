@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "832bf1c1_8a965d5c",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T11:38:35Z",
+      "side": 1,
+      "message": "u-nit: can we move this to be a static method on the GPUDevice and hide the lookup in the .cpp file so others don\u0027t start relying on it?",
+      "revId": "d7c346ad6d0f9af6b09e2deea46a6cc8f3b44a45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "446850a0_63399442",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T11:38:35Z",
+      "side": 1,
+      "message": "I believe that could be checked using the return value of dispatchEvent, see comment in the previous CL.",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 3
+      },
+      "revId": "d7c346ad6d0f9af6b09e2deea46a6cc8f3b44a45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
