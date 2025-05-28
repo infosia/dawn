@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1ee74a2_f89d5130",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-28T07:45:08Z",
+      "side": 1,
+      "message": "The last piece of ImmediateData in D3D11 backend. PTAL, thanks!",
+      "revId": "d8fe4894d4d49472692516b731c44631a73746f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
