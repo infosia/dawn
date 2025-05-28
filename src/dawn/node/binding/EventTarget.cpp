@@ -18,6 +18,29 @@
 
 namespace wgpu::binding {
 
+RegisteredEventListener::RegisteredEventListener(Napi::Env env, interop::EventHandler callback)
+    : callback_(Napi::Persistent(callback.value())) {
+    listener_ = Napi::Function::New(
+        env,
+        [](const Napi::CallbackInfo& info) -> Napi::Value {
+            return RegisteredEventListener::StaticCallCallback(info.Env(), info);
+        },
+        "eventListener", this);
+}
+
+Napi::Value RegisteredEventListener::StaticCallCallback(Napi::Env env,
+                                                        const Napi::CallbackInfo& info) {
+    RegisteredEventListener* self = static_cast<RegisteredEventListener*>(info.Data());
+    if (self) {
+        std::vector<napi_value> args(info.Length());
+        for (size_t i = 0; i < info.Length(); ++i) {
+            args[i] = info[i];
+        }
+        return self->callback_.Call(info.This(), args);
+    }
+    return env.Undefined();
+}
+
 // Note: We don't cache many of these lookups since the developer
 // is free to patch methods between calls.
 
@@ -76,6 +99,35 @@ bool EventTarget::dispatchEvent(Napi::Env env, interop::Event event) {
     std::vector<Napi::Value> args{interop::ToJS(env, event)};
     Napi::Value result = dispatchEventFunc.Call(jsEventTarget, args);
     return result.As<Napi::Boolean>().Value();
+}
+
+RegisteredEventListener* EventTarget::getAttributeRegisteredEventListener(const std::string& type) {
+    auto it = attributeListeners_.find(type);
+    return it == attributeListeners_.end() ? nullptr : &it->second;
+}
+
+void EventTarget::setAttributeEventListener(Napi::Env env,
+                                            const std::string& type,
+                                            interop::EventHandler callback) {
+    auto it = attributeListeners_.find(type);
+    bool listener_exists = (it != attributeListeners_.end());
+
+    if (callback.has_value()) {
+        if (listener_exists) {
+            it->second.setCallback(callback);
+        } else {
+            auto emplace_result =
+                attributeListeners_.emplace(std::piecewise_construct, std::forward_as_tuple(type),
+                                            std::forward_as_tuple(env, callback));
+            addEventListener(env, type, emplace_result.first->second.listener(), {});
+        }
+    } else {
+        if (listener_exists) {
+            removeEventListener(env, type, it->second.listener(),
+                                std::variant<interop::EventListenerOptions, bool>(false));
+            attributeListeners_.erase(it);
+        }
+    }
 }
 
 }  // namespace wgpu::binding
