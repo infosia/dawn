@@ -32,16 +32,17 @@
 #include <bitset>
 #include <functional>
 #include <limits>
+#include <list>
 #include <memory>
+#include <optional>
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
 #include <vector>
 
-#include <optional>
-
 #include "absl/container/flat_hash_map.h"
 #include "absl/container/flat_hash_set.h"
+#include "dawn/common/MutexProtected.h"
 #include "dawn/common/Platform.h"
 #include "dawn/common/TypedInteger.h"
 #include "dawn/common/ityp_array.h"
@@ -106,11 +107,13 @@ MaybeError StreamOut(Source* s, T* v, Ts*... vs) {
 
 // Helper to call StreamIn on an empty parameter pack, e.g. for a DAWN_SERIALIZABLE struct with no
 // member. Do nothing.
-constexpr void StreamIn(Sink* s);
+inline constexpr void StreamIn(Sink* s) {}
 
 // Helper to call StreamOut on an empty parameter pack, e.g. for a DAWN_SERIALIZABLE struct with no
 // member. Do nothing and return success.
-MaybeError StreamOut(Source* s);
+inline MaybeError StreamOut(Source* s) {
+    return {};
+}
 
 // Stream specialization for fundamental types.
 template <typename T>
@@ -254,9 +257,9 @@ class Stream<std::unique_ptr<T>, std::enable_if_t<!std::is_pointer_v<T>>> {
         bool notNullptr;
         DAWN_TRY(StreamOut(source, &notNullptr));
         if (notNullptr) {
-            T out;
-            DAWN_TRY(StreamOut(source, &out));
-            *t = std::make_unique<T>(std::move(out));
+            // Avoid using copy or move constructor of T.
+            *t = std::make_unique<T>();
+            DAWN_TRY(StreamOut(source, t->get()));
         } else {
             *t = nullptr;
         }
@@ -284,6 +287,18 @@ class Stream<std::optional<T>> {
         if (hasValue) {
             StreamIn(sink, *t);
         }
+    }
+    static MaybeError Read(Source* source, std::optional<T>* t) {
+        bool hasValue;
+        DAWN_TRY(StreamOut(source, &hasValue));
+        if (hasValue) {
+            // Avoid using copy or move constructor of T.
+            t->emplace();
+            DAWN_TRY(StreamOut(source, &t->value()));
+        } else {
+            t->reset();
+        }
+        return {};
     }
 };
 
@@ -344,6 +359,33 @@ class Stream<std::vector<T>> {
                         "Trying to reserve a vector of size larger than max_size");
         *v = {};
         v->reserve(size);
+        for (SizeT i = 0; i < size; ++i) {
+            T el;
+            DAWN_TRY(StreamOut(s, &el));
+            v->push_back(std::move(el));
+        }
+        return {};
+    }
+};
+
+// Stream specialization for std::list.
+template <typename T>
+class Stream<std::list<T>> {
+  public:
+    static void Write(Sink* s, const std::list<T>& v) {
+        StreamIn(s, v.size());
+        for (const T& it : v) {
+            StreamIn(s, it);
+        }
+    }
+
+    static MaybeError Read(Source* s, std::list<T>* v) {
+        using SizeT = decltype(std::declval<std::list<T>>().size());
+        SizeT size;
+        DAWN_TRY(StreamOut(s, &size));
+        DAWN_INVALID_IF(size >= v->max_size(),
+                        "Trying to reserve a list of size larger than max_size");
+        v->clear();
         for (SizeT i = 0; i < size; ++i) {
             T el;
             DAWN_TRY(StreamOut(s, &el));
@@ -588,6 +630,19 @@ class Stream<std::variant<Types...>> {
         DAWN_TRY(StreamOut(source, &value));
         *t = VariantType(std::move(value));
         return {};
+    }
+};
+
+// Stream specialization for dawn::MutexProtected
+template <typename T>
+class Stream<MutexProtected<T>> {
+  public:
+    static void Write(stream::Sink* sink, const MutexProtected<T>& t) {
+        t.Use([&](typename MutexProtected<T>::ConstUsage data) { StreamIn(sink, *data); });
+    }
+    static MaybeError Read(Source* source, MutexProtected<T>* t) {
+        return t->Use(
+            [&](typename MutexProtected<T>::Usage data) { return StreamOut(source, &*data); });
     }
 };
 
