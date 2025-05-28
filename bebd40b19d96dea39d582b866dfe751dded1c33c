@@ -22,6 +22,30 @@
       },
       "revId": "bebd40b19d96dea39d582b866dfe751dded1c33c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "687a2694_b00a5c7a",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T21:12:02Z",
+      "side": 0,
+      "message": "This CL resolves one of the diffs with upstream by making the signature of WGPUQueueWorkDoneCallback match upstream. So in this CL, this section of the diff disappears because they now match.",
+      "parentUuid": "206fbc3b_c313c3d7",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 1
+      },
+      "revId": "bebd40b19d96dea39d582b866dfe751dded1c33c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
