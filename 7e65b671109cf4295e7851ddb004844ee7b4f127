@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6226d0d4_3cacacd7",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-28T16:49:07Z",
+      "side": 0,
+      "message": "TARGET libprotobuf will always return false here, because third_party/protobuf.cmake hasn\u0027t been loaded yet.\n\nWe could defer this code until that has been loaded, but that creates a kinda \u0027soft\u0027 dependency cycle and this check reallyy doesn\u0027t add value.\n\nIf DAWN_BUILD_PROTOBUF is enabled but TARGET libprotobuf is false, the build is going to fail anyway, because it is going to try to build libprotobuf later.\n\nThe intent of this code is if we are going to try to build protobuf then by default we are going to try to build IR binary. But we want to be able to still be able to manually override building the IR binary.",
+      "revId": "7e65b671109cf4295e7851ddb004844ee7b4f127",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
