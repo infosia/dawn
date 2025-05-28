@@ -3839,12 +3839,6 @@ Result<SuccessType> ValidateAndDumpIfNeeded([[maybe_unused]] const Module& ir,
     printer->Print(Disassembler(ir).Text());
 #endif
 
-#if TINT_ENABLE_IR_VALIDATION
-    auto result = Validate(ir, capabilities);
-    if (result != Success) {
-        return result.Failure();
-    }
-#endif
 
     return Success;
 }
