@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a79bcd6_d20ce7f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T18:48:22Z",
+      "side": 1,
+      "message": "(The CQ failures are just from Skia, that\u0027ll be fixed when https://skia-review.googlesource.com/c/skia/+/998042 lands and rolls)",
+      "revId": "32a67464fe566341bbb71acf43b05b9cd975c668",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
