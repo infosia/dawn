@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b869bf0_601dc03b",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-28T17:58:14Z",
+      "side": 1,
+      "message": "I think so. We are returning Ref\u003cBindGroupBase\u003e{nullptr} and need the type to be complete",
+      "parentUuid": "df509a20_23c22f6c",
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "032d0304_a9f15e8c",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b098a28e_5af9a4d0",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-28T17:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "032d0304_a9f15e8c",
+      "range": {
+        "startLine": 91,
+        "startChar": 29,
+        "endLine": 91,
+        "endChar": 35
+      },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3fd2733d_44d840c2",
@@ -54,6 +96,30 @@
       "writtenOn": "2025-05-28T04:03:51Z",
       "side": 1,
       "message": "nit: include \"outer\" in this name",
+      "range": {
+        "startLine": 92,
+        "startChar": 38,
+        "endLine": 92,
+        "endChar": 49
+      },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "677834de_86db1ad2",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-28T17:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd2733d_44d840c2",
       "range": {
         "startLine": 92,
         "startChar": 38,
@@ -89,6 +155,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e576330_a06d2c5b",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-28T17:58:14Z",
+      "side": 1,
+      "message": "Does this look right? AddRef and release in the lost callback?\n```\n[](WGPUDevice const*, WGPUDeviceLostReason reason, WGPUStringView message, void*,\n           void* outerDeviceParam) {\n            auto deviceWGPU \u003d reinterpret_cast\u003cDevice*\u003e(outerDeviceParam);\n            deviceWGPU-\u003eAPIAddRef();\n            // ...\n            deviceWGPU-\u003eAPIRelease();\n        }\n```",
+      "parentUuid": "07e4bb58_f99de9bc",
+      "range": {
+        "startLine": 102,
+        "startChar": 17,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1524b378_21717754",
         "filename": "src/dawn/tests/end2end/DeviceLifetimeTests.cpp",
         "patchSetId": 7
@@ -100,6 +190,24 @@
       "writtenOn": "2025-05-28T11:13:19Z",
       "side": 1,
       "message": "optional nit\n\n```suggestion\n    // TODO(crbug.com/413053623): implement wgpu::CommandBuffer\n```\n\nDitto below",
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3969181_38084d42",
+        "filename": "src/dawn/tests/end2end/DeviceLifetimeTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-28T17:58:14Z",
+      "side": 1,
+      "message": "The namespace is \"dawn::native::webgpu\" instead of \"dawn::native::wgpu\"?",
+      "parentUuid": "1524b378_21717754",
       "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
