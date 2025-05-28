@@ -56,6 +56,30 @@
       },
       "revId": "9f39559eb7084589c0a7ede42fedecad79c71cea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6de21e7f_645ec52a",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-28T10:09:55Z",
+      "side": 1,
+      "message": "Ah, right. I forget the case that bits boundary are cross words.",
+      "parentUuid": "e178d51f_6b8788ea",
+      "range": {
+        "startLine": 159,
+        "startChar": 5,
+        "endLine": 160,
+        "endChar": 5
+      },
+      "revId": "9f39559eb7084589c0a7ede42fedecad79c71cea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
