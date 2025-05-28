@@ -136,6 +136,12 @@ void ProgrammableEncoder::APISetImmediateData(uint32_t offset, const void* data,
                 DAWN_INVALID_IF(size > maxImmediateSize - offset,
                                 "offset (%u) + size (%u): is larger than maxImmediateSize (%u).",
                                 offset, size, maxImmediateSize);
+
+#if defined(DAWN_ENABLE_BACKEND_D3D11) || defined(DAWN_ENABLE_BACKEND_D3D12)
+                // TODO(crbug.com/366291600): Remove this validation rules after tint ir used.
+                const bool useTintIR = GetDevice()->IsToggleEnabled(Toggle::UseTintIR);
+                DAWN_INVALID_IF(!useTintIR, "SetImmediateData should not be used without tint ir.");
+#endif  // defined(DAWN_ENABLE_BACKEND_D3D11) || defined(DAWN_ENABLE_BACKEND_D3D12)
             }
 
             // Skip SetImmediateData when uploading constants are empty.
