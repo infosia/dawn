@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-05-21 05:04:52AM
+# Last rolled: 2025-05-28 05:04:49AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -121,7 +121,6 @@ crbug.com/42240909 [ android ] webgpu:web_platform,canvas,configure:viewFormats:
 
 # sample_mask tests causing instability
 crbug.com/42251115 [ qualcomm ] webgpu:api,operation,render_pipeline,sample_mask:* [ Skip ]
-
 
 # D3D12 create command queue failed with DXGI_ERROR_DEVICE_REMOVED. Skipped because these tests likely cause downstream flakes.
 crbug.com/41491936 [ nvidia-0x2184 win10 ] webgpu:api,validation,capability_checks,* [ Skip ]
