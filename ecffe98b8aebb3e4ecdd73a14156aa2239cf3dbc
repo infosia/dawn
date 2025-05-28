@@ -16,6 +16,23 @@
       "message": "ping cwallez@ softly.",
       "revId": "ecffe98b8aebb3e4ecdd73a14156aa2239cf3dbc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ee31e82_9d1b725e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-28T07:36:32Z",
+      "side": 1,
+      "message": "drop the ping, the CL is easy and I could do review :)",
+      "revId": "ecffe98b8aebb3e4ecdd73a14156aa2239cf3dbc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
