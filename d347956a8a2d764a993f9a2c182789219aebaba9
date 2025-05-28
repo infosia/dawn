@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e0f8d5bd_93baf806",
+        "filename": "src/dawn/node/binding/EventTarget.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-28T18:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37f127b9_90eccb33",
+      "revId": "d347956a8a2d764a993f9a2c182789219aebaba9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "9994c08f_72946b75",
         "filename": "src/dawn/node/binding/EventTarget.h",
         "patchSetId": 1
@@ -54,6 +72,24 @@
       "writtenOn": "2025-05-28T09:29:05Z",
       "side": 1,
       "message": "Maybe open an issue and put the bug number here? ^^",
+      "revId": "d347956a8a2d764a993f9a2c182789219aebaba9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbeb04eb_204a1e58",
+        "filename": "src/dawn/node/binding/EventTarget.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-28T18:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "382a572b_44dcad5a",
       "revId": "d347956a8a2d764a993f9a2c182789219aebaba9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
