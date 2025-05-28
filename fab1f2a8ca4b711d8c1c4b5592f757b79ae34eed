@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ac1c0aa_d5d7b331",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-28T14:30:52Z",
+      "side": 1,
+      "message": "What if the same helper function is called by two different entry points with different lengths structures?\n\nDoes this pass assume there\u0027s only a single entry point?",
+      "revId": "fab1f2a8ca4b711d8c1c4b5592f757b79ae34eed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8befb531_c246032b",
+        "filename": "test/tint/buffer/storage/dynamic_index/read.wgsl.expected.msl",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-28T14:30:52Z",
+      "side": 1,
+      "message": "This suggests an optimization:  store the length-1 instead of length.   If accessing is the common case, then it will generate much less code and save runtime",
+      "range": {
+        "startLine": 76,
+        "startChar": 64,
+        "endLine": 76,
+        "endChar": 92
+      },
+      "revId": "fab1f2a8ca4b711d8c1c4b5592f757b79ae34eed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
