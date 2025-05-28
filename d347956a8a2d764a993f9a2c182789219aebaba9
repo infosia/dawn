@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37f127b9_90eccb33",
+        "filename": "src/dawn/node/binding/EventTarget.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T09:29:05Z",
+      "side": 1,
+      "message": "Should we unpack the return values and coerce it to a boolean so we can check if `preventDefaults` has been called?",
+      "revId": "d347956a8a2d764a993f9a2c182789219aebaba9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9994c08f_72946b75",
+        "filename": "src/dawn/node/binding/EventTarget.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T09:29:05Z",
+      "side": 1,
+      "message": "Aaaaaaah! First time we use that in Dawn (that\u0027s ok).",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "d347956a8a2d764a993f9a2c182789219aebaba9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "382a572b_44dcad5a",
+        "filename": "src/dawn/node/binding/EventTarget.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T09:29:05Z",
+      "side": 1,
+      "message": "Maybe open an issue and put the bug number here? ^^",
+      "revId": "d347956a8a2d764a993f9a2c182789219aebaba9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
