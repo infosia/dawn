@@ -205,7 +205,6 @@ uint16_t GPUPipelineError::getCode(Napi::Env) {
     return 0;
 }
 std::string GPUPipelineError::getMessage(Napi::Env) {
-    std::cerr << "getMessage gpuPipelineError \n";
     return message_;
 }
 interop::GPUPipelineErrorReason GPUPipelineError::getReason(Napi::Env) {
