@@ -146,6 +146,8 @@ GPUDevice* lookupGPUDeviceFromWGPUDevice(wgpu::Device device) {
     return nullptr;
 }
 
+const char kUncapturedError[] = "uncapturederror";
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -634,15 +636,13 @@ void GPUDevice::setLabel(Napi::Env, std::string value) {
     label_ = value;
 }
 
-interop::Interface<interop::EventHandler> GPUDevice::getOnuncapturederror(Napi::Env env) {
-    // TODO(dawn:1348): Implement support for the "unhandlederror" event.
-    UNIMPLEMENTED(env, {});
+interop::EventHandler GPUDevice::getOnuncapturederror(Napi::Env env) {
+    RegisteredEventListener* listener = getAttributeRegisteredEventListener(kUncapturedError);
+    return listener ? interop::EventHandler(listener->callback()) : interop::EventHandler();
 }
 
-void GPUDevice::setOnuncapturederror(Napi::Env env,
-                                     interop::Interface<interop::EventHandler> value) {
-    // TODO(dawn:1348): Implement support for the "unhandlederror" event.
-    UNIMPLEMENTED(env);
+void GPUDevice::setOnuncapturederror(Napi::Env env, interop::EventHandler value) {
+    setAttributeEventListener(env, kUncapturedError, value);
 }
 
 }  // namespace wgpu::binding
