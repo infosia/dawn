@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "df509a20_23c22f6c",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T11:13:19Z",
+      "side": 1,
+      "message": "Are these includes needed?",
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "032d0304_a9f15e8c",
         "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
         "patchSetId": 7
@@ -66,6 +83,23 @@
         "endLine": 102,
         "endChar": 46
       },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1524b378_21717754",
+        "filename": "src/dawn/tests/end2end/DeviceLifetimeTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T11:13:19Z",
+      "side": 1,
+      "message": "optional nit\n\n```suggestion\n    // TODO(crbug.com/413053623): implement wgpu::CommandBuffer\n```\n\nDitto below",
       "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
