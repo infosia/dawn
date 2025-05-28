@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9d49910b_c057a4fe",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T22:16:21Z",
+      "side": 1,
+      "message": "I think the `include_what_you_use` check runs on presubmit? I saw it recently, but not certain if it was on Dawn or another repo.",
+      "parentUuid": "4c180298_241a18e4",
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "032d0304_a9f15e8c",
         "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
         "patchSetId": 7
@@ -275,6 +293,30 @@
       "side": 1,
       "message": "linking error for `wgpuDeviceRelease` when build `libdawn_native.so` though. Don\u0027t know why it only appears for `linux-clang-dbg-x64` but not e.g. `linux-clang-rel-x64\n`",
       "parentUuid": "e1e6af03_f285d8e4",
+      "range": {
+        "startLine": 102,
+        "startChar": 17,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7892f514_cee5d740",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T22:16:21Z",
+      "side": 1,
+      "message": "The code LGTM. I have a guess about the linking error. If libdawn_native doesn\u0027t define this symbol (without libdawn_proc), then linking it would fail.\n\nIt shouldn\u0027t actually be attempting to call wgpuDeviceRelease, though I can see how in debug there might be an unreachable call to it that doesn\u0027t get optimized out, due to this (`auto` \u003d `wgpu::Device` which calls `wgpuDeviceRelease` from the destructor):\nhttps://source.chromium.org/chromium/chromium/src/+/main:out/mac-Debug/gen/third_party/dawn/include/dawn/webgpu_cpp.h;l\u003d7790;drc\u003d02c44ebb5f50b2248ad073216bf880092c617d7f\n\nI don\u0027t have a suggestion to avoid this unfortunately. Might have to switch back to the C descriptor.",
+      "parentUuid": "8b2f5b2a_690cba7b",
       "range": {
         "startLine": 102,
         "startChar": 17,
