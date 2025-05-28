@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f911dd19_f1849bb8",
+        "filename": "src/dawn/node/binding/Errors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T09:13:54Z",
+      "side": 1,
+      "message": "nit: Leftover debug.",
+      "revId": "15ab6ac84c4d721ef6fff110db144b4c060442f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff285dcd_eeddba93",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T09:13:54Z",
+      "side": 1,
+      "message": "What if there are multiple initializers? It seems that we should throw an exception only if they all fail.",
+      "revId": "15ab6ac84c4d721ef6fff110db144b4c060442f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a077dfd_b3125089",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T09:13:54Z",
+      "side": 1,
+      "message": "nit: that tuple creation is the exact same as in [1], can we separate it to a new \"define ParameterTupleDecl\" to factor the logic?",
+      "revId": "15ab6ac84c4d721ef6fff110db144b4c060442f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "457ed277_13e01b02",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T09:13:54Z",
+      "side": 1,
+      "message": "```suggestion\n        }\n{{-      end}}\n      if (impl \u003d\u003d nullptr) {\n        // No constructor matched.\n        Napi::TypeError::New(info.Env(), \"No constructor matched.\").ThrowAsJavaScriptException();\n      }\n{{-  end}}\n\n```",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "15ab6ac84c4d721ef6fff110db144b4c060442f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cbbb0a7_093d8524",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T09:13:54Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "15ab6ac84c4d721ef6fff110db144b4c060442f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
