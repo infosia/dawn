@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2eb2084e_8cbcb7eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-28T10:39:51Z",
+      "side": 1,
+      "message": "Thanks for reviewing!",
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fc0c5f9_980ebf35",
@@ -60,6 +77,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a0077ee4_c76aafee",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-28T10:39:51Z",
+      "side": 1,
+      "message": "`std::list` is used in the refactored version of `OwnedCompilationMessages`, which can be found in https://dawn-review.googlesource.com/c/dawn/+/244114.\nThere I tried to split the serializable dumb data with unserializable data that have to be generated before using `CompilationInfo`. And `std::list` is used instead of `std::vector` in some place to ensure the pointer never get invalid.\n\nPlease take a look there and suggest me how to refactor the `OwnedCompilationMessages`.",
+      "parentUuid": "6d3da1a3_8c3cde36",
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b6dc4ca9_de33dede",
         "filename": "src/dawn/native/stream/Stream.h",
         "patchSetId": 1
@@ -71,6 +106,24 @@
       "writtenOn": "2025-05-28T09:06:07Z",
       "side": 1,
       "message": "Uuuh that\u0027s not ideal because streaming MutexProtected means that we are streaming \"complex\" data that has behavior and not just a dumb structure. I\u0027ve never really understood why we made a class with logic for `OwnedCompilationMessages` instead of a dumb structure and logic in ShaderModule. Maybe we could do that instead?",
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f30692f9_e002b8cb",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-28T10:39:51Z",
+      "side": 1,
+      "message": "I think that\u0027s because `OwnedCompilationMessages` takes the responsibility of 1) building the messages list and then 2) creating and caching the `CompilationInfo` and `CompilationMessage` and `DawnCompilationMessageUtf16` objects that holding raw pointers to each other and message strings.\n\nThese objects can not be serialized and can not be moved/copyed (since they are pointed by raw pointers), so there is some logic to build these data and also use `MutexProtected` to prevent race conditioning when building or using it.\n\nCurrently the only `MutexProtected` that we touched when streaming actually holds data that we don\u0027t want to serialized, so another way that just make `MutexProtected` unserializable would just work as well. Althought I thought we could treat `MutexProtected` as a wrapper of whatever data inside if, and we can stream it looking through this wrapper.",
+      "parentUuid": "b6dc4ca9_de33dede",
       "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
