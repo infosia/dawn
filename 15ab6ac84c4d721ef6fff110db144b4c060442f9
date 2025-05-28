@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20c91c1f_18f48d5d",
+        "filename": "src/dawn/node/binding/Errors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-28T18:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f911dd19_f1849bb8",
+      "revId": "15ab6ac84c4d721ef6fff110db144b4c060442f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff285dcd_eeddba93",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ace19f51_39322d2d",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-28T18:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff285dcd_eeddba93",
+      "revId": "15ab6ac84c4d721ef6fff110db144b4c060442f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2a077dfd_b3125089",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-05-28T09:13:54Z",
       "side": 1,
       "message": "nit: that tuple creation is the exact same as in [1], can we separate it to a new \"define ParameterTupleDecl\" to factor the logic?",
+      "revId": "15ab6ac84c4d721ef6fff110db144b4c060442f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "820d3350_b2a8b4e1",
+        "filename": "src/dawn/node/interop/WebGPU.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-28T18:24:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a077dfd_b3125089",
       "revId": "15ab6ac84c4d721ef6fff110db144b4c060442f9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
