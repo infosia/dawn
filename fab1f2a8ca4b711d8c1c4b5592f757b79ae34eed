@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "480a6ce9_f6a015f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-28T15:09:05Z",
+      "side": 1,
+      "message": "Result is good.\n\n$ ./runtint -t2\n\nDevice: Apple M1 Pro\nUsing Tint-generated source, with Tint patched with CL 244014\n\u003d\u003d create library: 0.264463 seconds\n\u003d\u003d get function: 0.000018 seconds\n\u003d\u003d create pipeline: 0.317808 seconds\nCompute pipeline created successfully.",
+      "revId": "fab1f2a8ca4b711d8c1c4b5592f757b79ae34eed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ac1c0aa_d5d7b331",
