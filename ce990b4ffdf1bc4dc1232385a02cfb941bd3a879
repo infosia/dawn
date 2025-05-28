@@ -126,6 +126,24 @@
       "parentUuid": "b6dc4ca9_de33dede",
       "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc3fc137_37fc138c",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-28T10:54:41Z",
+      "side": 1,
+      "message": "Or I can change the type of that`OwnedCompilationMessages` member to some wrapper like `MutexProtectedUnserializableOptional` that exactly implement the semantic we want...",
+      "parentUuid": "f30692f9_e002b8cb",
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
