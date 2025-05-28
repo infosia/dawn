@@ -33,15 +33,15 @@
 namespace dawn::native {
 
 ExecutionSerial ExecutionQueueBase::GetPendingCommandSerial() const {
-    return ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire) + 1);
+    return mState.Use([](auto state) { return ExecutionSerial(state->lastSubmittedSerial + 1); });
 }
 
 ExecutionSerial ExecutionQueueBase::GetLastSubmittedCommandSerial() const {
-    return ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire));
+    return mState.Use([](auto state) { return ExecutionSerial(state->lastSubmittedSerial); });
 }
 
 ExecutionSerial ExecutionQueueBase::GetCompletedCommandSerial() const {
-    return ExecutionSerial(mCompletedSerial.load(std::memory_order_acquire));
+    return mState.Use([](auto state) { return ExecutionSerial(state->completedSerial); });
 }
 
 MaybeError ExecutionQueueBase::CheckPassedSerials() {

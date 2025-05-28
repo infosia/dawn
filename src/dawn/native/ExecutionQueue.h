@@ -82,9 +82,8 @@ class ExecutionQueueBase {
     // resources.
     virtual MaybeError WaitForIdleForDestruction() = 0;
 
-    // Wait at most `timeout` synchronously for the ExecutionSerial to pass. Returns true
-    // if the serial passed.
-    virtual ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) = 0;
+    // Wait at most `timeout` synchronously for the ExecutionSerial to pass.
+    MaybeError WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout);
 
     // Tracks a new task to complete when |serial| is reached.
     void TrackSerialTask(ExecutionSerial serial, Task&& task);
@@ -105,6 +104,30 @@ class ExecutionQueueBase {
     // Each backend should implement to check their passed fences if there are any and return a
     // completed serial. Return 0 should indicate no fences to check.
     virtual ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() = 0;
+
+    // Wait at most `timeout` synchronously for the ExecutionSerial to pass. Returns true
+    // if the serial passed.
+    virtual MaybeError WaitForQueueSerialImpl(ExecutionSerial serial, Nanoseconds timeout) = 0;
+
+    // Indicates whether the backend has pending commands to be submitted as soon as possible.
+    virtual bool HasPendingCommands() const = 0;
+
+    // Submit any pending commands that are enqueued.
+    virtual MaybeError SubmitPendingCommands() = 0;
+
+    // Represents the entire state of the ExecutionQueue.
+    struct State {
+        // Tracks the last completed command serial that the fence has returned. May be artificially
+        // incremented to make it appear as if commands have been compeleted.
+        uint64_t completedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
+        // Tracks the last submitted command serial.
+        uint64_t lastSubmittedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
+
+        // Tracks all pending tasks that should be completed when a particular serial is reached.
+        SerialMap<ExecutionSerial, Task> waitingTasks;
+    };
+    MutexProtected<State> mState;
+
     // mCompletedSerial tracks the last completed command serial that the fence has returned.
     // mLastSubmittedSerial tracks the last submitted command serial.
     // During device removal, the serials could be artificially incremented
@@ -113,12 +136,6 @@ class ExecutionQueueBase {
     std::atomic<uint64_t> mLastSubmittedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
 
     MutexProtected<SerialMap<ExecutionSerial, Task>> mWaitingTasks;
-
-    // Indicates whether the backend has pending commands to be submitted as soon as possible.
-    virtual bool HasPendingCommands() const = 0;
-
-    // Submit any pending commands that are enqueued.
-    virtual MaybeError SubmitPendingCommands() = 0;
 };
 
 }  // namespace dawn::native
