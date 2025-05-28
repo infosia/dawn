@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "85c0ebc4_23d34a38",
+        "filename": "src/dawn/node/binding/GPUAdapter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-28T19:05:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "832bf1c1_8a965d5c",
+      "revId": "d7c346ad6d0f9af6b09e2deea46a6cc8f3b44a45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "446850a0_63399442",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-05-28T11:38:35Z",
       "side": 1,
       "message": "I believe that could be checked using the return value of dispatchEvent, see comment in the previous CL.",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 3
+      },
+      "revId": "d7c346ad6d0f9af6b09e2deea46a6cc8f3b44a45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f80c719_83a2dbbe",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-28T19:05:17Z",
+      "side": 1,
+      "message": "Those are not the same thing. The return value from dispatchEvent is \"true if event is cancelable, and at least one of the event handlers which received event called Event.preventDefault()\"  But whether or not the event is cancelable is irrelevant to whether or not preventDefault was called.",
+      "parentUuid": "446850a0_63399442",
       "range": {
         "startLine": 225,
         "startChar": 0,
