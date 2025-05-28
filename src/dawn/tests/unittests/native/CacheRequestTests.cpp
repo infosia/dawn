@@ -60,12 +60,12 @@ struct Foo {
     int value;
 };
 
-#define REQUEST_MEMBERS(X)                   \
-    X(int, a)                                \
-    X(float, b)                              \
-    X(std::vector<unsigned int>, c)          \
-    X(CacheKey::UnsafeUnkeyedValue<int*>, d) \
-    X(CacheKey::UnsafeUnkeyedValue<Foo>, e)
+#define REQUEST_MEMBERS(X)              \
+    X(int, a)                           \
+    X(float, b)                         \
+    X(std::vector<unsigned int>, c)     \
+    X(UnsafeUnserializedValue<int*>, d) \
+    X(UnsafeUnserializedValue<Foo>, e)
 
 DAWN_MAKE_CACHE_REQUEST(CacheRequestForTesting, REQUEST_MEMBERS);
 

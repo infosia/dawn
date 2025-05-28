@@ -90,7 +90,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     const bool useTintIR = device->IsToggleEnabled(Toggle::UseTintIR);
 
     d3d::D3DCompilationRequest req = {};
-    req.tracePlatform = UnsafeUnkeyedValue(device->GetPlatform());
+    req.tracePlatform = device->GetPlatform();
     req.hlsl.shaderModel = 50;
     req.hlsl.disableSymbolRenaming = device->IsToggleEnabled(Toggle::DisableSymbolRenaming);
     req.hlsl.dumpShaders = device->IsToggleEnabled(Toggle::DumpShaders);

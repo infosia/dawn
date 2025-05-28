@@ -55,19 +55,19 @@ namespace {
 using OptionalVertexPullingTransformConfig = std::optional<tint::VertexPullingConfig>;
 using SubstituteOverrideConfig = std::unordered_map<tint::OverrideId, double>;
 
-#define MSL_COMPILATION_REQUEST_MEMBERS(X)                                                \
-    X(SingleShaderStage, stage)                                                           \
-    X(ShaderModuleBase::ShaderModuleHash, shaderModuleHash)                               \
-    X(CacheKey::UnsafeUnkeyedValue<ShaderModuleBase::ScopedUseTintProgram>, inputProgram) \
-    X(SubstituteOverrideConfig, substituteOverrideConfig)                                 \
-    X(LimitsForCompilationRequest, limits)                                                \
-    X(CacheKey::UnsafeUnkeyedValue<LimitsForCompilationRequest>, adapterSupportedLimits)  \
-    X(uint32_t, maxSubgroupSize)                                                          \
-    X(std::string, entryPointName)                                                        \
-    X(bool, usesSubgroupMatrix)                                                           \
-    X(bool, disableSymbolRenaming)                                                        \
-    X(tint::msl::writer::Options, tintOptions)                                            \
-    X(CacheKey::UnsafeUnkeyedValue<dawn::platform::Platform*>, platform)
+#define MSL_COMPILATION_REQUEST_MEMBERS(X)                                           \
+    X(SingleShaderStage, stage)                                                      \
+    X(ShaderModuleBase::ShaderModuleHash, shaderModuleHash)                          \
+    X(UnsafeUnserializedValue<ShaderModuleBase::ScopedUseTintProgram>, inputProgram) \
+    X(SubstituteOverrideConfig, substituteOverrideConfig)                            \
+    X(LimitsForCompilationRequest, limits)                                           \
+    X(UnsafeUnserializedValue<LimitsForCompilationRequest>, adapterSupportedLimits)  \
+    X(uint32_t, maxSubgroupSize)                                                     \
+    X(std::string, entryPointName)                                                   \
+    X(bool, usesSubgroupMatrix)                                                      \
+    X(bool, disableSymbolRenaming)                                                   \
+    X(tint::msl::writer::Options, tintOptions)                                       \
+    X(UnsafeUnserializedValue<dawn::platform::Platform*>, platform)
 
 DAWN_MAKE_CACHE_REQUEST(MslCompilationRequest, MSL_COMPILATION_REQUEST_MEMBERS);
 #undef MSL_COMPILATION_REQUEST_MEMBERS
