@@ -263,6 +263,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8b2f5b2a_690cba7b",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-28T21:25:14Z",
+      "side": 1,
+      "message": "linking error for `wgpuDeviceRelease` when build `libdawn_native.so` though. Don\u0027t know why it only appears for `linux-clang-dbg-x64` but not e.g. `linux-clang-rel-x64\n`",
+      "parentUuid": "e1e6af03_f285d8e4",
+      "range": {
+        "startLine": 102,
+        "startChar": 17,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1524b378_21717754",
         "filename": "src/dawn/tests/end2end/DeviceLifetimeTests.cpp",
         "patchSetId": 7
