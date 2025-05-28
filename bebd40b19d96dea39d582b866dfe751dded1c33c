@@ -46,6 +46,30 @@
       },
       "revId": "bebd40b19d96dea39d582b866dfe751dded1c33c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adb995a5_67912948",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-28T23:22:47Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "687a2694_b00a5c7a",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 1
+      },
+      "revId": "bebd40b19d96dea39d582b866dfe751dded1c33c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
