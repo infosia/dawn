@@ -16,6 +16,24 @@
       "message": "Needs `// flags:  --hlsl-shader-model 62` at the top to fix the DXC errors.\n\nAlso FXC does not support f16 at all, so needs a `SKIP: INVALID` for those two expectations.",
       "revId": "16c635acd09fdfb6ec391822d520a9f054567f83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0ca38ba_35024a59",
+        "filename": "test/tint/const/array/array_matrix_f16.wgsl",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-28T21:04:42Z",
+      "side": 1,
+      "message": "sg. I generated these on mac",
+      "parentUuid": "baf7cdf8_7aa6f307",
+      "revId": "16c635acd09fdfb6ec391822d520a9f054567f83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
