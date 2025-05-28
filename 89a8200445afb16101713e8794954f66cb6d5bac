@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a5f3cd4_ea15c795",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T03:32:56Z",
+      "side": 1,
+      "message": "Should say \"Unsafe\" in the name.\n\nThis isn\u0027t the only time that we have needed an atomic with unmutexed reads and mutexed writes:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/SystemEvent.h;l\u003d116-120;drc\u003dabef75693d96caadd6eb2cd38542e719932e8b4d\n\nIt would be nice if we can come up with a pattern that satisfies these. One way could be to make this thing `protected` and do something like:\n\n```\nclass MutexProtectedSynchronizedState : public MutexProtected\u003cSynchronizedState\u003e {\n    BufferState GetBufferState() { return ConstRead().bufferState.load(); }\n    // ...\n};\n```\n\nUnfortunately this would need all of `CanGetMappedRange` moved inside, which may not be practical, but would keep the unsafe code scoped to a smaller area that\u0027s easier to analyze.",
+      "range": {
+        "startLine": 189,
+        "startChar": 13,
+        "endLine": 189,
+        "endChar": 22
+      },
+      "revId": "89a8200445afb16101713e8794954f66cb6d5bac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8107530c_4beacd22",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T03:32:56Z",
+      "side": 1,
+      "message": "As we said this doesn\u0027t need to be safe wrt Unmap (mapped -\u003e unmapped), but still needs to be safe wrt MapAsync\u0027s completion (unmapped -\u003e mapped).\n\nIn order to do this I think you first need to do `if (bufferState \u003d\u003d unmapped) return nullptr;` or something like that.\n\n(That check would actually need to happen before CanGetMappedRange, since it is unsafe and needs to be protected externally. I suggest having GetMappedRange _not_ call into GetMappedPointer, so that GetMappedPointer can have just the minimal validation of `bufferState` while GetMappedRange has the full validation in CanGetMappedRange, and the first step of CanGetMappedRange is to check the `bufferState`.)",
+      "revId": "89a8200445afb16101713e8794954f66cb6d5bac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbf78492_dffb5e94",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T03:32:56Z",
+      "side": 1,
+      "message": "I\u0027m pretty certain we don\u0027t need all of the loads/stores of this atomic to be `memory_order_seq_cst` but offhand I don\u0027t know what they should be. Probably not worth optimizing right now as this is less hot than some other atomics.",
+      "revId": "89a8200445afb16101713e8794954f66cb6d5bac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

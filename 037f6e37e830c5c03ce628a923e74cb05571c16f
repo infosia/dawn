@@ -213,6 +213,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ea119877_cedb1a88",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-28T03:32:56Z",
+      "side": 1,
+      "message": "nit: include something like that comment so we\u0027re explicit about the fact that we say the buffer is initialized when its underlying buffer isn\u0027t really",
+      "parentUuid": "8b9cd5d0_be89a40c",
+      "revId": "037f6e37e830c5c03ce628a923e74cb05571c16f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d227acf9_ab942b06",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 13
