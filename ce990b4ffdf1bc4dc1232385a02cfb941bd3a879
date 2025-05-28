@@ -16,6 +16,40 @@
       "message": "Please take a look, thanks! This CL is step 1/4 of enabling shader module front-end blob cache.",
       "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d3da1a3_8c3cde36",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T09:06:07Z",
+      "side": 1,
+      "message": "I don\u0027t see a list in OwnedCompilationMessages.",
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6dc4ca9_de33dede",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T09:06:07Z",
+      "side": 1,
+      "message": "Uuuh that\u0027s not ideal because streaming MutexProtected means that we are streaming \"complex\" data that has behavior and not just a dumb structure. I\u0027ve never really understood why we made a class with logic for `OwnedCompilationMessages` instead of a dumb structure and logic in ShaderModule. Maybe we could do that instead?",
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
