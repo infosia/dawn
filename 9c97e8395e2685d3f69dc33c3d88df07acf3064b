@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5248b43_bf5ef868",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-28T07:44:32Z",
+      "side": 1,
+      "message": "A fix for d3d11 backend. This bug is rarely hit but caught by ImmediateData end2end tests. PTAL, thanks!",
+      "revId": "9c97e8395e2685d3f69dc33c3d88df07acf3064b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
