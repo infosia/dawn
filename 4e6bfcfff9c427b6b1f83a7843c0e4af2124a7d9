@@ -37,6 +37,69 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5837236d_0c562670",
+        "filename": "src/dawn/native/BuddyMemoryAllocator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-05-28T13:29:14Z",
+      "side": 1,
+      "message": "It\u0027s a bit unfortunate Vulkan implementation details like this end up leaking into higher level BuddyMemoryAllocator/ResourceMemoryAllocation abstractions. I also don\u0027t have any concrete suggestions on how to fix this although cwallez@ might.",
+      "range": {
+        "startLine": 63,
+        "startChar": 53,
+        "endLine": 63,
+        "endChar": 74
+      },
+      "revId": "4e6bfcfff9c427b6b1f83a7843c0e4af2124a7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27577ab3_977fec88",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-05-28T13:29:14Z",
+      "side": 1,
+      "message": "const",
+      "revId": "4e6bfcfff9c427b6b1f83a7843c0e4af2124a7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "784289b1_caf49e8c",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-05-28T13:29:14Z",
+      "side": 1,
+      "message": "nit: `const auto\u0026 memoryType \u003d info.memoryTypes[i]` would help.",
+      "range": {
+        "startLine": 196,
+        "startChar": 13,
+        "endLine": 196,
+        "endChar": 32
+      },
+      "revId": "4e6bfcfff9c427b6b1f83a7843c0e4af2124a7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "81f0ea01_423f65e2",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
         "patchSetId": 5
