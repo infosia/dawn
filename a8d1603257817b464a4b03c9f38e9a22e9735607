@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a56034d2_98a036b9",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-28T11:14:12Z",
+      "side": 1,
+      "message": "nit: Maybe this should be an assert. For external API users, this should be already caught by the front-end validation layer, shouldn\u0027t it?\nFor internal users, this can be considered programmer error if using it without proper support.",
+      "range": {
+        "startLine": 619,
+        "startChar": 16,
+        "endLine": 619,
+        "endChar": 31
+      },
+      "revId": "a8d1603257817b464a4b03c9f38e9a22e9735607",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "083256ac_56a2451d",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-28T11:14:12Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 880,
+        "startChar": 16,
+        "endLine": 880,
+        "endChar": 31
+      },
+      "revId": "a8d1603257817b464a4b03c9f38e9a22e9735607",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
