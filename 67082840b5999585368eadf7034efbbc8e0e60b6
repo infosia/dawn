@@ -179,6 +179,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "58bda999_f38caae3",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-28T18:00:40Z",
+      "side": 1,
+      "message": "Or do you `AddRef` outside of callback before passing in the pointer, and manually `Release` it when lost",
+      "parentUuid": "6e576330_a06d2c5b",
+      "range": {
+        "startLine": 102,
+        "startChar": 17,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1524b378_21717754",
         "filename": "src/dawn/tests/end2end/DeviceLifetimeTests.cpp",
         "patchSetId": 7
