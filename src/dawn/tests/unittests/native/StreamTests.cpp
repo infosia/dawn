@@ -614,6 +614,8 @@ static auto kStreamValueVectorParams = std::make_tuple(
         BitsetFromBitString("100110010101011001100110101011001100101010110011001011011"),
         BitsetFromBitString("000110010101011000100110101011001100101010010011001010100"),
         BitsetFromBitString("111111111111111111111111111111111111111111111111111111111"), 0},
+    // Test std::optional.
+    std::vector<std::optional<std::string>>{std::nullopt, "", "abc"},
     // Test unordered_maps.
     std::vector<std::unordered_map<int, int>>{{},
                                               {{4, 5}, {6, 8}, {99, 42}, {0, 0}},
