@@ -16,6 +16,46 @@
       "message": "A fix for BitSetRangeIterator. PTAL, thanks!",
       "revId": "9f39559eb7084589c0a7ede42fedecad79c71cea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f609bbe0_ef05f058",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T10:02:30Z",
+      "side": 1,
+      "message": "Maybe just \"Clear the bits for the current range.\".",
+      "revId": "9f39559eb7084589c0a7ede42fedecad79c71cea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e178d51f_6b8788ea",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T10:02:30Z",
+      "side": 1,
+      "message": "We need to take into account the fact that mBits might have been shifted in the last call to ScanForwardAndShiftBits.\n\n```suggestion\n    mBits \u003c\u003c\u003d (rangeCount % kBitsPerWord);\n    mBits \u003e\u003e\u003d (rangeCount % kBitsPerWord);\n```\n\nA test that would find this is in a 128 bitset a range that straddles the two chunks. Like {60, 70} and an other one that would get garbled by that {80, 90}.",
+      "range": {
+        "startLine": 159,
+        "startChar": 5,
+        "endLine": 160,
+        "endChar": 5
+      },
+      "revId": "9f39559eb7084589c0a7ede42fedecad79c71cea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
