@@ -574,7 +574,7 @@ TEST_F(IR_ValidatorTest, Var_DuplicateBindingPoints_ReferencedInDifferentFunctio
         b.Return(func_b);
     });
 
-    auto res = ir::Validate(mod);
+    auto res = ir::Validate(mod, Capabilities{Capability::kAllowMultipleEntryPoints});
     ASSERT_EQ(res, Success);
 }
 
