@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "44c80e39_7496db81",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T18:05:22Z",
+      "side": 1,
+      "message": "I guess at random I chose the wrong line. But what about `dawn/native/ComputePipeline.h`?",
+      "parentUuid": "5b869bf0_601dc03b",
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "032d0304_a9f15e8c",
         "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
         "patchSetId": 7
@@ -232,6 +250,24 @@
       "side": 1,
       "message": "The namespace is \"dawn::native::webgpu\" instead of \"dawn::native::wgpu\"?",
       "parentUuid": "1524b378_21717754",
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0805095_03067686",
+        "filename": "src/dawn/tests/end2end/DeviceLifetimeTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-05-28T18:05:22Z",
+      "side": 1,
+      "message": "Ah ok yeah makes sense.",
+      "parentUuid": "b3969181_38084d42",
       "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
