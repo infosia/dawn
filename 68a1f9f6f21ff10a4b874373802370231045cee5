@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "714b309e_260c8ba1",
+        "filename": "src/tint/lang/wgsl/ast/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-28T21:36:09Z",
+      "side": 1,
+      "message": "These i/u suffixed literal expressions are always 32 bits, so you won\u0027t get the right types here. Do you need 8-bit literals for something?",
+      "range": {
+        "startLine": 1534,
+        "startChar": 0,
+        "endLine": 1548,
+        "endChar": 5
+      },
+      "revId": "68a1f9f6f21ff10a4b874373802370231045cee5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b316b4f5_9cea3b42",
+        "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2561,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-28T21:36:09Z",
+      "side": 1,
+      "message": "We should guard the types with the subgroup matrix extension here (maybe pull the creation out to separate functions like with `F16()`).\n\nI know that you\u0027ve made it so the types can be used almost nowhere, but the one place where we do not currently reject them is:\n```\nalias i \u003d i8;\n```\nYou can\u0027t do anything with `i` after declaring this alias, but we\u0027re still not supposed to accept this program without the extension.",
+      "revId": "68a1f9f6f21ff10a4b874373802370231045cee5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c853a6b2_46936cb4",
+        "filename": "src/tint/lang/wgsl/resolver/resolver_helper_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-28T21:36:09Z",
+      "side": 1,
+      "message": "Do we need these? I don\u0027t think we want to support 8-bit scalar values anywhere, just the type name for use as a template type parameter.",
+      "revId": "68a1f9f6f21ff10a4b874373802370231045cee5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72b05ac7_a2b8b5ad",
+        "filename": "src/tint/lang/wgsl/resolver/variable_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1411,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-28T21:36:09Z",
+      "side": 1,
+      "message": "Please add error expectations so that we can make sure we are always rejecting these types for the right reasons.\n\nThis guards against future test changes making the AST invalid for some other reason, and then we are no longer testing the guards correctly.",
+      "revId": "68a1f9f6f21ff10a4b874373802370231045cee5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2316b408_840f788c",
+        "filename": "src/tint/lang/wgsl/resolver/variable_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-28T21:36:09Z",
+      "side": 1,
+      "message": "Maybe in `value_constructor_validation_test.cc` please also test that `i8()` and `u8()` fail as type constructors.",
+      "revId": "68a1f9f6f21ff10a4b874373802370231045cee5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dc0b69e_7d6d7440",
+        "filename": "test/tint/builtins/gen/literal/subgroupMatrixMultiply/0a2c0c.wgsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-28T21:36:09Z",
+      "side": 1,
+      "message": "The test template will need to be updated to generate u32/i32 array element types for u8/i8 result types.",
+      "revId": "68a1f9f6f21ff10a4b874373802370231045cee5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
