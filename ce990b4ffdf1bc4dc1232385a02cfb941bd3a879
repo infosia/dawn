@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1fc0c5f9_980ebf35",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-05-28T09:26:27Z",
+      "side": 1,
+      "message": "This has slightly different behaviour, the output variable is still written in the error case.\n\nHow about:\n```\nstd::unique_ptr\u003cT\u003e out \u003d std::make_unique\u003cT\u003e();\nTRY...\n*t \u003d std::move(out);\n```",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 261,
+        "endChar": 39
+      },
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6d3da1a3_8c3cde36",
         "filename": "src/dawn/native/stream/Stream.h",
         "patchSetId": 1
