@@ -90,7 +90,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     const bool useTintIR = device->IsToggleEnabled(Toggle::UseTintIR);
 
     d3d::D3DCompilationRequest req = {};
-    req.tracePlatform = UnsafeUnkeyedValue(device->GetPlatform());
+    req.tracePlatform = UnsafeUnserializedValue(device->GetPlatform());
     req.hlsl.shaderModel = 50;
     req.hlsl.disableSymbolRenaming = device->IsToggleEnabled(Toggle::DisableSymbolRenaming);
     req.hlsl.dumpShaders = device->IsToggleEnabled(Toggle::DumpShaders);
@@ -102,7 +102,8 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
 
     // D3D11 only supports FXC.
     req.bytecode.compiler = d3d::Compiler::FXC;
-    req.bytecode.d3dCompile = std::move(pD3DCompile{device->GetFunctions()->d3dCompile});
+    req.bytecode.d3dCompile =
+        UnsafeUnserializedValue(pD3DCompile{device->GetFunctions()->d3dCompile});
     req.bytecode.compilerVersion = D3D_COMPILER_VERSION;
     DAWN_ASSERT(device->GetDeviceInfo().shaderModel == 50);
     switch (stage) {
@@ -190,7 +191,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     }
 
     req.hlsl.shaderModuleHash = GetHash();
-    req.hlsl.inputProgram = UseTintProgram();
+    req.hlsl.inputProgram = UnsafeUnserializedValue(UseTintProgram());
     req.hlsl.entryPointName = programmableStage.entryPoint.c_str();
     req.hlsl.stage = stage;
     // Put the firstIndex into the internally reserved group and binding to avoid conflicting with
@@ -215,8 +216,8 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
 
     req.hlsl.substituteOverrideConfig = BuildSubstituteOverridesTransformConfig(programmableStage);
     req.hlsl.limits = LimitsForCompilationRequest::Create(device->GetLimits().v1);
-    req.hlsl.adapterSupportedLimits =
-        LimitsForCompilationRequest::Create(device->GetAdapter()->GetLimits().v1);
+    req.hlsl.adapterSupportedLimits = UnsafeUnserializedValue(
+        LimitsForCompilationRequest::Create(device->GetAdapter()->GetLimits().v1));
     req.hlsl.maxSubgroupSize = device->GetAdapter()->GetPhysicalDevice()->GetSubgroupMaxSize();
 
     req.hlsl.tintOptions.disable_robustness = !device->IsRobustnessEnabled();
