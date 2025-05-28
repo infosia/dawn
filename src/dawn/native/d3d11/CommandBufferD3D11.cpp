@@ -239,7 +239,7 @@ class ImmediateConstantTracker : public T {
                 immediateRangeStartOffset,
                 this->mContent.template Get<uint32_t>(immediateContentStartOffset),
                 size * kImmediateConstantElementByteSize);
-            immediateRangeStartOffset += size * kImmediateConstantElementByteSize;
+            immediateRangeStartOffset += size;
         }
 
         // Reset all dirty bits after uploading.
@@ -537,6 +537,7 @@ MaybeError CommandBuffer::ExecuteComputePass(
     ComputePassBindGroupTracker bindGroupTracker(commandContext);
 
     ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
+    const bool useTintIR = ToBackend(GetDevice())->IsToggleEnabled(Toggle::UseTintIR);
 
     Command type;
     while (mCommands.NextCommandId(&type)) {
@@ -614,8 +615,15 @@ MaybeError CommandBuffer::ExecuteComputePass(
                 break;
             }
 
-            case Command::SetImmediateData:
-                return DAWN_UNIMPLEMENTED_ERROR("SetImmediateData unimplemented");
+            case Command::SetImmediateData: {
+                DAWN_INVALID_IF(!useTintIR, "SetImmediateData should not be used without tint ir.");
+                SetImmediateDataCmd* cmd = mCommands.NextCommand<SetImmediateDataCmd>();
+                DAWN_ASSERT(cmd->size > 0);
+                uint8_t* value = nullptr;
+                value = mCommands.NextData<uint8_t>(cmd->size);
+                immediates.SetImmediateData(cmd->offset, value, cmd->size);
+                break;
+            }
 
             default:
                 DAWN_UNREACHABLE();
@@ -718,6 +726,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(
     VertexBufferTracker vertexBufferTracker(commandContext);
     std::array<float, 4> blendColor = {0.0f, 0.0f, 0.0f, 0.0f};
     uint32_t stencilReference = 0;
+    const bool useTintIR = ToBackend(GetDevice())->IsToggleEnabled(Toggle::UseTintIR);
 
     ImmediateConstantTracker<RenderImmediateConstantsTrackerBase> immediates = {};
 
@@ -867,6 +876,16 @@ MaybeError CommandBuffer::ExecuteRenderPass(
                 break;
             }
 
+            case Command::SetImmediateData: {
+                DAWN_INVALID_IF(!useTintIR, "SetImmediateData should not be used without tint ir.");
+                SetImmediateDataCmd* cmd = mCommands.NextCommand<SetImmediateDataCmd>();
+                DAWN_ASSERT(cmd->size > 0);
+                uint8_t* value = nullptr;
+                value = mCommands.NextData<uint8_t>(cmd->size);
+                immediates.SetImmediateData(cmd->offset, value, cmd->size);
+                break;
+            }
+
             default:
                 DAWN_UNREACHABLE();
                 break;
@@ -985,9 +1004,6 @@ MaybeError CommandBuffer::ExecuteRenderPass(
 
             case Command::WriteTimestamp:
                 return DAWN_UNIMPLEMENTED_ERROR("WriteTimestamp unimplemented");
-
-            case Command::SetImmediateData:
-                return DAWN_UNIMPLEMENTED_ERROR("SetImmediateData unimplemented");
 
             default: {
                 DAWN_TRY(DoRenderBundleCommand(&mCommands, type));
