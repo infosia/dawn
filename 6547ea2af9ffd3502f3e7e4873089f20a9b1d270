@@ -16,6 +16,23 @@
       "message": "This CL is likely the cause of rendering glitches in Skia-Graphite-Dawn-D3D11, Quyen tested locally and confirmed that reverting this fixes the issue, although the underlying reason hasn\u0027t been determined yet.",
       "revId": "6547ea2af9ffd3502f3e7e4873089f20a9b1d270",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fed938b_3250ecf3",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-29T17:19:07Z",
+      "side": 1,
+      "message": "I think this is a bug. `immediateRangeStartOffset` only advances if there is one dirty immediate\u0027s offset.\n\nSo if `firstVertex` is not dirty and `firstInstance` is dirty, this code will overwrite the `firstVertex` location in the buffer with `firstInstance` value.\n\nWe should add a test case for this.",
+      "revId": "6547ea2af9ffd3502f3e7e4873089f20a9b1d270",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
