@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f5e1e8a_366f4efe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-29T10:46:49Z",
+      "side": 1,
+      "message": "Please take a look, thanks!\nThis CL make `ShaderModuleParseResult` serializable and combined with reflection data `EntryPoitMetadataTable` and `ParsedCompilationMessages` so we can handle everything that need calling Tint within a single `ParseShaderModule` of a single output , or with a single cache load with future CL.\nThis CL also refactor the `DeviceBase::CreateShaderModule` and related APIs to prevent passing compilation messages and its pointer everywhere, now all we need is just a single `ShaderModuleParseResult`.",
+      "revId": "5ed3cdd0ed8773d2c82c9ed6de04d56cd207c2e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
