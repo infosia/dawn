@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7e5d6eb_d2e10398",
+        "filename": "src/dawn/tests/unittests/MutexProtectedTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-29T04:38:23Z",
+      "side": 1,
+      "message": "I had to stare at this for a while before remembering that this works because we overload `operator-\u003e`. I don\u0027t have a suggestion, just noting.",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 27
+      },
+      "revId": "759528ecea01badc842557cb9ce94200caa3a0b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
