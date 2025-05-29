@@ -213,10 +213,9 @@ class DeviceBase : public ErrorSink,
         const RenderPipelineDescriptor* descriptor,
         bool allowInternalBinding = false);
     ResultOrError<Ref<SamplerBase>> CreateSampler(const SamplerDescriptor* descriptor = nullptr);
-    ResultOrError<Ref<ShaderModuleBase>> CreateShaderModule(
-        const ShaderModuleDescriptor* descriptor,
-        const std::vector<tint::wgsl::Extension>& internalExtensions = {},
-        ParsedCompilationMessages* compilationMessages = nullptr);
+    MaybeError CreateShaderModule(const ShaderModuleDescriptor* descriptor,
+                                  const std::vector<tint::wgsl::Extension>& internalExtensions,
+                                  Ref<ShaderModuleBase>* validOrErrorShaderModule);
     ResultOrError<Ref<SwapChainBase>> CreateSwapChain(Surface* surface,
                                                       SwapChainBase* previousSwapChain,
                                                       const SurfaceConfiguration* config);
@@ -482,8 +481,7 @@ class DeviceBase : public ErrorSink,
     virtual ResultOrError<Ref<ShaderModuleBase>> CreateShaderModuleImpl(
         const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
         const std::vector<tint::wgsl::Extension>& internalExtensions,
-        ShaderModuleParseResult* parseResult,
-        std::unique_ptr<OwnedCompilationMessages>* compilationMessages) = 0;
+        ShaderModuleParseResult* parseResult) = 0;
     // Note that previousSwapChain may be nullptr, or come from a different backend.
     virtual ResultOrError<Ref<SwapChainBase>> CreateSwapChainImpl(
         Surface* surface,
