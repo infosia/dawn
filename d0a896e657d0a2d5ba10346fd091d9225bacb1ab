@@ -16,6 +16,108 @@
       "message": "PTAL.",
       "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5880ba39_fcabcc18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-29T20:56:03Z",
+      "side": 1,
+      "message": "I got stuck reviewing because I didn\u0027t understand some basic terms in the algorithm.",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f81fb06a_9eca3fc8",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-29T20:56:03Z",
+      "side": 1,
+      "message": "Please comment this struct.\n\nvalue_id is the only obvious thing here",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "911c403c_07591a70",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-29T20:56:03Z",
+      "side": 1,
+      "message": "this needs a method comment.",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3505ca5_da77d104",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-29T20:56:03Z",
+      "side": 1,
+      "message": "needs a method comment explaining what it does.\n\nI presume it maps a SPIR-V value ID to an IR value.\n\nOh, reading the code it only works on things that are constants from a spirv-opt perspective.",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c83bebe6_1e99d545",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-29T20:56:03Z",
+      "side": 1,
+      "message": "needs a method comment",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f527956_1ccc66e6",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-05-29T20:56:03Z",
+      "side": 1,
+      "message": "What is the meaning of \"propagate\" here?  \nand \"up\" means into immediately containing blocks?",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
