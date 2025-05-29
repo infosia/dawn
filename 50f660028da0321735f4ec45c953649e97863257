@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06d89c36_6387f95a",
+        "filename": "src/dawn/native/RenderPipeline.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-29T22:01:38Z",
+      "side": 1,
+      "message": "This line needs reformatting because it\u0027s now too long. You can use `git cl format` or, probably easier, just rewrap it manually.",
+      "revId": "50f660028da0321735f4ec45c953649e97863257",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
