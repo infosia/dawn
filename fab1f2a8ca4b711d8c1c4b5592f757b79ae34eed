@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dbeae78_d7c2d943",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-29T15:50:18Z",
+      "side": 1,
+      "message": "This is in a `GetOrAdd` call keyed on the function so will only execute once, so this part was robust for multiple entry points.\n\nThat said, other parts of the transform did indeed assume single entry point. I\u0027ve added a validation capability to capture that requirement in a parent CL so we can now make that assumption more definitively.",
+      "parentUuid": "7ac1c0aa_d5d7b331",
+      "revId": "fab1f2a8ca4b711d8c1c4b5592f757b79ae34eed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8befb531_c246032b",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-05-28T14:30:52Z",
       "side": 1,
       "message": "This suggests an optimization:  store the length-1 instead of length.   If accessing is the common case, then it will generate much less code and save runtime",
+      "range": {
+        "startLine": 76,
+        "startChar": 64,
+        "endLine": 76,
+        "endChar": 92
+      },
+      "revId": "fab1f2a8ca4b711d8c1c4b5592f757b79ae34eed",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6131e951_bc85dd7a",
+        "filename": "test/tint/buffer/storage/dynamic_index/read.wgsl.expected.msl",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-29T15:50:18Z",
+      "side": 1,
+      "message": "Good observation. That would be an optimization in the robustness transform, which. is the one introducing the `- 1`.",
+      "parentUuid": "8befb531_c246032b",
       "range": {
         "startLine": 76,
         "startChar": 64,
