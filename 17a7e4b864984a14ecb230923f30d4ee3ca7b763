@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fbff94f_3defd73a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-29T22:57:54Z",
+      "side": 1,
+      "message": "AFAICT the crash I saw before is unrelated to this change. This works in my local tests. In the CTS though every event it dispatched twice.",
+      "revId": "17a7e4b864984a14ecb230923f30d4ee3ca7b763",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
