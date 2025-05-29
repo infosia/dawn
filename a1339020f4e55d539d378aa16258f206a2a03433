@@ -1,0 +1,167 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "220ae56a_1f8af91e",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T01:50:00Z",
+      "side": 1,
+      "message": "```suggestion\n                return lengths_constructor-\u003eResult();\n```",
+      "revId": "a1339020f4e55d539d378aa16258f206a2a03433",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cadb044_e35145f7",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T01:50:00Z",
+      "side": 1,
+      "message": "nit: else not needed as if returns.",
+      "fixSuggestions": [
+        {
+          "fixId": "b6b1ac1c_eb38bc1b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+              "range": {
+                "startLine": 197,
+                "startChar": 0,
+                "endLine": 201,
+                "endChar": 0
+              },
+              "replacement": "            }\n            // Add a new parameter to receive the array lengths structure.\n            auto* lengths \u003d b.FunctionParam(\"tint_array_lengths\", nullptr);\n            func-\u003eAppendParam(lengths);\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+              "range": {
+                "startLine": 202,
+                "startChar": 0,
+                "endLine": 210,
+                "endChar": 0
+              },
+              "replacement": "            // Update callsites of this function to pass the structure to it.\n            func-\u003eForEachUseUnsorted([\u0026](core::ir::Usage use) {\n                if (auto* call \u003d use.instruction-\u003eAs\u003ccore::ir::UserCall\u003e()) {\n                    // Get the structure in the calling function and pass that.\n                    auto* caller \u003d ContainingFunction(call);\n                    call-\u003eAppendArg(GetArrayLengthsStructure(caller));\n                }\n            });\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+              "range": {
+                "startLine": 211,
+                "startChar": 0,
+                "endLine": 213,
+                "endChar": 0
+              },
+              "replacement": "            return lengths;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a1339020f4e55d539d378aa16258f206a2a03433",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f827f9e_c550f9ee",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T01:50:00Z",
+      "side": 1,
+      "message": "Maybe update this to note that the function param is a `nullptr` here and will be filled in during `CreateLengthsStructure` for all functions.",
+      "revId": "a1339020f4e55d539d378aa16258f206a2a03433",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92ad1672_ad70c8a5",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T01:50:00Z",
+      "side": 1,
+      "message": "Can we use `\u003cformat\u003e` ? If so, something like this?\n\n```suggestion\n            auto name \u003d std::format(\"tint_array_length_{}_{}\", binding-\u003egroup, binding-\u003ebinding);\n```",
+      "range": {
+        "startLine": 238,
+        "startChar": 1,
+        "endLine": 239,
+        "endChar": 57
+      },
+      "revId": "a1339020f4e55d539d378aa16258f206a2a03433",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aad1d267_7afec1fd",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T01:50:00Z",
+      "side": 1,
+      "message": "```suggestion\n            ordered_bindpoints.Push(BindingPointInfo{\n            \t.binding_point \u003d *binding,\n\t\t.storage_buffer \u003d var,\n\t    });\n```",
+      "revId": "a1339020f4e55d539d378aa16258f206a2a03433",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9896b329_9b2b44ac",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T01:50:00Z",
+      "side": 1,
+      "message": "```suggestion\n        return length-\u003eResult();\n```",
+      "revId": "a1339020f4e55d539d378aa16258f206a2a03433",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57dbd51f_1400239b",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T01:50:00Z",
+      "side": 1,
+      "message": "We only use the `storage_buffer` to get the unwrapped type, why not just store the unwrapped type into `info` instead of the buffer itself?",
+      "revId": "a1339020f4e55d539d378aa16258f206a2a03433",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
