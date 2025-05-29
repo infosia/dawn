@@ -116,6 +116,24 @@
       "parentUuid": "0f2b49c5_d03caece",
       "revId": "f624510b25f1575bfae784358f0cdecb0319ce1f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4730c61c_9a59108d",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T21:01:03Z",
+      "side": 1,
+      "message": "ohhh, IsApple means Apple silicon. Thanks for the clarification.",
+      "parentUuid": "d2aac5c9_feb9b1c3",
+      "revId": "f624510b25f1575bfae784358f0cdecb0319ce1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
