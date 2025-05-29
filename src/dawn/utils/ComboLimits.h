@@ -34,7 +34,7 @@
 
 namespace dawn::utils {
 
-struct ComboLimits : public NonMovable, public wgpu::Limits {
+struct ComboLimits : public NonMovable, public wgpu::Limits, public wgpu::CompatibilityModeLimits {
     ComboLimits();
 
     // This is not copyable or movable to avoid surprises with nextInChain pointers becoming stale

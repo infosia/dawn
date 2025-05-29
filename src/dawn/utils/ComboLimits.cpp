@@ -35,12 +35,18 @@ void ComboLimits::UnlinkedCopyTo(ComboLimits* dst) const {
     wgpu::Limits* dstV1 = static_cast<wgpu::Limits*>(dst);
     *dstV1 = *static_cast<const wgpu::Limits*>(this);
     dstV1->nextInChain = nullptr;
+
+    wgpu::CompatibilityModeLimits* dstCompat = dst;
+    *dstCompat = *this;
+    dstCompat->nextInChain = nullptr;
 }
 
 wgpu::Limits* ComboLimits::GetLinked() {
-    auto* v1 = static_cast<wgpu::Limits*>(this);
-    v1->nextInChain = nullptr;
-    return v1;
+    wgpu::Limits* thisV1 = this;
+    wgpu::CompatibilityModeLimits* thisCompat = this;
+    thisV1->nextInChain = thisCompat;
+    thisCompat->nextInChain = nullptr;
+    return thisV1;
 }
 
 }  // namespace dawn::utils
