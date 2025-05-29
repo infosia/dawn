@@ -34,6 +34,24 @@
       "parentUuid": "baf7cdf8_7aa6f307",
       "revId": "16c635acd09fdfb6ec391822d520a9f054567f83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0b88a80_8f5491a5",
+        "filename": "test/tint/const/array/array_matrix_f16.wgsl",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-29T14:18:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0ca38ba_35024a59",
+      "revId": "16c635acd09fdfb6ec391822d520a9f054567f83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
