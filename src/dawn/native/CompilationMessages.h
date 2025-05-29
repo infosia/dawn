@@ -87,7 +87,9 @@ DAWN_SERIALIZABLE(struct, ParsedCompilationMessages, PARSED_COMPILATION_MESSAGES
 };
 #undef PARSED_COMPILATION_MESSAGES_MEMBER
 
-class OwnedCompilationMessages : public NonCopyable, public NonMovable {
+// Members of OwnedCompilationMessages hold the raw pointers to each other, so
+// OwnedCompilationMessages is non-movable.
+class OwnedCompilationMessages : public NonMovable {
   public:
     explicit OwnedCompilationMessages(ParsedCompilationMessages&& parsedCompilationMessagges);
 

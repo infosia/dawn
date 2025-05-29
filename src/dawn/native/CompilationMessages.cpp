@@ -86,7 +86,7 @@ ResultOrError<uint64_t> CountUTF16CodeUnitsFromUTF8String(const std::string_view
 }
 
 void ParsedCompilationMessages::AddUnanchoredMessage(std::string_view message,
-                                                    wgpu::CompilationMessageType type) {
+                                                     wgpu::CompilationMessageType type) {
     CompilationMessageContent m = {};
     m.message = message;
     m.type = type;
@@ -94,11 +94,11 @@ void ParsedCompilationMessages::AddUnanchoredMessage(std::string_view message,
 }
 
 void ParsedCompilationMessages::AddMessageForTesting(std::string_view message,
-                                                    wgpu::CompilationMessageType type,
-                                                    uint64_t lineNum,
-                                                    uint64_t linePos,
-                                                    uint64_t offset,
-                                                    uint64_t length) {
+                                                     wgpu::CompilationMessageType type,
+                                                     uint64_t lineNum,
+                                                     uint64_t linePos,
+                                                     uint64_t offset,
+                                                     uint64_t length) {
     AddMessage({{
         .message = std::string(message),
         .type = type,

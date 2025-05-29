@@ -63,6 +63,40 @@ class Serializable {
         return CreateBlob(std::move(sink));
     }
 };
+
+// UnsafeUnserializedOptional is a wrapper of std::optional that do nothing when StreamIn to a
+// sink, set to nullopt when StreamOut from a source, and always compared as equal between objects
+// of the same type.
+template <typename T>
+class UnsafeUnserializedOptional {
+  public:
+    UnsafeUnserializedOptional() = default;
+    // NOLINTNEXTLINE(runtime/explicit) allow implicit construction to decrease verbosity
+    UnsafeUnserializedOptional(T&& value) : mValue(std::forward<T>(value)) {}
+
+    void Reset() { mValue.reset(); }
+    constexpr bool HasValue() const { return mValue.has_value(); }
+    constexpr const T& Value() const { return mValue.value(); }
+    constexpr T& Value() { return mValue.value(); }
+
+    template <class... Args>
+    void Emplace(Args&&... args) {
+        mValue.emplace(args...);
+    }
+
+    friend constexpr void StreamIn(stream::Sink*, const UnsafeUnserializedOptional&) {}
+    friend MaybeError StreamOut(stream::Source*, UnsafeUnserializedOptional* out) {
+        out->Reset();
+        return {};
+    }
+
+    // Enabling DAWN_SERIALIZABLE classes with UnsafeUnserializedOptional member to use default
+    // equality operator. Equality comparison always returns true for the same type.
+    bool operator==(const UnsafeUnserializedOptional<T>& other) const { return true; }
+
+  private:
+    std::optional<T> mValue;
+};
 }  // namespace dawn::native
 
 // Helper macro to define a struct or class along with VisitAll methods to call

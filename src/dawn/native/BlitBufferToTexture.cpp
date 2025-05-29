@@ -291,7 +291,7 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreatePipeline(DeviceBase* device,
     std::string shaderCode = GenerateShaderSource(format);
     wgslDesc.code = shaderCode.c_str();
     Ref<ShaderModuleBase> shaderModule;
-    DAWN_TRY_ASSIGN(shaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    DAWN_TRY(device->CreateShaderModule(&shaderModuleDesc, {}, &shaderModule));
 
     FragmentState fragmentState = {};
     fragmentState.module = shaderModule.Get();
