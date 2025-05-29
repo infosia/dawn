@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ac2f5a3_90140520",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-29T21:42:44Z",
+      "side": 1,
+      "message": "Nit: For backend specific toggles we usually prefix them, e.g. `MetalEnableModuleConstant`.",
+      "fixSuggestions": [
+        {
+          "fixId": "d57f0954_63301f8b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/Toggles.cpp",
+              "range": {
+                "startLine": 573,
+                "startChar": 0,
+                "endLine": 575,
+                "endChar": 0
+              },
+              "replacement": "    {Toggle::MetalEnableModuleConstant,\n     {\"metal_enable_module_constant_transform\", \"Enable the module constant transform.\",\n"
+            }
+          ]
+        }
+      ],
+      "revId": "80bba5c91b00e02cfe7a0a03ce8d10d79a93e565",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
