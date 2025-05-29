@@ -135,8 +135,8 @@ class SinglePipelineCachingTests : public PipelineCachingTests {
         // Just copy all the limits, though all we really care about is
         // maxStorageBuffersInFragmentStage
         supported.UnlinkedCopyTo(required);
-        required->v1.maxStorageBuffersInFragmentStage =
-            supported.v1.maxStorageBuffersInFragmentStage;
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
     }
 };
 
@@ -545,7 +545,7 @@ TEST_P(SinglePipelineCachingTests, RenderPipelineBlobCacheNegativeCasesFragmentC
 // cached backends currently remap shader bindings based on the layout. It can be split
 // per-backend as needed.
 TEST_P(SinglePipelineCachingTests, RenderPipelineBlobCacheLayout) {
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedComboLimits().compat.maxStorageBuffersInFragmentStage < 1);
 
     // First time should create and write out to the cache.
     {
