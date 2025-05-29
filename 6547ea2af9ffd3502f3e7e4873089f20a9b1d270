@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d272fbf5_7e4c6ecb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 36
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004156
+      },
+      "writtenOn": "2025-05-29T16:49:37Z",
+      "side": 1,
+      "message": "This CL is likely the cause of rendering glitches in Skia-Graphite-Dawn-D3D11, Quyen tested locally and confirmed that reverting this fixes the issue, although the underlying reason hasn\u0027t been determined yet.",
+      "revId": "6547ea2af9ffd3502f3e7e4873089f20a9b1d270",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
