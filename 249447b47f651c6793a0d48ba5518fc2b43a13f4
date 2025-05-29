@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34eba2e6_ec3b6334",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T20:43:01Z",
+      "side": 1,
+      "message": "Missed a test?\n\n```\n[ RUN      ] IR_ValidatorTest.Var_DuplicateBindingPoints_ReferencedInDifferentFunctions\n../../src/tint/lang/core/ir/validator_value_test.cc:578: Failure\nExpected equality of these values:\n  res\n    Which is: failure: :12:1 error: a module with multiple entry points requires the AllowMultipleEntryPoints capability\n%func_b \u003d @fragment func():void {\n^^^^^^^\n```",
+      "revId": "249447b47f651c6793a0d48ba5518fc2b43a13f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
