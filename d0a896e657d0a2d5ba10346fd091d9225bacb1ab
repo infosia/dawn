@@ -88,6 +88,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "907ebb99_7761cab7",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T21:03:04Z",
+      "side": 1,
+      "message": "Not quite, it\u0027s either a value we\u0027ve already converted (so it\u0027s in the `values_` hash), or it\u0027s a constant. I\u0027ll clarify the description.",
+      "parentUuid": "f3505ca5_da77d104",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c83bebe6_1e99d545",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 11
@@ -116,6 +134,24 @@
       "writtenOn": "2025-05-29T20:56:03Z",
       "side": 1,
       "message": "What is the meaning of \"propagate\" here?  \nand \"up\" means into immediately containing blocks?",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3881e8bc_592fbc50",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T21:03:04Z",
+      "side": 1,
+      "message": "Yea, push the value up as return values from the containing control instructions so it becomes available as a value in the parent scope. Will try to clarify the comment.",
+      "parentUuid": "8f527956_1ccc66e6",
       "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
