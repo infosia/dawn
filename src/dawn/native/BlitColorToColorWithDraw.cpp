@@ -163,13 +163,15 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateExpandMultisamplePipeline(
     wgslDesc.code = vsCode.c_str();
 
     Ref<ShaderModuleBase> vshaderModule;
-    DAWN_TRY_ASSIGN(vshaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    DAWN_TRY_ASSIGN(vshaderModule, device->CreateShaderModule(&shaderModuleDesc, {},
+                                                              /* outputParseResult */ nullptr));
 
     // fragment shader's source will depend on pipeline key.
     std::string fsCode = GenerateExpandFS(pipelineKey);
     wgslDesc.code = fsCode.c_str();
     Ref<ShaderModuleBase> fshaderModule;
-    DAWN_TRY_ASSIGN(fshaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    DAWN_TRY_ASSIGN(fshaderModule, device->CreateShaderModule(&shaderModuleDesc, {},
+                                                              /* outputParseResult */ nullptr));
 
     FragmentState fragmentState = {};
     fragmentState.module = fshaderModule.Get();
@@ -268,13 +270,15 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateResolveMultisamplePipeline(
     wgslDesc.code = vsCode.c_str();
 
     Ref<ShaderModuleBase> vshaderModule;
-    DAWN_TRY_ASSIGN(vshaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    DAWN_TRY_ASSIGN(vshaderModule, device->CreateShaderModule(&shaderModuleDesc, {},
+                                                              /* outputParseResult */ nullptr));
 
     // fragment shader's source will depend on sample count.
     std::string fsCode = GenerateResolveFS(pipelineKey.sampleCount);
     wgslDesc.code = fsCode.c_str();
     Ref<ShaderModuleBase> fshaderModule;
-    DAWN_TRY_ASSIGN(fshaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    DAWN_TRY_ASSIGN(fshaderModule, device->CreateShaderModule(&shaderModuleDesc, {},
+                                                              /* outputParseResult */ nullptr));
 
     FragmentState fragmentState = {};
     fragmentState.module = fshaderModule.Get();

@@ -154,7 +154,8 @@ ResultOrError<Ref<RenderPipelineBase>> GetOrCreateRG8ToDepth16UnormPipeline(Devi
     wgslDesc.code = kBlitRG8ToDepthShaders;
 
     Ref<ShaderModuleBase> shaderModule;
-    DAWN_TRY_ASSIGN(shaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    DAWN_TRY_ASSIGN(shaderModule, device->CreateShaderModule(&shaderModuleDesc, {},
+                                                             /* outputParseResult */ nullptr));
 
     FragmentState fragmentState = {};
     fragmentState.module = shaderModule.Get();
@@ -219,7 +220,8 @@ ResultOrError<InternalPipelineStore::BlitR8ToStencilPipelines> GetOrCreateR8ToSt
     wgslDesc.code = shader.c_str();
 
     Ref<ShaderModuleBase> shaderModule;
-    DAWN_TRY_ASSIGN(shaderModule, device->CreateShaderModule(&shaderModuleDesc));
+    DAWN_TRY_ASSIGN(shaderModule, device->CreateShaderModule(&shaderModuleDesc, {},
+                                                             /* outputParseResult */ nullptr));
 
     FragmentState fragmentState = {};
     fragmentState.module = shaderModule.Get();
