@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "982f7bc0_ce41ea6d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-05-29T21:10:25Z",
+      "side": 1,
+      "message": "Added the warning text into the description.",
+      "parentUuid": "38b17cd8_f4e1e6e8",
+      "revId": "364da81ea0f85dc3f376a8d50da05bf193cebab4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "65ba234c_dde5446d",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -65,6 +83,24 @@
       "writtenOn": "2025-05-27T18:44:28Z",
       "side": 1,
       "message": "Is this new, we\u0027ve been building with this flag enabled I thought and this wasn\u0027t showing up before?",
+      "revId": "364da81ea0f85dc3f376a8d50da05bf193cebab4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbcd0764_18be2d90",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-05-29T21:10:25Z",
+      "side": 1,
+      "message": "I am not sure. But this seems to be only happening for iOS build for me.",
+      "parentUuid": "203ae44d_f9f1ce8a",
       "revId": "364da81ea0f85dc3f376a8d50da05bf193cebab4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
