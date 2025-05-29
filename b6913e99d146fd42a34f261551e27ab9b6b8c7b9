@@ -22,6 +22,30 @@
       },
       "revId": "b6913e99d146fd42a34f261551e27ab9b6b8c7b9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99a481b7_95243660",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-05-29T15:33:52Z",
+      "side": 1,
+      "message": "This is non trivial but can be done.",
+      "parentUuid": "447fd2b4_c73f5984",
+      "range": {
+        "startLine": 670,
+        "startChar": 20,
+        "endLine": 670,
+        "endChar": 25
+      },
+      "revId": "b6913e99d146fd42a34f261551e27ab9b6b8c7b9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
