@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27243c57_0f779a51",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T21:07:40Z",
+      "side": 1,
+      "message": "Just a few nits",
+      "revId": "e387c690e761496fcecbd48938f113d77601d661",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c735b33f_ff4c57cb",
+        "filename": "src/tint/lang/spirv/writer/raise/merge_return.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T21:07:40Z",
+      "side": 1,
+      "message": "Out of curiosity, could this be:\n\n```\nauto returns \u003d fn-\u003eBlock()-\u003eExits();\n```\n\nthe only exits should all be the returns, no?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 11
+      },
+      "revId": "e387c690e761496fcecbd48938f113d77601d661",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "073ccf43_0489f607",
+        "filename": "src/tint/lang/spirv/writer/raise/merge_return.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T21:07:40Z",
+      "side": 1,
+      "message": "Is `returns.IsEmpty()` a slightly more confusing way of saying `fn-\u003eReturnValue()-\u003eIs\u003ccore::ir::Void\u003e()` ? At least to me saying the function says it doesn\u0027t return is easier to read then there are no returns for some reason.\n\n(If you used the ReturnValue type, you don\u0027t even have to get the exits and could return before the block above)\n\n....\n\n\nOh, I see, so even for a function with  a void return we may have to conditionalize due to stores into buffers. So we can\u0027t use the return value.\n\nMaybe some kind of comment here to that effect as it\u0027s not obvious?",
+      "revId": "e387c690e761496fcecbd48938f113d77601d661",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e389782_a5d7214b",
+        "filename": "src/tint/lang/spirv/writer/raise/merge_return.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T21:07:40Z",
+      "side": 1,
+      "message": "nit: Maybe add something like `because we removed the main `return` value when replacing returns` ?",
+      "revId": "e387c690e761496fcecbd48938f113d77601d661",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
