@@ -220,7 +220,8 @@ class DeviceBase : public ErrorSink,
     ResultOrError<Ref<SwapChainBase>> CreateSwapChain(Surface* surface,
                                                       SwapChainBase* previousSwapChain,
                                                       const SurfaceConfiguration* config);
-    ResultOrError<Ref<TextureBase>> CreateTexture(const TextureDescriptor* rawDescriptor);
+    ResultOrError<Ref<TextureBase>> CreateTexture(const TextureDescriptor* rawDescriptor,
+                                                  bool fromApiCall = false);
     ResultOrError<Ref<TextureViewBase>> CreateTextureView(
         TextureBase* texture,
         const TextureViewDescriptor* descriptor = nullptr);
@@ -342,6 +343,7 @@ class DeviceBase : public ErrorSink,
     QueueBase* GetQueue() const;
 
     friend class IgnoreLazyClearCountScope;
+    friend class TextureViewCache;
 
     MaybeError Tick();
 
