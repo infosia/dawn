@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c793cbf_bab745c9",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-29T20:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4452c9e2_23420ef3",
+      "revId": "6b7b404cef798f7d3c8ef920d08b224549873532",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "364e2261_8791a46e",
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6de7680b_f757d01e",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-29T20:55:46Z",
+      "side": 1,
+      "message": "This is still protected by the device autolock since it gets called in either `WriteBuffer` or `Submit`. But from what I can tell, this wouldn\u0027t be safe either way unless we locked the entire buffer for the duration of the `WriteBuffer` or `Submit` call?\n\nMaybe we should do that? (But probably would need to be a follow up change.)",
+      "parentUuid": "364e2261_8791a46e",
+      "revId": "6b7b404cef798f7d3c8ef920d08b224549873532",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c7cf99a0_6a9719cc",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 19
@@ -48,6 +84,24 @@
       "writtenOn": "2025-05-29T05:19:44Z",
       "side": 1,
       "message": "What lock must be held while calling this? Right now, we hold the device lock, not the SynchronizedState lock. I\u0027m not sure that\u0027s safe? Probably we actually need to pass a `Usage` in here like I think you had before. Or if not, we need to comment on this function (in the header) about what lock must be held while calling it.\n\nSimilar questions about every other function that was previously assuming the device lock was held.",
+      "revId": "6b7b404cef798f7d3c8ef920d08b224549873532",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0dce85e2_ad97639f",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-29T20:55:46Z",
+      "side": 1,
+      "message": "Since this was a private function and was only called in 1 place where it was already holding the buffer lock, I had removed the `Usage`. Added it back to make it clear that the lock should be held during the call.",
+      "parentUuid": "c7cf99a0_6a9719cc",
       "revId": "6b7b404cef798f7d3c8ef920d08b224549873532",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +129,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e93af217_1397932a",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-29T20:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d0bc66d_9e08a2de",
+      "range": {
+        "startLine": 187,
+        "startChar": 63,
+        "endLine": 188,
+        "endChar": 21
+      },
+      "revId": "6b7b404cef798f7d3c8ef920d08b224549873532",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15eef176_d311642c",
@@ -88,6 +166,30 @@
       "writtenOn": "2025-05-29T05:19:44Z",
       "side": 1,
       "message": "YAGNI, remove this argument until we need it (which we won\u0027t unless we bother to try to change some of them to `relaxed`).",
+      "range": {
+        "startLine": 189,
+        "startChar": 29,
+        "endLine": 189,
+        "endChar": 81
+      },
+      "revId": "6b7b404cef798f7d3c8ef920d08b224549873532",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ea78b9a_becdda2f",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-29T20:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15eef176_d311642c",
       "range": {
         "startLine": 189,
         "startChar": 29,
