@@ -90,6 +90,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0e13db3_cdc72c1f",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-29T16:44:06Z",
+      "side": 1,
+      "message": "Mark as resolved to submit",
+      "parentUuid": "9d49910b_c057a4fe",
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "032d0304_a9f15e8c",
@@ -365,6 +383,30 @@
       "side": 1,
       "message": "LGTM. I do think that manual APIAddRef+APIRelease would work but this is maybe easier to understand.",
       "parentUuid": "d9549abd_bf4f12cd",
+      "range": {
+        "startLine": 102,
+        "startChar": 17,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20c56e13_96728d93",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-29T16:44:06Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "dee19ad1_0cc7a1f4",
       "range": {
         "startLine": 102,
         "startChar": 17,
