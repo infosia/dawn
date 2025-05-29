@@ -176,7 +176,7 @@ TEST_P(OpArrayLengthTest, Fragment) {
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM() &&
                           HasToggleEnabled("gl_use_array_length_from_uniform"));
 
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 3);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedComboLimits().compat.maxStorageBuffersInFragmentStage < 3);
 
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
 
@@ -230,7 +230,7 @@ TEST_P(OpArrayLengthTest, Fragment) {
 
 // Test OpArrayLength in the vertex stage
 TEST_P(OpArrayLengthTest, Vertex) {
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInVertexStage < 3);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedComboLimits().compat.maxStorageBuffersInVertexStage < 3);
 
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
 
