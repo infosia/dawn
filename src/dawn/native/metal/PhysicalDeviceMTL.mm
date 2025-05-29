@@ -29,6 +29,7 @@
 
 #include "dawn/common/CoreFoundationRef.h"
 #include "dawn/common/GPUInfo.h"
+#include "dawn/common/GPUInfo_autogen.h"
 #include "dawn/common/Log.h"
 #include "dawn/common/NSRef.h"
 #include "dawn/common/Platform.h"
@@ -439,6 +440,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // TODO(crbug.com/dawn/1071): Tighten the workaround when this issue is fixed.
     if (gpu_info::IsIntel(vendorId)) {
         deviceToggles->Default(Toggle::MetalRenderR8RG8UnormSmallMipToTempTexture, true);
+    }
+
+    // chromium:419804339: Module constant hoisting is broadly available as a msl transform but are
+    // execution correction issues with f16 for non apple silicon (Intel/AMD).
+    if (gpu_info::IsApple(vendorId)) {
+        deviceToggles->Default(Toggle::EnableModuleConstant, true);
     }
 
     // On some Intel GPUs vertex only render pipeline get wrong depth result if no fragment
