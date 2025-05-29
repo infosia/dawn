@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba1de157_9249958e",
+        "filename": "src/tint/lang/spirv/writer/raise/merge_return.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-29T21:35:21Z",
+      "side": 1,
+      "message": "There is no `Exits()` on a block. A control instruction tracks exits, but blocks do not.",
+      "parentUuid": "c735b33f_ff4c57cb",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 11
+      },
+      "revId": "e387c690e761496fcecbd48938f113d77601d661",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "073ccf43_0489f607",
@@ -60,6 +84,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "caff13fc_398c8b0f",
+        "filename": "src/tint/lang/spirv/writer/raise/merge_return.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-29T21:35:21Z",
+      "side": 1,
+      "message": "Rephrased the comment to hopefully better reflect the intent.",
+      "parentUuid": "073ccf43_0489f607",
+      "revId": "e387c690e761496fcecbd48938f113d77601d661",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4e389782_a5d7214b",
         "filename": "src/tint/lang/spirv/writer/raise/merge_return.cc",
         "patchSetId": 1
@@ -71,6 +113,24 @@
       "writtenOn": "2025-05-29T21:07:40Z",
       "side": 1,
       "message": "nit: Maybe add something like `because we removed the main `return` value when replacing returns` ?",
+      "revId": "e387c690e761496fcecbd48938f113d77601d661",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61045caa_b33152e8",
+        "filename": "src/tint/lang/spirv/writer/raise/merge_return.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-29T21:35:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e389782_a5d7214b",
       "revId": "e387c690e761496fcecbd48938f113d77601d661",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
