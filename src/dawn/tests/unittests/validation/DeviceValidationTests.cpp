@@ -276,7 +276,7 @@ TEST_F(RequestDeviceCoreValidationTest, Explicit) {
             // Check one of limits to be greater than compat tier.
             dawn::utils::ComboLimits limits;
             device.GetLimits(limits.GetLinked());
-            EXPECT_GT(limits.v1.maxStorageBuffersInVertexStage, 0u);
+            EXPECT_GT(limits.compat.maxStorageBuffersInVertexStage, 0u);
         }));
     adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                           mRequestDeviceCallback.Callback());
@@ -294,7 +294,7 @@ TEST_F(RequestDeviceCoreValidationTest, Implicit) {
             // Check one of limits to be greater than compat tier.
             dawn::utils::ComboLimits limits;
             device.GetLimits(limits.GetLinked());
-            EXPECT_GT(limits.v1.maxStorageBuffersInVertexStage, 0u);
+            EXPECT_GT(limits.compat.maxStorageBuffersInVertexStage, 0u);
         }));
     adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                           mRequestDeviceCallback.Callback());
@@ -320,7 +320,7 @@ TEST_F(RequestDeviceCompatValidationTest, CreateCore) {
             // Check one of limits to be greater than compat tier.
             dawn::utils::ComboLimits limits;
             device.GetLimits(limits.GetLinked());
-            EXPECT_GT(limits.v1.maxStorageBuffersInVertexStage, 0u);
+            EXPECT_GT(limits.compat.maxStorageBuffersInVertexStage, 0u);
         }));
     adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                           mRequestDeviceCallback.Callback());
@@ -338,7 +338,7 @@ TEST_F(RequestDeviceCompatValidationTest, CreateCompat) {
             // Check one of limits to be compat tier.
             dawn::utils::ComboLimits limits;
             device.GetLimits(limits.GetLinked());
-            EXPECT_EQ(limits.v1.maxStorageBuffersInVertexStage, 0u);
+            EXPECT_EQ(limits.compat.maxStorageBuffersInVertexStage, 0u);
         }));
     adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                           mRequestDeviceCallback.Callback());
