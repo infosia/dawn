@@ -46,8 +46,8 @@ class DynamicBufferOffsetTests : public DawnTest {
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
                            dawn::utils::ComboLimits* required) override {
         // TODO(crbug.com/383593270): Enable all the limits.
-        required->v1.maxStorageBuffersInFragmentStage =
-            supported.v1.maxStorageBuffersInFragmentStage;
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
         required->v1.maxStorageBuffersPerShaderStage = supported.v1.maxStorageBuffersPerShaderStage;
     }
 
