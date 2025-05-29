@@ -56,10 +56,10 @@
     X(v1, maxDynamicStorageBuffersPerPipelineLayout) \
     X(v1, maxSampledTexturesPerShaderStage)          \
     X(v1, maxSamplersPerShaderStage)                 \
-    X(v1, maxStorageBuffersInFragmentStage)          \
-    X(v1, maxStorageTexturesInFragmentStage)         \
-    X(v1, maxStorageBuffersInVertexStage)            \
-    X(v1, maxStorageTexturesInVertexStage)           \
+    X(compat, maxStorageBuffersInFragmentStage)      \
+    X(compat, maxStorageTexturesInFragmentStage)     \
+    X(compat, maxStorageBuffersInVertexStage)        \
+    X(compat, maxStorageTexturesInVertexStage)       \
     X(v1, maxStorageBuffersPerShaderStage)           \
     X(v1, maxStorageTexturesPerShaderStage)          \
     X(v1, maxUniformBuffersPerShaderStage)           \
