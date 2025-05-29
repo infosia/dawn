@@ -317,6 +317,7 @@ TEST_F(ShaderModuleValidationTest, GetCompilationMessages) {
 
     native::ShaderModuleBase* shaderModuleBase = native::FromAPI(shaderModule.Get());
     native::OwnedCompilationMessages* messages = shaderModuleBase->GetCompilationMessages();
+    // TODO: add ShaderModuleBase::SetFinalizedCompilationMessages for testing
     messages->ClearMessages();
     messages->AddMessageForTesting("Info Message");
     messages->AddMessageForTesting("Warning Message", wgpu::CompilationMessageType::Warning);
