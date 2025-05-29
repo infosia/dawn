@@ -164,19 +164,19 @@ uint32_t GPUSupportedLimits::getMaxComputeWorkgroupsPerDimension(Napi::Env) {
 }
 
 uint32_t GPUSupportedLimits::getMaxStorageBuffersInFragmentStage(Napi::Env) {
-    return limits_.v1.maxStorageBuffersInFragmentStage;
+    return limits_.compat.maxStorageBuffersInFragmentStage;
 }
 
 uint32_t GPUSupportedLimits::getMaxStorageTexturesInFragmentStage(Napi::Env) {
-    return limits_.v1.maxStorageTexturesInFragmentStage;
+    return limits_.compat.maxStorageTexturesInFragmentStage;
 }
 
 uint32_t GPUSupportedLimits::getMaxStorageBuffersInVertexStage(Napi::Env) {
-    return limits_.v1.maxStorageBuffersInVertexStage;
+    return limits_.compat.maxStorageBuffersInVertexStage;
 }
 
 uint32_t GPUSupportedLimits::getMaxStorageTexturesInVertexStage(Napi::Env) {
-    return limits_.v1.maxStorageTexturesInVertexStage;
+    return limits_.compat.maxStorageTexturesInVertexStage;
 }
 
 }  // namespace wgpu::binding
