@@ -1460,7 +1460,7 @@ ShaderModuleBase* DeviceBase::APICreateErrorShaderModule(const ShaderModuleDescr
 }
 TextureBase* DeviceBase::APICreateTexture(const TextureDescriptor* descriptor) {
     Ref<TextureBase> result;
-    if (ConsumedError(CreateTexture(descriptor), &result, InternalErrorType::OutOfMemory,
+    if (ConsumedError(CreateTexture(descriptor, true), &result, InternalErrorType::OutOfMemory,
                       "calling %s.CreateTexture(%s).", this, descriptor)) {
         result = TextureBase::MakeError(this, descriptor);
     }
@@ -2206,7 +2206,8 @@ ResultOrError<Ref<SwapChainBase>> DeviceBase::CreateSwapChain(Surface* surface,
     return CreateSwapChainImpl(surface, previousSwapChain, config);
 }
 
-ResultOrError<Ref<TextureBase>> DeviceBase::CreateTexture(const TextureDescriptor* descriptorOrig) {
+ResultOrError<Ref<TextureBase>> DeviceBase::CreateTexture(const TextureDescriptor* descriptorOrig,
+                                                          bool fromApiCall) {
     DAWN_TRY(ValidateIsAlive());
 
     TextureDescriptor rawDescriptor = descriptorOrig->WithTrivialFrontendDefaults();
@@ -2247,7 +2248,11 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
     } else {
         descriptor = Unpack(&desc);
     }
-    return CreateTextureViewImpl(texture, descriptor);
+
+    return texture->GetTextureViewCache().GetOrCreate(
+        desc, [&](TextureViewDescriptor& key) -> ResultOrError<Ref<TextureViewBase>> {
+            return CreateTextureViewImpl(texture, descriptor);
+        });
 }
 
 // Other implementation details

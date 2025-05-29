@@ -31,6 +31,8 @@
 #include <string>
 #include <vector>
 
+#include "dawn/common/LRUCache.h"
+#include "dawn/common/RefCountedWithExternalCount.h"
 #include "dawn/common/WeakRef.h"
 #include "dawn/common/ityp_array.h"
 #include "dawn/common/ityp_bitset.h"
@@ -84,7 +86,31 @@ static constexpr wgpu::TextureUsage kTextureViewOnlyUsages =
     kShaderTextureUsages | kResolveTextureLoadAndStoreUsages |
     wgpu::TextureUsage::TransientAttachment | wgpu::TextureUsage::StorageAttachment;
 
-class TextureBase : public SharedResource {
+struct TextureViewCacheFuncs {
+    size_t operator()(const TextureViewDescriptor& desc) const;
+    bool operator()(const TextureViewDescriptor& a, const TextureViewDescriptor& b) const;
+};
+class TextureViewCache : public LRUCache<TextureViewDescriptor,
+                                         Ref<TextureViewBase>,
+                                         ErrorData,
+                                         TextureViewCacheFuncs> {
+    using Base =
+        LRUCache<TextureViewDescriptor, Ref<TextureViewBase>, ErrorData, TextureViewCacheFuncs>;
+
+  public:
+    static const size_t kDefaultCapacity = 4;
+
+    explicit TextureViewCache(TextureBase* texture);
+    using Base::Clear;
+    using Base::GetOrCreate;
+
+  private:
+    // We use a raw pointer to the texture here because the cache is always owned by the texture
+    // and hence should always be valid.
+    raw_ptr<TextureBase> mTexture;
+};
+
+class TextureBase : public RefCountedWithExternalCount<SharedResource> {
   public:
     enum class ClearValue { Zero, NonZero };
 
@@ -164,6 +190,8 @@ class TextureBase : public SharedResource {
 
     uint64_t ComputeEstimatedByteSize() const;
 
+    TextureViewCache& GetTextureViewCache() { return mTextureViewCache; }
+
     // Dawn API
     TextureViewBase* APICreateView(const TextureViewDescriptor* descriptor = nullptr);
     TextureViewBase* APICreateErrorView(const TextureViewDescriptor* descriptor = nullptr);
@@ -201,6 +229,9 @@ class TextureBase : public SharedResource {
 
     std::string GetSizeLabel() const;
 
+    void WillAddFirstExternalRef() override;
+    void WillDropLastExternalRef() override;
+
     wgpu::TextureDimension mDimension;
     // Only used for compatibility mode
     wgpu::TextureViewDimension mCompatibilityTextureBindingViewDimension =
@@ -218,6 +249,8 @@ class TextureBase : public SharedResource {
     // Textures track texture views created from them so that they can be destroyed when the texture
     // is destroyed.
     ApiObjectList mTextureViews;
+
+    TextureViewCache mTextureViewCache;
 
     // TODO(crbug.com/dawn/845): Use a more optimized data structure to save space
     std::vector<bool> mIsSubresourceContentInitializedAtIndex;

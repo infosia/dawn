@@ -33,6 +33,7 @@
 #include "absl/strings/str_format.h"
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
+#include "dawn/common/HashUtils.h"
 #include "dawn/common/Math.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BlitBufferToTexture.h"
@@ -926,7 +927,7 @@ bool IsValidSampleCount(uint32_t sampleCount) {
 TextureBase::TextureState::TextureState() : hasAccess(true), destroyed(false) {}
 
 TextureBase::TextureBase(DeviceBase* device, const UnpackedPtr<TextureDescriptor>& descriptor)
-    : SharedResource(device, descriptor->label),
+    : RefCountedWithExternalCount<SharedResource>(device, descriptor->label),
       mDimension(descriptor->dimension),
       mCompatibilityTextureBindingViewDimension(
           ResolveDefaultCompatiblityTextureBindingViewDimension(device, descriptor)),
@@ -936,7 +937,8 @@ TextureBase::TextureBase(DeviceBase* device, const UnpackedPtr<TextureDescriptor
       mSampleCount(descriptor->sampleCount),
       mUsage(descriptor->usage),
       mInternalUsage(mUsage),
-      mFormatEnumForReflection(descriptor->format) {
+      mFormatEnumForReflection(descriptor->format),
+      mTextureViewCache(this) {
     uint32_t subresourceCount =
         mMipLevelCount * GetArrayLayers() * GetAspectCount(mFormat->aspects);
     mIsSubresourceContentInitializedAtIndex = std::vector<bool>(subresourceCount, false);
@@ -966,14 +968,15 @@ static constexpr Format kUnusedFormat;
 TextureBase::TextureBase(DeviceBase* device,
                          const TextureDescriptor* descriptor,
                          ObjectBase::ErrorTag tag)
-    : SharedResource(device, tag, descriptor->label),
+    : RefCountedWithExternalCount<SharedResource>(device, tag, descriptor->label),
       mDimension(descriptor->dimension),
       mFormat(kUnusedFormat),
       mBaseSize(descriptor->size),
       mMipLevelCount(descriptor->mipLevelCount),
       mSampleCount(descriptor->sampleCount),
       mUsage(descriptor->usage),
-      mFormatEnumForReflection(descriptor->format) {}
+      mFormatEnumForReflection(descriptor->format),
+      mTextureViewCache(this) {}
 
 void TextureBase::DestroyImpl() {
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
@@ -987,6 +990,9 @@ void TextureBase::DestroyImpl() {
     //   is implicitly destroyed. This case is thread-safe because there are no
     //   other threads using the texture since there are no other live refs.
     mState.destroyed = true;
+
+    // Drop all the cache references to TextureViews.
+    mTextureViewCache.Clear();
 
     // Destroy all of the views associated with the texture as well.
     mTextureViews.Destroy();
@@ -1011,6 +1017,19 @@ void TextureBase::FormatLabel(absl::FormatSink* s) const {
     } else if (!IsError()) {
         s->Append(absl::StrFormat(" (unlabeled %s, %s)", GetSizeLabel(), mFormat->format));
     }
+}
+
+void TextureBase::WillAddFirstExternalRef() {
+    // Only enable the view cache once an external reference has been added. This prevents textures
+    // created for internal uses, such as workarounds, from being kept alive by the views in the
+    // cache.
+    mTextureViewCache.ResizeCapacity(TextureViewCache::kDefaultCapacity);
+}
+
+void TextureBase::WillDropLastExternalRef() {
+    // Drop all the additional references to TextureViews that we were holding as a part of the
+    // cache.
+    mTextureViewCache.ResizeCapacity(0);  // Implicitly clears the cache.
 }
 
 std::string TextureBase::GetSizeLabel() const {
@@ -1433,6 +1452,31 @@ wgpu::TextureFormat TextureBase::APIGetFormat() const {
 wgpu::TextureUsage TextureBase::APIGetUsage() const {
     return mUsage;
 }
+
+// TextureViewCacheFuncs
+
+size_t TextureViewCacheFuncs::operator()(const TextureViewDescriptor& desc) const {
+    size_t hash = Hash(desc.format);
+
+    HashCombine(&hash, desc.dimension, desc.aspect, desc.usage);
+    HashCombine(&hash, desc.baseMipLevel, desc.mipLevelCount, desc.baseArrayLayer,
+                desc.arrayLayerCount);
+
+    return hash;
+}
+
+bool TextureViewCacheFuncs::operator()(const TextureViewDescriptor& a,
+                                       const TextureViewDescriptor& b) const {
+    // Need to manually omit the label and chain members.
+    return a.format == b.format && a.dimension == b.dimension && a.baseMipLevel == b.baseMipLevel &&
+           a.mipLevelCount == b.mipLevelCount && a.baseArrayLayer == b.baseArrayLayer &&
+           a.arrayLayerCount == b.arrayLayerCount && a.aspect == b.aspect && a.usage == b.usage;
+}
+
+// TextureViewCache
+
+TextureViewCache::TextureViewCache(TextureBase* texture)
+    : TextureViewCache::Base(0), mTexture(texture) {}
 
 // TextureViewBase
 
