@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7690fff0_8c576e17",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-29T02:32:48Z",
+      "side": 1,
+      "message": "The previous CQ failure should be fixed since I landed https://dawn-review.googlesource.com/c/dawn/+/244035.\n\nThe code seems fine, but I\u0027m still trying to decide whether it would be better to just do it for the frontend with the alternative I suggested...",
+      "revId": "31d0c0eb59cef86f79bbae3585328447756d5951",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
