@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c089552_f88397ec",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-29T23:34:55Z",
+      "side": 1,
+      "message": "nit: I believe just `release` is sufficient for this. We don\u0027t have to actually switch `store`s from `seq_cst` to `release` right now but the comment can explain the theory.",
+      "range": {
+        "startLine": 303,
+        "startChar": 17,
+        "endLine": 303,
+        "endChar": 39
+      },
+      "revId": "278bad30f06507e068f27a7ef87f83b26da4f91c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6fa01913_95b169d0",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-29T23:34:55Z",
+      "side": 1,
+      "message": "nit: the atomic should only be read once and reused. Here and on 332.",
+      "range": {
+        "startLine": 306,
+        "startChar": 8,
+        "endLine": 306,
+        "endChar": 25
+      },
+      "revId": "278bad30f06507e068f27a7ef87f83b26da4f91c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cba29df6_d552cd82",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-29T23:34:55Z",
+      "side": 1,
+      "message": "nit: This is a bit duplicated with the switch later. Maybe the switch can just move to the top?",
+      "revId": "278bad30f06507e068f27a7ef87f83b26da4f91c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
