@@ -2247,7 +2247,12 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
     } else {
         descriptor = Unpack(&desc);
     }
-    return CreateTextureViewImpl(texture, descriptor);
+
+    return texture->GetTextureViewCache().GetOrCreate(desc, [&]() -> ResultOrError<Ref<TextureViewBase>> {
+        return CreateTextureViewImpl(texture, descriptor);
+    });
+
+    //return texture->GetOrCreateTextureView(descriptor);//CreateTextureViewImpl(texture, descriptor);
 }
 
 // Other implementation details
