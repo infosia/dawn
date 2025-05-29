@@ -329,6 +329,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d9549abd_bf4f12cd",
+        "filename": "src/dawn/native/webgpu/DeviceWGPU.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-29T00:41:00Z",
+      "side": 1,
+      "message": "Change to using C descriptor. Pass a `new Ref\u003cDevice\u003e` pointer to the deviceLostCallback.userdata and rely on the callback to delete it. PTAL.",
+      "parentUuid": "7892f514_cee5d740",
+      "range": {
+        "startLine": 102,
+        "startChar": 17,
+        "endLine": 102,
+        "endChar": 46
+      },
+      "revId": "67082840b5999585368eadf7034efbbc8e0e60b6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1524b378_21717754",
         "filename": "src/dawn/tests/end2end/DeviceLifetimeTests.cpp",
         "patchSetId": 7
