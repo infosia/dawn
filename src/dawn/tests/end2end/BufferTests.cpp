@@ -1339,7 +1339,8 @@ class BufferMapExtendedUsagesTests : public DawnTest {
   protected:
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
                            dawn::utils::ComboLimits* required) override {
-        required->v1.maxStorageBuffersInVertexStage = supported.v1.maxStorageBuffersInVertexStage;
+        required->compat.maxStorageBuffersInVertexStage =
+            supported.compat.maxStorageBuffersInVertexStage;
         required->v1.maxStorageBuffersPerShaderStage = supported.v1.maxStorageBuffersPerShaderStage;
     }
 

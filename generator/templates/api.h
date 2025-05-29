@@ -43,6 +43,7 @@
 #define WGPU_BREAKING_CHANGE_STRING_VIEW_LABELS
 #define WGPU_BREAKING_CHANGE_STRING_VIEW_OUTPUT_STRUCTS
 #define WGPU_BREAKING_CHANGE_STRING_VIEW_CALLBACKS
+#define WGPU_BREAKING_CHANGE_COMPATIBILITY_MODE_LIMITS
 {% macro render_c_default_value(member) -%}
     {%- if member.annotation in ["*", "const*", "const*const*"] -%}
         //* Pointer types should always default to NULL.
