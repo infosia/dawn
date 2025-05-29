@@ -39,11 +39,13 @@ dawn_add_library(
   ENABLE_EMSCRIPTEN
   UTILITY_TARGET dawn_internal_config
   PRIVATE_HEADERS
+    "ComboLimits.h"
     "ComboRenderBundleEncoderDescriptor.h"
     "ComboRenderPipelineDescriptor.h"
     "TextureUtils.h"
     "WGPUHelpers.h"
   SOURCES
+    "ComboLimits.cpp"
     "ComboRenderBundleEncoderDescriptor.cpp"
     "ComboRenderPipelineDescriptor.cpp"
     "TextureUtils.cpp"

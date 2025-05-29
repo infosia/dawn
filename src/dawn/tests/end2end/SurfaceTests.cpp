@@ -47,10 +47,10 @@ struct GLFWindowDestroyer {
 
 class SurfaceTests : public DawnTest {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
-        // Just copy all the limits, though all we really care about is
-        // maxStorageBuffersInFragmentStage
-        return supported;
+    void GetRequiredCombinedLimits(const dawn::utils::ComboLimits& supported,
+                                   dawn::utils::ComboLimits* required) override {
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
     }
 
   public:
@@ -623,7 +623,8 @@ TEST_P(SurfaceTests, CopyTo) {
 
 // Test using the surface as a storage texture when supported.
 TEST_P(SurfaceTests, Storage) {
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage <
+                             1);
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceCapabilities caps;
     surface.GetCapabilities(adapter, &caps);

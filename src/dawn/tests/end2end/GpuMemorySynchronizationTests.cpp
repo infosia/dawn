@@ -40,15 +40,16 @@ namespace {
 
 class GpuMemorySyncTests : public DawnTest {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
-        // Just copy all the limits, though all we really care about is
-        // maxStorageBuffersInFragmentStage
-        return supported;
+    void GetRequiredCombinedLimits(const dawn::utils::ComboLimits& supported,
+                                   dawn::utils::ComboLimits* required) override {
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
     }
 
     void SetUp() override {
         DawnTest::SetUp();
-        DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+        DAWN_TEST_UNSUPPORTED_IF(
+            GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage < 1);
     }
 
     wgpu::Buffer CreateBuffer() {
@@ -121,7 +122,8 @@ class GpuMemorySyncTests : public DawnTest {
 // dependency chain. The test verifies that data in buffer among iterations in compute passes is
 // correctly synchronized.
 TEST_P(GpuMemorySyncTests, ComputePass) {
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage <
+                             1);
 
     // Create pipeline, bind group, and buffer for compute pass.
     wgpu::Buffer buffer = CreateBuffer();
@@ -431,15 +433,16 @@ constexpr int kVertexBufferStride = 4 * sizeof(float);
 
 class MultipleWriteThenMultipleReadTests : public DawnTest {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
-        // Just copy all the limits, though all we really care about is
-        // maxStorageBuffersInFragmentStage
-        return supported;
+    void GetRequiredCombinedLimits(const dawn::utils::ComboLimits& supported,
+                                   dawn::utils::ComboLimits* required) override {
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
     }
 
     void SetUp() override {
         DawnTest::SetUp();
-        DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+        DAWN_TEST_UNSUPPORTED_IF(
+            GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage < 1);
     }
 
   protected:
