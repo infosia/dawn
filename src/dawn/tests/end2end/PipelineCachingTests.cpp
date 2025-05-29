@@ -135,8 +135,8 @@ class SinglePipelineCachingTests : public PipelineCachingTests {
         // Just copy all the limits, though all we really care about is
         // maxStorageBuffersInFragmentStage
         supported.UnlinkedCopyTo(required);
-        required->v1.maxStorageBuffersInFragmentStage =
-            supported.v1.maxStorageBuffersInFragmentStage;
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
     }
 };
 

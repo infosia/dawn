@@ -48,12 +48,14 @@ class BindGroupTests : public DawnTest {
         required->v1.maxStorageBuffersPerShaderStage = supported.v1.maxStorageBuffersPerShaderStage;
         required->v1.maxStorageTexturesPerShaderStage =
             supported.v1.maxStorageTexturesPerShaderStage;
-        required->v1.maxStorageBuffersInVertexStage = supported.v1.maxStorageBuffersInVertexStage;
-        required->v1.maxStorageBuffersInFragmentStage =
-            supported.v1.maxStorageBuffersInFragmentStage;
-        required->v1.maxStorageTexturesInVertexStage = supported.v1.maxStorageTexturesInVertexStage;
-        required->v1.maxStorageTexturesInFragmentStage =
-            supported.v1.maxStorageTexturesInFragmentStage;
+        required->compat.maxStorageBuffersInVertexStage =
+            supported.compat.maxStorageBuffersInVertexStage;
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
+        required->compat.maxStorageTexturesInVertexStage =
+            supported.compat.maxStorageTexturesInVertexStage;
+        required->compat.maxStorageTexturesInFragmentStage =
+            supported.compat.maxStorageTexturesInFragmentStage;
     }
 
     void SetUp() override {
