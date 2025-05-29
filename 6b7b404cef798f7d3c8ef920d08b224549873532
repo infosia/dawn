@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4452c9e2_23420ef3",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-29T05:19:44Z",
+      "side": 1,
+      "message": "I think bufferState still needs to be checked first to make sure that the buffer is mapped before we read the other fields without the lock. Otherwise we could read them before MapAsync completes, then MapAsync completes, then we validate bufferState.\n\nAlso comment why it\u0027s safe to read the other fields without the lock.",
+      "revId": "6b7b404cef798f7d3c8ef920d08b224549873532",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "364e2261_8791a46e",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-29T05:19:44Z",
+      "side": 1,
+      "message": "I think callers of this method need to be holding the lock to be safe (otherwise they could race with MapAsync or Destroy). I\u0027m assume this was safe before because of the device autolock, but if it was never safe then this isn\u0027t a blocker.",
+      "revId": "6b7b404cef798f7d3c8ef920d08b224549873532",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7cf99a0_6a9719cc",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-29T05:19:44Z",
+      "side": 1,
+      "message": "What lock must be held while calling this? Right now, we hold the device lock, not the SynchronizedState lock. I\u0027m not sure that\u0027s safe? Probably we actually need to pass a `Usage` in here like I think you had before. Or if not, we need to comment on this function (in the header) about what lock must be held while calling it.\n\nSimilar questions about every other function that was previously assuming the device lock was held.",
+      "revId": "6b7b404cef798f7d3c8ef920d08b224549873532",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d0bc66d_9e08a2de",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-29T05:19:44Z",
+      "side": 1,
+      "message": "```suggestion\n        // Reads the buffer state without acquiring any locks. This is safe in itself, but does not\n        // synchronize any of the other state in SynchronizedState, so should be used with care.\n```",
+      "range": {
+        "startLine": 187,
+        "startChar": 63,
+        "endLine": 188,
+        "endChar": 21
+      },
+      "revId": "6b7b404cef798f7d3c8ef920d08b224549873532",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15eef176_d311642c",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-29T05:19:44Z",
+      "side": 1,
+      "message": "YAGNI, remove this argument until we need it (which we won\u0027t unless we bother to try to change some of them to `relaxed`).",
+      "range": {
+        "startLine": 189,
+        "startChar": 29,
+        "endLine": 189,
+        "endChar": 81
+      },
+      "revId": "6b7b404cef798f7d3c8ef920d08b224549873532",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

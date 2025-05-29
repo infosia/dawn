@@ -118,6 +118,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "92278256_3e2f1ac9",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-29T05:19:44Z",
+      "side": 1,
+      "message": "`GetMappedPointer()` is also used in `DynamicUploader` so it should be synchronized somehow. Or made private or deleted.\n\n(GetMappedRange calls `mState.GetMappedPointer()` directly now which I think is correct.)",
+      "parentUuid": "5263f290_22b4ed61",
+      "revId": "89a8200445afb16101713e8794954f66cb6d5bac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cbf78492_dffb5e94",
