@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd32f4fe_26f3fffe",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-29T23:36:57Z",
+      "side": 1,
+      "message": "Some questions for implementing these Queue syncing methods (will do in another CL if appropriate):\n\nLooking at the QueueVk/QueueGL to follow, I\u0027m thinking the way here is to get `WGPUFuture` from `wgpuQueueOnSubmittedWorkDone` and making a pair with `ExecutionSerial` and maintain a dequeue of them to tack which operations are finished. And use `wgpuInstanceWaitAny` to wait.\n\nFor `ForceEventualFlush` we just make it a noop.\n\nDoes these make sense?",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
