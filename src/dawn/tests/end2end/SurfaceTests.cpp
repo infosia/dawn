@@ -624,7 +624,7 @@ TEST_P(SurfaceTests, CopyTo) {
 
 // Test using the surface as a storage texture when supported.
 TEST_P(SurfaceTests, Storage) {
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedComboLimits().compat.maxStorageBuffersInFragmentStage < 1);
     wgpu::Surface surface = CreateTestSurface();
     wgpu::SurfaceCapabilities caps;
     surface.GetCapabilities(adapter, &caps);

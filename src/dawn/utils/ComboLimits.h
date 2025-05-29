@@ -46,6 +46,7 @@ struct ComboLimits : public NonMovable {
     wgpu::Limits* GetLinked();
 
     wgpu::Limits v1{};
+    wgpu::CompatibilityModeLimits compat{};
 };
 
 }  // namespace dawn::utils
