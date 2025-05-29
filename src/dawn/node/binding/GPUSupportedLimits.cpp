@@ -166,25 +166,25 @@ uint32_t GPUSupportedLimits::getMaxComputeWorkgroupsPerDimension(Napi::Env) {
 std::variant<uint32_t, interop::UndefinedType>
 GPUSupportedLimits::getMaxStorageBuffersInFragmentStage(Napi::Env) {
     return std::variant<uint32_t, interop::UndefinedType>(
-        limits_.v1.maxStorageBuffersInFragmentStage);
+        limits_.compat.maxStorageBuffersInFragmentStage);
 }
 
 std::variant<uint32_t, interop::UndefinedType>
 GPUSupportedLimits::getMaxStorageTexturesInFragmentStage(Napi::Env) {
     return std::variant<uint32_t, interop::UndefinedType>(
-        limits_.v1.maxStorageTexturesInFragmentStage);
+        limits_.compat.maxStorageTexturesInFragmentStage);
 }
 
 std::variant<uint32_t, interop::UndefinedType>
 GPUSupportedLimits::getMaxStorageBuffersInVertexStage(Napi::Env) {
     return std::variant<uint32_t, interop::UndefinedType>(
-        limits_.v1.maxStorageBuffersInVertexStage);
+        limits_.compat.maxStorageBuffersInVertexStage);
 }
 
 std::variant<uint32_t, interop::UndefinedType>
 GPUSupportedLimits::getMaxStorageTexturesInVertexStage(Napi::Env) {
     return std::variant<uint32_t, interop::UndefinedType>(
-        limits_.v1.maxStorageTexturesInVertexStage);
+        limits_.compat.maxStorageTexturesInVertexStage);
 }
 
 }  // namespace wgpu::binding
