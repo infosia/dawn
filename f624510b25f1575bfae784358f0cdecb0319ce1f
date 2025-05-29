@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "afc1ad9d_990cc235",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T20:37:21Z",
+      "side": 1,
+      "message": "maybe \"enable_module_constant_transform\" to make it clearer what it\u0027s doing?",
+      "revId": "f624510b25f1575bfae784358f0cdecb0319ce1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f2b49c5_d03caece",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T20:37:21Z",
+      "side": 1,
+      "message": "The correctness issues don\u0027t seem to effect this, as it\u0027s only checking `IsApple`? The comment makes the think we don\u0027t turn it on for intel/amd?",
+      "revId": "f624510b25f1575bfae784358f0cdecb0319ce1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08eade87_4b628baf",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-29T20:37:21Z",
+      "side": 1,
+      "message": "```suggestion\n    // chromium:419804339: Module constant hoisting is broadly available as a msl transform but there\n    // are execution correction issues with f16 for non apple silicon (Intel/AMD).\n```",
+      "range": {
+        "startLine": 445,
+        "startChar": 0,
+        "endLine": 446,
+        "endChar": 78
+      },
+      "revId": "f624510b25f1575bfae784358f0cdecb0319ce1f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
