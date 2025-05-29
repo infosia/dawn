@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce64e3a8_ded9de1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-29T00:44:47Z",
+      "side": 1,
+      "message": "PTAL and verify my logic as to why we shouldn\u0027t ICE on failure for this validation.\n\nValidating against fuzzer preconditions becomes necessary now that several transforms cannot handle multiple entry points.",
+      "revId": "0976073423e9d2c0ab1780877f1dfdbed0642a83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
