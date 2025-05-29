@@ -16,6 +16,24 @@
       "message": "Is this a MSVC specific unused variable? We don\u0027t see add this for clang?",
       "revId": "faf2291aa0c3286201729e7bfe8db1d21c15f88e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a6354e9_15ebe12d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-05-29T18:34:48Z",
+      "side": 1,
+      "message": "It is initialized but unused, so I assume that is why llvm doesn\u0027t trigger on it.\n\nOlder versions of MSVC also doesn\u0027t trigger on it, it is only the newest toolchain on the bots that trigger on it. (which is why it was a bit of pita to replicate)",
+      "parentUuid": "7053db7c_ce5178f6",
+      "revId": "faf2291aa0c3286201729e7bfe8db1d21c15f88e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
