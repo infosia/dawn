@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "340289d3_26a0cc3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-29T14:21:50Z",
+      "side": 1,
+      "message": "Updated, PTAL",
+      "revId": "34cc6b65bdff31989e6c747f0a20759a13dafa16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a016a2bc_4e6f80f2",
@@ -64,6 +81,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e33659ef_f8ac23f6",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-29T14:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a016a2bc_4e6f80f2",
+      "range": {
+        "startLine": 83,
+        "startChar": 3,
+        "endLine": 83,
+        "endChar": 16
+      },
+      "revId": "34cc6b65bdff31989e6c747f0a20759a13dafa16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8f6c9d3_4965147d",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-29T14:21:50Z",
+      "side": 1,
+      "message": "Great idea, thank!",
+      "parentUuid": "7f744c1d_6fb11f34",
+      "range": {
+        "startLine": 83,
+        "startChar": 3,
+        "endLine": 83,
+        "endChar": 16
+      },
+      "revId": "34cc6b65bdff31989e6c747f0a20759a13dafa16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f07e35b0_6f094d8d",
@@ -77,6 +142,30 @@
       "writtenOn": "2025-05-29T13:18:25Z",
       "side": 1,
       "message": "We should explain this further that because texture\u0027s sizes are never larger than 16 bits, it\u0027s safe to use 16 bits to store offsets.",
+      "range": {
+        "startLine": 319,
+        "startChar": 34,
+        "endLine": 319,
+        "endChar": 55
+      },
+      "revId": "34cc6b65bdff31989e6c747f0a20759a13dafa16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "215ff317_83596bcf",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-05-29T14:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f07e35b0_6f094d8d",
       "range": {
         "startLine": 319,
         "startChar": 34,
