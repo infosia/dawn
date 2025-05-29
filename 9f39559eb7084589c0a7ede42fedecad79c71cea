@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f426b752_a58930ba",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-29T08:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f609bbe0_ef05f058",
+      "revId": "9f39559eb7084589c0a7ede42fedecad79c71cea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e178d51f_6b8788ea",
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "Ah, right. I forget the case that bits boundary are cross words.",
       "parentUuid": "e178d51f_6b8788ea",
+      "range": {
+        "startLine": 159,
+        "startChar": 5,
+        "endLine": 160,
+        "endChar": 5
+      },
+      "revId": "9f39559eb7084589c0a7ede42fedecad79c71cea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bc0976e_5c40e162",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-29T08:18:14Z",
+      "side": 1,
+      "message": "(Enhancement the test cases by adding smaller than 1 word, equal to 1 word and larger than 1 word.)\n\nI don\u0027t think we need to add `% kBitsPerWord` because the last scanForwardAndShift will shift all kBitsPerWord and padding fake 1s in tails. So we need to clear these fake 1s.\n\nAm I miss something?\n\nP.S. adding \"%kBitsPerWord\" cause test failure due to we cannot ternimate the iteration.\n\n\u003eLike {60, 70} and an other one that would get garbled by that {80, 90}.\nSry but I\u0027m a bit confuse by this case. We have 128 bitset but {60, 70} means we might reach to 130. Would you mind to provide more details?",
+      "parentUuid": "6de21e7f_645ec52a",
       "range": {
         "startLine": 159,
         "startChar": 5,
