@@ -34,11 +34,13 @@ ComboLimits::ComboLimits() = default;
 void ComboLimits::UnlinkedCopyTo(ComboLimits* o) const {
     o->v1 = v1;
     o->v1.nextInChain = nullptr;
+    o->compat = compat;
+    o->compat.nextInChain = nullptr;
 }
 
 wgpu::Limits* ComboLimits::GetLinked() {
-    // Set up chain. (There is no chain yet.)
-    v1.nextInChain = nullptr;
+    v1.nextInChain = &compat;
+    compat.nextInChain = nullptr;
     return &v1;
 }
 
