@@ -342,6 +342,7 @@ class DeviceBase : public ErrorSink,
     QueueBase* GetQueue() const;
 
     friend class IgnoreLazyClearCountScope;
+    friend class TextureViewCache;
 
     MaybeError Tick();
 
