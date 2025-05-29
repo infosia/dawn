@@ -50,6 +50,24 @@
       "message": "Ah got it, that explains the additions to MutexProtected. How about making ParseResult returns something that\u0027s not a OwnedCompilationMessages but instead define a `ParseCompilationMessages` struct with\n\n```\n// Hold the content of each compilation message\n#define COMPILATION_MESSAGE_CONTENT_MEMBER(X) \\\n    X(std::string, message)                   \\\n    X(wgpu::CompilationMessageType, type)     \\\n    X(uint64_t, lineNum)                      \\\n    X(uint64_t, linePosInBytes)               \\\n    X(uint64_t, offsetInBytes)                \\\n    X(uint64_t, lengthInBytes)                \\\n    X(uint64_t, linePosInUTF16)               \\\n    X(uint64_t, offsetInUTF16)                \\\n    X(uint64_t, lengthInUTF16)\nDAWN_SERIALIZABLE(struct, CompilationMessageContent, COMPILATION_MESSAGE_CONTENT_MEMBER){};\n#undef COMPILATION_MESSAGE_CONTENT_MEMBER\n\nAnother serializable struct ParseCompilationMessages {\n  std::vector\u003cCompilationMessage\u003e messages;\n  std::vector\u003cstd::string\u003e formattedMessages;\n  \n  static ParseCompilationMessages FromTint(tint::DiagList);\n}\n\nThen remove the tint-specific parts of OwnedCompilationMessages but have AddMessages(ParseCompilationMessages)\n```\n\nThis would let us reuse a lot of the code here, while avoiding acrobatics for serializing MutexProtected and other stuff.",
       "revId": "c8cb7763922f462b6e9f7af6e4fb2eab6786499e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4deb9410_dd664c1d",
+        "filename": "src/dawn/native/CompilationMessages.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-29T10:38:15Z",
+      "side": 1,
+      "message": "Done, after refactoring we can get rid of the `MutexProtected` since the generated `OwnedCompilationMessages` hold in `ShaderModuleBase` is immutable.",
+      "parentUuid": "83e24f17_f9acea7e",
+      "revId": "c8cb7763922f462b6e9f7af6e4fb2eab6786499e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
