@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13e769f2_3057899e",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-29T14:36:11Z",
+      "side": 1,
+      "message": "suggest to use unsigned vectors for computations for easier to understand.\n\nWe can cast the unsigned vector to signed vector when returning.\n\n```suggestion\n  var offsets_bits \u003d vec2u(high_16, low_16);\n```",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "384b480a980f81c62a47f9fbeb0fd77a420b920e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e112f5b3_20e18a95",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-29T14:36:11Z",
+      "side": 1,
+      "message": "```suggestion\n  offsets_bits \u003d select(\n```",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 15
+      },
+      "revId": "384b480a980f81c62a47f9fbeb0fd77a420b920e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88156fbc_1b40331c",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-29T14:36:11Z",
+      "side": 1,
+      "message": "nit: vec constructor with single argument will set all components to the given value.\n```suggestion\n      offsets_bits | vec2u(0xFFFF0000u),\n```",
+      "range": {
+        "startLine": 77,
+        "startChar": 21,
+        "endLine": 77,
+        "endChar": 44
+      },
+      "revId": "384b480a980f81c62a47f9fbeb0fd77a420b920e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce79d8d8_63eca5b0",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-29T14:36:11Z",
+      "side": 1,
+      "message": "```suggestion\n      (offsets_bits \u0026 vec2u(0x8000u)) !\u003d vec2u(0u),\n```",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 69
+      },
+      "revId": "384b480a980f81c62a47f9fbeb0fd77a420b920e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48ed6c8a_99639490",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-29T14:36:11Z",
+      "side": 1,
+      "message": "```suggestion\n  return bitcast\u003cvec2i\u003e(offsets_bits);\n```",
+      "range": {
+        "startLine": 81,
+        "startChar": 9,
+        "endLine": 81,
+        "endChar": 21
+      },
+      "revId": "384b480a980f81c62a47f9fbeb0fd77a420b920e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b8c7560_d9322723",
+        "filename": "src/dawn/native/BlitColorToColorWithDraw.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-05-29T14:36:11Z",
+      "side": 1,
+      "message": "Is there any reason kUnpackOffsetsFunc \u0026 kBlitToColorVS  cannot be combined into a single variable?",
+      "range": {
+        "startLine": 85,
+        "startChar": 31,
+        "endLine": 85,
+        "endChar": 46
+      },
+      "revId": "384b480a980f81c62a47f9fbeb0fd77a420b920e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
