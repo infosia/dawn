@@ -161,5 +161,6 @@ dawn_component("wire") {
     ":abseil",
     ":headers",
     "${dawn_root}/src/dawn/partition_alloc:raw_ptr",
+    "${dawn_root}/src/dawn/utils:wgpu_utils",
   ]
 }
