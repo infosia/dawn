@@ -58,13 +58,18 @@ class RefCountedWithExternalCount : public T {
         T::APIRelease();
     }
 
-    void IncrementExternalRefCount() { mExternalRefCount.Increment(); }
+    void IncrementExternalRefCount() {
+        if (mExternalRefCount.Increment()) {
+            WillAddFirstExternalRef();
+        }
+    }
 
     uint64_t GetExternalRefCountForTesting() const {
         return mExternalRefCount.GetValueForTesting();
     }
 
   private:
+    virtual void WillAddFirstExternalRef() {}
     virtual void WillDropLastExternalRef() = 0;
 
     RefCount mExternalRefCount{/*initCount=*/0, /*payload=*/0};
