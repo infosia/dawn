@@ -42,6 +42,8 @@ static_library("wgpu_utils") {
   ]
 
   sources = [
+    "ComboLimits.cpp",
+    "ComboLimits.h",
     "ComboRenderBundleEncoderDescriptor.cpp",
     "ComboRenderBundleEncoderDescriptor.h",
     "ComboRenderPipelineDescriptor.cpp",

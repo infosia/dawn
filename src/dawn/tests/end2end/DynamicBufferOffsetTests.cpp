@@ -43,18 +43,19 @@ constexpr uint32_t kBindingSize = 8;
 
 class DynamicBufferOffsetTests : public DawnTest {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
+    void GetRequiredCombinedLimits(const dawn::utils::ComboLimits& supported,
+                                   dawn::utils::ComboLimits* required) override {
         // TODO(crbug.com/383593270): Enable all the limits.
-        wgpu::Limits required = {};
-        required.maxStorageBuffersInFragmentStage = supported.maxStorageBuffersInFragmentStage;
-        required.maxStorageBuffersPerShaderStage = supported.maxStorageBuffersPerShaderStage;
-        return required;
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
+        required->v1.maxStorageBuffersPerShaderStage = supported.v1.maxStorageBuffersPerShaderStage;
     }
 
     void SetUp() override {
         DawnTest::SetUp();
 
-        DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+        DAWN_TEST_UNSUPPORTED_IF(
+            GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage < 1);
 
         mMinUniformBufferOffsetAlignment = GetSupportedLimits().minUniformBufferOffsetAlignment;
 

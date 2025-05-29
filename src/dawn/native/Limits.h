@@ -40,6 +40,7 @@ namespace dawn::native {
 
 struct CombinedLimits {
     Limits v1;
+    CompatibilityModeLimits compat;
     DawnHostMappedPointerLimits hostMappedPointerLimits;
     DawnTexelCopyBufferRowAlignmentLimits texelCopyBufferRowAlignmentLimits;
 };
@@ -53,7 +54,7 @@ void GetDefaultLimits(CombinedLimits* limits, wgpu::FeatureLevel featureLevel);
 CombinedLimits ReifyDefaultLimits(const CombinedLimits& limits, wgpu::FeatureLevel featureLevel);
 
 // Fixup limits after device creation
-void EnforceLimitSpecInvariants(Limits* limits, wgpu::FeatureLevel featureLevel);
+void EnforceLimitSpecInvariants(CombinedLimits* limits, wgpu::FeatureLevel featureLevel);
 
 // Validate that |requiredLimits| are no better than |supportedLimits|.
 MaybeError ValidateLimits(const CombinedLimits& supportedLimits,

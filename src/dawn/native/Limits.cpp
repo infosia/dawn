@@ -67,26 +67,26 @@
 // Tiers for limits related to resource bindings.
 // TODO(crbug.com/dawn/685): Define these better. For now, use two tiers where one
 // offers slightly better than default limits.
-//                                                                 compat      tier0       tier1
-#define LIMITS_RESOURCE_BINDINGS(X)                                                               \
-    X(v1, Maximum,   maxDynamicUniformBuffersPerPipelineLayout,         8,         8,         10) \
-    X(v1, Maximum,   maxDynamicStorageBuffersPerPipelineLayout,         4,         4,          8) \
-    X(v1, Maximum,            maxSampledTexturesPerShaderStage,        16,        16,         16) \
-    X(v1, Maximum,                   maxSamplersPerShaderStage,        16,        16,         16) \
-    X(v1, Maximum,            maxStorageTexturesPerShaderStage,         4,         4,          8) \
-    X(v1, Maximum,           maxStorageTexturesInFragmentStage,         4,         4,          8) \
-    X(v1, Maximum,             maxStorageTexturesInVertexStage,         0,         4,          8) \
-    X(v1, Maximum,             maxUniformBuffersPerShaderStage,        12,        12,         12)
+//                                                                     compat      tier0       tier1
+#define LIMITS_RESOURCE_BINDINGS(X)                                                                   \
+    X(v1,     Maximum,   maxDynamicUniformBuffersPerPipelineLayout,         8,         8,         10) \
+    X(v1,     Maximum,   maxDynamicStorageBuffersPerPipelineLayout,         4,         4,          8) \
+    X(v1,     Maximum,            maxSampledTexturesPerShaderStage,        16,        16,         16) \
+    X(v1,     Maximum,                   maxSamplersPerShaderStage,        16,        16,         16) \
+    X(v1,     Maximum,            maxStorageTexturesPerShaderStage,         4,         4,          8) \
+    X(compat, Maximum,           maxStorageTexturesInFragmentStage,         4,         4,          8) \
+    X(compat, Maximum,             maxStorageTexturesInVertexStage,         0,         4,          8) \
+    X(v1,     Maximum,             maxUniformBuffersPerShaderStage,        12,        12,         12)
 
 // Tiers for limits related to storage buffer bindings. Should probably be merged with
 // LIMITS_RESOURCE_BINDINGS.
 // TODO(crbug.com/dawn/685): Define these better. For now, use two tiers where one
 // offers slightly better than default limits.
 //
-#define LIMITS_STORAGE_BUFFER_BINDINGS(X)                                                          \
-    X(v1, Maximum,             maxStorageBuffersPerShaderStage,         8,         8,          10) \
-    X(v1, Maximum,             maxStorageBuffersInFragmentStage,        4,         8,          10) \
-    X(v1, Maximum,             maxStorageBuffersInVertexStage,          0,         8,          10)
+#define LIMITS_STORAGE_BUFFER_BINDINGS(X)                                                              \
+    X(v1,     Maximum,             maxStorageBuffersPerShaderStage,         8,         8,          10) \
+    X(compat, Maximum,            maxStorageBuffersInFragmentStage,         4,         8,          10) \
+    X(compat, Maximum,              maxStorageBuffersInVertexStage,         0,         8,          10)
 
 // TODO(crbug.com/dawn/685):
 // These limits aren't really tiered and could probably be grouped better.
@@ -331,17 +331,17 @@ void ApplyLimitTiers(CombinedLimits* limits) {
         }                                                            \
     }
 
-#define X_CHECK_BETTER_AND_CLAMP(Scope, Class, limitName, ...)                             \
-    {                                                                                      \
-        constexpr std::array<decltype(Limits::limitName), kTierCount> tiers{__VA_ARGS__};  \
-        decltype(Limits::limitName) tierValue = tiers[i - 1];                              \
-        if (CheckLimit<LimitClass::Class>::IsBetter(tierValue, limits->Scope.limitName)) { \
-            /* The tier is better. Go to the next tier. */                                 \
-            continue;                                                                      \
-        } else if (tierValue != limits->Scope.limitName) {                                 \
-            /* Better than the tier. Degrade |limits| to the tier. */                      \
-            limits->Scope.limitName = tiers[i - 1];                                        \
-        }                                                                                  \
+#define X_CHECK_BETTER_AND_CLAMP(Scope, Class, limitName, ...)                                  \
+    {                                                                                           \
+        constexpr std::array<decltype(limits->Scope.limitName), kTierCount> tiers{__VA_ARGS__}; \
+        auto tierValue = tiers[i - 1];                                                          \
+        if (CheckLimit<LimitClass::Class>::IsBetter(tierValue, limits->Scope.limitName)) {      \
+            /* The tier is better. Go to the next tier. */                                      \
+            continue;                                                                           \
+        } else if (tierValue != limits->Scope.limitName) {                                      \
+            /* Better than the tier. Degrade |limits| to the tier. */                           \
+            limits->Scope.limitName = tiers[i - 1];                                             \
+        }                                                                                       \
     }
 
     LIMITS_EACH_GROUP(X_EACH_GROUP)
@@ -402,18 +402,19 @@ void NormalizeLimits(CombinedLimits* limits) {
         std::min(limits->v1.maxStorageBuffersPerShaderStage, kMaxStorageBuffersPerShaderStage);
     limits->v1.maxStorageTexturesPerShaderStage =
         std::min(limits->v1.maxStorageTexturesPerShaderStage, kMaxStorageTexturesPerShaderStage);
-    limits->v1.maxStorageBuffersInVertexStage =
-        std::min(limits->v1.maxStorageBuffersInVertexStage, kMaxStorageBuffersPerShaderStage);
-    limits->v1.maxStorageTexturesInVertexStage =
-        std::min(limits->v1.maxStorageTexturesInVertexStage, kMaxStorageTexturesPerShaderStage);
-    limits->v1.maxStorageBuffersInFragmentStage =
-        std::min(limits->v1.maxStorageBuffersInFragmentStage, kMaxStorageBuffersPerShaderStage);
-    limits->v1.maxStorageTexturesInFragmentStage =
-        std::min(limits->v1.maxStorageTexturesInFragmentStage, kMaxStorageTexturesPerShaderStage);
     limits->v1.maxUniformBuffersPerShaderStage =
         std::min(limits->v1.maxUniformBuffersPerShaderStage, kMaxUniformBuffersPerShaderStage);
     limits->v1.maxImmediateSize =
         std::min(limits->v1.maxImmediateSize, kMaxSupportedImmediateDataBytes);
+    // Compat limits.
+    limits->compat.maxStorageBuffersInVertexStage =
+        std::min(limits->compat.maxStorageBuffersInVertexStage, kMaxStorageBuffersPerShaderStage);
+    limits->compat.maxStorageTexturesInVertexStage =
+        std::min(limits->compat.maxStorageTexturesInVertexStage, kMaxStorageTexturesPerShaderStage);
+    limits->compat.maxStorageBuffersInFragmentStage =
+        std::min(limits->compat.maxStorageBuffersInFragmentStage, kMaxStorageBuffersPerShaderStage);
+    limits->compat.maxStorageTexturesInFragmentStage = std::min(
+        limits->compat.maxStorageTexturesInFragmentStage, kMaxStorageTexturesPerShaderStage);
 
     // Additional enforcement for dependent limits.
     limits->v1.maxStorageBufferBindingSize =
@@ -422,19 +423,19 @@ void NormalizeLimits(CombinedLimits* limits) {
         std::min(limits->v1.maxUniformBufferBindingSize, limits->v1.maxBufferSize);
 }
 
-void EnforceLimitSpecInvariants(Limits* limits, wgpu::FeatureLevel featureLevel) {
+void EnforceLimitSpecInvariants(CombinedLimits* limits, wgpu::FeatureLevel featureLevel) {
     // In all feature levels, maxXXXPerStage is raised to maxXXXInStage
     // The reason for this is in compatibility mode, maxXXXPerStage defaults to = 4.
     // That means if the adapter has 8 maxXXXInStage and 8 maxXXXPerStage
     // and you request maxXXXInStage = 3 things work but, if you request
     // maxXXXInStage = 5 they'd fail because suddenly you're you'd also be required
     // to request maxXXXPerStage to 5. So, we auto-uprade the perStage limits.
-    limits->maxStorageBuffersPerShaderStage =
-        Max(limits->maxStorageBuffersPerShaderStage, limits->maxStorageBuffersInVertexStage,
-            limits->maxStorageBuffersInFragmentStage);
-    limits->maxStorageTexturesPerShaderStage =
-        Max(limits->maxStorageTexturesPerShaderStage, limits->maxStorageTexturesInVertexStage,
-            limits->maxStorageTexturesInFragmentStage);
+    limits->v1.maxStorageBuffersPerShaderStage = Max(
+        limits->v1.maxStorageBuffersPerShaderStage, limits->compat.maxStorageBuffersInVertexStage,
+        limits->compat.maxStorageBuffersInFragmentStage);
+    limits->v1.maxStorageTexturesPerShaderStage = Max(
+        limits->v1.maxStorageTexturesPerShaderStage, limits->compat.maxStorageTexturesInVertexStage,
+        limits->compat.maxStorageTexturesInFragmentStage);
 
     if (featureLevel != wgpu::FeatureLevel::Compatibility) {
         // In core mode the maxStorageXXXInYYYStage are always set to maxStorageXXXPerShaderStage
@@ -448,10 +449,13 @@ void EnforceLimitSpecInvariants(Limits* limits, wgpu::FeatureLevel featureLevel)
         //     device.limits.maxStorageBuffersPerShaderStage = 5;
         //     It's ok to use 5 storage buffers in fragment stage because in core
         //     we originally only had maxStorageBuffersPerShaderStage
-        limits->maxStorageBuffersInFragmentStage = limits->maxStorageBuffersPerShaderStage;
-        limits->maxStorageTexturesInFragmentStage = limits->maxStorageTexturesPerShaderStage;
-        limits->maxStorageBuffersInVertexStage = limits->maxStorageBuffersPerShaderStage;
-        limits->maxStorageTexturesInVertexStage = limits->maxStorageTexturesPerShaderStage;
+        limits->compat.maxStorageBuffersInFragmentStage =
+            limits->v1.maxStorageBuffersPerShaderStage;
+        limits->compat.maxStorageTexturesInFragmentStage =
+            limits->v1.maxStorageTexturesPerShaderStage;
+        limits->compat.maxStorageBuffersInVertexStage = limits->v1.maxStorageBuffersPerShaderStage;
+        limits->compat.maxStorageTexturesInVertexStage =
+            limits->v1.maxStorageTexturesPerShaderStage;
     }
 }
 
@@ -466,6 +470,14 @@ MaybeError FillLimits(Limits* outputLimits,
         **unpacked = combinedLimits.v1;
         // Recover origin chain.
         unpacked->nextInChain = originalChain;
+    }
+
+    if (auto* compatibilityModeLimits = unpacked.Get<CompatibilityModeLimits>()) {
+        wgpu::ChainedStructOut* originalChain = compatibilityModeLimits->nextInChain;
+        *compatibilityModeLimits = combinedLimits.compat;
+
+        // Recover origin chain.
+        compatibilityModeLimits->nextInChain = originalChain;
     }
 
     if (auto* texelCopyBufferRowAlignmentLimits =

@@ -37,11 +37,12 @@ namespace {
 
 class OpArrayLengthTest : public DawnTest {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
-        // Just copy all the limits, though all we really care about is
-        // maxStorageBuffersInFragmentStage
-        // maxStorageBuffersInVertexStage
-        return supported;
+    void GetRequiredCombinedLimits(const dawn::utils::ComboLimits& supported,
+                                   dawn::utils::ComboLimits* required) override {
+        required->compat.maxStorageBuffersInVertexStage =
+            supported.compat.maxStorageBuffersInVertexStage;
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
     }
 
     void SetUp() override {
@@ -175,7 +176,8 @@ TEST_P(OpArrayLengthTest, Fragment) {
     DAWN_SUPPRESS_TEST_IF(IsOpenGLES() && IsAndroid() && IsARM() &&
                           HasToggleEnabled("gl_use_array_length_from_uniform"));
 
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 3);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage <
+                             3);
 
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
 
@@ -229,7 +231,8 @@ TEST_P(OpArrayLengthTest, Fragment) {
 
 // Test OpArrayLength in the vertex stage
 TEST_P(OpArrayLengthTest, Vertex) {
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInVertexStage < 3);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedCombinedLimits()->compat.maxStorageBuffersInVertexStage <
+                             3);
 
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
 

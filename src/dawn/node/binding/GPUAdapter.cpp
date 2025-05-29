@@ -42,43 +42,44 @@
 #include "src/dawn/node/binding/GPUSupportedFeatures.h"
 #include "src/dawn/node/binding/GPUSupportedLimits.h"
 #include "src/dawn/node/binding/TogglesLoader.h"
+#include "src/dawn/utils/ComboLimits.h"
 
-#define FOR_EACH_LIMIT(X)                        \
-    X(maxTextureDimension1D)                     \
-    X(maxTextureDimension2D)                     \
-    X(maxTextureDimension3D)                     \
-    X(maxTextureArrayLayers)                     \
-    X(maxBindGroups)                             \
-    X(maxBindGroupsPlusVertexBuffers)            \
-    X(maxBindingsPerBindGroup)                   \
-    X(maxDynamicUniformBuffersPerPipelineLayout) \
-    X(maxDynamicStorageBuffersPerPipelineLayout) \
-    X(maxSampledTexturesPerShaderStage)          \
-    X(maxSamplersPerShaderStage)                 \
-    X(maxStorageBuffersInFragmentStage)          \
-    X(maxStorageTexturesInFragmentStage)         \
-    X(maxStorageBuffersInVertexStage)            \
-    X(maxStorageTexturesInVertexStage)           \
-    X(maxStorageBuffersPerShaderStage)           \
-    X(maxStorageTexturesPerShaderStage)          \
-    X(maxUniformBuffersPerShaderStage)           \
-    X(maxUniformBufferBindingSize)               \
-    X(maxStorageBufferBindingSize)               \
-    X(minUniformBufferOffsetAlignment)           \
-    X(minStorageBufferOffsetAlignment)           \
-    X(maxVertexBuffers)                          \
-    X(maxBufferSize)                             \
-    X(maxVertexAttributes)                       \
-    X(maxVertexBufferArrayStride)                \
-    X(maxInterStageShaderVariables)              \
-    X(maxColorAttachments)                       \
-    X(maxColorAttachmentBytesPerSample)          \
-    X(maxComputeWorkgroupStorageSize)            \
-    X(maxComputeInvocationsPerWorkgroup)         \
-    X(maxComputeWorkgroupSizeX)                  \
-    X(maxComputeWorkgroupSizeY)                  \
-    X(maxComputeWorkgroupSizeZ)                  \
-    X(maxComputeWorkgroupsPerDimension)
+#define FOR_EACH_LIMIT(X)                            \
+    X(v1, maxTextureDimension1D)                     \
+    X(v1, maxTextureDimension2D)                     \
+    X(v1, maxTextureDimension3D)                     \
+    X(v1, maxTextureArrayLayers)                     \
+    X(v1, maxBindGroups)                             \
+    X(v1, maxBindGroupsPlusVertexBuffers)            \
+    X(v1, maxBindingsPerBindGroup)                   \
+    X(v1, maxDynamicUniformBuffersPerPipelineLayout) \
+    X(v1, maxDynamicStorageBuffersPerPipelineLayout) \
+    X(v1, maxSampledTexturesPerShaderStage)          \
+    X(v1, maxSamplersPerShaderStage)                 \
+    X(compat, maxStorageBuffersInFragmentStage)      \
+    X(compat, maxStorageTexturesInFragmentStage)     \
+    X(compat, maxStorageBuffersInVertexStage)        \
+    X(compat, maxStorageTexturesInVertexStage)       \
+    X(v1, maxStorageBuffersPerShaderStage)           \
+    X(v1, maxStorageTexturesPerShaderStage)          \
+    X(v1, maxUniformBuffersPerShaderStage)           \
+    X(v1, maxUniformBufferBindingSize)               \
+    X(v1, maxStorageBufferBindingSize)               \
+    X(v1, minUniformBufferOffsetAlignment)           \
+    X(v1, minStorageBufferOffsetAlignment)           \
+    X(v1, maxVertexBuffers)                          \
+    X(v1, maxBufferSize)                             \
+    X(v1, maxVertexAttributes)                       \
+    X(v1, maxVertexBufferArrayStride)                \
+    X(v1, maxInterStageShaderVariables)              \
+    X(v1, maxColorAttachments)                       \
+    X(v1, maxColorAttachmentBytesPerSample)          \
+    X(v1, maxComputeWorkgroupStorageSize)            \
+    X(v1, maxComputeInvocationsPerWorkgroup)         \
+    X(v1, maxComputeWorkgroupSizeX)                  \
+    X(v1, maxComputeWorkgroupSizeY)                  \
+    X(v1, maxComputeWorkgroupSizeZ)                  \
+    X(v1, maxComputeWorkgroupsPerDimension)
 
 namespace wgpu::binding {
 
@@ -98,8 +99,8 @@ interop::Interface<interop::GPUSupportedFeatures> GPUAdapter::getFeatures(Napi::
 }
 
 interop::Interface<interop::GPUSupportedLimits> GPUAdapter::getLimits(Napi::Env env) {
-    wgpu::Limits limits{};
-    if (!adapter_.GetLimits(&limits)) {
+    dawn::utils::ComboLimits limits;
+    if (!adapter_.GetLimits(limits.GetLinked())) {
         Napi::Error::New(env, "failed to get adapter limits").ThrowAsJavaScriptException();
     }
 
@@ -182,13 +183,13 @@ interop::Promise<interop::Interface<interop::GPUDevice>> GPUAdapter::requestDevi
         env, PROMISE_INFO, async_);
     auto promise = ctx->promise;
 
-    wgpu::Limits limits;
-#define COPY_LIMIT(LIMIT)                                                                        \
+    dawn::utils::ComboLimits limits;
+#define COPY_LIMIT(SCOPE, LIMIT)                                                                 \
     if (descriptor.requiredLimits.count(#LIMIT)) {                                               \
         auto jsLimitVariant = descriptor.requiredLimits[#LIMIT];                                 \
         if (!std::holds_alternative<interop::UndefinedType>(jsLimitVariant)) {                   \
-            using DawnLimitType = decltype(WGPULimits::LIMIT);                                   \
-            DawnLimitType* dawnLimit = &limits.LIMIT;                                            \
+            using DawnLimitType = decltype(limits.SCOPE.LIMIT);                                  \
+            DawnLimitType* dawnLimit = &limits.SCOPE.LIMIT;                                      \
             uint64_t jsLimit = std::get<interop::GPUSize64>(jsLimitVariant);                     \
             if (jsLimit > std::numeric_limits<DawnLimitType>::max() - 1) {                       \
                 promise.Reject(                                                                  \
@@ -211,7 +212,7 @@ interop::Promise<interop::Interface<interop::GPUDevice>> GPUAdapter::requestDevi
 
     desc.requiredFeatureCount = requiredFeatures.size();
     desc.requiredFeatures = requiredFeatures.data();
-    desc.requiredLimits = &limits;
+    desc.requiredLimits = limits.GetLinked();
 
     // Set the device callbacks.
     using DeviceLostContext = AsyncContext<interop::Interface<interop::GPUDeviceLostInfo>>;

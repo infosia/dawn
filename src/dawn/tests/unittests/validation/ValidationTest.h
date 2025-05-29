@@ -39,6 +39,7 @@
 #include "dawn/common/Log.h"
 #include "dawn/native/BindGroupLayout.h"
 #include "dawn/native/DawnNative.h"
+#include "dawn/utils/ComboLimits.h"
 
 // Argument helpers to allow macro overriding.
 #define UNIMPLEMENTED_MACRO(...) DAWN_UNREACHABLE()
@@ -163,6 +164,7 @@ class ValidationTest : public testing::Test {
 
     const dawn::native::ToggleInfo* GetToggleInfo(const char* name) const;
     bool HasToggleEnabled(const char* toggle) const;
+    std::unique_ptr<dawn::utils::ComboLimits> GetSupportedCombinedLimits() const;
     wgpu::Limits GetSupportedLimits() const;
     dawn::utils::WireHelper* GetWireHelper() const;
 
@@ -173,6 +175,8 @@ class ValidationTest : public testing::Test {
     // Override these appropriately for different tests.
     virtual bool AllowUnsafeAPIs();
     virtual std::vector<wgpu::FeatureName> GetRequiredFeatures();
+    virtual void GetRequiredCombinedLimits(const dawn::utils::ComboLimits& supported,
+                                           dawn::utils::ComboLimits* required);
     virtual wgpu::Limits GetRequiredLimits(const wgpu::Limits&);
     virtual std::vector<const char*> GetEnabledToggles();
     virtual std::vector<const char*> GetDisabledToggles();

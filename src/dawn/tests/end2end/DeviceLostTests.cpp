@@ -51,12 +51,12 @@ using MockQueueWorkDoneCallback = MockCppCallback<wgpu::QueueWorkDoneCallback<vo
 
 class DeviceLostTest : public DawnTest {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
+    void GetRequiredCombinedLimits(const dawn::utils::ComboLimits& supported,
+                                   dawn::utils::ComboLimits* required) override {
         // TODO(crbug.com/383593270): Enable all the limits.
-        wgpu::Limits required = {};
-        required.maxStorageBuffersInFragmentStage = supported.maxStorageBuffersInFragmentStage;
-        required.maxStorageBuffersPerShaderStage = supported.maxStorageBuffersPerShaderStage;
-        return required;
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
+        required->v1.maxStorageBuffersPerShaderStage = supported.v1.maxStorageBuffersPerShaderStage;
     }
 
     void SetUp() override { DawnTest::SetUp(); }
@@ -532,7 +532,8 @@ TEST_P(DeviceLostTest, DeviceLostBeforeCreatePipelineAsyncCallback) {
 // references to bind group layouts such that the cache was non-empty at the end
 // of shut down.
 TEST_P(DeviceLostTest, FreeBindGroupAfterDeviceLossWithPendingCommands) {
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage <
+                             1);
 
     wgpu::BindGroupLayout bgl = utils::MakeBindGroupLayout(
         device, {{0, wgpu::ShaderStage::Fragment, wgpu::BufferBindingType::Storage}});

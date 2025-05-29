@@ -268,9 +268,9 @@ TEST_P(MaxLimitTests, MaxDynamicBuffers) {
 
     wgpu::Limits limits = GetSupportedLimits();
 
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage <
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage <
                              limits.maxStorageBuffersPerShaderStage);
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInVertexStage <
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedCombinedLimits()->compat.maxStorageBuffersInVertexStage <
                              limits.maxStorageBuffersPerShaderStage);
 
     std::vector<wgpu::BindGroupLayoutEntry> bglEntries;

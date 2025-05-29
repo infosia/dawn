@@ -36,11 +36,11 @@ namespace {
 
 class PixelLocalStorageTests : public DawnTest {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
-        wgpu::Limits required = {};
-        required.maxStorageBuffersInFragmentStage = supported.maxStorageBuffersInFragmentStage;
-        required.maxStorageBuffersPerShaderStage = supported.maxStorageBuffersPerShaderStage;
-        return required;
+    void GetRequiredCombinedLimits(const dawn::utils::ComboLimits& supported,
+                                   dawn::utils::ComboLimits* required) override {
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
+        required->v1.maxStorageBuffersPerShaderStage = supported.v1.maxStorageBuffersPerShaderStage;
     }
 
     void SetUp() override {
@@ -49,7 +49,8 @@ class PixelLocalStorageTests : public DawnTest {
             !device.HasFeature(wgpu::FeatureName::PixelLocalStorageCoherent) &&
             !device.HasFeature(wgpu::FeatureName::PixelLocalStorageNonCoherent));
 
-        DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+        DAWN_TEST_UNSUPPORTED_IF(
+            GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage < 1);
 
         supportsCoherent = device.HasFeature(wgpu::FeatureName::PixelLocalStorageCoherent);
     }

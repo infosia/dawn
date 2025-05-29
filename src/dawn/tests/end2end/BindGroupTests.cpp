@@ -42,15 +42,20 @@ constexpr static uint32_t kRTSize = 8;
 
 class BindGroupTests : public DawnTest {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
+    void GetRequiredCombinedLimits(const dawn::utils::ComboLimits& supported,
+                                   dawn::utils::ComboLimits* required) override {
         // TODO(crbug.com/383593270): Enable all the limits.
-        wgpu::Limits required = {};
-        required.maxStorageBuffersInVertexStage = supported.maxStorageBuffersInVertexStage;
-        required.maxStorageBuffersInFragmentStage = supported.maxStorageBuffersInFragmentStage;
-        required.maxStorageBuffersPerShaderStage = supported.maxStorageBuffersPerShaderStage;
-        required.maxStorageTexturesInFragmentStage = supported.maxStorageTexturesInFragmentStage;
-        required.maxStorageTexturesPerShaderStage = supported.maxStorageTexturesPerShaderStage;
-        return required;
+        required->v1.maxStorageBuffersPerShaderStage = supported.v1.maxStorageBuffersPerShaderStage;
+        required->v1.maxStorageTexturesPerShaderStage =
+            supported.v1.maxStorageTexturesPerShaderStage;
+        required->compat.maxStorageBuffersInVertexStage =
+            supported.compat.maxStorageBuffersInVertexStage;
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
+        required->compat.maxStorageTexturesInVertexStage =
+            supported.compat.maxStorageTexturesInVertexStage;
+        required->compat.maxStorageTexturesInFragmentStage =
+            supported.compat.maxStorageTexturesInFragmentStage;
     }
 
     void SetUp() override {
@@ -805,7 +810,8 @@ TEST_P(BindGroupTests, ThreePipelinesInSameRenderpass) {
 
 // Test that bind groups set for one pipeline are still set when the pipeline changes.
 TEST_P(BindGroupTests, BindGroupsPersistAfterPipelineChange) {
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage <
+                             1);
 
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
@@ -887,7 +893,8 @@ TEST_P(BindGroupTests, BindGroupsPersistAfterPipelineChange) {
 TEST_P(BindGroupTests, DrawThenChangePipelineAndBindGroup) {
     // TODO(anglebug.com/3032): fix failure in ANGLE/D3D11
     DAWN_SUPPRESS_TEST_IF(IsANGLE() && IsWindows());
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage <
+                             1);
 
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, kRTSize, kRTSize);
 
@@ -1486,7 +1493,8 @@ TEST_P(BindGroupTests, EmptyLayout) {
 // This is a regression test for crbug.com/dawn/410 which tests that it can successfully compile and
 // execute the shader.
 TEST_P(BindGroupTests, ReadonlyStorage) {
-    DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 1);
+    DAWN_TEST_UNSUPPORTED_IF(GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage <
+                             1);
 
     utils::ComboRenderPipelineDescriptor pipelineDescriptor;
 
@@ -1557,7 +1565,7 @@ TEST_P(BindGroupTests, CreateWithDestroyedResource) {
 
     // Test various usages and binding types since they take different backend code paths.
     doBufferTest(wgpu::BufferBindingType::Uniform, wgpu::BufferUsage::Uniform);
-    if (GetSupportedLimits().maxStorageBuffersInFragmentStage > 0) {
+    if (GetSupportedCombinedLimits()->compat.maxStorageBuffersInFragmentStage > 0) {
         doBufferTest(wgpu::BufferBindingType::Storage, wgpu::BufferUsage::Storage);
         doBufferTest(wgpu::BufferBindingType::ReadOnlyStorage, wgpu::BufferUsage::Storage);
     }

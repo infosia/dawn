@@ -1592,11 +1592,7 @@
             {"name": "max compute workgroup size y", "type": "uint32_t", "default": "limit u32 undefined"},
             {"name": "max compute workgroup size z", "type": "uint32_t", "default": "limit u32 undefined"},
             {"name": "max compute workgroups per dimension", "type": "uint32_t", "default": "limit u32 undefined"},
-            {"name": "max immediate size", "type": "uint32_t", "default": "limit u32 undefined"},
-            {"name": "max storage buffers in vertex stage", "type": "uint32_t", "default": "limit u32 undefined"},
-            {"name": "max storage textures in vertex stage", "type": "uint32_t", "default": "limit u32 undefined"},
-            {"name": "max storage buffers in fragment stage", "type": "uint32_t", "default": "limit u32 undefined"},
-            {"name": "max storage textures in fragment stage", "type": "uint32_t", "default": "limit u32 undefined"}
+            {"name": "max immediate size", "type": "uint32_t", "default": "limit u32 undefined"}
         ]
     },
     "adapter properties subgroups": {
@@ -1606,6 +1602,18 @@
         "members": [
             {"name": "subgroup min size", "type": "uint32_t", "default": "limit u32 undefined"},
             {"name": "subgroup max size", "type": "uint32_t", "default": "limit u32 undefined"}
+        ]
+    },
+    "compatibility mode limits": {
+        "category": "structure",
+        "chained": "out",
+        "chain roots": ["limits"],
+        "tags": ["compat"],
+        "members": [
+            {"name": "max storage buffers in vertex stage", "type": "uint32_t", "default": "limit u32 undefined"},
+            {"name": "max storage textures in vertex stage", "type": "uint32_t", "default": "limit u32 undefined"},
+            {"name": "max storage buffers in fragment stage", "type": "uint32_t", "default": "limit u32 undefined"},
+            {"name": "max storage textures in fragment stage", "type": "uint32_t", "default": "limit u32 undefined"}
         ]
     },
     "dawn texel copy buffer row alignment limits": {
@@ -3788,7 +3796,8 @@
             {"value": 12, "name": "adapter properties subgroups"},
             {"value": 13, "name": "bind group layout entry array size"},
 
-            {"value": 0, "name": "texture binding view dimension descriptor", "tags": ["compat"]},
+            {"value": 0, "name": "compatibility mode limits", "tags": ["compat"]},
+            {"value": 1, "name": "texture binding view dimension descriptor", "tags": ["compat"]},
 
             {"value": 0, "name": "emscripten surface source canvas HTML selector", "tags": ["emscripten"]},
 

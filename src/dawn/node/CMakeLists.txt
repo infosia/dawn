@@ -102,8 +102,15 @@ set_target_properties(dawn_node PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
     CXX_STANDARD 20
 )
-target_link_libraries(dawn_node dawn_node_binding dawn_node_interop dawn_native dawncpp dawn_proc
-                      libtint)
+target_link_libraries(dawn_node
+    dawn_native
+    dawn_node_binding
+    dawn_node_interop
+    dawn_proc
+    dawn_wgpu_utils
+    dawncpp
+    libtint
+)
 target_include_directories(dawn_node PRIVATE
     "${PROJECT_SOURCE_DIR}"
     "${NODE_ADDON_API_DIR}"
