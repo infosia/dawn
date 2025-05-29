@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d530ad11_e24cc6c1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-29T10:40:55Z",
+      "side": 1,
+      "message": "Please take a look, thanks! Now this CL prepares for the serialization of `ShaderModuleParseResult` instead of `ParsedCompilationMessages` (which is just a `DAWN_SERIALIZABLE` with regular member types after refactoring).",
+      "revId": "3df65c4810e55a1d4136c907059f30132b184ae8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

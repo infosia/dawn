@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d3334b3_d2832e8c",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-29T10:40:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fc0c5f9_980ebf35",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 261,
+        "endChar": 39
+      },
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d3da1a3_8c3cde36",
@@ -89,6 +113,24 @@
       "side": 1,
       "message": "`std::list` is used in the refactored version of `OwnedCompilationMessages`, which can be found in https://dawn-review.googlesource.com/c/dawn/+/244114.\nThere I tried to split the serializable dumb data with unserializable data that have to be generated before using `CompilationInfo`. And `std::list` is used instead of `std::vector` in some place to ensure the pointer never get invalid.\n\nPlease take a look there and suggest me how to refactor the `OwnedCompilationMessages`.",
       "parentUuid": "6d3da1a3_8c3cde36",
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35be175f_6b026ec3",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-29T10:40:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0077ee4_c76aafee",
       "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -142,6 +184,42 @@
       "side": 1,
       "message": "Or I can change the type of that`OwnedCompilationMessages` member to some wrapper like `MutexProtectedUnserializableOptional` that exactly implement the semantic we want...",
       "parentUuid": "f30692f9_e002b8cb",
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57286f49_abc92462",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-29T10:40:55Z",
+      "side": 1,
+      "message": "Done, currently we don\u0027t stream objects containing `MutexProtected` anymore.",
+      "parentUuid": "dc3fc137_37fc138c",
+      "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "689a51ef_6c8eb5ae",
+        "filename": "src/dawn/native/stream/Stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-05-29T10:40:55Z",
+      "side": 1,
+      "message": "Done, currently we don\u0027t stream objects containing `MutexProtected` member at all.",
+      "parentUuid": "dc3fc137_37fc138c",
       "revId": "ce990b4ffdf1bc4dc1232385a02cfb941bd3a879",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
