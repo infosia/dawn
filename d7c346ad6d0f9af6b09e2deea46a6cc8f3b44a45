@@ -105,6 +105,30 @@
       },
       "revId": "d7c346ad6d0f9af6b09e2deea46a6cc8f3b44a45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59f696ec_629048e2",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-05-29T23:00:25Z",
+      "side": 1,
+      "message": "actually I take that back. You were right. You can\u0027t \"preventDefault\" on an event that\u0027s not cancelable.  Also, dispatchEvent returns `false` if `preventDefault` as called. Fixed",
+      "parentUuid": "1d4a288d_91a970d9",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 3
+      },
+      "revId": "d7c346ad6d0f9af6b09e2deea46a6cc8f3b44a45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
