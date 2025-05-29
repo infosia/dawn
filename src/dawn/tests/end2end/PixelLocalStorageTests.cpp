@@ -38,8 +38,8 @@ class PixelLocalStorageTests : public DawnTest {
   protected:
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
                            dawn::utils::ComboLimits* required) override {
-        required->v1.maxStorageBuffersInFragmentStage =
-            supported.v1.maxStorageBuffersInFragmentStage;
+        required->compat.maxStorageBuffersInFragmentStage =
+            supported.compat.maxStorageBuffersInFragmentStage;
         required->v1.maxStorageBuffersPerShaderStage = supported.v1.maxStorageBuffersPerShaderStage;
     }
 
