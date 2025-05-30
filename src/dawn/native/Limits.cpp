@@ -331,17 +331,17 @@ void ApplyLimitTiers(CombinedLimits* limits) {
         }                                                            \
     }
 
-#define X_CHECK_BETTER_AND_CLAMP(Scope, Class, limitName, ...)                             \
-    {                                                                                      \
-        constexpr std::array<decltype(Limits::limitName), kTierCount> tiers{__VA_ARGS__};  \
-        decltype(Limits::limitName) tierValue = tiers[i - 1];                              \
-        if (CheckLimit<LimitClass::Class>::IsBetter(tierValue, limits->Scope.limitName)) { \
-            /* The tier is better. Go to the next tier. */                                 \
-            continue;                                                                      \
-        } else if (tierValue != limits->Scope.limitName) {                                 \
-            /* Better than the tier. Degrade |limits| to the tier. */                      \
-            limits->Scope.limitName = tiers[i - 1];                                        \
-        }                                                                                  \
+#define X_CHECK_BETTER_AND_CLAMP(Scope, Class, limitName, ...)                                  \
+    {                                                                                           \
+        constexpr std::array<decltype(limits->Scope.limitName), kTierCount> tiers{__VA_ARGS__}; \
+        auto tierValue = tiers[i - 1];                                                          \
+        if (CheckLimit<LimitClass::Class>::IsBetter(tierValue, limits->Scope.limitName)) {      \
+            /* The tier is better. Go to the next tier. */                                      \
+            continue;                                                                           \
+        } else if (tierValue != limits->Scope.limitName) {                                      \
+            /* Better than the tier. Degrade |limits| to the tier. */                           \
+            limits->Scope.limitName = tiers[i - 1];                                             \
+        }                                                                                       \
     }
 
     LIMITS_EACH_GROUP(X_EACH_GROUP)
@@ -422,19 +422,19 @@ void NormalizeLimits(CombinedLimits* limits) {
         std::min(limits->v1.maxUniformBufferBindingSize, limits->v1.maxBufferSize);
 }
 
-void EnforceLimitSpecInvariants(Limits* limits, wgpu::FeatureLevel featureLevel) {
+void EnforceLimitSpecInvariants(CombinedLimits* limits, wgpu::FeatureLevel featureLevel) {
     // In all feature levels, maxXXXPerStage is raised to maxXXXInStage
     // The reason for this is in compatibility mode, maxXXXPerStage defaults to = 4.
     // That means if the adapter has 8 maxXXXInStage and 8 maxXXXPerStage
     // and you request maxXXXInStage = 3 things work but, if you request
     // maxXXXInStage = 5 they'd fail because suddenly you're you'd also be required
     // to request maxXXXPerStage to 5. So, we auto-uprade the perStage limits.
-    limits->maxStorageBuffersPerShaderStage =
-        Max(limits->maxStorageBuffersPerShaderStage, limits->maxStorageBuffersInVertexStage,
-            limits->maxStorageBuffersInFragmentStage);
-    limits->maxStorageTexturesPerShaderStage =
-        Max(limits->maxStorageTexturesPerShaderStage, limits->maxStorageTexturesInVertexStage,
-            limits->maxStorageTexturesInFragmentStage);
+    limits->v1.maxStorageBuffersPerShaderStage =
+        Max(limits->v1.maxStorageBuffersPerShaderStage, limits->v1.maxStorageBuffersInVertexStage,
+            limits->v1.maxStorageBuffersInFragmentStage);
+    limits->v1.maxStorageTexturesPerShaderStage =
+        Max(limits->v1.maxStorageTexturesPerShaderStage, limits->v1.maxStorageTexturesInVertexStage,
+            limits->v1.maxStorageTexturesInFragmentStage);
 
     if (featureLevel != wgpu::FeatureLevel::Compatibility) {
         // In core mode the maxStorageXXXInYYYStage are always set to maxStorageXXXPerShaderStage
@@ -448,10 +448,10 @@ void EnforceLimitSpecInvariants(Limits* limits, wgpu::FeatureLevel featureLevel)
         //     device.limits.maxStorageBuffersPerShaderStage = 5;
         //     It's ok to use 5 storage buffers in fragment stage because in core
         //     we originally only had maxStorageBuffersPerShaderStage
-        limits->maxStorageBuffersInFragmentStage = limits->maxStorageBuffersPerShaderStage;
-        limits->maxStorageTexturesInFragmentStage = limits->maxStorageTexturesPerShaderStage;
-        limits->maxStorageBuffersInVertexStage = limits->maxStorageBuffersPerShaderStage;
-        limits->maxStorageTexturesInVertexStage = limits->maxStorageTexturesPerShaderStage;
+        limits->v1.maxStorageBuffersInFragmentStage = limits->v1.maxStorageBuffersPerShaderStage;
+        limits->v1.maxStorageTexturesInFragmentStage = limits->v1.maxStorageTexturesPerShaderStage;
+        limits->v1.maxStorageBuffersInVertexStage = limits->v1.maxStorageBuffersPerShaderStage;
+        limits->v1.maxStorageTexturesInVertexStage = limits->v1.maxStorageTexturesPerShaderStage;
     }
 }
 
