@@ -51,12 +51,12 @@ using MockQueueWorkDoneCallback = MockCppCallback<wgpu::QueueWorkDoneCallback<vo
 
 class DeviceLostTest : public DawnTest {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
+    void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
+                           dawn::utils::ComboLimits* required) override {
         // TODO(crbug.com/383593270): Enable all the limits.
-        wgpu::Limits required = {};
-        required.maxStorageBuffersInFragmentStage = supported.maxStorageBuffersInFragmentStage;
-        required.maxStorageBuffersPerShaderStage = supported.maxStorageBuffersPerShaderStage;
-        return required;
+        required->v1.maxStorageBuffersInFragmentStage =
+            supported.v1.maxStorageBuffersInFragmentStage;
+        required->v1.maxStorageBuffersPerShaderStage = supported.v1.maxStorageBuffersPerShaderStage;
     }
 
     void SetUp() override { DawnTest::SetUp(); }

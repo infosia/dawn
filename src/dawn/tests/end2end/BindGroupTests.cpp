@@ -42,15 +42,18 @@ constexpr static uint32_t kRTSize = 8;
 
 class BindGroupTests : public DawnTest {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
+    void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
+                           dawn::utils::ComboLimits* required) override {
         // TODO(crbug.com/383593270): Enable all the limits.
-        wgpu::Limits required = {};
-        required.maxStorageBuffersInVertexStage = supported.maxStorageBuffersInVertexStage;
-        required.maxStorageBuffersInFragmentStage = supported.maxStorageBuffersInFragmentStage;
-        required.maxStorageBuffersPerShaderStage = supported.maxStorageBuffersPerShaderStage;
-        required.maxStorageTexturesInFragmentStage = supported.maxStorageTexturesInFragmentStage;
-        required.maxStorageTexturesPerShaderStage = supported.maxStorageTexturesPerShaderStage;
-        return required;
+        required->v1.maxStorageBuffersPerShaderStage = supported.v1.maxStorageBuffersPerShaderStage;
+        required->v1.maxStorageTexturesPerShaderStage =
+            supported.v1.maxStorageTexturesPerShaderStage;
+        required->v1.maxStorageBuffersInVertexStage = supported.v1.maxStorageBuffersInVertexStage;
+        required->v1.maxStorageBuffersInFragmentStage =
+            supported.v1.maxStorageBuffersInFragmentStage;
+        required->v1.maxStorageTexturesInVertexStage = supported.v1.maxStorageTexturesInVertexStage;
+        required->v1.maxStorageTexturesInFragmentStage =
+            supported.v1.maxStorageTexturesInFragmentStage;
     }
 
     void SetUp() override {
