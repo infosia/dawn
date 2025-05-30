@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "641a21d3_981d6d63",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-05-30T23:18:30Z",
+      "side": 1,
+      "message": "LGTM, but will need to wait for the ml_drift change to land and roll. Usually takes a while.",
+      "revId": "fb8a0106528b15e0c1b73eb3ab89017c788f3753",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
