@@ -195,6 +195,24 @@
       "parentUuid": "f85fe952_669781d0",
       "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1a61b5a_4187c2c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3992086
+      },
+      "writtenOn": "2025-05-30T15:28:29Z",
+      "side": 1,
+      "message": "the line \n\nadd_library(${output_target} SHARED ${all_objects})\n\ndoes not exist in my branch in that file:\n\nhttps://github.com/manuel5975p/dawn/blob/main/src/cmake/BundleLibraries.cmake\n\nor I don\u0027t understand something",
+      "parentUuid": "d55a2c70_9f0f20dd",
+      "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
