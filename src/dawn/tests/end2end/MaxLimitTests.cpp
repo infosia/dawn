@@ -41,7 +41,10 @@ namespace {
 
 class MaxLimitTests : public DawnTest {
   public:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override { return supported; }
+    void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
+                           dawn::utils::ComboLimits* required) override {
+        supported.UnlinkedCopyTo(required);
+    }
 };
 
 // Test using the maximum amount of workgroup memory works
