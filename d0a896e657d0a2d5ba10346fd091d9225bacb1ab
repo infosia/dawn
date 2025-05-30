@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0c8746f5_ace183b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-30T01:39:36Z",
+      "side": 1,
+      "message": "Better now?",
+      "parentUuid": "5880ba39_fcabcc18",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f81fb06a_9eca3fc8",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 11
@@ -48,6 +66,24 @@
       "writtenOn": "2025-05-29T20:56:03Z",
       "side": 1,
       "message": "Please comment this struct.\n\nvalue_id is the only obvious thing here",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c558e70a_c8bea7fa",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-30T01:39:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f81fb06a_9eca3fc8",
       "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -65,6 +101,24 @@
       "writtenOn": "2025-05-29T20:56:03Z",
       "side": 1,
       "message": "this needs a method comment.",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79709f27_31cf454f",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-30T01:39:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "911c403c_07591a70",
       "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -104,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57269511_982412a3",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-30T01:39:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "907ebb99_7761cab7",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c83bebe6_1e99d545",
@@ -117,6 +189,24 @@
       "writtenOn": "2025-05-29T20:56:03Z",
       "side": 1,
       "message": "needs a method comment",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b3ac238_ee8dd3dc",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-30T01:39:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c83bebe6_1e99d545",
       "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -152,6 +242,24 @@
       "side": 1,
       "message": "Yea, push the value up as return values from the containing control instructions so it becomes available as a value in the parent scope. Will try to clarify the comment.",
       "parentUuid": "8f527956_1ccc66e6",
+      "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e6e2b83_139ef36b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-30T01:39:36Z",
+      "side": 1,
+      "message": "Removed this and documented the `Propagate` method itself as this makes more sense attached to that I think.",
+      "parentUuid": "3881e8bc_592fbc50",
       "revId": "d0a896e657d0a2d5ba10346fd091d9225bacb1ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
