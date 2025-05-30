@@ -92,6 +92,11 @@ add_library(dawn_node_binding STATIC
 )
 common_compile_options(dawn_node_binding)
 
+target_link_libraries(dawn_node_binding
+    PRIVATE
+        dawn::dawn_wgpu_utils
+)
+
 target_include_directories(dawn_node_binding
     PRIVATE
         "${PROJECT_SOURCE_DIR}"

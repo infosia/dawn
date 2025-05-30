@@ -1108,24 +1108,27 @@ std::vector<wgpu::FeatureName> DawnTestBase::GetRequiredFeatures() {
     return {};
 }
 
-wgpu::Limits DawnTestBase::GetRequiredLimits(const wgpu::Limits&) {
-    return {};
-}
+void DawnTestBase::GetRequiredLimits(const dawn::utils::ComboLimits& supported,
+                                     dawn::utils::ComboLimits* required) {}
 
 const TestAdapterProperties& DawnTestBase::GetAdapterProperties() const {
     return mParam.adapterProperties;
 }
 
-wgpu::Limits DawnTestBase::GetAdapterLimits() {
-    wgpu::Limits supportedLimits = {};
-    adapter.GetLimits(&supportedLimits);
-    return supportedLimits;
+const dawn::utils::ComboLimits& DawnTestBase::GetAdapterComboLimits() {
+    return adapterLimits;
 }
 
-wgpu::Limits DawnTestBase::GetSupportedLimits() {
-    wgpu::Limits supportedLimits = {};
-    device.GetLimits(&supportedLimits);
-    return supportedLimits;
+const wgpu::Limits& DawnTestBase::GetAdapterLimits() {
+    return GetAdapterComboLimits().v1;
+}
+
+const dawn::utils::ComboLimits& DawnTestBase::GetSupportedComboLimits() {
+    return deviceLimits;
+}
+
+const wgpu::Limits& DawnTestBase::GetSupportedLimits() {
+    return GetSupportedComboLimits().v1;
 }
 
 bool DawnTestBase::SupportsFeatures(const std::vector<wgpu::FeatureName>& features) {
@@ -1176,14 +1179,15 @@ WGPUDevice DawnTestBase::CreateDeviceImpl(std::string isolationKey,
         requiredFeatures.push_back(wgpu::FeatureName::ImplicitDeviceSynchronization);
     }
 
-    wgpu::Limits supportedLimits;
+    dawn::utils::ComboLimits supportedLimits;
     native::GetProcs().adapterGetLimits(mBackendAdapter.Get(),
-                                        reinterpret_cast<WGPULimits*>(&supportedLimits));
-    wgpu::Limits requiredLimits = GetRequiredLimits(supportedLimits);
+                                        reinterpret_cast<WGPULimits*>(supportedLimits.GetLinked()));
+    dawn::utils::ComboLimits requiredLimits{};
+    GetRequiredLimits(supportedLimits, &requiredLimits);
 
     wgpu::DeviceDescriptor deviceDescriptor =
         *reinterpret_cast<const wgpu::DeviceDescriptor*>(descriptor);
-    deviceDescriptor.requiredLimits = &requiredLimits;
+    deviceDescriptor.requiredLimits = requiredLimits.GetLinked();
     deviceDescriptor.requiredFeatures = requiredFeatures.data();
     deviceDescriptor.requiredFeatureCount = requiredFeatures.size();
 
@@ -1295,11 +1299,13 @@ void DawnTestBase::SetUp() {
         &adapter);
     FlushWire();
     DAWN_ASSERT(adapter);
+    adapter.GetLimits(adapterLimits.GetLinked());
 
     device = CreateDevice();
     backendDevice = mLastCreatedBackendDevice;
     DAWN_ASSERT(backendDevice);
     DAWN_ASSERT(device);
+    device.GetLimits(deviceLimits.GetLinked());
 
     queue = device.GetQueue();
 }
