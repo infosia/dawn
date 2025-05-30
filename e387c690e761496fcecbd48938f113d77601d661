@@ -100,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ef37e11_36985d82",
+        "filename": "src/tint/lang/spirv/writer/raise/merge_return.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-05-30T01:11:05Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "caff13fc_398c8b0f",
+      "revId": "e387c690e761496fcecbd48938f113d77601d661",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e389782_a5d7214b",
