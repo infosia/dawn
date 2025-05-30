@@ -781,7 +781,7 @@ class Printer {
         // Declare the function.
         auto decl = Instruction{
             spv::Op::OpFunction,
-            {return_type_id, id, U32Operand(SpvFunctionControlMaskNone), function_type_id}};
+            {return_type_id, id, U32Operand(SpvFunctionControlDontInlineMask), function_type_id}};
 
         // Create a function that we will add instructions to.
         auto entry_block = module_.NextId();
