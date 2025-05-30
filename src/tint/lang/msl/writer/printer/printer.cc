@@ -665,7 +665,7 @@ class Printer : public tint::TextGenerator {
 
         if (current_function_ == nullptr) {
             // program scope let
-            out << "constexpr constant ";
+            out << "const constant ";
         }
         EmitType(out, l->Result()->Type());
         out << " ";
