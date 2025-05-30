@@ -33,6 +33,24 @@
       "message": "I think this is a bug. `immediateRangeStartOffset` only advances if there is one dirty immediate\u0027s offset.\n\nSo if `firstVertex` is not dirty and `firstInstance` is dirty, this code will overwrite the `firstVertex` location in the buffer with `firstInstance` value.\n\nWe should add a test case for this.",
       "revId": "6547ea2af9ffd3502f3e7e4873089f20a9b1d270",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc90328a_5891d142",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-30T01:47:34Z",
+      "side": 1,
+      "message": "That makes sense. It hints that we should iterate based on PipelineMask to upload the contents. (And do opt if we find we need to reduce the uploading bits) I\u0027ll add a dawn end2end tests in FirstIndexOffsetTest for it.",
+      "parentUuid": "2fed938b_3250ecf3",
+      "revId": "6547ea2af9ffd3502f3e7e4873089f20a9b1d270",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
