@@ -1240,7 +1240,7 @@ class MultiGeneratorFromDawnJSON(Generator):
         if 'webgpu_headers' in targets:
             params_upstream = parse_json(
                 loaded_json,
-                enabled_tags=['compat', 'upstream', 'native'],
+                enabled_tags=['upstream', 'native'],
                 disabled_tags=['dawn'])
             imported_templates.append('BSD_LICENSE')
             renders.append(
