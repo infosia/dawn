@@ -1108,18 +1108,29 @@ std::vector<wgpu::FeatureName> DawnTestBase::GetRequiredFeatures() {
     return {};
 }
 
-wgpu::Limits DawnTestBase::GetRequiredLimits(const wgpu::Limits&) {
-    return {};
-}
+void DawnTestBase::GetRequiredLimits(const dawn::utils::ComboLimits& supported,
+                                     dawn::utils::ComboLimits* required) {}
 
 const TestAdapterProperties& DawnTestBase::GetAdapterProperties() const {
     return mParam.adapterProperties;
+}
+
+std::unique_ptr<dawn::utils::ComboLimits> DawnTestBase::GetAdapterComboLimits() {
+    auto limits = std::make_unique<dawn::utils::ComboLimits>();
+    adapter.GetLimits(limits->GetLinked());
+    return limits;
 }
 
 wgpu::Limits DawnTestBase::GetAdapterLimits() {
     wgpu::Limits supportedLimits = {};
     adapter.GetLimits(&supportedLimits);
     return supportedLimits;
+}
+
+std::unique_ptr<dawn::utils::ComboLimits> DawnTestBase::GetSupportedComboLimits() {
+    auto limits = std::make_unique<dawn::utils::ComboLimits>();
+    device.GetLimits(limits->GetLinked());
+    return limits;
 }
 
 wgpu::Limits DawnTestBase::GetSupportedLimits() {
@@ -1176,14 +1187,15 @@ WGPUDevice DawnTestBase::CreateDeviceImpl(std::string isolationKey,
         requiredFeatures.push_back(wgpu::FeatureName::ImplicitDeviceSynchronization);
     }
 
-    wgpu::Limits supportedLimits;
+    dawn::utils::ComboLimits supportedLimits;
     native::GetProcs().adapterGetLimits(mBackendAdapter.Get(),
-                                        reinterpret_cast<WGPULimits*>(&supportedLimits));
-    wgpu::Limits requiredLimits = GetRequiredLimits(supportedLimits);
+                                        reinterpret_cast<WGPULimits*>(supportedLimits.GetLinked()));
+    dawn::utils::ComboLimits requiredLimits{};
+    GetRequiredLimits(supportedLimits, &requiredLimits);
 
     wgpu::DeviceDescriptor deviceDescriptor =
         *reinterpret_cast<const wgpu::DeviceDescriptor*>(descriptor);
-    deviceDescriptor.requiredLimits = &requiredLimits;
+    deviceDescriptor.requiredLimits = requiredLimits.GetLinked();
     deviceDescriptor.requiredFeatures = requiredFeatures.data();
     deviceDescriptor.requiredFeatureCount = requiredFeatures.size();
 

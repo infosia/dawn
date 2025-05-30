@@ -281,6 +281,12 @@ bool ValidationTest::HasToggleEnabled(const char* toggle) const {
            }) != toggles.end();
 }
 
+std::unique_ptr<dawn::utils::ComboLimits> ValidationTest::GetSupportedComboLimits() const {
+    auto limits = std::make_unique<dawn::utils::ComboLimits>();
+    device.GetLimits(limits->GetLinked());
+    return limits;
+}
+
 wgpu::Limits ValidationTest::GetSupportedLimits() const {
     wgpu::Limits supportedLimits = {};
     device.GetLimits(&supportedLimits);
@@ -295,9 +301,8 @@ std::vector<wgpu::FeatureName> ValidationTest::GetRequiredFeatures() {
     return {};
 }
 
-wgpu::Limits ValidationTest::GetRequiredLimits(const wgpu::Limits&) {
-    return {};
-}
+void ValidationTest::GetRequiredLimits(const dawn::utils::ComboLimits& supported,
+                                       dawn::utils::ComboLimits* required) {}
 
 std::vector<const char*> ValidationTest::GetEnabledToggles() {
     return {};
@@ -409,11 +414,12 @@ void ValidationTest::SetUp(const wgpu::InstanceDescriptor* nativeDesc,
     deviceDescriptor.requiredFeatures = requiredFeatures.data();
     deviceDescriptor.requiredFeatureCount = requiredFeatures.size();
 
-    wgpu::Limits supportedLimits;
-    dawn::native::GetProcs().adapterGetLimits(mBackendAdapter.Get(),
-                                              reinterpret_cast<WGPULimits*>(&supportedLimits));
-    wgpu::Limits requiredLimits = GetRequiredLimits(supportedLimits);
-    deviceDescriptor.requiredLimits = &requiredLimits;
+    dawn::utils::ComboLimits supportedLimits;
+    dawn::native::GetProcs().adapterGetLimits(
+        mBackendAdapter.Get(), reinterpret_cast<WGPULimits*>(supportedLimits.GetLinked()));
+    dawn::utils::ComboLimits requiredLimits{};
+    GetRequiredLimits(supportedLimits, &requiredLimits);
+    deviceDescriptor.requiredLimits = requiredLimits.GetLinked();
 
     device = RequestDeviceSync(deviceDescriptor);
     DAWN_ASSERT(device);

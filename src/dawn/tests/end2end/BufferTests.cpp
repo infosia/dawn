@@ -1337,11 +1337,10 @@ DAWN_INSTANTIATE_TEST(BufferNoSuballocationTests,
 
 class BufferMapExtendedUsagesTests : public DawnTest {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
-        wgpu::Limits required = {};
-        required.maxStorageBuffersInVertexStage = supported.maxStorageBuffersInVertexStage;
-        required.maxStorageBuffersPerShaderStage = supported.maxStorageBuffersPerShaderStage;
-        return required;
+    void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
+                           dawn::utils::ComboLimits* required) override {
+        required->v1.maxStorageBuffersInVertexStage = supported.v1.maxStorageBuffersInVertexStage;
+        required->v1.maxStorageBuffersPerShaderStage = supported.v1.maxStorageBuffersPerShaderStage;
     }
 
   protected:

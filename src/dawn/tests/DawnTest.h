@@ -51,6 +51,7 @@
 #include "dawn/tests/MockCallback.h"
 #include "dawn/tests/ParamGenerator.h"
 #include "dawn/tests/ToggleParser.h"
+#include "dawn/utils/ComboLimits.h"
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/TextureUtils.h"
 #include "dawn/webgpu_cpp_print.h"
@@ -617,11 +618,16 @@ class DawnTestBase {
     // code path to handle the situation when not all features are supported.
     virtual std::vector<wgpu::FeatureName> GetRequiredFeatures();
 
-    virtual wgpu::Limits GetRequiredLimits(const wgpu::Limits&);
+    // Called in SetUp() to get the limits required to be enabled in the tests.
+    // Note implementations of this can assume `required` starts as default-initialized.
+    virtual void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
+                                   dawn::utils::ComboLimits* required);
 
     const TestAdapterProperties& GetAdapterProperties() const;
 
+    std::unique_ptr<dawn::utils::ComboLimits> GetAdapterComboLimits();
     wgpu::Limits GetAdapterLimits();
+    std::unique_ptr<dawn::utils::ComboLimits> GetSupportedComboLimits();
     wgpu::Limits GetSupportedLimits();
 
     uint64_t GetDeprecationWarningCountForTesting() const;

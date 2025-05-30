@@ -130,10 +130,10 @@ class PipelineCachingTests : public DawnTest {
 
 class SinglePipelineCachingTests : public PipelineCachingTests {
   protected:
-    wgpu::Limits GetRequiredLimits(const wgpu::Limits& supported) override {
-        // Just copy all the limits, though all we really care about is
-        // maxStorageBuffersInFragmentStage
-        return supported;
+    void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
+                           dawn::utils::ComboLimits* required) override {
+        required->v1.maxStorageBuffersInFragmentStage =
+            supported.v1.maxStorageBuffersInFragmentStage;
     }
 };
 
