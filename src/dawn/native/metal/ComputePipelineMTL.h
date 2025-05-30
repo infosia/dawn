@@ -30,10 +30,10 @@
 
 #include <vector>
 
+#include "dawn/common/NSRef.h"
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
-
-#include "dawn/common/NSRef.h"
+#include "dawn/native/metal/ShaderModuleMTL.h"
 
 #import <Metal/Metal.h>
 
@@ -54,6 +54,8 @@ class ComputePipeline final : public ComputePipelineBase {
     MTLSize GetLocalWorkGroupSize() const;
     bool RequiresStorageBufferLength() const;
 
+    id<MTLFunction> GetComputeFunction();
+
   private:
     using ComputePipelineBase::ComputePipelineBase;
     MaybeError InitializeImpl() override;
@@ -62,6 +64,9 @@ class ComputePipeline final : public ComputePipelineBase {
     MTLSize mLocalWorkgroupSize;
     bool mRequiresStorageBufferLength;
     std::vector<uint32_t> mWorkgroupAllocations;
+
+    ShaderModule::MetalFunctionData computeData;
+    NSPRef<id<MTLFunction>> mComputeFunction;
 };
 
 }  // namespace dawn::native::metal

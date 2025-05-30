@@ -31,6 +31,7 @@
 #include "dawn/native/RenderPipeline.h"
 
 #include "dawn/common/NSRef.h"
+#include "dawn/native/metal/ShaderModuleMTL.h"
 
 #import <Metal/Metal.h>
 
@@ -55,6 +56,9 @@ class RenderPipeline final : public RenderPipelineBase {
 
     id<MTLDepthStencilState> GetMTLDepthStencilState();
 
+    id<MTLFunction> GetVertexFunction();
+    id<MTLFunction> GetFragmentFunction();
+
     // For each Dawn vertex buffer, give the index in which it will be positioned in the Metal
     // vertex buffer table.
     uint32_t GetMtlVertexBufferIndex(VertexBufferSlot slot) const;
@@ -75,6 +79,12 @@ class RenderPipeline final : public RenderPipelineBase {
     NSPRef<id<MTLRenderPipelineState>> mMtlRenderPipelineState;
     NSPRef<id<MTLDepthStencilState>> mMtlDepthStencilState;
     PerVertexBuffer<uint32_t> mMtlVertexBufferIndices;
+
+    NSPRef<id<MTLFunction>> mVertexFunction;
+    NSPRef<id<MTLFunction>> mFragmentFunction;
+
+    ShaderModule::MetalFunctionData vertexData;
+    ShaderModule::MetalFunctionData fragmentData;
 
     wgpu::ShaderStage mStagesRequiringStorageBufferLength = wgpu::ShaderStage::None;
 };

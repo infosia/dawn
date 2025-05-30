@@ -137,19 +137,19 @@ void SetSampleBufferAttachments(PassDescriptor* descriptor, BeginPass* cmd) {
     if (querySet == nullptr) {
         return;
     }
-        SampleBufferAttachment<PassDescriptor> sampleBufferAttachment;
-        sampleBufferAttachment.SetSampleBuffer(descriptor,
-                                               ToBackend(querySet)->GetCounterSampleBuffer());
-        uint32_t beginningOfPassWriteIndex = cmd->timestampWrites.beginningOfPassWriteIndex;
-        sampleBufferAttachment.SetStartSampleIndex(
-            descriptor, beginningOfPassWriteIndex != wgpu::kQuerySetIndexUndefined
-                            ? NSUInteger(beginningOfPassWriteIndex)
-                            : MTLCounterDontSample);
-        uint32_t endOfPassWriteIndex = cmd->timestampWrites.endOfPassWriteIndex;
-        sampleBufferAttachment.SetEndSampleIndex(
-            descriptor, endOfPassWriteIndex != wgpu::kQuerySetIndexUndefined
-                            ? NSUInteger(endOfPassWriteIndex)
-                            : MTLCounterDontSample);
+    SampleBufferAttachment<PassDescriptor> sampleBufferAttachment;
+    sampleBufferAttachment.SetSampleBuffer(descriptor,
+                                           ToBackend(querySet)->GetCounterSampleBuffer());
+    uint32_t beginningOfPassWriteIndex = cmd->timestampWrites.beginningOfPassWriteIndex;
+    sampleBufferAttachment.SetStartSampleIndex(
+        descriptor, beginningOfPassWriteIndex != wgpu::kQuerySetIndexUndefined
+                        ? NSUInteger(beginningOfPassWriteIndex)
+                        : MTLCounterDontSample);
+    uint32_t endOfPassWriteIndex = cmd->timestampWrites.endOfPassWriteIndex;
+    sampleBufferAttachment.SetEndSampleIndex(descriptor,
+                                             endOfPassWriteIndex != wgpu::kQuerySetIndexUndefined
+                                                 ? NSUInteger(endOfPassWriteIndex)
+                                                 : MTLCounterDontSample);
 }
 
 NSRef<MTLComputePassDescriptor> CreateMTLComputePassDescriptor(BeginComputePassCmd* computePass) {
@@ -518,15 +518,27 @@ struct StorageBufferLengthTracker {
 // texture tables in contiguous order.
 class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
   public:
-    explicit BindGroupTracker(StorageBufferLengthTracker* lengthTracker)
-        : BindGroupTrackerBase(), mLengthTracker(lengthTracker) {}
+    explicit BindGroupTracker(StorageBufferLengthTracker* lengthTracker, bool useArgumentBuffers)
+        : BindGroupTrackerBase(),
+          mLengthTracker(lengthTracker),
+          mUseArgumentBuffers(useArgumentBuffers) {}
 
     template <typename Encoder>
-    void Apply(Encoder encoder) {
+    void Apply(Encoder encoder, RenderPipeline* pipeline) {
         BeforeApply();
         for (BindGroupIndex index : mDirtyBindGroupsObjectChangedOrIsDynamic) {
-            ApplyBindGroup(encoder, index, ToBackend(mBindGroups[index]), mDynamicOffsets[index],
-                           ToBackend(mPipelineLayout));
+            ApplyBindGroup(encoder, pipeline, index, ToBackend(mBindGroups[index]),
+                           mDynamicOffsets[index], ToBackend(mPipelineLayout));
+        }
+        AfterApply();
+    }
+
+    template <typename Encoder>
+    void Apply(Encoder encoder, ComputePipeline* pipeline) {
+        BeforeApply();
+        for (BindGroupIndex index : mDirtyBindGroupsObjectChangedOrIsDynamic) {
+            ApplyBindGroup(encoder, pipeline, index, ToBackend(mBindGroups[index]),
+                           mDynamicOffsets[index], ToBackend(mPipelineLayout));
         }
         AfterApply();
     }
@@ -538,10 +550,26 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
     // two encoder types.
     void ApplyBindGroupImpl(id<MTLRenderCommandEncoder> render,
                             id<MTLComputeCommandEncoder> compute,
+                            RenderPipeline* renderPipeline,
+                            ComputePipeline* computePipeline,
                             BindGroupIndex index,
                             BindGroup* group,
                             const ityp::vector<BindingIndex, uint64_t>& dynamicOffsets,
                             PipelineLayout* pipelineLayout) {
+        std::unordered_map<wgpu::ShaderStage, std::unordered_map<uint32_t, id<MTLArgumentEncoder>>>
+            argumentEncoders;
+
+        NSUInteger binding_group = static_cast<NSUInteger>(static_cast<uint32_t>(index));
+
+        [[maybe_unused]] id<MTLArgumentEncoder> vertEncoder = nil;
+        [[maybe_unused]] id<MTLBuffer> vertArgBuffer = nil;
+
+        [[maybe_unused]] id<MTLArgumentEncoder> fragEncoder = nil;
+        [[maybe_unused]] id<MTLBuffer> fragArgBuffer = nil;
+
+        [[maybe_unused]] id<MTLArgumentEncoder> computeEncoder = nil;
+        [[maybe_unused]] id<MTLBuffer> computeArgBuffer = nil;
+
         // TODO(crbug.com/dawn/854): Maintain buffers and offsets arrays in BindGroup
         // so that we only have to do one setVertexBuffers and one setFragmentBuffers
         // call here.
@@ -562,14 +590,72 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
             if (hasVertStage) {
                 vertIndex = pipelineLayout->GetBindingIndexInfo(
                     SingleShaderStage::Vertex)[index][bindingIndex];
+
+                if (mUseArgumentBuffers) {
+                    DAWN_ASSERT(renderPipeline);
+
+                    if (vertEncoder == nil) {
+                        id<MTLFunction> vFunc = renderPipeline->GetVertexFunction();
+                        vertEncoder = [vFunc newArgumentEncoderWithBufferIndex:binding_group];
+
+                        NSUInteger vertArgumentBufferLength = vertEncoder.encodedLength;
+
+                        vertArgBuffer = [ToBackend(renderPipeline->GetDevice())->GetMTLDevice()
+                            newBufferWithLength:vertArgumentBufferLength
+                                        options:0];
+
+                        [vertEncoder setArgumentBuffer:vertArgBuffer offset:0];
+                    }
+
+                    [render setVertexBuffer:vertArgBuffer offset:0 atIndex:0];
+                }
             }
+
             if (hasFragStage) {
                 fragIndex = pipelineLayout->GetBindingIndexInfo(
                     SingleShaderStage::Fragment)[index][bindingIndex];
+
+                if (mUseArgumentBuffers) {
+                    DAWN_ASSERT(renderPipeline);
+
+                    if (fragEncoder == nil) {
+                        id<MTLFunction> fFunc = renderPipeline->GetFragmentFunction();
+                        fragEncoder = [fFunc newArgumentEncoderWithBufferIndex:binding_group];
+
+                        NSUInteger fragArgumentBufferLength = fragEncoder.encodedLength;
+
+                        fragArgBuffer = [ToBackend(renderPipeline->GetDevice())->GetMTLDevice()
+                            newBufferWithLength:fragArgumentBufferLength
+                                        options:0];
+
+                        [fragEncoder setArgumentBuffer:fragArgBuffer offset:0];
+                    }
+                    [render setFragmentBuffer:fragArgBuffer offset:0 atIndex:0];
+                }
             }
+
             if (hasComputeStage) {
                 computeIndex = pipelineLayout->GetBindingIndexInfo(
                     SingleShaderStage::Compute)[index][bindingIndex];
+
+                if (mUseArgumentBuffers) {
+                    DAWN_ASSERT(renderPipeline);
+
+                    if (computeEncoder == nil) {
+                        id<MTLFunction> cFunc = computePipeline->GetComputeFunction();
+                        computeEncoder = [cFunc newArgumentEncoderWithBufferIndex:binding_group];
+
+                        NSUInteger argumentBufferLength = computeEncoder.encodedLength;
+
+                        computeArgBuffer = [ToBackend(renderPipeline->GetDevice())->GetMTLDevice()
+                            newBufferWithLength:argumentBufferLength
+                                        options:0];
+
+                        [computeEncoder setArgumentBuffer:computeArgBuffer offset:0];
+                    }
+
+                    [compute setBuffer:computeArgBuffer offset:0 atIndex:0];
+                }
             }
 
             auto HandleTextureBinding = [&]() {
@@ -578,17 +664,32 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                 if (hasVertStage &&
                     mBoundTextures[SingleShaderStage::Vertex][vertIndex] != texture) {
                     mBoundTextures[SingleShaderStage::Vertex][vertIndex] = texture;
-                    [render setVertexTexture:texture atIndex:vertIndex];
+
+                    if (mUseArgumentBuffers) {
+                        [vertEncoder setTexture:texture atIndex:vertIndex];
+                    } else {
+                        [render setVertexTexture:texture atIndex:vertIndex];
+                    }
                 }
                 if (hasFragStage &&
                     mBoundTextures[SingleShaderStage::Fragment][fragIndex] != texture) {
                     mBoundTextures[SingleShaderStage::Fragment][fragIndex] = texture;
-                    [render setFragmentTexture:texture atIndex:fragIndex];
+
+                    if (mUseArgumentBuffers) {
+                        [vertEncoder setTexture:texture atIndex:fragIndex];
+                    } else {
+                        [render setFragmentTexture:texture atIndex:fragIndex];
+                    }
                 }
                 if (hasComputeStage &&
                     mBoundTextures[SingleShaderStage::Compute][computeIndex] != texture) {
                     mBoundTextures[SingleShaderStage::Compute][computeIndex] = texture;
-                    [compute setTexture:texture atIndex:computeIndex];
+
+                    if (mUseArgumentBuffers) {
+                        [computeEncoder setTexture:texture atIndex:computeIndex];
+                    } else {
+                        [compute setTexture:texture atIndex:computeIndex];
+                    }
                 }
             };
 
@@ -610,24 +711,39 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     if (hasVertStage) {
                         mLengthTracker->data[SingleShaderStage::Vertex][vertIndex] = binding.size;
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Vertex;
-                        [render setVertexBuffers:&buffer
-                                         offsets:&offset
-                                       withRange:NSMakeRange(vertIndex, 1)];
+
+                        if (mUseArgumentBuffers) {
+                            [vertEncoder setBuffer:buffer offset:offset atIndex:vertIndex];
+                        } else {
+                            [render setVertexBuffers:&buffer
+                                             offsets:&offset
+                                           withRange:NSMakeRange(vertIndex, 1)];
+                        }
                     }
                     if (hasFragStage) {
                         mLengthTracker->data[SingleShaderStage::Fragment][fragIndex] = binding.size;
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Fragment;
-                        [render setFragmentBuffers:&buffer
-                                           offsets:&offset
-                                         withRange:NSMakeRange(fragIndex, 1)];
+                        if (mUseArgumentBuffers) {
+                            [fragEncoder setBuffer:buffer offset:offset atIndex:fragIndex];
+                        } else {
+                            [render setFragmentBuffers:&buffer
+                                               offsets:&offset
+                                             withRange:NSMakeRange(fragIndex, 1)];
+                        }
                     }
                     if (hasComputeStage) {
                         mLengthTracker->data[SingleShaderStage::Compute][computeIndex] =
                             binding.size;
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Compute;
-                        [compute setBuffers:&buffer
-                                    offsets:&offset
-                                  withRange:NSMakeRange(computeIndex, 1)];
+                        if (mUseArgumentBuffers) {
+                            [computeEncoder setBuffers:&buffer
+                                               offsets:&offset
+                                             withRange:NSMakeRange(computeIndex, 1)];
+                        } else {
+                            [compute setBuffers:&buffer
+                                        offsets:&offset
+                                      withRange:NSMakeRange(computeIndex, 1)];
+                        }
                     }
                 },
                 [&](const SamplerBindingInfo&) {
@@ -636,18 +752,31 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     if (hasVertStage &&
                         mBoundSamplers[SingleShaderStage::Vertex][vertIndex] != samplerState) {
                         mBoundSamplers[SingleShaderStage::Vertex][vertIndex] = samplerState;
-                        [render setVertexSamplerState:samplerState atIndex:vertIndex];
+                        if (mUseArgumentBuffers) {
+                            [vertEncoder setSamplerState:samplerState atIndex:vertIndex];
+                        } else {
+                            [render setVertexSamplerState:samplerState atIndex:vertIndex];
+                        }
                     }
                     if (hasFragStage &&
                         mBoundSamplers[SingleShaderStage::Fragment][fragIndex] != samplerState) {
                         mBoundSamplers[SingleShaderStage::Fragment][fragIndex] = samplerState;
-                        [render setFragmentSamplerState:samplerState atIndex:fragIndex];
+                        if (mUseArgumentBuffers) {
+                            [fragEncoder setSamplerState:samplerState atIndex:fragIndex];
+                        } else {
+                            [render setFragmentSamplerState:samplerState atIndex:fragIndex];
+                        }
                     }
                     if (hasComputeStage &&
                         mBoundSamplers[SingleShaderStage::Compute][computeIndex] != samplerState) {
                         mBoundSamplers[SingleShaderStage::Compute][computeIndex] = samplerState;
-                        [compute setSamplerState:sampler->GetMTLSamplerState()
-                                         atIndex:computeIndex];
+                        if (mUseArgumentBuffers) {
+                            [computeEncoder setSamplerState:sampler->GetMTLSamplerState()
+                                                    atIndex:computeIndex];
+                        } else {
+                            [compute setSamplerState:sampler->GetMTLSamplerState()
+                                             atIndex:computeIndex];
+                        }
                     }
                 },
                 [&](const StaticSamplerBindingInfo&) {
@@ -663,13 +792,17 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
     }
 
     template <typename... Args>
-    void ApplyBindGroup(id<MTLRenderCommandEncoder> encoder, Args&&... args) {
-        ApplyBindGroupImpl(encoder, nullptr, std::forward<Args&&>(args)...);
+    void ApplyBindGroup(id<MTLRenderCommandEncoder> encoder,
+                        RenderPipeline* pipeline,
+                        Args&&... args) {
+        ApplyBindGroupImpl(encoder, nullptr, pipeline, nullptr, std::forward<Args&&>(args)...);
     }
 
     template <typename... Args>
-    void ApplyBindGroup(id<MTLComputeCommandEncoder> encoder, Args&&... args) {
-        ApplyBindGroupImpl(nullptr, encoder, std::forward<Args&&>(args)...);
+    void ApplyBindGroup(id<MTLComputeCommandEncoder> encoder,
+                        ComputePipeline* pipeline,
+                        Args&&... args) {
+        ApplyBindGroupImpl(nullptr, encoder, nullptr, pipeline, std::forward<Args&&>(args)...);
     }
 
     raw_ptr<StorageBufferLengthTracker> mLengthTracker;
@@ -679,6 +812,8 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
     // texture/sampler is bound in Metal and the Metal runtime will keep them alive.
     PerStage<absl::flat_hash_map<uint32_t, id<MTLTexture>>> mBoundTextures;
     PerStage<absl::flat_hash_map<uint32_t, id<MTLSamplerState>>> mBoundSamplers;
+
+    bool mUseArgumentBuffers = false;
 };
 
 // Keeps track of the dirty vertex buffer values so they can be lazily applied when we know
@@ -1234,12 +1369,12 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                                                             cmd);
 
                 } else {
-                        DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
-                        [commandContext->EnsureBlit()
-                            sampleCountersInBuffer:ToBackend(cmd->querySet.Get())
-                                                       ->GetCounterSampleBuffer()
-                                     atSampleIndex:NSUInteger(cmd->queryIndex)
-                                       withBarrier:YES];
+                    DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
+                    [commandContext->EnsureBlit()
+                        sampleCountersInBuffer:ToBackend(cmd->querySet.Get())
+                                                   ->GetCounterSampleBuffer()
+                                 atSampleIndex:NSUInteger(cmd->queryIndex)
+                                   withBarrier:YES];
                 }
 
                 break;
@@ -1310,7 +1445,8 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                                             BeginComputePassCmd* computePassCmd) {
     ComputePipeline* lastPipeline = nullptr;
     StorageBufferLengthTracker storageBufferLengths = {};
-    BindGroupTracker bindGroups(&storageBufferLengths);
+    BindGroupTracker bindGroups(&storageBufferLengths,
+                                GetDevice()->IsToggleEnabled(Toggle::MetalUseArgumentBuffers));
 
     id<MTLComputeCommandEncoder> encoder;
     // When counter sampling is supported at stage boundary, begin a configurable compute pass
@@ -1324,17 +1460,17 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
     } else {
         encoder = commandContext->BeginCompute();
 
-            if (computePassCmd->timestampWrites.beginningOfPassWriteIndex !=
-                wgpu::kQuerySetIndexUndefined) {
-                DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
+        if (computePassCmd->timestampWrites.beginningOfPassWriteIndex !=
+            wgpu::kQuerySetIndexUndefined) {
+            DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
 
-                [encoder
-                    sampleCountersInBuffer:ToBackend(computePassCmd->timestampWrites.querySet.Get())
-                                               ->GetCounterSampleBuffer()
-                             atSampleIndex:NSUInteger(computePassCmd->timestampWrites
-                                                          .beginningOfPassWriteIndex)
-                               withBarrier:YES];
-            }
+            [encoder
+                sampleCountersInBuffer:ToBackend(computePassCmd->timestampWrites.querySet.Get())
+                                           ->GetCounterSampleBuffer()
+                         atSampleIndex:NSUInteger(computePassCmd->timestampWrites
+                                                      .beginningOfPassWriteIndex)
+                           withBarrier:YES];
+        }
     }
     SetDebugName(GetDevice(), encoder, "Dawn_ComputePassEncoder", computePassCmd->label);
 
@@ -1372,7 +1508,7 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                     break;
                 }
 
-                bindGroups.Apply(encoder);
+                bindGroups.Apply(encoder, lastPipeline);
                 storageBufferLengths.Apply(encoder, lastPipeline);
 
                 [encoder dispatchThreadgroups:MTLSizeMake(dispatch->x, dispatch->y, dispatch->z)
@@ -1383,7 +1519,7 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
             case Command::DispatchIndirect: {
                 DispatchIndirectCmd* dispatch = mCommands.NextCommand<DispatchIndirectCmd>();
 
-                bindGroups.Apply(encoder);
+                bindGroups.Apply(encoder, lastPipeline);
                 storageBufferLengths.Apply(encoder, lastPipeline);
 
                 Buffer* buffer = ToBackend(dispatch->indirectBuffer.Get());
@@ -1485,7 +1621,8 @@ MaybeError CommandBuffer::EncodeRenderPass(
 
     StorageBufferLengthTracker storageBufferLengths = {};
     VertexBufferTracker vertexBuffers(&storageBufferLengths);
-    BindGroupTracker bindGroups(&storageBufferLengths);
+    BindGroupTracker bindGroups(&storageBufferLengths,
+                                GetDevice()->IsToggleEnabled(Toggle::MetalUseArgumentBuffers));
 
     // Simulate timestamp write at the beginning of render pass by
     // sampleCountersInBuffer if it does not support counter sampling at stage boundary.
@@ -1509,7 +1646,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 DrawCmd* draw = iter->NextCommand<DrawCmd>();
 
                 vertexBuffers.Apply(encoder, lastPipeline, enableVertexPulling);
-                bindGroups.Apply(encoder);
+                bindGroups.Apply(encoder, lastPipeline);
                 storageBufferLengths.Apply(encoder, lastPipeline, enableVertexPulling);
 
                 // The instance count must be non-zero, otherwise no-op
@@ -1537,7 +1674,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 DrawIndexedCmd* draw = iter->NextCommand<DrawIndexedCmd>();
 
                 vertexBuffers.Apply(encoder, lastPipeline, enableVertexPulling);
-                bindGroups.Apply(encoder);
+                bindGroups.Apply(encoder, lastPipeline);
                 storageBufferLengths.Apply(encoder, lastPipeline, enableVertexPulling);
 
                 // The index and instance count must be non-zero, otherwise no-op
@@ -1573,7 +1710,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 DrawIndirectCmd* draw = iter->NextCommand<DrawIndirectCmd>();
 
                 vertexBuffers.Apply(encoder, lastPipeline, enableVertexPulling);
-                bindGroups.Apply(encoder);
+                bindGroups.Apply(encoder, lastPipeline);
                 storageBufferLengths.Apply(encoder, lastPipeline, enableVertexPulling);
 
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
@@ -1590,7 +1727,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 DrawIndexedIndirectCmd* draw = iter->NextCommand<DrawIndexedIndirectCmd>();
 
                 vertexBuffers.Apply(encoder, lastPipeline, enableVertexPulling);
-                bindGroups.Apply(encoder);
+                bindGroups.Apply(encoder, lastPipeline);
                 storageBufferLengths.Apply(encoder, lastPipeline, enableVertexPulling);
 
                 Buffer* buffer = ToBackend(draw->indirectBuffer.Get());
@@ -1612,7 +1749,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 iter->NextCommand<MultiDrawIndirectCmd>();
 
                 vertexBuffers.Apply(encoder, lastPipeline, enableVertexPulling);
-                bindGroups.Apply(encoder);
+                bindGroups.Apply(encoder, lastPipeline);
                 storageBufferLengths.Apply(encoder, lastPipeline, enableVertexPulling);
 
                 ExecuteMultiDraw(multiDrawExecutions[multiDrawIndex], encoder);
@@ -1623,7 +1760,7 @@ MaybeError CommandBuffer::EncodeRenderPass(
                 iter->NextCommand<MultiDrawIndexedIndirectCmd>();
 
                 vertexBuffers.Apply(encoder, lastPipeline, enableVertexPulling);
-                bindGroups.Apply(encoder);
+                bindGroups.Apply(encoder, lastPipeline);
                 storageBufferLengths.Apply(encoder, lastPipeline, enableVertexPulling);
 
                 ExecuteMultiDraw(multiDrawExecutions[multiDrawIndex], encoder);

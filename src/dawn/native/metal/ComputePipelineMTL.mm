@@ -33,7 +33,6 @@
 #include "dawn/native/Instance.h"
 #include "dawn/native/metal/BackendMTL.h"
 #include "dawn/native/metal/DeviceMTL.h"
-#include "dawn/native/metal/ShaderModuleMTL.h"
 #include "dawn/native/metal/UtilsMetal.h"
 #include "dawn/platform/metrics/HistogramMacros.h"
 
@@ -56,7 +55,6 @@ MaybeError ComputePipeline::InitializeImpl() {
     auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
 
     const ProgrammableStage& computeStage = GetStage(SingleShaderStage::Compute);
-    ShaderModule::MetalFunctionData computeData;
 
     DAWN_TRY(ToBackend(computeStage.module.Get())
                  ->CreateFunction(SingleShaderStage::Compute, computeStage, ToBackend(GetLayout()),
@@ -72,6 +70,10 @@ MaybeError ComputePipeline::InitializeImpl() {
     MTLComputePipelineDescriptor* descriptor = descriptorRef.Get();
     descriptor.computeFunction = computeData.function.Get();
     descriptor.label = label.Get();
+
+    if (GetDevice()->IsToggleEnabled(Toggle::MetalUseArgumentBuffers)) {
+        mComputeFunction = AcquireNSPRef(computeData.function.Get());
+    }
 
     platform::metrics::DawnHistogramTimer timer(GetDevice()->GetPlatform());
     mMtlComputePipelineState.Acquire([mtlDevice
@@ -112,6 +114,10 @@ MTLSize ComputePipeline::GetLocalWorkGroupSize() const {
 
 bool ComputePipeline::RequiresStorageBufferLength() const {
     return mRequiresStorageBufferLength;
+}
+
+id<MTLFunction> ComputePipeline::GetComputeFunction() {
+    return mComputeFunction.Get();
 }
 
 }  // namespace dawn::native::metal
