@@ -16,6 +16,23 @@
       "message": "https://ci.chromium.org/ui/p/chrome/builders/try/win-branded-compile-rel/883660/overview\n\nStep compile (with patch) failed. Error logs are shown below:\n[2097/13790] CXX obj/components/optimization_guide/internal/third_party/ml_drift/ml_drift/webgpu_api_util.obj\n../../third_party/llvm-build/Release+Asserts/bin/clang-cl.exe /c ../../components/optimization_guide/internal/third_party/ml_drift/src/ml_drif...(too long)\n../../components/optimization_guide/internal/third_party/ml_drift/src/ml_drift/webgpu/webgpu_api_util.cc(220,13): error: no matching member function for call to \u0027OnSubmittedWorkDone\u0027\n  220 |       queue.OnSubmittedWorkDone(\n      |       ~~~~~~^~~~~~~~~~~~~~~~~~~\n../../components/optimization_guide/internal/third_party/ml_drift/src/ml_drift/common/default/status_macros.h(31,44): note: expanded from macro \u0027RETURN_IF_ERROR\u0027\n   31 |           status_macro_internal_adaptor \u003d {expr}) {             \\\n      |                                            ^~~~",
       "revId": "ca2f28d499f8b880ffcc7f580a00d9304bd62bd0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a4001a4_dfb38d50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-05-30T17:18:52Z",
+      "side": 1,
+      "message": "Missing Kai\u0027s owner approval for file `third_party/webgpu-headers/webgpu.h.diff` before submitting",
+      "revId": "ca2f28d499f8b880ffcc7f580a00d9304bd62bd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
