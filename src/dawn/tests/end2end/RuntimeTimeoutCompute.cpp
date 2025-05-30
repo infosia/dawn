@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <chrono>
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -106,6 +107,7 @@ fn main(@builtin(local_invocation_index) g: u32) {
     uint32_t kDispatchSizeDim = 64;
     uint32_t kBufferNumElements = 256 * kDispatchSizeDim;
     wgpu::Buffer output = CreateBuffer(kBufferNumElements, kDefaultVal);
+
     wgpu::BindGroup bindGroup =
         utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0), {{0, output}});
 
@@ -123,6 +125,125 @@ fn main(@builtin(local_invocation_index) g: u32) {
 
     queue.Submit(1, &commands);
     std::vector<uint32_t> expected = {15, 16};
+    EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), output, 0, expected.size());
+}
+
+TEST_P(RuntimeTimeoutComputeTest, CompileInliningConditionals) {
+    DAWN_SKIP_TEST_IF_BASE(IsCPU() || IsWARP(), "timeout",
+                           "skipping because software rendering is slow");
+
+    const auto now =
+        std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+
+    auto kTimeTickHash = static_cast<uint32_t>(now ^ (now >> 32));
+    std::ostringstream kShaderCode;
+    kShaderCode << R"(
+@group(0)@binding(0) var < storage,read_write > _in: array < f32 >;
+@group(0)@binding(1) var < storage,read_write > _out: array < u32 >;
+
+
+fn expandLeaf(i:u32, g:u32) -> f32 {
+    if(_in[i+g]*2.0 > 13.0){
+        if(_in[i+g]*2.0 > 23.0){
+            if(_in[i+g]*2.0 > 3.0){
+                if(_in[i+g]*2.0 > 1.0){
+                     return _in[i+g+17] + 4.0;
+                }
+                return _in[i+g+17] + 7.0;
+            }
+            return _in[i+g+17] + 3.0;
+        }
+         return _in[i+g+17] + 2.0;
+    }
+    else {
+        return _in[i+g+3];
+    }
+}
+
+fn expandBranch(i:u32, q:u32) -> f32 {
+    var g = q*13 + i*7;
+    var n = 0.0;
+    n += expandLeaf(0u,g);
+    n += expandLeaf(0u,g);
+    n += expandLeaf(0u,g);
+    n += expandLeaf(0u,g);
+    n += expandLeaf(0u,g);
+    n += expandLeaf(0u,g);
+    n += expandLeaf(0u,g);
+    n += expandLeaf(0u,g);
+
+    return n;
+}
+
+
+fn expandLimb(i:u32, q:u32) -> f32 {
+    var g = q*17 + i*21;
+    var n = 0.0;
+    n += expandBranch(0u,g);
+    n += expandBranch(0u,g);
+    n += expandBranch(0u,g);
+    n += expandBranch(0u,g);
+    n += expandBranch(0u,g);
+    n += expandBranch(0u,g);
+    n += expandBranch(0u,g);
+    n += expandBranch(0u,g);
+
+    return n;
+}
+
+@compute @workgroup_size(1)
+fn main(@builtin(local_invocation_index) g: u32) {
+   if(_out[0] == 0){
+    _out[g] = )" << kTimeTickHash
+                << R"(;
+    return;
+   }
+    var n = 0.0;
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+    n += expandLimb(0u,g);
+
+    _out[g] = u32(n);
+}
+)";
+
+    StartTestTimer(0.5f);
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(kShaderCode.str());
+    uint32_t kDefaultVal = 0;
+    uint32_t kBufferNumElements = 1024 * 1024;
+    wgpu::Buffer input = CreateBuffer(kBufferNumElements, kDefaultVal);
+    wgpu::Buffer output = CreateBuffer(kBufferNumElements, kDefaultVal);
+    wgpu::BindGroup bindGroup =
+        utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0), {{0, input}, {1, output}});
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+
+        pass.DispatchWorkgroups(1, 1, 1);
+        pass.End();
+        commands = encoder.Finish();
+    }
+
+    queue.Submit(1, &commands);
+    std::vector<uint32_t> expected = {kTimeTickHash, 0};
     EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), output, 0, expected.size());
 }
 
