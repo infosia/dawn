@@ -213,6 +213,24 @@
       "parentUuid": "d55a2c70_9f0f20dd",
       "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68772b5b_9938a4dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4067298
+      },
+      "writtenOn": "2025-05-30T18:14:46Z",
+      "side": 1,
+      "message": "https://github.com/google/dawn/blob/main/src%2Fcmake%2FBundleLibraries.cmake#L69\n\nIt\u0027s on main. Flipping that switch yields the working monolithic library. Reading your changes I expected it to do the same basically, but the output is different.",
+      "parentUuid": "a1a61b5a_4187c2c8",
+      "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
