@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4830f4f2_44b2c089",
+        "filename": "src/tint/lang/wgsl/ast/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-30T17:42:15Z",
+      "side": 1,
+      "message": "My point was that I don\u0027t think we need these functions at all, do we? We shouldn\u0027t be trying to create literals from 8-bit values, unless I\u0027m missing something.",
+      "parentUuid": "97661d81_0104efbd",
+      "range": {
+        "startLine": 1534,
+        "startChar": 0,
+        "endLine": 1548,
+        "endChar": 5
+      },
+      "revId": "68a1f9f6f21ff10a4b874373802370231045cee5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b316b4f5_9cea3b42",
         "filename": "src/tint/lang/wgsl/resolver/resolver.cc",
         "patchSetId": 2
@@ -219,6 +243,24 @@
       "side": 1,
       "message": "Ack\nI\u0027d like to only add i8 and u8 types in this CL and do this change in the next one. What do you think?",
       "parentUuid": "3dc0b69e_7d6d7440",
+      "revId": "68a1f9f6f21ff10a4b874373802370231045cee5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "959a9f76_8af52958",
+        "filename": "test/tint/builtins/gen/literal/subgroupMatrixMultiply/0a2c0c.wgsl",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-05-30T17:42:15Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "9824a3ca_615f0bbb",
       "revId": "68a1f9f6f21ff10a4b874373802370231045cee5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
