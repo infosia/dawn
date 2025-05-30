@@ -3,6 +3,69 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8c12ca9f_ea27a99b",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-30T23:44:11Z",
+      "side": 1,
+      "message": "nit: This will be common enough that I\u0027d recommend having something like `ToBackend(GetDevice())-\u003eGetInnerInstance()`.",
+      "range": {
+        "startLine": 97,
+        "startChar": 53,
+        "endLine": 97,
+        "endChar": 85
+      },
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca687708_312b18cf",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-30T23:44:11Z",
+      "side": 1,
+      "message": "It would be more correct to call GetMappedRange instead of GetConstMappedRange if the map mode is writable. (Though in Dawn I don\u0027t think it really matters.)\n\n(For the non-writable case, const_cast is still needed and still valid, the outer layer\u0027s frontend should disallow improper usage of it.)",
+      "range": {
+        "startLine": 107,
+        "startChar": 27,
+        "endLine": 107,
+        "endChar": 52
+      },
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d23ef8e_6c2fe596",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-30T23:44:11Z",
+      "side": 1,
+      "message": "nit: Not sure what this old todo is about, I\u0027d say just leave it out.",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cd32f4fe_26f3fffe",
         "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
         "patchSetId": 11
@@ -14,6 +77,24 @@
       "writtenOn": "2025-05-29T23:36:57Z",
       "side": 1,
       "message": "Some questions for implementing these Queue syncing methods (will do in another CL if appropriate):\n\nLooking at the QueueVk/QueueGL to follow, I\u0027m thinking the way here is to get `WGPUFuture` from `wgpuQueueOnSubmittedWorkDone` and making a pair with `ExecutionSerial` and maintain a dequeue of them to tack which operations are finished. And use `wgpuInstanceWaitAny` to wait.\n\nFor `ForceEventualFlush` we just make it a noop.\n\nDoes these make sense?",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b525cfa_98a4c2ad",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-30T23:44:11Z",
+      "side": 1,
+      "message": "Yes, I think so. We have data structures SerialQueue and SerialMap for things like that.\n\nForceEventualFlush might need to call Tick, but I don\u0027t think it will be necessary. (The proposed [wgpuDeviceCheckpoint](https://docs.google.com/document/d/1qJRTJRY318ZEqhK6ryw4P-91FumYQfOnNP6LpANYy6A/edit?tab\u003dt.0#heading\u003dh.l3149w38ebmt) would be the closest standard equivalent:)",
+      "parentUuid": "cd32f4fe_26f3fffe",
       "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
