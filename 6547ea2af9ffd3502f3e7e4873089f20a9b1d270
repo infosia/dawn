@@ -51,6 +51,24 @@
       "parentUuid": "2fed938b_3250ecf3",
       "revId": "6547ea2af9ffd3502f3e7e4873089f20a9b1d270",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac85685f_5859bcfe",
+        "filename": "src/dawn/native/d3d11/CommandBufferD3D11.cpp",
+        "patchSetId": 36
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-05-30T01:49:01Z",
+      "side": 1,
+      "message": "And I\u0027ll reland this CL after this CL which fix bug in BitSetRangeIterator https://dawn-review.googlesource.com/c/dawn/+/244095 landed.",
+      "parentUuid": "bc90328a_5891d142",
+      "revId": "6547ea2af9ffd3502f3e7e4873089f20a9b1d270",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
