@@ -34,6 +34,24 @@
       "parentUuid": "62a99686_2e8af038",
       "revId": "91043600f7117f3366a64654238ed9d222046b6c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "150f27da_de5fd52b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-05-30T20:59:32Z",
+      "side": 1,
+      "message": "Thank you for the fix!\nHopefully this doesn\u0027t cause other issues, but if it does, I\u0027ve verified that this also would work as an alternative way of overriding argv0:\nhttps://stackoverflow.com/a/3251586",
+      "parentUuid": "3e8eafad_057258e5",
+      "revId": "91043600f7117f3366a64654238ed9d222046b6c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
