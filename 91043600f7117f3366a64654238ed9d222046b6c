@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62a99686_2e8af038",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002886
+      },
+      "writtenOn": "2025-05-30T12:46:50Z",
+      "side": 1,
+      "message": "This symlink causes certain Skia test jobs to break (e.g. when run on a non-Mac host) https://ci.chromium.org/raw/build/logs.chromium.org/skia/7139ff6969ee4611/+/annotations",
+      "revId": "91043600f7117f3366a64654238ed9d222046b6c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
