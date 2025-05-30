@@ -109,8 +109,10 @@ target_link_libraries(dawn_node dawn_node_binding dawn_node_interop dawn_native 
 target_include_directories(dawn_node PRIVATE
     "${PROJECT_SOURCE_DIR}"
     "${NODE_ADDON_API_DIR}"
-    "${NODE_API_HEADERS_DIR}/include"
     "${DAWN_NODE_GEN_DIR}"
+)
+target_include_directories(dawn_node SYSTEM PRIVATE
+    "${NODE_API_HEADERS_DIR}/include"
 )
 
 # To reduce the build dependencies for compiling the dawn.node targets, we do
