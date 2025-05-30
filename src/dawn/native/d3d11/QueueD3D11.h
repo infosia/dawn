@@ -98,7 +98,7 @@ class Queue : public d3d::Queue {
         Ref<Buffer> buffer;
         wgpu::MapMode mode;
     };
-    SerialMap<ExecutionSerial, BufferMapEntry> mPendingMapBuffers;
+    MutexProtected<SerialMap<ExecutionSerial, BufferMapEntry>> mPendingMapBuffers;
 };
 
 }  // namespace dawn::native::d3d11
