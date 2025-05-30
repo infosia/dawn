@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <chrono>
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -106,6 +107,7 @@ fn main(@builtin(local_invocation_index) g: u32) {
     uint32_t kDispatchSizeDim = 64;
     uint32_t kBufferNumElements = 256 * kDispatchSizeDim;
     wgpu::Buffer output = CreateBuffer(kBufferNumElements, kDefaultVal);
+
     wgpu::BindGroup bindGroup =
         utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0), {{0, output}});
 
@@ -126,7 +128,121 @@ fn main(@builtin(local_invocation_index) g: u32) {
     EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), output, 0, expected.size());
 }
 
-DAWN_INSTANTIATE_TEST(RuntimeTimeoutComputeTest, D3D12Backend(), MetalBackend(), VulkanBackend());
+TEST_P(RuntimeTimeoutComputeTest, CompileInliningConditionals) {
+    DAWN_SKIP_TEST_IF_BASE(IsCPU() || IsWARP(), "timeout",
+                           "skipping because software rendering is slow");
+
+    const auto now =
+        std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+
+    auto kTimeTickHash = static_cast<uint32_t>(now ^ (now >> 32));
+    std::ostringstream kShaderCode;
+    kShaderCode << R"(
+@group(0)@binding(0) var < storage,read_write > _in: array < f32 >;
+@group(0)@binding(1) var < storage,read_write > _out: array < u32 >;
+
+
+fn expandLeaf(g:u32) -> f32 {
+    var c = _in[g]*2.0;
+
+    if(c > 1.0) {
+        if(c > 2.0) {
+            if(c > 3.0) {
+                if(c > 4.0) {
+                    if(c > 5.0) {
+                        if(c > 6.0) {
+                            return  _in[g+8] + 1.0;
+                        }
+                        return  _in[g+7] + 4.0;
+                    }
+                    return  _in[g+7] + 4.0;
+                }
+                return _in[g+6] + 7.0;
+            }
+            return  _in[g+5] + 3.0;
+        }
+        return _in[g+4] + 2.0;
+    }
+    else {
+        return  _in[g+3];
+    }
+}
+
+fn expandBranch(g:u32) -> f32 {
+    var n = 0.0;
+    n += expandLeaf(g);
+    n += expandLeaf(g);
+    n += expandLeaf(g);
+    n += expandLeaf(g);
+    return n;
+}
+
+
+fn expandLimb(g:u32) -> f32 {
+    var n = 0.0;
+    n += expandBranch(g);
+    n += expandBranch(g);
+    n += expandBranch(g);
+    n += expandBranch(g);
+
+
+    return n;
+}
+
+@compute @workgroup_size(1)
+fn main(@builtin(local_invocation_index) g: u32) {
+   if(_out[0] == 0){
+    _out[g] = )" << kTimeTickHash
+                << R"(;
+    return;
+   }
+    var n = 0.0;
+    n += expandLimb(g);
+    n += expandLimb(g);
+    n += expandLimb(g);
+    n += expandLimb(g);
+    n += expandLimb(g);
+    n += expandLimb(g);
+    n += expandLimb(g);
+    n += expandLimb(g);
+
+    _out[g] = u32(n);
+}
+)";
+
+    StartTestTimer(0.5f);
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(kShaderCode.str());
+    uint32_t kDefaultVal = 0;
+    uint32_t kBufferNumElements = 1024 * 1024;
+    wgpu::Buffer input = CreateBuffer(kBufferNumElements, kDefaultVal);
+    wgpu::Buffer output = CreateBuffer(kBufferNumElements, kDefaultVal);
+    wgpu::BindGroup bindGroup =
+        utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0), {{0, input}, {1, output}});
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+
+        pass.DispatchWorkgroups(1, 1, 1);
+        pass.End();
+        commands = encoder.Finish();
+    }
+
+    queue.Submit(1, &commands);
+    std::vector<uint32_t> expected = {kTimeTickHash, 0};
+    EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), output, 0, expected.size());
+}
+
+DAWN_INSTANTIATE_TEST(RuntimeTimeoutComputeTest,
+                      D3D12Backend(),
+                      MetalBackend(),
+                      VulkanBackend(),
+                      D3D12Backend({"disable_robustness"}, {}),
+                      MetalBackend({"disable_robustness"}, {}),
+                      VulkanBackend({"disable_robustness"}, {}));
 
 }  // anonymous namespace
 }  // namespace dawn
