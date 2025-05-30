@@ -62,6 +62,9 @@ class ControlInstruction : public Castable<ControlInstruction, OperandInstructio
     /// @return All the exits for the flow control instruction
     const Hashset<Exit*, 2>& Exits() const { return exits_; }
 
+    /// @return All the exits for the flow control instruction
+    Hashset<Exit*, 2>& Exits() { return exits_; }
+
     /// Adds the exit to the flow control instruction
     /// @param exit the exit instruction
     void AddExit(Exit* exit);
