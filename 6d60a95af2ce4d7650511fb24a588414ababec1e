@@ -177,6 +177,24 @@
       "parentUuid": "7711911a_53090498",
       "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d55a2c70_9f0f20dd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4067298
+      },
+      "writtenOn": "2025-05-30T15:16:09Z",
+      "side": 1,
+      "message": "```diff\ndiff --git a/src/cmake/BundleLibraries.cmake b/src/cmake/BundleLibraries.cmake\nindex 046a6af1..b3494425 100644\n--- a/src/cmake/BundleLibraries.cmake\n+++ b/src/cmake/BundleLibraries.cmake\n@@ -66,7 +66,7 @@ function(bundle_libraries output_target)\n     endif()\n   endforeach()\n \n-  add_library(${output_target} SHARED ${all_objects})\n+  add_library(${output_target} STATIC ${all_objects})\n \n   add_dependencies(${output_target} ${ARGN})\n```\n \nThis is all. Saw it here: https://github.com/google/filament/blob/main/third_party/dawn/tnt/001-dawn-static-lib.patch",
+      "parentUuid": "f85fe952_669781d0",
+      "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
