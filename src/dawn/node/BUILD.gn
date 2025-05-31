@@ -55,28 +55,6 @@ interop_gen_dir = "$dawn_node_gen_dir/src/dawn/node/interop"
 run_built_binary_script =
     "$dawn_root/third_party/gn/dxc/build/run_built_binary.py"
 
-config("common_config") {
-  warning_flags = []
-  if (is_clang) {
-    warning_flags += [
-      "-Wno-error",  # TODO(amaiorano): For now, allow warnings
-      "-Wno-extra-semi",
-      "-Wno-shadow",
-      "-Wno-unused-variable",
-      "-Wno-implicit-fallthrough",
-      "-Wno-unused-but-set-variable",
-    ]
-  } else {
-    # MSVC
-    warning_flags += [
-      "/W0",  # Suppress most warnings
-    ]
-  }
-
-  cflags_c = warning_flags
-  cflags_cc = warning_flags
-}
-
 template("idlgen") {
   assert(defined(invoker.template), "must set 'template'")
   assert(defined(invoker.output), "must set 'output'")
@@ -134,17 +112,20 @@ idlgen("idlgen_webgpu_cpp") {
 }
 
 static_library("dawn_node_interop") {
-  public_configs = [ ":common_config" ]
   sources = [
     "$interop_gen_dir/WebGPU.cpp",
     "$interop_gen_dir/WebGPU.h",
     "interop/Core.cpp",
     "interop/Core.h",
+    "interop/NodeAPI.h",
   ]
-  include_dirs = [
-    "${dawn_node_addon_api_dir}",
-    "${dawn_node_api_headers_dir}/include",
-    "${dawn_node_gen_dir}",
+  include_dirs = [ "${dawn_node_gen_dir}" ]
+
+  # These headers produce many warnings so they need to use -isystem instead of include_dirs.
+  cflags = [
+    "-isystem" + rebase_path("${dawn_node_addon_api_dir}", root_build_dir),
+    "-isystem" +
+        rebase_path("${dawn_node_api_headers_dir}/include", root_build_dir),
   ]
   deps = [
     ":idlgen_webgpu_cpp",
@@ -154,7 +135,6 @@ static_library("dawn_node_interop") {
 }
 
 static_library("dawn_node_binding") {
-  public_configs = [ ":common_config" ]
   if (is_win) {
     # Use multibyte character set so that Win32 functions map the ANSI ones, not the UNICODE ones.
     configs -= [ "//build/config/win:unicode" ]
@@ -224,10 +204,13 @@ static_library("dawn_node_binding") {
     "binding/TogglesLoader.cpp",
     "binding/TogglesLoader.h",
   ]
-  include_dirs = [
-    "${dawn_node_addon_api_dir}",
-    "${dawn_node_api_headers_dir}/include",
-    "${dawn_node_gen_dir}",
+  include_dirs = [ "${dawn_node_gen_dir}" ]
+
+  # These headers produce many warnings so they need to use -isystem instead of include_dirs.
+  cflags = [
+    "-isystem" + rebase_path("${dawn_node_addon_api_dir}", root_build_dir),
+    "-isystem" +
+        rebase_path("${dawn_node_api_headers_dir}/include", root_build_dir),
   ]
   deps = [
     ":dawn_node_interop",
@@ -307,9 +290,12 @@ shared_library("dawn_node") {
     }
     sources += [ "NapiSymbols.cpp" ]
   }
-  include_dirs = [
-    "${dawn_node_addon_api_dir}",
-    "${dawn_node_api_headers_dir}/include",
-    "${dawn_node_gen_dir}",
+  include_dirs = [ "${dawn_node_gen_dir}" ]
+
+  # These headers produce many warnings so they need to use -isystem instead of include_dirs.
+  cflags = [
+    "-isystem" + rebase_path("${dawn_node_addon_api_dir}", root_build_dir),
+    "-isystem" +
+        rebase_path("${dawn_node_api_headers_dir}/include", root_build_dir),
   ]
 }

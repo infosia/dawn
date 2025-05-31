@@ -85,14 +85,14 @@ template <typename K, typename V>
 std::ostream& Write(std::ostream& out, const std::unordered_map<K, V>& value) {
     out << "{";
     bool first = true;
-    for (auto& [key, value] : value) {
+    for (auto& [key, val] : value) {
         if (!first) {
             out << ", ";
         }
         first = false;
         Write(out, key);
         out << ": ";
-        Write(out, value);
+        Write(out, val);
     }
     return out << "}";
 }
@@ -139,7 +139,7 @@ template <typename... MSG_ARGS>
 #define LOG(...)                                                                                  \
     ::wgpu::utils::Write(std::cout << __FILE__ << ":" << __LINE__ << " " << __FUNCTION__ << ": ", \
                          ##__VA_ARGS__)                                                           \
-        << "\n";
+        << "\n"
 
 // UNIMPLEMENTED(env) raises a JS exception. Used to stub code that has not yet been implemented.
 #define UNIMPLEMENTED(env, ...)                                              \
