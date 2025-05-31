@@ -25,8 +25,28 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# This module requires CMake 3.19 features (the `CheckCompilerFlag`
-# module). Just skip it for older CMake versions and let the warnings appear.
+# Flags we can add without bothering with CheckCompilerFlag.
+
+if (COMPILER_IS_LIKE_GNU)
+  target_compile_options(dawn_compiler_flag_config
+    INTERFACE
+      "-Wno-assume"
+      "-Wno-deprecated-builtins"
+      "-Wno-unknown-warning-option"
+      "-Wno-switch-default"
+  )
+  if (DAWN_WERROR)
+    target_compile_options(dawn_compiler_flag_config
+      INTERFACE
+        "-Werror"
+    )
+  endif ()
+endif ()
+
+# Flags that might not be supported in every version of a compiler.
+
+# This requires CMake 3.19 features (the `CheckCompilerFlag` module).
+# Just skip it for older CMake versions and let the warnings appear.
 if (CMAKE_VERSION VERSION_LESS "3.19")
   return ()
 endif ()
@@ -37,9 +57,10 @@ function (dawn_add_flag flag)
   foreach (lang IN LISTS ARGN)
     check_compiler_flag("${lang}" "${flag}" "dawn_have_compiler_flag-${lang}-${flag}")
     if (dawn_have_compiler_flag-${lang}-${flag})
-      target_compile_options(dawn_internal_config
+      target_compile_options(dawn_compiler_flag_config
         INTERFACE
-          "$<BUILD_INTERFACE:$<$<COMPILE_LANGUAGE:${lang}>:${flag}>>")
+          "$<BUILD_INTERFACE:$<$<COMPILE_LANGUAGE:${lang}>:${flag}>>"
+      )
     endif ()
   endforeach ()
 endfunction ()

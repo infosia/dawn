@@ -104,13 +104,24 @@ set_target_properties(dawn_node PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}"
     CXX_STANDARD 20
 )
-target_link_libraries(dawn_node dawn_node_binding dawn_node_interop dawn_native dawncpp dawn_proc
-                      libtint)
-target_include_directories(dawn_node PRIVATE
-    "${PROJECT_SOURCE_DIR}"
-    "${NODE_ADDON_API_DIR}"
-    "${NODE_API_HEADERS_DIR}/include"
-    "${DAWN_NODE_GEN_DIR}"
+target_link_libraries(dawn_node
+    PRIVATE
+        dawn_node_binding
+        dawn_node_interop
+        dawn_native
+        dawncpp
+        dawn_proc
+        libtint
+)
+target_include_directories(dawn_node
+    PRIVATE
+        "${PROJECT_SOURCE_DIR}"
+        "${DAWN_NODE_GEN_DIR}"
+)
+target_include_directories(dawn_node SYSTEM
+    PRIVATE
+        "${NODE_ADDON_API_DIR}"
+        "${NODE_API_HEADERS_DIR}/include"
 )
 
 # To reduce the build dependencies for compiling the dawn.node targets, we do

@@ -58,13 +58,16 @@ run_built_binary_script =
 config("common_config") {
   warning_flags = []
   if (is_clang) {
+    # Node API headers produce many warnings. GN does not support -isystem (which is used in CMake
+    # builds), so we have to disable all warnings triggered by these headers. (We could set -isystem
+    # flags via cflags, but this may not work well, see https://crbug.com/41400937)
     warning_flags += [
-      "-Wno-error",  # TODO(amaiorano): For now, allow warnings
       "-Wno-extra-semi",
+      "-Wno-extra-semi-stmt",
+      "-Wno-inconsistent-missing-destructor-override",
       "-Wno-shadow",
-      "-Wno-unused-variable",
-      "-Wno-implicit-fallthrough",
-      "-Wno-unused-but-set-variable",
+      "-Wno-shadow-field",
+      "-Wno-suggest-destructor-override",
     ]
   } else {
     # MSVC
@@ -140,6 +143,7 @@ static_library("dawn_node_interop") {
     "$interop_gen_dir/WebGPU.h",
     "interop/Core.cpp",
     "interop/Core.h",
+    "interop/NodeAPI.h",
   ]
   include_dirs = [
     "${dawn_node_addon_api_dir}",
