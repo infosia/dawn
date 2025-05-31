@@ -37,31 +37,68 @@ if (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") OR
     add_compile_options(-Wno-c++20-compat)
 endif()
 
+# Common compiler flag config. Added by common_compile_options() and thus by dawn_internal_config.
+# DawnCompilerWarningFlags will add more flags to this target.
+add_library(dawn_compiler_flag_config INTERFACE)
+if (COMPILER_IS_LIKE_GNU)
+  target_compile_options(dawn_compiler_flag_config
+    PRIVATE
+      "-fno-exceptions"
+      "-fno-rtti")
+  set(SANITIZER_OPTIONS "")
+  if (${DAWN_ENABLE_MSAN})
+    list(APPEND SANITIZER_OPTIONS "-fsanitize=memory")
+  endif ()
+  if (${DAWN_ENABLE_ASAN})
+    list(APPEND SANITIZER_OPTIONS "-fsanitize=address")
+  endif ()
+  if (${DAWN_ENABLE_TSAN})
+    list(APPEND SANITIZER_OPTIONS "-fsanitize=thread")
+  endif ()
+  if (${DAWN_ENABLE_UBSAN})
+    list(APPEND SANITIZER_OPTIONS
+      "-fsanitize=undefined"
+      "-fsanitize=float-divide-by-zero")
+  endif ()
+  if (SANITIZER_OPTIONS)
+    target_compile_options(dawn_compiler_flag_config PUBLIC ${SANITIZER_OPTIONS})
+    target_link_options(dawn_compiler_flag_config PUBLIC ${SANITIZER_OPTIONS})
+  endif ()
+endif ()
+if (MSVC)
+  target_compile_options(dawn_compiler_flag_config
+    PUBLIC
+      "/utf-8")
+endif ()
+
+option(DAWN_EMIT_COVERAGE "Emit code coverage information" OFF)
+if (DAWN_EMIT_COVERAGE)
+  target_compile_definitions(${target}
+    PRIVATE "DAWN_EMIT_COVERAGE")
+  if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    target_compile_options(${target}
+      PRIVATE "--coverage")
+    target_link_options(${target}
+      PRIVATE "gcov")
+  elseif (COMPILER_IS_CLANG OR COMPILER_IS_CLANG_CL)
+    target_compile_options(${target}
+      PRIVATE "-fprofile-instr-generate" "-fcoverage-mapping")
+    target_link_options(${target}
+      PRIVATE "-fprofile-instr-generate" "-fcoverage-mapping")
+  else()
+    message(FATAL_ERROR
+      "Coverage generation not supported for the ${CMAKE_CXX_COMPILER_ID} toolchain")
+  endif ()
+endif ()
+
 ################################################################################
 # common_compile_options - sets compiler and linker options common for dawn
 ################################################################################
 function(common_compile_options target)
-  if (COMPILER_IS_LIKE_GNU)
-    target_compile_options(${target}
-      PRIVATE
-        "-fno-exceptions"
-        "-fno-rtti"
-
-        "-Wno-assume"
-        "-Wno-deprecated-builtins"
-        "-Wno-unknown-warning-option"
-        "-Wno-switch-default"
-    )
-    if (${DAWN_WERROR})
-      target_compile_options(${target}
-        PRIVATE "-Werror")
-    endif ()
-  endif ()
-
-  if (MSVC)
-    target_compile_options(${target}
-      PUBLIC "/utf-8")
-  endif ()
+  target_link_libraries(${target}
+    INTERFACE
+      dawn_compiler_flag_config
+  )
 
   # Abseil headers can cause warnings when included that will cause failures
   # with -Werror.
@@ -76,50 +113,6 @@ function(common_compile_options target)
               "-Wno-nullability-extension"
               "-Wno-shadow"
       )
-    endif ()
-  endif ()
-
-  if (COMPILER_IS_LIKE_GNU)
-    set(SANITIZER_OPTIONS "")
-    if (${DAWN_ENABLE_MSAN})
-      list(APPEND SANITIZER_OPTIONS "-fsanitize=memory")
-    endif ()
-    if (${DAWN_ENABLE_ASAN})
-      list(APPEND SANITIZER_OPTIONS "-fsanitize=address")
-    endif ()
-    if (${DAWN_ENABLE_TSAN})
-      list(APPEND SANITIZER_OPTIONS "-fsanitize=thread")
-    endif ()
-    if (${DAWN_ENABLE_UBSAN})
-      list(APPEND SANITIZER_OPTIONS
-        "-fsanitize=undefined"
-        "-fsanitize=float-divide-by-zero")
-    endif ()
-    if (SANITIZER_OPTIONS)
-      target_compile_options(${target}
-        PUBLIC ${SANITIZER_OPTIONS})
-      target_link_options(${target}
-        PUBLIC ${SANITIZER_OPTIONS})
-    endif ()
-  endif ()
-
-  option(DAWN_EMIT_COVERAGE "Emit code coverage information" OFF)
-  if (DAWN_EMIT_COVERAGE)
-    target_compile_definitions(${target}
-      PRIVATE "DAWN_EMIT_COVERAGE")
-    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-      target_compile_options(${target}
-        PRIVATE "--coverage")
-      target_link_options(${target}
-        PRIVATE "gcov")
-    elseif (COMPILER_IS_CLANG OR COMPILER_IS_CLANG_CL)
-      target_compile_options(${target}
-        PRIVATE "-fprofile-instr-generate" "-fcoverage-mapping")
-      target_link_options(${target}
-        PRIVATE "-fprofile-instr-generate" "-fcoverage-mapping")
-    else()
-      message(FATAL_ERROR
-        "Coverage generation not supported for the ${CMAKE_CXX_COMPILER_ID} toolchain")
     endif ()
   endif ()
 endfunction()
