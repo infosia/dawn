@@ -56,25 +56,24 @@ run_built_binary_script =
     "$dawn_root/third_party/gn/dxc/build/run_built_binary.py"
 
 config("common_config") {
-  warning_flags = []
   if (is_clang) {
-    warning_flags += [
-      "-Wno-error",  # TODO(amaiorano): For now, allow warnings
-      "-Wno-extra-semi",
-      "-Wno-shadow",
-      "-Wno-unused-variable",
-      "-Wno-implicit-fallthrough",
-      "-Wno-unused-but-set-variable",
+    # Node API headers produce many warnings. GN does not have a feature to support -isystem (like
+    # CMake's target_include_directories SYSTEM option) so we set it directly via cflags.
+    # Note this may have slightly weird behavior (e.g. https://crbug.com/41400937).
+    cflags = [
+      "-isystem" + rebase_path(dawn_node_addon_api_dir, root_build_dir),
+      "-isystem" + rebase_path("${dawn_node_api_headers_dir}/include", root_build_dir),
     ]
   } else {
     # MSVC
-    warning_flags += [
+    include_dirs = [
+      "${dawn_node_addon_api_dir}",
+      "${dawn_node_api_headers_dir}/include",
+    ]
+    cflags = [
       "/W0",  # Suppress most warnings
     ]
   }
-
-  cflags_c = warning_flags
-  cflags_cc = warning_flags
 }
 
 template("idlgen") {
@@ -140,10 +139,9 @@ static_library("dawn_node_interop") {
     "$interop_gen_dir/WebGPU.h",
     "interop/Core.cpp",
     "interop/Core.h",
+    "interop/NodeAPI.h",
   ]
   include_dirs = [
-    "${dawn_node_addon_api_dir}",
-    "${dawn_node_api_headers_dir}/include",
     "${dawn_node_gen_dir}",
   ]
   deps = [
@@ -225,8 +223,6 @@ static_library("dawn_node_binding") {
     "binding/TogglesLoader.h",
   ]
   include_dirs = [
-    "${dawn_node_addon_api_dir}",
-    "${dawn_node_api_headers_dir}/include",
     "${dawn_node_gen_dir}",
   ]
   deps = [
@@ -279,6 +275,7 @@ shared_library("dawn_node") {
   output_name = "dawn"
   output_extension = "node"
   output_prefix_override = true  # dawn.node, not libdawn.node
+  public_configs = [ ":common_config" ]
   sources = [
     "ManualConstructors.cpp",
     "ManualConstructors.h",
@@ -308,8 +305,6 @@ shared_library("dawn_node") {
     sources += [ "NapiSymbols.cpp" ]
   }
   include_dirs = [
-    "${dawn_node_addon_api_dir}",
-    "${dawn_node_api_headers_dir}/include",
     "${dawn_node_gen_dir}",
   ]
 }
