@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df10c90a_23b12807",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-06-02T20:51:52Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "2ac6c070de9ea1675911c7720d2a533bdccadcc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34803bfa_ae20bf4c",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-06-02T20:51:52Z",
+      "side": 1,
+      "message": "Good find!",
+      "revId": "2ac6c070de9ea1675911c7720d2a533bdccadcc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
