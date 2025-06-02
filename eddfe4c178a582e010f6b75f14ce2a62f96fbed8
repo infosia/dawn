@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3bfc11cf_d8b8da28",
+        "filename": "src/dawn/utils/ComboLimits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-02T18:37:39Z",
+      "side": 1,
+      "message": "WDYT about replacing the `native::CombinedLimits` with this as well? I think it makes sense to move it into `utils` since it could easily be reused in other places also?\n\nThat said, I\u0027m also wondering if it would be possible to generate this with our generators, i.e. `generator/templates/dawn/utils/ComboLimits.*`. If we did that, we could programmatically include all the extension structs for `Limits` by walking it\u0027s extensions, and I assume the helpers below will be fairly simple also to implement to work for all the extensions.",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
