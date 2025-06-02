@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "517988c5_e1f63260",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-02T20:30:29Z",
+      "side": 1,
+      "message": "`wgpuBufferGetMapState` (it only returns map state, not other types of state, but that should be good enough here)",
+      "parentUuid": "c28645bc_bcc2cf9f",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d335cc4d_bc901232",
         "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
         "patchSetId": 11
