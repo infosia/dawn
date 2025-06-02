@@ -67,10 +67,9 @@ class BitSetRangeIterator final {
 
       private:
         void Advance();
-        size_t ScanForwardAndShiftBits();
 
         static constexpr size_t kBitsPerWord = sizeof(uint64_t) * 8;
-        std::bitset<N> mBits;
+        std::bitset<N> mBits;  // The original bitset shifted by mOffset + mSize.
         uint32_t mOffset{0};
         uint32_t mSize{0};
     };
@@ -110,52 +109,55 @@ typename BitSetRangeIterator<N, T>::Iterator& BitSetRangeIterator<N, T>::Iterato
 }
 
 template <size_t N, typename T>
-size_t BitSetRangeIterator<N, T>::Iterator::ScanForwardAndShiftBits() {
-    if (mBits.none()) {
-        return N;  // Or some other indicator that there are no bits.
-    }
-
-    constexpr std::bitset<N> wordMask(std::numeric_limits<uint64_t>::max());
-    size_t offset = 0;
-    while ((mBits & wordMask).to_ullong() == 0) {
-        offset += kBitsPerWord;
-        mBits >>= kBitsPerWord;
-    }
-
-    size_t nextBit = static_cast<size_t>(
-        std::countr_zero(static_cast<uint64_t>((mBits & wordMask).to_ullong())));
-    mBits >>= nextBit;
-    return offset + nextBit;
-}
-
-template <size_t N, typename T>
 void BitSetRangeIterator<N, T>::Iterator::Advance() {
+    constexpr std::bitset<N> kBlockMask(std::numeric_limits<uint64_t>::max());
+
     // Bits are currently shifted to mOffset + mSize.
     mOffset += mSize;
+    mSize = 0;
 
-    size_t rangeStart = ScanForwardAndShiftBits();
-    if (rangeStart == N) {
-        // Reached the end, no more ranges.
+    // There are no more 1s, so there are no more ranges.
+    if (mBits.none()) {
         mOffset = N;
-        mSize = 0;
         return;
     }
 
-    mOffset += rangeStart;
-    mBits = ~mBits;
+    // Look for the next 1, shifting mBits as we go and accounting for it in mOffset.
+    {
+        if constexpr (N > kBitsPerWord) {
+            while ((mBits & kBlockMask).to_ullong() == 0) {
+                mOffset += kBitsPerWord;
+                mBits >>= kBitsPerWord;
+            }
+        }
 
-    size_t rangeCount = ScanForwardAndShiftBits();
-    if (rangeCount == N) {
-        // All bits until the end of the set are set.
-        rangeCount = N - mOffset;
+        size_t nextBit = static_cast<size_t>(
+            std::countr_zero(static_cast<uint64_t>((mBits & kBlockMask).to_ullong())));
+        mOffset += nextBit;
+        mBits >>= nextBit;
     }
 
-    mSize = rangeCount;
-    mBits = ~mBits;
+    // The full range is left such that there is no zero.
+    if (mBits.all()) {
+        mSize = N - mOffset;
+        mBits.reset();
+        return;
+    }
 
-    // Clear the bits for the current range.
-    mBits <<= rangeCount;
-    mBits >>= rangeCount;
+    // Look for the next 0, shifting mBits as we go and accounting for it in mSize.
+    {
+        if constexpr (N > kBitsPerWord) {
+            while ((mBits & kBlockMask).to_ullong() == kBlockMask) {
+                mSize += kBitsPerWord;
+                mBits >>= kBitsPerWord;
+            }
+        }
+
+        size_t nextBit = static_cast<size_t>(
+            std::countr_one(static_cast<uint64_t>((mBits & kBlockMask).to_ullong())));
+        mSize += nextBit;
+        mBits >>= nextBit;
+    }
 }
 
 // Helper to avoid needing to specify the template parameter size
