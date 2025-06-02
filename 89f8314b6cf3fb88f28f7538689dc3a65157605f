@@ -16,6 +16,23 @@
       "message": "This seems fine, but I am actively trying to update some of the `QueueBase`/`ExecutionQueueBase` code to make them thread safe overall. I am hopeful that we might be able to revert this change in the future?",
       "revId": "89f8314b6cf3fb88f28f7538689dc3a65157605f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c822bf6e_adb5bf65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-02T21:19:41Z",
+      "side": 1,
+      "message": "Trying this fix instead atm: https://dawn-review.googlesource.com/c/dawn/+/244974",
+      "revId": "89f8314b6cf3fb88f28f7538689dc3a65157605f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
