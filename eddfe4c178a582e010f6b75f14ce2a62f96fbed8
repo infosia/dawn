@@ -94,6 +94,30 @@
       },
       "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99b23e66_c0da22e2",
+        "filename": "src/dawn/utils/ComboLimits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-02T23:53:28Z",
+      "side": 1,
+      "message": "A minor unfortunate consequence of using inheritance is that `ComboLimits\u0026`/`*` will always silently cast to `wgpu::Limits\u0026`/`*` without calling `GetLinked()`. Before, of course, you could do this with `.v1`, but now it\u0027s automatic. Doesn\u0027t seem to be possible to block this by adding a cast operator. I don\u0027t think this is probably a big problem though.",
+      "parentUuid": "5e4ca2ff_3a227057",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
