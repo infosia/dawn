@@ -52,6 +52,24 @@
       "parentUuid": "80388e48_b6376751",
       "revId": "d76a4733ba817e74fae06d4968f50ff746b3d0a1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed47a608_c74f661c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-02T15:58:48Z",
+      "side": 1,
+      "message": "I\u0027ve updated `webgpu-cts/compat-expectations.txt`. Please review.",
+      "parentUuid": "152d735a_bf11045c",
+      "revId": "d76a4733ba817e74fae06d4968f50ff746b3d0a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
