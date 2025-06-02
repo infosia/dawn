@@ -35,6 +35,29 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "f09906bc_9ef9da04",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-02T18:53:27Z",
+      "side": 1,
+      "message": "Actually, looking at this here now, why does `UnsafeUnkeyedValue` not work here? Is it because of the deserialization part? Maybe we could update `UnsafeUnkeyedValue` to just default initialize on deserialization? Then this could just be `UnsafeUnkeyedValue\u003cstd::optional\u003cRef\u003cTintProgram\u003e\u003e\u003e` maybe?",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 32
+      },
+      "revId": "90716cb67afb04826a1a48eb01d5c1ff162d7b02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f898e198_da570e13",
