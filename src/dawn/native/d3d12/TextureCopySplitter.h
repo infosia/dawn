@@ -50,10 +50,15 @@ struct TextureCopySubresource {
         D3D12_BOX sourceRegion;
         D3D12_TEXTURE_COPY_LOCATION bufferLocation;
 
+        // Returns x,y,z offset in buffer (from sourceRegion if B2T, or destinationOffset if T2B)
         Origin3D GetBufferOffset(BufferTextureCopyDirection direction) const;
+        // Returns x,y,z offset in texture (from destinationOffset if B2T, or sourceRegion if T2B)
         Origin3D GetTextureOffset(BufferTextureCopyDirection direction) const;
+        // Returns width,height,depth of source region
         Extent3D GetCopySize() const;
+        // Returns 512-byte aligned offset into buffer
         uint64_t GetAlignedOffset() const;
+        // Returns width,height,depth of buffer footprint
         Extent3D GetBufferSize() const;
 
         void SetAlignedOffset(uint64_t alignedOffset);

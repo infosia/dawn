@@ -453,7 +453,7 @@ void Recompute3DTextureCopyRegionWithEmptyFirstRowAndEvenCopyHeight(
     // Likewise, all other image followed will be incorrect because we wrongly keep skipping
     // one row for each depth slice.
     //
-    // Solution: split the copy region to two copies: copy 3 (rowsPerImage - 1) rows in and
+    // Solution: split the copy region to two copies: copy 3 (rowsPerImage - 1) rows and
     // expand to all depth slices in the first copy. 3 rows + one skipped rows = 4 rows, which
     // equals to rowsPerImage. Then copy the last row in the second copy. However, the copy
     // block of the last row of the last image may out-of-bound (see the details below), so
@@ -524,8 +524,8 @@ void Recompute3DTextureCopyRegionWithEmptyFirstRowAndEvenCopyHeight(
     uint64_t offsetForCopy0 =
         OffsetToFirstCopiedTexel(blockInfo, bytesPerRow, copy0.GetAlignedOffset(), bufferOffset0);
     uint64_t offsetForLastRowOfLastImage =
-        offsetForCopy0 +
-        bytesPerRow * (copySize0.height/blockInfo.height + rowsPerImage * (copySize.depthOrArrayLayers - 1));
+        offsetForCopy0 + bytesPerRow * (copySize0.height / blockInfo.height +
+                                        rowsPerImage * (copySize.depthOrArrayLayers - 1));
     uint64_t alignedOffsetForLastRowOfLastImage =
         AlignDownForDataPlacement(offsetForLastRowOfLastImage);
     Origin3D texelOffsetForLastRowOfLastImage = ComputeTexelOffsets(
@@ -551,6 +551,7 @@ void Recompute3DTextureCopyRegionWithEmptyFirstRowAndEvenCopyHeight(
 void Recompute3DTextureCopyRegionWithEmptyFirstRowAndOddCopyHeight(
     BufferTextureCopyDirection direction,
     Extent3D copySize,
+    const TexelBlockInfo& blockInfo,
     uint32_t bytesPerRow,
     TextureCopySubresource& copy,
     uint32_t i) {
@@ -577,8 +578,9 @@ void Recompute3DTextureCopyRegionWithEmptyFirstRowAndOddCopyHeight(
     // Copy 1: copy the rest depth slices in one shot
     TextureCopySubresource::CopyInfo* copy1 = copy.AddCopy();
     *copy1 = copy0;
-    DAWN_ASSERT(copySize.height % 2 == 1);
-    uint64_t alignedOffset1 = copy0.GetAlignedOffset() + (copySize.height + 1) * bytesPerRow;
+    DAWN_ASSERT((copySize.height / blockInfo.height) % 2 == 1);
+    uint64_t alignedOffset1 =
+        copy0.GetAlignedOffset() + (copySize.height / blockInfo.height + 1) * bytesPerRow;
     DAWN_ASSERT(alignedOffset1 % D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT == 0);
     copy1->SetAlignedOffset(alignedOffset1);
     // textureOffset1.z should add one because the first slice has already been copied in copy0.
@@ -636,7 +638,6 @@ TextureCopySubresource Compute3DTextureCopySplits(BufferTextureCopyDirection dir
         // There can be one empty row at most in a copy region.
         uint32_t bufferHeight = copySubresource.copies[i].GetBufferSize().height;
         DAWN_ASSERT(bufferHeight <= rowsPerImageInTexels + blockInfo.height);
-        DAWN_ASSERT(bufferHeight <= rowsPerImageInTexels + blockInfo.height);
 
         if (bufferHeight == rowsPerImageInTexels) {
             // If the copy region's bufferHeight equals to rowsPerImageInTexels, we can use this
@@ -658,7 +659,7 @@ TextureCopySubresource Compute3DTextureCopySplits(BufferTextureCopyDirection dir
             DAWN_ASSERT(bytesPerRow == D3D12_TEXTURE_DATA_PITCH_ALIGNMENT);
             DAWN_ASSERT(copySize.height == rowsPerImageInTexels);
 
-            if (copySize.height % 2 == 0) {
+            if ((copySize.height / blockInfo.height) % 2 == 0) {
                 // If copySize.height is even and there is an empty row at the beginning of the
                 // first slice of the copy region, the offset of all depth slices will never be
                 // aligned to D3D12_TEXTURE_DATA_PLACEMENT_ALIGNMENT (512) and there is always
@@ -675,7 +676,7 @@ TextureCopySubresource Compute3DTextureCopySplits(BufferTextureCopyDirection dir
                 // without an empty row. This is an easier case relative to cases with even copy
                 // height.
                 Recompute3DTextureCopyRegionWithEmptyFirstRowAndOddCopyHeight(
-                    direction, copySize, bytesPerRow, copySubresource, i);
+                    direction, copySize, blockInfo, bytesPerRow, copySubresource, i);
             }
         }
     }
