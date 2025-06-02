@@ -46,6 +46,30 @@
       },
       "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce4ff869_3d97f37c",
+        "filename": "src/dawn/utils/ComboLimits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-02T22:07:07Z",
+      "side": 1,
+      "message": "Fine with not generating for now. Thoughts on renaming it to `utils::CombinedLimits` then? I think we should try to replace `native::CombinedLimits` asap to avoid having the duplicated stuff. Probably should add a comment to `native::CombinedLimits` to note that we want to eventually replace it with this one also.\n\nOne more thing, thoughts on making this extend `wgpu::Limits` directly to avoid `v1`, and just have direct access to the core limits?",
+      "parentUuid": "fed3e60b_53ff2c82",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
