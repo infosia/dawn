@@ -70,6 +70,30 @@
       },
       "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e4ca2ff_3a227057",
+        "filename": "src/dawn/utils/ComboLimits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-02T23:08:37Z",
+      "side": 1,
+      "message": "I prefer ComboLimits, it matches the naming of ComboRenderPassDescriptor (though it\u0027s not quite the same thing) and also avoids confusion in the meantime before we merge them.\n\nExtending wgpu::Limits is a good idea. Actually, I think I could have it extend both... will try.",
+      "parentUuid": "ce4ff869_3d97f37c",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
