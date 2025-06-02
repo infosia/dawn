@@ -3,6 +3,75 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "24d31b4c_e92a41e0",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-02T18:45:49Z",
+      "side": 1,
+      "message": "nit. does",
+      "range": {
+        "startLine": 67,
+        "startChar": 65,
+        "endLine": 67,
+        "endChar": 67
+      },
+      "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8044ff07_585d78f9",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-02T18:45:49Z",
+      "side": 1,
+      "message": "nit. sets",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 12
+      },
+      "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "896c4261_9c6eaad4",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-02T18:45:49Z",
+      "side": 1,
+      "message": "nit. compares",
+      "range": {
+        "startLine": 68,
+        "startChar": 65,
+        "endLine": 68,
+        "endChar": 73
+      },
+      "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "884e809e_f6405306",
         "filename": "src/dawn/native/Serializable.h",
         "patchSetId": 5
@@ -31,6 +100,24 @@
       "writtenOn": "2025-06-02T09:24:02Z",
       "side": 1,
       "message": "Can we have a test for this?",
+      "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fad942a0_acc5c812",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-02T18:45:49Z",
+      "side": 1,
+      "message": "Maybe it would also make more sense to put this in the child CL since this isn\u0027t used anywhere in this change? I\u0027m fine to leave it here though if we add relevant tests for it here though.",
+      "parentUuid": "abfc8bc3_8af579ff",
       "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
