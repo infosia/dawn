@@ -601,6 +601,26 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
                                    const Format& format) {
     VkImageUsageFlags flags = 0;
 
+    if (usage & wgpu::TextureUsage::RenderAttachment) {
+        if (format.HasDepthOrStencil()) {
+            flags |= VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+        } else {
+            flags |= VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+            if (!format.IsMultiPlanar() && (usage & wgpu::TextureUsage::TextureBinding) &&
+                device->HasFeature(Feature::DawnLoadResolveTexture)) {
+                // Automatically set "input attachment" usage so that the texture would be
+                // used in ExpandResolveTexture subpass.
+                flags |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;
+            }
+        }
+        // Transient attachments must support either of VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
+        // VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT or VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT flags.
+        if (usage & wgpu::TextureUsage::TransientAttachment) {
+            flags |= VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT;
+            // TransientAttachment usages do not support any of copy, storage and sampled bits.
+            return flags;
+        }
+    }
     if (usage & wgpu::TextureUsage::CopySrc) {
         flags |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
     }
@@ -618,19 +638,6 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
     }
     if (usage & wgpu::TextureUsage::StorageBinding) {
         flags |= VK_IMAGE_USAGE_STORAGE_BIT;
-    }
-    if (usage & wgpu::TextureUsage::RenderAttachment) {
-        if (format.HasDepthOrStencil()) {
-            flags |= VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
-        } else {
-            flags |= VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-            if (!format.IsMultiPlanar() && (usage & wgpu::TextureUsage::TextureBinding) &&
-                device->HasFeature(Feature::DawnLoadResolveTexture)) {
-                // Automatically set "input attachment" usage so that the texture would be
-                // used in ExpandResolveTexture subpass.
-                flags |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;
-            }
-        }
     }
 
     // Choosing Vulkan image usages should not know about kReadOnlyRenderAttachment because that's
