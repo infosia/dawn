@@ -260,6 +260,10 @@ class Printer : public tint::TextGenerator {
                 result_.workgroup_info.z = wg[2];
             }
 
+            bool is_ep = func->IsEntryPoint();
+            if (!is_ep) {
+                Line() << "[noinline]";
+            }
             auto out = Line();
 
             // Remap the entry point name if requested.
@@ -280,7 +284,6 @@ class Printer : public tint::TextGenerator {
 
             out << " " << func_name << "(";
 
-            bool is_ep = func->IsEntryPoint();
             size_t i = 0;
             for (auto* param : func->Params()) {
                 if (i > 0) {
