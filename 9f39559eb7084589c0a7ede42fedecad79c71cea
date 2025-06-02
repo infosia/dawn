@@ -170,6 +170,30 @@
       },
       "revId": "9f39559eb7084589c0a7ede42fedecad79c71cea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa6a2451_b83262bb",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T13:45:32Z",
+      "side": 1,
+      "message": "Ah I finally got it, it clears the extra 1s that were extra 0s that were introduced in the \u003e\u003e\u003d in the last ScanForwardAndShiftBits. LGTM and I\u0027ll have a simplification CL that I made as a follow-up.",
+      "parentUuid": "9aa2aed4_c6cce19d",
+      "range": {
+        "startLine": 159,
+        "startChar": 5,
+        "endLine": 160,
+        "endChar": 5
+      },
+      "revId": "9f39559eb7084589c0a7ede42fedecad79c71cea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
