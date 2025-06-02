@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eeb5d060_8772962e",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 2173,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:40:41Z",
+      "side": 1,
+      "message": "This looks a LOT better!",
+      "revId": "4a936d60d7e8ef06682d8d50d87ef687b4ce463a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
