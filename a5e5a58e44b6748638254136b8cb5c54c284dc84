@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d0426e6_e249b496",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:28:43Z",
+      "side": 1,
+      "message": "Ah, it could require checking after these functions if the program is valid. So IDK",
+      "parentUuid": "854fbeb5_b784a477",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f32ab49c_6e8aba1d",
         "filename": "src/dawn/native/ShaderModule.cpp",
         "patchSetId": 4
