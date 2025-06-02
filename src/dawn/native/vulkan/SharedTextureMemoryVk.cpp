@@ -810,6 +810,10 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
     }
     if (createInfo->usage &
         (VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT)) {
+        // Set transient attachment only when depth-stencil or color attachments are set.
+        if (createInfo->usage & VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT) {
+            properties.usage |= wgpu::TextureUsage::TransientAttachment;
+        }
         properties.usage |= wgpu::TextureUsage::RenderAttachment;
     }
 
