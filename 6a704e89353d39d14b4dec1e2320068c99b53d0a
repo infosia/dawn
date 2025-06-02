@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19fcfd3d_c3a05073",
+        "filename": "src/dawn/tests/unittests/d3d12/CopySplitTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-02T23:36:28Z",
+      "side": 1,
+      "message": "These are new tests from here down",
+      "range": {
+        "startLine": 618,
+        "startChar": 4,
+        "endLine": 618,
+        "endChar": 31
+      },
+      "revId": "6a704e89353d39d14b4dec1e2320068c99b53d0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
