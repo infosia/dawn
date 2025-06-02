@@ -1,6 +1,91 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "622f1240_938cfcd2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T08:36:19Z",
+      "side": 1,
+      "message": "Ah I just realized I was only in CC and not a reviewer, sorry.",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bf86962_c44aa523",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T08:36:19Z",
+      "side": 1,
+      "message": "What if this returns nullptr? It can happen on OOM when mappedAtCreation is true.",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e8f1af7_a24c4857",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T08:36:19Z",
+      "side": 1,
+      "message": "nit: we could return bufferGetState(inner) \u003d\u003d mapped. Or at least add a TODO.",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d335cc4d_bc901232",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T08:36:19Z",
+      "side": 1,
+      "message": "Why do we need to increment the serial? We haven\u0027t scheduled any work on the queue.",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f11bb1d1_201adb52",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T08:36:19Z",
+      "side": 1,
+      "message": "Maybe a TODO to not do that? Along with an issue so we don\u0027t forget to revisit.",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c12ca9f_ea27a99b",
@@ -60,6 +145,64 @@
       "writtenOn": "2025-05-30T23:44:11Z",
       "side": 1,
       "message": "nit: Not sure what this old todo is about, I\u0027d say just leave it out.",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e87a14dd_dabfb595",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T08:36:19Z",
+      "side": 1,
+      "message": "Loko would know more about this TODO.",
+      "parentUuid": "1d23ef8e_6c2fe596",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54dced4d_3d498220",
+        "filename": "src/dawn/native/webgpu/CommandBufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T08:36:19Z",
+      "side": 1,
+      "message": "We don\u0027t really need to store the encoder as it is only used transiently in Encode.",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d4f671c_5c9b59c8",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T08:36:19Z",
+      "side": 1,
+      "message": "nit: Encode? This they aren\u0027t executed until the submit.",
+      "range": {
+        "startLine": 64,
+        "startChar": 57,
+        "endLine": 64,
+        "endChar": 64
+      },
       "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
