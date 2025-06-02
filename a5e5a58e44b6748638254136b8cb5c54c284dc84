@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "491c8db8_dc6096df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:21:07Z",
+      "side": 1,
+      "message": "LGTM, +Loko since Geoff is OOO",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f48f03b_c05c2156",
+        "filename": "src/dawn/native/CompilationMessages.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:21:07Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem necessary to have on this object and instead could be computed in `OwnedCompilationMessages::OwnedCompilationMessages`.",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "854fbeb5_b784a477",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:21:07Z",
+      "side": 1,
+      "message": "This two functions could now directly return a `ResultOrError\u003cShaderModuleParseResult\u003e` if we put the messages in `ShaderModuleParseResult`.",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f32ab49c_6e8aba1d",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:21:07Z",
+      "side": 1,
+      "message": "And this could return a `ResultOrError\u003cShaderModuleParseResult\u003e` since it will return a single thing. (that contains all of the info)",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fbd9f9ef_173bc503",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:21:07Z",
+      "side": 1,
+      "message": "Can\u0027t  `outMessages` be instead a `messages` member of `ShaderModuleParseResult` since it is a part of the results of the compilation?",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e41f1a15_1b1a9e1b",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:21:07Z",
+      "side": 1,
+      "message": "In a follow-up, can we make this constructor take a `ParseCompilationMessages` and `InitializeBase` use `ShaderModuleParseResult`? IMHO the shader module is the one that should copy the parse result into an OwnedCompilationMessages.",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
