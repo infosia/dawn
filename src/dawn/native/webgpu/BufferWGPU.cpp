@@ -56,7 +56,9 @@ ResultOrError<Ref<Buffer>> Buffer::Create(Device* device,
 Buffer::Buffer(Device* device,
                const UnpackedPtr<BufferDescriptor>& descriptor,
                WGPUBuffer innerBuffer)
-    : BufferBase(device, descriptor), mInnerBuffer(innerBuffer) {
+    : BufferBase(device, descriptor),
+      mInnerBuffer(innerBuffer),
+      mMappedAtCreation(descriptor->mappedAtCreation) {
     mAllocatedSize = GetSize();
 }
 
@@ -70,7 +72,10 @@ bool Buffer::IsCPUWritableAtCreation() const {
 }
 
 MaybeError Buffer::MapAtCreationImpl() {
-    return DAWN_UNIMPLEMENTED_ERROR("Not implemented");
+    DAWN_ASSERT(mMappedAtCreation);
+    mMappedData = const_cast<void*>(
+        ToBackend(GetDevice())->wgpu.bufferGetConstMappedRange(mInnerBuffer, 0, GetSize()));
+    return {};
 }
 
 MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) {

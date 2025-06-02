@@ -55,6 +55,8 @@ class Buffer final : public BufferBase {
     WGPUBuffer mInnerBuffer = nullptr;
 
     raw_ptr<void> mMappedData = nullptr;
+
+    bool mMappedAtCreation;
 };
 
 }  // namespace dawn::native::webgpu
