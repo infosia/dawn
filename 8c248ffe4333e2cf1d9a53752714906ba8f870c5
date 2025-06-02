@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b62cd650_43b0498a",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:01:26Z",
+      "side": 1,
+      "message": "This could be a constant offset instead of a byte offset to avoid the division and multiplication by kImmediateConstantElementByteSize.",
+      "range": {
+        "startLine": 31,
+        "startChar": 9,
+        "endLine": 31,
+        "endChar": 41
+      },
+      "revId": "8c248ffe4333e2cf1d9a53752714906ba8f870c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b984a89e_bcba15fa",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:01:26Z",
+      "side": 1,
+      "message": "The pipeline and bindgroup can be moved out.",
+      "range": {
+        "startLine": 243,
+        "startChar": 1,
+        "endLine": 246,
+        "endChar": 0
+      },
+      "revId": "8c248ffe4333e2cf1d9a53752714906ba8f870c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "333f4a61_7cfeab4e",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:01:26Z",
+      "side": 1,
+      "message": "That logic is weird, if we need to do an extra draw, we should do it outside the loop. But also here the first offsets are drawn twice.",
+      "revId": "8c248ffe4333e2cf1d9a53752714906ba8f870c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e0014e0_ac3c77e9",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:01:26Z",
+      "side": 1,
+      "message": "Instead of mutating a vector on the stack, can we inline the initializer list? It makes each test more independent and easier to follow.",
+      "revId": "8c248ffe4333e2cf1d9a53752714906ba8f870c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ca23f28_4d215cfe",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-02T09:01:26Z",
+      "side": 1,
+      "message": "commented out code?",
+      "revId": "8c248ffe4333e2cf1d9a53752714906ba8f870c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
