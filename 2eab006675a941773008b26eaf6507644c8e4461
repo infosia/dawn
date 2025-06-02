@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eff97167_2cdb73c7",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-02T21:46:09Z",
+      "side": 1,
+      "message": "There should either be one inner encoder for each outer command buffer, or Encode() needs to not call Finish.",
+      "revId": "2eab006675a941773008b26eaf6507644c8e4461",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d570ba4_1857b943",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-02T21:46:09Z",
+      "side": 1,
+      "message": "nit: This can be called right after Finish, wherever that ends up being",
+      "revId": "2eab006675a941773008b26eaf6507644c8e4461",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

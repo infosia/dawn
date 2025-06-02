@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "97245120_72602768",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-02T21:46:09Z",
+      "side": 1,
+      "message": "That\u0027s good for now, and I think it is correct, but we\u0027ll see for sure later when we implement MapAtCreationImpl.",
+      "parentUuid": "79ecbb7f_c14d51be",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e8f1af7_a24c4857",
@@ -296,6 +314,30 @@
       "side": 1,
       "message": "If the inner buffer mapMode doesn\u0027t have wgpu::MapMode::Write bufferGetMappedRange returns nullptr (`BufferBase::CanGetMappedRange` check)\n\nAnd yes map mode stuff is gated by frontend validation. And the mapped pointer is used internally. This should be fine.",
       "parentUuid": "ca687708_312b18cf",
+      "range": {
+        "startLine": 107,
+        "startChar": 27,
+        "endLine": 107,
+        "endChar": 52
+      },
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d021a838_6851590e",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-02T21:46:09Z",
+      "side": 1,
+      "message": "Right, we would need to call GetConstMappedRange for non-writable modes and GetMappedRange for writable modes.\n\nThe thing that\u0027s technically invalid here is calling GetConstMappedRange and then writing to the resulting pointer:\nhttps://github.com/webgpu-native/webgpu-headers/blob/c51643d3225f037f8a55bb2108fa5fbe9f4ea982/webgpu.h#L5777\n\nIt may become relevant someday if some implementation (e.g. emscripten) actually gives readonly memory when you call GetConstMappedRange.",
+      "parentUuid": "c8c77d80_7726bd4a",
       "range": {
         "startLine": 107,
         "startChar": 27,
