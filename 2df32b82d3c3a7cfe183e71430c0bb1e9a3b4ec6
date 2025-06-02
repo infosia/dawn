@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "1b01d980_8ef89a12",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-06-02T14:41:32Z",
+      "side": 1,
+      "message": "Would it be more robust to find \"Intel\" and find \"Mesa\" separately than strictly looking at this pattern?",
+      "revId": "2df32b82d3c3a7cfe183e71430c0bb1e9a3b4ec6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c94191a7_094fbb9d",
         "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
         "patchSetId": 16
