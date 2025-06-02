@@ -282,7 +282,7 @@ function(AddSubdirectoryDXC)
     set_target_properties(dxc PROPERTIES EXCLUDE_FROM_ALL FALSE)
     set_target_properties(dxcompiler PROPERTIES EXCLUDE_FROM_ALL FALSE)
 
-    if ((NOT IS_DEBUG_BUILD) AND DAWN_DXC_ENABLE_ASSERTS_IN_NDEBUG)
+    if (FALSE)
         # NOTE: Don't set LLVM_ENABLE_ASSERTIONS because it modifies CMAKE_CXX_FLAGS_* by removing NDEBUG
         # from it; but this is a global CMake flag that affects all targets, including the non-DXC ones.
         # Instead, we add '-UNDEBUG', which will come after the default '-DNDEBUG' that comes from

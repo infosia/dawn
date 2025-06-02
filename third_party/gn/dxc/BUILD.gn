@@ -593,7 +593,7 @@ template("dxc_module") {
       # DXC is built with multibyte character set, so it expects Win32 functions to map the ANSI ones, not the UNICODE ones.
       configs -= [ "//build/config/win:unicode" ]
     }
-    if (dawn_dxc_enable_asserts_in_ndebug && !is_debug) {
+    if (false) {
       # Do as CMake option "LLVM_ENABLE_ASSERTIONS" does: undef NDEBUG and define _DEBUG
       configs -= [ "//build/config:release" ]
       if (!is_win) {
