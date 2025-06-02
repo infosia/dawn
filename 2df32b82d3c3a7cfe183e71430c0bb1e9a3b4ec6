@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c94191a7_094fbb9d",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 3453757
+      },
+      "writtenOn": "2025-06-02T14:38:36Z",
+      "side": 1,
+      "message": "Mesa version might be part of Driver Description instead, glancing at https://opengl.gpuinfo.org/ with renderer Intel and OS Linux (marking as resolved to make things simpler, just wanted to note)",
+      "revId": "2df32b82d3c3a7cfe183e71430c0bb1e9a3b4ec6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
