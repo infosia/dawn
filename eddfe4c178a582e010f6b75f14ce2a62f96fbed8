@@ -22,6 +22,30 @@
       },
       "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fed3e60b_53ff2c82",
+        "filename": "src/dawn/utils/ComboLimits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-02T19:57:14Z",
+      "side": 1,
+      "message": "I think we should replace `native::CombinedLimits`, it\u0027s fundamentally the same. But I started with just adding `compat` so I could get the next CL done. Filed https://crbug.com/421950205\n\nIt definitely could be generated but I don\u0027t think we\u0027re going to have so many limits extensions that it\u0027s very helpful (of course we can do it later if we feel like it). Also we would need extra dawn.json info in order to determine the struct field names if we want to keep them short.",
+      "parentUuid": "3bfc11cf_d8b8da28",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
