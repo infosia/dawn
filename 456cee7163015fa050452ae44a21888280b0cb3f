@@ -348,6 +348,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0f8c853_6c716a45",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-02T22:33:59Z",
+      "side": 1,
+      "message": "Done (Didn\u0027t realize the intention is to call non-const and const `GetMappedRange` seperately based on the map mode)",
+      "parentUuid": "d021a838_6851590e",
+      "range": {
+        "startLine": 107,
+        "startChar": 27,
+        "endLine": 107,
+        "endChar": 52
+      },
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d23ef8e_6c2fe596",
@@ -397,6 +421,24 @@
       "side": 1,
       "message": "(removed for now)",
       "parentUuid": "e87a14dd_dabfb595",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c8b2e1f_3e83e615",
+        "filename": "src/dawn/native/webgpu/BufferWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-02T22:33:59Z",
+      "side": 1,
+      "message": "Mark as resolved",
+      "parentUuid": "dca96ddb_312927af",
       "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -514,6 +556,24 @@
       "side": 1,
       "message": "Yes, I think so. We have data structures SerialQueue and SerialMap for things like that.\n\nForceEventualFlush might need to call Tick, but I don\u0027t think it will be necessary. (The proposed [wgpuDeviceCheckpoint](https://docs.google.com/document/d/1qJRTJRY318ZEqhK6ryw4P-91FumYQfOnNP6LpANYy6A/edit?tab\u003dt.0#heading\u003dh.l3149w38ebmt) would be the closest standard equivalent:)",
       "parentUuid": "cd32f4fe_26f3fffe",
+      "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27cd8f1d_c32d3f2e",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-02T22:33:59Z",
+      "side": 1,
+      "message": "Mark as resolved",
+      "parentUuid": "7b525cfa_98a4c2ad",
       "revId": "456cee7163015fa050452ae44a21888280b0cb3f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

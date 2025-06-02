@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "88840862_b0d979ea",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-02T22:33:59Z",
+      "side": 1,
+      "message": "Done (My mistake. Create innerEncoder in `webgpu::CommandBuffer::Encode()`)",
+      "parentUuid": "eff97167_2cdb73c7",
+      "revId": "2eab006675a941773008b26eaf6507644c8e4461",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d570ba4_1857b943",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-06-02T21:46:09Z",
       "side": 1,
       "message": "nit: This can be called right after Finish, wherever that ends up being",
+      "revId": "2eab006675a941773008b26eaf6507644c8e4461",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3bd7908_14bc51a3",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-02T22:33:59Z",
+      "side": 1,
+      "message": "Done (Moved inside Encode)",
+      "parentUuid": "7d570ba4_1857b943",
       "revId": "2eab006675a941773008b26eaf6507644c8e4461",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
