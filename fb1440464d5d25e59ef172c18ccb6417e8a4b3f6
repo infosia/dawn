@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b54806a_cd13a6b3",
+        "filename": "src/tint/lang/wgsl/resolver/value_constructor_validation_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-02T06:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad5b78ca_c7814cc7",
+      "revId": "fb1440464d5d25e59ef172c18ccb6417e8a4b3f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "623138cd_a2702931",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-05-30T17:42:15Z",
       "side": 1,
       "message": "We should enable the extension in these tests so that we are actually checking that the type cannot be used as the store type for variable, as opposed to checking for the extension guard.",
+      "revId": "fb1440464d5d25e59ef172c18ccb6417e8a4b3f6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d53c8220_d296f8b9",
+        "filename": "src/tint/lang/wgsl/resolver/variable_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1414,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-02T06:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "623138cd_a2702931",
       "revId": "fb1440464d5d25e59ef172c18ccb6417e8a4b3f6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

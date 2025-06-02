@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7a2eab3_b45df844",
+        "filename": "src/tint/lang/wgsl/ast/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-02T06:51:38Z",
+      "side": 1,
+      "message": "Done\n\nSorry it was my fault.",
+      "parentUuid": "4830f4f2_44b2c089",
+      "range": {
+        "startLine": 1534,
+        "startChar": 0,
+        "endLine": 1548,
+        "endChar": 5
+      },
+      "revId": "68a1f9f6f21ff10a4b874373802370231045cee5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b316b4f5_9cea3b42",
