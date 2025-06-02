@@ -81,7 +81,8 @@ MaybeError ComputePipeline::InitializeImpl() {
                                         error:&error]);
     if (error != nullptr) {
         return DAWN_INTERNAL_ERROR("Error creating pipeline state " +
-                                   std::string([error.localizedDescription UTF8String]));
+                                   std::string([error.localizedDescription UTF8String])
+                                 + std::string([error.localizedFailureReason UTF8String]);
     }
     DAWN_ASSERT(mMtlComputePipelineState != nil);
     timer.RecordMicroseconds("Metal.newComputePipelineStateWithDescriptor.CacheMiss");
