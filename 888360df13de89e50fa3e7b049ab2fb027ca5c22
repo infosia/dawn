@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2632db3_12b013f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-02T12:40:34Z",
+      "side": 1,
+      "message": "```suggestion\nFixed: 416264055\n```",
+      "revId": "888360df13de89e50fa3e7b049ab2fb027ca5c22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "013a1b48_5879a51e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-02T12:40:34Z",
+      "side": 1,
+      "message": "lgtm w/ nit.",
+      "revId": "888360df13de89e50fa3e7b049ab2fb027ca5c22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
