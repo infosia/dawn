@@ -601,6 +601,26 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
                                    const Format& format) {
     VkImageUsageFlags flags = 0;
 
+    if (usage & wgpu::TextureUsage::RenderAttachment) {
+        if (format.HasDepthOrStencil()) {
+            flags |= VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
+        } else {
+            flags |= VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
+            if (!format.IsMultiPlanar() && (usage & wgpu::TextureUsage::TextureBinding) &&
+                device->HasFeature(Feature::DawnLoadResolveTexture)) {
+                // Automatically set "input attachment" usage so that the texture would be
+                // used in ExpandResolveTexture subpass.
+                flags |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;
+            }
+        }
+        // Transient attachments must support either of VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
+        // VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT or VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT flags.
+        if (usage & wgpu::TextureUsage::TransientAttachment) {
+            flags |= VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT;
+            // TransientAttachment usages do not support any of copy, storage and sampled bits.
+            return flags;
+        }
+    }
     if (usage & wgpu::TextureUsage::CopySrc) {
         flags |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT;
     }
@@ -618,19 +638,6 @@ VkImageUsageFlags VulkanImageUsage(const DeviceBase* device,
     }
     if (usage & wgpu::TextureUsage::StorageBinding) {
         flags |= VK_IMAGE_USAGE_STORAGE_BIT;
-    }
-    if (usage & wgpu::TextureUsage::RenderAttachment) {
-        if (format.HasDepthOrStencil()) {
-            flags |= VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
-        } else {
-            flags |= VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
-            if (!format.IsMultiPlanar() && (usage & wgpu::TextureUsage::TextureBinding) &&
-                device->HasFeature(Feature::DawnLoadResolveTexture)) {
-                // Automatically set "input attachment" usage so that the texture would be
-                // used in ExpandResolveTexture subpass.
-                flags |= VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT;
-            }
-        }
     }
 
     // Choosing Vulkan image usages should not know about kReadOnlyRenderAttachment because that's
@@ -1362,10 +1369,13 @@ MaybeError InternalTexture::Initialize(VkImageUsageFlags extraUsages) {
         createInfo.flags |= VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT;
     }
 
-    // We always set VK_IMAGE_USAGE_TRANSFER_DST_BIT unconditionally because the Vulkan images
-    // that are used in vkCmdClearColorImage() must have been created with this flag, which is
-    // also required for the implementation of robust resource initialization.
-    createInfo.usage |= VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+    if (!(GetInternalUsage() & wgpu::TextureUsage::TransientAttachment)) {
+        // We set VK_IMAGE_USAGE_TRANSFER_DST_BIT for Vulkan images that are used in
+        // vkCmdClearColorImage() that must have been created with this flag, which is also required
+        // for the implementation of robust resource initialization. It cannot be set for
+        // TransientAttachment usage as they are incompatible with each other.
+        createInfo.usage |= VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+    }
 
     DAWN_TRY(CheckVkOOMThenSuccess(
         device->fn.CreateImage(device->GetVkDevice(), &createInfo, nullptr, &*mHandle),
@@ -1772,10 +1782,13 @@ MaybeError ExternalVkImageTexture::Initialize(const ExternalImageDescriptorVk* d
     baseCreateInfo.queueFamilyIndexCount = 0;
     baseCreateInfo.pQueueFamilyIndices = nullptr;
 
-    // We always set VK_IMAGE_USAGE_TRANSFER_DST_BIT unconditionally because the Vulkan images
-    // that are used in vkCmdClearColorImage() must have been created with this flag, which is
-    // also required for the implementation of robust resource initialization.
-    baseCreateInfo.usage |= VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+    if (!(GetInternalUsage() & wgpu::TextureUsage::TransientAttachment)) {
+        // We set VK_IMAGE_USAGE_TRANSFER_DST_BIT for Vulkan images that are used in
+        // vkCmdClearColorImage() that must have been created with this flag, which is also required
+        // for the implementation of robust resource initialization. It cannot be set for
+        // TransientAttachment usage as they are incompatible with each other.
+        baseCreateInfo.usage |= VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+    }
 
     VkImageFormatListCreateInfo imageFormatListInfo = {};
     PNextChainBuilder createInfoChain(&baseCreateInfo);
