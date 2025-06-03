@@ -166,6 +166,30 @@
       },
       "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62191170_56e64ccf",
+        "filename": "src/dawn/utils/ComboLimits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-03T18:51:09Z",
+      "side": 1,
+      "message": "Nice!!! Yea the `private` + `using` workaround is how I got the `DeviceDescriptor` stuff to work a while back also! This looks great!",
+      "parentUuid": "b3cfa852_d9a831c6",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
