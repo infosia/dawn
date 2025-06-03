@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fef8f05c_312a9529",
+        "filename": "src/dawn/native/vulkan/SharedTextureMemoryVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-03T16:47:52Z",
+      "side": 1,
+      "message": "Didn\u0027t know about the validation, thanks. Updated to make it top level.",
+      "parentUuid": "ab2d0d55_773631a8",
+      "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5ce9fd86_5e88a41a",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "129d8c70_de6b92d9",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-03T16:47:52Z",
+      "side": 1,
+      "message": "I had moved it so it was easier to then early return without having any other usages inadvertently in. But since frontend validation handles it, updated to be top level.",
+      "parentUuid": "5ce9fd86_5e88a41a",
+      "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e8bfa3fe_b7227aec",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-06-03T10:13:19Z",
       "side": 1,
       "message": "Likewise, frontend validation should handle that for us and we can move the handling to the top level of the loop.",
+      "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "815efc62_1286d64f",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-03T16:47:52Z",
+      "side": 1,
+      "message": "Sounds good, done.",
+      "parentUuid": "e8bfa3fe_b7227aec",
       "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +146,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "01dc0a40_e3b98ec0",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-03T16:47:52Z",
+      "side": 1,
+      "message": "Sounds good, updated.",
+      "parentUuid": "8563af6e_806869a8",
+      "range": {
+        "startLine": 1372,
+        "startChar": 0,
+        "endLine": 1378,
+        "endChar": 5
+      },
+      "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "379e7c71_bb566f7d",
@@ -105,6 +183,24 @@
       "writtenOn": "2025-06-03T13:25:43Z",
       "side": 1,
       "message": "Q: How does ExternalVkImage work with usage transient attachment? I\u0027m wondering if this case makes sense to have or if we should never have external memory + transient attachment together.",
+      "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64b5ef2e_5a4ec4e1",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-03T16:47:52Z",
+      "side": 1,
+      "message": "I chatted with Vasiliy on this today and looks like it is possible for ExternalVkImage to pass in transient attachment usage and there are no vulkan requirements against it. In reality though it seems chrome/client code should not use it with ExternalVkImage as it would be inefficient.",
+      "parentUuid": "379e7c71_bb566f7d",
       "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
