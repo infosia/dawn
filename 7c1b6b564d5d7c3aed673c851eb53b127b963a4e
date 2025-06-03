@@ -111,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f59023af_c73f0fe4",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:15:31Z",
+      "side": 1,
+      "message": "Yes, that sounds correct.",
+      "parentUuid": "b316735d_232b8230",
+      "range": {
+        "startLine": 73,
+        "startChar": 46,
+        "endLine": 73,
+        "endChar": 57
+      },
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "920f63e4_e0c98b9f",
@@ -124,6 +148,24 @@
       "writtenOn": "2025-06-03T20:10:29Z",
       "side": 1,
       "message": "This is the operand index of the terminator instruction?  That\u0027s the only thing that makes sense to me.",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e273bcb_798a5a89",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:15:31Z",
+      "side": 1,
+      "message": "Yes, in terminator. Added the extra words for context.",
+      "parentUuid": "920f63e4_e0c98b9f",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
