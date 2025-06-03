@@ -28,9 +28,31 @@
 #ifndef SRC_DAWN_NODE_INTEROP_NODEAPI_H_
 #define SRC_DAWN_NODE_INTEROP_NODEAPI_H_
 
+#include "src/utils/compiler.h"
+
 // Dawn is built with exceptions disabled.
 #define NAPI_DISABLE_CPP_EXCEPTIONS
 
+// Disable warnings produced by Node API header.
+// This is done here rather than in the build file to scope the disablement to just this header.
+#if DAWN_COMPILER_IS_CLANG
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wextra-semi"
+#pragma clang diagnostic ignored "-Wextra-semi-stmt"
+#pragma clang diagnostic ignored "-Winconsistent-missing-destructor-override"
+#pragma clang diagnostic ignored "-Wshadow"
+#pragma clang diagnostic ignored "-Wshadow-field"
+#pragma clang diagnostic ignored "-Wsuggest-destructor-override"
+#elif DAWN_COMPILER_IS_MSVC
+#pragma warning(push)
+#endif  // DAWN_COMPILER_IS_CLANG
+
 #include <napi.h>
+
+#if DAWN_COMPILER_IS_CLANG
+#pragma clang diagnostic pop
+#elif DAWN_COMPILER_IS_MSVC
+#pragma warning(pop)
+#endif  // DAWN_COMPILER_IS_CLANG
 
 #endif  // SRC_DAWN_NODE_INTEROP_NODEAPI_H_
