@@ -16,6 +16,46 @@
       "message": "Still LGTM",
       "revId": "1d28f677a8b3b292fb16d9e9e2a56d4bba1cb1bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "705d26b1_8a288a98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-03T20:08:09Z",
+      "side": 1,
+      "message": "Wow, a lot more texel vs block bugs than I expected. Great work, and good comments!",
+      "revId": "1d28f677a8b3b292fb16d9e9e2a56d4bba1cb1bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0c1cff1_80ae79f1",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-03T20:08:09Z",
+      "side": 1,
+      "message": "nit: crbug.com/41479503",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 21
+      },
+      "revId": "1d28f677a8b3b292fb16d9e9e2a56d4bba1cb1bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
