@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bebedee6_1bbcb1da",
+        "filename": "src/tint/lang/core/ir/control_instruction.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T02:24:19Z",
+      "side": 1,
+      "message": "Turns out, it\u0027s removal is sitting un-uploaded on my machine. I used it at one point, but it\u0027s to be removed now.",
+      "parentUuid": "cdb40417_60aa9bbc",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d94f137a_d30d4bad",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 13
@@ -65,6 +83,24 @@
       "writtenOn": "2025-06-03T01:24:33Z",
       "side": 1,
       "message": "Is it really true that there must only be one exit? What about something like this:\n```\nloop {\n  %foo: ...\n  if %cond {\n    exit_loop\n  } else {\n    exit_loop\n  }\n}\n// now use %foo\n```\nThe definition of %foo dominates the use, but there\u0027s two exits. Is that valid SPIR-V?",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52d21384_5c100022",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T02:24:19Z",
+      "side": 1,
+      "message": "@dneto ?\n\nI didn\u0027t think it would be valid, but then I realize I was reading the `OpPhi` definition and transposing it onto this case, which isn\u0027t valid.\n\nIf this is valid, I guess we\u0027d have to do something like:\n\n```\n%1:i32 \u003d loop {\n  %foo:i32 ...\n  if %cond {\n    exit_loop %foo\n  } else {\n    exit_loop %foo\n  }\n}\n```",
+      "parentUuid": "d94f137a_d30d4bad",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -105,6 +141,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e75a5f28_80cd1866",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T02:24:19Z",
+      "side": 1,
+      "message": "The multi-exit handling lis accidental in that looping the exits is an easy way to get at the first one, heh. Will leave until we figure out the answer above.",
+      "parentUuid": "9b783c7e_b9c7523e",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "63a865b5_156ccfe1",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 13
@@ -128,6 +182,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "341b22e9_973ee3b6",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T02:24:19Z",
+      "side": 1,
+      "message": "I\u0027m struggling to remember if this case is valid anymore with the current shuffling of the code. I\u0027ll pull it out and see what fails.",
+      "parentUuid": "63a865b5_156ccfe1",
+      "range": {
+        "startLine": 1585,
+        "startChar": 0,
+        "endLine": 1588,
+        "endChar": 13
+      },
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "08416cef_0c147fda",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 13
@@ -139,6 +217,30 @@
       "writtenOn": "2025-06-03T01:24:33Z",
       "side": 1,
       "message": "Can you add unit test coverage for this scenario? I commented this out and nothing failed.",
+      "range": {
+        "startLine": 1608,
+        "startChar": 0,
+        "endLine": 1614,
+        "endChar": 13
+      },
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "364d96b8_4f8e0179",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T02:24:19Z",
+      "side": 1,
+      "message": "Hm, I thought there was coverage for this case. Will look.",
+      "parentUuid": "08416cef_0c147fda",
       "range": {
         "startLine": 1608,
         "startChar": 0,
@@ -208,6 +310,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6cd6acab_d3352d66",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T02:24:19Z",
+      "side": 1,
+      "message": "Will fix, wrote this originally thinking it was `InboundSiblingBlocks` so had to check for unreachable and didn\u0027t remove it when I fixed to `InboundSiblingBranches`",
+      "parentUuid": "c4bbdedc_c43b77fe",
+      "range": {
+        "startLine": 1675,
+        "startChar": 0,
+        "endLine": 1677,
+        "endChar": 21
+      },
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a05b17a7_7c82f2db",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 13
@@ -225,6 +351,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d1e9dd84_9fd18492",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T02:24:19Z",
+      "side": 1,
+      "message": "Needs a better name, but, as far as I understand, _only_ in the case of the loop header can we have an `OpPhi` which refers to blocks which come _after_ the phi instruction. In that case when that block jumps back to the header, we need to pass these `value_id`s back to the header as the block params. So, these phis define a `default` set of values to provide to any jump back to the header.",
+      "parentUuid": "a05b17a7_7c82f2db",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2dcc0c9e_3aff0a4b",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 13
@@ -236,6 +380,24 @@
       "writtenOn": "2025-06-03T01:24:33Z",
       "side": 1,
       "message": "Why \"header\"? This isn\u0027t always the loop header is it? I assume you could get here for any `continue` inside the loop body.",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56c10eed_086606a8",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T02:24:19Z",
+      "side": 1,
+      "message": "We\u0027ll only have stored default values coming from the header. This is only handling the case where the phi references blocks which come after the phi. That can only happen in a loop header.",
+      "parentUuid": "2dcc0c9e_3aff0a4b",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -276,6 +438,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f16be3c6_6ca66e8b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1752,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T02:24:19Z",
+      "side": 1,
+      "message": "Heh, I think I\u0027ve moved this instruction 2 dozen times so far ....",
+      "parentUuid": "bfa3c716_0f3d2dba",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "008707b6_77d675aa",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 13
@@ -287,6 +467,24 @@
       "writtenOn": "2025-06-03T01:24:33Z",
       "side": 1,
       "message": "I don\u0027t really understand what \"default\" means in this context. Is it not just _the_ source value that you have to use if you are coming from `blk_id`?",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfbb6f38_e886fb78",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T02:24:19Z",
+      "side": 1,
+      "message": "It\u0027s the `phi` value we will use when coming from `blk_id`. So, if `blk_id` is the continuing block, then we\u0027ll use `value_id` when transitioning from `blk_id`. We call it header, because the `loop header` is the only time we have this weird case, in all other cases, the phi blocks would have already been emitted and we can back propagate the values.",
+      "parentUuid": "008707b6_77d675aa",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
