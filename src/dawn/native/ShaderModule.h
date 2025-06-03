@@ -392,6 +392,7 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
     // releasing/recreation behaviors.
     Ref<TintProgram> GetNullableTintProgramForTesting() const;
     int GetTintProgramRecreateCountForTesting() const;
+    std::string mWgsl;
 
   protected:
     void DestroyImpl() override;
@@ -411,7 +412,6 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
     enum class Type { Undefined, Spirv, Wgsl };
     Type mType;
     std::vector<uint32_t> mOriginalSpirv;
-    std::string mWgsl;
 
     // Secure hash computed from shader code and other metadata to be used as a cache key
     // representing the shader module.
