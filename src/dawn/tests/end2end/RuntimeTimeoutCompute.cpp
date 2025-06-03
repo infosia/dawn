@@ -76,29 +76,29 @@ TEST_P(RuntimeTimeoutComputeTest, LargeConstantArrayInLoop) {
     DAWN_SKIP_TEST_IF_BASE(IsMetal() && IsIntelGen9(), "timeout", "device found to be slow on CI");
 
     std::string kShaderCode = R"(
-@group(0)@binding(0) var < storage,read_write > A: array < i32 >;
-@compute @workgroup_size(256)
-fn main(@builtin(local_invocation_index) g: u32) {
-  var offset = g;
-  var b = i32(offset);
-      for (var i = 0;  i < 20; i++) {
-        var n = array(13, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-         1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0,
-         13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 20, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 13, 0, 13, 0, 13, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 25, 0, 20, 0, 23, 0, 20, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 13, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0,
-          0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 13, 0, 13, 0,
-          1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 20, 0, 18, 0, 20, 0, 11, 18,
-           15, 18, 23, 18, 15, 18, 10, 18, 13, 18, 22, 18, 13, 18, 10, 13,
-           18, 22, 23, 22, 18, 13, 13, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 13, 0, 11, 0, 9, 0, 11, 0,
-            13, 0, 11, 0, 9, 0, 8, 0, 13, 1, 13, 8, 13, 8, 13, 8, 13, 8, 16,
-            11, 13, 8, 16, 11, 13, 8, 13, 1, 13, 18, 16, 8, 13, 18, 16, 8,
-            13, 18, 16, 8, 13, 18, 16, 8, 13, 13, 11, 18, 13, 13, 11, 18, 13, 1)[i];
-         b +=  n;
-      }
-  A[offset] = b;
+
+
+    struct Output {
+  @size(4) value : u32
+};
+@group(0) @binding(0) var<storage, read_write> outputs : array<Output, 3>;
+
+
+
+const values = array(
+  array<u32, 3>(1u, 0u, 1u)[0u],
+  array<u32, 3>(1u, 0u, 1u)[1u],
+  array<u32, 3>(1u, 0u, 1u)[2u]
+);
+
+
+
+@compute @workgroup_size(1)
+fn main() {
+
+  for (var i = 0u; i < 3; i++) {
+    outputs[i].value = select(0u, 1u, values[i]==1u);
+  }
 }
     )";
 
@@ -124,7 +124,7 @@ fn main(@builtin(local_invocation_index) g: u32) {
     }
 
     queue.Submit(1, &commands);
-    std::vector<uint32_t> expected = {15, 16};
+    std::vector<uint32_t> expected = {1, 0, 1};
     EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), output, 0, expected.size());
 }
 
