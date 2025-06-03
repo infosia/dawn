@@ -47,21 +47,22 @@ message Type {
         TypeVector vector = 2;
         TypeMatrix matrix = 3;
         TypeArray array = 4;
-        TypePointer pointer = 5;
-        TypeStruct struct = 6;
-        TypeAtomic atomic = 7;
-        TypeDepthTexture depth_texture = 8;
-        TypeSampledTexture sampled_texture = 9;
-        TypeMultisampledTexture multisampled_texture = 10;
-        TypeDepthMultisampledTexture depth_multisampled_texture = 11;
-        TypeStorageTexture storage_texture = 12;
-        TypeExternalTexture external_texture = 13;
-        TypeSampler sampler = 14;
-        TypeInputAttachment input_attachment = 15;
-        TypeSubgroupMatrix subgroup_matrix_left = 16;
-        TypeSubgroupMatrix subgroup_matrix_right = 17;
-        TypeSubgroupMatrix subgroup_matrix_result = 18;
-        TypeBuiltinStruct builtin_struct = 19;
+        TypeBindingArray binding_array = 5;
+        TypePointer pointer = 6;
+        TypeStruct struct = 7;
+        TypeAtomic atomic = 8;
+        TypeDepthTexture depth_texture = 9;
+        TypeSampledTexture sampled_texture = 10;
+        TypeMultisampledTexture multisampled_texture = 11;
+        TypeDepthMultisampledTexture depth_multisampled_texture = 12;
+        TypeStorageTexture storage_texture = 13;
+        TypeExternalTexture external_texture = 14;
+        TypeSampler sampler = 15;
+        TypeInputAttachment input_attachment = 16;
+        TypeSubgroupMatrix subgroup_matrix_left = 17;
+        TypeSubgroupMatrix subgroup_matrix_right = 18;
+        TypeSubgroupMatrix subgroup_matrix_result = 19;
+        TypeBuiltinStruct builtin_struct = 20;
     }
 }
 
@@ -92,6 +93,11 @@ message TypeArray {
     uint32 element = 1;  // Module.types
     uint32 stride = 2;
     uint32 count = 3;
+}
+
+message TypeBindingArray {
+    uint32 element = 1;  // Module.types
+    uint32 count = 2;
 }
 
 message TypePointer {
