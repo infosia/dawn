@@ -376,8 +376,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
         device->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
     req.hlsl.tintOptions.polyfill_pack_unpack_4x8 =
         device->IsToggleEnabled(Toggle::D3D12PolyFillPackUnpack4x8);
-    req.hlsl.tintOptions.enable_integer_range_analysis =
-        device->IsToggleEnabled(Toggle::EnableIntegerRangeAnalysisInRobustness);
+    req.hlsl.tintOptions.enable_integer_range_analysis = true;
 
     req.hlsl.limits = LimitsForCompilationRequest::Create(device->GetLimits().v1);
     req.hlsl.adapterSupportedLimits =

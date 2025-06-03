@@ -302,8 +302,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
             offsetStartBytes, offsetStartBytes + kImmediateConstantElementByteSize};
     }
 
-    req.tintOptions.enable_integer_range_analysis =
-        GetDevice()->IsToggleEnabled(Toggle::EnableIntegerRangeAnalysisInRobustness);
+    req.tintOptions.enable_integer_range_analysis = true;
 
     req.limits = LimitsForCompilationRequest::Create(GetDevice()->GetLimits().v1);
     req.adapterSupportedLimits =
