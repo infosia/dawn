@@ -50,6 +50,24 @@
       "message": "Please add this new value to the end, i.e \u003d 20, instead of renumbering them. It is generally recommended to not change field numbers in protos, since it will cause issues with existing encoded protos (i.e. IR fuzzer test cases) having different semantics between different versions of the .proto, and thus potentially break things.",
       "revId": "3582d361a7dc55f14489d48aae00b825ef382b04",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f56b0e8_29ad52cc",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-06-03T18:16:15Z",
+      "side": 1,
+      "message": "For reference the proto \u0027style\u0027 recommendation, https://protobuf.dev/best-practices/dos-donts/\n\n(I am aware we already deviate from these, due to not reserving unspecified \u003d 0 in our enums, but if we are going to create effective a v2 of the proto, I would like to do it intentionally)",
+      "parentUuid": "5dc70e18_03d72f3f",
+      "revId": "3582d361a7dc55f14489d48aae00b825ef382b04",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
