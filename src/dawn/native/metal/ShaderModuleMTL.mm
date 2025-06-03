@@ -433,7 +433,7 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     DAWN_TRY_ASSIGN(mslCompilation,
                     TranslateToMSL(GetDevice(), programmableStage, stage, layout, out, sampleMask,
                                    renderPipeline, GetEntryPoint(entryPointName).bindings));
-
+    out->saved_msl = mslCompilation->msl.c_str();
     out->needsStorageBufferLength = mslCompilation->needsStorageBufferLength;
     out->workgroupAllocations = std::move(mslCompilation->workgroupAllocations);
     out->localWorkgroupSize = MTLSizeMake(mslCompilation->localWorkgroupSize.width,
