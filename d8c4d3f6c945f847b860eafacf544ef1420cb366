@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21a327f9_e1ea7fd0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-03T18:53:48Z",
+      "side": 1,
+      "message": "Heh... what are the odds you just make it use `ComboLimits` now? I suspect it\u0027s a lot more changes... so if not that\u0027s fine.",
+      "revId": "d8c4d3f6c945f847b860eafacf544ef1420cb366",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
