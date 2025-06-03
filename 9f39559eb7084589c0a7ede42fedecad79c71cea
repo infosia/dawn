@@ -194,6 +194,30 @@
       },
       "revId": "9f39559eb7084589c0a7ede42fedecad79c71cea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b67638ad_8526d0a1",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-06-03T00:49:52Z",
+      "side": 1,
+      "message": "Good to have a simplification!",
+      "parentUuid": "aa6a2451_b83262bb",
+      "range": {
+        "startLine": 159,
+        "startChar": 5,
+        "endLine": 160,
+        "endChar": 5
+      },
+      "revId": "9f39559eb7084589c0a7ede42fedecad79c71cea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
