@@ -16,6 +16,279 @@
       "message": "ping",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a5d8005_d32e160f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "A bunch of questions about terms and logic I didn\u0027t really understand. Will probably need another review pass when I\u0027ve got the answers.",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdb40417_60aa9bbc",
+        "filename": "src/tint/lang/core/ir/control_instruction.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "What did you need this mutable overload for?",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d94f137a_d30d4bad",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "Is it really true that there must only be one exit? What about something like this:\n```\nloop {\n  %foo: ...\n  if %cond {\n    exit_loop\n  } else {\n    exit_loop\n  }\n}\n// now use %foo\n```\nThe definition of %foo dominates the use, but there\u0027s two exits. Is that valid SPIR-V?",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df397614_c4a02f01",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "Nit: More accurate to say that we never _need_ to, since it\u0027s always in scope?",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b783c7e_b9c7523e",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "Again, I\u0027m not sure the \"only one exit\" part is true, and in fact your code below handles multiple exits.",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63a865b5_156ccfe1",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why the body might not have a terminator? IIRC it\u0027s something like the \"no continuing block\" case, but it\u0027s hard to remember.\n\nAnd if we didn\u0027t add one, why is not `unreachable`? If we already know it\u0027s unreachable here I think that simplifies some other things.",
+      "range": {
+        "startLine": 1585,
+        "startChar": 0,
+        "endLine": 1588,
+        "endChar": 13
+      },
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08416cef_0c147fda",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "Can you add unit test coverage for this scenario? I commented this out and nothing failed.",
+      "range": {
+        "startLine": 1608,
+        "startChar": 0,
+        "endLine": 1614,
+        "endChar": 13
+      },
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c8a2486_68614a20",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "Say?",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbd35a8e_c9a5c9fb",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "übernit: Unnecessary abbreviation?\n\nAlso I forgot what this count represented by the time I got to the uses of it below, so something like `continuing_param_count` would make this easier to understand.",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4bbdedc_c43b77fe",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "Surely this can\u0027t ever happen? If the terminator is `unreachable`, it shouldn\u0027t be an inbound branch to anything.\n\nShould it just be `TINT_ASSERT(incoming-\u003eIs\u003cContinue\u003e())` instead?",
+      "range": {
+        "startLine": 1675,
+        "startChar": 0,
+        "endLine": 1677,
+        "endChar": 21
+      },
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a05b17a7_7c82f2db",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "Mentioned below as well, but this \"default\" terminology is confusing me a bit.\n\nIIUC, this part of the code is adding terminator operands for all `continue` instructions that branch to a continue block. The `block_default_phi_values_` map stores those values as they were determined when we emitted the continuing block.\n\nSo is this map really more of a `continuing_block_phi_sources_`? Or am I missing the meaning of \"default\"?",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dcc0c9e_3aff0a4b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "Why \"header\"? This isn\u0027t always the loop header is it? I assume you could get here for any `continue` inside the loop body.",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "406d9d08_ccec4efa",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "Is the `let` necessary? I think we could just `AddValue` here.",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfa3c716_0f3d2dba",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1752,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "Nit: This is loop invariant, no need to redo the type lookup each time.\n\nLikewise it doesn\u0027t need to be passed to the lambdas above since it\u0027s always the same.",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "008707b6_77d675aa",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:24:33Z",
+      "side": 1,
+      "message": "I don\u0027t really understand what \"default\" means in this context. Is it not just _the_ source value that you have to use if you are coming from `blk_id`?",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
