@@ -3,6 +3,80 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ad617297_f4d86ab8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T11:59:03Z",
+      "side": 1,
+      "message": "about footprint?",
+      "range": {
+        "startLine": 14,
+        "startChar": 229,
+        "endLine": 14,
+        "endChar": 233
+      },
+      "revId": "6a704e89353d39d14b4dec1e2320068c99b53d0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e108299b_1c6ca970",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T11:59:03Z",
+      "side": 1,
+      "message": "```suggestion\n  - Fixed GetBufferSize that was computing the wrong bufferSizeForFootprint\n```",
+      "revId": "6a704e89353d39d14b4dec1e2320068c99b53d0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b0733a2_88559211",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T11:59:03Z",
+      "side": 1,
+      "message": "Amazing fixes to an extremely difficult chunk of code, LGTM!",
+      "revId": "6a704e89353d39d14b4dec1e2320068c99b53d0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0449c354_7848b43e",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T11:59:03Z",
+      "side": 1,
+      "message": "Maybe mention that we believe that it is because D3D12 requires the \"linear texture\" defined in the buffer to fit within the buffer.",
+      "revId": "6a704e89353d39d14b4dec1e2320068c99b53d0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "19fcfd3d_c3a05073",
         "filename": "src/dawn/tests/unittests/d3d12/CopySplitTests.cpp",
         "patchSetId": 1
@@ -14,6 +88,30 @@
       "writtenOn": "2025-06-02T23:36:28Z",
       "side": 1,
       "message": "These are new tests from here down",
+      "range": {
+        "startLine": 618,
+        "startChar": 4,
+        "endLine": 618,
+        "endChar": 31
+      },
+      "revId": "6a704e89353d39d14b4dec1e2320068c99b53d0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2da0f54d_8699667b",
+        "filename": "src/dawn/tests/unittests/d3d12/CopySplitTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T11:59:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "19fcfd3d_c3a05073",
       "range": {
         "startLine": 618,
         "startChar": 4,
