@@ -118,6 +118,30 @@
       },
       "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80d6f781_eb1d8fcb",
+        "filename": "src/dawn/utils/ComboLimits.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-03T01:26:44Z",
+      "side": 1,
+      "message": "Ah.. yea that\u0027s unfortunate, but I guess that\u0027s probably by design for C++... That said, if we can use inheritance, it does make it a lot easier to do generated code for this (if we want in the future), since it can just inherit from all the sub structs.",
+      "parentUuid": "99b23e66_c0da22e2",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "eddfe4c178a582e010f6b75f14ce2a62f96fbed8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
