@@ -31,6 +31,7 @@
 #include <mutex>
 #include <utility>
 
+#include "dawn/common/Defer.h"
 #include "dawn/common/Mutex.h"
 #include "dawn/common/NonMovable.h"
 #include "dawn/common/Ref.h"
@@ -91,9 +92,18 @@ class Guard : public NonMovable, StackAllocated {
     auto* operator->() const { return Get(); }
     auto& operator*() const { return *Get(); }
 
+    void Defer(std::function<void()> f) {
+        DAWN_ASSERT(mDefer);
+        mDefer->Append(std::move(f));
+    }
+
   protected:
-    Guard(T* obj, typename Traits::MutexType& mutex) : mLock(Traits::GetMutex(mutex)), mObj(obj) {}
-    Guard(Guard&& other) : mLock(std::move(other.mLock)), mObj(std::move(other.mObj)) {}
+    Guard(T* obj, typename Traits::MutexType& mutex, class Defer* defer = nullptr)
+        : mLock(Traits::GetMutex(mutex)), mObj(obj), mDefer(defer) {}
+    Guard(Guard&& other)
+        : mLock(std::move(other.mLock)),
+          mObj(std::move(other.mObj)),
+          mDefer(std::move(other.mDefer)) {}
 
     Guard(const Guard& other) = delete;
     Guard& operator=(const Guard& other) = delete;
@@ -108,6 +118,7 @@ class Guard : public NonMovable, StackAllocated {
 
     typename Traits::LockType mLock;
     raw_ptr<T> mObj;
+    raw_ptr<class Defer> mDefer = nullptr;
 };
 
 template <typename T, typename Traits, template <typename, typename> class Guard = detail::Guard>
@@ -131,8 +142,15 @@ class MutexProtectedBase {
         return fn(Use());
     }
 
+    template <typename Fn>
+    auto UseWithDefer(Fn&& fn) {
+        Defer defer;
+        return fn(UseWithDefer(defer));
+    }
+
   protected:
     virtual Usage Use() = 0;
+    virtual Usage UseWithDefer(Defer& defer) = 0;
     virtual ConstUsage Use() const = 0;
 
     mutable typename Traits::MutexType mMutex;
@@ -186,9 +204,11 @@ class MutexProtected
     MutexProtected(Args&&... args) : mObj(std::forward<Args>(args)...) {}
 
     using Base::Use;
+    using Base::UseWithDefer;
 
   private:
     Usage Use() override { return Usage(&mObj, this->mMutex); }
+    Usage UseWithDefer(Defer& defer) override { return Usage(&mObj, this->mMutex, &defer); }
     ConstUsage Use() const override { return ConstUsage(&mObj, this->mMutex); }
 
     T mObj;
@@ -225,9 +245,13 @@ class MutexProtectedSupport
     using typename Base::Usage;
 
     using Base::Use;
+    using Base::UseWithDefer;
 
   private:
     Usage Use() override { return Usage(static_cast<T*>(this), this->mMutex); }
+    Usage UseWithDefer(Defer& defer) override {
+        return Usage(static_cast<T*>(this), this->mMutex, &defer);
+    }
     ConstUsage Use() const override {
         return ConstUsage(static_cast<const T*>(this), this->mMutex);
     }
