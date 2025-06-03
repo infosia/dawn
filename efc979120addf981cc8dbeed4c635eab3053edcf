@@ -69,6 +69,24 @@
       "parentUuid": "886a3f02_98c0983e",
       "revId": "efc979120addf981cc8dbeed4c635eab3053edcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0d88986_df2b68dc",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1003851
+      },
+      "writtenOn": "2025-06-03T20:51:42Z",
+      "side": 1,
+      "message": "Looking at code, dawn will try clearing textures for Copy operations, which we shouldn\u0027t hit with Transient Attachment and [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/CommandBufferVk.cpp;drc\u003daaceb0ff7dcbc44c661bae12fba36279b3dee7c4;l\u003d300). It might be problematic the way it\u0027s written? i.e we should either check that there is no RenderAttachment usage (like comment says) or we should be checking for both RenderAttachemnt and Transient?",
+      "parentUuid": "2057122c_014fe847",
+      "revId": "efc979120addf981cc8dbeed4c635eab3053edcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
