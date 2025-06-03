@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "29d5db3c_b49aba3f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T11:47:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow, isn\u0027t `APICreateShaderModule` calling `CreateShadeModule` [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.cpp;drc\u003d65e89ee3bd4c7e6d756760c07d3619d37df3e9c1;l\u003d1418)? Errors are handled in both `APICSM` (with returning an error module with the compilation messages) and `CSM` (by returning an error `ResultOrError`).\n\nBasically what I\u0027m asking is for a dedent and for the internal uses of `CreateShaderModule` to stay the same.",
+      "parentUuid": "c49f8e66_fbdfde6f",
+      "revId": "90716cb67afb04826a1a48eb01d5c1ff162d7b02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "825af7db_6eff7dd4",
         "filename": "src/dawn/native/ShaderModule.cpp",
         "patchSetId": 15
@@ -49,6 +67,24 @@
       "writtenOn": "2025-06-02T09:40:51Z",
       "side": 1,
       "message": "See other CL for suggestion to make all three Parse* function return",
+      "revId": "90716cb67afb04826a1a48eb01d5c1ff162d7b02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bde0ad81_f9140406",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1331,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T11:47:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "825af7db_6eff7dd4",
       "revId": "90716cb67afb04826a1a48eb01d5c1ff162d7b02",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -90,6 +126,30 @@
       "side": 1,
       "message": "I thought `UnsafeUnkeyedValue` is designed for cache key generation (`Unkeyed` indicated that). Maybe we can rename it to e.g. `UnsafeUnserializedValue` and add the default constructing deserialization semantic?",
       "parentUuid": "f09906bc_9ef9da04",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 32
+      },
+      "revId": "90716cb67afb04826a1a48eb01d5c1ff162d7b02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ec66883_a37f12f0",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T11:47:03Z",
+      "side": 1,
+      "message": "Sounds good",
+      "parentUuid": "f4ba9051_9c0237f1",
       "range": {
         "startLine": 119,
         "startChar": 6,
