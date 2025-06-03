@@ -225,10 +225,8 @@ struct BufferBase::MapAsyncEvent final : public EventManager::TrackedEvent {
 
     void Complete(EventCompletionType completionType) override {
         if (const auto* queueAndSerial = GetIfQueueAndSerial()) {
-            if (auto queue = queueAndSerial->queue.Promote()) {
-                TRACE_EVENT_NESTABLE_ASYNC_END0(queue->GetDevice()->GetPlatform(), General,
-                                                "Buffer::APIMapAsync", this);
-            }
+            TRACE_EVENT_ASYNC_END0(queueAndSerial->queue->GetDevice()->GetPlatform(), General,
+                                   "Buffer::APIMapAsync", this);
         }
 
         void* userdata1 = mUserdata1.ExtractAsDangling();

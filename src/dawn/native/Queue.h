@@ -32,7 +32,6 @@
 
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
-#include "dawn/common/WeakRefSupport.h"
 #include "dawn/native/CallbackTaskManager.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ExecutionQueue.h"
@@ -62,9 +61,7 @@ struct TrackTaskCallback : CallbackTask {
     ExecutionSerial mSerial = kMaxExecutionSerial;
 };
 
-class QueueBase : public ApiObjectBase,
-                  public ExecutionQueueBase,
-                  public WeakRefSupport<QueueBase> {
+class QueueBase : public ApiObjectBase, public ExecutionQueueBase {
   public:
     ~QueueBase() override;
 
@@ -95,7 +92,6 @@ class QueueBase : public ApiObjectBase,
                            uint64_t bufferOffset,
                            const void* data,
                            size_t size);
-
     // Ensure a flush occurs if needed, and track this task as complete after the
     // scheduled work is complete.
     void TrackTaskAfterEventualFlush(std::unique_ptr<TrackTaskCallback> task);
