@@ -79,6 +79,8 @@ std::vector<const wchar_t*> GetDXCArguments(std::wstring_view entryPointNameW,
     // TODO(chromium:346595893): Disable buggy DXC pass
     arguments.push_back(L"-opt-disable");
     arguments.push_back(L"structurize-loop-exits-for-unroll");
+    arguments.push_back(L"-opt-disable");
+    arguments.push_back(L"gvn");
 
     uint32_t compileFlags = r.compileFlags;
     if (compileFlags & D3DCOMPILE_ENABLE_BACKWARDS_COMPATIBILITY) {
