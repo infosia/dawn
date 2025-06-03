@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "082aa8bc59155a7e76b32542cb431eee4f60815f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d35da70d_9878711f",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T19:48:48Z",
+      "side": 1,
+      "message": "Nit: I think this comment is no longer accurate. Since we\u0027re always emitting `unreachable`, it shouldn\u0027t matter whether we do it before or after emitting the continuing block.",
+      "range": {
+        "startLine": 1484,
+        "startChar": 0,
+        "endLine": 1485,
+        "endChar": 65
+      },
+      "revId": "082aa8bc59155a7e76b32542cb431eee4f60815f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
