@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "298f4a26_d6822fdc",
+        "filename": "src/tint/lang/core/ir/control_instruction.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bebedee6_1bbcb1da",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d94f137a_d30d4bad",
@@ -118,6 +136,24 @@
       "writtenOn": "2025-06-03T01:24:33Z",
       "side": 1,
       "message": "Nit: More accurate to say that we never _need_ to, since it\u0027s always in scope?",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1853495_7eb6bb99",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df397614_c4a02f01",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -204,6 +240,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0722f24a_fe7c414c",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "341b22e9_973ee3b6",
+      "range": {
+        "startLine": 1585,
+        "startChar": 0,
+        "endLine": 1588,
+        "endChar": 13
+      },
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08416cef_0c147fda",
@@ -251,6 +311,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "438738b9_e4decbd0",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1614,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "364d96b8_4f8e0179",
+      "range": {
+        "startLine": 1608,
+        "startChar": 0,
+        "endLine": 1614,
+        "endChar": 13
+      },
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0c8a2486_68614a20",
@@ -268,6 +352,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8727bdf_9f60e42a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "saw",
+      "parentUuid": "0c8a2486_68614a20",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbd35a8e_c9a5c9fb",
@@ -281,6 +383,24 @@
       "writtenOn": "2025-06-03T01:24:33Z",
       "side": 1,
       "message": "übernit: Unnecessary abbreviation?\n\nAlso I forgot what this count represented by the time I got to the uses of it below, so something like `continuing_param_count` would make this easier to understand.",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "763c3526_c675ea4c",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbd35a8e_c9a5c9fb",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -332,6 +452,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "413615ad_4998efda",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cd6acab_d3352d66",
+      "range": {
+        "startLine": 1675,
+        "startChar": 0,
+        "endLine": 1677,
+        "endChar": 21
+      },
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a05b17a7_7c82f2db",
@@ -363,6 +507,24 @@
       "side": 1,
       "message": "Needs a better name, but, as far as I understand, _only_ in the case of the loop header can we have an `OpPhi` which refers to blocks which come _after_ the phi instruction. In that case when that block jumps back to the header, we need to pass these `value_id`s back to the header as the block params. So, these phis define a `default` set of values to provide to any jump back to the header.",
       "parentUuid": "a05b17a7_7c82f2db",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86878e39_6f0ea41e",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "d1e9dd84_9fd18492",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -402,6 +564,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15ca6ec5_4656eeea",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "56c10eed_086606a8",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "406d9d08_ccec4efa",
@@ -415,6 +595,24 @@
       "writtenOn": "2025-06-03T01:24:33Z",
       "side": 1,
       "message": "Is the `let` necessary? I think we could just `AddValue` here.",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "187f9693_fe0b8941",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "406d9d08_ccec4efa",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -454,6 +652,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "656c84ca_3bb3b240",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1752,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "Removed from `add_blk_inst` but we pass a different value in `add_ctrl_inst` in some instances.",
+      "parentUuid": "f16be3c6_6ca66e8b",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "008707b6_77d675aa",
@@ -485,6 +701,24 @@
       "side": 1,
       "message": "It\u0027s the `phi` value we will use when coming from `blk_id`. So, if `blk_id` is the continuing block, then we\u0027ll use `value_id` when transitioning from `blk_id`. We call it header, because the `loop header` is the only time we have this weird case, in all other cases, the phi blocks would have already been emitted and we can back propagate the values.",
       "parentUuid": "008707b6_77d675aa",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "649fca9a_0d676922",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T20:10:00Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "cfbb6f38_e886fb78",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
