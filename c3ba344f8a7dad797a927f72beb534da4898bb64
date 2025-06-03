@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a53f5b90_b2e33148",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T07:45:52Z",
+      "side": 1,
+      "message": "If we want to check that the values passed for testing are used, then maybe we should arbitrary values not used in tests instead of the first ones to test.",
+      "range": {
+        "startLine": 229,
+        "startChar": 56,
+        "endLine": 229,
+        "endChar": 83
+      },
+      "revId": "c3ba344f8a7dad797a927f72beb534da4898bb64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
