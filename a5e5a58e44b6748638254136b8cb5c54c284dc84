@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "821073f9_9d8cb6ce",
+        "filename": "src/dawn/native/CompilationMessages.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-03T19:12:55Z",
+      "side": 1,
+      "message": "Personally, I think it\u0027s fine to leave as is actually. This makes `OwnedCompilationMessages` clearly immutable which is nice because before it was immutable after you called `GetCompilationInfo()` but mutable before, and we needed a bunch of asserts to make sure that was true.\n\nIMO, I would even consider renaming `OwnedCompilationMessages` to something like `CompilationInfoImpl`, and making it directly extend `CompilationInfo` so that we can just cast it and return it upstream and don\u0027t even need `GetCompilationInfo` anymore.",
+      "parentUuid": "2f48f03b_c05c2156",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "854fbeb5_b784a477",
         "filename": "src/dawn/native/ShaderModule.cpp",
         "patchSetId": 4
