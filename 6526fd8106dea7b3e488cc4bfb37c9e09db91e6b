@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c2c38f2_4f0d78ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-03T06:54:00Z",
+      "side": 1,
+      "message": "Hi Dan,\n\nSorry that the build failure is caused by my CL and the failure can be fixed with https://dawn-review.googlesource.com/c/dawn/+/245075.",
+      "revId": "6526fd8106dea7b3e488cc4bfb37c9e09db91e6b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
