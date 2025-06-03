@@ -1484,11 +1484,7 @@ class Parser {
             // Add the body terminator after processing the continuing block in
             // case we've propagated values through the continue.
             if (!loop->Body()->Terminator()) {
-                if (loop->Continuing()->Params().IsEmpty()) {
-                    loop->Body()->Append(b_.Continue(loop));
-                } else {
-                    loop->Body()->Append(b_.Unreachable());
-                }
+                loop->Body()->Append(b_.Unreachable());
             }
             if (!loop->Continuing()->Terminator()) {
                 loop->Continuing()->Append(b_.NextIteration(loop));
