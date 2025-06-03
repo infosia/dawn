@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43e536fd_bf8473f5",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T21:23:28Z",
+      "side": 1,
+      "message": "Could we push to this list when we hit a load in `ConvertUsagesToTexture` instead?\n\nI realize that would exclude samplers, but I\u0027m also wondering whether we could use the `value_to_fix_usages` loop for samplers too since we want to do the same sort of things for them (inline lets, sink loads, ...).",
+      "revId": "785e91874f429203e30b25c304ccc992730834ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a49dd2f6_416d49c3",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T21:23:28Z",
+      "side": 1,
+      "message": "What if there are multiple usages inside the same block? Wouldn\u0027t we have the same issue that you are describing in the comment below?",
+      "revId": "785e91874f429203e30b25c304ccc992730834ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "517270e8_0935fb83",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T21:23:28Z",
+      "side": 1,
+      "message": "I\u0027d need to look into `ir_to_program` more to remember how `Bind` works but I sort of wonder if we could just fix this there instead. It\u0027d probably be nice if we could inline loads in other situations too, e.g. a load from a read-only uniform buffer used in multiple places might be nicer to inline instead of a hoisting to a let.",
+      "revId": "785e91874f429203e30b25c304ccc992730834ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

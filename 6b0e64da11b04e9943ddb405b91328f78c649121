@@ -211,6 +211,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff919a5c_dbef0d8a",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T21:23:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f7b3c8fd_48de296a",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "708a054c_efab2201",
