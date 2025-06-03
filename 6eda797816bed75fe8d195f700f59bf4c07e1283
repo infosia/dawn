@@ -34,6 +34,24 @@
       "parentUuid": "0cd8ddbd_cd5b3eb7",
       "revId": "6eda797816bed75fe8d195f700f59bf4c07e1283",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b43c9c2_9d70405b",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T10:22:25Z",
+      "side": 1,
+      "message": "Ah makes sense, ok!",
+      "parentUuid": "765ef62f_f15b54d9",
+      "revId": "6eda797816bed75fe8d195f700f59bf4c07e1283",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
