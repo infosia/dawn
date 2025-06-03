@@ -50,6 +50,24 @@
       "message": "Good find!",
       "revId": "2ac6c070de9ea1675911c7720d2a533bdccadcc0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a6ad199_f1e1509a",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-03T06:52:31Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "34803bfa_ae20bf4c",
+      "revId": "2ac6c070de9ea1675911c7720d2a533bdccadcc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
