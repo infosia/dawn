@@ -109,9 +109,6 @@ func (c *cmd) runTestCaseWithCmdline(ctx context.Context, testCase common.TestCa
 	if c.flags.Colors {
 		args = append(args, "--colors")
 	}
-	if c.flags.unrollConstEvalLoops {
-		args = append(args, "--unroll-const-eval-loops")
-	}
 	if c.flags.compatibilityMode {
 		args = append(args, "--compat")
 	}
