@@ -16,6 +16,80 @@
       "message": "Please take a look.",
       "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab2d0d55_773631a8",
+        "filename": "src/dawn/native/vulkan/SharedTextureMemoryVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T10:13:19Z",
+      "side": 1,
+      "message": "nit: we shouldn\u0027t need to check for this because frontend validation will validate that Transient requires one of these two usages, so we can keep Transient at the top level of the loop.",
+      "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ce9fd86_5e88a41a",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T10:13:19Z",
+      "side": 1,
+      "message": "Any reason this block of code had to move?",
+      "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8bfa3fe_b7227aec",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T10:13:19Z",
+      "side": 1,
+      "message": "Likewise, frontend validation should handle that for us and we can move the handling to the top level of the loop.",
+      "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8563af6e_806869a8",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T10:13:19Z",
+      "side": 1,
+      "message": "WDYT?\n\n```suggestion\n    // Zero initialization and various workarounds need to copy to the images. Always add VK_IMAGE_USAGE_TRANSFER_DST_BIT to allow for these use cases, unless the image is a transient attachment and incompatible with transfers.\n    if (!(GetInternalUsage() \u0026 wgpu::TextureUsage::TransientAttachment)) {\n        createInfo.usage |\u003d VK_IMAGE_USAGE_TRANSFER_DST_BIT;\n    }\n```\n\nDitto below",
+      "range": {
+        "startLine": 1372,
+        "startChar": 0,
+        "endLine": 1378,
+        "endChar": 5
+      },
+      "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
