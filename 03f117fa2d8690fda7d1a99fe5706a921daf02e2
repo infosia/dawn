@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bedb7c1_570eb9b7",
+        "filename": "src/dawn/node/binding/EventTarget.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-03T17:43:19Z",
+      "side": 1,
+      "message": "Unfortunately no. I had that originally. I get\n\n```\n/Users/gman/src/chromium/src/third_party/dawn/src/dawn/node/binding/EventTarget.cpp:129:39: error: no matching member function for call to \u0027emplace\u0027\n  129 |                   attributeListeners_.emplace({type, {env, callback}});\n      |                   ~~~~~~~~~~~~~~~~~~~~^~~~~~~\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/unordered_map:1256:46: note: candidate template ignored: substitution failure: deduced incomplete pack \u003c(no value)\u003e for template parameter \u0027_Args\u0027\n 1255 |   template \u003cclass... _Args\u003e\n      |                      ~~~~~\n 1256 |   _LIBCPP_HIDE_FROM_ABI pair\u003citerator, bool\u003e emplace(_Args\u0026\u0026... __args) {\n      |                                              ^\n1 error generated.\n```",
+      "parentUuid": "94c3953c_8bfd9e8e",
+      "range": {
+        "startLine": 121,
+        "startChar": 44,
+        "endLine": 122,
+        "endChar": 79
+      },
+      "revId": "03f117fa2d8690fda7d1a99fe5706a921daf02e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e328e97_3eeb0373",
@@ -75,6 +99,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "30417970_d946d13e",
+        "filename": "src/dawn/node/binding/EventTarget.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-03T17:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e328e97_3eeb0373",
+      "revId": "03f117fa2d8690fda7d1a99fe5706a921daf02e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "127f8182_0a6f1748",
@@ -88,6 +130,24 @@
       "writtenOn": "2025-06-03T10:05:50Z",
       "side": 1,
       "message": "I believe that likewise we can have a live-leak reference loop, can we add a TODO on the same issue?",
+      "revId": "03f117fa2d8690fda7d1a99fe5706a921daf02e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77bf3b2f_d7d3d2e4",
+        "filename": "src/dawn/node/binding/EventTarget.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-03T17:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "127f8182_0a6f1748",
       "revId": "03f117fa2d8690fda7d1a99fe5706a921daf02e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
