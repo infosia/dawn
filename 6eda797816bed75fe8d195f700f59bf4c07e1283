@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cd8ddbd_cd5b3eb7",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T09:56:42Z",
+      "side": 1,
+      "message": "Given that everything fail on this device, shouldn\u0027t we disable the feature on it?",
+      "revId": "6eda797816bed75fe8d195f700f59bf4c07e1283",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

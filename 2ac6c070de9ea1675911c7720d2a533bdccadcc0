@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3312621d_bd0fb2a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T09:56:42Z",
+      "side": 1,
+      "message": "I can\u0027t add your account as committer because your @google.com account is an admin of this Gerrit instance and it is not allowed to have two different committer accounts. You should ask for your accounts to be linked together.",
+      "parentUuid": "d1d84ce9_868804db",
+      "revId": "2ac6c070de9ea1675911c7720d2a533bdccadcc0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "34803bfa_ae20bf4c",
