@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79b9bca5_bb81f639",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-03T00:26:25Z",
+      "side": 1,
+      "message": "A small addation",
+      "revId": "ad4887d8cd0887be0fa64b5d4b98a79758d6c5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
