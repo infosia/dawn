@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5554468_a76428b0",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T03:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5eb37e5_0cae561d",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f3e3d6c_8415a23b",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-05-22T14:00:32Z",
       "side": 1,
       "message": "Similarly, I\u0027m not sure that you can ever hit the same instruction twice in this transform (it\u0027s a simpler situation than with atomics), so I\u0027m not sure you need this `converted_` map.\n\nMaybe I\u0027m missing a scenario though?",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bff9e6e_f356face",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T03:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f3e3d6c_8415a23b",
       "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0ba543c_46b05d30",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T03:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b98965c6_535fe3fc",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bde5a80_1496a42d",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-05-22T14:00:32Z",
       "side": 1,
       "message": "As above, maybe not needed?",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09643e24_c5b01808",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T03:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bde5a80_1496a42d",
       "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -123,6 +195,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f7b3c8fd_48de296a",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T03:43:11Z",
+      "side": 1,
+      "message": "Actually, I can\u0027t make this test easily because I don\u0027t support depth texture conversion yet.\n\nCan I file a bug for this and verify after we have depth texture conversions?",
+      "parentUuid": "a4b2de6d_a3317b22",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "708a054c_efab2201",
         "filename": "src/tint/lang/spirv/reader/texture_test.cc",
         "patchSetId": 4
@@ -134,6 +224,30 @@
       "writtenOn": "2025-05-22T14:00:32Z",
       "side": 1,
       "message": "I think the point of the test was to ensure that this sort of thing *doesn\u0027t* happen.\n\nWGSL doesn\u0027t support creating pointers to handle types, so we wouldn\u0027t be able to convert these `let` instructions to WGSL.\n\nSo we should probably just have the handling of `let` remove the instruction completely.",
+      "range": {
+        "startLine": 3355,
+        "startChar": 0,
+        "endLine": 3356,
+        "endChar": 42
+      },
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19c87e4e_411cdd2c",
+        "filename": "src/tint/lang/spirv/reader/texture_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3356,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T03:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "708a054c_efab2201",
       "range": {
         "startLine": 3355,
         "startChar": 0,
@@ -175,6 +289,24 @@
       "side": 1,
       "message": "Looks like the original bug was it turned into a `var` without an initializer? I\u0027ll  see what we spit out in WGSL to see if this IR is workable.",
       "parentUuid": "4d3b5cbf_c841a4c7",
+      "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22e28b8a_3a1dad28",
+        "filename": "src/tint/lang/spirv/reader/texture_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3442,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T03:43:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbb1e96f_c803ecd5",
       "revId": "6b0e64da11b04e9943ddb405b91328f78c649121",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
