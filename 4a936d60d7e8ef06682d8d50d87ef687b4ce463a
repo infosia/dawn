@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4031415b_b2527e12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-03T06:25:13Z",
+      "side": 1,
+      "message": "Please take a look, thanks!",
+      "revId": "4a936d60d7e8ef06682d8d50d87ef687b4ce463a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eeb5d060_8772962e",
@@ -14,6 +31,40 @@
       "writtenOn": "2025-06-02T09:40:41Z",
       "side": 1,
       "message": "This looks a LOT better!",
+      "revId": "4a936d60d7e8ef06682d8d50d87ef687b4ce463a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dadef69_35f95c88",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 2180,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-03T06:25:13Z",
+      "side": 1,
+      "message": "`DAWN_TRY_LOAD_OR_RUN` requires the returned type `CacheResult\u003cT\u003e` have a non-void `T`, otherwise I would just use `MaybeError` which is `ResultOrError\u003cvoid\u003e`.",
+      "revId": "4a936d60d7e8ef06682d8d50d87ef687b4ce463a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b054108f_d7259fae",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-03T06:25:13Z",
+      "side": 1,
+      "message": "If we want to also dump the shader in cache hit case, we can handle that here. However since we don\u0027t call Tint in a cache hit, we could only dump the WGSL source.",
       "revId": "4a936d60d7e8ef06682d8d50d87ef687b4ce463a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
