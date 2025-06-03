@@ -33,6 +33,24 @@
       "message": "Weren\u0027t there tests that you added skips in because of the lack of MapAtCreationImpl?\n\n```\nsrc/dawn/tests/end2end/DeviceLifetimeTests.cpp:    // TODO(crbug.com/413053623): implement webgpu::Buffer::MapAtCreationImpl\nsrc/dawn/tests/end2end/DeviceLostTests.cpp:    // TODO(crbug.com/413053623): implement webgpu::Buffer::MapAtCreationImpl\nsrc/dawn/tests/end2end/DeviceLostTests.cpp:    // TODO(crbug.com/413053623): implement webgpu::Buffer::MapAtCreationImpl\nsrc/dawn/tests/end2end/DeviceLostTests.cpp:    // TODO(crbug.com/413053623): implement webgpu::Buffer::MapAtCreationImpl\n```",
       "revId": "ad4887d8cd0887be0fa64b5d4b98a79758d6c5c0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4c639b4_ff459ed7",
+        "filename": "src/dawn/tests/end2end/BufferTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1071,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-03T17:25:28Z",
+      "side": 1,
+      "message": "Done (My bad forgot to remove those skips)",
+      "parentUuid": "038bfbe3_4e110363",
+      "revId": "ad4887d8cd0887be0fa64b5d4b98a79758d6c5c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
