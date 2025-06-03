@@ -90,6 +90,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b316735d_232b8230",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-03T20:10:29Z",
+      "side": 1,
+      "message": "typo, should be \"to\".\n\nIf I understand correctly, in the Tint IR, the terminator\u0027s idx\u0027th operand is the value being supplied to the Phi from the basic block that the terminator is in.\nIf that\u0027s wrong, then I\u0027ll need a better comment.",
+      "range": {
+        "startLine": 73,
+        "startChar": 46,
+        "endLine": 73,
+        "endChar": 57
+      },
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "920f63e4_e0c98b9f",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-03T20:10:29Z",
+      "side": 1,
+      "message": "This is the operand index of the terminator instruction?  That\u0027s the only thing that makes sense to me.",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d94f137a_d30d4bad",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 13
@@ -119,6 +159,24 @@
       "side": 1,
       "message": "@dneto ?\n\nI didn\u0027t think it would be valid, but then I realize I was reading the `OpPhi` definition and transposing it onto this case, which isn\u0027t valid.\n\nIf this is valid, I guess we\u0027d have to do something like:\n\n```\n%1:i32 \u003d loop {\n  %foo:i32 ...\n  if %cond {\n    exit_loop %foo\n  } else {\n    exit_loop %foo\n  }\n}\n```",
       "parentUuid": "d94f137a_d30d4bad",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f6685e3_29b6bd44",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-03T20:10:29Z",
+      "side": 1,
+      "message": "James\u0027s example is valid.  The %foo definition dominates the uses outside the loop\n\n```\n%entry \u003d OpLabel\nOpBranch %10 \n\n%10 \u003d OpLabel\nOpMergeLoop %cont %merge\nOpBranch %20\n\n%20 \u003d OpLabel\n%foo \u003d ...\nOpBranchConditional %cond %30 %40\n\n%30 \u003d OpLabel\nOpBranch %merge\n\n%40 \u003d OpLabel\nOpBranch %merge\n\n%cont \u003d OpLabel\nOpBranch %10\n\n%merge \u003d OpLabel\n%foo2 \u003d OpCopyObject %footy %foo\n```",
+      "parentUuid": "52d21384_5c100022",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
