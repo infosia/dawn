@@ -175,6 +175,30 @@
       },
       "revId": "26edc4047f10a3d8804417dbad748f5a096e614f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71a0ae0e_6f7c3bd7",
+        "filename": "src/dawn/native/CommandAllocator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-03T01:24:07Z",
+      "side": 1,
+      "message": "Wow thanks Kai!",
+      "parentUuid": "a759a284_364763f6",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 214,
+        "endChar": 5
+      },
+      "revId": "26edc4047f10a3d8804417dbad748f5a096e614f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
