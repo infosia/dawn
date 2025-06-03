@@ -16,6 +16,80 @@
       "message": "ptal when you have a chance.",
       "revId": "03f117fa2d8690fda7d1a99fe5706a921daf02e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a08406b_f0e59325",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T10:05:50Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "03f117fa2d8690fda7d1a99fe5706a921daf02e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94c3953c_8bfd9e8e",
+        "filename": "src/dawn/node/binding/EventTarget.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T10:05:50Z",
+      "side": 1,
+      "message": "Doesn\u0027t this work?\n\n```suggestion\n                attributeListeners_.emplace({type, {env, callback}});\n```",
+      "range": {
+        "startLine": 121,
+        "startChar": 44,
+        "endLine": 122,
+        "endChar": 79
+      },
+      "revId": "03f117fa2d8690fda7d1a99fe5706a921daf02e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e328e97_3eeb0373",
+        "filename": "src/dawn/node/binding/EventTarget.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T10:05:50Z",
+      "side": 1,
+      "message": "optional-nit: Implementation can be in the .c;;",
+      "revId": "03f117fa2d8690fda7d1a99fe5706a921daf02e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "127f8182_0a6f1748",
+        "filename": "src/dawn/node/binding/EventTarget.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-03T10:05:50Z",
+      "side": 1,
+      "message": "I believe that likewise we can have a live-leak reference loop, can we add a TODO on the same issue?",
+      "revId": "03f117fa2d8690fda7d1a99fe5706a921daf02e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
