@@ -89,6 +89,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "706fac71_714c84c2",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1309,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-03T06:25:51Z",
+      "side": 1,
+      "message": "The main issue of using `ResultOrError\u003cShaderModuleParseResult\u003e` here and will see in the [latest step to use `DAWN_TRY_LOAD_OR_RUN`](https://dawn-review.googlesource.com/c/dawn/+/242854) is that we need the returned information (mainly compilation messages, in order to create a proper error shader module) even in a error case, but with `ResultOrError` we will get nothing but just error message string.\n\nWith current `ResultOrError` implementation, I think we have to use pointer to output the result for this use case. Or, maybe we can make `ResultOrError` into `ResultOrError\u003cSuccessResult, ErrorResult\u003e` that can also return a `ErrorResult` object together with error string in case of error and make current `ResultOrError\u003cT\u003e` become something like `ResultOrError\u003cT, void\u003e`.",
+      "parentUuid": "f32ab49c_6e8aba1d",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fbd9f9ef_173bc503",
         "filename": "src/dawn/native/ShaderModule.h",
         "patchSetId": 4
@@ -106,6 +124,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a0e89905_d54d30fd",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-03T06:25:51Z",
+      "side": 1,
+      "message": "Yes, I do that in https://dawn-review.googlesource.com/c/dawn/+/244115",
+      "parentUuid": "fbd9f9ef_173bc503",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e41f1a15_1b1a9e1b",
         "filename": "src/dawn/native/ShaderModule.h",
         "patchSetId": 4
@@ -117,6 +153,24 @@
       "writtenOn": "2025-06-02T09:21:07Z",
       "side": 1,
       "message": "In a follow-up, can we make this constructor take a `ParseCompilationMessages` and `InitializeBase` use `ShaderModuleParseResult`? IMHO the shader module is the one that should copy the parse result into an OwnedCompilationMessages.",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9cdfc20_0b6552d5",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-03T06:25:51Z",
+      "side": 1,
+      "message": "Done that in https://dawn-review.googlesource.com/c/dawn/+/244115 because that would change many files.",
+      "parentUuid": "e41f1a15_1b1a9e1b",
       "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
