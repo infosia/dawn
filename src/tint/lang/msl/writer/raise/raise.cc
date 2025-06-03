@@ -160,7 +160,7 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(raise::BinaryPolyfill, module);
     RUN_TRANSFORM(raise::BuiltinPolyfill, module);
 
-    if (options.enable_module_constant) {
+    if (options.enable_module_constant && (false)) {
         RUN_TRANSFORM(raise::ModuleConstant, module);
     }
 

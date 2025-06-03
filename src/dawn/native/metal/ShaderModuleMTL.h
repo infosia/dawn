@@ -63,6 +63,7 @@ class ShaderModule final : public ShaderModuleBase {
         bool needsStorageBufferLength;
         std::vector<uint32_t> workgroupAllocations;
         MTLSize localWorkgroupSize;
+        std::string saved_msl;
     };
 
     MaybeError CreateFunction(SingleShaderStage stage,
