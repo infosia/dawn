@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "621a5349_93577a23",
+        "filename": "src/dawn/native/ImmediateConstantsLayout.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-06-03T06:31:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b62cd650_43b0498a",
+      "range": {
+        "startLine": 31,
+        "startChar": 9,
+        "endLine": 31,
+        "endChar": 41
+      },
+      "revId": "8c248ffe4333e2cf1d9a53752714906ba8f870c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b984a89e_bcba15fa",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-06-02T09:01:26Z",
       "side": 1,
       "message": "The pipeline and bindgroup can be moved out.",
+      "range": {
+        "startLine": 243,
+        "startChar": 1,
+        "endLine": 246,
+        "endChar": 0
+      },
+      "revId": "8c248ffe4333e2cf1d9a53752714906ba8f870c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcbd3f0c_e6e3d1ab",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-06-03T06:31:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b984a89e_bcba15fa",
       "range": {
         "startLine": 243,
         "startChar": 1,
@@ -64,6 +112,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08551bbe_a2b0b261",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-06-03T06:31:02Z",
+      "side": 1,
+      "message": "I think the logic here wants to ensure the value is indeed \"written in\" instead of some \"initial value\".\n\nAnyway, move this out of loop and kept it.",
+      "parentUuid": "333f4a61_7cfeab4e",
+      "revId": "8c248ffe4333e2cf1d9a53752714906ba8f870c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e0014e0_ac3c77e9",
@@ -81,6 +147,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "22b10e71_a81fc9d9",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-06-03T06:31:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e0014e0_ac3c77e9",
+      "revId": "8c248ffe4333e2cf1d9a53752714906ba8f870c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ca23f28_4d215cfe",
@@ -94,6 +178,24 @@
       "writtenOn": "2025-06-02T09:01:26Z",
       "side": 1,
       "message": "commented out code?",
+      "revId": "8c248ffe4333e2cf1d9a53752714906ba8f870c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f49a4a0_8361fa0d",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-06-03T06:31:02Z",
+      "side": 1,
+      "message": "The legacy from debugging time...Thanks!",
+      "parentUuid": "7ca23f28_4d215cfe",
       "revId": "8c248ffe4333e2cf1d9a53752714906ba8f870c5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
