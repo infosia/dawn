@@ -16,6 +16,40 @@
       "message": "PTAL!",
       "revId": "3582d361a7dc55f14489d48aae00b825ef382b04",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "002bb517_7a376bd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-06-03T18:12:57Z",
+      "side": 1,
+      "message": "Overall looks decent other than my one comment on the .proto change.",
+      "revId": "3582d361a7dc55f14489d48aae00b825ef382b04",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dc70e18_03d72f3f",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-06-03T18:12:57Z",
+      "side": 1,
+      "message": "Please add this new value to the end, i.e \u003d 20, instead of renumbering them. It is generally recommended to not change field numbers in protos, since it will cause issues with existing encoded protos (i.e. IR fuzzer test cases) having different semantics between different versions of the .proto, and thus potentially break things.",
+      "revId": "3582d361a7dc55f14489d48aae00b825ef382b04",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
