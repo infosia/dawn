@@ -51,6 +51,24 @@
       "parentUuid": "2f5dcf83_8b591c5d",
       "revId": "efc979120addf981cc8dbeed4c635eab3053edcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2057122c_014fe847",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-06-03T20:44:18Z",
+      "side": 1,
+      "message": "I\u0027m less worried since it looks like WebGPU doesn\u0027t have access to TransientAttachment usage which limits this to Skia at least. I don\u0027t really understand all the paths that lead to clearing textures early though so I have no idea if it\u0027s possible to [hit one of these branches](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/TextureVk.cpp;l\u003d1131-1228;drc\u003daaceb0ff7dcbc44c661bae12fba36279b3dee7c4) which AFAIK won\u0027t work.",
+      "parentUuid": "886a3f02_98c0983e",
+      "revId": "efc979120addf981cc8dbeed4c635eab3053edcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
