@@ -203,6 +203,24 @@
       "parentUuid": "379e7c71_bb566f7d",
       "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12f68733_3240ca33",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1003851
+      },
+      "writtenOn": "2025-06-03T16:51:33Z",
+      "side": 1,
+      "message": "Right,\n\n`VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT` can be set on any image really that can be an attachment. It **must** be present to vkBindMemory if memory has `VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT`\n\nWhen we vkAllocateMemory that defines import operation, then memoryTypeIndex (that defines memory properties) comes from the buffer (e.g via vkGetAndroidHardwareBufferPropertiesANDROID) and I doubt that ever will return lazily allocated. For External memory though [spec says](https://registry.khronos.org/vulkan/specs/latest/man/html/VkMemoryAllocateInfo.html#VUID-VkMemoryAllocateInfo-allocationSize-01742):\n\u003e If the parameters define an import operation, the external handle specified was created by the Vulkan API, and the external handle type is VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT, then the values of allocationSize and memoryTypeIndex must match those specified when the payload being imported was created. \n\nSo in theory it might be possible to create lazily allocated memory and share it across devices, though the value of it is not really clear, because either it will be committed or it\u0027s used only with-in render pass, so is not technically shared.",
+      "parentUuid": "379e7c71_bb566f7d",
+      "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
