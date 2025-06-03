@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "3b4a90d40cfe433e57a0ea247bb85a6c3f230f50",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98043825_73cf8139",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-03T13:13:16Z",
+      "side": 1,
+      "message": "The original change got reverted, so I think this can just be applied to the reland of that change?",
+      "revId": "3b4a90d40cfe433e57a0ea247bb85a6c3f230f50",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
