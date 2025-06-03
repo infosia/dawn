@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "198cb41b_322718b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-03T20:08:41Z",
+      "side": 1,
+      "message": "also nit: word wrap the commit message",
+      "revId": "1d28f677a8b3b292fb16d9e9e2a56d4bba1cb1bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c3ea9c91_e9e670e6",
