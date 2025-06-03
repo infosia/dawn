@@ -16,6 +16,24 @@
       "message": "Given that everything fail on this device, shouldn\u0027t we disable the feature on it?",
       "revId": "6eda797816bed75fe8d195f700f59bf4c07e1283",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "765ef62f_f15b54d9",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-03T10:21:13Z",
+      "side": 1,
+      "message": "I wonder if the CTS tests should be updated to reflect the fact that source.texture.format must not be a compressed format in copyTextureToBuffer(). See https://github.com/gpuweb/gpuweb/pull/5211\n\nhttps://github.com/gpuweb/cts/blob/566aba1bde80492c08b07193bc37c124e450b2c2/src/webgpu/api/operation/command_buffer/image_copy.spec.ts#L415 suggests it\u0027s not.\n\n@cwallez@chromium.org Are you okay with me landing this CL in the meantime?",
+      "parentUuid": "0cd8ddbd_cd5b3eb7",
+      "revId": "6eda797816bed75fe8d195f700f59bf4c07e1283",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
