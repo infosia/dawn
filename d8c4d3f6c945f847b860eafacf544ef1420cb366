@@ -16,6 +16,24 @@
       "message": "Heh... what are the odds you just make it use `ComboLimits` now? I suspect it\u0027s a lot more changes... so if not that\u0027s fine.",
       "revId": "d8c4d3f6c945f847b860eafacf544ef1420cb366",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "415f58c0_eda549aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-03T19:14:02Z",
+      "side": 1,
+      "message": "I don\u0027t think dawn::utils is available in Blink. Would need to move it to webgpu_cpp.h but I don\u0027t want to do that yet.",
+      "parentUuid": "21a327f9_e1ea7fd0",
+      "revId": "d8c4d3f6c945f847b860eafacf544ef1420cb366",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
