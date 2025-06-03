@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cfd9287_be1ce51e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-03T01:34:10Z",
+      "side": 1,
+      "message": "LGTM but will let Antonio review the Windows-specific details.",
+      "revId": "d123c3ac424db0f917e546d8cf64f5668bd2c4b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
