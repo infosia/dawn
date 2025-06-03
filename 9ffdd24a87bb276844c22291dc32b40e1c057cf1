@@ -221,6 +221,24 @@
       "parentUuid": "379e7c71_bb566f7d",
       "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4d38e647_4ae59fe6",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1785,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-06-03T17:37:34Z",
+      "side": 1,
+      "message": "I see. I guess ExternalVkImageTexture/SharedTextureMemory should handle it then.",
+      "parentUuid": "12f68733_3240ca33",
+      "revId": "9ffdd24a87bb276844c22291dc32b40e1c057cf1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

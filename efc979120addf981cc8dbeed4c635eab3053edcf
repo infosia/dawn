@@ -16,6 +16,23 @@
       "message": "Addressed feedback, PTAL.",
       "revId": "efc979120addf981cc8dbeed4c635eab3053edcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f5dcf83_8b591c5d",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-06-03T17:37:34Z",
+      "side": 1,
+      "message": "Do we need to [not lazily clear](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/TextureVk.cpp;l\u003d1245;drc\u003daaceb0ff7dcbc44c661bae12fba36279b3dee7c4) textures if they have transient attachment usage? Or at least make sure it\u0027s clearable without a copy by rendering to it?",
+      "revId": "efc979120addf981cc8dbeed4c635eab3053edcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
