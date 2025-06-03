@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1cd92cb_59682c7d",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-03T20:57:19Z",
+      "side": 1,
+      "message": "Suggest a comment:\n\n// Maintain the invariant that \u0027src\u0027 is in scope in \u0027blk\u0027, and walk\n// outward from \u0027blk\u0027 until reaching a block that is current, i.e. still being\n// emitted. At each step, add \u0027src\u0027 to the list of results of \u0027blk\u0027, and then\n// update \u0027src\u0027 to point to that.",
+      "revId": "ff40604815cb8d033728b41806e9da392d076e32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "432dd676_914da9e8",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-03T20:57:19Z",
+      "side": 1,
+      "message": "note to self: the reason this switch is exhaustive is because a MultiInBlock is only ever a loop body or loop continue. The only way to get out of the *loop* is an exit-loop or a break-if.",
+      "revId": "ff40604815cb8d033728b41806e9da392d076e32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df4a7547_8ed9f23d",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-03T20:57:19Z",
+      "side": 1,
+      "message": "There might be other continues?",
+      "revId": "ff40604815cb8d033728b41806e9da392d076e32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2ac667c_13863849",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3271,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-03T20:57:19Z",
+      "side": 1,
+      "message": "The id_stack_ variable needs a comment.",
+      "fixSuggestions": [
+        {
+          "fixId": "36167d50_7da7939e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 3271,
+                "startChar": 0,
+                "endLine": 3271,
+                "endChar": 0
+              },
+              "replacement": "    // A stack of sets of SPIR-V result IDs. Each entry in the stack represents a\n    // scope, and the set contains all the result IDs that have been defined in\n    // that scope.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "ff40604815cb8d033728b41806e9da392d076e32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

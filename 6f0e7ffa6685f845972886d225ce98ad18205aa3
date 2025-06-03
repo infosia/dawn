@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "038c8f88_08731178",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-03T20:57:19Z",
+      "side": 0,
+      "message": "note to myself:  The other case that it can be is a function parameter.",
+      "revId": "6f0e7ffa6685f845972886d225ce98ad18205aa3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
