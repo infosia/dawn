@@ -22,6 +22,30 @@
       },
       "revId": "c3ba344f8a7dad797a927f72beb534da4898bb64",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdd621cb_686558a7",
+        "filename": "src/dawn/tests/end2end/FirstIndexOffsetTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-06-04T05:21:51Z",
+      "side": 1,
+      "message": "Agree. Using initialization data to replace this draw.",
+      "parentUuid": "a53f5b90_b2e33148",
+      "range": {
+        "startLine": 229,
+        "startChar": 56,
+        "endLine": 229,
+        "endChar": 83
+      },
+      "revId": "c3ba344f8a7dad797a927f72beb534da4898bb64",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
