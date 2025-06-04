@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93cffe94_04c881f7",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-04T08:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24d31b4c_e92a41e0",
+      "range": {
+        "startLine": 67,
+        "startChar": 65,
+        "endLine": 67,
+        "endChar": 67
+      },
+      "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8044ff07_585d78f9",
@@ -70,6 +94,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b54fb65_dca74e3f",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-04T08:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "896c4261_9c6eaad4",
+      "range": {
+        "startLine": 68,
+        "startChar": 65,
+        "endLine": 68,
+        "endChar": 73
+      },
+      "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2a47402_d5ee7ed0",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-04T08:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8044ff07_585d78f9",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 12
+      },
+      "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "884e809e_f6405306",
@@ -83,6 +155,24 @@
       "writtenOn": "2025-06-02T09:24:02Z",
       "side": 1,
       "message": "Maybe add context:\n\nThis is useful to let the cache-miss function return data that it has computed so that it doesn\u0027t need to be recomputed after the cache lookup.",
+      "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94aa0e91_046c4061",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-04T08:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "884e809e_f6405306",
       "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -118,6 +208,24 @@
       "side": 1,
       "message": "Maybe it would also make more sense to put this in the child CL since this isn\u0027t used anywhere in this change? I\u0027m fine to leave it here though if we add relevant tests for it here though.",
       "parentUuid": "abfc8bc3_8af579ff",
+      "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc48cb31_775cf4c2",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-04T08:54:44Z",
+      "side": 1,
+      "message": "In the latest patchset I renamed it to `UnsafeUnserializedValue`, replace the `CacheKey::UnsafeUnkeyedValue` by it and add tests for it,",
+      "parentUuid": "fad942a0_acc5c812",
       "revId": "c7e17a1605f7e05bf18284212f0136204db71278",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
