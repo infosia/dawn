@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14cad4c9_38348120",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-04T14:53:31Z",
+      "side": 1,
+      "message": "Now that the transient attachments bits are set properly, sending this out for review again addressing comments. PTAL.",
+      "revId": "7eedef4bb08c9b0a5230c7065de2dc0a794f245c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

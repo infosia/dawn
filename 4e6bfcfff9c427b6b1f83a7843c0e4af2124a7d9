@@ -92,6 +92,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ffecc85_1ffe242f",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-04T14:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27577ab3_977fec88",
+      "revId": "4e6bfcfff9c427b6b1f83a7843c0e4af2124a7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "784289b1_caf49e8c",
@@ -115,6 +133,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "66c7fcd9_9cc83520",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-04T14:53:31Z",
+      "side": 1,
+      "message": "Sounds good, done.",
+      "parentUuid": "784289b1_caf49e8c",
+      "range": {
+        "startLine": 196,
+        "startChar": 13,
+        "endLine": 196,
+        "endChar": 32
+      },
+      "revId": "4e6bfcfff9c427b6b1f83a7843c0e4af2124a7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "81f0ea01_423f65e2",
@@ -128,6 +170,30 @@
       "writtenOn": "2025-05-27T21:20:43Z",
       "side": 1,
       "message": "Rather than having 4x map and 4x size we could combine map+size into a wrapper class with Increment(size), Decrement(size, serial) and Tick(serial). That would remove a bunch of duplicated code.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 42
+      },
+      "revId": "4e6bfcfff9c427b6b1f83a7843c0e4af2124a7d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34140d43_8d1f55ef",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-04T14:53:31Z",
+      "side": 1,
+      "message": "Sounds good, updated to have a wrapper class with these methods and updated related code/getters.",
+      "parentUuid": "81f0ea01_423f65e2",
       "range": {
         "startLine": 106,
         "startChar": 0,
