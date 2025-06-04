@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb27ba94_ccbe48ea",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T17:25:15Z",
+      "side": 1,
+      "message": "Actually, we can move this up to the initial `for` when we convert the usage types.",
+      "parentUuid": "43e536fd_bf8473f5",
+      "revId": "785e91874f429203e30b25c304ccc992730834ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a49dd2f6_416d49c3",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "56c5d224_9f44f57a",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T17:25:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a49dd2f6_416d49c3",
+      "revId": "785e91874f429203e30b25c304ccc992730834ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "517270e8_0935fb83",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-06-03T21:23:28Z",
       "side": 1,
       "message": "I\u0027d need to look into `ir_to_program` more to remember how `Bind` works but I sort of wonder if we could just fix this there instead. It\u0027d probably be nice if we could inline loads in other situations too, e.g. a load from a read-only uniform buffer used in multiple places might be nicer to inline instead of a hoisting to a let.",
+      "revId": "785e91874f429203e30b25c304ccc992730834ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e0eb0b8_8775bd33",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T17:25:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "517270e8_0935fb83",
       "revId": "785e91874f429203e30b25c304ccc992730834ab",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
