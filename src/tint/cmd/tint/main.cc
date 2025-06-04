@@ -168,6 +168,7 @@ struct Options {
 
 #if TINT_BUILD_SPV_WRITER
     bool use_storage_input_output_16 = true;
+    bool use_spirv_1p4 = false;
 #endif  // TINT_BULD_SPV_WRITER
 
 #if TINT_BUILD_MSL_WRITER
@@ -410,6 +411,9 @@ violations that may be produced)",
         options.Add<BoolOption>("use-storage-input-output-16",
                                 "Use the StorageInputOutput16 SPIR-V capability", Default{true});
     TINT_DEFER(opts->use_storage_input_output_16 = *use_storage_input_output_16.value);
+    auto& use_spirv_1p4 =
+        options.Add<BoolOption>("use-spirv-1p4", "Generate a SPIR-V 1.4 binary", Default{false});
+    TINT_DEFER(opts->use_spirv_1p4 = *use_spirv_1p4.value);
 #endif  // TINT_BUILD_SPV_WRITER
 
 #if TINT_BUILD_GLSL_WRITER
@@ -890,6 +894,9 @@ bool GenerateSpirv([[maybe_unused]] Options& options,
     gen_options.disable_robustness = !options.enable_robustness;
     gen_options.disable_workgroup_init = options.disable_workgroup_init;
     gen_options.use_storage_input_output_16 = options.use_storage_input_output_16;
+    if (options.use_spirv_1p4) {
+        gen_options.spirv_version = 0x10400u;
+    }
 
     auto entry_point = inspector.GetEntryPoint(options.ep_name);
 

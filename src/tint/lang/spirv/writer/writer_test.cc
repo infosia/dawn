@@ -154,6 +154,66 @@ TEST_F(SpirvWriterTest, EntryPointName_NotRemapped) {
     EXPECT_INST("OpEntryPoint GLCompute %main \"main\"");
 }
 
+TEST_F(SpirvWriterTest, EntryPoint_FunctionVar_Spirv1p3) {
+    auto* func = b.ComputeFunction("main");
+    b.Append(func->Block(), [&] {  //
+        b.Var("x", 0_u);
+        b.Return(func);
+    });
+
+    Options options;
+    options.remapped_entry_point_name = "";
+    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    EXPECT_INST("OpEntryPoint GLCompute %main \"main\"\n");
+}
+
+TEST_F(SpirvWriterTest, EntryPoint_FunctionVar_Spirv1p4) {
+    auto* func = b.ComputeFunction("main");
+    b.Append(func->Block(), [&] {  //
+        b.Var("x", 0_u);
+        b.Return(func);
+    });
+
+    Options options;
+    options.remapped_entry_point_name = "";
+    options.spirv_version = 0x10400u;
+    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    EXPECT_INST("OpEntryPoint GLCompute %main \"main\"\n");
+}
+
+TEST_F(SpirvWriterTest, EntryPoint_StorageVar_Spirv1p3) {
+    auto* v = b.Var("v", core::AddressSpace::kStorage, ty.u32(), core::Access::kReadWrite);
+    mod.root_block->Append(v);
+    v->SetBindingPoint(0, 0);
+    auto* func = b.ComputeFunction("main");
+    b.Append(func->Block(), [&] {  //
+        b.Load(v);
+        b.Return(func);
+    });
+
+    Options options;
+    options.remapped_entry_point_name = "";
+    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    EXPECT_INST("OpEntryPoint GLCompute %main \"main\"\n");
+}
+
+TEST_F(SpirvWriterTest, EntryPoint_StorageVar_Spirv1p4) {
+    auto* v = b.Var("v", core::AddressSpace::kStorage, ty.u32(), core::Access::kReadWrite);
+    mod.root_block->Append(v);
+    v->SetBindingPoint(0, 0);
+    auto* func = b.ComputeFunction("main");
+    b.Append(func->Block(), [&] {  //
+        b.Load(v);
+        b.Return(func);
+    });
+
+    Options options;
+    options.remapped_entry_point_name = "";
+    options.spirv_version = 0x10400u;
+    ASSERT_TRUE(Generate(options)) << Error() << output_;
+    EXPECT_INST("OpEntryPoint GLCompute %main \"main\" %1");
+}
+
 TEST_F(SpirvWriterTest, StripAllNames) {
     auto* str =
         ty.Struct(mod.symbols.New("MyStruct"), {

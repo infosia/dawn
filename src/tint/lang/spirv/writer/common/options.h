@@ -210,6 +210,14 @@ struct Options {
     /// Offsets of the minDepth and maxDepth push constants.
     std::optional<RangeOffsets> depth_range_offsets = std::nullopt;
 
+    /// SPIR-V binary version.
+    uint32_t spirv_version = 0x00010300;
+
+    /// Returns true if the binary version is less than major.minor.
+    bool SpirvVersionLess(uint32_t major, uint32_t minor) const {
+        return spirv_version < (((major & 0xffff) << 16) | ((minor & 0xffff) << 8));
+    }
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
     TINT_REFLECT(Options,
                  remapped_entry_point_name,
@@ -232,7 +240,8 @@ struct Options {
                  use_vulkan_memory_model,
                  scalarize_clamp_builtin,
                  dva_transform_handle,
-                 depth_range_offsets);
+                 depth_range_offsets,
+                 spirv_version);
 };
 
 }  // namespace tint::spirv::writer

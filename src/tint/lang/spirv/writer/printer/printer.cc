@@ -219,7 +219,7 @@ class Printer {
 
         // Serialize the module into binary SPIR-V.
         BinaryWriter writer;
-        writer.WriteHeader(module_.IdBound(), kWriterVersion);
+        writer.WriteHeader(module_.IdBound(), kWriterVersion, options_.spirv_version);
         writer.WriteModule(module_);
 
         output_.spirv = std::move(writer.Result());
@@ -862,7 +862,8 @@ class Printer {
             }
 
             auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
-            if (!(ptr->AddressSpace() == core::AddressSpace::kIn ||
+            if (options_.SpirvVersionLess(1, 4) &&
+                !(ptr->AddressSpace() == core::AddressSpace::kIn ||
                   ptr->AddressSpace() == core::AddressSpace::kOut)) {
                 continue;
             }
