@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89003cf4_bca44016",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-04T13:33:30Z",
+      "side": 1,
+      "message": "FYI I\u0027ve filed https://issues.chromium.org/issues/422398034",
+      "revId": "4a0a7099371b773d23677fb0b327452ee5c412f9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
