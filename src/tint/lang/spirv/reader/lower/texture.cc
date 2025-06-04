@@ -30,8 +30,10 @@
 #include <optional>
 #include <tuple>
 #include <utility>
+#include <vector>
 
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/clone_context.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
@@ -68,6 +70,24 @@ struct State {
     /// Map of all OpSampledImages seen
     Hashmap<core::ir::Value*, core::ir::Instruction*, 4> sampled_images_{};
 
+    /// Any `ir::UserCall` instructions which have texture params which need to be updated.
+    Hashset<core::ir::UserCall*, 2> user_calls_to_convert_{};
+
+    /// The `ir::Values`s which have had their types changed, they then need to have their
+    /// usages updated to match. This maps to the root FunctionParam or Var for each texture.
+    Vector<core::ir::Value*, 8> values_to_fix_usages_{};
+
+    Vector<core::ir::Let*, 8> lets_to_inline_{};
+
+    /// Function to texture replacements, this is done by hashcode since the
+    /// function pointer is combined with the parameters which are converted to
+    /// textures.
+    Hashmap<size_t, core::ir::Function*, 4> func_hash_to_func_{};
+
+    /// The list of loads which need to be sunk down into any control instruction in which they're
+    /// used.
+    Vector<core::ir::Load*, 8> loads_to_sink_{};
+
     /// Process the module.
     void Process() {
         for (auto* inst : *ir.root_block) {
@@ -80,24 +100,33 @@ struct State {
             TINT_ASSERT(ptr);
 
             auto* type = ptr->UnwrapPtr();
-            if (!type->Is<spirv::type::Image>()) {
+            if (!type->IsAnyOf<spirv::type::Image, core::type::Sampler>()) {
                 continue;
             }
 
             auto* new_ty = TypeFor(type);
-            var->Result()->SetType(ty.ptr(ptr->AddressSpace(), new_ty, ptr->Access()));
-
-            // TODO(dsinclair): Propagate through functions
-
-            for (auto& usage : var->Result()->UsagesUnsorted()) {
-                if (usage->instruction->Is<core::ir::Load>()) {
-                    usage->instruction->Result()->SetType(new_ty);
-                }
+            if (type->Is<spirv::type::Image>()) {
+                var->Result()->SetType(ty.ptr(ptr->AddressSpace(), new_ty, ptr->Access()));
+                values_to_fix_usages_.Push(var->Result());
             }
-        }
 
-        // TODO(dsinclair): Propagate OpTypeSampledImage through function params by replacing with
-        // the texture/sampler
+            var->Result()->ForEachUseUnsorted([&](const core::ir::Usage& usage) {
+                tint::Switch(
+                    usage.instruction,  //
+                    [&](core::ir::Load* l) {
+                        loads_to_sink_.Push(l);
+
+                        if (type->Is<spirv::type::Image>()) {
+                            l->Result()->SetType(new_ty);
+                        }
+                    },
+                    [&](core::ir::Let* let) {
+                        if (type->Is<core::type::Sampler>()) {
+                            lets_to_inline_.Push(let);
+                        }
+                    });
+            });
+        }
 
         Vector<spirv::ir::BuiltinCall*, 4> builtin_worklist;
         for (auto* inst : ir.Instructions()) {
@@ -123,6 +152,41 @@ struct State {
                 }
             }
         }
+
+        // TODO(dsinclair): Propagate OpTypeSampledImage through function params by replacing with
+        // the texture/sampler
+
+        // The double loop happens because when we convert user calls, that will
+        // add more values to convert, but those values can find user calls to
+        // convert, so we have to work until we stabilize
+        while (!values_to_fix_usages_.IsEmpty() || !lets_to_inline_.IsEmpty()) {
+            while (!values_to_fix_usages_.IsEmpty()) {
+                auto* val = values_to_fix_usages_.Pop();
+                ConvertUsagesToTexture(val);
+            }
+
+            while (!lets_to_inline_.IsEmpty()) {
+                auto* let = lets_to_inline_.Pop();
+                TINT_ASSERT(let->Value());
+                let->Result()->ReplaceAllUsesWith(let->Value());
+                // We may have done this value already, but push it back on as any of the let usages
+                // will now point to it and they need to be updated.
+                values_to_fix_usages_.Push(let->Value());
+                let->Destroy();
+            }
+
+            auto user_calls = user_calls_to_convert_.Vector();
+            // Sort for deterministic output
+            user_calls.Sort();
+            for (auto& call : user_calls) {
+                ConvertUserCall(call);
+            }
+            user_calls_to_convert_.Clear();
+        }
+
+        TINT_ASSERT(lets_to_inline_.IsEmpty());
+        TINT_ASSERT(values_to_fix_usages_.IsEmpty());
+        TINT_ASSERT(user_calls_to_convert_.IsEmpty());
 
         for (auto* builtin : builtin_worklist) {
             switch (builtin->Func()) {
@@ -166,6 +230,125 @@ struct State {
         for (auto res : sampled_images_) {
             res.value->Destroy();
         }
+
+        // Sink all loads down to their usage block. This is in order to keep the `ValueToLet`
+        // transform from creating invalid `let`'s for the handle loads.
+        while (!loads_to_sink_.IsEmpty()) {
+            auto* l = loads_to_sink_.Pop();
+            SinkLoad(l);
+        }
+        TINT_ASSERT(loads_to_sink_.IsEmpty());
+    }
+
+    // Stores information for operands which need to be updated with the new load result.
+    struct ReplacementValue {
+        // The instruction to update
+        core::ir::Instruction* instruction;
+        // The operand index to insert into
+        size_t idx;
+        // The new value to insert into the instruction operands at `idx`
+        core::ir::Value* value;
+    };
+
+    void SinkLoad(core::ir::Load* l) {
+        auto* blk = l->Block();
+
+        Hashmap<core::ir::Block*, core::ir::Load*, 8> blk_to_load{};
+        std::vector<ReplacementValue> updates;
+        l->Result()->ForEachUseUnsorted([&](const core::ir::Usage& usage) {
+            auto* usage_blk = usage.instruction->Block();
+
+            // If we're in the same block, we should be good to go
+            if (usage_blk == blk) {
+                return;
+            }
+
+            auto* load = blk_to_load.GetOrAdd(usage_blk, [&] {
+                auto* new_load = b.Load(l->From());
+                new_load->InsertBefore(usage_blk->Front());
+                return new_load;
+            });
+
+            // Do these after iteration so we don't modify usage while iterating.
+            updates.push_back(ReplacementValue{
+                .instruction = usage.instruction,
+                .idx = usage.operand_index,
+                .value = load->Result(),
+            });
+        });
+
+        for (auto& update : updates) {
+            update.instruction->SetOperand(update.idx, update.value);
+        }
+
+        // If we've removed all usages, remove the load
+        if (!l->Result()->IsUsed()) {
+            l->Destroy();
+        }
+    }
+
+    void ConvertUsagesToTexture(core::ir::Value* val) {
+        val->ForEachUseUnsorted([&](const core::ir::Usage& usage) {
+            auto* inst = usage.instruction;
+
+            tint::Switch(  //
+                inst,
+                [&](core::ir::Let* l) {
+                    // auto* res = l->Result();
+                    // res->SetType(val->Type());
+                    // values_to_fix_usages_.Push(res);
+
+                    lets_to_inline_.Push(l);
+                },
+                [&](core::ir::Load* l) {
+                    auto* res = l->Result();
+                    res->SetType(val->Type()->UnwrapPtr());
+                    values_to_fix_usages_.Push(res);
+                },  //
+                [&](core::ir::UserCall* uc) { user_calls_to_convert_.Add(uc); },
+                [&](core::ir::BuiltinCall*) {},  //
+                TINT_ICE_ON_NO_MATCH);
+        });
+    }
+
+    // The user calls need to check all of the parameters which were converted
+    // to textures and create a forked function call for that combination of
+    // parameters.
+    void ConvertUserCall(core::ir::UserCall* uc) {
+        auto* target = uc->Target();
+        auto& params = target->Params();
+        const auto& args = uc->Args();
+
+        Vector<size_t, 2> to_convert;
+        for (size_t i = 0; i < args.Length(); ++i) {
+            if (params[i]->Type() != args[i]->Type()) {
+                to_convert.Push(i);
+            }
+        }
+        // Everything is already converted we're done.
+        if (to_convert.IsEmpty()) {
+            return;
+        }
+
+        // Hash based on the original function pointer and the specific
+        // parameters we're converting.
+        auto hash = Hash(target);
+        hash = HashCombine(hash, to_convert);
+
+        auto* new_fn = func_hash_to_func_.GetOrAdd(hash, [&] {
+            core::ir::CloneContext ctx{ir};
+            auto* fn = uc->Target()->Clone(ctx);
+            ir.functions.Push(fn);
+
+            for (auto idx : to_convert) {
+                auto* p = fn->Params()[idx];
+                p->SetType(args[idx]->Type());
+
+                values_to_fix_usages_.Push(p);
+            }
+            return fn;
+        });
+        uc->SetTarget(new_fn);
     }
 
     // Record the sampled image so we can extract the texture/sampler information as we process the
