@@ -68,6 +68,24 @@
       "parentUuid": "5dc70e18_03d72f3f",
       "revId": "3582d361a7dc55f14489d48aae00b825ef382b04",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f17be24b_7ab11afc",
+        "filename": "src/tint/utils/protos/ir/ir.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-04T08:23:23Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure if we cared about backwards compatibility of the protos, where are the existing test cases? It might be better to do the v2 before we start exposing protos outside of Tint (eventually someone will ask for it). Anyway done the backwards compatible change now.",
+      "parentUuid": "4f56b0e8_29ad52cc",
+      "revId": "3582d361a7dc55f14489d48aae00b825ef382b04",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
