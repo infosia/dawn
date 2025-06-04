@@ -448,6 +448,15 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     if (gpu_info::IsApple(vendorId)) {
         deviceToggles->Default(Toggle::MetalEnableModuleConstant, true);
     }
+    // TESTING ONLY
+    if (gpu_info::IsAMD(vendorId)) {
+        deviceToggles->Default(Toggle::MetalEnableModuleConstant, true);
+    }
+
+    // TESTING ONLY
+    if (gpu_info::IsIntel(vendorId)) {
+        deviceToggles->Default(Toggle::MetalEnableModuleConstant, true);
+    }
 
     // On some Intel GPUs vertex only render pipeline get wrong depth result if no fragment
     // shader provided. Create a placeholder fragment shader module to work around this issue.
