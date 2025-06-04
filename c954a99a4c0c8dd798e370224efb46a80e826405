@@ -34,6 +34,58 @@
       "parentUuid": "0277bc8f_a876be03",
       "revId": "c954a99a4c0c8dd798e370224efb46a80e826405",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aba03f34_4d62de6f",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T15:29:13Z",
+      "side": 1,
+      "message": "Since we\u0027ll probably have other SPIR-V versions in the future, it might be better to have a general `--spirv-version` flag instead. Kinda like the `--hlsl-shader-model` flag.\n\nSo you could do `--spirv-version 1.3`, `--spirv-version 1.4`, etc.",
+      "parentUuid": "0277bc8f_a876be03",
+      "revId": "c954a99a4c0c8dd798e370224efb46a80e826405",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7899938_089baf57",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T15:29:13Z",
+      "side": 1,
+      "message": "Can we declare these magic constants in `options.h`? I know they are fairly easy to read but I could easily imagine mistyping them and then weird things happening.",
+      "revId": "c954a99a4c0c8dd798e370224efb46a80e826405",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "272013c8_72cdbac2",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T15:29:13Z",
+      "side": 1,
+      "message": "This block is filtering out variables that are not directly referenced by the entry point function, but I assume we need to include transitively referenced module-scope variables instead.\n\nThis didn\u0027t matter for In/Out variables because they were always directly referenced by the entry point, but will matter for other address spaces.\n\nTwo options:\n  1. Use the `ReferencedModuleVars` helper to determine all of the transitively referenced globals, instead of looping over the root block above.\n  2. Just include everything in the root block and remove this check below, since we now require that the IR module is stripped down to a single entry point anyway, so we can just assume that everything is used.\n  \nI\u0027d lean towards 2 personally.\n\nWould be good to add a unit test case for the transitively referenced storage buffer scenario with SPIR-V 1.4 too.",
+      "revId": "c954a99a4c0c8dd798e370224efb46a80e826405",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
