@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cec4f895_0ff8c8f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T17:44:29Z",
+      "side": 1,
+      "message": "```suggestion\n - Pointers to various non-handle storage spaces that had logic to\n```",
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba55093d_bf7105e5",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -106,6 +123,23 @@
         "endLine": 629,
         "endChar": 52
       },
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b3d5eba_06fab73b",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T17:44:29Z",
+      "side": 1,
+      "message": "Doesn\u0027t this duplicate what\u0027s happening in the switch above?",
       "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
