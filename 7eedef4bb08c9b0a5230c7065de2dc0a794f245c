@@ -16,6 +16,75 @@
       "message": "Now that the transient attachments bits are set properly, sending this out for review again addressing comments. PTAL.",
       "revId": "7eedef4bb08c9b0a5230c7065de2dc0a794f245c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "694892b2_46a791c8",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-06-04T15:30:57Z",
+      "side": 1,
+      "message": "Only used memory is modified here right?",
+      "range": {
+        "startLine": 316,
+        "startChar": 77,
+        "endLine": 316,
+        "endChar": 86
+      },
+      "revId": "7eedef4bb08c9b0a5230c7065de2dc0a794f245c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03a4ff6d_dcfdfd27",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-06-04T15:30:57Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"upto\" is a possible misspelling of \"up to\".\n\nAnalyzer Description: Checks for common typos.\nOwner: chops-source-team@google.com\n\n\"upto\" is a possible misspelling of \"up to\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 98,
+        "startChar": 67,
+        "endLine": 98,
+        "endChar": 71
+      },
+      "revId": "7eedef4bb08c9b0a5230c7065de2dc0a794f245c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68001599_72286fd3",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-06-04T15:30:57Z",
+      "side": 1,
+      "message": "mTotalSize and mMemoryToDecrement",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 35
+      },
+      "revId": "7eedef4bb08c9b0a5230c7065de2dc0a794f245c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
