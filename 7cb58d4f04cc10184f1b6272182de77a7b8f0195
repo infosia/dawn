@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "58c6b8aa_c98c5ccc",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-04T10:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0426da9f_fb2cc652",
+      "revId": "7cb58d4f04cc10184f1b6272182de77a7b8f0195",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a588840f_a0e1e939",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-06-04T09:11:00Z",
       "side": 1,
       "message": "ditto",
+      "revId": "7cb58d4f04cc10184f1b6272182de77a7b8f0195",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01a6db6f_5701cb2d",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-04T10:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a588840f_a0e1e939",
       "revId": "7cb58d4f04cc10184f1b6272182de77a7b8f0195",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c196618a_0a3af552",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-04T10:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c266cda7_ec3a09bd",
+      "revId": "7cb58d4f04cc10184f1b6272182de77a7b8f0195",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9517d892_406214fe",
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9cb5c295_1cda8ea9",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-04T10:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9517d892_406214fe",
+      "revId": "7cb58d4f04cc10184f1b6272182de77a7b8f0195",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "285f0547_30e85a05",
@@ -99,6 +171,24 @@
       "writtenOn": "2025-06-04T09:11:00Z",
       "side": 1,
       "message": "```suggestion\n    // Initialize the UnsafeUnserializedValue to a value different from default constructed. When\n```",
+      "revId": "7cb58d4f04cc10184f1b6272182de77a7b8f0195",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdc5ecdf_a0f76e38",
+        "filename": "src/dawn/tests/unittests/native/StreamTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-04T10:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "285f0547_30e85a05",
       "revId": "7cb58d4f04cc10184f1b6272182de77a7b8f0195",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
