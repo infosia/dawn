@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0fca0255_e23255b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-04T22:15:36Z",
+      "side": 1,
+      "message": "This is just an initial skeleton right? I don\u0027t think this change actually does anything yet?",
+      "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "55aec2cd_53e40f38",
         "filename": "src/dawn/common/LRUCache.h",
         "patchSetId": 4
@@ -31,6 +48,47 @@
       "writtenOn": "2025-06-04T21:46:34Z",
       "side": 1,
       "message": "I wish this was const, but it does make for an easy way to turn the cache off and on when external references are added.",
+      "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "925e64a1_56492a1f",
+        "filename": "src/dawn/common/LRUCache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-04T22:15:36Z",
+      "side": 1,
+      "message": "One alt is to use a `unique_ptr\u003cLRUCache\u003e` in `TextureBase` instead? That way it can be `nullptr` in the case where no external refs are added?",
+      "parentUuid": "55aec2cd_53e40f38",
+      "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb60ea09_dd8426cb",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-04T22:15:36Z",
+      "side": 1,
+      "message": "We don\u0027t need with with the `WillAddFirstExternalRef` thing right?",
+      "range": {
+        "startLine": 224,
+        "startChar": 50,
+        "endLine": 224,
+        "endChar": 74
+      },
       "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
