@@ -51,6 +51,23 @@
       "parentUuid": "a79be3b6_5998b78b",
       "revId": "1566f0d592d0084ff47a1327e4e99877c961c615",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3744e326_8c3eb442",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T20:50:32Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a `TINT_UNREACHABLE`? If we\u0027re trying to propagate through an unreachable block then something has gone wrong?",
+      "revId": "1566f0d592d0084ff47a1327e4e99877c961c615",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
