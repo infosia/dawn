@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42dae46b_6aef8c57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T02:15:26Z",
+      "side": 1,
+      "message": "PTAL. (Had to undo the simplification, as it broke other tests to remove it. This seems the best way to handle the multiple dominated exits).",
+      "revId": "1566f0d592d0084ff47a1327e4e99877c961c615",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a79be3b6_5998b78b",
+        "filename": "src/tint/lang/spirv/reader/parser/branch_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T02:15:26Z",
+      "side": 1,
+      "message": "This is a bug, but I think it\u0027s unrelated to this CL, so I\u0027m going to fix it in a followup. For some reason, the loop merge got emitted here, possibly because it thinks it\u0027s a premerge block?",
+      "revId": "1566f0d592d0084ff47a1327e4e99877c961c615",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
