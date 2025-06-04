@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c40aad75_6315f60e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-04T15:34:05Z",
+      "side": 1,
+      "message": "PTAL! This is necessary for Vulkan on ARM and GL.",
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0c30261_1a76b9f0",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-04T15:34:05Z",
+      "side": 1,
+      "message": "The alternative to this and the code at [1] is to have a pre-transform that makes all the handle parameter pointers.",
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bca52d7b_509db356",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-04T15:34:05Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
