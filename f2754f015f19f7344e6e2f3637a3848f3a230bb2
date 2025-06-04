@@ -53,6 +53,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0853e58d_cd8d72b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-04T22:27:31Z",
+      "side": 1,
+      "message": "Welp. Apparently the CQ thinks I\u0027ve got something to fix, still, so I\u0027ll look into that.",
+      "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55aec2cd_53e40f38",
@@ -101,6 +118,30 @@
       "writtenOn": "2025-06-04T22:15:36Z",
       "side": 1,
       "message": "We don\u0027t need with with the `WillAddFirstExternalRef` thing right?",
+      "range": {
+        "startLine": 224,
+        "startChar": 50,
+        "endLine": 224,
+        "endChar": 74
+      },
+      "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad437c9a_f750db8c",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-04T22:27:31Z",
+      "side": 1,
+      "message": "Oh, yeah! That was a leftover from an attempt at a different code path. Removed.",
+      "parentUuid": "eb60ea09_dd8426cb",
       "range": {
         "startLine": 224,
         "startChar": 50,
