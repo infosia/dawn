@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74a77f5a_24937145",
+        "filename": "src/dawn/native/CompilationMessages.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-04T08:59:59Z",
+      "side": 1,
+      "message": "Yeah let\u0027s look at that as a follow-up after this stack, but it could be nice.",
+      "parentUuid": "4f3275bf_d85b1b96",
+      "revId": "a5e5a58e44b6748638254136b8cb5c54c284dc84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "854fbeb5_b784a477",
