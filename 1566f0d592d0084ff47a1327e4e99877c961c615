@@ -33,6 +33,24 @@
       "message": "This is a bug, but I think it\u0027s unrelated to this CL, so I\u0027m going to fix it in a followup. For some reason, the loop merge got emitted here, possibly because it thinks it\u0027s a premerge block?",
       "revId": "1566f0d592d0084ff47a1327e4e99877c961c615",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd843047_1a988537",
+        "filename": "src/tint/lang/spirv/reader/parser/branch_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T02:35:40Z",
+      "side": 1,
+      "message": "https://dawn-review.googlesource.com/c/dawn/+/245335",
+      "parentUuid": "a79be3b6_5998b78b",
+      "revId": "1566f0d592d0084ff47a1327e4e99877c961c615",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
