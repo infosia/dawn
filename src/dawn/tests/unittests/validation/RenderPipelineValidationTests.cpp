@@ -3559,5 +3559,83 @@ TEST_F(ClipDistancesValidationTest, ClipDistancesAgainstMaxInterStageLocation) {
     }
 }
 
+// Test that the r8snorm  is not renderable if the feature TextureFormatsTier1 is not enabled
+TEST_F(RenderPipelineValidationTest, R8SNORMFormatWithoutEnablingFeature) {
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vsModule;
+    descriptor.cFragment.module = fsModule;
+    descriptor.cTargets[0].format = wgpu::TextureFormat::R8Snorm;
+
+    ASSERT_DEVICE_ERROR(device.CreateRenderPipeline(&descriptor));
+}
+
+// Test that the rg8snorm  is not renderable if the feature TextureFormatsTier1 is not enabled
+TEST_F(RenderPipelineValidationTest, RG8SNORMFormatWithoutEnablingFeature) {
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vsModule;
+    descriptor.cFragment.module = fsModule;
+    descriptor.cTargets[0].format = wgpu::TextureFormat::RG8Snorm;
+
+    ASSERT_DEVICE_ERROR(device.CreateRenderPipeline(&descriptor));
+}
+
+// Test that the rgba8snorm  is not renderable if the feature TextureFormatsTier1 is not enabled
+TEST_F(RenderPipelineValidationTest, RGBA8SNORMFormatWithoutEnablingFeature) {
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vsModule;
+    descriptor.cFragment.module = fsModule;
+    descriptor.cTargets[0].format = wgpu::TextureFormat::RGBA8Snorm;
+
+    ASSERT_DEVICE_ERROR(device.CreateRenderPipeline(&descriptor));
+}
+
+class R8SNORMRenderableValidationTest : public RenderPipelineValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::TextureFormatsTier1};
+    }
+};
+
+// Test that r8snorm format must be renderable when the feature TextureFormatsTier1 is enabled.
+TEST_F(R8SNORMRenderableValidationTest, R8SNORMRenderableFormatsWithFeatureEnabled) {
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vsModule;
+    descriptor.cFragment.module = fsModule;
+    descriptor.cTargets[0].format = wgpu::TextureFormat::R8Snorm;
+    device.CreateRenderPipeline(&descriptor);
+}
+
+class RG8SNORMRenderableValidationTest : public RenderPipelineValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::TextureFormatsTier1};
+    }
+};
+
+// Test that rg8snorm format must be renderable when the feature TextureFormatsTier1 is enabled.
+TEST_F(RG8SNORMRenderableValidationTest, RG8SNORMRenderableFormatsWithFeatureEnabled) {
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vsModule;
+    descriptor.cFragment.module = fsModule;
+    descriptor.cTargets[0].format = wgpu::TextureFormat::RG8Snorm;
+    device.CreateRenderPipeline(&descriptor);
+}
+
+class RGBA8SNORMRenderableValidationTest : public RenderPipelineValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::TextureFormatsTier1};
+    }
+};
+
+// Tests that rgba8snorm format must be renderable when the feature TextureFormatsTier1 is enabled.
+TEST_F(RGBA8SNORMRenderableValidationTest, RGBA8SNORMRenderableFormatsWithFeatureEnabled) {
+    utils::ComboRenderPipelineDescriptor descriptor;
+    descriptor.vertex.module = vsModule;
+    descriptor.cFragment.module = fsModule;
+    descriptor.cTargets[0].format = wgpu::TextureFormat::RGBA8Snorm;
+    device.CreateRenderPipeline(&descriptor);
+}
+
 }  // anonymous namespace
 }  // namespace dawn

@@ -1199,5 +1199,56 @@ TEST_F(TransientAttachmentValidationTest, FlagsBeyondRenderAttachment) {
     ASSERT_DEVICE_ERROR(device.CreateTexture(&desc));
 }
 
+class R8SNORMTextureFormatsValidationTests : public TextureValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::TextureFormatsTier1};
+    }
+};
+
+// Test that r8snorm formats are valid as renderable texture if
+// 'texture-formats-tier1' is enabled.
+TEST_F(R8SNORMTextureFormatsValidationTests, RenderableFeature) {
+    wgpu::TextureDescriptor descriptor;
+    descriptor.size = {1, 1, 1};
+    descriptor.usage = wgpu::TextureUsage::RenderAttachment;
+    descriptor.format = wgpu::TextureFormat::R8Snorm;
+    device.CreateTexture(&descriptor);
+}
+
+class RG8SNORMTextureFormatsValidationTests : public TextureValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::TextureFormatsTier1};
+    }
+};
+
+// Test that rg8snorm formats are valid as renderable texture if
+// 'texture-formats-tier1' is enabled.
+TEST_F(RG8SNORMTextureFormatsValidationTests, RenderableFeature) {
+    wgpu::TextureDescriptor descriptor;
+    descriptor.size = {1, 1, 1};
+    descriptor.usage = wgpu::TextureUsage::RenderAttachment;
+    descriptor.format = wgpu::TextureFormat::RG8Snorm;
+    device.CreateTexture(&descriptor);
+}
+
+class RGBA8SNORMTextureFormatsValidationTests : public TextureValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::TextureFormatsTier1};
+    }
+};
+
+// Test that rgba8snorm formats are valid as renderable texture if
+// 'texture-formats-tier1' is enabled.
+TEST_F(RGBA8SNORMTextureFormatsValidationTests, RenderableFeature) {
+    wgpu::TextureDescriptor descriptor;
+    descriptor.size = {1, 1, 1};
+    descriptor.usage = wgpu::TextureUsage::RenderAttachment;
+    descriptor.format = wgpu::TextureFormat::RGBA8Snorm;
+    device.CreateTexture(&descriptor);
+}
+
 }  // anonymous namespace
 }  // namespace dawn
