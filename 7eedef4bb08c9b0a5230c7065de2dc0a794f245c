@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39787cd4_47edfb70",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-04T16:57:40Z",
+      "side": 1,
+      "message": "We call Decrement on used memory trackers here directly but also for allocated memory through `DeallocateResourceHeap`. I\u0027ll update the comment though to clarify here for used and for allocated in DeallocateResourceHeap.",
+      "parentUuid": "694892b2_46a791c8",
+      "range": {
+        "startLine": 316,
+        "startChar": 77,
+        "endLine": 316,
+        "endChar": 86
+      },
+      "revId": "7eedef4bb08c9b0a5230c7065de2dc0a794f245c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03a4ff6d_dcfdfd27",
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6647f919_5717e48c",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-04T16:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03a4ff6d_dcfdfd27",
+      "range": {
+        "startLine": 98,
+        "startChar": 67,
+        "endLine": 98,
+        "endChar": 71
+      },
+      "revId": "7eedef4bb08c9b0a5230c7065de2dc0a794f245c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68001599_72286fd3",
@@ -77,6 +125,30 @@
       "writtenOn": "2025-06-04T15:30:57Z",
       "side": 1,
       "message": "mTotalSize and mMemoryToDecrement",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 35
+      },
+      "revId": "7eedef4bb08c9b0a5230c7065de2dc0a794f245c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9422ddbb_74593b1e",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003581
+      },
+      "writtenOn": "2025-06-04T16:57:40Z",
+      "side": 1,
+      "message": "Oops, done.",
+      "parentUuid": "68001599_72286fd3",
       "range": {
         "startLine": 112,
         "startChar": 0,
