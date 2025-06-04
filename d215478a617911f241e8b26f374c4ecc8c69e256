@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba55093d_bf7105e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T17:40:08Z",
+      "side": 1,
+      "message": "I assume this was meant to be `s/pointer/value/` or something? We\u0027re still not allowing handles to be passed by pointer right?",
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c40aad75_6315f60e",
@@ -37,6 +54,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "5faa133f_7b596a11",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T17:40:08Z",
+      "side": 1,
+      "message": "I think this is fine.",
+      "parentUuid": "d0c30261_1a76b9f0",
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "bca52d7b_509db356",
         "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
         "patchSetId": 2
@@ -48,6 +83,46 @@
       "writtenOn": "2025-06-04T15:34:05Z",
       "side": 1,
       "message": "[1]",
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dfc0c28_186edccb",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T17:40:08Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be hitting this case should we? We\u0027re not allowing pointers to handles as function parameters, unless I missed something.",
+      "range": {
+        "startLine": 628,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 52
+      },
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e99cc6d_b2209260",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5950,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T17:40:08Z",
+      "side": 1,
+      "message": "Nit: %9 is unused. You could tweak the handling of `Load` in `DeleteDeadInstructions` to make sure this gets cleaned up.",
       "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
