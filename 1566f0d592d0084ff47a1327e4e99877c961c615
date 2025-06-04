@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83b2851e_1096124d",
+        "filename": "src/tint/lang/spirv/reader/parser/branch_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T21:07:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cd843047_1a988537",
+      "revId": "1566f0d592d0084ff47a1327e4e99877c961c615",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3744e326_8c3eb442",
@@ -66,6 +84,24 @@
       "writtenOn": "2025-06-04T20:50:32Z",
       "side": 1,
       "message": "Shouldn\u0027t this be a `TINT_UNREACHABLE`? If we\u0027re trying to propagate through an unreachable block then something has gone wrong?",
+      "revId": "1566f0d592d0084ff47a1327e4e99877c961c615",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5124fe7_6502ef34",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T21:07:42Z",
+      "side": 1,
+      "message": "No, we can propagate through unreachable blocks, like the case of:\n\n```\nloop {\n  if {\n     exit_loop\n  } else {\n     exit_loop\n  }\n  unreachable\n}\n```\n\nwhen looking at the loop, the block is unreachable.",
+      "parentUuid": "3744e326_8c3eb442",
       "revId": "1566f0d592d0084ff47a1327e4e99877c961c615",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
