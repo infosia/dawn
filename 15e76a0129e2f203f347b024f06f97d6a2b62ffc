@@ -16,6 +16,75 @@
       "message": "PTAL",
       "revId": "15e76a0129e2f203f347b024f06f97d6a2b62ffc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf090581_e3eee842",
+        "filename": "src/dawn/native/DynamicUploader.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-04T22:28:33Z",
+      "side": 1,
+      "message": "ditto with the link format for external contributors",
+      "range": {
+        "startLine": 145,
+        "startChar": 12,
+        "endLine": 145,
+        "endChar": 20
+      },
+      "revId": "15e76a0129e2f203f347b024f06f97d6a2b62ffc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa47d4c9_6eb7f6b6",
+        "filename": "src/dawn/native/DynamicUploader.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-04T22:28:33Z",
+      "side": 1,
+      "message": "nit. Don\u0027t think you need `dawn::` here?",
+      "range": {
+        "startLine": 54,
+        "startChar": 24,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "15e76a0129e2f203f347b024f06f97d6a2b62ffc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ea27fbd_e7ec4124",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-04T22:28:33Z",
+      "side": 1,
+      "message": "nit. crbug.com/42240396\n\nAlso, could you add an example of where this is being re-entrantly called? I have found that finding such stuff later (i.e. when I\u0027m trying to do some multithread changes), can be quite difficult, and having some reminders for why we added stuff like this is helpful, especially in some cases where we may have fixed stuff and didn\u0027t update the comments.",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 27
+      },
+      "revId": "15e76a0129e2f203f347b024f06f97d6a2b62ffc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
