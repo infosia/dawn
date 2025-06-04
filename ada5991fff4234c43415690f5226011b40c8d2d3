@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17dbe7e8_c5f08f13",
+        "filename": "src/dawn/common/MutexProtected.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-04T02:20:18Z",
+      "side": 0,
+      "message": "We\u0027re not using RAW_PTR_EXCLUSION anymore. I guess it was for performance? Maybe we should keep it?",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 21
+      },
+      "revId": "ada5991fff4234c43415690f5226011b40c8d2d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
