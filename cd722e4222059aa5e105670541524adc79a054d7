@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a32beed_54630211",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T19:32:31Z",
+      "side": 1,
+      "message": "Nit: 403609083 is a more specific bug",
+      "revId": "cd722e4222059aa5e105670541524adc79a054d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "1854b4eb_67f64db2",
@@ -14,6 +31,74 @@
       "writtenOn": "2025-06-04T14:03:34Z",
       "side": 1,
       "message": "PTAL, thanks!",
+      "revId": "cd722e4222059aa5e105670541524adc79a054d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2435ed8a_f35b5b98",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T19:32:31Z",
+      "side": 1,
+      "message": "I think the array element type should be `u32` for `u8` and `i32` for `i8`, based on the current proposal.\n\nSame for `subgroupMatrixStore`.",
+      "revId": "cd722e4222059aa5e105670541524adc79a054d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4a99715_58fcf440",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T19:32:31Z",
+      "side": 1,
+      "message": "Please add a couple of unit tests in `robustness_test.cc` that cover this change.",
+      "revId": "cd722e4222059aa5e105670541524adc79a054d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1df0b33_c830a9f1",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T19:32:31Z",
+      "side": 1,
+      "message": "Same here about `i8` using `i32` instead of `u32` for the array elemment type.",
+      "revId": "cd722e4222059aa5e105670541524adc79a054d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdd08aba_0b4a30d6",
+        "filename": "test/tint/builtins/gen/gen.wgsl.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-04T19:32:31Z",
+      "side": 1,
+      "message": "This will also need to split the cases for `i8` to use `i32`.",
       "revId": "cd722e4222059aa5e105670541524adc79a054d7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
