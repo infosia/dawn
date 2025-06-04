@@ -87,6 +87,24 @@
       "parentUuid": "2057122c_014fe847",
       "revId": "efc979120addf981cc8dbeed4c635eab3053edcf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22436300_f1275536",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-04T14:03:45Z",
+      "side": 1,
+      "message": "Dawn does lazy zero initialization and tries to avoid doing the actual zero init when it can avoid it. For transient attachments, they can only be attachments and no other usages ([validation](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Texture.cpp;drc\u003dc3999d7e32b1accce2ce2f2431db487541a4f15e;l\u003d447)) and we have a special case to zero init using `LoadOp::Clear` in [`LazyClearRenderPassAttachments`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CommandBuffer.cpp;drc\u003de8e3490269a003ae1f1e92c9ae0ae30cdbdd3de0;l\u003d158). This means that we shouldn\u0027t ever go into the texture clearing by copy code for transient attachments.",
+      "parentUuid": "a0d88986_df2b68dc",
+      "revId": "efc979120addf981cc8dbeed4c635eab3053edcf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
