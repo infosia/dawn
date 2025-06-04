@@ -109,6 +109,29 @@
       },
       "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f647d18c_d7096c66",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-04T22:25:16Z",
+      "side": 1,
+      "message": "Huh... is this needed? I thought that lambda\u0027s created with it\u0027s scope visibility, so since we are creating the lambda in `Device`, it should already have access to the private func?",
+      "range": {
+        "startLine": 346,
+        "startChar": 4,
+        "endLine": 346,
+        "endChar": 34
+      },
+      "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
