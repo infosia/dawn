@@ -33,6 +33,23 @@
       "message": "lgtm",
       "revId": "514f63ab30773847d21c2aa3671bc4d9be32581d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eeea5a95_b953fd4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-04T08:13:12Z",
+      "side": 1,
+      "message": "PTAL!",
+      "revId": "514f63ab30773847d21c2aa3671bc4d9be32581d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
