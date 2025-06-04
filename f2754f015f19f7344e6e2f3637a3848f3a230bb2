@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20ce6a05_3113fcd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-04T21:46:34Z",
+      "side": 1,
+      "message": "Thanks for the discussion today! Here\u0027s a working version of the front end cache, let me know what you think.\n\nSome thoughts on this approach:\n\n - I\u0027m not a big fan of having the view creation happen in a lambda, but the alternative was a fair amount of new plumbing between the Texture/TextureView/Device.\n - My initial inclination was to not add the new virtual call to RefCountedWithExternalCount due to the concerns Corentin mentioned, but I realized that the alternative was to require all the Texture backend impls to handle an `enableViewCache` constructor arg, which felt potentially confusing and error prone.\n - An alternative to that and the current approach is to add a TextureDescriptor chain struct that specifies that view caching should be enabled, which is then injected by the `APICreateTexture` call (or something around there). Less plumbing, but still feels potentially error prone and adds something that looks like API surface but is really only intended for internal use.",
+      "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55aec2cd_53e40f38",
+        "filename": "src/dawn/common/LRUCache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-04T21:46:34Z",
+      "side": 1,
+      "message": "I wish this was const, but it does make for an easy way to turn the cache off and on when external references are added.",
+      "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
