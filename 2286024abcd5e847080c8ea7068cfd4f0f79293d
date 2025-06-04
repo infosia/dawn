@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c92cdce_379ed6cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-04T00:25:45Z",
+      "side": 1,
+      "message": "Sorry for the spam, something weird happened in `git cl upload`.",
+      "revId": "2286024abcd5e847080c8ea7068cfd4f0f79293d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
