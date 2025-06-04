@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "cfc0b790_67e3e7f0",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T02:52:13Z",
+      "side": 1,
+      "message": "Rewrote to what I think works.",
+      "parentUuid": "a1cd92cb_59682c7d",
+      "revId": "ff40604815cb8d033728b41806e9da392d076e32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "432dd676_914da9e8",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 14
@@ -48,6 +66,24 @@
       "writtenOn": "2025-06-03T20:57:19Z",
       "side": 1,
       "message": "There might be other continues?",
+      "revId": "ff40604815cb8d033728b41806e9da392d076e32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3821c813_c9b767bc",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T02:52:13Z",
+      "side": 1,
+      "message": "Not in this case, we\u0027re jumping to the continue block. If there was another block with a continuing we\u0027d have two blocks jumping to the continuing block, but only one would have this definition. You\u0027d require an `OpPhi` to handle that case. I think, and let me know if I\u0027m wrong, that because we can access this directly from the continuing, and it\u0027s using a `continue` to get to the continuing, then this has to be the only way to get there.",
+      "parentUuid": "df4a7547_8ed9f23d",
       "revId": "ff40604815cb8d033728b41806e9da392d076e32",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -83,6 +119,24 @@
           ]
         }
       ],
+      "revId": "ff40604815cb8d033728b41806e9da392d076e32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84283d27_29d27449",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3271,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T02:52:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2ac667c_13863849",
       "revId": "ff40604815cb8d033728b41806e9da392d076e32",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

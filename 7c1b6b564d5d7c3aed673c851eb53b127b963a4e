@@ -223,6 +223,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cadf1ff_47527ef8",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T02:52:13Z",
+      "side": 1,
+      "message": "Fixed in https://dawn-review.googlesource.com/c/dawn/+/245334",
+      "parentUuid": "4f6685e3_29b6bd44",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "df397614_c4a02f01",
@@ -289,6 +307,24 @@
       "side": 1,
       "message": "The multi-exit handling lis accidental in that looping the exits is an easy way to get at the first one, heh. Will leave until we figure out the answer above.",
       "parentUuid": "9b783c7e_b9c7523e",
+      "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28743b4f_ba48837b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T02:52:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e75a5f28_80cd1866",
       "revId": "7c1b6b564d5d7c3aed673c851eb53b127b963a4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
