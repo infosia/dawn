@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0277bc8f_a876be03",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-04T15:11:33Z",
+      "side": 1,
+      "message": "`1p4` is weird, why not just `14`?",
+      "revId": "c954a99a4c0c8dd798e370224efb46a80e826405",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
