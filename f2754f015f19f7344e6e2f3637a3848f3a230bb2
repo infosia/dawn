@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e653f8ec_64566fc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-04T22:17:30Z",
+      "side": 1,
+      "message": "Oh, sorry I misunderstood part of the code. Retracting this comment. lol.",
+      "parentUuid": "0fca0255_e23255b5",
+      "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55aec2cd_53e40f38",
