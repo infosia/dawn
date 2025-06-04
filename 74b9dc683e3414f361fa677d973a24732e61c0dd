@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b68513e_991df367",
+        "filename": "src/dawn/wire/server/ServerAdapter.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-04T00:39:27Z",
+      "side": 1,
+      "message": "I didn\u0027t do this now because ComboLimits it sets an extra extension that the wire doesn\u0027t know about (ComboLimits always chains all known extensions currently and that may need to be fixed I\u0027m not sure)",
+      "revId": "74b9dc683e3414f361fa677d973a24732e61c0dd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
