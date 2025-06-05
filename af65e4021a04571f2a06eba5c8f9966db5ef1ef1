@@ -186,6 +186,24 @@
       "message": "This would become infallible as errors would become part of the compilation messages returned.",
       "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ff615bf_566424d5",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-05T09:26:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "38fe3771_de5baac9",
+      "revId": "af65e4021a04571f2a06eba5c8f9966db5ef1ef1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
