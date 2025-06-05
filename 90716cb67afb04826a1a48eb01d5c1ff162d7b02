@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "616d626f_f2541dc7",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2119,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-05T08:47:17Z",
+      "side": 1,
+      "message": "Done, making `CreateShadeModule` back to return `ResultOrError\u003cRef\u003cShaderModuleBase\u003e\u003e` and output `ShaderModuleParseResult` via pointer.",
+      "parentUuid": "29d5db3c_b49aba3f",
+      "revId": "90716cb67afb04826a1a48eb01d5c1ff162d7b02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "825af7db_6eff7dd4",
@@ -162,6 +180,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "98ce2e74_fa16c881",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-05T08:47:17Z",
+      "side": 1,
+      "message": "Done in https://dawn-review.googlesource.com/c/dawn/+/244094",
+      "parentUuid": "6ec66883_a37f12f0",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 32
+      },
+      "revId": "90716cb67afb04826a1a48eb01d5c1ff162d7b02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f898e198_da570e13",
         "filename": "src/dawn/native/ShaderModule.h",
         "patchSetId": 15
@@ -190,6 +232,30 @@
       "writtenOn": "2025-06-02T09:40:51Z",
       "side": 1,
       "message": "```suggestion\n};\n#undef SHADER_MODULE_PARSE_RESULT_MEMBER\n```",
+      "range": {
+        "startLine": 128,
+        "startChar": 1,
+        "endLine": 130,
+        "endChar": 1
+      },
+      "revId": "90716cb67afb04826a1a48eb01d5c1ff162d7b02",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30e12030_da65cc54",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-05T08:47:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fa06923_f4f144eb",
       "range": {
         "startLine": 128,
         "startChar": 1,
