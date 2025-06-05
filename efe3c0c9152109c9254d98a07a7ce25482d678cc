@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "02c935ad_32db35eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-05T18:59:29Z",
+      "side": 1,
+      "message": "this was my internal LLM hallucination :P   The issue was in ManualConstructors I wasn\u0027t setting this-\u003eDOMException_ctor. I was setting a local variable. 😅",
+      "parentUuid": "8ad71852_9fbf5540",
+      "revId": "efe3c0c9152109c9254d98a07a7ce25482d678cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "23d750ae_1d9b55aa",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75e8f5f1_0f863a7d",
+        "filename": "src/dawn/node/binding/Errors.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-05T18:59:29Z",
+      "side": 1,
+      "message": "this is gone",
+      "parentUuid": "23d750ae_1d9b55aa",
+      "revId": "efe3c0c9152109c9254d98a07a7ce25482d678cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "02590b5b_5d760d25",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-06-04T15:51:23Z",
       "side": 1,
       "message": "u-nit: can we have a switch on the reason so we know to add cases when the enum is extended?",
+      "revId": "efe3c0c9152109c9254d98a07a7ce25482d678cc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6878d3c_c506ce58",
+        "filename": "src/dawn/node/binding/GPUDevice.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-05T18:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02590b5b_5d760d25",
       "revId": "efe3c0c9152109c9254d98a07a7ce25482d678cc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
