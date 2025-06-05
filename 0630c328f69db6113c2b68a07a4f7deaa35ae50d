@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8cd5d1b_985c6d7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-05T18:14:54Z",
+      "side": 1,
+      "message": "Note that it looks like we don\u0027t have any dawn_end2end_tests that cover this path AFAICT. I thought maybe `CompressedTextureFormatTest` but these are currently 2D only tests, and a cursory stab at making it also support 3D seemed like a bunch of work. For now, am testing with CTS (e.g. `webgpu:api,operation,command_buffer,image_copy:mip_levels:initMethod\u003d\"CopyB2T\";checkMethod\u003d\"FullCopyT2B\";*\u0027).",
+      "revId": "0630c328f69db6113c2b68a07a4f7deaa35ae50d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
