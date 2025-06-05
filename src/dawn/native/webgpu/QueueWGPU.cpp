@@ -27,8 +27,10 @@
 
 #include "dawn/native/webgpu/QueueWGPU.h"
 
+#include <limits>
 #include <vector>
 
+#include "dawn/native/Error.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/webgpu/BufferWGPU.h"
 #include "dawn/native/webgpu/CommandBufferWGPU.h"
@@ -70,6 +72,19 @@ MaybeError Queue::SubmitImpl(uint32_t commandCount, CommandBufferBase* const* co
         wgpu.commandBufferRelease(innerCommandBuffers[i]);
     }
 
+    WGPUFuture future = wgpu.queueOnSubmittedWorkDone(
+        mInnerQueue,
+        {nullptr, WGPUCallbackMode_AllowSpontaneous,
+         [](WGPUQueueWorkDoneStatus, WGPUStringView, void*, void*) {}, nullptr, nullptr});
+    if (future.id == kNullFutureID) {
+        return DAWN_INTERNAL_ERROR("inner queueOnSubmittedWorkDone returned a null future.");
+    }
+
+    IncrementLastSubmittedCommandSerial();
+    mFuturesInFlight.Use([&](auto futuresInFlight) {
+        futuresInFlight->emplace_back(future, GetLastSubmittedCommandSerial());
+    });
+    mHasPendingCommands = false;
     return {};
 }
 
@@ -80,31 +95,114 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
     auto innerBuffer = ToBackend(buffer)->GetInnerHandle();
     ToBackend(GetDevice())
         ->wgpu.queueWriteBuffer(mInnerQueue, innerBuffer, bufferOffset, data, size);
+    buffer->MarkUsedInPendingCommands();
     return {};
 }
 
 ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
-    // TODO(crbug.com/413053623): finish implementing WebGPU backend.
-    return GetLastSubmittedCommandSerial();
+    auto& wgpu = ToBackend(GetDevice())->wgpu;
+    return mFuturesInFlight.Use([&](auto futuresInFlight) -> ResultOrError<ExecutionSerial> {
+        ExecutionSerial fenceSerial(GetCompletedCommandSerial());
+        while (!futuresInFlight->empty()) {
+            auto [future, tentativeSerial] = futuresInFlight->front();
+
+            WGPUFutureWaitInfo waitInfo = {future, false};
+            WGPUWaitStatus status =
+                wgpu.instanceWaitAny(ToBackend(GetDevice())->GetInnerInstance(), 1, &waitInfo, 0);
+
+            if (status == WGPUWaitStatus_TimedOut) {
+                return fenceSerial;
+            }
+            DAWN_INVALID_IF(status != WGPUWaitStatus_Success,
+                            "inner instanceWaitAny status is (%s).", FromAPI(status));
+
+            // Update fenceSerial since future is ready.
+            fenceSerial = tentativeSerial;
+
+            futuresInFlight->pop_front();
+
+            DAWN_ASSERT(fenceSerial > GetCompletedCommandSerial());
+        }
+        return fenceSerial;
+    });
 }
 
 void Queue::ForceEventualFlushOfCommands() {
-    DAWN_UNREACHABLE();
+    mHasPendingCommands = true;
+    ToBackend(GetDevice())->wgpu.deviceTick(ToBackend(GetDevice())->GetInnerHandle());
 }
 
 bool Queue::HasPendingCommands() const {
-    return false;
+    return mHasPendingCommands;
 }
 
 MaybeError Queue::SubmitPendingCommandsImpl() {
+    // For WebGPU backend, commands are submitted immediately in SubmitImpl.
+    // Just gets a future for an empty submission.
+    if (mHasPendingCommands && mFuturesInFlight->empty()) {
+        WGPUFuture future =
+            ToBackend(GetDevice())
+                ->wgpu.queueOnSubmittedWorkDone(
+                    mInnerQueue, {nullptr, WGPUCallbackMode_AllowSpontaneous,
+                                  [](WGPUQueueWorkDoneStatus, WGPUStringView, void*, void*) {},
+                                  nullptr, nullptr});
+        if (future.id == kNullFutureID) {
+            return DAWN_INTERNAL_ERROR(
+                "inner queueOnSubmittedWorkDone returned a null future for empty submission.");
+        }
+        IncrementLastSubmittedCommandSerial();
+        mFuturesInFlight.Use([&](auto futuresInFlight) {
+            futuresInFlight->emplace_back(future, GetLastSubmittedCommandSerial());
+        });
+        mHasPendingCommands = false;
+    }
     return {};
 }
 
 ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
-    return DAWN_UNIMPLEMENTED_ERROR("webgpu::Queue implementation is incomplete.");
+    return mFuturesInFlight.Use([&](auto futuresInFlight) -> ResultOrError<bool> {
+        WGPUFuture future = {kNullFutureID};
+        for (const auto& f : *futuresInFlight) {
+            if (f.second >= serial) {
+                future = f.first;
+                break;
+            }
+        }
+        if (future.id == kNullFutureID) {
+            return true;
+        }
+
+        WGPUFutureWaitInfo waitInfo = {future, false};
+        WGPUWaitStatus status =
+            ToBackend(GetDevice())
+                ->wgpu.instanceWaitAny(ToBackend(GetDevice())->GetInnerInstance(), 1, &waitInfo,
+                                       static_cast<uint64_t>(timeout));
+
+        switch (status) {
+            case WGPUWaitStatus_TimedOut:
+                return false;
+            case WGPUWaitStatus_Success:
+                return true;
+            default:
+                return DAWN_FORMAT_INTERNAL_ERROR("inner instanceWaitAny status is (%s).",
+                                                  FromAPI(status));
+        }
+    });
 }
 
 MaybeError Queue::WaitForIdleForDestruction() {
+    auto& wgpu = ToBackend(GetDevice())->wgpu;
+    mFuturesInFlight.Use([&](auto futuresInFlight) {
+        while (!futuresInFlight->empty()) {
+            WGPUFuture future = futuresInFlight->front().first;
+            WGPUFutureWaitInfo waitInfo = {future, false};
+            wgpu.instanceWaitAny(ToBackend(GetDevice())->GetInnerInstance(), 1, &waitInfo,
+                                 UINT64_MAX);
+
+            futuresInFlight->pop_front();
+        }
+    });
+    mHasPendingCommands = false;
     return {};
 }
 
