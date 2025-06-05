@@ -824,6 +824,13 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
         uint32_t additional = maxBuffersPerStage - baseMaxBuffersPerStage;
         limits->v1.maxStorageBuffersPerShaderStage += additional;
     }
+    if (!(limits->v1.maxStorageBuffersPerShaderStage < mtlLimits.maxBufferArgumentEntriesPerFunc)) {
+        dawn::ErrorLog() << "PhysicalDevice::InitializeSupportedLimitsImpl: max storage buffers "
+                            "per shader stage ("
+                         << limits->v1.maxStorageBuffersPerShaderStage
+                         << ") + 1 exceeds maxBufferArgumentEntriesPerFunc ("
+                         << mtlLimits.maxBufferArgumentEntriesPerFunc << ")";
+    }
 
     uint32_t baseMaxTexturesPerStage =
         limits->v1.maxSampledTexturesPerShaderStage + limits->v1.maxStorageTexturesPerShaderStage;
