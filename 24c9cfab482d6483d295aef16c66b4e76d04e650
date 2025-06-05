@@ -37,6 +37,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f1d5f0e5_5782a2bf",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1654,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T21:01:44Z",
+      "side": 1,
+      "message": "I think this is no longer accurate, since we always insert `unreachable` if there was no terminator now.\n\nI deleted the `to_remove` stuff and no unit tests failed, so we\u0027re missing a test case if there\u0027s another way to have an invalid continue.",
+      "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de1af403_f898695a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T21:01:44Z",
+      "side": 1,
+      "message": "Nit: still says \"default\" here",
+      "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54796dd0_e6e10c71",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1702,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T21:01:44Z",
+      "side": 1,
+      "message": "Nit: not emitted as a `let` anymore, we just use the value directly.",
+      "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0297ebf8_fc8166e2",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 17
@@ -54,6 +105,23 @@
         "endLine": 1804,
         "endChar": 56
       },
+      "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b40f4408_b8e60f25",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1896,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T21:01:44Z",
+      "side": 1,
+      "message": "When is this not true? I tried `TINT_ASSERT()`ing this and no tests failed, so missing test coverage if this can actually happen.",
       "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
