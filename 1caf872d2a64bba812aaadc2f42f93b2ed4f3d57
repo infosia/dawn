@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4072454_1b6ca72a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-05T15:11:25Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "79ef08c4_4a447696",
+      "revId": "1caf872d2a64bba812aaadc2f42f93b2ed4f3d57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff100770_69fd2fb9",
@@ -66,6 +84,24 @@
       "writtenOn": "2025-06-05T15:09:03Z",
       "side": 1,
       "message": "Nit: Pull out the definition of `referenced` to the top level so that it isn\u0027t recomputed from scratch every time we get here.",
+      "revId": "1caf872d2a64bba812aaadc2f42f93b2ed4f3d57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ed69a5a_03ef7a58",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-05T15:11:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff100770_69fd2fb9",
       "revId": "1caf872d2a64bba812aaadc2f42f93b2ed4f3d57",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
