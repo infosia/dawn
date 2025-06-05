@@ -16,6 +16,29 @@
       "message": "Bots happly now. PTAL, thanks!",
       "revId": "cb9d4f1137633462dff53e30f8dfa8e2dcb46ef3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adaa80dd_a6285672",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-06-05T14:36:56Z",
+      "side": 1,
+      "message": "This is a bit awkward. Though I don\u0027t think we currently have anyway to explicitly disable/enable a feature based on toggles. It would be better to be able to do that. Otherwise we have a situation where the device advertises that it supports ImmidiateConstants but cannot use it.",
+      "range": {
+        "startLine": 145,
+        "startChar": 37,
+        "endLine": 145,
+        "endChar": 46
+      },
+      "revId": "cb9d4f1137633462dff53e30f8dfa8e2dcb46ef3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
