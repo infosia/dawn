@@ -48,19 +48,23 @@ OPTIONS = {
     #
     #     embuilder build path/to/port/file.py:opt_level=2:shared_memory=true
     'opt_level':
-    "Optimization (-O) level for the bindings' Wasm layer. Default: choose based on -sASSERTIONS.",
+    "Optimization (-O) level for the bindings' Wasm layer. Default: choose based on linker's -sASSERTIONS.",
     'shared_memory':
-    "Enable -sSHARED_MEMORY. Default: choose based on whether linker has -sSHARED_MEMORY enabled.",
+    "Enable -sSHARED_MEMORY. Default: choose based on linker's -sSHARED_MEMORY.",
+    'async':
+    "Whether to build for Asyncify/JSPI or not. Default: choose based on linker's -sASYNCIFY or -sJSPI."
 }
 _VALID_OPTION_VALUES = {
     'cpp_bindings': ['true', 'false'],
     'opt_level': ['auto', '0', '2'],
     'shared_memory': ['auto', 'true', 'false'],
+    'async': ['auto', 'true', 'false'],
 }
 _opts: Dict[str, Optional[str]] = {
     'cpp_bindings': 'true',
     'opt_level': 'auto',
     'shared_memory': 'auto',
+    'async': 'auto',
 }
 
 
@@ -151,6 +155,15 @@ def _compute_library_compile_flags(settings):
     if shared_memory == 'true':
         lib_name_suffix += '-shared_memory'
         flags.append('-sSHARED_MEMORY')
+
+    _async = _opts['async']
+    if _async == 'auto':
+        _async == 'true' if settings.ASYNCIFY else 'false'
+    if _async == 'true':
+        lib_name_suffix += '-async'
+        flags.append('-DASYNC=1')
+    else:
+        flags.append('-DASYNC=0')
 
     return (lib_name_suffix, flags)
 

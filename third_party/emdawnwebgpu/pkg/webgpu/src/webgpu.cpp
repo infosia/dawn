@@ -41,6 +41,13 @@
 #define DCHECK_PRINTF(...)
 #endif
 
+#if !defined(ASYNC)
+#error Missing -DASYNC=0 or -DASYNC=1
+#elif ASYNC != 0 && ASYNC != 1
+#error -DASYNC must be 0 or 1
+#endif
+static constexpr bool kBuiltWithAsync = ASYNC;
+
 using FutureID = uint64_t;
 static constexpr FutureID kNullFutureId = 0;
 using InstanceID = uint64_t;
@@ -57,9 +64,11 @@ void emwgpuSetLabel(void* ptr, const char* data, size_t length);
 // and deref it in JS on the other side. The timeout, however, is converted to
 // a int32_t because it will be used with JS setTimeout which actually takes a
 // int32_t.
+#if ASYNC  // Make sure emwgpuWaitAny can get optimized out in non-async builds.
 double emwgpuWaitAny(FutureID const* futurePtr,
                      size_t futureCount,
                      int32_t const* timeoutMSPtr);
+#endif
 WGPUTextureFormat emwgpuGetPreferredFormat();
 
 // Device functions, i.e. creation functions to create JS backing objects given
@@ -549,10 +558,7 @@ class EventManager : NonMovable {
     }
 
     // To handle timeouts, use Asyncify and proxy back into JS.
-    if (timeoutNS > 0) {
-      // Should have already been validated in WGPUInstanceImpl::WaitAny.
-      assert(emscripten_has_asyncify());
-
+    if (kBuiltWithAsync && timeoutNS > 0) {
       std::vector<FutureID> futures;
       std::unordered_map<FutureID, WGPUFutureWaitInfo*> futureIdToInfo;
       for (size_t i = 0; i < count; ++i) {
@@ -599,6 +605,8 @@ class EventManager : NonMovable {
         completed->Complete(completedId, EventCompletionType::Ready);
       }
       return WGPUWaitStatus_Success;
+    } else {
+      assert(timeoutNS == 0);
     }
 
     std::map<FutureID, std::unique_ptr<TrackedEvent>> completable;
@@ -1618,6 +1626,9 @@ void WGPUInstanceImpl::ProcessEvents() {
 WGPUWaitStatus WGPUInstanceImpl::WaitAny(size_t count,
                                          WGPUFutureWaitInfo* infos,
                                          uint64_t timeoutNS) {
+  // Check that -DASYNC is set correctly for the link environment.
+  assert(kBuiltWithAsync == emscripten_has_asyncify());
+
   if (timeoutNS > 0) {
     if (!mCapabilities.timedWaitAnyEnable) {
       // Timed wait not valid unless enabled on the instance.
@@ -1627,11 +1638,6 @@ WGPUWaitStatus WGPUInstanceImpl::WaitAny(size_t count,
           timeoutNS);
       return WGPUWaitStatus_Error;
     }
-    // Cannot handle timeouts without Asyncify. Assert should never fail,
-    // because wgpuCreateInstance should disallow timedWaitAnyEnable.
-    // TODO(crbug.com/377760848): Use the preprocessor to remove all this code
-    // (and emwgpuWaitAny) when building without Asyncify.
-    assert(emscripten_has_asyncify());
 
     if (count > mCapabilities.timedWaitAnyMaxCount) {
       DEBUG_PRINTF(
@@ -1748,8 +1754,7 @@ void wgpuSurfaceCapabilitiesFreeMembers(WGPUSurfaceCapabilities) {
 // ----------------------------------------------------------------------------
 
 bool ValidateInstanceDescriptor(const WGPUInstanceDescriptor& descriptor) {
-  if (descriptor.capabilities.timedWaitAnyEnable &&
-      !emscripten_has_asyncify()) {
+  if (!kBuiltWithAsync && descriptor.capabilities.timedWaitAnyEnable) {
     DEBUG_PRINTF(
         "timedWaitAnyEnable requested, but requires Asyncify or JSPI.");
     return false;
@@ -1759,6 +1764,9 @@ bool ValidateInstanceDescriptor(const WGPUInstanceDescriptor& descriptor) {
 
 WGPUInstance wgpuCreateInstance(
     [[maybe_unused]] const WGPUInstanceDescriptor* descriptor) {
+  // Check that -DASYNC is set correctly for the link environment.
+  assert(kBuiltWithAsync == emscripten_has_asyncify());
+
   if (descriptor && !ValidateInstanceDescriptor(*descriptor)) {
     return nullptr;
   }
