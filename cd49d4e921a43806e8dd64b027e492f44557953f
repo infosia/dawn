@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11ddc27a_be204e9c",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-05T18:39:19Z",
+      "side": 1,
+      "message": "nit. was there a reason to remove the default? It looks like it caused a lot of the other sorta unnecessary changes in this cl?",
+      "range": {
+        "startLine": 218,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 50
+      },
+      "revId": "cd49d4e921a43806e8dd64b027e492f44557953f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
