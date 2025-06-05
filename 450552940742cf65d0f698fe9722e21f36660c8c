@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d62da1e3_2eace490",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T18:48:36Z",
+      "side": 1,
+      "message": "Discussed this briefly internally today - because W3C has already provisionally agreed on doing this extension, we should prototype this using the expected \"final\" name of `texel_buffers`, instead of prefixing it with `chromium_experimental_`. This will make it easier for early adopters to migrate once we release it.",
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9832a82d_95dc9551",
         "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
         "patchSetId": 2
@@ -106,6 +123,41 @@
       "writtenOn": "2025-06-05T17:08:49Z",
       "side": 1,
       "message": "@jrprice@google.com does this have any interaction with the new tier1 texel formats? https://github.com/gpuweb/gpuweb/pull/5160",
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47510e3b_083b6cf2",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T18:48:36Z",
+      "side": 1,
+      "message": "Not yet. We will need to figure out which formats we can add texel buffer support for with the tier1 feature, but we can do that later.",
+      "parentUuid": "fa6135d2_5eda9eb7",
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d5c40c4_651448fd",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T18:48:36Z",
+      "side": 1,
+      "message": "The decision from our F2F last year was that this would be a language extension instead of an \"enable extension\". So instead of using `enable` you would (optionally) use `requires texel_buffers;`.\n\nIn `wgsl.def` that means using the `language_feature` enum instead of `extension`.",
       "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
