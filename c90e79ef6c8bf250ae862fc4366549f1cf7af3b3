@@ -33,6 +33,24 @@
       "message": "LGTM assuming we will have coverage in the CTS before enabling (because we don\u0027t have end2end tests here)",
       "revId": "c90e79ef6c8bf250ae862fc4366549f1cf7af3b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8ef04ab_d73f3746",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-05T06:27:43Z",
+      "side": 1,
+      "message": "That\u0027s true. The related end2end tests will be in the next CL and the CTS will be added after we enable it as an experimental feature in Chromium.",
+      "parentUuid": "8531e5cd_21508c27",
+      "revId": "c90e79ef6c8bf250ae862fc4366549f1cf7af3b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
