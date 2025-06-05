@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9832a82d_95dc9551",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-05T17:08:49Z",
+      "side": 1,
+      "message": "Can you format the file to be 100 columns?",
+      "fixSuggestions": [
+        {
+          "fixId": "4a0b0617_d7632b41",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+              "range": {
+                "startLine": 3,
+                "startChar": 0,
+                "endLine": 6,
+                "endChar": 0
+              },
+              "replacement": "The `chromium_experimental_texel_buffers` extension allows to store WebGPU plain\ncolor format data with buffers, supporting format conversion on load and store\noperations. Texel buffers roughly translate to buffer textures in Vulkan\n(`Dim \u003d Buffer`), `texture_buffer\u003cformat\u003e` in Metal Shading Language, and typed\nUAV/SRV buffer views in HLSL/D3D12.\n"
+            },
+            {
+              "path": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+              "range": {
+                "startLine": 9,
+                "startChar": 0,
+                "endLine": 10,
+                "endChar": 0
+              },
+              "replacement": "No official WebGPU specification has been written yet, and implementations must\nnot expose this functionality without an explicit draft-enable flag.\n"
+            },
+            {
+              "path": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+              "range": {
+                "startLine": 13,
+                "startChar": 0,
+                "endLine": 14,
+                "endChar": 0
+              },
+              "replacement": "A new `texel_buffer` type, parameterized by the color format and the access mode:\n`texel_buffer\u003cFormat, Access\u003e`.\n"
+            },
+            {
+              "path": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+              "range": {
+                "startLine": 15,
+                "startChar": 0,
+                "endLine": 17,
+                "endChar": 0
+              },
+              "replacement": "*   `Format` must be a WebGPU plain color format (e.g. r8unorm, rgba32float,\n    etc.).\n*   `Access` is either read or read_write.\n"
+            },
+            {
+              "path": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+              "range": {
+                "startLine": 18,
+                "startChar": 0,
+                "endLine": 19,
+                "endChar": 0
+              },
+              "replacement": "Texel buffers overload `textureDimensions`, `textureLoad` and `textureStore`\nbuilt-in functions.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad6f3388_6db770d8",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-05T17:08:49Z",
+      "side": 1,
+      "message": "There is a WGSL spec at https://github.com/gpuweb/gpuweb/blob/main/proposals/texel-buffers.md which has been accepted by the committee. May also be worth linking to the gpuweb issue https://github.com/gpuweb/gpuweb/issues/162 to keep it all together.",
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa6135d2_5eda9eb7",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-05T17:08:49Z",
+      "side": 1,
+      "message": "@jrprice@google.com does this have any interaction with the new tier1 texel formats? https://github.com/gpuweb/gpuweb/pull/5160",
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e71c57d_0fffc7d0",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-05T17:08:49Z",
+      "side": 1,
+      "message": "```suggestion\n@group(0) @binding(0) var myBuffer : texel_buffer\u003crgba8unorm, read_write\u003e;\n```",
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
