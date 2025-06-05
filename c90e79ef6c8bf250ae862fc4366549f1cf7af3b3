@@ -16,6 +16,23 @@
       "message": "PTAL, thanks!",
       "revId": "c90e79ef6c8bf250ae862fc4366549f1cf7af3b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8531e5cd_21508c27",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-05T06:22:11Z",
+      "side": 1,
+      "message": "LGTM assuming we will have coverage in the CTS before enabling (because we don\u0027t have end2end tests here)",
+      "revId": "c90e79ef6c8bf250ae862fc4366549f1cf7af3b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
