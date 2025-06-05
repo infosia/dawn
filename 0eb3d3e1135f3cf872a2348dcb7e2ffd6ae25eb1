@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f382be03_000ee12a",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-05T19:54:18Z",
+      "side": 1,
+      "message": "Hm, maybe not. I was thinking it would still have issues moving the load over block boundaries, but I can try it without and see what happens.",
+      "parentUuid": "2a7772f5_13efe3a8",
+      "revId": "0eb3d3e1135f3cf872a2348dcb7e2ffd6ae25eb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3f3f029f_dc07dcf7",
         "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
         "patchSetId": 14
@@ -49,6 +67,24 @@
           ]
         }
       ],
+      "revId": "0eb3d3e1135f3cf872a2348dcb7e2ffd6ae25eb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eff10377_7cd21b33",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-05T19:54:18Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "3f3f029f_dc07dcf7",
       "revId": "0eb3d3e1135f3cf872a2348dcb7e2ffd6ae25eb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
