@@ -78,7 +78,10 @@ if (tint_build_ir_binary) {
 if (tint_build_unittests) {
   if (tint_build_ir_binary) {
     tint_unittests_source_set("unittests") {
-      sources = [ "roundtrip_test.cc" ]
+      sources = [
+        "decode_test.cc",
+        "roundtrip_test.cc",
+      ]
       deps = [
         "${dawn_root}/src/utils:utils",
         "${tint_src_dir}:gmock_and_gtest",
@@ -102,7 +105,10 @@ if (tint_build_unittests) {
       ]
 
       if (tint_build_ir_binary) {
-        deps += [ "${tint_src_dir}/lang/core/ir/binary" ]
+        deps += [
+          "${tint_src_dir}/lang/core/ir/binary",
+          "${tint_src_dir}/utils/protos/ir:proto",
+        ]
       }
     }
   }
