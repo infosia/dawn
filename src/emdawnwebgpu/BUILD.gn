@@ -184,6 +184,9 @@ if (is_wasm) {
     ]
     sources = get_target_outputs(":emdawnwebgpu_headers_gen") +
               [ "../../third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp" ]
+
+    # This build only currently supports async targets.
+    defines = [ "ASYNC=1" ]
     inputs = [
       # TODO(crbug.com/371024051): Changing these files doesn't seem to trigger a relink. Why?
       "../../third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
