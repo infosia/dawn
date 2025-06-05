@@ -19,6 +19,7 @@
 #include <memory>
 #include <mutex>
 #include <set>
+#include <span>
 #include <tuple>
 #include <unordered_map>
 #include <utility>
@@ -52,6 +53,8 @@ using FutureID = uint64_t;
 static constexpr FutureID kNullFutureId = 0;
 using InstanceID = uint64_t;
 static constexpr InstanceID kNullInstanceId = 0;
+
+static constexpr size_t kTimedWaitAnyMaxCountDefault = 64;
 
 // ----------------------------------------------------------------------------
 // Declarations for JS emwgpu functions (defined in library_webgpu.js)
@@ -822,7 +825,7 @@ struct WGPUInstanceImpl final : public EventSource, public RefCounted {
  private:
   static InstanceID GetNextInstanceId();
 
-  WGPUInstanceCapabilities mCapabilities = {};
+  size_t mTimedWaitAnyMaxCount = 0;
 };
 
 struct WGPUShaderModuleImpl final : public EventSource, public RefCounted {
@@ -1608,9 +1611,16 @@ void WGPUDeviceImpl::WillDropLastExternalRef() {
 WGPUInstanceImpl::WGPUInstanceImpl(const WGPUInstanceDescriptor* desc)
     : EventSource(GetNextInstanceId()) {
   if (desc) {
-    mCapabilities = desc->capabilities;
-    if (mCapabilities.timedWaitAnyMaxCount < 64) {
-      mCapabilities.timedWaitAnyMaxCount = 64;
+    auto features =
+        std::span(desc->requiredFeatures, desc->requiredFeatureCount);
+    if (std::find(features.begin(), features.end(),
+                  WGPUInstanceFeatureName_TimedWaitAny) != features.end()) {
+      if (desc->requiredLimits) {
+        mTimedWaitAnyMaxCount = desc->requiredLimits->timedWaitAnyMaxCount;
+      }
+      if (mTimedWaitAnyMaxCount < kTimedWaitAnyMaxCountDefault) {
+        mTimedWaitAnyMaxCount = kTimedWaitAnyMaxCountDefault;
+      }
     }
   }
   GetEventManager().RegisterInstance(GetInstanceId());
@@ -1630,20 +1640,20 @@ WGPUWaitStatus WGPUInstanceImpl::WaitAny(size_t count,
   assert(kBuiltWithAsync == emscripten_has_asyncify());
 
   if (timeoutNS > 0) {
-    if (!mCapabilities.timedWaitAnyEnable) {
+    if (!kBuiltWithAsync || mTimedWaitAnyMaxCount == 0) {
       // Timed wait not valid unless enabled on the instance.
       DEBUG_PRINTF(
           "WaitAny timeoutNS (%" PRIu64
-          ") > 0, but timedWaitAnyEnable not enabled at wgpuCreateInstance\n",
+          ") > 0, but TimedWaitAny not enabled at wgpuCreateInstance\n",
           timeoutNS);
       return WGPUWaitStatus_Error;
     }
 
-    if (count > mCapabilities.timedWaitAnyMaxCount) {
+    if (count > mTimedWaitAnyMaxCount) {
       DEBUG_PRINTF(
           "WaitAny count (%zu) > the timedWaitAnyMaxCount (%zu) which was "
           "enabled at wgpuCreateInstance\n",
-          count, mCapabilities.timedWaitAnyMaxCount);
+          count, mTimedWaitAnyMaxCount);
       return WGPUWaitStatus_Error;
     }
   }
@@ -1749,15 +1759,58 @@ void wgpuSurfaceCapabilitiesFreeMembers(WGPUSurfaceCapabilities) {
   // wgpuSurfaceCapabilities doesn't currently allocate anything.
 }
 
+void wgpuSupportedInstanceFeaturesFreeMembers(WGPUSupportedInstanceFeatures) {
+  // Nothing to do, .features is statically allocated.
+}
+
 // ----------------------------------------------------------------------------
 // Standalone (non-method) functions
 // ----------------------------------------------------------------------------
 
+static constexpr auto kSupportedFeatures =
+#if ASYNC
+    std::array{WGPUInstanceFeatureName_TimedWaitAny};
+#else
+    std::array<WGPUInstanceFeatureName, 0>{};
+#endif
+
+WGPUBool wgpuHasInstanceFeature(WGPUInstanceFeatureName feature) {
+  return std::find(kSupportedFeatures.begin(), kSupportedFeatures.end(),
+                   feature) != kSupportedFeatures.end();
+}
+
+void wgpuGetInstanceFeatures(WGPUSupportedInstanceFeatures* features) {
+  assert(features != nullptr);
+
+  features->featureCount = kSupportedFeatures.size();
+  features->features = kSupportedFeatures.data();
+}
+
+WGPUStatus wgpuGetInstanceLimits(WGPUInstanceLimits* limits) {
+  assert(limits != nullptr);
+  if (limits->nextInChain != nullptr) {
+    return WGPUStatus_Error;
+  }
+
+  limits->timedWaitAnyMaxCount = kTimedWaitAnyMaxCountDefault;
+  return WGPUStatus_Success;
+}
+
 bool ValidateInstanceDescriptor(const WGPUInstanceDescriptor& descriptor) {
-  if (!kBuiltWithAsync && descriptor.capabilities.timedWaitAnyEnable) {
-    DEBUG_PRINTF(
-        "timedWaitAnyEnable requested, but requires Asyncify or JSPI.");
-    return false;
+  auto features =
+      std::span(descriptor.requiredFeatures, descriptor.requiredFeatureCount);
+  for (auto feature : features) {
+    switch (feature) {
+      case WGPUInstanceFeatureName_TimedWaitAny:
+        if constexpr (!kBuiltWithAsync) {
+          DEBUG_PRINTF(
+              "timedWaitAnyEnable requested, but requires Asyncify or JSPI.");
+          return false;
+        }
+        break;
+      default:
+        return false;
+    }
   }
   return true;
 }
