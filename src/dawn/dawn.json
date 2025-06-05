@@ -162,7 +162,7 @@
                 "name": "request device",
                 "returns": "future",
                 "args": [
-                    {"name": "options", "type": "device descriptor", "annotation": "const*", "optional": true, "no_default": true},
+                    {"name": "descriptor", "type": "device descriptor", "annotation": "const*", "optional": true, "no_default": true},
                     {"name": "callback info", "type": "request device callback info"}
                 ]
             },
@@ -3372,9 +3372,9 @@
             {"name": "stencil back", "type": "stencil face state"},
             {"name": "stencil read mask", "type": "uint32_t", "default": "0xFFFFFFFF"},
             {"name": "stencil write mask", "type": "uint32_t", "default": "0xFFFFFFFF"},
-            {"name": "depth bias", "type": "int32_t", "default": "0"},
-            {"name": "depth bias slope scale", "type": "float", "default": "0.0f"},
-            {"name": "depth bias clamp", "type": "float", "default": "0.0f"}
+            {"name": "depth bias", "type": "int32_t"},
+            {"name": "depth bias slope scale", "type": "float"},
+            {"name": "depth bias clamp", "type": "float"}
         ]
     },
 
@@ -3464,8 +3464,8 @@
             {"name": "mag filter", "type": "filter mode", "default": "nearest"},
             {"name": "min filter", "type": "filter mode", "default": "nearest"},
             {"name": "mipmap filter", "type": "mipmap filter mode", "default": "nearest"},
-            {"name": "lod min clamp", "type": "float", "default": "0.0f"},
-            {"name": "lod max clamp", "type": "float", "default": "32.0f"},
+            {"name": "lod min clamp", "type": "float", "default": "0.f"},
+            {"name": "lod max clamp", "type": "float", "default": "32.f"},
             {"name": "compare", "type": "compare function"},
             {"name": "max anisotropy", "type": "uint16_t", "default": "1"}
         ]

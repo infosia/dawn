@@ -107,9 +107,9 @@
             {%- elif member.type.name.get() == "bool" -%}
                 //* Explicitly use literals 0 and 1 for booleans.
                 {%- if member.default_value == "true" -%}
-                    1
+                    WGPU_TRUE
                 {%- else -%}
-                    0
+                    WGPU_FALSE
                 {%- endif -%}
             {%- elif "void" in member.type.name.get() -%}
                 //* For members, void types are always pointers. We should
@@ -229,6 +229,8 @@
 #  endif
 #endif
 
+#define WGPU_TRUE (UINT32_C(1))
+#define WGPU_FALSE (UINT32_C(0))
 {% for constant in by_category["constant"] %}
     #define {{API}}_{{constant.name.SNAKE_CASE()}} ({{constant.value}})
 {% endfor %}
@@ -340,7 +342,7 @@ extern "C" {
 {% for function in by_category["function"] %}
     typedef {{as_cType(function.return_type.name)}} (*{{as_cProc(None, function.name)}})(
             {%- for arg in function.arguments -%}
-                {% if not loop.first %}, {% endif %}
+                {% if not loop.first %}, {% endif -%}
                 {{nullable_annotation(arg)}}{{as_annotated_cType(arg)}}
             {%- endfor -%}
         ) {{API}}_FUNCTION_ATTRIBUTE;
