@@ -51,6 +51,24 @@
       ],
       "revId": "740351a126fe2110cc9d85ab36404107c914b056",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e704d35_bf07f1d3",
+        "filename": "src/tint/lang/wgsl/writer/ir_to_program/ir_to_program.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-05T19:25:52Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "7227504c_c0879abb",
+      "revId": "740351a126fe2110cc9d85ab36404107c914b056",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
