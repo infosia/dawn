@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e11e4834_858e2a56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-05T21:58:38Z",
+      "side": 1,
+      "message": "Updated this after rebasing the VkFramebuffer cache CL (https://dawn-review.googlesource.com/c/dawn/+/243636) on top of it to ensure I could reuse the LRUCache for both.",
+      "revId": "72fb0194c08e0ad8f6547ec20875b5598a233df2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
