@@ -105,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5c55c20_b1cf18f4",
+        "filename": "src/dawn/common/LRUCache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-05T17:33:49Z",
+      "side": 1,
+      "message": "Gave it a try!",
+      "parentUuid": "925e64a1_56492a1f",
+      "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb60ea09_dd8426cb",
@@ -165,6 +183,30 @@
       "writtenOn": "2025-06-04T22:25:16Z",
       "side": 1,
       "message": "Huh... is this needed? I thought that lambda\u0027s created with it\u0027s scope visibility, so since we are creating the lambda in `Device`, it should already have access to the private func?",
+      "range": {
+        "startLine": 346,
+        "startChar": 4,
+        "endLine": 346,
+        "endChar": 34
+      },
+      "revId": "f2754f015f19f7344e6e2f3637a3848f3a230bb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f588d4a_c7b4ff42",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-05T17:33:49Z",
+      "side": 1,
+      "message": "Bah. That\u0027s another accidental leftover from testing another path. Removed.",
+      "parentUuid": "f647d18c_d7096c66",
       "range": {
         "startLine": 346,
         "startChar": 4,
