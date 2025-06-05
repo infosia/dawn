@@ -131,6 +131,8 @@
 #define TINT_DISABLE_WARNING_WEAK_VTABLES _Pragma("clang diagnostic ignored \"-Wweak-vtables\"")
 #define TINT_DISABLE_WARNING_ZERO_AS_NULLPTR \
     _Pragma("clang diagnostic ignored \"-Wzero-as-null-pointer-constant\"")
+#define TINT_DISABLE_WARNING_EXIT_TIME_DESTRUCTORS                                             \
+    _Pragma("clang diagnostic ignored \"-Wexit-time-destructors\"")
 
 // clang-format off
 #define TINT_BEGIN_DISABLE_PROTOBUF_WARNINGS()                                 \
@@ -207,6 +209,7 @@
 #define TINT_DISABLE_WARNING_UNUSED_VALUE _Pragma("GCC diagnostic ignored \"-Wunused-value\"")
 #define TINT_DISABLE_WARNING_WEAK_VTABLES    /* currently no-op */
 #define TINT_DISABLE_WARNING_ZERO_AS_NULLPTR /* currently no-op */
+#define TINT_DISABLE_WARNING_EXIT_TIME_DESTRUCTORS /* currently no-op */
 
 #define TINT_BEGIN_DISABLE_PROTOBUF_WARNINGS() \
     _Pragma("GCC diagnostic push") TINT_DISABLE_WARNING_UNUSED_PARAMETER TINT_REQUIRE_SEMICOLON
