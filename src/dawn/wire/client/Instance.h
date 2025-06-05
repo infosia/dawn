@@ -42,6 +42,8 @@ class Instance final : public RefCountedWithExternalCount<ObjectWithEventsBase> 
 
     ObjectType GetObjectType() const override;
 
+    // Validate and initialize the client side state. Note the *actual* native
+    // instance is not created via the wire, but gets injected separately.
     WireResult Initialize(const WGPUInstanceDescriptor* descriptor);
 
     WGPUFuture RequestAdapter(const WGPURequestAdapterOptions* options,
