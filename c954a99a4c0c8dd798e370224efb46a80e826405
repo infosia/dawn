@@ -90,6 +90,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52d45f1c_88e1885b",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-06-05T13:15:08Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "74c10db0_a21bc744",
+      "revId": "c954a99a4c0c8dd798e370224efb46a80e826405",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7899938_089baf57",
