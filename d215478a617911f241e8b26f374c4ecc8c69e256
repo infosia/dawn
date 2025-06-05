@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a80aaa23_c0ca7328",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-05T06:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cec4f895_0ff8c8f5",
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba55093d_bf7105e5",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-06-04T17:40:08Z",
       "side": 1,
       "message": "I assume this was meant to be `s/pointer/value/` or something? We\u0027re still not allowing handles to be passed by pointer right?",
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8b44937_1670a304",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-05T06:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba55093d_bf7105e5",
       "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -127,6 +163,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ec36df1_152148b1",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-05T06:43:26Z",
+      "side": 1,
+      "message": "Indeed! I replaced with an ASSERT that the pointers are not in the handle address space.",
+      "parentUuid": "2dfc0c28_186edccb",
+      "range": {
+        "startLine": 628,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 52
+      },
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5b3d5eba_06fab73b",
@@ -144,6 +204,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "86279ccc_7b6de598",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-05T06:43:26Z",
+      "side": 1,
+      "message": "The handling above was for pointers while this condition is for values. However as James pointed out, we shouldn\u0027t need to handle ptr\u003chandle\u003e in parameters.",
+      "parentUuid": "5b3d5eba_06fab73b",
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4e99cc6d_b2209260",
@@ -157,6 +235,24 @@
       "writtenOn": "2025-06-04T17:40:08Z",
       "side": 1,
       "message": "Nit: %9 is unused. You could tweak the handling of `Load` in `DeleteDeadInstructions` to make sure this gets cleaned up.",
+      "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1002f0f_11d3fd11",
+        "filename": "src/tint/lang/core/ir/transform/direct_variable_access_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5950,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-05T06:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e99cc6d_b2209260",
       "revId": "d215478a617911f241e8b26f374c4ecc8c69e256",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
