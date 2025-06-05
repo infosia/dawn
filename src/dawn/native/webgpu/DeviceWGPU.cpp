@@ -227,6 +227,7 @@ MaybeError Device::CopyFromStagingToTextureImpl(const BufferBase* source,
 }
 
 MaybeError Device::TickImpl() {
+    // queue Submit sync?
     wgpu.deviceTick(mInnerDevice);
     return {};
 }
