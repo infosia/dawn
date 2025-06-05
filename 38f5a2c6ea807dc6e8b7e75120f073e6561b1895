@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0012ddbd_6e6a9304",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-05T17:45:28Z",
+      "side": 1,
+      "message": "Good comment.",
+      "revId": "38f5a2c6ea807dc6e8b7e75120f073e6561b1895",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
