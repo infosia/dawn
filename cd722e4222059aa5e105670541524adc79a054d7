@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "af703eed_b1604d63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-05T08:08:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a32beed_54630211",
+      "revId": "cd722e4222059aa5e105670541524adc79a054d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "1854b4eb_67f64db2",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 3
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b859eebb_d0ef1ca6",
+        "filename": "src/tint/lang/core/core.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-05T08:08:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2435ed8a_f35b5b98",
+      "revId": "cd722e4222059aa5e105670541524adc79a054d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4a99715_58fcf440",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-06-04T19:32:31Z",
       "side": 1,
       "message": "Please add a couple of unit tests in `robustness_test.cc` that cover this change.",
+      "revId": "cd722e4222059aa5e105670541524adc79a054d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89e19518_a29d230b",
+        "filename": "src/tint/lang/core/ir/transform/robustness.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-05T08:08:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4a99715_58fcf440",
       "revId": "cd722e4222059aa5e105670541524adc79a054d7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "14d0788f_30f39080",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-05T08:08:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1df0b33_c830a9f1",
+      "revId": "cd722e4222059aa5e105670541524adc79a054d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bdd08aba_0b4a30d6",
@@ -99,6 +171,24 @@
       "writtenOn": "2025-06-04T19:32:31Z",
       "side": 1,
       "message": "This will also need to split the cases for `i8` to use `i32`.",
+      "revId": "cd722e4222059aa5e105670541524adc79a054d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13a2b768_5fe8cf86",
+        "filename": "test/tint/builtins/gen/gen.wgsl.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-05T08:08:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdd08aba_0b4a30d6",
       "revId": "cd722e4222059aa5e105670541524adc79a054d7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
