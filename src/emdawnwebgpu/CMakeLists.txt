@@ -215,6 +215,8 @@ if (EMSCRIPTEN)
         DEPENDS
             emdawnwebgpu_c_include
     )
+    # This build only currently supports async targets.
+    target_compile_options(emdawnwebgpu_c PRIVATE "-DASYNC=1")
     target_link_options(emdawnwebgpu_c INTERFACE
         # IMPORTANT: If changing these dependencies, update EMDAWNWEBGPU_C_ALL_FILE_DEPS too.
         "--js-library=${EM_BUILD_GEN_DIR}/library_webgpu_enum_tables.js"
