@@ -16,6 +16,58 @@
       "message": "PTAL.",
       "revId": "1caf872d2a64bba812aaadc2f42f93b2ed4f3d57",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79ef08c4_4a447696",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T15:09:03Z",
+      "side": 1,
+      "message": "Nit: You can do `func-\u003eIsVertex()` now.",
+      "fixSuggestions": [
+        {
+          "fixId": "d9c91d01_595fb638",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 1000,
+                "startChar": 0,
+                "endLine": 1001,
+                "endChar": 0
+              },
+              "replacement": "            if (func-\u003eIsVertex()) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1caf872d2a64bba812aaadc2f42f93b2ed4f3d57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff100770_69fd2fb9",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T15:09:03Z",
+      "side": 1,
+      "message": "Nit: Pull out the definition of `referenced` to the top level so that it isn\u0027t recomputed from scratch every time we get here.",
+      "revId": "1caf872d2a64bba812aaadc2f42f93b2ed4f3d57",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
