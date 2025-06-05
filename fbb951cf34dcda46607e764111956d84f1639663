@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67415edb_09bea62a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T15:03:51Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "fbb951cf34dcda46607e764111956d84f1639663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed103f63_b72c0275",
+        "filename": "src/tint/lang/spirv/writer/common/options.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T15:03:51Z",
+      "side": 1,
+      "message": "Needs a `TINT_REFLECT_ENUM_RANGE` to fix the decoder issue that the bots are failing with.\n\ne.g.\nhttps://source.chromium.org/chromium/chromium/src/+/refs/tags/139.0.7220.1:third_party/angle/third_party/dawn/src/tint/lang/glsl/writer/common/version.h;l\u003d79",
+      "revId": "fbb951cf34dcda46607e764111956d84f1639663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
