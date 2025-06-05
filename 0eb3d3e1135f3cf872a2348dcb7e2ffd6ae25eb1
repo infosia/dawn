@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a7772f5_13efe3a8",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T19:52:49Z",
+      "side": 1,
+      "message": "Is this still needed?\n\nYou updated `ValueToLet` to avoid creating `let`s for handle types, and `IrToProgram` can now inline a `load` at all of its uses.",
+      "revId": "0eb3d3e1135f3cf872a2348dcb7e2ffd6ae25eb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f3f029f_dc07dcf7",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T19:52:49Z",
+      "side": 1,
+      "message": "Remove commented out code.",
+      "fixSuggestions": [
+        {
+          "fixId": "d9661ed4_b7e55803",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/texture.cc",
+              "range": {
+                "startLine": 297,
+                "startChar": 0,
+                "endLine": 301,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "0eb3d3e1135f3cf872a2348dcb7e2ffd6ae25eb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
