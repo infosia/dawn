@@ -39,6 +39,30 @@
       },
       "revId": "cb9d4f1137633462dff53e30f8dfa8e2dcb46ef3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53a3e32d_79bfab2f",
+        "filename": "src/dawn/native/ProgrammableEncoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-05T18:36:24Z",
+      "side": 1,
+      "message": "Yeah it\u0027s not great but we plan on deleting the HLSL AST path on June 23rd so we\u0027ll remove this code very soon.",
+      "parentUuid": "adaa80dd_a6285672",
+      "range": {
+        "startLine": 145,
+        "startChar": 37,
+        "endLine": 145,
+        "endChar": 46
+      },
+      "revId": "cb9d4f1137633462dff53e30f8dfa8e2dcb46ef3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
