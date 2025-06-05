@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da53bb55_9d6fbdb7",
+        "filename": "test/tint/builtins/gen/literal/subgroupMatrixLoad/14bbb7.wgsl",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-05T15:15:25Z",
+      "side": 1,
+      "message": "Some of these auto-generated test files and expectations from the first set patch need to be deleted now, since they are testing the non-existent overloads.\n\n`tools/run gen` does not remove tests for non-existent overloads unfortunately :-(",
+      "revId": "5e611202dd6e8829b6ab011d6ee538cb580016f5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
