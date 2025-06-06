@@ -16,6 +16,40 @@
       "message": "Please take a look, thanks! The votes outdated because `uploaderin:cria/project-dawn-committers` not satisfied",
       "revId": "af2a25efc9f5bac777fbbe8a59e9b49b2950305c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7960d43d_39105628",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T08:27:23Z",
+      "side": 1,
+      "message": "LGTM, one last comment",
+      "revId": "af2a25efc9f5bac777fbbe8a59e9b49b2950305c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2bd9e56_5517f2a9",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T08:27:23Z",
+      "side": 1,
+      "message": "This is unused.",
+      "revId": "af2a25efc9f5bac777fbbe8a59e9b49b2950305c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
