@@ -67,6 +67,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "64d616d4_68c5ecd7",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-06T23:40:46Z",
+      "side": 1,
+      "message": "Ah I see, it\u0027s added to the map inside the function, but checked outside.\n\nI think it\u0027d probably be a bit clearer to both get from map and add to the map in the same place. That way you can also cache the fact that there is no valid range for a given binary instruction when something like overflow happens.\n\nOur usual pattern for this is `\u003cmap\u003e.GetOrAdd`. I think you could move the entire body of `GetInfo` into a `integer_binary_range_info_map_.GetOrAdd()` callback and then it always caches the outcome.\n\nKeeping the functions as returning `nullptr` is fine - we\u0027d just cache the `nullptr` to signal no valid range.",
+      "parentUuid": "3d199b19_7ac9bb64",
+      "range": {
+        "startLine": 1101,
+        "startChar": 35,
+        "endLine": 1101,
+        "endChar": 43
+      },
+      "revId": "d655bc234d27cb9f3dfa7f1ee89b4cb2a2187332",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "5185a51c_40450c05",
         "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
         "patchSetId": 2
