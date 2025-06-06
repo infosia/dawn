@@ -33,6 +33,40 @@
       "message": "lgtm",
       "revId": "c1d58c933160d7bdbd350e8e8617e46cc33b5181",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd26d586_6d411fed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T15:38:55Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "c1d58c933160d7bdbd350e8e8617e46cc33b5181",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12bfd2d_882ef7ba",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T15:38:55Z",
+      "side": 1,
+      "message": "It seems that this could be a SerialQueue since the DeletionSerial is strictly increasing.",
+      "revId": "c1d58c933160d7bdbd350e8e8617e46cc33b5181",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
