@@ -178,6 +178,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04be0c87_4d2fd2aa",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-06T20:15:49Z",
+      "side": 1,
+      "message": "Ah, well this function `APIGetCurrentTexture` is definitely user facing, hence the `API` in the name. But the location I linked might not be?... \n\nThe call stack I\u0027m seeing in code search looks like `APIGetCurrentTexture`-\u003e`Surface::GetCurrentTexture`-\u003e`SwapChain::GetCurrentTexture`. From what I can tell, it feels like `SwapChain::GetCurrentTexture` and `Surface::GetCurrentTexture` should just return a `SwapChainTextureInfo` instead of a `SurfaceTexture`, and then we assign the return values to the `SurfaceTexture` in `APIGetCurrentTexture`. I\u0027m not as familiar with the code-paths for surfaces/swap chains so maybe Corentin might have better input on whether that is a viable solution.",
+      "parentUuid": "305e4677_3e907e29",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "079def30_c369b768",
         "filename": "src/dawn/native/Texture.cpp",
         "patchSetId": 8
