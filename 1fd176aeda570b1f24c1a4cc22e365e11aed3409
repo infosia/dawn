@@ -34,6 +34,58 @@
       "parentUuid": "e9d71fc3_aa9ef98b",
       "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79435897_9f9b2b0c",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T14:06:49Z",
+      "side": 1,
+      "message": "I believe that CMAKE\u0027s BUILD_SHARED_LIBS should control this now that [this other CL landed](https://dawn-review.googlesource.com/c/dawn/+/238874).",
+      "parentUuid": "f322e360_524fd356",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d83bb941_f36b7934",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T14:06:49Z",
+      "side": 1,
+      "message": "Is there a way to use a Github action \"matrix\" to control these different variant without as much redundancy?",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8ea71ce_6938f85b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T14:06:49Z",
+      "side": 1,
+      "message": "A few more comments but I\u0027d like Kai to review this when he comes back.",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
