@@ -836,6 +836,22 @@ class Parser {
 
                         cont->PushOperand(src);
 
+<<<<<<< PATCH SET (1bf74e [spirv-reader][ir] Fix propagation when jumping if controls.)
+            // If this control has no exits, then we don't need to add the result through the
+            // control as we're jumping over the control to its parent control. (This is an
+            // `if` inside a `loop` where the `if` is doing a `break`).
+            if (ctrl->Exits().IsEmpty()) {
+                TINT_ASSERT(ctrl->Is<core::ir::If>());
+                blk = ctrl->Block();
+                continue;
+            }
+
+            for (auto& exit : ctrl->Exits()) {
+                exit->PushOperand(src);
+||||||| BASE
+            for (auto& exit : ctrl->Exits()) {
+                exit->PushOperand(src);
+=======
                         // Set `src` as the `param` so it's returned as the new value
                         src = param;
                         return nullptr;
@@ -849,6 +865,7 @@ class Parser {
                 for (auto& exit : ctrl->Exits()) {
                     exit->PushOperand(src);
                 }
+>>>>>>> BASE      (bd2e27 [spirv-reader][ir] Add OpPhi support.)
             }
 
             // Add a new result to the control instruction
