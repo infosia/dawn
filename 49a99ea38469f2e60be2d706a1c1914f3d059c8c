@@ -3,6 +3,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "47e5ec17_a6df4d51",
+        "filename": "src/dawn/common/LRUCache.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T11:52:44Z",
+      "side": 1,
+      "message": "Can we have a small comment for the whole class and that shows how to use the cache?",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80477363_2040d150",
+        "filename": "src/dawn/common/RefCountedWithExternalCount.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T11:52:44Z",
+      "side": 1,
+      "message": "nit: this comment could be updated.",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e28d1954_a0b53641",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2251,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T11:52:44Z",
+      "side": 1,
+      "message": "We used to have the logic for CreatView on the texture but then moved it on the device for consistency. Now that there is a reason to first make it go on the texture, maybe we could move it back? We\u0027d need to do the split for APICreateView and CreateView so that reentrant logic calling device-\u003eCreateTextureView can instead call texture-\u003eCreateView. Then we don\u0027t need to expose the template `GetOrCreateViewFromCache` and it can be a private, non-templated member of TextureBase.",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b752d037_08539964",
         "filename": "src/dawn/native/Surface.cpp",
         "patchSetId": 8
@@ -32,6 +83,57 @@
       "side": 1,
       "message": "It looks like the way to do this would be to do it here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/SwapChain.cpp;l\u003d132;drc\u003d04bbe3089844813b6c42f08575ace672c9a7202a;bpv\u003d1;bpt\u003d1\n\nI think what you probably want would be:\n```\nauto texture \u003d mCurrentTextureInfo.texture;\nsurfaceTexture.texture \u003d ReturnToAPI(std::move(texture));\n```",
       "parentUuid": "b752d037_08539964",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "079def30_c369b768",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T11:52:44Z",
+      "side": 1,
+      "message": "nit:\n```suggestion\n        mTextureViewCache \u003d std::make_unique\u003cTextureViewCache\u003e(kDefaultTextureViewCacheCapacity));\n```",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b5419da_4f6eca30",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T11:52:44Z",
+      "side": 1,
+      "message": "We will add texture component mapping soon, so this will be updated to support extension structs. Maybe we should have a helper to unpack to a flattened struct already and use that flattened struct for the key.",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b78e657_498e350b",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-06T11:52:44Z",
+      "side": 1,
+      "message": "We have a TODO to improve the label handling of frontend-cached objects so that the labels of all the deduplicated objects appear in messages. We should add the same TODO here.\n\nChain members will have to be taken into account though.",
       "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
