@@ -16,6 +16,8 @@
 
 #include <vector>
 
+#include "src/dawn/node/interop/WebGPU.h"
+
 namespace wgpu::binding {
 
 Napi::Function RegisteredEventListener::listener() const {
@@ -141,3 +143,10 @@ void EventTarget::setAttributeEventListener(Napi::Env env,
 }
 
 }  // namespace wgpu::binding
+
+namespace wgpu::interop {
+
+EventTarget::EventTarget() {}
+EventTarget::~EventTarget() {}
+
+}  // namespace wgpu::interop
