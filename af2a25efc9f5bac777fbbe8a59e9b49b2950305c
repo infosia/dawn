@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8407a88c_4e0f35d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-06T05:35:36Z",
+      "side": 1,
+      "message": "Please take a look, thanks! The votes outdated because `uploaderin:cria/project-dawn-committers` not satisfied",
+      "revId": "af2a25efc9f5bac777fbbe8a59e9b49b2950305c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
