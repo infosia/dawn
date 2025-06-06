@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39e6bb36_2d08edb4",
+        "filename": "src/tint/lang/spirv/reader/parser/branch_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-06T03:49:16Z",
+      "side": 1,
+      "message": "This would be invalid in later spir-v versions, but this was the only way I could see to make the dominance work out.",
+      "revId": "6ffcc3120a478ca583101580d9aec27cdab42428",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
