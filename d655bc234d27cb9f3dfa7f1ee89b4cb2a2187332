@@ -91,6 +91,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "ec7b0ff8_e7e2068d",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-06T23:47:51Z",
+      "side": 1,
+      "message": "Got it. I\u0027ll make this change in the next CL.",
+      "parentUuid": "64d616d4_68c5ecd7",
+      "range": {
+        "startLine": 1101,
+        "startChar": 35,
+        "endLine": 1101,
+        "endChar": 43
+      },
+      "revId": "d655bc234d27cb9f3dfa7f1ee89b4cb2a2187332",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "5185a51c_40450c05",
         "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
         "patchSetId": 2
