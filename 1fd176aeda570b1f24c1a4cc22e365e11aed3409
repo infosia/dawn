@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9d71fc3_aa9ef98b",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-06T01:23:51Z",
+      "side": 1,
+      "message": "This is our own source file, so I\u0027d strongly prefer to fix this in the file itself. Is there a reason we need to patch it?",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
