@@ -65,6 +65,11 @@ class RuntimeTimeoutComputeTest : public DawnTest {
         }
         return device.CreateComputePipeline(&csDesc);
     }
+
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::ShaderF16};
+    }
 };
 
 // This test will take up to 5+ seconds to execute if we do not have module constant hoisting
@@ -72,33 +77,31 @@ class RuntimeTimeoutComputeTest : public DawnTest {
 TEST_P(RuntimeTimeoutComputeTest, LargeConstantArrayInLoop) {
     DAWN_SKIP_TEST_IF_BASE(IsCPU() || IsWARP(), "timeout",
                            "skipping because software rendering is slow");
-    // Test disable due to CI failures. See crbug.com/421869294
-    DAWN_SKIP_TEST_IF_BASE(IsIntel(), "timeout", "device found to be slow on CI");
 
     std::string kShaderCode = R"(
+enable f16;
 @group(0)@binding(0) var < storage,read_write > A: array < i32 >;
-@compute @workgroup_size(256)
+@compute @workgroup_size(32)
 fn main(@builtin(local_invocation_index) g: u32) {
   var offset = g;
-  var b = i32(offset);
-      for (var i = 0;  i < 20; i++) {
-        var n = array(13, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-         1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0,
-         13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 0, 20, 0, 0, 0,
-          0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 13, 0, 13, 0, 13, 0, 0, 0, 0,
-          0, 0, 0, 0, 0, 25, 0, 20, 0, 23, 0, 20, 0, 0, 0, 0, 0, 0, 0,
-          0, 0, 13, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0,
-          0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 13, 0, 13, 0,
-          1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 20, 0, 18, 0, 20, 0, 11, 18,
-           15, 18, 23, 18, 15, 18, 10, 18, 13, 18, 22, 18, 13, 18, 10, 13,
-           18, 22, 23, 22, 18, 13, 13, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 13, 0, 11, 0, 9, 0, 11, 0,
-            13, 0, 11, 0, 9, 0, 8, 0, 13, 1, 13, 8, 13, 8, 13, 8, 13, 8, 16,
-            11, 13, 8, 16, 11, 13, 8, 13, 1, 13, 18, 16, 8, 13, 18, 16, 8,
-            13, 18, 16, 8, 13, 18, 16, 8, 13, 13, 11, 18, 13, 13, 11, 18, 13, 1)[i];
+  var b = f16(offset);
+      for (var i = 0;  i < 80; i++) {
+        var n = array(
+        13.0h, 1.0h, 2.3h, 14.1h, 22.3h,5h,6h,7h,8h,9h, 13.03h, 1.0h, 2.3h, 314.1h, 22.3h,15h,6h,7h,18h,9h,
+        13.0h, 1.0h, 2.3h, 14.1h, 22.3h,5h,6h,7h,8h,9h, 13.03h, 1.0h, 2.3h, 314.1h, 2.3h,15h,6h,7h,18h,9h,
+        13.0h, 1.0h, 2.3h, 14.1h, 22.3h,5h,6h,7h,8h,9h, 13.03h, 1.0h, 2.3h, 314.1h, 22.3h,15h,6h,7h,18h,9h,
+        13.0h, 1.0h, 2.3h, 14.1h, 22.7h,5h,6h,7h,8h,9h, 13.3h, 1.0h, 2.3h, 314.1h, 22.3h,15h,6h,7h,8h,9h,
+        13.0h, 1.0h, 2.3h, 14.1h, 22.3h,5h,6h,7h,8h,9h, 13.03h, 1.0h, 2.3h, 314.1h, 22.3h,15h,6h,7h,18h,9h,
+        3.0h, 1.0h, 2.3h, 14.1h, 22.3h,5h,6h,7h,8h,9h, 13.3h, 1.0h, 2.3h, 314.1h, 22.3h,15h,6h,7h,18h,9h,
+        3.0h, 1.0h, 2.3h, 14.1h, 22.3h,5h,6h,7h,8h,9h, 13.03h, 1.0h, 2.3h, 34.1h, 22.3h,15h,6h,7h,8h,9h,
+        13.0h, 1.0h, 2.3h, 14.1h, 22.3h,5h,6h,7h,8h,9h, 13.03h, 1.0h, 2.3h, 314.1h, 22.3h,15h,6h,7h,18h,9h,
+        13.0h, 1.0h, 2.3h, 14.1h, 22.3h,5h,6h,7h,8h,9h, 13.03h, 1.0h, 2.3h, 314.1h, 22.3h,15h,6h,7h,18h,9h,
+        3.0h, 1.0h, 2.3h, 14.1h, 22.6h,5h,6h,7h,8h,9h, 13.03h, 1.0h, 2.3h, 14.1h, 22.3h,15h,6h,7h,18h,9h,
+        13.0h, 1.0h, 2.3h, 14.1h, 22.3h,5h,6h,7h,8h,9h, 13.03h, 1.0h, 2.3h, 314.1h, 22.3h,15h,6h,4h,18h,9h,
+        )[i];
          b +=  n;
       }
-  A[offset] = b;
+  A[offset] = i32( b);
 }
     )";
 
@@ -124,7 +127,7 @@ fn main(@builtin(local_invocation_index) g: u32) {
     }
 
     queue.Submit(1, &commands);
-    std::vector<uint32_t> expected = {15, 16};
+    std::vector<uint32_t> expected = {1951, 1952};
     EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), output, 0, expected.size());
 }
 
