@@ -16,6 +16,29 @@
       "message": "PTAL, thanks!",
       "revId": "d655bc234d27cb9f3dfa7f1ee89b4cb2a2187332",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77fe97dd_5adc7922",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-06T17:11:25Z",
+      "side": 1,
+      "message": "IIUC the caching is actually handled by the caller - these methods don\u0027t do any caching. So maybe as a follow-up CL can you remove the `AndCache` from all of these methods names?",
+      "range": {
+        "startLine": 1101,
+        "startChar": 35,
+        "endLine": 1101,
+        "endChar": 43
+      },
+      "revId": "d655bc234d27cb9f3dfa7f1ee89b4cb2a2187332",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
