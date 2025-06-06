@@ -67,6 +67,24 @@
       "message": "It seems that this could be a SerialQueue since the DeletionSerial is strictly increasing.",
       "revId": "c1d58c933160d7bdbd350e8e8617e46cc33b5181",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83f0d188_acf60266",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-06-06T15:43:58Z",
+      "side": 1,
+      "message": "It could be SerialQueue but then instead of a `{Serial, VkDeviceSize}` pair it has `{Serial, std::vector\u003cVkDeviceSize\u003e}` pair where N sizes inserted for a given serial. All that\u0027s needed is the total size for a serial so it\u0027s a bit less efficient to store each size separately.",
+      "parentUuid": "f12bfd2d_882ef7ba",
+      "revId": "c1d58c933160d7bdbd350e8e8617e46cc33b5181",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
