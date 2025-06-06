@@ -131,11 +131,11 @@ deps = {
   # The //build and //tools/clang deps should all be updated in
   # unison, as there are dependencies between them.
   'build': {
-    'url': '{chromium_git}/chromium/src/build@db0d31d702840881c049c523a2226e8e391929bf',
+    'url': '{chromium_git}/chromium/src/build@b33ac2b68d9c600c88d88edfaa8406feca64206e',
     'condition': 'dawn_standalone',
   },
   'tools/clang': {
-    'url': '{chromium_git}/chromium/src/tools/clang@5d9b09742311e059ecdba6d74adcb883e4ebffe5',
+    'url': '{chromium_git}/chromium/src/tools/clang@71e38a389592db1a420dd6176e7448e347efc64c',
     'condition': 'dawn_standalone',
   },
 
