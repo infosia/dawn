@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ccd8d837_84ede54f",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-06-06T16:39:24Z",
+      "side": 1,
+      "message": "This is great, you wrote that \"this other CL landed\" but it is not merged yet right?",
+      "parentUuid": "79435897_9f9b2b0c",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d83bb941_f36b7934",
         "filename": ".github/workflows/ci.yml",
         "patchSetId": 8
@@ -67,6 +85,24 @@
       "writtenOn": "2025-06-06T14:06:49Z",
       "side": 1,
       "message": "Is there a way to use a Github action \"matrix\" to control these different variant without as much redundancy?",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05e78a95_d27e40f2",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-06-06T16:39:24Z",
+      "side": 1,
+      "message": "That\u0027s a good point, I am experimenting if a build matrix can work here.",
+      "parentUuid": "d83bb941_f36b7934",
       "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
