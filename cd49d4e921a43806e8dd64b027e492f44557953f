@@ -22,6 +22,30 @@
       },
       "revId": "cd49d4e921a43806e8dd64b027e492f44557953f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "160b6bdd_21b33743",
+        "filename": "src/dawn/native/Device.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-06T05:33:11Z",
+      "side": 1,
+      "message": "Oh that\u0027s because in previous CL I add an output pointer `Ref\u003cShaderModuleBase\u003e* outputSHaderModule` at the end of parameters list...\n\nAdding back the empty default.",
+      "parentUuid": "11ddc27a_be204e9c",
+      "range": {
+        "startLine": 218,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 50
+      },
+      "revId": "cd49d4e921a43806e8dd64b027e492f44557953f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
