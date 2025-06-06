@@ -107,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "29a64522_bfdf3b34",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2251,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-06T20:01:09Z",
+      "side": 1,
+      "message": "Given that I\u0027m trying to keep the complexity of this CL down and have a few follow ups that I need to do afterwards anyway (removing the D3D11 texture view cache, for example) I\u0027m inclined to leave that to a future CL?",
+      "parentUuid": "e28d1954_a0b53641",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b752d037_08539964",
         "filename": "src/dawn/native/Surface.cpp",
         "patchSetId": 8
@@ -210,6 +228,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "501f1efe_40e0a45f",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-06T20:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b5419da_4f6eca30",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b78e657_498e350b",
@@ -223,6 +259,24 @@
       "writtenOn": "2025-06-06T11:52:44Z",
       "side": 1,
       "message": "We have a TODO to improve the label handling of frontend-cached objects so that the labels of all the deduplicated objects appear in messages. We should add the same TODO here.\n\nChain members will have to be taken into account though.",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fa0c49d_96d10533",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-06T20:01:09Z",
+      "side": 1,
+      "message": "We don\u0027t want labels to be considered when checking the cache, though. Right?",
+      "parentUuid": "8b78e657_498e350b",
       "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
