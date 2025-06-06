@@ -16,6 +16,24 @@
       "message": "Okay, this is what was breaking at least some of the CQ bots. It\u0027s the only place we return and external reference without calling ReturnToAPI. Would love opinions on how to handle this properly!",
       "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95041565_b26ea72c",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-06T06:13:42Z",
+      "side": 1,
+      "message": "It looks like the way to do this would be to do it here: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/SwapChain.cpp;l\u003d132;drc\u003d04bbe3089844813b6c42f08575ace672c9a7202a;bpv\u003d1;bpt\u003d1\n\nI think what you probably want would be:\n```\nauto texture \u003d mCurrentTextureInfo.texture;\nsurfaceTexture.texture \u003d ReturnToAPI(std::move(texture));\n```",
+      "parentUuid": "b752d037_08539964",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
