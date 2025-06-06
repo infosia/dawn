@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b64ff3d_ba1de0ee",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-06T22:22:56Z",
+      "side": 1,
+      "message": "I think eventually, we could probably just do all the tracking for the serials via the callbacks since they spontaneous. Then I think `CheckAndUpdateCompletedSerials` could be a no-op and just return the completed serial.",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 90
+      },
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "345fa0dd_d5405790",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-06T22:22:56Z",
+      "side": 1,
+      "message": "Is this the only way to make forward progress? Ideally, I want to avoid adding anymore new usages of `deviceTick` since we eventually hope to get rid of it.",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 86
+      },
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
