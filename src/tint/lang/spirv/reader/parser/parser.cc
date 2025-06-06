@@ -760,6 +760,15 @@ class Parser {
                 break;
             }
 
+            // If this control has no exists, then we don't need to add the result through it as
+            // we're jumping over it. (This is an `if` inside a `loop` where it `if` is doing a
+            // `break` or `continue`.
+            if (ctrl->Exits().IsEmpty()) {
+                TINT_ASSERT(ctrl->Is<core::ir::If>());
+                blk = ctrl->Block();
+                continue;
+            }
+
             for (auto& exit : ctrl->Exits()) {
                 exit->PushOperand(src);
             }
