@@ -39,6 +39,53 @@
       },
       "revId": "d655bc234d27cb9f3dfa7f1ee89b4cb2a2187332",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d199b19_7ac9bb64",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-06T23:32:23Z",
+      "side": 1,
+      "message": "I think the caching is done in [1]?\n\nOr how do you think returning an std::optional\u003cIntegerRangeInfo\u003e in these functions?",
+      "parentUuid": "77fe97dd_5adc7922",
+      "range": {
+        "startLine": 1101,
+        "startChar": 35,
+        "endLine": 1101,
+        "endChar": 43
+      },
+      "revId": "d655bc234d27cb9f3dfa7f1ee89b4cb2a2187332",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5185a51c_40450c05",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-06T23:32:23Z",
+      "side": 1,
+      "message": "[1]",
+      "range": {
+        "startLine": 1135,
+        "startChar": 16,
+        "endLine": 1135,
+        "endChar": 46
+      },
+      "revId": "d655bc234d27cb9f3dfa7f1ee89b4cb2a2187332",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
