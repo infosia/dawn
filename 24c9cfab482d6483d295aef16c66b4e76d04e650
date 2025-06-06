@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e8feee2_f7e909c6",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1621,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-06T02:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb58a6cd_6b210fb5",
+      "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1d5f0e5_5782a2bf",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-06-05T21:01:44Z",
       "side": 1,
       "message": "I think this is no longer accurate, since we always insert `unreachable` if there was no terminator now.\n\nI deleted the `to_remove` stuff and no unit tests failed, so we\u0027re missing a test case if there\u0027s another way to have an invalid continue.",
+      "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0da38049_e3b63d96",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1654,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-06T02:39:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f1d5f0e5_5782a2bf",
       "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c10556e_575656d9",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1668,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-06T02:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de1af403_f898695a",
+      "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54796dd0_e6e10c71",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-06-05T21:01:44Z",
       "side": 1,
       "message": "Nit: not emitted as a `let` anymore, we just use the value directly.",
+      "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3d37422_0e2cb9eb",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1702,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-06T02:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54796dd0_e6e10c71",
       "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -109,6 +181,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2ed5925_8f3d0e5e",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1804,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-06T02:39:24Z",
+      "side": 1,
+      "message": "Updated the comment.",
+      "parentUuid": "0297ebf8_fc8166e2",
+      "range": {
+        "startLine": 1803,
+        "startChar": 49,
+        "endLine": 1804,
+        "endChar": 56
+      },
+      "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b40f4408_b8e60f25",
@@ -122,6 +218,24 @@
       "writtenOn": "2025-06-05T21:01:44Z",
       "side": 1,
       "message": "When is this not true? I tried `TINT_ASSERT()`ing this and no tests failed, so missing test coverage if this can actually happen.",
+      "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e326caa_75b2305a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1896,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-06T02:39:24Z",
+      "side": 1,
+      "message": "Reading through the code, the cases which trigger it all end up having this as true. I don\u0027t see a way to make it false, so I changed to an ASSERT.",
+      "parentUuid": "b40f4408_b8e60f25",
       "revId": "24c9cfab482d6483d295aef16c66b4e76d04e650",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
