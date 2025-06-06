@@ -105,8 +105,6 @@ class Backend : public BackendConnection {
     explicit Backend(InstanceBase* instance);
     ~Backend() override;
 
-    MaybeError Initialize();
-
     std::vector<Ref<PhysicalDeviceBase>> DiscoverPhysicalDevices(
         const UnpackedPtr<RequestAdapterOptions>& options) override;
 
