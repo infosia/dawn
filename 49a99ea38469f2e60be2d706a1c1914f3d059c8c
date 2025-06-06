@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b752d037_08539964",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-06T00:04:41Z",
+      "side": 1,
+      "message": "Okay, this is what was breaking at least some of the CQ bots. It\u0027s the only place we return and external reference without calling ReturnToAPI. Would love opinions on how to handle this properly!",
+      "revId": "49a99ea38469f2e60be2d706a1c1914f3d059c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
