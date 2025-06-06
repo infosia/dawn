@@ -442,7 +442,8 @@ class DeviceBase : public ErrorSink,
 
     void ForceEnableFeatureForTesting(Feature feature);
 
-    MaybeError Initialize(Ref<QueueBase> defaultQueue);
+    MaybeError Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor,
+                          Ref<QueueBase> defaultQueue);
     void DestroyObjects();
     void Destroy();
 

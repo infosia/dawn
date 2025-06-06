@@ -420,7 +420,8 @@ DeviceBase::~DeviceBase() {
     mQueue = nullptr;
 }
 
-MaybeError DeviceBase::Initialize(Ref<QueueBase> defaultQueue) {
+MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor,
+                                  Ref<QueueBase> defaultQueue) {
     mQueue = std::move(defaultQueue);
 
     SetWGSLExtensionAllowList();
@@ -437,6 +438,11 @@ MaybeError DeviceBase::Initialize(Ref<QueueBase> defaultQueue) {
     // Starting from now the backend can start doing reentrant calls so the device is marked as
     // alive.
     mState = State::Alive;
+
+    // Fake an error after the creation of a device here for testing.
+    if (descriptor.Get<DawnFakeDeviceInitializeErrorForTesting>() != nullptr) {
+        return DAWN_INTERNAL_ERROR("DawnFakeDeviceInitialzeErrorForTesting");
+    }
 
     DAWN_TRY_ASSIGN(mEmptyBindGroupLayout, CreateEmptyBindGroupLayout());
     DAWN_TRY_ASSIGN(mEmptyPipelineLayout, CreateEmptyPipelineLayout());
@@ -673,8 +679,11 @@ void DeviceBase::APIDestroy() {
 
 void DeviceBase::HandleDeviceLost(wgpu::DeviceLostReason reason, std::string_view message) {
     if (mLostEvent != nullptr) {
-        mLostEvent->mReason = reason;
-        mLostEvent->mMessage = message;
+        // Only update the reason if the reason isn't FailedCreation.
+        if (mLostEvent->mReason != wgpu::DeviceLostReason::FailedCreation) {
+            mLostEvent->mReason = reason;
+            mLostEvent->mMessage = message;
+        }
         GetInstance()->GetEventManager()->SetFutureReady(mLostEvent.Get());
         mLostFuture = mLostEvent->GetFuture();
         mLostEvent = nullptr;
