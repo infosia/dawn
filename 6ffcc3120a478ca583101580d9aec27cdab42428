@@ -34,6 +34,24 @@
       "parentUuid": "39e6bb36_2d08edb4",
       "revId": "6ffcc3120a478ca583101580d9aec27cdab42428",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "998aa616_f1e83e46",
+        "filename": "src/tint/lang/spirv/reader/parser/branch_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-06T17:40:39Z",
+      "side": 1,
+      "message": "Maybe? This works for now, and we\u0027ll have to continue to support it anyway, so I\u0027m not too concerned.",
+      "parentUuid": "c75d7502_3733cd3a",
+      "revId": "6ffcc3120a478ca583101580d9aec27cdab42428",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
