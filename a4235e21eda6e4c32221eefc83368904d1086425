@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e18eda1_817fc364",
+        "filename": "src/dawn/native/vulkan/external_memory/MemoryServiceImplementationDmaBuf.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-07T23:50:50Z",
+      "side": 1,
+      "message": "I chose this simply because of what my device had (for this fd import) however I wonder if HostVisible is a better alternative",
+      "range": {
+        "startLine": 275,
+        "startChar": 48,
+        "endLine": 275,
+        "endChar": 58
+      },
+      "revId": "a4235e21eda6e4c32221eefc83368904d1086425",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
