@@ -366,7 +366,7 @@ TEST_F(SpirvParserTest, OpUnreachable_InNonVoidFunction) {
               R"(
 %1 = func():bool {
   $B1: {
-    unreachable
+    ret false
   }
 }
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
