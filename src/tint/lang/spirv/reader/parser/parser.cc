@@ -1072,6 +1072,19 @@ class Parser {
             if (!current_function_->Block()->Terminator()) {
                 current_function_->Block()->Append(b_.Unreachable());
             }
+
+            // The `OpUnreachable` in SPIR-V doesn't mean it's unreachable, just that the result is
+            // indeterminate. If we expect to return something, and the function ends in an
+            // unreachable, then swap it for a zero return instead to make sure we always have a
+            // return.
+            if (!current_function_->ReturnType()->Is<core::type::Void>() &&
+                current_function_->Block()->Terminator()->Is<core::ir::Unreachable>()) {
+                auto* unreach = current_function_->Block()->Terminator();
+                unreach->Destroy();
+
+                current_function_->Block()->Append(
+                    b_.Return(current_function_, b_.Zero(current_function_->ReturnType())));
+            }
         }
         current_spirv_function_ = nullptr;
     }
