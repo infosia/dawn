@@ -118,7 +118,8 @@ class Parser {
         for (const auto& ext : spirv_context_->extensions()) {
             auto name = ext.GetOperand(0).AsString();
             if (name != "SPV_KHR_storage_buffer_storage_class" &&
-                name != "SPV_KHR_non_semantic_info") {
+                name != "SPV_KHR_non_semantic_info" &&  //
+                name != "SPV_KHR_vulkan_memory_model") {
                 return Failure("SPIR-V extension '" + name + "' is not supported");
             }
         }
