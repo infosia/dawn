@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5dcdc226_b875b937",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-08T15:55:11Z",
+      "side": 1,
+      "message": "```suggestion\n        OperandList operands \u003d {Type(copy-\u003eResult()-\u003eType()), id};\n```",
+      "range": {
+        "startLine": 1668,
+        "startChar": 0,
+        "endLine": 1669,
+        "endChar": 54
+      },
+      "revId": "a4312b3ed49a525a9910a4d143f3303250e50ade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "467ddf22_7f4e3e95",
+        "filename": "src/tint/lang/spirv/writer/raise/fork_explicit_layout_types.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-08T15:55:11Z",
+      "side": 1,
+      "message": "The \u0027if\u0027 returns, so no need for else.\n```suggestion\n        }\n\n        // Create a helper function to do the conversion.\n        auto* helper \u003d conversion_helpers.GetOrAdd(src_type, [\u0026] {\n            auto* param \u003d b.FunctionParam(\"tint_source\", src_type);\n            auto* func \u003d b.Function(\"tint_convert_explicit_layout\", dst_type);\n            func-\u003eAppendParam(param);\n            b.Append(func-\u003eBlock(), [\u0026] {\n                if (auto* src_struct \u003d src_type-\u003eAs\u003ccore::type::Struct\u003e()) {\n                    auto* dst_struct \u003d dst_type-\u003eAs\u003ccore::type::Struct\u003e();\n                    b.Return(func, ConvertStruct(src_struct, dst_struct, param));\n                } else if (auto* src_arr \u003d src_type-\u003eAs\u003ccore::type::Array\u003e()) {\n                    auto* dst_arr \u003d dst_type-\u003eAs\u003ccore::type::Array\u003e();\n                    b.Return(func, ConvertArray(src_arr, dst_arr, param));\n                } else {\n                    TINT_UNREACHABLE();\n                }\n            });\n            return func;\n        });\n        return b.Call(helper, src)-\u003eResult();\n```",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 9
+      },
+      "revId": "a4312b3ed49a525a9910a4d143f3303250e50ade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "395776d8_b8b0982c",
+        "filename": "src/tint/lang/spirv/writer/raise/fork_explicit_layout_types_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2628,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-08T15:55:11Z",
+      "side": 1,
+      "message": "Do we even need to create this anymore? Or is it just so we can attach the `core.explicit_layout` modifier?",
+      "revId": "a4312b3ed49a525a9910a4d143f3303250e50ade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
