@@ -33,7 +33,9 @@
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/spirv/ir/builtin_call.h"
+#include "src/tint/lang/spirv/ir/copy_logical.h"
 #include "src/tint/lang/spirv/type/explicit_layout_array.h"
+#include "src/tint/lang/spirv/writer/common/options.h"
 
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
@@ -46,6 +48,9 @@ namespace {
 struct State {
     /// The IR module.
     core::ir::Module& ir;
+
+    /// The SPIR-V binary version.
+    SpvVersion version;
 
     /// The IR builder.
     core::ir::Builder b{ir};
@@ -292,27 +297,32 @@ struct State {
             return src;
         }
 
-        // TODO(crbug.com/401587662): Use OpCopyLogical with SPIR-V 1.4 and later.
-
-        // Create a helper function to do the conversion.
-        auto* helper = conversion_helpers.GetOrAdd(src_type, [&] {
-            auto* param = b.FunctionParam("tint_source", src_type);
-            auto* func = b.Function("tint_convert_explicit_layout", dst_type);
-            func->AppendParam(param);
-            b.Append(func->Block(), [&] {
-                if (auto* src_struct = src_type->As<core::type::Struct>()) {
-                    auto* dst_struct = dst_type->As<core::type::Struct>();
-                    b.Return(func, ConvertStruct(src_struct, dst_struct, param));
-                } else if (auto* src_arr = src_type->As<core::type::Array>()) {
-                    auto* dst_arr = dst_type->As<core::type::Array>();
-                    b.Return(func, ConvertArray(src_arr, dst_arr, param));
-                } else {
-                    TINT_UNREACHABLE();
-                }
+        // In SPIR-V 1.4 or later, use OpCopyLogical instead of member-wise copying.
+        if (version >= SpvVersion::kSpv14) {
+            auto* copy =
+                ir.CreateInstruction<spirv::ir::CopyLogical>(b.InstructionResult(dst_type), src);
+            return b.Append(copy)->Result();
+        } else {
+            // Create a helper function to do the conversion.
+            auto* helper = conversion_helpers.GetOrAdd(src_type, [&] {
+                auto* param = b.FunctionParam("tint_source", src_type);
+                auto* func = b.Function("tint_convert_explicit_layout", dst_type);
+                func->AppendParam(param);
+                b.Append(func->Block(), [&] {
+                    if (auto* src_struct = src_type->As<core::type::Struct>()) {
+                        auto* dst_struct = dst_type->As<core::type::Struct>();
+                        b.Return(func, ConvertStruct(src_struct, dst_struct, param));
+                    } else if (auto* src_arr = src_type->As<core::type::Array>()) {
+                        auto* dst_arr = dst_type->As<core::type::Array>();
+                        b.Return(func, ConvertArray(src_arr, dst_arr, param));
+                    } else {
+                        TINT_UNREACHABLE();
+                    }
+                });
+                return func;
             });
-            return func;
-        });
-        return b.Call(helper, src)->Result();
+            return b.Call(helper, src)->Result();
+        }
     }
 
     /// Recursively convert a struct type to/from the explicitly laid out version.
@@ -356,14 +366,14 @@ struct State {
 
 }  // namespace
 
-Result<SuccessType> ForkExplicitLayoutTypes(core::ir::Module& ir) {
+Result<SuccessType> ForkExplicitLayoutTypes(core::ir::Module& ir, SpvVersion version) {
     auto result = ValidateAndDumpIfNeeded(ir, "spirv.ForkExplicitLayoutTypes",
                                           kForkExplicitLayoutTypesCapabilities);
     if (result != Success) {
         return result;
     }
 
-    State{ir}.Process();
+    State{ir, version}.Process();
 
     return Success;
 }
