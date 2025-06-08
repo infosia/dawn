@@ -310,6 +310,35 @@ class Parser {
                     CreateOverride(inst, Value(inst.result_id()), std::nullopt);
                     break;
                 }
+                case spv::Op::OpSpecConstantComposite: {
+                    auto spec_id = GetSpecId(inst);
+                    if (spec_id.has_value()) {
+                        TINT_ICE()
+                            << "OpSpecConstantCompositeOp not supported when set with a SpecId";
+                    }
+
+                    auto* cnst = SpvConstant(inst.result_id());
+                    if (cnst != nullptr) {
+                        // The spec constant is made of literals, so it's return as a constant from
+                        // SPIR-V Tools Opt. We can just ignore it and let the normal constant
+                        // handling take over.
+                        break;
+                    }
+
+                    Vector<uint32_t, 4> args;
+                    args.Reserve(inst.NumInOperands());
+
+                    for (uint32_t i = 0; i < inst.NumInOperands(); ++i) {
+                        uint32_t id = inst.GetSingleWordInOperand(i);
+                        args.Push(id);
+                    }
+
+                    spec_composites_.insert({inst.result_id(), SpecComposite{
+                                                                   .type = Type(inst.type_id()),
+                                                                   .args = args,
+                                                               }});
+                    break;
+                }
                 default:
                     break;
             }
@@ -883,6 +912,11 @@ class Parser {
         return false;
     }
 
+    // Get the spirv constant for the given `id`. `nullptr` if no constant exists.
+    const spvtools::opt::analysis::Constant* SpvConstant(uint32_t id) {
+        return spirv_context_->get_constant_mgr()->FindDeclaredConstant(id);
+    }
+
     /// Attempts to retrieve the current Tint IR value for `id`. This ignores scoping for the
     /// variable, if it exists it's returned (or if it's constant it's created). The value will not
     /// propagate up through control instructions.
@@ -895,10 +929,25 @@ class Parser {
             return *v;
         }
 
-        if (auto* c = spirv_context_->get_constant_mgr()->FindDeclaredConstant(id)) {
+        if (auto* c = SpvConstant(id)) {
             auto* val = b_.Constant(Constant(c));
             values_.Add(id, val);
             return val;
+        }
+
+        // If this was a spec composite, we have to make sure it's loaded as it would be emitted as
+        // a `var` instruction. We then return the result of the load instead of the composite.
+        auto iter = spec_composites_.find(id);
+        if (iter != spec_composites_.end()) {
+            Vector<core::ir::Value*, 4> args;
+            for (auto arg : iter->second.args) {
+                args.Push(Value(arg));
+            }
+
+            auto* construct = b_.Construct(iter->second.type, args);
+            current_block_->Append(construct);
+            values_.Replace(id, construct->Result());
+            return construct->Result();
         }
 
         TINT_UNREACHABLE() << "missing value for result ID " << id;
@@ -3342,6 +3391,17 @@ class Parser {
 
     // Map of certain instructions back to their originating spirv block
     std::unordered_map<core::ir::Instruction*, uint32_t> inst_to_spirv_block_;
+
+    // Structure hold spec composite information
+    struct SpecComposite {
+        // The composite type
+        const core::type::Type* type;
+        // The composite arguments
+        Vector<uint32_t, 4> args;
+    };
+
+    // The set of SPIR-V IDs which map to `OpSpecConstantComposite` instructions created as `var`s.
+    std::unordered_map<uint32_t, SpecComposite> spec_composites_;
 };
 
 }  // namespace
