@@ -43,7 +43,8 @@ class PhysicalDevice : public PhysicalDeviceBase {
   public:
     static ResultOrError<Ref<PhysicalDevice>> Create(wgpu::BackendType backendType,
                                                      Ref<DisplayEGL> display,
-                                                     bool forceES31AndMinExtensions);
+                                                     bool forceES31AndMinExtensions,
+                                                     EGLint angleVirtualizationGroup);
 
     ~PhysicalDevice() override = default;
 
@@ -82,6 +83,7 @@ class PhysicalDevice : public PhysicalDeviceBase {
 
     OpenGLFunctions mFunctions;
     Ref<DisplayEGL> mDisplay;
+    EGLint angleVirtualizationGroup;
 };
 
 }  // namespace dawn::native::opengl
