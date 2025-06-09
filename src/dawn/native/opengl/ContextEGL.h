@@ -47,7 +47,8 @@ class ContextEGL : NonMovable {
                                                              wgpu::BackendType backend,
                                                              bool useRobustness,
                                                              bool useANGLETextureSharing,
-                                                             bool forceES31AndMinExtensions);
+                                                             bool forceES31AndMinExtensions,
+                                                             EGLint angleVirtualizationGroup);
 
     explicit ContextEGL(Ref<DisplayEGL> display);
     ~ContextEGL();
@@ -55,7 +56,8 @@ class ContextEGL : NonMovable {
     MaybeError Initialize(wgpu::BackendType backend,
                           bool useRobustness,
                           bool useANGLETextureSharing,
-                          bool forceES31AndMinExtensions);
+                          bool forceES31AndMinExtensions,
+                          EGLint angleVirtualizationGroup);
     void RequestRequiredExtensionsExplicitly();
 
     // Make the surface used by all MakeCurrent until the scoper gets out of scope.
