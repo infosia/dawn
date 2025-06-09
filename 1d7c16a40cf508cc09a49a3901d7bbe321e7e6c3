@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ec92bf8_9bfe2351",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-09T09:49:58Z",
+      "side": 1,
+      "message": "Can you explain how the changes to the templates make that happen?",
+      "revId": "1d7c16a40cf508cc09a49a3901d7bbe321e7e6c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
