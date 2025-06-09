@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2697dfcd_74c567d7",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-06-09T12:15:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5dcdc226_b875b937",
+      "range": {
+        "startLine": 1668,
+        "startChar": 0,
+        "endLine": 1669,
+        "endChar": 54
+      },
+      "revId": "a4312b3ed49a525a9910a4d143f3303250e50ade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "467ddf22_7f4e3e95",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "799f23b7_5ccfdefe",
+        "filename": "src/tint/lang/spirv/writer/raise/fork_explicit_layout_types.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-06-09T12:15:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "467ddf22_7f4e3e95",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 9
+      },
+      "revId": "a4312b3ed49a525a9910a4d143f3303250e50ade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "395776d8_b8b0982c",
@@ -60,6 +108,24 @@
       "writtenOn": "2025-06-08T15:55:11Z",
       "side": 1,
       "message": "Do we even need to create this anymore? Or is it just so we can attach the `core.explicit_layout` modifier?",
+      "revId": "a4312b3ed49a525a9910a4d143f3303250e50ade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19caf845_19e56b1a",
+        "filename": "src/tint/lang/spirv/writer/raise/fork_explicit_layout_types_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2628,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-06-09T12:15:50Z",
+      "side": 1,
+      "message": "Yes, to attach the modifier and disambiguate the requirement for different types in SPIR-V.",
+      "parentUuid": "395776d8_b8b0982c",
       "revId": "a4312b3ed49a525a9910a4d143f3303250e50ade",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
