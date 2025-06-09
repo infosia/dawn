@@ -447,7 +447,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // we only enable for apple silicon for now.
     // chromium:417519810: Mutiple cts tests will fail on AMD if module scope hoisting is not
     // enabled on AMD. These failures will be internal compiler errors.
-    if (gpu_info::IsApple(vendorId) || gpu_info::IsAMD(vendorId)) {
+    if (gpu_info::IsApple(vendorId) || gpu_info::IsAMD(vendorId) || gpu_info::IsIntel(vendorId)) {
         deviceToggles->Default(Toggle::MetalEnableModuleConstant, true);
     }
 

@@ -55,7 +55,6 @@ type flags struct {
 	dumpShadersPretty    bool
 	fxc                  bool
 	useIR                bool
-	unrollConstEvalLoops bool
 	genCoverage          bool
 	compatibilityMode    bool
 	debugCTS             bool
@@ -87,7 +86,6 @@ func (cmd) Desc() string {
 }
 
 func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, error) {
-	unrollConstEvalLoopsDefault := runtime.GOOS != "windows"
 
 	backendDefault := "default"
 	if vkIcdFilenames := cfg.OsWrapper.Getenv("VK_ICD_FILENAMES"); vkIcdFilenames != "" {
@@ -107,7 +105,6 @@ func (c *cmd) RegisterFlags(ctx context.Context, cfg common.Config) ([]string, e
 	flag.BoolVar(&c.flags.dumpShadersPretty, "dump-shaders-pretty", false, "dump WGSL shaders, but don't run symbol renaming. May fail tests that shadow predeclared builtins. Enables --verbose")
 	flag.BoolVar(&c.flags.fxc, "fxc", false, "Use FXC instead of DXC. Disables 'use_dxc' Dawn flag")
 	flag.BoolVar(&c.flags.useIR, "use-ir", false, "Use Tint's IR generator code path")
-	flag.BoolVar(&c.flags.unrollConstEvalLoops, "unroll-const-eval-loops", unrollConstEvalLoopsDefault, "unroll loops in const-eval tests")
 	flag.BoolVar(&c.flags.genCoverage, "coverage", false, "displays coverage data")
 	flag.StringVar(&c.flags.coverageFile, "export-coverage", "", "write coverage data to the given path")
 	flag.BoolVar(&c.flags.compatibilityMode, "compat", false, "run tests in compatibility mode")
