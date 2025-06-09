@@ -2062,6 +2062,7 @@ testing::AssertionResult ExpectEq<T, U>::Check(const void* data, size_t size) {
     return testing::AssertionSuccess();
 }
 
+template class ExpectEq<int8_t>;
 template class ExpectEq<uint8_t>;
 template class ExpectEq<uint16_t>;
 template class ExpectEq<uint32_t>;
