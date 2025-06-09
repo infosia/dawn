@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f983bfb_ad334e9e",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-09T23:27:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89e4b5e9_db6100f7",
+      "revId": "d246f668d28eef021ba749402f98b1bd793b2398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2b49fc9c_3c18f961",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-06-09T22:24:52Z",
       "side": 1,
       "message": "Don\u0027t we also need to check that there was a `store`?",
+      "revId": "d246f668d28eef021ba749402f98b1bd793b2398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d9b8dab_27c44547",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-09T23:27:30Z",
+      "side": 1,
+      "message": "Not really, what we actually need is just a usage. That will force the position to be part of the interface, and shader_io will plop it into the return as needed. If there is a usage, we\u0027ll zero init it anyway.\n\nI am making the assumption that the access chain is used, which I think is fair because, there would be very little reason for it to exist if unused.",
+      "parentUuid": "2b49fc9c_3c18f961",
       "revId": "d246f668d28eef021ba749402f98b1bd793b2398",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
