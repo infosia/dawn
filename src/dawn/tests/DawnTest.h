@@ -125,6 +125,10 @@
 #define EXPECT_TEXTURE_FLOAT16_EQ(...) \
     AddTextureExpectation<float, uint16_t>(__FILE__, __LINE__, __VA_ARGS__)
 
+#define EXPECT_PIXEL_SNORM_BETWEEN(expectedLower, expectedUpper, texture, x, y)                \
+    AddSnormTextureBoundsExpectation<int8_t>(__FILE__, __LINE__, expectedLower, expectedUpper, \
+                                             texture, x, y)
+
 // Matcher for C++ types to verify that their internal C-handles are identical.
 MATCHER_P(CHandleIs, cType, "") {
     return arg.Get() == cType;
@@ -170,6 +174,8 @@ template <typename T, typename U = T>
 class ExpectEq;
 template <typename T>
 class ExpectBetweenColors;
+template <typename T>
+class ExpectBetweenSnormTextureBounds;
 }  // namespace detail
 
 namespace wire {
@@ -548,6 +554,42 @@ class DawnTestBase {
             texture, {x, y}, {1, 1}, level, aspect, sizeof(T), bytesPerRow);
     }
 
+    template <typename T>
+    std::ostringstream& AddSnormTextureBoundsExpectation(
+        const char* file,
+        int line,
+        const std::vector<T>& expectedL,
+        const std::vector<T>& expectedU,
+        const wgpu::Texture& texture,
+        uint32_t x,
+        uint32_t y,
+        uint32_t level = 0,
+        wgpu::TextureAspect aspect = wgpu::TextureAspect::All,
+        uint32_t bytesPerRow = 0) {
+        // No device passed explicitly. Default it, and forward the rest of the args.
+        return AddSnormTextureBoundsExpectation(file, line, this->device, expectedL, expectedU,
+                                                texture, x, y, level, aspect, bytesPerRow);
+    }
+
+    template <typename T>
+    std::ostringstream& AddSnormTextureBoundsExpectation(
+        const char* file,
+        int line,
+        const wgpu::Device& targetDevice,
+        const std::vector<T>& expectedL,
+        const std::vector<T>& expectedU,
+        const wgpu::Texture& texture,
+        uint32_t x,
+        uint32_t y,
+        uint32_t level = 0,
+        wgpu::TextureAspect aspect = wgpu::TextureAspect::All,
+        uint32_t bytesPerRow = 0) {
+        return AddTextureExpectationImpl(
+            file, line, std::move(targetDevice),
+            new detail::ExpectBetweenSnormTextureBounds<T>(expectedL, expectedU), texture, {x, y},
+            {1, 1}, level, aspect, sizeof(T), bytesPerRow);
+    }
+
     std::ostringstream& ExpectSampledFloatData(wgpu::Texture texture,
                                                uint32_t width,
                                                uint32_t height,
@@ -909,6 +951,21 @@ class ExpectBetweenColors : public Expectation {
 // each counterparts. It doesn't matter which value is higher or lower. Essentially color =
 // lerp(color0, color1, t) where t is [0,1]. But I don't want to be too strict here.
 extern template class ExpectBetweenColors<utils::RGBA8>;
+
+template <typename T>
+class ExpectBetweenSnormTextureBounds : public Expectation {
+  public:
+    // Inclusive for now
+    ExpectBetweenSnormTextureBounds(const std::vector<T>& expectedL,
+                                    const std::vector<T>& expectedU)
+        : expectedLower(expectedL), expectedUpper(expectedU) {}
+    testing::AssertionResult Check(const void* data, size_t size) override;
+
+  private:
+    std::vector<T> expectedLower;
+    std::vector<T> expectedUpper;
+};
+extern template class ExpectBetweenSnormTextureBounds<int8_t>;
 
 class CustomTextureExpectation : public Expectation {
   public:
