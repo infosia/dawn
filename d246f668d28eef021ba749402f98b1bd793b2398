@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89e4b5e9_db6100f7",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-09T22:24:52Z",
+      "side": 1,
+      "message": "Do we need this check? If the shader did `s.position.x \u003d 42` that should be fine too right?",
+      "revId": "d246f668d28eef021ba749402f98b1bd793b2398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b49fc9c_3c18f961",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-09T22:24:52Z",
+      "side": 1,
+      "message": "Don\u0027t we also need to check that there was a `store`?",
+      "revId": "d246f668d28eef021ba749402f98b1bd793b2398",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
