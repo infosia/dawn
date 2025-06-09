@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f5887f6_dad06a99",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-06-09T19:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d62da1e3_2eace490",
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9832a82d_95dc9551",
@@ -93,6 +111,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8e06bea_fc094809",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-06-09T19:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9832a82d_95dc9551",
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad6f3388_6db770d8",
@@ -106,6 +142,24 @@
       "writtenOn": "2025-06-05T17:08:49Z",
       "side": 1,
       "message": "There is a WGSL spec at https://github.com/gpuweb/gpuweb/blob/main/proposals/texel-buffers.md which has been accepted by the committee. May also be worth linking to the gpuweb issue https://github.com/gpuweb/gpuweb/issues/162 to keep it all together.",
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44fdab43_e99ac022",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-06-09T19:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad6f3388_6db770d8",
       "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -162,6 +216,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c1c7ee1_58269e47",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-06-09T19:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d5c40c4_651448fd",
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e71c57d_0fffc7d0",
@@ -175,6 +247,24 @@
       "writtenOn": "2025-06-05T17:08:49Z",
       "side": 1,
       "message": "```suggestion\n@group(0) @binding(0) var myBuffer : texel_buffer\u003crgba8unorm, read_write\u003e;\n```",
+      "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5e1d137_94aea705",
+        "filename": "docs/tint/extensions/chromium_experimental_texel_buffers.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-06-09T19:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e71c57d_0fffc7d0",
       "revId": "450552940742cf65d0f698fe9722e21f36660c8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
