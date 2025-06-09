@@ -866,9 +866,7 @@ struct BuiltinPolyfill::State {
     Symbol ConvF32ToIU32(const core::type::Type* source, const core::type::Type* target) {
         struct Limits {
             AFloat low_condition;
-            AInt low_limit;
             AFloat high_condition;
-            AInt high_limit;
         };
         const bool is_signed = target->IsSignedIntegerScalarOrVector();
         const uint32_t largest_signed_integer_float = 0x7fffff80;
@@ -876,37 +874,22 @@ struct BuiltinPolyfill::State {
         const Limits limits =
             is_signed ? Limits{
                             /* low_condition   */ -AFloat(0x80000000),
-                            /* low_limit  */ -AInt(0x80000000),
                             /* high_condition  */ AFloat(largest_signed_integer_float),
-                            /* high_limit */ AInt(0x7fffffff),
                         }
                       : Limits{
                             /* low_condition   */ AFloat(0),
-                            /* low_limit  */ AInt(0),
                             /* high_condition  */ AFloat(largest_unsigned_integer_float),
-                            /* high_limit */ AInt(0xffffffff),
                         };
 
         const uint32_t width = WidthOf(target);
 
-        // select(target(v), low_limit, v < low_condition)
-        auto* select_low = b.Call(wgsl::BuiltinFn::kSelect,                 //
-                                  b.Call(T(target), "v"),                   //
-                                  ScalarOrVector(width, limits.low_limit),  //
-                                  b.LessThan("v", ScalarOrVector(width, limits.low_condition)));
-
-        // select(high_limit, select_low, v <= high_condition)
-        // The equality test in the 'LessThanEqual' is used to ensure that the largest integer float
-        // will be converted to an integer.
-        auto* select_high =
-            b.Call(wgsl::BuiltinFn::kSelect,                  //
-                   ScalarOrVector(width, limits.high_limit),  //
-                   select_low,                                //
-                   b.LessThanEqual("v", ScalarOrVector(width, limits.high_condition)));
+        auto* clamped_conv =
+            b.Call(wgsl::BuiltinFn::kClamp, "v", ScalarOrVector(width, limits.low_condition),
+                   ScalarOrVector(width, limits.high_condition));
 
         auto name = b.Symbols().New(is_signed ? "tint_ftoi" : "tint_ftou");
         b.Func(name, tint::Vector{b.Param("v", T(source))}, T(target),
-               tint::Vector{b.Return(select_high)});
+               tint::Vector{b.Return(clamped_conv)});
         return name;
     }
 
