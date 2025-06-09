@@ -1,7 +1,7 @@
 ; SPIR-V
 ; Version: 1.3
 ; Generator: Google Tint Compiler; 1
-; Bound: 278
+; Bound: 273
 ; Schema: 0
                OpCapability Shader
         %162 = OpExtInstImport "GLSL.std.450"
@@ -284,12 +284,10 @@
         %227 = OpTypeFunction %VertexOutput %v3float %v2float %v4float %v3float %float
         %235 = OpTypeFunction %int %float
 %float_n2_14748365e_09 = OpConstant %float -2.14748365e+09
-%int_n2147483648 = OpConstant %int -2147483648
 %float_2_14748352e_09 = OpConstant %float 2.14748352e+09
-%int_2147483647 = OpConstant %int 2147483647
-        %258 = OpTypeFunction %Mat4x4_ %Mat4x4__tint_explicit_layout
-        %266 = OpTypeFunction %Mat4x2_ %Mat4x2__tint_explicit_layout
-        %272 = OpTypeFunction %Mat4x3_ %Mat4x3__tint_explicit_layout
+        %253 = OpTypeFunction %Mat4x4_ %Mat4x4__tint_explicit_layout
+        %261 = OpTypeFunction %Mat4x2_ %Mat4x2__tint_explicit_layout
+        %267 = OpTypeFunction %Mat4x3_ %Mat4x3__tint_explicit_layout
         %Mul = OpFunction %v4float None %61
          %m8 = OpFunctionParameter %Mat4x4_
           %v = OpFunctionParameter %v4float
@@ -472,54 +470,51 @@
 %tint_f32_to_i32 = OpFunction %int None %235
       %value = OpFunctionParameter %float
         %236 = OpLabel
-        %237 = OpConvertFToS %int %value
-        %238 = OpFOrdGreaterThanEqual %bool %value %float_n2_14748365e_09
-        %240 = OpSelect %int %238 %237 %int_n2147483648
-        %242 = OpFOrdLessThanEqual %bool %value %float_2_14748352e_09
-        %244 = OpSelect %int %242 %240 %int_2147483647
-               OpReturnValue %244
+        %237 = OpExtInst %float %162 NClamp %value %float_n2_14748365e_09 %float_2_14748352e_09
+        %240 = OpConvertFToS %int %237
+               OpReturnValue %240
                OpFunctionEnd
        %main = OpFunction %void None %151
-        %247 = OpLabel
-        %248 = OpLoad %v3float %main_loc0_Input None
-        %249 = OpLoad %v2float %main_loc1_Input None
-        %250 = OpLoad %v4float %main_loc2_Input None
-        %251 = OpLoad %v3float %main_loc3_Input None
-        %252 = OpLoad %float %main_loc4_Input None
-        %253 = OpFunctionCall %VertexOutput %main_inner %248 %249 %250 %251 %252
-        %254 = OpCompositeExtract %v4float %253 0
-               OpStore %main_loc0_Output %254 None
-        %255 = OpCompositeExtract %v2float %253 1
-               OpStore %main_loc1_Output %255 None
-        %256 = OpCompositeExtract %v4float %253 2
-               OpStore %main_position_Output %256 None
+        %242 = OpLabel
+        %243 = OpLoad %v3float %main_loc0_Input None
+        %244 = OpLoad %v2float %main_loc1_Input None
+        %245 = OpLoad %v4float %main_loc2_Input None
+        %246 = OpLoad %v3float %main_loc3_Input None
+        %247 = OpLoad %float %main_loc4_Input None
+        %248 = OpFunctionCall %VertexOutput %main_inner %243 %244 %245 %246 %247
+        %249 = OpCompositeExtract %v4float %248 0
+               OpStore %main_loc0_Output %249 None
+        %250 = OpCompositeExtract %v2float %248 1
+               OpStore %main_loc1_Output %250 None
+        %251 = OpCompositeExtract %v4float %248 2
+               OpStore %main_position_Output %251 None
                OpStore %main___point_size_Output %float_1 None
                OpReturn
                OpFunctionEnd
-%tint_convert_explicit_layout = OpFunction %Mat4x4_ None %258
+%tint_convert_explicit_layout = OpFunction %Mat4x4_ None %253
 %tint_source = OpFunctionParameter %Mat4x4__tint_explicit_layout
-        %259 = OpLabel
-        %260 = OpCompositeExtract %v4float %tint_source 0
-        %261 = OpCompositeExtract %v4float %tint_source 1
-        %262 = OpCompositeExtract %v4float %tint_source 2
-        %263 = OpCompositeExtract %v4float %tint_source 3
-        %264 = OpCompositeConstruct %Mat4x4_ %260 %261 %262 %263
-               OpReturnValue %264
+        %254 = OpLabel
+        %255 = OpCompositeExtract %v4float %tint_source 0
+        %256 = OpCompositeExtract %v4float %tint_source 1
+        %257 = OpCompositeExtract %v4float %tint_source 2
+        %258 = OpCompositeExtract %v4float %tint_source 3
+        %259 = OpCompositeConstruct %Mat4x4_ %255 %256 %257 %258
+               OpReturnValue %259
                OpFunctionEnd
-%tint_convert_explicit_layout_0 = OpFunction %Mat4x2_ None %266
+%tint_convert_explicit_layout_0 = OpFunction %Mat4x2_ None %261
 %tint_source_0 = OpFunctionParameter %Mat4x2__tint_explicit_layout
-        %267 = OpLabel
-        %268 = OpCompositeExtract %v4float %tint_source_0 0
-        %269 = OpCompositeExtract %v4float %tint_source_0 1
-        %270 = OpCompositeConstruct %Mat4x2_ %268 %269
-               OpReturnValue %270
+        %262 = OpLabel
+        %263 = OpCompositeExtract %v4float %tint_source_0 0
+        %264 = OpCompositeExtract %v4float %tint_source_0 1
+        %265 = OpCompositeConstruct %Mat4x2_ %263 %264
+               OpReturnValue %265
                OpFunctionEnd
-%tint_convert_explicit_layout_1 = OpFunction %Mat4x3_ None %272
+%tint_convert_explicit_layout_1 = OpFunction %Mat4x3_ None %267
 %tint_source_1 = OpFunctionParameter %Mat4x3__tint_explicit_layout
-        %273 = OpLabel
-        %274 = OpCompositeExtract %v4float %tint_source_1 0
-        %275 = OpCompositeExtract %v4float %tint_source_1 1
-        %276 = OpCompositeExtract %v4float %tint_source_1 2
-        %277 = OpCompositeConstruct %Mat4x3_ %274 %275 %276
-               OpReturnValue %277
+        %268 = OpLabel
+        %269 = OpCompositeExtract %v4float %tint_source_1 0
+        %270 = OpCompositeExtract %v4float %tint_source_1 1
+        %271 = OpCompositeExtract %v4float %tint_source_1 2
+        %272 = OpCompositeConstruct %Mat4x3_ %269 %270 %271
+               OpReturnValue %272
                OpFunctionEnd
