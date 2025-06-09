@@ -125,6 +125,8 @@
 #define EXPECT_TEXTURE_FLOAT16_EQ(...) \
     AddTextureExpectation<float, uint16_t>(__FILE__, __LINE__, __VA_ARGS__)
 
+#define EXPECT_PIXEL_SNORM_EQ(...) AddTextureExpectation<int8_t>(__FILE__, __LINE__, __VA_ARGS__)
+
 // Matcher for C++ types to verify that their internal C-handles are identical.
 MATCHER_P(CHandleIs, cType, "") {
     return arg.Get() == cType;
