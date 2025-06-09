@@ -47,7 +47,8 @@ class ContextEGL : NonMovable {
                                                              wgpu::BackendType backend,
                                                              bool useRobustness,
                                                              bool useANGLETextureSharing,
-                                                             bool forceES31AndMinExtensions);
+                                                             bool forceES31AndMinExtensions,
+                                                             EGLint angleVirtualizationGroup);
 
     explicit ContextEGL(Ref<DisplayEGL> display);
     ~ContextEGL();
