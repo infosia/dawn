@@ -45,6 +45,33 @@ struct State {
     core::ir::Builder b{ir};
     core::type::Manager& ty{ir.Types()};
 
+    /// @returns true if @p type is or contains a f16 type
+    bool ContainsF16Type(const core::type::Type* type) {
+        if (type->Is<core::type::F16>()) {
+            return true;
+        }
+
+        if (type->IsScalar()) {
+            return false;
+        }
+
+        if (const auto* str = type->As<core::type::Struct>()) {
+            for (auto* member : str->Members()) {
+                if (ContainsF16Type(member->Type())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        auto* deepest_type = type->DeepestElement();
+        if (deepest_type == type) {
+            return true;
+        }
+
+        return ContainsF16Type(deepest_type);
+    }
+
     void Process() {
         Hashmap<core::ir::Value*, core::ir::Value*, 16> object_to_var;
         for (auto* inst : ir.Instructions()) {
@@ -64,6 +91,11 @@ struct State {
             if (!curr_const->Type()->IsAnyOf<core::type::Array, core::type::Struct>()) {
                 continue;
             }
+
+            if (ContainsF16Type(curr_const->Type())) {
+                continue;
+            }
+
             // Declare a variable and copy the source object to it.
             auto* var = object_to_var.GetOrAdd(source_object, [&] {
                 // If the source object is a constant we use a module-scope variable
