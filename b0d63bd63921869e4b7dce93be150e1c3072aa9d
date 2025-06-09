@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "cef06e2b_1e995faf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-09T17:46:08Z",
+      "side": 1,
+      "message": "My point is that Tint IR has the same semantics as SPIR-V here. `unreachable` in Tint IR doesn\u0027t mean `unreachable` either. So the translation from SPIR-V to Tint IR is perfectly correct.\n\nAll of the other textual backends handle this case in their respective printers, so it makes sense to me that we do the same in WGSL.",
+      "parentUuid": "3aa822c0_08b6e3e3",
+      "revId": "b0d63bd63921869e4b7dce93be150e1c3072aa9d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7602bd4e_025f879d",
