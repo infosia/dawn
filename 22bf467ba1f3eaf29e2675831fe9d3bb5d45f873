@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7528d32_99775658",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-09T20:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc612e09_72d7f239",
+      "revId": "22bf467ba1f3eaf29e2675831fe9d3bb5d45f873",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cb1ccc1c_bed63702",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-06-09T09:56:12Z",
       "side": 1,
       "message": "This is a bit weird that it works even if DawnFakeDeviceInitializeErrorForTesting doesn\u0027t have any more members than ChainedStruct. Maybe a copy operation is being done? Instead we could predeclare both and have this be an array of `wgpu::ChainedStruct*`",
+      "revId": "22bf467ba1f3eaf29e2675831fe9d3bb5d45f873",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d79b43ab_b8beafdf",
+        "filename": "src/dawn/tests/unittests/validation/DeviceValidationTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-09T20:26:48Z",
+      "side": 1,
+      "message": "Ah, yea, it\u0027s probably doing a copy and since the default ctor for the testing one sets the stype, it\u0027s copied in. Anyways, changed it to use pointers.",
+      "parentUuid": "cb1ccc1c_bed63702",
       "revId": "22bf467ba1f3eaf29e2675831fe9d3bb5d45f873",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
