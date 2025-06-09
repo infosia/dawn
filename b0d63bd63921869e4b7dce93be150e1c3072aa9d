@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aa822c0_08b6e3e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-09T17:26:56Z",
+      "side": 1,
+      "message": "I think this is more a SPIR-V thing as, `unreachable` doesn\u0027t mean `unreachable` in SPIR-V. It just means, undefined behaviour. So, we\u0027re just defining the SPIR-V behaviour. Like, in the examples we have, being `unreachable` seems like an invalid program because it\u0027s obviously reachable.",
+      "parentUuid": "ea42df40_eeed4e27",
+      "revId": "b0d63bd63921869e4b7dce93be150e1c3072aa9d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7602bd4e_025f879d",
