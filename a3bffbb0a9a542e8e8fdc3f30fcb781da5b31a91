@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "a3bffbb0a9a542e8e8fdc3f30fcb781da5b31a91",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0962f6a6_7824d066",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-09T20:21:20Z",
+      "side": 1,
+      "message": "Question for Alan about whether we should indeed limit the overloads to the types that we would expect to see in practice.",
+      "revId": "a3bffbb0a9a542e8e8fdc3f30fcb781da5b31a91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd72313c_73dacd86",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-09T20:21:20Z",
+      "side": 1,
+      "message": "The current proposal supports every combination of `componentType` -\u003e `resultComponentType`, with the configuration being validated at pipeline creation time. Limiting the intrinsics overloads here would cause CTS failures if we were to test that all combinations are expected to pass shader module creation.\n\nBut I appreciate that many of these overloads would never exist in practice, and maybe it doesn\u0027t make sense to keep them all in our intrinsics table.\n\n@alanbaker@google.com does it make sense to limit the overloads to:\n```\nf* -\u003e f*\ni* -\u003e i*\nu* -\u003e u*\n```\n?\nThat reduces us from 36 overloads down to 9 overloads.\n\nShould we also limit `i8` input to `i32` too as Jiawei has done here, or is that too far?",
+      "revId": "a3bffbb0a9a542e8e8fdc3f30fcb781da5b31a91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
