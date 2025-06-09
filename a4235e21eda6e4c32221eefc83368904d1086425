@@ -45,6 +45,30 @@
       },
       "revId": "a4235e21eda6e4c32221eefc83368904d1086425",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbe22af5_4f2923c0",
+        "filename": "src/dawn/native/vulkan/external_memory/MemoryServiceImplementationDmaBuf.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-09T21:37:11Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with the device in question to be able to say which would be better. This seems reasonable, though?",
+      "parentUuid": "0e18eda1_817fc364",
+      "range": {
+        "startLine": 275,
+        "startChar": 48,
+        "endLine": 275,
+        "endChar": 58
+      },
+      "revId": "a4235e21eda6e4c32221eefc83368904d1086425",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
