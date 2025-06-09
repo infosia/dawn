@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a68cae47_bccb2d79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-09T18:36:25Z",
+      "side": 1,
+      "message": "We allow `construct` in the root block when the `kAllowOverrides` capability is present, specifically to support these cases in WGSL. We rely on the same behavior for `OpSpecConstantOp`, so wouldn\u0027t it be simpler to do that here too?",
+      "range": {
+        "startLine": 13,
+        "startChar": 46,
+        "endLine": 14,
+        "endChar": 70
+      },
+      "revId": "491de765cdd901af39e5246c95e9bd5fca21aca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
