@@ -46,6 +46,30 @@
       },
       "revId": "491de765cdd901af39e5246c95e9bd5fca21aca8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a994a2f7_4dd1f6d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-09T18:51:08Z",
+      "side": 1,
+      "message": "Acknowledged\n\nMissed the point that WGSL requires `override` to be scalar, so we can\u0027t use an `override` instruction in the root block here.",
+      "parentUuid": "d4bbf22f_6d855c96",
+      "range": {
+        "startLine": 13,
+        "startChar": 46,
+        "endLine": 14,
+        "endChar": 70
+      },
+      "revId": "491de765cdd901af39e5246c95e9bd5fca21aca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
