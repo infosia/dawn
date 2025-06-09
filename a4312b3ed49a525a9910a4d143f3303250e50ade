@@ -128,6 +128,24 @@
       "parentUuid": "395776d8_b8b0982c",
       "revId": "a4312b3ed49a525a9910a4d143f3303250e50ade",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ca35b34_e9e84bc9",
+        "filename": "src/tint/lang/spirv/writer/raise/fork_explicit_layout_types_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2628,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-09T13:38:14Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "19caf845_19e56b1a",
+      "revId": "a4312b3ed49a525a9910a4d143f3303250e50ade",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
