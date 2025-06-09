@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea42df40_eeed4e27",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-09T16:25:13Z",
+      "side": 1,
+      "message": "Since this is a WGSL thing, seems like it should maybe be done in IrToProgram instead?\n\nWe don\u0027t require this in core Tint IR (we have no behavior analysis to enforce it), and it feels wrong to fixup WGSL-specific things in the SPIR-V frontend.",
+      "revId": "b0d63bd63921869e4b7dce93be150e1c3072aa9d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "7602bd4e_025f879d",
