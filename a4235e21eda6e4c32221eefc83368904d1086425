@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eedd0fb0_ba4ec8d3",
+        "filename": "src/dawn/native/vulkan/external_memory/MemoryServiceImplementationDmaBuf.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-09T18:11:47Z",
+      "side": 1,
+      "message": "Btw I am aware that the list in \u0027FindBestTypeIndex\u0027 is already ordered for optimal performance on device. The fallback I am adding simply makes things explicit.",
+      "range": {
+        "startLine": 266,
+        "startChar": 69,
+        "endLine": 266,
+        "endChar": 86
+      },
+      "revId": "a4235e21eda6e4c32221eefc83368904d1086425",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0e18eda1_817fc364",
         "filename": "src/dawn/native/vulkan/external_memory/MemoryServiceImplementationDmaBuf.cpp",
         "patchSetId": 5
