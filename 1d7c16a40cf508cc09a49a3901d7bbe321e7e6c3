@@ -16,6 +16,24 @@
       "message": "Can you explain how the changes to the templates make that happen?",
       "revId": "1d7c16a40cf508cc09a49a3901d7bbe321e7e6c3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef99260a_cc1eab1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-09T17:12:32Z",
+      "side": 1,
+      "message": "With or without this change, the code sets the prototype chain so `GPUDevice` inherits from `EventTarget`. It\u0027s just it was inheriting from an internal `EventTarget`, not the real `EventTarget`. Marking `EventTarget` with `[ManualImplementation]` makes code use the real `EventTarget` for the chain and the `GPUDevice instanceof EventTarget` CTS tests pass.\n\nBut, making `EventTarget` as `[ManualImplementation]` generated errors. This is because, unlike the other manual classes, `EventTarget` implements various methods. We still want the templates to generate the JS-\u003eC++ code for those methods instead of just not generating any code whatsoever, but we don\u0027t need `XX::Unwrap`, `XX::Bind`, etc... since we never construct these directly. Those are the changes to the code.\n\nIf Napi allowed actually inheriting from `EventTarget` we wouldn\u0027t need any of it because calls would just fall through to `EventTarget`. But, because we can\u0027t do that we\u0027re using `EventTarget` by composition and so we have to forward the calls. To forward the calls we need the JS-\u003eC++ generated interop code.",
+      "parentUuid": "4ec92bf8_9bfe2351",
+      "revId": "1d7c16a40cf508cc09a49a3901d7bbe321e7e6c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
