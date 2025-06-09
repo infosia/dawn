@@ -49,6 +49,11 @@
 #define EGL_EXTENSIONS_ENABLED_ANGLE 0x345F
 #endif
 
+// https://chromium.googlesource.com/angle/angle/+/main/extensions/EGL_ANGLE_context_virtualization.txt
+#ifndef EGL_ANGLE_context_virtualization
+#define EGL_CONTEXT_VIRTUALIZATION_GROUP_ANGLE 0x3481
+#endif
+
 namespace dawn::native::opengl {
 
 // static
@@ -56,10 +61,11 @@ ResultOrError<std::unique_ptr<ContextEGL>> ContextEGL::Create(Ref<DisplayEGL> di
                                                               wgpu::BackendType backend,
                                                               bool useRobustness,
                                                               bool useANGLETextureSharing,
-                                                              bool forceES31AndMinExtensions) {
+                                                              bool forceES31AndMinExtensions,
+                                                              EGLint angleVirtualizationGroup) {
     auto context = std::make_unique<ContextEGL>(std::move(display));
     DAWN_TRY(context->Initialize(backend, useRobustness, useANGLETextureSharing,
-                                 forceES31AndMinExtensions));
+                                 forceES31AndMinExtensions, angleVirtualizationGroup));
     return std::move(context);
 }
 
@@ -79,7 +85,8 @@ ContextEGL::~ContextEGL() {
 MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
                                   bool useRobustness,
                                   bool useANGLETextureSharing,
-                                  bool forceES31AndMinExtensions) {
+                                  bool forceES31AndMinExtensions,
+                                  EGLint angleVirtualizationGroup) {
     const EGLFunctions& egl = mDisplay->egl;
 
     // Unless EGL_KHR_no_config is present, we need to choose an EGLConfig on context creation that
@@ -147,6 +154,10 @@ MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
         if (egl.HasExt(EGLExt::ANGLECreateContextExtensionsEnabled)) {
             AddAttrib(EGL_EXTENSIONS_ENABLED_ANGLE, EGL_FALSE);
         }
+    }
+
+    if (egl.HasExt(EGLExt::ANGLEContextVirtualization)) {
+        AddAttrib(EGL_CONTEXT_VIRTUALIZATION_GROUP_ANGLE, angleVirtualizationGroup);
     }
 
     // The attrib list is finished with an EGL_NONE tag.
