@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9975efd_e0b5921b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-09T18:52:34Z",
+      "side": 1,
+      "message": "Can we just make this an if `else if compute` branch off of the `if (func-\u003eIsVertex()) {` in the loop above, rather than looping over all functions again?",
+      "range": {
+        "startLine": 1211,
+        "startChar": 0,
+        "endLine": 1214,
+        "endChar": 13
+      },
+      "revId": "64915abe34cc71142b465d420930a5304e9eb3db",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
