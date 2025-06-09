@@ -134,9 +134,9 @@ MaybeError GetDeviceIORegistryPCIInfo(id<MTLDevice> device, PCIIDs* ids) {
         return DAWN_INTERNAL_ERROR("Failed to create the matching dict for the device");
     }
 
-    // Work around a breaking deprecation of kIOMasterPortDefault to kIOMainPortDefault. Both values
-    // are equivalent with NULL (given mach_port_t is an unsigned int they probably mean 0) as noted
-    // by the IOKitLib.h comments so use that directly.
+    // Work around a breaking deprecation of kIOMas-terPortDefault to kIOMainPortDefault. Both
+    // values are equivalent with NULL (given mach_port_t is an unsigned int they probably mean 0)
+    // as noted by the IOKitLib.h comments so use that directly.
     // TODO(chromium:1400252): Use kIOMainPortDefault once the minimum supported version includes
     // macOS 12.0
     constexpr mach_port_t kIOMainPort = 0;
@@ -671,6 +671,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::ClipDistances);
     EnableFeature(Feature::Float32Blendable);
     EnableFeature(Feature::FlexibleTextureViews);
+    EnableFeature(Feature::TextureFormatsTier1);
 
     // The function subgroupBroadcast(f16) fails for some edge cases on intel gen-9 devices.
     // See crbug.com/391680973
