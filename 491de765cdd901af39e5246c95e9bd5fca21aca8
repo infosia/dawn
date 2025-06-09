@@ -22,6 +22,30 @@
       },
       "revId": "491de765cdd901af39e5246c95e9bd5fca21aca8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4bbf22f_6d855c96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-09T18:39:06Z",
+      "side": 1,
+      "message": "You can\u0027t use it outside the root block.",
+      "parentUuid": "a68cae47_bccb2d79",
+      "range": {
+        "startLine": 13,
+        "startChar": 46,
+        "endLine": 14,
+        "endChar": 70
+      },
+      "revId": "491de765cdd901af39e5246c95e9bd5fca21aca8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
