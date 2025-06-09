@@ -45,6 +45,30 @@
       },
       "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e174dc9a_00f4fd96",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-09T16:22:20Z",
+      "side": 1,
+      "message": "Not really. I put it here just feels it\u0027s conceptually correct. I tried removing the deviceTick and it still passes all the tests. Removed it.",
+      "parentUuid": "345fa0dd_d5405790",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 86
+      },
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
