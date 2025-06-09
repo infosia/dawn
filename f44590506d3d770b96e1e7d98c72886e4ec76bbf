@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b46d8b2_17718700",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-09T19:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b77fd99_29bd8905",
+      "range": {
+        "startLine": 937,
+        "startChar": 0,
+        "endLine": 938,
+        "endChar": 95
+      },
+      "revId": "f44590506d3d770b96e1e7d98c72886e4ec76bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61505423_92cee9b8",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6dc5851_564660d8",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-09T19:25:18Z",
+      "side": 1,
+      "message": "We can\u0027t, because an `OpSpecConstantComposite` can depend on another `OpSpecConstantComposite`. We don\u0027t have the `Value` for that constant until we\u0027ve emitted it here with `Value`. This happens, for example, if you\u0027re making a `Matrix` which depends on a `Vector` to fill in the rows and the vector uses a spec constant.",
+      "parentUuid": "61505423_92cee9b8",
+      "revId": "f44590506d3d770b96e1e7d98c72886e4ec76bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f8d4e41_7b46fa01",
@@ -54,6 +96,24 @@
       "writtenOn": "2025-06-09T18:51:08Z",
       "side": 1,
       "message": "Nit: no vars",
+      "revId": "f44590506d3d770b96e1e7d98c72886e4ec76bbf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6c17ec8_4ceb82f8",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3389,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-09T19:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f8d4e41_7b46fa01",
       "revId": "f44590506d3d770b96e1e7d98c72886e4ec76bbf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
