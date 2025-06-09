@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5a8ad1e_ef992386",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-09T21:23:58Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that this doesn\u0027t avoid the forking and manual copies for arrays. I had forgotten that we always fork arrays when they need explicit layouts, which is a separate issue really.\n\nI\u0027ll open a separate bug for that.",
+      "revId": "33c13161c2ce3d6de3a9cdb0ece961be4b2f86b1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

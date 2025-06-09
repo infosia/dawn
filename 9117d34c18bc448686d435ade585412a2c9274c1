@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e308f7f_647db61c",
+        "filename": "src/tint/lang/spirv/writer/raise/fork_explicit_layout_types_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-09T21:23:58Z",
+      "side": 0,
+      "message": "I think we may have lost all unit test coverage for these element-wise conversion functions for structures.\n\nThe problem is that I wrote all of the tests using `function` as the \"other\" address space. Now all of the tests that had shared structures needing conversions either:\n- Use SPIR-V 1.3 and therefore use explicit layouts, no conversion needed\n- Use SPIR-V 1.5 and therefore use OpCopyLogical for the conversions\n\nSo it\u0027d probably be better to change these tests to use `workgroup` for the \"other\" address space instead, rather than splitting them into 1.3 vs 1.5 versions. I think having the 1.5 versions of the `foo_SharedWithBar` tests at the top is enough to cover the key difference of \"no type forking\".\n\nSorry, that\u0027s a bunch of test reworking, but this stuff is awkward enough that we should try and keep the unit test coverage.",
+      "revId": "9117d34c18bc448686d435ade585412a2c9274c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
