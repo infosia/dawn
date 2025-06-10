@@ -50,6 +50,24 @@
       "message": "The current proposal supports every combination of `componentType` -\u003e `resultComponentType`, with the configuration being validated at pipeline creation time. Limiting the intrinsics overloads here would cause CTS failures if we were to test that all combinations are expected to pass shader module creation.\n\nBut I appreciate that many of these overloads would never exist in practice, and maybe it doesn\u0027t make sense to keep them all in our intrinsics table.\n\n@alanbaker@google.com does it make sense to limit the overloads to:\n```\nf* -\u003e f*\ni* -\u003e i*\nu* -\u003e u*\n```\n?\nThat reduces us from 36 overloads down to 9 overloads.\n\nShould we also limit `i8` input to `i32` too as Jiawei has done here, or is that too far?",
       "revId": "a3bffbb0a9a542e8e8fdc3f30fcb781da5b31a91",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "906df3d1_a9c0ce4a",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-06-10T18:05:14Z",
+      "side": 1,
+      "message": "Those make sense, the only other ones worth considering are mixed signage for integer types. Unfortunately, I\u0027m not certain how prevalent that is.\n\nSo\n```\nf* -\u003e f*\niu* -\u003e iu*\n```\n\nWe could also reduce overloads by not specifying down conversions, but that might make the table unwieldy.",
+      "parentUuid": "bd72313c_73dacd86",
+      "revId": "a3bffbb0a9a542e8e8fdc3f30fcb781da5b31a91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
