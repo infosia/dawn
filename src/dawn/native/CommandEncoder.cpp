@@ -210,7 +210,7 @@ class RenderPassValidationState final : public NonMovable {
                                     attachment);
                     // RenderPassDescriptorResolveRect relaxes the requirement for the color
                     // attachment texture size to match the resolve texture size.
-                    if (!mExpandResolveRect) {
+                    if (!mExpandResolveRect && !mIsResolvePass) {
                         DAWN_INVALID_IF(
                             renderSize.width != mRenderWidth || renderSize.height != mRenderHeight,
                             "The resolve target %s size (width: %u, height: %u) does not match the "
@@ -305,6 +305,7 @@ class RenderPassValidationState final : public NonMovable {
 
     bool WillExpandResolveTexture() const { return mWillExpandResolveTexture; }
     void SetWillExpandResolveTexture(bool enabled) { mWillExpandResolveTexture = enabled; }
+    void SetIsResolvePass(bool enabled) { mIsResolvePass = enabled; }
     void SetExpandResolveRect(
         const std::optional<RenderPassDescriptorResolveRect>& expandResolveRect) {
         mExpandResolveRect = expandResolveRect;
@@ -327,6 +328,7 @@ class RenderPassValidationState final : public NonMovable {
     absl::InlinedVector<RecordedAttachment, kMaxColorAttachments> mRecords;
 
     bool mWillExpandResolveTexture = false;
+    bool mIsResolvePass = false;
     std::optional<RenderPassDescriptorResolveRect> mExpandResolveRect;
 };
 
@@ -1282,7 +1284,9 @@ RenderPassEncoder* CommandEncoder::APIBeginRenderPass(const RenderPassDescriptor
     return ReturnToAPI(BeginRenderPass(descriptor));
 }
 
-Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescriptor* rawDescriptor) {
+Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(
+    const RenderPassDescriptor* rawDescriptor,
+    const std::optional<RenderPassDescriptorResolveRect>& resolveRectNoRenderPass) {
     DeviceBase* device = GetDevice();
     DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
 
@@ -1314,6 +1318,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                                     "validating and unpacking chained structs.");
 
             if (GetDevice()->IsValidationEnabled()) {
+                validationState.SetIsResolvePass(resolveRectNoRenderPass.has_value());
                 DAWN_TRY(ValidateRenderPassDescriptor(device, descriptor, mUsageValidationMode,
                                                       &validationState));
             } else {
@@ -1463,6 +1468,51 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
             cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
 
+            cmd->hasExpandResolveRect = false;
+            const bool useRenderPass = device->IsToggleEnabled(Toggle::UseD3D12RenderPass);
+
+            // When using render pass, pass the resolve rect directly to
+            // D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS. Otherwise, pass it to
+            // ResolveSubresourceRegion in D3D12.
+            if (useRenderPass) {
+                if (auto* legacyResolveRect =
+                        descriptor.Get<RenderPassDescriptorExpandResolveRect>()) {
+                    cmd->colorOffsetX = legacyResolveRect->x;
+                    cmd->colorOffsetY = legacyResolveRect->y;
+                    cmd->resolveOffsetX = legacyResolveRect->x;
+                    cmd->resolveOffsetY = legacyResolveRect->y;
+                    cmd->updateWidth = legacyResolveRect->width;
+                    cmd->updateHeight = legacyResolveRect->height;
+                    cmd->hasExpandResolveRect = true;
+                } else if (auto* resolveRect = descriptor.Get<RenderPassDescriptorResolveRect>()) {
+                    cmd->colorOffsetX = resolveRect->colorOffsetX;
+                    cmd->colorOffsetY = resolveRect->colorOffsetY;
+                    cmd->resolveOffsetX = resolveRect->resolveOffsetX;
+                    cmd->resolveOffsetY = resolveRect->resolveOffsetY;
+                    cmd->updateWidth = resolveRect->width;
+                    cmd->updateHeight = resolveRect->height;
+                    cmd->hasExpandResolveRect = true;
+                }
+            } else if (resolveRectNoRenderPass) {
+                cmd->colorOffsetX = resolveRectNoRenderPass->colorOffsetX;
+                cmd->colorOffsetY = resolveRectNoRenderPass->colorOffsetY;
+                cmd->resolveOffsetX = resolveRectNoRenderPass->resolveOffsetX;
+                cmd->resolveOffsetY = resolveRectNoRenderPass->resolveOffsetY;
+                cmd->updateWidth = resolveRectNoRenderPass->width;
+                cmd->updateHeight = resolveRectNoRenderPass->height;
+                cmd->hasExpandResolveRect = true;
+            }
+#if 0
+             else {
+                cmd->colorOffsetX = 0;
+                cmd->colorOffsetY = 0;
+                cmd->resolveOffsetX = 0;
+                cmd->resolveOffsetY = 0;
+                cmd->updateWidth = 0;
+                cmd->updateHeight = 0;
+            }
+#endif
+
             if (descriptor->timestampWrites != nullptr) {
                 QuerySetBase* querySet = descriptor->timestampWrites->querySet;
                 uint32_t beginningOfPassWriteIndex =
@@ -1504,7 +1554,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             }
 
             DAWN_TRY(renderpassWorkaroundsHelper.ApplyOnPostEncoding(
-                this, descriptor, &usageTracker, cmd, &passEndCallback));
+                this, descriptor, &usageTracker, cmd, &passEndCallback, useRenderPass));
 
             return {};
         },
