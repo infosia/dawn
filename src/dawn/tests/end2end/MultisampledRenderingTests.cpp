@@ -1816,6 +1816,8 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
     void TestLoadOrClearThenPartialResolve(wgpu::LoadOp loadOp,
                                            const wgpu::Color& initialColor,
                                            const wgpu::Color& userDrawColor) {
+        // TODO(402810062): Fails using WARP but not on real hardware.
+        DAWN_TEST_UNSUPPORTED_IF(IsWARP());
         constexpr wgpu::Color kBlack = {0.0f, 0.0f, 0.0f, 0.0f};
         wgpu::RenderPassDescriptorResolveRect rect{};
         rect.colorOffsetX = 1;

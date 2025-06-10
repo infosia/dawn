@@ -1463,6 +1463,45 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
             cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
 
+            // Initialize all resolve parameters to "empty region" (0,0,0,0).
+            // This handles:
+            // 1) Non-D3D12 backends where sub-rect resolves aren't supported.  For non-D3D12 path,
+            // resolving a specified sub-rect is only valid on hardware that supports sample
+            // positions. This means even {0, 0, width, height} would be invalid if unsupported. To
+            // avoid this, we assume sub-rect resolves never work by setting them to all zeros or
+            // "empty" to resolve the entire region.
+            // 2) D3D12 cases where no resolve rect is specified.
+            cmd->colorOffsetX = 0;
+            cmd->colorOffsetY = 0;
+            cmd->resolveOffsetX = 0;
+            cmd->resolveOffsetY = 0;
+            cmd->updateWidth = 0;
+            cmd->updateHeight = 0;
+            // On D3D12, MSAA resolves support two modes:
+            // 1) Using D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS for render
+            // pass resolves.
+            // 2) Using ResolveSubresourceRegion for explicit sub-rectangle resolves
+            // The command parameters are passed through 'cmd' to execute the appropriate resolve
+            // operation.
+            if (device->GetPhysicalDevice()->GetBackendType() == wgpu::BackendType::D3D12) {
+                if (auto* legacyResolveRect =
+                        descriptor.Get<RenderPassDescriptorExpandResolveRect>()) {
+                    cmd->colorOffsetX = legacyResolveRect->x;
+                    cmd->colorOffsetY = legacyResolveRect->y;
+                    cmd->resolveOffsetX = legacyResolveRect->x;
+                    cmd->resolveOffsetY = legacyResolveRect->y;
+                    cmd->updateWidth = legacyResolveRect->width;
+                    cmd->updateHeight = legacyResolveRect->height;
+                } else if (auto* resolveRect = descriptor.Get<RenderPassDescriptorResolveRect>()) {
+                    cmd->colorOffsetX = resolveRect->colorOffsetX;
+                    cmd->colorOffsetY = resolveRect->colorOffsetY;
+                    cmd->resolveOffsetX = resolveRect->resolveOffsetX;
+                    cmd->resolveOffsetY = resolveRect->resolveOffsetY;
+                    cmd->updateWidth = resolveRect->width;
+                    cmd->updateHeight = resolveRect->height;
+                }
+            }
+
             if (descriptor->timestampWrites != nullptr) {
                 QuerySetBase* querySet = descriptor->timestampWrites->querySet;
                 uint32_t beginningOfPassWriteIndex =
