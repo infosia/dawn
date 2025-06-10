@@ -16,6 +16,24 @@
       "message": "Nit: Add `enable texel_buffers;` at the top of this wgsl code.",
       "revId": "90aebb61c0f9fa4261d4e7ea1db8cf067d650c44",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b08b9526_30397be5",
+        "filename": "docs/tint/extensions/texel_buffers.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-10T11:43:00Z",
+      "side": 1,
+      "message": "This is going to be a language extension available everywhere, not an \"enable extension\", so no `enable` required.",
+      "parentUuid": "60c4ed26_9aa6881c",
+      "revId": "90aebb61c0f9fa4261d4e7ea1db8cf067d650c44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
