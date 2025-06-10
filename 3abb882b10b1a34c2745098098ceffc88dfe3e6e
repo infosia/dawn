@@ -24,6 +24,47 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75936344_57bd9855",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-10T11:29:10Z",
+      "side": 1,
+      "message": "Loko\u0027s suggestion is the way Metal does the tracking essentially. I think it might be better to go that route because (Loko please confirm) eventually we want all backends to \"call us back\" when forward progress is made on the queue, which will make all backends look a bit like Metal (though the logic might be in the frontend).",
+      "parentUuid": "1b64ff3d_ba1de0ee",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 90
+      },
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ddd60f90_56332647",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-10T11:29:10Z",
+      "side": 1,
+      "message": "Could we have a helper for this that checks the various WGPU statuses? We have one in most other backends. (we can do a trick to convert the C to C++ type, get E::Success then go back to C to make this work for all enum types). Also this would need to be an internal error instead of a validation error like DAWN_INVALID_IF produces.",
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "345fa0dd_d5405790",
@@ -67,6 +108,87 @@
         "endLine": 132,
         "endChar": 86
       },
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86f61b86_628ad962",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-10T11:29:10Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need a tick here. The code in `SubmitPendingCommandsImpl` should already force a submit of pending commands if `mHasPendingCommands`.",
+      "parentUuid": "345fa0dd_d5405790",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 86
+      },
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d74f9152_980d2d8b",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-10T11:29:10Z",
+      "side": 1,
+      "message": "The comment doesn\u0027t match the code as there is no empty submission. Also it is reflowed to 80 chars when the size is 100 in Dawn.",
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "37b1afac_fa7390a5",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-10T11:29:10Z",
+      "side": 1,
+      "message": "Why this condition? If we remove it then `ForceEventualFlushOfCommands` doesn\u0027t need a tick.",
+      "range": {
+        "startLine": 142,
+        "startChar": 28,
+        "endLine": 142,
+        "endChar": 56
+      },
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71a95472_11bece68",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-10T11:29:10Z",
+      "side": 1,
+      "message": "This block is done twice and could be refactored.",
       "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
