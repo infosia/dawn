@@ -72,6 +72,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "500d2d18_8a37e541",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-10T22:23:12Z",
+      "side": 1,
+      "message": "Talked with Loko offline. Moving the content from `CheckAndUpdateCompletedSerials` to the onSubmittedWorkDone callback isn\u0027t pain-free for C style API (but could be done, example: see DeviceWGPU constructor [code](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/webgpu/DeviceWGPU.cpp;l\u003d91;drc\u003d7e31f668425d3d4dfcb0cfc587f4c76384e512b6)). Add a TODO for now at [1].",
+      "parentUuid": "77181880_76be5102",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 90
+      },
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddd60f90_56332647",
@@ -85,6 +109,24 @@
       "writtenOn": "2025-06-10T11:29:10Z",
       "side": 1,
       "message": "Could we have a helper for this that checks the various WGPU statuses? We have one in most other backends. (we can do a trick to convert the C to C++ type, get E::Success then go back to C to make this work for all enum types). Also this would need to be an internal error instead of a validation error like DAWN_INVALID_IF produces.",
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36092cd3_64557752",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-10T22:23:12Z",
+      "side": 1,
+      "message": "Done (Check error macro in a new [CL](https://dawn-review.googlesource.com/c/dawn/+/246254))",
+      "parentUuid": "ddd60f90_56332647",
       "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -160,6 +202,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cce2ce4b_270e57dc",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-10T22:23:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86f61b86_628ad962",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 86
+      },
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d74f9152_980d2d8b",
@@ -173,6 +239,24 @@
       "writtenOn": "2025-06-10T11:29:10Z",
       "side": 1,
       "message": "The comment doesn\u0027t match the code as there is no empty submission. Also it is reflowed to 80 chars when the size is 100 in Dawn.",
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4bfc1df_ec527c54",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-10T22:23:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d74f9152_980d2d8b",
       "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -200,6 +284,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93e163eb_a544fc22",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-10T22:23:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37b1afac_fa7390a5",
+      "range": {
+        "startLine": 142,
+        "startChar": 28,
+        "endLine": 142,
+        "endChar": 56
+      },
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71a95472_11bece68",
@@ -213,6 +321,24 @@
       "writtenOn": "2025-06-10T11:29:10Z",
       "side": 1,
       "message": "This block is done twice and could be refactored.",
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18cf195d_0215d57f",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-10T22:23:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71a95472_11bece68",
       "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
