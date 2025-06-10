@@ -1463,6 +1463,28 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
             cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
 
+            cmd->hasExpandResolveRect = false;
+            // When using render pass, pass the resolve rect directly to
+            // D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS. Otherwise, pass it to
+            // ResolveSubresourceRegion in D3D12.
+            if (auto* legacyResolveRect = descriptor.Get<RenderPassDescriptorExpandResolveRect>()) {
+                cmd->colorOffsetX = legacyResolveRect->x;
+                cmd->colorOffsetY = legacyResolveRect->y;
+                cmd->resolveOffsetX = legacyResolveRect->x;
+                cmd->resolveOffsetY = legacyResolveRect->y;
+                cmd->updateWidth = legacyResolveRect->width;
+                cmd->updateHeight = legacyResolveRect->height;
+                cmd->hasExpandResolveRect = true;
+            } else if (auto* resolveRect = descriptor.Get<RenderPassDescriptorResolveRect>()) {
+                cmd->colorOffsetX = resolveRect->colorOffsetX;
+                cmd->colorOffsetY = resolveRect->colorOffsetY;
+                cmd->resolveOffsetX = resolveRect->resolveOffsetX;
+                cmd->resolveOffsetY = resolveRect->resolveOffsetY;
+                cmd->updateWidth = resolveRect->width;
+                cmd->updateHeight = resolveRect->height;
+                cmd->hasExpandResolveRect = true;
+            }
+
             if (descriptor->timestampWrites != nullptr) {
                 QuerySetBase* querySet = descriptor->timestampWrites->querySet;
                 uint32_t beginningOfPassWriteIndex =
