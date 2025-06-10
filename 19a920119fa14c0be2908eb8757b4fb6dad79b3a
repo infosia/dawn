@@ -16,6 +16,138 @@
       "message": "Please take a look, thanks",
       "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "598a41a1_7a447256",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 34
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-10T21:15:53Z",
+      "side": 1,
+      "message": "Looks good to me. Mostly some requests to clarify comments.",
+      "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb6110df_0ea0dfa9",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 2186,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-10T21:15:53Z",
+      "side": 1,
+      "message": "Could you reword this a bit? It\u0027s not clear to me when parseResult (probably should be `outputParseResult`) is written in an error case. Do you mean when `ParseShaderModule` generates an error the there will still be messages written?",
+      "range": {
+        "startLine": 2183,
+        "startChar": 84,
+        "endLine": 2186,
+        "endChar": 72
+      },
+      "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcb22506_3eeb0f89",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 2193,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-10T21:15:53Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t add too much details that are not obvious from reading the code. I think we can leave it out.",
+      "range": {
+        "startLine": 2192,
+        "startChar": 0,
+        "endLine": 2193,
+        "endChar": 95
+      },
+      "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44bb91e4_aa1ea01f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-10T21:15:53Z",
+      "side": 1,
+      "message": "A comment on this would help a little too I think. It\u0027s because Acquire is just returning `outputParseResult`, right?",
+      "range": {
+        "startLine": 2202,
+        "startChar": 16,
+        "endLine": 2202,
+        "endChar": 33
+      },
+      "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ebf52f9_90cb0e36",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 2205,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-10T21:15:53Z",
+      "side": 1,
+      "message": "Probably unneeded. The moving of compilation messages is an implementation detail.",
+      "range": {
+        "startLine": 2204,
+        "startChar": 0,
+        "endLine": 2205,
+        "endChar": 87
+      },
+      "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcc36659_2c60250b",
+        "filename": "src/dawn/native/ShaderModuleParseRequest.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-10T21:15:53Z",
+      "side": 1,
+      "message": "I thiiiink this might not be necessary, UnsafeUnserializedValue has a constructor from const ref.",
+      "range": {
+        "startLine": 121,
+        "startChar": 37,
+        "endLine": 121,
+        "endChar": 71
+      },
+      "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
