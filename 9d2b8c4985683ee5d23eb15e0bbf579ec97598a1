@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "228b2a1d_2a6fb4c0",
+        "filename": "src/tint/lang/core/ir/transform/conversion_polyfill.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-10T19:44:37Z",
+      "side": 1,
+      "message": "I guess this was added because i used uint32_t",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "9d2b8c4985683ee5d23eb15e0bbf579ec97598a1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
