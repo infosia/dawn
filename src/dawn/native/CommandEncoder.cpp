@@ -60,6 +60,7 @@
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/ValidationUtils.h"
 #include "dawn/native/ValidationUtils_autogen.h"
+#include "dawn/native/dawn_platform.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
@@ -1404,8 +1405,33 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 usageTracker.TextureViewUsedAs(colorTarget, wgpu::TextureUsage::RenderAttachment);
 
                 if (resolveTarget != nullptr) {
-                    usageTracker.TextureViewUsedAs(resolveTarget,
-                                                   wgpu::TextureUsage::RenderAttachment);
+                    // Special handling for MSAA resolve operations:
+                    // When a texture is used as a resolve target in an MSAA operation (expanding
+                    // from resolve target to MSAA texture), we need special usage tracking due to
+                    // different device capabilities and load operations.
+                    //
+                    // Case 1: Devices support partial resolves (CanResolveSubRect)
+                    //   - When loadOp is Clear or Load (but not ExpandResolveTexture):
+                    //     1. Uses kResolveAttachmentLoadingUsage (a frontend flag) to inform the
+                    //     backend:
+                    //        - Directs backend to use appropriate resource state (e.g.,
+                    //        D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE
+                    //          instead of D3D12_RESOURCE_STATE_RENDER_TARGET)
+                    //        - Avoids validation errors from mixing TextureBinding|RenderAttachment
+                    //   - Note: ExpandResolveTexture case is handled during expanding pipeline
+                    //   creation
+                    //
+                    // Case 2: Devices without partial resolve support
+                    //   - Falls back to standard RenderAttachment usage
+                    if (device->CanResolveSubRect()) {
+                        if (cmdColorAttachment.loadOp != wgpu::LoadOp::ExpandResolveTexture) {
+                            usageTracker.TextureViewUsedAs(resolveTarget,
+                                                           kResolveAttachmentLoadingUsage);
+                        }
+                    } else {
+                        usageTracker.TextureViewUsedAs(resolveTarget,
+                                                       wgpu::TextureUsage::RenderAttachment);
+                    }
                 }
             }
 
