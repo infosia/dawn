@@ -37,6 +37,7 @@
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/Texture.h"
 
 namespace dawn::native {
@@ -229,7 +230,6 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
         rect.width = legacyResolveRect->width;
         rect.height = legacyResolveRect->height;
         expandResolveRect = rect;
-
     } else if (auto* resolveRect = renderPassDescriptor.Get<RenderPassDescriptorResolveRect>()) {
         expandResolveRect = *resolveRect;
     }
@@ -237,7 +237,8 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
     // wgpu::LoadOp::ExpandResolveTexture. If that's the case then the resolves are deferred by
     // removing the resolve targets and forcing the storeOp to Store. After the pass has ended an
     // new pass is recorded for each resolve target that resolves it separately.
-    if (expandResolveRect) {
+    const bool isD3D12 = device->GetPhysicalDevice()->GetBackendType() == wgpu::BackendType::D3D12;
+    if (expandResolveRect && !isD3D12) {
         std::vector<TemporaryResolveAttachment> temporaryResolveAttachments;
 
         for (auto i : cmd->attachmentState->GetColorAttachmentsMask()) {
