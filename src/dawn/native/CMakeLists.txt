@@ -578,6 +578,7 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
         "webgpu/Forward.h"
         "webgpu/PhysicalDeviceWGPU.h"
         "webgpu/QueueWGPU.h"
+        "webgpu/WebGPUError.h"
     )
     list(APPEND sources
         "webgpu/BackendWGPU.cpp"
@@ -586,6 +587,7 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
         "webgpu/DeviceWGPU.cpp"
         "webgpu/PhysicalDeviceWGPU.cpp"
         "webgpu/QueueWGPU.cpp"
+        "webgpu/WebGPUError.cpp"
     )
 endif()
 
