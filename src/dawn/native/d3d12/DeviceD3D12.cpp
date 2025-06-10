@@ -784,6 +784,10 @@ uint64_t Device::GetOptimalBufferToTextureCopyOffsetAlignment() const {
     return 1;
 }
 
+bool Device::CanTextureLoadResolveTargetInTheSameRenderpass() const {
+    return true;
+}
+
 float Device::GetTimestampPeriodInNS() const {
     return mTimestampPeriod;
 }
