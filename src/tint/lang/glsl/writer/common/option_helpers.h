@@ -41,7 +41,7 @@ using RemapperData = std::unordered_map<BindingPoint, BindingPoint>;
 
 /// @param options the options
 /// @returns success or failure
-diag::Result<SuccessType> ValidateBindingOptions(const Options& options);
+Result<SuccessType> ValidateBindingOptions(const Options& options);
 
 /// Populates data from the writer options for the remapper and external texture.
 /// @param options the writer options
