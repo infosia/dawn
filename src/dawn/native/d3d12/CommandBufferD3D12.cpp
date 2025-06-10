@@ -779,9 +779,27 @@ void ResolveMultisampledRenderPass(CommandRecordingContext* commandContext,
         const uint32_t resolveTextureSubresourceIndex = resolveTexture->GetSubresourceIndex(
             resolveTarget->GetBaseMipLevel(), resolveTarget->GetBaseArrayLayer(), Aspect::Color);
         constexpr uint32_t kColorTextureSubresourceIndex = 0;
-        commandContext->GetCommandList()->ResolveSubresource(
-            resolveTextureHandle, resolveTextureSubresourceIndex, colorTextureHandle,
-            kColorTextureSubresourceIndex, colorTexture->GetD3D12Format());
+        // On D3D12, MSAA resolves support two modes:
+        // 1) Using D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS for render
+        // pass resolves.
+        // 2) Using ResolveSubresourceRegion for non render pass resolves.
+        if (renderPass->resolveRect.hasValue()) {
+            D3D12_RECT pSrcRect = {static_cast<int32_t>(renderPass->resolveRect.colorOffsetX),
+                                   static_cast<int32_t>(renderPass->resolveRect.colorOffsetY),
+                                   static_cast<int32_t>(renderPass->resolveRect.colorOffsetX +
+                                                        renderPass->resolveRect.updateWidth),
+                                   static_cast<int32_t>(renderPass->resolveRect.colorOffsetY +
+                                                        renderPass->resolveRect.updateHeight)};
+            commandContext->GetCommandList1()->ResolveSubresourceRegion(
+                resolveTextureHandle, resolveTextureSubresourceIndex,
+                renderPass->resolveRect.resolveOffsetX, renderPass->resolveRect.resolveOffsetY,
+                colorTextureHandle, kColorTextureSubresourceIndex, &pSrcRect,
+                colorTexture->GetD3D12Format(), D3D12_RESOLVE_MODE_AVERAGE);
+        } else {
+            commandContext->GetCommandList()->ResolveSubresource(
+                resolveTextureHandle, resolveTextureSubresourceIndex, colorTextureHandle,
+                kColorTextureSubresourceIndex, colorTexture->GetD3D12Format());
+        }
     }
 }
 
@@ -1395,11 +1413,12 @@ MaybeError CommandBuffer::SetupRenderPass(CommandRecordingContext* commandContex
                     ToBackend(resolveDestinationView->GetTexture());
 
                 resolveDestinationTexture->TrackUsageAndTransitionNow(
-                    commandContext, D3D12_RESOURCE_STATE_RESOLVE_DEST,
+                    commandContext, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
                     resolveDestinationView->GetSubresourceRange());
 
                 renderPassBuilder->SetRenderTargetEndingAccessResolve(i, attachmentInfo.storeOp,
-                                                                      view, resolveDestinationView);
+                                                                      view, resolveDestinationView,
+                                                                      renderPass->resolveRect);
             } else {
                 renderPassBuilder->SetRenderTargetEndingAccess(i, attachmentInfo.storeOp);
             }

@@ -152,6 +152,30 @@ struct RenderPassDepthStencilAttachmentInfo {
     bool stencilReadOnly;
 };
 
+struct ResolveRect {
+    uint32_t colorOffsetX = 0;
+    uint32_t colorOffsetY = 0;
+    uint32_t resolveOffsetX = 0;
+    uint32_t resolveOffsetY = 0;
+    uint32_t updateWidth = 0;
+    uint32_t updateHeight = 0;
+    ResolveRect() = default;
+    // Add constructor for easy conversion
+    ResolveRect(uint32_t colorOffsetX,
+                uint32_t colorOffsetY,
+                uint32_t resolveOffsetX,
+                uint32_t resolveOffsetY,
+                uint32_t updateWidth,
+                uint32_t updateHeight)
+        : colorOffsetX(colorOffsetX),
+          colorOffsetY(colorOffsetY),
+          resolveOffsetX(resolveOffsetX),
+          resolveOffsetY(resolveOffsetY),
+          updateWidth(updateWidth),
+          updateHeight(updateHeight) {}
+    bool hasValue() { return updateWidth != 0 && updateHeight != 0; }
+};
+
 struct BeginRenderPassCmd {
     BeginRenderPassCmd();
     ~BeginRenderPassCmd();
@@ -165,6 +189,8 @@ struct BeginRenderPassCmd {
     // Cache the width and height of all attachments for convenience
     uint32_t width;
     uint32_t height;
+    // Used for partial resolve
+    ResolveRect resolveRect;
 
     Ref<QuerySetBase> occlusionQuerySet;
     TimestampWrites timestampWrites;
