@@ -163,8 +163,8 @@ struct Options {
     /// Set to `true` to disable the polyfills on integer division and modulo.
     bool disable_polyfill_integer_div_mod = false;
 
-    /// Set to `true` to enable the module constant transform
-    bool enable_module_constant = false;
+    /// Set to `true` to disable the module constant transform for f16
+    bool disable_module_constant_f16 = false;
 
     /// Emit argument buffers
     bool use_argument_buffers = false;
@@ -200,7 +200,7 @@ struct Options {
                  disable_demote_to_helper,
                  emit_vertex_point_size,
                  disable_polyfill_integer_div_mod,
-                 enable_module_constant,
+                 disable_module_constant_f16,
                  use_argument_buffers,
                  buffer_size_ubo_index,
                  fixed_sample_mask,
