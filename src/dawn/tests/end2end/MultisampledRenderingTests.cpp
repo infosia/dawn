@@ -1715,6 +1715,18 @@ class DawnLoadResolveTextureTest : public MultisampledRenderingTest {
 
         wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
 
+        // Clear the resolve target first.
+        {
+            utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
+                {singleSampledTextureView}, {nullptr}, wgpu::LoadOp::Clear, wgpu::LoadOp::Clear,
+                /*testDepth=*/false);
+            renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
+            renderPass.cColorAttachments[0].clearValue = kClearColor;
+
+            wgpu::RenderPassEncoder renderPassEncoder = commandEncoder.BeginRenderPass(&renderPass);
+            renderPassEncoder.End();
+        }
+
         // Initial clear of MSAA texture if loading.
         if (loadOp == wgpu::LoadOp::Load) {
             utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
