@@ -57,7 +57,7 @@ const core::ir::Capabilities kModuleConstant{
 /// potential for copying of large const in nested loops.
 /// @param module the module to transform
 /// @returns success or failure
-Result<SuccessType> ModuleConstant(core::ir::Module& module);
+Result<SuccessType> ModuleConstant(core::ir::Module& module, bool disable_module_constant_f16);
 
 }  // namespace tint::msl::writer::raise
 
