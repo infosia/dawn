@@ -37,6 +37,7 @@
 #include "dawn/native/CommandEncoder.h"
 #include "dawn/native/Commands.h"
 #include "dawn/native/Device.h"
+#include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/Texture.h"
 
 namespace dawn::native {
@@ -77,10 +78,12 @@ void CopyTextureView(CommandEncoder* encoder, TextureViewBase* src, TextureViewB
     encoder->APICopyTextureToTexture(&srcTexelCopyTextureInfo, &dstTexelCopyTextureInfo, &extent3D);
 }
 
-void ResolveWithRenderPass(CommandEncoder* encoder,
-                           TextureViewBase* src,
-                           TextureViewBase* dst,
-                           wgpu::StoreOp storeOp) {
+void ResolveWithRenderPass(
+    CommandEncoder* encoder,
+    TextureViewBase* src,
+    TextureViewBase* dst,
+    wgpu::StoreOp storeOp,
+    const std::optional<RenderPassDescriptorResolveRect>& expandResolveRect = std::nullopt) {
     RenderPassColorAttachment attachment = {};
     attachment.view = src;
     attachment.resolveTarget = dst;
@@ -92,13 +95,15 @@ void ResolveWithRenderPass(CommandEncoder* encoder,
     resolvePass.colorAttachments = &attachment;
 
     // Begin and end an empty render pass to force the resolve.
-    Ref<RenderPassEncoder> rpEncoder = encoder->BeginRenderPass(&resolvePass);
+    Ref<RenderPassEncoder> rpEncoder = encoder->BeginRenderPass(&resolvePass, expandResolveRect);
     rpEncoder->End();
 }
 
+#if 0
 void DiscardWithRenderPass(CommandEncoder* encoder, TextureViewBase* view) {
     ResolveWithRenderPass(encoder, view, nullptr, wgpu::StoreOp::Discard);
 }
+#endif
 
 }  // namespace
 
@@ -237,6 +242,7 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
     // wgpu::LoadOp::ExpandResolveTexture. If that's the case then the resolves are deferred by
     // removing the resolve targets and forcing the storeOp to Store. After the pass has ended an
     // new pass is recorded for each resolve target that resolves it separately.
+#if 0
     if (expandResolveRect) {
         std::vector<TemporaryResolveAttachment> temporaryResolveAttachments;
 
@@ -254,13 +260,27 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
             attachmentInfo.storeOp = wgpu::StoreOp::Store;
             attachmentInfo.resolveTarget = nullptr;
         }
+        const auto isD3D12 =
+            device->GetPhysicalDevice()->GetBackendType() == wgpu::BackendType::D3D12;
+        const bool useRenderPass = device->IsToggleEnabled(Toggle::UseD3D12RenderPass);
         for (auto& deferredResolve : temporaryResolveAttachments) {
             passEndOperations.emplace_back([device, encoder, resolveRect = *expandResolveRect,
-                                            deferredResolve]() -> MaybeError {
-                // Do partial resolve first in one render pass.
-                DAWN_TRY(ResolveMultisampleWithDraw(device, encoder, resolveRect,
-                                                    deferredResolve.copySrc.Get(),
-                                                    deferredResolve.copyDst.Get()));
+                                            deferredResolve, isD3D12,
+                                            useRenderPass]() -> MaybeError {
+                // TODO(402810062): Enable render pass functionality using either
+                // ResolveSubresourceRegion (manual resolve) or
+                // D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS (in-pass resolve).
+                if (useRenderPass || !isD3D12) {
+                    // Do partial resolve first in one render pass.
+                    DAWN_TRY(ResolveMultisampleWithDraw(device, encoder, resolveRect,
+                                                        deferredResolve.copySrc.Get(),
+                                                        deferredResolve.copyDst.Get()));
+                } else {
+                    // Do partial resolve using D3D12 path.
+                    ResolveWithRenderPass(encoder, deferredResolve.copySrc.Get(),
+                                          deferredResolve.copyDst.Get(), deferredResolve.storeOp,
+                                          resolveRect);
+                }
 
                 switch (deferredResolve.storeOp) {
                     case wgpu::StoreOp::Store:
@@ -277,6 +297,7 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
             });
         }
     }
+#endif
 
     // dawn:1550
     // Handle toggle ResolveMultipleAttachmentInSeparatePasses. This identifies passes where there

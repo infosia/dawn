@@ -779,9 +779,21 @@ void ResolveMultisampledRenderPass(CommandRecordingContext* commandContext,
         const uint32_t resolveTextureSubresourceIndex = resolveTexture->GetSubresourceIndex(
             resolveTarget->GetBaseMipLevel(), resolveTarget->GetBaseArrayLayer(), Aspect::Color);
         constexpr uint32_t kColorTextureSubresourceIndex = 0;
-        commandContext->GetCommandList()->ResolveSubresource(
-            resolveTextureHandle, resolveTextureSubresourceIndex, colorTextureHandle,
-            kColorTextureSubresourceIndex, colorTexture->GetD3D12Format());
+        if (renderPass->hasExpandResolveRect) {
+            D3D12_RECT pSrcRect = {
+                static_cast<int32_t>(renderPass->colorOffsetX),
+                static_cast<int32_t>(renderPass->colorOffsetY),
+                static_cast<int32_t>(renderPass->colorOffsetX + renderPass->updateWidth),
+                static_cast<int32_t>(renderPass->colorOffsetY + renderPass->updateHeight)};
+            commandContext->GetCommandList1()->ResolveSubresourceRegion(
+                resolveTextureHandle, resolveTextureSubresourceIndex, renderPass->resolveOffsetX,
+                renderPass->resolveOffsetY, colorTextureHandle, kColorTextureSubresourceIndex,
+                &pSrcRect, colorTexture->GetD3D12Format(), D3D12_RESOLVE_MODE_AVERAGE);
+        } else {
+            commandContext->GetCommandList()->ResolveSubresource(
+                resolveTextureHandle, resolveTextureSubresourceIndex, colorTextureHandle,
+                kColorTextureSubresourceIndex, colorTexture->GetD3D12Format());
+        }
     }
 }
 
