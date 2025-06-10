@@ -60,6 +60,7 @@
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/ValidationUtils.h"
 #include "dawn/native/ValidationUtils_autogen.h"
+#include "dawn/native/dawn_platform.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
@@ -1404,8 +1405,13 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 usageTracker.TextureViewUsedAs(colorTarget, wgpu::TextureUsage::RenderAttachment);
 
                 if (resolveTarget != nullptr) {
-                    usageTracker.TextureViewUsedAs(resolveTarget,
-                                                   wgpu::TextureUsage::RenderAttachment);
+                    if (device->CanResolveSubRect()) {
+                        usageTracker.TextureViewUsedAs(resolveTarget,
+                                                       kResolveAttachmentLoadingUsage);
+                    } else {
+                        usageTracker.TextureViewUsedAs(resolveTarget,
+                                                       wgpu::TextureUsage::RenderAttachment);
+                    }
                 }
             }
 
