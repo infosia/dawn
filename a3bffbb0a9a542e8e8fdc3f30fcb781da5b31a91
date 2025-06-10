@@ -68,6 +68,24 @@
       "parentUuid": "bd72313c_73dacd86",
       "revId": "a3bffbb0a9a542e8e8fdc3f30fcb781da5b31a91",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b35b63d1_912b4d67",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-10T18:59:14Z",
+      "side": 1,
+      "message": "Yeah, it looks like AMD supports `u8 -\u003e i32`, so we do need to support mixed signage unfortunately.\n\nSo without removing down conversions, we still have 20 overloads. Still better than 36 though.\n\nRemoving down conversions removes 5 additional overloads.",
+      "parentUuid": "906df3d1_a9c0ce4a",
+      "revId": "a3bffbb0a9a542e8e8fdc3f30fcb781da5b31a91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
