@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fbdc060_87814bb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-06-10T19:01:57Z",
+      "side": 1,
+      "message": "PTAL.\n\nI know this will fail on the bots, since it exposes a KI with the GLSL backend, so that is why I have -2\u0027d it.",
+      "revId": "d610788b80db9799fa553d80469062cb258d3598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
