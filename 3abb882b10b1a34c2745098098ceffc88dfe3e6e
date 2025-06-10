@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77181880_76be5102",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-10T18:24:17Z",
+      "side": 1,
+      "message": "Yea, that\u0027s the eventual goal! I\u0027m not sure how feasible it is right now (even for the WebGPU backend) though since spontaneous isn\u0027t implemented for most of the other backends. It could be worth trying? It might be fine as long as we are forwarding the `ProcessEvents`/`WaitAny` calls that a user does to the backend since since that should effectively look the same.",
+      "parentUuid": "75936344_57bd9855",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 90
+      },
+      "revId": "3abb882b10b1a34c2745098098ceffc88dfe3e6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ddd60f90_56332647",
