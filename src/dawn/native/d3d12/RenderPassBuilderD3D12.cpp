@@ -43,11 +43,8 @@ D3D12_RENDER_PASS_BEGINNING_ACCESS_TYPE D3D12BeginningAccessType(wgpu::LoadOp lo
         case wgpu::LoadOp::Clear:
             return D3D12_RENDER_PASS_BEGINNING_ACCESS_TYPE_CLEAR;
         case wgpu::LoadOp::Load:
-            return D3D12_RENDER_PASS_BEGINNING_ACCESS_TYPE_PRESERVE;
         case wgpu::LoadOp::ExpandResolveTexture:
-            // TODO(dawn:1710): Implement this on D3D12.
-            DAWN_UNREACHABLE();
-            break;
+            return D3D12_RENDER_PASS_BEGINNING_ACCESS_TYPE_PRESERVE;
 
         case wgpu::LoadOp::Undefined:
             DAWN_UNREACHABLE();
@@ -96,13 +93,13 @@ D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_PARAMETERS D3D12EndingAccessResolveParam
 }
 
 D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS
-D3D12EndingAccessResolveSubresourceParameters(TextureView* resolveDestination) {
+D3D12EndingAccessResolveSubresourceParameters(TextureView* resolveDestination,
+                                              BeginRenderPassCmd* renderPass,
+                                              bool useRenderPass) {
     D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS subresourceParameters;
     Texture* resolveDestinationTexture = ToBackend(resolveDestination->GetTexture());
     DAWN_ASSERT(resolveDestinationTexture->GetFormat().aspects == Aspect::Color);
 
-    subresourceParameters.DstX = 0;
-    subresourceParameters.DstY = 0;
     subresourceParameters.SrcSubresource = 0;
     subresourceParameters.DstSubresource = resolveDestinationTexture->GetSubresourceIndex(
         resolveDestination->GetBaseMipLevel(), resolveDestination->GetBaseArrayLayer(),
@@ -111,7 +108,24 @@ D3D12EndingAccessResolveSubresourceParameters(TextureView* resolveDestination) {
     // positions. This means even {0, 0, width, height} would be invalid if unsupported. To
     // avoid this, we assume sub-rect resolves never work by setting them to all zeros or
     // "empty" to resolve the entire region.
-    subresourceParameters.SrcRect = {0, 0, 0, 0};
+    std::cout << __func__ << "," << __LINE__
+              << ", warpigpu, renderPass->resolveOffsetX= " << renderPass->resolveOffsetX << "\n";
+    if (useRenderPass && renderPass->hasExpandResolveRect) {
+        subresourceParameters.DstX = renderPass->resolveOffsetX;
+        subresourceParameters.DstY = renderPass->resolveOffsetY;
+        std::cout << __func__ << "," << __LINE__
+                  << ", warpigpu, renderPass->resolveOffsetX= " << renderPass->resolveOffsetX
+                  << "\n";
+        subresourceParameters.SrcRect = {
+            static_cast<int32_t>(renderPass->colorOffsetX),
+            static_cast<int32_t>(renderPass->colorOffsetY),
+            static_cast<int32_t>(renderPass->colorOffsetX + renderPass->updateWidth),
+            static_cast<int32_t>(renderPass->colorOffsetY + renderPass->updateHeight)};
+    } else {
+        subresourceParameters.DstX = 0;
+        subresourceParameters.DstY = 0;
+        subresourceParameters.SrcRect = {0, 0, 0, 0};
+    }
 
     return subresourceParameters;
 }
@@ -213,14 +227,16 @@ void RenderPassBuilder::SetRenderTargetEndingAccess(ColorAttachmentIndex attachm
 void RenderPassBuilder::SetRenderTargetEndingAccessResolve(ColorAttachmentIndex attachment,
                                                            wgpu::StoreOp storeOp,
                                                            TextureView* resolveSource,
-                                                           TextureView* resolveDestination) {
+                                                           TextureView* resolveDestination,
+                                                           BeginRenderPassCmd* renderPass,
+                                                           bool useRenderPass) {
     mRenderPassRenderTargetDescriptors[attachment].EndingAccess.Type =
         D3D12_RENDER_PASS_ENDING_ACCESS_TYPE_RESOLVE;
     mRenderPassRenderTargetDescriptors[attachment].EndingAccess.Resolve =
         D3D12EndingAccessResolveParameters(storeOp, resolveSource, resolveDestination);
 
-    mSubresourceParams[attachment] =
-        D3D12EndingAccessResolveSubresourceParameters(resolveDestination);
+    mSubresourceParams[attachment] = D3D12EndingAccessResolveSubresourceParameters(
+        resolveDestination, renderPass, useRenderPass);
 
     mRenderPassRenderTargetDescriptors[attachment].EndingAccess.Resolve.pSubresourceParameters =
         &mSubresourceParams[attachment];
