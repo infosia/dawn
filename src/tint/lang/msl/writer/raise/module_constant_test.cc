@@ -82,7 +82,8 @@ $B1: {  # root
 }
 )";
 
-    Run(ModuleConstant);
+    ModuleConstantConfig cfg;
+    Run(ModuleConstant, cfg);
 
     EXPECT_EQ(expect, str());
 }
@@ -119,7 +120,8 @@ TEST_F(MslWriter_ModuleConstantTest, ConstVec3) {
   }
 }
 )";
-    Run(ModuleConstant);
+    ModuleConstantConfig cfg;
+    Run(ModuleConstant, cfg);
 
     EXPECT_EQ(expect, str());
 }
@@ -172,7 +174,8 @@ $B1: {  # root
   }
 }
 )";
-    Run(ModuleConstant);
+    ModuleConstantConfig cfg;
+    Run(ModuleConstant, cfg);
 
     EXPECT_EQ(expect, str());
 }
@@ -215,7 +218,8 @@ $B1: {  # root
 }
 )";
 
-    Run(ModuleConstant);
+    ModuleConstantConfig cfg;
+    Run(ModuleConstant, cfg);
 
     EXPECT_EQ(expect, str());
 }
@@ -273,7 +277,8 @@ $B1: {  # root
 }
 )";
 
-    Run(ModuleConstant);
+    ModuleConstantConfig cfg;
+    Run(ModuleConstant, cfg);
 
     EXPECT_EQ(expect, str());
 }
@@ -331,7 +336,8 @@ $B1: {  # root
 }
 )";
 
-    Run(ModuleConstant);
+    ModuleConstantConfig cfg;
+    Run(ModuleConstant, cfg);
 
     EXPECT_EQ(expect, str());
 }
@@ -377,7 +383,8 @@ $B1: {  # root
 }
 )";
 
-    Run(ModuleConstant);
+    ModuleConstantConfig cfg;
+    Run(ModuleConstant, cfg);
 
     EXPECT_EQ(expect, str());
 }

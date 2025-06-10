@@ -447,8 +447,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // we only enable for apple silicon for now.
     // chromium:417519810: Mutiple cts tests will fail on AMD if module scope hoisting is not
     // enabled on AMD. These failures will be internal compiler errors.
-    if (gpu_info::IsApple(vendorId) || gpu_info::IsAMD(vendorId)) {
-        deviceToggles->Default(Toggle::MetalEnableModuleConstant, true);
+    if (gpu_info::IsIntel(vendorId)) {
+        deviceToggles->Default(Toggle::MetalDisableModuleConstantF16, true);
     }
 
     // On some Intel GPUs vertex only render pipeline get wrong depth result if no fragment
