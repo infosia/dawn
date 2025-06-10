@@ -1463,6 +1463,34 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
 
             cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
 
+            cmd->colorOffsetX = 0;
+            cmd->colorOffsetY = 0;
+            cmd->resolveOffsetX = 0;
+            cmd->resolveOffsetY = 0;
+            cmd->updateWidth = 0;
+            cmd->updateHeight = 0;
+            // In D3D12, MSAA resolve is done by
+            // D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS or
+            // ResolveSubresourceRegion.
+            if (device->GetPhysicalDevice()->GetBackendType() == wgpu::BackendType::D3D12) {
+                if (auto* legacyResolveRect =
+                        descriptor.Get<RenderPassDescriptorExpandResolveRect>()) {
+                    cmd->colorOffsetX = legacyResolveRect->x;
+                    cmd->colorOffsetY = legacyResolveRect->y;
+                    cmd->resolveOffsetX = legacyResolveRect->x;
+                    cmd->resolveOffsetY = legacyResolveRect->y;
+                    cmd->updateWidth = legacyResolveRect->width;
+                    cmd->updateHeight = legacyResolveRect->height;
+                } else if (auto* resolveRect = descriptor.Get<RenderPassDescriptorResolveRect>()) {
+                    cmd->colorOffsetX = resolveRect->colorOffsetX;
+                    cmd->colorOffsetY = resolveRect->colorOffsetY;
+                    cmd->resolveOffsetX = resolveRect->resolveOffsetX;
+                    cmd->resolveOffsetY = resolveRect->resolveOffsetY;
+                    cmd->updateWidth = resolveRect->width;
+                    cmd->updateHeight = resolveRect->height;
+                }
+            }
+
             if (descriptor->timestampWrites != nullptr) {
                 QuerySetBase* querySet = descriptor->timestampWrites->querySet;
                 uint32_t beginningOfPassWriteIndex =

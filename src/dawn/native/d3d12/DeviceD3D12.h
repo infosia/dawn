@@ -148,6 +148,7 @@ class Device final : public d3d::Device {
 
     uint32_t GetOptimalBytesPerRowAlignment() const override;
     uint64_t GetOptimalBufferToTextureCopyOffsetAlignment() const override;
+    bool CanTextureLoadResolveTargetInTheSameRenderpass() const override;
 
     float GetTimestampPeriodInNS() const override;
 

@@ -173,6 +173,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::ClipDistances);
     EnableFeature(Feature::FlexibleTextureViews);
     EnableFeature(Feature::TextureFormatsTier1);
+    EnableFeature(Feature::DawnLoadResolveTexture);
+    EnableFeature(Feature::DawnPartialLoadResolveTexture);
 
     if (AreTimestampQueriesSupported()) {
         EnableFeature(Feature::TimestampQuery);
