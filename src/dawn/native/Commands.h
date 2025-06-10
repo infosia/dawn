@@ -165,6 +165,13 @@ struct BeginRenderPassCmd {
     // Cache the width and height of all attachments for convenience
     uint32_t width;
     uint32_t height;
+    bool hasExpandResolveRect;
+    uint32_t colorOffsetX;
+    uint32_t colorOffsetY;
+    uint32_t resolveOffsetX;
+    uint32_t resolveOffsetY;
+    uint32_t updateWidth;
+    uint32_t updateHeight;
 
     Ref<QuerySetBase> occlusionQuerySet;
     TimestampWrites timestampWrites;

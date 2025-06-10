@@ -59,7 +59,8 @@ class RenderPassWorkaroundsHelper : NonMovable {
                                    const UnpackedPtr<RenderPassDescriptor>& renderPassDescriptor,
                                    RenderPassResourceUsageTracker* usageTracker,
                                    BeginRenderPassCmd* cmd,
-                                   RenderPassEncoder::EndCallback* passEndCallbackOut);
+                                   RenderPassEncoder::EndCallback* passEndCallbackOut,
+                                   bool resolveInRenderPass);
 
     MaybeError ApplyOnRenderPassStart(RenderPassEncoder* rpEncoder,
                                       const UnpackedPtr<RenderPassDescriptor>& rpDesc);
