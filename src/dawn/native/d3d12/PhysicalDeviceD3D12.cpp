@@ -696,6 +696,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         }
     }
 
+    // Known issue on mac intel uhd 630. Resolved by scalarization.
+    // See crbug.com/422144514
+    if (gpu_info::IsIntelGen9(vendorId, deviceId)) {
+        deviceToggles->Default(Toggle::ScalarizeMaxMinClamp, true);
+    }
+
     // Currently this workaround is only needed on Intel Gen9, Gen9.5, Gen12 and Xe GPUs.
     // See http://crbug.com/dawn/1487 for more information.
     if (gpu_info::IsIntelGen9(vendorId, deviceId) || gpu_info::IsIntelGen12LP(vendorId, deviceId) ||
