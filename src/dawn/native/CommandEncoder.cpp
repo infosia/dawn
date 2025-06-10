@@ -210,7 +210,9 @@ class RenderPassValidationState final : public NonMovable {
                                     attachment);
                     // RenderPassDescriptorResolveRect relaxes the requirement for the color
                     // attachment texture size to match the resolve texture size.
-                    if (!mExpandResolveRect) {
+                    if (!mExpandResolveRect &&
+                        attachment->GetDevice()->GetPhysicalDevice()->GetBackendType() !=
+                            wgpu::BackendType::D3D12) {
                         DAWN_INVALID_IF(
                             renderSize.width != mRenderWidth || renderSize.height != mRenderHeight,
                             "The resolve target %s size (width: %u, height: %u) does not match the "
@@ -1282,7 +1284,9 @@ RenderPassEncoder* CommandEncoder::APIBeginRenderPass(const RenderPassDescriptor
     return ReturnToAPI(BeginRenderPass(descriptor));
 }
 
-Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescriptor* rawDescriptor) {
+Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(
+    const RenderPassDescriptor* rawDescriptor,
+    const std::optional<RenderPassDescriptorResolveRect>& expandResolveRect) {
     DeviceBase* device = GetDevice();
     DAWN_ASSERT(device->IsLockedByCurrentThreadIfNeeded());
 
@@ -1462,6 +1466,16 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             cmd->height = validationState.GetRenderHeight();
 
             cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
+            cmd->hasExpandResolveRect = false;
+            if (expandResolveRect) {
+                cmd->colorOffsetX = expandResolveRect->colorOffsetX;
+                cmd->colorOffsetY = expandResolveRect->colorOffsetY;
+                cmd->resolveOffsetX = expandResolveRect->resolveOffsetX;
+                cmd->resolveOffsetY = expandResolveRect->resolveOffsetY;
+                cmd->updateWidth = expandResolveRect->width;
+                cmd->updateHeight = expandResolveRect->height;
+                cmd->hasExpandResolveRect = true;
+            }
 
             if (descriptor->timestampWrites != nullptr) {
                 QuerySetBase* querySet = descriptor->timestampWrites->querySet;

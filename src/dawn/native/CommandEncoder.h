@@ -110,7 +110,9 @@ class CommandEncoder final : public ApiObjectBase {
     CommandBufferBase* APIFinish(const CommandBufferDescriptor* descriptor = nullptr);
 
     Ref<ComputePassEncoder> BeginComputePass(const ComputePassDescriptor* descriptor = nullptr);
-    Ref<RenderPassEncoder> BeginRenderPass(const RenderPassDescriptor* rawDescriptor);
+    Ref<RenderPassEncoder> BeginRenderPass(
+        const RenderPassDescriptor* rawDescriptor,
+        const std::optional<RenderPassDescriptorResolveRect>& expandResolveRect = std::nullopt);
     ResultOrError<Ref<CommandBufferBase>> Finish(
         const CommandBufferDescriptor* descriptor = nullptr);
 
