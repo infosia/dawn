@@ -78,6 +78,10 @@ D3D12_RESOURCE_STATES D3D12TextureUsage(wgpu::TextureUsage usage, const Format& 
     if (usage & wgpu::TextureUsage::CopyDst) {
         resourceState |= D3D12_RESOURCE_STATE_COPY_DEST;
     }
+    const bool hasResolveAttachmentLoadingUsage = usage & (kResolveAttachmentLoadingUsage);
+    if (hasResolveAttachmentLoadingUsage) {
+        resourceState |= D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+    }
     if (usage & (wgpu::TextureUsage::TextureBinding | kReadOnlyStorageTexture)) {
         resourceState |= D3D12_RESOURCE_STATE_ALL_SHADER_RESOURCE;
     }
@@ -87,7 +91,7 @@ D3D12_RESOURCE_STATES D3D12TextureUsage(wgpu::TextureUsage usage, const Format& 
     if (usage & wgpu::TextureUsage::RenderAttachment) {
         if (format.HasDepthOrStencil()) {
             resourceState |= D3D12_RESOURCE_STATE_DEPTH_WRITE;
-        } else {
+        } else if (!hasResolveAttachmentLoadingUsage) {
             resourceState |= D3D12_RESOURCE_STATE_RENDER_TARGET;
         }
     }

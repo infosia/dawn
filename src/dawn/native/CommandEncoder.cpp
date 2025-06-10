@@ -60,6 +60,7 @@
 #include "dawn/native/RenderPipeline.h"
 #include "dawn/native/ValidationUtils.h"
 #include "dawn/native/ValidationUtils_autogen.h"
+#include "dawn/native/dawn_platform.h"
 #include "dawn/native/utils/WGPUHelpers.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
@@ -1404,8 +1405,28 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 usageTracker.TextureViewUsedAs(colorTarget, wgpu::TextureUsage::RenderAttachment);
 
                 if (resolveTarget != nullptr) {
-                    usageTracker.TextureViewUsedAs(resolveTarget,
-                                                   wgpu::TextureUsage::RenderAttachment);
+                    // Special handling for MSAA resolve operations.
+                    // When a texture is used as the resolve target in an MSAA operation (the
+                    // "expanding step" where samples are written to the target), we need special
+                    // usage tracking:
+                    //
+                    // 1. For devices that support partial resolves (CanResolveSubRect), we use
+                    // kResolveAttachmentLoadingUsage:
+                    // 1), This is a special front-end usage flag that tells the backend this is
+                    // part of a resolve operation, then ensures proper D3D12 resource state
+                    // (PIXEL_SHADER_RESOURCE rather than RENDER_TARGET). 2), Prevents normal
+                    // validation errors that would occur from mixing
+                    // TextureBinding|RenderAttachment.
+                    //
+                    // 2. For devices without partial resolve support, we fall back to standard
+                    // RenderAttachment usage.
+                    if (device->CanResolveSubRect()) {
+                        usageTracker.TextureViewUsedAs(resolveTarget,
+                                                       kResolveAttachmentLoadingUsage);
+                    } else {
+                        usageTracker.TextureViewUsedAs(resolveTarget,
+                                                       wgpu::TextureUsage::RenderAttachment);
+                    }
                 }
             }
 
