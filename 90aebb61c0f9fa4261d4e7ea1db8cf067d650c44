@@ -52,6 +52,24 @@
       "parentUuid": "b08b9526_30397be5",
       "revId": "90aebb61c0f9fa4261d4e7ea1db8cf067d650c44",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98a6dfc0_9a4d8e13",
+        "filename": "docs/tint/extensions/texel_buffers.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-10T12:12:07Z",
+      "side": 1,
+      "message": "Yes, you can optionally add `requires texel_buffers;` to the top of the module, but it\u0027s not required.",
+      "parentUuid": "abc7eae2_8086cd6b",
+      "revId": "90aebb61c0f9fa4261d4e7ea1db8cf067d650c44",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
