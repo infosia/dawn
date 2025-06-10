@@ -50,6 +50,92 @@
       "message": "Geoff PTAL eventually, but there is 0 urgency on this CL.",
       "revId": "ec16595e5fe72e566058f9b305c39403cbf80fba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c40f803_2aba9797",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-10T16:37:48Z",
+      "side": 1,
+      "message": "In the interest in commenting this up as much as possible, let\u0027s state that this block jumps in 64-bit chunks and the next block does the last sub-64-bit check.",
+      "revId": "ec16595e5fe72e566058f9b305c39403cbf80fba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8493c0ff_127186ed",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-10T16:37:48Z",
+      "side": 1,
+      "message": "It\u0027s frustrating that we end up ANDing two potentially large bitsets and discard everything except the bottom 64 bits just to make this function not throw an exception.\n\nOne (fairly small) place that our own bitset class could be faster.",
+      "range": {
+        "startLine": 128,
+        "startChar": 19,
+        "endLine": 128,
+        "endChar": 51
+      },
+      "revId": "ec16595e5fe72e566058f9b305c39403cbf80fba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "196a4c4d_b47dd042",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-10T16:37:48Z",
+      "side": 1,
+      "message": "I did not know that these existed. I hope they end up as intrinsics.\n\nIt\u0027s nice to avoid flipping all the bits with countr_one.",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 135,
+        "endChar": 28
+      },
+      "revId": "ec16595e5fe72e566058f9b305c39403cbf80fba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93ee60e5_5793b1b5",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-10T16:37:48Z",
+      "side": 1,
+      "message": "I think the only way that this is true means that we did not shift at all in the previous block. Could it be moved up and possibly even out of this function into the iterator constructor since it can only happen on the first iteration?",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 5
+      },
+      "revId": "ec16595e5fe72e566058f9b305c39403cbf80fba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
