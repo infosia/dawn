@@ -37,6 +37,10 @@
 #include "dawn/native/d3d12/d3d12_platform.h"
 #include "dawn/native/dawn_platform.h"
 
+namespace dawn::native {
+struct BeginRenderPassCmd;
+}  // namespace dawn::native
+
 namespace dawn::native::d3d12 {
 
 class TextureView;
@@ -82,7 +86,9 @@ class RenderPassBuilder {
     void SetRenderTargetEndingAccessResolve(ColorAttachmentIndex attachment,
                                             wgpu::StoreOp storeOp,
                                             TextureView* resolveSource,
-                                            TextureView* resolveDestination);
+                                            TextureView* resolveDestination,
+                                            BeginRenderPassCmd* renderPass,
+                                            bool useRenderPass);
     void SetStencilAccess(wgpu::LoadOp loadOp,
                           wgpu::StoreOp storeOp,
                           uint8_t clearStencil,

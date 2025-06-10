@@ -779,9 +779,21 @@ void ResolveMultisampledRenderPass(CommandRecordingContext* commandContext,
         const uint32_t resolveTextureSubresourceIndex = resolveTexture->GetSubresourceIndex(
             resolveTarget->GetBaseMipLevel(), resolveTarget->GetBaseArrayLayer(), Aspect::Color);
         constexpr uint32_t kColorTextureSubresourceIndex = 0;
-        commandContext->GetCommandList()->ResolveSubresource(
-            resolveTextureHandle, resolveTextureSubresourceIndex, colorTextureHandle,
-            kColorTextureSubresourceIndex, colorTexture->GetD3D12Format());
+        if (renderPass->updateWidth != 0 && renderPass->updateHeight != 0) {
+            D3D12_RECT pSrcRect = {
+                static_cast<int32_t>(renderPass->colorOffsetX),
+                static_cast<int32_t>(renderPass->colorOffsetY),
+                static_cast<int32_t>(renderPass->colorOffsetX + renderPass->updateWidth),
+                static_cast<int32_t>(renderPass->colorOffsetY + renderPass->updateHeight)};
+            commandContext->GetCommandList1()->ResolveSubresourceRegion(
+                resolveTextureHandle, resolveTextureSubresourceIndex, renderPass->resolveOffsetX,
+                renderPass->resolveOffsetY, colorTextureHandle, kColorTextureSubresourceIndex,
+                &pSrcRect, colorTexture->GetD3D12Format(), D3D12_RESOLVE_MODE_AVERAGE);
+        } else {
+            commandContext->GetCommandList()->ResolveSubresource(
+                resolveTextureHandle, resolveTextureSubresourceIndex, colorTextureHandle,
+                kColorTextureSubresourceIndex, colorTexture->GetD3D12Format());
+        }
     }
 }
 
@@ -1364,6 +1376,7 @@ MaybeError CommandBuffer::SetupRenderPass(CommandRecordingContext* commandContex
     D3D12_CPU_DESCRIPTOR_HANDLE nullRTV;
 
     const auto& colorAttachmentsMaskBitSet = renderPass->attachmentState->GetColorAttachmentsMask();
+    const bool useRenderPass = device->IsToggleEnabled(Toggle::UseD3D12RenderPass);
     for (auto i : Range(kMaxColorAttachmentsTyped)) {
         if (colorAttachmentsMaskBitSet.test(i)) {
             RenderPassColorAttachmentInfo& attachmentInfo = renderPass->colorAttachments[i];
@@ -1399,7 +1412,8 @@ MaybeError CommandBuffer::SetupRenderPass(CommandRecordingContext* commandContex
                     resolveDestinationView->GetSubresourceRange());
 
                 renderPassBuilder->SetRenderTargetEndingAccessResolve(i, attachmentInfo.storeOp,
-                                                                      view, resolveDestinationView);
+                                                                      view, resolveDestinationView,
+                                                                      renderPass, useRenderPass);
             } else {
                 renderPassBuilder->SetRenderTargetEndingAccess(i, attachmentInfo.storeOp);
             }
