@@ -153,8 +153,49 @@ class Parser {
 
         RemapSamplers();
         RemoveUnreferencedIOVariables();
+        AddRefToOutputsIfNeeded();
 
         return std::move(ir_);
+    }
+
+    void AddRefToOutputsIfNeeded() {
+        core::ir::ReferencedModuleVars<const core::ir::Module> referenced(ir_);
+
+        for (auto& entry_point : spirv_context_->module()->entry_points()) {
+            uint32_t spv_id = entry_point.GetSingleWordInOperand(1);
+            TINT_ASSERT(functions_.Contains(spv_id));
+
+            auto* func = *(functions_.Get(spv_id));
+            auto refs = referenced.TransitiveReferences(func);
+
+            for (uint32_t i = 3; i < entry_point.NumInOperands(); ++i) {
+                auto* val = Value(entry_point.GetSingleWordInOperand(i));
+                auto* res = val->As<core::ir::InstructionResult>();
+                TINT_ASSERT(res);
+                auto* var = res->Instruction()->As<core::ir::Var>();
+                TINT_ASSERT(var);
+
+                auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
+                TINT_ASSERT(ptr);
+                if (ptr->AddressSpace() != core::AddressSpace::kOut) {
+                    continue;
+                }
+
+                if (refs.Contains(var)) {
+                    continue;
+                }
+
+                core::ir::Value* init_val = nullptr;
+                if (var->Initializer()) {
+                    init_val = var->Initializer();
+                } else {
+                    init_val = b_.Zero(res->Type()->UnwrapPtr());
+                }
+
+                auto* store = b_.Store(var, init_val);
+                store->InsertBefore(func->Block()->Front());
+            }
+        }
     }
 
     // If an `OpVariable` is marked as `Input` or `Output` but not listed in the entry pointer
