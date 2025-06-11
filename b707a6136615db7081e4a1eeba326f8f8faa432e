@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fbeb338_4bc5a99b",
+        "filename": "src/dawn/native/CacheResult.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T11:45:29Z",
+      "side": 1,
+      "message": "Is this default constructor ever used? If it isn\u0027t then we can remove mIsValid.",
+      "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d266664_9fc3f017",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T11:45:29Z",
+      "side": 1,
+      "message": "IMHO it is weird that `outputParseResult` is passed as an \"out\" argument and ParseShaderModule returns MaybeError.\n\nWhy can\u0027t ParseShaderModule return ResultOrError\u003csome result struct\u003e and then the result struct has `MaybeError CheckErrors()`. This would require storing the errors text in the cache but that\u0027s fine, it\u0027s just the compilation messages. So the code here would look like\n\n```\n           ShaderModuleParseRequest req \u003d BuildShaderModuleParseRequest(\n                    this, blueprint.GetHash(), unpacked, internalExtensions,\n                    /* needReflection */ true);\n\n                CacheResult\u003cShaderModuleParseResult\u003e cacheResult;\n                DAWN_TRY_LOAD_OR_RUN(cacheResult, this, std::move(req),\n                                     ParseShaderModule, \"ShaderModuleParsing\");\n\n                // The cache stores both success and error parse results, propagate errors that happenend during parsing now.\n\t\t*outputParseResult \u003d cacheResult.Acquire();\n\t\tDAWN_TRY(outputParseResult-\u003eCheckErrors());\n\n                // If created successfully, compilation messages are moved into the shader module.\n                // Otherwise, it is kept in *outputParseResult so that we can create an error shader\n                // module from it.\n                Ref\u003cShaderModuleBase\u003e shaderModule;\n                DAWN_TRY_ASSIGN(shaderModule, CreateShaderModuleImpl(unpacked, internalExtensions,\n                                                                     outputParseResult));\n                shaderModule-\u003eSetContentHash(blueprintHash);\n                return shaderModule;\n```",
+      "range": {
+        "startLine": 2200,
+        "startChar": 41,
+        "endLine": 2200,
+        "endChar": 58
+      },
+      "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1472c87_c938c02a",
+        "filename": "src/dawn/native/ShaderModuleParseRequest.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T11:45:29Z",
+      "side": 1,
+      "message": "this can be the defaulted comparison operator.",
+      "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ca2e6f4_e49abba9",
+        "filename": "src/dawn/native/ShaderModuleParseRequest.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T11:45:29Z",
+      "side": 1,
+      "message": "nit: this could be inlined in `ShaderModuleParseSpirvDescription`",
+      "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

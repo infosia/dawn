@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "628997d6_a529f0d8",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T11:45:29Z",
+      "side": 1,
+      "message": "Instead of making a wrapper that carries a device around, let\u0027s make an abstract class with the compilation log emission methods and make DeviceBase implement that. Then we can pass the CompilationLogEmitter around without caring that it is a device or some other adapter.",
+      "range": {
+        "startLine": 385,
+        "startChar": 27,
+        "endLine": 385,
+        "endChar": 43
+      },
+      "revId": "56d591791e5bb8f3d4578b20e71bd743602060e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

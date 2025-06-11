@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d0be985_bd961d96",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 2173,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T11:45:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "eeb5d060_8772962e",
+      "revId": "4a936d60d7e8ef06682d8d50d87ef687b4ce463a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6dadef69_35f95c88",
@@ -83,6 +101,24 @@
       "writtenOn": "2025-06-03T06:25:13Z",
       "side": 1,
       "message": "If we want to also dump the shader in cache hit case, we can handle that here. However since we don\u0027t call Tint in a cache hit, we could only dump the WGSL source.",
+      "revId": "4a936d60d7e8ef06682d8d50d87ef687b4ce463a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee9e2200_ea582520",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 2183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T11:45:29Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b054108f_d7259fae",
       "revId": "4a936d60d7e8ef06682d8d50d87ef687b4ce463a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
