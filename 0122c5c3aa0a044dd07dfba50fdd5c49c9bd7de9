@@ -16,6 +16,24 @@
       "message": "Can you describe why this is needed? We used to have such a method but did a lot of work to remove it as it didn\u0027t match the JS API.\n\nAn alternative is https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/SharedResourceMemory.h;drc\u003d5e74ac5d42bce00b534d992272e7fa09b53b300f;l\u003d99 though we also would like to remove it eventually.",
       "revId": "0122c5c3aa0a044dd07dfba50fdd5c49c9bd7de9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25aa9713_eaa5df9e",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 3466141
+      },
+      "writtenOn": "2025-06-11T02:10:38Z",
+      "side": 1,
+      "message": "To implement [[lastPresentImage]] behavior, my plan is in [HandleDissociateMailboxForPresent](https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/webgpu_decoder_impl.cc;l\u003d2349;drc\u003d5e74ac5d42bce00b534d992272e7fa09b53b300f) check whether device is lost/destroyed, if device is lost, `ClearSharedImageWithSkia`. \n\nI don\u0027t find a better way to get device\u0027s state expect add an interface in DawnNative.",
+      "parentUuid": "cee5979a_8912457f",
+      "revId": "0122c5c3aa0a044dd07dfba50fdd5c49c9bd7de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
