@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09b78e43_3c8b0be0",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T09:08:57Z",
+      "side": 1,
+      "message": "I don\u0027t think that we need to put inner here, we can make that more clear (if needed but maybe it isn\u0027t) inside CheckWGPUSuccess.",
+      "range": {
+        "startLine": 105,
+        "startChar": 56,
+        "endLine": 105,
+        "endChar": 61
+      },
+      "revId": "4cca36859533cd5d407fe32db13f53b85b321ca2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59e119f2_fe136efc",
+        "filename": "src/dawn/native/webgpu/QueueWGPU.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T09:08:57Z",
+      "side": 1,
+      "message": "nit: `CheckWGPUSuccess` could take the C type.",
+      "range": {
+        "startLine": 105,
+        "startChar": 38,
+        "endLine": 105,
+        "endChar": 53
+      },
+      "revId": "4cca36859533cd5d407fe32db13f53b85b321ca2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95074d8d_5fae339c",
+        "filename": "src/dawn/native/webgpu/WebGPUError.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T09:08:57Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "4cca36859533cd5d407fe32db13f53b85b321ca2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa0cdb66_f1313807",
+        "filename": "src/dawn/native/webgpu/WebGPUError.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T09:08:57Z",
+      "side": 1,
+      "message": "Ah, I was thinking something like this that has more type safety:\n\n```\ntemplate \u003ctypename Enum\u003e\nMaybeError CheckWGPUSuccessImpl(Enum result,\n                                const char* context) {\n    using CppEnum \u003d decltype(FromAPI(result));\n    constexpr successValue \u003d ToAPI(CppEnum::Success);\n    if (result \u003d\u003d successValue) [[likely]] {\n        return {};\n    }\n\n    return DAWN_FORMAT_INTERNAL_ERROR(\" %s failed with (%s)\", context, originalResult);\n}\n```",
+      "revId": "4cca36859533cd5d407fe32db13f53b85b321ca2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
