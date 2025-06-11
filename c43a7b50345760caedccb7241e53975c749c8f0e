@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3dda8d61_59e3707b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-11T19:37:09Z",
+      "side": 1,
+      "message": "What if the variable is referenced by a non-entry point function that is never called by an entry point? It\u0027d be referenced and therefore have usages, but it wouldn\u0027t be in any entry point interface.\n\nSo we\u0027d also need to remove unused functions in that case.",
+      "revId": "c43a7b50345760caedccb7241e53975c749c8f0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
