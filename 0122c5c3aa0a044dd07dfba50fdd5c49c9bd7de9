@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d8ea0e4_037258c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T11:48:00Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "0122c5c3aa0a044dd07dfba50fdd5c49c9bd7de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cee5979a_8912457f",
@@ -68,6 +85,24 @@
       "side": 1,
       "message": "\u003eAn alternative is https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/SharedResourceMemory.h;drc\u003d5e74ac5d42bce00b534d992272e7fa09b53b300f;l\u003d99 though we also would like to remove it eventually.\n\nI don\u0027t know how could we use it in our scenario. Maybe you have some ideas? We wants to:\n- Issuing a clear/draw op using other context when dawn device is lost.\n\nWe find a possible valid context from webgpu_decoder but it requires the API in this CL. Or do you think using \"  gl::GLApi* const api \u003d gl::g_current_gl_context;\" in every shared image backend to do this and using SharedResourceMemory::APIIsDeviceLost() work?",
       "parentUuid": "b67ab718_f8987e26",
+      "revId": "0122c5c3aa0a044dd07dfba50fdd5c49c9bd7de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5006b49_21f4d3c9",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T11:48:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure I followed the last comment, what does GL have to do with this? In every SIB if we have a Dawn STM then we should be able to check with STM::IsDeviceLost(). But if for some reason that\u0027s not possible I think it is fine to add this API (and add it to webgpu.h eventually imho)",
+      "parentUuid": "341d77bb_41884f06",
       "revId": "0122c5c3aa0a044dd07dfba50fdd5c49c9bd7de9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
