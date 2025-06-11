@@ -160,8 +160,9 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(raise::BinaryPolyfill, module);
     RUN_TRANSFORM(raise::BuiltinPolyfill, module);
 
-    if (options.enable_module_constant) {
-        RUN_TRANSFORM(raise::ModuleConstant, module);
+    {
+        raise::ModuleConstantConfig cfg{options.disable_module_constant_f16};
+        RUN_TRANSFORM(raise::ModuleConstant, module, cfg);
     }
 
     // These transforms need to be run last as various transforms introduce terminator arguments,
