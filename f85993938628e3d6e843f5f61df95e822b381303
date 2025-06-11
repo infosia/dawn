@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a9836d9_8870798f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-11T17:21:07Z",
+      "side": 1,
+      "message": "PTAL. Rebuilt off of the LRUCache that landed with the TextureView cache.\n\nPreviously a version of this change (https://dawn-review.googlesource.com/c/dawn/+/241137) landed and was reverted due to a bunch a seemingly unrelated tests failing (https://ci.chromium.org/ui/p/chromium/builders/try/android-desktop-x64-rel/96775/overview). I haven\u0027t yet figured out what the connection is, but will be trying to provoke it on the bots while this is under review.",
+      "revId": "f85993938628e3d6e843f5f61df95e822b381303",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
