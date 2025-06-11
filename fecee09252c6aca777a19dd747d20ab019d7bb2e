@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0adb863c_9cafa8fc",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-11T13:12:24Z",
+      "side": 1,
+      "message": "Instead of creating `unique_ptr`s and storing those, could we just shove all of the `IntergerRangeInfo` objects into a `Vector` and then store the vector index into these maps? Seems a bit simpler then all of the unique pointers?",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
