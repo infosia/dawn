@@ -106,7 +106,7 @@ class EventManager final : NonMovable {
 
 struct QueueAndSerial {
     WeakRef<QueueBase> queue;
-    ExecutionSerial completionSerial;
+    std::atomic<ExecutionSerial> completionSerial;
 
     // Returns the most recently completed serial on |queue|. Otherwise, returns |completionSerial|.
     ExecutionSerial GetCompletedSerial() const;
@@ -133,6 +133,7 @@ class EventManager::TrackedEvent : public RefCounted {
 
     bool IsReadyToComplete() const;
 
+    QueueAndSerial* GetIfQueueAndSerial() { return std::get_if<QueueAndSerial>(&mCompletionData); }
     const QueueAndSerial* GetIfQueueAndSerial() const {
         return std::get_if<QueueAndSerial>(&mCompletionData);
     }
