@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "481ae50f_b8f74752",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-11T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c0b6b7d_b9a1cabf",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 112,
+        "endChar": 31
+      },
+      "revId": "352832c5d261cb238eab185b602a83097e28d8ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1bd18f32_81b8f98e",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-06-11T20:32:27Z",
       "side": 1,
       "message": "2025 get with the times",
+      "range": {
+        "startLine": 1,
+        "startChar": 16,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "352832c5d261cb238eab185b602a83097e28d8ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01ac66ca_f8c004bb",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-11T20:32:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bd18f32_81b8f98e",
       "range": {
         "startLine": 1,
         "startChar": 16,
