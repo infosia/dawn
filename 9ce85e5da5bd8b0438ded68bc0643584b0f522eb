@@ -16,6 +16,24 @@
       "message": "Or should native Dawn default to `true` so that we have better test coverage via Dawn E2E tests while we are still ramping up?",
       "revId": "9ce85e5da5bd8b0438ded68bc0643584b0f522eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59a45c58_a09c8e16",
+        "filename": "src/dawn/platform/DawnPlatform.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T08:42:21Z",
+      "side": 1,
+      "message": "Good idea!",
+      "parentUuid": "086b571b_e7fccb50",
+      "revId": "9ce85e5da5bd8b0438ded68bc0643584b0f522eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

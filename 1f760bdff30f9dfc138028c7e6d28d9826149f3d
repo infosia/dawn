@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31c0d8f7_17144f3b",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T08:42:21Z",
+      "side": 1,
+      "message": "We really should have a common request setting code on day ^^\u0027",
+      "revId": "1f760bdff30f9dfc138028c7e6d28d9826149f3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
