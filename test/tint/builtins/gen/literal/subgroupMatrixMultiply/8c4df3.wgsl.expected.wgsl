@@ -1,5 +1,3 @@
-SKIP: FAILED
-
 enable chromium_experimental_subgroup_matrix;
 enable f16;
 
