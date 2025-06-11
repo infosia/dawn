@@ -153,6 +153,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d5f28b2_150c1687",
+        "filename": "src/dawn/native/webgpu/WebGPUError.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-11T19:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6329e17_1f4bf891",
+      "range": {
+        "startLine": 56,
+        "startChar": 52,
+        "endLine": 56,
+        "endChar": 54
+      },
+      "revId": "4cca36859533cd5d407fe32db13f53b85b321ca2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa0cdb66_f1313807",
@@ -202,6 +226,24 @@
       "side": 1,
       "message": "I think `INJECT_ERROR_OR_RUN` is just for fuzzing? (I think it\u0027s used in the Vulkan backend fuzzer). Maybe we don\u0027t need this unless we plan to add fuzzing? We could also add that when we need to for the fuzzing.",
       "parentUuid": "808e1f4e_0b178d4a",
+      "revId": "4cca36859533cd5d407fe32db13f53b85b321ca2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8717fbcd_a79128f5",
+        "filename": "src/dawn/native/webgpu/WebGPUError.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-11T19:37:37Z",
+      "side": 1,
+      "message": "Done (Remove INJECT_ERROR_OR_RUN and use suggested impl)",
+      "parentUuid": "a5884eca_a611dc02",
       "revId": "4cca36859533cd5d407fe32db13f53b85b321ca2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
