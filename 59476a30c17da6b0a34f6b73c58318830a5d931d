@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "104e022f_a86dd87b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-06-11T18:20:04Z",
+      "side": 1,
+      "message": "The current change is unlikely to be related to the test failure. Are those known failures?",
+      "revId": "59476a30c17da6b0a34f6b73c58318830a5d931d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
