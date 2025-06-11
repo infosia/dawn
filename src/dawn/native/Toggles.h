@@ -151,6 +151,13 @@ enum class Toggle {
     D3D12RelaxMinSubgroupSizeTo8,
     D3D12RelaxBufferTextureCopyPitchAndOffsetAlignment,
     UseVulkanMemoryModel,
+<<<<<<< HEAD   (fbe707 tint_wgsl_fuzzer: only depend on dxc if dawn_use_built_dxc)
+||||||| BASE
+    VulkanScalarizeClampBuiltin,
+=======
+    VulkanScalarizeClampBuiltin,
+    VulkanDirectVariableAccessTransformHandle,
+>>>>>>> CHANGE (6cfc84 [tint] Arm enable transform handle for direct variable acces)
     VulkanAddWorkToEmptyResolvePass,
 
     // Unresolved issues.

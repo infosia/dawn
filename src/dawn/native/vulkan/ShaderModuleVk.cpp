@@ -383,7 +383,18 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         GetDevice()->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
     req.tintOptions.use_vulkan_memory_model =
         GetDevice()->IsToggleEnabled(Toggle::UseVulkanMemoryModel);
+<<<<<<< HEAD   (fbe707 tint_wgsl_fuzzer: only depend on dxc if dawn_use_built_dxc)
 
+||||||| BASE
+    req.tintOptions.scalarize_clamp_builtin =
+        GetDevice()->IsToggleEnabled(Toggle::VulkanScalarizeClampBuiltin);
+
+=======
+    req.tintOptions.scalarize_clamp_builtin =
+        GetDevice()->IsToggleEnabled(Toggle::VulkanScalarizeClampBuiltin);
+    req.tintOptions.dva_transform_handle =
+        GetDevice()->IsToggleEnabled(Toggle::VulkanDirectVariableAccessTransformHandle);
+>>>>>>> CHANGE (6cfc84 [tint] Arm enable transform handle for direct variable acces)
     // Pass matrices to user functions by pointer on Qualcomm devices to workaround a known bug.
     // See crbug.com/tint/2045.
     if (ToBackend(GetDevice()->GetPhysicalDevice())->IsAndroidQualcomm()) {

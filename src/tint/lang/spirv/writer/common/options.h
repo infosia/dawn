@@ -198,6 +198,19 @@ struct Options {
     /// Set to `true` if the Vulkan Memory Model should be used
     bool use_vulkan_memory_model = false;
 
+<<<<<<< HEAD   (fbe707 tint_wgsl_fuzzer: only depend on dxc if dawn_use_built_dxc)
+||||||| BASE
+    /// Set to `true` if the clamp builtin should be scalarized for vector operations
+    bool scalarize_clamp_builtin = false;
+
+=======
+    /// Set to `true` if the clamp builtin should be scalarized for vector operations
+    bool scalarize_clamp_builtin = false;
+
+    /// Set to `true` if handles should be transformed by direct variable access.
+    bool dva_transform_handle = false;
+
+>>>>>>> CHANGE (6cfc84 [tint] Arm enable transform handle for direct variable acces)
     /// Offsets of the minDepth and maxDepth push constants.
     std::optional<RangeOffsets> depth_range_offsets;
 
@@ -220,6 +233,13 @@ struct Options {
                  polyfill_pack_unpack_4x8_norm,
                  disable_polyfill_integer_div_mod,
                  use_vulkan_memory_model,
+<<<<<<< HEAD   (fbe707 tint_wgsl_fuzzer: only depend on dxc if dawn_use_built_dxc)
+||||||| BASE
+                 scalarize_clamp_builtin,
+=======
+                 scalarize_clamp_builtin,
+                 dva_transform_handle,
+>>>>>>> CHANGE (6cfc84 [tint] Arm enable transform handle for direct variable acces)
                  depth_range_offsets);
 };
 
