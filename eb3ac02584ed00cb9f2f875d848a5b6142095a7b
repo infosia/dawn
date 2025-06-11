@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6dc5b4c_636d221e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-11T16:02:39Z",
+      "side": 1,
+      "message": "This is actually addressed by https://dawn-review.googlesource.com/c/dawn/+/246034 which will delete many of these overloads (and updates the ones that are not deleted).",
+      "revId": "eb3ac02584ed00cb9f2f875d848a5b6142095a7b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
