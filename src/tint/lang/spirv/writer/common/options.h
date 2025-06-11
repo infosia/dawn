@@ -198,6 +198,9 @@ struct Options {
     /// Set to `true` if the Vulkan Memory Model should be used
     bool use_vulkan_memory_model = false;
 
+    /// Set to `true` if handles should be transformed by direct variable access.
+    bool dva_transform_handle = false;
+
     /// Offsets of the minDepth and maxDepth push constants.
     std::optional<RangeOffsets> depth_range_offsets;
 
@@ -220,6 +223,7 @@ struct Options {
                  polyfill_pack_unpack_4x8_norm,
                  disable_polyfill_integer_div_mod,
                  use_vulkan_memory_model,
+                 dva_transform_handle,
                  depth_range_offsets);
 };
 
