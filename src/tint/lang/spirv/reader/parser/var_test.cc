@@ -1364,5 +1364,31 @@ $B1: {  # root
 )");
 }
 
+TEST_F(SpirvParserTest, VarMarkedOutputNotInInterface) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical Simple
+               OpEntryPoint Fragment %2 "main"
+               OpExecutionMode %2 OriginUpperLeft
+       %void = OpTypeVoid
+          %4 = OpTypeFunction %void
+       %uint = OpTypeInt 32 0
+     %uint_0 = OpConstant %uint 0
+%_ptr_Output_uint = OpTypePointer Output %uint
+          %1 = OpVariable %_ptr_Output_uint Output
+          %2 = OpFunction %void None %4
+         %29 = OpLabel
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @fragment func():void {
+  $B1: {
+    ret
+  }
+}
+)");
+}
+
 }  // namespace
 }  // namespace tint::spirv::reader
