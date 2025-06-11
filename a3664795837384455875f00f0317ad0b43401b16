@@ -50,6 +50,23 @@
       "message": "Nice find! \u003e_\u003e",
       "revId": "a3664795837384455875f00f0317ad0b43401b16",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3d470a9_dccb12bf",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T18:00:41Z",
+      "side": 1,
+      "message": "Later we could add an entry to Platform.h to not have the same in the future.",
+      "revId": "a3664795837384455875f00f0317ad0b43401b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
