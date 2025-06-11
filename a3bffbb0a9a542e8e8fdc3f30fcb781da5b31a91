@@ -86,6 +86,24 @@
       "parentUuid": "906df3d1_a9c0ce4a",
       "revId": "a3bffbb0a9a542e8e8fdc3f30fcb781da5b31a91",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1de1737f_ab8c1549",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-11T05:33:17Z",
+      "side": 1,
+      "message": "Now I added below overloads (totally 15 overloads):\n\n- f16 -\u003e f16_f32\n- f32 -\u003e f32\n- iu8 -\u003e iu32_iu8\n- iu32 -\u003e iu32\n\nPTAL, thanks!",
+      "parentUuid": "b35b63d1_912b4d67",
+      "revId": "a3bffbb0a9a542e8e8fdc3f30fcb781da5b31a91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
