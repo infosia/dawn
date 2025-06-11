@@ -3,6 +3,74 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4633ba68_980f120d",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-11T13:44:28Z",
+      "side": 1,
+      "message": "Nit: Could just do `return integer_var_range_info_map_.GetOr(var, nullptr);`",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18141f0c_b5c9cd9e",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-11T13:44:28Z",
+      "side": 1,
+      "message": "Nit: Could just directly `return` the result of `GetOrAdd` here",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32afef32_9621b3f2",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-11T13:44:28Z",
+      "side": 1,
+      "message": "Nit: Again just `return` here",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3cb11945_f57c3ad5",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-11T13:44:28Z",
+      "side": 1,
+      "message": "Nit: `return` here",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0adb863c_9cafa8fc",
         "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
         "patchSetId": 4
@@ -14,6 +82,24 @@
       "writtenOn": "2025-06-11T13:12:24Z",
       "side": 1,
       "message": "Instead of creating `unique_ptr`s and storing those, could we just shove all of the `IntergerRangeInfo` objects into a `Vector` and then store the vector index into these maps? Seems a bit simpler then all of the unique pointers?",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2508f0c_95f1194e",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-11T13:44:28Z",
+      "side": 1,
+      "message": "Would still need to store them as pointers in that case because pushing to the `Vector` could trigger a reallocation, and we want to be able to return a pointer that is valid for the lifetime of the `IntegerRangeAnalysisImpl`.\n\nAnother option would be to just return the `IntegerRangeInfo` objects by value instead of by pointer. It has a `std::monostate` option that we could use to signal \"no valid range\". The `sizeof(IntegerRangeInfo)` is only ~2x the size of a pointer anyway, so it\u0027s not too much extra overhead for the returns. I could go either way. This CL seems fine to me as is.",
+      "parentUuid": "0adb863c_9cafa8fc",
       "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
