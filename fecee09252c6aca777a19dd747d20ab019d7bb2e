@@ -102,6 +102,24 @@
       "parentUuid": "0adb863c_9cafa8fc",
       "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27b9de19_2f4ea895",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-11T13:57:02Z",
+      "side": 1,
+      "message": "Why return the pointer tho, can\u0027t you just return the index and then access the vector when needed? Or if you want to hold it for a while, store the index and then just get the pointer in short lived instances.",
+      "parentUuid": "b2508f0c_95f1194e",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
