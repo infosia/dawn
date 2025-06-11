@@ -34,6 +34,24 @@
       "parentUuid": "cee5979a_8912457f",
       "revId": "0122c5c3aa0a044dd07dfba50fdd5c49c9bd7de9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b67ab718_f8987e26",
+        "filename": "include/dawn/native/DawnNative.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-06-11T02:37:40Z",
+      "side": 1,
+      "message": "(Add something)\n\nI think previous implementation tries to leverage deviceLostCallback to check the status but Kai pointed out that it might have timing gap between real lost and callback invocation. So we need to check dawn native device status in gpu process and get the status immediately.",
+      "parentUuid": "25aa9713_eaa5df9e",
+      "revId": "0122c5c3aa0a044dd07dfba50fdd5c49c9bd7de9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
