@@ -16,6 +16,23 @@
       "message": "After https://dawn-review.googlesource.com/c/dawn/+/244994 we noticed that Graphite was using dst copies in dawn-\u003emetal even though it wasn\u0027t the simulator.",
       "revId": "a3664795837384455875f00f0317ad0b43401b16",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afd17d5e_4b58620a",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T17:58:21Z",
+      "side": 1,
+      "message": "Nice find! \u003e_\u003e",
+      "revId": "a3664795837384455875f00f0317ad0b43401b16",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
