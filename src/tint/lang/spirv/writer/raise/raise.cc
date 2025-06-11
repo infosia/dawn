@@ -34,6 +34,7 @@
 #include "src/tint/lang/core/ir/transform/binding_remapper.h"
 #include "src/tint/lang/core/ir/transform/block_decorated_structs.h"
 #include "src/tint/lang/core/ir/transform/builtin_polyfill.h"
+#include "src/tint/lang/core/ir/transform/builtin_scalarize.h"
 #include "src/tint/lang/core/ir/transform/combine_access_instructions.h"
 #include "src/tint/lang/core/ir/transform/conversion_polyfill.h"
 #include "src/tint/lang/core/ir/transform/demote_to_helper.h"
@@ -116,6 +117,12 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     core_polyfills.pack_unpack_4x8_norm = options.polyfill_pack_unpack_4x8_norm;
     RUN_TRANSFORM(core::ir::transform::BuiltinPolyfill, module, core_polyfills);
 
+    core::ir::transform::BuiltinScalarizeConfig scalarize_config;
+    scalarize_config.scalarize_clamp = options.scalarize_max_min_clamp;
+    scalarize_config.scalarize_max = options.scalarize_max_min_clamp;
+    scalarize_config.scalarize_min = options.scalarize_max_min_clamp;
+    RUN_TRANSFORM(core::ir::transform::BuiltinScalarize, module, scalarize_config);
+
     core::ir::transform::ConversionPolyfillConfig conversion_polyfills;
     conversion_polyfills.ftoi = true;
     RUN_TRANSFORM(core::ir::transform::ConversionPolyfill, module, conversion_polyfills);
@@ -167,8 +174,7 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         RUN_TRANSFORM(core::ir::transform::DemoteToHelper, module);
     }
 
-    raise::PolyfillConfig config = {.use_vulkan_memory_model = options.use_vulkan_memory_model,
-                                    .scalarize_clamp_builtin = options.scalarize_clamp_builtin};
+    raise::PolyfillConfig config = {.use_vulkan_memory_model = options.use_vulkan_memory_model};
     RUN_TRANSFORM(raise::BuiltinPolyfill, module, config);
     RUN_TRANSFORM(raise::ExpandImplicitSplats, module);
     // kAllowAnyInputAttachmentIndexType required after ExpandImplicitSplats

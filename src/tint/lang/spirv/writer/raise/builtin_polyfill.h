@@ -40,7 +40,6 @@ namespace tint::spirv::writer::raise {
 
 struct PolyfillConfig {
     bool use_vulkan_memory_model = false;
-    bool scalarize_clamp_builtin = false;
 };
 
 /// BuiltinPolyfill is a transform that replaces calls to builtins with polyfills and calls to
