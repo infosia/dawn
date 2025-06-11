@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b8c3d8a_6828ebae",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 2180,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-11T09:04:18Z",
+      "side": 1,
+      "message": "Add specialization for `CacheResult\u003cvoid\u003e` and change return type of `Result\u003cvoid, E\u003e::AcquireSuccess()` from `void` to `std::nullptr_t` (which can be used as function parameter type) to enable using `MaybeError` for both CacheHitFn and CacheMissFn.\n\nNow they can be `MaybeError` as it should be.",
+      "parentUuid": "6dadef69_35f95c88",
+      "revId": "4a936d60d7e8ef06682d8d50d87ef687b4ce463a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b054108f_d7259fae",

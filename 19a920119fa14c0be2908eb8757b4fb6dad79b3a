@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "496d91e3_ede5db39",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 2186,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-11T09:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb6110df_0ea0dfa9",
+      "range": {
+        "startLine": 2183,
+        "startChar": 84,
+        "endLine": 2186,
+        "endChar": 72
+      },
+      "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dcb22506_3eeb0f89",
@@ -71,6 +95,30 @@
       "writtenOn": "2025-06-10T21:15:53Z",
       "side": 1,
       "message": "This comment doesn\u0027t add too much details that are not obvious from reading the code. I think we can leave it out.",
+      "range": {
+        "startLine": 2192,
+        "startChar": 0,
+        "endLine": 2193,
+        "endChar": 95
+      },
+      "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3ab8cc6_dd73e83a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 2193,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-11T09:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb22506_3eeb0f89",
       "range": {
         "startLine": 2192,
         "startChar": 0,
@@ -104,6 +152,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "368dcb21_9705ac81",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 2202,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-11T09:04:18Z",
+      "side": 1,
+      "message": "Turns out that this is unnecessary, removed.",
+      "parentUuid": "44bb91e4_aa1ea01f",
+      "range": {
+        "startLine": 2202,
+        "startChar": 16,
+        "endLine": 2202,
+        "endChar": 33
+      },
+      "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ebf52f9_90cb0e36",
@@ -127,6 +199,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f645d69_f46c5648",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 2205,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-11T09:04:18Z",
+      "side": 1,
+      "message": "Rewritten, the propose of this comment is indicating that compilation messages would only get moved if creation succeed, otherwise it would be kept in `*outputParseResult`.",
+      "parentUuid": "0ebf52f9_90cb0e36",
+      "range": {
+        "startLine": 2204,
+        "startChar": 0,
+        "endLine": 2205,
+        "endChar": 87
+      },
+      "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dcc36659_2c60250b",
@@ -140,6 +236,30 @@
       "writtenOn": "2025-06-10T21:15:53Z",
       "side": 1,
       "message": "I thiiiink this might not be necessary, UnsafeUnserializedValue has a constructor from const ref.",
+      "range": {
+        "startLine": 121,
+        "startChar": 37,
+        "endLine": 121,
+        "endChar": 71
+      },
+      "revId": "19a920119fa14c0be2908eb8757b4fb6dad79b3a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "195c6e9a_727647a8",
+        "filename": "src/dawn/native/ShaderModuleParseRequest.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-11T09:04:18Z",
+      "side": 1,
+      "message": "Yes there should be one, I add it.",
+      "parentUuid": "dcc36659_2c60250b",
       "range": {
         "startLine": 121,
         "startChar": 37,

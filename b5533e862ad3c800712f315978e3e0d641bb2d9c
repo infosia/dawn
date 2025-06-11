@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84ad25b0_e91efbd8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 36
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-11T09:04:18Z",
+      "side": 1,
+      "message": "Please take a look, thanks!\n\nIn the latest patchset I make both CacheHitFn and CacheMissFn (i.e. `parseShaderModule`) return `MaybeError` as they should be. They all modify the `*outputParseResult` via pointer.",
+      "revId": "b5533e862ad3c800712f315978e3e0d641bb2d9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
