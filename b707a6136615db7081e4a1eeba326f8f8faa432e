@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6ab6c093_5378a9de",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-11T12:19:24Z",
+      "side": 1,
+      "message": "My main concern is that `ResultOrError\u003cT\u003e` doesn\u0027t contain anything but an error message string in case of error, and if `ParseShaderModule` return `ResultOrError\u003cT\u003e` and an error occurs, `DAWN_TRY_LOAD_OR_RUN` will just return the error threw by `ParseShaderModule` instead of assigning `cacheResult`.",
+      "parentUuid": "1d266664_9fc3f017",
+      "range": {
+        "startLine": 2200,
+        "startChar": 41,
+        "endLine": 2200,
+        "endChar": 58
+      },
+      "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1472c87_c938c02a",
         "filename": "src/dawn/native/ShaderModuleParseRequest.h",
         "patchSetId": 37
