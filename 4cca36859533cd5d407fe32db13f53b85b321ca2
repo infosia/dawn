@@ -132,6 +132,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b6329e17_1f4bf891",
+        "filename": "src/dawn/native/webgpu/WebGPUError.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-11T18:14:47Z",
+      "side": 1,
+      "message": "nit. otherwise returns an",
+      "range": {
+        "startLine": 56,
+        "startChar": 52,
+        "endLine": 56,
+        "endChar": 54
+      },
+      "revId": "4cca36859533cd5d407fe32db13f53b85b321ca2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa0cdb66_f1313807",
         "filename": "src/dawn/native/webgpu/WebGPUError.h",
         "patchSetId": 4
@@ -161,6 +184,24 @@
       "side": 1,
       "message": "Question: how to deal with the INJECT_ERROR_OR_RUN to have a same Enum return type? Or we can ignore and drop INJECT_ERROR_OR_RUN for WebGPU backend?",
       "parentUuid": "aa0cdb66_f1313807",
+      "revId": "4cca36859533cd5d407fe32db13f53b85b321ca2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5884eca_a611dc02",
+        "filename": "src/dawn/native/webgpu/WebGPUError.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-11T18:14:47Z",
+      "side": 1,
+      "message": "I think `INJECT_ERROR_OR_RUN` is just for fuzzing? (I think it\u0027s used in the Vulkan backend fuzzer). Maybe we don\u0027t need this unless we plan to add fuzzing? We could also add that when we need to for the fuzzing.",
+      "parentUuid": "808e1f4e_0b178d4a",
       "revId": "4cca36859533cd5d407fe32db13f53b85b321ca2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
