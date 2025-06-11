@@ -39,6 +39,30 @@
       },
       "revId": "38eca870bbcaeb40e3c4b18f8382de014f82b294",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "050bd262_6f02031b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3354,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-11T15:04:09Z",
+      "side": 1,
+      "message": "Fix applied. Probably? It is clearer this way. It shoulnd\u0027t have changed the sampling so this should probably be safe. We still need the remove below anyway tho.",
+      "parentUuid": "5c899d74_e70439d6",
+      "range": {
+        "startLine": 3349,
+        "startChar": 0,
+        "endLine": 3354,
+        "endChar": 13
+      },
+      "revId": "38eca870bbcaeb40e3c4b18f8382de014f82b294",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
