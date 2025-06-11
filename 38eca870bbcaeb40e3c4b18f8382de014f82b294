@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "38eca870bbcaeb40e3c4b18f8382de014f82b294",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c899d74_e70439d6",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3354,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-11T14:48:34Z",
+      "side": 1,
+      "message": "Nit: Doesn\u0027t it make more sense to just set it to nullopt directly here, rather than relying on the case below to it?\n```suggestion\n            // SPIR-V requires all fragment shader integer Inputs are \u0027flat\u0027. If the decorations do\n            // not contain a spv::Decoration::Location, then remove the interpolation decoration.\n            if (io_attributes.interpolation-\u003etype \u003d\u003d core::InterpolationType::kFlat \u0026\u0026\n                !io_attributes.location.has_value()) {\n                interpolation().type \u003d std::nullopt;\n            }\n```",
+      "range": {
+        "startLine": 3349,
+        "startChar": 0,
+        "endLine": 3354,
+        "endChar": 13
+      },
+      "revId": "38eca870bbcaeb40e3c4b18f8382de014f82b294",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
