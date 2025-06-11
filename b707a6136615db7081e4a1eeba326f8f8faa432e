@@ -91,6 +91,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d1f27f89_7398fe94",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T13:54:03Z",
+      "side": 1,
+      "message": "Here there are two different kinds of error:\n\n 1. DAWN_TRY_LOAD_OR_RUN expects a Result\u003c?, ErrorData\u003e for errors creating what needs to be cached.\n 2. Shader module creation requires an error because it needs to know if parsing was successful or not.\n \nThe difficulty for this CL is that we need to handle 2 but that 1 essentially never happens. We are not going to use the \"error\" from `Result\u003cT, E\u003e` to store 2, but instead we treat shader parsing error as a success for creation of the cached data. It is the logic afterwards that determines that what was cached (or just created) is an error shader module or a success one. Essentially we cache error shader modules as well.\n\nTo unblock forward progress we can do that in a follow up, but then we\u0027ll need to remove the unused CacheResult and other code introduced here.",
+      "parentUuid": "7c677a8c_cb01e36b",
+      "range": {
+        "startLine": 2200,
+        "startChar": 41,
+        "endLine": 2200,
+        "endChar": 58
+      },
+      "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1472c87_c938c02a",
         "filename": "src/dawn/native/ShaderModuleParseRequest.h",
         "patchSetId": 37
