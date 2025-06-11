@@ -152,8 +152,48 @@ class Parser {
         // TODO(crbug.com/tint/1907): Handle annotation instructions.
 
         RemapSamplers();
+        RemoveUnreferencedIOVariables();
 
         return std::move(ir_);
+    }
+
+    // If an `OpVariable` is marked as `Input` or `Output` but not listed in the entry pointer
+    // interface, then it can not be referenced. We can just remove this variable as it isn't part
+    // of the interface.
+    void RemoveUnreferencedIOVariables() {
+        std::unordered_set<core::ir::Var*> vars;
+        for (auto* inst : *ir_.root_block) {
+            auto* var = inst->As<core::ir::Var>();
+            if (!var) {
+                continue;
+            }
+            auto* ptr = var->Result()->Type()->As<core::type::Pointer>();
+            TINT_ASSERT(ptr);
+
+            if (ptr->AddressSpace() != core::AddressSpace::kIn &&
+                ptr->AddressSpace() != core::AddressSpace::kOut) {
+                continue;
+            }
+            vars.insert(var);
+        }
+
+        for (auto& entry_point : spirv_context_->module()->entry_points()) {
+            for (uint32_t i = 3; i < entry_point.NumInOperands(); ++i) {
+                auto* val = Value(entry_point.GetSingleWordInOperand(i));
+                TINT_ASSERT(val);
+                auto* res = val->As<core::ir::InstructionResult>();
+                TINT_ASSERT(res);
+                auto* var = res->Instruction()->As<core::ir::Var>();
+                TINT_ASSERT(var);
+                vars.erase(var);
+            }
+        }
+
+        // For any un-referenced var that is Input/Output we can remove them as they can't be used.
+        for (auto* v : vars) {
+            TINT_ASSERT(!v->Result()->IsUsed());
+            v->Destroy();
+        }
     }
 
     void RemapSamplers() {

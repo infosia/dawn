@@ -352,7 +352,7 @@ TEST_P(BuiltinInputTest, Enum) {
                OpCapability Shader
                OpCapability SampleRateShading
                OpMemoryModel Logical GLSL450
-               OpEntryPoint GLCompute %main "main"
+               OpEntryPoint GLCompute %main "main" %var
                OpExecutionMode %main LocalSize 1 1 1
                OpDecorate %var BuiltIn )" +
                   params.spirv_builtin + R"(
@@ -446,7 +446,7 @@ TEST_P(BuiltinOutputTest, Enum) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
-               OpEntryPoint GLCompute %main "main"
+               OpEntryPoint GLCompute %main "main" %var
                OpExecutionMode %main LocalSize 1 1 1
                OpDecorate %var BuiltIn )" +
                   params.spirv_builtin + R"(
@@ -495,7 +495,7 @@ TEST_F(SpirvParserTest, Invariant_OnVariable) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
-               OpEntryPoint GLCompute %main "main"
+               OpEntryPoint GLCompute %main "main" %var
                OpExecutionMode %main LocalSize 1 1 1
                OpDecorate %var BuiltIn Position
                OpDecorate %var Invariant
@@ -528,7 +528,7 @@ TEST_P(LocationVarTest, Input) {
                OpCapability Shader
                OpCapability SampleRateShading
                OpMemoryModel Logical GLSL450
-               OpEntryPoint GLCompute %main "main"
+               OpEntryPoint GLCompute %main "main" %var
                OpExecutionMode %main LocalSize 1 1 1
           )" + params.spirv_decorations +
                   R"(
@@ -554,7 +554,7 @@ TEST_P(LocationVarTest, Output) {
                OpCapability Shader
                OpCapability SampleRateShading
                OpMemoryModel Logical GLSL450
-               OpEntryPoint GLCompute %main "main"
+               OpEntryPoint GLCompute %main "main" %var
                OpExecutionMode %main LocalSize 1 1 1
           )" + params.spirv_decorations +
                   R"(
@@ -1358,6 +1358,32 @@ $B1: {  # root
 %main = @fragment func():void {
   $B2: {
     %3:u32 = load %1
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, VarMarkedOutputNotInInterface) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical Simple
+               OpEntryPoint Fragment %2 "main"
+               OpExecutionMode %2 OriginUpperLeft
+       %void = OpTypeVoid
+          %4 = OpTypeFunction %void
+       %uint = OpTypeInt 32 0
+     %uint_0 = OpConstant %uint 0
+%_ptr_Output_uint = OpTypePointer Output %uint
+          %1 = OpVariable %_ptr_Output_uint Output
+          %2 = OpFunction %void None %4
+         %29 = OpLabel
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+%main = @fragment func():void {
+  $B1: {
     ret
   }
 }
