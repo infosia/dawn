@@ -71,6 +71,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "cfc4aed1_982a3dd0",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T09:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c40f803_2aba9797",
+      "revId": "ec16595e5fe72e566058f9b305c39403cbf80fba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "8493c0ff_127186ed",
         "filename": "src/dawn/common/BitSetRangeIterator.h",
         "patchSetId": 2
@@ -115,6 +133,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44834c3f_07a32131",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T09:42:31Z",
+      "side": 1,
+      "message": "yeah I assume they are intrinsics, though I\u0027m pretty sure the countr_one does a flip before calling countr_zero.",
+      "parentUuid": "196a4c4d_b47dd042",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 135,
+        "endChar": 28
+      },
+      "revId": "ec16595e5fe72e566058f9b305c39403cbf80fba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "93ee60e5_5793b1b5",
@@ -128,6 +170,30 @@
       "writtenOn": "2025-06-10T16:37:48Z",
       "side": 1,
       "message": "I think the only way that this is true means that we did not shift at all in the previous block. Could it be moved up and possibly even out of this function into the iterator constructor since it can only happen on the first iteration?",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 5
+      },
+      "revId": "ec16595e5fe72e566058f9b305c39403cbf80fba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "667c04bb_a301394d",
+        "filename": "src/dawn/common/BitSetRangeIterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-11T09:42:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93ee60e5_5793b1b5",
       "range": {
         "startLine": 140,
         "startChar": 0,
