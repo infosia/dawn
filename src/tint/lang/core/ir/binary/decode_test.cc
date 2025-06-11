@@ -157,6 +157,24 @@ static VectorTypeCheck vec3_check{3u, {0x0a, 0x04, 0x12, 0x02, 0x08, 0x03}};
 static VectorTypeCheck vec4_check{4u, {0x0a, 0x04, 0x12, 0x02, 0x08, 0x04}};
 TINT_END_DISABLE_WARNING(EXIT_TIME_DESTRUCTORS);
 
+typedef struct {
+    uint32_t cols;
+    uint32_t rows;
+    std::vector<uint8_t> expected_bin;
+} MatrixTypeCheck;
+
+TINT_BEGIN_DISABLE_WARNING(EXIT_TIME_DESTRUCTORS);
+static MatrixTypeCheck mat2x2_check{2u, 2u, {0x0a, 0x06, 0x1a, 0x04, 0x08, 0x02, 0x10, 0x02}};
+static MatrixTypeCheck mat2x3_check{2u, 3u, {0x0a, 0x06, 0x1a, 0x04, 0x08, 0x02, 0x10, 0x03}};
+static MatrixTypeCheck mat2x4_check{2u, 4u, {0x0a, 0x06, 0x1a, 0x04, 0x08, 0x02, 0x10, 0x04}};
+static MatrixTypeCheck mat3x2_check{3u, 2u, {0x0a, 0x06, 0x1a, 0x04, 0x08, 0x03, 0x10, 0x02}};
+static MatrixTypeCheck mat3x3_check{3u, 3u, {0x0a, 0x06, 0x1a, 0x04, 0x08, 0x03, 0x10, 0x03}};
+static MatrixTypeCheck mat3x4_check{3u, 4u, {0x0a, 0x06, 0x1a, 0x04, 0x08, 0x03, 0x10, 0x04}};
+static MatrixTypeCheck mat4x2_check{4u, 2u, {0x0a, 0x06, 0x1a, 0x04, 0x08, 0x04, 0x10, 0x02}};
+static MatrixTypeCheck mat4x3_check{4u, 3u, {0x0a, 0x06, 0x1a, 0x04, 0x08, 0x04, 0x10, 0x03}};
+static MatrixTypeCheck mat4x4_check{4u, 4u, {0x0a, 0x06, 0x1a, 0x04, 0x08, 0x04, 0x10, 0x04}};
+TINT_END_DISABLE_WARNING(EXIT_TIME_DESTRUCTORS);
+
 }  // namespace
 
 TEST_F(DecodeTest, EmptyModule) {
@@ -258,6 +276,80 @@ INSTANTIATE_TEST_SUITE_P(DecodeTest,
                              testing::Values(vec2_check,
                                              vec3_check,
                                              vec4_check)));
+// clang-format on
+
+using MatrixType = DecodeTestWithParam<std::tuple<
+    /* elem_check */ BasicTypeCheck,
+    /* mat_check */ MatrixTypeCheck>>;
+
+TEST_P(MatrixType, Test) {
+    BasicTypeCheck elem_check = std::get<0>(GetParam());
+    MatrixTypeCheck mat_check = std::get<1>(GetParam());
+
+    // clang-format off
+    std::string text_proto = \
+R"pb(types { basic: )pb" + elem_check.ty_str  + R"pb( }
+types {
+    matrix {
+        element_type: 0
+        num_columns: )pb" + std::to_string(mat_check.cols) + R"pb(
+        num_rows: )pb" + std::to_string(mat_check.rows) + R"pb(
+    }
+})pb";
+    // clang-format on
+
+    auto expected_bin = elem_check.expected_bin;
+    expected_bin.insert(expected_bin.end(), mat_check.expected_bin.begin(),
+                        mat_check.expected_bin.end());
+
+    auto res = TextProtoToIRModule(text_proto, expected_bin);
+    ASSERT_EQ(res, Success) << res.Failure().reason;
+    auto mod = res.Move();
+
+    const type::Matrix* mat_ty = nullptr;
+    // Internally the type manager needs/creates a vector for the rows when a matrix type is
+    // generated
+    const type::Vector* vec_ty = nullptr;
+    size_t ty_count = 0;
+    for (const type::Type* ty : mod.Types()) {
+        ty_count++;
+        if (auto* m = ty->As<type::Matrix>()) {
+            EXPECT_EQ(mat_ty, nullptr) << "Found more than one matrix type";
+            mat_ty = m;
+        }
+        if (auto* v = ty->As<type::Vector>()) {
+            EXPECT_EQ(vec_ty, nullptr) << "Found more than one vector type";
+            vec_ty = v;
+        }
+    }
+
+    EXPECT_EQ(ty_count, 3u) << "Expected one element type and one matrix type";
+    ASSERT_NE(mat_ty, nullptr) << "Matrix type not found";
+    ASSERT_NE(vec_ty, nullptr) << "Vector type not found";
+
+    EXPECT_TRUE(elem_check.check_fn(mat_ty->Type())) << "Matrix element type mismatch";
+    EXPECT_EQ(mat_ty->Columns(), mat_check.cols) << "Matrix columns mismatch";
+    EXPECT_EQ(mat_ty->Rows(), mat_check.rows) << "Matrix rows mismatch";
+
+    EXPECT_TRUE(elem_check.check_fn(vec_ty->Type())) << "Vector element type mismatch";
+    EXPECT_EQ(vec_ty->Width(), mat_check.rows) << "Vector width mismatch";
+}
+
+// clang-format off
+INSTANTIATE_TEST_SUITE_P(DecodeTest,
+                         MatrixType,
+                         testing::Combine(
+                             testing::Values(f32_check,
+                                             f16_check),
+                             testing::Values(mat2x2_check,
+                                             mat2x3_check,
+                                             mat2x4_check,
+                                             mat3x2_check,
+                                             mat3x3_check,
+                                             mat3x4_check,
+                                             mat4x2_check,
+                                             mat4x3_check,
+                                             mat4x4_check)));
 // clang-format on
 
 }  // namespace tint::core::ir::binary
