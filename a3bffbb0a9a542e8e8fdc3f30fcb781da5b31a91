@@ -104,6 +104,24 @@
       "parentUuid": "b35b63d1_912b4d67",
       "revId": "a3bffbb0a9a542e8e8fdc3f30fcb781da5b31a91",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba9bad59_db8ca978",
+        "filename": "src/tint/lang/wgsl/wgsl.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-11T16:01:42Z",
+      "side": 1,
+      "message": "Thanks, LGTM, we can revise later if needed depending on where the spec ends up.",
+      "parentUuid": "1de1737f_ab8c1549",
+      "revId": "a3bffbb0a9a542e8e8fdc3f30fcb781da5b31a91",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
