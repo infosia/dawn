@@ -115,6 +115,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3d9b40cc_fd9b3a77",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-11T23:45:16Z",
+      "side": 1,
+      "message": "My preference would be to just do the change in this one since this change is already quite complex, though I now it will be a bit of work... It might even be possible to have like a... `ResultOrError\u003cResultOrError\u003cT\u003e\u003e` thing.. though I\u0027m not sure if that\u0027s the best route for clarity. But if that works, it could make this initial implementation a bit easier and we could do a follow up after that?",
+      "parentUuid": "d1f27f89_7398fe94",
+      "range": {
+        "startLine": 2200,
+        "startChar": 41,
+        "endLine": 2200,
+        "endChar": 58
+      },
+      "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d1472c87_c938c02a",
         "filename": "src/dawn/native/ShaderModuleParseRequest.h",
         "patchSetId": 37
