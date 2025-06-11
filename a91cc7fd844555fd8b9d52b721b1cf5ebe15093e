@@ -33,6 +33,24 @@
       "message": "This feels dangerous. I don\u0027t think we can guarantee that this pointer will be valid for the whole lifetime of the `IntegerRangeAnalysisImpl` instance.\n\nFor example, if the hashmap implementation has to perform internal reallocations when more entries are added, then this pointer will no longer be valid.\n\nI think we should just keep the `const IntegerRangeInfo*` as the hashmap values and use `nullptr` to indicate that there is no valid range info instead.",
       "revId": "a91cc7fd844555fd8b9d52b721b1cf5ebe15093e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11053635_e413055b",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-11T13:02:51Z",
+      "side": 1,
+      "message": "Now I saved IntegerRangeInfo in std::unique_ptr to avoid the issue you mentioned. PTAL, thanks!",
+      "parentUuid": "51434ca0_4a28c83e",
+      "revId": "a91cc7fd844555fd8b9d52b721b1cf5ebe15093e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
