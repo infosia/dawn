@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c7a37c5_cf6d28f5",
+        "filename": "src/tint/lang/core/ir/binary/decode_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-11T21:18:12Z",
+      "side": 1,
+      "message": "Maybe not that important but you could keep the number of test cases down by only testing those that are actually valid in IR, i.e. skip all the integer elements here.",
+      "range": {
+        "startLine": 342,
+        "startChar": 0,
+        "endLine": 347,
+        "endChar": 55
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1ce972d7_c7f24141",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/binary/decode_test.cc",
+              "range": {
+                "startLine": 342,
+                "startChar": 0,
+                "endLine": 348,
+                "endChar": 0
+              },
+              "replacement": "                             testing::Values(f32_check,\n                                             f16_check),\n"
+            }
+          ]
+        }
+      ],
+      "revId": "713f7e592becbdafc2c52980ecc62af9877b2e84",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
