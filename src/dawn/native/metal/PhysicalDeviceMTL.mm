@@ -451,6 +451,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::MetalEnableModuleConstant, true);
     }
 
+    // Known issue on mac intel uhd 630. Resolved by scalarization.
+    // See crbug.com/422144514
+    if (gpu_info::IsIntelGen9(vendorId, deviceId)) {
+        deviceToggles->Default(Toggle::ScalarizeMaxMinClamp, true);
+    }
+
     // On some Intel GPUs vertex only render pipeline get wrong depth result if no fragment
     // shader provided. Create a placeholder fragment shader module to work around this issue.
     if (gpu_info::IsIntel(vendorId)) {
