@@ -16,6 +16,75 @@
       "message": "PTAL.",
       "revId": "70ecbee8d3c6338bb87a76fcaf190f74cf0cebbe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5468bd41_2e4ae1f7",
+        "filename": "src/tint/lang/core/ir/transform/dead_code_elimination.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:58:12Z",
+      "side": 1,
+      "message": "Nit: Unneeded.",
+      "fixSuggestions": [
+        {
+          "fixId": "4e79c46a_8adf1f3d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/dead_code_elimination.cc",
+              "range": {
+                "startLine": 52,
+                "startChar": 0,
+                "endLine": 55,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "70ecbee8d3c6338bb87a76fcaf190f74cf0cebbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db3424cb_e8432883",
+        "filename": "src/tint/lang/core/ir/transform/dead_code_elimination.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:58:12Z",
+      "side": 1,
+      "message": "We could just reverse-iterate through `ir.DependencyOrderedFunctions()`. That would start with top-level functions and work down, so you only need a single loop.\n\nYou wouldn\u0027t need the `functions_to_remove` worklist either, since `DependencyOrderedFunctions` returns a new vector.",
+      "revId": "70ecbee8d3c6338bb87a76fcaf190f74cf0cebbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "124d64a8_27cbf91f",
+        "filename": "src/tint/lang/core/ir/transform/dead_code_elimination_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:58:12Z",
+      "side": 1,
+      "message": "Did you add this just for the purposes of these tests, or can this actually happen coming from SPIR-V?",
+      "revId": "70ecbee8d3c6338bb87a76fcaf190f74cf0cebbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
