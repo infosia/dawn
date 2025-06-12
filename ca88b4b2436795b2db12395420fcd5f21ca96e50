@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e61c48a4_f27172aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T02:50:23Z",
+      "side": 1,
+      "message": "This is a copy of the base overload, not using the base version itself. So, I don\u0027t think the removal from base would effect this code, would it?\n\nIs there any benefit to the absl version or is it basically just the same thing?",
+      "revId": "ca88b4b2436795b2db12395420fcd5f21ca96e50",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "1697bc54_6430c65d",
