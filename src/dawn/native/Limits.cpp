@@ -416,6 +416,12 @@ void NormalizeLimits(CombinedLimits* limits) {
         std::min(limits->v1.maxUniformBuffersPerShaderStage, kMaxUniformBuffersPerShaderStage);
     limits->v1.maxImmediateSize =
         std::min(limits->v1.maxImmediateSize, kMaxSupportedImmediateDataBytes);
+    limits->v1.maxDynamicUniformBuffersPerPipelineLayout =
+        std::min(limits->v1.maxDynamicUniformBuffersPerPipelineLayout,
+                 kMaxDynamicUniformBuffersPerPipelineLayout);
+    limits->v1.maxDynamicStorageBuffersPerPipelineLayout =
+        std::min(limits->v1.maxDynamicStorageBuffersPerPipelineLayout,
+                 kMaxDynamicStorageBuffersPerPipelineLayout);
     // Compat limits.
     limits->compat.maxStorageBuffersInVertexStage =
         std::min(limits->compat.maxStorageBuffersInVertexStage, kMaxStorageBuffersPerShaderStage);
