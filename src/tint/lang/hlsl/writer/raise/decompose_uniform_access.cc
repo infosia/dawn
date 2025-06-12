@@ -312,7 +312,7 @@ struct State {
         if (result_ty->IsFloatScalar() || result_ty->IsIntegerScalar()) {
             return MakeScalarLoad(var, result_ty, byte_idx);
         }
-        if (result_ty->IsScalarVector()) {
+        if (result_ty->Is<core::type::Vector>()) {
             return MakeVectorLoad(var, result_ty->As<core::type::Vector>(), byte_idx);
         }
 
