@@ -152,48 +152,6 @@ VkImageCopy ComputeImageCopyRegion(const TextureCopy& srcCopy,
     return region;
 }
 
-class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
-  public:
-    DescriptorSetTracker() = default;
-
-    bool AreLayoutsCompatible() override {
-        return mPipelineLayout == mLastAppliedPipelineLayout &&
-               mLastAppliedImmediateConstantSize == mImmediateConstantSize;
-    }
-
-    template <typename VkPipelineType>
-    void OnSetPipeline(VkPipelineType* pipeline) {
-        BindGroupTrackerBase::OnSetPipeline(pipeline);
-
-        mVkLayout = pipeline->GetVkLayout();
-        mImmediateConstantSize = pipeline->GetImmediateConstantSize();
-    }
-
-    void Apply(Device* device,
-               CommandRecordingContext* recordingContext,
-               VkPipelineBindPoint bindPoint) {
-        BeforeApply();
-        for (BindGroupIndex dirtyIndex : mDirtyBindGroupsObjectChangedOrIsDynamic) {
-            VkDescriptorSet set = ToBackend(mBindGroups[dirtyIndex])->GetHandle();
-            uint32_t count = static_cast<uint32_t>(mDynamicOffsets[dirtyIndex].size());
-            const uint32_t* dynamicOffset =
-                count > 0 ? mDynamicOffsets[dirtyIndex].data() : nullptr;
-            device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint, mVkLayout,
-                                             static_cast<uint32_t>(dirtyIndex), 1, &*set, count,
-                                             dynamicOffset);
-        }
-
-        // Update PipelineLayout
-        AfterApply();
-
-        mLastAppliedImmediateConstantSize = mImmediateConstantSize;
-    }
-
-    RAW_PTR_EXCLUSION VkPipelineLayout mVkLayout;
-    uint32_t mLastAppliedImmediateConstantSize = 0;
-    uint32_t mImmediateConstantSize = 0;
-};
-
 template <typename T>
 class ImmediateConstantTracker : public T {
   public:
@@ -417,6 +375,48 @@ void RecordResolveQuerySetCmd(VkCommandBuffer commands,
 }
 
 }  // anonymous namespace
+
+class DescriptorSetTracker : public BindGroupTrackerBase<true, uint32_t> {
+  public:
+    DescriptorSetTracker() = default;
+
+    bool AreLayoutsCompatible() override {
+        return mPipelineLayout == mLastAppliedPipelineLayout &&
+               mLastAppliedImmediateConstantSize == mImmediateConstantSize;
+    }
+
+    template <typename VkPipelineType>
+    void OnSetPipeline(VkPipelineType* pipeline) {
+        BindGroupTrackerBase::OnSetPipeline(pipeline);
+
+        mVkLayout = pipeline->GetVkLayout();
+        mImmediateConstantSize = pipeline->GetImmediateConstantSize();
+    }
+
+    void Apply(Device* device,
+               CommandRecordingContext* recordingContext,
+               VkPipelineBindPoint bindPoint) {
+        BeforeApply();
+        for (BindGroupIndex dirtyIndex : mDirtyBindGroupsObjectChangedOrIsDynamic) {
+            VkDescriptorSet set = ToBackend(mBindGroups[dirtyIndex])->GetHandle();
+            const auto dynamicOffsetSpan = GetDynamicOffsets(dirtyIndex);
+            uint32_t count = static_cast<uint32_t>(dynamicOffsetSpan.size());
+            const uint32_t* dynamicOffset = count > 0 ? dynamicOffsetSpan.data() : nullptr;
+            device->fn.CmdBindDescriptorSets(recordingContext->commandBuffer, bindPoint, mVkLayout,
+                                             static_cast<uint32_t>(dirtyIndex), 1, &*set, count,
+                                             dynamicOffset);
+        }
+
+        // Update PipelineLayout
+        AfterApply();
+
+        mLastAppliedImmediateConstantSize = mImmediateConstantSize;
+    }
+
+    RAW_PTR_EXCLUSION VkPipelineLayout mVkLayout;
+    uint32_t mLastAppliedImmediateConstantSize = 0;
+    uint32_t mImmediateConstantSize = 0;
+};
 
 MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
                                  Device* device,
@@ -643,6 +643,7 @@ MaybeError CommandBuffer::RecordCopyImageWithTemporaryBuffer(
 MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingContext) {
     Device* device = ToBackend(GetDevice());
     VkCommandBuffer commands = recordingContext->commandBuffer;
+    DescriptorSetTracker descriptorSets = {};
 
     // Records the necessary barriers for the resource usage pre-computed by the frontend.
     // And resets the used query sets which are rewritten on the render pass.
@@ -878,8 +879,9 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                     GetResourceUsages().renderPasses[nextRenderPassNumber]));
 
                 LazyClearRenderPassAttachments(cmd);
-                DAWN_TRY(RecordRenderPass(recordingContext, cmd));
-
+                DAWN_TRY(RecordRenderPass(recordingContext, cmd, descriptorSets));
+                
+                descriptorSets.Reset();
                 recordingContext->hasRecordedRenderPass = true;
                 nextRenderPassNumber++;
                 break;
@@ -900,9 +902,10 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                 }
 
                 DAWN_TRY(
-                    RecordComputePass(recordingContext, cmd,
+                    RecordComputePass(recordingContext, cmd, descriptorSets,
                                       GetResourceUsages().computePasses[nextComputePassNumber]));
-
+                
+                descriptorSets.Reset();
                 nextComputePassNumber++;
                 break;
             }
@@ -1042,6 +1045,7 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
 
 MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingContext,
                                             BeginComputePassCmd* computePassCmd,
+                                            DescriptorSetTracker& descriptorSets,
                                             const ComputePassResourceUsage& resourceUsages) {
     Device* device = ToBackend(GetDevice());
 
@@ -1057,7 +1061,7 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
     uint64_t currentDispatch = 0;
-    DescriptorSetTracker descriptorSets = {};
+    //DescriptorSetTracker descriptorSets = {};
     ImmediateConstantTracker<ComputeImmediateConstantsTrackerBase> immediates = {};
 
     Command type;
@@ -1205,7 +1209,8 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
 }
 
 MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingContext,
-                                           BeginRenderPassCmd* renderPassCmd) {
+                                           BeginRenderPassCmd* renderPassCmd,
+                                           DescriptorSetTracker& descriptorSets) {
     Device* device = ToBackend(GetDevice());
     VkCommandBuffer commands = recordingContext->commandBuffer;
 
@@ -1258,7 +1263,7 @@ MaybeError CommandBuffer::RecordRenderPass(CommandRecordingContext* recordingCon
         immediates.SetClampFragDepth(0.0, 1.0);
     }
 
-    DescriptorSetTracker descriptorSets = {};
+    //DescriptorSetTracker descriptorSets = {};
     RenderPipeline* lastPipeline = nullptr;
 
     // Tracks the number of commands that do significant GPU work (a draw or query write) this pass.

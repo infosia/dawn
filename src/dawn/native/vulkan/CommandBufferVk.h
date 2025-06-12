@@ -45,6 +45,7 @@ namespace dawn::native::vulkan {
 
 struct CommandRecordingContext;
 class Device;
+class DescriptorSetTracker;
 
 MaybeError RecordBeginRenderPass(CommandRecordingContext* recordingContext,
                                  Device* device,
@@ -62,9 +63,11 @@ class CommandBuffer final : public CommandBufferBase {
 
     MaybeError RecordComputePass(CommandRecordingContext* recordingContext,
                                  BeginComputePassCmd* computePass,
+                                 DescriptorSetTracker& descriptorSets,
                                  const ComputePassResourceUsage& resourceUsages);
     MaybeError RecordRenderPass(CommandRecordingContext* recordingContext,
-                                BeginRenderPassCmd* renderPass);
+                                BeginRenderPassCmd* renderPass,
+                                DescriptorSetTracker& descriptorSets);
     MaybeError RecordCopyImageWithTemporaryBuffer(CommandRecordingContext* recordingContext,
                                                   const TextureCopy& srcCopy,
                                                   const TextureCopy& dstCopy,
