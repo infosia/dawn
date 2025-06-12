@@ -67,6 +67,30 @@
       ],
       "revId": "833f3817bc42286dd4727784b9edf6030dc8e4d7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6e4d1da_c87c80fc",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T20:57:46Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "f3e01d4b_21a6db9c",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 9
+      },
+      "revId": "833f3817bc42286dd4727784b9edf6030dc8e4d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
