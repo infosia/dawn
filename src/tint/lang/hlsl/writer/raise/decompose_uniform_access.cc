@@ -312,9 +312,6 @@ struct State {
         if (result_ty->IsFloatScalar() || result_ty->IsIntegerScalar()) {
             return MakeScalarLoad(var, result_ty, byte_idx);
         }
-        if (result_ty->IsScalarVector()) {
-            return MakeVectorLoad(var, result_ty->As<core::type::Vector>(), byte_idx);
-        }
 
         return tint::Switch(
             result_ty,
@@ -329,6 +326,9 @@ struct State {
             [&](const core::type::Array* a) {
                 auto* fn = GetLoadFunctionFor(inst, var, a);
                 return b.Call(fn, byte_idx);
+            },
+            [&](const core::type::Vector* v) {
+                return MakeVectorLoad(var, v, byte_idx);
             },
             TINT_ICE_ON_NO_MATCH);
     }
