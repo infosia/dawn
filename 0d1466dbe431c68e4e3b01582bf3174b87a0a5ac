@@ -352,6 +352,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ccaccc9b_66f930e1",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T20:56:39Z",
+      "side": 1,
+      "message": "I added some comments but in general one should never make a comment that is effectively a restatement of the code. Interface or not.",
+      "parentUuid": "60118894_bd837f86",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1f17c0e7_f7288e6e",
         "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
         "patchSetId": 15
