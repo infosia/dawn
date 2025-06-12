@@ -40,6 +40,13 @@
 
 namespace dawn::native {
 
+namespace {
+
+// TODO: Assert that this is >= the maximum limits
+static const size_t kMaxDynamicOffsetsPerBindGroup = 18;
+
+}  // namespace
+
 // Keeps track of the dirty bind groups so they can be lazily applied when we know the
 // pipeline state or it changes.
 // |DynamicOffset| is a template parameter because offsets in Vulkan are uint32_t but uint64_t
@@ -69,15 +76,33 @@ class BindGroupTrackerBase {
         }
 
         mBindGroups[index] = bindGroup;
-        mDynamicOffsets[index].resize(BindingIndex(dynamicOffsetCount));
+        mDynamicOffsetCounts[index] = BindingIndex(dynamicOffsetCount);
         std::copy(dynamicOffsets, dynamicOffsets + dynamicOffsetCount,
                   mDynamicOffsets[index].begin());
     }
 
     void OnSetPipeline(PipelineBase* pipeline) { mPipelineLayout = pipeline->GetLayout(); }
 
+    void Reset() {
+        mPipelineLayout = nullptr;
+        mLastAppliedPipelineLayout = nullptr;
+
+        mDirtyBindGroups.reset();
+        mDirtyBindGroupsObjectChangedOrIsDynamic.reset();
+        mBindGroups.fill(nullptr);
+
+        // Reset the dynamic offset counts to 0. The contents themselves don't need to be overridden
+        // Because they will be copied over the next time a bind group is set.
+        mDynamicOffsetCounts.fill(BindingIndex(0));
+    }
+
   protected:
     virtual bool AreLayoutsCompatible() { return mLastAppliedPipelineLayout == mPipelineLayout; }
+
+    ityp::span<BindingIndex, DynamicOffset> GetDynamicOffsets(BindGroupIndex index) {
+        return ityp::span<BindingIndex, DynamicOffset>(mDynamicOffsets[index].data(),
+                                                       mDynamicOffsetCounts[index]);
+    }
 
     // The Derived class should call this before it applies bind groups.
     void BeforeApply() {
@@ -123,7 +148,6 @@ class BindGroupTrackerBase {
     BindGroupMask mDirtyBindGroupsObjectChangedOrIsDynamic = 0;
     BindGroupMask mBindGroupLayoutsMask = 0;
     PerBindGroup<BindGroupBase*> mBindGroups = {};
-    PerBindGroup<ityp::vector<BindingIndex, DynamicOffset>> mDynamicOffsets = {};
 
     // |mPipelineLayout| is the current pipeline layout set on the command buffer.
     // |mLastAppliedPipelineLayout| is the last pipeline layout for which we applied changes
@@ -133,6 +157,11 @@ class BindGroupTrackerBase {
     // freed from underneath this class.
     RAW_PTR_EXCLUSION PipelineLayoutBase* mPipelineLayout = nullptr;
     RAW_PTR_EXCLUSION PipelineLayoutBase* mLastAppliedPipelineLayout = nullptr;
+
+  private:
+    PerBindGroup<ityp::array<BindingIndex, DynamicOffset, kMaxDynamicOffsetsPerBindGroup>>
+        mDynamicOffsets = {};
+    PerBindGroup<BindingIndex> mDynamicOffsetCounts = {};
 };
 
 }  // namespace dawn::native
