@@ -152,8 +152,24 @@ class Parser {
         // TODO(crbug.com/tint/1907): Handle annotation instructions.
 
         RemapSamplers();
+        AddRefToOutputsIfNeeded();
 
         return std::move(ir_);
+    }
+
+    void AddRefToOutputsIfNeeded() {
+        core::ir::ReferencedModuleVars<const core::ir::Module> referenced(ir_);
+
+        for (auto& entry_point : spirv_context_->module()->entry_points()) {
+            uint32_t spv_id = entry_point.GetSingleWordInOperand(1);
+            TINT_ASSERT(functions_.Contains(spv_id));
+
+            auto* func = *(functions_.Get(spv_id));
+            for (uint32_t i = 3; i < entry_point.NumInOperands(); ++i) {
+                auto* val = Value(entry_point.GetSingleWordInOperand(i));
+                b_.Phony(val)->InsertBefore(func->Block()->Front());
+            }
+        }
     }
 
     void RemapSamplers() {
