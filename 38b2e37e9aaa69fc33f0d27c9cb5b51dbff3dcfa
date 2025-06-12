@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f16ed4d_e7f9419e",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:47:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e888193e_95017224",
+      "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1745e6d7_34a5edc7",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-06-12T14:27:54Z",
       "side": 1,
       "message": "Shouldn\u0027t need to handle Phony here if destroyed above.",
+      "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b76e6cc_346cb920",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:47:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1745e6d7_34a5edc7",
       "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -71,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "46363230_069c184b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:47:20Z",
+      "side": 1,
+      "message": "Removed `referenced`. The entry point looping is dealing with attributes on entry points. I think it\u0027s a bit nicer to keep the methods separated as this is doing something very different. (Probably putting the position stuff there was the wrong decision in the first place).",
+      "parentUuid": "e5f9155d_d857653f",
+      "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "79a88471_92fc3d1d",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 6
@@ -82,6 +136,24 @@
       "writtenOn": "2025-06-12T14:27:54Z",
       "side": 1,
       "message": "Can we get rid of all of this code for `position` now that we add the phony reference? As in, isn\u0027t having the phony reference now enough for ShaderIO to make sure that the variable is stored?",
+      "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c5737b0_de6488bb",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:47:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79a88471_92fc3d1d",
       "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
