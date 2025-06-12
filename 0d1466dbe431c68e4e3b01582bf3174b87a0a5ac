@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e8f4350_e4236327",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:23:05Z",
+      "side": 1,
+      "message": "This comment seems weird, it\u0027s not that we check for pre-approved builtins, it\u0027s that we\u0027re checking if scalarization is turned on for a given builtin.",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57155a33_40010505",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:23:05Z",
+      "side": 1,
+      "message": "The comment doesn\u0027t match the check. The `IsScalarVector` returns true if it\u0027s a vector of scalar values. Not, if it\u0027s a scalar or vector. If you want both you need `IsNumericScalarVector()` if you don\u0027t care about bools, or `IsScalar() || IsScalarVector()` if you do care about bools.",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fec438ac_f698d66f",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:23:05Z",
+      "side": 1,
+      "message": "```suggestion\n                        auto* access_arg \u003d b.Access(vec_type, e, u32(i));\n```",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fb8bc7a_1c460818",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:23:05Z",
+      "side": 1,
+      "message": "Can this happen? If it\u0027s a scalar, we\u0027d have exited on line 112 above? Should this, just be a TINT_UNREACHABLE? Or just always cast to vector and TINT_ASSERT(vec) would probably be simpler",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "424fc497_822420e0",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:23:05Z",
+      "side": 1,
+      "message": "```suggestion\n/// The scalarizer configuration options\n```",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9747697_abb76e21",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:23:05Z",
+      "side": 1,
+      "message": "We typically add a comment for these, can you add one for each of them?",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "810d0064_a9ca1fe0",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize_test.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:23:05Z",
+      "side": 1,
+      "message": "```suggestion\n// Copyright 2025 The Dawn \u0026 Tint Authors\n```",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16c58843_bfdcacc8",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize_test.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:23:05Z",
+      "side": 1,
+      "message": "```suggestion\n    BuiltinScalarizeConfig config{\n        .scalarize_clamp \u003d true,\n    };\n```",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 34
+      },
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe5c8fe7_a2b0a3ac",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:23:05Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Set to `true` to scalarize max, min, and clamp builtins.\n```",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0a04005_dd688af2",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T15:23:05Z",
+      "side": 1,
+      "message": "```suggestion\n        core::ir::transform::BuiltinScalarizeConfig scalarize_config{\n            .scalarize_clamp \u003d options.scalarize_max_min_clamp,\n            .scalarize_max \u003d options.scalarize_max_min_clamp,\n            .scalarize_min \u003d options.scalarize_max_min_clamp,\n        };\n```\n\n(and on others)",
+      "range": {
+        "startLine": 153,
+        "startChar": 1,
+        "endLine": 156,
+        "endChar": 73
+      },
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
