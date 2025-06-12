@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "21ed69f5_642297d8",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T21:22:28Z",
+      "side": 1,
+      "message": "I can try them. I am we are not 100% positive on the nature in which it manifests but we are sure that scalarization solves it and that switching to max/min does not solve it (vectorized).",
+      "parentUuid": "45d5ad4a_6a454920",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1f772db2_3f866e5e",
         "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
         "patchSetId": 15
@@ -66,6 +84,24 @@
       "writtenOn": "2025-06-12T20:30:27Z",
       "side": 1,
       "message": "Comment seems copy-pasta incorrect.",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b6bd702_266e5e70",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T21:22:28Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "1f772db2_3f866e5e",
       "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
