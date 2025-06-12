@@ -16,6 +16,74 @@
       "message": "PTAL.",
       "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e888193e_95017224",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T14:27:54Z",
+      "side": 1,
+      "message": "I think you can just destroy the `Phony` here, rather than looping over all instructions to find them in a separate pass.\n\nThe `ForEachUse*` methods are safe for having the usage lists modified during iteration.",
+      "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1745e6d7_34a5edc7",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T14:27:54Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need to handle Phony here if destroyed above.",
+      "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5f9155d_d857653f",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T14:27:54Z",
+      "side": 1,
+      "message": "You\u0027re not using `referenced`?\n\nAlso, I think it might make more sense to just do this when you\u0027re processing the entry points since you\u0027re already looking at the interface there as well.",
+      "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79a88471_92fc3d1d",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T14:27:54Z",
+      "side": 1,
+      "message": "Can we get rid of all of this code for `position` now that we add the phony reference? As in, isn\u0027t having the phony reference now enough for ShaderIO to make sure that the variable is stored?",
+      "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
