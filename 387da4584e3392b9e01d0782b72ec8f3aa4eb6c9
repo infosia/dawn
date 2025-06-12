@@ -33,6 +33,23 @@
       "message": "LGTM",
       "revId": "387da4584e3392b9e01d0782b72ec8f3aa4eb6c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c358db7d_0a847880",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-12T18:02:01Z",
+      "side": 1,
+      "message": "You might be able to silence some of the clang warnings using `// NOLINTNEXTLINE(runtime/explicit)`. But otherwise lgtm.",
+      "revId": "387da4584e3392b9e01d0782b72ec8f3aa4eb6c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
