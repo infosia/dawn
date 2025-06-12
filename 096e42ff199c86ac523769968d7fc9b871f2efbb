@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "096e42ff199c86ac523769968d7fc9b871f2efbb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2053169e_01a5b3c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T20:25:48Z",
+      "side": 1,
+      "message": "I did this here because we handle the struct member here. But, maybe we should file a followup to actually move both of these into IRToProgram. They are \"valid\" in core IR, but it\u0027s WGSL which doesn\u0027t understand them.\n\nSo, I think we should probably land this so both struct members and vars works, but then decide if we want this moved later, thoughts?",
+      "revId": "096e42ff199c86ac523769968d7fc9b871f2efbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
