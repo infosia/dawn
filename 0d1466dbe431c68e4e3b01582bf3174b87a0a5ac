@@ -87,6 +87,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ba8ee73_f7dfe46f",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T20:51:26Z",
+      "side": 1,
+      "message": "I will try rewording",
+      "parentUuid": "5e8f4350_e4236327",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "57155a33_40010505",
@@ -140,6 +158,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c8cf58a_6cad2217",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T20:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57155a33_40010505",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1e89140f_2589091f",
@@ -170,6 +206,24 @@
       "writtenOn": "2025-06-12T15:23:05Z",
       "side": 1,
       "message": "```suggestion\n                        auto* access_arg \u003d b.Access(vec_type, e, u32(i));\n```",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbbf2ce1_2450c79f",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T20:51:26Z",
+      "side": 1,
+      "message": "This hinted how I can generalize further. I will now use the return type instead.",
+      "parentUuid": "fec438ac_f698d66f",
       "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -225,6 +279,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8658e40f_fe57af59",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T20:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "424fc497_822420e0",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9747697_abb76e21",
@@ -238,6 +310,24 @@
       "writtenOn": "2025-06-12T15:23:05Z",
       "side": 1,
       "message": "We typically add a comment for these, can you add one for each of them?",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8618287_0d03e803",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T20:51:26Z",
+      "side": 1,
+      "message": "I think this falls under\ngo/superfluous-concordant-comments\n\nHowever I have added them.",
+      "parentUuid": "e9747697_abb76e21",
       "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -276,6 +366,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0aa594c0_47c6577f",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize_test.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T20:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810d0064_a9ca1fe0",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "16c58843_bfdcacc8",
@@ -289,6 +397,30 @@
       "writtenOn": "2025-06-12T15:23:05Z",
       "side": 1,
       "message": "```suggestion\n    BuiltinScalarizeConfig config{\n        .scalarize_clamp \u003d true,\n    };\n```",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 34
+      },
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d2d43e2_0a74f83e",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize_test.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T20:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16c58843_bfdcacc8",
       "range": {
         "startLine": 121,
         "startChar": 0,
@@ -316,6 +448,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2d69c1d_f0a91911",
+        "filename": "src/tint/lang/hlsl/writer/common/options.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T20:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe5c8fe7_a2b0a3ac",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0a04005_dd688af2",
@@ -329,6 +479,30 @@
       "writtenOn": "2025-06-12T15:23:05Z",
       "side": 1,
       "message": "```suggestion\n        core::ir::transform::BuiltinScalarizeConfig scalarize_config{\n            .scalarize_clamp \u003d options.scalarize_max_min_clamp,\n            .scalarize_max \u003d options.scalarize_max_min_clamp,\n            .scalarize_min \u003d options.scalarize_max_min_clamp,\n        };\n```\n\n(and on others)",
+      "range": {
+        "startLine": 153,
+        "startChar": 1,
+        "endLine": 156,
+        "endChar": 73
+      },
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d3cc803_d93924cf",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T20:51:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0a04005_dd688af2",
       "range": {
         "startLine": 153,
         "startChar": 1,
