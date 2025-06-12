@@ -386,6 +386,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a5001af_651036af",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T21:02:42Z",
+      "side": 1,
+      "message": "Right, it should describe what the option does. What you have is fine, but could also be something like `Replace all `clamp` builtins taking vectors with a scalarized version`. This doesn\u0027t just restart scalarize clamp but lets you know what it does and what it works on.",
+      "parentUuid": "ccaccc9b_66f930e1",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1f17c0e7_f7288e6e",

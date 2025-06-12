@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d4e51d6a_f229362b",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T21:02:42Z",
+      "side": 1,
+      "message": "```suggestion\n            if (!e-\u003eType()-\u003eIs\u003ccore::type::Vector\u003e() \u0026\u0026 !e-\u003eType()-\u003eIsScalar()) {\n```",
+      "range": {
+        "startLine": 100,
+        "startChar": 28,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b8046700_21729d63",
         "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
         "patchSetId": 16
