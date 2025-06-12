@@ -138,6 +138,24 @@
       "parentUuid": "27b9de19_2f4ea895",
       "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3058c5e7_d642d48d",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-12T07:58:52Z",
+      "side": 1,
+      "message": "Do you mean returning a `std::optional\u003cIntegerRangeInfo\u003e` instead of a `IntegerRangeInfo*` ?",
+      "parentUuid": "4ae01e01_e03bc6a4",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
