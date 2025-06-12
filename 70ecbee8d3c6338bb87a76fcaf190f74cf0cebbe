@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "490fc091_a83a8242",
+        "filename": "src/tint/lang/core/ir/transform/dead_code_elimination.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T21:04:47Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "5468bd41_2e4ae1f7",
+      "revId": "70ecbee8d3c6338bb87a76fcaf190f74cf0cebbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "db3424cb_e8432883",
@@ -83,6 +101,24 @@
       "writtenOn": "2025-06-12T20:58:12Z",
       "side": 1,
       "message": "Did you add this just for the purposes of these tests, or can this actually happen coming from SPIR-V?",
+      "revId": "70ecbee8d3c6338bb87a76fcaf190f74cf0cebbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "687d72f8_d0c675bb",
+        "filename": "src/tint/lang/core/ir/transform/dead_code_elimination_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T21:04:47Z",
+      "side": 1,
+      "message": "It can happen when coming from spirv. If you look at `test/tint/unittest/reader/SpvModuleScopeVarParserTest_OutputVarsConvertedToPrivate.spvasm` the `%1` is an undecorated `Output` variable.",
+      "parentUuid": "124d64a8_27cbf91f",
       "revId": "70ecbee8d3c6338bb87a76fcaf190f74cf0cebbe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
