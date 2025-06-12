@@ -74,6 +74,18 @@ struct State {
         // be propagated through.
         ProcessOutputs();
         ProcessInputs();
+
+        // Destroy any phonies we used to create references. The referenced variable should now be
+        // in the interface structs, so it should be referenced.
+        Vector<core::ir::Phony*, 2> phonies;
+        for (auto* inst : ir.Instructions()) {
+            if (auto* phony = inst->As<core::ir::Phony>()) {
+                phonies.Push(phony);
+            }
+        }
+        for (auto* phony : phonies) {
+            phony->Destroy();
+        }
     }
 
     /// Process output variables.
@@ -144,8 +156,9 @@ struct State {
         value->ForEachUseUnsorted([&](core::ir::Usage use) {
             if (auto* access = use.instruction->As<core::ir::Access>()) {
                 ReplaceOutputPointerAddressSpace(access->Result());
-            } else if (!use.instruction->IsAnyOf<core::ir::Load, core::ir::LoadVectorElement,
-                                                 core::ir::Store, core::ir::StoreVectorElement>()) {
+            } else if (!use.instruction
+                            ->IsAnyOf<core::ir::Load, core::ir::LoadVectorElement, core::ir::Store,
+                                      core::ir::StoreVectorElement, core::ir::Phony>()) {
                 TINT_UNREACHABLE()
                     << "unexpected instruction: " << use.instruction->TypeInfo().name;
             }
@@ -230,7 +243,8 @@ struct State {
                 // to the skipping.
                 if (skipped_member_emission) {
                     for (auto& usage : var->Result()->UsagesUnsorted()) {
-                        TINT_ASSERT(usage->instruction->Is<core::ir::Access>());
+                        TINT_ASSERT(usage->instruction->Is<core::ir::Access>() ||
+                                    usage->instruction->Is<core::ir::Phony>());
                     }
                 }
             } else {
@@ -378,6 +392,7 @@ struct State {
                     ReplaceInputPointerUses(var, l->Result());
                     to_destroy.Push(l);
                 },
+                [&](core::ir::Phony* p) { to_destroy.Push(p); },  //
                 TINT_ICE_ON_NO_MATCH);
         });
 
@@ -557,6 +572,7 @@ Result<SuccessType> ShaderIO(core::ir::Module& ir) {
                                           core::ir::Capabilities{
                                               core::ir::Capability::kAllowMultipleEntryPoints,
                                               core::ir::Capability::kAllowOverrides,
+                                              core::ir::Capability::kAllowPhonyInstructions,
                                           });
     if (result != Success) {
         return result.Failure();
