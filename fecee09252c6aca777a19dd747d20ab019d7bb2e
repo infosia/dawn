@@ -156,6 +156,24 @@
       "parentUuid": "4ae01e01_e03bc6a4",
       "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8201d583_06de5d89",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T13:28:52Z",
+      "side": 1,
+      "message": "Since `IntegerRangeInfo` holds a `std::variant`, I don\u0027t think we need the optional because `std::monostate` indicates that there is no valid range. So we were thinking that you could just return an `IntegerRangeInfo` (by value, instead of by pointer).",
+      "parentUuid": "3058c5e7_d642d48d",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
