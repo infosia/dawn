@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "6ea0e0d8e5aad34fc3efabd0fbc224fef6f095d9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90946957_aef2cb46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-06-12T14:59:01Z",
+      "side": 1,
+      "message": "I am going to abandon this, and the dependent change, per our OOB discussions about changing the approach to this testing.",
+      "revId": "6ea0e0d8e5aad34fc3efabd0fbc224fef6f095d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
