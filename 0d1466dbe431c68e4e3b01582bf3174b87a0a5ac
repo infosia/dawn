@@ -124,6 +124,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1c919951_aa7fa838",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T20:42:04Z",
+      "side": 1,
+      "message": "Maybe we don\u0027t have it anymore ... https://dawn-review.googlesource.com/c/dawn/+/246774",
+      "parentUuid": "4fecb1cb_b5a0278b",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1e89140f_2589091f",
         "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
         "patchSetId": 15
