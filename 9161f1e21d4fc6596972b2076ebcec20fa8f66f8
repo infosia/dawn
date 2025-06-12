@@ -16,6 +16,23 @@
       "message": "The bug that caused the revert last time is apparently an issue with SwiftShader. I\u0027ve checked for that and made it activate the same toggle as Qualcomm, so this should be working now.\n\nStill want to try a potentially more reliable way of constructing the framebuffer query that I discussed with Loko in the hopes that it could clear up the Qualcomm issue, but perhaps that\u0027s best left to another CL since there\u0027s no guarantee it\u0027ll work.",
       "revId": "9161f1e21d4fc6596972b2076ebcec20fa8f66f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12ebace1_b0070255",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-12T11:17:45Z",
+      "side": 1,
+      "message": "Should we instead enable the cache only on devices that need it? But also Qualcomm GPUs are the ones that actually do an allocation of GPU memory with VkFramebuffer so I\u0027m suprised to see it disabled there.",
+      "revId": "9161f1e21d4fc6596972b2076ebcec20fa8f66f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
