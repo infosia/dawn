@@ -33,6 +33,59 @@
       "message": "I did this here because we handle the struct member here. But, maybe we should file a followup to actually move both of these into IRToProgram. They are \"valid\" in core IR, but it\u0027s WGSL which doesn\u0027t understand them.\n\nSo, I think we should probably land this so both struct members and vars works, but then decide if we want this moved later, thoughts?",
       "revId": "096e42ff199c86ac523769968d7fc9b871f2efbb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9e0714d_26c599a9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T21:28:29Z",
+      "side": 1,
+      "message": "I don\u0027t know that I\u0027d consider them valid in core IR, since they\u0027re SPIR-V specific.",
+      "parentUuid": "2053169e_01a5b3c5",
+      "revId": "096e42ff199c86ac523769968d7fc9b871f2efbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bce4fca5_fb3de4e4",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T21:28:29Z",
+      "side": 1,
+      "message": "Maybe worth adding a TODO that we should check that it is only ever assigned `1.0` as well, similar to the TODO in `ShouldSkipMemberEmission`.\n\nI also wonder whether we could use `ShouldSkipMemberEmission` (renamed) for vars as well to avoid the duplication. It currently has an extra condition for a struct member that has no attributes at all but I assuming that can only happen when variables are not referenced? In which case, that condition will no longer be necessary after DCE and it\u0027d be easier to combine the logic.",
+      "fixSuggestions": [
+        {
+          "fixId": "0b5ce791_797bb61a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+              "range": {
+                "startLine": 242,
+                "startChar": 0,
+                "endLine": 242,
+                "endChar": 0
+              },
+              "replacement": "                    // TODO(dsinclair): Validate that all accesses of this variable are then used\n                    // only to assign the value of 1.0.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "096e42ff199c86ac523769968d7fc9b871f2efbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
