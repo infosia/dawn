@@ -16,6 +16,57 @@
       "message": "PTAL.",
       "revId": "833f3817bc42286dd4727784b9edf6030dc8e4d7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3e01d4b_21a6db9c",
+        "filename": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:55:22Z",
+      "side": 1,
+      "message": "This should just be a case in the Switch below.",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 9
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "309093c0_2ac00917",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+              "range": {
+                "startLine": 315,
+                "startChar": 0,
+                "endLine": 318,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.cc",
+              "range": {
+                "startLine": 333,
+                "startChar": 0,
+                "endLine": 333,
+                "endChar": 0
+              },
+              "replacement": "            [\u0026](const core::type::Vector* v) {\n                return MakeVectorLoad(var, v, byte_idx);\n            },\n"
+            }
+          ]
+        }
+      ],
+      "revId": "833f3817bc42286dd4727784b9edf6030dc8e4d7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
