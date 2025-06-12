@@ -33,6 +33,24 @@
       "message": "This is quite early. Didn\u0027t we establish that we need to run this after /all/ of the other polyfills, which might introduce clamp calls (or other stuff)?",
       "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e1078cc_ed64e417",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T20:55:29Z",
+      "side": 1,
+      "message": "I thought we only agreed on builtin_polyfills. I can move this further down.",
+      "parentUuid": "df129c99_e59dfe7a",
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
