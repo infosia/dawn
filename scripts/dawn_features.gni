@@ -59,6 +59,10 @@ declare_args() {
   # See crbug.com/tint/1753.
   dawn_use_built_dxc = is_win && target_cpu != "x86"
 
+  # Allow Dawn to search in system directories for DLLs such as d3dcompiler_47.dll
+  # and vulkan-1.dll.
+  dawn_allow_system_component_fallback = false
+
   # Whether to build Dawn's NodeJS bindings
   dawn_build_node_bindings = false
 }
