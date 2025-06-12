@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e10f007e_f6b12d49",
+        "filename": "src/tint/lang/core/ir/binary/BUILD.bazel",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T03:04:33Z",
+      "side": 1,
+      "message": "Is this a mistake?",
+      "revId": "1c674509ff109ddaf83c97f728d458d0b671015b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d40438b_b2ddf813",
+        "filename": "src/tint/lang/core/ir/binary/decode_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T03:04:33Z",
+      "side": 1,
+      "message": "Is this base class still necessary? It doesn\u0027t seem to provide anything?",
+      "revId": "1c674509ff109ddaf83c97f728d458d0b671015b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "424a76d6_5382f3ac",
+        "filename": "src/tint/lang/core/ir/binary/decode_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T03:04:33Z",
+      "side": 1,
+      "message": "```suggestion\n                \"incompatible changes to ir.proto\\nInput Text:\\n\" +\n```",
+      "range": {
+        "startLine": 117,
+        "startChar": 1,
+        "endLine": 118,
+        "endChar": 35
+      },
+      "revId": "1c674509ff109ddaf83c97f728d458d0b671015b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c13771e_76bd1e9b",
+        "filename": "src/tint/lang/core/ir/binary/decode_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T03:04:33Z",
+      "side": 1,
+      "message": "nit (ignore if preferred): I found in the spirv test these can be a lot easier to read (although a lot longer) if you use designated initializers.\n\n```suggestion\nstatic BasicTypeCheck void_check{\n    .ty_str \u003d \"void\",\n    .check_fn \u003d CheckType\u003ctype::Void\u003e,\n    .expected_bin \u003d {0x0a, 0x02, 0x08, 0x00},\n};\n```",
+      "range": {
+        "startLine": 139,
+        "startChar": 33,
+        "endLine": 139,
+        "endChar": 88
+      },
+      "revId": "1c674509ff109ddaf83c97f728d458d0b671015b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
