@@ -123,6 +123,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8427bac_392e13f7",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T16:51:27Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "46363230_069c184b",
+      "revId": "38b2e37e9aaa69fc33f0d27c9cb5b51dbff3dcfa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "79a88471_92fc3d1d",
