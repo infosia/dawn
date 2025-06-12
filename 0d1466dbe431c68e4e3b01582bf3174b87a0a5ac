@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c4be59e6_f6daab52",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T21:00:17Z",
+      "side": 1,
+      "message": "I think this does impact all of intel gen9 but I dont have the evidence on other platforms. I can check with thomsmit@google.com if he has seen this across the board.",
+      "parentUuid": "e0978381_6133d2ed",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "45d5ad4a_6a454920",
         "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
         "patchSetId": 15

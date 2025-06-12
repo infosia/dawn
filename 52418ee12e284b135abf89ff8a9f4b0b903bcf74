@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "19b650c7_fcf838f6",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-12T21:00:17Z",
+      "side": 1,
+      "message": "This is simply an example of where we have some params of the buildin that are non vectorize. I can add an end to end test if you wish. It is unused.",
+      "parentUuid": "b8046700_21729d63",
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "df129c99_e59dfe7a",
         "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
         "patchSetId": 16
