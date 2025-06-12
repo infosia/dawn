@@ -186,6 +186,17 @@ struct State {
             output_descriptors.Push(core::type::Manager::StructMemberDesc{name, type, attributes});
         };
         for (auto* var : referenced_outputs) {
+            // Destroy any phonies we used to create references
+            Vector<core::ir::Phony*, 2> phonies;
+            var->Result()->ForEachUseUnsorted([&](core::ir::Usage use) {
+                if (auto* phony = use.instruction->As<core::ir::Phony>()) {
+                    phonies.Push(phony);
+                }
+            });
+            for (auto* phony : phonies) {
+                phony->Destroy();
+            }
+
             // Change the address space of the variable to private and update its uses, if we
             // haven't already seen this variable.
             if (output_variables.Add(var)) {
@@ -378,6 +389,7 @@ struct State {
                     ReplaceInputPointerUses(var, l->Result());
                     to_destroy.Push(l);
                 },
+                [&](core::ir::Phony* p) { to_destroy.Push(p); },  //
                 TINT_ICE_ON_NO_MATCH);
         });
 
@@ -557,6 +569,7 @@ Result<SuccessType> ShaderIO(core::ir::Module& ir) {
                                           core::ir::Capabilities{
                                               core::ir::Capability::kAllowMultipleEntryPoints,
                                               core::ir::Capability::kAllowOverrides,
+                                              core::ir::Capability::kAllowPhonyInstructions,
                                           });
     if (result != Success) {
         return result.Failure();
