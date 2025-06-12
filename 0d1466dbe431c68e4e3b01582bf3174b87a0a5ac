@@ -334,6 +334,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "60118894_bd837f86",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-12T20:54:00Z",
+      "side": 1,
+      "message": "That document doesn\u0027t make a distinction between code and interface which seems wrong to me.",
+      "parentUuid": "f8618287_0d03e803",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1f17c0e7_f7288e6e",
         "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
         "patchSetId": 15
