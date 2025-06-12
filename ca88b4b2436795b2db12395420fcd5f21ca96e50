@@ -68,6 +68,23 @@
       "message": "LGTM",
       "revId": "ca88b4b2436795b2db12395420fcd5f21ca96e50",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "057d8329_c2d9924a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2025-06-12T08:21:18Z",
+      "side": 1,
+      "message": "Thanks for the +1 code review, is there an engineer willing to +2?",
+      "revId": "ca88b4b2436795b2db12395420fcd5f21ca96e50",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
