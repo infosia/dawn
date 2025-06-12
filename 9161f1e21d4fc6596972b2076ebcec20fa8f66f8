@@ -33,6 +33,24 @@
       "message": "Should we instead enable the cache only on devices that need it? But also Qualcomm GPUs are the ones that actually do an allocation of GPU memory with VkFramebuffer so I\u0027m suprised to see it disabled there.",
       "revId": "9161f1e21d4fc6596972b2076ebcec20fa8f66f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "984454e4_986dce15",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-12T16:40:02Z",
+      "side": 1,
+      "message": "I\u0027ve seen evidence that this is expensive on other mobile chipsets, so I think it\u0027s worthwhile to enable it even if we can\u0027t include Qualcomm initially. We could disable this on desktop, but it doesn\u0027t seem like it\u0027ll make much of a difference either way?\n\nAlso, it\u0027s not clear if this is something that only affects older QC devices (like the Pixel 4), but I need more testing to figure out if that\u0027s the case. It\u0027s possible that we only have to disable this on a small slice of device rather than all of QC.\n\nAlso, yes. It\u0027s silly that a vendor that has been vocal about the need to re-use framebuffers apparently has driver bugs when you re-use framebuffers. Still hoping to find a way around that.",
+      "parentUuid": "12ebace1_b0070255",
+      "revId": "9161f1e21d4fc6596972b2076ebcec20fa8f66f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
