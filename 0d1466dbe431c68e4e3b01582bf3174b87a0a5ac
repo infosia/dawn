@@ -3,6 +3,57 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e0978381_6133d2ed",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:30:27Z",
+      "side": 1,
+      "message": "The comment mentioned Mac but this is D3D, and the same comment is in the Vulkan version. Do we think the problem affects all UHD 630s on all platforms?",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "45d5ad4a_6a454920",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:30:27Z",
+      "side": 1,
+      "message": "Have you verified that these tests fail without scalarization on UHD 630?\n\nWe have experimental UHD 630 bots that do not appear to failing any vector clamp CTS tests, so it\u0027d be good to know why we appear to missing coverage for this issue given how simple these E2E tests are.",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f772db2_3f866e5e",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:30:27Z",
+      "side": 1,
+      "message": "Comment seems copy-pasta incorrect.",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5e8f4350_e4236327",
         "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
         "patchSetId": 15
@@ -20,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1c78593c_c805ecff",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:30:27Z",
+      "side": 1,
+      "message": "I think the point is that we can\u0027t just use `EnumSet\u003cBuiltinFn\u003e` in the config and then generically scalarize anything in that set (which is what I was about to suggest). The set of builtins that can be scalarized is a subset of all vector builtins, and we\u0027re codifying that subset in the config options. Maybe the comment makes more sense there instead though?",
+      "parentUuid": "5e8f4350_e4236327",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "57155a33_40010505",
         "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
         "patchSetId": 15
@@ -31,6 +100,41 @@
       "writtenOn": "2025-06-12T15:23:05Z",
       "side": 1,
       "message": "The comment doesn\u0027t match the check. The `IsScalarVector` returns true if it\u0027s a vector of scalar values. Not, if it\u0027s a scalar or vector. If you want both you need `IsNumericScalarVector()` if you don\u0027t care about bools, or `IsScalar() || IsScalarVector()` if you do care about bools.",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fecb1cb_b5a0278b",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:30:27Z",
+      "side": 1,
+      "message": "Why do we even have `IsScalarVector()`? All vectors are vectors of scalars...\n\nAren\u0027t you just checking for vectors here anyway?",
+      "parentUuid": "57155a33_40010505",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e89140f_2589091f",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:30:27Z",
+      "side": 1,
+      "message": "Instead of all of this above, can\u0027t you just use the vector width of the result type? And then below, TINT_ASSERT that any vectors have the same width as that.",
       "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -71,6 +175,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "30943a46_fd9c4f8b",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:30:27Z",
+      "side": 1,
+      "message": "Nit: unused",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "424fc497_822420e0",
         "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
         "patchSetId": 15
@@ -99,6 +220,23 @@
       "writtenOn": "2025-06-12T15:23:05Z",
       "side": 1,
       "message": "We typically add a comment for these, can you add one for each of them?",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f17c0e7_f7288e6e",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-12T20:30:27Z",
+      "side": 1,
+      "message": "Nit: extra \"with\"",
       "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
