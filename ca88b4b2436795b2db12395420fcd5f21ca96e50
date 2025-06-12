@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ac9c642_3504c2e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 3418012
+      },
+      "writtenOn": "2025-06-12T03:35:36Z",
+      "side": 1,
+      "message": "The absl version explicitly provides constructors to support non-aggregate initialization and places more emphasis on types.\n\nAt the same time, this version also supports both () and {} initialization, and is clearly marked as final.",
+      "parentUuid": "e61c48a4_f27172aa",
+      "revId": "ca88b4b2436795b2db12395420fcd5f21ca96e50",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "1697bc54_6430c65d",
