@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f5462f9_17fd0e31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-13T19:40:09Z",
+      "side": 1,
+      "message": "It\u0027s a nice cleanup.",
+      "revId": "b43e0408153c6c0fabd0665834a4c299b7f8a616",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9c5791d_00f436b0",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-13T19:40:09Z",
+      "side": 1,
+      "message": "nit: prefer making data  `void* const data;` and assign it like the other members.",
+      "revId": "b43e0408153c6c0fabd0665834a4c299b7f8a616",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e33e6bac_3370676e",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-13T19:40:09Z",
+      "side": 1,
+      "message": "This is undefined behaviour in C++, generally.  In general you have to read back via the type used to write the value in the first place.\n\nYou have to go through a memcpy, or a cast through a pointer-to-char or do a bitcast on the value type (src/tint/utils/bitcast.h)\n\nApplies to the other reads via reinterpret_cast\u0027ed pointers.",
+      "revId": "b43e0408153c6c0fabd0665834a4c299b7f8a616",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c11f87b_fa3ddf97",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-13T19:40:09Z",
+      "side": 1,
+      "message": "Prefer this to be a member method on Matrix. ResetToZero or something like that.",
+      "revId": "b43e0408153c6c0fabd0665834a4c299b7f8a616",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
