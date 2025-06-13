@@ -121,6 +121,24 @@
       "parentUuid": "124d64a8_27cbf91f",
       "revId": "70ecbee8d3c6338bb87a76fcaf190f74cf0cebbe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fe76fbc_28bb91ec",
+        "filename": "src/tint/lang/core/ir/transform/dead_code_elimination_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-13T00:15:38Z",
+      "side": 1,
+      "message": "I see, it can only happen for a variable that is never used by an entry point. That\u0027s very annoying.",
+      "parentUuid": "687d72f8_d0c675bb",
+      "revId": "70ecbee8d3c6338bb87a76fcaf190f74cf0cebbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
