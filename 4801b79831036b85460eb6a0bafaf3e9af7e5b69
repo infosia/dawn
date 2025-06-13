@@ -16,6 +16,29 @@
       "message": "PTAL, thanks!",
       "revId": "4801b79831036b85460eb6a0bafaf3e9af7e5b69",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf60bdf0_927f7ed3",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 2140,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-13T05:00:27Z",
+      "side": 1,
+      "message": "nit. Could maybe use an `absl::StrFormat` or something to make this a little less messy?",
+      "range": {
+        "startLine": 2138,
+        "startChar": 46,
+        "endLine": 2140,
+        "endChar": 82
+      },
+      "revId": "4801b79831036b85460eb6a0bafaf3e9af7e5b69",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
