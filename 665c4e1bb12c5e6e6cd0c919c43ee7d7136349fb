@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5e37a6d_98678b06",
+        "filename": "src/tint/lang/core/number.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-13T20:24:27Z",
+      "side": 1,
+      "message": "Use the word highest rather than largest",
+      "range": {
+        "startLine": 386,
+        "startChar": 16,
+        "endLine": 386,
+        "endChar": 43
+      },
+      "revId": "665c4e1bb12c5e6e6cd0c919c43ee7d7136349fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
