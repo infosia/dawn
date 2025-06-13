@@ -16,6 +16,24 @@
       "message": "PTAL! Attempting to resolve one of the more minor slowdowns we saw in the profiles from the Skia Team. (See https://docs.google.com/presentation/d/1YU-qHtEv61Ecyb5CwEoLBe2lM_loHPmFjYQ9CA5J-Sg/edit?slide\u003did.g361402475c0_0_57\u0026resourcekey\u003d0-NLPhV-2hGTdlK7ZAg8Tz0Q#slide\u003did.g361402475c0_0_57)\n\nOnly thing I\u0027m not super happy with is that his would be over-allocating space just to ensure each bind group could use the max number of dynamic offsets, even though that would mean that none of the other bind groups could use any. That said, it\u0027s just static array of ints, so it\u0027s not all that bad. Happy to hear suggestions, in any case!",
       "revId": "bdcd5f9da9bd51d559e3eaef94134e4bb86c5097",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b96dfc4_604013c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-13T20:24:14Z",
+      "side": 1,
+      "message": "One potential option to save some more space would be to just have one `std::array\u003cDynamicOffset, kMaxDynamicOffsetsPerBindGroup\u003e`, and then have `PerBindGroup\u003cstd::pair\u003csize_t, size_t\u003e\u003e mDynamicOffsetRanges` that indexes into the array? Then we can return splices of the array when calling `GetDynamicOffsets()`. I think the downside of that is that you would need to do some more tracking, and also, when bind groups are overridden, probably need to make sure that the indices aren\u0027t changed (not sure if that\u0027s valid?)",
+      "parentUuid": "faea34b6_6762e2e6",
+      "revId": "bdcd5f9da9bd51d559e3eaef94134e4bb86c5097",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
