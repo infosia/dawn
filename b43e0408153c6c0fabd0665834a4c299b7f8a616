@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ac9d049_5eaa2290",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-13T20:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9c5791d_00f436b0",
+      "revId": "b43e0408153c6c0fabd0665834a4c299b7f8a616",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e33e6bac_3370676e",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34dd2a0b_929f3e18",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-13T20:38:25Z",
+      "side": 1,
+      "message": "Changed to use `memcpy`. Made it a `uint8_t*` to avoid the need to cast before doing the pointer arithmetic.\n\nAlso changed the expectation to work on `U8` to avoid a similar issue when checking the values.",
+      "parentUuid": "e33e6bac_3370676e",
+      "revId": "b43e0408153c6c0fabd0665834a4c299b7f8a616",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c11f87b_fa3ddf97",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-06-13T19:40:09Z",
       "side": 1,
       "message": "Prefer this to be a member method on Matrix. ResetToZero or something like that.",
+      "revId": "b43e0408153c6c0fabd0665834a4c299b7f8a616",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db013615_159dd23a",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-13T20:38:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c11f87b_fa3ddf97",
       "revId": "b43e0408153c6c0fabd0665834a4c299b7f8a616",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
