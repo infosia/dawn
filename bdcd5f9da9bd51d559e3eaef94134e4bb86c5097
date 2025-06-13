@@ -34,6 +34,24 @@
       "parentUuid": "faea34b6_6762e2e6",
       "revId": "bdcd5f9da9bd51d559e3eaef94134e4bb86c5097",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "81ef7c81_44785a61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-13T20:43:36Z",
+      "side": 1,
+      "message": "I considered that, and frankly it might be nice to have a single array for the dynamic offsets anyway. The concern I had was packing. Consider the following:\n\n// Pretend we have a max dynamic offset count of 8 per pipeline layout\nsetBindGroup(0, a, [1, 2, 3, 4]);\nsetBindGroup(1, b, [1, 2, 3, 4, 5, 6]);\nsetBindGroup(0, a, [1, 2, 3, 4, 5, 6, 7]);\nsetBindGroup(1, b, [1]);\ndraw();\n\nThis is a valid draw, but the intermediate states exceed the overall limit or present packing problems. We can\u0027t pack them tightly because then the second setBindGroup(0) call would collide with the bind group 1 dynamic offsets. And we can\u0027t only allocate enough space for a valid draw or else we won\u0027t be to accomodate the third call which temporarily overflows the allowed count.",
+      "parentUuid": "4b96dfc4_604013c4",
+      "revId": "bdcd5f9da9bd51d559e3eaef94134e4bb86c5097",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
