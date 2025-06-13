@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42b45dc7_4408c656",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-13T12:26:42Z",
+      "side": 1,
+      "message": "This function is removed in the next CL. I could just squash the two CLs into one, if you prefer.",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "ffcc0b89fc3a409bfef4971f549d90e9052d6f9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
