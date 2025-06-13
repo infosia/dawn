@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d223f123_68825e30",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-13T11:09:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4633ba68_980f120d",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "18141f0c_b5c9cd9e",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-06-11T13:44:28Z",
       "side": 1,
       "message": "Nit: Could just directly `return` the result of `GetOrAdd` here",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "175b3133_70c90097",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-13T11:09:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18141f0c_b5c9cd9e",
       "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "efe883e5_632e835f",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-13T11:09:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32afef32_9621b3f2",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3cb11945_f57c3ad5",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-06-11T13:44:28Z",
       "side": 1,
       "message": "Nit: `return` here",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9e914a1_bb00ce01",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-13T11:09:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb11945_f57c3ad5",
       "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -172,6 +244,24 @@
       "side": 1,
       "message": "Since `IntegerRangeInfo` holds a `std::variant`, I don\u0027t think we need the optional because `std::monostate` indicates that there is no valid range. So we were thinking that you could just return an `IntegerRangeInfo` (by value, instead of by pointer).",
       "parentUuid": "3058c5e7_d642d48d",
+      "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be1880f8_2fb25389",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-13T11:09:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8201d583_06de5d89",
       "revId": "fecee09252c6aca777a19dd747d20ab019d7bb2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
