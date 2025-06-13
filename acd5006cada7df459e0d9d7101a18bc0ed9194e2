@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4c719ce_e7130212",
+        "filename": "src/dawn/native/Error.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T09:26:37Z",
+      "side": 0,
+      "message": "This `include` is unused and should be removed, while `Toggles.h` includes tons of other headers recursively, so some files need to add headers that previously get included by `Toggles.h`.",
+      "revId": "acd5006cada7df459e0d9d7101a18bc0ed9194e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
