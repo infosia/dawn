@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "13c2c2f2_8d79349b",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-13T02:19:13Z",
+      "side": 1,
+      "message": "Is this required? we only want to scalarize vectors of scalars.",
+      "parentUuid": "d4e51d6a_f229362b",
+      "range": {
+        "startLine": 100,
+        "startChar": 28,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b8046700_21729d63",
         "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
         "patchSetId": 16
@@ -55,6 +79,24 @@
       "side": 1,
       "message": "This is simply an example of where we have some params of the buildin that are non vectorize. I can add an end to end test if you wish. It is unused.",
       "parentUuid": "b8046700_21729d63",
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0d89e39_f08b5c1e",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-13T02:19:13Z",
+      "side": 1,
+      "message": "This was to demonstrate that this code is general purpose and works to serialize many function. I dont think we need that demonstration in the code so I will remove it.",
+      "parentUuid": "19b650c7_fcf838f6",
       "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
