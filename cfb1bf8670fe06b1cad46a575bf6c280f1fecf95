@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a21a6a1_7decb5c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 44
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T15:20:37Z",
+      "side": 1,
+      "message": "Thanks for reviewing! I will handle the comments in next week.",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0272e926_d78bb425",
@@ -31,6 +48,24 @@
       "writtenOn": "2025-06-13T13:47:53Z",
       "side": 1,
       "message": "Why?",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfe639d2_c3850870",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T15:20:37Z",
+      "side": 1,
+      "message": "This is one of the tons of headers that get silently included by `Toggles.h`...",
+      "parentUuid": "0272e926_d78bb425",
       "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -88,6 +123,24 @@
       "writtenOn": "2025-06-13T13:47:53Z",
       "side": 1,
       "message": "If this is a conflict with windows.h then we should add that to windows_with_undefs.h and use that header instead of windows.h",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "554bb8fb_b039bfe8",
+        "filename": "src/dawn/native/ErrorData.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T15:20:37Z",
+      "side": 1,
+      "message": "I found some difficulty looking for where `windows.h` get included, somehow suspecting it comes from d3d related headers from MS...",
+      "parentUuid": "61d59be1_814ad91a",
       "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -225,6 +278,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e4af61db_5a2305d8",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T15:20:37Z",
+      "side": 1,
+      "message": "I can try to further narrow the header dependency if possible",
+      "parentUuid": "76f6b7a0_325cbcf8",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d5802f82_12ced3f2",
         "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
         "patchSetId": 44
@@ -236,6 +307,30 @@
       "writtenOn": "2025-06-13T13:47:53Z",
       "side": 1,
       "message": "The cast shouldn\u0027t be happening automatically no?",
+      "range": {
+        "startLine": 385,
+        "startChar": 27,
+        "endLine": 385,
+        "endChar": 64
+      },
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49ae958d_9360e637",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T15:20:37Z",
+      "side": 1,
+      "message": "Compiler complains about it if I remember correctly",
+      "parentUuid": "d5802f82_12ced3f2",
       "range": {
         "startLine": 385,
         "startChar": 27,
