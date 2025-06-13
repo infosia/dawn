@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "faea34b6_6762e2e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-13T18:32:31Z",
+      "side": 1,
+      "message": "PTAL! Attempting to resolve one of the more minor slowdowns we saw in the profiles from the Skia Team. (See https://docs.google.com/presentation/d/1YU-qHtEv61Ecyb5CwEoLBe2lM_loHPmFjYQ9CA5J-Sg/edit?slide\u003did.g361402475c0_0_57\u0026resourcekey\u003d0-NLPhV-2hGTdlK7ZAg8Tz0Q#slide\u003did.g361402475c0_0_57)\n\nOnly thing I\u0027m not super happy with is that his would be over-allocating space just to ensure each bind group could use the max number of dynamic offsets, even though that would mean that none of the other bind groups could use any. That said, it\u0027s just static array of ints, so it\u0027s not all that bad. Happy to hear suggestions, in any case!",
+      "revId": "bdcd5f9da9bd51d559e3eaef94134e4bb86c5097",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
