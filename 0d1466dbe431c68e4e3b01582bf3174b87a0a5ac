@@ -247,6 +247,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3435291_49ba4b3a",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-13T16:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e89140f_2589091f",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fec438ac_f698d66f",
@@ -295,6 +313,24 @@
       "writtenOn": "2025-06-12T15:23:05Z",
       "side": 1,
       "message": "Can this happen? If it\u0027s a scalar, we\u0027d have exited on line 112 above? Should this, just be a TINT_UNREACHABLE? Or just always cast to vector and TINT_ASSERT(vec) would probably be simpler",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01a3d6ed_cab89096",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-13T16:00:11Z",
+      "side": 1,
+      "message": "This is why I added that demonstration with the extract_bits. James suggested that maybe this should not be in the CL as it doesnt fix this or any bug and is simply a demonstration of the generality of this function.",
+      "parentUuid": "3fb8bc7a_1c460818",
       "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -471,6 +507,24 @@
       "writtenOn": "2025-06-12T20:30:27Z",
       "side": 1,
       "message": "Nit: extra \"with\"",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e03ee57_8a334016",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-13T16:00:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f17c0e7_f7288e6e",
       "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
