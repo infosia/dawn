@@ -22,6 +22,30 @@
       },
       "revId": "ffcc0b89fc3a409bfef4971f549d90e9052d6f9f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce8c0298_39e76147",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T12:30:20Z",
+      "side": 1,
+      "message": "Either way sounds good.",
+      "parentUuid": "42b45dc7_4408c656",
+      "range": {
+        "startLine": 80,
+        "startChar": 5,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "ffcc0b89fc3a409bfef4971f549d90e9052d6f9f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
