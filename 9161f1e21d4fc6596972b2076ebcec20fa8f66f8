@@ -51,6 +51,24 @@
       "parentUuid": "12ebace1_b0070255",
       "revId": "9161f1e21d4fc6596972b2076ebcec20fa8f66f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc1c41e7_5c7d183b",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T14:16:44Z",
+      "side": 1,
+      "message": "Ok sounds good! It might be worth asking ANGLE folks (Shabby?) if they had any similar difficulties and how they worked around it. (or we could look at their code)",
+      "parentUuid": "984454e4_986dce15",
+      "revId": "9161f1e21d4fc6596972b2076ebcec20fa8f66f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
