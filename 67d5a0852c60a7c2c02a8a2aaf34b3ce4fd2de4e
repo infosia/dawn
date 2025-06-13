@@ -33,6 +33,24 @@
       "message": "Just a thought since I was the one originally added the device lock to dawn.\n\nHow about we change the device lock to a recursive mutex? To make everything simpler. I understand recursive mutexes are not recommended in general but the device lock was only an interim solution for multithreading support in Dawn. We want to do a more fine-grained locking approach. Over time we added more locks to the code base to realize that plan. However, they often broke the device lock. Even though the two approaches (device lock vs fine-grained lock) should be independent, it\u0027s very hard to ensure that right now.\n\nIf we used recursive mutex for the device lock we would continue working on the fine-grained locking plan without worrying about breaking/causing dead locks with the device lock. Once that plan is complete, we can remove the device lock entirely.\n\nAs a plus point, recursive mutex\u0027s implementation is pretty efficient nowadays afaik. Microsoft\u0027s D3D11\u0027s multithreading implementation also uses a recursive mutex iiuc.",
       "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6029e17_d547f99b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-13T20:41:19Z",
+      "side": 1,
+      "message": "I\u0027d be happy to consider that. I agree entirely that it\u0027s been quite tricky to get things right with both the device lock and the smaller locks that lead to unexpected behaviors and lock inversion issues. I think it would especially help a lot with re-entrancy for callbacks atm. The downside would be that it could result in even MORE places using the device lock to synchronize stuff. I feel like one of the main issues with the device lock right now is that it is very hard to tell when and where it NEEDS to be held, and where it\u0027s being held as a byproduct.\n\nAnother thing is that I think if we decide to go the route of making the device lock recursive, we would want to make sure that we remove the `\"no autolock\": true` option entirely so that anytime we call into the API we take the lock. That would probably solve all the issues related to lock-inversion since the device lock will always be held first, but then we would probably take a perf hit for users of the implicit synchronization.",
+      "parentUuid": "f0b70e67_c502b0bf",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
