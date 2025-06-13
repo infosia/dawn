@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ec2495b_7f9fcbc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-13T17:58:46Z",
+      "side": 1,
+      "message": "We can skip the CQ and just hit submit. I added the linux-dawn-rel just as sanity. As you know the mac-dawn-rel is 3 hours",
+      "revId": "5ba97901e1439bc2f2fcf83d76a7d448d179709f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
