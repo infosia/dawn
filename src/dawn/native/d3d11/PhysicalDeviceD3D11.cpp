@@ -338,6 +338,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::ClearColorWithDraw, true);
     }
 
+    // Known issue on mac intel uhd 630. Resolved by scalarization.
+    // See crbug.com/422144514
+    if (gpu_info::IsIntelGen9(vendorId, deviceId)) {
+        deviceToggles->Default(Toggle::ScalarizeMaxMinClamp, true);
+    }
+
     // Use the Tint IR backend by default if the corresponding platform feature is enabled.
     deviceToggles->Default(Toggle::UseTintIR,
                            platform->IsFeatureEnabled(platform::Features::kWebGPUUseTintIR));
