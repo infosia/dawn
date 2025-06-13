@@ -46,6 +46,30 @@
       },
       "revId": "56d591791e5bb8f3d4578b20e71bd743602060e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73d53cbf_64a52b55",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T09:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c54710ab_f9da2b02",
+      "range": {
+        "startLine": 385,
+        "startChar": 27,
+        "endLine": 385,
+        "endChar": 43
+      },
+      "revId": "56d591791e5bb8f3d4578b20e71bd743602060e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "89bc2f57_546bc345",
+        "filename": "src/dawn/native/CacheResult.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T09:24:00Z",
+      "side": 1,
+      "message": "Now `CacheResult.h` is left untouched.",
+      "parentUuid": "0fbeb338_4bc5a99b",
+      "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d266664_9fc3f017",
@@ -137,6 +155,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3900253_abaf5548",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 37
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T09:24:00Z",
+      "side": 1,
+      "message": "Done, now `ParseShaderModule` just catch and cache validation error into `ShaderModuleParseResult` and treat them as succeed. Now `ParseShaderModule` returns `ResultOrError\u003cShaderModuleParseResult\u003e` and only errors other than validation error are thrown as Error.",
+      "parentUuid": "3d9b40cc_fd9b3a77",
+      "range": {
+        "startLine": 2200,
+        "startChar": 41,
+        "endLine": 2200,
+        "endChar": 58
+      },
+      "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1472c87_c938c02a",
@@ -154,6 +196,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2773b648_87588a45",
+        "filename": "src/dawn/native/ShaderModuleParseRequest.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T09:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1472c87_c938c02a",
+      "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ca2e6f4_e49abba9",
@@ -167,6 +227,24 @@
       "writtenOn": "2025-06-11T11:45:29Z",
       "side": 1,
       "message": "nit: this could be inlined in `ShaderModuleParseSpirvDescription`",
+      "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26e3d703_0d7179fb",
+        "filename": "src/dawn/native/ShaderModuleParseRequest.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T09:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ca2e6f4_e49abba9",
       "revId": "b707a6136615db7081e4a1eeba326f8f8faa432e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

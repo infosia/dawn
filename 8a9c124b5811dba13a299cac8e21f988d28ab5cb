@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08e872ff_e997bada",
+        "filename": "src/dawn/native/ShaderModuleParseRequest.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T09:24:00Z",
+      "side": 1,
+      "message": "We are fine here now since we add the whole enabled `TogglesSet` in the request. The validation happens at the early stage of `DeviceBase::CreateShaderModule`.",
+      "parentUuid": "37f70894_f228288c",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 51
+      },
+      "revId": "8a9c124b5811dba13a299cac8e21f988d28ab5cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06f579b5_882a1622",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-06-11T23:45:16Z",
       "side": 1,
       "message": "My gut is telling me that we should probably just be serializing the `ToggleState`/`ToggleSet` from the device instead of individual toggle `bool`s here. If we can use `ToggleSet`, it wouldn\u0027t be too bad in terms of space since it\u0027s just a bitset, but it would be a LOT more future-proof for when we add new features and stuff.\n\nOtherwise, anytime we add a new toggle we potentially would need to add another `bool` here if we check it when parsing the shader.\n\nI\u0027m on the fence w.r.t serializing the related `FeaturesSet` also, but I\u0027m thinking that maybe it\u0027s better to do that for future-proofing also.\n\nJust as a side-note to make my point stronger, I think the device cache key (used in the frontend cache) also already serializes the entire `FeaturesSet` and `TogglesSet`, so I think that is probably the way to go for this.",
+      "range": {
+        "startLine": 61,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 51
+      },
+      "revId": "8a9c124b5811dba13a299cac8e21f988d28ab5cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d273986_ff1d946a",
+        "filename": "src/dawn/native/ShaderModuleParseRequest.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-13T09:24:00Z",
+      "side": 1,
+      "message": "Done, making `TogglesSet` and `FeaturesSet` serializable.",
+      "parentUuid": "06f579b5_882a1622",
       "range": {
         "startLine": 61,
         "startChar": 4,
