@@ -16,6 +16,24 @@
       "message": "I\u0027d just put this assertion in the loop below instead, and then you don\u0027t need this extra loop at all.",
       "revId": "8ab43dadbee3568373b061ab44f9a3bf87f4cfdb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c7a422c_083d0378",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-13T18:40:07Z",
+      "side": 1,
+      "message": "Yes that is better. Just crash if this was called incorrectly.",
+      "parentUuid": "254dfffb_8caf92ff",
+      "revId": "8ab43dadbee3568373b061ab44f9a3bf87f4cfdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
