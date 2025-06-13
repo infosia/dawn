@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_VULKAN_TEXTUREVK_H_
 #define SRC_DAWN_NATIVE_VULKAN_TEXTUREVK_H_
 
+#include <atomic>
 #include <memory>
 #include <vector>
 
@@ -112,6 +113,8 @@ class Texture : public TextureBase {
     // Dawn API
     void SetLabelImpl() override;
 
+    uint64_t GetUniqueTextureViewId();
+
   protected:
     Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descriptor);
 
@@ -163,6 +166,9 @@ class Texture : public TextureBase {
 
     SubresourceStorage<TextureSyncInfo> mSubresourceLastSyncInfos;
     VkImage mHandle = VK_NULL_HANDLE;
+
+    const uint32_t mTextureId;
+    std::atomic<uint32_t> mNextTextureViewId = 1;
 };
 
 // A texture created and fully owned by Dawn. Typically the result of device.CreateTexture.
@@ -321,7 +327,10 @@ class TextureView final : public TextureViewBase {
     bool IsYCbCr() const override;
     YCbCrVkDescriptor GetYCbCrVkDescriptor() const override;
 
+    uint64_t GetTextureViewId() const { return mTextureViewId; }
+
   private:
+    TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor);
     ~TextureView() override;
     void DestroyImpl() override;
     using TextureViewBase::TextureViewBase;
@@ -340,6 +349,7 @@ class TextureView final : public TextureViewBase {
     bool mIsYCbCr = false;
     YCbCrVkDescriptor mYCbCrVkDescriptor;
     std::vector<VkImageView> mHandlesFor2DViewOn3D;
+    const uint64_t mTextureViewId;
 };
 
 }  // namespace dawn::native::vulkan

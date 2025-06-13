@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_VULKAN_DEVICEVK_H_
 #define SRC_DAWN_NATIVE_VULKAN_DEVICEVK_H_
 
+#include <atomic>
 #include <memory>
 #include <mutex>
 #include <queue>
@@ -53,6 +54,7 @@ namespace dawn::native::vulkan {
 
 class BufferUploader;
 class FencedDeleter;
+class FramebufferCache;
 class RenderPassCache;
 class ResourceMemoryAllocator;
 
@@ -76,6 +78,7 @@ class Device final : public DeviceBase {
     uint32_t GetGraphicsQueueFamily() const;
 
     MutexProtected<FencedDeleter>& GetFencedDeleter() const;
+    FramebufferCache* GetFramebufferCache() const;
     RenderPassCache* GetRenderPassCache() const;
     MutexProtected<ResourceMemoryAllocator>& GetResourceMemoryAllocator() const;
     external_semaphore::Service* GetExternalSemaphoreService() const;
@@ -134,6 +137,8 @@ class Device final : public DeviceBase {
                                                       size_t bufferSize) const override;
 
     QuerySetBase* GetEmptyPassQuerySet();
+
+    uint32_t GetUniqueTextureId();
 
   private:
     Device(AdapterBase* adapter,
@@ -201,6 +206,7 @@ class Device final : public DeviceBase {
         mDescriptorAllocatorsPendingDeallocation;
     std::unique_ptr<MutexProtected<FencedDeleter>> mDeleter;
     std::unique_ptr<MutexProtected<ResourceMemoryAllocator>> mResourceMemoryAllocator;
+    std::unique_ptr<FramebufferCache> mFramebufferCache;
     std::unique_ptr<RenderPassCache> mRenderPassCache;
 
     std::unique_ptr<external_memory::Service> mExternalMemoryService;
@@ -216,6 +222,8 @@ class Device final : public DeviceBase {
     Ref<QuerySetBase> mEmptyPassQuerySet;
 
     bool mSupportsMappableStorageBuffer = false;
+
+    std::atomic<uint32_t> mNextTextureId = 1;
 
     MaybeError ImportExternalImage(const ExternalImageDescriptorVk* descriptor,
                                    ExternalMemoryHandle memoryHandle,

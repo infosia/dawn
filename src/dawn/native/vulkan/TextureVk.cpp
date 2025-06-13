@@ -27,6 +27,7 @@
 
 #include "dawn/native/vulkan/TextureVk.h"
 
+#include <iostream>
 #include <utility>
 
 #include "dawn/common/Assert.h"
@@ -806,7 +807,8 @@ Texture::Texture(Device* device, const UnpackedPtr<TextureDescriptor>& descripto
           mCombinedAspect != Aspect::None ? mCombinedAspect : GetFormat().aspects,
           GetArrayLayers(),
           GetNumMipLevels(),
-          TextureSyncInfo{wgpu::TextureUsage::None, wgpu::ShaderStage::None}) {}
+          TextureSyncInfo{wgpu::TextureUsage::None, wgpu::ShaderStage::None}),
+      mTextureId(device->GetUniqueTextureId()) {}
 
 void Texture::SetLabelHelper(const char* prefix) {
     SetDebugName(ToBackend(GetDevice()), mHandle, prefix, GetLabel());
@@ -1278,6 +1280,11 @@ MaybeError Texture::OnBeforeSubmit(CommandRecordingContext*) {
 }
 MaybeError Texture::OnAfterSubmit() {
     DAWN_UNREACHABLE();
+}
+
+uint64_t Texture::GetUniqueTextureViewId() {
+    uint32_t textureViewId = mNextTextureViewId++;
+    return (static_cast<uint64_t>(mTextureId) << 32) | textureViewId;
 }
 
 //
@@ -1989,6 +1996,9 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
     return {};
 }
 
+TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDescriptor>& descriptor)
+    : TextureViewBase(texture, descriptor),
+      mTextureViewId(ToBackend(texture)->GetUniqueTextureViewId()) {}
 TextureView::~TextureView() {}
 
 void TextureView::DestroyImpl() {
