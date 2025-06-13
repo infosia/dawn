@@ -51,6 +51,24 @@
       "parentUuid": "f0b70e67_c502b0bf",
       "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7640b1c2_84b92a02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-13T21:16:46Z",
+      "side": 1,
+      "message": "I\u0027d want to get cwallez@chromium.org thoughts on this also. I was working on a separate change to circumvent some of the issues with the device lock, but depending on the decision here, I might be able to do it differently. \n\nFor context, the separate change was to effectively add a `Defer` option similar to https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/MutexProtected.h;l\u003d152;bpv\u003d0;bpt\u003d0 for the device lock. Then I was going to plumb that through to places that need to execute code without the lock, i.e. places that trigger callbacks. However, if we decide to allow the lock to be recursive, I think I don\u0027t need to do that since this is only an issue for re-entrant spontaneous callbacks, in which case we could just acquire the lock again and it would be fine since it\u0027s recursive.",
+      "parentUuid": "d6029e17_d547f99b",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
