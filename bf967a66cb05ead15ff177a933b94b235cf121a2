@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5c591f3_44d5a8c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T12:26:43Z",
+      "side": 1,
+      "message": "LGTM, it\u0027s missing a `g cl format` says the presubmit script.",
+      "revId": "bf967a66cb05ead15ff177a933b94b235cf121a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6676a03_cc8c8894",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T12:26:43Z",
+      "side": 1,
+      "message": "nit: maybe \"of the texture linearly laid out in the buffer\"",
+      "revId": "bf967a66cb05ead15ff177a933b94b235cf121a2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
