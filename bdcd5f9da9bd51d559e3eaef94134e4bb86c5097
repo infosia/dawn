@@ -52,6 +52,24 @@
       "parentUuid": "4b96dfc4_604013c4",
       "revId": "bdcd5f9da9bd51d559e3eaef94134e4bb86c5097",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4e9bfae_1cbf978f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-13T21:11:26Z",
+      "side": 1,
+      "message": "Right, so it would have to be fairly complex... The way I was imagining it would effectively implement something https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/common/SlabAllocator.h;bpv\u003d1;bpt\u003d0 but with an additional \"repack\" helper...\n\nFor the example you gave, numbering the commands:\n```\n1) setBindGroup(0, a, [1, 2, 3, 4]);\n2) setBindGroup(1, b, [1, 2, 3, 4, 5, 6]);\n3) setBindGroup(0, a, [1, 2, 3, 4, 5, 6, 7]);\n4) setBindGroup(1, b, [1]);\n```\n\n1) we can just allocate the first 4, and it works so continue. set some tracker of `usedCount \u003d 4`.\n\n2) we exceed max (`usedCount + 6 \u003e 8`), so set a invalid state on index 1 that is only checked on Submit/Draw or wherever we do the validation and continue. Don\u0027t change `usedCount`.\n\n3) existing bind group, so deallocate the first allocation, and reallocate a new alloc of size 7, `usedCount \u003d 7`.\n\n4) we have space, so alloc, and `usedCount \u003d 8`.\n\nWe would need to additionally add a `repack` helper though in cases where we may have enough space, but we have holes that need to be coalesced in order for it to work (we would lazily coalesce when needed). That said, I\u0027m not sure if this solution is amazing since it\u0027s rather complex, and ultimately saves us what, like `((4 (maxBindGroups) - 1) * 32 (kMaxDynamicOffsetsPerBindGroup)) * 8 (8 bytes for uint64) \u003d 768 bytes`?",
+      "parentUuid": "81ef7c81_44785a61",
+      "revId": "bdcd5f9da9bd51d559e3eaef94134e4bb86c5097",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
