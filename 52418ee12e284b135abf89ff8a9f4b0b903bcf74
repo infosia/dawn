@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d09fe71c_f5c118e6",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-13T18:36:46Z",
+      "side": 1,
+      "message": "All vectors are vectors of scalars.\n\nBut I don\u0027t think you need this separate loop to check that. If the return type is a vector (which you\u0027ve checked above), then we know we want to scalarize this call.",
+      "parentUuid": "13c2c2f2_8d79349b",
+      "range": {
+        "startLine": 100,
+        "startChar": 28,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b8046700_21729d63",
         "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
         "patchSetId": 16
@@ -150,6 +174,24 @@
       "side": 1,
       "message": "I thought we only agreed on builtin_polyfills. I can move this further down.",
       "parentUuid": "df129c99_e59dfe7a",
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c069db18_969dadf9",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-13T18:36:46Z",
+      "side": 1,
+      "message": "There are more backend-specific polyfills below (see `raise::BuiltinPolyfill`). For some backends they may introduce things like `clamp`.",
+      "parentUuid": "7e1078cc_ed64e417",
       "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

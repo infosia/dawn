@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6b9ac4f4_035dc528",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-13T18:36:46Z",
+      "side": 1,
+      "message": "I think it\u0027s worth doing that. We need to make sure the test actually hits the problem (otherwise it\u0027s not a good test), and if we\u0027re missing CTS coverage then we should add it.",
+      "parentUuid": "21ed69f5_642297d8",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1f772db2_3f866e5e",
         "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
         "patchSetId": 15
