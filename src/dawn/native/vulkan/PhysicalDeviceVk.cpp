@@ -834,6 +834,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         // `unpack4x8unorm` methods can have issues on ARM. To work around the issue we re-write the
         // pack/unpack calls and do the packing manually.
         deviceToggles->Default(Toggle::PolyfillPackUnpack4x8Norm, true);
+
+        deviceToggles->Default(Toggle::VulkanFramebufferCache, true);
+    }
+
+    if (IsAndroidImgTec()) {
+        deviceToggles->Default(Toggle::VulkanFramebufferCache, true);
     }
 
     if (gpu_info::IsARM(GetVendorId())) {
@@ -1039,6 +1045,14 @@ bool PhysicalDevice::IsAndroidSamsung() const {
 bool PhysicalDevice::IsAndroidHuawei() const {
 #if DAWN_PLATFORM_IS(ANDROID)
     return gpu_info::IsHuawei(GetVendorId());
+#else
+    return false;
+#endif
+}
+
+bool PhysicalDevice::IsAndroidImgTec() const {
+#if DAWN_PLATFORM_IS(ANDROID)
+    return gpu_info::IsImgTec(GetVendorId());
 #else
     return false;
 #endif
