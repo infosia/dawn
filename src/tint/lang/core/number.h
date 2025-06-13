@@ -378,6 +378,20 @@ tint::Result<TO, ConversionFailure> CheckedConvert(Number<FROM> num) {
                 return ConversionFailure::kExceedsNegativeLimit;
             }
         }
+    } else if (float_to_integral && std::is_same_v<FROM, f32> &&
+               (std::is_same_v<TO, u32> || std::is_same_v<TO, i32>)) {
+        // The WGSL spec dictates that the conversion of f32 to u32/i32 saturates to integer
+        // values representable in float. This highly particular for f32 converting to u32/i32 for
+        // the highest integer value.
+        const T kLargestIntWhichIsAlsoFloat =
+            IsSignedIntegral<TO> ? static_cast<T>(0x7FFFFF80) : static_cast<T>(0xFFFFFF00);
+        if (value > kLargestIntWhichIsAlsoFloat) {
+            return TO(kLargestIntWhichIsAlsoFloat);
+        }
+
+        if (value < static_cast<T>(TO::kLowestValue)) {
+            return TO(TO::kLowestValue);
+        }
     } else {
         if (value > static_cast<T>(TO::kHighestValue)) {
             if (float_to_integral) {
