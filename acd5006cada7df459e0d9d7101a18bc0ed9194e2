@@ -16,6 +16,24 @@
       "message": "This `include` is unused and should be removed, while `Toggles.h` includes tons of other headers recursively, so some files need to add headers that previously get included by `Toggles.h`.",
       "revId": "acd5006cada7df459e0d9d7101a18bc0ed9194e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43d24976_a053a894",
+        "filename": "src/dawn/native/Error.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "d4c719ce_e7130212",
+      "revId": "acd5006cada7df459e0d9d7101a18bc0ed9194e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

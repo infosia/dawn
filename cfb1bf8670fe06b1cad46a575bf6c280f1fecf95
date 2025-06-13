@@ -1,0 +1,249 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5416e0eb_4c923f51",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 44
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "Nice update, comments are much more local now.",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0272e926_d78bb425",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "Why?",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef1390d1_c72608e5",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "```suggestion\n                CacheResult\u003cShaderModuleParseResult\u003e result;\n                DAWN_TRY_LOAD_OR_RUN(result, this, std::move(req), ShaderModuleParseResult::FromBlob, ParseShaderModule,\n                                     \"ShaderModuleParsing\");\n                GetBlobCache()-\u003eEnsureStored(result);\n```",
+      "range": {
+        "startLine": 2194,
+        "startChar": 4,
+        "endLine": 2200,
+        "endChar": 1
+      },
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "900785f5_22739c2d",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "We could store the error just as a string and here return DAWN_VALIDATION_ERROR(parseResult.cachedValidationError).",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61d59be1_814ad91a",
+        "filename": "src/dawn/native/ErrorData.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "If this is a conflict with windows.h then we should add that to windows_with_undefs.h and use that header instead of windows.h",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f7eb779_300242a3",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "Why?",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "794df185_8eef25e3",
+        "filename": "src/dawn/native/LogEmitter.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "nit: Maybe this could be the C++ type?",
+      "range": {
+        "startLine": 39,
+        "startChar": 25,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36989011_e4b18066",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "I feel that we can change the logic in ParseWGSL / ParseSPIRV instead of catching the error afterwards and putting it in the validationError.",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6829808_73c1bbea",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "It seems that could just be a string put in `ShaderModuleParseResult`.",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e3291c1_f98e71b8",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "Maybe\n```suggestion\n    // Empty when there is a success.\n    X(std::string, validationError)\n```",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0971be8d_3212390d",
+        "filename": "src/dawn/native/ShaderModuleParseRequest.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "nit:\n```suggestion\n    X(TogglesSet, toggles)                 \\\n    X(FeaturesSet, features)                   \\\n    X(LimitsForShaderModuleParseRequest, limits)  \\\n```",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76f6b7a0_325cbcf8",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "Why? (not saying that this and the one in Buffer shouldn\u0027t be needed, but it\u0027s a bit surprising)",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5802f82_12ced3f2",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-13T13:47:53Z",
+      "side": 1,
+      "message": "The cast shouldn\u0027t be happening automatically no?",
+      "range": {
+        "startLine": 385,
+        "startChar": 27,
+        "endLine": 385,
+        "endChar": 64
+      },
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
