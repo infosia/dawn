@@ -16,6 +16,23 @@
       "message": "I reverted a decent amount of changes, and decided to remove the buffer lock and continue using the device-wide lock for now. I realized to get it right in the case of a submit, I would need to acquire all the locks of all the buffers, and I would also need to acquire them in a consistent order so it was too much for now. I think probably, the \"correct\" way is to have the lock on the queue instead, but deferring that change for now. There\u0027s some follow up changes I will be doing to clean up some cases where we may re-entrantly acquire the lock, but those cases are invalid uses right now anyways so wanted to unblock this first. Please take another look at everything, thanks!",
       "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0b70e67_c502b0bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-06-13T19:22:07Z",
+      "side": 1,
+      "message": "Just a thought since I was the one originally added the device lock to dawn.\n\nHow about we change the device lock to a recursive mutex? To make everything simpler. I understand recursive mutexes are not recommended in general but the device lock was only an interim solution for multithreading support in Dawn. We want to do a more fine-grained locking approach. Over time we added more locks to the code base to realize that plan. However, they often broke the device lock. Even though the two approaches (device lock vs fine-grained lock) should be independent, it\u0027s very hard to ensure that right now.\n\nIf we used recursive mutex for the device lock we would continue working on the fine-grained locking plan without worrying about breaking/causing dead locks with the device lock. Once that plan is complete, we can remove the device lock entirely.\n\nAs a plus point, recursive mutex\u0027s implementation is pretty efficient nowadays afaik. Microsoft\u0027s D3D11\u0027s multithreading implementation also uses a recursive mutex iiuc.",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
