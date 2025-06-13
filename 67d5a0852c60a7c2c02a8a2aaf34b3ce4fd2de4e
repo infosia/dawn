@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c0ed849_5311ef86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-13T04:57:53Z",
+      "side": 1,
+      "message": "I reverted a decent amount of changes, and decided to remove the buffer lock and continue using the device-wide lock for now. I realized to get it right in the case of a submit, I would need to acquire all the locks of all the buffers, and I would also need to acquire them in a consistent order so it was too much for now. I think probably, the \"correct\" way is to have the lock on the queue instead, but deferring that change for now. There\u0027s some follow up changes I will be doing to clean up some cases where we may re-entrantly acquire the lock, but those cases are invalid uses right now anyways so wanted to unblock this first. Please take another look at everything, thanks!",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

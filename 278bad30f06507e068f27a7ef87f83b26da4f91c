@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e20be9a5_ba7a0ed3",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-13T04:57:53Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "1c089552_f88397ec",
+      "range": {
+        "startLine": 303,
+        "startChar": 17,
+        "endLine": 303,
+        "endChar": 39
+      },
+      "revId": "278bad30f06507e068f27a7ef87f83b26da4f91c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6fa01913_95b169d0",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34f41250_1b215d5e",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-13T04:57:53Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "6fa01913_95b169d0",
+      "range": {
+        "startLine": 306,
+        "startChar": 8,
+        "endLine": 306,
+        "endChar": 25
+      },
+      "revId": "278bad30f06507e068f27a7ef87f83b26da4f91c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cba29df6_d552cd82",
@@ -60,6 +108,24 @@
       "writtenOn": "2025-05-29T23:34:55Z",
       "side": 1,
       "message": "nit: This is a bit duplicated with the switch later. Maybe the switch can just move to the top?",
+      "revId": "278bad30f06507e068f27a7ef87f83b26da4f91c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "004bdb4c_747db66f",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-13T04:57:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cba29df6_d552cd82",
       "revId": "278bad30f06507e068f27a7ef87f83b26da4f91c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
