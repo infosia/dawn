@@ -69,6 +69,24 @@
       "parentUuid": "d6029e17_d547f99b",
       "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51028ac9_8f522417",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-06-14T18:03:50Z",
+      "side": 1,
+      "message": "\u003e Another thing is that I think if we decide to go the route of making the device lock recursive, we would want to make sure that we remove the \"no autolock\": true option entirely so that anytime we call into the API we take the lock.\n\nYou are right that the recursive mutex won\u0027t help resolving locking ordering issues. Though I would prefer we don\u0027t switch to auto lock device on every method. There are certain methods we still want to be lock-free such as command encoding. Locking them would regress the perf too much. Ideally when switching to recursive mutex, it should not impact the perf too much. If we had to reduce perf in order to make it work, I would rather stick to the current implementation then.",
+      "parentUuid": "7640b1c2_84b92a02",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
