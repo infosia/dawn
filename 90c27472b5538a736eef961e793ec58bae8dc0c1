@@ -16,6 +16,24 @@
       "message": "does this mean we can\u0027t add new entries?",
       "revId": "90c27472b5538a736eef961e793ec58bae8dc0c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1223be93_16075cab",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-06-16T19:05:34Z",
+      "side": 1,
+      "message": "Adding new entries is fine. This is only iterating the keys of the old entries and confirming they match the value in the new entries, not doing the converse with iterating the new entry keys\n\n(An aside, adding a duplicate value into an enum should be caught when building the protobuf in Tint, so I am not doing any uniqueness checking here)",
+      "parentUuid": "003c191b_04db5fe6",
+      "revId": "90c27472b5538a736eef961e793ec58bae8dc0c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
