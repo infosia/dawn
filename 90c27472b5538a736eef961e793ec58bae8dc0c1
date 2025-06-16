@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "003c191b_04db5fe6",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-16T18:55:03Z",
+      "side": 1,
+      "message": "does this mean we can\u0027t add new entries?",
+      "revId": "90c27472b5538a736eef961e793ec58bae8dc0c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
