@@ -966,6 +966,9 @@ struct State {
 
             core::ir::Value* coords = args[idx++];
             switch (tex_type->Dim()) {
+                case core::type::TextureDimension::k1d:
+                    params.Push(coords);
+                    break;
                 case core::type::TextureDimension::k2d:
                     if (is_depth) {
                         coords = b.Construct(ty.vec3<f32>(), coords, depth_ref)->Result();
