@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d2dbf55_53df4ac7",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "Turns out that `Buffer.h` and `Texture.h` use `dawn::native::MemoryDump`. Make it a forward declaration.",
+      "parentUuid": "cfe639d2_c3850870",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ef1390d1_c72608e5",
@@ -93,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec39b5f6_25208a14",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef1390d1_c72608e5",
+      "range": {
+        "startLine": 2194,
+        "startChar": 4,
+        "endLine": 2200,
+        "endChar": 1
+      },
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "900785f5_22739c2d",
@@ -106,6 +148,24 @@
       "writtenOn": "2025-06-13T13:47:53Z",
       "side": 1,
       "message": "We could store the error just as a string and here return DAWN_VALIDATION_ERROR(parseResult.cachedValidationError).",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fe7ad03_a66834df",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "[1]",
+      "parentUuid": "900785f5_22739c2d",
       "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -145,6 +205,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ca6d53d_20f8453e",
+        "filename": "src/dawn/native/ErrorData.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "It turns out that `native/D3DBackend.h` and `d3dcompiler.h` (from Windows Kits) include `windows.h` that may break the following code.\n\nDone by (pre)including `windows_with_undefs.h` instead.",
+      "parentUuid": "554bb8fb_b039bfe8",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f7eb779_300242a3",
@@ -158,6 +236,24 @@
       "writtenOn": "2025-06-13T13:47:53Z",
       "side": 1,
       "message": "Why?",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9910da5_7bff2701",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "Oops, leftover from a draft patchset. Removed.",
+      "parentUuid": "0f7eb779_300242a3",
       "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -185,6 +281,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e936e4c_45476408",
+        "filename": "src/dawn/native/LogEmitter.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "Done in https://dawn-review.googlesource.com/c/dawn/+/247014",
+      "parentUuid": "794df185_8eef25e3",
+      "range": {
+        "startLine": 39,
+        "startChar": 25,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "36989011_e4b18066",
@@ -198,6 +318,24 @@
       "writtenOn": "2025-06-13T13:47:53Z",
       "side": 1,
       "message": "I feel that we can change the logic in ParseWGSL / ParseSPIRV instead of catching the error afterwards and putting it in the validationError.",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32b90709_2e038945",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 1383,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "Done, now `ParseWGSL` and `ParseSPIRV` might only return Internal errors (comes from `CountUTF16CodeUnitsFromUTF8String`), and `ReflectShaderUsingTint` and `ReflectEntryPointUsingTint` will never return error. All validation errors now are stored within `outputParseResult` instead of get thrown.",
+      "parentUuid": "36989011_e4b18066",
       "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -221,6 +359,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9dcfc6c1_bf36d9f0",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "[1]: I make `CachedValidationError` contains `std::string message` and `std::vector\u003cstd::string\u003e contexts`, as `ReflectEntryPointUsingTint` might add contexts indicating which entrypoint the reflection failed on.",
+      "parentUuid": "c6829808_73c1bbea",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0e3291c1_f98e71b8",
         "filename": "src/dawn/native/ShaderModule.h",
         "patchSetId": 44
@@ -238,6 +394,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b744ed8_616446df",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "[1]",
+      "parentUuid": "0e3291c1_f98e71b8",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0971be8d_3212390d",
         "filename": "src/dawn/native/ShaderModuleParseRequest.h",
         "patchSetId": 44
@@ -249,6 +423,30 @@
       "writtenOn": "2025-06-13T13:47:53Z",
       "side": 1,
       "message": "nit:\n```suggestion\n    X(TogglesSet, toggles)                 \\\n    X(FeaturesSet, features)                   \\\n    X(LimitsForShaderModuleParseRequest, limits)  \\\n```",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d768576_96d7eb7f",
+        "filename": "src/dawn/native/ShaderModuleParseRequest.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0971be8d_3212390d",
       "range": {
         "startLine": 55,
         "startChar": 0,
@@ -294,6 +492,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08d1c4dd_01307b4f",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4af61db_5a2305d8",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5802f82_12ced3f2",
@@ -331,6 +547,30 @@
       "side": 1,
       "message": "Compiler complains about it if I remember correctly",
       "parentUuid": "d5802f82_12ced3f2",
+      "range": {
+        "startLine": 385,
+        "startChar": 27,
+        "endLine": 385,
+        "endChar": 64
+      },
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f3168e1_c2a23f7e",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T09:29:34Z",
+      "side": 1,
+      "message": "Oh compiler is happy. Removed.",
+      "parentUuid": "49ae958d_9360e637",
       "range": {
         "startLine": 385,
         "startChar": 27,
