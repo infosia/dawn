@@ -77,12 +77,17 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
         ShaderModule* module = ToBackend(stages[stage].module.Get());
         GLuint shader;
         bool needsSSBOLengthUniformBuffer = false;
-        DAWN_TRY_ASSIGN(shader, module->CompileShader(
-                                    gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex,
-                                    usesFragDepth, bgraSwizzleAttributes, &combinedSamplers[stage],
-                                    layout, &needsPlaceholderSampler,
-                                    &mBindingPointEmulatedBuiltins, &needsSSBOLengthUniformBuffer));
+        DAWN_TRY_ASSIGN(
+            shader, module->CompileShader(
+                        gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex, usesFragDepth,
+                        bgraSwizzleAttributes, &combinedSamplers[stage], layout,
+                        &mBindingPointEmulatedBuiltins, &needsSSBOLengthUniformBuffer));
+
         mNeedsSSBOLengthUniformBuffer |= needsSSBOLengthUniformBuffer;
+        for (const auto& combinedSampler : combinedSamplers[stage]) {
+            needsPlaceholderSampler |= combinedSampler.usePlaceholderSampler;
+        }
+
         DAWN_GL_TRY(gl, AttachShader(mProgram, shader));
         glShaders.push_back(shader);
     }

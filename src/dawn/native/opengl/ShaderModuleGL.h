@@ -97,7 +97,6 @@ class ShaderModule final : public ShaderModuleBase {
                                         VertexAttributeMask bgraSwizzleAttributes,
                                         CombinedSamplerInfo* combinedSamplers,
                                         const PipelineLayout* layout,
-                                        bool* needsPlaceholderSampler,
                                         BindingPointToFunctionAndOffset* bindingPointToData,
                                         bool* needsSSBOLengthUniformBuffer);
 
