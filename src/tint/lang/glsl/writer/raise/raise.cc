@@ -73,6 +73,7 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     } while (false)
 
     // Must come before TextureBuiltinsFromUniform as it may add `textureNumLevels` calls.
+    // Mest come before ArrayLengthFromUniform as it may add `arrayLength` calls.
     if (!options.disable_robustness) {
         core::ir::transform::RobustnessConfig config{};
         config.use_integer_range_analysis = options.enable_integer_range_analysis;
@@ -107,20 +108,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         return immediate_data_layout.Failure();
     }
 
-    // Note, this comes before binding remapper as Dawn inserts _pre-remapping_ binding information.
-    // So, in order to move this later we'd need to update Dawn to send the _post-remapping_ data.
-    RUN_TRANSFORM(raise::TextureBuiltinsFromUniform, module,
-                  options.bindings.texture_builtins_from_uniform);
-
-    // Note, this must come after Robustness as it may add `arrayLength`.
-    // This also needs to come before binding remapper as Dawn inserts _pre-remapping_ binding
-    // information. So, in order to move this later we'd need to update Dawn to send the
-    // _post-remapping_ data.
-    if (options.use_array_length_from_uniform) {
-        RUN_TRANSFORM(core::ir::transform::ArrayLengthFromUniform, module,
-                      options.bindings.array_length_from_uniform.ubo_binding,
-                      options.bindings.array_length_from_uniform.bindpoint_to_size_index);
-    }
 
     tint::transform::multiplanar::BindingsMap multiplanar_map{};
     RemapperData remapper_data{};
@@ -150,6 +137,21 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         core_polyfills.pack_4xu8_clamp = true;
 
         RUN_TRANSFORM(core::ir::transform::BuiltinPolyfill, module, core_polyfills);
+    }
+
+    // Note, this must come after Robustness as it may add `textureNumLevels`.
+    // Note, this comes after the binding remapper as Dawn inserts _post-remapping_ binding
+    // information.
+    RUN_TRANSFORM(raise::TextureBuiltinsFromUniform, module,
+                  options.bindings.texture_builtins_from_uniform);
+
+    // Note, this must come after Robustness as it may add `arrayLength`.
+    // Note, this comes after the binding remapper as Dawn inserts _post-remapping_ binding
+    // information.
+    if (options.use_array_length_from_uniform) {
+        RUN_TRANSFORM(core::ir::transform::ArrayLengthFromUniform, module,
+                      options.bindings.array_length_from_uniform.ubo_binding,
+                      options.bindings.array_length_from_uniform.bindpoint_to_size_index);
     }
 
     RUN_TRANSFORM(core::ir::transform::Bgra8UnormPolyfill, module);

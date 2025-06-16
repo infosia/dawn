@@ -80,8 +80,8 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
         DAWN_TRY_ASSIGN(shader, module->CompileShader(
                                     gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex,
                                     usesFragDepth, bgraSwizzleAttributes, &combinedSamplers[stage],
-                                    layout, &needsPlaceholderSampler,
-                                    &mBindingPointEmulatedBuiltins, &needsSSBOLengthUniformBuffer));
+                                    layout, &needsPlaceholderSampler, &mEmulatedTextureBuiltinInfo,
+                                    &needsSSBOLengthUniformBuffer));
         mNeedsSSBOLengthUniformBuffer |= needsSSBOLengthUniformBuffer;
         DAWN_GL_TRY(gl, AttachShader(mProgram, shader));
         glShaders.push_back(shader);
@@ -205,12 +205,12 @@ MaybeError PipelineGL::ApplyNow(const OpenGLFunctions& gl, const PipelineLayout*
     return {};
 }
 
-const BindingPointToFunctionAndOffset& PipelineGL::GetBindingPointBuiltinDataInfo() const {
-    return mBindingPointEmulatedBuiltins;
+const EmulatedTextureBuiltinInfo& PipelineGL::GetEmulatedTextureBuiltinInfo() const {
+    return mEmulatedTextureBuiltinInfo;
 }
 
 bool PipelineGL::NeedsTextureBuiltinUniformBuffer() const {
-    return !mBindingPointEmulatedBuiltins.empty();
+    return !mEmulatedTextureBuiltinInfo.empty();
 }
 
 bool PipelineGL::NeedsSSBOLengthUniformBuffer() const {

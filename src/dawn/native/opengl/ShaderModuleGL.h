@@ -35,7 +35,7 @@
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/Serializable.h"
 #include "dawn/native/ShaderModule.h"
-#include "dawn/native/opengl/BindingPoint.h"
+#include "dawn/native/opengl/PipelineLayoutGL.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native {
@@ -50,7 +50,6 @@ class Source;
 namespace opengl {
 
 class Device;
-class PipelineLayout;
 struct OpenGLFunctions;
 
 std::string GetBindingName(BindGroupIndex group, BindingNumber bindingNumber);
@@ -98,7 +97,7 @@ class ShaderModule final : public ShaderModuleBase {
                                         CombinedSamplerInfo* combinedSamplers,
                                         const PipelineLayout* layout,
                                         bool* needsPlaceholderSampler,
-                                        BindingPointToFunctionAndOffset* bindingPointToData,
+                                        EmulatedTextureBuiltinInfo* bindingPointToData,
                                         bool* needsSSBOLengthUniformBuffer);
 
   private:

@@ -32,6 +32,7 @@
 #include <utility>
 
 #include "absl/container/flat_hash_map.h"
+#include "dawn/common/Enumerator.h"
 #include "dawn/common/MatchVariant.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
@@ -39,7 +40,6 @@
 #include "dawn/native/Pipeline.h"
 #include "dawn/native/TintUtils.h"
 #include "dawn/native/opengl/BindGroupLayoutGL.h"
-#include "dawn/native/opengl/BindingPoint.h"
 #include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/PipelineLayoutGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
@@ -134,7 +134,7 @@ namespace {
 // because GL uses combined texture/sampler bindings while WGSL allows mixing and matching textures
 // and samplers in the shader. GL also uses a placeholder sampler to use with textures when they
 // aren't combined with a sampler in the WGSL.
-//
+// 
 // Another subtlety is that Dawn uses pre-remapping BindingPoints when referring to bindings while
 // the Tint GLSL writer uses post-remapping BindingPoints.
 void GenerateCombinedSamplerInfo(
@@ -358,10 +358,7 @@ std::pair<tint::glsl::writer::Bindings, BindingMap> GenerateBindingInfo(
             tint::BindingPoint srcBindingPoint{static_cast<uint32_t>(group),
                                                static_cast<uint32_t>(binding)};
 
-            BindingIndex bindingIndex = bgl->GetBindingIndex(binding);
-            auto& bindingIndexInfo = layout->GetBindingIndexInfo()[group];
-            uint32_t shaderIndex = bindingIndexInfo[bindingIndex];
-            tint::BindingPoint dstBindingPoint{0, shaderIndex};
+            uint32_t glIndex = layout->GetGLIndex(group, binding);
 
             auto* const bufferBindingInfo =
                 std::get_if<BufferBindingInfo>(&shaderBindingInfo.bindingInfo);
@@ -369,17 +366,15 @@ std::pair<tint::glsl::writer::Bindings, BindingMap> GenerateBindingInfo(
             if (bufferBindingInfo) {
                 switch (bufferBindingInfo->type) {
                     case wgpu::BufferBindingType::Uniform:
-                        bindings.uniform.emplace(
-                            srcBindingPoint,
-                            tint::glsl::writer::binding::Uniform{dstBindingPoint.binding});
+                        bindings.uniform.emplace(srcBindingPoint,
+                                                 tint::glsl::writer::binding::Uniform{glIndex});
                         break;
                     case kInternalStorageBufferBinding:
                     case wgpu::BufferBindingType::Storage:
                     case wgpu::BufferBindingType::ReadOnlyStorage:
                     case kInternalReadOnlyStorageBufferBinding:
-                        bindings.storage.emplace(
-                            srcBindingPoint,
-                            tint::glsl::writer::binding::Storage{dstBindingPoint.binding});
+                        bindings.storage.emplace(srcBindingPoint,
+                                                 tint::glsl::writer::binding::Storage{glIndex});
                         break;
                     case wgpu::BufferBindingType::BindingNotUsed:
                     case wgpu::BufferBindingType::Undefined:
@@ -387,16 +382,15 @@ std::pair<tint::glsl::writer::Bindings, BindingMap> GenerateBindingInfo(
                         break;
                 }
             } else if (std::holds_alternative<SamplerBindingInfo>(shaderBindingInfo.bindingInfo)) {
-                bindings.sampler.emplace(
-                    srcBindingPoint, tint::glsl::writer::binding::Sampler{dstBindingPoint.binding});
+                bindings.sampler.emplace(srcBindingPoint,
+                                         tint::glsl::writer::binding::Sampler{glIndex});
             } else if (std::holds_alternative<TextureBindingInfo>(shaderBindingInfo.bindingInfo)) {
-                bindings.texture.emplace(
-                    srcBindingPoint, tint::glsl::writer::binding::Texture{dstBindingPoint.binding});
+                bindings.texture.emplace(srcBindingPoint,
+                                         tint::glsl::writer::binding::Texture{glIndex});
             } else if (std::holds_alternative<StorageTextureBindingInfo>(
                            shaderBindingInfo.bindingInfo)) {
                 bindings.storage_texture.emplace(
-                    srcBindingPoint,
-                    tint::glsl::writer::binding::StorageTexture{dstBindingPoint.binding});
+                    srcBindingPoint, tint::glsl::writer::binding::StorageTexture{glIndex});
             } else if (std::holds_alternative<ExternalTextureBindingInfo>(
                            shaderBindingInfo.bindingInfo)) {
                 const auto& etBindingMap = bgl->GetExternalTextureBindingExpansionMap();

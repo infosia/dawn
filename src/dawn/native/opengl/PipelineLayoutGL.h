@@ -30,7 +30,9 @@
 
 #include "dawn/native/PipelineLayout.h"
 
-#include "dawn/common/ityp_array.h"
+#include <utility>
+
+#include "absl/container/flat_hash_map.h"
 #include "dawn/common/ityp_vector.h"
 #include "dawn/native/BindingInfo.h"
 #include "dawn/native/opengl/opengl_platform.h"
@@ -54,6 +56,8 @@ class PipelineLayout final : public PipelineLayoutBase {
     // number.
     using BindingIndexInfo = PerBindGroup<ityp::vector<BindingIndex, GLuint>>;
     const BindingIndexInfo& GetBindingIndexInfo() const;
+    // Short hand for use when we have @group @binding information
+    GLuint GetGLIndex(BindGroupIndex group, BindingNumber binding) const;
 
     GLuint GetTextureUnitsUsed() const;
     size_t GetNumSamplers() const;
@@ -80,6 +84,26 @@ class PipelineLayout final : public PipelineLayoutBase {
     GLuint mInternalTextureBuiltinsUniformBinding;
     GLuint mInternalArrayLengthUniformBinding;
 };
+
+// Some texture "getter" builtins need to be emulated by passing information via a uniform buffer.
+// While the way the information is passed is specific to each pipeline, we define the datatypes
+// here as anything using a PipelineLayout will need to know how to handle these builtins.
+
+// The kind of builtins that we may need to emulate.
+enum class TextureBuiltin : uint8_t {
+    /// The number of mip levels of the bound texture view.
+    kTextureNumLevels,
+    /// The number of samples per texel of the bound multi-sampled texture.
+    kTextureNumSamples,
+};
+
+// Which offset a builtin information needs to be writton to in the uniform buffer.
+using TextureBuiltinAndOffset = std::pair<TextureBuiltin, uint32_t>;
+// For each texture index (after mapping in the pipeline layout), tells which data needs to be
+// pushed where in the internal uniform buffer and at which offset. textureNumSamples only takes
+// texture_(depth_)multisampled_2d as input while textureNumLevels does not, so the same binding
+// point can have at most one entry in this map.
+using EmulatedTextureBuiltinInfo = absl::flat_hash_map<uint32_t, TextureBuiltinAndOffset>;
 
 }  // namespace dawn::native::opengl
 
