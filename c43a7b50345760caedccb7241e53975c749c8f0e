@@ -16,6 +16,24 @@
       "message": "What if the variable is referenced by a non-entry point function that is never called by an entry point? It\u0027d be referenced and therefore have usages, but it wouldn\u0027t be in any entry point interface.\n\nSo we\u0027d also need to remove unused functions in that case.",
       "revId": "c43a7b50345760caedccb7241e53975c749c8f0e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8296e4f2_ea79540f",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-16T14:34:22Z",
+      "side": 1,
+      "message": "That\u0027s possible, but I\u0027d prefer to wait for a failing shader before adding the extra complexity.",
+      "parentUuid": "3dda8d61_59e3707b",
+      "revId": "c43a7b50345760caedccb7241e53975c749c8f0e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
