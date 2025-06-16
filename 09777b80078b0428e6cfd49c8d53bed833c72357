@@ -33,6 +33,24 @@
       "message": "Unit test?",
       "revId": "09777b80078b0428e6cfd49c8d53bed833c72357",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab177ad7_cde1c417",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-16T14:29:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd295b03_fae2fcfc",
+      "revId": "09777b80078b0428e6cfd49c8d53bed833c72357",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
