@@ -122,6 +122,24 @@
       "parentUuid": "bce4fca5_fb3de4e4",
       "revId": "096e42ff199c86ac523769968d7fc9b871f2efbb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23d3f59d_2bad6501",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-16T15:21:57Z",
+      "side": 1,
+      "message": "Looked at ShouldSkipMemberEmission. There is extra checks on the matrix one for this like accessed indices for CullDistance and ClipDistance so there are going to be differences. Not sure if it\u0027s worth the effort at this point to combine the two.",
+      "parentUuid": "55825aa8_d0ab343d",
+      "revId": "096e42ff199c86ac523769968d7fc9b871f2efbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
