@@ -82,7 +82,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-06-06 08:34:21AM
+# Last rolled: 2025-06-16 08:30:17AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -812,8 +812,14 @@ crbug.com/421948908 webgpu:shader,validation,types,textures:texel_formats:format
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,operation,adapter,requestDevice:stale: [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,adapter,requestDevice:stale: [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,operation,adapter,requestDevice:stale: [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,operation,buffers,map:mapAsync,mapState:usageType="read";mapModeType="WRITE";beforeUnmap=false;beforeDestroy=true;afterUnmap=true;afterDestroy=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rgba32float";dstFormat="rgba32float";dimension="3d" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,operation,command_buffer,queries,occlusionQuery:occlusion_query,alpha_to_coverage:writeMask=15;renderMode="render-bundle";bufferOffset="non-zero";querySetOffset="zero";alpha=0.75 [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,compute,basic:large_dispatch:dispatchSize="maximum" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,operation,storage_texture,read_write:basic:format="r16float";shaderStage="compute";textureDimension="2d";depthOrArrayLayers=2 [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:api,operation,storage_texture,read_write:basic:format="r16sint";shaderStage="compute";textureDimension="2d";depthOrArrayLayers=2 [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,operation,storage_texture,read_write:basic:format="r16uint";shaderStage="fragment";textureDimension="1d";depthOrArrayLayers=1 [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:api,operation,storage_texture,read_write:basic:format="r16uint";shaderStage="fragment";textureDimension="2d";depthOrArrayLayers=1 [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,buffer,create:limit: [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:api,validation,buffer,create:size:mappedAtCreation=true [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,validation,buffer,create:size:mappedAtCreation=true [ Failure ]
@@ -826,8 +832,11 @@ crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,state,device_lost,destroy:queue,copyExternalImageToTexture,canvas:canvasType="onscreen";contextType="webgl";awaitLost=false [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,access,array,index:runtime_sized:elementType="vec2u";indexType="u32" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,access,array,index:runtime_sized:elementType="vec3f";indexType="i32" [ Failure ]
+crbug.com/0000 [ intel linux ] webgpu:shader,execution,expression,call,builtin,exp:f16:inputSource="uniform";vectorize=4 [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:shader,execution,expression,call,builtin,textureSampleBaseClampToEdge:2d_coords:stage="v";textureType="texture_external";filt="nearest";modeU="m";modeV="c" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,execution,expression,call,builtin,textureSampleLevel:sampled_array_2d_coords:stage="c";format="depth16unorm";filt="nearest";modeU="r";modeV="r";offset=true [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:shader,validation,expression,call,builtin,textureLoad:level_argument,non_storage:textureType="texture_1d";levelType="vec2%3Ci32%3E" [ Failure ]
+crbug.com/0000 [ linux nvidia ] webgpu:shader,validation,expression,call,builtin,transpose:return:input_type="abstract-float";input_rows=2;input_cols=2;output_type="f16";output_rows=3;output_cols=4 [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:shader,validation,shader_io,workgroup_size:workgroup_size:attr="override_expr" [ Failure ]
 crbug.com/0000 [ android-pixel-6 ] webgpu:web_platform,canvas,getCurrentTexture:multiple_frames:canvasType="onscreen" [ Failure ]
 crbug.com/0000 [ android-pixel-6 android-t ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:alpha="none";orientation="flipY";colorSpaceConversion="none";srcFlipYInCopy=true;dstFormat="rg16float";dstPremultiplied=false [ Failure ]
