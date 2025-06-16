@@ -16,6 +16,24 @@
       "message": "These are not yet passing in debug mode (with IR validation enabled)",
       "revId": "73815c63f9e5d58c5714f60501a6e67e823e0e79",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b081859_140072c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-16T20:05:15Z",
+      "side": 1,
+      "message": "I see ok. I can just ignore for now.",
+      "parentUuid": "b3566430_91ba7912",
+      "revId": "73815c63f9e5d58c5714f60501a6e67e823e0e79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
