@@ -70,31 +70,21 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
 
     // Create an OpenGL shader for each stage and gather the list of combined samplers.
     PerStage<CombinedSamplerInfo> combinedSamplers;
-    bool needsPlaceholderSampler = false;
     mNeedsSSBOLengthUniformBuffer = false;
     std::vector<GLuint> glShaders;
     for (SingleShaderStage stage : IterateStages(activeStages)) {
         ShaderModule* module = ToBackend(stages[stage].module.Get());
         GLuint shader;
         bool needsSSBOLengthUniformBuffer = false;
-        DAWN_TRY_ASSIGN(shader, module->CompileShader(
-                                    gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex,
-                                    usesFragDepth, bgraSwizzleAttributes, &combinedSamplers[stage],
-                                    layout, &needsPlaceholderSampler,
-                                    &mBindingPointEmulatedBuiltins, &needsSSBOLengthUniformBuffer));
+        DAWN_TRY_ASSIGN(
+            shader, module->CompileShader(
+                        gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex, usesFragDepth,
+                        bgraSwizzleAttributes, &combinedSamplers[stage], layout,
+                        &mBindingPointEmulatedBuiltins, &needsSSBOLengthUniformBuffer));
+
         mNeedsSSBOLengthUniformBuffer |= needsSSBOLengthUniformBuffer;
         DAWN_GL_TRY(gl, AttachShader(mProgram, shader));
         glShaders.push_back(shader);
-    }
-
-    if (needsPlaceholderSampler) {
-        SamplerDescriptor desc = {};
-        DAWN_ASSERT(desc.minFilter == wgpu::FilterMode::Nearest);
-        DAWN_ASSERT(desc.magFilter == wgpu::FilterMode::Nearest);
-        DAWN_ASSERT(desc.mipmapFilter == wgpu::MipmapFilterMode::Nearest);
-        Ref<SamplerBase> sampler;
-        DAWN_TRY_ASSIGN(sampler, layout->GetDevice()->GetOrCreateSampler(&desc));
-        mPlaceholderSampler = ToBackend(std::move(sampler));
     }
 
     // Link all the shaders together.
@@ -153,19 +143,29 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
                                  sampleType == wgpu::TextureSampleType::Depth;
         }
         {
-            if (combined.usePlaceholderSampler) {
+            if (!combined.samplerLocation) {
                 mPlaceholderSamplerUnits.push_back(textureUnit);
             } else {
                 const BindGroupLayoutInternalBase* bgl =
-                    layout->GetBindGroupLayout(combined.samplerLocation.group);
-                BindingIndex bindingIndex = bgl->GetBindingIndex(combined.samplerLocation.binding);
+                    layout->GetBindGroupLayout(combined.samplerLocation->group);
+                BindingIndex bindingIndex = bgl->GetBindingIndex(combined.samplerLocation->binding);
 
-                GLuint samplerIndex = indices[combined.samplerLocation.group][bindingIndex];
+                GLuint samplerIndex = indices[combined.samplerLocation->group][bindingIndex];
                 mUnitsForSamplers[samplerIndex].push_back({textureUnit, shouldUseFiltering});
             }
         }
 
         textureUnit++;
+    }
+
+    if (!mPlaceholderSamplerUnits.empty()) {
+        SamplerDescriptor desc = {};
+        DAWN_ASSERT(desc.minFilter == wgpu::FilterMode::Nearest);
+        DAWN_ASSERT(desc.magFilter == wgpu::FilterMode::Nearest);
+        DAWN_ASSERT(desc.mipmapFilter == wgpu::MipmapFilterMode::Nearest);
+        Ref<SamplerBase> sampler;
+        DAWN_TRY_ASSIGN(sampler, layout->GetDevice()->GetOrCreateSampler(&desc));
+        mPlaceholderSampler = ToBackend(std::move(sampler));
     }
 
     for (GLuint glShader : glShaders) {
