@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3566430_91ba7912",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-16T20:04:31Z",
+      "side": 1,
+      "message": "These are not yet passing in debug mode (with IR validation enabled)",
+      "revId": "73815c63f9e5d58c5714f60501a6e67e823e0e79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
