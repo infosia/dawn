@@ -34,6 +34,24 @@
       "parentUuid": "254dfffb_8caf92ff",
       "revId": "8ab43dadbee3568373b061ab44f9a3bf87f4cfdb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "289abe67_5268a8a8",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-16T14:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c7a422c_083d0378",
+      "revId": "8ab43dadbee3568373b061ab44f9a3bf87f4cfdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

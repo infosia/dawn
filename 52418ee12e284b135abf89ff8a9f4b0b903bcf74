@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f1c0849f_9f2a3f7c",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-16T14:01:59Z",
+      "side": 1,
+      "message": "Sg. Will this just be called \"IsVector\"",
+      "parentUuid": "d09fe71c_f5c118e6",
+      "range": {
+        "startLine": 100,
+        "startChar": 28,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b8046700_21729d63",
         "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.h",
         "patchSetId": 16
@@ -216,6 +240,24 @@
       "side": 1,
       "message": "There are more backend-specific polyfills below (see `raise::BuiltinPolyfill`). For some backends they may introduce things like `clamp`.",
       "parentUuid": "7e1078cc_ed64e417",
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f9ff2d5_843042df",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-16T14:01:59Z",
+      "side": 1,
+      "message": "I think I would need to introduce a vector check in validation as this seems like an easy thing to get wrong.",
+      "parentUuid": "c069db18_969dadf9",
       "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
