@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d288c12f_a8ecadfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-16T21:33:47Z",
+      "side": 1,
+      "message": "PTAL. Patchset 4 fixes incorrect stride issues found when testing on Intel - so the new scheme for varying the matrix values is finding issues (albeit in the tests themselves...).",
+      "revId": "f82e3bb7f745ab98183c5ad7153089afd1a7d9b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
