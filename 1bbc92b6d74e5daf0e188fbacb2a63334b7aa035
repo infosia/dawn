@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61978121_bfd844be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-06-16T10:50:05Z",
+      "side": 1,
+      "message": "I wanted to check if my current understanding of this PR is correct. We would need https://github.com/google/dawn/pull/33 to land (static build option) in order to update and hopefully land this PR?",
+      "revId": "1bbc92b6d74e5daf0e188fbacb2a63334b7aa035",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
