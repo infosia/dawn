@@ -223,6 +223,9 @@ Result<SuccessType> Lower(core::ir::Module& mod) {
     for (auto* inst : mod.Instructions()) {
         if (auto* call = inst->As<wgsl::ir::BuiltinCall>()) {
             switch (call->Func()) {
+                case BuiltinFn::kTextureSampleLevel: {
+                    break;
+                }
                 case BuiltinFn::kWorkgroupUniformLoad: {
                     auto* param0 = call->Args()[0];
                     TINT_ASSERT(param0->Type()->Is<core::type::Pointer>());

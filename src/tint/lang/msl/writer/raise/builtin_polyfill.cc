@@ -29,6 +29,7 @@
 
 #include <atomic>
 #include <cstdint>
+#include <iostream>
 #include <utility>
 
 #include "src/tint/lang/core/fluent_types.h"
@@ -854,6 +855,13 @@ struct State {
         auto* tex_type = tex->Type()->As<core::type::Texture>();
         auto args = Vector<core::ir::Value*, 4>(builtin->Args().Offset(1));
 
+        // auto* texture = call->Args()[0];
+        // auto* sampler = call->Args()[1];
+        // auto* coords = call->Args()[2];
+        //     auto* clamped = b.Call<vec2<f32>>(core::BuiltinFn::kClamp, coords, half_texel,
+        //                                       one_minus_half_texel);
+
+
         b.InsertBefore(builtin, [&] {
             // Wrap the LOD argument in a constructor for the MSL `level` builtin type.
             uint32_t lod_idx = 2;
@@ -861,7 +869,12 @@ struct State {
                 tex_type->Dim() == core::type::TextureDimension::kCubeArray) {
                 lod_idx = 3;
             }
-            args[lod_idx] = b.Construct(ty.Get<msl::type::Level>(), args[lod_idx])->Result();
+            if (tex_type->Dim() == core::type::TextureDimension::k1d) {
+              // Remove level for 1d.
+              args.Resize(args.Length() - 1);
+            } else {
+              args[lod_idx] = b.Construct(ty.Get<msl::type::Level>(), args[lod_idx])->Result();
+            }
             // Call the `sample()` member function.
             auto* call = b.MemberCallWithResult<msl::ir::MemberBuiltinCall>(
                 builtin->DetachResult(), msl::BuiltinFn::kSample, tex, std::move(args));
