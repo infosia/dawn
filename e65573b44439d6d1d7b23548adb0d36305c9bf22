@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f7bb9ef_8b505f72",
+        "filename": "include/dawn/native/D3DBackend.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T11:18:10Z",
+      "side": 1,
+      "message": "No longer needed, removed.",
+      "parentUuid": "26bc6869_a6205f21",
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14fdc3d8_bd6ad130",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-06-16T09:57:52Z",
       "side": 1,
       "message": "The early out means that we can dedent. (but nit: it\u0027s usually clearer to deal with the error case first and early out, than the contrary).",
+      "range": {
+        "startLine": 2209,
+        "startChar": 0,
+        "endLine": 2217,
+        "endChar": 17
+      },
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc697c49_fb454c21",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 45
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T11:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14fdc3d8_bd6ad130",
       "range": {
         "startLine": 2209,
         "startChar": 0,
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2143622f_aa5bf86d",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 45
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T11:18:10Z",
+      "side": 1,
+      "message": "Yes I changed that for symmetry. Changed back.",
+      "parentUuid": "2a3bd8d8_2b642478",
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d8649ec_5093ee68",
@@ -88,6 +148,24 @@
       "writtenOn": "2025-06-16T09:57:52Z",
       "side": 1,
       "message": "nit: this and the following can be in the cpp",
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c375294_f3adc53a",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T11:18:10Z",
+      "side": 1,
+      "message": "Done, moving these into cpp also make the macro conflict disappeared.",
+      "parentUuid": "9d8649ec_5093ee68",
       "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -117,6 +195,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d6f71aa3_0c20e7af",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T11:18:10Z",
+      "side": 1,
+      "message": "Rephased to explicitly states `ResultOrError::IsSuccess()` and `ResultOrError::IsError()`",
+      "parentUuid": "4022f6e4_8ab9fb24",
+      "range": {
+        "startLine": 165,
+        "startChar": 28,
+        "endLine": 167,
+        "endChar": 41
+      },
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0051b261_2329d022",
         "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
         "patchSetId": 45
@@ -128,6 +230,24 @@
       "writtenOn": "2025-06-16T09:57:52Z",
       "side": 1,
       "message": "Let\u0027s make a parallel file to d3d_platform.h that does the same trick, or put that include in d3d_platform directly.",
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "801bf6ef_14a74859",
+        "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T11:18:10Z",
+      "side": 1,
+      "message": "Done, put the `#include \u003cd3dcompiler.h\u003e` into `d3d_platform.h`",
+      "parentUuid": "0051b261_2329d022",
       "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
