@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "108b7a4d_a4344024",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-16T20:50:45Z",
+      "side": 1,
+      "message": "I am removing the intel workaround from this CL but keeping the adreno active\nI will add intel later.",
+      "parentUuid": "6b9ac4f4_035dc528",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1f772db2_3f866e5e",
         "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
         "patchSetId": 15
@@ -367,6 +385,24 @@
       "side": 1,
       "message": "This is why I added that demonstration with the extract_bits. James suggested that maybe this should not be in the CL as it doesnt fix this or any bug and is simply a demonstration of the generality of this function.",
       "parentUuid": "3fb8bc7a_1c460818",
+      "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a352d8a8_9e093b67",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-16T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01a3d6ed_cab89096",
       "revId": "0d1466dbe431c68e4e3b01582bf3174b87a0a5ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

@@ -168,6 +168,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "914ee478_60797009",
+        "filename": "src/tint/lang/core/ir/transform/builtin_scalarize.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-16T20:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15c9f3fa_5de16bca",
+      "range": {
+        "startLine": 100,
+        "startChar": 28,
+        "endLine": 100,
+        "endChar": 42
+      },
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8046700_21729d63",
@@ -342,6 +366,24 @@
       "side": 1,
       "message": "Ah that is a bit simpler.",
       "parentUuid": "21a2c744_9d7e8572",
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f56ec75_82b4aae3",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-16T20:50:45Z",
+      "side": 1,
+      "message": "This turns out to be a bit ugly. It would be cleaner to just a validation check for all instructions (bit flags for what are allowed.",
+      "parentUuid": "dbe207b2_6ed49f3d",
       "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
