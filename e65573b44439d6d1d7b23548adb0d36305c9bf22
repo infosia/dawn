@@ -250,6 +250,24 @@
       "parentUuid": "0051b261_2329d022",
       "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cfe527d_75df863d",
+        "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-16T11:22:13Z",
+      "side": 1,
+      "message": "Oh `d3dcompiler.h` is kept in D3DCompilationRequest.h, since we no longer have macro conflict after moving related code to `ShaderModule.cpp`.",
+      "parentUuid": "801bf6ef_14a74859",
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
