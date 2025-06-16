@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f770d123_25b5fcf0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-16T14:32:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b9e0714d_26c599a9",
+      "revId": "096e42ff199c86ac523769968d7fc9b871f2efbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bce4fca5_fb3de4e4",
@@ -84,6 +102,24 @@
           ]
         }
       ],
+      "revId": "096e42ff199c86ac523769968d7fc9b871f2efbb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55825aa8_d0ab343d",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-16T14:32:25Z",
+      "side": 1,
+      "message": "Applied the comment. Will look into `ShouldSkipMemberEmission` reuse as a followup.",
+      "parentUuid": "bce4fca5_fb3de4e4",
       "revId": "096e42ff199c86ac523769968d7fc9b871f2efbb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
