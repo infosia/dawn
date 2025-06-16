@@ -67,6 +67,40 @@
       "message": "+R Corentin, please, take a look.",
       "revId": "63dc8d3474bbc381ca0f2bb778c04ab0b745c00a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f0b6b3e_80ed833c",
+        "filename": "include/dawn/native/OpenGLBackend.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T11:07:16Z",
+      "side": 1,
+      "message": "```suggestion\n    EGLint angleVirtualizationGroup \u003d -1;  // EGL_DONT_CARE\n```\n\nBut also this seems independent of the `GLProc` that are in this struct and could be separated. It would be a separate member of the `Unpacked` at [1].\n\nPlaces that would be to be modified are in:\n```\n[cwallez@cwallez-macbookpro3:~/dev/dawn]%g grep \"get GL proc\"\nsrc/dawn/dawn.json:            {\"value\": 13, \"name\": \"request adapter options get GL proc\", \"tags\": [\"dawn\", \"native\"]},\n[cwallez@cwallez-macbookpro3:~/dev/dawn]%g grep RequestAdapterOptionsGetGLProc\ndocs/dawn/features/adapter_options.md:### `RequestAdapterOptionsGetGLProc`\ndocs/dawn/features/adapter_options.md:When discovering adapters on the GLES backend, Dawn uses the provided `RequestAdapterOptionsGetGLProc::getProc` method to load GL procs. `RequestAdapterOptionsGetGLProc::display` indicates the EGLDisplay on which to create an adapter. If `display` is `EGL_NO_DISPLAY`, the current display will be used. This extension struct does nothing on other backends.\ninclude/dawn/native/OpenGLBackend.h:struct DAWN_NATIVE_EXPORT RequestAdapterOptionsGetGLProc : wgpu::ChainedStruct {\ninclude/dawn/native/OpenGLBackend.h:    RequestAdapterOptionsGetGLProc();\nsrc/dawn/native/ChainUtilsImpl.inl:struct RequestAdapterOptionsGetGLProc;\nsrc/dawn/native/ChainUtilsImpl.inl:constexpr inline wgpu::SType STypeForImpl\u003copengl::RequestAdapterOptionsGetGLProc\u003e \u003d\nsrc/dawn/native/ChainUtilsImpl.inl:    wgpu::SType(WGPUSType_RequestAdapterOptionsGetGLProc);\nsrc/dawn/native/ChainUtilsImpl.inl:                                          const opengl::RequestAdapterOptionsGetGLProc*\u003e;\nsrc/dawn/native/opengl/BackendGL.cpp:    if (auto* glGetProcOptions \u003d options.Get\u003cRequestAdapterOptionsGetGLProc\u003e()) {\nsrc/dawn/native/opengl/OpenGLBackend.cpp:RequestAdapterOptionsGetGLProc::RequestAdapterOptionsGetGLProc() {\nsrc/dawn/native/opengl/OpenGLBackend.cpp:    sType \u003d wgpu::SType::RequestAdapterOptionsGetGLProc;\n```",
+      "revId": "63dc8d3474bbc381ca0f2bb778c04ab0b745c00a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "96a0fd0e_86b9992c",
+        "filename": "src/dawn/native/opengl/BackendGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T11:07:16Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "63dc8d3474bbc381ca0f2bb778c04ab0b745c00a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
