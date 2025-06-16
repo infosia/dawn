@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ce24260_532be1f8",
+        "filename": "src/dawn/tests/end2end/BindingArrayTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T13:49:13Z",
+      "side": 1,
+      "message": "Put this issue in the commit message.",
+      "revId": "385d0bad7732be366fe7d62d6f8ab0c5427f7b24",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
