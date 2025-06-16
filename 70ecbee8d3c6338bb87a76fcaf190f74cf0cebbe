@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5b2c423_a7e1a5bf",
+        "filename": "src/tint/lang/core/ir/transform/dead_code_elimination.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-16T14:10:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db3424cb_e8432883",
+      "revId": "70ecbee8d3c6338bb87a76fcaf190f74cf0cebbe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "124d64a8_27cbf91f",
