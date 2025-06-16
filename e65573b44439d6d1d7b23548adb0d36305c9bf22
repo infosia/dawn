@@ -16,6 +16,120 @@
       "message": "Please take a look, thanks!",
       "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26bc6869_a6205f21",
+        "filename": "include/dawn/native/D3DBackend.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T09:57:52Z",
+      "side": 1,
+      "message": "Ah, we shouldn\u0027t do that in the public header, but instead in whatever includes this file, make sure windows_with_undefs is included first.",
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14fdc3d8_bd6ad130",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 45
+      },
+      "lineNbr": 2217,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T09:57:52Z",
+      "side": 1,
+      "message": "The early out means that we can dedent. (but nit: it\u0027s usually clearer to deal with the error case first and early out, than the contrary).",
+      "range": {
+        "startLine": 2209,
+        "startChar": 0,
+        "endLine": 2217,
+        "endChar": 17
+      },
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a3bd8d8_2b642478",
+        "filename": "src/dawn/native/ShaderModule.cpp",
+        "patchSetId": 45
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T09:57:52Z",
+      "side": 1,
+      "message": "Uuuh why did we have to change all that instead of catching the validation error at the call site of `ReflectEntryPointUsingTint`? Is it for symmetry with the Parse*? Given that this method will certainly be broken down in the future, IMHO it\u0027d be nicer to keep it how it was previously.",
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d8649ec_5093ee68",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T09:57:52Z",
+      "side": 1,
+      "message": "nit: this and the following can be in the cpp",
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4022f6e4_8ab9fb24",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T09:57:52Z",
+      "side": 1,
+      "message": "It\u0027s a bit weird to talk about throwing because it\u0027s confusing with C++ exception, maybe this is more clear? WDYT?\n\n```suggestion\n// information if required. Validation errors generated during parsing need to be cacheable so they are returned in the ShaderModuleParseResult together with compilation messages, rather than returned in the ResultOrError. Other types of errors will still get returned in the ResultOrError.\n```",
+      "range": {
+        "startLine": 165,
+        "startChar": 28,
+        "endLine": 167,
+        "endChar": 41
+      },
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0051b261_2329d022",
+        "filename": "src/dawn/native/d3d/D3DCompilationRequest.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T09:57:52Z",
+      "side": 1,
+      "message": "Let\u0027s make a parallel file to d3d_platform.h that does the same trick, or put that include in d3d_platform directly.",
+      "revId": "e65573b44439d6d1d7b23548adb0d36305c9bf22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

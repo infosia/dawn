@@ -170,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4df99e62_a3db0284",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 44
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T09:57:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "4fe7ad03_a66834df",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61d59be1_814ad91a",
@@ -375,6 +393,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c713ba48_32efebdf",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T09:57:52Z",
+      "side": 1,
+      "message": "Mmmh ok let\u0027s try like that.",
+      "parentUuid": "9dcfc6c1_bf36d9f0",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e3291c1_f98e71b8",
@@ -406,6 +442,24 @@
       "side": 1,
       "message": "[1]",
       "parentUuid": "0e3291c1_f98e71b8",
+      "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b49b59d_4056c242",
+        "filename": "src/dawn/native/ShaderModule.h",
+        "patchSetId": 44
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T09:57:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "7b744ed8_616446df",
       "revId": "cfb1bf8670fe06b1cad46a575bf6c280f1fecf95",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
