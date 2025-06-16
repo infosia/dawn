@@ -16,6 +16,23 @@
       "message": "Please take a look, thanks!",
       "revId": "25ba427c963565ac1a9d8fe77c1d735708c12f6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99d1df9e_c373fdcf",
+        "filename": "src/dawn/native/SpirvValidation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-16T09:38:36Z",
+      "side": 1,
+      "message": "The declaration in the header needs to be updated.",
+      "revId": "25ba427c963565ac1a9d8fe77c1d735708c12f6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
