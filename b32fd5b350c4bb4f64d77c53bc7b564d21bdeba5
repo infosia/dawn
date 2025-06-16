@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12a4c6cb_f208a521",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-16T15:17:52Z",
+      "side": 1,
+      "message": "Issue also found by Crash reports: https://crbug.com/425153503",
+      "revId": "b32fd5b350c4bb4f64d77c53bc7b564d21bdeba5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
