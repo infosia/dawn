@@ -308,6 +308,24 @@
       "parentUuid": "c069db18_969dadf9",
       "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21a2c744_9d7e8572",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-16T20:14:56Z",
+      "side": 1,
+      "message": "Validation would be awkward since it\u0027s tried to a printer option.\n\nYou could just add assertions to the printers instead (e.g. if we are emitting a clamp/min/max and the options say that they should be scalarized, TINT_ASSERT that the result is a vector).",
+      "parentUuid": "5f9ff2d5_843042df",
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
