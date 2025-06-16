@@ -326,6 +326,24 @@
       "parentUuid": "5f9ff2d5_843042df",
       "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbe207b2_6ed49f3d",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-16T20:15:44Z",
+      "side": 1,
+      "message": "Ah that is a bit simpler.",
+      "parentUuid": "21a2c744_9d7e8572",
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
