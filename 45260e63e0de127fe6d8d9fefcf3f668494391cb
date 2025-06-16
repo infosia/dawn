@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "54d69be6_5b71def5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-16T17:53:55Z",
+      "side": 1,
+      "message": "Any reason not to support the same set of overloads that we are supporting in WGSL?",
+      "revId": "45260e63e0de127fe6d8d9fefcf3f668494391cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "f3694d2b_fa691595",
