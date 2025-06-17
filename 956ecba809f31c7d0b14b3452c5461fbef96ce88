@@ -16,6 +16,24 @@
       "message": "If not done already, make sure to use `vkFlushMappedMemoryRanges` and `vkInvalidateMappedMemoryRanges` when memory is not coherent.",
       "revId": "956ecba809f31c7d0b14b3452c5461fbef96ce88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c368b146_02428a3e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-06-17T20:46:45Z",
+      "side": 1,
+      "message": "Hmm I thought it was done but looking closer that only happens from Buffer::UploadData() [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/BufferVk.cpp;l\u003d604-624;drc\u003dab5261de6f730d1378a27c400f8640440f662303). That wouldn\u0027t be reached if we map, write to memory and then unmap the buffer.\n\nShould dawn invalidate on Map() and then flush on Unmap()?",
+      "parentUuid": "f67d1057_767b634f",
+      "revId": "956ecba809f31c7d0b14b3452c5461fbef96ce88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
