@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cae8667_424c47ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-17T18:11:18Z",
+      "side": 1,
+      "message": "LGTM modulo bot failures, looks like you may just need a rebase.",
+      "revId": "568869d46830b8308f5048d0863f8ece5bcc5061",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
