@@ -30,12 +30,108 @@
 
 #include <array>
 
+#include "dawn/common/TypedInteger.h"
 #include "dawn/native/d3d12/UtilsD3D12.h"
 #include "dawn/native/dawn_platform.h"
 
 namespace dawn::native {
 
 struct TexelBlockInfo;
+
+// TODO(amaiorano): Move all these types somewhere...
+using TexelCount = dawn::TypedInteger<struct TexelCountTag, uint64_t>;
+using BlockCount = dawn::TypedInteger<struct BlockCountTag, uint64_t>;
+
+template <typename T>
+struct TOrigin3D {
+    T x{0};
+    T y{0};
+    T z{0};
+
+    TOrigin3D() = default;
+
+    template <typename U>
+    TOrigin3D(U x, U y, U z) : x(x), y(y), z(z) {}
+
+    TOrigin3D(const Origin3D& o) : x(o.x), y(o.y), z(o.z) {}
+    Origin3D ToOrigin3D() const {
+        return {static_cast<uint32_t>(x), static_cast<uint32_t>(y), static_cast<uint32_t>(z)};
+    }
+};
+
+template <typename T>
+struct TExtent3D {
+    T width;
+    T height{1};
+    T depthOrArrayLayers{1};
+
+    TExtent3D() = default;
+
+    template <typename U>
+    TExtent3D(U width, U height, U depthOrArrayLayers)
+        : width(width), height(height), depthOrArrayLayers(depthOrArrayLayers) {}
+
+    TExtent3D(const Extent3D& e)
+        : width(e.width), height(e.height), depthOrArrayLayers(e.depthOrArrayLayers) {}
+    Extent3D ToExtent3D() const {
+        return {static_cast<uint32_t>(width), static_cast<uint32_t>(height),
+                static_cast<uint32_t>(depthOrArrayLayers)};
+    }
+};
+
+struct TypedTexelBlockInfo {
+    uint32_t byteSize;
+    TexelCount width;
+    TexelCount height;
+
+    TypedTexelBlockInfo() = default;
+
+    TypedTexelBlockInfo(const TexelBlockInfo& blockInfo)
+        : byteSize(blockInfo.byteSize), width(blockInfo.width), height(blockInfo.height) {}
+
+    TexelBlockInfo ToTexelBlockInfo() const {
+        return {byteSize, static_cast<uint32_t>(width), static_cast<uint32_t>(height)};
+    }
+
+    uint64_t ToBytes(BlockCount value) {
+        // Retrieve uint32_t value, then cast to uin64_t to avoid overflow when multiplying by
+        // bytesSize return static_cast<uint64_t>(static_cast<uint32_t>(value)) * byteSize;
+        return static_cast<uint64_t>(value) * byteSize;
+    }
+
+    BlockCount BytesToBlocks(uint64_t bytes) {
+        DAWN_ASSERT(bytes % byteSize == 0);
+        return BlockCount{bytes / byteSize};
+    }
+
+    BlockCount ToBlockHeight(TexelCount value) {
+        return BlockCount{static_cast<uint64_t>((value + height - TexelCount{1}) / height)};
+    }
+
+    BlockCount ToBlockWidth(TexelCount value) {
+        return BlockCount{static_cast<uint64_t>((value + width - TexelCount{1}) / width)};
+    }
+
+    BlockCount ToBlockDepth(TexelCount value) {
+        // TODO(amaiorano): When we add block 'depth' for 3D block support, divide this value by
+        // 'depth'
+        return BlockCount{static_cast<uint64_t>(value)};
+    }
+
+    TexelCount ToTexelWidth(BlockCount value) {
+        return TexelCount{static_cast<uint64_t>(value)} * width;
+    }
+
+    TexelCount ToTexelHeight(BlockCount value) {
+        return TexelCount{static_cast<uint64_t>(value)} * height;
+    }
+
+    TexelCount ToTexelDepth(BlockCount value) {
+        // TODO(amaiorano): When we add block 'depth' for 3D block support, multiply this value by
+        // 'depth'
+        return TexelCount{static_cast<uint64_t>(value)};
+    }
+};
 
 }  // namespace dawn::native
 
@@ -48,13 +144,13 @@ struct TextureCopySubresource {
         // The 512-byte aligned offset into buffer
         uint64_t alignedOffset = 0;
         // Offset into texture
-        Origin3D textureOffset;
+        TOrigin3D<TexelCount> textureOffset;
         // Offset into buffer
-        Origin3D bufferOffset;
+        TOrigin3D<TexelCount> bufferOffset;
         // width,height,depth of the texture linearly laid out in the buffer
-        Extent3D bufferSize;
+        TExtent3D<TexelCount> bufferSize;
         // width,height,depth to copy
-        Extent3D copySize;
+        TExtent3D<TexelCount> copySize;
     };
 
     CopyInfo* AddCopy();
