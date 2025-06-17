@@ -42,141 +42,7 @@ int8_t ConvertFloatToSnorm8(float value) {
     return static_cast<int8_t>(clampedValue);
 }
 
-class RenderAttachmentSnormFormatsTest : public DawnTest {
-  protected:
-    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
-        std::vector<wgpu::FeatureName> requiredFeatures = {};
-        if (SupportsFeatures({wgpu::FeatureName::TextureFormatsTier1})) {
-            requiredFeatures.push_back(wgpu::FeatureName::TextureFormatsTier1);
-        }
-        return requiredFeatures;
-    }
-
-    const char* GetSinglePointVS() {
-        return R"(
-            @vertex
-            fn main() -> @builtin(position) vec4<f32> {
-                return vec4<f32>(0.0, 0.0, 0.0, 1.0);
-            }
-        )";
-    }
-
-    void RunSingleFormatTest(wgpu::TextureFormat format,
-                             const char* fsCode,
-                             const std::vector<float>& originData) {
-        wgpu::Extent3D textureSize = {1, 1, 1};
-        wgpu::TextureDescriptor textureDesc;
-        textureDesc.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
-        textureDesc.dimension = wgpu::TextureDimension::e2D;
-        textureDesc.size = textureSize;
-        textureDesc.format = format;
-
-        wgpu::Texture texture = device.CreateTexture(&textureDesc);
-
-        wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, GetSinglePointVS());
-        wgpu::ShaderModule fsModule = utils::CreateShaderModule(device, fsCode);
-
-        utils::ComboRenderPipelineDescriptor pipelineDesc;
-        pipelineDesc.vertex.module = vsModule;
-        pipelineDesc.cFragment.module = fsModule;
-        pipelineDesc.primitive.topology = wgpu::PrimitiveTopology::PointList;
-        pipelineDesc.cFragment.targetCount = 1;
-        pipelineDesc.cTargets[0].format = format;
-        wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pipelineDesc);
-
-        wgpu::TextureView textureView = texture.CreateView();
-
-        utils::ComboRenderPassDescriptor renderPass;
-        renderPass.cColorAttachments[0].view = textureView;
-        renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
-        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
-        renderPass.cColorAttachments[0].clearValue = {0.0f, 0.0f, 0.0f, 0.0f};
-        renderPass.colorAttachmentCount = 1;
-
-        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
-        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
-
-        pass.SetPipeline(pipeline);
-        pass.Draw(1);
-        pass.End();
-
-        wgpu::CommandBuffer commands = encoder.Finish();
-        queue.Submit(1, &commands);
-
-        std::vector<int8_t> expectedLowerBounds;
-        std::vector<int8_t> expectedUpperBounds;
-
-        for (uint32_t i = 0; i < originData.size(); ++i) {
-            float floatComponent = originData[i];
-            float scaledComponent = floatComponent * 127.f;
-
-            int8_t lowerSnormExpectation = ConvertFloatToSnorm8(scaledComponent - 0.6f);
-            int8_t upperSnormExpectation = ConvertFloatToSnorm8(scaledComponent + 0.6f);
-
-            expectedLowerBounds.push_back(lowerSnormExpectation);
-            expectedUpperBounds.push_back(upperSnormExpectation);
-        }
-
-        EXPECT_TEXTURE_SNORM_BETWEEN(expectedLowerBounds, expectedUpperBounds, texture, {0, 0},
-                                     {1, 1}, format);
-    }
-};
-
-// Test that r8snorm format is valid as renderable texture if
-// 'texture-formats-tier1' is enabled.
-TEST_P(RenderAttachmentSnormFormatsTest, R8SnormRenderAttachment) {
-    DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::TextureFormatsTier1));
-
-    const char* fs_r8snorm = R"(
-        @fragment
-        fn main() -> @location(0) vec4<f32> {
-            return vec4<f32>(-0.5, 0.0, 0.0, 1.0);
-        }
-    )";
-    std::vector<float> originData = {-0.5};
-
-    RunSingleFormatTest(wgpu::TextureFormat::R8Snorm, fs_r8snorm, originData);
-}
-
-// Test that rg8snorm format is valid as renderable texture if
-// 'texture-formats-tier1' is enabled.
-TEST_P(RenderAttachmentSnormFormatsTest, RG8SnormRenderAttachment) {
-    DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::TextureFormatsTier1));
-
-    const char* fs_rg8snorm = R"(
-        @fragment
-        fn main() -> @location(0) vec4<f32> {
-            return vec4<f32>(-0.5, 0.25, 0.0, 1.0);
-        }
-    )";
-    std::vector<float> originData = {-0.5, 0.25};
-
-    RunSingleFormatTest(wgpu::TextureFormat::RG8Snorm, fs_rg8snorm, originData);
-}
-
-// Test that r8snorm format is valid as renderable texture if
-// 'texture-formats-tier1' is enabled.
-TEST_P(RenderAttachmentSnormFormatsTest, RGBA8SnormRenderAttachment) {
-    DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::TextureFormatsTier1));
-
-    const char* fs_rgba8snorm = R"(
-        @fragment
-        fn main() -> @location(0) vec4<f32> {
-            return vec4<f32>(-0.5, 0.25, -1.0, 1.0);
-        }
-    )";
-    std::vector<float> originData = {-0.5, 0.25, -1.0, 1.0};
-    RunSingleFormatTest(wgpu::TextureFormat::RGBA8Snorm, fs_rgba8snorm, originData);
-}
-
-DAWN_INSTANTIATE_TEST(RenderAttachmentSnormFormatsTest,
-                      D3D11Backend(),
-                      D3D12Backend(),
-                      MetalBackend(),
-                      VulkanBackend(),
-                      OpenGLBackend());
-
-class BlendableSnormTextureTest : public DawnTest {
+class TextureFormatsTier1Test : public DawnTest {
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         std::vector<wgpu::FeatureName> requiredFeatures = {};
@@ -199,7 +65,7 @@ class BlendableSnormTextureTest : public DawnTest {
             )";
     }
 
-    std::string generateFragmentShader(const std::vector<float>& srcColorFloats) {
+    std::string GenerateFragmentShader(const std::vector<float>& srcColorFloats) {
         std::ostringstream fsCodeStream;
         fsCodeStream << R"(
     @fragment
@@ -222,13 +88,114 @@ class BlendableSnormTextureTest : public DawnTest {
 
         return fsCodeStream.str();
     }
+};
 
+class RenderAttachmentSnormFormatsTest : public TextureFormatsTier1Test {
+  protected:
+    void RunRenderTest(wgpu::TextureFormat format, const std::vector<float>& originData) {
+        DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::TextureFormatsTier1));
+        wgpu::Extent3D textureSize = {16, 16, 1};
+        wgpu::TextureDescriptor textureDesc;
+        textureDesc.usage = wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
+        textureDesc.dimension = wgpu::TextureDimension::e2D;
+        textureDesc.size = textureSize;
+        textureDesc.format = format;
+
+        wgpu::Texture texture = device.CreateTexture(&textureDesc);
+
+        std::string fsCode = GenerateFragmentShader(originData);
+
+        std::string combinedShaderCode = GetFullScreenQuadVS() + fsCode;
+        wgpu::ShaderModule shaderModule =
+            utils::CreateShaderModule(device, combinedShaderCode.c_str());
+
+        utils::ComboRenderPipelineDescriptor pipelineDesc;
+        pipelineDesc.vertex.module = shaderModule;
+        pipelineDesc.vertex.entryPoint = "vs_main";
+        pipelineDesc.cFragment.module = shaderModule;
+        pipelineDesc.cFragment.entryPoint = "fs_main";
+
+        pipelineDesc.primitive.topology = wgpu::PrimitiveTopology::TriangleList;
+        pipelineDesc.cFragment.targetCount = 1;
+        pipelineDesc.cTargets[0].format = format;
+        wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pipelineDesc);
+
+        wgpu::TextureView textureView = texture.CreateView();
+
+        utils::ComboRenderPassDescriptor renderPass;
+        renderPass.cColorAttachments[0].view = textureView;
+        renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
+        renderPass.cColorAttachments[0].clearValue = {0.0f, 0.0f, 0.0f, 0.0f};
+        renderPass.colorAttachmentCount = 1;
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+
+        pass.SetPipeline(pipeline);
+        pass.Draw(3);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        std::vector<int8_t> expectedLowerBounds;
+        std::vector<int8_t> expectedUpperBounds;
+
+        uint32_t componentCount = utils::GetTextureComponentCount(format);
+
+        for (uint32_t i = 0; i < componentCount; ++i) {
+            float floatComponent = originData[i];
+            float scaledComponent = floatComponent * 127.f;
+
+            int8_t lowerSnormExpectation = ConvertFloatToSnorm8(scaledComponent - 0.6f);
+            int8_t upperSnormExpectation = ConvertFloatToSnorm8(scaledComponent + 0.6f);
+
+            expectedLowerBounds.push_back(lowerSnormExpectation);
+            expectedUpperBounds.push_back(upperSnormExpectation);
+        }
+
+        EXPECT_TEXTURE_SNORM_BETWEEN(expectedLowerBounds, expectedUpperBounds, texture, {0, 0},
+                                     {1, 1}, format);
+    }
+};
+
+// Test that r8snorm format is valid as renderable texture if
+// 'texture-formats-tier1' is enabled.
+TEST_P(RenderAttachmentSnormFormatsTest, R8SnormRenderAttachment) {
+    std::vector<float> originData = {-0.5f};  // R
+    RunRenderTest(wgpu::TextureFormat::R8Snorm, originData);
+}
+
+// Test that rg8snorm format is valid as renderable texture if
+// 'texture-formats-tier1' is enabled.
+TEST_P(RenderAttachmentSnormFormatsTest, RG8SnormRenderAttachment) {
+    std::vector<float> originData = {-0.5f, 0.25f};  // RG
+    RunRenderTest(wgpu::TextureFormat::RG8Snorm, originData);
+}
+
+// Test that r8snorm format is valid as renderable texture if
+// 'texture-formats-tier1' is enabled.
+TEST_P(RenderAttachmentSnormFormatsTest, RGBA8SnormRenderAttachment) {
+    std::vector<float> originData = {-0.5f, 0.25f, -1.0f, 1.0f};  // RGBA
+    RunRenderTest(wgpu::TextureFormat::RGBA8Snorm, originData);
+}
+
+DAWN_INSTANTIATE_TEST(RenderAttachmentSnormFormatsTest,
+                      D3D11Backend(),
+                      D3D12Backend(),
+                      MetalBackend(),
+                      VulkanBackend(),
+                      OpenGLBackend());
+
+class BlendableSnormTextureTest : public TextureFormatsTier1Test {
+  protected:
     void RunBlendTest(wgpu::TextureFormat format,
                       const std::vector<float>& srcColorFloats,
                       const std::vector<float>& clearColorFloats) {
         DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::TextureFormatsTier1));
 
-        std::string fsCode = generateFragmentShader(srcColorFloats);
+        std::string fsCode = GenerateFragmentShader(srcColorFloats);
 
         wgpu::Extent3D textureSize = {16, 16, 1};
         wgpu::TextureDescriptor textureDesc;
@@ -297,21 +264,7 @@ class BlendableSnormTextureTest : public DawnTest {
         expectedBlendedFloats[2] = srcB * srcA + dstB * (1.0f - srcA);
         expectedBlendedFloats[3] = srcA;
 
-        size_t componentCount;
-        switch (format) {
-            case wgpu::TextureFormat::R8Snorm:
-                componentCount = 1;
-                break;
-            case wgpu::TextureFormat::RG8Snorm:
-                componentCount = 2;
-                break;
-            case wgpu::TextureFormat::RGBA8Snorm:
-                componentCount = 4;
-                break;
-            default:
-                FAIL() << "Unsupported format for blending test.";
-        }
-
+        uint32_t componentCount = utils::GetTextureComponentCount(format);
         std::vector<int8_t> expectedLowerBounds;
         std::vector<int8_t> expectedUpperBounds;
 
@@ -353,6 +306,119 @@ TEST_P(BlendableSnormTextureTest, RGBA8SnormBlendable) {
 }
 
 DAWN_INSTANTIATE_TEST(BlendableSnormTextureTest,
+                      D3D11Backend(),
+                      D3D12Backend(),
+                      MetalBackend(),
+                      VulkanBackend(),
+                      OpenGLBackend());
+
+class MultisampleResolveSnormFormatsTest : public TextureFormatsTier1Test {
+  protected:
+    static constexpr uint32_t kSize = 16;
+    static constexpr uint32_t kMultisampleCount = 4;
+    static constexpr uint32_t kSingleSampleCount = 1;
+    void RunMultisampleResolveTest(wgpu::TextureFormat format,
+                                   const std::vector<float>& expectedDrawColorFloats) {
+        DAWN_TEST_UNSUPPORTED_IF(!device.HasFeature(wgpu::FeatureName::TextureFormatsTier1));
+        std::string fsCode = GenerateFragmentShader(expectedDrawColorFloats);
+
+        wgpu::TextureDescriptor multisampleColorDesc;
+        multisampleColorDesc.usage = wgpu::TextureUsage::RenderAttachment;
+        multisampleColorDesc.dimension = wgpu::TextureDimension::e2D;
+        multisampleColorDesc.size = {kSize, kSize, 1};
+        multisampleColorDesc.format = format;
+        multisampleColorDesc.sampleCount = kMultisampleCount;
+
+        wgpu::Texture multisampleColorTexture = device.CreateTexture(&multisampleColorDesc);
+        wgpu::TextureView multisampleColorView = multisampleColorTexture.CreateView();
+
+        wgpu::TextureDescriptor resolveTargetDesc;
+        resolveTargetDesc.usage =
+            wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc;
+        resolveTargetDesc.dimension = wgpu::TextureDimension::e2D;
+        resolveTargetDesc.size = {kSize, kSize, 1};
+        resolveTargetDesc.format = format;
+        resolveTargetDesc.sampleCount = kSingleSampleCount;
+
+        wgpu::Texture resolveTargetTexture = device.CreateTexture(&resolveTargetDesc);
+        wgpu::TextureView resolveTargetView = resolveTargetTexture.CreateView();
+
+        std::string combinedShaderCode = GetFullScreenQuadVS() + fsCode;
+        wgpu::ShaderModule shaderModule =
+            utils::CreateShaderModule(device, combinedShaderCode.c_str());
+
+        utils::ComboRenderPipelineDescriptor pipelineDesc;
+        pipelineDesc.vertex.module = shaderModule;
+        pipelineDesc.vertex.entryPoint = "vs_main";
+        pipelineDesc.cFragment.module = shaderModule;
+        pipelineDesc.cFragment.entryPoint = "fs_main";
+        pipelineDesc.primitive.topology = wgpu::PrimitiveTopology::TriangleList;
+        pipelineDesc.cFragment.targetCount = 1;
+        pipelineDesc.cTargets[0].format = format;
+        pipelineDesc.multisample.count = kMultisampleCount;
+
+        pipelineDesc.cTargets[0].writeMask = wgpu::ColorWriteMask::All;
+
+        wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&pipelineDesc);
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        utils::ComboRenderPassDescriptor renderPass;
+        renderPass.cColorAttachments[0].view = multisampleColorView;
+        renderPass.cColorAttachments[0].resolveTarget = resolveTargetView;
+        renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::Clear;
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
+        renderPass.cColorAttachments[0].clearValue = {0.0f, 0.0f, 0.0f, 0.0f};
+        renderPass.colorAttachmentCount = 1;
+
+        wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass);
+        pass.SetPipeline(pipeline);
+        pass.Draw(3);
+        pass.End();
+
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        uint32_t componentCount = utils::GetTextureComponentCount(format);
+
+        std::vector<int8_t> expectedLowerBounds;
+        std::vector<int8_t> expectedUpperBounds;
+
+        for (uint32_t i = 0; i < componentCount; ++i) {
+            float floatComponent = expectedDrawColorFloats[i];
+            int8_t lowerSnormExpectation = ConvertFloatToSnorm8(floatComponent * 127.0f - 0.6f);
+            int8_t upperSnormExpectation = ConvertFloatToSnorm8(floatComponent * 127.0f + 0.6f);
+
+            expectedLowerBounds.push_back(lowerSnormExpectation);
+            expectedUpperBounds.push_back(upperSnormExpectation);
+        }
+
+        EXPECT_TEXTURE_SNORM_BETWEEN(expectedLowerBounds, expectedUpperBounds, resolveTargetTexture,
+                                     {0, 0}, {1, 1}, format);
+    }
+};
+
+// Test that r8snorm format has multisample and resolve capability
+// if 'texture-formats-tier1' is enabled.
+TEST_P(MultisampleResolveSnormFormatsTest, R8SnormMultisampleResolve) {
+    std::vector<float> expectedDrawColor = {1.0f, 0.0f, 0.0f, 1.0f};
+    RunMultisampleResolveTest(wgpu::TextureFormat::R8Snorm, expectedDrawColor);
+}
+
+// Test that rg8snorm format has multisample and resolve capability
+// if 'texture-formats-tier1' is enabled.
+TEST_P(MultisampleResolveSnormFormatsTest, RG8SnormMultisampleResolve) {
+    std::vector<float> expectedDrawColor = {1.0f, -0.5f, 0.0f, 1.0f};
+    RunMultisampleResolveTest(wgpu::TextureFormat::RG8Snorm, expectedDrawColor);
+}
+
+// Test that rgba8snorm format has multisample and resolve capability
+// if 'texture-formats-tier1' is enabled.
+TEST_P(MultisampleResolveSnormFormatsTest, RGBA8SnormMultisampleResolve) {
+    std::vector<float> expectedDrawColor = {1.0f, -0.5f, -1.0f, 0.5f};
+    RunMultisampleResolveTest(wgpu::TextureFormat::RGBA8Snorm, expectedDrawColor);
+}
+
+DAWN_INSTANTIATE_TEST(MultisampleResolveSnormFormatsTest,
                       D3D11Backend(),
                       D3D12Backend(),
                       MetalBackend(),
