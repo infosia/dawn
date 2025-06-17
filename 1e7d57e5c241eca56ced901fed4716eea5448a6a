@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "1e7d57e5c241eca56ced901fed4716eea5448a6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c2f892e_20f677fc",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-17T18:41:10Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t particularly like the inout reference here. Can we just do the increments inside the loops instead?",
+      "revId": "1e7d57e5c241eca56ced901fed4716eea5448a6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
