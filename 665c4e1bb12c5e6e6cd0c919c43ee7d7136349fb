@@ -22,6 +22,30 @@
       },
       "revId": "665c4e1bb12c5e6e6cd0c919c43ee7d7136349fb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85579b35_8d038e6e",
+        "filename": "src/tint/lang/core/number.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-17T14:29:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5e37a6d_98678b06",
+      "range": {
+        "startLine": 386,
+        "startChar": 16,
+        "endLine": 386,
+        "endChar": 43
+      },
+      "revId": "665c4e1bb12c5e6e6cd0c919c43ee7d7136349fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
