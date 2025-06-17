@@ -11,9 +11,9 @@ layout(binding = 0, std140)
 uniform tint_symbol_1_ubo {
   TintTextureUniformData inner;
 } v;
-uniform highp sampler2DArray t_f;
-uniform highp isampler2DArray t_i;
 uniform highp usampler2DArray t_u;
+uniform highp isampler2DArray t_i;
+uniform highp sampler2DArray t_f;
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   uint v_1 = (v.inner.tint_builtin_value_0 - 1u);

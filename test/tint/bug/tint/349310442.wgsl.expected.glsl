@@ -61,8 +61,8 @@ layout(binding = 2, std140)
 uniform t_params_block_std140_1_ubo {
   tint_ExternalTextureParams_std140 inner;
 } v_1;
-uniform highp sampler2D t_plane0;
 uniform highp sampler2D t_plane1;
+uniform highp sampler2D t_plane0;
 vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   vec3 v_2 = vec3(params.G);
   return mix((sign(v) * (pow(((params.A * abs(v)) + params.B), v_2) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), lessThan(abs(v), vec3(params.D)));

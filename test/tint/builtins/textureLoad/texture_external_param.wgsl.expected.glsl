@@ -64,8 +64,8 @@ layout(binding = 2, std140)
 uniform v_arg_0_params_block_std140_ubo {
   tint_ExternalTextureParams_std140 inner;
 } v_1;
-uniform highp sampler2D v_arg_0_plane0;
 uniform highp sampler2D v_arg_0_plane1;
+uniform highp sampler2D v_arg_0_plane0;
 vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   vec3 v_2 = vec3(params.G);
   return mix((sign(v) * (pow(((params.A * abs(v)) + params.B), v_2) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), lessThan(abs(v), vec3(params.D)));
@@ -184,8 +184,8 @@ layout(binding = 2, std140)
 uniform f_arg_0_params_block_std140_ubo {
   tint_ExternalTextureParams_std140 inner;
 } v_1;
-uniform highp sampler2D f_arg_0_plane0;
 uniform highp sampler2D f_arg_0_plane1;
+uniform highp sampler2D f_arg_0_plane0;
 vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   vec3 v_2 = vec3(params.G);
   return mix((sign(v) * (pow(((params.A * abs(v)) + params.B), v_2) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), lessThan(abs(v), vec3(params.D)));
@@ -296,8 +296,8 @@ layout(binding = 2, std140)
 uniform arg_0_params_block_std140_1_ubo {
   tint_ExternalTextureParams_std140 inner;
 } v_1;
-uniform highp sampler2D arg_0_plane0;
 uniform highp sampler2D arg_0_plane1;
+uniform highp sampler2D arg_0_plane0;
 vec3 tint_GammaCorrection(vec3 v, tint_GammaTransferParams params) {
   vec3 v_2 = vec3(params.G);
   return mix((sign(v) * (pow(((params.A * abs(v)) + params.B), v_2) + params.E)), (sign(v) * ((params.C * abs(v)) + params.F)), lessThan(abs(v), vec3(params.D)));

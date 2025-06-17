@@ -25,8 +25,8 @@ layout(binding = 0, std140)
 uniform tint_symbol_1_ubo {
   TintTextureUniformData inner;
 } v_2;
-uniform highp sampler2D src;
 uniform highp sampler2D dst;
+uniform highp sampler2D src;
 uint ConvertToFp16FloatValue(float fp32) {
   return 1u;
 }
