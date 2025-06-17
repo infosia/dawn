@@ -417,6 +417,9 @@ class BindGroupTracker : public BindGroupTrackerBase<false, uint64_t> {
 
                     // Some texture builtin function data needs emulation to update into the
                     // internal uniform buffer.
+                    // TODO(425579202): This shouldn't be moved outside of ApplyBindGroup because
+                    // it might need to happen when we change pipelines that have the same layout
+                    // but use different queries (so this code path wouldn't be hit).
                     UpdateTextureBuiltinsUniformData(gl, view, groupIndex, bindingIndex);
                     return {};
                 },
