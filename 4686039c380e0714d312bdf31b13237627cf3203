@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "367911b4_55a14ef4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-17T14:34:15Z",
+      "side": 1,
+      "message": "```suggestion\nfunction that is called in a non-fragment entry point, but does not\n```",
+      "revId": "4686039c380e0714d312bdf31b13237627cf3203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ea4892b_c9871012",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-17T14:34:15Z",
+      "side": 1,
+      "message": "```suggestion\ncatch if the function for the entry point itself contains a\n```",
+      "revId": "4686039c380e0714d312bdf31b13237627cf3203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "972db7ac_629775e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-17T14:34:15Z",
+      "side": 1,
+      "message": "```suggestion\ndiscard. This is rooted to the fact that entry point functions are not\n```",
+      "revId": "4686039c380e0714d312bdf31b13237627cf3203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "998aecc8_75afc4e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-17T14:34:15Z",
+      "side": 1,
+      "message": "```suggestion\nfor the containing function being an entry point. The alternate would be\n```",
+      "revId": "4686039c380e0714d312bdf31b13237627cf3203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b0c3de42_2e2d3c0f",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-17T14:34:15Z",
+      "side": 1,
+      "message": "```suggestion\n            AddError(d) \u003c\u003c \"cannot be called in non-fragment entry point\";\n```",
+      "revId": "4686039c380e0714d312bdf31b13237627cf3203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "316ea632_3f6f2351",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-17T14:34:15Z",
+      "side": 1,
+      "message": "```suggestion\n                    AddError(d) \u003c\u003c \"cannot be called in non-fragment entry point\";\n```",
+      "revId": "4686039c380e0714d312bdf31b13237627cf3203",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
