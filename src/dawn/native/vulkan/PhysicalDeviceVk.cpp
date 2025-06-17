@@ -1299,6 +1299,12 @@ void PhysicalDevice::PopulateSubgroupMatrixConfigs() {
             case VK_COMPONENT_TYPE_SINT32_KHR:
                 config.componentType = wgpu::SubgroupMatrixComponentType::I32;
                 break;
+            case VK_COMPONENT_TYPE_UINT8_KHR:
+                config.componentType = wgpu::SubgroupMatrixComponentType::U8;
+                break;
+            case VK_COMPONENT_TYPE_SINT8_KHR:
+                config.componentType = wgpu::SubgroupMatrixComponentType::I8;
+                break;
             default:
                 continue;
         }
@@ -1314,6 +1320,12 @@ void PhysicalDevice::PopulateSubgroupMatrixConfigs() {
                 break;
             case VK_COMPONENT_TYPE_SINT32_KHR:
                 config.resultComponentType = wgpu::SubgroupMatrixComponentType::I32;
+                break;
+            case VK_COMPONENT_TYPE_UINT8_KHR:
+                config.resultComponentType = wgpu::SubgroupMatrixComponentType::U8;
+                break;
+            case VK_COMPONENT_TYPE_SINT8_KHR:
+                config.resultComponentType = wgpu::SubgroupMatrixComponentType::I8;
                 break;
             default:
                 continue;
