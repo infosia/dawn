@@ -159,6 +159,7 @@ struct State {
         // Remove all replaced textures and samplers as they have been replaced by new globals.
         for (auto* var : replaced_textures_and_samplers_.Vector()) {
             var->Result()->ForEachUseUnsorted([](core::ir::Usage use) {
+                // XXX Update to follow binding array accesses and delete the access results and any load of them.
                 TINT_ASSERT(use.instruction->Is<core::ir::Load>());
                 use.instruction->Destroy();
             });
@@ -167,6 +168,7 @@ struct State {
     }
 
     // Get the module root var a texture/sampler value comes from.
+    // XXX Update to follow binding array accesses to find root variable.
     core::ir::Var* VarForValue(core::ir::Value* val) const {
         auto* res = val->As<core::ir::InstructionResult>();
         TINT_ASSERT(res);
@@ -182,6 +184,7 @@ struct State {
     // Returns the module root var that the texture and sampler come from (or nullptr for the
     // sampler if it isn't an argument).
     struct SamplerTextureVars {
+        // XXX This would sometimes return a binding array.
         core::ir::Var* texture;
         core::ir::Var* sampler;
     };
@@ -434,6 +437,7 @@ struct State {
     // Must be called inside an insertion block
     core::ir::Value* GetNewTexture(core::ir::Value* tex, core::ir::Value* sampler = nullptr) {
         auto* t = VarForValue(tex);
+        // XXX MaybeVarForValue returns the root var and an index if there was one and the binding array size.
 
         core::ir::Var* replacement;
         if (sampler) {
@@ -448,6 +452,8 @@ struct State {
         } else {
             replacement = *texture_to_replacement_.Get(t).value;
         }
+
+        // XXX Need to index the resulting binding array if needed, building an expression.
         TINT_ASSERT(replacement);
 
         // In the storage case, we'll return the original texture. Nothing else to do in that case.
