@@ -113,11 +113,15 @@ class ResourceMemoryAllocator {
         VkDeviceSize mTotalSize = 0;
     };
 
+    VkMemoryPropertyFlags GetRequiredMemoryPropertyFlags(MemoryKind memoryKind, bool mappable);
+
     raw_ptr<Device> mDevice;
     const VkDeviceSize mMaxSizeForSuballocation;
 
     class SingleTypeAllocator;
     std::vector<std::unique_ptr<SingleTypeAllocator>> mAllocatorsPerType;
+
+    bool mSupportsCoherentMappable = false;
 
     SerialQueue<ExecutionSerial, ResourceMemoryAllocation> mSubAllocationsToDelete;
     AllocationSizeTracker mAllocatedMemory;
