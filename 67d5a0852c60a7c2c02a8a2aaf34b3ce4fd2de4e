@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "73d49b33_9410e01c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 29
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-17T18:39:41Z",
+      "side": 1,
+      "message": "When can the same event be completed multiple times?",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "0c0ed849_5311ef86",
@@ -85,6 +102,104 @@
       "side": 1,
       "message": "\u003e Another thing is that I think if we decide to go the route of making the device lock recursive, we would want to make sure that we remove the \"no autolock\": true option entirely so that anytime we call into the API we take the lock.\n\nYou are right that the recursive mutex won\u0027t help resolving locking ordering issues. Though I would prefer we don\u0027t switch to auto lock device on every method. There are certain methods we still want to be lock-free such as command encoding. Locking them would regress the perf too much. Ideally when switching to recursive mutex, it should not impact the perf too much. If we had to reduce perf in order to make it work, I would rather stick to the current implementation then.",
       "parentUuid": "7640b1c2_84b92a02",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ff40144_2bd6d2a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-17T18:39:41Z",
+      "side": 1,
+      "message": "The biggest issue is callback reentrancy, and we should know the complete list of where that is happening + using Loko\u0027s UseWithDefer we should be able to handle it nicely. The other one is when reentrancy happens inside Dawn code that doesn\u0027t know if the incoming code path locked the device mutex or not. It seems that 90%+ of it is from workarounds that need to allocate during command encoding, which we want to fix eventually.\n\nIt seems that it might be worth going the recursive mutex route, but I really want us to eventually have only fine-grained locking, and the pain of using the non-recursive device mutex helps remind us of that. How much pain would be saved right now by using a recursive one?",
+      "parentUuid": "51028ac9_8f522417",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba729e51_c65f398e",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-17T18:39:41Z",
+      "side": 1,
+      "message": "Maybe comment that Unmapped is default status on creation.",
+      "range": {
+        "startLine": 473,
+        "startChar": 34,
+        "endLine": 473,
+        "endChar": 42
+      },
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "808d8cbb_61fa4d8f",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-17T18:39:41Z",
+      "side": 1,
+      "message": "nit: unused.",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93f05306_1160b1b3",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-17T18:39:41Z",
+      "side": 1,
+      "message": "That\u0027s ... allowed in C++? TIL\n\nAlso you seemed to have been using a MutexProtected previously but rolled that back. Can you explain why? I feel like I\u0027m missing a lot of context, but that a buffer-scoped mutex should work.",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb2ea28f_1f7b0402",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-17T18:39:41Z",
+      "side": 1,
+      "message": "```suggestion\n    auto\u0026 queueAndSerial \u003d mCompletionData.emplace\u003cQueueAndSerial\u003e();\n        queueAndSerial.queue \u003d GetWeakRef(queue);\n        queueAndSerial.completionSerial \u003d completionSerial;\n```",
+      "range": {
+        "startLine": 586,
+        "startChar": 0,
+        "endLine": 590,
+        "endChar": 5
+      },
       "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
