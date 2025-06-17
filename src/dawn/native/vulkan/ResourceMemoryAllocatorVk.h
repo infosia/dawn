@@ -113,11 +113,17 @@ class ResourceMemoryAllocator {
         VkDeviceSize mTotalSize = 0;
     };
 
+    VkMemoryPropertyFlags GetRequiredMemoryPropertyFlags(MemoryKind memoryKind);
+
     raw_ptr<Device> mDevice;
     const VkDeviceSize mMaxSizeForSuballocation;
 
     class SingleTypeAllocator;
     std::vector<std::unique_ptr<SingleTypeAllocator>> mAllocatorsPerType;
+
+    // Will be true if mappable buffers can use host coherent memory in addition to the other
+    // required memory property flags.
+    bool mSupportsHostCoherentMappable = false;
 
     SerialQueue<ExecutionSerial, ResourceMemoryAllocation> mSubAllocationsToDelete;
     AllocationSizeTracker mAllocatedMemory;

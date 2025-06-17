@@ -44,6 +44,11 @@ namespace dawn::native::vulkan {
 
 namespace {
 
+// Memory property flags needed for mappable buffers.
+constexpr VkMemoryPropertyFlags kMappableBufferFlags = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT |
+                                                       VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+                                                       VK_MEMORY_PROPERTY_HOST_CACHED_BIT;
+
 VkDeviceSize GetMaxSuballocationSize(VkDeviceSize heapBlockSize) {
     // Have each bucket of the buddy system allocate at least some resource of the maximum
     // size
@@ -56,39 +61,13 @@ bool IsMemoryKindMappable(MemoryKind memoryKind) {
     return memoryKind & (MemoryKind::ReadMappable | MemoryKind::WriteMappable);
 }
 
-VkMemoryPropertyFlags GetRequiredMemoryPropertyFlags(MemoryKind memoryKind, bool mappable) {
-    VkMemoryPropertyFlags vkFlags = 0;
-
-    // Mappable resource must be host visible and host coherent.
-    if (mappable) {
-        vkFlags |= VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
-        vkFlags |= VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-    }
-
-    // DEVICE_LOCAL_BIT must be set when MemoryKind::DeviceLocal is required.
-    if (memoryKind & MemoryKind::DeviceLocal) {
-        vkFlags |= VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-    }
-
-    // HOST_CACHED_BIT must be set when MemoryKind::HostCached is required.
-    if (memoryKind & MemoryKind::HostCached) {
-        vkFlags |= VK_MEMORY_PROPERTY_HOST_CACHED_BIT;
-    }
-
-    return vkFlags;
-}
-
 }  // anonymous namespace
 
 bool SupportsBufferMapExtendedUsages(const VulkanDeviceInfo& deviceInfo) {
     // On Vulkan the memory type of the mappable buffers with extended usages must have all below
     // memory property flags.
-    constexpr VkMemoryPropertyFlags kMapExtendedUsageMemoryPropertyFlags =
-        VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
-        VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT;
     for (const auto& memoryType : deviceInfo.memoryTypes) {
-        if ((memoryType.propertyFlags & kMapExtendedUsageMemoryPropertyFlags) ==
-            kMapExtendedUsageMemoryPropertyFlags) {
+        if ((memoryType.propertyFlags & kMappableBufferFlags) == kMappableBufferFlags) {
             return true;
         }
     }
@@ -215,6 +194,15 @@ ResourceMemoryAllocator::ResourceMemoryAllocator(Device* device, VkDeviceSize he
 
     for (size_t i = 0; i < info.memoryTypes.size(); i++) {
         const auto& memoryType = info.memoryTypes[i];
+
+        // Check if mappable buffers can also require host coherent memory.
+        constexpr VkMemoryPropertyFlags kMappableBufferWithCoherentFlags =
+            kMappableBufferFlags | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+        if ((memoryType.propertyFlags & kMappableBufferWithCoherentFlags) ==
+            kMappableBufferWithCoherentFlags) {
+            mSupportsHostCoherentMappable = true;
+        }
+
         bool isLazyMemoryType =
             (memoryType.propertyFlags & VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT) != 0u;
         mAllocatorsPerType.emplace_back(std::make_unique<SingleTypeAllocator>(
@@ -398,7 +386,7 @@ void ResourceMemoryAllocator::Tick(ExecutionSerial completedSerial) {
 int ResourceMemoryAllocator::FindBestTypeIndex(VkMemoryRequirements requirements, MemoryKind kind) {
     const VulkanDeviceInfo& info = mDevice->GetDeviceInfo();
     bool mappable = IsMemoryKindMappable(kind);
-    VkMemoryPropertyFlags vkRequiredFlags = GetRequiredMemoryPropertyFlags(kind, mappable);
+    VkMemoryPropertyFlags vkRequiredFlags = GetRequiredMemoryPropertyFlags(kind);
 
     // Find a suitable memory type for this allocation
     int bestType = -1;
@@ -492,6 +480,32 @@ uint64_t ResourceMemoryAllocator::GetTotalLazyAllocatedMemory() const {
 
 uint64_t ResourceMemoryAllocator::GetTotalLazyUsedMemory() const {
     return mLazyUsedMemory.Size();
+}
+
+VkMemoryPropertyFlags ResourceMemoryAllocator::GetRequiredMemoryPropertyFlags(
+    MemoryKind memoryKind) {
+    VkMemoryPropertyFlags vkFlags = 0;
+
+    // Mappable resource must be host visible.
+    if (IsMemoryKindMappable(memoryKind)) {
+        vkFlags |= VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
+
+        if (mSupportsHostCoherentMappable) {
+            vkFlags |= VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+        }
+    }
+
+    // DEVICE_LOCAL_BIT must be set when MemoryKind::DeviceLocal is required.
+    if (memoryKind & MemoryKind::DeviceLocal) {
+        vkFlags |= VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+    }
+
+    // HOST_CACHED_BIT must be set when MemoryKind::HostCached is required.
+    if (memoryKind & MemoryKind::HostCached) {
+        vkFlags |= VK_MEMORY_PROPERTY_HOST_CACHED_BIT;
+    }
+
+    return vkFlags;
 }
 
 }  // namespace dawn::native::vulkan
