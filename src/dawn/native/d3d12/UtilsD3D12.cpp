@@ -205,23 +205,24 @@ void RecordBufferTextureCopyFromSplits(BufferTextureCopyDirection direction,
 
         const uint64_t offsetBytes = info.alignedOffset + baseOffset;
         const D3D12_TEXTURE_COPY_LOCATION bufferLocation =
-            ComputeBufferLocationForCopyTextureRegion(texture, bufferResource, info.bufferSize,
+            ComputeBufferLocationForCopyTextureRegion(texture, bufferResource, info.bufferSize.ToExtent3D(),
                                                       offsetBytes, bufferBytesPerRow, aspect);
 
         if (direction == BufferTextureCopyDirection::B2T) {
             const D3D12_BOX sourceRegion =
-                ComputeD3D12BoxFromOffsetAndSize(info.bufferOffset, info.copySize);
-
-            commandList->CopyTextureRegion(&textureLocation, info.textureOffset.x,
-                                           info.textureOffset.y, info.textureOffset.z,
+                ComputeD3D12BoxFromOffsetAndSize(info.bufferOffset.ToOrigin3D(), info.copySize.ToExtent3D());
+                const Origin3D textureOffset = info.textureOffset.ToOrigin3D();
+            commandList->CopyTextureRegion(&textureLocation, textureOffset.x,
+                                           textureOffset.y, textureOffset.z,
                                            &bufferLocation, &sourceRegion);
         } else {
             DAWN_ASSERT(direction == BufferTextureCopyDirection::T2B);
             const D3D12_BOX sourceRegion =
-                ComputeD3D12BoxFromOffsetAndSize(info.textureOffset, info.copySize);
+                ComputeD3D12BoxFromOffsetAndSize(info.textureOffset.ToOrigin3D(), info.copySize.ToExtent3D());
+            const Origin3D bufferOffset = info.bufferOffset.ToOrigin3D();
 
-            commandList->CopyTextureRegion(&bufferLocation, info.bufferOffset.x,
-                                           info.bufferOffset.y, info.bufferOffset.z,
+            commandList->CopyTextureRegion(&bufferLocation, bufferOffset.x,
+                                           bufferOffset.y, bufferOffset.z,
                                            &textureLocation, &sourceRegion);
         }
     }

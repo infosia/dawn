@@ -85,14 +85,18 @@ template <typename Tag, typename T>
 class alignas(T) TypedIntegerImpl {
     static_assert(std::is_integral<T>::value, "TypedInteger must be integral");
     T mValue;
+    
+public:
+    // using StorageType = T;
 
-  public:
     constexpr TypedIntegerImpl() : mValue(0) {
         static_assert(alignof(TypedIntegerImpl) == alignof(T));
         static_assert(sizeof(TypedIntegerImpl) == sizeof(T));
     }
 
     // Construction from non-narrowing integral types.
+    // TODO(amaiorano): Consider allowing construction from narrowing types, but assert
+    // that it doesn't truncate.
     template <typename I>
         requires std::integral<I>
     explicit constexpr TypedIntegerImpl(I rhs) : mValue(static_cast<T>(rhs)) {
@@ -103,7 +107,19 @@ class alignas(T) TypedIntegerImpl {
     // Allow explicit casts only to the underlying type. If you're casting out of an
     // TypedInteger, you should know what what you're doing, and exactly what type you
     // expect.
-    explicit constexpr operator T() const { return static_cast<T>(this->mValue); }
+    // explicit constexpr operator T() const { return static_cast<T>(this->mValue); }
+
+    // Allow explicit casts to any integral type. If the type is smaller than T,
+    // we assert that no truncation occurs.
+    template <typename I>
+    requires std::integral<I>
+    explicit constexpr operator I() const {
+        if constexpr (sizeof(I) < sizeof(T)) {
+            // If downcasting, assert that the value is not truncated
+            DAWN_ASSERT(static_cast<I>(this->mValue) == this->mValue);
+        }
+        return static_cast<I>(this->mValue);
+    }
 
     // Same-tag TypedInteger comparison operators
     constexpr auto operator<=>(const TypedIntegerImpl& rhs) const = default;
@@ -190,6 +206,35 @@ class alignas(T) TypedIntegerImpl {
     }
 
     template <typename T2 = T>
+        requires(std::unsigned_integral<T2> && std::same_as<T, T2>)
+    static constexpr decltype(T(0) + T2(0)) MulImpl(TypedIntegerImpl<Tag, T> lhs,
+                                                    TypedIntegerImpl<Tag, T2> rhs) {
+        DAWN_ASSERT(lhs.mValue == 0 || rhs.mValue == 0 ||
+                    lhs.mValue <= (std::numeric_limits<T>::max() / rhs.mValue));
+        return lhs.mValue * rhs.mValue;
+    }
+
+    template <typename T2 = T>
+        requires(std::signed_integral<T2> && std::same_as<T, T2>)
+    static constexpr decltype(T(0) + T2(0)) MulImpl(TypedIntegerImpl<Tag, T> lhs,
+                                                    TypedIntegerImpl<Tag, T2> rhs) {
+        if (lhs.mValue > 0) {
+            if (rhs.mValue > 0) {
+                DAWN_ASSERT(lhs.mValue <= (std::numeric_limits<T>::max() / rhs.mValue));
+            } else {
+                DAWN_ASSERT(rhs.mValue >= (std::numeric_limits<T>::min() / lhs.mValue));
+            }
+        } else {
+            if (rhs.mValue > 0) {
+                DAWN_ASSERT(lhs.mValue >= (std::numeric_limits<T>::min() / rhs.mValue));
+            } else {
+                DAWN_ASSERT((lhs.mValue == 0) || (rhs.mValue >= (std::numeric_limits<T>::max() / lhs.mValue)));
+            }
+        }
+        return lhs.mValue * rhs.mValue;
+    }
+
+    template <typename T2 = T>
         requires(std::signed_integral<T2> && std::same_as<T, T2>)
     constexpr TypedIntegerImpl operator-() const {
         // The negation of the most negative value cannot be represented.
@@ -207,6 +252,29 @@ class alignas(T) TypedIntegerImpl {
         auto result = SubImpl(*this, rhs);
         static_assert(std::is_same<T, decltype(result)>::value, "Use ityp::Sub instead.");
         return TypedIntegerImpl(result);
+    }
+
+    constexpr TypedIntegerImpl operator*(TypedIntegerImpl rhs) const {
+        auto result = MulImpl(*this, rhs);
+        return TypedIntegerImpl(result);
+        // TODO(amaiorano): Call MulImpl to check for overflow
+        // return TypedIntegerImpl{mValue * rhs.mValue};
+    }
+    constexpr TypedIntegerImpl operator/(TypedIntegerImpl rhs) const {
+        // TODO(amaiorano): Call DivImpl to check for overflow
+        return TypedIntegerImpl{mValue / rhs.mValue};
+    }
+    constexpr TypedIntegerImpl operator%(TypedIntegerImpl rhs) const {
+        // TODO(amaiorano): Call Mod
+        return TypedIntegerImpl{mValue % rhs.mValue};
+    }
+    constexpr TypedIntegerImpl& operator+=(const TypedIntegerImpl& rhs) {
+        mValue += rhs.mValue;
+        return *this;
+    }
+    constexpr TypedIntegerImpl& operator-=(const TypedIntegerImpl& rhs) {
+        mValue -= rhs.mValue;
+        return *this;
     }
 
     template <typename H>
