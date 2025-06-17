@@ -33,6 +33,7 @@
 #include "dawn/common/Constants.h"
 #include "dawn/tests/unittests/validation/ValidationTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
+#include "dawn/utils/TextureUtils.cpp"
 #include "dawn/utils/WGPUHelpers.h"
 
 namespace dawn {
@@ -3606,6 +3607,21 @@ TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsBlendableWithFeatureEnabled)
         descriptor.cTargets[0].blend = &descriptor.cBlends[0];
         descriptor.cTargets[0].format = format;
 
+        device.CreateRenderPipeline(&descriptor);
+    }
+}
+
+// Tests that R8Snorm, RG8Snorm, and RGBA8Snorm must support multisampling
+// when the TextureFormatsTier1 feature is enabled.
+TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsMultisampleSupportWithTier1) {
+    const std::array kTestFormats = {wgpu::TextureFormat::R8Snorm, wgpu::TextureFormat::RG8Snorm,
+                                     wgpu::TextureFormat::RGBA8Snorm};
+    for (const auto format : kTestFormats) {
+        utils::ComboRenderPipelineDescriptor descriptor;
+        descriptor.vertex.module = vsModule;
+        descriptor.cFragment.module = fsModule;
+        descriptor.cTargets[0].format = format;
+        descriptor.multisample.count = 4;
         device.CreateRenderPipeline(&descriptor);
     }
 }
