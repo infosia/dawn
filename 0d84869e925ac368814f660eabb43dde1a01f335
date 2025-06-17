@@ -16,6 +16,29 @@
       "message": "A simple apply. PTAL, thanks!",
       "revId": "0d84869e925ac368814f660eabb43dde1a01f335",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b78d654e_98e710eb",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-17T16:50:36Z",
+      "side": 1,
+      "message": "nit: Can these be declared in the inner loop? They\u0027re not referenced outside of it.",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 49
+      },
+      "revId": "0d84869e925ac368814f660eabb43dde1a01f335",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
