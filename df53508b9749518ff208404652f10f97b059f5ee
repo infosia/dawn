@@ -33,6 +33,24 @@
       "message": "Please generate expectation files for these new tests with `--generate-expected`.",
       "revId": "df53508b9749518ff208404652f10f97b059f5ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "222fa3bb_287395fa",
+        "filename": "test/tint/builtins/gen/literal/textureSampleLevel/6c3106.wgsl",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-17T13:53:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef39b949_e9d0ac20",
+      "revId": "df53508b9749518ff208404652f10f97b059f5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
