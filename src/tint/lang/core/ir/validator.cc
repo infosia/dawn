@@ -112,7 +112,7 @@
 #include "src/tint/utils/text/text_style.h"
 
 /// If set to 1 then the Tint will dump the IR when validating.
-#define TINT_DUMP_IR_WHEN_VALIDATING 0
+#define TINT_DUMP_IR_WHEN_VALIDATING 1
 #if TINT_DUMP_IR_WHEN_VALIDATING
 #include <iostream>
 #include "src/tint/utils/text/styled_text_printer.h"
@@ -1439,9 +1439,13 @@ void Validator::CheckForNonFragmentDiscards() {
     // Check for discards in non-fragments
     for (const auto& d : discards_) {
         const auto* f = ContainingFunction(d);
-        for (const Function* ep : ContainingEndPoints(f)) {
-            if (!ep->IsFragment()) {
-                AddError(d) << "cannot be called in non-fragment end point";
+        if (f->IsEntryPoint() && !f->IsFragment()) {
+            AddError(d) << "cannot be called in non-fragment end point";
+        } else {
+            for (const Function* ep : ContainingEndPoints(f)) {
+                if (!ep->IsFragment()) {
+                    AddError(d) << "cannot be called in non-fragment end point";
+                }
             }
         }
     }
