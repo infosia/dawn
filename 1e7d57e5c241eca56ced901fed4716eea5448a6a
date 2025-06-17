@@ -33,6 +33,24 @@
       "message": "Nit: I don\u0027t particularly like the inout reference here. Can we just do the increments inside the loops instead?",
       "revId": "1e7d57e5c241eca56ced901fed4716eea5448a6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0c3b707_ebd24404",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-17T18:45:23Z",
+      "side": 1,
+      "message": "`loc` is removed in the next CL.",
+      "parentUuid": "6c2f892e_20f677fc",
+      "revId": "1e7d57e5c241eca56ced901fed4716eea5448a6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
