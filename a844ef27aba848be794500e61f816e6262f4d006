@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19d2a5d0_8674f6b3",
+        "filename": "src/dawn/native/d3d/DeviceD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-06-17T16:37:19Z",
+      "side": 1,
+      "message": "Please use an enum histogram and populate it with the values in [ID3D11Device::GetDeviceRemovedReason](https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nf-d3d11-id3d11device-getdeviceremovedreason)",
+      "range": {
+        "startLine": 61,
+        "startChar": 3,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "a844ef27aba848be794500e61f816e6262f4d006",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
