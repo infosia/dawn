@@ -43,8 +43,7 @@ struct TexturePolyfillConfig {
     BindingPoint placeholder_sampler_bind_point;
 
     /// Reflection for this class
-    TINT_REFLECT(TexturePolyfillConfig,
-                 placeholder_sampler_bind_point);
+    TINT_REFLECT(TexturePolyfillConfig, placeholder_sampler_bind_point);
 };
 
 /// TexturePolyfill is a transform that replaces textures, samplers and functions calls to make them
