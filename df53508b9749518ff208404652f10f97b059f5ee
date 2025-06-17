@@ -16,6 +16,23 @@
       "message": "PTAL at this first attempt",
       "revId": "df53508b9749518ff208404652f10f97b059f5ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ef39b949_e9d0ac20",
+        "filename": "test/tint/builtins/gen/literal/textureSampleLevel/6c3106.wgsl",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-17T13:31:00Z",
+      "side": 1,
+      "message": "Please generate expectation files for these new tests with `--generate-expected`.",
+      "revId": "df53508b9749518ff208404652f10f97b059f5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
