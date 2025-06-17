@@ -55,6 +55,7 @@
 #include "dawn/native/webgpu/CommandBufferWGPU.h"
 #include "dawn/native/webgpu/PhysicalDeviceWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
+#include "dawn/native/webgpu/RecordCommandSerializer.h"
 
 #include "tint/tint.h"
 
@@ -78,8 +79,18 @@ Device::Device(AdapterBase* adapter,
                const TogglesState& deviceToggles,
                Ref<DeviceBase::DeviceLostEvent>&& lostEvent)
     : DeviceBase(adapter, descriptor, deviceToggles, std::move(lostEvent)),
-      wgpu(ToBackend(adapter->GetPhysicalDevice())->GetFunctions()) {
+      wgpu(ToBackend(adapter->GetPhysicalDevice())->GetFunctions()),
+      mDeviceHandle(ReserveHandle())
+      {
     DAWN_ASSERT(adapter->GetPhysicalDevice()->GetBackendType() == wgpu::BackendType::WebGPU);
+
+    mCommandSerializerImpl = std::make_unique<RecordCommandSerializer>();
+    // mDeviceHandle = ReserveHandle();
+
+    // link error
+    // mSerializer = std::make_unique<dawn::wire::ChunkedCommandSerializer>(mCommandSerializerImpl.get());
+
+    // mObjectIdProvider = std::make_unique<DeviceObjectIdProvider>(this);
 
     WGPUDeviceDescriptor apiDesc = *(ToAPI(*descriptor));
     std::string label = "Inner Device on " + adapter->GetPhysicalDevice()->GetName();
@@ -118,6 +129,14 @@ WGPUDevice Device::GetInnerHandle() const {
     return mInnerDevice;
 }
 
+dawn::wire::ObjectHandle Device::ReserveHandle() {
+    // std::lock_guard<Mutex> lock(mObjectHandleMutex);
+    std::lock_guard<std::mutex> lock(mObjectHandleMutex);
+    // Simple generation management: always use 1 for new objects.
+    // A full ObjectStore would handle generation reuse more carefully.
+    return dawn::wire::ObjectHandle(mNextObjectId++, 1);
+}
+
 WGPUInstance Device::GetInnerInstance() const {
     return ToBackend(GetPhysicalDevice())->GetBackend()->GetInnerInstance();
 }
@@ -142,6 +161,29 @@ ResultOrError<Ref<BindGroupLayoutInternalBase>> Device::CreateBindGroupLayoutImp
 ResultOrError<Ref<BufferBase>> Device::CreateBufferImpl(
     const UnpackedPtr<BufferDescriptor>& descriptor) {
     return Buffer::Create(this, descriptor);
+
+    // ResultOrError<Ref<webgpu::Buffer>> result = Buffer::Create(this, descriptor);
+    // if (result.IsSuccess()) {
+    //     Ref<webgpu::Buffer> buffer = result.AcquireSuccess();
+
+    //     dawn::wire::DeviceCreateBufferCmd cmd;
+    //     cmd.deviceId = mDeviceH
+    //     cmd.descriptor = ToAPI(*descriptor); // Careful with lifetime
+    //     cmd.result = GetOrCreateHandle(buffer.Get());
+    //     cmd.readHandleCreateInfoLength = 0;
+    //     cmd.readHandleCreateInfo = nullptr;
+    //     cmd.writeHandleCreateInfoLength = 0;
+    //     cmd.writeHandleCreateInfo = nullptr;
+
+    //     // The ObjectIdProvider should be `this` or a member that can resolve handles.
+    //     // For this example, we pass `*mObjectIdProvider.get()`
+    //     // mSerializer->SerializeCommand(cmd, *mObjectIdProvider.get());
+    //     mSerializer->SerializeCommand(cmd);
+    //     // mSerializer->Flush(); // Or batch flushes
+
+    //     return static_cast<Ref<BufferBase>>(buffer);
+    // }
+    // return result.AcquireError();
 }
 ResultOrError<Ref<CommandBufferBase>> Device::CreateCommandBuffer(
     CommandEncoder* encoder,
@@ -241,5 +283,41 @@ uint64_t Device::GetOptimalBufferToTextureCopyOffsetAlignment() const {
 float Device::GetTimestampPeriodInNS() const {
     return 1.0f;
 }
+
+// dawn::wire::ObjectHandle Device::GetOrCreateHandle(const ApiObjectBase* obj) {
+//     // std::lock_guard<Mutex> lock(mObjectHandleMutex);
+//     auto it = mObjectHandles.find(obj);
+//     if (it != mObjectHandles.end()) {
+//         return it->second;
+//     }
+//     dawn::wire::ObjectHandle handle(mNextObjectId++, 1); // Generation 1 for simplicity
+//     mObjectHandles.emplace(obj, handle);
+//     return handle;
+// }
+
+// dawn::wire::ObjectIdProvider* Device::GetObjectIdProvider() {
+//     return mObjectIdProvider.get();
+// }
+
+// // DeviceObjectIdProvider implementation
+// template <typename T>
+// dawn::wire::WireResult Device::DeviceObjectIdProvider::GetIdImpl(T, dawn::wire::ObjectId*) const {
+//     // Default: Not implemented for this type for this simplified example
+//     // A full implementation would need to handle all WGPU object types.
+//     DAWN_UNREACHABLE();
+//     return dawn::wire::WireResult::FatalError;
+// }
+
+// dawn::wire::WireResult Device::DeviceObjectIdProvider::GetId(WGPUBuffer cBuffer, dawn::wire::ObjectId* out) const {
+//     // This is tricky because WGPUBuffer is an opaque handle.
+//     // We'd need to map it back to our ApiObjectBase* or have a direct map from WGPUBuffer -> ObjectId
+//     // For this example, we'll assume we can get the ApiObjectBase* somehow if needed,
+//     // or that the caller (QueueWGPU) passes the ApiObjectBase*.
+//     // Let's adjust GetOrCreateHandle to be callable from Queue.
+//     // For now, this specific GetId will be simplified.
+//     // In a real scenario, the object passed to ObjectIdProvider::GetId would be the Dawn object.
+//     // Here, we're in the native backend, so we'd look up the handle for our *native* object.
+//     return mDevice->GetId(FromAPI(cBuffer), out);
+// }
 
 }  // namespace dawn::native::webgpu

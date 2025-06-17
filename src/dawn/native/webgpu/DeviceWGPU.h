@@ -29,12 +29,16 @@
 #define SRC_DAWN_NATIVE_WEBGPU_DEVICEWGPU_H_
 
 #include <memory>
+#include <mutex>
 #include <vector>
 
 #include "dawn/native/Device.h"
 #include "dawn/native/ToBackend.h"
 #include "dawn/native/webgpu/Forward.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "dawn/wire/ChunkedCommandSerializer.h"
+#include "dawn/wire/ObjectHandle.h"
+#include "dawn/wire/WireCmd_autogen.h"
 
 namespace dawn::native::webgpu {
 
@@ -59,6 +63,21 @@ class Device final : public DeviceBase {
     WGPUInstance GetInnerInstance() const;
 
     const DawnProcTable& wgpu;
+
+    // For serialization/logging
+    // dawn::wire::ObjectHandle GetOrCreateHandle(const ApiObjectBase* obj);
+
+    std::unique_ptr<dawn::wire::CommandSerializer> mCommandSerializerImpl; // The actual serializer (e.g., file/stdout)
+    std::unique_ptr<dawn::wire::ChunkedCommandSerializer> mSerializer;
+
+    mutable std::mutex mObjectHandleMutex;
+    absl::flat_hash_map<const ApiObjectBase*, dawn::wire::ObjectHandle> mObjectHandles;
+    dawn::wire::ObjectId mNextObjectId = 1;
+
+    dawn::wire::ObjectHandle mDeviceHandle;
+
+    dawn::wire::ObjectHandle ReserveHandle();
+    
 
   private:
     Device(AdapterBase* adapter,
@@ -115,6 +134,72 @@ class Device final : public DeviceBase {
 
     // The "lower layer" implementation device that actually manages calls to GPU driver.
     WGPUDevice mInnerDevice = nullptr;
+
+    // // Simple ObjectIdProvider implementation for logging purposes
+    // class DeviceObjectIdProvider : public dawn::wire::ObjectIdProvider {
+    //   public:
+    //     explicit DeviceObjectIdProvider(Device* device) : mDevice(device) {}
+    //     dawn::wire::WireResult GetId(WGPUBuffer buffer, dawn::wire::ObjectId* out) const override;
+
+
+    //     dawn::wire::WireResult GetId(WGPUAdapter object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUAdapter object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUBindGroup object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUBindGroup object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUBindGroupLayout object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUBindGroupLayout object, ObjectId* out) const override;
+    //     // dawn::wire::WireResult GetId(WGPUBuffer object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUBuffer object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUCommandBuffer object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUCommandBuffer object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUCommandEncoder object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUCommandEncoder object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUComputePassEncoder object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUComputePassEncoder object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUComputePipeline object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUComputePipeline object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUDevice object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUDevice object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUExternalTexture object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUExternalTexture object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUInstance object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUInstance object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUPipelineLayout object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUPipelineLayout object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUQuerySet object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUQuerySet object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUQueue object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUQueue object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPURenderBundle object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPURenderBundle object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPURenderBundleEncoder object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPURenderBundleEncoder object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPURenderPassEncoder object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPURenderPassEncoder object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPURenderPipeline object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPURenderPipeline object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUSampler object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUSampler object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUShaderModule object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUShaderModule object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUSurface object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUSurface object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUTexture object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUTexture object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetId(WGPUTextureView object, ObjectId* out) const override;
+    //     dawn::wire::WireResult GetOptionalId(WGPUTextureView object, ObjectId* out) const override;
+
+    //     // Add other GetId overloads as needed for other types...
+    //     // For simplicity, other GetId methods will return error or assert.
+    //     // Default implementation for other types:
+    //     template <typename T>
+    //     dawn::wire::WireResult GetIdImpl(T object, dawn::wire::ObjectId* out) const;
+
+        
+    //   private:
+    //     raw_ptr<Device> mDevice;
+    // };
+    // std::unique_ptr<DeviceObjectIdProvider> mObjectIdProvider;
 };
 
 }  // namespace dawn::native::webgpu
