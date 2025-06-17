@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab61f0c7_e48b9d26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 53
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-17T08:17:12Z",
+      "side": 1,
+      "message": "Please take a look, thanks! Fix an use-after-moved and some nits.",
+      "revId": "dbc1052444bd345d940a81998d5ca386d895ba2f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
