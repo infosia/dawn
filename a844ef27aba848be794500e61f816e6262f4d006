@@ -46,6 +46,30 @@
       },
       "revId": "a844ef27aba848be794500e61f816e6262f4d006",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c35be4ce_bf16330f",
+        "filename": "src/dawn/native/d3d/DeviceD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3466141
+      },
+      "writtenOn": "2025-06-18T06:17:49Z",
+      "side": 1,
+      "message": "BTW in ANGLE we are using histogramSparse to record [D3D11CreateDeviceError](https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/modules/webgpu/gpu_device.cc;l\u003d510;drc\u003d301e3bd33307505904990afb894bb3712ec8145e) result which is also a `HRESULT`. So when should use histogramSpare and when should use histogramEnumeration when histogram `HRESULT` value?",
+      "parentUuid": "be6b40f3_782f5bcb",
+      "range": {
+        "startLine": 61,
+        "startChar": 3,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "a844ef27aba848be794500e61f816e6262f4d006",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
