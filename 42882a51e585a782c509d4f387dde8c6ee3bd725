@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "19d2dd83_f62a19bc",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-18T18:38:38Z",
+      "side": 1,
+      "message": "Ack. Add a TODO. The push constant rewrite might happen first though.",
+      "parentUuid": "00b42cfa_2dfe752a",
+      "revId": "42882a51e585a782c509d4f387dde8c6ee3bd725",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "6aaa851a_571a01c5",
         "filename": "src/dawn/tests/end2end/TextureShaderBuiltinTests.cpp",
         "patchSetId": 3
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea07afb6_c6ebce2c",
+        "filename": "src/dawn/tests/end2end/TextureShaderBuiltinTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-18T18:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6deaf41e_26466d51",
+      "revId": "42882a51e585a782c509d4f387dde8c6ee3bd725",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "984a1c03_b8781842",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-06-18T13:14:40Z",
       "side": 1,
       "message": "TBH the helper for creating textures are always more confusing than just writing the descriptor. The descriptor with defaults only needs a few things, and here between the two texture creations we\u0027d only change the depthOrArrayLayers.",
+      "revId": "42882a51e585a782c509d4f387dde8c6ee3bd725",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08b367c3_3cf4f8ab",
+        "filename": "src/dawn/tests/end2end/TextureShaderBuiltinTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-18T18:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "984a1c03_b8781842",
       "revId": "42882a51e585a782c509d4f387dde8c6ee3bd725",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "aac6e028_63166ecb",
+        "filename": "src/dawn/tests/end2end/TextureShaderBuiltinTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-18T18:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "394be900_5c310298",
+      "revId": "42882a51e585a782c509d4f387dde8c6ee3bd725",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "80880ec9_c238c2a3",
@@ -103,6 +175,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0935331_86f00e30",
+        "filename": "src/dawn/tests/end2end/TextureShaderBuiltinTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-18T18:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80880ec9_c238c2a3",
+      "revId": "42882a51e585a782c509d4f387dde8c6ee3bd725",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "179aebd8_8ac51075",
@@ -116,6 +206,24 @@
       "writtenOn": "2025-06-18T13:14:40Z",
       "side": 1,
       "message": "optional nit Ditto could reuse the same descriptor.",
+      "revId": "42882a51e585a782c509d4f387dde8c6ee3bd725",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e67dfd86_3973cafb",
+        "filename": "src/dawn/tests/end2end/TextureShaderBuiltinTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-18T18:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "179aebd8_8ac51075",
       "revId": "42882a51e585a782c509d4f387dde8c6ee3bd725",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
