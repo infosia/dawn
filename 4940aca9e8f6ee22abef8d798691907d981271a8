@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db9d0bb9_cfd77e57",
+        "filename": "src/dawn/common/TypedInteger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-18T14:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e3e5113_d8ce25ef",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f0141e94_906f35d7",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-06-18T13:18:03Z",
       "side": 1,
       "message": "Can we associate this TODO with a bug and not a person?",
+      "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e0a029e_feaa0875",
+        "filename": "src/dawn/common/TypedInteger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-18T14:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0141e94_906f35d7",
       "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -77,6 +119,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "812c923e_5ec2d852",
+        "filename": "src/dawn/common/TypedInteger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-18T14:52:33Z",
+      "side": 1,
+      "message": "There\u0027s already precendent for including stream headers in Dawn native, for example `src\\dawn\\native\\stream\\ByteVectorSink.h` includes `\u003costream\u003e`, and this header is included by other native headers, such as `src\\dawn\\native\\CacheKey.h`. If you really want, I could probably move this to a test-specific header.",
+      "parentUuid": "906b6da4_74814fbd",
+      "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0e0a98a7_cbaa3697",
         "filename": "src/dawn/tests/unittests/TypedIntegerTests.cpp",
         "patchSetId": 1
@@ -88,6 +148,24 @@
       "writtenOn": "2025-06-18T13:18:03Z",
       "side": 1,
       "message": "nit: that they can be cast explicitly. That\u0027s an important part ^^",
+      "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3399b4f6_365e14a3",
+        "filename": "src/dawn/tests/unittests/TypedIntegerTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-18T14:52:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e0a98a7_cbaa3697",
       "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
