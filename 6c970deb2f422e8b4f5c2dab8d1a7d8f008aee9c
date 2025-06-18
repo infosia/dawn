@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21159d03_f7fe20c4",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-18T21:02:55Z",
+      "side": 1,
+      "message": "This function needs to be double checked. It has unit tests.",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 24
+      },
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
