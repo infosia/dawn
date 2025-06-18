@@ -38,6 +38,255 @@ namespace {
 
 constexpr static std::initializer_list<uint32_t> kSentinelData{0, 0, 0};
 
+class ComputeRobustAccessTest : public DawnTest {};
+
+TEST_P(ComputeRobustAccessTest, BugOnMac) {
+    wgpu::ShaderModule module1 = utils::CreateShaderModule(device, R"(
+struct Constants {
+  zero: u32
+};
+@group(1) @binding(0) var<uniform> constants: Constants;
+
+struct Result {
+  value: u32
+};
+@group(1) @binding(1) var<storage, read_write> result: Result;
+
+struct S {
+  startCanary: array<u32, 10>,
+  data: vec2<bool>,
+  endCanary: array<u32, 10>,
+};var<workgroup> s: S;
+
+
+fn runTest() -> u32 {
+  for (var i = 0u; i < 10u; i = i + 1u) {
+    s.startCanary[i] = 0xFFFFFFFFu;
+    s.endCanary[i] = 0xFFFFFFFFu;
+  }
+  {
+    let index = (0u);
+    if (s.data[index] != bool()) { return 0x1001u; }
+  }
+  {
+    let index = (2u - 1u);
+    if (s.data[index] != bool()) { return 0x1002u; }
+  }
+  {
+    let index = (2u);
+    if (s.data[index] != bool()) { return 0x1003u; }
+  }
+  {
+    let index = (1000000u);
+    if (s.data[index] != bool()) { return 0x1004u; }
+  }
+  {
+    let index = (4294967295u);
+    if (s.data[index] != bool()) { return 0x1005u; }
+  }
+  {
+    let index = (2147483647u);
+    if (s.data[index] != bool()) { return 0x1006u; }
+  }
+  {
+    let index = (0u) + 0u;
+    if (s.data[index] != bool()) { return 0x1007u; }
+  }
+  {
+    let index = (2u - 1u) + 0u;
+    if (s.data[index] != bool()) { return 0x1008u; }
+  }
+  {
+    let index = (2u) + 0u;
+    if (s.data[index] != bool()) { return 0x1009u; }
+  }
+  {
+    let index = (1000000u) + 0u;
+    if (s.data[index] != bool()) { return 0x100au; }
+  }
+  {
+    let index = (4294967295u) + 0u;
+    if (s.data[index] != bool()) { return 0x100bu; }
+  }
+  {
+    let index = (2147483647u) + 0u;
+    if (s.data[index] != bool()) { return 0x100cu; }
+  }
+  {
+    let index = (0u) + u32(constants.zero);
+    if (s.data[index] != bool()) { return 0x100du; }
+  }
+  {
+    let index = (2u - 1u) + u32(constants.zero);
+    if (s.data[index] != bool()) { return 0x100eu; }
+  }
+  {
+    let index = (2u) + u32(constants.zero);
+    if (s.data[index] != bool()) { return 0x100fu; }
+  }
+  {
+    let index = (1000000u) + u32(constants.zero);
+    if (s.data[index] != bool()) { return 0x1010u; }
+  }
+  {
+    let index = (4294967295u) + u32(constants.zero);
+    if (s.data[index] != bool()) { return 0x1011u; }
+  }
+  {
+    let index = (2147483647u) + u32(constants.zero);
+    if (s.data[index] != bool()) { return 0x1012u; }
+  }
+  {
+    let index = (0);
+    if (s.data[index] != bool()) { return 0x1013u; }
+  }
+  {
+    let index = (2 - 1);
+    if (s.data[index] != bool()) { return 0x1014u; }
+  }
+  {
+    let index = (-1);
+    if (s.data[index] != bool()) { return 0x1015u; }
+  }
+  {
+    let index = (2);
+    if (s.data[index] != bool()) { return 0x1016u; }
+  }
+  {
+    let index = (-1000000);
+    if (s.data[index] != bool()) { return 0x1017u; }
+  }
+  {
+    let index = (1000000);
+    if (s.data[index] != bool()) { return 0x1018u; }
+  }
+  {
+    let index = (-2147483648);
+    if (s.data[index] != bool()) { return 0x1019u; }
+  }
+  {
+    let index = (2147483647);
+    if (s.data[index] != bool()) { return 0x101au; }
+  }
+  {
+    let index = (0) + 0;
+    if (s.data[index] != bool()) { return 0x101bu; }
+  }
+  {
+    let index = (2 - 1) + 0;
+    if (s.data[index] != bool()) { return 0x101cu; }
+  }
+  {
+    let index = (-1) + 0;
+    if (s.data[index] != bool()) { return 0x101du; }
+  }
+  {
+    let index = (2) + 0;
+    if (s.data[index] != bool()) { return 0x101eu; }
+  }
+  {
+    let index = (-1000000) + 0;
+    if (s.data[index] != bool()) { return 0x101fu; }
+  }
+  {
+    let index = (1000000) + 0;
+    if (s.data[index] != bool()) { return 0x1020u; }
+  }
+  {
+    let index = (-2147483648) + 0;
+    if (s.data[index] != bool()) { return 0x1021u; }
+  }
+  {
+    let index = (2147483647) + 0;
+    if (s.data[index] != bool()) { return 0x1022u; }
+  }
+  {
+    let index = (0) + i32(constants.zero);
+    if (s.data[index] != bool()) { return 0x1023u; }
+  }
+  {
+    let index = (2 - 1) + i32(constants.zero);
+    if (s.data[index] != bool()) { return 0x1024u; }
+  }
+  {
+    let index = (-1) + i32(constants.zero);
+    if (s.data[index] != bool()) { return 0x1025u; }
+  }
+  {
+    let index = (2) + i32(constants.zero);
+    if (s.data[index] != bool()) { return 0x1026u; }
+  }
+  {
+    let index = (-1000000) + i32(constants.zero);
+    if (s.data[index] != bool()) { return 0x1027u; }
+  }
+  {
+    let index = (1000000) + i32(constants.zero);
+    if (s.data[index] != bool()) { return 0x1028u; }
+  }
+  {
+    let index = (-2147483648) + i32(constants.zero);
+    if (s.data[index] != bool()) { return 0x1029u; }
+  }
+  {
+    let index = (2147483647) + i32(constants.zero);
+    if (s.data[index] != bool()) { return 0x102au; }
+  }
+  for (var i = 0u; i < 10u; i = i + 1u) {
+    if (s.startCanary[i] != 0xFFFFFFFFu) {
+      return 0x102bu;
+    }
+    if (s.endCanary[i] != 0xFFFFFFFFu) {
+      return 0x102cu;
+    }
+  }
+  return 0u;
+}
+
+@compute @workgroup_size(1)
+fn main() {
+  _ = constants.zero; // Ensure constants buffer is statically-accessed
+  result.value = runTest();
+}
+)");
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = module1;
+    wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+    wgpu::BufferDescriptor desc = {};
+    desc.size = 4;
+    desc.usage =
+        wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage | wgpu::BufferUsage::Uniform;
+    wgpu::Buffer resultBuffer = device.CreateBuffer(&desc);
+    wgpu::Buffer zeroBuffer = device.CreateBuffer(&desc);
+
+    // Set up bind group and issue dispatch
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(1),
+                                                     {
+                                                         {0, zeroBuffer},
+                                                         {1, resultBuffer},
+                                                     });
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(1, bindGroup);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        commands = encoder.Finish();
+    }
+
+    queue.Submit(1, &commands);
+}
+
+DAWN_INSTANTIATE_TEST(ComputeRobustAccessTest,
+                      D3D12Backend({"use_tint_ir"}),
+                      MetalBackend(),
+                      VulkanBackend());
+
 class ComputeDispatchTests : public DawnTest {
   protected:
     void SetUp() override {
