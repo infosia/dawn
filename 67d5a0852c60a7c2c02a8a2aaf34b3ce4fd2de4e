@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9e8035c_f307fb74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 29
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-18T20:22:30Z",
+      "side": 1,
+      "message": "The same event isn\u0027t completed multiple times, but a thread checking if it\u0027s done can race with a thread that is completing it. This was seen in https://g-issues.skia.org/issues/418165343 where a race on a thread setting the future ready could race against a `WaitAny` call on that event. I\u0027m pretty sure in that scenario, nothing bad happens, `WaitAny` would just try to wait on a completed serial and do nothing, but making it an atomic got rid of the TSAN issue. Maybe there\u0027s a better way to solve that?",
+      "parentUuid": "73d49b33_9410e01c",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "0c0ed849_5311ef86",
@@ -147,6 +165,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1af9f7b_64f86063",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-18T20:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba729e51_c65f398e",
+      "range": {
+        "startLine": 473,
+        "startChar": 34,
+        "endLine": 473,
+        "endChar": 42
+      },
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "808d8cbb_61fa4d8f",
@@ -160,6 +202,24 @@
       "writtenOn": "2025-06-17T18:39:41Z",
       "side": 1,
       "message": "nit: unused.",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f4bacc3_ffed3874",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-18T20:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "808d8cbb_61fa4d8f",
       "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -181,6 +241,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d35a4de_63dd9e9b",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-18T20:22:30Z",
+      "side": 1,
+      "message": "Talked about this with you offline, but just to document here as well:\n\n- Main issue is that lock per buffer is bad when dealing with submit because we would need to acquire all the locks on every buffer. Acquiring many small locks instead of the current device lock could result in a perf hit, plus the logic becomes a lot more complex.\n- Eventually, I\u0027m thinking of having a `Queue` lock for this stuff instead of the `Device` lock since we only really need to lock these states when we are doing validation and submitting.",
+      "parentUuid": "93f05306_1160b1b3",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb2ea28f_1f7b0402",
@@ -194,6 +272,30 @@
       "writtenOn": "2025-06-17T18:39:41Z",
       "side": 1,
       "message": "```suggestion\n    auto\u0026 queueAndSerial \u003d mCompletionData.emplace\u003cQueueAndSerial\u003e();\n        queueAndSerial.queue \u003d GetWeakRef(queue);\n        queueAndSerial.completionSerial \u003d completionSerial;\n```",
+      "range": {
+        "startLine": 586,
+        "startChar": 0,
+        "endLine": 590,
+        "endChar": 5
+      },
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d310e4b7_a831d1f1",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-18T20:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb2ea28f_1f7b0402",
       "range": {
         "startLine": 586,
         "startChar": 0,
