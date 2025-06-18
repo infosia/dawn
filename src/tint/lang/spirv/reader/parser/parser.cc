@@ -652,6 +652,17 @@ class Parser {
         TINT_ASSERT(count_val <= UINT32_MAX);
 
         // TODO(crbug.com/1907): Handle decorations that affect the array layout.
+        for (auto deco : arr_ty->decorations()) {
+            switch (spv::Decoration(deco[0])) {
+                case spv::Decoration::SpecId: {
+                    // trick clang ... will remove when first decoration is handled
+                    break;
+                }
+                default: {
+                    TINT_UNIMPLEMENTED() << " unhandled array decoration " << deco[0];
+                }
+            }
+        }
 
         return ty_.array(Type(arr_ty->element_type()), static_cast<uint32_t>(count_val));
     }
@@ -670,6 +681,19 @@ class Parser {
         auto struct_to_member_iter = struct_to_member_names_.find(struct_id);
         if (struct_to_member_iter != struct_to_member_names_.end()) {
             member_names = &((*struct_to_member_iter).second);
+        }
+
+        // TODO(crbug.com/1907): Handle decorations that affect the struct layout.
+        for (auto& deco : struct_ty->decorations()) {
+            switch (spv::Decoration(deco[0])) {
+                case spv::Decoration::SpecId: {
+                    // trick clang ... will remove when first decoration is handled
+                    break;
+                }
+                default: {
+                    TINT_UNIMPLEMENTED() << " unhandled struct decoration " << deco[0];
+                }
+            }
         }
 
         // Build a list of struct members.
