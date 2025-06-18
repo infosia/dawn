@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "ff9e3108c2d84ea7b6d4caf7b3f573717bdcc51d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ea99228_71597239",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-18T15:16:42Z",
+      "side": 1,
+      "message": "Also, the control path definitely reaches block %30, and OpUnreachable asserts dynamic control flow will reach it. So it\u0027a a nonsense result (undefined behaviour).\n\nhttps://registry.khronos.org/SPIR-V/specs/unified1/SPIRV.html#OpUnreachable \n\n\u003e Behavior is undefined if this instruction is executed.",
+      "revId": "ff9e3108c2d84ea7b6d4caf7b3f573717bdcc51d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
