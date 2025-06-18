@@ -404,6 +404,24 @@
       "parentUuid": "4f56ec75_82b4aae3",
       "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df80ad1e_f3d50955",
+        "filename": "src/tint/lang/hlsl/writer/raise/raise.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-18T02:08:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0aa07ceb_5cb94030",
+      "revId": "52418ee12e284b135abf89ff8a9f4b0b903bcf74",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
