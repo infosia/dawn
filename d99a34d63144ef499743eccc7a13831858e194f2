@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e349ed50_9f3690c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-18T08:36:51Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "d99a34d63144ef499743eccc7a13831858e194f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7523a307_61fad369",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-18T08:36:51Z",
+      "side": 1,
+      "message": "Why the extra indentation? But also using string literals would make this easier to parse.",
+      "revId": "d99a34d63144ef499743eccc7a13831858e194f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b422f425_4c68a701",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-18T08:36:51Z",
+      "side": 1,
+      "message": "Note that WebGPU can have multigle entrypoints in the same module and infer which one to use if there is a single one for that shader stage. It could allow making a single GenerateWGSL function.",
+      "revId": "d99a34d63144ef499743eccc7a13831858e194f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
