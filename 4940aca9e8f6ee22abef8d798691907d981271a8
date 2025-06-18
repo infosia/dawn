@@ -135,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ca23b4e_42c00945",
+        "filename": "src/dawn/common/TypedInteger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-18T14:56:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "812c923e_5ec2d852",
+      "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e0a98a7_cbaa3697",
