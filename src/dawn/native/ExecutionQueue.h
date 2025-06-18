@@ -33,6 +33,7 @@
 
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SerialMap.h"
+#include "dawn/native/DeviceGuard.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/IntegerTypes.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -58,8 +59,11 @@ class ExecutionQueueBase {
     // Whether the execution queue has scheduled commands to be submitted or executing.
     bool HasScheduledCommands() const;
 
-    // Check for passed fences and set the new completed serial.
-    MaybeError CheckPassedSerials();
+    // Check for passed fences and set the new completed serial. Currently, this requires the device
+    // lock because it calls into |CheckAndUpdateCompletedSerials| which is not yet thread-safe on
+    // all backends. By passing a DeviceGuard, it makes that requirement obvious and allows for
+    // deferring additional work to be done after the lock is released.
+    MaybeError CheckPassedSerials(DeviceGuard& guard);
 
     // For the commands being internally recorded in backend, that were not urgent to submit, this
     // method makes them to be submitted as soon as possible in next ticks.
@@ -115,7 +119,7 @@ class ExecutionQueueBase {
   private:
     // Each backend should implement to check their passed fences if there are any and return a
     // completed serial. Return 0 should indicate no fences to check.
-    virtual ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() = 0;
+    virtual ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials(DeviceGuard& guard) = 0;
     // mCompletedSerial tracks the last completed command serial that the fence has returned.
     // mLastSubmittedSerial tracks the last submitted command serial.
     // During device removal, the serials could be artificially incremented

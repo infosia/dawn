@@ -65,7 +65,7 @@ class Queue final : public d3d::Queue {
     MaybeError SubmitPendingCommandsImpl() override;
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;
     bool HasPendingCommands() const override;
-    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
+    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials(DeviceGuard& guard) override;
     void ForceEventualFlushOfCommands() override;
     MaybeError WaitForIdleForDestruction() override;
 

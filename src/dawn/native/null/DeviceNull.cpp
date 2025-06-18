@@ -333,7 +333,8 @@ MaybeError Device::SubmitPendingOperations() {
     }
     mPendingOperations.clear();
 
-    DAWN_TRY(GetQueue()->CheckPassedSerials());
+    auto guard = GetGuard();
+    DAWN_TRY(GetQueue()->CheckPassedSerials(guard));
 
     return {};
 }
@@ -452,7 +453,7 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
     return {};
 }
 
-ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
+ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials(DeviceGuard& guard) {
     return GetLastSubmittedCommandSerial();
 }
 
