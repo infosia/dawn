@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f43f49eb_c37aa892",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-18T13:18:03Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e3e5113_d8ce25ef",
+        "filename": "src/dawn/common/TypedInteger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-18T13:18:03Z",
+      "side": 1,
+      "message": "```suggestion\n#include \u003cutility\u003e\n\n#include \"dawn/common/Assert.h\"\n```",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0141e94_906f35d7",
+        "filename": "src/dawn/common/TypedInteger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-18T13:18:03Z",
+      "side": 1,
+      "message": "Can we associate this TODO with a bug and not a person?",
+      "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "906b6da4_74814fbd",
+        "filename": "src/dawn/common/TypedInteger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-18T13:18:03Z",
+      "side": 1,
+      "message": "optional nit: it\u0027s mildly unfortunate to include ostream in basically all of Dawn with this, is there a way to reduce header includes? (might not be practical unfortunately).",
+      "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e0a98a7_cbaa3697",
+        "filename": "src/dawn/tests/unittests/TypedIntegerTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-18T13:18:03Z",
+      "side": 1,
+      "message": "nit: that they can be cast explicitly. That\u0027s an important part ^^",
+      "revId": "4940aca9e8f6ee22abef8d798691907d981271a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
