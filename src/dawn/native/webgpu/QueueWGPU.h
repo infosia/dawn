@@ -51,7 +51,7 @@ class Queue final : public QueueBase {
                                uint64_t bufferOffset,
                                const void* data,
                                size_t size) override;
-    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
+    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials(DeviceGuard& guard) override;
     void ForceEventualFlushOfCommands() override;
     bool HasPendingCommands() const override;
     MaybeError SubmitPendingCommandsImpl() override;

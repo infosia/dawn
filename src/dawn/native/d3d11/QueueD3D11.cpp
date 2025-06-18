@@ -59,7 +59,7 @@ class MonitoredFenceQueue final : public Queue {
     using Queue::Queue;
     MaybeError Initialize();
     MaybeError NextSerial() override;
-    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
+    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials(DeviceGuard& guard) override;
     void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
 
   private:
@@ -72,7 +72,7 @@ class SystemEventQueue final : public Queue {
     using Queue::Queue;
     MaybeError Initialize();
     MaybeError NextSerial() override;
-    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
+    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials(DeviceGuard& guard) override;
     ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
     void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
 
@@ -108,7 +108,7 @@ class DelayFlushQueue final : public Queue {
     using Queue::Queue;
     MaybeError Initialize();
     MaybeError NextSerial() override;
-    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
+    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials(DeviceGuard& guard) override;
     ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
     void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
 
@@ -407,7 +407,8 @@ MaybeError MonitoredFenceQueue::NextSerial() {
     return {};
 }
 
-ResultOrError<ExecutionSerial> MonitoredFenceQueue::CheckAndUpdateCompletedSerials() {
+ResultOrError<ExecutionSerial> MonitoredFenceQueue::CheckAndUpdateCompletedSerials(
+    DeviceGuard& guard) {
     ExecutionSerial completedSerial = ExecutionSerial(mFence->GetCompletedValue());
     if (completedSerial == ExecutionSerial(UINT64_MAX)) [[unlikely]] {
         // GetCompletedValue returns UINT64_MAX if the device was removed.
@@ -465,7 +466,8 @@ MaybeError SystemEventQueue::NextSerial() {
     return {};
 }
 
-ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials() {
+ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials(
+    DeviceGuard& guard) {
     ExecutionSerial completedSerial;
     std::vector<SystemEventReceiver> returnedReceivers;
     // Check for completed events in the pending list.
@@ -657,7 +659,7 @@ MaybeError DelayFlushQueue::CheckPendingQueries(
     return {};
 }
 
-ResultOrError<ExecutionSerial> DelayFlushQueue::CheckAndUpdateCompletedSerials() {
+ResultOrError<ExecutionSerial> DelayFlushQueue::CheckAndUpdateCompletedSerials(DeviceGuard& guard) {
     ExecutionSerial completedSerial;
     {
         auto commandContext = GetScopedPendingCommandContext(SubmitMode::Passive);

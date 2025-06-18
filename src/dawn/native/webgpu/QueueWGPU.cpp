@@ -88,7 +88,7 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
     return {};
 }
 
-ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
+ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials(DeviceGuard& guard) {
     auto& wgpu = ToBackend(GetDevice())->wgpu;
     return mFuturesInFlight.Use([&](auto futuresInFlight) -> ResultOrError<ExecutionSerial> {
         ExecutionSerial fenceSerial(GetCompletedCommandSerial());
