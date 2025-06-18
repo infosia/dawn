@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60bf2a68_6304874d",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-18T18:28:15Z",
+      "side": 1,
+      "message": "The fact that our Windows builds are failing to load FXC seems to indicate that we are relying on system FXC, which surprises me. Am looking now to see why FXC isn\u0027t copied to the build directory, assuming that\u0027s the problem.",
+      "range": {
+        "startLine": 105,
+        "startChar": 12,
+        "endLine": 105,
+        "endChar": 48
+      },
+      "revId": "ca9cddfcf35b322bb720ea76814689ea1dd712ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
