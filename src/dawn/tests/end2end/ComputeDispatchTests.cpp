@@ -38,6 +38,57 @@ namespace {
 
 constexpr static std::initializer_list<uint32_t> kSentinelData{0, 0, 0};
 
+class ComputeRobustAccessTest : public DawnTest {};
+
+TEST_P(ComputeRobustAccessTest, BugOnMac) {
+    wgpu::ShaderModule module1 = utils::CreateShaderModule(device, R"(
+struct Result {
+  value: u32
+};
+@group(0) @binding(0) var<storage, read_write> result: Result;
+
+var<workgroup> s: vec3<bool>;
+@compute @workgroup_size(1)
+fn main() {
+  if (s[0]) {
+      result.value = 1u;
+  }
+}
+)");
+    wgpu::ComputePipelineDescriptor csDesc;
+    csDesc.compute.module = module1;
+    wgpu::ComputePipeline pipeline = device.CreateComputePipeline(&csDesc);
+
+    wgpu::BufferDescriptor desc = {};
+    desc.size = 4;
+    desc.usage =
+        wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::Storage | wgpu::BufferUsage::Uniform;
+    wgpu::Buffer resultBuffer = device.CreateBuffer(&desc);
+    wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                     {
+                                                         {0, resultBuffer},
+                                                     });
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+
+        commands = encoder.Finish();
+    }
+
+    queue.Submit(1, &commands);
+}
+
+DAWN_INSTANTIATE_TEST(ComputeRobustAccessTest,
+                      D3D12Backend({"use_tint_ir"}),
+                      MetalBackend(),
+                      VulkanBackend());
+
 class ComputeDispatchTests : public DawnTest {
   protected:
     void SetUp() override {
