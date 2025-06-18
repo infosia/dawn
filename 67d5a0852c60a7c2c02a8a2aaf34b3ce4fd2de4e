@@ -144,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9df1faa5_cf105a5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-18T21:53:15Z",
+      "side": 1,
+      "message": "I think one area that the recursive mutex would help a lot with in the current state is error handling. Whenever an error can occur on the device right now (and this is practically everywhere...), we either need to ensure we take the device lock before calling `ConsumedError`, or there is an assumption that the upper layer (i.e. generated code), already has the lock.\n\nWhat the recursive lock would allow us to do there is just take the lock in the `Device::ConsumeError` implementation no matter what. From what I can tell, that alone might allow us to take the lock in a lot less APIs since in a lot of them in some backends, we just need it in case we generate an error (which ideally isn\u0027t the common path).",
+      "parentUuid": "0ff40144_2bd6d2a4",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba729e51_c65f398e",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 29
