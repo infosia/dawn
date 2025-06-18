@@ -76,6 +76,7 @@
 #include "dawn/native/SharedBufferMemory.h"
 #include "dawn/native/SharedFence.h"
 #include "dawn/native/SharedTextureMemory.h"
+#include "dawn/native/SpirvValidation.h"
 #include "dawn/native/Surface.h"
 #include "dawn/native/SwapChain.h"
 #include "dawn/native/Texture.h"
@@ -2151,11 +2152,17 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
                                    Branch<ShaderSourceSPIRV, DawnShaderModuleSPIRVOptionsDescriptor,
                                           ShaderModuleCompilationOptions>>()));
 
-    // Module type specific validation.
+    // Module type specific validation, and dump shader source if required.
     switch (moduleType) {
         case wgpu::SType::ShaderSourceSPIRV: {
             DAWN_INVALID_IF(!TINT_BUILD_SPV_READER || IsToggleEnabled(Toggle::DisallowSpirv),
                             "SPIR-V is disallowed.");
+#ifdef TINT_BUILD_SPV_READER
+            if (IsToggleEnabled(Toggle::DumpShaders)) {
+                DumpSpirv(this, unpacked.Get<ShaderSourceSPIRV>()->code,
+                          unpacked.Get<ShaderSourceSPIRV>()->codeSize);
+            }
+#endif  // TINT_BUILD_SPV_READER
             break;
         }
         case wgpu::SType::ShaderSourceWGSL: {
@@ -2163,6 +2170,12 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
                                 !HasFeature(Feature::ShaderModuleCompilationOptions),
                             "Shader module compilation options used without %s enabled.",
                             wgpu::FeatureName::ShaderModuleCompilationOptions);
+            if (IsToggleEnabled(Toggle::DumpShaders)) {
+                std::ostringstream dumpedMsg;
+                dumpedMsg << "// Dumped WGSL:\n"
+                          << std::string_view(unpacked.Get<ShaderSourceWGSL>()->code) << "\n";
+                EmitLog(wgpu::LoggingType::Info, dumpedMsg.str().c_str());
+            }
             break;
         }
         default:
