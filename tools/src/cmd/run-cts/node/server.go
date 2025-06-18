@@ -124,9 +124,6 @@ func (c *cmd) runServer(
 				"--verbose",
 				"--gpu-provider-flag", "verbose=1")
 		}
-		if c.flags.unrollConstEvalLoops {
-			args = append(args, "--unroll-const-eval-loops")
-		}
 		if c.flags.compatibilityMode {
 			args = append(args, "--compat")
 		}
