@@ -382,8 +382,10 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         "Vulkan.CompileShaderToSPIRV");
 
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
-    DAWN_TRY(ValidateSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size(),
-                           GetDevice()->IsToggleEnabled(Toggle::DumpShaders)));
+    DAWN_TRY(ValidateSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size()));
+    if (GetDevice()->IsToggleEnabled(Toggle::DumpShaders)) {
+        DumpSpirv(GetDevice(), compilation->spirv.data(), compilation->spirv.size());
+    }
 #endif
 
     VkShaderModuleCreateInfo createInfo;
