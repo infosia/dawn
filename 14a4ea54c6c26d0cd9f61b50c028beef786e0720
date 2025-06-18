@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fffe5c5_de726494",
+        "filename": "src/tint/lang/spirv/reader/lower/shader_io.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-18T17:01:31Z",
+      "side": 1,
+      "message": "The \"always push, sometimes pop\" logic was a little subtle for me. Also this function is getting quite unwieldy. Can we pull this lambda out to a proper function and then pass the type and vectors down the stack?",
+      "revId": "14a4ea54c6c26d0cd9f61b50c028beef786e0720",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
