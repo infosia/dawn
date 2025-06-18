@@ -220,7 +220,7 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     return SubmitPendingCommandBuffer();
 }
 
-ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
+ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials(DeviceGuard& guard) {
     // Metal serials are updated via a thread owned by Metal so we don't actually need to do
     // anything, just return the latest completed serial.
     return GetCompletedCommandSerial();

@@ -56,7 +56,10 @@ class QueueMock : public QueueBase {
                 (override));
     MOCK_METHOD(void, DestroyImpl, (), (override));
 
-    MOCK_METHOD(ResultOrError<ExecutionSerial>, CheckAndUpdateCompletedSerials, (), (override));
+    MOCK_METHOD(ResultOrError<ExecutionSerial>,
+                CheckAndUpdateCompletedSerials,
+                (DeviceGuard&),
+                (override));
     MOCK_METHOD(bool, HasPendingCommands, (), (const, override));
     MOCK_METHOD(MaybeError, SubmitPendingCommandsImpl, (), (override));
     MOCK_METHOD(void, ForceEventualFlushOfCommands, (), (override));
