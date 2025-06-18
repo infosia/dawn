@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a344fbcf_3cd53503",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-18T15:29:38Z",
+      "side": 1,
+      "message": "LGTM, assuming the plan is to just revert this CL once we\u0027ve gotten confidence from CTS and landed the spec change?",
+      "revId": "a7e8a766661d736d074e50d85641f42d91d37a76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6f21474_54027c8c",
@@ -14,6 +31,24 @@
       "writtenOn": "2025-06-18T13:55:21Z",
       "side": 1,
       "message": "FWIW I\u0027ve tried adding a ResolverValidationTest test for this but I didn\u0027t find a way to make `allowed_features_.features.count(feature)` returns `false`.\n\n```\nTEST_F(ResolverValidationTest, TextureSampleLevel1d) {\n    // @group(0) @binding(0) var t : texture_1d\u003cf32\u003e;\n    // @group(0) @binding(1) var s : sampler;\n    GlobalVar(\"t\", ty.sampled_texture(core::type::TextureDimension::k1d, ty.f32()),\n                         Group(0_a), Binding(0_a));\n    GlobalVar(\"s\", ty.sampler(core::type::SamplerKind::kSampler), Group(0_a), Binding(1_a));\n\n    auto* call \u003d Call(\"textureSampleLevel\", \"t\", \"s\", 0_f, 0_f);\n    WrapInFunction(call);\n\n    EXPECT_FALSE(r()-\u003eResolve());\n    ...\n```",
+      "revId": "a7e8a766661d736d074e50d85641f42d91d37a76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16e6491c_bb3ab6fd",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-18T15:29:38Z",
+      "side": 1,
+      "message": "Yeah, we just unconditionally enable all features in the test helper:\nhttps://source.chromium.org/chromium/chromium/src/+/refs/tags/139.0.7208.0:third_party/dawn/src/tint/lang/wgsl/resolver/resolver_helper_test.cc;l\u003d35\n\nWe /could/ add a way to override the set of allowed features for a given test. Since this CL is (hopefully) going to be short-lived I\u0027m not too worried about the missing test coverage here.",
+      "parentUuid": "a6f21474_54027c8c",
       "revId": "a7e8a766661d736d074e50d85641f42d91d37a76",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
