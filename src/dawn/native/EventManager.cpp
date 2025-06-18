@@ -35,6 +35,7 @@
 
 #include "absl/strings/str_format.h"
 #include "dawn/common/Assert.h"
+#include "dawn/common/Defer.h"
 #include "dawn/common/FutureUtils.h"
 #include "dawn/common/Log.h"
 #include "dawn/native/ChainUtils.h"
@@ -163,7 +164,8 @@ void WaitQueueSerials(const QueueWaitSerialsMap& queueWaitSerials, Nanoseconds t
 
         auto* device = queue->GetDevice();
         {
-            auto deviceLock(device->GetScopedLock());
+            Defer defer;
+            auto guard = device->GetGuard(&defer);
             [[maybe_unused]] bool error = device->ConsumedError(
                 [&]() -> MaybeError {
                     if (waitSerial > queue->GetLastSubmittedCommandSerial()) {
@@ -179,15 +181,12 @@ void WaitQueueSerials(const QueueWaitSerialsMap& queueWaitSerials, Nanoseconds t
                                             queue->WaitForQueueSerial(waitSerial, timeout));
                         }
                         // Update completed serials.
-                        DAWN_TRY(queue->CheckPassedSerials());
+                        DAWN_TRY(queue->CheckPassedSerials(guard));
                     }
                     return {};
                 }(),
                 "waiting for work in %s.", queue.Get());
         }
-        // TODO(crbug.com/421945313): Checking and updating serials cannot hold the device-wide lock
-        // because it may cause user callbacks to fire.
-        queue->UpdateCompletedSerial(queue->GetCompletedCommandSerial());
     }
 }
 

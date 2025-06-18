@@ -452,7 +452,7 @@ MaybeError Queue::WriteBufferImpl(BufferBase* buffer,
     return {};
 }
 
-ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
+ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials(DeviceGuard& guard) {
     return GetLastSubmittedCommandSerial();
 }
 

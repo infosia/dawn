@@ -70,7 +70,7 @@ class Queue final : public QueueBase {
 
     bool HasPendingCommands() const override;
     MaybeError SubmitPendingCommandsImpl() override;
-    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
+    ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials(DeviceGuard& guard) override;
     void ForceEventualFlushOfCommands() override;
     MaybeError WaitForIdleForDestruction() override;
 
