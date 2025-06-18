@@ -34,7 +34,20 @@
 
 namespace dawn::native::d3d {
 
+enum HistogramDeviceLostValue {
+    kOK = 0,
+    kErrorDeviceHung,
+    kErrorDeviceRemoved,
+    kErrorDeviceReset,
+    kErrorDriverInternalError,
+    kErrorInvalidCall,
+    kErrorOther,
+    kErrorMaxEnumValue
+};
+
 const char* HRESULTAsString(HRESULT result);
+
+HistogramDeviceLostValue DeviceLostHistogramValueFromHRESULT(HRESULT result);
 
 constexpr HRESULT E_FAKE_ERROR_FOR_TESTING = MAKE_HRESULT(SEVERITY_ERROR, FACILITY_ITF, 0xFF);
 constexpr HRESULT E_FAKE_OUTOFMEMORY_ERROR_FOR_TESTING =
