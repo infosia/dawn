@@ -69,6 +69,7 @@ static constexpr Case kValidCases[] = {
      LanguageFeature::kReadonlyAndReadwriteStorageTextures},
     {"sized_binding_array", LanguageFeature::kSizedBindingArray},
     {"texel_buffers", LanguageFeature::kTexelBuffers},
+    {"texture_sample_level_1d", LanguageFeature::kTextureSampleLevel1d},
     {"unrestricted_pointer_parameters", LanguageFeature::kUnrestrictedPointerParameters},
 };
 
