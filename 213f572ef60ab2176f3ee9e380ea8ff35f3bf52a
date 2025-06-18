@@ -45,6 +45,30 @@
       },
       "revId": "213f572ef60ab2176f3ee9e380ea8ff35f3bf52a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a10f24eb_923ac20d",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-18T17:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd39abd6_80813a59",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 24
+      },
+      "revId": "213f572ef60ab2176f3ee9e380ea8ff35f3bf52a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
