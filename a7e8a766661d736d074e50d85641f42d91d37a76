@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6f21474_54027c8c",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2067,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-18T13:55:21Z",
+      "side": 1,
+      "message": "FWIW I\u0027ve tried adding a ResolverValidationTest test for this but I didn\u0027t find a way to make `allowed_features_.features.count(feature)` returns `false`.\n\n```\nTEST_F(ResolverValidationTest, TextureSampleLevel1d) {\n    // @group(0) @binding(0) var t : texture_1d\u003cf32\u003e;\n    // @group(0) @binding(1) var s : sampler;\n    GlobalVar(\"t\", ty.sampled_texture(core::type::TextureDimension::k1d, ty.f32()),\n                         Group(0_a), Binding(0_a));\n    GlobalVar(\"s\", ty.sampler(core::type::SamplerKind::kSampler), Group(0_a), Binding(1_a));\n\n    auto* call \u003d Call(\"textureSampleLevel\", \"t\", \"s\", 0_f, 0_f);\n    WrapInFunction(call);\n\n    EXPECT_FALSE(r()-\u003eResolve());\n    ...\n```",
+      "revId": "a7e8a766661d736d074e50d85641f42d91d37a76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
