@@ -2436,6 +2436,10 @@ Mutex::AutoLock DeviceBase::GetScopedLock() {
     return Mutex::AutoLock(mMutex.Get());
 }
 
+DeviceGuard DeviceBase::GetGuard(Defer* defer) {
+    return DeviceGuard(this, mMutex, defer);
+}
+
 bool DeviceBase::IsLockedByCurrentThreadIfNeeded() const {
     return mMutex == nullptr || mMutex->IsLockedByCurrentThread();
 }

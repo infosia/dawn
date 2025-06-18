@@ -46,6 +46,7 @@
 #include "dawn/native/Commands.h"
 #include "dawn/native/ComputePipeline.h"
 #include "dawn/native/CreatePipelineAsyncEvent.h"
+#include "dawn/native/DeviceGuard.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/ErrorSink.h"
 #include "dawn/native/ExecutionQueue.h"
@@ -411,6 +412,7 @@ class DeviceBase : public ErrorSink,
     // This lock won't guarantee the wrapped mutex will be alive if the Device is deleted before the
     // AutoLock. It would crash if such thing happens.
     [[nodiscard]] Mutex::AutoLock GetScopedLock();
+    [[nodiscard]] DeviceGuard GetGuard(Defer* defer = nullptr);
 
     // This method returns true if Feature::ImplicitDeviceSynchronization is turned on and the
     // device is locked by current thread. This method is only enabled when DAWN_ENABLE_ASSERTS is

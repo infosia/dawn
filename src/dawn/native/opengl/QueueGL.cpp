@@ -280,7 +280,7 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     return {};
 }
 
-ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
+ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials(DeviceGuard& guard) {
     return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<ExecutionSerial> {
         ExecutionSerial fenceSerial{0};
         while (!fencesInFlight->empty()) {

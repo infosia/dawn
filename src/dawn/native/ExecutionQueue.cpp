@@ -47,19 +47,15 @@ ExecutionSerial ExecutionQueueBase::GetCompletedCommandSerial() const {
     return ExecutionSerial(mCompletedSerial.load(std::memory_order_acquire));
 }
 
-MaybeError ExecutionQueueBase::CheckPassedSerials() {
+MaybeError ExecutionQueueBase::CheckPassedSerials(DeviceGuard& guard) {
     ExecutionSerial completedSerial;
-    DAWN_TRY_ASSIGN(completedSerial, CheckAndUpdateCompletedSerials());
+    DAWN_TRY_ASSIGN(completedSerial, CheckAndUpdateCompletedSerials(guard));
 
     DAWN_ASSERT(completedSerial <=
                 ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire)));
 
-    // Atomically set mCompletedSerial to completedSerial if completedSerial is larger.
-    FetchMax(mCompletedSerial, uint64_t(completedSerial));
-
-    // TODO(crbug.com/421945313): We should call |UpdateCompletedSerial| here also, but since some
-    // backends rely on the device lock for safe use of |CheckAndUpdateCompletedSerials|, we
-    // separate that call out for now.
+    // Update the serial once we are not longer holding the device lock.
+    guard.Defer([&, completedSerial]() { UpdateCompletedSerial(completedSerial); });
     return {};
 }
 
