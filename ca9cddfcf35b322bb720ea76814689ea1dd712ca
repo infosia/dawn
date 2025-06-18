@@ -46,6 +46,30 @@
       },
       "revId": "ca9cddfcf35b322bb720ea76814689ea1dd712ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee65a644_8539f996",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-18T18:52:47Z",
+      "side": 1,
+      "message": "Okay, looking more carefully at the compilation steps, we can see that the FXC DLL is being copied:\n\n```\n[9/5573] 2.73s S COPY \"../../third_party/depot_tools/win_toolchain/vs_files/68a20d6dee/Windows Kits/10/Redist/D3D/x64/d3dcompiler_47.dll\" d3dcompiler_47.dll\n```\n\nThis doesn\u0027t show _where_, but normally this would be in the build output directory. See the stdout from Step 7, for example, here: https://ci.chromium.org/ui/p/dawn/builders/try/win-clang-rel-x64/b8711767521115790977/overview",
+      "parentUuid": "05c59656_0ad5bfa6",
+      "range": {
+        "startLine": 105,
+        "startChar": 12,
+        "endLine": 105,
+        "endChar": 48
+      },
+      "revId": "ca9cddfcf35b322bb720ea76814689ea1dd712ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
