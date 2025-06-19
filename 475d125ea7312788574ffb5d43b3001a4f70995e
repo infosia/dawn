@@ -33,6 +33,148 @@
       "message": "PTAL it makes the CL higher in the stack pass!",
       "revId": "475d125ea7312788574ffb5d43b3001a4f70995e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0475c424_8c7fd92a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-19T21:56:14Z",
+      "side": 1,
+      "message": "LGTM, just nits.",
+      "revId": "475d125ea7312788574ffb5d43b3001a4f70995e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5620aaa_0d6474e5",
+        "filename": "src/tint/lang/spirv/writer/raise/keep_binding_array_as_pointer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-19T21:56:14Z",
+      "side": 1,
+      "message": "Nit: b.LoadWithResult(access-\u003eDetachResult(), element_ptr)\n\nThis is more efficient than the `ReplaceAllUsesWith` below, as it avoids creating a new `InstructionResult` and then repointing all uses at the new one.",
+      "fixSuggestions": [
+        {
+          "fixId": "a0fb5dd5_56387465",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/raise/keep_binding_array_as_pointer.cc",
+              "range": {
+                "startLine": 80,
+                "startChar": 0,
+                "endLine": 83,
+                "endChar": 0
+              },
+              "replacement": "                            b.LoadWithResult(access-\u003eDetachResult(), element_ptr);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "475d125ea7312788574ffb5d43b3001a4f70995e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30af5c0d_9f1177d6",
+        "filename": "src/tint/lang/spirv/writer/raise/keep_binding_array_as_pointer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-19T21:56:14Z",
+      "side": 1,
+      "message": "BTW you can also write `b.Zero\u003cvec2\u003cu32\u003e\u003e()` instead of the splat.",
+      "fixSuggestions": [
+        {
+          "fixId": "73c1b8e7_fa35350e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/raise/keep_binding_array_as_pointer_test.cc",
+              "range": {
+                "startLine": 52,
+                "startChar": 0,
+                "endLine": 53,
+                "endChar": 0
+              },
+              "replacement": "        b.Call(ty.vec4\u003cf32\u003e(), core::BuiltinFn::kTextureLoad, t, b.Zero\u003cty::vec2\u003cu32\u003e\u003e(), 0_u);\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/writer/raise/keep_binding_array_as_pointer_test.cc",
+              "range": {
+                "startLine": 87,
+                "startChar": 0,
+                "endLine": 88,
+                "endChar": 0
+              },
+              "replacement": "        b.Call(ty.vec4\u003cf32\u003e(), core::BuiltinFn::kTextureLoad, t, b.Zero\u003cty::vec2\u003cu32\u003e\u003e(), 0_u);\n"
+            },
+            {
+              "path": "src/tint/lang/spirv/writer/raise/keep_binding_array_as_pointer_test.cc",
+              "range": {
+                "startLine": 126,
+                "startChar": 0,
+                "endLine": 129,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "475d125ea7312788574ffb5d43b3001a4f70995e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a5ec489_f6c21f67",
+        "filename": "src/tint/lang/spirv/writer/raise/keep_binding_array_as_pointer_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-19T21:56:14Z",
+      "side": 1,
+      "message": "Looks like notes to yourself?",
+      "fixSuggestions": [
+        {
+          "fixId": "787e7a20_9a8cd7bc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/writer/raise/keep_binding_array_as_pointer_test.cc",
+              "range": {
+                "startLine": 126,
+                "startChar": 0,
+                "endLine": 129,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "475d125ea7312788574ffb5d43b3001a4f70995e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
