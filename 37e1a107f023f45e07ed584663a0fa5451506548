@@ -16,6 +16,24 @@
       "message": "A `bool` has size and align of `1` in MSL, but `u32` is `4` and `4`. Do we know what size is expected here?",
       "revId": "37e1a107f023f45e07ed584663a0fa5451506548",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9819309_31c1d0f4",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-19T17:34:02Z",
+      "side": 1,
+      "message": "WGSL specifies `bool` as `4` and `4`, so this just makes the MSL we generate match what is expected from the perspective of the WGSL shader.",
+      "parentUuid": "4be5675b_83c2cf46",
+      "revId": "37e1a107f023f45e07ed584663a0fa5451506548",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
