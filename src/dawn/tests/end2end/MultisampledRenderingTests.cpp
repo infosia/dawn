@@ -2628,6 +2628,53 @@ TEST_P(DawnLoadResolveTextureTest, ExpandResolve) {
                         /*msaaCoverage=*/1.0f, /*x=*/2, /*y=*/1);
 }
 
+// Test RenderPassDescriptorResolveRect works correctly when rendering with
+// LoadOp::ExpandResolveTexture but without RenderPassDescriptorResolveRect.
+TEST_P(DawnLoadResolveTextureTest, ExpandResolveWithoutPartialResolveRect) {
+    DAWN_TEST_UNSUPPORTED_IF(!SupportsFeatures({wgpu::FeatureName::DawnPartialLoadResolveTexture}));
+
+    const uint32_t approxMsaaWidth = 4;
+    const uint32_t approxMsaaHeight = 4;
+    auto approxMultiSampledTexture =
+        CreateTextureForRenderAttachment(kColorFormat, 4, 1, 1,
+                                         /*transientAttachment=*/false,
+                                         /*supportsTextureBinding=*/false,
+                                         /*supportsCopyDst=*/false,
+                                         /*width*/ approxMsaaWidth,
+                                         /*height*/ approxMsaaHeight);
+    auto approxMultiSampledTextureView = approxMultiSampledTexture.CreateView();
+
+    auto singleSampledTexture =
+        CreateTextureForRenderAttachment(kColorFormat, 1, 1, 1, /*transientAttachment=*/false,
+                                         /*supportsTextureBinding=*/true);
+    auto singleSampledTextureView = singleSampledTexture.CreateView();
+
+    wgpu::CommandEncoder commandEncoder = device.CreateCommandEncoder();
+    wgpu::RenderPipeline pipeline = CreateRenderPipelineWithOneOutputForTest(
+        /*testDepth=*/false, /*sampleMask=*/0xFFFFFFFF, /*alphaToCoverageEnabled=*/false,
+        /*flipTriangle=*/false, /*enableExpandResolveLoadOp=*/true);
+
+    // Draw a green triangle with LoadOp::ExpandResolveTexture, but not specify a scissor rect.
+    {
+        utils::ComboRenderPassDescriptor renderPass = CreateComboRenderPassDescriptorForTest(
+            {approxMultiSampledTextureView}, {singleSampledTextureView},
+            wgpu::LoadOp::ExpandResolveTexture, wgpu::LoadOp::Clear,
+            /*hasDepthStencilAttachment=*/false);
+        renderPass.cColorAttachments[0].storeOp = wgpu::StoreOp::Store;
+        EncodeRenderPassForTest(commandEncoder, renderPass, pipeline, kGreen);
+    }
+
+    wgpu::CommandBuffer commandBuffer = commandEncoder.Finish();
+    queue.Submit(1, &commandBuffer);
+
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/1, /*y=*/0);
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/2, /*y=*/0);
+    VerifyResolveTarget(kGreen, singleSampledTexture, /*mipmapLevel=*/0, /*arrayLayer=*/0,
+                        /*msaaCoverage=*/1.0f, /*x=*/2, /*y=*/1);
+}
+
 // Test RenderPassDescriptorResolveRect works correctly when rendering at different offset with
 // LoadOp::ExpandResolveTexture.
 TEST_P(DawnLoadResolveTextureTest, ExpandResolveDifferentOffset) {
