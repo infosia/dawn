@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c798dfe_3103bc07",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:26:13Z",
+      "side": 1,
+      "message": "Can we comment about that in the new header file?",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aed65fd9_4e8929ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:26:13Z",
+      "side": 1,
+      "message": "LGTM, this is extremely nice!",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fe898f9_3427873c",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:26:13Z",
+      "side": 1,
+      "message": "What is this second template parameter used for in practice?",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d12f9079_8a3c722c",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:26:13Z",
+      "side": 1,
+      "message": "I\u0027m not 100% sure of the value of having this be a template, but also if it weren\u0027t a template, we could have the conversion from/to Origin3D/Extent3D only for the Texel version as they always are in texels in webgpu.h",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "191a8463_9287df51",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:26:13Z",
+      "side": 1,
+      "message": "We could replace Format.h\u0027s TexelBlockInfo with this one, and keep the member variables untyped for now. (also the implementation of methods can be in a cpp file)",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "303c0647_5f0e4c74",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:26:13Z",
+      "side": 1,
+      "message": "We could also have the same conversions from/to for extents and origins.",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbd61781_7da488e7",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:26:13Z",
+      "side": 1,
+      "message": "You mentioned a follow-up where most things would stay in blocks during computation, I believe this would remove some of the verbosity added in this CL.",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af03b76a_ff9d9aa4",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:26:13Z",
+      "side": 1,
+      "message": "```suggestion\n// TODO(424536624): Return a BlockOrigin3D\nTexelOrigin3D ComputeTexelOffsets(const TypedTexelBlockInfo\u0026 blockInfo,\n```",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 71
+      },
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a395375_aca6fac0",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:26:13Z",
+      "side": 1,
+      "message": "But also we\u0027d compute in blocks only.",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1eaa3d36_b0a0a8ff",
+        "filename": "src/dawn/tests/unittests/d3d12/CopySplitTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:26:13Z",
+      "side": 1,
+      "message": "```suggestion\n                // TOOD(425944899): add overload of RequiredBytesInCopy that accepts strong types\n```",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
