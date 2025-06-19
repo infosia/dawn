@@ -61,6 +61,8 @@ VkMemoryPropertyFlags GetRequiredMemoryPropertyFlags(MemoryKind memoryKind, bool
 
     // Mappable resource must be host visible and host coherent.
     if (mappable) {
+        // Nothing checks if HOST_CACHED memory is usable for mappable buffers.
+        DAWN_ASSERT(!(memoryKind & MemoryKind::HostCached));
         vkFlags |= VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
         vkFlags |= VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
     }
@@ -85,7 +87,7 @@ bool SupportsBufferMapExtendedUsages(const VulkanDeviceInfo& deviceInfo) {
     // memory property flags.
     constexpr VkMemoryPropertyFlags kMapExtendedUsageMemoryPropertyFlags =
         VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT | VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
-        VK_MEMORY_PROPERTY_HOST_COHERENT_BIT | VK_MEMORY_PROPERTY_HOST_CACHED_BIT;
+        VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
     for (const auto& memoryType : deviceInfo.memoryTypes) {
         if ((memoryType.propertyFlags & kMapExtendedUsageMemoryPropertyFlags) ==
             kMapExtendedUsageMemoryPropertyFlags) {
