@@ -84,6 +84,30 @@
       ],
       "revId": "644f85dc680e8046884bcbd620461bb22a8a6341",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "236bb185_650a668c",
+        "filename": "src/dawn/common/SystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-06-19T16:39:07Z",
+      "side": 1,
+      "message": "Done. Since the __ImageBase declaration already describes its purpose and links to the article, I trimmed the comment in the function itself to just the essentials.",
+      "parentUuid": "b7b59966_5b28aedb",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 66
+      },
+      "revId": "644f85dc680e8046884bcbd620461bb22a8a6341",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
