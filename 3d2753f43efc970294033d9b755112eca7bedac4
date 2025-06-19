@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93e5f17b_f6df75b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T01:20:18Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3eb0c698_1cd9d819",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T01:20:18Z",
+      "side": 1,
+      "message": "nit: return something like `{}` or `{{}}` or `{nullptr}` (whatever works) in this case so it\u0027s easier to tell it\u0027s null.",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "229a171f_97f071a1",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T01:20:18Z",
+      "side": 1,
+      "message": "same",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0f01a17_56aad21a",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T01:20:18Z",
+      "side": 1,
+      "message": "with Get*MappedRange?",
+      "range": {
+        "startLine": 207,
+        "startChar": 11,
+        "endLine": 207,
+        "endChar": 15
+      },
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74e4d1e0_c78b7b52",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T01:20:18Z",
+      "side": 1,
+      "message": "nit: probably could always use acq/rel instead of the default seq_cst",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1462caa8_2ec62be9",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T01:20:18Z",
+      "side": 1,
+      "message": "nit: this shouldn\u0027t be needed anymore, we fixed the cmake bots",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "587c9ef1_40b2adcb",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T01:20:18Z",
+      "side": 1,
+      "message": "nit: instead of `[[maybe_unused]]` can we assert the value of this? or could it be either?",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

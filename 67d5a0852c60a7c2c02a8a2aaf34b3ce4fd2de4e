@@ -162,6 +162,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e2013555_3b1dda70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T01:20:18Z",
+      "side": 1,
+      "message": "I don\u0027t have any better idea than anyone else here about whether a recursive mutex would save pain in general. It does sound like it would help for ConsumeError cases. However I am not sure if it would have helped with the problem in this CL - in the earlier version we tried to introduced a finer-grained lock for the buffer state struct, but getting this correct while a device lock also exists was incredibly hard, hence switching to protecting only the buffer state enum with an atomic.",
+      "parentUuid": "9df1faa5_cf105a5b",
+      "revId": "67d5a0852c60a7c2c02a8a2aaf34b3ce4fd2de4e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ba729e51_c65f398e",
         "filename": "src/dawn/native/Buffer.cpp",
         "patchSetId": 29
