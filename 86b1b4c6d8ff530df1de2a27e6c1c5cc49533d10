@@ -33,6 +33,24 @@
       "message": "```suggestion\n// is being relied on for computing buffer offsets and such.\n```",
       "revId": "86b1b4c6d8ff530df1de2a27e6c1c5cc49533d10",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c628a04_849f030a",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T15:25:29Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "d8d4a3aa_b3918138",
+      "revId": "86b1b4c6d8ff530df1de2a27e6c1c5cc49533d10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
