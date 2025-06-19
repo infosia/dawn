@@ -33,6 +33,24 @@
       "message": "The implicit stride is the element size rounded up to a multiple of the element alignment.\n\ne.g. `vec3\u003cu32\u003e` has a size of 12, but `array\u003cvec3\u003cu32\u003e\u003e` has a stride of 16.",
       "revId": "dd4b501dee038c9ab8adbc37f6af1d8eabc1837c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9863e98e_b62d6b88",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T17:16:36Z",
+      "side": 1,
+      "message": "Which implicit stride? The `array_stride` is what is provided by SPIR-V in the `ArrayStride` decoration, so it can be.... whatever.\n\nOr, is the suggestion to change the `Size` side of the equation to round up to the element alignment?",
+      "parentUuid": "c288dd5d_224e086f",
+      "revId": "dd4b501dee038c9ab8adbc37f6af1d8eabc1837c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
