@@ -16,6 +16,29 @@
       "message": "PTAL!",
       "revId": "91727825dd1c1ddbfd0c00a9bab5f98e4535b867",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20de94ef_63b3f880",
+        "filename": "src/dawn/tests/end2end/BindingArrayTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T15:39:22Z",
+      "side": 1,
+      "message": "We should consider making this the default.",
+      "range": {
+        "startLine": 478,
+        "startChar": 37,
+        "endLine": 478,
+        "endChar": 48
+      },
+      "revId": "91727825dd1c1ddbfd0c00a9bab5f98e4535b867",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
