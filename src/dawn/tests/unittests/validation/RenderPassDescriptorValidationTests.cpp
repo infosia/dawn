@@ -2081,6 +2081,23 @@ TEST_F(DawnPartialLoadResolveTextureValidationTest, ExpandResolveRectValid) {
     AssertBeginRenderPassSuccess(&renderPass);
 }
 
+// Test that using a valid ExpandResolveRect without LoadOp::ExpandResolveTexture doesn't raise
+// any error.
+TEST_F(DawnPartialLoadResolveTextureValidationTest, ExpandResolveWithoutPartialResolveRectValid) {
+    auto multisampledTexture = CreateTexture(
+        device, wgpu::TextureDimension::e2D, kColorFormat, kSize + 1, kSize + 1, kArrayLayers,
+        kLevelCount, /*sampleCount=*/4, wgpu::TextureUsage::RenderAttachment);
+
+    // Create a resolve texture with sample count = 1.
+    auto resolveTarget = CreateCompatibleResolveTextureView();
+
+    auto renderPass = CreateMultisampledRenderPass();
+    renderPass.cColorAttachments[0].view = multisampledTexture.CreateView();
+    renderPass.cColorAttachments[0].resolveTarget = resolveTarget;
+    renderPass.cColorAttachments[0].loadOp = wgpu::LoadOp::ExpandResolveTexture;
+    AssertBeginRenderPassSuccess(&renderPass);
+}
+
 // Test that using a valid ExpandResolveRect with LoadOp::ExpandResolveTexture, jointed with another
 // attachment without LoadOp::ExpandResolveTexture doesn't raise any error.
 TEST_F(DawnPartialLoadResolveTextureValidationTest, ExpandResolveRectMixedLoadOpsValid) {
