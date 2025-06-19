@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d6e097dd_4ee0732f",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T13:42:05Z",
+      "side": 1,
+      "message": "Is that mostly useful for tests? If we keep the implicit constructor from `Origin3D `we can do `TexelOrigin3D({1, 2, 3})` which isn\u0027t terrible. Likewise IMHO we should expose easier constructors only on `Texel*` to avoid mistakenly creating block values. (most folks think in texels, and if things are in blocks, the types will force use of blocks).",
+      "parentUuid": "9c9bffed_7d2821ab",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d12f9079_8a3c722c",
         "filename": "src/dawn/native/BlockInfo.h",
         "patchSetId": 11
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "That\u0027s a fair point. In fact, currently I have no instances of BlockOrigin3D or BlockExtent3D, although I think we will in a future CL. I suggest we keep this as is until I do the \"use blocks everywhere\" pass we discussed, and let\u0027s see what it looks like?",
       "parentUuid": "d12f9079_8a3c722c",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07296b0f_34155c5d",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T13:42:05Z",
+      "side": 1,
+      "message": "Or reintroduce the constructors there if needed? I think it would be a logic mistake if someone takes an `Origin3D` and makes a `BlockOrigin3D` from it directly. We can make the following work: `BlockOrigin3D foo \u003d blockInfo.ToBlock(myOrigin3D)` (using the implicit constructor of `TexelOrigin3D` from `Origin3D`) though.",
+      "parentUuid": "1e8c8845_dbdf10a2",
       "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -158,6 +194,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e0ce3f0_42cf2af0",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T13:42:05Z",
+      "side": 1,
+      "message": "Ack! Can we have a plan to replace it eventually?",
+      "parentUuid": "94c3210d_16b00078",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "303c0647_5f0e4c74",
@@ -189,6 +243,24 @@
       "side": 1,
       "message": "Ah, so you mean bring the conversion functions into the BlockInfo class, rather than as constructors/members of the extents and origin classes? We could do, although we would lose the implicit constructor we have right now, which simplifies the change.",
       "parentUuid": "303c0647_5f0e4c74",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aa50dd0_7d071d91",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T13:42:05Z",
+      "side": 1,
+      "message": "I should have been more clear, I meant:\n\n```\nTexelOrigin3D ToTexel(BlockOrigin3D)\nBlockOrigin3D ToBlock(TexelOrigin3D)\nTexelExtent3D ToTexel(BlockExtent3D)\nBlockExtent3D ToBlock(TexelExtent3D)\n```",
+      "parentUuid": "1e0ee13d_25043a97",
       "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -282,6 +354,24 @@
       "side": 1,
       "message": "That\u0027s true. I\u0027m still on the fence on whether the next step is to replace the args, as I state in this TODO, and fix all the call sites, or whether to go blocks right away, which would also affect the args and call sites. I guess going straight to blocks would be less code churn.",
       "parentUuid": "3a395375_aca6fac0",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "919d8f1b_3f9b20b1",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T13:42:05Z",
+      "side": 1,
+      "message": "Probably yes.",
+      "parentUuid": "dab58999_ca0cca45",
       "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
