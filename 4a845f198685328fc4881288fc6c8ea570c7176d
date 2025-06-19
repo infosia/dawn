@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78bb68c0_c462121b",
+        "filename": "src/dawn/common/SystemUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T13:44:19Z",
+      "side": 0,
+      "message": "Can you put this comment back?",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 42
+      },
+      "revId": "4a845f198685328fc4881288fc6c8ea570c7176d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
