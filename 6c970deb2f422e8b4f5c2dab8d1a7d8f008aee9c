@@ -178,6 +178,24 @@
       "parentUuid": "fcf48a07_0931383e",
       "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6acc834_12d178b4",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 28
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-19T14:29:36Z",
+      "side": 1,
+      "message": "Correct. I can add a comment detailing this more because we wont remember.",
+      "parentUuid": "872c181e_48299717",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
