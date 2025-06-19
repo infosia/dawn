@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4be5675b_83c2cf46",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T17:12:55Z",
+      "side": 1,
+      "message": "A `bool` has size and align of `1` in MSL, but `u32` is `4` and `4`. Do we know what size is expected here?",
+      "revId": "37e1a107f023f45e07ed584663a0fa5451506548",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
