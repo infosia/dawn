@@ -16,6 +16,29 @@
       "message": "Thanks for your comments！",
       "revId": "83d10d9c63f76fff22c7ad6c52f5fa2f1fec311a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f51bf0c_effe7b41",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T07:45:15Z",
+      "side": 1,
+      "message": "nit: these entrypoints are not necessary to specify as webgpu will select the only entry point of the correct stage if there is only one.",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "83d10d9c63f76fff22c7ad6c52f5fa2f1fec311a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
