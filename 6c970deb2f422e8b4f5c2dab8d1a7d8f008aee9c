@@ -146,6 +146,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf9fb51a_94d08df4",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant_test.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-19T23:36:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9a2f0cd_3840b45c",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41b48b86_55b39a26",
@@ -159,6 +177,24 @@
       "writtenOn": "2025-06-19T01:17:23Z",
       "side": 1,
       "message": "Is this just `expect \u003d src;` ?",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e5ae7dc_4200387c",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant_test.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-19T23:36:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41b48b86_55b39a26",
       "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -230,6 +266,24 @@
       "side": 1,
       "message": "Correct. I can add a comment detailing this more because we wont remember.",
       "parentUuid": "872c181e_48299717",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae63bf49_af31a693",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 28
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-19T23:36:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6acc834_12d178b4",
       "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
