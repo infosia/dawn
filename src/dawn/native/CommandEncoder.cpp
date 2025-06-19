@@ -208,16 +208,6 @@ class RenderPassValidationState final : public NonMovable {
                                     "The resolve target %s used as resolve target is from a "
                                     "multi-planar texture. It is not supported by dawn yet.",
                                     attachment);
-                    // RenderPassDescriptorResolveRect relaxes the requirement for the color
-                    // attachment texture size to match the resolve texture size.
-                    if (!mExpandResolveRect) {
-                        DAWN_INVALID_IF(
-                            renderSize.width != mRenderWidth || renderSize.height != mRenderHeight,
-                            "The resolve target %s size (width: %u, height: %u) does not match the "
-                            "size of the other attachments (width: %u, height: %u).",
-                            attachment, renderSize.width, renderSize.height, mRenderWidth,
-                            mRenderHeight);
-                    }
                     break;
                 }
                 case AttachmentType::DepthStencilAttachment: {
