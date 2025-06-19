@@ -143,6 +143,78 @@ TEST_F(SpirvParserTest, CompositeConstruct_Array) {
 )");
 }
 
+TEST_F(SpirvParserTest, CompositeConstruct_Array_ArrayStride_EqualsElementSize) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpDecorate %arr_ty ArrayStride 4
+       %void = OpTypeVoid
+        %u32 = OpTypeInt 32 0
+    %ep_type = OpTypeFunction %void
+      %u32_1 = OpConstant %u32 1
+      %u32_2 = OpConstant %u32 2
+      %u32_3 = OpConstant %u32 3
+      %u32_4 = OpConstant %u32 4
+     %arr_ty = OpTypeArray %u32 %u32_4
+    %fn_type = OpTypeFunction %arr_ty
+       %main = OpFunction %void None %ep_type
+ %main_start = OpLabel
+               OpReturn
+               OpFunctionEnd
+
+        %foo = OpFunction %arr_ty None %fn_type
+  %foo_start = OpLabel
+        %arr = OpCompositeConstruct %arr_ty %u32_1 %u32_2 %u32_3 %u32_4
+               OpReturnValue %arr
+               OpFunctionEnd
+)",
+              R"(
+%2 = func():array<u32, 4> {
+  $B2: {
+    %3:array<u32, 4> = construct 1u, 2u, 3u, 4u
+    ret %3
+  }
+)");
+}
+
+TEST_F(SpirvParserTest, CompositeConstruct_Array_ArrayStride) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpDecorate %arr_ty ArrayStride 16
+       %void = OpTypeVoid
+        %u32 = OpTypeInt 32 0
+    %ep_type = OpTypeFunction %void
+      %u32_1 = OpConstant %u32 1
+      %u32_2 = OpConstant %u32 2
+      %u32_3 = OpConstant %u32 3
+      %u32_4 = OpConstant %u32 4
+     %arr_ty = OpTypeArray %u32 %u32_4
+    %fn_type = OpTypeFunction %arr_ty
+       %main = OpFunction %void None %ep_type
+ %main_start = OpLabel
+               OpReturn
+               OpFunctionEnd
+
+        %foo = OpFunction %arr_ty None %fn_type
+  %foo_start = OpLabel
+        %arr = OpCompositeConstruct %arr_ty %u32_1 %u32_2 %u32_3 %u32_4
+               OpReturnValue %arr
+               OpFunctionEnd
+)",
+              R"(
+%2 = func():spirv.explicit_layout_array<u32, 4> {
+  $B2: {
+    %3:spirv.explicit_layout_array<u32, 4> = construct 1u, 2u, 3u, 4u
+    ret %3
+  }
+)");
+}
+
 TEST_F(SpirvParserTest, CompositeConstruct_ArrayOfVec) {
     EXPECT_IR(R"(
                OpCapability Shader
