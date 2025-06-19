@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "46afc064_7771a957",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T01:17:23Z",
+      "side": 1,
+      "message": "```suggestion\n     {\"metal_disable_module_constant_f16\",\n```",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a4a67b4c_369b5bcd",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T01:17:23Z",
+      "side": 1,
+      "message": "```suggestion\n    // types on Intel.\n```",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "21159d03_f7fe20c4",
         "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
         "patchSetId": 28
@@ -20,6 +54,74 @@
         "endLine": 50,
         "endChar": 24
       },
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a276a0b_7a4dacbe",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T01:17:23Z",
+      "side": 1,
+      "message": "Is this check necessary? I don\u0027t think the deepest element could ever match the type if it\u0027s gotten here?",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9a2f0cd_3840b45c",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant_test.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T01:17:23Z",
+      "side": 1,
+      "message": "Maybe a test for `vec2\u003cf16\u003e` and `mat2x3\u003cf16\u003e`?",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41b48b86_55b39a26",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant_test.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T01:17:23Z",
+      "side": 1,
+      "message": "Is this just `expect \u003d src;` ?",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adbcbc95_7a878585",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 28
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T01:17:23Z",
+      "side": 1,
+      "message": "Do we need to disable the transform on vulkan arm? So these don\u0027t start failing?",
       "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

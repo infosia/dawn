@@ -22,6 +22,30 @@
       },
       "revId": "cc9e5940c601a6654bce26946ffed521c63b52e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2846bcad_33a36ccc",
+        "filename": "tools/src/cmd/run-cts/node/cmd.go",
+        "patchSetId": 28
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T01:17:23Z",
+      "side": 0,
+      "message": "I\u0027m fine removing it in this CL if you want, if you\u0027d prefer to wait that\u0027s also fine by me.",
+      "parentUuid": "c6d7dcca_0fc29bff",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 26
+      },
+      "revId": "cc9e5940c601a6654bce26946ffed521c63b52e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
