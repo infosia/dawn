@@ -78,12 +78,12 @@ TypedTexelBlockInfo ToTypedTexelBlockInfo(const TextureSpec& textureSpec) {
 }
 
 // TODO(425944899): Store TexelOrigin3D in TextureSpec
-TexelOrigin3D ToTOrigin3D(const TextureSpec& textureSpec) {
+TexelOrigin3D ToTexelOrigin3D(const TextureSpec& textureSpec) {
     return TexelOrigin3D{textureSpec.x, textureSpec.y, textureSpec.z};
 }
 
 // TODO(425944899): Store TexelExtent3D in TextureSpec
-TexelExtent3D ToTExtent3D(const TextureSpec& textureSpec) {
+TexelExtent3D ToTexelExtent3D(const TextureSpec& textureSpec) {
     return TexelExtent3D{textureSpec.width, textureSpec.height, textureSpec.depthOrArrayLayers};
 }
 
@@ -765,14 +765,14 @@ class CopySplitTest : public testing::TestWithParam<CopySplitTestParam> {
                 }
                 if (relaxed) {
                     copySplit = Compute2DTextureCopySubresourceWithRelaxedRowPitchAndOffset(
-                        ToTOrigin3D(textureSpec).ToOrigin3D(),
-                        ToTExtent3D(textureSpec).ToExtent3D(),
+                        ToTexelOrigin3D(textureSpec).ToOrigin3D(),
+                        ToTexelExtent3D(textureSpec).ToExtent3D(),
                         ToTypedTexelBlockInfo(textureSpec).ToTexelBlockInfo(), bufferSpec.offset,
                         bufferSpec.bytesPerRow);
                 } else {
                     copySplit = Compute2DTextureCopySubresource(
-                        ToTOrigin3D(textureSpec).ToOrigin3D(),
-                        ToTExtent3D(textureSpec).ToExtent3D(),
+                        ToTexelOrigin3D(textureSpec).ToOrigin3D(),
+                        ToTexelExtent3D(textureSpec).ToExtent3D(),
                         ToTypedTexelBlockInfo(textureSpec).ToTexelBlockInfo(), bufferSpec.offset,
                         bufferSpec.bytesPerRow);
                 }
@@ -781,14 +781,14 @@ class CopySplitTest : public testing::TestWithParam<CopySplitTestParam> {
             case wgpu::TextureDimension::e3D: {
                 if (relaxed) {
                     copySplit = Compute3DTextureCopySubresourceWithRelaxedRowPitchAndOffset(
-                        ToTOrigin3D(textureSpec).ToOrigin3D(),
-                        ToTExtent3D(textureSpec).ToExtent3D(),
+                        ToTexelOrigin3D(textureSpec).ToOrigin3D(),
+                        ToTexelExtent3D(textureSpec).ToExtent3D(),
                         ToTypedTexelBlockInfo(textureSpec).ToTexelBlockInfo(), bufferSpec.offset,
                         bufferSpec.bytesPerRow, static_cast<uint32_t>(bufferSpec.rowsPerImage));
                 } else {
                     copySplit = Compute3DTextureCopySplits(
-                        ToTOrigin3D(textureSpec).ToOrigin3D(),
-                        ToTExtent3D(textureSpec).ToExtent3D(),
+                        ToTexelOrigin3D(textureSpec).ToOrigin3D(),
+                        ToTexelExtent3D(textureSpec).ToExtent3D(),
                         ToTypedTexelBlockInfo(textureSpec).ToTexelBlockInfo(), bufferSpec.offset,
                         bufferSpec.bytesPerRow, static_cast<uint32_t>(bufferSpec.rowsPerImage));
                 }
@@ -982,6 +982,20 @@ TEST_F(CopySplitTest, Block1x1_3D_CopyOneRow_StraddleBytesPerRowOffset) {
                                .blockWidth = blockDim,
                                .blockHeight = blockDim};
     BufferSpec bufferSpec = {.offset = 3592, .bytesPerRow = 256, .rowsPerImage = 1_bc};
+    DoTest(textureSpec, bufferSpec, wgpu::TextureDimension::e3D, false);
+}
+
+TEST_F(CopySplitTest, Blah) {
+    TextureSpec textureSpec = {.x = 1_tc,
+                               .y = 0_tc,
+                               .z = 0_tc,
+                               .width = 4_tc,
+                               .height = 4_tc,
+                               .depthOrArrayLayers = 1_tc,
+                               .texelBlockSizeInBytes = 8,
+                               .blockWidth = 4_tc,
+                               .blockHeight = 4_tc};
+    BufferSpec bufferSpec = {.offset = 0, .bytesPerRow = 256, .rowsPerImage = 1_bc};
     DoTest(textureSpec, bufferSpec, wgpu::TextureDimension::e3D, false);
 }
 
