@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9f7369d_033838b1",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T02:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c18c7b76_1ba7cda5",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 97
+      },
+      "revId": "614c91e419da9d94d2bb974c805f83aa25152b15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5eec2730_4ad28d96",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-06-18T23:59:13Z",
       "side": 1,
       "message": "I think this is implicitly guaranteed between the previous and for loop below.",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 98,
+        "endChar": 94
+      },
+      "revId": "614c91e419da9d94d2bb974c805f83aa25152b15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db84d280_32f688ee",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T02:24:59Z",
+      "side": 1,
+      "message": "The loop only checks for true cases, this also checks HasInstanceFeature returns false when on the wire. Ideally we could check HasInstanceFeature for every enum value but we don\u0027t have a way to enumerate them.",
+      "parentUuid": "5eec2730_4ad28d96",
       "range": {
         "startLine": 98,
         "startChar": 4,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "09b866b3_fd5b6c82",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T02:24:59Z",
+      "side": 1,
+      "message": "Only these two are needed because they\u0027re referenced as `friend`s of `Impl` structs. Seems we may as well only list these, otherwise we\u0027ll probably eventually forget to add new ones here and it\u0027ll get out of sync anyway.\n\nI\u0027ve moved these down to where they\u0027re used and commented why they\u0027re there, WDYT? Alternative would be to maybe move these inside the Impl objects like `WGPUShaderModuleImpl::CompilationInfoEvent`. (Both options should avoid polluting the global namespace for the linker.)",
+      "parentUuid": "6913c711_44dd7d57",
+      "range": {
+        "startLine": 720,
+        "startChar": 0,
+        "endLine": 721,
+        "endChar": 20
+      },
+      "revId": "614c91e419da9d94d2bb974c805f83aa25152b15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5375c97b_78bf861a",
         "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
         "patchSetId": 7
@@ -83,6 +155,30 @@
       "writtenOn": "2025-06-18T23:59:13Z",
       "side": 1,
       "message": "nit. Maybe add a comment that 0 \u003d not enabled also.",
+      "range": {
+        "startLine": 829,
+        "startChar": 2,
+        "endLine": 829,
+        "endChar": 35
+      },
+      "revId": "614c91e419da9d94d2bb974c805f83aa25152b15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a488053_c1c866d9",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-19T02:24:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5375c97b_78bf861a",
       "range": {
         "startLine": 829,
         "startChar": 2,
