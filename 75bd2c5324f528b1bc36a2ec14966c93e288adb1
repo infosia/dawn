@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e68aab15_25470521",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T14:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c798dfe_3103bc07",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "aed65fd9_4e8929ec",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 11
@@ -106,6 +124,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7d58c92_ee194896",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T14:52:16Z",
+      "side": 1,
+      "message": "I went with a non-template constructor as you suggested.",
+      "parentUuid": "d6e097dd_4ee0732f",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d12f9079_8a3c722c",
@@ -155,6 +191,24 @@
       "side": 1,
       "message": "Or reintroduce the constructors there if needed? I think it would be a logic mistake if someone takes an `Origin3D` and makes a `BlockOrigin3D` from it directly. We can make the following work: `BlockOrigin3D foo \u003d blockInfo.ToBlock(myOrigin3D)` (using the implicit constructor of `TexelOrigin3D` from `Origin3D`) though.",
       "parentUuid": "1e8c8845_dbdf10a2",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d29377b_a3fc4db5",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T14:52:16Z",
+      "side": 1,
+      "message": "You won me over. I\u0027ve removed the templated types, and replaced with TexelOrigin3D and TexelExtent3D with implicit conversions from Origin3D and Extent3D, since they are in texel space.",
+      "parentUuid": "07296b0f_34155c5d",
       "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -267,6 +321,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8fafc85a_ddfad888",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T14:52:16Z",
+      "side": 1,
+      "message": "Yes, this is a good idea. Will do this as needed.",
+      "parentUuid": "6aa50dd0_7d071d91",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "cbd61781_7da488e7",
         "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
         "patchSetId": 11
@@ -313,6 +385,30 @@
       "writtenOn": "2025-06-19T08:26:13Z",
       "side": 1,
       "message": "```suggestion\n// TODO(424536624): Return a BlockOrigin3D\nTexelOrigin3D ComputeTexelOffsets(const TypedTexelBlockInfo\u0026 blockInfo,\n```",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 71
+      },
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b3a8731_0a02f0c3",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T14:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af03b76a_ff9d9aa4",
       "range": {
         "startLine": 37,
         "startChar": 0,
@@ -376,6 +472,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "544082bb_b7221b29",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T14:52:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "919d8f1b_3f9b20b1",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1eaa3d36_b0a0a8ff",
@@ -389,6 +503,24 @@
       "writtenOn": "2025-06-19T08:26:13Z",
       "side": 1,
       "message": "```suggestion\n                // TOOD(425944899): add overload of RequiredBytesInCopy that accepts strong types\n```",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b81c5f8_4da70795",
+        "filename": "src/dawn/tests/unittests/d3d12/CopySplitTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T14:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eaa3d36_b0a0a8ff",
       "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
