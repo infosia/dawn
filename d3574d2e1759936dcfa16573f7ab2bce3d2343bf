@@ -16,6 +16,103 @@
       "message": "PTAL",
       "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f08082bf_e059fb56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T15:47:49Z",
+      "side": 1,
+      "message": "Just nits, feel free to ignore",
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da7d5200_440af8b0",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T15:47:49Z",
+      "side": 1,
+      "message": "```suggestion\n            CombinedSampler combinedSampler{\n                .textureLocation \u003d {\n                    .group \u003d BindGroupIndex(textureWGSL.group),\n                    .binding \u003d BindingNumber(textureWGSL.binding),\n                },\n            };\n```",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 89
+      },
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "baa007d9_af22286f",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T15:47:49Z",
+      "side": 1,
+      "message": "```suggestion\n                BindingLocation samplerLocation{\n                    .group \u003d BindGroupIndex(samplerWGSL-\u003egroup),\n                    .binding \u003d BindingNumber(samplerWGSL-\u003ebinding),\n                };\n```",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 78
+      },
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f22e25f_4d509e8f",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T15:47:49Z",
+      "side": 1,
+      "message": "```suggestion\n        std::optional\u003ctint::BindingPoint\u003e sampler \u003d std::nullopt;\n```",
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adae8049_7a3f55be",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T15:47:49Z",
+      "side": 1,
+      "message": "```suggestion\n    /* provide one and Dawn should bind a placeholder non-filtering sampler.  */               \\\n```",
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
