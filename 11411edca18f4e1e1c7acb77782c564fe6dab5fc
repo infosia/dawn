@@ -16,6 +16,57 @@
       "message": "Please take a look, thanks! This CL make DumpShaders toggle always works regardless of cache.",
       "revId": "11411edca18f4e1e1c7acb77782c564fe6dab5fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3063d79_9abcffae",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:31:22Z",
+      "side": 1,
+      "message": "To avoid this concept going in the Device, how about adding a `if (toggle) {DumpShader(this, unpacked)}` around [1] with the implementation in ShaderModule.h/cpp?",
+      "revId": "11411edca18f4e1e1c7acb77782c564fe6dab5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a57e6da6_add5e845",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:31:22Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "11411edca18f4e1e1c7acb77782c564fe6dab5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7eca4bc_df9fd36c",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T08:31:22Z",
+      "side": 1,
+      "message": "Does this need to stay given that we handle dumpShaders somewhere else now?",
+      "revId": "11411edca18f4e1e1c7acb77782c564fe6dab5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
