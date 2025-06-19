@@ -160,6 +160,24 @@
       "parentUuid": "adbcbc95_7a878585",
       "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "872c181e_48299717",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 28
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T14:27:40Z",
+      "side": 1,
+      "message": "Ah, so these are failures which were hidden by this change is undoing, not things that are broken by this change?",
+      "parentUuid": "fcf48a07_0931383e",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
