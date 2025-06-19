@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d16f78fe_88e5f0af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T15:07:01Z",
+      "side": 1,
+      "message": "LGTM, thanks for the updates!",
+      "revId": "86b1b4c6d8ff530df1de2a27e6c1c5cc49533d10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d8d4a3aa_b3918138",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-19T15:07:01Z",
+      "side": 1,
+      "message": "```suggestion\n// is being relied on for computing buffer offsets and such.\n```",
+      "revId": "86b1b4c6d8ff530df1de2a27e6c1c5cc49533d10",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
