@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f55aee84_38af27c8",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-19T13:34:03Z",
+      "side": 1,
+      "message": "woops that is quite a silly slip i wonder why i didnt see that.",
+      "parentUuid": "46afc064_7771a957",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a4a67b4c_369b5bcd",
         "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
         "patchSetId": 28
@@ -122,6 +140,24 @@
       "writtenOn": "2025-06-19T01:17:23Z",
       "side": 1,
       "message": "Do we need to disable the transform on vulkan arm? So these don\u0027t start failing?",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcf48a07_0931383e",
+        "filename": "webgpu-cts/compat-expectations.txt",
+        "patchSetId": 28
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-19T13:34:03Z",
+      "side": 1,
+      "message": "I was under the impression that these failures come from the loop unroll change. I can double check",
+      "parentUuid": "adbcbc95_7a878585",
       "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
