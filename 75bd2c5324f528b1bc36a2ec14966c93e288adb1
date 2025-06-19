@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5d58944_1475ba01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T13:30:57Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "aed65fd9_4e8929ec",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fe898f9_3427873c",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-06-19T08:26:13Z",
       "side": 1,
       "message": "What is this second template parameter used for in practice?",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c9bffed_7d2821ab",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T13:30:57Z",
+      "side": 1,
+      "message": "This allows us to construct these types with literal values, rather than explicitly constructed TypedIntegers. TypedIntegers can be constructed from literal values, like `TexelCount(2)`, and for TexelOrigin3D we can do the same: `TexelOrigin3D(2, 3, 4)`. Without this constructor, we\u0027d have to do `TexelOrigin3D(TexelCount(2), TexelCount(3), TexelCount(4))`.",
+      "parentUuid": "1fe898f9_3427873c",
       "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -71,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1e8c8845_dbdf10a2",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T13:30:57Z",
+      "side": 1,
+      "message": "That\u0027s a fair point. In fact, currently I have no instances of BlockOrigin3D or BlockExtent3D, although I think we will in a future CL. I suggest we keep this as is until I do the \"use blocks everywhere\" pass we discussed, and let\u0027s see what it looks like?",
+      "parentUuid": "d12f9079_8a3c722c",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "191a8463_9287df51",
         "filename": "src/dawn/native/BlockInfo.h",
         "patchSetId": 11
@@ -82,6 +136,24 @@
       "writtenOn": "2025-06-19T08:26:13Z",
       "side": 1,
       "message": "We could replace Format.h\u0027s TexelBlockInfo with this one, and keep the member variables untyped for now. (also the implementation of methods can be in a cpp file)",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94c3210d_16b00078",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T13:30:57Z",
+      "side": 1,
+      "message": "But having the strong type for \u0027width\u0027 and \u0027height\u0027 is actually really important. It\u0027s what makes the compiler help us to know that we require a conversion. Indeed, it\u0027s how I was able to fix some of the bugs that I did in this CL.",
+      "parentUuid": "191a8463_9287df51",
       "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -103,6 +175,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e0ee13d_25043a97",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T13:30:57Z",
+      "side": 1,
+      "message": "Ah, so you mean bring the conversion functions into the BlockInfo class, rather than as constructors/members of the extents and origin classes? We could do, although we would lose the implicit constructor we have right now, which simplifies the change.",
+      "parentUuid": "303c0647_5f0e4c74",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cbd61781_7da488e7",
@@ -116,6 +206,24 @@
       "writtenOn": "2025-06-19T08:26:13Z",
       "side": 1,
       "message": "You mentioned a follow-up where most things would stay in blocks during computation, I believe this would remove some of the verbosity added in this CL.",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f37a29aa_6d5adbf1",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T13:30:57Z",
+      "side": 1,
+      "message": "Yes, I hope so.",
+      "parentUuid": "cbd61781_7da488e7",
       "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -156,6 +264,24 @@
       "writtenOn": "2025-06-19T08:26:13Z",
       "side": 1,
       "message": "But also we\u0027d compute in blocks only.",
+      "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dab58999_ca0cca45",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-19T13:30:57Z",
+      "side": 1,
+      "message": "That\u0027s true. I\u0027m still on the fence on whether the next step is to replace the args, as I state in this TODO, and fix all the call sites, or whether to go blocks right away, which would also affect the args and call sites. I guess going straight to blocks would be less code churn.",
+      "parentUuid": "3a395375_aca6fac0",
       "revId": "75bd2c5324f528b1bc36a2ec14966c93e288adb1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
