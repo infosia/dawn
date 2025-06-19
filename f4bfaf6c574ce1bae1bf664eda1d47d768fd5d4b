@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e41b597_267d1aed",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-06-19T07:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c532d63_ecfaaf52",
+      "revId": "f4bfaf6c574ce1bae1bf664eda1d47d768fd5d4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63e766ae_9c498b9a",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-06-18T08:39:54Z",
       "side": 1,
       "message": "nit: This could be factored in a TextureFormatTier1Tests base class.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 5
+      },
+      "revId": "f4bfaf6c574ce1bae1bf664eda1d47d768fd5d4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7fb53b6_bb9a8d55",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-06-19T07:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63e766ae_9c498b9a",
       "range": {
         "startLine": 46,
         "startChar": 0,
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59e2dd15_11246629",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-06-19T07:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e232f04_ef1b42c1",
+      "revId": "f4bfaf6c574ce1bae1bf664eda1d47d768fd5d4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2153b3fc_6f5ed83d",
@@ -81,6 +141,54 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c7988c8_2828e175",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-06-19T07:36:54Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "2153b3fc_6f5ed83d",
+      "range": {
+        "startLine": 237,
+        "startChar": 1,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "f4bfaf6c574ce1bae1bf664eda1d47d768fd5d4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e833fae_7b7c66d3",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-06-19T07:36:54Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "2153b3fc_6f5ed83d",
+      "range": {
+        "startLine": 237,
+        "startChar": 1,
+        "endLine": 239,
+        "endChar": 0
+      },
+      "revId": "f4bfaf6c574ce1bae1bf664eda1d47d768fd5d4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4c91d1f_f1bb7bc5",
@@ -94,6 +202,24 @@
       "writtenOn": "2025-06-18T08:39:54Z",
       "side": 1,
       "message": "This is done in the other CL as well and could be factored. Actually it could use https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/utils/TextureUtils.cpp;drc\u003dc6b725dfb5b06e63ab091eab2c43d902c9c88e41;l\u003d901 instead",
+      "revId": "f4bfaf6c574ce1bae1bf664eda1d47d768fd5d4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "166e6626_a8c733f6",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-06-19T07:36:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4c91d1f_f1bb7bc5",
       "revId": "f4bfaf6c574ce1bae1bf664eda1d47d768fd5d4b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
