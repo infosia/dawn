@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27ce8299_8af8ed8d",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-19T09:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3063d79_9abcffae",
+      "revId": "11411edca18f4e1e1c7acb77782c564fe6dab5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a57e6da6_add5e845",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f5a6db8_06b8e384",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2187,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-19T09:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a57e6da6_add5e845",
+      "revId": "11411edca18f4e1e1c7acb77782c564fe6dab5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7eca4bc_df9fd36c",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-06-19T08:31:22Z",
       "side": 1,
       "message": "Does this need to stay given that we handle dumpShaders somewhere else now?",
+      "revId": "11411edca18f4e1e1c7acb77782c564fe6dab5fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2bccc9d_0f9a8024",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-19T09:37:28Z",
+      "side": 1,
+      "message": "I think this is for dumping the VK backend compilation result e.g. in case WGSL-\u003eSPIRV, like the case of dumping generated DXIL in WGSL-\u003eDXIL compilation in D3D backend.\n\nThe front-end SPIR-V dumping in lines above [1] handles input SPIR-V source, in the other hand. That would be in the case of e.g. SPIR-V-\u003eDXIL I think, if SPIRV shader is enabled.",
+      "parentUuid": "c7eca4bc_df9fd36c",
       "revId": "11411edca18f4e1e1c7acb77782c564fe6dab5fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
