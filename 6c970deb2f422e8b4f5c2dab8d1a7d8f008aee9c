@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08fdd4e8_3127b8e9",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-19T23:35:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f55aee84_38af27c8",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a4a67b4c_369b5bcd",
@@ -49,6 +67,24 @@
       "writtenOn": "2025-06-19T01:17:23Z",
       "side": 1,
       "message": "```suggestion\n    // types on Intel.\n```",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30784fbc_4f599dc8",
+        "filename": "src/dawn/native/metal/PhysicalDeviceMTL.mm",
+        "patchSetId": 28
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-19T23:35:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4a67b4c_369b5bcd",
       "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
