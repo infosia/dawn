@@ -37,6 +37,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "98bda0cd_ad1fc19d",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-19T17:52:45Z",
+      "side": 1,
+      "message": "Thoughts on passing the std::set\u003cCombinedSampler\u003e all the way here instead of creating a vector that gets copied into the set?\n\nFewer copies but messier API.",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 51
+      },
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "da7d5200_440af8b0",
         "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
         "patchSetId": 8
