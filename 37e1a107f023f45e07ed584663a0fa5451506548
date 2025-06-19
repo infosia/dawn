@@ -34,6 +34,24 @@
       "parentUuid": "4be5675b_83c2cf46",
       "revId": "37e1a107f023f45e07ed584663a0fa5451506548",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a82d281a_6b2fae0e",
+        "filename": "src/tint/lang/msl/writer/raise/packed_vec3.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-19T17:34:25Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f9819309_31c1d0f4",
+      "revId": "37e1a107f023f45e07ed584663a0fa5451506548",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
