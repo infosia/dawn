@@ -16,6 +16,24 @@
       "message": "I have some concerns that we may end up exposing uncacheable memory to Dawn users without warning them. For WebGPU we are safe (for now) because there is always at least one copy done by Dawn, but it might not be the case in the future. Can we at least prefer CACHED|COHERENT below to just COHERENT (if not already the case?) We should also look into using CACHED(|COHERENT)? If possible by default in the future by default, for these reasons. Can you open an issue about it?\n\n+CC Loko about it for buffer mapping\n+CC Jiawei for triple mapping that we must not allow to expose uncacheable memory to JS.",
       "revId": "f5267414465b15f31e7cf9d930c0c0ba50579560",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dea714aa_e7e72888",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-06-20T17:43:00Z",
+      "side": 0,
+      "message": "I can do that but would it be best to:\n1. Prefer HOST_CACHED|HOST_COHERENT but fall back to HOST_COHERENT?\n2. Revive the CL that switches mappable buffers to use HOST_CACHED with added flush/invalidate?\n\nI\u0027m kind of at a loss for what is the best approach to move forward. On the bug Skia folks were thinking HOST_COHERENT might be best, dawn team was thinking HOST_CACHED might be best, ANGLE has a complex heuristic to pick some combination HOST_CACHED and or HOST_COHERENT, there was potential performance problems suggested when using HOST_CACHED|HOST_COHERENT, so I just went with the simplest to land.",
+      "parentUuid": "c6061c33_46ae9845",
+      "revId": "f5267414465b15f31e7cf9d930c0c0ba50579560",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
