@@ -70,6 +70,53 @@
       },
       "revId": "d6d414808fcc81f814095200d9c8041523b3e163",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c188ae39_fbf5ce0d",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T16:13:45Z",
+      "side": 1,
+      "message": "I think this is fine, ideally we\u0027d remove the flag one day because compile-time flag are more brittle kinds of code. That said LGTM at the moment.",
+      "parentUuid": "0cfcb3c4_01d10456",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 45
+      },
+      "revId": "d6d414808fcc81f814095200d9c8041523b3e163",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a57b90fa_52c8c0f8",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T16:13:45Z",
+      "side": 1,
+      "message": "This might work:\n```suggestion\n    const bool dxcAvailable \u003d defined(DAWN_USE_BUILT_DXC);\n```",
+      "range": {
+        "startLine": 606,
+        "startChar": 0,
+        "endLine": 610,
+        "endChar": 6
+      },
+      "revId": "d6d414808fcc81f814095200d9c8041523b3e163",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
