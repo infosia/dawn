@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "fee9b14a22b94f0895bfdd2fc84c98515168d1f4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70c3d5ea_798c1d26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-20T22:24:38Z",
+      "side": 1,
+      "message": "LGTM, fyi you can use rubber-stamper for this",
+      "revId": "fee9b14a22b94f0895bfdd2fc84c98515168d1f4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
