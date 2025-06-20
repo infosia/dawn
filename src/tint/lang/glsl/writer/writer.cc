@@ -44,9 +44,6 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
         if (ty->Is<core::type::SubgroupMatrix>()) {
             return Failure("subgroup matrices are not supported by the GLSL backend");
         }
-        if (ty->Is<core::type::BindingArray>()) {
-            return Failure("binding_array are not supported by the GLSL backend");
-        }
     }
 
     // Make sure that every texture variable is in the texture_builtins_from_uniform binding list,
