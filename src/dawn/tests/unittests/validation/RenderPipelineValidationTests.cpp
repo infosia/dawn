@@ -3559,12 +3559,11 @@ TEST_F(ClipDistancesValidationTest, ClipDistancesAgainstMaxInterStageLocation) {
     }
 }
 
-// Tests that r8snorm, rg8snorm and rgba8snorm are not renderable if the feature TextureFormatsTier1
-// is not enabled
+// Tests that
+// r8snorm/rg8snorm/rgba8snorm/r16unorm/r16snorm/rg16unorm/rg16snorm/rgba16unorm/rgba16snorm are not
+// renderable if the feature TextureFormatsTier1is not enabled
 TEST_F(RenderPipelineValidationTest, SNORMFormatsNotRenderableWithoutFeature) {
-    const std::array kTestFormats = {wgpu::TextureFormat::R8Snorm, wgpu::TextureFormat::RG8Snorm,
-                                     wgpu::TextureFormat::RGBA8Snorm};
-    for (auto format : kTestFormats) {
+    for (auto format : utils::kTier1TestFormats) {
         utils::ComboRenderPipelineDescriptor descriptor;
         descriptor.vertex.module = vsModule;
         descriptor.cFragment.module = fsModule;
@@ -3580,12 +3579,11 @@ class TextureFormatsTier1PipelineTest : public RenderPipelineValidationTest {
     }
 };
 
-// Tests that r8snorm, rg8snorm and rgba8snorm must be renderable when the feature
-// TextureFormatsTier1 is enabled.
+// Tests that
+// r8snorm/rg8snorm/rgba8snorm/r16unorm/r16snorm/rg16unorm/rg16snorm/rgba16unorm/rgba16snorm must be
+// renderable when the feature TextureFormatsTier1 is enabled.
 TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsRenderableWithFeatureEnabled) {
-    const std::array kTestFormats = {wgpu::TextureFormat::R8Snorm, wgpu::TextureFormat::RG8Snorm,
-                                     wgpu::TextureFormat::RGBA8Snorm};
-    for (const auto format : kTestFormats) {
+    for (const auto format : utils::kTier1TestFormats) {
         utils::ComboRenderPipelineDescriptor descriptor;
         descriptor.vertex.module = vsModule;
         descriptor.cFragment.module = fsModule;
@@ -3594,12 +3592,11 @@ TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsRenderableWithFeatureEnabled
     }
 }
 
-// Tests that r8snorm, rg8snorm and rgba8snorm must be blendable when the feature
-// TextureFormatsTier1 is enabled.
+// Tests that
+// r8snorm/rg8snorm/rgba8snorm/r16unorm/r16snorm/rg16unorm/rg16snorm/rgba16unorm/rgba16snorm must be
+// blendable when the feature TextureFormatsTier1 is enabled.
 TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsBlendableWithFeatureEnabled) {
-    const std::array kTestFormats = {wgpu::TextureFormat::R8Snorm, wgpu::TextureFormat::RG8Snorm,
-                                     wgpu::TextureFormat::RGBA8Snorm};
-    for (const auto format : kTestFormats) {
+    for (const auto format : utils::kTier1TestFormats) {
         utils::ComboRenderPipelineDescriptor descriptor;
         descriptor.vertex.module = vsModule;
         descriptor.cFragment.module = fsModule;
@@ -3610,12 +3607,11 @@ TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsBlendableWithFeatureEnabled)
     }
 }
 
-// Tests that R8Snorm, RG8Snorm, and RGBA8Snorm must support multisampling
-// when the TextureFormatsTier1 feature is enabled.
+// Tests that
+// r8snorm/rg8snorm/rgba8snorm/r16unorm/r16snorm/rg16unorm/rg16snorm/rgba16unorm/rgba16snorm must
+// support multisampling when the TextureFormatsTier1 feature is enabled.
 TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsMultisampleSupportWithTier1) {
-    const std::array kTestFormats = {wgpu::TextureFormat::R8Snorm, wgpu::TextureFormat::RG8Snorm,
-                                     wgpu::TextureFormat::RGBA8Snorm};
-    for (const auto format : kTestFormats) {
+    for (const auto format : utils::kTier1TestFormats) {
         utils::ComboRenderPipelineDescriptor descriptor;
         descriptor.vertex.module = vsModule;
         descriptor.cFragment.module = fsModule;
