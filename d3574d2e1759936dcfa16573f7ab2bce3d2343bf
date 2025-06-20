@@ -60,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "12b20884_787208e4",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T07:43:26Z",
+      "side": 1,
+      "message": "I\u0027m a bit lukewarm about it. One difficulty with this function and the logic in CompileShader is that it can be hard to know what is modified where. My hope is that because this is cold code, we can be more explicit even if it is technically not as efficient. Let my know what you think.",
+      "parentUuid": "98bda0cd_ad1fc19d",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 51
+      },
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "da7d5200_440af8b0",
         "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
         "patchSetId": 8
@@ -71,6 +95,30 @@
       "writtenOn": "2025-06-19T15:47:49Z",
       "side": 1,
       "message": "```suggestion\n            CombinedSampler combinedSampler{\n                .textureLocation \u003d {\n                    .group \u003d BindGroupIndex(textureWGSL.group),\n                    .binding \u003d BindingNumber(textureWGSL.binding),\n                },\n            };\n```",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 89
+      },
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a968df10_499ecde7",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T07:43:26Z",
+      "side": 1,
+      "message": "Because these are serializable classes, the members are in a child class, which requires more {}, ditto below. I gave it a try in the latest patchset, let me know how you like it.",
+      "parentUuid": "da7d5200_440af8b0",
       "range": {
         "startLine": 128,
         "startChar": 0,
@@ -104,6 +152,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6745b252_78bb8eb6",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T07:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baa007d9_af22286f",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 78
+      },
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f22e25f_4d509e8f",
@@ -121,6 +193,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37fe066e_afc94825",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T07:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f22e25f_4d509e8f",
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "adae8049_7a3f55be",
@@ -134,6 +224,24 @@
       "writtenOn": "2025-06-19T15:47:49Z",
       "side": 1,
       "message": "```suggestion\n    /* provide one and Dawn should bind a placeholder non-filtering sampler.  */               \\\n```",
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "800d71c9_47d4b193",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T07:43:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adae8049_7a3f55be",
       "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
