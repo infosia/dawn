@@ -16,6 +16,52 @@
       "message": "@cwallez@chromium.org @lokokung@google.com PTAL thanks!",
       "revId": "6afa13185c89a5e20d5f977e162c820101e90138",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "512b25ea_d02060bb",
+        "filename": "src/dawn/native/d3d/D3DError.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T18:29:04Z",
+      "side": 1,
+      "message": "nit. additional space",
+      "range": {
+        "startLine": 132,
+        "startChar": 37,
+        "endLine": 132,
+        "endChar": 38
+      },
+      "revId": "6afa13185c89a5e20d5f977e162c820101e90138",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "261f1890_e237c6ac",
+        "filename": "src/dawn/native/d3d/DeviceD3D.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T18:29:04Z",
+      "side": 1,
+      "message": "nit. Maybe something like `RecordDeviceLostError` instead? Otherwise it\u0027s unclear what this function does from the name.",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "6afa13185c89a5e20d5f977e162c820101e90138",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
