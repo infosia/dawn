@@ -94,6 +94,30 @@
       },
       "revId": "cc9e5940c601a6654bce26946ffed521c63b52e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fe5fd57_65ce52de",
+        "filename": "tools/src/cmd/run-cts/node/cmd.go",
+        "patchSetId": 28
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-20T16:08:57Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "a82265a4_082f1957",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 26
+      },
+      "revId": "cc9e5940c601a6654bce26946ffed521c63b52e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
