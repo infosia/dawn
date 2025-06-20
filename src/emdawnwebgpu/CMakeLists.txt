@@ -306,13 +306,35 @@ if (EMSCRIPTEN)
     )
 
     if (${DAWN_BUILD_TESTS})
+        # The CMake target GTest::gmock_main always sets -fexceptions. The only
+        # way to avoid this is to define our own custom CMake rule for it.
+        # (This is based on GMock's internal `gmock_main_no_exception` target.)
+        add_library(emdawnwebgpu_gmock_main
+            "${gtest_SOURCE_DIR}/src/gtest-all.cc"
+            "${gmock_SOURCE_DIR}/src/gmock-all.cc"
+            "${gmock_SOURCE_DIR}/src/gmock_main.cc"
+        )
+        target_compile_options(emdawnwebgpu_gmock_main
+            PUBLIC
+                "-fno-exceptions"
+                "-fno-rtti"
+        )
+        target_include_directories(emdawnwebgpu_gmock_main SYSTEM
+            PRIVATE
+                "${gtest_SOURCE_DIR}"
+                "${gmock_SOURCE_DIR}"
+            PUBLIC
+                "${gtest_SOURCE_DIR}/include"
+                "${gmock_SOURCE_DIR}/include"
+        )
+
         set(emdawnwebgpu_test_sources
             "tests/FuturesTests.cpp"
         )
         set(emdawnwebgpu_test_deps
             dawn::dawn_wgpu_utils
             emdawnwebgpu_cpp
-            gmock_main
+            emdawnwebgpu_gmock_main
         )
 
         add_executable(emdawnwebgpu_tests_asyncify ${emdawnwebgpu_test_sources})
