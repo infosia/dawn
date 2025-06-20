@@ -139,7 +139,7 @@ TEST_P(PolyfillBuiltinSimpleTests, ScalarizeClampBuiltin) {
     EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), output, 0, expected.size());
 }
 
-TEST_P(PolyfillBuiltinSimpleTests, ScalarizeMinMaxBuiltin) {
+TEST_P(PolyfillBuiltinSimpleTests, ScalarizeMinMaxBuiltinddd) {
     // Basic correctness test for scalariztion of min and max.
     std::string kShaderCode = R"(
     @group(0) @binding(0) var<storage, read_write> in_out : array<u32, 2>;
@@ -171,6 +171,83 @@ TEST_P(PolyfillBuiltinSimpleTests, ScalarizeMinMaxBuiltin) {
 
     queue.Submit(1, &commands);
     std::vector<uint32_t> expected = {3, 2};
+    EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), output, 0, expected.size());
+}
+
+TEST_P(PolyfillBuiltinSimpleTests, GemTest) {
+    // Basic correctness test for scalariztion of min and max.
+    std::string kShaderCode = R"(
+    struct Data { values: array<i32> };
+    @group(0) @binding(0) var<storage, read> input_data: Data;
+    @group(0) @binding(1) var<storage, read_write> output_data: Data;
+
+    @compute @workgroup_size(1)
+    fn main(@builtin(global_invocation_id) global_id: vec3<u32>) {
+        if (global_id.x >= 64u) { return; }
+        var result = input_data.values[global_id.x];
+        result = -result;
+        result = abs(result);
+        result = max(result, 3488);
+        if (result != 3430) {
+            result = ~result;
+        }
+        else {
+            result = -result;
+        }
+        result = result | 3655;
+        if (result == 2643) {
+            result = max(result, 5007);
+        }
+        result = result ^ input_data.values[15u];
+
+        output_data.values[global_id.x] = result;
+    }
+    )";
+
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(kShaderCode);
+    uint32_t kDefaultVal = 0;
+    std::vector<int32_t> init_input_i32 = {
+        2839,        -11642,      756,    -2147483648, -2147483648, -12721,      16418,  -17922,
+        -8546,       16318,       -18635, 15736,       -11270,      -5746,       9279,   -12241,
+        3064,        10579,       16859,  -19456,      -2147483648, -16590,      -2859,  -15482,
+        4093,        84,          13128,  12130,       -18089,      -8648,       -18364, -5659,
+        18517,       14982,       4303,   -10265,      -17959,      -11174,      18506,  1944,
+        16610,       -19063,      15549,  17542,       -6895,       -17133,      16820,  -19187,
+        15987,       -8326,       -7308,  6506,        1198,        6959,        -865,   9467,
+        -2147483648, -2147483648, -1793,  -6919,       -8620,       -2147483648, -10881, 10302,
+    };
+
+    std::vector<uint32_t> init_input;
+    init_input.resize(64);
+    for (int i = 0; i < 64; i++) {
+        init_input[i] = init_input_i32[i];
+    }
+
+    wgpu::Buffer input = CreateBuffer(init_input);
+    wgpu::Buffer output = CreateBuffer(64, kDefaultVal);
+    wgpu::BindGroup bindGroup =
+        utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0), {{0, input}, {1, output}});
+
+    wgpu::CommandBuffer commands;
+    {
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(64);
+        pass.End();
+        commands = encoder.Finish();
+    }
+
+    queue.Submit(1, &commands);
+    std::vector<uint32_t> expected = {
+        11888, 3816,  11888, 11888, 11888, 7776,  28656, 28624, 3824,  7784,  28504, 7912,  4048,
+        16352, 4072,  3648,  11888, 3776,  28232, 28624, 11888, 28504, 11888, 8168,  11880, 11888,
+        7896,  3824,  28536, 3672,  28264, 16328, 28608, 8016,  16216, 4040,  28656, 3696,  28632,
+        11888, 28528, 28640, 8040,  28496, 16248, 28536, 28256, 28512, 8160,  3920,  16216, 16120,
+        11888, 16120, 11888, 3944,  11888, 11888, 11888, 16080, 3704,  11888, 3920,  4072,
+    };
+
     EXPECT_BUFFER_U32_RANGE_EQ(expected.data(), output, 0, expected.size());
 }
 
