@@ -142,6 +142,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d0e5a2b_d4a2e416",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-20T20:37:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "09b866b3_fd5b6c82",
+      "range": {
+        "startLine": 720,
+        "startChar": 0,
+        "endLine": 721,
+        "endChar": 20
+      },
+      "revId": "614c91e419da9d94d2bb974c805f83aa25152b15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5375c97b_78bf861a",

@@ -16,6 +16,24 @@
       "message": "What if there are chained structs? Should it be an error as well?",
       "revId": "bfe78c93621cd686e3fd0a143080092ef9d0416a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e3a86a2_85ae136d",
+        "filename": "src/dawn/wire/client/Instance.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-20T20:37:51Z",
+      "side": 1,
+      "message": "Done and also fixed:\n- same issue in emdawnwebgpu\n- wire getting an unknown feature name\n- emdawnwebgpu getting a limit request larger than the max",
+      "parentUuid": "31602490_745dfc6c",
+      "revId": "bfe78c93621cd686e3fd0a143080092ef9d0416a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
