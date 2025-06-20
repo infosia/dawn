@@ -52,6 +52,24 @@
       "parentUuid": "dea714aa_e7e72888",
       "revId": "f5267414465b15f31e7cf9d930c0c0ba50579560",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eaa53b4f_4b5a1101",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-06-20T20:21:09Z",
+      "side": 0,
+      "message": "sgtm I implemented 1 here.",
+      "parentUuid": "a525399d_9a17d9cd",
+      "revId": "f5267414465b15f31e7cf9d930c0c0ba50579560",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
