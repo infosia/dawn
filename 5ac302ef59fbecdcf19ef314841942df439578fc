@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d62310e7_28b7f364",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T21:09:06Z",
+      "side": 1,
+      "message": "Maybe we could ask if we could make that rule public? (I think it is right now, but it\u0027s only available if we enable `gmock_build_tests` but I don\u0027t think that\u0027s useful for us atm.",
+      "range": {
+        "startLine": 101,
+        "startChar": 42,
+        "endLine": 101,
+        "endChar": 65
+      },
+      "revId": "5ac302ef59fbecdcf19ef314841942df439578fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
