@@ -16,6 +16,29 @@
       "message": "PTAL again now that I fixed the generated SPIR-V!",
       "revId": "564cd7b42783de12d032bf304849de4bd709fd96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "251b97aa_e68067db",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T18:25:07Z",
+      "side": 1,
+      "message": "nit. Is this (and below) intended to be a TODO? Otherwise, we could just remove it if there\u0027s no foreseeable action?",
+      "range": {
+        "startLine": 821,
+        "startChar": 11,
+        "endLine": 821,
+        "endChar": 48
+      },
+      "revId": "564cd7b42783de12d032bf304849de4bd709fd96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
