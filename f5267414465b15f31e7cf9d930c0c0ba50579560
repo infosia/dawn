@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c6061c33_46ae9845",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T17:21:25Z",
+      "side": 0,
+      "message": "I have some concerns that we may end up exposing uncacheable memory to Dawn users without warning them. For WebGPU we are safe (for now) because there is always at least one copy done by Dawn, but it might not be the case in the future. Can we at least prefer CACHED|COHERENT below to just COHERENT (if not already the case?) We should also look into using CACHED(|COHERENT)? If possible by default in the future by default, for these reasons. Can you open an issue about it?\n\n+CC Loko about it for buffer mapping\n+CC Jiawei for triple mapping that we must not allow to expose uncacheable memory to JS.",
+      "revId": "f5267414465b15f31e7cf9d930c0c0ba50579560",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
