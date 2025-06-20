@@ -46,6 +46,30 @@
       },
       "revId": "5ac302ef59fbecdcf19ef314841942df439578fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed95e9fc_0d59bf7d",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-20T21:34:55Z",
+      "side": 1,
+      "message": "jk it does repro, I forgot to stop my old http server pointing at the fixed version first.",
+      "parentUuid": "72491051_50225eb6",
+      "range": {
+        "startLine": 101,
+        "startChar": 42,
+        "endLine": 101,
+        "endChar": 65
+      },
+      "revId": "5ac302ef59fbecdcf19ef314841942df439578fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
