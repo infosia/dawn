@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9210cde_4ee62ce5",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-20T13:24:33Z",
+      "side": 1,
+      "message": "So what changed that we need to force, rather than fallback, on system FXC?",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 45
+      },
+      "revId": "d6d414808fcc81f814095200d9c8041523b3e163",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
