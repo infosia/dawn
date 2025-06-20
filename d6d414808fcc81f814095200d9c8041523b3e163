@@ -46,6 +46,30 @@
       },
       "revId": "d6d414808fcc81f814095200d9c8041523b3e163",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cfcb3c4_01d10456",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-20T16:07:15Z",
+      "side": 1,
+      "message": "I guess it\u0027s okay, although if/when Skia do decide to update their build system to build DXC and copy FXC, we\u0027ll have to remember to disable this flag, otherwise it will silently keep loading system FXC.\n\n@cwallez@chromium.org any thoughts?",
+      "parentUuid": "e16fda0d_91fc0ee1",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 45
+      },
+      "revId": "d6d414808fcc81f814095200d9c8041523b3e163",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
