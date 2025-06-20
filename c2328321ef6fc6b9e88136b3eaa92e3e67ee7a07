@@ -16,6 +16,23 @@
       "message": "WDYT about just starting with coherent memory for mappable buffers since it requires no synchronization?",
       "revId": "c2328321ef6fc6b9e88136b3eaa92e3e67ee7a07",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f49cf6f6_98a94fb1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T18:34:36Z",
+      "side": 1,
+      "message": "LGTM for buffer mapping, but I don\u0027t have enough expertise to comment otherwise on which bits to use for the buffers.",
+      "revId": "c2328321ef6fc6b9e88136b3eaa92e3e67ee7a07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
