@@ -46,6 +46,30 @@
       },
       "revId": "cc9e5940c601a6654bce26946ffed521c63b52e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dcfcc61_2898d39f",
+        "filename": "tools/src/cmd/run-cts/node/cmd.go",
+        "patchSetId": 28
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-20T01:59:08Z",
+      "side": 0,
+      "message": "It looks like telemetry always unrolls for DXC+Intel:\nhttps://source.chromium.org/chromium/chromium/src/+/refs/tags/139.0.7249.0:content/test/gpu/gpu_tests/webgpu_cts_integration_test_base.py;l\u003d285-291\n\nSo our Windows node users might still want to have this flag available in node too.",
+      "parentUuid": "2846bcad_33a36ccc",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 26
+      },
+      "revId": "cc9e5940c601a6654bce26946ffed521c63b52e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
