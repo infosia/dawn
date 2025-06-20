@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "32b5ddaf_a184ac29",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T19:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eb0c698_1cd9d819",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "229a171f_97f071a1",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-06-19T01:20:18Z",
       "side": 1,
       "message": "same",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6666711f_9d62eb9b",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T19:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "229a171f_97f071a1",
       "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "954d8b39_9016edea",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T19:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0f01a17_56aad21a",
+      "range": {
+        "startLine": 207,
+        "startChar": 11,
+        "endLine": 207,
+        "endChar": 15
+      },
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74e4d1e0_c78b7b52",
@@ -88,6 +148,24 @@
       "writtenOn": "2025-06-19T01:20:18Z",
       "side": 1,
       "message": "nit: probably could always use acq/rel instead of the default seq_cst",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2354f2b4_ab38b381",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T19:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74e4d1e0_c78b7b52",
       "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -111,6 +189,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "3786d31d_ce923d4c",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T19:25:42Z",
+      "side": 1,
+      "message": "Done, but had to add a ctor for it, and had to use a different ctor for the variant. I\u0027m not sure why it doesn\u0027t like it otherwise.",
+      "parentUuid": "1462caa8_2ec62be9",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "f75eb48f_398de335",
         "filename": "src/dawn/native/EventManager.cpp",
         "patchSetId": 30
@@ -122,6 +218,24 @@
       "writtenOn": "2025-06-20T17:27:51Z",
       "side": 1,
       "message": "We have this pattern multiple times, it could be worth adding an AtomicMax at some point.",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "da1e3b6b_78e5e1a1",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T19:25:42Z",
+      "side": 1,
+      "message": "Ack, I can do that in a follow up.",
+      "parentUuid": "f75eb48f_398de335",
       "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -139,6 +253,24 @@
       "writtenOn": "2025-06-19T01:20:18Z",
       "side": 1,
       "message": "nit: instead of `[[maybe_unused]]` can we assert the value of this? or could it be either?",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59b81dbb_544ac4df",
+        "filename": "src/dawn/native/opengl/BufferGL.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T19:25:42Z",
+      "side": 1,
+      "message": "I think that right now I could add the assert, because it\u0027s only used with `mappedAtCreation` in one place and I\u0027m pretty sure that code would always result in a staging buffer, but I don\u0027t think that it\u0027s guaranteed since you could ask for a `MapWrite` buffer with `mappedAtCreation` at which point you may not get the staging buffer. Leaving as is for now.",
+      "parentUuid": "587c9ef1_40b2adcb",
       "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
