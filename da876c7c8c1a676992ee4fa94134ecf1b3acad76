@@ -16,6 +16,24 @@
       "message": "Does this Cl change the linker requirements? I\u0027m getting linker errors on my local application, which seem like they could be related to this CL. Checking out the commit before this builds and links correctly:\n\n```\nUndefined symbols for architecture arm64:\n  \"_wgpuAdapterInfoFreeMembers\", referenced from:\n      wgpu::AdapterInfo::FreeMembers() in ...\n  \"_wgpuSupportedFeaturesFreeMembers\", referenced from:\n      wgpu::SupportedFeatures::FreeMembers() in ...\n  \"_wgpuSurfaceCapabilitiesFreeMembers\", referenced from:\n      wgpu::SurfaceCapabilities::FreeMembers() in ...\n```",
       "revId": "da876c7c8c1a676992ee4fa94134ecf1b3acad76",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46080403_b0ae4f49",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T19:19:02Z",
+      "side": 1,
+      "message": "Huh.. it shouldn\u0027t? Is this a cmake build? Or how can I repro?",
+      "parentUuid": "c880bbce_f697f33a",
+      "revId": "da876c7c8c1a676992ee4fa94134ecf1b3acad76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
