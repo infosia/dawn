@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a63df6ff_188262d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "LGTM overall, it\u0027s very nice!",
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d30ac699_d1c90788",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "Maybe we could have a intro comment that explain why texel vs. block space and the use of strong types. (can easily be a follow up)",
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a10ed29f_3d7b8011",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "nit here and in other places it could make sense to have height and depthOrArrayLayers default to 1 (and y, z default to 0) to match the field initializers.",
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ad738f4_169167f9",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "Here and in other suggestions below we can use aggregate initialization to the same effect.\n\n```suggestion\n        copyInfo-\u003ealignedOffset \u003d alignedOffset;\n        copyInfo-\u003ebufferSize \u003d\n           {copySize.width + blockOffset.x, copySize.height + blockOffset.y,\n                          copySize.depthOrArrayLayers};\n```",
+      "range": {
+        "startLine": 155,
+        "startChar": 48,
+        "endLine": 158,
+        "endChar": 55
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3b8acfe1_1d528da8",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "```suggestion\n    copyInfo0-\u003ebufferSize \u003d\n       {blocksPerRow, copySize.height + blockOffset.y, copySize.depthOrArrayLayers};\n\n```",
+      "range": {
+        "startLine": 206,
+        "startChar": 13,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "361a6966_6eb3f6a1",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "Arguments could be in block space as this is an implementation detail of `Compute3DTextureCopySplits`",
+      "range": {
+        "startLine": 291,
+        "startChar": 3,
+        "endLine": 296,
+        "endChar": 33
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10c42036_5671eda3",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "What is nice is that now we should have support for 3D block compressed formats working already! (famous last words)",
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "161791da_da3cca6c",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d52b703_24c24c2a",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "```suggestion\n        copyInfo1-\u003ecopySize \u003d {copySize.width, copySize.height, depthInCopy1};\n        copyInfo1-\u003ealignedOffset \u003d offset;\n        copyInfo1-\u003ebufferSize \u003d {copySize.width, rowsPerImage, depthInCopy1};\n    }\n```",
+      "range": {
+        "startLine": 655,
+        "startChar": 2,
+        "endLine": 658,
+        "endChar": 0
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18b8768a_376ab7fe",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "```suggestion\n        copyInfo2-\u003etextureOffset \u003d {origin.x, origin.y, origin.z + depthInCopy1};\n        copyInfo2-\u003ecopySize \u003d {copySize.width, copySize.height, depthInCopy2};\n        copyInfo2-\u003ealignedOffset \u003d\n            offset + blockInfo.ToBytes(blocksPerRow * rowsPerImage * depthInCopy1);\n        copyInfo2-\u003ebufferSize \u003d {copySize.width, rowsPerImageInTexels2, depthInCopy2};\n```",
+      "range": {
+        "startLine": 685,
+        "startChar": 40,
+        "endLine": 689,
+        "endChar": 38
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1932c98_a6b8f28d",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "This is the only use of this function so it could use strong types already!",
+      "range": {
+        "startLine": 215,
+        "startChar": 12,
+        "endLine": 215,
+        "endChar": 53
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30928ead_72bf88e2",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T15:56:08Z",
+      "side": 1,
+      "message": "This one is used in other places and we can convert it later.",
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
