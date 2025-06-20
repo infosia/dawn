@@ -22,6 +22,30 @@
       },
       "revId": "5ac302ef59fbecdcf19ef314841942df439578fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "72491051_50225eb6",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-20T21:34:02Z",
+      "side": 1,
+      "message": "I\u0027ll file a bug with googletest. Also since this worked before I guess something regressed, I should try to bisect it. I think the thing that needs bisecting is googletest, I already tried bisecting dawn with no luck.\n\n... actually I tried reproducing in a standalone checkout and it didn\u0027t repro, maybe this wasn\u0027t a regression at all, but something weird about my setup. Will have to figure that out.",
+      "parentUuid": "d62310e7_28b7f364",
+      "range": {
+        "startLine": 101,
+        "startChar": 42,
+        "endLine": 101,
+        "endChar": 65
+      },
+      "revId": "5ac302ef59fbecdcf19ef314841942df439578fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
