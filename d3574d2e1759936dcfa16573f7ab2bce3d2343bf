@@ -82,6 +82,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3fe3db82_c8aa1fef",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-06-20T14:57:36Z",
+      "side": 1,
+      "message": "I think that\u0027s fine. Only other option I think of is to pass an inserter object which makes it clear there is no state in the container which needs to be maintained or not.",
+      "parentUuid": "12b20884_787208e4",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 51
+      },
+      "revId": "d3574d2e1759936dcfa16573f7ab2bce3d2343bf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da7d5200_440af8b0",
