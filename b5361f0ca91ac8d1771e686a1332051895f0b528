@@ -16,6 +16,24 @@
       "message": "LGTM but I don\u0027t know why the unittests are crashing",
       "revId": "b5361f0ca91ac8d1771e686a1332051895f0b528",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "983d1601_dd059f88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 31
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T21:10:49Z",
+      "side": 1,
+      "message": "Should be fixed now. Issue was that `ResultOrError\u003cRef\u003cBufferBase::MapAsyncEvent\u003e\u003e` thought that `{nullptr}` was a no error, but not a Ref. I added the explicit `Ref` constructor and it seems happy now. I might try to follow up a separate CL to make that not happen if possible.",
+      "parentUuid": "1a4b4352_b5fbe33a",
+      "revId": "b5361f0ca91ac8d1771e686a1332051895f0b528",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
