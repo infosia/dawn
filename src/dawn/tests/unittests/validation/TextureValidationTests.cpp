@@ -1206,11 +1206,16 @@ class TextureFormatsTier1TextureTest : public TextureValidationTest {
     }
 };
 
-// Test that r8snorm, rg8snorm and rgba8snrom formats are valid as renderable texture if
-// 'texture-formats-tier1' is enabled.
+// Test that
+// r8snorm/rg8snorm/rgba8snorm/r16unorm/r16snorm/rg16unorm/rg16snorm/rgba16unorm/rgba16snorm formats
+// are valid as renderable texture if 'texture-formats-tier1' is enabled.
 TEST_F(TextureFormatsTier1TextureTest, SNORMFormatsAreRenderableWithFeatureEnabled) {
-    const std::array kTestFormats = {wgpu::TextureFormat::R8Snorm, wgpu::TextureFormat::RG8Snorm,
-                                     wgpu::TextureFormat::RGBA8Snorm};
+    const std::array kTestFormats = {
+        wgpu::TextureFormat::R8Snorm,    wgpu::TextureFormat::RG8Snorm,
+        wgpu::TextureFormat::RGBA8Snorm, wgpu::TextureFormat::R16Unorm,
+        wgpu::TextureFormat::R16Snorm,   wgpu::TextureFormat::RG16Unorm,
+        wgpu::TextureFormat::RG16Snorm,  wgpu::TextureFormat::RGBA16Unorm,
+        wgpu::TextureFormat::RGBA16Snorm};
     for (auto format : kTestFormats) {
         wgpu::TextureDescriptor descriptor;
         descriptor.size = {1, 1, 1};
