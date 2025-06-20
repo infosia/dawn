@@ -118,6 +118,30 @@
       },
       "revId": "a844ef27aba848be794500e61f816e6262f4d006",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "073f754f_e88ff1bc",
+        "filename": "src/dawn/native/d3d/DeviceD3D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 3466141
+      },
+      "writtenOn": "2025-06-20T01:53:13Z",
+      "side": 1,
+      "message": "Alright, keep the enum histogram in this CL.",
+      "parentUuid": "23844a70_38b7f4a1",
+      "range": {
+        "startLine": 61,
+        "startChar": 3,
+        "endLine": 61,
+        "endChar": 25
+      },
+      "revId": "a844ef27aba848be794500e61f816e6262f4d006",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
