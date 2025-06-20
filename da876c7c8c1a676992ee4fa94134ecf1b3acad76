@@ -52,6 +52,24 @@
       "parentUuid": "46080403_b0ae4f49",
       "revId": "da876c7c8c1a676992ee4fa94134ecf1b3acad76",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa4546f5_eb8dbfe0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2025-06-20T19:33:25Z",
+      "side": 1,
+      "message": "Seeing the same issue upgrading Dusk, if you checkout `https://github.com/dj2/Dusk` and switch to the `upgrade` branch do a CMake build and you should see the issue. \n\n(So, checkout dusk, switch to `upgrade` branch and then run the usuall set of commands\n\n```\ngit submodule init\ngit submodule update\nmkdir -p out/Debug\ncd out/Debug\ncmake -GNinja ../..\nninja\n```",
+      "parentUuid": "23615fbd_57435188",
+      "revId": "da876c7c8c1a676992ee4fa94134ecf1b3acad76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
