@@ -109,6 +109,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f75eb48f_398de335",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T17:27:51Z",
+      "side": 1,
+      "message": "We have this pattern multiple times, it could be worth adding an AtomicMax at some point.",
+      "revId": "3d2753f43efc970294033d9b755112eca7bedac4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "587c9ef1_40b2adcb",
