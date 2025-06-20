@@ -49,8 +49,6 @@
 
 #include <sstream>
 
-#include <AvailabilityMacros.h>
-
 namespace dawn::native::metal {
 namespace {
 
@@ -448,18 +446,19 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
         (*compileOptions).preserveInvariance = true;
     }
 
-#if defined(__MAC_15_0) && __MAC_OS_X_VERSION_MIN_REQUIRED >= __MAC_15_0
+#if DAWN_PLATFORM_IS(MACOS)
     if (@available(macOS 15.0, iOS 18.0, *)) {
+        // Relaxed is preferred to 'fastMathEnabled' as it respects inf/nan.
+        // See crbug.com/425650181
         (*compileOptions).mathMode =
-            GetStrictMath().value_or(false) ? MTLMathMode.safe : MTLMathMode.relaxed;
+            GetStrictMath().value_or(false) ? MTLMathModeSafe : MTLMathModeRelaxed;
     } else
-#else
+#endif
     {
         (*compileOptions).fastMathEnabled = !GetStrictMath().value_or(false);
     }
-#endif
 
-        auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
+    auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
     NSError* error = nullptr;
 
     NSPRef<id<MTLLibrary>> library;
