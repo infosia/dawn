@@ -16,6 +16,24 @@
       "message": "What happens for other Result\u003cT*\u003e where nullptr would be ambiguous between E and T? Does it still select E? It might be best to just reject constructing from nullptr, or even better somehow disable the constructor(E) overload for nullptr_t (but I don\u0027t know if this is possible).",
       "revId": "ab11c5c57b8de8a637fb1c6ff98082daee21a426",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10b4c5b7_587c7819",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-20T23:19:43Z",
+      "side": 1,
+      "message": "IIUC, for `Result\u003cT*, E\u003e`, `nullptr` wouldn\u0027t be ambiguous and default to using `T*` as the type since no additional constructor conversions are necessary so resolution ordering would prefer that over converting the `nullptr` to a `unique_ptr\u003cE\u003e` which would take one additional constructor conversion. I\u0027m not sure if it\u0027s possible to disable the default overload of `unique_ptr\u003cT\u003e` with `nullptr` without doing something like extending it as a private type and hiding that constructor or something.",
+      "parentUuid": "6ab1ea7c_83135354",
+      "revId": "ab11c5c57b8de8a637fb1c6ff98082daee21a426",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
