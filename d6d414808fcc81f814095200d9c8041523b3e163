@@ -22,6 +22,30 @@
       },
       "revId": "d6d414808fcc81f814095200d9c8041523b3e163",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e16fda0d_91fc0ee1",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-06-20T16:01:49Z",
+      "side": 1,
+      "message": "Doing it as \"fallback\" also works but I decided to change it to \"force\" to keep things simple and have fewer test cases to reason about. Force \u003d\u003e use system components; No force \u003d\u003e use local components. No in-between. \n\nWDYT?",
+      "parentUuid": "b9210cde_4ee62ce5",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 45
+      },
+      "revId": "d6d414808fcc81f814095200d9c8041523b3e163",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
