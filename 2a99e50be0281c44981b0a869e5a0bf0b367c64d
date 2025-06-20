@@ -16,6 +16,24 @@
       "message": "My bad.",
       "revId": "2a99e50be0281c44981b0a869e5a0bf0b367c64d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "860c6a8c_8cdcff50",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-20T18:17:00Z",
+      "side": 1,
+      "message": "Not your bad, this validation did not exist when you wrote this transform :-)",
+      "parentUuid": "53527d45_12d789f7",
+      "revId": "2a99e50be0281c44981b0a869e5a0bf0b367c64d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
