@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bac2897c_19a56393",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-20T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d30ac699_d1c90788",
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a10ed29f_3d7b8011",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8eeb5721_b40305f3",
+        "filename": "src/dawn/native/BlockInfo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-20T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a10ed29f_3d7b8011",
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9ad738f4_169167f9",
@@ -65,6 +101,30 @@
       "writtenOn": "2025-06-20T15:56:08Z",
       "side": 1,
       "message": "Here and in other suggestions below we can use aggregate initialization to the same effect.\n\n```suggestion\n        copyInfo-\u003ealignedOffset \u003d alignedOffset;\n        copyInfo-\u003ebufferSize \u003d\n           {copySize.width + blockOffset.x, copySize.height + blockOffset.y,\n                          copySize.depthOrArrayLayers};\n```",
+      "range": {
+        "startLine": 155,
+        "startChar": 48,
+        "endLine": 158,
+        "endChar": 55
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "611bbc61_38bcb530",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-20T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ad738f4_169167f9",
       "range": {
         "startLine": 155,
         "startChar": 48,
@@ -98,6 +158,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea4d3762_a1226462",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-20T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b8acfe1_1d528da8",
+      "range": {
+        "startLine": 206,
+        "startChar": 13,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "361a6966_6eb3f6a1",
@@ -111,6 +195,30 @@
       "writtenOn": "2025-06-20T15:56:08Z",
       "side": 1,
       "message": "Arguments could be in block space as this is an implementation detail of `Compute3DTextureCopySplits`",
+      "range": {
+        "startLine": 291,
+        "startChar": 3,
+        "endLine": 296,
+        "endChar": 33
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e809f0a_a267132c",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-20T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "361a6966_6eb3f6a1",
       "range": {
         "startLine": 291,
         "startChar": 3,
@@ -155,6 +263,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab1abd2c_43268907",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-20T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "161791da_da3cca6c",
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8d52b703_24c24c2a",
@@ -168,6 +294,30 @@
       "writtenOn": "2025-06-20T15:56:08Z",
       "side": 1,
       "message": "```suggestion\n        copyInfo1-\u003ecopySize \u003d {copySize.width, copySize.height, depthInCopy1};\n        copyInfo1-\u003ealignedOffset \u003d offset;\n        copyInfo1-\u003ebufferSize \u003d {copySize.width, rowsPerImage, depthInCopy1};\n    }\n```",
+      "range": {
+        "startLine": 655,
+        "startChar": 2,
+        "endLine": 658,
+        "endChar": 0
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ded8f0b6_4fe12158",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-20T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d52b703_24c24c2a",
       "range": {
         "startLine": 655,
         "startChar": 2,
@@ -201,6 +351,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7574cce_b6126a8c",
+        "filename": "src/dawn/native/d3d12/TextureCopySplitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-20T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18b8768a_376ab7fe",
+      "range": {
+        "startLine": 685,
+        "startChar": 40,
+        "endLine": 689,
+        "endChar": 38
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d1932c98_a6b8f28d",
@@ -214,6 +388,30 @@
       "writtenOn": "2025-06-20T15:56:08Z",
       "side": 1,
       "message": "This is the only use of this function so it could use strong types already!",
+      "range": {
+        "startLine": 215,
+        "startChar": 12,
+        "endLine": 215,
+        "endChar": 53
+      },
+      "revId": "08c4d4b9e31556a3a5db34f5083e33a80ff4e49e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bf88002_6b142414",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-20T18:24:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1932c98_a6b8f28d",
       "range": {
         "startLine": 215,
         "startChar": 12,
