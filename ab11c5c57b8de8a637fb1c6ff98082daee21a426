@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ab1ea7c_83135354",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-20T23:03:45Z",
+      "side": 1,
+      "message": "What happens for other Result\u003cT*\u003e where nullptr would be ambiguous between E and T? Does it still select E? It might be best to just reject constructing from nullptr, or even better somehow disable the constructor(E) overload for nullptr_t (but I don\u0027t know if this is possible).",
+      "revId": "ab11c5c57b8de8a637fb1c6ff98082daee21a426",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
