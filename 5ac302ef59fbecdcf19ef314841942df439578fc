@@ -70,6 +70,30 @@
       },
       "revId": "5ac302ef59fbecdcf19ef314841942df439578fc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd3bc0f2_62cf88ea",
+        "filename": "third_party/CMakeLists.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-20T23:08:05Z",
+      "side": 1,
+      "message": "I can\u0027t get this to work even on the old revision with old emscripten, I think it might have been a change in CMake (perhaps relating to CMP0077 but I\u0027m not sure why, that should only affect the cmake variable `gtest_disable_pthreads`, not add_compile_definitions)",
+      "parentUuid": "ed95e9fc_0d59bf7d",
+      "range": {
+        "startLine": 101,
+        "startChar": 42,
+        "endLine": 101,
+        "endChar": 65
+      },
+      "revId": "5ac302ef59fbecdcf19ef314841942df439578fc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
