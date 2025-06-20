@@ -39,6 +39,30 @@
       },
       "revId": "83d10d9c63f76fff22c7ad6c52f5fa2f1fec311a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c6b5afb_e1973fab",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-06-20T02:17:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f51bf0c_effe7b41",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "83d10d9c63f76fff22c7ad6c52f5fa2f1fec311a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
