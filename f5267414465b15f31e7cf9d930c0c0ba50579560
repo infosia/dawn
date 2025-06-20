@@ -34,6 +34,24 @@
       "parentUuid": "c6061c33_46ae9845",
       "revId": "f5267414465b15f31e7cf9d930c0c0ba50579560",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a525399d_9a17d9cd",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T18:40:22Z",
+      "side": 0,
+      "message": "IMHO let\u0027s go with 1 because we know exactly what to do and just open an issue to do 2. For Dawn, I\u0027m thinking of 2 because it is easier for our users to handle but in ANGLE it might not be necessary when the buffer is just internal.",
+      "parentUuid": "dea714aa_e7e72888",
+      "revId": "f5267414465b15f31e7cf9d930c0c0ba50579560",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
