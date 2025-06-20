@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffbb554a_e384d953",
+        "filename": "third_party/angle",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-20T07:19:13Z",
+      "side": 1,
+      "message": "It seemed that you missed a gclient sync at some point, can you revert the changes to third_party?",
+      "revId": "60ff3875feaaaaab53415a5c2315e1057a041b17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
