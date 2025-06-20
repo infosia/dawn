@@ -34,6 +34,24 @@
       "parentUuid": "c880bbce_f697f33a",
       "revId": "da876c7c8c1a676992ee4fa94134ecf1b3acad76",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23615fbd_57435188",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002761
+      },
+      "writtenOn": "2025-06-20T19:21:56Z",
+      "side": 1,
+      "message": "Yea, it\u0027s  a cmake build. I just sync\u0027d my submodules to tip-of-tree and it failed to link. The example isn\u0027t public, but I can try to upgrade dusk to see if the same issue happens?",
+      "parentUuid": "46080403_b0ae4f49",
+      "revId": "da876c7c8c1a676992ee4fa94134ecf1b3acad76",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
