@@ -109,6 +109,8 @@ enum class DeviceExt {
     ShaderSubgroupExtendedTypes,
     DrawIndirectCount,
     VulkanMemoryModel,
+    ShaderFloatControls,
+    Spirv14,
 
     // Promoted to 1.3
     ShaderIntegerDotProduct,
