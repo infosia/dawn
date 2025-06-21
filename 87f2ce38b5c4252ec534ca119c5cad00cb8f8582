@@ -33,6 +33,24 @@
       "message": "Does SPIR-V 1.4 actually require `VK_KHR_shader_float_controls`? It sounds more like an optional extra thing from my brief reading of the spec?",
       "revId": "87f2ce38b5c4252ec534ca119c5cad00cb8f8582",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44dfbdc2_78d03150",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002266
+      },
+      "writtenOn": "2025-06-21T20:28:35Z",
+      "side": 1,
+      "message": "According to the spec it is required. I remember there be some discussion about not being able to untangle certain interactions properly so it was turned into a dependency.\n\nhttps://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#VK_KHR_spirv_1_4",
+      "parentUuid": "27ba689f_a2f2d2b8",
+      "revId": "87f2ce38b5c4252ec534ca119c5cad00cb8f8582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
