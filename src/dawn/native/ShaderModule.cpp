@@ -1389,7 +1389,8 @@ ResultOrError<ShaderModuleParseResult> ParseShaderModule(ShaderModuleParseReques
 
 #ifdef DAWN_ENABLE_SPIRV_VALIDATION
         MaybeError validationResult =
-            ValidateSpirv(logEmitter, spirvCode.data(), spirvCode.size(), dumpShaders);
+            ValidateSpirv(logEmitter, spirvCode.data(), spirvCode.size(), dumpShaders,
+                          deviceInfo.toggles.Has(Toggle::Spirv14));
         // If SpirV validation error occurs, store it into outputParseResult and return.
         if (validationResult.IsError()) {
             outputParseResult.SetValidationError(validationResult.AcquireError());

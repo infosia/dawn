@@ -970,6 +970,10 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     deviceToggles->Default(
         Toggle::EnableIntegerRangeAnalysisInRobustness,
         platform->IsFeatureEnabled(platform::Features::kWebGPUEnableRangeAnalysisForRobustness));
+
+    deviceToggles->Default(Toggle::Spirv14,
+                           platform->IsFeatureEnabled(platform::Features::kWebGPUUseSpirv14) &&
+                               GetDeviceInfo().HasExt(DeviceExt::Spirv14));
 }
 
 ResultOrError<Ref<DeviceBase>> PhysicalDevice::CreateDeviceImpl(

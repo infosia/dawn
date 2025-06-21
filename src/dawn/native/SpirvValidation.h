@@ -36,7 +36,8 @@ namespace dawn::native {
 MaybeError ValidateSpirv(LogEmitter* logEmitter,
                          const uint32_t* spirv,
                          size_t wordCount,
-                         bool dumpSpirv);
+                         bool dumpSpirv,
+                         bool spv14);
 
 }  // namespace dawn::native
 
