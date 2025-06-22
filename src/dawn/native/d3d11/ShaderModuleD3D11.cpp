@@ -236,6 +236,8 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.hlsl.tintOptions.bindings = std::move(bindings);
     req.hlsl.tintOptions.scalarize_max_min_clamp =
         device->IsToggleEnabled(Toggle::ScalarizeMaxMinClamp);
+    req.hlsl.tintOptions.polyfill_abs_signed_integer =
+        device->IsToggleEnabled(Toggle::PolyfillAbsSignedInteger);
 
     // Immediate data available in TintIR only.
     if (useTintIR) {
