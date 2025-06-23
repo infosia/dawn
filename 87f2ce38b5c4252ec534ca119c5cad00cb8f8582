@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "07b3197d_9112473a",
+        "filename": "src/dawn/native/SpirvValidation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T08:20:52Z",
+      "side": 1,
+      "message": "This comment makes sense with the context of this CL but not as much when reading the code in the future, newer than what?\n\nWhat about \"Use the maximum SPIR-V version that Dawn supports using as a newer environment can always be used for disassembly of older ones\"",
+      "revId": "87f2ce38b5c4252ec534ca119c5cad00cb8f8582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1b11118b_6eec8e58",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
         "patchSetId": 3
@@ -14,6 +31,87 @@
       "writtenOn": "2025-06-21T16:34:10Z",
       "side": 1,
       "message": "In other cases we `ForceSet` the toggle to `false` if the feature is not supported, which means that the user cannot override it and use the feature anyway.\n\nI don\u0027t know if there\u0027s a particular reason to do it one way or the other though. @cwallez@chromium.org ?",
+      "revId": "87f2ce38b5c4252ec534ca119c5cad00cb8f8582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8fae7a1_100392a9",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 987,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T08:20:52Z",
+      "side": 1,
+      "message": "A default can be overriden, ForceSet cannot and we use it when we know that this will break down if the toggle doesn\u0027t have the correct value. So in this case it should `Default(platform-\u003eIsFeatureEnabled)` and `if (!HasExt) {ForceSet(false)}` to honor the Finch, while preventing use when not supported by the driver.",
+      "parentUuid": "1b11118b_6eec8e58",
+      "revId": "87f2ce38b5c4252ec534ca119c5cad00cb8f8582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12b5958b_107d9f26",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T08:20:52Z",
+      "side": 1,
+      "message": "nit: UseSpirv14 to match the platform enum and style of other toggles?",
+      "range": {
+        "startLine": 389,
+        "startChar": 60,
+        "endLine": 389,
+        "endChar": 67
+      },
+      "revId": "87f2ce38b5c4252ec534ca119c5cad00cb8f8582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9a73236_453e5cf0",
+        "filename": "src/dawn/native/vulkan/ShaderModuleVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T08:20:52Z",
+      "side": 1,
+      "message": "Do we expect to have additional SPIR-V versions supported in the future? It would be worth using an enum as the ValidateSpirv parameter instead of a boolean.",
+      "range": {
+        "startLine": 391,
+        "startChar": 89,
+        "endLine": 391,
+        "endChar": 94
+      },
+      "revId": "87f2ce38b5c4252ec534ca119c5cad00cb8f8582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d1c76b6_bb7ea4b1",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T08:20:52Z",
+      "side": 1,
+      "message": "[1]",
       "revId": "87f2ce38b5c4252ec534ca119c5cad00cb8f8582",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -49,6 +147,23 @@
       "side": 1,
       "message": "According to the spec it is required. I remember there be some discussion about not being able to untangle certain interactions properly so it was turned into a dependency.\n\nhttps://registry.khronos.org/vulkan/specs/latest/html/vkspec.html#VK_KHR_spirv_1_4",
       "parentUuid": "27ba689f_a2f2d2b8",
+      "revId": "87f2ce38b5c4252ec534ca119c5cad00cb8f8582",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "450df590_e45e0a03",
+        "filename": "src/dawn/native/vulkan/VulkanExtensions.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T08:20:52Z",
+      "side": 1,
+      "message": "Interesting, it looks like the first extension that we have that requires a specific Vulkan version, can we check that with a new argument that\u0027s the Vulkan version? We have the enums at [1] but need to pipe the version from VulkanInfo.cpp",
       "revId": "87f2ce38b5c4252ec534ca119c5cad00cb8f8582",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
