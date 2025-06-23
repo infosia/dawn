@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74b1ef0c_2fcf8a4a",
+        "filename": "src/dawn/tests/unittests/validation/RenderPipelineValidationTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 3571,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-23T18:14:48Z",
+      "side": 1,
+      "message": "nit. Maybe we should add this array to utils/TextureUtils.h/cpp so we don\u0027t need to repeat it multiple times.",
+      "range": {
+        "startLine": 3566,
+        "startChar": 4,
+        "endLine": 3571,
+        "endChar": 42
+      },
+      "revId": "4ea80ccabbd60d4d99f965315f161a5ca7f04287",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
