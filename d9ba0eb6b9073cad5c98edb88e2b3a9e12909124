@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bde5c646_7018e34d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-23T14:17:56Z",
+      "side": 1,
+      "message": "PTAL. Won\u0027t land until after the branch email, but given how long bots take may as well start, heh.",
+      "revId": "d9ba0eb6b9073cad5c98edb88e2b3a9e12909124",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
