@@ -173,6 +173,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02cd4da9_193c414f",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-23T13:56:34Z",
+      "side": 1,
+      "message": "If the type has no elements, but i think you\u0027ve filtered all those out above? Like, is there a test that shows this is necessary?",
+      "parentUuid": "0c5f683d_4af87cc9",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d9a2f0cd_3840b45c",
         "filename": "src/tint/lang/msl/writer/raise/module_constant_test.cc",
         "patchSetId": 28
