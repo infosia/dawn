@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "551f5647_25a3ceb6",
+        "filename": "src/dawn/native/d3d/D3DError.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T08:09:58Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "3c0ca1547144580ed475b22f49d0c9bf8dc4a1b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06342422_df71f451",
+        "filename": "src/dawn/native/d3d11/DeviceD3D11.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T08:09:58Z",
+      "side": 1,
+      "message": "u-nit: we can do that conversion inside RecordDeviceLostError to avoid the need to have [1]",
+      "revId": "3c0ca1547144580ed475b22f49d0c9bf8dc4a1b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
