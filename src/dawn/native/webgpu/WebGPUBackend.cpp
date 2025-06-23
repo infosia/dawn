@@ -30,4 +30,41 @@
 
 #include "dawn/native/WebGPUBackend.h"
 
-namespace dawn::native::webgpu {}  // namespace dawn::native::webgpu
+#include "dawn/native/webgpu/BufferWGPU.h"
+#include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/QueueWGPU.h"
+
+namespace dawn::native::webgpu {
+
+DAWN_NATIVE_EXPORT void StartRecording(WGPUDevice device) {
+    Device* deviceWGPU = ToBackend(FromAPI(device));
+    deviceWGPU->SetRecord(std::make_unique<native::webgpu::RecordCommandSerializer>(deviceWGPU));
+    // auto record = deviceWGPU->GetRecordCommandSerializer();
+    // record->StartCapture();
+}
+
+DAWN_NATIVE_EXPORT void EndRecording(WGPUDevice device, std::ostream& out) {
+    Device* deviceWGPU = ToBackend(FromAPI(device));
+    auto record = deviceWGPU->GetRecordCommandSerializer();
+    record->End(out);
+}
+
+DAWN_NATIVE_EXPORT void StartPlayback(WGPUDevice device, std::istream& in) {
+    Device* deviceWGPU = ToBackend(FromAPI(device));
+    deviceWGPU->SetReplay(
+        std::make_unique<native::webgpu::PlaybackCommandDeserializer>(deviceWGPU));
+    auto playback = deviceWGPU->GetPlaybackCommandDeserializer();
+    playback->StartPlayback(in);
+}
+
+DAWN_NATIVE_EXPORT WGPUBuffer GetResource(WGPUDevice device, uint32_t id) {
+    // temp
+    Device* deviceWGPU = ToBackend(FromAPI(device));
+    auto playback = deviceWGPU->GetPlaybackCommandDeserializer();
+    native::webgpu::CapturedObject* capturedBuffer;
+    playback->mObjectIdManager.GetFromId(id, &capturedBuffer);
+    native::webgpu::Buffer* buffer = static_cast<native::webgpu::Buffer*>(capturedBuffer);
+    return ToAPI(buffer);
+}
+
+}  // namespace dawn::native::webgpu

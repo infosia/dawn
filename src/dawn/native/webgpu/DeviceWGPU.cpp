@@ -108,9 +108,21 @@ Device::Device(AdapterBase* adapter,
     // TODO(crbug.com/413053623): use adapterRequestDevice instead as dawn_wire doesn't support
     // adapterCreateDevice.
     mInnerDevice = wgpu.adapterCreateDevice(innerAdapter, &apiDesc);
+
+    // // Use a descriptor extension to turn record on/off
+    // mRecord = std::make_unique<RecordCommandSerializer>();
+    // // mRecord = std::make_unique<RecordCommandSerializer>(mInnerDevice);
+
+    // // temp
+    // mRecord->StartCapture();
+
+    // // temp
+    // id = 0;
 }
 
 Device::~Device() {
+    // // temp
+    // mRecord->End("out/Debug/captured1.dawn");
     Destroy();
 }
 
@@ -141,7 +153,15 @@ ResultOrError<Ref<BindGroupLayoutInternalBase>> Device::CreateBindGroupLayoutImp
 }
 ResultOrError<Ref<BufferBase>> Device::CreateBufferImpl(
     const UnpackedPtr<BufferDescriptor>& descriptor) {
-    return Buffer::Create(this, descriptor);
+    // return Buffer::Create(this, descriptor);
+
+    Ref<BufferBase> buffer;
+    DAWN_TRY_ASSIGN(buffer, Buffer::Create(this, descriptor));
+
+    if (IsRecord()) {
+        mRecord->EncodeDeviceCreateBuffer(this, ToBackend(buffer.Get()), descriptor);
+    }
+    return buffer;
 }
 ResultOrError<Ref<CommandBufferBase>> Device::CreateCommandBuffer(
     CommandEncoder* encoder,
@@ -240,6 +260,33 @@ uint64_t Device::GetOptimalBufferToTextureCopyOffsetAlignment() const {
 
 float Device::GetTimestampPeriodInNS() const {
     return 1.0f;
+}
+
+// Record Replay related temp
+bool Device::IsRecord() const {
+    return mRecord != nullptr;
+    // Is capturing?
+}
+
+bool Device::IsPlayback() const {
+    return mPlayback != nullptr;
+}
+
+void Device::SetRecord(std::unique_ptr<RecordCommandSerializer> record) {
+    mRecord = std::move(record);
+    mPlayback = nullptr;
+}
+
+void Device::SetReplay(std::unique_ptr<PlaybackCommandDeserializer> playback) {
+    mPlayback = std::move(playback);
+    mRecord = nullptr;
+}
+
+RecordCommandSerializer* Device::GetRecordCommandSerializer() const {
+    return mRecord.get();
+}
+PlaybackCommandDeserializer* Device::GetPlaybackCommandDeserializer() const {
+    return mPlayback.get();
 }
 
 }  // namespace dawn::native::webgpu

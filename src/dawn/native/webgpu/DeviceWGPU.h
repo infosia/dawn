@@ -34,11 +34,12 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/ToBackend.h"
 #include "dawn/native/webgpu/Forward.h"
+#include "dawn/native/webgpu/RecordCommandSerializer.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native::webgpu {
 
-class Device final : public DeviceBase {
+class Device final : public DeviceBase, public CapturedObject {
   public:
     static ResultOrError<Ref<Device>> Create(AdapterBase* adapter,
                                              WGPUAdapter innerAdapter,
@@ -59,6 +60,20 @@ class Device final : public DeviceBase {
     WGPUInstance GetInnerInstance() const;
 
     const DawnProcTable& wgpu;
+
+    // record replay related
+    void SetRecord(std::unique_ptr<RecordCommandSerializer> record);
+    void SetReplay(std::unique_ptr<PlaybackCommandDeserializer> playback);
+    RecordCommandSerializer* GetRecordCommandSerializer() const;
+    PlaybackCommandDeserializer* GetPlaybackCommandDeserializer() const;
+
+    // temp
+    bool IsRecord() const;
+    bool IsPlayback() const;
+
+    // temp public
+    std::unique_ptr<RecordCommandSerializer> mRecord = nullptr;
+    std::unique_ptr<PlaybackCommandDeserializer> mPlayback = nullptr;
 
   private:
     Device(AdapterBase* adapter,
