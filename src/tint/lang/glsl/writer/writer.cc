@@ -51,7 +51,9 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
 
     // Make sure that every texture variable is in the texture_builtins_from_uniform binding list,
     // otherwise TextureBuiltinsFromUniform will fail.
-    // Also make sure there is at most one user-declared immediate, and make a note of its size.
+    // TODO(https://issues.chromium.org/427172887) Be more precise for the
+    // texture_builtins_from_uniform checks. Also make sure there is at most one user-declared
+    // immediate, and make a note of its size.
     uint32_t user_immediate_size = 0;
     for (auto* inst : *ir.root_block) {
         auto* var = inst->As<core::ir::Var>();
@@ -66,12 +68,14 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
             return Failure("pixel_local address space is not supported by the GLSL backend");
         }
 
-        if (ptr->StoreType()->Is<core::type::Texture>()) {
+        // Check texture types that need metadata for texture_builtins_from_uniform.
+        if (ptr->StoreType()->Is<core::type::Texture>() &&
+            !ptr->StoreType()->IsAnyOf<core::type::StorageTexture, core::type::ExternalTexture>()) {
             bool found = false;
-            auto binding_point = var->BindingPoint();
+            auto binding = options.bindings.texture.at(var->BindingPoint().value());
             for (auto& bp :
                  options.bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering) {
-                if (bp == binding_point) {
+                if (bp == binding) {
                     found = true;
                     break;
                 }
@@ -79,6 +83,7 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
             if (!found) {
                 return Failure("texture missing from texture_builtins_from_uniform list");
             }
+        }
 
             // Check texel formats for read-write storage textures when targeting ES.
             if (options.version.IsES()) {
@@ -95,7 +100,6 @@ Result<SuccessType> CanGenerate(const core::ir::Module& ir, const Options& optio
                     }
                 }
             }
-        }
 
         if (ptr->AddressSpace() == core::AddressSpace::kImmediate) {
             if (user_immediate_size > 0) {
