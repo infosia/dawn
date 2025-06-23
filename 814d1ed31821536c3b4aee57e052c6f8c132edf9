@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0d3071a_c9505855",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T19:58:03Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "814d1ed31821536c3b4aee57e052c6f8c132edf9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec2c248a_4131af3e",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T19:58:03Z",
+      "side": 1,
+      "message": "I think we also have an occurrence in src/dawn/native/metal/QueueMTL.mm",
+      "revId": "814d1ed31821536c3b4aee57e052c6f8c132edf9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
