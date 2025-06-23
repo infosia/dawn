@@ -718,8 +718,13 @@ source_set("sources") {
       "webgpu/PhysicalDeviceWGPU.h",
       "webgpu/QueueWGPU.cpp",
       "webgpu/QueueWGPU.h",
+      "webgpu/RecordCommandSerializer.cpp",
+      "webgpu/RecordCommandSerializer.h",
       "webgpu/WebGPUError.h",
     ]
+    if (dawn_enable_record_replay) {
+      deps += [ "webgpu/protos:webgpu_cmd_proto" ]
+    }
   }
 
   if ((dawn_enable_opengl || dawn_enable_vulkan) &&

@@ -125,6 +125,8 @@ declare_args() {
   # Disable SPIR-V validation on Android because it adds a significant amount
   # to the binary size, and Tint's output should be well-formed.
   dawn_enable_spirv_validation = dawn_enable_vulkan && !is_android
+
+  dawn_enable_record_replay = dawn_enable_webgpu_on_webgpu
 }
 
 # UWP only supports CoreWindow for windowing
