@@ -717,6 +717,10 @@ source_set("end2end_tests_sources") {
     sources += [ "end2end/D3D12CachingTests.cpp" ]
   }
 
+  if (dawn_enable_webgpu_on_webgpu && dawn_enable_record_replay) {
+    sources += [ "end2end/RecordReplayTests.cpp" ]
+  }
+
   if (is_mac || is_ios) {
     if (dawn_enable_metal) {
       sources += [ "end2end/VideoViewsTests_mac.cpp" ]
