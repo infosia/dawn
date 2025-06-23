@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3bd88bd_49c975fd",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T20:12:27Z",
+      "side": 1,
+      "message": "FYI src/dawn/common/Range.h is a helper to try to help with the verbosity of iterating with TypedIntegers. `for (BlockCount copyLayer : Range(copySize.depthOrArrayLayers)) {`",
+      "range": {
+        "startLine": 262,
+        "startChar": 9,
+        "endLine": 263,
+        "endChar": 20
+      },
+      "revId": "6e8126c93d2bbd69d7c0c22a7177a8dd29e816a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5768b587_11ddd7c6",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T20:12:27Z",
+      "side": 1,
+      "message": "Leftover?",
+      "revId": "6e8126c93d2bbd69d7c0c22a7177a8dd29e816a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22ce74b0_f6a7d0fc",
+        "filename": "src/dawn/native/d3d12/UtilsD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T20:12:27Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6e8126c93d2bbd69d7c0c22a7177a8dd29e816a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
