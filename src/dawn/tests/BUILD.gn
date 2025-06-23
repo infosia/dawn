@@ -801,6 +801,10 @@ source_set("white_box_tests_sources") {
   ]
   libs = []
 
+  if (dawn_enable_webgpu_on_webgpu && dawn_enable_record_replay) {
+    sources += [ "white_box/RecordReplayTests.cpp" ]
+  }
+
   if (is_mac || is_ios) {
     sources += [ "white_box/SharedTextureMemoryTests_apple.mm" ]
   }
