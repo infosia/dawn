@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0373127e_8f8e5cac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 36
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-23T19:04:45Z",
+      "side": 1,
+      "message": "Please explain what changed that allows us to reland",
+      "revId": "0ae8d8ba1045db926b8b41ebb0d8196b9437a00e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
