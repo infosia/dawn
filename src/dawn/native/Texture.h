@@ -198,6 +198,8 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
         const UnpackedPtr<TextureViewDescriptor>& desc,
         CreateFn createFn);
 
+    void SetDefaultView(Ref<TextureViewBase> view);
+
     // Dawn API
     TextureViewBase* APICreateView(const TextureViewDescriptor* descriptor = nullptr);
     TextureViewBase* APICreateErrorView(const TextureViewDescriptor* descriptor = nullptr);
@@ -252,6 +254,7 @@ class TextureBase : public RefCountedWithExternalCount<SharedResource> {
     TextureState mState;
     wgpu::TextureFormat mFormatEnumForReflection;
 
+    Ref<TextureViewBase> mDefaultView;
     // Textures track texture views created from them so that they can be destroyed when the texture
     // is destroyed.
     ApiObjectList mTextureViews;

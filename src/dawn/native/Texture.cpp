@@ -993,6 +993,7 @@ void TextureBase::DestroyImpl() {
 
     // Destroy all of the views associated with the texture as well.
     mTextureViews.Destroy();
+    mDefaultView = nullptr;
 }
 
 // static
@@ -1029,6 +1030,7 @@ void TextureBase::WillDropLastExternalRef() {
     // Drop all the additional references to TextureViews that we were holding as a part of the
     // cache.
     mTextureViewCache = nullptr;
+    mDefaultView = nullptr;
 }
 
 std::string TextureBase::GetSizeLabel() const {
@@ -1347,6 +1349,9 @@ Extent3D TextureBase::GetMipLevelSubresourceVirtualSize(uint32_t level, Aspect a
 
 ResultOrError<Ref<TextureViewBase>> TextureBase::CreateView(
     const TextureViewDescriptor* descriptor) {
+    if (descriptor == nullptr && mDefaultView) {
+        return AcquireRef(mDefaultView.Get());
+    }
     return GetDevice()->CreateTextureView(this, descriptor);
 }
 
@@ -1415,6 +1420,10 @@ uint64_t TextureBase::ComputeEstimatedByteSize() const {
         byteSize *= mBaseSize.depthOrArrayLayers;
     }
     return byteSize;
+}
+
+void TextureBase::SetDefaultView(Ref<TextureViewBase> view) {
+    mDefaultView = view;
 }
 
 void TextureBase::APIDestroy() {
