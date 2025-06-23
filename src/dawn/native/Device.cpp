@@ -2267,6 +2267,12 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
 
     TextureViewDescriptor desc;
     DAWN_TRY_ASSIGN(desc, GetTextureViewDescriptorWithDefaults(texture, descriptorOrig));
+    std::string generatedLabel;
+    bool setDefaultViewForTexture = (descriptorOrig == nullptr);
+    if (setDefaultViewForTexture) {
+        generatedLabel = absl::StrFormat("defaulted from %s", texture);
+        desc.label = {generatedLabel.data(), generatedLabel.length()};
+    }
 
     UnpackedPtr<TextureViewDescriptor> descriptor;
     if (IsValidationEnabled()) {
@@ -2279,7 +2285,12 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
 
     return texture->GetOrCreateViewFromCache(
         descriptor, [&](TextureViewQuery&) -> ResultOrError<Ref<TextureViewBase>> {
-            return CreateTextureViewImpl(texture, descriptor);
+            Ref<TextureViewBase> result;
+            DAWN_TRY_ASSIGN(result, CreateTextureViewImpl(texture, descriptor));
+            if (setDefaultViewForTexture) {
+                texture->SetDefaultView(result);
+            }
+            return result;
         });
 }
 
