@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64424b14_caf95727",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-23T18:16:00Z",
+      "side": 1,
+      "message": "Nit: Could return the `SubstituteOverridesConfig` from the helper so you don\u0027t have to do this in each `Generate*` function.",
+      "revId": "75b3791c12037eef3018352440ff2f1cc796dd22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2355998_75f4d3ea",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-23T18:16:00Z",
+      "side": 1,
+      "message": "We should also switch to the IR version of GenerateBindings.",
+      "revId": "75b3791c12037eef3018352440ff2f1cc796dd22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
