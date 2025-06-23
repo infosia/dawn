@@ -70,9 +70,17 @@ group("abseil") {
       "${dawn_root}/third_party/gn/abseil-cpp:str_format",
       "${dawn_root}/third_party/gn/abseil-cpp:string_view",
       "${dawn_root}/third_party/gn/abseil-cpp:strings",
+
+      # protobuf deps
+      #"${dawn_root}/third_party/gn/abseil-cpp:base",
+      #"${dawn_root}/third_party/gn/abseil-cpp:log",
     ]
   }
 }
+
+# protobuf requires
+#config("abseil_input_config") {
+#}
 
 config("internal") {
   configs = [
@@ -722,8 +730,20 @@ source_set("sources") {
       "webgpu/PhysicalDeviceWGPU.h",
       "webgpu/QueueWGPU.cpp",
       "webgpu/QueueWGPU.h",
+      "webgpu/RecordCommandSerializer.cpp",
+      "webgpu/RecordCommandSerializer.h",
       "webgpu/WebGPUError.h",
     ]
+    if (dawn_enable_record_replay) {
+      deps += [
+        #":abseil",
+        "webgpu/protos:webgpu_cmd_proto",
+      ]
+      public_deps += [ "${dawn_root}/third_party/protobuf:protobuf_full" ]
+
+      #public_deps += [ "${dawn_root}/third_party/protobuf:protobuf" ]
+      #public_deps += [ ":abseil" ]
+    }
   }
 
   if ((dawn_enable_opengl || dawn_enable_vulkan) &&
