@@ -40,7 +40,9 @@
 #include "dawn/common/RefCounted.h"
 
 namespace dawn {
-class Mutex : public RefCounted, NonCopyable {
+
+template <typename MutexT>
+class MutexBase : public RefCounted, NonCopyable {
   public:
     template <typename MutexRef>
     struct AutoLockBase : NonMovable {
@@ -61,26 +63,55 @@ class Mutex : public RefCounted, NonCopyable {
     };
 
     // This scoped lock won't keep the mutex alive.
-    using AutoLock = AutoLockBase<Mutex*>;
+    using AutoLock = AutoLockBase<MutexBase<MutexT>*>;
     // This scoped lock will keep the mutex alive until out of scope.
-    using AutoLockAndHoldRef = AutoLockBase<Ref<Mutex>>;
+    using AutoLockAndHoldRef = AutoLockBase<Ref<MutexBase<MutexT>>>;
 
-    ~Mutex() override;
+    ~MutexBase() override = default;
 
-    void Lock();
-    void Unlock();
+    void Lock() {
+#if defined(DAWN_ENABLE_ASSERTS)
+        auto currentThread = std::this_thread::get_id();
+        DAWN_ASSERT(mOwner.load(std::memory_order_acquire) != currentThread);
+#endif  // DAWN_ENABLE_ASSERTS
+
+        mNativeMutex.lock();
+
+#if defined(DAWN_ENABLE_ASSERTS)
+        mOwner.store(currentThread, std::memory_order_release);
+#endif  // DAWN_ENABLE_ASSERTS
+    }
+
+    void Unlock() {
+#if defined(DAWN_ENABLE_ASSERTS)
+        DAWN_ASSERT(IsLockedByCurrentThread());
+        mOwner.store(std::thread::id(), std::memory_order_release);
+#endif  // DAWN_ENABLE_ASSERTS
+
+        mNativeMutex.unlock();
+    }
 
     // This method is only enabled when DAWN_ENABLE_ASSERTS is turned on.
     // Thus it should only be wrapped inside DAWN_ASSERT() macro.
     // i.e. DAWN_ASSERT(mutex.IsLockedByCurrentThread())
-    bool IsLockedByCurrentThread();
+    bool IsLockedByCurrentThread() {
+#if defined(DAWN_ENABLE_ASSERTS)
+        return mOwner.load(std::memory_order_acquire) == std::this_thread::get_id();
+#else
+        // This is not supported.
+        DAWN_CHECK(false);
+#endif
+    }
 
   private:
 #if defined(DAWN_ENABLE_ASSERTS)
     std::atomic<std::thread::id> mOwner;
 #endif  // DAWN_ENABLE_ASSERTS
-    std::mutex mNativeMutex;
+    MutexT mNativeMutex;
 };
+
+using Mutex = MutexBase<std::mutex>;
+using RecursiveMutex = MutexBase<std::recursive_mutex>;
 
 }  // namespace dawn
 
