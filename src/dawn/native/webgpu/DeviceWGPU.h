@@ -34,6 +34,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/ToBackend.h"
 #include "dawn/native/webgpu/Forward.h"
+#include "dawn/native/webgpu/RecordCommandSerializer.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native::webgpu {
@@ -115,6 +116,8 @@ class Device final : public DeviceBase {
 
     // The "lower layer" implementation device that actually manages calls to GPU driver.
     WGPUDevice mInnerDevice = nullptr;
+
+    std::unique_ptr<RecordCommandSerializer> mRecordCommandSerializer;
 };
 
 }  // namespace dawn::native::webgpu

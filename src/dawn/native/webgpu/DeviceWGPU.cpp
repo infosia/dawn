@@ -108,6 +108,9 @@ Device::Device(AdapterBase* adapter,
     // TODO(crbug.com/413053623): use adapterRequestDevice instead as dawn_wire doesn't support
     // adapterCreateDevice.
     mInnerDevice = wgpu.adapterCreateDevice(innerAdapter, &apiDesc);
+
+    // Use a descriptor extension to turn record on/off
+    mRecordCommandSerializer = std::make_unique<RecordCommandSerializer>(mInnerDevice);
 }
 
 Device::~Device() {
@@ -141,7 +144,14 @@ ResultOrError<Ref<BindGroupLayoutInternalBase>> Device::CreateBindGroupLayoutImp
 }
 ResultOrError<Ref<BufferBase>> Device::CreateBufferImpl(
     const UnpackedPtr<BufferDescriptor>& descriptor) {
-    return Buffer::Create(this, descriptor);
+    // return Buffer::Create(this, descriptor);
+
+    Ref<BufferBase> buffer;
+    DAWN_TRY_ASSIGN(buffer, Buffer::Create(this, descriptor));
+
+    mRecordCommandSerializer->EncodeDeviceCreateBuffer(
+        mInnerDevice, ToBackend(buffer.Get())->GetInnerHandle(), descriptor);
+    return buffer;
 }
 ResultOrError<Ref<CommandBufferBase>> Device::CreateCommandBuffer(
     CommandEncoder* encoder,
