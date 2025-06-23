@@ -57,7 +57,7 @@ ComPtr<IDXGIFactory4> Device::GetFactory() const {
     return ToBackend(GetPhysicalDevice())->GetBackend()->GetFactory();
 }
 
-void Device::HistogramDeviceLostError(HistogramDeviceLostValue value) {
+void Device::RecordDeviceLostError(HistogramDeviceLostValue value) {
     DAWN_HISTOGRAM_ENUMERATION(GetPlatform(), "D3DDeviceLostError", value, kErrorMaxEnumValue);
 }
 

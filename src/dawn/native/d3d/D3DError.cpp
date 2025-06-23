@@ -129,7 +129,7 @@ MaybeError CheckOutOfMemoryHRESULTImpl(HRESULT result, const char* context) {
 }
 
 HistogramDeviceLostValue DeviceLostHistogramValueFromHRESULT(HRESULT result) {
-    // The possible return values of  GetDeviceRemovedReason are here:
+    // The possible return values of GetDeviceRemovedReason are here:
     // https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nf-d3d11-id3d11device-getdeviceremovedreason
     switch (result) {
         case S_OK:

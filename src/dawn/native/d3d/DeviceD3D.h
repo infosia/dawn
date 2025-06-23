@@ -52,7 +52,7 @@ class Device : public DeviceBase {
 
     virtual void DisposeKeyedMutex(ComPtr<IDXGIKeyedMutex> dxgiKeyedMutex) = 0;
 
-    void HistogramDeviceLostError(HistogramDeviceLostValue value);
+    void RecordDeviceLostError(HistogramDeviceLostValue value);
 
   protected:
     void DestroyImpl() override;
