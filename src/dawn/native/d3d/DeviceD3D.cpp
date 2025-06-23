@@ -33,6 +33,7 @@
 #include "dawn/native/d3d/Forward.h"
 #include "dawn/native/d3d/PhysicalDeviceD3D.h"
 #include "dawn/native/d3d/SharedFenceD3D.h"
+#include "dawn/platform/metrics/HistogramMacros.h"
 
 namespace dawn::native::d3d {
 
@@ -54,6 +55,47 @@ const PlatformFunctions* Device::GetFunctions() const {
 
 ComPtr<IDXGIFactory4> Device::GetFactory() const {
     return ToBackend(GetPhysicalDevice())->GetBackend()->GetFactory();
+}
+
+void Device::RecordDeviceLostError(HRESULT result) {
+    enum HistogramDeviceLostValue {
+        kOK = 0,
+        kErrorDeviceHung,
+        kErrorDeviceRemoved,
+        kErrorDeviceReset,
+        kErrorDriverInternalError,
+        kErrorInvalidCall,
+        kErrorOther,
+        kErrorMaxEnumValue
+    };
+
+    // The possible return values of GetDeviceRemovedReason are here:
+    // https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nf-d3d11-id3d11device-getdeviceremovedreason
+    HistogramDeviceLostValue value = kOK;
+    switch (result) {
+        case S_OK:
+            value = kOK;
+            break;
+        case DXGI_ERROR_DEVICE_HUNG:
+            value = kErrorDeviceHung;
+            break;
+        case DXGI_ERROR_DEVICE_REMOVED:
+            value = kErrorDeviceRemoved;
+            break;
+        case DXGI_ERROR_DEVICE_RESET:
+            value = kErrorDeviceReset;
+            break;
+        case DXGI_ERROR_DRIVER_INTERNAL_ERROR:
+            value = kErrorDriverInternalError;
+            break;
+        case DXGI_ERROR_INVALID_CALL:
+            value = kErrorInvalidCall;
+            break;
+        default:
+            value = kErrorOther;
+    }
+
+    DAWN_HISTOGRAM_ENUMERATION(GetPlatform(), "D3DDeviceLostError", value, kErrorMaxEnumValue);
 }
 
 }  // namespace dawn::native::d3d
