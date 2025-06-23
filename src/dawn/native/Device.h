@@ -563,7 +563,7 @@ class DeviceBase : public ErrorSink,
     // clean up stacks on threads aside from the thread that dropped the last reference. By using a
     // unique ThreadUniqueId here, and tracking the stacks as a member, we can reclaim all memory
     // when the Device is destroyed.
-    absl::flat_hash_map<ThreadUniqueId, std::unique_ptr<ErrorScopeStack>> mErrorScopeStacks;
+    PerThread<ErrorScopeStack> mErrorScopeStacks;
 
     Ref<AdapterBase> mAdapter;
 

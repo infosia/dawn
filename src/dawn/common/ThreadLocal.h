@@ -29,6 +29,11 @@
 #define SRC_DAWN_COMMON_THREADLOCAL_H_
 
 #include <cstdint>
+#include <memory>
+
+#include "absl/container/flat_hash_map.h"
+#include "dawn/common/MutexProtected.h"
+#include "dawn/common/TypeTraits.h"
 
 namespace dawn {
 
@@ -40,6 +45,112 @@ ThreadUniqueId GetThreadUniqueId();
 
 // Returns true if the thread associated with the ID is still running.
 bool IsThreadAlive(ThreadUniqueId ThreadUniqueId);
+
+template <typename T>
+class PerThread;
+
+template <NonPointer T>
+class PerThread<T> {
+  public:
+    T* Get() {
+        return mData.Use([&](auto data) {
+            if (auto it = data->find(GetThreadUniqueId()); it != data->end()) {
+                return it->second.get();
+            }
+
+            // Each time a new thread creates a value, attempt to clean up terminated thread values
+            // before adding the new one.
+            Trim(data);
+
+            auto [it, inserted] = data->try_emplace(GetThreadUniqueId(), new T);
+            DAWN_ASSERT(inserted);
+            return it->second.get();
+        });
+    }
+
+    void Set(T* value) {
+        mData.Use([&](auto data) {
+            // Each time a new thread sets a value, attempt to clean up terminated thread values
+            // before adding the new one.
+            Trim(data);
+
+            auto [it, inserted] = data->try_emplace(GetThreadUniqueId(), value);
+            if (!inserted) {
+                it.second.reset(value);
+            }
+        });
+    }
+
+    void Trim() {
+        mData.Use([](auto data) { Trim(data); });
+    }
+
+  private:
+    // The values are always stored as std::unique_ptrs so that even if the map is rehashed or
+    // changed across threads, results are always the same. The lock is to prevent any rehashing
+    // from racing with reading a from the map.
+    using Map = absl::flat_hash_map<ThreadUniqueId, std::unique_ptr<T>>;
+    using MapUsage = MutexProtected<Map>::Usage;
+
+    MutexProtected<Map> mData;
+
+    static void Trim(MapUsage& data) {
+        for (auto it = data->begin(); it != data->end();) {
+            if (!IsThreadAlive(it->first)) {
+                data->erase(it++);
+            } else {
+                it++;
+            }
+        }
+    }
+};
+
+template <Pointer T>
+class PerThread<T> {
+  public:
+    T Get() {
+        return mData.Use([](auto data) {
+            if (auto it = data->find(GetThreadUniqueId()); it != data->end()) {
+                return it->second.get();
+            }
+            return nullptr;
+        });
+    }
+
+    void Set(T value) {
+        mData.Use([&](auto data) {
+            // Each time a new thread sets a value, attempt to clean up terminated thread values
+            // before adding the new one.
+            Trim(data);
+
+            auto& [it, inserted] = data->try_emplace(GetThreadUniqueId(), value);
+            if (!inserted) {
+                it->second = value;
+            }
+        });
+    }
+
+    void Trim() {
+        mData.Use([](auto data) { Trim(data); });
+    }
+
+  private:
+    // The lock is to prevent any rehashing from racing with reading a from the map.
+    using Map = absl::flat_hash_map<ThreadUniqueId, std::remove_pointer_t<T>>;
+    using MapUsage = MutexProtected<Map>::Usage;
+
+    MutexProtected<Map> mData;
+
+    static void Trim(MapUsage& data) {
+        for (auto it = data->begin(); it != data->end();) {
+            if (!IsThreadAlive(it->first)) {
+                data->erase(it++);
+            } else {
+                it++;
+            }
+        }
+    }
+};
 
 }  // namespace dawn
 

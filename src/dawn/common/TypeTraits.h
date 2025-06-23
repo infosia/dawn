@@ -58,6 +58,11 @@ struct IsCString {
     static constexpr const bool value = Eval();
 };
 
+template <typename T>
+concept Pointer = std::is_pointer_v<T>;
+template <typename T>
+concept NonPointer = not std::is_pointer_v<T>;
+
 }  // namespace dawn
 
 #endif  // SRC_DAWN_COMMON_TYPETRAITS_H_
