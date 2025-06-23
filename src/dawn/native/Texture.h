@@ -322,6 +322,7 @@ class TextureViewBase : public ApiObjectBase {
 
     Ref<TextureBase> mTexture;
 
+    bool mIsDefaultedFromTexture = false;
     const raw_ref<const Format> mFormat;
     wgpu::TextureViewDimension mDimension;
     SubresourceRange mRange;

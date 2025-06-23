@@ -2268,6 +2268,11 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
     TextureViewDescriptor desc;
     DAWN_TRY_ASSIGN(desc, GetTextureViewDescriptorWithDefaults(texture, descriptorOrig));
 
+    DawnTextureViewDefaultedFromTexture defaultedFromTextureDesc = {};
+    defaultedFromTextureDesc.nextInChain = desc.nextInChain;
+    defaultedFromTextureDesc.defaultedFromTexture = (descriptorOrig == nullptr);
+    desc.nextInChain = &defaultedFromTextureDesc;
+
     UnpackedPtr<TextureViewDescriptor> descriptor;
     if (IsValidationEnabled()) {
         DAWN_TRY_ASSIGN_CONTEXT(descriptor, ValidateAndUnpack(&desc), "validating %s.", &desc);

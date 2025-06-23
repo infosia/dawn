@@ -3874,7 +3874,8 @@
             {"value": 67, "name": "dawn host mapped pointer limits", "tags": ["dawn"]},
             {"value": 68, "name": "render pass descriptor resolve rect", "tags": ["dawn"]},
             {"value": 69, "name": "request adapter WebGPU backend options", "tags": ["dawn", "native"]},
-            {"value": 70, "name": "dawn fake device initialize error for testing", "tags": ["dawn"]}
+            {"value": 70, "name": "dawn fake device initialize error for testing", "tags": ["dawn"]},
+            {"value": 71, "name": "dawn texture view defaulted from texture", "tags": ["dawn", "native"]}
         ]
     },
     "texture": {
@@ -4131,6 +4132,15 @@
             {"value": 16, "name": "render attachment"},
             {"value": 32, "name": "transient attachment", "tags": ["dawn"]},
             {"value": 64, "name": "storage attachment", "tags": ["dawn"]}
+        ]
+    },
+    "dawn texture view defaulted from texture": {
+        "category": "structure",
+        "chained": "in",
+        "chain roots": ["texture view descriptor"],
+        "tags": ["dawn", "native"],
+        "members": [
+            {"name": "defaulted from texture", "type": "bool", "default": "false"}
         ]
     },
     "texture view descriptor": {

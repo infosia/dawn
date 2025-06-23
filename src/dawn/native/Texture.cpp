@@ -921,6 +921,13 @@ bool IsValidSampleCount(uint32_t sampleCount) {
     }
 }
 
+bool IsDefaultedFromTexture(const UnpackedPtr<TextureViewDescriptor>& descriptor) {
+    if (const auto* dawnDesc = descriptor.Get<DawnTextureViewDefaultedFromTexture>()) {
+        return dawnDesc->defaultedFromTexture;
+    }
+    return false;
+}
+
 // TextureBase
 
 TextureBase::TextureState::TextureState() : hasAccess(true), destroyed(false) {}
@@ -1488,6 +1495,7 @@ TextureViewBase::TextureViewBase(TextureBase* texture,
                                  const UnpackedPtr<TextureViewDescriptor>& descriptor)
     : ApiObjectBase(texture->GetDevice(), descriptor->label),
       mTexture(texture),
+      mIsDefaultedFromTexture(IsDefaultedFromTexture(descriptor)),
       mFormat(GetDevice()->GetValidInternalFormat(descriptor->format)),
       mDimension(descriptor->dimension),
       mRange({ConvertViewAspect(*mFormat, descriptor->aspect),
@@ -1546,7 +1554,11 @@ void TextureViewBase::FormatLabel(absl::FormatSink* s) const {
     }
 
     if (label.empty()) {
-        s->Append(" of ");
+        if (mIsDefaultedFromTexture) {
+            s->Append(" defaulted from ");
+        } else {
+            s->Append(" of ");
+        }
         GetTexture()->FormatLabel(s);
     }
 }
