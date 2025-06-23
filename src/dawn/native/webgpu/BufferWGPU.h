@@ -31,12 +31,13 @@
 #include "dawn/native/Buffer.h"
 
 #include "dawn/native/webgpu/Forward.h"
+#include "dawn/native/webgpu/RecordCommandSerializer.h"
 
 namespace dawn::native::webgpu {
 
 class Device;
 
-class Buffer final : public BufferBase {
+class Buffer final : public BufferBase, public CapturedObject {
   public:
     static ResultOrError<Ref<Buffer>> Create(Device* device,
                                              const UnpackedPtr<BufferDescriptor>& descriptor);
