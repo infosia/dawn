@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "556a5d0c_8fcd1e10",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-23T13:59:47Z",
+      "side": 1,
+      "message": "Does this always print or do you need to set a flag to get the info log?",
+      "revId": "a26ec486c41aa7cd57ba2818aebb05d9fb4c95e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
