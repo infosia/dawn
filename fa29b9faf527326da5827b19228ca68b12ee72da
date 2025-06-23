@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c707f30b_8a7ca495",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T09:05:26Z",
+      "side": 1,
+      "message": "Can we double check with the standardization group if other texture format extension can be implicitly enabled by tier1? Like this one, and the float32 ones?",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc1d6c90_07c5f130",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T09:05:26Z",
+      "side": 1,
+      "message": "Can we open an issue and add a TODO to replace uses if U/Norm16TextureFormats with TextureFormatsTier1 as it should be just as widespread, and closer to the spec? Then we can remove that extension from Dawn. See https://source.chromium.org/search?q\u003dNorm16TextureFormats%20-f:%5Eout%20-f:third_party%2Fdawn\u0026sq\u003d",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0876dbc_b7141e96",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T09:05:26Z",
+      "side": 1,
+      "message": "This file is starting to be pretty messy. We should find a way to make it nicer in the future. Maybe with something like that (but again, no need to do it now):\n\n```\n// Define all the formats as well as their base capability.\nDefineColorFormat(...) // Define instead of Add to show that support isn\u0027t necessarily added.\n// This wouldn\u0027t add capabilities and would have a UnsupportedReason::Undefined.\n\n// Add compat capabilities\nSupportFormat(rgba8unorm, Cap::...);\n...\n\n// Add core support\nif (core) {\n  SupportFormat(rgba8unorm, Cap::...);\n  AddCapability(..., Cap::...) // ASSERTs that the format is supported.\n} else {\n  ExplainWhyUnsupported(..., reason)\n}\n\n// texture-format-tier1\nif (texture-format-tier1) {\n  SupportFormat(..., Cap::...);\n  AddCapability(..., Cap::...) // ASSERTs that the format is supported.\n} else {\n  ExplainWhyUnsupported(..., reason)\n}\n\nfor each format {\n   ASSERT UnsupportedReason is not Undefined.\n}\n```",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3667f7c_56ae4e6d",
+        "filename": "src/dawn/tests/unittests/validation/StorageTextureValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-23T09:05:26Z",
+      "side": 1,
+      "message": "```suggestion\n// Check that it is allowed to create R8Snorm/RG8Snorm/RGBA8Snorm texture with the storage usage\n```",
+      "range": {
+        "startLine": 1311,
+        "startChar": 38,
+        "endLine": 1311,
+        "endChar": 45
+      },
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
