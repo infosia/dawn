@@ -140,6 +140,7 @@ enum class Toggle {
     ExposeWGSLExperimentalFeatures,
     DisablePolyfillsOnIntegerDivisonAndModulo,
     ScalarizeMaxMinClamp,
+    PolyfillAbsSignedInteger,
     MetalEnableModuleConstant,
     EnableImmediateErrorHandling,
     VulkanUseStorageInputOutput16,
