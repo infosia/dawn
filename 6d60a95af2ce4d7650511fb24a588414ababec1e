@@ -231,6 +231,23 @@
       "parentUuid": "a1a61b5a_4187c2c8",
       "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab3760cb_d018a10e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-06-23T23:09:46Z",
+      "side": 1,
+      "message": "This feature is useful to my use scenario. I saw it is approved. Is there anything blocking the merge of this change?",
+      "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
