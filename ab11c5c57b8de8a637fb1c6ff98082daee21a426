@@ -34,6 +34,24 @@
       "parentUuid": "6ab1ea7c_83135354",
       "revId": "ab11c5c57b8de8a637fb1c6ff98082daee21a426",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61ac0bd7_f648dde9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-23T19:03:54Z",
+      "side": 1,
+      "message": "Ahh, right, of course, I forgot the E case took `unique_ptr\u003cE\u003e` (should have checked). LGTM then.",
+      "parentUuid": "10b4c5b7_587c7819",
+      "revId": "ab11c5c57b8de8a637fb1c6ff98082daee21a426",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
