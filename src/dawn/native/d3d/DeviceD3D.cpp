@@ -33,6 +33,7 @@
 #include "dawn/native/d3d/Forward.h"
 #include "dawn/native/d3d/PhysicalDeviceD3D.h"
 #include "dawn/native/d3d/SharedFenceD3D.h"
+#include "dawn/platform/metrics/HistogramMacros.h"
 
 namespace dawn::native::d3d {
 
@@ -54,6 +55,10 @@ const PlatformFunctions* Device::GetFunctions() const {
 
 ComPtr<IDXGIFactory4> Device::GetFactory() const {
     return ToBackend(GetPhysicalDevice())->GetBackend()->GetFactory();
+}
+
+void Device::RecordDeviceLostError(HistogramDeviceLostValue value) {
+    DAWN_HISTOGRAM_ENUMERATION(GetPlatform(), "D3DDeviceLostError", value, kErrorMaxEnumValue);
 }
 
 }  // namespace dawn::native::d3d

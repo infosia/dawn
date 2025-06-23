@@ -128,4 +128,25 @@ MaybeError CheckOutOfMemoryHRESULTImpl(HRESULT result, const char* context) {
     return CheckHRESULTImpl(result, context);
 }
 
+HistogramDeviceLostValue DeviceLostHistogramValueFromHRESULT(HRESULT result) {
+    // The possible return values of GetDeviceRemovedReason are here:
+    // https://learn.microsoft.com/en-us/windows/win32/api/d3d11/nf-d3d11-id3d11device-getdeviceremovedreason
+    switch (result) {
+        case S_OK:
+            return kOK;
+        case DXGI_ERROR_DEVICE_HUNG:
+            return kErrorDeviceHung;
+        case DXGI_ERROR_DEVICE_REMOVED:
+            return kErrorDeviceRemoved;
+        case DXGI_ERROR_DEVICE_RESET:
+            return kErrorDeviceReset;
+        case DXGI_ERROR_DRIVER_INTERNAL_ERROR:
+            return kErrorDriverInternalError;
+        case DXGI_ERROR_INVALID_CALL:
+            return kErrorInvalidCall;
+        default:
+            return kErrorOther;
+    }
+}
+
 }  // namespace dawn::native::d3d

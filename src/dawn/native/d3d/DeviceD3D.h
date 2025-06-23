@@ -32,6 +32,7 @@
 #include <vector>
 
 #include "dawn/native/Device.h"
+#include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d/d3d_platform.h"
 
 namespace dawn::native::d3d {
@@ -50,6 +51,8 @@ class Device : public DeviceBase {
     ComPtr<IDXGIFactory4> GetFactory() const;
 
     virtual void DisposeKeyedMutex(ComPtr<IDXGIKeyedMutex> dxgiKeyedMutex) = 0;
+
+    void RecordDeviceLostError(HistogramDeviceLostValue value);
 
   protected:
     void DestroyImpl() override;
