@@ -16,6 +16,24 @@
       "message": "Does this always print or do you need to set a flag to get the info log?",
       "revId": "a26ec486c41aa7cd57ba2818aebb05d9fb4c95e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9d6c2d7_fbdb9a2e",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-23T14:02:55Z",
+      "side": 1,
+      "message": "It always prints. Maybe there\u0027s a flag to suppress info log messages, not sure.",
+      "parentUuid": "556a5d0c_8fcd1e10",
+      "revId": "a26ec486c41aa7cd57ba2818aebb05d9fb4c95e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
