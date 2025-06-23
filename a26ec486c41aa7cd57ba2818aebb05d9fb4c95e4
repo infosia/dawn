@@ -52,6 +52,24 @@
       "parentUuid": "e9d6c2d7_fbdb9a2e",
       "revId": "a26ec486c41aa7cd57ba2818aebb05d9fb4c95e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a41e3391_01bd5248",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-23T14:07:32Z",
+      "side": 1,
+      "message": "I did have that reservation, but it\u0027s only a handful of lines for a few tests, and most of our bots will be skipping these tests anyway.\n\nIt\u0027s really annoying to not have this information when debugging test failures. If there\u0027s a good way to enable some sort of verbose mode for printing extra information in tests I would love to use that instead.",
+      "parentUuid": "136ff7d9_a8d28f54",
+      "revId": "a26ec486c41aa7cd57ba2818aebb05d9fb4c95e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
