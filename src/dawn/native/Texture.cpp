@@ -1546,7 +1546,11 @@ void TextureViewBase::FormatLabel(absl::FormatSink* s) const {
     }
 
     if (label.empty()) {
-        s->Append(" of ");
+        if (mIsDefaultedFromTexture) {
+            s->Append(" defaulted from ");
+        } else {
+            s->Append(" of ");
+        }
         GetTexture()->FormatLabel(s);
     }
 }
@@ -1614,6 +1618,10 @@ wgpu::TextureUsage TextureViewBase::GetUsage() const {
 wgpu::TextureUsage TextureViewBase::GetInternalUsage() const {
     DAWN_ASSERT(!IsError());
     return mInternalUsage;
+}
+
+void TextureViewBase::SetIsDefaultedFromTexture(bool isDefaultedFromTexture) {
+    mIsDefaultedFromTexture = isDefaultedFromTexture;
 }
 
 bool TextureViewBase::IsYCbCr() const {

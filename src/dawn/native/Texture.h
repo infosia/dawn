@@ -308,6 +308,8 @@ class TextureViewBase : public ApiObjectBase {
     wgpu::TextureUsage GetUsage() const;
     wgpu::TextureUsage GetInternalUsage() const;
 
+    void SetIsDefaultedFromTexture(bool isDefaultedFromTexture);
+
     virtual bool IsYCbCr() const;
     // Valid to call only if `IsYCbCr()` is true.
     virtual YCbCrVkDescriptor GetYCbCrVkDescriptor() const;
@@ -322,6 +324,7 @@ class TextureViewBase : public ApiObjectBase {
 
     Ref<TextureBase> mTexture;
 
+    bool mIsDefaultedFromTexture = false;
     const raw_ref<const Format> mFormat;
     wgpu::TextureViewDimension mDimension;
     SubresourceRange mRange;
