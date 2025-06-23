@@ -33,6 +33,24 @@
       "message": "I think we also have an occurrence in src/dawn/native/metal/QueueMTL.mm",
       "revId": "814d1ed31821536c3b4aee57e052c6f8c132edf9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6683dbe_57240c98",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-23T20:37:04Z",
+      "side": 1,
+      "message": "That one is removed in the parent CL of this one.",
+      "parentUuid": "ec2c248a_4131af3e",
+      "revId": "814d1ed31821536c3b4aee57e052c6f8c132edf9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
