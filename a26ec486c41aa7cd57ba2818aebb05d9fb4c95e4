@@ -70,6 +70,24 @@
       "parentUuid": "136ff7d9_a8d28f54",
       "revId": "a26ec486c41aa7cd57ba2818aebb05d9fb4c95e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3eec4943_2b03501f",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-23T14:10:04Z",
+      "side": 1,
+      "message": "Yea, i don\u0027t see anything. There is a WarnLog, but I don\u0027t see any flags to control log level for e2e tests.",
+      "parentUuid": "a41e3391_01bd5248",
+      "revId": "a26ec486c41aa7cd57ba2818aebb05d9fb4c95e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
