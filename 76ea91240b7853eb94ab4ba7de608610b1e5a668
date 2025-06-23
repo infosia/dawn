@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cfb3d6d_f12eafba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-23T06:22:35Z",
+      "side": 1,
+      "message": "I meant https://dawn-review.googlesource.com/c/dawn/+/248214",
+      "revId": "76ea91240b7853eb94ab4ba7de608610b1e5a668",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
