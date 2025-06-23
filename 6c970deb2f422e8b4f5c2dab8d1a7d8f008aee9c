@@ -112,6 +112,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7e03491_2016066a",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-23T13:45:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21159d03_f7fe20c4",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 24
+      },
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a276a0b_7a4dacbe",
@@ -125,6 +149,24 @@
       "writtenOn": "2025-06-19T01:17:23Z",
       "side": 1,
       "message": "Is this check necessary? I don\u0027t think the deepest element could ever match the type if it\u0027s gotten here?",
+      "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c5f683d_4af87cc9",
+        "filename": "src/tint/lang/msl/writer/raise/module_constant.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-23T13:45:13Z",
+      "side": 1,
+      "message": "Likely. The conditions for a type returning itself are which? if it is struct or a scalar?",
+      "parentUuid": "7a276a0b_7a4dacbe",
       "revId": "6c970deb2f422e8b4f5c2dab8d1a7d8f008aee9c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
