@@ -2279,7 +2279,10 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
 
     return texture->GetOrCreateViewFromCache(
         descriptor, [&](TextureViewQuery&) -> ResultOrError<Ref<TextureViewBase>> {
-            return CreateTextureViewImpl(texture, descriptor);
+            Ref<TextureViewBase> result;
+            DAWN_TRY_ASSIGN(result, CreateTextureViewImpl(texture, descriptor));
+            result->SetIsDefaultedFromTexture((descriptorOrig == nullptr));
+            return result;
         });
 }
 

@@ -308,6 +308,8 @@ class TextureViewBase : public ApiObjectBase {
     wgpu::TextureUsage GetUsage() const;
     wgpu::TextureUsage GetInternalUsage() const;
 
+    void SetIsDefaultedFromTexture(bool isDefaultedFromTexture);
+
     virtual bool IsYCbCr() const;
     // Valid to call only if `IsYCbCr()` is true.
     virtual YCbCrVkDescriptor GetYCbCrVkDescriptor() const;
@@ -327,6 +329,8 @@ class TextureViewBase : public ApiObjectBase {
     SubresourceRange mRange;
     const wgpu::TextureUsage mUsage = wgpu::TextureUsage::None;
     const wgpu::TextureUsage mInternalUsage = wgpu::TextureUsage::None;
+
+    bool mIsDefaultedFromTexture = false;
 };
 
 }  // namespace dawn::native
