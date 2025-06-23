@@ -46,12 +46,8 @@ Bindings GenerateBindings(const core::ir::Module& module) {
 
     std::unordered_set<tint::BindingPoint> seen_binding_points;
 
-    // Set a binding point for the texture-builtins-from-uniform buffer.
-    constexpr uint32_t kMaxBindGroups = 4u;
-    bindings.texture_builtins_from_uniform.ubo_binding = {kMaxBindGroups, 0u};
-
-    // Collect next valid binding number per group
-    Hashmap<uint32_t, uint32_t, 4> group_to_next_binding_number;
+    // Give each resource a different bind point.
+    uint32_t binding = 0;
     Vector<tint::BindingPoint, 4> ext_tex_bps;
     for (auto* inst : *module.root_block) {
         auto* var = inst->As<core::ir::Var>();
@@ -60,18 +56,7 @@ Bindings GenerateBindings(const core::ir::Module& module) {
         }
 
         if (auto bp = var->BindingPoint()) {
-            if (auto val = group_to_next_binding_number.Get(bp->group)) {
-                *val = std::max(*val, bp->binding + 1);
-            } else {
-                group_to_next_binding_number.Add(bp->group, bp->binding + 1);
-            }
-
             auto* ptr_type = var->Result()->Type()->As<core::type::Pointer>();
-
-            // Add all texture variables to the texture-builtin-from-uniform map.
-            if (ptr_type->StoreType()->Is<core::type::Texture>()) {
-                bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering.emplace_back(*bp);
-            }
 
             // Store up the external textures, we'll add them in the next step
             if (ptr_type->StoreType()->Is<core::type::ExternalTexture>()) {
@@ -79,7 +64,7 @@ Bindings GenerateBindings(const core::ir::Module& module) {
                 continue;
             }
 
-            binding::BindingInfo info{bp->binding};
+            binding::BindingInfo info{binding++};
             switch (ptr_type->AddressSpace()) {
                 case core::AddressSpace::kHandle:
                     Switch(
@@ -88,7 +73,11 @@ Bindings GenerateBindings(const core::ir::Module& module) {
                         [&](const core::type::StorageTexture*) {
                             bindings.storage_texture.emplace(*bp, info);
                         },
-                        [&](const core::type::Texture*) { bindings.texture.emplace(*bp, info); });
+                        [&](const core::type::Texture*) {
+                            bindings.texture.emplace(*bp, info);
+                            bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering
+                                .emplace_back(info);
+                        });
                     break;
                 case core::AddressSpace::kStorage:
                     bindings.storage.emplace(*bp, info);
@@ -111,17 +100,14 @@ Bindings GenerateBindings(const core::ir::Module& module) {
     }
 
     for (auto bp : ext_tex_bps) {
-        uint32_t g = bp.group;
-        uint32_t& next_num = group_to_next_binding_number.GetOrAddZero(g);
-
-        binding::BindingInfo plane0{bp.binding};
-        binding::BindingInfo plane1{next_num++};
-        binding::BindingInfo metadata{next_num++};
-
-        group_to_next_binding_number.Replace(g, next_num);
-
+        binding::BindingInfo plane0{binding++};
+        binding::BindingInfo plane1{binding++};
+        binding::BindingInfo metadata{binding++};
         bindings.external_texture.emplace(bp, binding::ExternalTexture{metadata, plane0, plane1});
     }
+
+    // Set a binding point for the texture-builtins-from-uniform buffer.
+    bindings.texture_builtins_from_uniform.ubo_binding = {binding++};
 
     return bindings;
 }

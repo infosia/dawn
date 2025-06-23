@@ -190,12 +190,14 @@ void GenerateCombinedSamplerInfo(
 void GenerateTextureBuiltinFromUniformData(
     const EntryPointMetadata& metadata,
     const PipelineLayout* layout,
+    const tint::glsl::writer::Bindings& bindings,
     BindingPointToFunctionAndOffset* bindingPointToData,
     tint::glsl::writer::TextureBuiltinsFromUniformOptions* textureBuiltinsFromUniform) {
     for (auto [i, query] : Enumerate(metadata.textureQueries)) {
-        // Tint uses WGSL binding points for textureBuiltinFromUniform options.
+        // Tint uses post-remapping binding points for textureBuiltinFromUniform options.
         tint::BindingPoint wgslBindPoint = {.group = query.group, .binding = query.binding};
-        textureBuiltinsFromUniform->ubo_bindingpoint_ordering.emplace_back(wgslBindPoint);
+        auto remappedBinding = bindings.texture.at(wgslBindPoint);
+        textureBuiltinsFromUniform->ubo_bindingpoint_ordering.emplace_back(remappedBinding);
 
         // Dawn uses (BindGroupIndex, BindingIndex) to know which builtin data needs to be passed as
         // uniform. Convert the WGSL bind point to that.
@@ -220,6 +222,12 @@ void GenerateTextureBuiltinFromUniformData(
         // `TextureBuiltinsFromUniform` when it creates the UBO structure.
         bindingPointToData->emplace(dstBindingPoint,
                                     std::pair{type, static_cast<uint32_t>(i * sizeof(uint32_t))});
+    }
+
+    // Tell Tint where the uniform containing the builtin data will (in post-remapping space).
+    if (!bindingPointToData->empty()) {
+        textureBuiltinsFromUniform->ubo_binding = {
+            layout->GetInternalTextureBuiltinsUniformBinding()};
     }
 }
 
@@ -460,17 +468,9 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     {
         BindingPointToFunctionAndOffset bindingPointToData;
         tint::glsl::writer::TextureBuiltinsFromUniformOptions textureBuiltinsFromUniform;
-        GenerateTextureBuiltinFromUniformData(entryPointMetaData, layout, &bindingPointToData,
-                                              &textureBuiltinsFromUniform);
+        GenerateTextureBuiltinFromUniformData(entryPointMetaData, layout, bindings,
+                                              &bindingPointToData, &textureBuiltinsFromUniform);
 
-        // Tell Tint where the uniform containing the builtin data is, and where to remap it.
-        if (!bindingPointToData.empty()) {
-            bindings.texture_builtins_from_uniform.ubo_binding = {kMaxBindGroups + 1, 0};
-
-            bindings.uniform.emplace(bindings.texture_builtins_from_uniform.ubo_binding,
-                                     tint::glsl::writer::binding::Uniform{
-                                         layout->GetInternalTextureBuiltinsUniformBinding()});
-        }
         *bindingPointToTextureBuiltinDataOut = std::move(bindingPointToData);
         bindings.texture_builtins_from_uniform = std::move(textureBuiltinsFromUniform);
     }
