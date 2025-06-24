@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "de95e293_9162eca8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-24T19:54:40Z",
+      "side": 1,
+      "message": "This is to differentiate the nullptr case from the defaulting done in the spec. See https://chromium-review.googlesource.com/c/chromium/src/+/6656722\n\nMaybe the difference is not important and your suggestion makes things simpler.",
+      "parentUuid": "28e3a578_c22a2d9e",
+      "revId": "3f1e75f13d1094e6169a357b5fcd4f5b42630689",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "649a95e3_742dc40e",
         "filename": "src/dawn/native/Texture.cpp",
         "patchSetId": 4
