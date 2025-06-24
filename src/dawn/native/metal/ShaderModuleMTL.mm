@@ -49,6 +49,8 @@
 
 #include <sstream>
 
+#include <AvailabilityMacros.h>
+
 namespace dawn::native::metal {
 namespace {
 
@@ -65,6 +67,7 @@ using SubstituteOverrideConfig = std::unordered_map<tint::OverrideId, double>;
     X(uint32_t, maxSubgroupSize)                                                     \
     X(std::string, entryPointName)                                                   \
     X(bool, usesSubgroupMatrix)                                                      \
+    X(bool, useStrictMath)                                                           \
     X(bool, disableSymbolRenaming)                                                   \
     X(tint::msl::writer::Options, tintOptions)                                       \
     X(UnsafeUnserializedValue<dawn::platform::Platform*>, platform)
@@ -221,7 +224,8 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     ShaderModule::MetalFunctionData* out,
     uint32_t sampleMask,
     const RenderPipeline* renderPipeline,
-    const BindingInfoArray& moduleBindingInfo) {
+    const BindingInfoArray& moduleBindingInfo,
+    bool use_strict_math) {
     std::ostringstream errorStream;
     errorStream << "Tint MSL failure:\n";
 
@@ -278,6 +282,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.disableSymbolRenaming = device->IsToggleEnabled(Toggle::DisableSymbolRenaming);
     req.usesSubgroupMatrix = programmableStage.metadata->usesSubgroupMatrix;
     req.platform = UnsafeUnserializedValue(device->GetPlatform());
+    req.useStrictMath = use_strict_math;
 
     req.tintOptions.strip_all_names = !req.disableSymbolRenaming;
     req.tintOptions.remapped_entry_point_name = device->GetIsolatedEntryPointName();
@@ -379,12 +384,19 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
             // some (old?) Metal drivers accidentally treat it as a MTLLibraryErrorCompileError
             // instead of a warning.
             auto msl = std::move(result->msl);
+            std::string math_mode = "";
+            if (@available(macOS 15.0, iOS 18.0, *)) {
+                math_mode = R"(#pragma METAL fp math_mode()";
+                math_mode += r.useStrictMath ? "safe" : "relaxed";
+                math_mode += +R"( )
+                 )";
+            }
             msl = R"(
                     #ifdef __clang__
                     #pragma clang diagnostic ignored "-Wall"
                     #endif
                 )" +
-                  msl;
+                  math_mode + msl;
 
             return MslCompilation{{
                 std::move(msl),
@@ -430,7 +442,8 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     CacheResult<MslCompilation> mslCompilation;
     DAWN_TRY_ASSIGN(mslCompilation,
                     TranslateToMSL(GetDevice(), programmableStage, stage, layout, out, sampleMask,
-                                   renderPipeline, GetEntryPoint(entryPointName).bindings));
+                                   renderPipeline, GetEntryPoint(entryPointName).bindings,
+                                   GetStrictMath().value_or(false)));
 
     out->needsStorageBufferLength = mslCompilation->needsStorageBufferLength;
     out->workgroupAllocations = std::move(mslCompilation->workgroupAllocations);
@@ -446,14 +459,13 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
         (*compileOptions).preserveInvariance = true;
     }
 
-#if DAWN_PLATFORM_IS(MACOS)
     if (@available(macOS 15.0, iOS 18.0, *)) {
         // Relaxed is preferred to 'fastMathEnabled' as it respects inf/nan.
         // See crbug.com/425650181
-        (*compileOptions).mathMode =
-            GetStrictMath().value_or(false) ? MTLMathModeSafe : MTLMathModeRelaxed;
+        //(*compileOptions).mathMode =
+        //   GetStrictMath().value_or(false) ? MTLMathModeSafe : MTLMathModeRelaxed;
     } else
-#endif
+
     {
         (*compileOptions).fastMathEnabled = !GetStrictMath().value_or(false);
     }
