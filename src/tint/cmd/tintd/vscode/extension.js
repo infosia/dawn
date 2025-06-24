@@ -25,26 +25,41 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-var path = require('path');
-var vscode = require('vscode');
-var langClient = require('vscode-languageclient');
+const fs = require('fs');
+const path = require('path');
+const vscode = require('vscode');
+const langClient = require('vscode-languageclient');
 
-var LanguageClient = langClient.LanguageClient;
+const LanguageClient = langClient.LanguageClient;
+
+function getServerModulePath(context) {
+   const modulePaths = [
+      path.join(context.extensionPath, 'tintd'),
+      path.join(context.extensionPath, 'Release', 'tintd.exe'),
+      path.join(context.extensionPath, 'Debug', 'tintd.exe'),
+   ];
+
+   for (const modulePath of modulePaths) {
+     if (fs.existsSync(modulePath)) {
+        return modulePath;
+     }
+   }
+}
 
 // activate() is called when the extension is activated
 function activate(context) {
-    let serverModule = path.join(context.extensionPath, 'tintd');
-    let debugOptions = {};
+    const serverModule = getServerModulePath(context)
+    const debugOptions = {};
 
     // If the extension is launched in debug mode then the debug server options are used
     // Otherwise the run options are used
-    let serverOptions = {
+    const serverOptions = {
         run: { command: serverModule, transport: langClient.stdio },
         debug: { command: serverModule, transport: langClient.stdio, options: debugOptions }
     }
 
     // Options to control the language client
-    let clientOptions = {
+    const clientOptions = {
         documentSelector: ['wgsl'],
         synchronize: {
             // Synchronize the setting section 'wgsl' to the server
@@ -55,7 +70,7 @@ function activate(context) {
     }
 
     // Create the language client and start the client.
-    let disposable = new LanguageClient('wgsl', serverOptions, clientOptions).start();
+    const disposable = new LanguageClient('wgsl', serverOptions, clientOptions).start();
 
     // Push the disposable to the context's subscriptions so that the
     // client can be deactivated on extension deactivation
