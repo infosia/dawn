@@ -50,4 +50,16 @@ WireResult Server::DoSurfaceGetCurrentTexture(Known<WGPUSurface> surface,
     }
 }
 
+WireResult Server::DoSurfacePresent(WGPUSurface self) {
+    printf("HERE0 %p\n", mProcs.surfacePresent);
+    WGPUStatus status = mProcs.surfacePresent(self);
+    if (status != WGPUStatus_Success) {
+        // The client already validated that the surface is configured, so this
+        // indicates the client thinks the surface is configured but it isn't.
+        printf("HERE1\n");
+        return WireResult::FatalError;
+    }
+    return WireResult::Success;
+}
+
 }  // namespace dawn::wire::server

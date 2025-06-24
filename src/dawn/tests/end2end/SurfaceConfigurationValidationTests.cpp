@@ -215,7 +215,7 @@ TEST_P(SurfaceConfigurationValidationTests, AnyCombinationOfCapabilities) {
                     // Check that we can present
                     wgpu::SurfaceTexture surfaceTexture;
                     surface.GetCurrentTexture(&surfaceTexture);
-                    surface.Present();
+                    ASSERT_EQ(wgpu::Status::Success, surface.Present());
                 }
                 device.Tick();
             }

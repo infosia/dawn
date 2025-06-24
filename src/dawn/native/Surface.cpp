@@ -458,10 +458,14 @@ uint32_t Surface::GetXWindow() const {
 }
 
 MaybeError Surface::Configure(const SurfaceConfiguration* configIn) {
-    DAWN_INVALID_IF(IsError(), "%s is invalid.", this);
-
     SurfaceConfiguration config = *configIn;
-    mCurrentDevice = config.device;  // next errors are routed to the new device
+    DAWN_CHECK(config.device);
+    // Configured-or-not is specified as a client-side state, so it must be
+    // maintained even on error surfaces.
+    mCurrentDevice = config.device;
+    // Any errors are routed to the new device.
+
+    DAWN_INVALID_IF(IsError(), "%s is invalid.", this);
 
     DAWN_TRY(mCapabilityCache->WithAdapterCapabilities(
         GetCurrentDevice()->GetAdapter(), this,
@@ -568,7 +572,17 @@ MaybeError Surface::GetCurrentTexture(SurfaceTexture* surfaceTexture) const {
     return {};
 }
 
-MaybeError Surface::Present() {
+MaybeError Surface::Present(wgpu::Status* outStatus) {
+    *outStatus = wgpu::Status::Success;
+
+    // Validation that the surface is configured. Note this is synchronous
+    // validation so it can't be skipped even if the surface is an error.
+    if (!mCurrentDevice) {
+        printf("HERE2\n");
+        *outStatus = wgpu::Status::Error;
+        return DAWN_VALIDATION_ERROR("%s is not configured.", this);
+    }
+
     DAWN_INVALID_IF(IsError(), "%s is invalid.", this);
     DAWN_INVALID_IF(!mSwapChain.Get(), "%s is not configured.", this);
 
@@ -616,13 +630,16 @@ void Surface::APIGetCurrentTexture(SurfaceTexture* surfaceTexture) const {
     }
 }
 
-void Surface::APIPresent() {
-    MaybeError maybeError = Present();
+wgpu::Status Surface::APIPresent() {
+    printf("HERE3\n");
+    wgpu::Status status;
+    MaybeError maybeError = Present(&status);
     if (!GetCurrentDevice()) {
         [[maybe_unused]] bool error = mInstance->ConsumedError(std::move(maybeError));
     } else {
         [[maybe_unused]] bool error = GetCurrentDevice()->ConsumedError(std::move(maybeError));
     }
+    return status;
 }
 
 void Surface::APIUnconfigure() {
