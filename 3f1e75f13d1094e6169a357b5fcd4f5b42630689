@@ -20,6 +20,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "28e3a578_c22a2d9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-24T17:35:29Z",
+      "side": 1,
+      "message": "The change seems fine, but I was wondering whether we actually need the new extension. We should be able to tell that we are defaulting from a texture at creation time of the `TextureView` because we would be passing in a `nullptr` for the descriptor. We could, at that point, just note that and pass that through?\n\nThe descriptor extension basically does that, but it\u0027s kind of a more roundabout way to do it?",
+      "revId": "3f1e75f13d1094e6169a357b5fcd4f5b42630689",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "649a95e3_742dc40e",
         "filename": "src/dawn/native/Texture.cpp",
         "patchSetId": 4
