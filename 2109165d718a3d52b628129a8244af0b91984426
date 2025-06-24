@@ -16,6 +16,24 @@
       "message": "Could this be an implicit template parameter?",
       "revId": "2109165d718a3d52b628129a8244af0b91984426",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5e8a212_9f104d95",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-24T18:56:30Z",
+      "side": 1,
+      "message": "Will try as a followup.",
+      "parentUuid": "8a3f15d3_81a450a5",
+      "revId": "2109165d718a3d52b628129a8244af0b91984426",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
