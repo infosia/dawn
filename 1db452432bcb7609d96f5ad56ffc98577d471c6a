@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b4dc89e_5ccbdb03",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 3878,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-24T08:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fa603d6_8cc1b495",
+      "revId": "1db452432bcb7609d96f5ad56ffc98577d471c6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d183b827_c8b81fda",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-06-23T14:03:53Z",
       "side": 1,
       "message": "```suggestion\n            {\"name\": \"defaulted from texture\", \"type\": \"bool\", \"default\": \"false\"}\n```",
+      "revId": "1db452432bcb7609d96f5ad56ffc98577d471c6a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2478410f_4d3b6329",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 4143,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-24T08:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d183b827_c8b81fda",
       "revId": "1db452432bcb7609d96f5ad56ffc98577d471c6a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
