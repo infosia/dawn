@@ -16,6 +16,24 @@
       "message": "We should check that the value is a constant zero.",
       "revId": "d32e4cc3f722f451e1955085fe03437e4da72d4b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7161e037_c1cd07c6",
+        "filename": "src/tint/lang/spirv/reader/lower/texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-24T18:57:27Z",
+      "side": 1,
+      "message": "Ack, will followup.",
+      "parentUuid": "cb2ab7fe_1d9a9257",
+      "revId": "d32e4cc3f722f451e1955085fe03437e4da72d4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
