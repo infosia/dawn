@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71592f12_0ea2388d",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-24T20:03:51Z",
+      "side": 0,
+      "message": "nit. This assert should still hold right? Should we keep it?",
+      "range": {
+        "startLine": 467,
+        "startChar": 8,
+        "endLine": 467,
+        "endChar": 64
+      },
+      "revId": "0df5a8fd9a75eb643a43f05feeb79558dd3ef7b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
