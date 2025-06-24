@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a3f15d3_81a450a5",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-24T18:48:47Z",
+      "side": 1,
+      "message": "Could this be an implicit template parameter?",
+      "revId": "2109165d718a3d52b628129a8244af0b91984426",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
