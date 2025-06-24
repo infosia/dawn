@@ -16,6 +16,29 @@
       "message": "@lokokung@google.com Could you please take another look? Thanks!",
       "revId": "3470706b5ebe127a2aadc97216cc588ab26101b8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3041ea4d_1d21db7d",
+        "filename": "src/dawn/native/d3d/DeviceD3D.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-06-24T17:13:25Z",
+      "side": 1,
+      "message": "(Apologies for leading you slightly astray)\n\nStudying prior art from other places, we DO want the Dawn code you originally had for sparse histograms. \n\nHowever, in addition, you need to add the new histogram to the Chromium histograms.xml file and label it as an HRESULT. See how the `Media.VideoCapture.Win.D3DDeviceRemovedReason` histogram was defined in `tools/metrics/histograms/metadata/media/histograms.xml`. Yours will be in `tools/metrics/histograms/metadata/gpu/histograms.xml`.\n\nJudging from the HRESULT list in `tools/metrics/histograms/enums.xml`, I think all of the ones returned from `GetDeviceRemovedReason` are already in the list.\n\nYou\u0027ll want to merge the Chromium CL which adds the histogram first before merging the Dawn CL which uses the histogram.",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 34
+      },
+      "revId": "3470706b5ebe127a2aadc97216cc588ab26101b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
