@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "6a33b6159a5339257ac3c9b4dcfb96d185737d06",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c4dd492_ccbd38a0",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-24T18:58:02Z",
+      "side": 1,
+      "message": "Try templating is_depth/non_depth as follow up.",
+      "revId": "6a33b6159a5339257ac3c9b4dcfb96d185737d06",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
