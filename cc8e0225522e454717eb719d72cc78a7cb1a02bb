@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1fbe3de6_e4db117c",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-24T01:37:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8b54e38_c36fac66",
+      "revId": "cc8e0225522e454717eb719d72cc78a7cb1a02bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edfa1acb_4ad2b003",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-06-23T14:47:37Z",
       "side": 1,
       "message": "Is this depending on wrap around since `0 - min_i32` is going to be 1 more then max_i32, no?",
+      "revId": "cc8e0225522e454717eb719d72cc78a7cb1a02bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4415ad9_01064102",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-06-24T01:37:20Z",
+      "side": 1,
+      "message": "This was a temp hack to get the -x.",
+      "parentUuid": "1181a94b_d3727ec2",
       "revId": "cc8e0225522e454717eb719d72cc78a7cb1a02bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
