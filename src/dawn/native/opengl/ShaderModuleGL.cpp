@@ -222,8 +222,16 @@ bool GenerateTextureBuiltinFromUniformData(const EntryPointMetadata& metadata,
 
         // Note, the `sizeof(uint32_t)` has to match up with the data type created by the
         // `TextureBuiltinsFromUniform` when it creates the UBO structure.
-        bindingPointToData->emplace(dstBindingPoint,
-                                    std::pair{type, static_cast<uint32_t>(i * sizeof(uint32_t))});
+        // Note, this function can be called multiple times (e.g. vertex and fragment stages of a
+        // render pipeline), we need to make sure each binding point data is pushed to a different
+        // offset. So the offset should be based on the entry number of bindingPointData instead of
+        // the textureQueries of the current shader.
+        if (!bindingPointToData->contains(dstBindingPoint)) {
+            uint32_t offset = bindingPointToData->size() * sizeof(uint32_t);
+            bindingPointToData->emplace(dstBindingPoint, std::pair{type, offset});
+        }
+        // bindingPointToData->emplace(dstBindingPoint,
+        //                         std::pair{type, static_cast<uint32_t>(i * sizeof(uint32_t))});
     }
 
     return true;
