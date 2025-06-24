@@ -59,11 +59,11 @@ layout(binding = 0, std140)
 uniform params_block_1_ubo {
   SimParams inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer particlesA_block_1_ssbo {
   Particles inner;
 } v_1;
-layout(binding = 2, std430)
+layout(binding = 4, std430)
 buffer particlesB_block_1_ssbo {
   Particles inner;
 } v_2;

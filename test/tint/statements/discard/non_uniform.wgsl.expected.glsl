@@ -6,7 +6,7 @@ layout(binding = 0, std430)
 buffer f_non_uniform_global_block_ssbo {
   int inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer f_output_block_ssbo {
   float inner;
 } v_1;

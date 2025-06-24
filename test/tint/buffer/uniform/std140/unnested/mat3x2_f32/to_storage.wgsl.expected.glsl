@@ -6,7 +6,7 @@ uniform u_block_std140_1_ubo {
   vec2 inner_col1;
   vec2 inner_col2;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer s_block_1_ssbo {
   mat3x2 inner;
 } v_1;

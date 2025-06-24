@@ -4,7 +4,7 @@ layout(binding = 0, std140)
 uniform u_block_1_ubo {
   mat4 inner[4];
 } v_1;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer s_block_1_ssbo {
   float inner;
 } v_2;

@@ -11,7 +11,7 @@ layout(binding = 0, std140)
 uniform src_uniform_block_1_ubo {
   S inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer src_storage_block_1_ssbo {
   S inner;
 } v_1;

@@ -33,7 +33,7 @@ layout(binding = 0, std140)
 uniform f_uniforms_block_ubo {
   Uniforms inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer f_PointLights_ssbo {
   PointLight values[];
 } pointLights;

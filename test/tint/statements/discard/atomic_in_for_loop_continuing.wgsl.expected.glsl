@@ -2,7 +2,7 @@
 precision highp float;
 precision highp int;
 
-layout(binding = 2, std430)
+layout(binding = 4, std430)
 buffer f_a_block_ssbo {
   int inner;
 } v;

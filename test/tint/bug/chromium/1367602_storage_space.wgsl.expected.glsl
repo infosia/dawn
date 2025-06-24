@@ -9,7 +9,7 @@ layout(binding = 0, std430)
 buffer v_block_1_ssbo {
   int inner[1000000];
 } v_1;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer b_block_1_ssbo {
   A inner;
 } v_2;

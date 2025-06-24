@@ -10,7 +10,7 @@ layout(binding = 0, std430)
 buffer f_prevent_dce_block_ssbo {
   uint inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer f_SB_RO_ssbo {
   float16_t arg_0[];
 } sb_ro;
@@ -31,7 +31,7 @@ layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer SB_RO_1_ssbo {
   float16_t arg_0[];
 } sb_ro;
@@ -55,7 +55,7 @@ struct VertexOutput {
   uint prevent_dce;
 };
 
-layout(binding = 1, std430)
+layout(binding = 0, std430)
 buffer v_SB_RO_ssbo {
   float16_t arg_0[];
 } sb_ro;

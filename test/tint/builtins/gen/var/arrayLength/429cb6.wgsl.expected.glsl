@@ -9,7 +9,7 @@ layout(binding = 0, std430)
 buffer f_prevent_dce_block_ssbo {
   uint inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer f_SB_RW_ssbo {
   int arg_0[];
 } sb_rw;
@@ -29,7 +29,7 @@ layout(binding = 0, std430)
 buffer prevent_dce_block_1_ssbo {
   uint inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer SB_RW_1_ssbo {
   int arg_0[];
 } sb_rw;

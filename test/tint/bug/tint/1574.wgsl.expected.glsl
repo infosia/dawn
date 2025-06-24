@@ -15,7 +15,7 @@ layout(binding = 0, std430)
 buffer a_u32_block_1_ssbo {
   uint inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer a_i32_block_1_ssbo {
   int inner;
 } v_1;

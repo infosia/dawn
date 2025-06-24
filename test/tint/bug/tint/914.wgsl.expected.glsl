@@ -11,15 +11,15 @@ layout(binding = 0, std430)
 buffer Matrix_1_ssbo {
   float numbers[];
 } firstMatrix;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer Matrix_2_ssbo {
   float numbers[];
 } secondMatrix;
-layout(binding = 2, std430)
+layout(binding = 4, std430)
 buffer Matrix_3_ssbo {
   float numbers[];
 } resultMatrix;
-layout(binding = 3, std140)
+layout(binding = 6, std140)
 uniform uniforms_block_1_ubo {
   Uniforms inner;
 } v;

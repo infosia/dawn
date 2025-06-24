@@ -29,11 +29,11 @@ layout(binding = 0, std140)
 uniform f_x_29_block_ubo {
   Scene inner;
 } v;
-layout(binding = 1, std140)
+layout(binding = 2, std140)
 uniform f_x_49_block_ubo {
   Material inner;
 } v_1;
-layout(binding = 2, std140)
+layout(binding = 4, std140)
 uniform f_x_137_block_ubo {
   Mesh inner;
 } v_2;

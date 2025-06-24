@@ -6,7 +6,7 @@ struct TintTextureUniformData {
   uint tint_builtin_value_1;
 };
 
-layout(binding = 1, r32ui) uniform highp writeonly uimage2D Dst;
+layout(binding = 2, r32ui) uniform highp writeonly uimage2D Dst;
 layout(binding = 0, std140)
 uniform tint_symbol_1_ubo {
   TintTextureUniformData inner;

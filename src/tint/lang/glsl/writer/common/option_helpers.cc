@@ -79,13 +79,10 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
     // point.
     auto wgsl_seen = [&diagnostics, &seen_wgsl_bindings](const tint::BindingPoint& src,
                                                          const binding::BindingInfo& dst) -> bool {
-        if (auto binding = seen_wgsl_bindings.Get(src)) {
-            if (*binding != dst) {
-                diagnostics.AddError(Source{}) << "found duplicate WGSL binding point: " << src;
-                return true;
-            }
+        if (auto binding = seen_wgsl_bindings.Add(src, dst); binding.value != dst) {
+            diagnostics.AddError(Source{}) << "found duplicate WGSL binding point: " << src;
+            return true;
         }
-        seen_wgsl_bindings.Add(src, dst);
         return false;
     };
 
@@ -99,6 +96,8 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
             -> bool {
             if (auto binding = seen_bindings.Get(src)) {
                 if (*binding != dst) {
+                    fprintf(stderr, "RHARRISON: src=%u, dst=[%u, %u], binding=[%u, %u]\n", src.binding, dst.group, dst.binding, binding->group, binding->binding);
+                    fflush(stderr);
                     diagnostics.AddError(Source{})
                         << "found duplicate GLSL binding point: [binding: " << src.binding << "]";
                     return true;
@@ -128,6 +127,8 @@ Result<SuccessType> ValidateBindingOptions(const Options& options) {
                     disallowed_duplicate(seen_glsl_other_bindings)) {
                     return true;
                 }
+//                fprintf(stderr, "RHARRISON: Adding src=%u, dst=[%u, %u] to 'other' bindings\n", src.binding, dst.group, dst.binding);
+//                fflush(stderr);
                 seen_glsl_other_bindings.Add(src, dst);
                 break;
         }

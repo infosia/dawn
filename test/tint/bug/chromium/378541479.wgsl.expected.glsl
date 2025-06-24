@@ -9,7 +9,7 @@ layout(binding = 0, std140)
 uniform level_block_1_ubo {
   uint inner;
 } v;
-layout(binding = 1, std140)
+layout(binding = 2, std140)
 uniform coords_block_1_ubo {
   uvec2 inner;
 } v_1;

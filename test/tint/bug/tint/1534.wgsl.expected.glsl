@@ -14,7 +14,7 @@ layout(binding = 0, std140)
 uniform i_block_1_ubo {
   g inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer j_block_1_ssbo {
   h inner;
 } v_1;

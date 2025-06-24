@@ -4,7 +4,7 @@ layout(binding = 0, std430)
 buffer in_block_1_ssbo {
   float inner[4];
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer out_block_1_ssbo {
   float inner[4];
 } v_1;

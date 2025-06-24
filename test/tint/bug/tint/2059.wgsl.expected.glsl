@@ -21,31 +21,31 @@ layout(binding = 0, std430)
 buffer buffer0_block_1_ssbo {
   mat3 inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer buffer1_block_1_ssbo {
   S inner;
 } v_1;
-layout(binding = 2, std430)
+layout(binding = 4, std430)
 buffer buffer2_block_1_ssbo {
   S2 inner;
 } v_2;
-layout(binding = 3, std430)
+layout(binding = 6, std430)
 buffer buffer3_block_1_ssbo {
   S3 inner;
 } v_3;
-layout(binding = 4, std430)
+layout(binding = 8, std430)
 buffer buffer4_block_1_ssbo {
   S4 inner;
 } v_4;
-layout(binding = 5, std430)
+layout(binding = 10, std430)
 buffer buffer5_block_1_ssbo {
   mat3 inner[1];
 } v_5;
-layout(binding = 6, std430)
+layout(binding = 12, std430)
 buffer buffer6_block_1_ssbo {
   S inner[1];
 } v_6;
-layout(binding = 7, std430)
+layout(binding = 14, std430)
 buffer buffer7_block_1_ssbo {
   S2 inner[1];
 } v_7;

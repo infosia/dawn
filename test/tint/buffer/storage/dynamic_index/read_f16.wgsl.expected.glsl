@@ -58,7 +58,7 @@ layout(binding = 0, std430)
 buffer S_1_ssbo {
   Inner arr[];
 } sb;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer s_block_1_ssbo {
   int inner;
 } v;

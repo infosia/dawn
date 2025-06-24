@@ -8,7 +8,7 @@ uniform u_block_std140_1_ubo {
   uint tint_pad_1;
   vec3 inner_col2;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer s_block_1_ssbo {
   mat3 inner;
 } v_1;

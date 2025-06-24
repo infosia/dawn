@@ -5,7 +5,7 @@ layout(binding = 0, std430)
 buffer in_block_1_ssbo {
   f16vec2 inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer out_block_1_ssbo {
   f16vec2 inner;
 } v_1;

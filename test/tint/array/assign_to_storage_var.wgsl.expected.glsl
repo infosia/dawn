@@ -15,15 +15,15 @@ layout(binding = 0, std140)
 uniform src_uniform_block_1_ubo {
   S inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer src_storage_block_1_ssbo {
   S inner;
 } v_1;
-layout(binding = 2, std430)
+layout(binding = 4, std430)
 buffer dst_block_1_ssbo {
   S inner;
 } v_2;
-layout(binding = 3, std430)
+layout(binding = 6, std430)
 buffer dst_nested_block_1_ssbo {
   S_nested inner;
 } v_3;

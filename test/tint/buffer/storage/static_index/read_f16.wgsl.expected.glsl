@@ -67,7 +67,7 @@ layout(binding = 0, std430)
 buffer sb_block_1_ssbo {
   S inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer s_block_1_ssbo {
   int inner;
 } v_1;

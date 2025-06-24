@@ -15,12 +15,12 @@ struct TintTextureUniformData {
   uint tint_builtin_value_1;
 };
 
-layout(binding = 1, std140)
+layout(binding = 2, std140)
 uniform params_block_1_ubo {
   Params inner;
 } v;
-layout(binding = 2, rgba8) uniform highp writeonly image2D outputTex;
-layout(binding = 3, std140)
+layout(binding = 6, rgba8) uniform highp writeonly image2D outputTex;
+layout(binding = 8, std140)
 uniform flip_block_1_ubo {
   Flip inner;
 } v_1;

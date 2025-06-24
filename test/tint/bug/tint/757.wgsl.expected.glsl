@@ -5,7 +5,7 @@ struct TintTextureUniformData {
   uint tint_builtin_value_0;
 };
 
-layout(binding = 3, std430)
+layout(binding = 2, std430)
 buffer Result_1_ssbo {
   float values[];
 } result;

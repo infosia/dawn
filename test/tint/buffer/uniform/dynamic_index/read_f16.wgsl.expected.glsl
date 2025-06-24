@@ -108,7 +108,7 @@ layout(binding = 0, std140)
 uniform ub_block_std140_1_ubo {
   S_std140 inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer s_block_1_ssbo {
   int inner;
 } v_1;

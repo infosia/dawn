@@ -4,7 +4,7 @@ layout(binding = 0, std140)
 uniform u_block_1_ubo {
   ivec2 inner;
 } v;
-layout(binding = 1, std430)
+layout(binding = 2, std430)
 buffer s_block_1_ssbo {
   ivec2 inner;
 } v_1;

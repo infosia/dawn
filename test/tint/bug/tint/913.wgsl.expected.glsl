@@ -14,11 +14,11 @@ struct TintTextureUniformData {
   uint tint_builtin_value_1;
 };
 
-layout(binding = 2, std430)
+layout(binding = 4, std430)
 buffer OutputBuf_1_ssbo {
   uint result[];
 } v;
-layout(binding = 3, std140)
+layout(binding = 6, std140)
 uniform uniforms_block_1_ubo {
   Uniforms inner;
 } v_1;
