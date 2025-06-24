@@ -196,6 +196,18 @@ bool GenerateTextureBuiltinFromUniformData(const EntryPointMetadata& metadata,
         return false;
     }
 
+    // Note, this function can be called multiple times for the same pipeline if there is multiple
+    // shader stages. (e.g. vertex and fragment stages of a render pipeline) If the current shader
+    // is a fragment shader, the mutable bindingPointToData can have size() > 0 meaning that there
+    // are other texture builtins needed for the vertex shader. To make sure the correct offset is
+    // applied when accessing the builtin value, we pushed placeholder binding point to the ordered
+    // list of binding point.
+    for (size_t i = 0; i < bindingPointToData->size(); i++) {
+        bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering.emplace_back(
+            // This binding point is never accessed for this current shader.
+            tint::BindingPoint{0xFFFFFFFF, 0xFFFFFFFF});
+    }
+
     for (size_t i = 0; i < textureBuiltinsFromUniformData.size(); ++i) {
         const auto& info = textureBuiltinsFromUniformData[i];
 
@@ -222,8 +234,12 @@ bool GenerateTextureBuiltinFromUniformData(const EntryPointMetadata& metadata,
 
         // Note, the `sizeof(uint32_t)` has to match up with the data type created by the
         // `TextureBuiltinsFromUniform` when it creates the UBO structure.
-        bindingPointToData->emplace(dstBindingPoint,
-                                    std::pair{type, static_cast<uint32_t>(i * sizeof(uint32_t))});
+        if (!bindingPointToData->contains(dstBindingPoint)) {
+            // The offset should be based on the entry number of bindingPointData instead of
+            // the textureQueries of the current shader.
+            uint32_t offset = bindingPointToData->size() * sizeof(uint32_t);
+            bindingPointToData->emplace(dstBindingPoint, std::pair{type, offset});
+        }
     }
 
     return true;
