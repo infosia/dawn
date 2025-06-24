@@ -39,6 +39,52 @@
       },
       "revId": "3470706b5ebe127a2aadc97216cc588ab26101b8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2dc22586_51018aca",
+        "filename": "src/dawn/native/d3d/DeviceD3D.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-06-24T17:54:23Z",
+      "side": 1,
+      "message": "```suggestion\n    DAWN_HISTOGRAM_ENUMERATION(GetPlatform(), \"GPU.Dawn.D3DDeviceRemovedError\", value, kErrorMaxEnumValue);\n```",
+      "range": {
+        "startLine": 98,
+        "startChar": 47,
+        "endLine": 98,
+        "endChar": 65
+      },
+      "revId": "3470706b5ebe127a2aadc97216cc588ab26101b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea5f627d_3d6e46ea",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-06-24T17:54:23Z",
+      "side": 1,
+      "message": "Nit: DirectX10+ prefers to call this \"device removed\", not \"device lost\". We should rename this method to be \"RecordDeviceRemovedError\".",
+      "range": {
+        "startLine": 707,
+        "startChar": 8,
+        "endLine": 707,
+        "endChar": 29
+      },
+      "revId": "3470706b5ebe127a2aadc97216cc588ab26101b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
