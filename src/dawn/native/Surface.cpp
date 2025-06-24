@@ -482,7 +482,7 @@ MaybeError Surface::Configure(const SurfaceConfiguration* configIn) {
     }
 
     {
-        auto deviceLock(GetCurrentDevice()->GetScopedLock());
+        auto deviceGuard = GetCurrentDevice()->GetGuard();
         ResultOrError<Ref<SwapChainBase>> maybeNewSwapChain =
             GetCurrentDevice()->CreateSwapChain(this, previousSwapChain, &config);
 
@@ -562,7 +562,7 @@ MaybeError Surface::GetCurrentTexture(SurfaceTexture* surfaceTexture) const {
         return {};
     }
 
-    auto deviceLock(GetCurrentDevice()->GetScopedLock());
+    auto deviceGuard = GetCurrentDevice()->GetGuard();
     DAWN_TRY_ASSIGN(*surfaceTexture, mSwapChain->GetCurrentTexture());
 
     return {};
@@ -572,7 +572,7 @@ MaybeError Surface::Present() {
     DAWN_INVALID_IF(IsError(), "%s is invalid.", this);
     DAWN_INVALID_IF(!mSwapChain.Get(), "%s is not configured.", this);
 
-    auto deviceLock(GetCurrentDevice()->GetScopedLock());
+    auto deviceGuard = GetCurrentDevice()->GetGuard();
     DAWN_TRY(mSwapChain->Present());
 
     return {};
