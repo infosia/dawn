@@ -33,6 +33,24 @@
       "message": "Can we have a test for this? There is LabelTests.cpp IIRC",
       "revId": "3f1e75f13d1094e6169a357b5fcd4f5b42630689",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39ba8e8f_3d122783",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-24T13:25:55Z",
+      "side": 1,
+      "message": "LabelTests only tests `GetLabel()`. Here I\u0027m updating `FormatLabel()` which seems t o be used only in error messages. Shall I write a test that injects some error and check its with ASSERT_DEVICE_ERROR? If so, I\u0027m not sure which error to send to get it when creating a bind group.",
+      "parentUuid": "649a95e3_742dc40e",
+      "revId": "3f1e75f13d1094e6169a357b5fcd4f5b42630689",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
