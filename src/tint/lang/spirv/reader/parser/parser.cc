@@ -3405,6 +3405,9 @@ class Parser {
                 case spv::Decoration::Index:
                     io_attributes.blend_src = deco->GetSingleWordOperand(2);
                     break;
+                case spv::Decoration::Coherent:
+                    // Tint has coherent memory semantics, so this is a no-op.
+                    break;
                 default:
                     TINT_UNIMPLEMENTED() << "unhandled decoration " << d;
             }
