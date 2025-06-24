@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7519152c_b734d824",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-24T00:12:13Z",
+      "side": 1,
+      "message": "Other solutions would include changing the build so it always puts the executable in the same place. It\u0027s apparently not doing that now. I\u0027m pretty sure this used to work since I setup a windows build on the repo. But it\u0027s not working now and this was a fix.",
+      "revId": "0e97b513c1bcd8420cf33dac33934a70c3b61be0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
