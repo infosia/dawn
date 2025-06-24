@@ -51,6 +51,24 @@
       "parentUuid": "649a95e3_742dc40e",
       "revId": "3f1e75f13d1094e6169a357b5fcd4f5b42630689",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "121cf976_e727f136",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-24T13:28:56Z",
+      "side": 1,
+      "message": "I wasn\u0027t able to find relevant tests in https://dawn-review.googlesource.com/c/dawn/+/177680 as well ;(",
+      "parentUuid": "39ba8e8f_3d122783",
+      "revId": "3f1e75f13d1094e6169a357b5fcd4f5b42630689",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
