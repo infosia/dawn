@@ -34,9 +34,28 @@
  struct WGPUTexelCopyBufferLayout;
  struct WGPUTextureBindingLayout;
 +struct WGPUTextureBindingViewDimensionDescriptor;
++struct WGPUTextureComponentSwizzle;
  struct WGPUTextureViewDescriptor;
  struct WGPUVertexAttribute;
  struct WGPUBindGroupDescriptor;
+@@
+     WGPUCompilationMessageType_Force32 = 0x7FFFFFFF
+ } WGPUCompilationMessageType WGPU_ENUM_ATTRIBUTE;
+ 
++typedef enum WGPUComponentSwizzle {
++    WGPUComponentSwizzle_Undefined = 0x00000000,
++    WGPUComponentSwizzle_Zero = 0x00000001,
++    WGPUComponentSwizzle_One = 0x00000002,
++    WGPUComponentSwizzle_R = 0x00000003,
++    WGPUComponentSwizzle_G = 0x00000004,
++    WGPUComponentSwizzle_B = 0x00000005,
++    WGPUComponentSwizzle_A = 0x00000006,
++    WGPUComponentSwizzle_Force32 = 0x7FFFFFFF
++} WGPUComponentSwizzle WGPU_ENUM_ATTRIBUTE;
++
+ typedef enum WGPUCompositeAlphaMode {
+     WGPUCompositeAlphaMode_Auto = 0x00000000,
+     WGPUCompositeAlphaMode_Opaque = 0x00000001,
 @@
      WGPUFeatureName_ClipDistances = 0x0000000F,
      WGPUFeatureName_DualSourceBlending = 0x00000010,
@@ -148,6 +167,20 @@
 +        /*.sType=*/WGPUSType_TextureBindingViewDimensionDescriptor _wgpu_COMMA \
 +    }) _wgpu_COMMA \
 +    /*.textureBindingViewDimension=*/WGPUTextureViewDimension_Undefined _wgpu_COMMA \
++})
++
++typedef struct WGPUTextureComponentSwizzle {
++    WGPUComponentSwizzle r;
++    WGPUComponentSwizzle g;
++    WGPUComponentSwizzle b;
++    WGPUComponentSwizzle a;
++} WGPUTextureComponentSwizzle WGPU_STRUCTURE_ATTRIBUTE;
++
++#define WGPU_TEXTURE_COMPONENT_SWIZZLE_INIT _wgpu_MAKE_INIT_STRUCT(WGPUTextureComponentSwizzle, { \
++    /*.r=*/WGPUComponentSwizzle_Undefined _wgpu_COMMA \
++    /*.g=*/WGPUComponentSwizzle_Undefined _wgpu_COMMA \
++    /*.b=*/WGPUComponentSwizzle_Undefined _wgpu_COMMA \
++    /*.a=*/WGPUComponentSwizzle_Undefined _wgpu_COMMA \
  })
  
  typedef struct WGPUTextureViewDescriptor {
