@@ -281,6 +281,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
         GetDevice()->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
     req.tintOptions.scalarize_max_min_clamp =
         GetDevice()->IsToggleEnabled(Toggle::ScalarizeMaxMinClamp);
+    req.tintOptions.polyfill_abs_signed_integer =
+        GetDevice()->IsToggleEnabled(Toggle::PolyfillAbsSignedInteger);
     req.tintOptions.use_vulkan_memory_model =
         GetDevice()->IsToggleEnabled(Toggle::UseVulkanMemoryModel);
     req.tintOptions.spirv_version = GetDevice()->IsToggleEnabled(Toggle::UseSpirv14)
