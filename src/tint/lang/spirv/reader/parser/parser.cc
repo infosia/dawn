@@ -790,6 +790,7 @@ class Parser {
             };
 
             bool is_row_major = false;
+            uint32_t matrix_stride = 0;
             // Handle member decorations that affect layout or attributes.
             if (struct_ty->element_decorations().count(i)) {
                 for (auto& deco : struct_ty->element_decorations().at(i)) {
@@ -799,6 +800,9 @@ class Parser {
                             break;
                         case spv::Decoration::RowMajor:
                             is_row_major = true;
+                            break;
+                        case spv::Decoration::MatrixStride:
+                            matrix_stride = deco[1];
                             break;
                         case spv::Decoration::Offset:
                             offset = deco[1];
@@ -846,6 +850,9 @@ class Parser {
                 name, member_ty, i, offset, align, member_ty->Size(), std::move(attributes));
             if (is_row_major) {
                 member->SetRowMajor();
+            }
+            if (matrix_stride > 0) {
+                member->SetMatrixStride(matrix_stride);
             }
 
             members.Push(member);
