@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b1816cf7_4ba3272e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-25T13:39:48Z",
+      "side": 1,
+      "message": "Hmm, so this isn\u0027t to fix this on Windows, but rather to fix it when using a CMake build using the default \"Visual Studio\" generator - that is, it uses msbuild rather than Ninja. If we do want to support that, we should also add search paths into `RelWithDebInfo` and `MinSizeRel` as there are four build configurations.\n\nHaving said that, I think a better solution would be to pass in the path to `tintd` as an argument, as we do with all our other tooling. We could still use `context.extensionPath` as a default if no path is provided.",
+      "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
