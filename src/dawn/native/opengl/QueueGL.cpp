@@ -281,6 +281,8 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
 }
 
 ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
+    auto deviceGuard = GetDevice()->GetGuard();
+
     return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<ExecutionSerial> {
         ExecutionSerial fenceSerial{0};
         while (!fencesInFlight->empty()) {

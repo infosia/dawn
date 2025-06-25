@@ -58,8 +58,17 @@ class ExecutionQueueBase {
     // Whether the execution queue has scheduled commands to be submitted or executing.
     bool HasScheduledCommands() const;
 
-    // Check for passed fences and set the new completed serial.
+    // Check for passed fences and set the new completed serial. Note that the two functions below
+    // effectively do the same thing. The main difference is that |UpdateCompletedSerials| requires
+    // that the device-wide lock is NOT held. Note that for the purpose of going fowards,
+    // |CheckPassedSerials| should not be used anymore since it assumes that the device-wide lock IS
+    // held. These functions are separated for now to maintain backwards compatibility, but since
+    // the ExecutionQueue shouldn't need to know about the Device, |UpdateCompletedSerials| which
+    // doesn't hold the device-wide lock makes more sense. Instead, if backend need the device-wide
+    // lock when |CheckAndUpdateCompletedSerials| is run, the backend should explicitly acquire the
+    // lock there and then.
     MaybeError CheckPassedSerials();
+    MaybeError UpdateCompletedSerial();
 
     // For the commands being internally recorded in backend, that were not urgent to submit, this
     // method makes them to be submitted as soon as possible in next ticks.
@@ -97,13 +106,6 @@ class ExecutionQueueBase {
     // example, until the client has explictly issued a submission.
     enum class SubmitMode { Normal, Passive };
 
-    // Currently, the queue has two paths for serial updating, one is via DeviceBase::Tick which
-    // calls into the backend specific polling mechanisms implemented in
-    // CheckAndUpdateCompletedSerials. Alternatively, the backend can actively call
-    // UpdateCompletedSerial when a new serial is complete to make forward progress proactively.
-    // TODO(crbug.com/421945313): This shouldn't need to be public once we fix lock ordering.
-    void UpdateCompletedSerial(ExecutionSerial completedSerial);
-
     // Tracks whether we are in a submit to avoid submit reentrancy. Reentrancy could otherwise
     // happen when allocating resources or staging memory during submission (for workarounds, or
     // emulation) and the heuristics ask for an early submit to happen (which would cause a
@@ -111,6 +113,13 @@ class ExecutionQueueBase {
     // TODO(crbug.com/42240396): Move all handling of Submit(command buffers) in this class as well,
     // at which point this member can be private.
     bool mInSubmit = false;
+
+  protected:
+    // Currently, the queue has two paths for serial updating, one is via DeviceBase::Tick which
+    // calls into the backend specific polling mechanisms implemented in
+    // CheckAndUpdateCompletedSerials. Alternatively, the backend can actively call
+    // UpdateCompletedSerial when a new serial is complete to make forward progress proactively.
+    void UpdateCompletedSerialTo(ExecutionSerial completedSerial);
 
   private:
     // Each backend should implement to check their passed fences if there are any and return a
