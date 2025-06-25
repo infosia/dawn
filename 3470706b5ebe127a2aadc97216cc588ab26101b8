@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80b97f8b_7c682c9e",
+        "filename": "src/dawn/native/d3d/DeviceD3D.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 3466141
+      },
+      "writtenOn": "2025-06-25T05:16:57Z",
+      "side": 1,
+      "message": "Thank you very much for the guidance. Chromium CL https://chromium-review.googlesource.com/c/chromium/src/+/6670740",
+      "parentUuid": "3041ea4d_1d21db7d",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 34
+      },
+      "revId": "3470706b5ebe127a2aadc97216cc588ab26101b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2dc22586_51018aca",
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "013631ef_8e2cea48",
+        "filename": "src/dawn/native/d3d/DeviceD3D.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 3466141
+      },
+      "writtenOn": "2025-06-25T05:16:57Z",
+      "side": 1,
+      "message": "In chromium it has already added prefix [GPU.WebGPU.](https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/webgpu_decoder_impl.cc;l\u003d1123;drc\u003dffc66899be4b0719e1166563f6bf4f68f2f8c6f8) or [GPU.GraphiteDawn.](https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/dawn_context_provider.cc;l\u003d575;drc\u003dffc66899be4b0719e1166563f6bf4f68f2f8c6f8). So we don\u0027t have to add prefix in dawn. Change the name to `D3DDeviceRemovedReason`.",
+      "parentUuid": "2dc22586_51018aca",
+      "range": {
+        "startLine": 98,
+        "startChar": 47,
+        "endLine": 98,
+        "endChar": 65
+      },
+      "revId": "3470706b5ebe127a2aadc97216cc588ab26101b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea5f627d_3d6e46ea",
@@ -77,6 +125,30 @@
       "writtenOn": "2025-06-24T17:54:23Z",
       "side": 1,
       "message": "Nit: DirectX10+ prefers to call this \"device removed\", not \"device lost\". We should rename this method to be \"RecordDeviceRemovedError\".",
+      "range": {
+        "startLine": 707,
+        "startChar": 8,
+        "endLine": 707,
+        "endChar": 29
+      },
+      "revId": "3470706b5ebe127a2aadc97216cc588ab26101b8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6de7241a_5f72dd3e",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 3466141
+      },
+      "writtenOn": "2025-06-25T05:16:57Z",
+      "side": 1,
+      "message": "Change the method name to `RecordDeviceRemovedReason`.",
+      "parentUuid": "ea5f627d_3d6e46ea",
       "range": {
         "startLine": 707,
         "startChar": 8,
