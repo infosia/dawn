@@ -55,6 +55,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "b0055bab_ae58be0f",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-25T17:12:06Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d85e1e88_63ab5f53",
+      "revId": "d9d9e5907efece8156e32dd291afc64ae694f949",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "52b41295_8e96c90d",
         "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill_test.cc",
         "patchSetId": 6
