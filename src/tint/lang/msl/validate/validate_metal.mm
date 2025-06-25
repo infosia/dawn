@@ -45,6 +45,8 @@ Result ValidateUsingMetal(const std::string& src, MslVersion version) {
         return result;
     }
 
+    std::string src = std::string("\n#pragma METAL fp math_mode(relaxed)\n") + src2;
+
     NSString* source = [NSString stringWithCString:src.c_str() encoding:NSUTF8StringEncoding];
 
     MTLCompileOptions* compileOptions = [MTLCompileOptions new];
