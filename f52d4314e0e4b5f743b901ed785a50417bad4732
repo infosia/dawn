@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2cc37b9_ee7e6713",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-25T19:38:33Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"didnt\" is a possible misspelling of \"didn\u0027t\".\n\nAnalyzer Description: Checks for common typos.\nOwner: chops-source-team@google.com\n\n\"didnt\" is a possible misspelling of \"didn\u0027t\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 10,
+        "startChar": 43,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "f52d4314e0e4b5f743b901ed785a50417bad4732",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
