@@ -825,6 +825,38 @@ MaybeError ValidateTextureViewDescriptor(const DeviceBase* device,
                                      wgpu::TextureFormat::External);
     }
 
+    if (device->HasFeature(Feature::TextureComponentSwizzle)) {
+        wgpu::TextureUsage inheritedUsage =
+            GetTextureViewUsage(texture->GetUsage(), descriptor->usage);
+        if (inheritedUsage & wgpu::TextureUsage::RenderAttachment ||
+            inheritedUsage & wgpu::TextureUsage::StorageBinding) {
+            DAWN_INVALID_IF(descriptor->swizzle.r != wgpu::ComponentSwizzle::R,
+                            "The texture view's component swizzle r (%s) must be  %s when usage "
+                            "includes %s or %s.",
+                            descriptor->swizzle.r, wgpu::ComponentSwizzle::R,
+                            wgpu::TextureUsage::RenderAttachment,
+                            wgpu::TextureUsage::StorageBinding);
+            DAWN_INVALID_IF(descriptor->swizzle.g != wgpu::ComponentSwizzle::G,
+                            "The texture view's component swizzle g (%s) must be  %s when usage "
+                            "includes %s or %s.",
+                            descriptor->swizzle.g, wgpu::ComponentSwizzle::G,
+                            wgpu::TextureUsage::RenderAttachment,
+                            wgpu::TextureUsage::StorageBinding);
+            DAWN_INVALID_IF(descriptor->swizzle.b != wgpu::ComponentSwizzle::B,
+                            "The texture view's component swizzle r (%s) must be  %s when usage "
+                            "includes %s or %s.",
+                            descriptor->swizzle.b, wgpu::ComponentSwizzle::B,
+                            wgpu::TextureUsage::RenderAttachment,
+                            wgpu::TextureUsage::StorageBinding);
+            DAWN_INVALID_IF(descriptor->swizzle.a != wgpu::ComponentSwizzle::A,
+                            "The texture view's component swizzle r (%s) must be  %s when usage "
+                            "includes %s or %s.",
+                            descriptor->swizzle.a, wgpu::ComponentSwizzle::A,
+                            wgpu::TextureUsage::RenderAttachment,
+                            wgpu::TextureUsage::StorageBinding);
+        }
+    }
+
     DAWN_TRY(ValidateCanViewTextureAs(device, texture, *viewFormat, descriptor->aspect));
     DAWN_TRY(ValidateTextureViewDimensionCompatibility(device, texture, descriptor));
 

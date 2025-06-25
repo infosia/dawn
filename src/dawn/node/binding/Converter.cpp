@@ -1555,6 +1555,9 @@ bool Converter::Convert(wgpu::FeatureName& out, interop::GPUFeatureName in) {
         case interop::GPUFeatureName::kTextureFormatsTier1:
             out = wgpu::FeatureName::TextureFormatsTier1;
             return true;
+        case interop::GPUFeatureName::kTextureComponentSwizzle:
+            out = wgpu::FeatureName::TextureComponentSwizzle;
+            return true;
     }
     return false;
 }
@@ -1587,6 +1590,7 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         CASE(ClipDistances, kClipDistances);
         CASE(ChromiumExperimentalSubgroupMatrix, kChromiumExperimentalSubgroupMatrix);
         CASE(TextureFormatsTier1, kTextureFormatsTier1);
+        CASE(TextureComponentSwizzle, kTextureComponentSwizzle);
 
 #undef CASE
 

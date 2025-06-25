@@ -1003,6 +1003,93 @@ TEST_F(TextureViewValidationTest, Usage) {
     }
 }
 
+// Test different swizzle values when creating a texture view if feature is disabled.
+TEST_F(TextureViewValidationTest, InvalidSwizzle) {
+    wgpu::TextureDescriptor textureDesc = {};
+    textureDesc.size = {kWidth, kHeight, kDepth};
+    textureDesc.usage = wgpu::TextureUsage::StorageBinding | wgpu::TextureUsage::RenderAttachment;
+    textureDesc.format = kDefaultTextureFormat;
+    wgpu::Texture texture = device.CreateTexture(&textureDesc);
+
+    // It is not an error if r, g, b, and a are "zero".
+    wgpu::TextureViewDescriptor viewDesc = {};
+    viewDesc.swizzle.r = wgpu::ComponentSwizzle::Zero;
+    viewDesc.swizzle.g = wgpu::ComponentSwizzle::Zero;
+    viewDesc.swizzle.b = wgpu::ComponentSwizzle::Zero;
+    viewDesc.swizzle.a = wgpu::ComponentSwizzle::Zero;
+    texture.CreateView(&viewDesc);
+}
+
+class ComponentSwizzleTextureViewValidationTests : public ValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::TextureComponentSwizzle};
+    }
+};
+
+// Test different swizzle values when creating a texture view.
+TEST_F(ComponentSwizzleTextureViewValidationTests, InvalidSwizzle) {
+    wgpu::TextureDescriptor textureDesc = {};
+    textureDesc.size = {kWidth, kHeight, kDepth};
+    textureDesc.usage = wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment;
+    textureDesc.format = kDefaultTextureFormat;
+
+    wgpu::TextureViewDescriptor viewDesc = {};
+
+    // Control case.
+    {
+        wgpu::Texture texture = device.CreateTexture(&textureDesc);
+        viewDesc.swizzle = {};
+        texture.CreateView(&viewDesc);
+    }
+
+    // It is an error if r is not "r" when usage includes RENDER_ATTACHMENT.
+    {
+        wgpu::Texture texture = device.CreateTexture(&textureDesc);
+        viewDesc.swizzle.r = wgpu::ComponentSwizzle::Zero;
+        ASSERT_DEVICE_ERROR(texture.CreateView(&viewDesc));
+    }
+
+    // It is not an error if r is not "r" when usage does not include RENDER_ATTACHMENT.
+    {
+        textureDesc.usage = wgpu::TextureUsage::TextureBinding;
+        wgpu::Texture texture = device.CreateTexture(&textureDesc);
+        texture.CreateView(&viewDesc);
+    }
+
+    // It is an error if r is not "r" when usage includes STORAGE_BINDING.
+    {
+        textureDesc.usage = wgpu::TextureUsage::StorageBinding;
+        wgpu::Texture texture = device.CreateTexture(&textureDesc);
+        ASSERT_DEVICE_ERROR(texture.CreateView(&viewDesc));
+    }
+
+    // It is an error if g is not "g" when usage includes RENDER_ATTACHMENT.
+    {
+        textureDesc.usage = wgpu::TextureUsage::RenderAttachment;
+        wgpu::Texture texture = device.CreateTexture(&textureDesc);
+        viewDesc.swizzle.r = wgpu::ComponentSwizzle::R;
+        viewDesc.swizzle.g = wgpu::ComponentSwizzle::One;
+        ASSERT_DEVICE_ERROR(texture.CreateView(&viewDesc));
+    }
+
+    // It is an error if b is not "b" when usage includes RENDER_ATTACHMENT.
+    {
+        wgpu::Texture texture = device.CreateTexture(&textureDesc);
+        viewDesc.swizzle.g = wgpu::ComponentSwizzle::G;
+        viewDesc.swizzle.b = wgpu::ComponentSwizzle::R;
+        ASSERT_DEVICE_ERROR(texture.CreateView(&viewDesc));
+    }
+
+    // It is an error if a is not "a" when usage includes RENDER_ATTACHMENT.
+    {
+        wgpu::Texture texture = device.CreateTexture(&textureDesc);
+        viewDesc.swizzle.b = wgpu::ComponentSwizzle::B;
+        viewDesc.swizzle.a = wgpu::ComponentSwizzle::G;
+        ASSERT_DEVICE_ERROR(texture.CreateView(&viewDesc));
+    }
+}
+
 class D32S8TextureViewValidationTests : public ValidationTest {
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {

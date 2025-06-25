@@ -2330,7 +2330,8 @@
             {"value": 55, "name": "chromium experimental subgroup matrix", "tags": ["dawn"]},
             {"value": 56, "name": "shared fence EGL sync", "tags": ["dawn", "native"]},
             {"value": 57, "name": "dawn device allocator control", "tags": ["dawn"]},
-            {"value": 58, "name": "texture formats tier1", "tags": ["dawn"]}
+            {"value": 58, "name": "texture formats tier1", "tags": ["dawn"]},
+            {"value": 59, "name": "texture component swizzle", "tags": ["dawn"]}
         ]
     },
     "filter mode": {
@@ -4145,6 +4146,7 @@
             {"name": "base array layer", "type": "uint32_t", "default": "0"},
             {"name": "array layer count", "type": "uint32_t", "default": "array layer count undefined"},
             {"name": "aspect", "type": "texture aspect", "default": "all"},
+            {"name": "swizzle", "type": "texture component swizzle"},
             {"name": "usage", "type": "texture usage"}
         ]
     },
@@ -4170,6 +4172,28 @@
             {"value": 4, "name": "cube"},
             {"value": 5, "name": "cube array"},
             {"value": 6, "name": "3D"}
+        ]
+    },
+    "texture component swizzle": {
+        "category": "structure",
+        "extensible": false,
+        "members": [
+            {"name": "r", "type": "component swizzle", "default": "r"},
+            {"name": "g", "type": "component swizzle", "default": "g"},
+            {"name": "b", "type": "component swizzle", "default": "b"},
+            {"name": "a", "type": "component swizzle", "default": "a"}
+        ]
+    },
+    "component swizzle": {
+        "category": "enum",
+        "values": [
+            {"value": 0, "name": "undefined", "jsrepr": "undefined"},
+            {"value": 1, "name": "zero"},
+            {"value": 2, "name": "one"},
+            {"value": 3, "name": "r"},
+            {"value": 4, "name": "g"},
+            {"value": 5, "name": "b"},
+            {"value": 6, "name": "a"}
         ]
     },
     "y cb cr vk descriptor": {
