@@ -30,8 +30,7 @@
 namespace tint::spirv::reader {
 namespace {
 
-// TODO(426198644): Requires MatrixStride support
-TEST_F(SpirvParserTest, DISABLED_Matrix_ColMajor) {
+TEST_F(SpirvParserTest, Matrix_ColMajor) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -62,8 +61,7 @@ TEST_F(SpirvParserTest, DISABLED_Matrix_ColMajor) {
 )");
 }
 
-// TODO(426198644): Requires MatrixStride support
-TEST_F(SpirvParserTest, DISABLED_Matrix_RowMajor) {
+TEST_F(SpirvParserTest, Matrix_RowMajor) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
