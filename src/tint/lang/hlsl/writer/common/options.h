@@ -236,6 +236,9 @@ struct Options {
     /// Set to `true` to scalarize max, min, and clamp builtins.
     bool scalarize_max_min_clamp = false;
 
+    /// Set to `true` to polyfill signed integer abs builtin.
+    bool polyfill_abs_signed_integer = false;
+
     /// Set to `true` to generate polyfill for `pack4xI8`, `pack4xU8`, `pack4xI8Clamp`,
     /// `unpack4xI8` and `unpack4xU8` builtins
     bool polyfill_pack_unpack_4x8 = false;
@@ -286,6 +289,7 @@ struct Options {
                  polyfill_dot_4x8_packed,
                  disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
+                 polyfill_abs_signed_integer,
                  polyfill_pack_unpack_4x8,
                  compiler,
                  array_length_from_uniform,

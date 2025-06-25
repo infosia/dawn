@@ -573,6 +573,9 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::ScalarizeMaxMinClamp,
      {"scalarize_max_min_clamp", "Scalarize max, min, and clamp builtins.",
       "https://crbug.com/422144514", ToggleStage::Device}},
+    {Toggle::PolyfillAbsSignedInteger,
+     {"polyfill_abs_signed_integer", "Polyfill signed integer abs builtin.",
+      "https://crbug.com/426999765", ToggleStage::Device}},
     {Toggle::MetalDisableModuleConstantF16,
      {"metal_disable_module_constant_f16",
       "Disable module constant hoisting for values that contain f16 types.",
@@ -946,7 +949,7 @@ void TogglesInfo::EnsureToggleNameToEnumMapInitialized() {
 
     for (size_t index = 0; index < kToggleNameAndInfoList.size(); ++index) {
         const ToggleEnumAndInfo& toggleNameAndInfo = kToggleNameAndInfoList[index];
-        DAWN_ASSERT(index == static_cast<size_t>(toggleNameAndInfo.toggle));
+        DAWN_CHECK(index == static_cast<size_t>(toggleNameAndInfo.toggle));
         mToggleNameToEnumMap[toggleNameAndInfo.info.name] = toggleNameAndInfo.toggle;
     }
 
