@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "075a84a3_f1e1967b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-25T11:52:42Z",
+      "side": 1,
+      "message": "PTAL\n\nShrek FYI as this will have a merge conflict with your CL.",
+      "revId": "fd66d4ad449c783000e03b9107f05be1ee722883",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
