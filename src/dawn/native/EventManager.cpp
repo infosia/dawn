@@ -166,9 +166,10 @@ void WaitQueueSerials(const QueueWaitSerialsMap& queueWaitSerials, Nanoseconds t
 
         auto* device = queue->GetDevice();
         {
-            auto deviceGuard = device->GetGuard();
             [[maybe_unused]] bool error = device->ConsumedError(
                 [&]() -> MaybeError {
+                    auto deviceGuard = device->GetGuard();
+
                     if (waitSerial > queue->GetLastSubmittedCommandSerial()) {
                         // Serial has not been submitted yet. Submit it now.
                         DAWN_TRY(queue->EnsureCommandsFlushed(waitSerial));
@@ -181,16 +182,15 @@ void WaitQueueSerials(const QueueWaitSerialsMap& queueWaitSerials, Nanoseconds t
                             DAWN_TRY_ASSIGN(waitResult,
                                             queue->WaitForQueueSerial(waitSerial, timeout));
                         }
-                        // Update completed serials.
-                        DAWN_TRY(queue->CheckPassedSerials());
                     }
                     return {};
                 }(),
                 "waiting for work in %s.", queue.Get());
         }
-        // TODO(crbug.com/421945313): Checking and updating serials cannot hold the device-wide lock
-        // because it may cause user callbacks to fire.
-        queue->UpdateCompletedSerial(queue->GetCompletedCommandSerial());
+        // Updating completed serial cannot hold the device-wide lock because it may cause user
+        // callbacks to fire.
+        [[maybe_unused]] bool error = device->ConsumedError(
+            queue->UpdateCompletedSerial(), "updating completed serial in %s", queue.Get());
     }
 }
 

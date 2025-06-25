@@ -170,6 +170,8 @@ bool Queue::HasPendingCommands() const {
 }
 
 ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
+    auto deviceGuard = GetDevice()->GetGuard();
+
     ExecutionSerial completedSerial = ExecutionSerial(mFence->GetCompletedValue());
     if (completedSerial == ExecutionSerial(UINT64_MAX)) [[unlikely]] {
         // GetCompletedValue returns UINT64_MAX if the device was removed.

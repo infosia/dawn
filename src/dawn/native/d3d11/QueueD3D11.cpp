@@ -408,6 +408,8 @@ MaybeError MonitoredFenceQueue::NextSerial() {
 }
 
 ResultOrError<ExecutionSerial> MonitoredFenceQueue::CheckAndUpdateCompletedSerials() {
+    auto deviceGuard = GetDevice()->GetGuard();
+
     ExecutionSerial completedSerial = ExecutionSerial(mFence->GetCompletedValue());
     if (completedSerial == ExecutionSerial(UINT64_MAX)) [[unlikely]] {
         // GetCompletedValue returns UINT64_MAX if the device was removed.
@@ -466,6 +468,8 @@ MaybeError SystemEventQueue::NextSerial() {
 }
 
 ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials() {
+    auto deviceGuard = GetDevice()->GetGuard();
+
     ExecutionSerial completedSerial;
     std::vector<SystemEventReceiver> returnedReceivers;
     // Check for completed events in the pending list.
@@ -658,6 +662,8 @@ MaybeError DelayFlushQueue::CheckPendingQueries(
 }
 
 ResultOrError<ExecutionSerial> DelayFlushQueue::CheckAndUpdateCompletedSerials() {
+    auto deviceGuard = GetDevice()->GetGuard();
+
     ExecutionSerial completedSerial;
     {
         auto commandContext = GetScopedPendingCommandContext(SubmitMode::Passive);
