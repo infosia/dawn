@@ -16,6 +16,23 @@
       "message": "PTAL.",
       "revId": "a290c81122383db94d2b1ed739ba16a6d58fa816",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29d3d81e_709ad891",
+        "filename": "src/tint/lang/spirv/reader/parser/composite_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-25T21:53:27Z",
+      "side": 1,
+      "message": "These are just parser tests, so shouldn\u0027t need any extra support to enable them. Just need to add the capability in the test helper.",
+      "revId": "a290c81122383db94d2b1ed739ba16a6d58fa816",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
