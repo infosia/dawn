@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02f10708_e9d9eda7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-25T13:57:40Z",
+      "side": 1,
+      "message": "Hi all,\n\nI\u0027ve verified all the cases in `SubgroupMatrix_MatrixMatrixArithmeticTest` can pass on Intel (B580) and NVidia (RTX2080Ti), and all the `i8` and `u8` cases can pass on AMD (7900XTX) (`f16` cases failed on AMD).\n\nPTAL, thanks!",
+      "revId": "565b57568cbd7a7282482cc883fc2d343f693163",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
