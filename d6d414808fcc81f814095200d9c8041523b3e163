@@ -120,6 +120,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea619d27_e1b31beb",
+        "filename": "src/dawn/native/d3d/PlatformFunctions.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-25T13:34:42Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3fe0cbe6_b685eb65",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 45
+      },
+      "revId": "d6d414808fcc81f814095200d9c8041523b3e163",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a57b90fa_52c8c0f8",
@@ -157,6 +181,30 @@
       "side": 1,
       "message": "Unfortunately, it does not. :-( \n\n```\n../../src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp(606,31): error: use of undeclared identifier \u0027defined\u0027\n  606 |     const bool dxcAvailable \u003d defined(DAWN_USE_BUILT_DXC);\n      |                               ^ \n1 error generated.      \n```",
       "parentUuid": "a57b90fa_52c8c0f8",
+      "range": {
+        "startLine": 606,
+        "startChar": 0,
+        "endLine": 610,
+        "endChar": 6
+      },
+      "revId": "d6d414808fcc81f814095200d9c8041523b3e163",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25843599_36b3eb42",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-25T13:34:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0b1f4b1_9b27bed1",
       "range": {
         "startLine": 606,
         "startChar": 0,
