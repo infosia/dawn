@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e05a1325_cd6ab211",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-25T09:14:07Z",
+      "side": 1,
+      "message": "Why not reuse the metadata that will be used by the vertex shader instead? Here we are forcing the metadata for bindings that are in both the vertex shader and the fragment shader to be listed twice.\n\nWe can check if the metadata is already specified in bindingPointToData then pass that index to Tint, otherwise generate a new index. If the transform needs to be modified to account for the max offset in the buffer instead of `ubo_bindingpoint_ordering.size()` that\u0027s ok.",
+      "revId": "bccd3cec43d83e78f627a6b38f6b3e8b812d9fb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a695681_ce47a375",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-25T09:14:07Z",
+      "side": 1,
+      "message": "That comment only makes sense in the context of this CL and the issue. Please expand it to make sense on its own.",
+      "revId": "bccd3cec43d83e78f627a6b38f6b3e8b812d9fb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
