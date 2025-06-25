@@ -51,6 +51,7 @@ class MappedNamedConstantsTest {
         CompilationInfoRequestStatus::class,
         CompilationMessageType::class,
         CompositeAlphaMode::class,
+        ComponentSwizzle::class,
         CreatePipelineAsyncStatus::class,
         CullMode::class,
         DeviceLostReason::class,
