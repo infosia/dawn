@@ -22,6 +22,30 @@
       },
       "revId": "0df5a8fd9a75eb643a43f05feeb79558dd3ef7b2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7adfbf89_73520e7b",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-25T09:14:38Z",
+      "side": 0,
+      "message": "It will be removed in the next CL but I\u0027ll keep it in this one for now. Done",
+      "parentUuid": "71592f12_0ea2388d",
+      "range": {
+        "startLine": 467,
+        "startChar": 8,
+        "endLine": 467,
+        "endChar": 64
+      },
+      "revId": "0df5a8fd9a75eb643a43f05feeb79558dd3ef7b2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
