@@ -105,6 +105,10 @@ struct TextureViewQuery {
     wgpu::TextureUsage usage;
 
     // Update with fields from relevant chained structs as they are added.
+    wgpu::ComponentSwizzle swizzleRed = wgpu::ComponentSwizzle::Undefined;
+    wgpu::ComponentSwizzle swizzleGreen = wgpu::ComponentSwizzle::Undefined;
+    wgpu::ComponentSwizzle swizzleBlue = wgpu::ComponentSwizzle::Undefined;
+    wgpu::ComponentSwizzle swizzleAlpha = wgpu::ComponentSwizzle::Undefined;
 };
 
 static const size_t kDefaultTextureViewCacheCapacity = 4;
