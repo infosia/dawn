@@ -16,6 +16,23 @@
       "message": "PTAL. This requires https://chromium-review.googlesource.com/c/chromium/src/+/6668434 to land first which removes the usages on the Chromium side.",
       "revId": "ab0aba229d6cf0f5b2e950cd52357714dcab854b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1876452_c8fe64c0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-25T09:05:39Z",
+      "side": 1,
+      "message": "LGTM too",
+      "revId": "ab0aba229d6cf0f5b2e950cd52357714dcab854b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
