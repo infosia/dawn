@@ -16,6 +16,74 @@
       "message": "PTAL, thanks!",
       "revId": "be1d26ba3b115996c1e455d99b10ac7c9be7c5e4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50fab3b0_0323fc1d",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-25T22:39:15Z",
+      "side": 1,
+      "message": "This shouldn\u0027t have been necessary, since the adapter should only return the f16 configs if the feature is supported. So if you needed to do this then something else has gone wrong?",
+      "revId": "be1d26ba3b115996c1e455d99b10ac7c9be7c5e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc202d95_26b379bd",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-25T22:39:15Z",
+      "side": 1,
+      "message": "Would it be simpler to put the column-major/row-major flag in here instead of duplicating the test fixture?",
+      "revId": "be1d26ba3b115996c1e455d99b10ac7c9be7c5e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c52924f1_938a5d16",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-25T22:39:15Z",
+      "side": 1,
+      "message": "Nit: Could avoid duplicating the `switch` by capturing the load and store strings instead, since they are the only parts that change.\n\ne.g.\n```\nstd::string loadLHS;\nstd::string loadRHS;\nstd::string loadAcc;\nstd::string storeResult;\nif (columnMajor) {\n  \u003cset them for column major\u003e\n} else {\n  \u003cset them for row major\u003e\n}\n\u003cemit the loads\u003e\nswitch (op) {\n  \u003cemit the multiply with the result declaration\u003e\n}\n\u003cemit the stores\u003e\n```",
+      "revId": "be1d26ba3b115996c1e455d99b10ac7c9be7c5e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a91c347_fa524fa8",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-25T22:39:15Z",
+      "side": 1,
+      "message": "Again, this shouldn\u0027t be necessary unless we\u0027re incorrectly returning f16 configs on devices that do not actually support f16.",
+      "revId": "be1d26ba3b115996c1e455d99b10ac7c9be7c5e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
