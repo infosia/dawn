@@ -248,6 +248,24 @@
       "message": "This feature is useful to my use scenario. I saw it is approved. Is there anything blocking the merge of this change?",
       "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a34814a_802b5c62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-25T16:20:58Z",
+      "side": 1,
+      "message": "At this point I think this is good to go and we can address any issues (if any) in future CLs. btlwood, you can press the CQ+2 button ^^",
+      "parentUuid": "ab3760cb_d018a10e",
+      "revId": "6d60a95af2ce4d7650511fb24a588414ababec1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
