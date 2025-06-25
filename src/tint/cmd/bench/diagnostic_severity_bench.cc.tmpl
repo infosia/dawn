@@ -11,11 +11,10 @@ See:
 {{- $I := LoadIntrinsics "src/tint/lang/wgsl/wgsl.def" -}}
 {{- Import "src/tint/utils/templates/enums.tmpl.inc" -}}
 
-#include "src/tint/lang/wgsl/diagnostic_severity.h"
-
 #include <array>
 
 #include "benchmark/benchmark.h"
+#include "src/tint/lang/wgsl/enums.h"
 
 namespace tint::wgsl {
 namespace {

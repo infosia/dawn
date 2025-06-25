@@ -34,11 +34,10 @@
 //                       Do not modify this file directly
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "src/tint/lang/wgsl/diagnostic_severity.h"
-
 #include <array>
 
 #include "benchmark/benchmark.h"
+#include "src/tint/lang/wgsl/enums.h"
 
 namespace tint::wgsl {
 namespace {
