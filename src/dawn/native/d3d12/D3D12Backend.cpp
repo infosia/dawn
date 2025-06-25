@@ -41,6 +41,10 @@
 
 namespace dawn::native::d3d12 {
 
+Microsoft::WRL::ComPtr<ID3D11On12Device> GetD3D11On12Device(WGPUDevice device) {
+  return ToBackend(FromAPI(device))->GetD3D11on12Device();
+}
+
 Microsoft::WRL::ComPtr<ID3D12Device> GetD3D12Device(WGPUDevice device) {
     return ToBackend(FromAPI(device))->GetD3D12Device();
 }

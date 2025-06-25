@@ -216,6 +216,13 @@ ID3D12Device* Device::GetD3D12Device() const {
     return mD3d12Device.Get();
 }
 
+ComPtr<ID3D11On12Device> Device::GetD3D11on12Device() {
+    ComPtr<ID3D11On12Device> d3d11On12Device;
+    d3d11On12Device = GetOrCreateD3D11on12Device().AcquireSuccess();
+    DAWN_ASSERT(d3d11On12Device != nullptr);
+    return d3d11On12Device;
+}
+
 ResultOrError<ComPtr<ID3D11On12Device>> Device::GetOrCreateD3D11on12Device() {
     if (mD3d11On12Device == nullptr) {
         ComPtr<ID3D11Device> d3d11Device;
