@@ -34,11 +34,10 @@
 //                       Do not modify this file directly
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "src/tint/lang/core/access.h"
-
 #include <array>
 
 #include "benchmark/benchmark.h"
+#include "src/tint/lang/core/enums.h"
 
 namespace tint::core {
 namespace {

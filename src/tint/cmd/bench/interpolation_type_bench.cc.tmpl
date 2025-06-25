@@ -11,11 +11,10 @@ See:
 {{- $I := LoadIntrinsics "src/tint/lang/core/core.def" -}}
 {{- Import "src/tint/utils/templates/enums.tmpl.inc" -}}
 
-#include "src/tint/lang/core/interpolation_type.h"
-
 #include <array>
 
 #include "benchmark/benchmark.h"
+#include "src/tint/lang/core/enums.h"
 
 namespace tint::core {
 namespace {

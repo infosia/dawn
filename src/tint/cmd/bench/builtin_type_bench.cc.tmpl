@@ -16,11 +16,10 @@ See:
 {{- $enum := ($I.Sem.Enum "builtin_type") -}}
 {{- Eval "OverrideEnumName" "Enum" $enum "Name" "BuiltinType" -}}
 
-#include "src/tint/lang/core/builtin_type.h"
-
 #include <array>
 
 #include "benchmark/benchmark.h"
+#include "src/tint/lang/core/enums.h"
 
 namespace tint::core {
 namespace {

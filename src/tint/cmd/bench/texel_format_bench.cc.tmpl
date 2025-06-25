@@ -12,11 +12,10 @@ See:
 {{- Import "src/tint/utils/templates/enums.tmpl.inc" -}}
 {{- $enum := ($I.Sem.Enum "texel_format") -}}
 
-#include "src/tint/lang/core/texel_format.h"
-
 #include <array>
 
 #include "benchmark/benchmark.h"
+#include "src/tint/lang/core/enums.h"
 
 namespace tint::core {
 namespace {

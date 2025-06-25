@@ -37,7 +37,7 @@
 #include <array>
 
 #include "benchmark/benchmark.h"
-#include "src/tint/lang/core/interpolation_sampling.h"
+#include "src/tint/lang/core/enums.h"
 
 namespace tint::core {
 namespace {
