@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "d9d9e5907efece8156e32dd291afc64ae694f949",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "862e2571_dcaa220c",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_polyfill.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-25T13:41:09Z",
+      "side": 1,
+      "message": "Why is this needed? Why not just change the type on the original access? I\u0027m not sure I understand why we need the Handle path? We should be able to just update all usages to the new type after making the replacement, no?",
+      "revId": "d9d9e5907efece8156e32dd291afc64ae694f949",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
