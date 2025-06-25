@@ -541,6 +541,9 @@ class Parser {
                         // Ignore, just means it's a memory block.
                         break;
                     }
+                    case spv::Decoration::ColMajor:
+                        // Do nothing, WGSL is column major
+                        break;
                     case spv::Decoration::BufferBlock: {
                         set_as_storage_buffer = true;
                         break;
