@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e4b7469_0da4e3fa",
+        "filename": "src/dawn/common/SystemUtils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-25T08:36:38Z",
+      "side": 1,
+      "message": "```suggestion\n#include \u003ccstdint\u003e\n```",
+      "revId": "efa71cfdd692d1c607c09f68b82e6010b3102db6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
