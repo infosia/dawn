@@ -68,6 +68,24 @@
       "parentUuid": "d87580ca_1f6861a0",
       "revId": "fd66d4ad449c783000e03b9107f05be1ee722883",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a425f7ae_b082df7a",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_builtins_from_uniform.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-25T17:46:33Z",
+      "side": 1,
+      "message": "Ah, that\u0027s fine then.",
+      "parentUuid": "76ea928f_a20ac333",
+      "revId": "fd66d4ad449c783000e03b9107f05be1ee722883",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
