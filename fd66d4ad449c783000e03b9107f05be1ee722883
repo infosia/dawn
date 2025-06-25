@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2dcdaf7_a6d9617d",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-25T17:52:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49eb5c36_7b1e5f65",
+      "revId": "fd66d4ad449c783000e03b9107f05be1ee722883",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d87580ca_1f6861a0",
