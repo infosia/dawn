@@ -541,6 +541,9 @@ class Parser {
                         // Ignore, just means it's a memory block.
                         break;
                     }
+                    case spv::Decoration::ColMajor:
+                        // Do nothing, WGSL is column major
+                        break;
                     case spv::Decoration::BufferBlock: {
                         set_as_storage_buffer = true;
                         break;
@@ -786,12 +789,16 @@ class Parser {
                 return attributes.interpolation.value();
             };
 
+            bool is_row_major = false;
             // Handle member decorations that affect layout or attributes.
             if (struct_ty->element_decorations().count(i)) {
                 for (auto& deco : struct_ty->element_decorations().at(i)) {
                     switch (spv::Decoration(deco[0])) {
                         case spv::Decoration::ColMajor:
                             // Do nothing, WGSL is column major
+                            break;
+                        case spv::Decoration::RowMajor:
+                            is_row_major = true;
                             break;
                         case spv::Decoration::Offset:
                             offset = deco[1];
@@ -835,8 +842,13 @@ class Parser {
                 name = ir_.symbols.New();
             }
 
-            members.Push(ty_.Get<core::type::StructMember>(
-                name, member_ty, i, offset, align, member_ty->Size(), std::move(attributes)));
+            core::type::StructMember* member = ty_.Get<core::type::StructMember>(
+                name, member_ty, i, offset, align, member_ty->Size(), std::move(attributes));
+            if (is_row_major) {
+                member->SetRowMajor();
+            }
+
+            members.Push(member);
 
             current_size = offset + member_ty->Size();
         }
