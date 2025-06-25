@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "289c6cf8_e770d608",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-25T13:58:30Z",
+      "side": 1,
+      "message": "Also for adding binding_array support I will need to make some entries use more than 1 u32 worth of values so I\u0027ll have to change the code here which should end up fixing it. So we could also just land the test suppressed on GLES and I\u0027ll unsuppress it when touching this code for binding array. Either way would work for me.",
+      "parentUuid": "e05a1325_cd6ab211",
+      "revId": "bccd3cec43d83e78f627a6b38f6b3e8b812d9fb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1a695681_ce47a375",
         "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
         "patchSetId": 3
