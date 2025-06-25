@@ -16,6 +16,41 @@
       "message": "PTAL.",
       "revId": "eff9b94bb8d62032adddaef415a0e48da008b56b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39e8c807_7f3298ea",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3436,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-25T21:54:16Z",
+      "side": 1,
+      "message": "Nit: \"WGSL is relaxed precision by default\"",
+      "fixSuggestions": [
+        {
+          "fixId": "7707bf99_f2b4daa7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/parser.cc",
+              "range": {
+                "startLine": 3436,
+                "startChar": 0,
+                "endLine": 3437,
+                "endChar": 0
+              },
+              "replacement": "                case spv::Decoration::RelaxedPrecision:  // WGSL is relaxed precision by default\n"
+            }
+          ]
+        }
+      ],
+      "revId": "eff9b94bb8d62032adddaef415a0e48da008b56b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
