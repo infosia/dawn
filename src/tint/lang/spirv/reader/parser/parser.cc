@@ -3433,6 +3433,8 @@ class Parser {
              spirv_context_->get_decoration_mgr()->GetDecorationsFor(inst.result_id(), false)) {
             auto d = deco->GetSingleWordOperand(1);
             switch (spv::Decoration(d)) {
+                case spv::Decoration::RelaxedPrecision:  // Not supported in WGSL
+                    break;
                 case spv::Decoration::NonReadable:
                     access_mode = core::Access::kWrite;
                     break;
