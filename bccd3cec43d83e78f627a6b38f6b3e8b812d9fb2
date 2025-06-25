@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d84babad_b383baad",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-25T17:47:58Z",
+      "side": 1,
+      "message": "Ack. Just land the suppressed test to avoid conflict with the big CL.",
+      "parentUuid": "289c6cf8_e770d608",
+      "revId": "bccd3cec43d83e78f627a6b38f6b3e8b812d9fb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1a695681_ce47a375",
@@ -49,6 +67,24 @@
       "writtenOn": "2025-06-25T09:14:07Z",
       "side": 1,
       "message": "That comment only makes sense in the context of this CL and the issue. Please expand it to make sense on its own.",
+      "revId": "bccd3cec43d83e78f627a6b38f6b3e8b812d9fb2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "747ed924_78023f64",
+        "filename": "src/dawn/native/opengl/ShaderModuleGL.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-06-25T17:47:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a695681_ce47a375",
       "revId": "bccd3cec43d83e78f627a6b38f6b3e8b812d9fb2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
