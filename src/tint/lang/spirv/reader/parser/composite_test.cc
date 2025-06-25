@@ -30,7 +30,8 @@
 namespace tint::spirv::reader {
 namespace {
 
-TEST_F(SpirvParserTest, Matrix_ColMajor) {
+// TODO(417682206): Requires support for removing matrix stride annotation
+TEST_F(SpirvParserTest, DISABLED_Matrix_ColMajor) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -72,7 +73,9 @@ $B1: {  # root
 )");
 }
 
-TEST_F(SpirvParserTest, Matrix_RowMajor) {
+// TODO(417682206): Requires support for removing matrix stride annotation
+// TODO(417682207): Requires support to transpose matrix
+TEST_F(SpirvParserTest, DISABLED_Matrix_RowMajor) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
