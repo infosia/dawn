@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ad079fe_fdf099b4",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-25T21:49:52Z",
+      "side": 1,
+      "message": "Why is this here, but you didn\u0027t add RowMajor here?",
+      "revId": "7a0d80132a811e0c02d6e589d6f03f2883e45d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
