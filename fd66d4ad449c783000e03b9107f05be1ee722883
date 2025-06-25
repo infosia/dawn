@@ -50,6 +50,24 @@
       "message": "We try to avoid doing things recursively as the fuzzers like to make programs which blow the stack. Can we switch this back to the non-recursive version?",
       "revId": "fd66d4ad449c783000e03b9107f05be1ee722883",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76ea928f_a20ac333",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_builtins_from_uniform.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-25T17:45:03Z",
+      "side": 1,
+      "message": "Here the recursion depth will be at most 2, would you still like an iterative version or would a comment explaining this be sufficient?",
+      "parentUuid": "d87580ca_1f6861a0",
+      "revId": "fd66d4ad449c783000e03b9107f05be1ee722883",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
