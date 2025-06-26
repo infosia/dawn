@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bd62366_662dcd8a",
+        "filename": "src/dawn/tests/unittests/d3d12/CopySplitTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-26T13:15:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11bbac20_861030ac",
+      "range": {
+        "startLine": 455,
+        "startChar": 13,
+        "endLine": 455,
+        "endChar": 31
+      },
+      "revId": "3a5d4221b2efecaedfd753ce284725f456eee254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82d6da89_93f12427",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-06-26T09:58:40Z",
       "side": 1,
       "message": "Maybe these should take relaxed vs. not as a boolean and dispatch to the correct function internally. Ditto for 2D / 3D.",
+      "range": {
+        "startLine": 480,
+        "startChar": 24,
+        "endLine": 480,
+        "endChar": 83
+      },
+      "revId": "3a5d4221b2efecaedfd753ce284725f456eee254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3787c707_8f513042",
+        "filename": "src/dawn/tests/unittests/d3d12/CopySplitTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-26T13:15:37Z",
+      "side": 1,
+      "message": "Yes, that is a great idea. I\u0027ll do that as followup.",
+      "parentUuid": "82d6da89_93f12427",
       "range": {
         "startLine": 480,
         "startChar": 24,
