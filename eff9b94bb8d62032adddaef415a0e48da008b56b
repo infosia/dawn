@@ -51,6 +51,24 @@
       ],
       "revId": "eff9b94bb8d62032adddaef415a0e48da008b56b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9150bcb4_ad1d65ef",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3436,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T12:51:00Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "39e8c807_7f3298ea",
+      "revId": "eff9b94bb8d62032adddaef415a0e48da008b56b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
