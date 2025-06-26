@@ -1341,6 +1341,13 @@ void PhysicalDevice::PopulateSubgroupMatrixConfigs() {
                 continue;
         }
 
+        TogglesState togglesState(ToggleStage::Adapter);
+        if (!IsFeatureSupportedWithToggles(wgpu::FeatureName::ShaderF16, togglesState) &&
+            (config.componentType == wgpu::SubgroupMatrixComponentType::F16 ||
+             config.resultComponentType == wgpu::SubgroupMatrixComponentType::F16)) {
+            continue;
+        }
+
         mSubgroupMatrixConfigs.push_back(config);
     }
 }
