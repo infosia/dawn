@@ -12,6 +12,7 @@ See:
 */ -}}
 
 {{- $I := LoadIntrinsics "src/tint/lang/core/core.def" -}}
+{{- $W := LoadIntrinsics "src/tint/lang/wgsl/wgsl.def" -}}
 {{- Import "src/tint/utils/templates/enums.tmpl.inc" -}}
 
 {{- Eval "OverrideEnumName" "Enum" ($I.Sem.Enum "builtin_type") "Name" "BuiltinType" -}}
@@ -21,6 +22,7 @@ See:
 
 #include "benchmark/benchmark.h"
 #include "src/tint/lang/core/enums.h"
+#include "src/tint/lang/wgsl/enums.h"
 
 namespace tint::core {
 namespace {
@@ -33,6 +35,11 @@ namespace {
 {{ Eval "BenchmarkParseEnum" ($I.Sem.Enum "interpolation_sampling") }}
 {{ Eval "BenchmarkParseEnum" ($I.Sem.Enum "interpolation_type") }}
 {{ Eval "BenchmarkParseEnum" ($I.Sem.Enum "texel_format") }}
+
+{{ Eval "BenchmarkParseEnum" ($W.Sem.Enum "core_diagnostic_rule") }}
+{{ Eval "BenchmarkParseEnum" ($W.Sem.Enum "chromium_diagnostic_rule") }}
+{{ Eval "BenchmarkParseEnum" ($W.Sem.Enum "diagnostic_severity") }}
+{{ Eval "BenchmarkParseEnum" ($W.Sem.Enum "extension") }}
 
 }  // namespace
 }  // namespace tint::core
