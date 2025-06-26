@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34354ad9_ce1efa2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-26T19:32:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure expanding StorageW, StorageR, and StorageRW to 3 bools is best rather than 3 bits but that seemed to be the pattern.",
+      "revId": "caf1f8a65e970f105e93a5c27b08136c5693945a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
