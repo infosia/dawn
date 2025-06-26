@@ -115,57 +115,57 @@ jobject toByteBuffer(JNIEnv *env, const void* address, jlong size) {
     {% endif %}
 
     //* Actually invoke the native version of the method.
-    {% if _kotlin_return.length == 'size_t' %}
-        //* Methods that return containers are converted from two-call to single call, and the
-        //* return type is switched to a Kotlin container.
-        size_t size = wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
-            {% for arg in method.arguments -%},
-                //* The replaced output parameter is set to nullptr on the first call.
-                {{ 'nullptr' if arg.annotation == '*' else "args." + as_varName(arg.name) -}}
-            {% endfor %}
-        );
-        //* Allocate the native container
-        args.{{ as_varName(_kotlin_return.name) }} = c.AllocArray<{{ as_cType(_kotlin_return.type.name) }}>(size);
-        if (env->ExceptionCheck()) {  //* Early out if client (Kotlin) callback threw an exception.
-            return nullptr;
-        }
-        //* Second call completes the native container
-        wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
-            {% for arg in method.arguments -%}
-               , {{- "args." + as_varName(arg.name) -}}
-            {% endfor %}
-        );
-        if (env->ExceptionCheck()) {  //* Early out if client (Kotlin) callback threw an exception.
-            return nullptr;
-        }
-    {% else %}
-        {% if _kotlin_return.annotation == '*' %}
-            //* Make a native container to accept the data output via parameter.
-            {{ as_cType(_kotlin_return.type.name) }} out = {};
-            args.{{ as_varName(_kotlin_return.name) }} = &out;
-        {% endif %}
-        {{ 'auto result =' if method.return_type.name.get() != 'void' }}
-        {% if object %}
-            wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
-        {% else %}
-            wgpu{{ method.name.CamelCase() }}(
-        {% endif %}
-            {% for arg in method.arguments -%}
-                {{- ',' if object or not loop.first }}args.{{ as_varName(arg.name) -}}
-            {% endfor %}
-        );
-        if (env->ExceptionCheck()) {  //* Early out if client (Kotlin) callback threw an exception.
-            return {{ '0' if  _kotlin_return.type.name.get() != 'void' }};
-        }
-        {% if method.return_type.name.canonical_case() == 'status' %}
-            if (result != WGPUStatus_Success) {
-                //* TODO(b/344805524): custom exception for Dawn.
-                env->ThrowNew(env->FindClass("java/lang/Error"), "Method failed");
-                return {{ '0' if method.return_type.name.get() != 'void' }};
+    {% if _kotlin_return %}
+        {% if _kotlin_return.length == 'size_t' %}
+            //* Methods that return containers are converted from two-call to single call, and the
+            //* return type is switched to a Kotlin container.
+            size_t size = wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
+                {% for arg in method.arguments -%},
+                    //* The replaced output parameter is set to nullptr on the first call.
+                    {{ 'nullptr' if arg.annotation == '*' else "args." + as_varName(arg.name) -}}
+                {% endfor %}
+            );
+            //* Allocate the native container
+            args.{{ as_varName(_kotlin_return.name) }} = c.AllocArray<{{ as_cType(_kotlin_return.type.name) }}>(size);
+            if (env->ExceptionCheck()) {  //* Early out if client (Kotlin) callback threw an exception.
+                return nullptr;
             }
+            //* Second call completes the native container
+            wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
+                {% for arg in method.arguments -%}
+                , {{- "args." + as_varName(arg.name) -}}
+                {% endfor %}
+            );
+            if (env->ExceptionCheck()) {  //* Early out if client (Kotlin) callback threw an exception.
+                return nullptr;
+            }
+        {% else %}
+            {% if _kotlin_return.annotation == '*' %}
+                //* Make a native container to accept the data output via parameter.
+                {{ as_cType(_kotlin_return.type.name) }} out = {};
+                args.{{ as_varName(_kotlin_return.name) }} = &out;
+            {% endif %}
+            {{ 'auto result =' if method.returns }}
+            {% if object %}
+                wgpu{{ object.name.CamelCase() }}{{ method.name.CamelCase() }}(handle
+            {% else %}
+                wgpu{{ method.name.CamelCase() }}(
+            {% endif %}
+                {% for arg in method.arguments -%}
+                    {{- ',' if object or not loop.first }}args.{{ as_varName(arg.name) -}}
+                {% endfor %}
+            );
+            if (env->ExceptionCheck()) {  //* Early out if client (Kotlin) callback threw an exception.
+                return {{ '0' if  _kotlin_return.type.name.get() != 'void' }};
+            }
+            {% if method.returns and method.returns.type.name.canonical_case() == 'status' %}
+                if (result != WGPUStatus_Success) {
+                    //* TODO(b/344805524): custom exception for Dawn.
+                    env->ThrowNew(env->FindClass("java/lang/Error"), "Method failed");
+                    return {{ '0' if method.returns }};
+                }
+            {% endif %}
         {% endif %}
-    {% endif %}
-    {% if _kotlin_return.type.name.get() != 'void' %}
         {% if _kotlin_return.type.name.get() in ['void const *', 'void *'] %}
             size_t size = args.size;
         {% endif %}
