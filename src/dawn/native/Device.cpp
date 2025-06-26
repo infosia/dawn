@@ -2198,7 +2198,7 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
                 // holds tint program.
                 CacheResult<ShaderModuleParseResult> result;
                 DAWN_TRY_LOAD_OR_RUN(result, this, std::move(req),
-                                     ShaderModuleParseResult::FromBlob, ParseShaderModule,
+                                     ShaderModuleParseResult::FromValidatedBlob, ParseShaderModule,
                                      "ShaderModuleParsing");
                 GetBlobCache()->EnsureStored(result);
                 ShaderModuleParseResult parseResult = result.Acquire();

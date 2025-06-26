@@ -146,6 +146,15 @@ DAWN_SERIALIZABLE(struct, ShaderModuleParseResult, SHADER_MODULE_PARSE_RESULT_ME
     std::unique_ptr<ErrorData> ToErrorData() const;
 
     void SetValidationError(std::unique_ptr<ErrorData> && errorData);
+
+    static ResultOrError<ShaderModuleParseResult> FromValidatedBlob(Blob blob) {
+        ShaderModuleParseResult result;
+        DAWN_TRY_ASSIGN(result, FromBlob(std::move(blob)));
+        // Validate a cached ShaderModuleParseResult holds valid metadataTable.
+        DAWN_INVALID_IF(!result.metadataTable.has_value(),
+                        "Cached ShaderModuleParseResult has no metadataTable");
+        return result;
+    }
 };
 #undef SHADER_MODULE_PARSE_RESULT_MEMBER
 
