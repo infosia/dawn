@@ -33,6 +33,7 @@
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
+#include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/depth_multisampled_texture.h"
 #include "src/tint/lang/core/type/depth_texture.h"
 #include "src/tint/lang/core/type/multisampled_texture.h"
@@ -327,6 +328,8 @@ struct State {
             }
 
             auto* tex_ty = tex->Result()->Type()->UnwrapPtr()->As<core::type::Texture>();
+            if (!tex_ty)
+            tex_ty = tex->Result()->Type()->UnwrapPtr()->As<core::type::BindingArray>()->ElemType()->As<core::type::Texture>();
 
             // Storage textures don't need replacements so they are replaced with themselves.
             if (tex_ty->Is<core::type::StorageTexture>()) {
@@ -335,14 +338,18 @@ struct State {
             }
 
             // Depth textures used without a sampler need to be replaced with f32 sampled textures.
-            auto* replacement_ty = ty.ptr<handle>(tex_ty);
+            const core::type::Type* replacement_ty = tex_ty;
             if (tex_ty->Is<core::type::DepthTexture>()) {
-                replacement_ty = ty.ptr<handle>(ty.sampled_texture(tex_ty->Dim(), ty.f32()));
+                replacement_ty = ty.sampled_texture(tex_ty->Dim(), ty.f32());
+            }
+
+            if (auto* ba = tex->Result()->Type()->UnwrapPtr()->As<core::type::BindingArray>()) {
+                replacement_ty = ty.binding_array(replacement_ty, ba->Count()->As<core::type::ConstantArrayCount>()->value);
             }
 
             binding::CombinedTextureSamplerPair key{tex->BindingPoint().value(),
                                                     cfg.placeholder_sampler_bind_point};
-            texture_to_replacement_.Add(tex, MakeReplacement(key, tex, nullptr, replacement_ty));
+            texture_to_replacement_.Add(tex, MakeReplacement(key, tex, nullptr, ty.ptr<handle>(replacement_ty)));
         }
     }
 
