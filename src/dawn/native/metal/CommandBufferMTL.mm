@@ -556,19 +556,11 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                             BindGroup* group,
                             const ityp::span<BindingIndex, uint64_t>& dynamicOffsets,
                             PipelineLayout* pipelineLayout) {
-        std::unordered_map<wgpu::ShaderStage, std::unordered_map<uint32_t, id<MTLArgumentEncoder>>>
-            argumentEncoders;
+        bool needsVertexArgBuffer = false;
+        bool needsFragArgBuffer = false;
+        bool needsComputeArgBuffer = false;
 
-        NSUInteger binding_group = static_cast<NSUInteger>(static_cast<uint32_t>(index));
-
-        [[maybe_unused]] id<MTLArgumentEncoder> vertEncoder = nil;
-        [[maybe_unused]] id<MTLBuffer> vertArgBuffer = nil;
-
-        [[maybe_unused]] id<MTLArgumentEncoder> fragEncoder = nil;
-        [[maybe_unused]] id<MTLBuffer> fragArgBuffer = nil;
-
-        [[maybe_unused]] id<MTLArgumentEncoder> computeEncoder = nil;
-        [[maybe_unused]] id<MTLBuffer> computeArgBuffer = nil;
+        printf("BIND GROPU APPLY\n");
 
         // TODO(crbug.com/dawn/854): Maintain buffers and offsets arrays in BindGroup
         // so that we only have to do one setVertexBuffers and one setFragmentBuffers
@@ -592,21 +584,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     SingleShaderStage::Vertex)[index][bindingIndex];
 
                 if (mUseArgumentBuffers) {
-                    DAWN_ASSERT(renderPipeline);
-
-                    if (vertEncoder == nil) {
-                        vertEncoder = group->GetVertexArgumentEncoder();
-
-                        NSUInteger vertArgumentBufferLength = vertEncoder.encodedLength;
-
-                        vertArgBuffer = [ToBackend(renderPipeline->GetDevice())->GetMTLDevice()
-                            newBufferWithLength:vertArgumentBufferLength
-                                        options:0];
-
-                        [vertEncoder setArgumentBuffer:vertArgBuffer offset:0];
-                    }
-
-                    [render setVertexBuffer:vertArgBuffer offset:0 atIndex:0];
+                    needsVertexArgBuffer |= true;
                 }
             }
 
@@ -615,20 +593,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     SingleShaderStage::Fragment)[index][bindingIndex];
 
                 if (mUseArgumentBuffers) {
-                    DAWN_ASSERT(renderPipeline);
-
-                    if (fragEncoder == nil) {
-                        fragEncoder = group->GetFragmentArgumentEncoder();
-
-                        NSUInteger fragArgumentBufferLength = fragEncoder.encodedLength;
-
-                        fragArgBuffer = [ToBackend(renderPipeline->GetDevice())->GetMTLDevice()
-                            newBufferWithLength:fragArgumentBufferLength
-                                        options:0];
-
-                        [fragEncoder setArgumentBuffer:fragArgBuffer offset:0];
-                    }
-                    [render setFragmentBuffer:fragArgBuffer offset:0 atIndex:0];
+                    needsFragArgBuffer |= true;
                 }
             }
 
@@ -637,21 +602,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     SingleShaderStage::Compute)[index][bindingIndex];
 
                 if (mUseArgumentBuffers) {
-                    DAWN_ASSERT(renderPipeline);
-
-                    if (computeEncoder == nil) {
-                        computeEncoder = group->GetComputeArgumentEncoder();
-
-                        NSUInteger argumentBufferLength = computeEncoder.encodedLength;
-
-                        computeArgBuffer = [ToBackend(renderPipeline->GetDevice())->GetMTLDevice()
-                            newBufferWithLength:argumentBufferLength
-                                        options:0];
-
-                        [computeEncoder setArgumentBuffer:computeArgBuffer offset:0];
-                    }
-
-                    [compute setBuffer:computeArgBuffer offset:0 atIndex:0];
+                    needsComputeArgBuffer |= true;
                 }
             }
 
@@ -662,9 +613,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     mBoundTextures[SingleShaderStage::Vertex][vertIndex] != texture) {
                     mBoundTextures[SingleShaderStage::Vertex][vertIndex] = texture;
 
-                    if (mUseArgumentBuffers) {
-                        [vertEncoder setTexture:texture atIndex:vertIndex];
-                    } else {
+                    if (!mUseArgumentBuffers) {
                         [render setVertexTexture:texture atIndex:vertIndex];
                     }
                 }
@@ -672,9 +621,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     mBoundTextures[SingleShaderStage::Fragment][fragIndex] != texture) {
                     mBoundTextures[SingleShaderStage::Fragment][fragIndex] = texture;
 
-                    if (mUseArgumentBuffers) {
-                        [vertEncoder setTexture:texture atIndex:fragIndex];
-                    } else {
+                    if (!mUseArgumentBuffers) {
                         [render setFragmentTexture:texture atIndex:fragIndex];
                     }
                 }
@@ -682,9 +629,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     mBoundTextures[SingleShaderStage::Compute][computeIndex] != texture) {
                     mBoundTextures[SingleShaderStage::Compute][computeIndex] = texture;
 
-                    if (mUseArgumentBuffers) {
-                        [computeEncoder setTexture:texture atIndex:computeIndex];
-                    } else {
+                    if (!mUseArgumentBuffers) {
                         [compute setTexture:texture atIndex:computeIndex];
                     }
                 }
@@ -708,10 +653,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     if (hasVertStage) {
                         mLengthTracker->data[SingleShaderStage::Vertex][vertIndex] = binding.size;
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Vertex;
-
-                        if (mUseArgumentBuffers) {
-                            [vertEncoder setBuffer:buffer offset:offset atIndex:vertIndex];
-                        } else {
+                        if (!mUseArgumentBuffers) {
                             [render setVertexBuffers:&buffer
                                              offsets:&offset
                                            withRange:NSMakeRange(vertIndex, 1)];
@@ -720,9 +662,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     if (hasFragStage) {
                         mLengthTracker->data[SingleShaderStage::Fragment][fragIndex] = binding.size;
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Fragment;
-                        if (mUseArgumentBuffers) {
-                            [fragEncoder setBuffer:buffer offset:offset atIndex:fragIndex];
-                        } else {
+                        if (!mUseArgumentBuffers) {
                             [render setFragmentBuffers:&buffer
                                                offsets:&offset
                                              withRange:NSMakeRange(fragIndex, 1)];
@@ -732,11 +672,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                         mLengthTracker->data[SingleShaderStage::Compute][computeIndex] =
                             binding.size;
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Compute;
-                        if (mUseArgumentBuffers) {
-                            [computeEncoder setBuffers:&buffer
-                                               offsets:&offset
-                                             withRange:NSMakeRange(computeIndex, 1)];
-                        } else {
+                        if (!mUseArgumentBuffers) {
                             [compute setBuffers:&buffer
                                         offsets:&offset
                                       withRange:NSMakeRange(computeIndex, 1)];
@@ -749,30 +685,22 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     if (hasVertStage &&
                         mBoundSamplers[SingleShaderStage::Vertex][vertIndex] != samplerState) {
                         mBoundSamplers[SingleShaderStage::Vertex][vertIndex] = samplerState;
-                        if (mUseArgumentBuffers) {
-                            [vertEncoder setSamplerState:samplerState atIndex:vertIndex];
-                        } else {
+                        if (!mUseArgumentBuffers) {
                             [render setVertexSamplerState:samplerState atIndex:vertIndex];
                         }
                     }
                     if (hasFragStage &&
                         mBoundSamplers[SingleShaderStage::Fragment][fragIndex] != samplerState) {
                         mBoundSamplers[SingleShaderStage::Fragment][fragIndex] = samplerState;
-                        if (mUseArgumentBuffers) {
-                            [fragEncoder setSamplerState:samplerState atIndex:fragIndex];
-                        } else {
+                        if (!mUseArgumentBuffers) {
                             [render setFragmentSamplerState:samplerState atIndex:fragIndex];
                         }
                     }
                     if (hasComputeStage &&
                         mBoundSamplers[SingleShaderStage::Compute][computeIndex] != samplerState) {
                         mBoundSamplers[SingleShaderStage::Compute][computeIndex] = samplerState;
-                        if (mUseArgumentBuffers) {
-                            [computeEncoder setSamplerState:sampler->GetMTLSamplerState()
-                                                    atIndex:computeIndex];
-                        } else {
-                            [compute setSamplerState:sampler->GetMTLSamplerState()
-                                             atIndex:computeIndex];
+                        if (!mUseArgumentBuffers) {
+                            [compute setSamplerState:samplerState atIndex:computeIndex];
                         }
                     }
                 },
@@ -785,6 +713,16 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                 [&](const TextureBindingInfo&) { HandleTextureBinding(); },
                 [&](const StorageTextureBindingInfo&) { HandleTextureBinding(); },
                 [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
+        }
+
+        if (needsVertexArgBuffer) {
+            [render setVertexBuffer:group->GetVertexArgumentBuffer() offset:0 atIndex:0];
+        }
+        if (needsFragArgBuffer) {
+            [render setFragmentBuffer:group->GetFragmentArgumentBuffer() offset:0 atIndex:0];
+        }
+        if (needsComputeArgBuffer) {
+            [compute setBuffer:group->GetComputeArgumentBuffer() offset:0 atIndex:0];
         }
     }
 
@@ -856,7 +794,6 @@ class VertexBufferTracker {
                     mVertexBufferBindingSizes[slot];
                 mLengthTracker->dirtyStages |= wgpu::ShaderStage::Vertex;
             }
-
             [encoder setVertexBuffers:&mVertexBuffers[slot]
                               offsets:&mVertexBufferOffsets[slot]
                             withRange:NSMakeRange(metalIndex, 1)];

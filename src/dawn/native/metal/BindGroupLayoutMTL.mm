@@ -44,9 +44,12 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device, const BindGroupLayoutDescri
     if (!device->IsToggleEnabled(Toggle::MetalUseArgumentBuffers)) {
         return;
     }
+    printf("SETUP LAYOUT\n");
 
     for (BindingIndex i{0}; i < GetBindingCount(); ++i) {
         auto& bindingInfo = GetBindingInfo(i);
+
+        printf("ENTRY\n\n");
 
         MTLArgumentDescriptor* desc = [MTLArgumentDescriptor argumentDescriptor];
         desc.index = static_cast<uint32_t>(bindingInfo.binding);
