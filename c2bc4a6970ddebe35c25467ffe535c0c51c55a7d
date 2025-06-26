@@ -1,0 +1,49 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13afbdc2_92c24792",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T17:48:34Z",
+      "side": 1,
+      "message": "Dawn is CamelCase",
+      "fixSuggestions": [
+        {
+          "fixId": "01cca3a9_3e1aa4fa",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/native/metal/ShaderModuleMTL.mm",
+              "range": {
+                "startLine": 226,
+                "startChar": 0,
+                "endLine": 227,
+                "endChar": 0
+              },
+              "replacement": "    bool useStrictMath) {\n"
+            },
+            {
+              "path": "src/dawn/native/metal/ShaderModuleMTL.mm",
+              "range": {
+                "startLine": 283,
+                "startChar": 0,
+                "endLine": 284,
+                "endChar": 0
+              },
+              "replacement": "    req.useStrictMath \u003d useStrictMath;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c2bc4a6970ddebe35c25467ffe535c0c51c55a7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
