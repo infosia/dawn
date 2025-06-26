@@ -52,6 +52,24 @@
       "parentUuid": "de917e71_a0eb0b2e",
       "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cacc755d_bfe956ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-26T20:51:52Z",
+      "side": 1,
+      "message": "You\u0027re right, I was thinking about our golang tooling where we often pass in paths (e.g. run-cts accepts `-bin \u003cpath\u003e`). I\u0027m supposing this fix is only for local development, right? The downloadable extension would include the tintd.exe in the right place, presumably. If so, I suppose a fix like this is alright, but one issue I see is that it implicitly picks the Release version before the Debug version.",
+      "parentUuid": "fad16da4_e523302b",
+      "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
