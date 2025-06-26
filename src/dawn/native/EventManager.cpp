@@ -140,6 +140,9 @@ bool PollFutures(std::vector<TrackedFutureWaitInfo>& futures) {
             success = true;
             future.ready = true;
         }
+
+        // For spontaneous events, we also need to make sure that their callbacks have completed.
+        // This can be accomplished by calling |EnsureComplete|
     }
     return success;
 }
@@ -594,7 +597,7 @@ EventManager::TrackedEvent::TrackedEvent(wgpu::CallbackMode callbackMode, NonPro
 
 EventManager::TrackedEvent::~TrackedEvent() {
     DAWN_ASSERT(mFutureID != kNullFutureID);
-    DAWN_ASSERT(mCompleted);
+    DAWN_ASSERT(mCompleted.Use([](auto completed) { return *completed; }));
 }
 
 Future EventManager::TrackedEvent::GetFuture() const {
@@ -632,10 +635,12 @@ void EventManager::TrackedEvent::SetReadyToComplete() {
 }
 
 void EventManager::TrackedEvent::EnsureComplete(EventCompletionType completionType) {
-    bool alreadyComplete = mCompleted.exchange(true);
-    if (!alreadyComplete) {
-        Complete(completionType);
-    }
+    mCompleted.Use([&](auto completed) {
+        if (!*completed) {
+            Complete(completionType);
+            *completed = true;
+        }
+    });
 }
 
 }  // namespace dawn::native
