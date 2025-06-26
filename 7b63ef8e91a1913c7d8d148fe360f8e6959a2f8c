@@ -34,6 +34,24 @@
       "parentUuid": "b1816cf7_4ba3272e",
       "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fad16da4_e523302b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-26T20:47:03Z",
+      "side": 1,
+      "message": "Thanks you for your notes. Could you be more concrete? What does \"pass in the path to tintd as an argument, as we do with all our other tooling\" mean? If I grep for `context.extensionPath` that\u0027s in `extension.js` which is called automatically by VSCode AFAICT. So there is no opportunity pass anything in.",
+      "parentUuid": "de917e71_a0eb0b2e",
+      "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
