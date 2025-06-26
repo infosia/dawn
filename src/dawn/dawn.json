@@ -1224,7 +1224,7 @@
             {
                 "name": "create buffer",
                 "no autolock": true,
-                "returns": "buffer",
+                "returns": {"type": "buffer", "optional": true},
                 "args": [
                     {"name": "descriptor", "type": "buffer descriptor", "annotation": "const*"}
                 ]
@@ -4336,8 +4336,7 @@
       "category": "native"
     },
     "void": {
-        "category": "native",
-        "wasm type": "v"
+        "category": "native"
     },
     "void *": {
         "category": "native",
