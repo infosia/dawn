@@ -25,9 +25,10 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_TINT_LANG_MSL_WRITER_RAISE_UNARY_POLYFILL_H_
-#define SRC_TINT_LANG_MSL_WRITER_RAISE_UNARY_POLYFILL_H_
+#ifndef SRC_TINT_LANG_CORE_IR_TRANSFORM_SIGNED_INTEGER_POLYFILL_H_
+#define SRC_TINT_LANG_CORE_IR_TRANSFORM_SIGNED_INTEGER_POLYFILL_H_
 
+#include "src/tint/utils/reflection.h"
 #include "src/tint/utils/result.h"
 
 // Forward declarations.
@@ -35,14 +36,30 @@ namespace tint::core::ir {
 class Module;
 }  // namespace tint::core::ir
 
-namespace tint::msl::writer::raise {
+namespace tint::core::ir::transform {
 
-/// UnaryPolyfill is a transform that replaces unary instructions with polyfills and calls to MSL
+/// The set of polyfills that should be applied.
+struct SignedIntegerPolyfillConfig {
+    /// Should signed negation be polyfilled to avoid integer overflow?
+    bool signed_negation = false;
+
+    /// Should signed arithmetic be polyfilled to avoid integer overflow?
+    bool signed_arithmetic = false;
+
+    /// Should signed shiftleft be polyfilled to avoid integer overflow?
+    bool signed_shiftleft = false;
+
+    /// Reflection for this class
+    TINT_REFLECT(SignedIntegerPolyfillConfig, signed_negation);
+};
+
+/// SignedIntegerPolyfill is a transform that replaces signed intgers instructions with polyfills.
 /// backend intrinsic functions.
 /// @param module the module to transform
 /// @returns success or failure
-Result<SuccessType> UnaryPolyfill(core::ir::Module& module);
+Result<SuccessType> SignedIntegerPolyfill(core::ir::Module& module,
+                                          const SignedIntegerPolyfillConfig& cfg);
 
-}  // namespace tint::msl::writer::raise
+}  // namespace tint::core::ir::transform
 
-#endif  // SRC_TINT_LANG_MSL_WRITER_RAISE_UNARY_POLYFILL_H_
+#endif  // SRC_TINT_LANG_CORE_IR_TRANSFORM_SIGNED_INTEGER_POLYFILL_H_
