@@ -70,6 +70,30 @@
       },
       "revId": "6369b7744bae239428f48058cfebc392cdd079f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "213fc773_b826f393",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-26T20:36:04Z",
+      "side": 1,
+      "message": "`status` is for the synchronous error whereas `ConsumedError` is for the async one. It\u0027s one of those weird distinctions that makes for weird code in Dawn Native but makes more sense in the wire (like the CreateBuffer OOM thing).",
+      "parentUuid": "456c0900_8e0b8e41",
+      "range": {
+        "startLine": 638,
+        "startChar": 4,
+        "endLine": 645,
+        "endChar": 18
+      },
+      "revId": "6369b7744bae239428f48058cfebc392cdd079f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
