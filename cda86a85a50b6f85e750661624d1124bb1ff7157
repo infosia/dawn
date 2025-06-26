@@ -16,6 +16,24 @@
       "message": "CL looks fine but I don\u0027t understand why this isn\u0027t enough. If WaitAny() observed the callback was ready it should have completed the callback, why are we completing it again?",
       "revId": "cda86a85a50b6f85e750661624d1124bb1ff7157",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c892350_96512b26",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-26T21:01:53Z",
+      "side": 0,
+      "message": "To elaborate on the example I provided in the description a bit more:\n\nThread 1 (main thread):\n- future \u003d MapAsync(..., [\u0026]callback)\n- loop WaitAny(future, 0)\n\nThread 2 (Metal thread):\n- Metal thread notifies that the serial is ready\n- Calls |EnsureComplete| and sets `mCompleted \u003d true`\n\nThread 1:\n- WaitAny checks and sees that event is ready\n- WaitImpl calls |EnsureComplete|, sees `mCompleted` is already true so continues, returning Success for the WaitAny call\n- Test continues and starts tearing down destroying things that were captured in the callback scope.\n\nThread 2:\n- Finally starts running the |Complete| call which calls the callback, but test has already destroyed everything in the capture scope so we crash.\n\n\nBy using a lock instead of the atomic, we guarantee that if WaitAny sees the event is ready and calls |EnsureComplete| on it, that the callback will have fully ran before we return Success from WaitAny.",
+      "parentUuid": "34eb44fe_5991705f",
+      "revId": "cda86a85a50b6f85e750661624d1124bb1ff7157",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
