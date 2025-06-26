@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "540e609c_3cb180d4",
+        "filename": "src/tint/lang/glsl/writer/common/option_helpers.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-06-26T18:37:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6579615c_ca41f0e2",
+      "revId": "5e70727bac94b7b13804266332f4e6597ea98af9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e82fb18_07a011cb",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-06-26T18:03:01Z",
       "side": 1,
       "message": "still needed?",
+      "revId": "5e70727bac94b7b13804266332f4e6597ea98af9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6a1e9ad_dde70f61",
+        "filename": "src/tint/lang/hlsl/writer/common/option_helpers.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-06-26T18:37:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e82fb18_07a011cb",
       "revId": "5e70727bac94b7b13804266332f4e6597ea98af9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
