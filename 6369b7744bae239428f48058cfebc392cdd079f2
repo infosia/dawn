@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "077217d2_ae94f729",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-26T18:47:01Z",
+      "side": 1,
+      "message": "Hmm, maybe we could just do:\n\n```\n    if (!GetCurrentDevice()) {\n        [[maybe_unused]] bool error \u003d mInstance-\u003eConsumedError(Present());\n    } else {\n        [[maybe_unused]] bool error \u003d GetCurrentDevice()-\u003eConsumedError(Present());\n    }\n```",
+      "range": {
+        "startLine": 638,
+        "startChar": 4,
+        "endLine": 645,
+        "endChar": 18
+      },
+      "revId": "6369b7744bae239428f48058cfebc392cdd079f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
