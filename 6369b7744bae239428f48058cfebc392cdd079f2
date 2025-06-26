@@ -46,6 +46,30 @@
       },
       "revId": "6369b7744bae239428f48058cfebc392cdd079f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "456c0900_8e0b8e41",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-26T19:47:10Z",
+      "side": 1,
+      "message": "Ah, sorry I messed up the example, I meant something more like this:\n\n```\nErrorSink* errorSink \u003d GetCurrentDevice() ? GetCurrentDevice : mInstance;\nif (errorSink-\u003eConsumedError(Present())) {\n    return wgpu::Status::Error;\n}\nreturn wgpu::Status::Success;\n```",
+      "parentUuid": "10bc3fe7_4d09e822",
+      "range": {
+        "startLine": 638,
+        "startChar": 4,
+        "endLine": 645,
+        "endChar": 18
+      },
+      "revId": "6369b7744bae239428f48058cfebc392cdd079f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
