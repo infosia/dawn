@@ -208,6 +208,9 @@ struct Options {
     /// Set to `true` to scalarize max min and clamp builtins.
     bool scalarize_max_min_clamp = false;
 
+    /// Set to `true` to polyfill signed integer abs builtin.
+    bool polyfill_abs_signed_integer = false;
+
     /// Set to `true` if the Vulkan Memory Model should be used
     bool use_vulkan_memory_model = false;
 
@@ -240,6 +243,7 @@ struct Options {
                  polyfill_pack_unpack_4x8_norm,
                  disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
+                 polyfill_abs_signed_integer,
                  use_vulkan_memory_model,
                  dva_transform_handle,
                  depth_range_offsets,
