@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b15e1f52_1b876120",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T22:10:08Z",
+      "side": 1,
+      "message": "Nit: The function name makes it sounds like it\u0027s converting from an input array type to something (as opposed to the other way around). The terminology we have in the current proposal is \"scalar shader type\", so maybe `ComponentTypeToScalarShaderType`?",
+      "revId": "7ca06af87f99e082e40ecfb2a32078663dcc5c3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f2f2ba8e_64e4838d",
         "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
         "patchSetId": 12
@@ -14,6 +31,41 @@
       "writtenOn": "2025-06-26T09:11:04Z",
       "side": 1,
       "message": "Why don\u0027t we /2 for f16?",
+      "revId": "7ca06af87f99e082e40ecfb2a32078663dcc5c3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69701f27_de1516b0",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T22:10:08Z",
+      "side": 1,
+      "message": "Because f16 also uses f16 as the element type of the arrays that contain the data. i8/u8 are the only ones where the component type does not match the array element type.\n\ni.e. this number is \"how many matrix elements per array element?\"",
+      "parentUuid": "f2f2ba8e_64e4838d",
+      "revId": "7ca06af87f99e082e40ecfb2a32078663dcc5c3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a0e06d2_c5840834",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T22:10:08Z",
+      "side": 1,
+      "message": "I\u0027ve asked @alanbaker@google.com on the proposal whether the offset is supposed to be in matrix elements or array elements. If it\u0027s the former (which would match stride), then we\u0027d need to do this division inside Tint instead.",
       "revId": "7ca06af87f99e082e40ecfb2a32078663dcc5c3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
