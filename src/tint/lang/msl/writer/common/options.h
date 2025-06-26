@@ -169,6 +169,9 @@ struct Options {
     /// Set to `true` to disable the module constant transform for f16
     bool disable_module_constant_f16 = false;
 
+    /// Set to `true` to polyfill signed integer abs builtin.
+    bool polyfill_abs_signed_integer = false;
+
     /// Emit argument buffers
     bool use_argument_buffers = false;
 
@@ -205,6 +208,7 @@ struct Options {
                  disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
                  disable_module_constant_f16,
+                 polyfill_abs_signed_integer,
                  use_argument_buffers,
                  buffer_size_ubo_index,
                  fixed_sample_mask,
