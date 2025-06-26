@@ -48,6 +48,10 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
     id<MTLArgumentEncoder> GetFragmentArgumentEncoder() { return mFragmentArgumentEncoder; }
     id<MTLArgumentEncoder> GetComputeArgumentEncoder() { return mComputeArgumentEncoder; }
 
+    id<MTLBuffer> GetVertexArgumentBuffer() { return mVertexArgumentBuffer; }
+    id<MTLBuffer> GetFragmentArgumentBuffer() { return mFragmentArgumentBuffer; }
+    id<MTLBuffer> GetComputeArgumentBuffer() { return mComputeArgumentBuffer; }
+
   private:
     ~BindGroup() override;
 
@@ -58,6 +62,10 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
     id<MTLArgumentEncoder> mVertexArgumentEncoder;
     id<MTLArgumentEncoder> mFragmentArgumentEncoder;
     id<MTLArgumentEncoder> mComputeArgumentEncoder;
+
+    id<MTLBuffer> mVertexArgumentBuffer;
+    id<MTLBuffer> mFragmentArgumentBuffer;
+    id<MTLBuffer> mComputeArgumentBuffer;
 };
 
 }  // namespace dawn::native::metal
