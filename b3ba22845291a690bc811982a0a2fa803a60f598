@@ -212,6 +212,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "63baf356_3125099a",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T16:34:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95205534_62869b48",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab8d2acb_b0df9134",
