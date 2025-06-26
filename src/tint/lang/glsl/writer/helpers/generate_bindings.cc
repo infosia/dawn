@@ -48,6 +48,7 @@ Bindings GenerateBindings(const core::ir::Module& module) {
 
     // Set a binding point for the texture-builtins-from-uniform buffer.
     bindings.texture_builtins_from_uniform.ubo_binding = {0u};
+    uint32_t texture_builtin_offset = 0;
 
     // Collect next valid binding number per group
     Hashmap<uint32_t, uint32_t, 4> group_to_next_binding_number;
@@ -84,9 +85,11 @@ Bindings GenerateBindings(const core::ir::Module& module) {
                         },
                         [&](const core::type::Texture*) {
                             bindings.texture.emplace(*bp, info);
+
                             // Add all texture variables to the texture-builtin-from-uniform map.
-                            bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering
-                                .emplace_back(info);
+                            bindings.texture_builtins_from_uniform.ubo_contents.push_back(
+                                {.offset = texture_builtin_offset, .count = 1, .binding = info});
+                            texture_builtin_offset++;
                         });
                     break;
                 case core::AddressSpace::kStorage:
