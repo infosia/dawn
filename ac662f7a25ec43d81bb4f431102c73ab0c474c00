@@ -73,6 +73,24 @@
       "message": "Why do we need to filter it? Subgroup matrices are independent from scalar values no?\n\nMaybe we could split this to a SupportComponentType helper lambda above and call it for each individual component type? Then don\u0027t forget to update it when adding 8bit support.\n\nBut also what happens when the user wants to use this subgroup matrix without enabling the shaderf16 extension? Will we mistakenly not request support for the Vulkan extension in that case?",
       "revId": "ac662f7a25ec43d81bb4f431102c73ab0c474c00",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4d9395e_6bb2f0ca",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T16:40:29Z",
+      "side": 1,
+      "message": "To declare an f16 subgroup matrix type in the shader you need to type `f16`, which Tint will reject if you haven\u0027t enabled the f16 extension. This means that the user does indeed need to enable the `ShaderF16` feature when creating the WebGPU adapter.\n\nWe /could/ change it so that `f16` is allowed in Tint without `enable f16` as long as it is only used for declaring subgroup matrix types (which is what we did for u8/i8), but I\u0027m not sure how high the value is. Is there a case where we denylist `ShaderF16` because it\u0027s broken, but for some reason have confidence that f16 subgroup matrix would be OK?",
+      "parentUuid": "77e75ccc_c1faa9e5",
+      "revId": "ac662f7a25ec43d81bb4f431102c73ab0c474c00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
