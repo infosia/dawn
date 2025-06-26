@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7885d7ba_3d7850a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-26T09:58:40Z",
+      "side": 1,
+      "message": "LGTM!",
+      "revId": "3a5d4221b2efecaedfd753ce284725f456eee254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11bbac20_861030ac",
+        "filename": "src/dawn/tests/unittests/d3d12/CopySplitTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-26T09:58:40Z",
+      "side": 1,
+      "message": "```suggestion\n        auto CheckAndLogFailure \u003d [\u0026](const TextureCopySubresource\u0026 copySplit) {\n```\n\nBut also this could be moved to be at the end of `ValidateCopySplit` since it is always called and \"part of the validation\" (it prints the validation error if any)",
+      "range": {
+        "startLine": 455,
+        "startChar": 13,
+        "endLine": 455,
+        "endChar": 31
+      },
+      "revId": "3a5d4221b2efecaedfd753ce284725f456eee254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82d6da89_93f12427",
+        "filename": "src/dawn/tests/unittests/d3d12/CopySplitTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-26T09:58:40Z",
+      "side": 1,
+      "message": "Maybe these should take relaxed vs. not as a boolean and dispatch to the correct function internally. Ditto for 2D / 3D.",
+      "range": {
+        "startLine": 480,
+        "startChar": 24,
+        "endLine": 480,
+        "endChar": 83
+      },
+      "revId": "3a5d4221b2efecaedfd753ce284725f456eee254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
