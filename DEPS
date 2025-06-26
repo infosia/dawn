@@ -388,7 +388,7 @@ deps = {
 
   # Upstream webgpu.h headers for testing purposes
   'third_party/webgpu-headers/src': {
-    'url': '{chromium_git}/external/github.com/webgpu-native/webgpu-headers@4f617851dfa20bd240436d9255bcb7e4dbbb1e3f',
+    'url': '{chromium_git}/external/github.com/webgpu-native/webgpu-headers@592137b227d47b3ef0fcae3870f90c1de2ae8d92',
   },
 
   'tools/golang': {
