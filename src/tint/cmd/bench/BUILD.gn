@@ -42,23 +42,32 @@ import("${tint_src_dir}/tint.gni")
 if (tint_build_unittests || tint_build_benchmarks) {
   import("//testing/test.gni")
 }
+if (tint_build_wgsl_reader) {
+  libtint_source_set("bench") {
+    sources = [ "enums.cc" ]
+    deps = [
+      "${dawn_root}/src/utils:utils",
+      "${tint_src_dir}:google_benchmark",
+      "${tint_src_dir}/lang/core",
+      "${tint_src_dir}/utils",
+      "${tint_src_dir}/utils/containers",
+      "${tint_src_dir}/utils/ice",
+      "${tint_src_dir}/utils/macros",
+      "${tint_src_dir}/utils/math",
+      "${tint_src_dir}/utils/memory",
+      "${tint_src_dir}/utils/rtti",
+    ]
+  }
+}
 if (tint_build_benchmarks) {
   if (tint_build_wgsl_reader) {
     tint_benchmarks_source_set("bench") {
       sources = [
-        "access_bench.cc",
-        "address_space_bench.cc",
-        "attribute_bench.cc",
         "bench.cc",
         "bench.h",
-        "builtin_type_bench.cc",
-        "builtin_value_bench.cc",
         "diagnostic_rule_bench.cc",
         "diagnostic_severity_bench.cc",
         "extension_bench.cc",
-        "interpolation_sampling_bench.cc",
-        "interpolation_type_bench.cc",
-        "texel_format_bench.cc",
         "validator_bench.cc",
       ]
       deps = [
