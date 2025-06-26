@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e93e45a2_fde3e5e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-26T07:15:35Z",
+      "side": 1,
+      "message": "@lokokung@google.com @cwallez@chromium.org Please let me know whether I should remove the extension struct or not. I don\u0027t have strong feelings about it to be honest.",
+      "parentUuid": "de95e293_9162eca8",
+      "revId": "3f1e75f13d1094e6169a357b5fcd4f5b42630689",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "649a95e3_742dc40e",
         "filename": "src/dawn/native/Texture.cpp",
         "patchSetId": 4
