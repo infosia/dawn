@@ -771,7 +771,8 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
             struct Init;
             inline {{as_cppType(type.name)}}(Init&& init);
     {% else %}
-        struct {{as_cppType(type.name)}} {
+        struct {{as_cppType(type.name)}}
+            {%- if type.extensible %} : ChainedOrBaseStruct{{Out}} {% endif %} {
             {% if type.has_free_members_function %}
                 inline {{as_cppType(type.name)}}();
             {% endif %}
@@ -785,9 +786,6 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
         {% endif %}
         inline operator const {{as_cType(type.name)}}&() const noexcept;
 
-        {% if type.extensible %}
-            ChainedStruct{{Out}} {{const}} * nextInChain = nullptr;
-        {% endif %}
         {% for member in type.members %}
             {% if type.name.get() == "bind group layout entry" %}
                 {% if member.name.canonical_case() == "buffer" %}
@@ -827,8 +825,7 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
 {% set type = types["device descriptor"] %}
 {% set CppType = as_cppType(type.name) %}
 namespace detail {
-struct {{CppType}} {
-    ChainedStruct const * nextInChain = nullptr;
+struct {{CppType}} : ChainedOrBaseStruct {
     {% for member in type.members %}
         {% if member.type.category != "callback info" %}
             {{as_annotated_cppType(member, type.has_free_members_function) + render_cpp_default_value(member, True, type.has_free_members_function)}};
@@ -841,7 +838,7 @@ struct {{CppType}} {
 struct {{CppType}} : protected detail::{{CppType}} {
     inline operator const {{as_cType(type.name)}}&() const noexcept;
 
-    using detail::{{CppType}}::nextInChain;
+    using ChainedOrBaseStruct::nextInChain;
     {% for member in type.members %}
         {% if member.type.category != "callback info" %}
             using detail::{{CppType}}::{{as_varName(member.name)}};
@@ -886,8 +883,7 @@ struct {{CppType}} : protected detail::{{CppType}} {
         {% set const = "const" if not type.output else "" %}
         {{CppType}}::{{CppType}}()
           : ChainedStruct{{Out}} { nullptr, SType::{{type.name.CamelCase()}} } {}
-        struct {{CppType}}::Init {
-            ChainedStruct{{Out}} * {{const}} nextInChain;
+        struct {{CppType}}::Init : ChainedOrBaseStruct{{Out}} {
             {% for member in type.members %}
                 {% set member_declaration = as_annotated_cppType(member, type.has_free_members_function) + render_cpp_default_value(member, True, type.has_free_members_function) %}
                 {{member_declaration}};

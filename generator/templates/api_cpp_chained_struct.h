@@ -43,15 +43,34 @@
 // which exposes capabilities that may require correctly set proc tables.
 namespace {{metadata.namespace}} {
 
+    struct ChainedStruct;
+    struct ChainedStructOut;
+
+    struct ChainedOrBaseStruct {
+        ChainedOrBaseStruct() = default;
+        ChainedOrBaseStruct(ChainedStruct const * nextInChain) : nextInChain(nextInChain) {}
+        ChainedStruct const * nextInChain = nullptr;
+    };
+
+    struct ChainedOrBaseStructOut {
+        ChainedOrBaseStructOut() = default;
+        ChainedOrBaseStructOut(ChainedStructOut * nextInChain) : nextInChain(nextInChain) {}
+        ChainedStructOut * nextInChain = nullptr;
+    };
+
     enum class SType : uint32_t;
 
-    struct ChainedStruct {
-        ChainedStruct const * nextInChain = nullptr;
+    struct ChainedStruct : ChainedOrBaseStruct {
+        ChainedStruct() = default;
+        ChainedStruct(ChainedStruct const * nextInChain, SType sType)
+            : ChainedOrBaseStruct(nextInChain), sType(sType) {}
         SType sType = SType(0u);
     };
 
-    struct ChainedStructOut {
-        ChainedStructOut * nextInChain = nullptr;
+    struct ChainedStructOut : ChainedOrBaseStructOut {
+        ChainedStructOut() = default;
+        ChainedStructOut(ChainedStructOut * nextInChain, SType sType)
+            : ChainedOrBaseStructOut(nextInChain), sType(sType) {}
         SType sType = SType(0u);
     };
 

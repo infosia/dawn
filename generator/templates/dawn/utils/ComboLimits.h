@@ -53,14 +53,10 @@ class ComboLimits : public NonMovable
     template <typename... Extension>
         requires (std::convertible_to<Extension, wgpu::ChainedStructOut*> && ...)
     wgpu::Limits* GetLinked(Extension... extension) {
-        wgpu::ChainedStructOut* lastExtension = nullptr;
+        wgpu::ChainedOrBaseStructOut* lastExtension = static_cast<wgpu::Limits*>(this);
         // Link all of the standard extensions.
         {% for type in types['limits'].extensions %}
-            {% if loop.first %}
-                lastExtension = this->wgpu::Limits::nextInChain =
-            {% else %}
-                lastExtension = lastExtension->nextInChain =
-            {% endif %}
+            lastExtension = lastExtension->nextInChain =
                 static_cast<wgpu::{{as_cppType(type.name)}}*>(this);
         {% endfor %}
         // Link any extensions passed by the caller.
