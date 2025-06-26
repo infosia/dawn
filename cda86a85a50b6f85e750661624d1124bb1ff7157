@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34eb44fe_5991705f",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-26T20:41:29Z",
+      "side": 0,
+      "message": "CL looks fine but I don\u0027t understand why this isn\u0027t enough. If WaitAny() observed the callback was ready it should have completed the callback, why are we completing it again?",
+      "revId": "cda86a85a50b6f85e750661624d1124bb1ff7157",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
