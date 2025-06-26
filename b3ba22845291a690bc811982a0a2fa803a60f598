@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c87d07f_d2ec6d39",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T15:18:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "dde79467_4aa33280",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c909ebbb_cc662745",
@@ -178,6 +196,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "95205534_62869b48",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T15:18:13Z",
+      "side": 1,
+      "message": "Not seeing changes in the diff?",
+      "parentUuid": "85761332_86e2b3e1",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab8d2acb_b0df9134",
         "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
         "patchSetId": 3
@@ -254,6 +290,24 @@
       "side": 1,
       "message": "We currently have no way to remove an unused struct. The Disassembler just emits all structures that exist in the type manager.\n\nThis \"works\" because IR-\u003eProgram only emits structures that are used, and the IR validator only validates structures that are used.\n\nWe could either:\n- Have the disassembler only output structures that are used\n- Track the structures that are used in the IR module so that we can \"remove\" them (which tells the disassembler which ones to emit, the validator which ones to validate, etc)\n\nThis is a separate issue though.",
       "parentUuid": "862c51ac_b6075fcc",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fff314e4_7f95f81e",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T15:18:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "5906ba97_e5acb6f4",
       "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cba82ed7_a40f53b0",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T15:18:13Z",
+      "side": 1,
+      "message": "This seems wrong, as the types don\u0027t match? Doesn\u0027t this need to turn into 5 constructs?",
+      "revId": "aa1a4262053b25e9c198b5788771009aa3bff438",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
