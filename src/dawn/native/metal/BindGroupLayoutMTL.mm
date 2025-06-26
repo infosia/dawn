@@ -27,6 +27,7 @@
 
 #include "dawn/native/metal/BindGroupLayoutMTL.h"
 
+#include "dawn/native/Device.h"
 #include "dawn/native/metal/BindGroupMTL.h"
 
 namespace dawn::native::metal {
@@ -39,7 +40,31 @@ Ref<BindGroupLayout> BindGroupLayout::Create(DeviceBase* device,
 
 BindGroupLayout::BindGroupLayout(DeviceBase* device, const BindGroupLayoutDescriptor* descriptor)
     : BindGroupLayoutInternalBase(device, descriptor),
-      mBindGroupAllocator(MakeFrontendBindGroupAllocator<BindGroup>(4096)) {}
+      mBindGroupAllocator(MakeFrontendBindGroupAllocator<BindGroup>(4096)) {
+    if (!device->IsToggleEnabled(Toggle::MetalUseArgumentBuffers)) {
+        return;
+    }
+
+    for (BindingIndex i{0}; i < GetBindingCount(); ++i) {
+        auto& bindingInfo = GetBindingInfo(i);
+
+        MTLArgumentDescriptor* desc = [MTLArgumentDescriptor argumentDescriptor];
+        desc.index = static_cast<uint32_t>(bindingInfo.binding);
+        // TODO(dsinclair): Fix the type and access
+        desc.dataType = MTLDataTypePointer;
+        desc.access = MTLArgumentAccessReadOnly;
+
+        if (bindingInfo.visibility & wgpu::ShaderStage::Vertex) {
+            mVertexArgumentDescriptors.push_back(desc);
+        }
+        if (bindingInfo.visibility & wgpu::ShaderStage::Fragment) {
+            mFragmentArgumentDescriptors.push_back(desc);
+        }
+        if (bindingInfo.visibility & wgpu::ShaderStage::Compute) {
+            mComputeArgumentDescriptors.push_back(desc);
+        }
+    }
+}
 
 BindGroupLayout::~BindGroupLayout() = default;
 

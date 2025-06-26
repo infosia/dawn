@@ -175,9 +175,13 @@ int SampleBase::Run(unsigned int delay) {
     dawnProcSetProcs(&dawn::native::GetProcs());
 #endif  // __EMSCRIPTEN__
 
+    //  dawn::native::DawnInstanceDescriptor dawnInstanceDescriptor = {};
+    //  dawnInstanceDescriptor.nextInChain = togglesChain;
+    //  dawnInstanceDescriptor.backendValidationLevel = dawn::native::BackendValidationLevel::Full;
+
     // Create the instance with the toggles
     wgpu::InstanceDescriptor instanceDescriptor = {};
-    instanceDescriptor.nextInChain = togglesChain;
+    instanceDescriptor.nextInChain = togglesChain;  // &dawnInstanceDescriptor;
     instanceDescriptor.capabilities.timedWaitAnyEnable = true;
     sample->instance = wgpu::CreateInstance(&instanceDescriptor);
 
