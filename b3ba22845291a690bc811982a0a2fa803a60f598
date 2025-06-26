@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60145ebd_97579c55",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T15:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be9819c0_0ec09cab",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7700646_1b2f801e",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-06-26T14:03:18Z",
       "side": 1,
       "message": "Not sure if it\u0027s possible, but could i have a return where I have an explicit layout array with `@location(0) @interpolate(perspective)` and, if so, do we need to move that interpolation anywhere or does it stay on the return itself?",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dde79467_4aa33280",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T15:13:17Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s possible since this transform is run after `ShaderIO`.",
+      "parentUuid": "c7700646_1b2f801e",
       "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -52,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c328560d_5f497cc2",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T15:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c909ebbb_cc662745",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c5eab84a_b50224ff",
@@ -65,6 +119,24 @@
       "writtenOn": "2025-06-26T14:03:18Z",
       "side": 1,
       "message": "```suggestion\n                            member-\u003eName(), new_member_type, member-\u003eIndex(),\n```",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f1a8552_44329212",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T15:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5eab84a_b50224ff",
       "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -88,6 +160,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "85761332_86e2b3e1",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T15:13:17Z",
+      "side": 1,
+      "message": "Clarified with comments and a slight refactor, PTAL.",
+      "parentUuid": "14349b08_7362cf8d",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab8d2acb_b0df9134",
         "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
         "patchSetId": 3
@@ -99,6 +189,30 @@
       "writtenOn": "2025-06-26T14:03:18Z",
       "side": 1,
       "message": "```suggestion\n        for (auto* idx : old_indices) {\n            new_operands.Push(idx);\n\n            auto* const_idx \u003d idx-\u003eAs\u003ccore::ir::Constant\u003e();\n```",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 71
+      },
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15b92e48_184793eb",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T15:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab8d2acb_b0df9134",
       "range": {
         "startLine": 202,
         "startChar": 0,
@@ -128,6 +242,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5906ba97_e5acb6f4",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T15:13:17Z",
+      "side": 1,
+      "message": "We currently have no way to remove an unused struct. The Disassembler just emits all structures that exist in the type manager.\n\nThis \"works\" because IR-\u003eProgram only emits structures that are used, and the IR validator only validates structures that are used.\n\nWe could either:\n- Have the disassembler only output structures that are used\n- Track the structures that are used in the IR module so that we can \"remove\" them (which tells the disassembler which ones to emit, the validator which ones to validate, etc)\n\nThis is a separate issue though.",
+      "parentUuid": "862c51ac_b6075fcc",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6ab18b41_61dd0a55",
         "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array_test.cc",
         "patchSetId": 3
@@ -139,6 +271,24 @@
       "writtenOn": "2025-06-26T14:03:18Z",
       "side": 1,
       "message": "Can you add some tests for the `Construct` case, so I have a something like\n\n`let a \u003d explicit_layout_array\u003cu32, 4\u003e(1, 2, 3, 4)`\n\nor `let b \u003d S(1, explicit_layout_array\u003cu32, 4\u003e(1, 2,",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94057a71_3e55dbe5",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T15:13:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ab18b41_61dd0a55",
       "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
