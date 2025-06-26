@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2266d0b_35a1ec6e",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-26T09:09:46Z",
+      "side": 1,
+      "message": "Do you expect to reuse the string in other tests in the future? This function could return a shader module or even a compute pipeline otherwise.",
+      "revId": "d5b8aa5fa00da7fcb0ffb04fe842fcf644df101c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
