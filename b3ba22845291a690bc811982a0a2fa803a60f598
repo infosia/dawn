@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be9819c0_0ec09cab",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T14:03:18Z",
+      "side": 1,
+      "message": "```suggestion\n            // Replace all constant operands where the type has changed, either due to being a strided array, or a composite containing a strided array.\n```",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7700646_1b2f801e",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T14:03:18Z",
+      "side": 1,
+      "message": "Not sure if it\u0027s possible, but could i have a return where I have an explicit layout array with `@location(0) @interpolate(perspective)` and, if so, do we need to move that interpolation anywhere or does it stay on the return itself?",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c909ebbb_cc662745",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T14:03:18Z",
+      "side": 1,
+      "message": "```suggestion\n                    Vector\u003cconst core::type::StructMember*, 8\u003e new_members;\n                    new_members.Reserve(str-\u003eMembers().Length())\n```",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5eab84a_b50224ff",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T14:03:18Z",
+      "side": 1,
+      "message": "```suggestion\n                            member-\u003eName(), new_member_type, member-\u003eIndex(),\n```",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14349b08_7362cf8d",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T14:03:18Z",
+      "side": 1,
+      "message": "Doesn\u0027t this mean that this `Composite` is always created with the type of the first new element `new_type-\u003eElement(0)`?\n\nSo, in the case where I had something like:\n\n```\nstruct {\n  f: f32,\n  b: explcit_layout_array\u003cu32, 1024\u003e,\n}\n```\n\nDoesn\u0027t that mean that `b` will end up with a composite of type `f32`?",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab8d2acb_b0df9134",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T14:03:18Z",
+      "side": 1,
+      "message": "```suggestion\n        for (auto* idx : old_indices) {\n            new_operands.Push(idx);\n\n            auto* const_idx \u003d idx-\u003eAs\u003ccore::ir::Constant\u003e();\n```",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 71
+      },
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "862c51ac_b6075fcc",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T14:03:18Z",
+      "side": 1,
+      "message": "Should this still exist after? I guess if we don\u0027t use it, it\u0027s fine to be in the module? Will we accidentally print it later?",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ab18b41_61dd0a55",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_array_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T14:03:18Z",
+      "side": 1,
+      "message": "Can you add some tests for the `Construct` case, so I have a something like\n\n`let a \u003d explicit_layout_array\u003cu32, 4\u003e(1, 2, 3, 4)`\n\nor `let b \u003d S(1, explicit_layout_array\u003cu32, 4\u003e(1, 2,",
+      "revId": "b3ba22845291a690bc811982a0a2fa803a60f598",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
