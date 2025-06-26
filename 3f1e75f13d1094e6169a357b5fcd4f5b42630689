@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c378b1be_f8d9d694",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-26T09:15:23Z",
+      "side": 1,
+      "message": "Let\u0027s go with Loko\u0027s suggestion. It is simpler and we can easily do something else in the future if needed.",
+      "parentUuid": "e93e45a2_fde3e5e6",
+      "revId": "3f1e75f13d1094e6169a357b5fcd4f5b42630689",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "649a95e3_742dc40e",
         "filename": "src/dawn/native/Texture.cpp",
         "patchSetId": 4
