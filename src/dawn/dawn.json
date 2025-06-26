@@ -58,7 +58,6 @@
     },
     "proc": {
         "category": "function pointer",
-        "returns": "void",
         "args": []
     },
     "get proc address": {
@@ -153,7 +152,6 @@
             },
             {
                 "name": "get features",
-                "returns": "void",
                 "args": [
                     {"name": "features", "type": "supported features", "annotation": "*"}
                 ]
@@ -319,7 +317,6 @@
         "methods": [
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -353,7 +350,6 @@
         "methods": [
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -632,7 +628,6 @@
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -773,7 +768,6 @@
         "methods": [
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -906,7 +900,6 @@
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -1067,7 +1060,6 @@
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -1105,7 +1097,6 @@
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -1224,7 +1215,7 @@
             {
                 "name": "create buffer",
                 "no autolock": true,
-                "returns": "buffer",
+                "returns": {"type": "buffer", "optional": true},
                 "args": [
                     {"name": "descriptor", "type": "buffer descriptor", "annotation": "const*"}
                 ]
@@ -1405,7 +1396,6 @@
             },
             {
                 "name": "get features",
-                "returns": "void",
                 "args": [
                     {"name": "features", "type": "supported features", "annotation": "*"}
                 ]
@@ -1471,7 +1461,6 @@
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -1712,22 +1701,18 @@
         "methods": [
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
             },
             {
-                "name": "destroy",
-                "returns": "void"
+                "name": "destroy"
             },
             {
-                "name": "expire",
-                "returns": "void"
+                "name": "expire"
             },
             {
-                "name": "refresh",
-                "returns": "void"
+                "name": "refresh"
             }
         ]
     },
@@ -1779,7 +1764,6 @@
         "methods": [
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -1844,7 +1828,6 @@
         "methods": [
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -2091,7 +2074,6 @@
         "methods": [
             {
                 "name": "export info",
-                "returns": "void",
                 "args": [
                     {"name": "info", "type": "shared fence export info", "annotation": "*"}
                 ]
@@ -2538,7 +2520,6 @@
     },
     "get instance features": {
         "category": "function",
-        "returns": "void",
         "args": [
             {"name": "features", "type": "supported instance features", "annotation": "*"}
         ]
@@ -2667,7 +2648,6 @@
         "methods": [
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -2749,7 +2729,6 @@
         "methods": [
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -2843,7 +2822,6 @@
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -2886,7 +2864,6 @@
         "methods": [
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -2989,7 +2966,6 @@
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3313,7 +3289,6 @@
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3341,7 +3316,6 @@
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3486,7 +3460,6 @@
         "methods": [
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3522,7 +3495,6 @@
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3620,7 +3592,6 @@
         "methods": [
             {
                 "name": "configure",
-                "returns": "void",
                 "args": [
                     {"name": "config", "type": "surface configuration", "annotation": "const*"}
                 ]
@@ -3635,7 +3606,6 @@
             },
             {
                 "name": "get current texture",
-                "returns": "void",
                 "args": [
                     {"name": "surface texture", "type": "surface texture", "annotation": "*"}
                 ]
@@ -3647,12 +3617,10 @@
             },
             {
                 "name": "unconfigure",
-                "returns": "void",
                 "args": []
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3938,7 +3906,6 @@
             },
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -4195,7 +4162,6 @@
         "methods": [
             {
                 "name": "set label",
-                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -4366,8 +4332,7 @@
       "category": "native"
     },
     "void": {
-        "category": "native",
-        "wasm type": "v"
+        "category": "native"
     },
     "void *": {
         "category": "native",
