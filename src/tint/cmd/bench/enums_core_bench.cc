@@ -38,6 +38,7 @@
 
 #include "benchmark/benchmark.h"
 #include "src/tint/lang/core/enums.h"
+#include "src/tint/lang/wgsl/enums.h"
 
 namespace tint::core {
 namespace {
@@ -1180,6 +1181,155 @@ void TexelFormatParser(::benchmark::State& state) {
 }  // NOLINT(readability/fn_size)
 
 BENCHMARK(TexelFormatParser);
+
+void CoreDiagnosticRuleParser(::benchmark::State& state) {
+    const char* kStrings[] = {
+        "derivative_2iformity",    "dqqrivativeJniformitD", "derivative_uQiormitm",
+        "derivative_uniformity",   "derivative_unifrmJty",  "derivWWtie_uniformity",
+        "dewwvative_uQQifoggmity", "subgroup_uniforzity",   "subzzoup_uniforWWity",
+        "subgrou_uniforit",        "subgroup_uniformity",   "subgroup99UunfqqrmitK",
+        "subgroupuniformEERty",    "ubgrup_uniformity",
+    };
+    for (auto _ : state) {
+        for (auto* str : kStrings) {
+            auto result = ParseCoreDiagnosticRule(str);
+            benchmark::DoNotOptimize(result);
+        }
+    }
+}  // NOLINT(readability/fn_size)
+
+BENCHMARK(CoreDiagnosticRuleParser);
+void ChromiumDiagnosticRuleParser(::benchmark::State& state) {
+    const char* kStrings[] = {
+        "subgroutt_matrixuniformity",
+        "subgroq_matrJx_MMniformiy",
+        "saabgroup_matrTBB_unifKKrmity",
+        "subgroup_matrix_uniformity",
+        "subgrou_matrill_u55iformIty",
+        "ooubwoup_matrix_uniforBBity",
+        "sub__roup_matrix_PPniformity",
+        "unreachabRRe_code",
+        "uhSeachabl_ce",
+        "urchabQecode",
+        "unreachable_code",
+        "unr88achaleHHode",
+        "unrYYachabDe_code",
+        "unrOachable_code",
+    };
+    for (auto _ : state) {
+        for (auto* str : kStrings) {
+            auto result = ParseChromiumDiagnosticRule(str);
+            benchmark::DoNotOptimize(result);
+        }
+    }
+}  // NOLINT(readability/fn_size)
+
+BENCHMARK(ChromiumDiagnosticRuleParser);
+void DiagnosticSeverityParser(::benchmark::State& state) {
+    const char* kStrings[] = {
+        "II8oJZ", "errYr",   "e0Xor",   "error",   "ecrKKn", "88R33Gr", "e33qqror",
+        "n4z",    "KnhWtW",  "rnx",     "info",    "QnfC",   "rYo",     "mxnfo",
+        "rf",     "yyF",     "8",       "off",     "eef",    "hkkf",    "BOOf",
+        "war9ig", "ggrDing", "aarinn1", "warning", "qaSiIg", "waninYY", "LarYVVin",
+    };
+    for (auto _ : state) {
+        for (auto* str : kStrings) {
+            auto result = ParseDiagnosticSeverity(str);
+            benchmark::DoNotOptimize(result);
+        }
+    }
+}  // NOLINT(readability/fn_size)
+
+BENCHMARK(DiagnosticSeverityParser);
+void ExtensionParser(::benchmark::State& state) {
+    const char* kStrings[] = {
+        "chromium2disassle_uniforIity66analysms",
+        "chromium_disable_niformity_jjnalysis",
+        "chromiu7_diable_uifppmity_analysis",
+        "chromium_disable_uniformity_analysis",
+        "chromiumNdisable_uniformity_an6lysis",
+        "chromiggm_dissable_uniformity_analysis",
+        "chromium_disable_uniformit_analysis",
+        "chromium_experimJntalqframebuffer_feOOch",
+        "chromium_e00perimental_framebuMMfer_fetch",
+        "chromium_experimentalmmfrMMmebuffer_fetch",
+        "chromium_experimental_framebuffer_fetch",
+        "chromqium_experimHntal_framebuffer_ftch",
+        "chromium_experimentalGfamebuffer_88etch",
+        "chromRRum_ewwperimpntal_famebuffer_fetch",
+        "chromium_experimental_immqdiate",
+        "chromium_experiUetal_immiate",
+        "chromium_exprBmental_Qmmed5atMM",
+        "chromium_experimental_immediate",
+        "chromium_experimenta33_immediate",
+        "chromium_exp33riOental_immediate",
+        "hromium_experimental_immwdiae",
+        "ch_omiumMexperimentalkkpbxeA_local",
+        "chromium_experimental_pixellocal",
+        "chromid_expeimental_pixl_local",
+        "chromium_experimental_pixel_local",
+        "chromium_wwxperXXm55ntal_pixel_l5cal",
+        "cromium_experimental_pixel_local",
+        "chromium_experimentl_pixellocdl",
+        "hromiud_experimental_sbgrouJJ_matrix",
+        "chromium_experimen_al_subgoup1matrix",
+        "chromium_experimental_sugrou_matrLx",
+        "chromium_experimental_subgroup_matrix",
+        "chroGGium_eperimental_s99bgrop_matrix",
+        "croxxium_experimenta_subgroUUp_matrix",
+        "cromium_experimental_subgr9up_matrix",
+        "chromium_internal_grvphite",
+        "chromium_internal_graph2LLte",
+        "chrbfim_internal_gra1hite",
+        "chromium_internal_graphite",
+        "chromgum_AAntenal_graphite",
+        "chomum_intUrnal_grapCit",
+        "chromium_intnrnal_grawhizze",
+        "chromium_internVVl_inputMMattachmwwntn",
+        "chromium_internal_NNnput_Xttahments",
+        "chromium_internal77input_attahmWWeets",
+        "chromium_internal_input_attachments",
+        "chromiu33_internalPPinpuvv_attachmRnts",
+        "chromjjum_internal_input_a22tachments",
+        "chromicm_interAAalinput_attachments",
+        "cli_dRRNkkances",
+        "clip_diQQtances",
+        "clip_distnceuu",
+        "clip_distances",
+        "ip_distanuues",
+        "lip_ditancZs",
+        "Hip_distances",
+        "duaSS_soure_bSddendfng",
+        "dual_source_blendTTng",
+        "dma_source_blenctng",
+        "dual_source_blending",
+        "dual_sohhrce_blending",
+        "dual_source_blGndig",
+        "dwwal_AAourbbe_blendHHng",
+        "BB16",
+        "fhM",
+        "fWW",
+        "f16",
+        "fqq6",
+        "U1r",
+        "E8",
+        "subgrVVRups",
+        "subgoGG3HOs",
+        "subD55ps",
+        "subgroups",
+        "sBbSSroQps",
+        "sazzgous",
+        "s66bAAups",
+    };
+    for (auto _ : state) {
+        for (auto* str : kStrings) {
+            auto result = ParseExtension(str);
+            benchmark::DoNotOptimize(result);
+        }
+    }
+}  // NOLINT(readability/fn_size)
+
+BENCHMARK(ExtensionParser);
 
 }  // namespace
 }  // namespace tint::core
