@@ -94,6 +94,30 @@
       },
       "revId": "6369b7744bae239428f48058cfebc392cdd079f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0197e55_37650066",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-26T20:52:11Z",
+      "side": 1,
+      "message": "Oh I see. Hmm, WDYT about splitting out like a `ValidateCanPresent` function and then calling it in `APIPresent` only then? (And we can have like an `ASSERT` in `Present`? \n\nI guess I\u0027m not too hard set on this, but I generally find the return value argument to be harder to follow and if we could avoid it, it would be nice.\n\nExample:\n```\nbool Surface::ValidateCanPresent() {\n    if (!mCurrentDevice) {\n        [[maybe_unused]] bool error \u003d mInstance-\u003eConsumedError(\n            DAWN_VALIDATION_ERROR(\"%s is not configured.\", this)\n        );\n        return false;\n    }\n    return true;\n}\n\nwgpu::Status Surface::APIPresent() {\n    if (!ValidateCanPresent()) {\n        return wgpu::Status::Error;\n    }\n    \n    // Other errors are handled as asynchronous errors and we return Success.\n    [[maybe_unused]] bool error \u003d GetCurrentDevice()-\u003eConsumedError(Present());\n    return wgpu::Status::Success;\n}\n\nMaybeError Surface::Present() {\n    DAWN_ASSERT(mCurrentDevice);\n    ...\n}\n```",
+      "parentUuid": "213fc773_b826f393",
+      "range": {
+        "startLine": 638,
+        "startChar": 4,
+        "endLine": 645,
+        "endChar": 18
+      },
+      "revId": "6369b7744bae239428f48058cfebc392cdd079f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
