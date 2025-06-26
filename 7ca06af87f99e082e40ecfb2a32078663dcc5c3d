@@ -68,6 +68,24 @@
       "message": "I\u0027ve asked @alanbaker@google.com on the proposal whether the offset is supposed to be in matrix elements or array elements. If it\u0027s the former (which would match stride), then we\u0027d need to do this division inside Tint instead.",
       "revId": "7ca06af87f99e082e40ecfb2a32078663dcc5c3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d35e34b_210fe3e5",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T22:12:00Z",
+      "side": 1,
+      "message": "(sorry, this was meant to be on the `kLoadOffset` calculation instead)",
+      "parentUuid": "8a0e06d2_c5840834",
+      "revId": "7ca06af87f99e082e40ecfb2a32078663dcc5c3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
