@@ -125,10 +125,7 @@ if(TINT_BUILD_WGSL_READER)
 tint_add_target(tint_cmd_bench_bench bench
   cmd/bench/bench.cc
   cmd/bench/bench.h
-  cmd/bench/diagnostic_rule_bench.cc
-  cmd/bench/diagnostic_severity_bench.cc
   cmd/bench/enums_bench.cc
-  cmd/bench/extension_bench.cc
   cmd/bench/validator_bench.cc
 )
 
