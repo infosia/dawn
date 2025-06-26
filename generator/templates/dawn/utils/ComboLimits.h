@@ -35,14 +35,9 @@ namespace dawn::utils {
 
 {% set limits_and_extensions = [types['limits']] + types['limits'].extensions %}
 class ComboLimits : public NonMovable
-    {% for type in limits_and_extensions if not type.ifndef_emscripten %}
+    {% for type in limits_and_extensions %}
             , private wgpu::{{as_cppType(type.name)}}
     {% endfor %}
-#ifndef __EMSCRIPTEN__
-    {% for type in limits_and_extensions if type.ifndef_emscripten %}
-            , private wgpu::{{as_cppType(type.name)}}
-    {% endfor %}
-#endif
     {
   public:
     ComboLimits();
@@ -55,18 +50,11 @@ class ComboLimits : public NonMovable
     // struct. Use this (rather than &comboLimits) whenever passing a ComboLimits to the API.
     wgpu::Limits* GetLinked();
 
-    {% for type in limits_and_extensions if not type.ifndef_emscripten %}
+    {% for type in limits_and_extensions %}
         {% for member in type.members %}
             using wgpu::{{as_cppType(type.name)}}::{{as_varName(member.name)}};
         {% endfor %}
     {% endfor %}
-#ifndef __EMSCRIPTEN__
-    {% for type in limits_and_extensions if type.ifndef_emscripten %}
-        {% for member in type.members %}
-            using wgpu::{{as_cppType(type.name)}}::{{as_varName(member.name)}};
-        {% endfor %}
-    {% endfor %}
-#endif
 };
 
 }  // namespace dawn::utils
