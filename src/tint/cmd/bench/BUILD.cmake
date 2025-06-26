@@ -42,6 +42,33 @@ include(cmd/bench/wgsl/BUILD.cmake)
 
 if(TINT_BUILD_WGSL_READER)
 ################################################################################
+# Target:    tint_cmd_bench
+# Kind:      lib
+# Condition: TINT_BUILD_WGSL_READER
+################################################################################
+tint_add_target(tint_cmd_bench lib
+  cmd/bench/enums.cc
+)
+
+tint_target_add_dependencies(tint_cmd_bench lib
+  tint_lang_core
+  tint_utils
+  tint_utils_containers
+  tint_utils_ice
+  tint_utils_macros
+  tint_utils_math
+  tint_utils_memory
+  tint_utils_rtti
+)
+
+tint_target_add_external_dependencies(tint_cmd_bench lib
+  "google-benchmark"
+  "src_utils"
+)
+
+endif(TINT_BUILD_WGSL_READER)
+if(TINT_BUILD_WGSL_READER)
+################################################################################
 # Target:    tint_cmd_bench_bench_cmd
 # Kind:      bench_cmd
 # Condition: TINT_BUILD_WGSL_READER
@@ -123,19 +150,11 @@ if(TINT_BUILD_WGSL_READER)
 # Condition: TINT_BUILD_WGSL_READER
 ################################################################################
 tint_add_target(tint_cmd_bench_bench bench
-  cmd/bench/access_bench.cc
-  cmd/bench/address_space_bench.cc
-  cmd/bench/attribute_bench.cc
   cmd/bench/bench.cc
   cmd/bench/bench.h
-  cmd/bench/builtin_type_bench.cc
-  cmd/bench/builtin_value_bench.cc
   cmd/bench/diagnostic_rule_bench.cc
   cmd/bench/diagnostic_severity_bench.cc
   cmd/bench/extension_bench.cc
-  cmd/bench/interpolation_sampling_bench.cc
-  cmd/bench/interpolation_type_bench.cc
-  cmd/bench/texel_format_bench.cc
   cmd/bench/validator_bench.cc
 )
 
