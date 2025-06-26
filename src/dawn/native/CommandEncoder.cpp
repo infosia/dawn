@@ -885,6 +885,47 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
     return descriptor;
 }
 
+ResultOrError<Extent3D> GetRenderPassSize(DeviceBase* device,
+                                          const RenderPassDescriptor* rawDescriptor,
+                                          UsageValidationMode usageValidationMode,
+                                          RenderPassValidationState* validationState) {
+    UnpackedPtr<RenderPassDescriptor> descriptor;
+    DAWN_TRY_ASSIGN_CONTEXT(descriptor, ValidateAndUnpack(rawDescriptor),
+                            "validating chained structs.");
+
+    auto colorAttachments = ityp::SpanFromUntyped<ColorAttachmentIndex>(
+        descriptor->colorAttachments, descriptor->colorAttachmentCount);
+    for (auto [i, colorAttachment] : Enumerate(colorAttachments)) {
+        TextureViewBase* attachment = colorAttachment.view;
+        if (attachment != nullptr) {
+            return attachment->GetSingleSubresourceVirtualSize();
+        }
+    }
+
+    if (descriptor->depthStencilAttachment != nullptr) {
+        UnpackedPtr<RenderPassDepthStencilAttachment> unpacked;
+        DAWN_TRY_ASSIGN(unpacked, ValidateAndUnpack(descriptor->depthStencilAttachment));
+
+        TextureViewBase* attachment = unpacked->view;
+        if (attachment != nullptr) {
+            return attachment->GetSingleSubresourceVirtualSize();
+        }
+    }
+
+    // Validation for any pixel local storage.
+    auto pls = descriptor.Get<RenderPassPixelLocalStorage>();
+    if (pls != nullptr) {
+        for (size_t i = 0; i < pls->storageAttachmentCount; i++) {
+            const RenderPassStorageAttachment& attachment = pls->storageAttachments[i];
+            if (attachment.storage != nullptr) {
+                return attachment.storage->GetSingleSubresourceVirtualSize();
+            }
+        }
+    }
+
+    return Extent3D();
+}
+
 MaybeError ValidateComputePassDescriptor(const DeviceBase* device,
                                          const ComputePassDescriptor* descriptor) {
     if (descriptor == nullptr) {
@@ -1275,12 +1316,16 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
     UnpackedPtr<RenderPassDescriptor> descriptor;
     ClearWithDrawHelper clearWithDrawHelper;
     RenderPassWorkaroundsHelper renderpassWorkaroundsHelper;
+    Extent3D renderPassSize;
 
     RenderPassEncoder::EndCallback passEndCallback = nullptr;
 
     bool success = mEncodingContext.TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
+            DAWN_TRY_ASSIGN(
+                renderPassSize,
+                GetRenderPassSize(device, rawDescriptor, mUsageValidationMode, &validationState));
             DAWN_TRY_ASSIGN(descriptor,
                             ValidateRenderPassDescriptor(device, rawDescriptor,
                                                          mUsageValidationMode, &validationState));
@@ -1421,8 +1466,8 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
                 }
             }
 
-            cmd->width = validationState.GetRenderWidth();
-            cmd->height = validationState.GetRenderHeight();
+            cmd->width = renderPassSize.width;
+            cmd->height = renderPassSize.height;
 
             cmd->occlusionQuerySet = descriptor->occlusionQuerySet;
 
@@ -1476,8 +1521,8 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
     if (success) {
         Ref<RenderPassEncoder> passEncoder = RenderPassEncoder::Create(
             device, descriptor, this, &mEncodingContext, std::move(usageTracker),
-            std::move(attachmentState), validationState.GetRenderWidth(),
-            validationState.GetRenderHeight(), depthReadOnly, stencilReadOnly, passEndCallback);
+            std::move(attachmentState), renderPassSize.width, renderPassSize.height, depthReadOnly,
+            stencilReadOnly, passEndCallback);
 
         mEncodingContext.EnterPass(passEncoder.Get());
 
