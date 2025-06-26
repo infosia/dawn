@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd717a04_9d001a44",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-26T09:07:05Z",
+      "side": 1,
+      "message": "```suggestion\nis not supported on the current `PhysicalDevice`.\n```",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "ac662f7a25ec43d81bb4f431102c73ab0c474c00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "8e507999_21d77a5c",
@@ -14,6 +37,40 @@
       "writtenOn": "2025-06-26T04:15:30Z",
       "side": 1,
       "message": "PTAL, thanks!",
+      "revId": "ac662f7a25ec43d81bb4f431102c73ab0c474c00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41a6c164_b7825aa5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-26T09:07:05Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "ac662f7a25ec43d81bb4f431102c73ab0c474c00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77e75ccc_c1faa9e5",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-26T09:07:05Z",
+      "side": 1,
+      "message": "Why do we need to filter it? Subgroup matrices are independent from scalar values no?\n\nMaybe we could split this to a SupportComponentType helper lambda above and call it for each individual component type? Then don\u0027t forget to update it when adding 8bit support.\n\nBut also what happens when the user wants to use this subgroup matrix without enabling the shaderf16 extension? Will we mistakenly not request support for the Vulkan extension in that case?",
       "revId": "ac662f7a25ec43d81bb4f431102c73ab0c474c00",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
