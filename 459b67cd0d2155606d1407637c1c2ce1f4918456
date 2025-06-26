@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "456f33cf_918fc87e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000262
+      },
+      "writtenOn": "2025-06-26T01:26:44Z",
+      "side": 1,
+      "message": "@Antonio, now that the CL has passed the run, can you please take another look?",
+      "revId": "459b67cd0d2155606d1407637c1c2ce1f4918456",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
