@@ -22,6 +22,30 @@
       },
       "revId": "6369b7744bae239428f48058cfebc392cdd079f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10bc3fe7_4d09e822",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-26T19:44:06Z",
+      "side": 1,
+      "message": "We still need to get a status value to return. Assume you mean `Present(\u0026status)`?\nI think it\u0027s slightly clearer if that\u0027s outside the if() because we call it unconditionally (only the error handling is conditional)",
+      "parentUuid": "077217d2_ae94f729",
+      "range": {
+        "startLine": 638,
+        "startChar": 4,
+        "endLine": 645,
+        "endChar": 18
+      },
+      "revId": "6369b7744bae239428f48058cfebc392cdd079f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
