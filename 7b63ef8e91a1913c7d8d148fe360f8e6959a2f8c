@@ -70,6 +70,24 @@
       "parentUuid": "fad16da4_e523302b",
       "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52f4af40_1591437e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-26T21:39:09Z",
+      "side": 1,
+      "message": "no, this fix is for the downloadable extension. All it does is build tintd and expects it work as is. It doesn\u0027t try to move things around.",
+      "parentUuid": "cacc755d_bfe956ba",
+      "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
