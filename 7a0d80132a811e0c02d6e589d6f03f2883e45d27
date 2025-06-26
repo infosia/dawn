@@ -16,6 +16,24 @@
       "message": "Why is this here, but you didn\u0027t add RowMajor here?",
       "revId": "7a0d80132a811e0c02d6e589d6f03f2883e45d27",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15d450e6_91ed944a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T12:50:04Z",
+      "side": 1,
+      "message": "Result of a merge that went very poorly. Removed.",
+      "parentUuid": "5ad079fe_fdf099b4",
+      "revId": "7a0d80132a811e0c02d6e589d6f03f2883e45d27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
