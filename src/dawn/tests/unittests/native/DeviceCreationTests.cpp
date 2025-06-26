@@ -59,6 +59,14 @@ class DeviceCreationTest : public testing::Test {
     void SetUp() override {
         dawnProcSetProcs(&GetProcs());
 
+        CreateAdapters();
+    }
+
+    // Creates the safe and unsafe instances and adapters.
+    // This needs to be callable from within a test because
+    // an adapter is "consumed" after successfully creates a
+    // device, i.e. it can't create another afterward.
+    void CreateAdapters() {
         // Create an instance with default toggles and create an adapter from it.
         wgpu::InstanceDescriptor safeInstanceDesc = {};
         instance = std::make_unique<Instance>(&safeInstanceDesc);
@@ -216,6 +224,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
             EXPECT_TRUE(featureName == supportedFeatures.features[0] ||
                         featureName == supportedFeatures.features[1]);
         }
+        CreateAdapters();
 
         // Test creating device with AllowUnsafeApis enabled in device toggle descriptor will
         // success on both adapter, as device toggles will override the inherited adapter toggles.
@@ -252,6 +261,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
                             featureName == supportedFeatures.features[1]);
             }
         }
+        CreateAdapters();
 
         // Test creating device with AllowUnsafeApis disabled in device toggle descriptor will fail
         // on both adapter, as device toggles will override the inherited adapter toggles.
@@ -274,6 +284,7 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
                 EXPECT_EQ(device, nullptr);
             }
         }
+        CreateAdapters();
     }
 }
 
@@ -284,19 +295,26 @@ TEST_F(DeviceCreationTest, CreateDeviceWithCacheSuccess) {
         wgpu::DeviceDescriptor desc = {};
         wgpu::Device device1 = adapter.CreateDevice(&desc);
         EXPECT_NE(device1, nullptr);
+        dawn::native::CacheKey cacheKey1 = FromAPI(device1.Get())->GetCacheKey();
+        CreateAdapters();
 
         wgpu::DawnCacheDeviceDescriptor cacheDesc = {};
         desc.nextInChain = &cacheDesc;
         wgpu::Device device2 = adapter.CreateDevice(&desc);
+        dawn::native::CacheKey cacheKey2 = FromAPI(device2.Get())->GetCacheKey();
 
-        EXPECT_EQ(FromAPI(device1.Get())->GetCacheKey(), FromAPI(device2.Get())->GetCacheKey());
+        EXPECT_EQ(cacheKey1, cacheKey2);
     }
+    CreateAdapters();
+
     // Default device descriptor should not have the same cache key as a device descriptor with
     // a non-default cache descriptor.
     {
         wgpu::DeviceDescriptor desc = {};
         wgpu::Device device1 = adapter.CreateDevice(&desc);
         EXPECT_NE(device1, nullptr);
+        dawn::native::CacheKey cacheKey1 = FromAPI(device1.Get())->GetCacheKey();
+        CreateAdapters();
 
         wgpu::DawnCacheDeviceDescriptor cacheDesc = {};
         desc.nextInChain = &cacheDesc;
@@ -304,9 +322,11 @@ TEST_F(DeviceCreationTest, CreateDeviceWithCacheSuccess) {
         cacheDesc.isolationKey = isolationKey;
         wgpu::Device device2 = adapter.CreateDevice(&desc);
         EXPECT_NE(device2, nullptr);
+        dawn::native::CacheKey cacheKey2 = FromAPI(device2.Get())->GetCacheKey();
 
-        EXPECT_NE(FromAPI(device1.Get())->GetCacheKey(), FromAPI(device2.Get())->GetCacheKey());
+        EXPECT_NE(cacheKey1, cacheKey2);
     }
+    CreateAdapters();
     // Two non-default cache descriptors should not have the same cache key.
     {
         wgpu::DawnCacheDeviceDescriptor cacheDesc = {};
@@ -318,12 +338,15 @@ TEST_F(DeviceCreationTest, CreateDeviceWithCacheSuccess) {
         cacheDesc.isolationKey = isolationKey1;
         wgpu::Device device1 = adapter.CreateDevice(&desc);
         EXPECT_NE(device1, nullptr);
+        dawn::native::CacheKey cacheKey1 = FromAPI(device1.Get())->GetCacheKey();
+        CreateAdapters();
 
         cacheDesc.isolationKey = isolationKey2;
         wgpu::Device device2 = adapter.CreateDevice(&desc);
         EXPECT_NE(device2, nullptr);
+        dawn::native::CacheKey cacheKey2 = FromAPI(device2.Get())->GetCacheKey();
 
-        EXPECT_NE(FromAPI(device1.Get())->GetCacheKey(), FromAPI(device2.Get())->GetCacheKey());
+        EXPECT_NE(cacheKey1, cacheKey2);
     }
 }
 
