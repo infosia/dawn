@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6579615c_ca41f0e2",
+        "filename": "src/tint/lang/glsl/writer/common/option_helpers.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T18:03:01Z",
+      "side": 1,
+      "message": "Still necessary?",
+      "revId": "5e70727bac94b7b13804266332f4e6597ea98af9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e82fb18_07a011cb",
+        "filename": "src/tint/lang/hlsl/writer/common/option_helpers.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-06-26T18:03:01Z",
+      "side": 1,
+      "message": "still needed?",
+      "revId": "5e70727bac94b7b13804266332f4e6597ea98af9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
