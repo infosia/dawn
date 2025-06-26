@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d33f4edc_cefff5a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T21:40:05Z",
+      "side": 1,
+      "message": "LGTM modulo the comments from others",
+      "revId": "d5b8aa5fa00da7fcb0ffb04fe842fcf644df101c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2266d0b_35a1ec6e",
@@ -31,6 +48,30 @@
       "writtenOn": "2025-06-26T09:40:17Z",
       "side": 1,
       "message": "Better to use `SCOPED_TRACE` here instead of logging. That way we only log the config when there is an error.",
+      "range": {
+        "startLine": 497,
+        "startChar": 8,
+        "endLine": 499,
+        "endChar": 73
+      },
+      "revId": "d5b8aa5fa00da7fcb0ffb04fe842fcf644df101c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ab78c99_44264f0a",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-26T21:40:05Z",
+      "side": 1,
+      "message": "Good idea (the `InfoLog()` was my fault).",
+      "parentUuid": "e52dc757_8206d315",
       "range": {
         "startLine": 497,
         "startChar": 8,
