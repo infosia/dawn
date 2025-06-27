@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "0344feb72eda836fea095c23820fa9c5a0199294",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c2a6350_f8977fcf",
+        "filename": "src/tint/lang/glsl/writer/raise/texture_builtins_from_uniform.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-27T18:35:29Z",
+      "side": 1,
+      "message": "Nit: Could fold these into a single `access` with two indices. Means you don\u0027t have to store `metadata_array_type_` as a global.",
+      "revId": "0344feb72eda836fea095c23820fa9c5a0199294",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
