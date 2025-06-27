@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99d7a650_6b6e47ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-27T21:50:41Z",
+      "side": 1,
+      "message": "Sorry to throw a wrench in everything, but I was looking at this change more and I have a potentially different suggestion to the existing approach given that Brandon recently added a `TextureView` cache and made the `Texture` externally ref-counted:\n\nFirst off, this change seems to be mainly aiming at just making the label more clear to users, but for what it\u0027s worth, the labels are a best effort thing and with the new cache, is effectively order dependent w.r.t what a user could end up seeing since we (correctly) don\u0027t use the label as a part of the cache key for the `TextureView`s. Example:\n```\nTextureViewDescriptor desc; // Note that this is the default descriptor.\ndesc.label \u003d \"first view\";\nauto view1 \u003d texture.CreateView(desc);\n\ndesc.label \u003d \"second view\";\nauto view2 \u003d texture.CreateView(desc);\n\nauto view3 \u003d texture.CreateView(nullptr);\n\n// view2 and view 3 will both be displayed with the label \"first view\"\n// even though we set the label differently.\n```\n\nThat said, I\u0027m thinking that for this change, we could just set the label of the descriptor at [1] appropriately if the `originalDesc \u003d\u003d nullptr`. That would mean we don\u0027t need the new extension chain at all. I think to get the same result we would use `\" defaulted from \" + GetTexture()-\u003eFormatLabel(s)` or w.e. the equivalent.\n\nFurthermore (maybe in a follow-up change), I think that the `TextureBase` class could actually have a member named `Ref\u003cTextureView\u003e mDefaultView` that can be lazily created when `CreateView(nullptr)` is called, and we could fast-track to returning it whenever it happens. Then in places where we null out `mTextureViewCache` currently, we would also null out `mDefaultView`. We would want it to be lazily created so that if the user creates a view with the default descriptor but with an explicit label, that the label they used would be the one that sticks.",
+      "revId": "28fa874415aa20bf8a505d2aee44239ea34d71c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ee9d248_bed3fc70",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2268,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-27T21:50:41Z",
+      "side": 1,
+      "message": "[1]",
+      "range": {
+        "startLine": 2268,
+        "startChar": 4,
+        "endLine": 2268,
+        "endChar": 31
+      },
+      "revId": "28fa874415aa20bf8a505d2aee44239ea34d71c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
