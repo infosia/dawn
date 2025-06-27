@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "33963109_8664cb07",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4188,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-27T12:23:07Z",
+      "side": 1,
+      "message": "Good catch! I\u0027ve added it here in `\"texture component swizzle\"` and in `\"component swizzle\"`",
+      "parentUuid": "ee4e5571_a001d3e6",
+      "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bf443c8a_e05c6501",
         "filename": "src/dawn/native/Texture.cpp",
         "patchSetId": 11
@@ -48,6 +66,24 @@
       "writtenOn": "2025-06-27T11:25:00Z",
       "side": 1,
       "message": "This CL will need to be the one that updates the caching, otherwise even validation tests could run into issues.",
+      "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "511c34c5_ed4e7dea",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-27T12:23:07Z",
+      "side": 1,
+      "message": "I assume you\u0027re referring to https://dawn-review.googlesource.com/c/dawn/+/249434/6/src/dawn/native/Texture.h right?",
+      "parentUuid": "bf443c8a_e05c6501",
       "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
