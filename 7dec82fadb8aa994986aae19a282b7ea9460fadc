@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0189f6e_04204c84",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 4159,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-27T11:13:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb827259_1bbd7e94",
+      "revId": "7dec82fadb8aa994986aae19a282b7ea9460fadc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ec2e2168_6ee3d458",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-06-27T09:05:51Z",
       "side": 1,
       "message": "I think `swizzleDesc.swizzle` should be a value of type `wgpu::TextureComponentSwizzle` instead of pointer `const wgpu::TextureComponentSwizzle*`?",
+      "revId": "7dec82fadb8aa994986aae19a282b7ea9460fadc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ece4233_d44318a4",
+        "filename": "src/dawn/tests/unittests/validation/TextureViewValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-27T11:13:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec2e2168_6ee3d458",
       "revId": "7dec82fadb8aa994986aae19a282b7ea9460fadc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -100,6 +136,24 @@
       "side": 1,
       "message": "Typo in helper function:\n```\nenum class SwizzleChannel { R,G,B,A };\n\nwgpu::TextureComponentSwizzleDescriptor identicalButOneSwizzleDesc(SwizzleChannel channel) {\n    // Note: Assuming wgpu::TextureComponentSwizzleDescriptor default initialized\n    // to identical swizzle.\n    wgpu::TextureComponentSwizzleDescriptor desc \u003d {};\n    wgpu::TextureComponentSwizzleswizzle\u0026 swizzle \u003d desc.swizzle;\n    switch (channel) {\n        case (SwizzleChannel::R): {\n            swizzle.r \u003d wgpu::ComponentSwizzle::Zero;\n            break;\n        }\n        case (SwizzleChannel::G): {\n            swizzle.g \u003d wgpu::ComponentSwizzle::R;\n            break;\n        }\n        case (SwizzleChannel::B): {\n            swizzle.b \u003d wgpu::ComponentSwizzle::Zero;\n            break;\n        }\n        case (SwizzleChannel::A): {\n            swizzle.a \u003d wgpu::ComponentSwizzle::G;\n            break;\n        }\n    }\n    return desc;\n}\n```",
       "parentUuid": "924636ad_1a4a9ab3",
+      "revId": "7dec82fadb8aa994986aae19a282b7ea9460fadc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f5a6f2c_db04c6c5",
+        "filename": "src/dawn/tests/unittests/validation/TextureViewValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-27T11:13:26Z",
+      "side": 1,
+      "message": "Thanks for the provided code!",
+      "parentUuid": "6e254e3b_efb0280a",
       "revId": "7dec82fadb8aa994986aae19a282b7ea9460fadc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
