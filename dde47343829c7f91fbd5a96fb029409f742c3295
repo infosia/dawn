@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f0d1a7a_5dee4d75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-27T22:39:15Z",
+      "side": 1,
+      "message": "Okay, I think I\u0027ve actually got it this time!\n\nTurns out that Vulkan handles can be recycled after an object is freed, which made my use of them as part of the cache hash previously a bad idea. Whether or not it failed was up to driver internals: If the driver re-evaluated the handles every time a given framebuffer was provided it would have worked fine, otherwise it could easily go off the rails (like Qualcomm/Samsung were).\n\nBy replacing those handles with explicit IDs it now works on all the hardware that I\u0027ve tried. Giving every texture/view an ID isn\u0027t my favorite idea, so I\u0027m open to feedback on that, but at least it works (and can be limited to just the Vulkan backend).\n\nAlso, the fact that this does appear to have fixed the issues universally led me to strip out the toggle I had in the previous version of the patch.",
+      "revId": "dde47343829c7f91fbd5a96fb029409f742c3295",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
