@@ -52,6 +52,24 @@
       "parentUuid": "5c892350_96512b26",
       "revId": "cda86a85a50b6f85e750661624d1124bb1ff7157",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a573340_4fce70ae",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-27T18:28:06Z",
+      "side": 0,
+      "message": "I\u0027m not sure I understand the concern about ProcessEvents here. ProcessEvents needs to call the callbacks regardless so if the callback is long-running, it will be stuck in it regardless? The call with either run the long running callback and block or block and wait until another thread finishes running the long callback. From the applications POV, that looks the same?\n\nAs for multiple threads setting the same future ready, that should only really happen between our internal threads (i.e. the metal ones or new ones we add for other backends), and application code. If users aren\u0027t using spontaneous, the lock won\u0027t even be acquired because it\u0027s only acquired when trying to complete the event which will only happen when the application calls WaitAny or ProcessEvents. If users are using spontaneous, then yes, their main thread may occasionally block but again, that is consistent with either calling the callback or waiting for it to complete.",
+      "parentUuid": "1cafa0dd_ce289560",
+      "revId": "cda86a85a50b6f85e750661624d1124bb1ff7157",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
