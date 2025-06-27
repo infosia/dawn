@@ -54,15 +54,6 @@
  })
  
 @@
-     WGPUChainedStruct * nextInChain;
-     WGPUStringView label;
-     size_t bindGroupLayoutCount;
--    WGPUBindGroupLayout const * bindGroupLayouts;
-+    WGPU_NULLABLE WGPUBindGroupLayout const * bindGroupLayouts;
-     uint32_t immediateSize;
- } WGPUPipelineLayoutDescriptor WGPU_STRUCTURE_ATTRIBUTE;
- 
-@@
      /*.features=*/NULL _wgpu_COMMA \
  })
  
