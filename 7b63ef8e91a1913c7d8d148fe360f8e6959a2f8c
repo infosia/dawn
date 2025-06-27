@@ -142,6 +142,24 @@
       "parentUuid": "b642bdae_f8bbf71d",
       "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f064dd0a_8db841f0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-27T17:58:27Z",
+      "side": 1,
+      "message": "that\u0027s fine. What I need then is for someone to tell me what solution they will approve rather than just leaving me to guess. Where is the code/rule that copies src/tint/cmd/tintd/vscode to out/\u003cfolder\u003e/gen/vscode. Maybe that step could re-write extension.js with the correct path?",
+      "parentUuid": "5646894e_4ba90211",
+      "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
