@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba9bfb7b_0386071d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-27T23:38:12Z",
+      "side": 1,
+      "message": "huh, I probably missed opportunities to use the spirv builtins...!\n\nBut the tests should be good.",
+      "revId": "7f3b16d06dc1754803ae05ac8f18a7c1c1d5e23c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
