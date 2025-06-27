@@ -161,17 +161,20 @@
     })
 {%- endmacro %}
 
-{%- macro render_c_function_args(args) %}
+{% macro render_c_function_args(args) %}
     {% for arg in args -%}
-        {% if not loop.first %}, {% endif -%}
-        {{as_nullability_annotated_cType(arg)}}
+        {% if not loop.first %}
+            ,
+        {% endif %}
+        {{'        '}}{{as_annotated_cType(arg)}}
     {%- endfor %}
 {%- endmacro %}
 
-{%- macro render_c_method_args(this, args) %}
-    {{as_cType(this.name)}} {{as_varName(this.name)}}
-    {%- if args -%}
-        , {{ render_c_function_args(args) }}
+{% macro render_c_method_args(this, args) %}
+    {{'        '}}{{API}}_NONNULL({{as_cType(this.name)}}) {{as_varName(this.name)}}
+    {%- if args %}
+        ,
+        {{ render_c_function_args(args) }}
     {%- endif %}
 {%- endmacro %}
 
@@ -214,7 +217,10 @@
 #define {{API}}_FUNCTION_ATTRIBUTE
 #endif
 #if !defined({{API}}_NULLABLE)
-#define {{API}}_NULLABLE
+#define {{API}}_NULLABLE(x) x
+#endif
+#if !defined({{API}}_NONNULL)
+#define {{API}}_NONNULL(x) x
 #endif
 
 #include <stdint.h>
@@ -297,10 +303,10 @@ typedef uint32_t {{API}}Bool;
 // Callback function pointers
 {% for type in by_category["callback function"] %}
     typedef {{as_annotated_cType(type.returns)}} (*{{as_cType(type.name)}})(
-        {%- for arg in type.arguments -%}
-            {% if arg.type.category == "structure" and arg.type.name.get() != "string view" %}struct {% endif %}{{as_annotated_cType(arg)}}{{", "}}
-        {%- endfor -%}
-    {{API}}_NULLABLE void* userdata1, {{API}}_NULLABLE void* userdata2) {{API}}_FUNCTION_ATTRIBUTE;
+    {{render_c_function_args(type.arguments)}},
+            {{API}}_NULLABLE(void *) userdata1,
+            {{API}}_NULLABLE(void *) userdata2
+        ) {{API}}_FUNCTION_ATTRIBUTE;
 
 {% endfor -%}
 
@@ -315,8 +321,8 @@ typedef struct {{API}}ChainedStruct {
         {% for member in type.members %}
             {{as_nullability_annotated_cType(member)}};
         {% endfor %}
-        {{API}}_NULLABLE void* userdata1;
-        {{API}}_NULLABLE void* userdata2;
+        {{API}}_NULLABLE(void *) userdata1;
+        {{API}}_NULLABLE(void *) userdata2;
     } {{as_cType(type.name)}} {{API}}_STRUCTURE_ATTRIBUTE;
 
     #define {{API}}_{{type.name.SNAKE_CASE()}}_INIT _{{api}}_MAKE_INIT_STRUCT({{as_cType(type.name)}}, { \
@@ -352,17 +358,17 @@ extern "C" {
 {% endif %}
 // Global procs
 {% for function in by_category["function"] %}
-    typedef {{as_nullability_annotated_cType(function.returns)}} (*{{as_cProc(None, function.name)}})(
-    {{- render_c_function_args(function.arguments) -}}
-    ) {{API}}_FUNCTION_ATTRIBUTE;
+    typedef {{as_annotated_cType(function.returns)}} (*{{as_cProc(None, function.name)}})(
+        {{render_c_function_args(function.arguments)}}
+        {{'    '}}) {{API}}_FUNCTION_ATTRIBUTE;
 {% endfor %}
 
 {% for (type, methods) in c_methods_sorted_by_parent %}
     // Procs of {{type.name.CamelCase()}}
     {% for method in methods %}
-        typedef {{as_nullability_annotated_cType(method.returns)}} (*{{as_cProc(type.name, method.name)}})(
-        {{- render_c_method_args(type, method.arguments) -}}
-        ) {{API}}_FUNCTION_ATTRIBUTE;
+        typedef {{as_annotated_cType(method.returns)}} (*{{as_cProc(type.name, method.name) -}})(
+        {{render_c_method_args(type, method.arguments)}}
+        {{'    '}}) {{API}}_FUNCTION_ATTRIBUTE;
     {% endfor %}
 
 {% endfor %}
@@ -370,17 +376,17 @@ extern "C" {
 
 #if !defined({{API}}_SKIP_DECLARATIONS)
 {% for function in by_category["function"] %}
-    {{API}}_EXPORT {{as_nullability_annotated_cType(function.returns)}} {{as_cMethod(None, function.name)}}(
-    {{- render_c_function_args(function.arguments) -}}
-    ) {{API}}_FUNCTION_ATTRIBUTE;
+    {{API}}_EXPORT {{as_annotated_cType(function.returns)}} {{as_cMethod(None, function.name)}}(
+    {{render_c_function_args(function.arguments)}}
+    {{'    '}}) {{API}}_FUNCTION_ATTRIBUTE;
 {% endfor %}
 
 {% for (type, methods) in c_methods_sorted_by_parent %}
     // Methods of {{type.name.CamelCase()}}
     {% for method in methods %}
-        {{API}}_EXPORT {{as_nullability_annotated_cType(method.returns)}} {{as_cMethod(type.name, method.name)}}(
-        {{- render_c_method_args(type, method.arguments) -}}
-        ) {{API}}_FUNCTION_ATTRIBUTE;
+        {{API}}_EXPORT {{as_annotated_cType(method.returns)}} {{as_cMethod(type.name, method.name)}}(
+        {{render_c_method_args(type, method.arguments)}}
+        {{'    '}}) {{API}}_FUNCTION_ATTRIBUTE;
     {% endfor %}
 
 {% endfor %}
