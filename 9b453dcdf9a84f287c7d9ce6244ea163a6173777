@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db2af610_ca2c6c62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-27T11:14:07Z",
+      "side": 1,
+      "message": "FYI I\u0027ve started locally exposing it in Blink: https://chromium-review.googlesource.com/c/chromium/src/+/6683180",
+      "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
