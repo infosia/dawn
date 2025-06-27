@@ -780,15 +780,10 @@ MaybeError ValidateRenderPassPLS(DeviceBase* device,
                            {attachments.data(), attachments.size()});
 }
 
-ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
-    DeviceBase* device,
-    const RenderPassDescriptor* rawDescriptor,
-    UsageValidationMode usageValidationMode,
-    RenderPassValidationState* validationState) {
-    UnpackedPtr<RenderPassDescriptor> descriptor;
-    DAWN_TRY_ASSIGN_CONTEXT(descriptor, ValidateAndUnpack(rawDescriptor),
-                            "validating chained structs.");
-
+MaybeError ValidateRenderPassDescriptor(DeviceBase* device,
+                                        UnpackedPtr<RenderPassDescriptor> descriptor,
+                                        UsageValidationMode usageValidationMode,
+                                        RenderPassValidationState* validationState) {
     uint32_t maxColorAttachments = device->GetLimits().v1.maxColorAttachments;
     DAWN_INVALID_IF(
         descriptor->colorAttachmentCount > maxColorAttachments,
@@ -882,7 +877,7 @@ ResultOrError<UnpackedPtr<RenderPassDescriptor>> ValidateRenderPassDescriptor(
                         ToAPI(Feature::DawnPartialLoadResolveTexture));
     }
 
-    return descriptor;
+    return {};
 }
 
 MaybeError ValidateComputePassDescriptor(const DeviceBase* device,
@@ -1197,7 +1192,9 @@ Ref<ComputePassEncoder> CommandEncoder::BeginComputePass(const ComputePassDescri
     bool success = mEncodingContext.TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
-            DAWN_TRY(ValidateComputePassDescriptor(device, descriptor));
+            if (GetDevice()->IsValidationEnabled()) {
+                DAWN_TRY(ValidateComputePassDescriptor(device, descriptor));
+            }
 
             BeginComputePassCmd* cmd =
                 allocator->Allocate<BeginComputePassCmd>(Command::BeginComputePass);
@@ -1281,9 +1278,41 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
     bool success = mEncodingContext.TryEncode(
         this,
         [&](CommandAllocator* allocator) -> MaybeError {
-            DAWN_TRY_ASSIGN(descriptor,
-                            ValidateRenderPassDescriptor(device, rawDescriptor,
-                                                         mUsageValidationMode, &validationState));
+            DAWN_TRY_ASSIGN_CONTEXT(descriptor, ValidateAndUnpack(rawDescriptor),
+                                    "validating and unpacking chained structs.");
+
+            if (GetDevice()->IsValidationEnabled()) {
+                DAWN_TRY(ValidateRenderPassDescriptor(device, descriptor, mUsageValidationMode,
+                                                      &validationState));
+            } else {
+                // If validation is skipped at least one attachment still needs to be added to the
+                // validation state to compute the render width and height from.
+                if (descriptor->depthStencilAttachment != nullptr) {
+                    DAWN_TRY(validationState.AddAttachment(descriptor->depthStencilAttachment->view,
+                                                           AttachmentType::DepthStencilAttachment));
+                } else {
+                    for (size_t i = 0; i < descriptor->colorAttachmentCount; ++i) {
+                        const RenderPassColorAttachment& colorAttachment =
+                            descriptor->colorAttachments[i];
+                        if (colorAttachment.view != nullptr) {
+                            DAWN_TRY(validationState.AddAttachment(colorAttachment.view,
+                                                                   AttachmentType::ColorAttachment,
+                                                                   colorAttachment.depthSlice));
+                            break;
+                        }
+                    }
+                }
+
+                if (!validationState->HasAttachment()) {
+                    // It's also possible that pixel local storage contains the only attachements.
+                    auto pls = descriptor.Get<RenderPassPixelLocalStorage>();
+                    if (pls != nullptr && pls->storageAttachmentCount > 0) {
+                        const RenderPassStorageAttachment& attachment = pls->storageAttachments[0];
+                        DAWN_TRY(validationState.AddAttachment(attachment.storage,
+                                                               AttachmentType::StorageAttachment));
+                    }
+                }
+            }
 
             DAWN_ASSERT(validationState.IsValidState());
 
