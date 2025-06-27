@@ -364,6 +364,14 @@ class Parser {
                         case spv::Op::OpNot:
                             EmitSpirvExplicitBuiltinCall(inst, spirv::BuiltinFn::kNot, 3);
                             break;
+                        case spv::Op::OpSConvert:
+                            TINT_ICE() << "can't translate SConvert: WGSL does not have concrete "
+                                          "integer types of different widths";
+                            break;
+                        case spv::Op::OpUConvert:
+                            TINT_ICE() << "can't translate UConvert: WGSL does not have concrete "
+                                          "integer types of different widths";
+                            break;
                         default:
                             TINT_ICE() << "Unknown spec constant operation: " << op;
                     }
