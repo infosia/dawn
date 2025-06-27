@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e17ccad_27024f6a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2284,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T10:37:23Z",
+      "side": 1,
+      "message": "While this work, I\u0027d rather avoid mutability after creation, especially with all the caching that\u0027s happening etc. We could pass the boolean around, or chain it in the extension but only internally.",
+      "revId": "88a6ae88f19a15707206173fcd9ce11ccf400c38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

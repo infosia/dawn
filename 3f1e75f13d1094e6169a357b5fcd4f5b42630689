@@ -158,6 +158,24 @@
       "parentUuid": "39ba8e8f_3d122783",
       "revId": "3f1e75f13d1094e6169a357b5fcd4f5b42630689",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa5ed6c2_08e7f97d",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T10:37:23Z",
+      "side": 1,
+      "message": "Ok nvm, it\u0027s probably ok without tests.",
+      "parentUuid": "121cf976_e727f136",
+      "revId": "3f1e75f13d1094e6169a357b5fcd4f5b42630689",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
