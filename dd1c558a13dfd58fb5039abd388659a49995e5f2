@@ -50,6 +50,24 @@
       "message": "Isn\u0027t this going to cause a SHA3 to happen for every tiny DAWN_SERIALIZABLE thing? IMHO we should do the checks when storing / retrieving at the dawn::platform level.",
       "revId": "dd1c558a13dfd58fb5039abd388659a49995e5f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "036b2277_b1cbf8d8",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-27T18:59:48Z",
+      "side": 1,
+      "message": "+1 for doing this at the platform level. In Dawn this could probably be in the `BlobCache` class: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlobCache.h;drc\u003de65323be17a0ba06198d18b0a8bf5ae594e10348;bpv\u003d1;bpt\u003d0;l\u003d48",
+      "parentUuid": "581c885e_20f63e9a",
+      "revId": "dd1c558a13dfd58fb5039abd388659a49995e5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
