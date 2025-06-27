@@ -33,6 +33,24 @@
       "message": "As discussed in the meeting, I think this is just a bandaid. Can we instead add a checksum to the cache entry (at the start of it) and DAWN_CHECK that it is valid? This would help make sure if this is a cache corruption or something else.",
       "revId": "be8491fc2891ba9578f8ccb8a8344656fe3a9b4b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7113fa4_bc70bc71",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-27T07:40:39Z",
+      "side": 1,
+      "message": "Add integrity check for `Serializable` in `FromBlob`/`ToBlob` in https://dawn-review.googlesource.com/c/dawn/+/249414.",
+      "parentUuid": "b865bcf9_e70f7ff5",
+      "revId": "be8491fc2891ba9578f8ccb8a8344656fe3a9b4b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
