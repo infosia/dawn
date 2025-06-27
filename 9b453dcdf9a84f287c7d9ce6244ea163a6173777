@@ -86,6 +86,24 @@
       "parentUuid": "bf443c8a_e05c6501",
       "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d4dd509_a4cccaee",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-27T12:36:37Z",
+      "side": 1,
+      "message": "I\u0027ve added support for caching in latest patchset.",
+      "parentUuid": "511c34c5_ed4e7dea",
+      "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
