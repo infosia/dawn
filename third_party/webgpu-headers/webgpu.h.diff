@@ -49,15 +49,6 @@
      WGPUInstanceFeatureName_MultipleDevicesPerAdapter = 0x00000003,
      WGPUInstanceFeatureName_Force32 = 0x7FFFFFFF
 @@
-     WGPUChainedStruct * nextInChain;
-     WGPUStringView label;
-     size_t bindGroupLayoutCount;
--    WGPUBindGroupLayout const * bindGroupLayouts;
-+    WGPU_NULLABLE WGPUBindGroupLayout const * bindGroupLayouts;
-     uint32_t immediateSize;
- } WGPUPipelineLayoutDescriptor WGPU_STRUCTURE_ATTRIBUTE;
- 
-@@
  extern "C" {
  #endif
  
