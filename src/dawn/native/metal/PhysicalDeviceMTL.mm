@@ -720,6 +720,13 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::BufferMapExtendedUsages);
     }
 #endif
+
+    if ([*mDevice supportsFamily:MTLGPUFamilyMetal3] ||
+        [*mDevice supportsFamily:MTLGPUFamilyApple2] ||
+        [*mDevice supportsFamily:MTLGPUFamilyMac2]) {) {
+            EnableFeature(Feature::TextureComponentSwizzle);
+        }
+    }
 }
 
 void PhysicalDevice::InitializeVendorArchitectureImpl() {
