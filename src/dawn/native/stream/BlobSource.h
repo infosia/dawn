@@ -41,6 +41,9 @@ class BlobSource : public Source {
     // stream::Source implementation.
     MaybeError Read(const void** ptr, size_t bytes) override;
 
+    size_t ByteSize() const;
+    void ResetOffset();
+
   private:
     const Blob mBlob;
     size_t mOffset = 0;

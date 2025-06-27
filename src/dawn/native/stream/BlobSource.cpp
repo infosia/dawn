@@ -40,4 +40,12 @@ MaybeError BlobSource::Read(const void** ptr, size_t bytes) {
     return {};
 }
 
+size_t BlobSource::ByteSize() const {
+    return mBlob.Size();
+}
+
+void BlobSource::ResetOffset() {
+    mOffset = 0;
+}
+
 }  // namespace dawn::native::stream

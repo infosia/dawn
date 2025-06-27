@@ -30,6 +30,7 @@
 
 #include <utility>
 
+#include "dawn/common/Sha3.h"
 #include "dawn/native/VisitableMembers.h"
 #include "dawn/native/stream/BlobSource.h"
 #include "dawn/native/stream/ByteVectorSink.h"
@@ -42,6 +43,9 @@ namespace dawn::native {
 template <typename Derived>
 class Serializable {
   public:
+    using Hasher = Sha3_512;
+    using Hash = Hasher::Output;
+
     friend void StreamIn(stream::Sink* s, const Derived& in) {
         in.VisitAll([&](const auto&... members) { StreamIn(s, members...); });
     }
@@ -50,17 +54,54 @@ class Serializable {
         return out->VisitAll([&](auto&... members) { return StreamOut(s, &members...); });
     }
 
+    Blob ToBlob() const {
+        stream::ByteVectorSink sink;
+
+        // Reserve the space for hash result at the head of sink, but don't store the returned
+        // pointer, as it would be invalided by resize in later StreamIn.
+        constexpr const size_t hashByteSize = sizeof(Hash) * sizeof(Hash::value_type);
+        sink.GetSpace(hashByteSize);
+
+        // Stream in the Derived object as payload.
+        StreamIn(&sink, static_cast<const Derived&>(*this));
+        // Check that streamed-in Derived object payload is not zero-sized.
+        DAWN_CHECK(sink.size() > hashByteSize);
+
+        // Compute the hash for payload bytes, and store the result at the head.
+        const size_t payloadByteSize = sink.size() - hashByteSize;
+        Hash hash = Hasher::Hash(&sink[hashByteSize], payloadByteSize);
+        memcpy(&sink[0], &hash, hashByteSize);
+
+        // Return the Blob with hash.
+        return CreateBlob(std::move(sink));
+    }
+
     static ResultOrError<Derived> FromBlob(Blob blob) {
         stream::BlobSource source(std::move(blob));
+
+        // Check the Blob integrity.
+        constexpr const size_t hashByteSize = sizeof(Hash) * sizeof(Hash::value_type);
+        // Check that payload must be non-zero sized.
+        DAWN_CHECK(source.ByteSize() > hashByteSize);
+        const size_t payloadByteSize = source.ByteSize() - hashByteSize;
+        // Check the Blob stored hash equals to the payload's hash.
+        Hash expectedHash;
+        const void* storedHashPtr;
+        DAWN_TRY(source.Read(&storedHashPtr, hashByteSize));
+        memcpy(&expectedHash, storedHashPtr, hashByteSize);
+        const void* payloadPtr;
+        DAWN_TRY(source.Read(&payloadPtr, payloadByteSize));
+        Hash payloadHash = Hasher::Hash(payloadPtr, payloadByteSize);
+        DAWN_CHECK(expectedHash == payloadHash);
+
+        // Set the offset to the begin of payload.
+        source.ResetOffset();
+        DAWN_TRY(source.Read(&storedHashPtr, hashByteSize));
+
+        // Stream out the payload.
         Derived out;
         DAWN_TRY(StreamOut(&source, &out));
         return out;
-    }
-
-    Blob ToBlob() const {
-        stream::ByteVectorSink sink;
-        StreamIn(&sink, static_cast<const Derived&>(*this));
-        return CreateBlob(std::move(sink));
     }
 };
 
