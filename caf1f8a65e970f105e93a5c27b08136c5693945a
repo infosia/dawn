@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f87a63d7_6af9451c",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-27T23:24:28Z",
+      "side": 1,
+      "message": "So I changed it but I think I don\u0027t understand why `device-\u003eEmitWarningOnce` exists if you\u0027re never supposed to call it but instead call `device-\u003eGetInstance()-\u003eEmitDeprecationWarning`. Should `device-\u003eEmitWarningOnce` be deleted?\n\nAlso, testing it, `device-\u003eGetInsstance()-\u003eEmitDeprecationWarning` gets emitted to stderr(or stdout) but it does not get emitted to the JavaScript console for developers to see. `device-\u003eEmitWarningOnce` does make it to the JavaScript console.",
+      "parentUuid": "c9072ceb_fb6fc5e1",
+      "revId": "caf1f8a65e970f105e93a5c27b08136c5693945a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a429e502_7ee6893e",
         "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
         "patchSetId": 1
