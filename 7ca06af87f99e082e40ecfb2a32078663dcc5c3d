@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2c16392_142bb8cb",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T10:47:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "69701f27_de1516b0",
+      "revId": "7ca06af87f99e082e40ecfb2a32078663dcc5c3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a0e06d2_c5840834",
