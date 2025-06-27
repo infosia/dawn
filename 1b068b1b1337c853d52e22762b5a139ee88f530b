@@ -16,6 +16,24 @@
       "message": "This might cause issues when WebGPU on Android wants to target compat. We should look to add it soonish (like as soon as compat lands in the spec?)",
       "revId": "1b068b1b1337c853d52e22762b5a139ee88f530b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd86c8f7_1497f059",
+        "filename": "tools/android/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-27T18:23:10Z",
+      "side": 0,
+      "message": "This was the only compat thing that was in the kotlin bindings, everything else was excluded because it doesn\u0027t generate using the \u0027compat\u0027 tag. Filed https://crbug.com/428158608",
+      "parentUuid": "830b6c1e_3196b837",
+      "revId": "1b068b1b1337c853d52e22762b5a139ee88f530b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

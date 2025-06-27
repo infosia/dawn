@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1e1e31f_9874aaba",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2260,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-27T18:23:10Z",
+      "side": 1,
+      "message": "You\u0027re right this isn\u0027t needed. Cleaned up.",
+      "parentUuid": "669ad50b_b2160121",
+      "range": {
+        "startLine": 2260,
+        "startChar": 61,
+        "endLine": 2260,
+        "endChar": 99
+      },
+      "revId": "5b3efc748a79b11682efbb41f7448d45f6c78fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1312ed8_f4bbe3b7",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9102a89_62651d7a",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2274,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-27T18:23:10Z",
+      "side": 1,
+      "message": "These are needed because the default would be `float32filterable`. That\u0027s because the algorithm special cases numbers so it works for `rgba8unorm` for example.",
+      "parentUuid": "e1312ed8_f4bbe3b7",
+      "range": {
+        "startLine": 2273,
+        "startChar": 6,
+        "endLine": 2274,
+        "endChar": 88
+      },
+      "revId": "5b3efc748a79b11682efbb41f7448d45f6c78fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d890654b_ebf69a42",
@@ -60,6 +108,24 @@
       "writtenOn": "2025-06-27T11:05:57Z",
       "side": 1,
       "message": "Maybe we should upstream this just because it is in the WebGPU IDL",
+      "revId": "5b3efc748a79b11682efbb41f7448d45f6c78fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17ba8bce_00da7ca5",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3050,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-27T18:23:10Z",
+      "side": 1,
+      "message": "This is just a deprecation typedef for `render pass max draw count`, which is untagged and already exists upstream.",
+      "parentUuid": "d890654b_ebf69a42",
       "revId": "5b3efc748a79b11682efbb41f7448d45f6c78fb8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
