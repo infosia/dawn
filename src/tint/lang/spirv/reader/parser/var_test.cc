@@ -2031,6 +2031,151 @@ $B1: {  # root
 )");
 }
 
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_SDiv_ResultI32_i32_i32) {
+    // All signed
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %one = OpConstant %i32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %i32 SDiv %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = div 1i, 2i
+  %myconst:i32 = override %1
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_SDiv_ResultI32_i32_u32) {
+    // Last arg different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %i32 1
+        %two = OpConstant %u32 2
+    %myconst = OpSpecConstantOp %i32 SDiv %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = bitcast 2u
+  %2:i32 = div 1i, %1
+  %myconst:i32 = override %2
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %5:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_SDiv_ResultI32_u32_i32) {
+    // Second arg different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %u32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %i32 SDiv %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = bitcast 1u
+  %2:i32 = div %1, 2i
+  %myconst:i32 = override %2
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %5:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_SDiv_ResultU32_i32_i32) {
+    // Result different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %i32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %u32 SDiv %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %u32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = div 1i, 2i
+  %2:u32 = bitcast %1
+  %myconst:u32 = override %2
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %5:u32 = let %myconst
+    ret
+  }
+}
+)");
+}
 
 // In the case of all literals, SPIR-V opt treats the `OpSpecConstantComposite` as an
 // `OpConstantComposite` so it appears in the constant manager already. This then needs no handling
