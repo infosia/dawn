@@ -34,6 +34,24 @@
       "parentUuid": "8e17ccad_27024f6a",
       "revId": "88a6ae88f19a15707206173fcd9ce11ccf400c38",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f1233c1_66f23f1f",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2284,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T11:08:44Z",
+      "side": 1,
+      "message": "Similar to patchset 3 but only assume that it will be used inside dawn::native.",
+      "parentUuid": "2be447b8_aca176b3",
+      "revId": "88a6ae88f19a15707206173fcd9ce11ccf400c38",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
