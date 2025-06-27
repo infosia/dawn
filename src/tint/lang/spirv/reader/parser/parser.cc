@@ -372,6 +372,11 @@ class Parser {
                             TINT_ICE() << "can't translate UConvert: WGSL does not have concrete "
                                           "integer types of different widths";
                             break;
+                        case spv::Op::OpFConvert:
+                            Emit(b_.Convert(Type(inst.type_id()),
+                                            Value(inst.GetSingleWordInOperand(1))),
+                                 inst.result_id());
+                            break;
                         default:
                             TINT_ICE() << "Unknown spec constant operation: " << op;
                     }
