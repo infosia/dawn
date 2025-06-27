@@ -70,6 +70,24 @@
       "parentUuid": "1cafa0dd_ce289560",
       "revId": "cda86a85a50b6f85e750661624d1124bb1ff7157",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecef7d8f_361eb067",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-27T22:06:56Z",
+      "side": 0,
+      "message": "Anyways, I\u0027ll land this for now, and we can follow up if we think there\u0027s other issues.",
+      "parentUuid": "3a573340_4fce70ae",
+      "revId": "cda86a85a50b6f85e750661624d1124bb1ff7157",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
