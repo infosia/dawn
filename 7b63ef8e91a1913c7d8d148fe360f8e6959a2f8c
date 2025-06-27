@@ -106,6 +106,24 @@
       "parentUuid": "52f4af40_1591437e",
       "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b642bdae_f8bbf71d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-06-27T17:11:50Z",
+      "side": 1,
+      "message": "I am not sure how to proceed here. Maybe we should just delete tintd? It\u0027s broken. It\u0027s unmaintained and unlikely to be updated. It\u0027s currently on the vscode marketplace but if you download the windows version it doesn\u0027t work. It doesn\u0027t actually work well in general as it doesn\u0027t help write code because it requires valid WGSL to function, vs other extensions which are more robust to helping auto-complete etc.",
+      "parentUuid": "4f5b5fa6_64882ff2",
+      "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
