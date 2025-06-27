@@ -944,22 +944,24 @@ def convert_cType_to_cppType(typ, annotation, arg, indent=0):
                                                     annotation, arg)
 
 
-def decorate(typ, arg, make_const=False):
-    maybe_const = ' const' if make_const else ''
-    if arg.annotation == 'value':
-        return typ + maybe_const
-    elif arg.annotation == '*':
-        return typ + ' *' + maybe_const
-    elif arg.annotation == 'const*':
-        return typ + ' const *' + maybe_const
-    elif arg.annotation == 'const*const*':
-        return 'const ' + typ + '* const *' + maybe_const
-    else:
-        assert False
+def decorate(typ, arg, make_const_member=False):
+    s = typ
+    if arg.annotation != 'value' or arg.type.category == 'object' or \
+            arg.type.name.get() in ['void *', 'void const *']:
+        if arg.annotation == '*':
+            s = typ + ' *'
+        elif arg.annotation == 'const*':
+            s = typ + ' const *'
+        elif arg.annotation == 'const*const*':
+            s = 'const ' + typ + '* const *'
+        nullability = 'WGPU_NULLABLE' if arg.optional else 'WGPU_NONNULL'
+        s = f'{nullability}({s})'
+    if make_const_member: s += ' const'
+    return s
 
 
-def annotated(typ, arg, make_const=False):
-    result = decorate(typ, arg, make_const)
+def annotate(typ, arg, make_const_member=False):
+    result = decorate(typ, arg, make_const_member)
     if isinstance(arg, RecordMember): result += ' ' + as_varName(arg.name)
     return result
 
@@ -1123,9 +1125,9 @@ def make_base_render_params(metadata):
     return {
             'Name': lambda name: Name(name),
             'as_annotated_cType': \
-                lambda arg, make_const=False: 'void' if arg is None else annotated(as_cTypeEnumSpecialCase(arg.type), arg, make_const),
+                lambda arg: 'void' if arg is None else annotate(as_cTypeEnumSpecialCase(arg.type), arg),
             'as_annotated_cppType': \
-                lambda arg, make_const=False: 'void' if arg is None else annotated(as_cppType(arg.type.name), arg, make_const),
+                lambda arg, make_const_member=False: 'void' if arg is None else annotate(as_cppType(arg.type.name), arg, make_const_member),
             'as_cEnum': as_cEnum,
             'as_cppEnum': as_cppEnum,
             'as_cMethod': as_cMethod,
@@ -1365,7 +1367,7 @@ class MultiGeneratorFromDawnJSON(Generator):
                     # TODO: as_frontendType and co. take a Type, not a Name :(
                     'as_frontendType': lambda typ: as_frontendType(metadata, typ),
                     'as_annotated_frontendType': \
-                        lambda arg: annotated(as_frontendType(metadata, arg.type), arg),
+                        lambda arg: annotate(as_frontendType(metadata, arg.type), arg),
                 }
             ]
 
@@ -1462,7 +1464,7 @@ class MultiGeneratorFromDawnJSON(Generator):
                 RENDER_PARAMS_BASE, params_dawn_wire, {
                     'as_wireType': lambda type : as_wireType(metadata, type),
                     'as_annotated_wireType': \
-                        lambda arg: annotated(as_wireType(metadata, arg.type), arg),
+                        lambda arg: annotate(as_wireType(metadata, arg.type), arg),
                     'is_wire_serializable': lambda type : is_wire_serializable(type),
                 }, additional_params
             ]
