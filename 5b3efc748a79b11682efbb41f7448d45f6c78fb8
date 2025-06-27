@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "669ad50b_b2160121",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2260,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T11:05:57Z",
+      "side": 1,
+      "message": "Why is this jsrepr needed?",
+      "range": {
+        "startLine": 2260,
+        "startChar": 61,
+        "endLine": 2260,
+        "endChar": 99
+      },
+      "revId": "5b3efc748a79b11682efbb41f7448d45f6c78fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1312ed8_f4bbe3b7",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2274,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T11:05:57Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 2273,
+        "startChar": 6,
+        "endLine": 2274,
+        "endChar": 88
+      },
+      "revId": "5b3efc748a79b11682efbb41f7448d45f6c78fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d890654b_ebf69a42",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 3050,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T11:05:57Z",
+      "side": 1,
+      "message": "Maybe we should upstream this just because it is in the WebGPU IDL",
+      "revId": "5b3efc748a79b11682efbb41f7448d45f6c78fb8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
