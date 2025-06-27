@@ -16,6 +16,24 @@
       "message": "Very nice! It seems that with this we are done fixing the TextureCopySplitter for now?",
       "revId": "dbbbfeaf116d51d2405bd9b770ef99cf429ec52c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6537ba8b_1a39901b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002361
+      },
+      "writtenOn": "2025-06-27T14:28:24Z",
+      "side": 1,
+      "message": "Yes, I would say so.",
+      "parentUuid": "30e1ebd3_99d815a3",
+      "revId": "dbbbfeaf116d51d2405bd9b770ef99cf429ec52c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
