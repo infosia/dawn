@@ -133,6 +133,24 @@
       "parentUuid": "d4d9395e_6bb2f0ca",
       "revId": "ac662f7a25ec43d81bb4f431102c73ab0c474c00",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7be3415_1e15b634",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1344,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-27T05:33:06Z",
+      "side": 1,
+      "message": "\u003e  Then don\u0027t forget to update it when adding 8bit support.\n`i8` and `u8` are different as we actually can only load and store i8 and u8 subgroup matrix from `array\u003ci32\u003e` and `array\u003cu32\u003e` instead of `array\u003ci8\u003e` and `array\u003cu8\u003e` which are not supported in WGSL.",
+      "parentUuid": "d31cb43f_fcf309a9",
+      "revId": "ac662f7a25ec43d81bb4f431102c73ab0c474c00",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
