@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30e1ebd3_99d815a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T10:42:56Z",
+      "side": 1,
+      "message": "Very nice! It seems that with this we are done fixing the TextureCopySplitter for now?",
+      "revId": "dbbbfeaf116d51d2405bd9b770ef99cf429ec52c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
