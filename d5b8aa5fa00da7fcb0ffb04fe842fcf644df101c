@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "568a7d9b_be8abbeb",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-27T05:13:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2266d0b_35a1ec6e",
+      "revId": "d5b8aa5fa00da7fcb0ffb04fe842fcf644df101c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e52dc757_8206d315",
@@ -82,6 +100,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8482d1ca_f4cfe047",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-27T05:13:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ab78c99_44264f0a",
+      "range": {
+        "startLine": 497,
+        "startChar": 8,
+        "endLine": 499,
+        "endChar": 73
+      },
+      "revId": "d5b8aa5fa00da7fcb0ffb04fe842fcf644df101c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d7759f7_54caaf43",
@@ -95,6 +137,30 @@
       "writtenOn": "2025-06-26T09:40:17Z",
       "side": 1,
       "message": "nit. Useful to add a comment here that this is for `columnMajor` or not.",
+      "range": {
+        "startLine": 516,
+        "startChar": 28,
+        "endLine": 517,
+        "endChar": 34
+      },
+      "revId": "d5b8aa5fa00da7fcb0ffb04fe842fcf644df101c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a220054_4774e419",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-27T05:13:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d7759f7_54caaf43",
       "range": {
         "startLine": 516,
         "startChar": 28,
