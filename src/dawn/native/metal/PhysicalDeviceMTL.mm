@@ -720,6 +720,10 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::BufferMapExtendedUsages);
     }
 #endif
+
+    if ([*mDevice supportsFamily:MTLGPUFamilyMac2]) {
+        EnableFeature(Feature::TextureComponentSwizzle);
+    }
 }
 
 void PhysicalDevice::InitializeVendorArchitectureImpl() {
