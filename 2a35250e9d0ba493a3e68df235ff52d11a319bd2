@@ -16,6 +16,23 @@
       "message": "I filed bug 415825174, you can link it.",
       "revId": "2a35250e9d0ba493a3e68df235ff52d11a319bd2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d22df2bd_de97222b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-06-27T15:03:02Z",
+      "side": 1,
+      "message": "I accidentally started doing the same thing.\n\nIn case it helps, I fixed a handful of unit tests by just creating new adapters when needed.\n\nhttps://dawn-review.googlesource.com/c/dawn/+/249314",
+      "revId": "2a35250e9d0ba493a3e68df235ff52d11a319bd2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
