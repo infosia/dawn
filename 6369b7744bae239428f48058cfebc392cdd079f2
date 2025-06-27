@@ -118,6 +118,30 @@
       },
       "revId": "6369b7744bae239428f48058cfebc392cdd079f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17a49e59_e5c07be1",
+        "filename": "src/dawn/native/Surface.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-27T22:39:47Z",
+      "side": 1,
+      "message": "For sure, the fact that I had to explain it is good enough reason that it needs to be fixed. I like your suggestion, I ended up collapsing it all down into one function because the logic is more local that way.",
+      "parentUuid": "a0197e55_37650066",
+      "range": {
+        "startLine": 638,
+        "startChar": 4,
+        "endLine": 645,
+        "endChar": 18
+      },
+      "revId": "6369b7744bae239428f48058cfebc392cdd079f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
