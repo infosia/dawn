@@ -387,6 +387,22 @@ class Parser {
                         case spv::Op::OpIMul:
                             EmitBinaryWithConsistentSignedness(inst, core::BinaryOp::kMultiply, 3);
                             break;
+                        case spv::Op::OpSDiv: {
+                            // SPIR-V allows mixed signedness operands and result.
+                            // Coerce to signed to perform the operation, and possibly coerce the
+                            // result.
+                            auto* lhs = ToSigned(Value(inst.GetSingleWordInOperand(1)));
+                            auto* rhs = ToSigned(Value(inst.GetSingleWordInOperand(2)));
+                            core::ir::Instruction* sdiv =
+                                b_.Binary(core::BinaryOp::kDivide, lhs->Type(), lhs, rhs);
+                            auto* result_type = Type(inst.type_id());
+                            if (!result_type->IsSignedIntegerScalarOrVector()) {
+                                EmitWithoutSpvResult(sdiv);
+                                sdiv = b_.Bitcast(result_type, sdiv->Result());
+                            }
+                            Emit(sdiv, inst.result_id());
+                            break;
+                        }
                         default:
                             TINT_ICE() << "Unknown spec constant operation: " << op;
                     }
@@ -699,6 +715,35 @@ class Parser {
                 }
             }
         });
+    }
+
+    /// Returns the signed type with the same bit width and vector component count.
+    /// @param type a Tint integer scalar or vector type
+    /// @returns a Tint type object
+    const core::type::Type* ToSignedType(const core::type::Type* type) {
+        TINT_ASSERT(type->IsIntegerScalarOrVector());
+        if (type->IsSignedIntegerScalarOrVector()) {
+            return type;
+        }
+        if (type->IsIntegerVector()) {
+            const core::type::TypeAndCount ty_c = type->Elements();
+            return ty_.vec(ToSignedType(ty_c.type), ty_c.count);
+        }
+        TINT_ASSERT(type == ty_.u32());
+        return ty_.i32();
+    }
+
+    /// Returns the signed form of @p value, inserting a bitcast as needed.
+    /// Assumes @p is a signed integer scalar or vector.
+    /// @param value a Value object
+    /// @returns a value object
+    core::ir::Value* ToSigned(core::ir::Value* value) {
+        if (value->Type()->IsSignedIntegerScalarOrVector()) {
+            return value;
+        }
+        auto* cast = b_.Bitcast(ToSignedType(value->Type()), value);
+        EmitWithoutSpvResult(cast);
+        return cast->Result();
     }
 
     core::TexelFormat ToTexelFormat(spv::ImageFormat fmt) {
