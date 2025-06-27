@@ -268,6 +268,7 @@ template <typename CreateFn>
 ResultOrError<Ref<TextureViewBase>> TextureBase::GetOrCreateViewFromCache(
     const UnpackedPtr<TextureViewDescriptor>& desc,
     CreateFn createFn) {
+    // TODO: Add swizzle to texture view query.
     TextureViewQuery query(desc);
 
     if (!mTextureViewCache) {
