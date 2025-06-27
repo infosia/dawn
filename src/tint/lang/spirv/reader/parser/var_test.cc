@@ -1273,7 +1273,7 @@ $B1: {  # root
 )");
 }
 
-TEST_F(SpirvParserTest, Var_OpSpecConstantOp_Not) {
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_Not_ResultI32_i32) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -1303,6 +1303,117 @@ $B1: {  # root
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B2: {
     %4:i32 = spirv.not<i32> %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_Not_ResultI32_u32) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+       %bool = OpTypeBool
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+      %false = OpSpecConstantFalse %bool
+       %true = OpSpecConstantTrue %bool
+        %one = OpConstant %u32 1
+    %myconst = OpSpecConstantOp %i32 Not %one
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = spirv.not<i32> 1u
+  %myconst:i32 = override %1
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_Not_ResultU32_i32) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+       %bool = OpTypeBool
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+      %false = OpSpecConstantFalse %bool
+       %true = OpSpecConstantTrue %bool
+        %one = OpConstant %i32 1
+    %myconst = OpSpecConstantOp %u32 Not %one
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %u32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:u32 = spirv.not<u32> 1i
+  %myconst:u32 = override %1
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:u32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_Not_ResultU32_u32) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+       %bool = OpTypeBool
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+      %false = OpSpecConstantFalse %bool
+       %true = OpSpecConstantTrue %bool
+        %one = OpConstant %u32 1
+    %myconst = OpSpecConstantOp %u32 Not %one
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %u32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:u32 = spirv.not<u32> 1u
+  %myconst:u32 = override %1
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:u32 = let %myconst
     ret
   }
 }
@@ -1344,10 +1455,9 @@ $B1: {  # root
 )");
 }
 
-TEST_F(SpirvParserTest, Var_OpSpecConstantOp_SNegate) {
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_SNegate_ResultI32_i32) {
     EXPECT_IR(R"(
                OpCapability Shader
-               OpCapability Float16
                OpMemoryModel Logical GLSL450
                OpEntryPoint GLCompute %main "main"
                OpExecutionMode %main LocalSize 1 1 1
@@ -1377,6 +1487,550 @@ $B1: {  # root
 }
 )");
 }
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_SNegate_ResultI32_u32) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %u32 1
+    %myconst = OpSpecConstantOp %i32 SNegate %one
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = spirv.s_negate<i32> 1u
+  %myconst:i32 = override %1
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_SNegate_ResultU32_i32) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %i32 1
+    %myconst = OpSpecConstantOp %u32 SNegate %one
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %u32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:u32 = spirv.s_negate<u32> 1i
+  %myconst:u32 = override %1
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:u32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_SNegate_ResultU32_u32) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %u32 1
+    %myconst = OpSpecConstantOp %u32 SNegate %one
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %u32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:u32 = spirv.s_negate<u32> 1u
+  %myconst:u32 = override %1
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:u32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_IAdd_ResultI32_i32_i32) {
+  // All signed
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %one = OpConstant %i32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %i32 IAdd %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = add 1i, 2i
+  %myconst:i32 = override %1
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_IAdd_ResultI32_i32_u32) {
+  // Last arg different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %i32 1
+        %two = OpConstant %u32 2
+    %myconst = OpSpecConstantOp %i32 IAdd %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = bitcast 2u
+  %2:i32 = add 1i, %1
+  %myconst:i32 = override %2
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %5:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_IAdd_ResultI32_u32_i32) {
+  // Second arg different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %u32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %i32 IAdd %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:u32 = bitcast 2i
+  %2:u32 = add 1u, %1
+  %3:i32 = bitcast %2
+  %myconst:i32 = override %3
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %6:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_IAdd_ResultU32_i32_i32) {
+  // Result different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %i32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %u32 IAdd %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %u32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = add 1i, 2i
+  %2:u32 = bitcast %1
+  %myconst:u32 = override %2
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %5:u32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_ISub_ResultI32_i32_i32) {
+  // All signed
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %one = OpConstant %i32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %i32 ISub %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = sub 1i, 2i
+  %myconst:i32 = override %1
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_ISub_ResultI32_i32_u32) {
+  // Last arg different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %i32 1
+        %two = OpConstant %u32 2
+    %myconst = OpSpecConstantOp %i32 ISub %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = bitcast 2u
+  %2:i32 = sub 1i, %1
+  %myconst:i32 = override %2
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %5:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_ISub_ResultI32_u32_i32) {
+  // Second arg different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %u32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %i32 ISub %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:u32 = bitcast 2i
+  %2:u32 = sub 1u, %1
+  %3:i32 = bitcast %2
+  %myconst:i32 = override %3
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %6:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_ISub_ResultU32_i32_i32) {
+  // Result different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %i32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %u32 ISub %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %u32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = sub 1i, 2i
+  %2:u32 = bitcast %1
+  %myconst:u32 = override %2
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %5:u32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_IMul_ResultI32_i32_i32) {
+  // All signed
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %one = OpConstant %i32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %i32 IMul %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = mul 1i, 2i
+  %myconst:i32 = override %1
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %4:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_IMul_ResultI32_i32_u32) {
+  // Last arg different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %i32 1
+        %two = OpConstant %u32 2
+    %myconst = OpSpecConstantOp %i32 IMul %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = bitcast 2u
+  %2:i32 = mul 1i, %1
+  %myconst:i32 = override %2
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %5:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_IMul_ResultI32_u32_i32) {
+  // Second arg different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %u32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %i32 IMul %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %i32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:u32 = bitcast 2i
+  %2:u32 = mul 1u, %1
+  %3:i32 = bitcast %2
+  %myconst:i32 = override %3
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %6:i32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
+TEST_F(SpirvParserTest, Var_OpSpecConstantOp_IMul_ResultU32_i32_i32) {
+  // Result different
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint GLCompute %main "main"
+               OpExecutionMode %main LocalSize 1 1 1
+               OpName %myconst "myconst"
+       %void = OpTypeVoid
+        %i32 = OpTypeInt 32 1
+        %u32 = OpTypeInt 32 0
+        %one = OpConstant %i32 1
+        %two = OpConstant %i32 2
+    %myconst = OpSpecConstantOp %u32 IMul %one %two
+     %voidfn = OpTypeFunction %void
+       %main = OpFunction %void None %voidfn
+ %main_entry = OpLabel
+          %1 = OpCopyObject %u32 %myconst
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+$B1: {  # root
+  %1:i32 = mul 1i, 2i
+  %2:u32 = bitcast %1
+  %myconst:u32 = override %2
+}
+
+%main = @compute @workgroup_size(1u, 1u, 1u) func():void {
+  $B2: {
+    %5:u32 = let %myconst
+    ret
+  }
+}
+)");
+}
+
 
 // In the case of all literals, SPIR-V opt treats the `OpSpecConstantComposite` as an
 // `OpConstantComposite` so it appears in the constant manager already. This then needs no handling
