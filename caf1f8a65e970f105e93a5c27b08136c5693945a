@@ -16,6 +16,40 @@
       "message": "I\u0027m not sure expanding StorageW, StorageR, and StorageRW to 3 bools is best rather than 3 bits but that seemed to be the pattern.",
       "revId": "caf1f8a65e970f105e93a5c27b08136c5693945a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3fc9f95_2a5d513d",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T10:29:35Z",
+      "side": 1,
+      "message": "Could we use https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Instance.h;drc\u003d7609303d10e3377d097f3a6fdc5640ef64186102;l\u003d126 ? I believe it will force use to have test coverage with the addition of EXPECT_DEPRECATION_WARNING when it is emitted.",
+      "revId": "caf1f8a65e970f105e93a5c27b08136c5693945a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a429e502_7ee6893e",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T10:29:35Z",
+      "side": 1,
+      "message": "optional nit: Maybe explain that this is a bug and that in the spec it is not allowed? I feel like the error message might slightly confuse developers at the moment.",
+      "revId": "caf1f8a65e970f105e93a5c27b08136c5693945a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
