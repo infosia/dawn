@@ -124,6 +124,24 @@
       "parentUuid": "4f5b5fa6_64882ff2",
       "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5646894e_4ba90211",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-06-27T17:25:41Z",
+      "side": 1,
+      "message": "I personally use it on macOS all the time and never have issues with it, so I would be reluctant to delete it completely just because of Windows issues.",
+      "parentUuid": "b642bdae_f8bbf71d",
+      "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
