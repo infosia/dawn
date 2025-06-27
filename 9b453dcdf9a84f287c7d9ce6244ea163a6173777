@@ -16,6 +16,40 @@
       "message": "FYI I\u0027ve started locally exposing it in Blink: https://chromium-review.googlesource.com/c/chromium/src/+/6683180",
       "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee4e5571_a001d3e6",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4188,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T11:25:00Z",
+      "side": 1,
+      "message": "These also need the Dawn tag.",
+      "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf443c8a_e05c6501",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-06-27T11:25:00Z",
+      "side": 1,
+      "message": "This CL will need to be the one that updates the caching, otherwise even validation tests could run into issues.",
+      "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
