@@ -378,6 +378,15 @@ class Parser {
                         case spv::Op::OpSNegate:
                             EmitSpirvExplicitBuiltinCall(inst, spirv::BuiltinFn::kSNegate, 3);
                             break;
+                        case spv::Op::OpIAdd:
+                            EmitBinaryWithConsistentSignedness(inst, core::BinaryOp::kAdd, 3);
+                            break;
+                        case spv::Op::OpISub:
+                            EmitBinaryWithConsistentSignedness(inst, core::BinaryOp::kSubtract, 3);
+                            break;
+                        case spv::Op::OpIMul:
+                            EmitBinaryWithConsistentSignedness(inst, core::BinaryOp::kMultiply, 3);
+                            break;
                         default:
                             TINT_ICE() << "Unknown spec constant operation: " << op;
                     }
@@ -3295,6 +3304,35 @@ class Parser {
         Emit(binary, inst.result_id());
     }
 
+    /// Emits the SPIR-V instruction that takes integral arguments, injecting
+    /// bitcasts to ensure arguments and the result type of the operation all
+    /// use the same signedness.
+    /// @param inst the SPIR-V instruction
+    /// @param op the binary operator to use
+    void EmitBinaryWithConsistentSignedness(const spvtools::opt::Instruction& inst,
+                    core::BinaryOp op,
+                    uint32_t first_operand_idx = 2) {
+        auto* lhs = Value(inst.GetSingleWordOperand(first_operand_idx));
+        auto* rhs = Value(inst.GetSingleWordOperand(first_operand_idx + 1));
+        TINT_ASSERT(lhs->Type()->IsIntegerScalarOrVector());
+        TINT_ASSERT(rhs->Type()->IsIntegerScalarOrVector());
+        if (rhs->Type() != lhs->Type()) {
+          auto* cast = b_.Bitcast(lhs->Type(), rhs);
+          EmitWithoutSpvResult(cast);
+          rhs = cast->Result();
+        }
+        core::ir::Instruction* binary = b_.Binary(op, lhs->Type(), lhs, rhs);
+        auto* binary_result = binary->Result();
+        auto* result_type = Type(inst.type_id());
+        if (binary_result->Type() != result_type) {
+          EmitWithoutSpvResult(binary);
+          auto* cast = b_.Bitcast(result_type, binary_result);
+          binary = cast;
+        }
+        Emit(binary, inst.result_id());
+    }
+
+    /// Emits the logical negation of the result of the given SPIR-V instruction.
     /// @param inst the SPIR-V instruction
     /// @param op the binary operator to use
     void EmitInvertedBinary(const spvtools::opt::Instruction& inst, core::BinaryOp op) {
