@@ -84,6 +84,24 @@
       "message": "Would it be better to have a helper function \n```\nenum class SwizzleChannel { R,G,B,A };\n\nwgpu::TextureComponentSwizzleDescriptor identicalButOneSwizzleDesc(SwizzleChannel channel) {\n    // Note: Assuming wgpu::TextureComponentSwizzleDescriptor default initialized\n    // to identical swizzle.\n    wgpu::TextureComponentSwizzleDescriptor desc \u003d {};\n    wgpu::TextureComponentSwizzleswizzle\u0026 swizzle \u003d desc.swizzle;\n    switch (channel) {\n        case (SwizzleChannel::R): {\n            swizzle.r \u003d wgpu::ComponentSwizzle::Zero;\n            break;\n        }\n        case (SwizzleChannel::G): {\n            swizzle.r \u003d wgpu::ComponentSwizzle::R;\n            break;\n        }\n        case (SwizzleChannel::B): {\n            swizzle.r \u003d wgpu::ComponentSwizzle::Zero;\n            break;\n        }\n        case (SwizzleChannel::A): {\n            swizzle.r \u003d wgpu::ComponentSwizzle::G;\n            break;\n        }\n    }\n    return desc;\n}\n```\n\nSo we can arrange the testcases within structured code like:\n```\nstd::vector\u003cwgpu::TextureUsage\u003e usages \u003d {\n    wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::RenderAttachment,\n    wgpu::TextureUsage::TextureBinding | wgpu::TextureUsage::StorageBinding,\n    wgpu::TextureUsage::TextureBinding\n};\nfor (auto textureUsage: usages) {\n    textureDesc.usage \u003d textureUsage;\n    wgpu::Texture texture \u003d device.CreateTexture(\u0026textureDesc);\n    \n    // Control case for identical swizzle, always success.\n    // Note: Assuming wgpu::TextureComponentSwizzleDescriptor default initialized\n    // to identical swizzle.\n    {\n        swizzleDesc \u003d wgpu::TextureComponentSwizzleDescriptor{};\n        texture.CreateView(\u0026viewDesc);\n    }\n    \n    // Non-identical swizzle cases\n    for (auto changedChannel: { SwizzleChannel::R, \n                                SwizzleChannel::G, \n                                SwizzleChannel::B, \n                                SwizzleChannel::A}) {\n        swizzleDesc \u003d identicalButOneSwizzleDesc(changedChannel);\n        // CreateView would succeed iif usage doesn\u0027t include RENDER_ATTACHMENT\n        // or STORAGE_BINDING.\n        bool expectSuccess \u003d !(textureUsage \u0026 \n                                (\n                                    wgpu::TextureUsage::RenderAttachment |\n                                    wgpu::TextureUsage::StorageBinding\n                                )\n                              );\n        if (expectSuccess) {\n            texture.CreateView(\u0026viewDesc);\n        } else {\n            ASSERT_DEVICE_ERROR(texture.CreateView(\u0026viewDesc));\n        }\n    }\n}\n```",
       "revId": "7dec82fadb8aa994986aae19a282b7ea9460fadc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e254e3b_efb0280a",
+        "filename": "src/dawn/tests/unittests/validation/TextureViewValidationTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-27T09:26:07Z",
+      "side": 1,
+      "message": "Typo in helper function:\n```\nenum class SwizzleChannel { R,G,B,A };\n\nwgpu::TextureComponentSwizzleDescriptor identicalButOneSwizzleDesc(SwizzleChannel channel) {\n    // Note: Assuming wgpu::TextureComponentSwizzleDescriptor default initialized\n    // to identical swizzle.\n    wgpu::TextureComponentSwizzleDescriptor desc \u003d {};\n    wgpu::TextureComponentSwizzleswizzle\u0026 swizzle \u003d desc.swizzle;\n    switch (channel) {\n        case (SwizzleChannel::R): {\n            swizzle.r \u003d wgpu::ComponentSwizzle::Zero;\n            break;\n        }\n        case (SwizzleChannel::G): {\n            swizzle.g \u003d wgpu::ComponentSwizzle::R;\n            break;\n        }\n        case (SwizzleChannel::B): {\n            swizzle.b \u003d wgpu::ComponentSwizzle::Zero;\n            break;\n        }\n        case (SwizzleChannel::A): {\n            swizzle.a \u003d wgpu::ComponentSwizzle::G;\n            break;\n        }\n    }\n    return desc;\n}\n```",
+      "parentUuid": "924636ad_1a4a9ab3",
+      "revId": "7dec82fadb8aa994986aae19a282b7ea9460fadc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
