@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eceb1dee_0ea939ad",
+        "filename": "src/dawn/native/DeviceGuard.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-28T04:18:58Z",
+      "side": 1,
+      "message": "The lock is held by the `detail::Guard` class that we are extending and I needed the `Defer` to be destroyed after the `Guard` classes destructor.",
+      "parentUuid": "2dca0177_6a165dd2",
+      "revId": "bb6a17e65461bbc037e8254f15830973ca9b0813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "396d8a7a_7dd05d95",
