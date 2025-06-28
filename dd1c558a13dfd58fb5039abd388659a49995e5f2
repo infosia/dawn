@@ -68,6 +68,24 @@
       "parentUuid": "581c885e_20f63e9a",
       "revId": "dd1c558a13dfd58fb5039abd388659a49995e5f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "836d1c9f_4f781651",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-06-28T01:08:20Z",
+      "side": 1,
+      "message": "If I get it right `ToBlob`/`FromBlob` are not recursive, they call `StreamIn`/`StreamOut` inside (which are recursive on every member).\n\nWe can do the validation in `BlobCache::LoadInternal` and `StoreInternal`, but that would introduce a full memory copy within `StoreInternal` because `Blob` just hold a pointer to raw memory and platform cache functions also expect a pointer to raw memory, but adding hash will change the byte size and must allocate a new buffer for whole hash+payload.",
+      "parentUuid": "036b2277_b1cbf8d8",
+      "revId": "dd1c558a13dfd58fb5039abd388659a49995e5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
