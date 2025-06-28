@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "123d2ffa_86013390",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-28T02:30:16Z",
+      "side": 1,
+      "message": "Not ready for review but want to get a vibe check on this direction for the header (you can just skip directly to `webgpu.h.diff` to see what it looks like)",
+      "revId": "d14e4ec2df458defebe6f9a9be011e388cd698ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
