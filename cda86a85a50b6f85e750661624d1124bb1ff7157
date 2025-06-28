@@ -88,6 +88,24 @@
       "parentUuid": "3a573340_4fce70ae",
       "revId": "cda86a85a50b6f85e750661624d1124bb1ff7157",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7180187_5efbd452",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-28T00:28:33Z",
+      "side": 0,
+      "message": "Yeah, no worries.\n\nIf thread 1 starts ProcessEvents which has a long task in it, then it\u0027ll be stuck in it, then if thread 2 starts ProcessEvents, it\u0027ll get stuck waiting on thread 1. This isn\u0027t really necessary because I don\u0027t think ProcessEvents needs to guarantee to thread 2 that that callback has completed. (Though maybe for sequential queue events we do - same as described below.)\n\nFor spontaneous callbacks, say we have metal threads 1 and 2 which both race to complete queue event E1. Thread 1 wins, and starts running the E1 callback, but there\u0027s no real reason for thread 2 to wait for thread 1, unless we want to guarantee that some later queue event E2\u0027s callback can\u0027t start until after E1\u0027s callback finishes. Which, maybe we do? IDK.\n\nBTW, filed https://github.com/webgpu-native/webgpu-headers/issues/552 about WaitAny.",
+      "parentUuid": "ecef7d8f_361eb067",
+      "revId": "cda86a85a50b6f85e750661624d1124bb1ff7157",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
