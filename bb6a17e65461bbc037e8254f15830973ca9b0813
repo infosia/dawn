@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e82bb60f_bd796022",
+        "filename": "src/dawn/native/DeviceGuard.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-28T05:04:43Z",
+      "side": 1,
+      "message": "Ah, it is destruction order, that was my best guess. I know there\u0027s a lot of comments here already, but could you mention this in the comments?",
+      "parentUuid": "eceb1dee_0ea939ad",
+      "revId": "bb6a17e65461bbc037e8254f15830973ca9b0813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "396d8a7a_7dd05d95",
         "filename": "src/dawn/native/DeviceGuard.h",
         "patchSetId": 8
