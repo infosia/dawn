@@ -86,6 +86,24 @@
       "parentUuid": "036b2277_b1cbf8d8",
       "revId": "dd1c558a13dfd58fb5039abd388659a49995e5f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "250dcdec_3e29f458",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-28T04:16:30Z",
+      "side": 1,
+      "message": "I think we would probably want to add an additional argument to those functions that explicitly pass the hash. Then we could do a transition to use those functions instead of the existing ones.",
+      "parentUuid": "836d1c9f_4f781651",
+      "revId": "dd1c558a13dfd58fb5039abd388659a49995e5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
