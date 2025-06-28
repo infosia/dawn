@@ -16,6 +16,23 @@
       "message": "LGTM",
       "revId": "815ea7bce2a185a3d44663d8e99c517bac222363",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8682f0a_74ef0b7a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-28T00:43:20Z",
+      "side": 1,
+      "message": "Is the lock not needed for AppendDebugLayerMessages and AppendDeviceLostMessage?",
+      "revId": "815ea7bce2a185a3d44663d8e99c517bac222363",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
