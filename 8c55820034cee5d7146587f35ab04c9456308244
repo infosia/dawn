@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c90199b_09822cbc",
+        "filename": "src/dawn/native/Buffer.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1004191
+      },
+      "writtenOn": "2025-06-29T22:54:05Z",
+      "side": 1,
+      "message": "@lokokung@google.com Can these members be moved out of the anonymous struct? GCC does not allow anonymous structs to contain members that have constructors.\n\nThis causes the Linux actions in your github CI to fail - see https://github.com/google/dawn/actions/runs/15958790245/job/45008512719. They have been failing since last week.\n\n```\n/__w/dawn/dawn/src/dawn/native/Buffer.h:208:34: error: member ‘std::atomic\u003cdawn::native::BufferBase::BufferState\u003e dawn::native::BufferBase::\u003cunnamed struct\u003e::mState’ with constructor not allowed in anonymous aggregate\n  208 |         std::atomic\u003cBufferState\u003e mState \u003d BufferState::Unmapped;\n      |                                  ^~~~~~\n/__w/dawn/dawn/src/dawn/native/Buffer.h:214:25: error: member ‘dawn::Ref\u003cdawn::native::BufferBase\u003e dawn::native::BufferBase::\u003cunnamed struct\u003e::mStagingBuffer’ with constructor not allowed in anonymous aggregate\n  214 |         Ref\u003cBufferBase\u003e mStagingBuffer \u003d nullptr;\n      |                         ^~~~~~~~~~~~~~\n/__w/dawn/dawn/src/dawn/native/Buffer.h:214:25: error: member ‘dawn::Ref\u003cdawn::native::BufferBase\u003e dawn::native::BufferBase::\u003cunnamed struct\u003e::mStagingBuffer’ with destructor not allowed in anonymous aggregate\n/__w/dawn/dawn/src/dawn/native/Buffer.h:214:25: error: member ‘dawn::Ref\u003cdawn::native::BufferBase\u003e dawn::native::BufferBase::\u003cunnamed struct\u003e::mStagingBuffer’ with copy assignment operator not allowed in anonymous aggregate\n/__w/dawn/dawn/src/dawn/native/Buffer.h:220:49: error: member ‘std::variant\u003cvoid*, dawn::Ref\u003cdawn::native::BufferBase::MapAsyncEvent\u003e \u003e dawn::native::BufferBase::\u003cunnamed struct\u003e::mMapData’ with constructor not allowed in anonymous aggregate\n  220 |         std::variant\u003cvoid*, Ref\u003cMapAsyncEvent\u003e\u003e mMapData;\n      |                                                 ^~~~~~~~\n/__w/dawn/dawn/src/dawn/native/Buffer.h:220:49: error: member ‘std::variant\u003cvoid*, dawn::Ref\u003cdawn::native::BufferBase::MapAsyncEvent\u003e \u003e dawn::native::BufferBase::\u003cunnamed struct\u003e::mMapData’ with destructor not allowed in anonymous aggregate\n/__w/dawn/dawn/src/dawn/native/Buffer.h:220:49: error: member ‘std::variant\u003cvoid*, dawn::Ref\u003cdawn::native::BufferBase::MapAsyncEvent\u003e \u003e dawn::native::BufferBase::\u003cunnamed struct\u003e::mMapData’ with copy assignment operator not allowed in anonymous aggregate\n```",
+      "revId": "8c55820034cee5d7146587f35ab04c9456308244",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
