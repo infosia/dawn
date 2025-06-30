@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bd3bceb_a6244238",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-06-30T17:59:16Z",
+      "side": 1,
+      "message": "Not sure how other builders don\u0027t catch things like this. Concepts must be included in one of the system headers included by webgpu_cpp.h on most builders.",
+      "revId": "c8679a2a23c25eb7b10cd78a21dc6c1b10bf2a3c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
