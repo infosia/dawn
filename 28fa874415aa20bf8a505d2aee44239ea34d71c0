@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e0bd2bac_c261b724",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-06-30T15:16:12Z",
+      "side": 1,
+      "message": "I\u0027ve followed your suggestion in latest patchset but I now get some Windows tests failing with this error:\n```\nError: Assertion failure at ..\\..\\third_party\\dawn\\src\\dawn\\common\\RefCounted.cpp:96 (Decrement): (mRefCount \u0026 ~kPayloadMask) !\u003d 0\n```\nAny idea?",
+      "parentUuid": "99d7a650_6b6e47ec",
+      "revId": "28fa874415aa20bf8a505d2aee44239ea34d71c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ee9d248_bed3fc70",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 7
