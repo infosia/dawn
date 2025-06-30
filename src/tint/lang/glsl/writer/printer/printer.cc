@@ -1313,6 +1313,7 @@ class Printer : public tint::TextGenerator {
             v,  //
             [&](const core::ir::Constant* c) { EmitConstant(out, c); },
             [&](const core::ir::InstructionResult* r) {
+                printf("\n inst = %s \n", r->Instruction()->FriendlyName().c_str());
                 tint::Switch(
                     r->Instruction(),  //
                     [&](const core::ir::Access* a) { EmitAccess(out, a); },
