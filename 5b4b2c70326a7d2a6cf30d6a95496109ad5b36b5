@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bcfa628_a5d061af",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-30T22:30:22Z",
+      "side": 1,
+      "message": "Maybe we could just get rid of the `\"returns\": \"void\"` instances in dawn.json?",
+      "range": {
+        "startLine": 519,
+        "startChar": 19,
+        "endLine": 519,
+        "endChar": 36
+      },
+      "revId": "5b4b2c70326a7d2a6cf30d6a95496109ad5b36b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
