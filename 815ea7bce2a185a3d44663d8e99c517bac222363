@@ -33,6 +33,24 @@
       "message": "Is the lock not needed for AppendDebugLayerMessages and AppendDeviceLostMessage?",
       "revId": "815ea7bce2a185a3d44663d8e99c517bac222363",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "155d0343_edf09116",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-30T21:43:07Z",
+      "side": 1,
+      "message": "Ah, since it was only passing the error in those functions, I thought it wouldn\u0027t need it, but now that I look at them, since they are virtual functions that are overridden, probably better to lock for them as well. Thanks for catching this. Done.",
+      "parentUuid": "e8682f0a_74ef0b7a",
+      "revId": "815ea7bce2a185a3d44663d8e99c517bac222363",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
