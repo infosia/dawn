@@ -364,7 +364,8 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
         cacheDesc.functionUserdata = nullptr;
     }
 
-    mBlobCache = std::make_unique<BlobCache>(cacheDesc);
+    mBlobCache =
+        std::make_unique<BlobCache>(cacheDesc, IsToggleEnabled(Toggle::BlobCacheHashValidation));
 
     if (descriptor->requiredLimits != nullptr) {
         UnpackLimitsIn(descriptor->requiredLimits, &mLimits);

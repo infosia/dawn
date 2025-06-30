@@ -660,6 +660,9 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::UseSpirv14,
      {"use_spirv_1_4", "Use SPIR-V 1.4 if available", "https://crbug.com/422421915",
       ToggleStage::Device}},
+    {Toggle::BlobCacheHashValidation,
+     {"blob_cache_hash_validation", "Enable hash validation when loading/storing blob cache",
+      "https://crbug.com/429938352", ToggleStage::Device}},
     {Toggle::NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
      {"no_workaround_sample_mask_becomes_zero_for_all_but_last_color_target",
       "MacOS 12.0+ Intel has a bug where the sample mask is only applied for the last color "

@@ -31,6 +31,7 @@
 #include <mutex>
 
 #include "dawn/common/Platform.h"
+#include "dawn/common/Sha3.h"
 #include "dawn/native/Blob.h"
 #include "dawn/native/CacheResult.h"
 #include "partition_alloc/pointers/raw_ptr_exclusion.h"
@@ -47,7 +48,7 @@ class InstanceBase;
 // This class should always be thread-safe because it may be called asynchronously.
 class BlobCache {
   public:
-    explicit BlobCache(const dawn::native::DawnCacheDeviceDescriptor& desc);
+    BlobCache(const dawn::native::DawnCacheDeviceDescriptor& desc, bool enableHashValidation);
 
     // Returns empty blob if the key is not found in the cache.
     Blob Load(const CacheKey& key);
@@ -65,11 +66,18 @@ class BlobCache {
         }
     }
 
+    // Generate a blob holds the actual stored bytes which are different from given *value if
+    // hash validation is enabled, otherwise holding bytes same as *value.
+    Blob GenerateActualStoredBlobForTesting(size_t valueSize, const void* value);
+
   private:
     // Non-thread safe internal implementations of load and store. Exposed callers that use
     // these helpers need to make sure that these are entered with `mMutex` held.
-    Blob LoadInternal(const CacheKey& key);
+    // If hash validation enabled, StoreInternal insert the hash of given value payload as prefix,
+    // and LoadInternal validate the its hash before returning payload as Blob. This hashing and
+    // validation is transparent to the caller.
     void StoreInternal(const CacheKey& key, size_t valueSize, const void* value);
+    Blob LoadInternal(const CacheKey& key);
 
     // Validates the cache key for this version of Dawn. At the moment, this is naively checking
     // that the cache key contains the dawn version string in it.
@@ -77,6 +85,7 @@ class BlobCache {
 
     // Protects thread safety of access to mCache.
     std::mutex mMutex;
+    bool mHashValidation;
     // TODO(https://crbug.com/dawn/2365): Convert these members to `raw_ptr`.
     RAW_PTR_EXCLUSION WGPUDawnLoadCacheDataFunction mLoadFunction;
     RAW_PTR_EXCLUSION WGPUDawnStoreCacheDataFunction mStoreFunction;
