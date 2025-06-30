@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3661dfa_a4b5a800",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-30T19:40:22Z",
+      "side": 1,
+      "message": "PTAL! Skips pass validation as much as possible when running without validation. Should help Skia out.",
+      "revId": "6796e1e60aa10bda6ff60f3b054337d4b0346976",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
