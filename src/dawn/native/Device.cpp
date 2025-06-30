@@ -364,7 +364,8 @@ DeviceBase::DeviceBase(AdapterBase* adapter,
         cacheDesc.functionUserdata = nullptr;
     }
 
-    mBlobCache = std::make_unique<BlobCache>(cacheDesc);
+    mBlobCache =
+        std::make_unique<BlobCache>(cacheDesc, IsToggleEnabled(Toggle::BlobCacheHashValidation));
 
     if (descriptor->requiredLimits != nullptr) {
         UnpackLimitsIn(descriptor->requiredLimits, &mLimits);
@@ -880,7 +881,13 @@ BlobCache* DeviceBase::GetBlobCache() const {
 }
 
 Blob DeviceBase::LoadCachedBlob(const CacheKey& key) {
-    return GetBlobCache()->Load(key);
+    auto loadResult = GetBlobCache()->Load(key);
+    if (loadResult.IsSuccess()) {
+        return loadResult.AcquireSuccess();
+    }
+    // Treat hash validation error as cache miss.
+    loadResult.AcquireError();
+    return Blob();
 }
 
 void DeviceBase::StoreCachedBlob(const CacheKey& key, const Blob& blob) {

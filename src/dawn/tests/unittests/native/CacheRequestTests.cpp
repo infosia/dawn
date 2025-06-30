@@ -33,6 +33,7 @@
 #include "dawn/native/CacheRequest.h"
 #include "dawn/tests/DawnNativeTest.h"
 #include "dawn/tests/mocks/platform/CachingInterfaceMock.h"
+#include "dawn/webgpu_cpp_print.h"
 
 namespace dawn::native {
 namespace {
@@ -45,7 +46,40 @@ using ::testing::Return;
 using ::testing::StrictMock;
 using ::testing::WithArg;
 
-class CacheRequestTests : public DawnNativeTest {
+struct CacheRequestTestParam {
+    bool enableHashValidation;
+};
+
+class CacheRequestTests : public DawnNativeTest,
+                          public ::testing::WithParamInterface<CacheRequestTestParam> {
+  public:
+    void SetUp() override {
+        DawnNativeTest::SetUp();
+
+        // Replace the device with the appropriate toggle for hash validation.
+        wgpu::DeviceDescriptor desc = {};
+        desc.SetUncapturedErrorCallback(
+            [](const wgpu::Device&, wgpu::ErrorType type, wgpu::StringView message) {
+                DAWN_ASSERT(type != wgpu::ErrorType::NoError);
+                FAIL() << "Unexpected error: " << message;
+            });
+
+        std::vector<const char*> hashValidationToggles = {"blob_cache_hash_validation"};
+        wgpu::DawnTogglesDescriptor toggles = {};
+        desc.nextInChain = &toggles;
+
+        // Explicitly set the toggle for hash validation based on the test parameter.
+        if (GetParam().enableHashValidation) {
+            toggles.enabledToggles = hashValidationToggles.data();
+            toggles.enabledToggleCount = hashValidationToggles.size();
+        } else {
+            toggles.disabledToggles = hashValidationToggles.data();
+            toggles.disabledToggleCount = hashValidationToggles.size();
+        }
+
+        device = wgpu::Device::Acquire(adapter.CreateDevice(&desc));
+    }
+
   protected:
     std::unique_ptr<dawn::platform::Platform> CreateTestPlatform() override {
         return std::make_unique<DawnCachingMockPlatform>(&mMockCache);
@@ -73,7 +107,7 @@ DAWN_MAKE_CACHE_REQUEST(CacheRequestForTesting, REQUEST_MEMBERS);
 
 // static_assert the expected types for various return types from the cache hit handler and cache
 // miss handler.
-TEST_F(CacheRequestTests, CacheResultTypes) {
+TEST_P(CacheRequestTests, CacheResultTypes) {
     EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillRepeatedly(Return(0));
 
     // (int, ResultOrError<int>), should be ResultOrError<CacheResult<int>>.
@@ -93,7 +127,7 @@ TEST_F(CacheRequestTests, CacheResultTypes) {
 
 // Test that using a CacheRequest builds a key from the device key, the request type enum, and all
 // of the request members.
-TEST_F(CacheRequestTests, MakesCacheKey) {
+TEST_P(CacheRequestTests, MakesCacheKey) {
     // Make a request.
     CacheRequestForTesting req;
     req.a = 1;
@@ -124,7 +158,7 @@ TEST_F(CacheRequestTests, MakesCacheKey) {
 }
 
 // Test that members that are wrapped in UnsafeUnserializedValue do not impact the key.
-TEST_F(CacheRequestTests, CacheKeyIgnoresUnsafeIgnoredValue) {
+TEST_P(CacheRequestTests, CacheKeyIgnoresUnsafeIgnoredValue) {
     // Make two requests with different UnsafeUnserializedValue (UnsafeUnkeyed is declared on the
     // struct definition).
     int v1, v2;
@@ -172,7 +206,7 @@ TEST_F(CacheRequestTests, CacheKeyIgnoresUnsafeIgnoredValue) {
 }
 
 // Test the expected code path when there is a cache miss.
-TEST_F(CacheRequestTests, CacheMiss) {
+TEST_P(CacheRequestTests, CacheMiss) {
     // Make a request.
     CacheRequestForTesting req;
     req.a = 1;
@@ -213,7 +247,7 @@ TEST_F(CacheRequestTests, CacheMiss) {
 }
 
 // Test the expected code path when there is a cache hit.
-TEST_F(CacheRequestTests, CacheHit) {
+TEST_P(CacheRequestTests, CacheHit) {
     // Make a request.
     CacheRequestForTesting req;
     req.a = 1;
@@ -224,13 +258,16 @@ TEST_F(CacheRequestTests, CacheHit) {
     static StrictMock<MockFunction<int(CacheRequestForTesting)>> cacheMissFn;
 
     static constexpr char kCachedData[] = "hello world!";
+    // Bytes actually stored into and loaded from Blob cache might be different from raw given data.
+    Blob actualStoredData = GetDevice()->GetBlobCache()->GenerateActualStoredBlobForTesting(
+        sizeof(kCachedData), kCachedData);
 
     // Mock a cache hit, and load the cached data.
-    EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(sizeof(kCachedData)));
-    EXPECT_CALL(mMockCache, LoadData(_, _, _, sizeof(kCachedData)))
-        .WillOnce(WithArg<2>(Invoke([](void* dataOut) {
-            memcpy(dataOut, kCachedData, sizeof(kCachedData));
-            return sizeof(kCachedData);
+    EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(actualStoredData.Size()));
+    EXPECT_CALL(mMockCache, LoadData(_, _, _, actualStoredData.Size()))
+        .WillOnce(WithArg<2>(Invoke([&actualStoredData](void* dataOut) {
+            memcpy(dataOut, actualStoredData.Data(), actualStoredData.Size());
+            return actualStoredData.Size();
         })));
 
     // Expect the cache hit, and return some value.
@@ -258,7 +295,7 @@ TEST_F(CacheRequestTests, CacheHit) {
 }
 
 // Test the expected code path when there is a cache hit but the handler errors.
-TEST_F(CacheRequestTests, CacheHitError) {
+TEST_P(CacheRequestTests, CacheHitError) {
     // Make a request.
     CacheRequestForTesting req;
     req.a = 1;
@@ -271,13 +308,16 @@ TEST_F(CacheRequestTests, CacheHitError) {
     static StrictMock<MockFunction<int(CacheRequestForTesting)>> cacheMissFn;
 
     static constexpr char kCachedData[] = "hello world!";
+    // Bytes actually stored into and loaded from Blob cache might be different from raw given data.
+    Blob actualStoredData = GetDevice()->GetBlobCache()->GenerateActualStoredBlobForTesting(
+        sizeof(kCachedData), kCachedData);
 
     // Mock a cache hit, and load the cached data.
-    EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(sizeof(kCachedData)));
-    EXPECT_CALL(mMockCache, LoadData(_, _, _, sizeof(kCachedData)))
-        .WillOnce(WithArg<2>(Invoke([](void* dataOut) {
-            memcpy(dataOut, kCachedData, sizeof(kCachedData));
-            return sizeof(kCachedData);
+    EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(actualStoredData.Size()));
+    EXPECT_CALL(mMockCache, LoadData(_, _, _, actualStoredData.Size()))
+        .WillOnce(WithArg<2>(Invoke([&actualStoredData](void* dataOut) {
+            memcpy(dataOut, actualStoredData.Data(), actualStoredData.Size());
+            return actualStoredData.Size();
         })));
 
     // Expect the cache hit.
@@ -315,6 +355,129 @@ TEST_F(CacheRequestTests, CacheHitError) {
     EXPECT_EQ(*result, rv);
     EXPECT_FALSE(result.IsCached());
 }
+
+// Test the expected code path when hash validation is enabled, there is a cache hit but the hash
+// validation fails.
+TEST_P(CacheRequestTests, CacheHitHashValidationFailed) {
+    // Only run this test if hash validation is enabled.
+    if (!GetParam().enableHashValidation) {
+        GTEST_SKIP();
+    }
+
+    static StrictMock<MockFunction<int(Blob)>> cacheHitFn;
+    static StrictMock<MockFunction<int(CacheRequestForTesting)>> cacheMissFn;
+
+    static constexpr char kCachedData[] = "hello world!";
+    // Bytes actually stored into and loaded from Blob cache might be different from raw given data.
+    Blob actualStoredData = GetDevice()->GetBlobCache()->GenerateActualStoredBlobForTesting(
+        sizeof(kCachedData), kCachedData);
+    const size_t sizeWithHash = actualStoredData.Size();
+    const size_t addedSize = sizeWithHash - sizeof(kCachedData);
+
+    // Hash validation failure case 1: loaded blob size too small.
+    {
+        // Make a request.
+        CacheRequestForTesting req;
+        req.a = 1;
+        req.b = 0.2;
+        req.c = {3, 4, 5};
+
+        unsigned int* cPtr = req.c.data();
+
+        static constexpr uint8_t tooSmallBuffer[] = "0";
+        static constexpr size_t tooSmallBufferSize = sizeof(tooSmallBuffer);
+        ASSERT_LT(tooSmallBufferSize, addedSize);
+
+        // Mock a cache hit with data too small.
+        EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(tooSmallBufferSize));
+        EXPECT_CALL(mMockCache, LoadData(_, _, _, tooSmallBufferSize))
+            .WillOnce(WithArg<2>(Invoke([&](void* dataOut) {
+                memcpy(dataOut, tooSmallBuffer, tooSmallBufferSize);
+                return tooSmallBufferSize;
+            })));
+
+        // Expect the cacheMissFn called and return some value, since hash validation failure are
+        // treated as miss.
+        int rv = 42;
+        EXPECT_CALL(cacheMissFn, Call(_))
+            .WillOnce(WithArg<0>(Invoke([=](CacheRequestForTesting req) {
+                // Expect the request contents to be the same. The data pointer for |c| is also the
+                // same since it was moved.
+                EXPECT_EQ(req.a, 1);
+                EXPECT_FLOAT_EQ(req.b, 0.2);
+                EXPECT_EQ(req.c.data(), cPtr);
+                return rv;
+            })));
+
+        // Load the request.
+        auto result = LoadOrRun(
+                          GetDevice(), std::move(req),
+                          [](Blob blob) -> int { return cacheHitFn.Call(std::move(blob)); },
+                          [](CacheRequestForTesting req) -> ResultOrError<int> {
+                              return cacheMissFn.Call(std::move(req));
+                          })
+                          .AcquireSuccess();
+
+        // Expect the result to store the value.
+        EXPECT_EQ(*result, rv);
+        EXPECT_FALSE(result.IsCached());
+    }
+
+    // Hash validation failure case 2: loaded blob hash mismatched.
+    {
+        // Make a request.
+        CacheRequestForTesting req;
+        req.a = 1;
+        req.b = 0.2;
+        req.c = {3, 4, 5};
+
+        unsigned int* cPtr = req.c.data();
+
+        Blob modifiedStoredData = CreateBlob(sizeWithHash);
+        memcpy(modifiedStoredData.Data(), actualStoredData.Data(), sizeWithHash);
+        // Modify the last byte to make the hash mismatch.
+        modifiedStoredData.Data()[sizeWithHash - 1] ^= 0xFF;
+
+        // Mock a cache hit with modified data.
+        EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(sizeWithHash));
+        EXPECT_CALL(mMockCache, LoadData(_, _, _, sizeWithHash))
+            .WillOnce(WithArg<2>(Invoke([&](void* dataOut) {
+                memcpy(dataOut, modifiedStoredData.Data(), sizeWithHash);
+                return sizeWithHash;
+            })));
+
+        // Expect the cacheMissFn called and return some value, since hash validation failure are
+        // treated as miss.
+        int rv = 42;
+        EXPECT_CALL(cacheMissFn, Call(_))
+            .WillOnce(WithArg<0>(Invoke([=](CacheRequestForTesting req) {
+                // Expect the request contents to be the same. The data pointer for |c| is also the
+                // same since it was moved.
+                EXPECT_EQ(req.a, 1);
+                EXPECT_FLOAT_EQ(req.b, 0.2);
+                EXPECT_EQ(req.c.data(), cPtr);
+                return rv;
+            })));
+
+        // Load the request.
+        auto result = LoadOrRun(
+                          GetDevice(), std::move(req),
+                          [](Blob blob) -> int { return cacheHitFn.Call(std::move(blob)); },
+                          [](CacheRequestForTesting req) -> ResultOrError<int> {
+                              return cacheMissFn.Call(std::move(req));
+                          })
+                          .AcquireSuccess();
+
+        // Expect the result to store the value.
+        EXPECT_EQ(*result, rv);
+        EXPECT_FALSE(result.IsCached());
+    }
+}
+
+INSTANTIATE_TEST_SUITE_P(,
+                         CacheRequestTests,
+                         testing::Values(CacheRequestTestParam{.enableHashValidation = false},
+                                         CacheRequestTestParam{.enableHashValidation = true}));
 
 }  // anonymous namespace
 }  // namespace dawn::native
