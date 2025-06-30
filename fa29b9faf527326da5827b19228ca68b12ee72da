@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "570615f5_fa740041",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-06-30T01:50:37Z",
+      "side": 1,
+      "message": "Thanks for your comments! Below are my findings:\n1.r8unormstorage: \n - Can be enabled via Tier 1.\n\n2.norm16textureformats/unorm16textureformats/snorm16textureformats:\n - Cannot be implicitly enabled by Tier 1. These features enable norm16 texture formats with resolving capability. A8-A10 series (Apple 2/3 family) Metal GPUs lacking resolving capability, which is a mandatory requirement for all Metal platforms in Tier1.\n\n3.float32filterable:\n - Cannot be implicitly enabled for two reasons:\n  a. Vulkan does not support filtering on float32 textures.\n  b. Metal support is limited to Apple 9 and Mac2 family GPUs.\n\n4.float32renderable:\n - Cannot be implicitly enabled by Tier 1 because Vulkan\u0027s lack of support for float32 blending.",
+      "parentUuid": "c707f30b_8a7ca495",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cc1d6c90_07c5f130",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 5
@@ -31,6 +49,24 @@
       "writtenOn": "2025-06-23T09:05:26Z",
       "side": 1,
       "message": "Can we open an issue and add a TODO to replace uses if U/Norm16TextureFormats with TextureFormatsTier1 as it should be just as widespread, and closer to the spec? Then we can remove that extension from Dawn. See https://source.chromium.org/search?q\u003dNorm16TextureFormats%20-f:%5Eout%20-f:third_party%2Fdawn\u0026sq\u003d",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c5ffe98_1d3f5ddc",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-06-30T01:50:37Z",
+      "side": 1,
+      "message": "As mentioned before，norm16textureformats/unorm16textureformats/snorm16textureformats can not be implicitly enabled by Tier 1. These features enable norm16 texture formats with resolving capability. A8-A10 series (Apple 2/3 family) Metal GPUs lacking resolving capability, which is a mandatory requirement for all Metal platforms in Tier1.",
+      "parentUuid": "cc1d6c90_07c5f130",
       "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -54,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "94c4be52_3fed36cb",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-06-30T01:50:37Z",
+      "side": 1,
+      "message": "Acknowledged. Can we generate format.cpp using a JSON file so that the capabilities of different formats can be defined more conveniently in the JSON file?",
+      "parentUuid": "d0876dbc_b7141e96",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e3667f7c_56ae4e6d",
         "filename": "src/dawn/tests/unittests/validation/StorageTextureValidationTests.cpp",
         "patchSetId": 5
@@ -65,6 +119,30 @@
       "writtenOn": "2025-06-23T09:05:26Z",
       "side": 1,
       "message": "```suggestion\n// Check that it is allowed to create R8Snorm/RG8Snorm/RGBA8Snorm texture with the storage usage\n```",
+      "range": {
+        "startLine": 1311,
+        "startChar": 38,
+        "endLine": 1311,
+        "endChar": 45
+      },
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff2a5072_5c8494d5",
+        "filename": "src/dawn/tests/unittests/validation/StorageTextureValidationTests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-06-30T01:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3667f7c_56ae4e6d",
       "range": {
         "startLine": 1311,
         "startChar": 38,
