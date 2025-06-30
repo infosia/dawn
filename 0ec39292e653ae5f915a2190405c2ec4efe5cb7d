@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f17d3e93_f5feb81b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-30T22:51:41Z",
+      "side": 1,
+      "message": "Ah... seeing this makes me wish we had the `array` types like upstream does.",
+      "revId": "0ec39292e653ae5f915a2190405c2ec4efe5cb7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3222e2bd_7941d15e",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-30T22:51:41Z",
+      "side": 1,
+      "message": "Should we add any assertions to verify that this is only valid for array types?",
+      "range": {
+        "startLine": 255,
+        "startChar": 8,
+        "endLine": 255,
+        "endChar": 60
+      },
+      "revId": "0ec39292e653ae5f915a2190405c2ec4efe5cb7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6eaf22b_0f679043",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 2683,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-30T22:51:41Z",
+      "side": 1,
+      "message": "Is it allowed to have a pipeline layout with no bind group layouts? i.e. would it also be valid for this to be optional in the old sense as well?",
+      "range": {
+        "startLine": 2683,
+        "startChar": 12,
+        "endLine": 2683,
+        "endChar": 165
+      },
+      "revId": "0ec39292e653ae5f915a2190405c2ec4efe5cb7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
