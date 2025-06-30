@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d84494b1_bc44be41",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-30T21:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "803fb4f4_ea5db17a",
+      "range": {
+        "startLine": 1130,
+        "startChar": 11,
+        "endLine": 1130,
+        "endChar": 39
+      },
+      "revId": "7273e737806e1f826e6e4cd2455f1bbf2283db65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88a86133_4323c17d",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-06-30T20:36:10Z",
       "side": 1,
       "message": "For now this is fine. But given that we know this now, I think we should do some follow up cleanup to make `third_party/dawn/src/dawn/native/vulkan/RefCountedVkHandle.h` automatically assign ids based on types that way we can abstract this detail for all Vulkan handles. That would probably be better going forwards so we never run into a similar issue again. (We should probably also use that helper in more places?)\n\nI think that if we do that cleanup, we should be able to re-simplify the hash operator and just use the ids for the hash value and stuff (and I think we could remove the id handling stuff specific for texture/views we introduced here). Seems like a decent amount of work though, so might be worth filing a bug noting the findings and proposing something along these lines in it and putting it into the backlog.",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 81
+      },
+      "revId": "7273e737806e1f826e6e4cd2455f1bbf2283db65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bc369b4_578f5434",
+        "filename": "src/dawn/native/vulkan/FramebufferCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-30T21:51:16Z",
+      "side": 1,
+      "message": "Agreed that this seems like good follow-up work. Filed https://crbug.com/428742556",
+      "parentUuid": "88a86133_4323c17d",
       "range": {
         "startLine": 46,
         "startChar": 4,
@@ -70,6 +118,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "83f19c41_d1e9fc3d",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-30T21:51:16Z",
+      "side": 1,
+      "message": "This is only ever read/incremented when mMutex is locked, so no. But I also don\u0027t think there\u0027s much harm to making it atomic even if it\u0027s not strictly necessary, so I\u0027ve made that change anyway. Clarifies it\u0027s usage and makes it so that potential future changes are less likely to break it.",
+      "parentUuid": "0edc7704_0cfed1f4",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 34
+      },
+      "revId": "7273e737806e1f826e6e4cd2455f1bbf2283db65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8815af3c_875a8f58",
@@ -83,6 +155,30 @@
       "writtenOn": "2025-06-30T20:36:10Z",
       "side": 1,
       "message": "Why not do the same thing that you did for the device-\u003etexture and just do `mTextureViewId(ToBackend(texture)-\u003eGetUniqueTextureViewId())` here?",
+      "range": {
+        "startLine": 2003,
+        "startChar": 44,
+        "endLine": 2003,
+        "endChar": 73
+      },
+      "revId": "7273e737806e1f826e6e4cd2455f1bbf2283db65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73468635_02e31324",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2003,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-30T21:51:16Z",
+      "side": 1,
+      "message": "Actually... yeah, why didn\u0027t I? :D I think I just went through a couple of design passes here and overlooked the obvious thing when I finally settled on a solution. Anyway, it\u0027s fixed!",
+      "parentUuid": "8815af3c_875a8f58",
       "range": {
         "startLine": 2003,
         "startChar": 44,
