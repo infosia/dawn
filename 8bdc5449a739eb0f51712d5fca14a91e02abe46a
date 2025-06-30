@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4def4aef_b0ee4e9f",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-30T22:16:36Z",
+      "side": 1,
+      "message": "Hmm, I imagined a `GetDefaultView` method instead of `SetDefaultView` since setting it feels a bit weird in terms of the lifetimes of stuff. Maybe something like:\n\n```\nResultOrError\u003cRef\u003cTextureViewBase\u003e\u003e GetOrCreateDefaultView() {\n    // Texture view caching is not enabled, so don\u0027t cache the default view.\n    if (!mTextureViewCache) {\n        return GetDevice()-\u003eCreateTextureView(this, nullptr);\n    }\n    \n    // Lazily initialize and cache a default view when asked for it.\n    if (!mDefaultView) {\n        DAWN_TRY_ASSIGN(mDefaultView, \n            GetDevice()-\u003eCreateTextureView(this, nullptr));\n    }\n    DAWN_ASSERT(mDefaultView);\n    return mDefaultView;\n}\n```",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 201,
+        "endChar": 43
+      },
+      "revId": "8bdc5449a739eb0f51712d5fca14a91e02abe46a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

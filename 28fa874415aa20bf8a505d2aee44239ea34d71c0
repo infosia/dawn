@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b91225a0_e329ec80",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-30T22:16:36Z",
+      "side": 1,
+      "message": "Hmm I took a look at this and I suspect the issue is that we are creating internal textures that we end up getting the default view for. Since they never have an external ref added for them, we don\u0027t clean up the ref cycle as expected and maybe that\u0027s causing some issues on cleanup?\n\nThe texture view cache is guarded by the `WillAddFirstExternalRef` function whereas we don\u0027t guard the new default view. One option to try is to only keep a reference to the default view if the texture view cache is available as well?",
+      "parentUuid": "e0bd2bac_c261b724",
+      "revId": "28fa874415aa20bf8a505d2aee44239ea34d71c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4ee9d248_bed3fc70",
         "filename": "src/dawn/native/Device.cpp",
         "patchSetId": 7
