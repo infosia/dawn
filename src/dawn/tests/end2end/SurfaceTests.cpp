@@ -656,6 +656,19 @@ TEST_P(SurfaceTests, Storage) {
     surface.Present();
 }
 
+// Test that a Device can be dropped before a Surface configured with it.
+TEST_P(SurfaceTests, DeviceDroppedBeforeSurface) {
+    wgpu::Device device2 = CreateDevice();
+    wgpu::Surface surface = CreateTestSurface();
+
+    wgpu::SurfaceConfiguration config = GetPreferredConfiguration(surface);
+    config.device = device2;
+    surface.Configure(&config);
+
+    config.device = nullptr;
+    device2 = nullptr;
+}
+
 DAWN_INSTANTIATE_TEST(SurfaceTests,
                       D3D11Backend(),
                       D3D11Backend({"d3d11_delay_flush_to_gpu"}),
