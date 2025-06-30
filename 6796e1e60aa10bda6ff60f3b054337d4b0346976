@@ -39,6 +39,30 @@
       },
       "revId": "6796e1e60aa10bda6ff60f3b054337d4b0346976",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd4a749f_784b25f8",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-06-30T21:53:00Z",
+      "side": 1,
+      "message": "Yeah, I failed to account for the fact that if pixel local storage is enable then it may be the only source of attachments for the pass. Should be fixed in the latest patch.",
+      "parentUuid": "837d35cb_aecb70be",
+      "range": {
+        "startLine": 1286,
+        "startChar": 54,
+        "endLine": 1286,
+        "endChar": 70
+      },
+      "revId": "6796e1e60aa10bda6ff60f3b054337d4b0346976",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
