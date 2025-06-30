@@ -16,6 +16,29 @@
       "message": "PTAL! Skips pass validation as much as possible when running without validation. Should help Skia out.",
       "revId": "6796e1e60aa10bda6ff60f3b054337d4b0346976",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "837d35cb_aecb70be",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-06-30T20:47:02Z",
+      "side": 1,
+      "message": "I\u0027m guessing the test failures are related to us not setting the right bits on this state when we don\u0027t call the validation code.",
+      "range": {
+        "startLine": 1286,
+        "startChar": 54,
+        "endLine": 1286,
+        "endChar": 70
+      },
+      "revId": "6796e1e60aa10bda6ff60f3b054337d4b0346976",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
