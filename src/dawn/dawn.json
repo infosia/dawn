@@ -3553,7 +3553,7 @@
     "shader module WGSL descriptor": {
         "category": "typedef",
         "type": "shader source WGSL",
-        "tags": ["dawn"]
+        "tags": ["dawn", "emscripten"]
     },
     "shader source WGSL": {
         "category": "structure",
@@ -4491,7 +4491,7 @@
     "subgroup matrix component type": {
         "category": "enum",
         "emscripten_no_enum_table": true,
-        "tags": ["dawn"],
+        "tags": ["dawn", "emscripten"],
         "values": [
             {"value": 1, "name": "f32"},
             {"value": 2, "name": "f16"},
