@@ -56,22 +56,21 @@ void BlobCache::Store(const CacheKey& key, const Blob& value) {
     Store(key, value.Size(), value.Data());
 }
 
-Blob BlobCache::LoadInternal(const CacheKey& key) {
-    DAWN_ASSERT(ValidateCacheKey(key));
-    if (mLoadFunction == nullptr) {
-        return Blob();
-    }
-    const size_t expectedSize =
-        mLoadFunction(key.data(), key.size(), nullptr, 0, mFunctionUserdata);
-    if (expectedSize > 0) {
-        // Need to put this inside to trigger copy elision.
-        Blob result = CreateBlob(expectedSize);
-        const size_t actualSize =
-            mLoadFunction(key.data(), key.size(), result.Data(), expectedSize, mFunctionUserdata);
-        DAWN_ASSERT(expectedSize == actualSize);
-        return result;
-    }
-    return Blob();
+Blob BlobCache::GenerateActualStoredBlobForTesting(size_t valueSize, const void* value) {
+    return GenerateHashPrefixedPayload(valueSize, value);
+}
+
+Blob BlobCache::GenerateHashPrefixedPayload(size_t valueSize, const void* value) {
+    // Create a Blob for holding hash+payload.
+    const size_t byteSizeWithHash = valueSize + mHashByteSize;
+    Blob result = CreateBlob(byteSizeWithHash);
+    Hash* hashHeader = reinterpret_cast<Hash*>(result.Data());
+    uint8_t* payload = result.Data() + mHashByteSize;
+    // Copy the payload into buffer and compute the hash as prefix.
+    memcpy(payload, value, valueSize);
+    *hashHeader = Hasher::Hash(payload, valueSize);
+
+    return result;
 }
 
 void BlobCache::StoreInternal(const CacheKey& key, size_t valueSize, const void* value) {
@@ -81,7 +80,45 @@ void BlobCache::StoreInternal(const CacheKey& key, size_t valueSize, const void*
     if (mStoreFunction == nullptr) {
         return;
     }
-    mStoreFunction(key.data(), key.size(), value, valueSize, mFunctionUserdata);
+
+    Blob hashAndPayloadBuffer = GenerateHashPrefixedPayload(valueSize, value);
+
+    // Call the actual store function for hash+payload.
+    mStoreFunction(key.data(), key.size(), hashAndPayloadBuffer.Data(), hashAndPayloadBuffer.Size(),
+                   mFunctionUserdata);
+}
+
+Blob BlobCache::LoadInternal(const CacheKey& key) {
+    DAWN_ASSERT(ValidateCacheKey(key));
+    if (mLoadFunction == nullptr) {
+        return Blob();
+    }
+    const size_t expectedSizeWithHash =
+        mLoadFunction(key.data(), key.size(), nullptr, 0, mFunctionUserdata);
+    // Non-zero size indicates cache hit
+    if (expectedSizeWithHash > 0) {
+        DAWN_CHECK(expectedSizeWithHash > mHashByteSize);
+        size_t payloadByteSize = expectedSizeWithHash - mHashByteSize;
+
+        // Load hash+payload from cache.
+        uint8_t* bufferWithHash = new uint8_t[expectedSizeWithHash];
+        const size_t actualSizeWithHash = mLoadFunction(key.data(), key.size(), bufferWithHash,
+                                                        expectedSizeWithHash, mFunctionUserdata);
+        DAWN_CHECK(expectedSizeWithHash == actualSizeWithHash);
+
+        // Compute and validate the payload's hash.
+        Hash* expectedHash = (reinterpret_cast<Hash*>(bufferWithHash));
+        uint8_t* payload = bufferWithHash + mHashByteSize;
+        Hash payloadHash = Hasher::Hash(payload, payloadByteSize);
+        DAWN_CHECK(payloadHash == *expectedHash);
+
+        // Wrap the buffer as Blob without exposing the hash header.
+        Blob result = Blob::UnsafeCreateWithDeleter(payload, payloadByteSize,
+                                                    [=]() { delete[] bufferWithHash; });
+
+        return result;
+    }
+    return Blob();
 }
 
 bool BlobCache::ValidateCacheKey(const CacheKey& key) {

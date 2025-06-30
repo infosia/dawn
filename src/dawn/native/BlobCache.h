@@ -31,6 +31,7 @@
 #include <mutex>
 
 #include "dawn/common/Platform.h"
+#include "dawn/common/Sha3.h"
 #include "dawn/native/Blob.h"
 #include "dawn/native/CacheResult.h"
 #include "partition_alloc/pointers/raw_ptr_exclusion.h"
@@ -65,11 +66,20 @@ class BlobCache {
         }
     }
 
+    static Blob GenerateActualStoredBlobForTesting(size_t valueSize, const void* value);
+
   private:
+    using Hasher = Sha3_224;
+    using Hash = Hasher::Output;
+    static constexpr const size_t mHashByteSize = sizeof(Hash);
+
     // Non-thread safe internal implementations of load and store. Exposed callers that use
     // these helpers need to make sure that these are entered with `mMutex` held.
-    Blob LoadInternal(const CacheKey& key);
+    // StoreInternal insert the hash of given value payload as prefix, and LoadInternal validate the
+    // its hash before returning payload as Blob. This hashing and validation is transparent.
+    static Blob GenerateHashPrefixedPayload(size_t valueSize, const void* value);
     void StoreInternal(const CacheKey& key, size_t valueSize, const void* value);
+    Blob LoadInternal(const CacheKey& key);
 
     // Validates the cache key for this version of Dawn. At the moment, this is naively checking
     // that the cache key contains the dawn version string in it.

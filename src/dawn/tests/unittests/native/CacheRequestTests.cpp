@@ -224,13 +224,16 @@ TEST_F(CacheRequestTests, CacheHit) {
     static StrictMock<MockFunction<int(CacheRequestForTesting)>> cacheMissFn;
 
     static constexpr char kCachedData[] = "hello world!";
+    // Bytes actually stored into and loaded from Blob cache might be different from raw given data.
+    Blob actualStoredData =
+        BlobCache::GenerateActualStoredBlobForTesting(sizeof(kCachedData), kCachedData);
 
     // Mock a cache hit, and load the cached data.
-    EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(sizeof(kCachedData)));
-    EXPECT_CALL(mMockCache, LoadData(_, _, _, sizeof(kCachedData)))
-        .WillOnce(WithArg<2>(Invoke([](void* dataOut) {
-            memcpy(dataOut, kCachedData, sizeof(kCachedData));
-            return sizeof(kCachedData);
+    EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(actualStoredData.Size()));
+    EXPECT_CALL(mMockCache, LoadData(_, _, _, actualStoredData.Size()))
+        .WillOnce(WithArg<2>(Invoke([&actualStoredData](void* dataOut) {
+            memcpy(dataOut, actualStoredData.Data(), actualStoredData.Size());
+            return actualStoredData.Size();
         })));
 
     // Expect the cache hit, and return some value.
@@ -271,13 +274,16 @@ TEST_F(CacheRequestTests, CacheHitError) {
     static StrictMock<MockFunction<int(CacheRequestForTesting)>> cacheMissFn;
 
     static constexpr char kCachedData[] = "hello world!";
+    // Bytes actually stored into and loaded from Blob cache might be different from raw given data.
+    Blob actualStoredData =
+        BlobCache::GenerateActualStoredBlobForTesting(sizeof(kCachedData), kCachedData);
 
     // Mock a cache hit, and load the cached data.
-    EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(sizeof(kCachedData)));
-    EXPECT_CALL(mMockCache, LoadData(_, _, _, sizeof(kCachedData)))
-        .WillOnce(WithArg<2>(Invoke([](void* dataOut) {
-            memcpy(dataOut, kCachedData, sizeof(kCachedData));
-            return sizeof(kCachedData);
+    EXPECT_CALL(mMockCache, LoadData(_, _, nullptr, 0)).WillOnce(Return(actualStoredData.Size()));
+    EXPECT_CALL(mMockCache, LoadData(_, _, _, actualStoredData.Size()))
+        .WillOnce(WithArg<2>(Invoke([&actualStoredData](void* dataOut) {
+            memcpy(dataOut, actualStoredData.Data(), actualStoredData.Size());
+            return actualStoredData.Size();
         })));
 
     // Expect the cache hit.
