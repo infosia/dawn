@@ -133,6 +133,11 @@ struct State {
                             }
                         }
                         break;
+                    case core::BuiltinFn::kSubgroupShuffleXor:
+                        if (config.subgroup_shuffle_xor) {
+                            worklist.Push(builtin);
+                        }
+                        break;
                     case core::BuiltinFn::kSaturate:
                         if (config.saturate) {
                             worklist.Push(builtin);
@@ -226,6 +231,9 @@ struct State {
                     break;
                 case core::BuiltinFn::kReflect:
                     Reflect(builtin);
+                    break;
+                case core::BuiltinFn::kSubgroupShuffleXor:
+                    SubgroupShuffleXor(builtin);
                     break;
                 case core::BuiltinFn::kSaturate:
                     Saturate(builtin);
@@ -881,6 +889,25 @@ struct State {
             auto* vfactor = b.Construct(vec_ty, factor);
             auto* mul = b.Multiply(vec_ty, vfactor, e2);
             b.AddWithResult(call->DetachResult(), e1, mul);
+        });
+        call->Destroy();
+    }
+
+    /// Polyfill a `subgroupShuffleXor()` builtin call.
+    /// @param call the builtin call instruction
+    void SubgroupShuffleXor(ir::CoreBuiltinCall* call) {
+        // This polyfill is implemented by doing a broadcast of the current subgroup invocation's
+        // value to all other invocations. The ID of the invocation to broadcast from is the XOR
+        // of the current invocation's ID and the offset requested by the shuffle.
+        auto* value = call->Args()[0];
+        auto* offset = call->Args()[1];
+        b.InsertBefore(call, [&] {
+            auto* subgroup_invocation_id_var =
+                ir.GetOrCreateBuiltinVar(core::BuiltinValue::kSubgroupInvocationId);
+            auto* subgroup_invocation_id = b.Load(subgroup_invocation_id_var);
+            auto* id = b.Xor<u32>(subgroup_invocation_id, offset);
+            auto* result = b.Call(value->Type(), core::BuiltinFn::kSubgroupBroadcast, value, id);
+            result->SetResult(call->DetachResult());
         });
         call->Destroy();
     }

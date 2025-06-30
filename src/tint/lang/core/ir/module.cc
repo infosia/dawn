@@ -30,6 +30,7 @@
 #include <limits>
 #include <utility>
 
+#include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/control_instruction.h"
 #include "src/tint/lang/core/ir/user_call.h"
 #include "src/tint/utils/containers/unique_vector.h"
@@ -186,6 +187,54 @@ Vector<const Function*, 16> Module::DependencyOrderedFunctions() const {
 void Module::Destroy(Function* func) {
     functions.EraseIf([&](const core::ir::Function* o) { return o == func; });
     func->Destroy();
+}
+
+ir::Var* Module::GetOrCreateBuiltinVar(core::BuiltinValue builtin) {
+    if (auto res = builtin_vars_.Get(builtin)) {
+        if (res) {
+            return *res.value;
+        }
+    }
+
+    Builder builder(*this);
+    const core::type::Type* type = nullptr;
+    switch (builtin) {
+        case core::BuiltinValue::kSubgroupInvocationId:
+            type = builder.ir.Types().u32();
+            break;
+        default:
+            TINT_UNIMPLEMENTED() << "unhandled builtin value: " << builtin;
+    }
+
+    auto* var =
+        builder.Var(ToString(builtin), builder.ir.Types().ptr(fluent_types::private_, type));
+    var->SetInitializer(builder.Zero(type));
+    root_block->Append(var);
+    builtin_vars_.Add(builtin, var);
+
+    // Store the subgroup invocation ID at the start of each relevant entry point.
+    for (auto& func : functions) {
+        if (func->Stage() == Function::PipelineStage::kCompute ||
+            func->Stage() == Function::PipelineStage::kFragment) {
+            FunctionParam* param = nullptr;
+            for (auto* each : func->Params()) {
+                if (each->Builtin() == builtin) {
+                    param = each;
+                    break;
+                }
+            }
+
+            if (param == nullptr) {
+                param = builder.FunctionParam("tint_local_index", builder.ir.Types().u32());
+                func->AppendParam(param);
+                param->SetBuiltin(builtin);
+            }
+
+            builder.InsertBefore(func->Block()->Front(), [&] { builder.Store(var, param); });
+        }
+    }
+
+    return var;
 }
 
 }  // namespace tint::core::ir
