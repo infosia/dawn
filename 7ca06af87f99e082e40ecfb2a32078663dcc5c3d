@@ -140,6 +140,24 @@
       "parentUuid": "2d35e34b_210fe3e5",
       "revId": "7ca06af87f99e082e40ecfb2a32078663dcc5c3d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bd04809_e7aec9fd",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-06-30T03:11:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e360b30_fc89b773",
+      "revId": "7ca06af87f99e082e40ecfb2a32078663dcc5c3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
