@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cc7fcd4_00b05b10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-01T01:26:11Z",
+      "side": 1,
+      "message": "Passed everything else, so I think it\u0027s OK to `No-Try` to unblock on `linux-dawn-rel`, if you want.",
+      "revId": "00d9d4b935913fce7c313f35c6710c45850e0952",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
