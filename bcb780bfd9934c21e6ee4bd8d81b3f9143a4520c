@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "93fcfe81_f94ce513",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-01T01:21:05Z",
+      "side": 1,
+      "message": "Left some suggestions about how we can avoid this but either or both change is fine if needed.",
+      "revId": "bcb780bfd9934c21e6ee4bd8d81b3f9143a4520c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7380d0c1_be102008",
