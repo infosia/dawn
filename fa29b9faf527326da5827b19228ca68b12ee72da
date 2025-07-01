@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1aa622b0_9375ab07",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-01T07:05:00Z",
+      "side": 1,
+      "message": "I don\u0027t know that for 2/3/4 the data shows that we cannot implicitly enable the extensions. The restrictions for the various extensions are different, but maybe the actual devices always support float32filterable (for example) when texture-tier1 is supported. (or we lose very few devices)\n\nCan you still open an issue about it on gpuweb? It would be very useful for developers if they could enable tier1 and not worry about the other optional features.\n\nIn all cases, after opening the issue, feel free to \"Ack\" these comment threads as they would otherwise be blocking this CL from landing (when it\u0027s just things for follow-ups)",
+      "parentUuid": "570615f5_fa740041",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cc1d6c90_07c5f130",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 5
@@ -73,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "db900485_3444dc66",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-01T07:05:00Z",
+      "side": 1,
+      "message": "This is an experimental feature and only used for Graphite, so we could double check if it uses the resolve capability.\n\nAlso discussions culminating in https://github.com/gpuweb/gpuweb/issues/3838#issuecomment-1753309588 seem to say we don\u0027t support Apple3 GPUs for this extension.\n\nJiawei, do you remember why the resolve capability was not added in the extension for these formats?",
+      "parentUuid": "2c5ffe98_1d3f5ddc",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d0876dbc_b7141e96",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 5
@@ -102,6 +138,24 @@
       "side": 1,
       "message": "Acknowledged. Can we generate format.cpp using a JSON file so that the capabilities of different formats can be defined more conveniently in the JSON file?",
       "parentUuid": "d0876dbc_b7141e96",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb760b57_500e2d64",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-01T07:05:00Z",
+      "side": 1,
+      "message": "I don\u0027t know that it would help readability necessarily compared to the suggestion above. Any specific reason for wanting to use a JSON + codegen?",
+      "parentUuid": "94c4be52_3fed36cb",
       "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
