@@ -376,7 +376,7 @@ void ValidationTest::SetUp(const wgpu::InstanceDescriptor* nativeDesc,
         wgpu::CallbackMode::AllowSpontaneous,
         [this](const wgpu::Device&, wgpu::DeviceLostReason reason, wgpu::StringView message) {
             if (mExpectDestruction) {
-                EXPECT_EQ(reason, wgpu::DeviceLostReason::Destroyed);
+                EXPECT_EQ(reason, wgpu::DeviceLostReason::Destroyed) << message;
                 return;
             }
             ADD_FAILURE() << "Device lost during test: " << message;
