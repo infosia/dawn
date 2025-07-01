@@ -198,17 +198,16 @@ Ref<DeviceBase::DeviceLostEvent> DeviceBase::DeviceLostEvent::Create(
     return AcquireRef(new DeviceBase::DeviceLostEvent(deviceLostCallbackInfo));
 }
 
-void DeviceBase::DeviceLostEvent::SetLost(EventManager* eventManager,
-                                          wgpu::DeviceLostReason reason,
-                                          std::string_view message) {
-    mReason = reason;
-    mMessage = message;
-    eventManager->SetFutureReady(this);
-    if (mDevice) {
-        // If the device was already set, then the device must be associated with this event. Since
-        // the event should only be set and triggered once, unset the event in the device now.
-        mDevice->mLostFuture = GetFuture();
-        mDevice->mLostEvent = nullptr;
+void DeviceBase::DeviceLostEvent::SetLost(wgpu::DeviceLostReason reason, std::string_view message) {
+    // Don't override the reason if we failed creation since that reason should always take
+    // precedence.
+    if (mReason != wgpu::DeviceLostReason::FailedCreation) {
+        // If we failed creation, null out the device.
+        if (reason == wgpu::DeviceLostReason::FailedCreation) {
+            mDevice = nullptr;
+        }
+        mReason = reason;
+        mMessage = message;
     }
 }
 
@@ -698,8 +697,13 @@ void DeviceBase::APIDestroy() {
 }
 
 void DeviceBase::HandleDeviceLost(wgpu::DeviceLostReason reason, std::string_view message) {
-    if (mLostEvent != nullptr) {
-        mLostEvent->SetLost(GetInstance()->GetEventManager(), reason, message);
+    if (mLostEvent) {
+        mLostEvent->SetLost(reason, message);
+        mLostFuture = mLostEvent->GetFuture();
+        DeferIfLocked(
+            [eventManager = GetInstance()->GetEventManager(), lostEvent = std::move(mLostEvent)]() {
+                eventManager->SetFutureReady(lostEvent.Get());
+            });
     }
 }
 
