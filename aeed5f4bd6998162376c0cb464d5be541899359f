@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6b8abec_d2b8b559",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-01T05:35:18Z",
+      "side": 1,
+      "message": "Loko, PTAL",
+      "revId": "aeed5f4bd6998162376c0cb464d5be541899359f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "54c337b0_9d35e677",
@@ -14,6 +31,24 @@
       "writtenOn": "2025-07-01T03:39:26Z",
       "side": 1,
       "message": "I am not sure, should we use `swizzleDesc-\u003eswizzle.WithTrivialFrontendDefaults()` here?",
+      "revId": "aeed5f4bd6998162376c0cb464d5be541899359f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a13e3fb6_53372c9c",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-01T05:35:18Z",
+      "side": 1,
+      "message": "Without it, I get this error when running `ComponentSwizzleTextureViewValidationTests.InvalidSwizzle` test:\n\n```\nGot unexpected device error: The texture view\u0027s component swizzle r (ComponentSwizzle::Undefined) must be ComponentSwizzle::R when usage includes TextureUsage::RenderAttachment or TextureUsage::StorageBinding.\n```",
+      "parentUuid": "54c337b0_9d35e677",
       "revId": "aeed5f4bd6998162376c0cb464d5be541899359f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
