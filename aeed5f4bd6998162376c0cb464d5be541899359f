@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54c337b0_9d35e677",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-01T03:39:26Z",
+      "side": 1,
+      "message": "I am not sure, should we use `swizzleDesc-\u003eswizzle.WithTrivialFrontendDefaults()` here?",
+      "revId": "aeed5f4bd6998162376c0cb464d5be541899359f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
