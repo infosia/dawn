@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7380d0c1_be102008",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3556,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-01T01:19:50Z",
+      "side": 1,
+      "message": "This is a deprecation typedef. Can we just migrate g3 onto ShaderSourceWGSL?",
+      "revId": "bcb780bfd9934c21e6ee4bd8d81b3f9143a4520c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b61ba5d7_d90dc54e",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4494,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-01T01:19:50Z",
+      "side": 1,
+      "message": "WGPUSubgroupMatrixConfig isn\u0027t implemented in Emdawnwebgpu and in fact will crash in debug builds if used:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js;l\u003d591;drc\u003deb34f73e1199295a0997a3debb1fb1ba19c2b747\n\nHow hard would it be to disable all the code that uses WGPUSubgroupMatrixComponentType? If it\u0027s just `ToDataType` then the `#ifndef __EMSCRIPTEN__` just needs to move up a few lines.",
+      "revId": "bcb780bfd9934c21e6ee4bd8d81b3f9143a4520c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
