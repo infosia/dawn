@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a728e92_27faf07d",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-01T01:11:18Z",
+      "side": 1,
+      "message": "Nit: There\u0027s no matrix multiplication happening here.",
+      "revId": "a0ebea748b975233d515795ec477bc1dedc30914",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40eabc93_f34ff677",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-01T01:11:18Z",
+      "side": 1,
+      "message": "Nit: Again, no matrix multiplication is happening here. Recommend describing what we are actually testing, and how, in this comment.",
+      "revId": "a0ebea748b975233d515795ec477bc1dedc30914",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8e40cdd_e1696365",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-01T01:11:18Z",
+      "side": 1,
+      "message": "Nit: Remove comment - there\u0027s only one matrix.",
+      "revId": "a0ebea748b975233d515795ec477bc1dedc30914",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c18961f1_7a92c2d1",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-01T01:11:18Z",
+      "side": 1,
+      "message": "Nit: \"input matrix\"",
+      "fixSuggestions": [
+        {
+          "fixId": "a3645a49_4e751f67",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+              "range": {
+                "startLine": 659,
+                "startChar": 0,
+                "endLine": 660,
+                "endChar": 0
+              },
+              "replacement": "        // Create the input buffer and copy the input matrix to it.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a0ebea748b975233d515795ec477bc1dedc30914",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f3dfeaa_0213b02f",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-01T01:11:18Z",
+      "side": 1,
+      "message": "Nit: no accumulator.",
+      "revId": "a0ebea748b975233d515795ec477bc1dedc30914",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5db8e603_07fe4261",
+        "filename": "src/dawn/tests/end2end/SubgroupMatrixTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-01T01:11:18Z",
+      "side": 1,
+      "message": "Nit: not using a reference implementation here since there\u0027s no multiply, so we\u0027re just comparing to the input.",
+      "revId": "a0ebea748b975233d515795ec477bc1dedc30914",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
