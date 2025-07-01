@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37640051_531f055a",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 4188,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-01T07:11:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "33963109_8664cb07",
+      "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf443c8a_e05c6501",
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "I\u0027ve added support for caching in latest patchset.",
       "parentUuid": "511c34c5_ed4e7dea",
+      "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cab75067_46119415",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-01T07:11:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6d4dd509_a4cccaee",
       "revId": "9b453dcdf9a84f287c7d9ce6244ea163a6173777",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
