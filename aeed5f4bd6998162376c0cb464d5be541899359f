@@ -107,6 +107,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07faf002_73a88369",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-01T09:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82832e82_305db1d2",
+      "revId": "aeed5f4bd6998162376c0cb464d5be541899359f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e0ac0bc6_745d7731",
@@ -120,6 +138,30 @@
       "writtenOn": "2025-07-01T07:11:56Z",
       "side": 1,
       "message": "Let\u0027s just default to RGBA like in the spec? Otherwise backends will have to handle the \"Undefined\" value and decide which channel it corresponds to.",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 76
+      },
+      "revId": "aeed5f4bd6998162376c0cb464d5be541899359f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a1016c2_4c05e73a",
+        "filename": "src/dawn/native/Texture.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-01T09:36:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0ac0bc6_745d7731",
       "range": {
         "startLine": 108,
         "startChar": 2,
