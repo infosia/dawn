@@ -141,6 +141,30 @@
       },
       "revId": "bb6a17e65461bbc037e8254f15830973ca9b0813",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c425bdd_93e6f40b",
+        "filename": "src/dawn/native/DeviceGuard.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-01T20:36:36Z",
+      "side": 1,
+      "message": "Ah, actually, I realized that I need to do the initialization and stuff for the Defer in the DeviceGuard ctor instead of at the `Device::GetGuard()` level because it needs to happen after we have acquired the device lock. Added more comments to make it clear why I had to do things the way they are.",
+      "parentUuid": "cc426cc0_6b521410",
+      "range": {
+        "startLine": 63,
+        "startChar": 26,
+        "endLine": 63,
+        "endChar": 32
+      },
+      "revId": "bb6a17e65461bbc037e8254f15830973ca9b0813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
