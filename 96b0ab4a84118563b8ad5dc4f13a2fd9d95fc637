@@ -39,6 +39,30 @@
       },
       "revId": "96b0ab4a84118563b8ad5dc4f13a2fd9d95fc637",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a737dc3d_24fca3cf",
+        "filename": "src/dawn/native/Buffer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-01T20:37:59Z",
+      "side": 1,
+      "message": "I didn\u0027t want to have the word `Lock` in the `Defer` call because it\u0027s technically allowed to be called with or without the `Lock`. Semantically it just means please call this `Task` asap when you can w.r.t the `Device`.",
+      "parentUuid": "f8adea7e_e4828b8f",
+      "range": {
+        "startLine": 737,
+        "startChar": 21,
+        "endLine": 737,
+        "endChar": 26
+      },
+      "revId": "96b0ab4a84118563b8ad5dc4f13a2fd9d95fc637",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
