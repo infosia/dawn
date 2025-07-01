@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a7b5fcb_07239874",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-01T08:30:58Z",
+      "side": 1,
+      "message": "Thank you for trying, I didn\u0027t realize the mismatches here. The deprecation warnings were very useful when we were updating webgpu.h but don\u0027t have a single user anymore. Let\u0027s remove that mechanism since we don\u0027t expect close to as many deprecations in the future.\n\nEmitWarningOnce needs to be kept as we\u0027ll have non-deprecation warnings if we don\u0027t already.\n\nKeeping that code path untested LGTM assuming you tried locally, because this code is meant to be deleted in ~months.",
+      "parentUuid": "f87a63d7_6af9451c",
+      "revId": "caf1f8a65e970f105e93a5c27b08136c5693945a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a429e502_7ee6893e",
