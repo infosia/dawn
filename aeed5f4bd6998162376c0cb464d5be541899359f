@@ -69,6 +69,24 @@
       "parentUuid": "a13e3fb6_53372c9c",
       "revId": "aeed5f4bd6998162376c0cb464d5be541899359f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ae09003_c3199fb0",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-01T05:53:47Z",
+      "side": 1,
+      "message": "Ah I didn\u0027t realize we were in `TextureViewQuery::TextureViewQuery` sorry!\n\n@lokokung@google.com Is there a centralized way to get swizzle defaults or is that okay to call `WithTrivialFrontendDefaults()` in  `TextureViewQuery::TextureViewQuery`?",
+      "parentUuid": "57373e1c_7661f26a",
+      "revId": "aeed5f4bd6998162376c0cb464d5be541899359f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
