@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "271b98a7_0502c452",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-01T01:53:50Z",
+      "side": 1,
+      "message": "Note: Having something that needs to be wrapped around the type part of a declaration (e.g. `Type value;`) is technically incorrect because it\u0027s not possible for all C types, e.g. `int (*x)[]` (pointer to array of int) which can\u0027t be separated into `int[]* x` or anything like that. (Clang nullability for this would look like `int (* _Nonnull x)[]`.)\n\nI think this problem is fine because it can be avoided using a typedef:\n```\ntypedef int intarray[];\nWGPU_NULLABLE(intarray *) x;\n```",
+      "range": {
+        "startLine": 219,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 6
+      },
+      "revId": "779452f0256336f14f3ab05e38c84df8412c2291",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
