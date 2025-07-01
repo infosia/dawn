@@ -127,6 +127,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "41839e04_a7a45500",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-01T07:23:37Z",
+      "side": 1,
+      "message": "\u003e Also discussions culminating in https://github.com/gpuweb/gpuweb/issues/3838#issuecomment-1753309588 seem to say we don\u0027t support Apple3 GPUs for this extension.\n\nOK I will open an issue to discuss if we can support Resolve unorm/snorm16 formats in Tier1.",
+      "parentUuid": "9705fd01_591e4e0d",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d0876dbc_b7141e96",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 5
