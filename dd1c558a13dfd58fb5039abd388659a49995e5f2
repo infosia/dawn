@@ -122,6 +122,24 @@
       "parentUuid": "250dcdec_3e29f458",
       "revId": "dd1c558a13dfd58fb5039abd388659a49995e5f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54784b03_e7e8bfa4",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-01T22:56:40Z",
+      "side": 1,
+      "message": "Oof... I see what you mean about needing the full copy... It might not be ideal, but maybe the right way is to do the bigger change incrementally? i.e. we introduce new callback functions in this CL while still supporting the other path, then migrate chromium to use the callback functions (that now take an additional integrity hash key argument).\n\nI feel like the copy will likely be a decent perf regression unfortunately. Another (probably hacky) solution, is we could store the integrity hash separately? Maybe we would set it up so that the the existing (cache key)-\u003e(integrity hash), then (optional? cache key + integrity hash)-\u003e(actual blob), or something like that? That would mean invoking the callback functions twice for both load and store though. Honestly though, it feels like these ideas would just be like tech-debt workarounds, so IMO we should just do it the clean way.",
+      "parentUuid": "834e81d4_ca607ae1",
+      "revId": "dd1c558a13dfd58fb5039abd388659a49995e5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
