@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "895f640e_b05a876d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-01T16:40:03Z",
+      "side": 1,
+      "message": "That\u0027s a good idea. It would be better than trying to represent the entire C type system. Maybe I can look at this soon.",
+      "parentUuid": "f17d3e93_f5feb81b",
+      "revId": "0ec39292e653ae5f915a2190405c2ec4efe5cb7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3222e2bd_7941d15e",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-06-30T22:51:41Z",
       "side": 1,
       "message": "Should we add any assertions to verify that this is only valid for array types?",
+      "range": {
+        "startLine": 255,
+        "startChar": 8,
+        "endLine": 255,
+        "endChar": 60
+      },
+      "revId": "0ec39292e653ae5f915a2190405c2ec4efe5cb7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "550e916a_b3124380",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-01T16:40:03Z",
+      "side": 1,
+      "message": "Will do",
+      "parentUuid": "3222e2bd_7941d15e",
       "range": {
         "startLine": 255,
         "startChar": 8,
@@ -77,6 +119,30 @@
       "writtenOn": "2025-07-01T12:17:21Z",
       "side": 1,
       "message": "It is valid yes!",
+      "parentUuid": "b6eaf22b_0f679043",
+      "range": {
+        "startLine": 2683,
+        "startChar": 12,
+        "endLine": 2683,
+        "endChar": 165
+      },
+      "revId": "0ec39292e653ae5f915a2190405c2ec4efe5cb7d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79511ca2_e1576bef",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 2683,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-01T16:40:03Z",
+      "side": 1,
+      "message": "Oops I forgot to submit this comment yesterday!\n\nYes, but all of our arrays can be zero-sized. (That\u0027s what I meant by WGPU_NULLABLE \"technically true\" - null is allowed if size is 0.) I\u0027d like to fix that but it\u0027s separate.",
       "parentUuid": "b6eaf22b_0f679043",
       "range": {
         "startLine": 2683,
