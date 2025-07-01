@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecb6e8cd_5ce4a465",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-01T02:12:46Z",
+      "side": 1,
+      "message": "nit: clarify that this CL _does_ revert the change",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "ab7759bb3fe427797b3ed464cb32b91e14c4b8cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd04fd38_4385c69b",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-01T02:12:46Z",
+      "side": 1,
+      "message": "nit: braces no longer needed on this block",
+      "revId": "ab7759bb3fe427797b3ed464cb32b91e14c4b8cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b53c7cb_68dffa24",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-01T02:12:46Z",
+      "side": 1,
+      "message": "Backwards compatibility with what? It\u0027s not a public API, is it? If it\u0027s just a code cleanup then there should be a TODO to migrate all code onto UpdateCompletedSerial.",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "ab7759bb3fe427797b3ed464cb32b91e14c4b8cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
