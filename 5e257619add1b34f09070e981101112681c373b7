@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "27b782cc_be7c0835",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-01T22:05:37Z",
+      "side": 1,
+      "message": "The renderPassId feels different to me because we don\u0027t have much else to work with aside from the VkHandle, given that it doesn\u0027t have a direct WebGPU equivalent.\n\nAlso, there should be FAR fewer of these over the lifetime of a device than textures/view, unless the app is perhaps fuzzing every possible combination of render pass args it can think of.",
+      "parentUuid": "abf58a40_9a2c96c5",
+      "revId": "5e257619add1b34f09070e981101112681c373b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7b937ce0_bd236e91",
         "filename": "src/dawn/native/vulkan/TextureVk.h",
         "patchSetId": 5
@@ -31,6 +49,24 @@
       "writtenOn": "2025-07-01T12:06:00Z",
       "side": 1,
       "message": "Could we have TypedIntegers for this, at least for storing in members (IDK that we can use these types in atomic\u003c\u003e)?\n\nu32s can easily overflow and roll over, so we should use u64 for unique IDs.\n\nInstead of doing:\n\n```\nDevice::CreateTextureImpl\n - Texture::Create\n   - Texture::Texture\n     - Device::GetTextureUniqueID // Why do we go back to mutate the device here?\n```\n\nCan we do\n\n```\nDevice::CreateTextureImpl\n  - Get the unique ID and pass it in\n  - Texture::Create\n    - Texture::Texture\n```\n\nDitto for the texture views.\n\nAlternatively (and less extra logic?) we can have the cache keys keep a WeakPtr to the dawn::native::TextureView, which would prevent reusing the same pointer until it is no longer in the cache.",
+      "revId": "5e257619add1b34f09070e981101112681c373b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c583379e_963a161c",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-01T22:05:37Z",
+      "side": 1,
+      "message": "Swapped this out for a WeakPtr and it appears to be working. Want to verify on the various Android devices I\u0027ve been testing when I\u0027m back in the office next (probably tomorrow)",
+      "parentUuid": "7b937ce0_bd236e91",
       "revId": "5e257619add1b34f09070e981101112681c373b7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
