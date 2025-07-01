@@ -51,6 +51,24 @@
       "parentUuid": "54c337b0_9d35e677",
       "revId": "aeed5f4bd6998162376c0cb464d5be541899359f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57373e1c_7661f26a",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-01T05:46:02Z",
+      "side": 1,
+      "message": "I am thinking that should we also use the `WithTrivialFrontendDefaults` here? E.g.\n```\n    if (auto* swizzleDesc \u003d desc.Get\u003cTextureComponentSwizzleDescriptor\u003e()) {\n        auto swizzle \u003d swizzleDesc-\u003eswizzle.WithTrivialFrontendDefaults();\n        swizzleRed \u003d swizzle.r;\n        swizzleGreen \u003d swizzle.g;\n        swizzleBlue \u003d swizzle.b;\n        swizzleAlpha \u003d swizzle.a;\n    }\n```",
+      "parentUuid": "a13e3fb6_53372c9c",
+      "revId": "aeed5f4bd6998162376c0cb464d5be541899359f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
