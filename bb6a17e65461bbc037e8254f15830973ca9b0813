@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7242cc4_1daa4f28",
+        "filename": "src/dawn/native/DeviceGuard.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-01T19:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e82bb60f_bd796022",
+      "revId": "bb6a17e65461bbc037e8254f15830973ca9b0813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "396d8a7a_7dd05d95",
@@ -91,6 +109,30 @@
       "side": 1,
       "message": "Also it seems that we could use nullptr to mean there is no handling needed for the defer. And have `Device::Guard()` initialize the Defer and pass it to the guard to handle, this way there is less logic leaking inside DeviceGuard (maybe it doesn\u0027t need to be a friend anymore).",
       "parentUuid": "396d8a7a_7dd05d95",
+      "range": {
+        "startLine": 63,
+        "startChar": 26,
+        "endLine": 63,
+        "endChar": 32
+      },
+      "revId": "bb6a17e65461bbc037e8254f15830973ca9b0813",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc426cc0_6b521410",
+        "filename": "src/dawn/native/DeviceGuard.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-01T19:31:57Z",
+      "side": 1,
+      "message": "Done. I still needed the friend for the mutex though.",
+      "parentUuid": "7072b385_64d52f59",
       "range": {
         "startLine": 63,
         "startChar": 26,
