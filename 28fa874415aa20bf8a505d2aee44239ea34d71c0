@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b3f9e49_2dc13e40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-01T17:43:49Z",
+      "side": 1,
+      "message": "It looks like it\u0027s not an issue anymore with latest patchset.",
+      "parentUuid": "b91225a0_e329ec80",
+      "revId": "28fa874415aa20bf8a505d2aee44239ea34d71c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ee9d248_bed3fc70",
@@ -67,6 +85,30 @@
       "writtenOn": "2025-06-27T21:50:41Z",
       "side": 1,
       "message": "[1]",
+      "range": {
+        "startLine": 2268,
+        "startChar": 4,
+        "endLine": 2268,
+        "endChar": 31
+      },
+      "revId": "28fa874415aa20bf8a505d2aee44239ea34d71c0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4232f2c_caea6137",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2268,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-01T17:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee9d248_bed3fc70",
       "range": {
         "startLine": 2268,
         "startChar": 4,
