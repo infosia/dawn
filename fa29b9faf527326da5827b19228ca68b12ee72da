@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9705fd01_591e4e0d",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-01T07:16:41Z",
+      "side": 1,
+      "message": "\u003e Jiawei, do you remember why the resolve capability was not added in the extension for these formats?\n\nIt is because Resolve capability is not supported on Apple2 and Apple3:\nhttps://developer.apple.com/metal/Metal-Feature-Set-Tables.pdf",
+      "parentUuid": "db900485_3444dc66",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d0876dbc_b7141e96",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 5
