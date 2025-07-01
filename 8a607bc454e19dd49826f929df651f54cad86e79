@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d18dd5bc_e754b51d",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-01T18:09:36Z",
+      "side": 1,
+      "message": "nit. Probably not important, but could we move this to before the `mTextureViews.Destroy()` call? (I don\u0027t think it matters atm, but that call can also affect the views so to be safe I just want to make sure it happens last.)",
+      "range": {
+        "startLine": 996,
+        "startChar": 4,
+        "endLine": 996,
+        "endChar": 27
+      },
+      "revId": "8a607bc454e19dd49826f929df651f54cad86e79",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
