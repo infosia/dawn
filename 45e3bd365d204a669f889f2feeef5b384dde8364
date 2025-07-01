@@ -16,6 +16,24 @@
       "message": "nit: can we move this to a separate function? this lambda is already huge.",
       "revId": "45e3bd365d204a669f889f2feeef5b384dde8364",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f78d469a_759b7697",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-01T17:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b9b8a05_0e2cf2e3",
+      "revId": "45e3bd365d204a669f889f2feeef5b384dde8364",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
