@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abf58a40_9a2c96c5",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-01T12:06:00Z",
+      "side": 1,
+      "message": "Ditto for everything about texture views here.",
+      "revId": "5e257619add1b34f09070e981101112681c373b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b937ce0_bd236e91",
+        "filename": "src/dawn/native/vulkan/TextureVk.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-01T12:06:00Z",
+      "side": 1,
+      "message": "Could we have TypedIntegers for this, at least for storing in members (IDK that we can use these types in atomic\u003c\u003e)?\n\nu32s can easily overflow and roll over, so we should use u64 for unique IDs.\n\nInstead of doing:\n\n```\nDevice::CreateTextureImpl\n - Texture::Create\n   - Texture::Texture\n     - Device::GetTextureUniqueID // Why do we go back to mutate the device here?\n```\n\nCan we do\n\n```\nDevice::CreateTextureImpl\n  - Get the unique ID and pass it in\n  - Texture::Create\n    - Texture::Texture\n```\n\nDitto for the texture views.\n\nAlternatively (and less extra logic?) we can have the cache keys keep a WeakPtr to the dawn::native::TextureView, which would prevent reusing the same pointer until it is no longer in the cache.",
+      "revId": "5e257619add1b34f09070e981101112681c373b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

@@ -95,6 +95,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abfd3033_c12f71e6",
+        "filename": "src/dawn/native/vulkan/FramebufferCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-01T12:06:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure how convenient it will be to number all the VkHandle. Dawn uses itself reentrantly a lot, but making sure that all VkImages (for example) are correctly numbered means that all the places we create one, we need to go through the thing that increments the counter, and we must also not forget to add that handling when there is a new case of creating a VkImage. This seems error prone.",
+      "parentUuid": "3bc369b4_578f5434",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 81
+      },
+      "revId": "7273e737806e1f826e6e4cd2455f1bbf2283db65",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0edc7704_0cfed1f4",
