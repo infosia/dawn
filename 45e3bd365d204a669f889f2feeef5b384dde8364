@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b9b8a05_0e2cf2e3",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-01T06:46:28Z",
+      "side": 1,
+      "message": "nit: can we move this to a separate function? this lambda is already huge.",
+      "revId": "45e3bd365d204a669f889f2feeef5b384dde8364",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
