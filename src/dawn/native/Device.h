@@ -93,10 +93,8 @@ class DeviceBase : public ErrorSink,
     struct DeviceLostEvent final : public EventManager::TrackedEvent {
         static Ref<DeviceLostEvent> Create(const DeviceDescriptor* descriptor);
 
-        // Sets the device lost event's fields and sets the event to be ready.
-        void SetLost(EventManager* eventManager,
-                     wgpu::DeviceLostReason reason,
-                     std::string_view message);
+        // Sets the device lost event's fields accordingly.
+        void SetLost(wgpu::DeviceLostReason reason, std::string_view message);
 
         // Note that the device is set when the event is passed to construct a device.
         Ref<DeviceBase> mDevice = nullptr;
