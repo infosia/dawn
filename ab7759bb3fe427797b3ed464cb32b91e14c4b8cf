@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b623abe_e19c0bd2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-01T22:31:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecb6e8cd_5ce4a465",
+      "range": {
+        "startLine": 19,
+        "startChar": 19,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "ab7759bb3fe427797b3ed464cb32b91e14c4b8cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dd04fd38_4385c69b",
@@ -41,6 +65,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b94cf19_d2093133",
+        "filename": "src/dawn/native/EventManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-01T22:31:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd04fd38_4385c69b",
+      "revId": "ab7759bb3fe427797b3ed464cb32b91e14c4b8cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0b53c7cb_68dffa24",
@@ -54,6 +96,30 @@
       "writtenOn": "2025-07-01T02:12:46Z",
       "side": 1,
       "message": "Backwards compatibility with what? It\u0027s not a public API, is it? If it\u0027s just a code cleanup then there should be a TODO to migrate all code onto UpdateCompletedSerial.",
+      "range": {
+        "startLine": 66,
+        "startChar": 16,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "ab7759bb3fe427797b3ed464cb32b91e14c4b8cf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b40e33a3_99383fb3",
+        "filename": "src/dawn/native/ExecutionQueue.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-01T22:31:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b53c7cb_68dffa24",
       "range": {
         "startLine": 66,
         "startChar": 16,
