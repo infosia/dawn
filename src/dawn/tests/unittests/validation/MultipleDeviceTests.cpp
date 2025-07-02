@@ -73,9 +73,7 @@ TEST_F(MultipleDeviceTest, ValidatesSameDeviceCreatePipelineAsync) {
         MockComputePipelineAsyncCallback creationCallback;
         EXPECT_CALL(creationCallback, Call(wgpu::CreatePipelineAsyncStatus::Success, NotNull(), _))
             .Times(1);
-        device.CreateComputePipelineAsync(&pipelineDesc,
-                                          UsesWire() ? wgpu::CallbackMode::AllowSpontaneous
-                                                     : wgpu::CallbackMode::AllowProcessEvents,
+        device.CreateComputePipelineAsync(&pipelineDesc, wgpu::CallbackMode::AllowProcessEvents,
                                           creationCallback.Callback());
 
         WaitForAllOperations();

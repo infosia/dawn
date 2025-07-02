@@ -129,7 +129,7 @@ ValidationTest::ValidationTest() {
              new WGPURequestAdapterCallbackInfo(callbackInfo), nullptr});
     };
 
-    // Forward to dawn::native instanceRequestAdapter, but save the returned backend device in
+    // Forward to dawn::native adapterRequestDevice, but save the returned backend device in
     // gCurrentTest->mLastCreatedBackendDevice.
     procs.adapterRequestDevice = [](WGPUAdapter self, const WGPUDeviceDescriptor* descriptor,
                                     WGPURequestDeviceCallbackInfo callbackInfo) -> WGPUFuture {
@@ -263,7 +263,6 @@ bool ValidationTest::UsesWire() const {
 
 void ValidationTest::FlushWire() {
     EXPECT_TRUE(mWireHelper->FlushClient());
-    EXPECT_TRUE(mWireHelper->FlushServer());
 }
 
 void ValidationTest::WaitForAllOperations() {
@@ -317,34 +316,20 @@ uint64_t ValidationTest::GetInstanceDeprecationCountForTesting() {
     return mDawnInstance->GetDeprecationWarningCountForTesting();
 }
 
-uint32_t ValidationTest::GetDeviceCreationDeprecationWarningExpectation(
-    const wgpu::DeviceDescriptor& descriptor) {
-    uint32_t expectedDeprecatedCount = 0;
-
-    std::unordered_set<wgpu::FeatureName> requiredFeatureSet;
-    for (uint32_t i = 0; i < descriptor.requiredFeatureCount; ++i) {
-        requiredFeatureSet.insert(descriptor.requiredFeatures[i]);
-    }
-
-    return expectedDeprecatedCount;
-}
-
 wgpu::Device ValidationTest::RequestDeviceSync(const wgpu::DeviceDescriptor& deviceDesc) {
     DAWN_ASSERT(adapter);
 
     wgpu::Device apiDevice;
-    EXPECT_DEPRECATION_WARNINGS(
-        adapter.RequestDevice(&deviceDesc, wgpu::CallbackMode::AllowSpontaneous,
-                              [&apiDevice](wgpu::RequestDeviceStatus status, wgpu::Device result,
-                                           wgpu::StringView message) {
-                                  if (status != wgpu::RequestDeviceStatus::Success) {
-                                      ADD_FAILURE() << "Unable to create device: " << message;
-                                      DAWN_ASSERT(false);
-                                  }
-                                  apiDevice = std::move(result);
-                              }),
-        GetDeviceCreationDeprecationWarningExpectation(deviceDesc));
-
+    adapter.RequestDevice(&deviceDesc, wgpu::CallbackMode::AllowSpontaneous,
+                          [&apiDevice](wgpu::RequestDeviceStatus status, wgpu::Device result,
+                                       wgpu::StringView message) {
+                              if (status != wgpu::RequestDeviceStatus::Success) {
+                                  ADD_FAILURE() << "Unable to create device: " << message;
+                                  DAWN_ASSERT(false);
+                              }
+                              apiDevice = std::move(result);
+                          });
+    FlushWire();
     DAWN_ASSERT(apiDevice);
     return apiDevice;
 }
