@@ -1221,5 +1221,25 @@ TEST_F(TextureFormatsTier1TextureTest, SNORMFormatsAreRenderableWithFeatureEnabl
     }
 }
 
+class RG11B10UfloatRenderableTextureTest : public TextureValidationTest {
+  protected:
+    std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
+        return {wgpu::FeatureName::RG11B10UfloatRenderable};
+    }
+};
+
+// Test that rg11b10ufloat is valid as renderable texture if RG11B10UfloatRenderable is enabled.
+TEST_F(RG11B10UfloatRenderableTextureTest, SNORMFormatsAreRenderableWithFeatureEnabled) {
+    const std::array kTestFormats = {wgpu::TextureFormat::RG11B10Ufloat};
+    for (auto format : kTestFormats) {
+        wgpu::TextureDescriptor descriptor;
+        descriptor.size = {1, 1, 1};
+        descriptor.usage = wgpu::TextureUsage::RenderAttachment;
+        descriptor.format = format;
+
+        wgpu::Texture texture = device.CreateTexture(&descriptor);
+    }
+}
+
 }  // anonymous namespace
 }  // namespace dawn
