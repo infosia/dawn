@@ -16,6 +16,24 @@
       "message": "Out of curiosity, do you think this is correct 100% time or are there cases where we should return false @cwallez@chromium.org?",
       "revId": "f305d0ca6ee67d0b1eb66f41de903f40b68356d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ad56008_d363837b",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-02T10:15:28Z",
+      "side": 1,
+      "message": "When the swizzle is equivalent to no swizzle, we could return false. That has to do with the component count as well as sampling returns 0 (iirc?) for unused components.",
+      "parentUuid": "6362e71c_840032b7",
+      "revId": "f305d0ca6ee67d0b1eb66f41de903f40b68356d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
