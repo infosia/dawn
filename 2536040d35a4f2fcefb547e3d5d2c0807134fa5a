@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6c09c7d_5ab81a36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-02T10:32:56Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "2536040d35a4f2fcefb547e3d5d2c0807134fa5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa292377_a7b367d5",
+        "filename": "src/dawn/native/vulkan/FramebufferCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-02T10:32:56Z",
+      "side": 1,
+      "message": "This is encoding a bit of the history in the comment. How about:\n\nKeep a weak ref in the cache key as we need to make sure the pointer values are not reused if the texture view is no longer used and new views created.\n\nAlso this comment could be better in struct definition, as that\u0027s what decides that a WeakRef will be used.",
+      "range": {
+        "startLine": 56,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 81
+      },
+      "revId": "2536040d35a4f2fcefb547e3d5d2c0807134fa5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0630e64_62f4cef3",
+        "filename": "src/dawn/native/vulkan/FramebufferCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-02T10:32:56Z",
+      "side": 1,
+      "message": "I don\u0027t know that this is needed? We are never going to query with weakRefs that no longer promote because when we query the framebuffer cache, the views are known to be alive. (and when rehashing if it ever happens, collisions because of nullptr viewA/B will cause early destruction of a VkFramebuffer that will never be used, which is fine).",
+      "revId": "2536040d35a4f2fcefb547e3d5d2c0807134fa5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35095472_4bdc54c0",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-02T10:32:56Z",
+      "side": 1,
+      "message": "This is the render pass info already, maybe `uniqueId`?",
+      "range": {
+        "startLine": 103,
+        "startChar": 17,
+        "endLine": 103,
+        "endChar": 29
+      },
+      "revId": "2536040d35a4f2fcefb547e3d5d2c0807134fa5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e53c4db_655582a4",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-02T10:32:56Z",
+      "side": 1,
+      "message": "ditto this needs to be a u64 as a u32 can roll over and is not unique. Unless we can prove that it will never fit in a u32 (even with future extensions) we should make sure ids are unique by having be in a huge ID space.",
+      "revId": "2536040d35a4f2fcefb547e3d5d2c0807134fa5a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

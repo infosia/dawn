@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dcbe960_1cbcfbee",
+        "filename": "src/dawn/native/vulkan/RenderPassCache.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-02T10:32:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "27b782cc_be7c0835",
+      "revId": "5e257619add1b34f09070e981101112681c373b7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7b937ce0_bd236e91",
