@@ -29,7 +29,7 @@
 #include <vector>
 
 #include "dawn/tests/MockCallback.h"
-#include "dawn/tests/StringViewMatchers.h"
+#include "dawn/tests/StringViewUtils.h"
 #include "dawn/tests/unittests/validation/ValidationTest.h"
 #include "dawn/utils/BinarySemaphore.h"
 #include "gmock/gmock.h"
