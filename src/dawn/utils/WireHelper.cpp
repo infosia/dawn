@@ -120,13 +120,16 @@ class WireHelperDirect : public WireHelper {
 
 class WireHelperProxy : public WireHelper {
   public:
-    explicit WireHelperProxy(const char* wireTraceDir, const DawnProcTable& procs) {
+    explicit WireHelperProxy(const char* wireTraceDir,
+                             const DawnProcTable& procs,
+                             bool useSpontaneousCallbacks = false) {
         mC2sBuf = std::make_unique<dawn::utils::TerribleCommandBuffer>();
         mS2cBuf = std::make_unique<dawn::utils::TerribleCommandBuffer>();
 
         dawn::wire::WireServerDescriptor serverDesc = {};
         serverDesc.procs = &procs;
         serverDesc.serializer = mS2cBuf.get();
+        serverDesc.useSpontaneousCallbacks = useSpontaneousCallbacks;
 
         mWireServer.reset(new dawn::wire::WireServer(serverDesc));
         mC2sBuf->SetHandler(mWireServer.get());
@@ -194,9 +197,11 @@ std::pair<wgpu::Instance, std::unique_ptr<dawn::native::Instance>> WireHelper::C
 
 std::unique_ptr<WireHelper> CreateWireHelper(const DawnProcTable& procs,
                                              bool useWire,
+                                             bool useSpontaneousCallbacks,
                                              const char* wireTraceDir) {
     if (useWire) {
-        return std::unique_ptr<WireHelper>(new WireHelperProxy(wireTraceDir, procs));
+        return std::unique_ptr<WireHelper>(
+            new WireHelperProxy(wireTraceDir, procs, useSpontaneousCallbacks));
     } else {
         return std::unique_ptr<WireHelper>(new WireHelperDirect(procs));
     }
