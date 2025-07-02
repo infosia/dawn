@@ -32,7 +32,7 @@
 #include "dawn/common/Constants.h"
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/tests/MockCallback.h"
-#include "dawn/tests/StringViewMatchers.h"
+#include "dawn/tests/StringViewUtils.h"
 #include "dawn/tests/unittests/wire/WireFutureTest.h"
 #include "dawn/tests/unittests/wire/WireTest.h"
 
