@@ -31,7 +31,7 @@
 #include "dawn/native/Device.h"
 #include "dawn/native/dawn_platform.h"
 #include "dawn/tests/MockCallback.h"
-#include "dawn/tests/StringViewMatchers.h"
+#include "dawn/tests/StringViewUtils.h"
 #include "dawn/tests/unittests/validation/ValidationTest.h"
 
 namespace dawn {
