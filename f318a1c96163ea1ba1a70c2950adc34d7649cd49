@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "88946f48_1e160726",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-02T19:00:55Z",
+      "side": 1,
+      "message": "Is this going to trigger if we revert a change that deleted a file with an old year?",
+      "revId": "f318a1c96163ea1ba1a70c2950adc34d7649cd49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "952bd765_2656125b",
         "filename": "PRESUBMIT.py",
         "patchSetId": 3
@@ -20,6 +37,41 @@
         "endLine": 277,
         "endChar": 54
       },
+      "revId": "f318a1c96163ea1ba1a70c2950adc34d7649cd49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "152d3414_bc173d26",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-02T19:00:55Z",
+      "side": 1,
+      "message": "Nit: \"this is\"",
+      "fixSuggestions": [
+        {
+          "fixId": "749093f2_9eca1e03",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "PRESUBMIT.py",
+              "range": {
+                "startLine": 296,
+                "startChar": 0,
+                "endLine": 297,
+                "endChar": 0
+              },
+              "replacement": "                            f\u0027{f.LocalPath()}: Copyright year is {year}, should be {current_year} as this is a new file.\u0027\n"
+            }
+          ]
+        }
+      ],
       "revId": "f318a1c96163ea1ba1a70c2950adc34d7649cd49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
