@@ -37,7 +37,7 @@
 #include "dawn/native/Toggles.h"
 #include "dawn/native/dawn_platform.h"
 #include "dawn/tests/MockCallback.h"
-#include "dawn/tests/StringViewMatchers.h"
+#include "dawn/tests/StringViewUtils.h"
 #include "dawn/utils/SystemUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
 #include "gtest/gtest.h"
