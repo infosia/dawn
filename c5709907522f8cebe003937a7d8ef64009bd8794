@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4db4a41f_abdc2b1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-02T16:48:10Z",
+      "side": 1,
+      "message": "Thanks for the feedback, all! Hopefully it\u0027ll stick this time.",
+      "revId": "c5709907522f8cebe003937a7d8ef64009bd8794",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
