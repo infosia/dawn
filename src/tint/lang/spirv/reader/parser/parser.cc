@@ -836,6 +836,25 @@ class Parser {
             elem_ty->Align(), static_cast<uint32_t>(array_stride * count_val), array_stride);
     }
 
+    /// Calculate the size of a struct member type that has a matrix stride decoration.
+    uint32_t GetSizeOfTypeWithMatrixStride(const core::type::Type* type,
+                                           uint32_t stride,
+                                           bool is_row_major) {
+        return tint::Switch(
+            type,
+            [&](const core::type::Matrix* mat) {
+                return stride * (is_row_major ? mat->Rows() : mat->Columns());
+            },
+            [&](const core::type::Array* arr) {
+                auto size = GetSizeOfTypeWithMatrixStride(arr->ElemType(), stride, is_row_major);
+                if (auto count = arr->ConstantCount()) {
+                    size *= count.value();
+                }
+                return size;
+            },
+            TINT_ICE_ON_NO_MATCH);
+    }
+
     /// @param struct_ty a SPIR-V struct object
     /// @returns a Tint struct object
     const core::type::Struct* EmitStruct(const spvtools::opt::analysis::Struct* struct_ty) {
@@ -929,8 +948,13 @@ class Parser {
                 name = ir_.symbols.New();
             }
 
+            uint32_t size = member_ty->Size();
+            if (matrix_stride > 0) {
+                size = GetSizeOfTypeWithMatrixStride(member_ty, matrix_stride, is_row_major);
+            }
+
             core::type::StructMember* member = ty_.Get<core::type::StructMember>(
-                name, member_ty, i, offset, align, member_ty->Size(), std::move(attributes));
+                name, member_ty, i, offset, align, size, std::move(attributes));
             if (is_row_major) {
                 member->SetRowMajor();
             }
@@ -940,7 +964,7 @@ class Parser {
 
             members.Push(member);
 
-            current_size = offset + member_ty->Size();
+            current_size = offset + size;
         }
 
         Symbol name = GetUniqueSymbolFor(struct_id);
