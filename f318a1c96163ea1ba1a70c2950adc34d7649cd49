@@ -61,6 +61,51 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d47d95cc_a22e1566",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-02T20:23:36Z",
+      "side": 1,
+      "message": "Discussed offline - recommend making these warnings instead of errors for now.",
+      "fixSuggestions": [
+        {
+          "fixId": "c9621652_89f673cb",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "PRESUBMIT.py",
+              "range": {
+                "startLine": 295,
+                "startChar": 0,
+                "endLine": 296,
+                "endChar": 0
+              },
+              "replacement": "                        output_api.PresubmitPromptWarning(\n"
+            },
+            {
+              "path": "PRESUBMIT.py",
+              "range": {
+                "startLine": 301,
+                "startChar": 0,
+                "endLine": 302,
+                "endChar": 0
+              },
+              "replacement": "                output_api.PresubmitPromptWarning(\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f318a1c96163ea1ba1a70c2950adc34d7649cd49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "152d3414_bc173d26",
         "filename": "PRESUBMIT.py",
         "patchSetId": 3
