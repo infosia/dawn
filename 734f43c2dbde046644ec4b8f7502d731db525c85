@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "08167662_b967a457",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 2461,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-02T20:18:18Z",
+      "side": 1,
+      "message": "This case is fine because the function is assumed to be thread-safe on its own. The main point here is to make sure that the thread that runs this won\u0027t run it with the device-wide lock and that should hold true.",
+      "parentUuid": "abacd5e0_a7b70aa4",
+      "range": {
+        "startLine": 2456,
+        "startChar": 0,
+        "endLine": 2461,
+        "endChar": 5
+      },
+      "revId": "734f43c2dbde046644ec4b8f7502d731db525c85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01e32a9f_d0eb0cf1",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "af59bfa2_f030ce93",
+        "filename": "src/dawn/native/DeviceGuard.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-02T20:18:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01e32a9f_d0eb0cf1",
+      "range": {
+        "startLine": 54,
+        "startChar": 17,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "734f43c2dbde046644ec4b8f7502d731db525c85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e5804a2_6d5557c6",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-07-02T14:47:13Z",
       "side": 1,
       "message": "Can this be done in DeviceGuardBase?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 5
+      },
+      "revId": "734f43c2dbde046644ec4b8f7502d731db525c85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "51000681_a0132b93",
+        "filename": "src/dawn/native/DeviceGuard.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-02T20:18:18Z",
+      "side": 1,
+      "message": "We can\u0027t because the lock isn\u0027t held until here. Added some more comments to make it more clear why. Also see https://dawn-review.googlesource.com/c/dawn/+/247995/comment/396d8a7a_7dd05d95/",
+      "parentUuid": "9e5804a2_6d5557c6",
       "range": {
         "startLine": 54,
         "startChar": 0,
