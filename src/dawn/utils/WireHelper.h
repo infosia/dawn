@@ -69,6 +69,7 @@ class WireHelper {
 
 std::unique_ptr<WireHelper> CreateWireHelper(const DawnProcTable& procs,
                                              bool useWire,
+                                             bool useSpontaneousCallbacks = false,
                                              const char* wireTraceDir = nullptr);
 
 }  // namespace dawn::utils
