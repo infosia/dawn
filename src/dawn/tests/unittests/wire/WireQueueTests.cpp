@@ -28,7 +28,7 @@
 #include <memory>
 
 #include "dawn/common/StringViewUtils.h"
-#include "dawn/tests/StringViewMatchers.h"
+#include "dawn/tests/StringViewUtils.h"
 #include "dawn/tests/unittests/wire/WireFutureTest.h"
 #include "dawn/tests/unittests/wire/WireTest.h"
 #include "dawn/wire/WireClient.h"
