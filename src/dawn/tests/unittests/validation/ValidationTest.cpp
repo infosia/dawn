@@ -175,7 +175,7 @@ ValidationTest::ValidationTest() {
              new WGPURequestDeviceCallbackInfo(callbackInfo), nullptr});
     };
 
-    mWireHelper = dawn::utils::CreateWireHelper(procs, gUseWire, gWireTraceDir.c_str());
+    mWireHelper = dawn::utils::CreateWireHelper(procs, gUseWire, false, gWireTraceDir.c_str());
 }
 
 void ValidationTest::SetUp() {
