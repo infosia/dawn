@@ -16,6 +16,24 @@
       "message": "Technically if for example we are an r8unorm and swizzle.g is One then we don\u0027t need a view. But as a first approximation this works.",
       "revId": "48a97609269e54eae642d55a8d41823958d68948",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "29a00bc0_77941206",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-02T12:52:33Z",
+      "side": 1,
+      "message": "I\u0027ll add a TODO for this.",
+      "parentUuid": "42bc25e5_0bbc92c5",
+      "revId": "48a97609269e54eae642d55a8d41823958d68948",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

@@ -70,6 +70,24 @@
       "parentUuid": "be9b77c6_d56007ff",
       "revId": "f305d0ca6ee67d0b1eb66f41de903f40b68356d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a68d9b91_c12d2e7b",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-02T12:52:33Z",
+      "side": 1,
+      "message": "Yes of course. I mean only this part, sorry if I was not clear.",
+      "parentUuid": "e53ae2a4_4370150f",
+      "revId": "f305d0ca6ee67d0b1eb66f41de903f40b68356d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
