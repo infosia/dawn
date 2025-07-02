@@ -32,6 +32,10 @@ namespace dawn::wire {
 ChunkedCommandSerializer::ChunkedCommandSerializer(CommandSerializer* serializer)
     : mSerializer(serializer), mMaxAllocationSize(serializer->GetMaximumAllocationSize()) {}
 
+void ChunkedCommandSerializer::Flush() {
+    mSerializer->Flush();
+}
+
 void ChunkedCommandSerializer::SerializeChunkedCommand(const char* allocatedBuffer,
                                                        size_t remainingSize) {
     while (remainingSize > 0) {
