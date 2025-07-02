@@ -1785,20 +1785,33 @@ void DawnTestBase::WaitABit(wgpu::Instance targetInstance) {
 void DawnTestBase::FlushWire() {
     if (gTestEnv->UsesWire()) {
         bool C2SFlushed = mWireHelper->FlushClient();
-        bool S2CFlushed = mWireHelper->FlushServer();
         DAWN_ASSERT(C2SFlushed);
-        DAWN_ASSERT(S2CFlushed);
     }
 }
 
 void DawnTestBase::WaitForAllOperations() {
-    do {
+    while (true) {
         FlushWire();
-        if (UsesWire() && instance != nullptr) {
+
+        if (!dawn::native::InstanceProcessEvents(gTestEnv->GetInstance()->Get())) {
+            if (UsesWire() && instance != nullptr) {
+                // If we are using the wire, even when the server is done with all events, we need
+                // to make sure to call |ProcessEvents| one more time to flush client side events.
+                // This could in turn cause more commands if the async callbacks use the WebGPU API,
+                // hence the additional check on whether the wire is idle, continuing to loop if it
+                // is not.
+                instance.ProcessEvents();
+                if (!mWireHelper->IsIdle()) {
+                    continue;
+                }
+            }
+            break;
+        }
+
+        if (UsesWire()) {
             instance.ProcessEvents();
         }
-    } while (dawn::native::InstanceProcessEvents(gTestEnv->GetInstance()->Get()) ||
-             !mWireHelper->IsIdle());
+    }
 }
 
 DawnTestBase::ReadbackReservation DawnTestBase::ReserveReadback(wgpu::Device targetDevice,

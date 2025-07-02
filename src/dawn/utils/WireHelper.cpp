@@ -127,6 +127,7 @@ class WireHelperProxy : public WireHelper {
         dawn::wire::WireServerDescriptor serverDesc = {};
         serverDesc.procs = &procs;
         serverDesc.serializer = mS2cBuf.get();
+        serverDesc.useSpontaneousCallbacks = true;
 
         mWireServer.reset(new dawn::wire::WireServer(serverDesc));
         mC2sBuf->SetHandler(mWireServer.get());
