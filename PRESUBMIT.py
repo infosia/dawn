@@ -271,6 +271,39 @@ def _HasNoStrayWhitespaceFilter(file):
     return file.LocalPath().replace('\\', '/') not in filter_list
 
 
+def _CheckCopyrightHeaders(input_api, output_api):
+    """Checks that newly added files have a correct copyright year."""
+    current_year = int(input_api.time.strftime('%Y'))
+    copyright_regex = re.compile(r'Copyright (\d{4})')
+
+    errors = []
+    for f in input_api.AffectedFiles(include_deletes=False):
+        if not (f.LocalPath().endswith(('.h', '.cc', '.cpp'))):
+            continue
+
+        # Check for copyright headers only in new files.
+        if f.Action() != 'A':
+            continue
+
+        found_copyright = False
+        for line in f.NewContents():
+            if match := copyright_regex.search(line):
+                found_copyright = True
+                year = int(match.group(1))
+                if year != current_year:
+                    errors.append(
+                        output_api.PresubmitError(
+                            f'{f.LocalPath()}: Copyright year is {year}, should be {current_year}'
+                        ))
+                break
+        if not found_copyright:
+            errors.append(
+                output_api.PresubmitError(
+                    f'{f.LocalPath()}: No copyright header found.'))
+
+    return errors
+
+
 def CheckChange(input_api, output_api):
     results = []
     results.extend(
@@ -306,6 +339,7 @@ def CheckChange(input_api, output_api):
             input_api, output_api))
     results.extend(
         input_api.canned_checks.CheckDoNotSubmit(input_api, output_api))
+    results.extend(_CheckCopyrightHeaders(input_api, output_api))
     # Note, the verbose_level here should match what is set in tools/lint so
     # the same set of lint errors are reported on the CQ and Kokoro bots.
     results.extend(
