@@ -57,7 +57,7 @@ TEST_F(SpirvParserTest, Matrix_ColMajor) {
 )",
               R"(
 tint_symbol_1 = struct @align(16) {
-  tint_symbol:mat4x3<f32> @offset(0), @matrix_stride(48)
+  tint_symbol:mat4x3<f32> @offset(0) @size(192), @matrix_stride(48)
 }
 
 $B1: {  # root
@@ -99,7 +99,7 @@ TEST_F(SpirvParserTest, Matrix_RowMajor) {
 )",
               R"(
 tint_symbol_1 = struct @align(16) {
-  tint_symbol:mat4x3<f32> @offset(0), @row_major, @matrix_stride(48)
+  tint_symbol:mat4x3<f32> @offset(0) @size(144), @row_major, @matrix_stride(48)
 }
 
 $B1: {  # root
