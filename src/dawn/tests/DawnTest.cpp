@@ -237,6 +237,12 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
             continue;
         }
 
+        if (strcmp("--use-spontaneous-wire", argv[i]) == 0) {
+            mUseWire = true;
+            mUseSpontaneousWire = true;
+            continue;
+        }
+
         if (strcmp("-s", argv[i]) == 0 || strcmp("--enable-implicit-device-sync", argv[i]) == 0) {
             mEnableImplicitDeviceSync = true;
             continue;
@@ -368,6 +374,8 @@ void DawnTestEnvironment::ParseArgs(int argc, char** argv) {
                    "[--enable-backend-validation[=full,partial,disabled]]\n"
                    "    [--exclusive-device-type-preference=integrated,cpu,discrete]\n\n"
                    "  -w, --use-wire: Run the tests through the wire (defaults to no wire)\n"
+                   "  --use-spontaneous-wire: Run the tests through the wire with spontaneous "
+                   "server callbacks\n"
                    "  -s, --enable-implicit-device-sync: Run the tests with implicit device "
                    "synchronization feature (defaults to false)\n"
                    "  -c, --begin-capture-on-startup: Begin debug capture on startup "
@@ -606,6 +614,9 @@ void DawnTestEnvironment::PrintTestConfigurationAndAdapterInfo(native::Instance*
            "UseWire: "
         << (mUseWire ? "true" : "false")
         << "\n"
+           "Use spontaneous wire callbacks: "
+        << (mUseSpontaneousWire ? "true" : "false")
+        << "\n"
            "Implicit device synchronization: "
         << (mEnableImplicitDeviceSync ? "enabled" : "disabled")
         << "\n"
@@ -692,6 +703,10 @@ void DawnTestEnvironment::TearDown() {
 
 bool DawnTestEnvironment::UsesWire() const {
     return mUseWire;
+}
+
+bool DawnTestEnvironment::UsesSpontaneousWire() const {
+    return mUseSpontaneousWire;
 }
 
 bool DawnTestEnvironment::IsImplicitDeviceSyncEnabled() const {
@@ -829,7 +844,8 @@ DawnTestBase::DawnTestBase(const AdapterTestParam& param) : mParam(param) {
         return {0};
     };
 
-    mWireHelper = utils::CreateWireHelper(procs, gTestEnv->UsesWire(), gTestEnv->GetWireTraceDir());
+    mWireHelper = utils::CreateWireHelper(
+        procs, gTestEnv->UsesWire(), gTestEnv->UsesSpontaneousWire(), gTestEnv->GetWireTraceDir());
 }
 
 DawnTestBase::~DawnTestBase() {
@@ -1785,9 +1801,11 @@ void DawnTestBase::WaitABit(wgpu::Instance targetInstance) {
 void DawnTestBase::FlushWire() {
     if (gTestEnv->UsesWire()) {
         bool C2SFlushed = mWireHelper->FlushClient();
-        bool S2CFlushed = mWireHelper->FlushServer();
+        if (!gTestEnv->UsesSpontaneousWire()) {
+            bool S2CFlushed = mWireHelper->FlushServer();
+            DAWN_ASSERT(S2CFlushed);
+        }
         DAWN_ASSERT(C2SFlushed);
-        DAWN_ASSERT(S2CFlushed);
     }
 }
 
