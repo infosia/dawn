@@ -198,6 +198,7 @@ class DawnTestEnvironment : public testing::Environment {
     void TearDown() override;
 
     bool UsesWire() const;
+    bool UsesSpontaneousWire() const;
     bool IsImplicitDeviceSyncEnabled() const;
     native::BackendValidationLevel GetBackendValidationLevel() const;
     native::Instance* GetInstance() const;
@@ -226,6 +227,7 @@ class DawnTestEnvironment : public testing::Environment {
     bool ValidateToggles(native::Instance* instance) const;
 
     bool mUseWire = false;
+    bool mUseSpontaneousWire = false;
     bool mEnableImplicitDeviceSync = false;
     native::BackendValidationLevel mBackendValidationLevel =
         native::BackendValidationLevel::Disabled;
