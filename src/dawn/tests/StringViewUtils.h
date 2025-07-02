@@ -25,15 +25,18 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_DAWN_TESTS_STRINGVIEWMATCHERS_H_
-#define SRC_DAWN_TESTS_STRINGVIEWMATCHERS_H_
+#ifndef SRC_DAWN_TESTS_STRINGVIEWUTILS_H_
+#define SRC_DAWN_TESTS_STRINGVIEWUTILS_H_
 
+#include <iostream>
 #include <string_view>
 
 #include "dawn/webgpu_cpp.h"
 #include "gmock/gmock.h"
 
 namespace testing {
+
+void PrintTo(const wgpu::StringView& s, std::ostream* os);
 
 MATCHER(EmptySizedString, "") {
     return arg.length == 0;
@@ -57,4 +60,4 @@ MATCHER_P(SizedStringMatches, matcher, "") {
 
 }  // namespace testing
 
-#endif  // SRC_DAWN_TESTS_STRINGVIEWMATCHERS_H_
+#endif  // SRC_DAWN_TESTS_STRINGVIEWUTILS_H_
