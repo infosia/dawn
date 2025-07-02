@@ -27,10 +27,16 @@
 
 #include "dawn/wire/ChunkedCommandSerializer.h"
 
+#include "dawn/common/Assert.h"
+
 namespace dawn::wire {
 
 ChunkedCommandSerializer::ChunkedCommandSerializer(CommandSerializer* serializer)
     : mSerializer(serializer), mMaxAllocationSize(serializer->GetMaximumAllocationSize()) {}
+
+void ChunkedCommandSerializer::Flush() {
+    mSerializer->Flush();
+}
 
 void ChunkedCommandSerializer::SerializeChunkedCommand(const char* allocatedBuffer,
                                                        size_t remainingSize) {
