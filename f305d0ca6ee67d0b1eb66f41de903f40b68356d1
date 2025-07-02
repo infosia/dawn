@@ -34,6 +34,24 @@
       "parentUuid": "6362e71c_840032b7",
       "revId": "f305d0ca6ee67d0b1eb66f41de903f40b68356d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be9b77c6_d56007ff",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-02T11:28:32Z",
+      "side": 1,
+      "message": "Does latest patchset look good to you now? Am I missing something?",
+      "parentUuid": "9ad56008_d363837b",
+      "revId": "f305d0ca6ee67d0b1eb66f41de903f40b68356d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
