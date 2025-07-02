@@ -529,7 +529,7 @@ source_set("test_infra_sources") {
     "DawnTest.h",
     "MockCallback.h",
     "ParamGenerator.h",
-    "StringViewMatchers.h",
+    "StringViewUtils.h",
     "ToggleParser.h",
   ]
   public_deps = [
@@ -544,6 +544,7 @@ source_set("test_infra_sources") {
   sources = [
     "AdapterTestConfig.cpp",
     "DawnTest.cpp",
+    "StringViewUtils.cpp",
     "ToggleParser.cpp",
   ]
 }
