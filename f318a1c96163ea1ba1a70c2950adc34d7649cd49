@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "952bd765_2656125b",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-02T15:43:37Z",
+      "side": 1,
+      "message": "Y3K safe.",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 277,
+        "endChar": 54
+      },
+      "revId": "f318a1c96163ea1ba1a70c2950adc34d7649cd49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
