@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b87f31b_15bd8330",
+        "filename": "src/tint/lang/spirv/reader/parser/var_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2094,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-02T20:21:29Z",
+      "side": 1,
+      "message": "Nit: unsigned",
+      "fixSuggestions": [
+        {
+          "fixId": "7c0bccd4_1cf034cb",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/spirv/reader/parser/var_test.cc",
+              "range": {
+                "startLine": 2094,
+                "startChar": 0,
+                "endLine": 2095,
+                "endChar": 0
+              },
+              "replacement": "    // SPIR-V UMod requires arguments and result type to be unsigned.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9ad75d15e652aa11f0cab00780e83162f0b4dc98",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
