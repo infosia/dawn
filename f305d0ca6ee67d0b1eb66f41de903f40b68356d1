@@ -52,6 +52,24 @@
       "parentUuid": "9ad56008_d363837b",
       "revId": "f305d0ca6ee67d0b1eb66f41de903f40b68356d1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e53ae2a4_4370150f",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-02T12:42:30Z",
+      "side": 1,
+      "message": "It looks good, but we should have at least some tests in this CL.",
+      "parentUuid": "be9b77c6_d56007ff",
+      "revId": "f305d0ca6ee67d0b1eb66f41de903f40b68356d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
