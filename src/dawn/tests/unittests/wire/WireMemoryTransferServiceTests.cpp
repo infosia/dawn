@@ -32,7 +32,7 @@
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/tests/MockCallback.h"
 #include "dawn/tests/ParamGenerator.h"
-#include "dawn/tests/StringViewMatchers.h"
+#include "dawn/tests/StringViewUtils.h"
 #include "dawn/tests/unittests/wire/WireTest.h"
 #include "dawn/wire/client/ClientMemoryTransferService_mock.h"
 #include "dawn/wire/server/ServerMemoryTransferService_mock.h"

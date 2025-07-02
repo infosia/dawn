@@ -33,7 +33,7 @@
 #include <vector>
 
 #include "dawn/tests/MockCallback.h"
-#include "dawn/tests/StringViewMatchers.h"
+#include "dawn/tests/StringViewUtils.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/TextureUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
