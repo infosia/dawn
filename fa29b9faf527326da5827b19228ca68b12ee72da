@@ -199,6 +199,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ebace408_6f064123",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-02T05:33:41Z",
+      "side": 1,
+      "message": "Hi Corentin Kai just pointed out that Resolve is not supported with Mac1 devices, which the group have decided to support in WebGPU, so we still cannot add the resolve capability in Tier1 (https://github.com/gpuweb/gpuweb/issues/5187).",
+      "parentUuid": "f2f75402_ae589482",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d0876dbc_b7141e96",
         "filename": "src/dawn/native/Format.cpp",
         "patchSetId": 5
