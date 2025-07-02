@@ -28,6 +28,9 @@
 #ifndef SRC_DAWN_NATIVE_VULKAN_FENCEDDELETER_H_
 #define SRC_DAWN_NATIVE_VULKAN_FENCEDDELETER_H_
 
+#include <mutex>
+#include <thread>
+
 #include "dawn/common/SerialQueue.h"
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/IntegerTypes.h"
@@ -41,6 +44,8 @@ class FencedDeleter {
   public:
     explicit FencedDeleter(Device* device);
     ~FencedDeleter();
+
+    void Destroy();
 
     void DeleteWhenUnused(VkBuffer buffer);
     void DeleteWhenUnused(VkDescriptorPool pool);
@@ -68,6 +73,9 @@ class FencedDeleter {
     void Tick(ExecutionSerial completedSerial);
 
   private:
+    void ProcessDeletions();
+    void ThreadLoop();
+
     raw_ptr<Device> mDevice = nullptr;
     SerialQueue<ExecutionSerial, VkBuffer> mBuffersToDelete;
     SerialQueue<ExecutionSerial, VkDescriptorPool> mDescriptorPoolsToDelete;
@@ -85,6 +93,12 @@ class FencedDeleter {
     SerialQueue<ExecutionSerial, VkSemaphore> mSemaphoresToDelete;
     SerialQueue<ExecutionSerial, VkSurfaceKHR> mSurfacesToDelete;
     SerialQueue<ExecutionSerial, VkSwapchainKHR> mSwapChainsToDelete;
+
+    std::mutex mMutex;
+    std::thread mThread;
+    std::condition_variable mHasWorkCondition;
+    std::atomic<bool> mHasDeletions;
+    bool mThreadShouldExit = false;
 };
 
 }  // namespace dawn::native::vulkan

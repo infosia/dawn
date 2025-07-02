@@ -34,9 +34,12 @@
 
 namespace dawn::native::vulkan {
 
-FencedDeleter::FencedDeleter(Device* device) : mDevice(device) {}
+FencedDeleter::FencedDeleter(Device* device) : mDevice(device) {
+    mThread = std::thread(&FencedDeleter::ThreadLoop, this);
+}
 
 FencedDeleter::~FencedDeleter() {
+    std::unique_lock<std::mutex> lock(mMutex);
     DAWN_ASSERT(mBuffersToDelete.Empty());
     DAWN_ASSERT(mDescriptorPoolsToDelete.Empty());
     DAWN_ASSERT(mFencesToDelete.Empty());
@@ -55,71 +58,126 @@ FencedDeleter::~FencedDeleter() {
     DAWN_ASSERT(mSwapChainsToDelete.Empty());
 }
 
+void Destroy() {
+    mThreadShouldExit = true;
+    mHasWorkCondition.notify_one();
+}
+
 void FencedDeleter::DeleteWhenUnused(VkBuffer buffer) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mBuffersToDelete.Enqueue(buffer, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkDescriptorPool pool) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mDescriptorPoolsToDelete.Enqueue(pool, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkDeviceMemory memory) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mMemoriesToDelete.Enqueue(memory, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkFence fence) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mFencesToDelete.Enqueue(fence, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkFramebuffer framebuffer) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mFramebuffersToDelete.Enqueue(framebuffer, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkImage image) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mImagesToDelete.Enqueue(image, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkImageView view) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mImageViewsToDelete.Enqueue(view, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkPipeline pipeline) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mPipelinesToDelete.Enqueue(pipeline, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkPipelineLayout layout) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mPipelineLayoutsToDelete.Enqueue(layout, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkQueryPool querypool) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mQueryPoolsToDelete.Enqueue(querypool, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkRenderPass renderPass) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mRenderPassesToDelete.Enqueue(renderPass, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkSamplerYcbcrConversion samplerYcbcrConversion) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mSamplerYcbcrConversionsToDelete.Enqueue(samplerYcbcrConversion, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkSampler sampler) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mSamplersToDelete.Enqueue(sampler, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkSemaphore semaphore) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mSemaphoresToDelete.Enqueue(semaphore, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkSurfaceKHR surface) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mSurfacesToDelete.Enqueue(surface, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 void FencedDeleter::DeleteWhenUnused(VkSwapchainKHR swapChain) {
+    std::unique_lock<std::mutex> lock(mMutex);
     mSwapChainsToDelete.Enqueue(swapChain, GetCurrentDeletionSerial());
+    mHasDeletions.exchange(true);
+    mHasWorkCondition.notify_one();
 }
 
 ExecutionSerial FencedDeleter::GetLastPendingDeletionSerial() {
+    std::unique_lock<std::mutex> lock(mMutex);
+
     ExecutionSerial lastSerial = kBeginningOfGPUTime;
     auto GetLastSubmitted = [&lastSerial](auto& queue) {
         if (!queue.Empty()) {
@@ -152,8 +210,15 @@ ExecutionSerial FencedDeleter::GetCurrentDeletionSerial() {
 }
 
 void FencedDeleter::Tick(ExecutionSerial completedSerial) {
+    std::unique_lock<std::mutex> lock(mMutex);
+    ProcessDeletions(completedSerial);
+}
+
+void FencedDeleter::ProcessDeletions(ExecutionSerial completedSerial) {
     VkDevice vkDevice = mDevice->GetVkDevice();
     VkInstance instance = mDevice->GetVkInstance();
+
+    mHasDeletions.exchange(false);
 
     // Buffers and images must be deleted before memories because it is invalid to free memory
     // that still have resources bound to it.
@@ -236,6 +301,20 @@ void FencedDeleter::Tick(ExecutionSerial completedSerial) {
         mDevice->fn.DestroySampler(vkDevice, sampler, nullptr);
     }
     mSamplersToDelete.ClearUpTo(completedSerial);
+}
+
+void FencedDeleter::ThreadLoop() {
+    while(1) {
+        std::unique_lock<std::mutex> lock(mMutex);
+        mHasWorkCondition.wait(lock, [this]() { return mThreadShouldExit || mHasDeletions; });
+
+        if (mThreadShouldExit) {
+            break;
+        }
+
+        ExecutionSerial completedSerial = GetCurrentDeletionSerial();
+        ProcessDeletions(completedSerial)
+    }
 }
 
 }  // namespace dawn::native::vulkan
