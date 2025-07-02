@@ -29,7 +29,7 @@
 
 #include "dawn/tests/DawnTest.h"
 #include "dawn/tests/MockCallback.h"
-#include "dawn/tests/StringViewMatchers.h"
+#include "dawn/tests/StringViewUtils.h"
 #include "gmock/gmock.h"
 
 namespace dawn {
