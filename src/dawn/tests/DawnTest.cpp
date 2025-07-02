@@ -1785,9 +1785,7 @@ void DawnTestBase::WaitABit(wgpu::Instance targetInstance) {
 void DawnTestBase::FlushWire() {
     if (gTestEnv->UsesWire()) {
         bool C2SFlushed = mWireHelper->FlushClient();
-        bool S2CFlushed = mWireHelper->FlushServer();
         DAWN_ASSERT(C2SFlushed);
-        DAWN_ASSERT(S2CFlushed);
     }
 }
 
