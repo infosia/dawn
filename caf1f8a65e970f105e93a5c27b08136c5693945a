@@ -89,6 +89,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f4dcb8f_17ef7a47",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-07-02T10:16:48Z",
+      "side": 1,
+      "message": "I switched this back to calling Device::EmitWarningOnce.\n\nI also filed this issue for any cleanup of these functions: https://issues.chromium.org/issues/429060509\n\nCould you leave some comments there on what how you\u0027d like them changed? I didn\u0027t change it in this CL because `GetDeprecationWarningCountForTesting` is referenced in a bunch if places so it seems the cleanup/refactor might be slightly more involved.",
+      "parentUuid": "0a7b5fcb_07239874",
+      "revId": "caf1f8a65e970f105e93a5c27b08136c5693945a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a429e502_7ee6893e",
