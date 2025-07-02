@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abacd5e0_a7b70aa4",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 2461,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-07-02T14:47:13Z",
+      "side": 1,
+      "message": "Is this protected from another thread grabbing the lock during this function?",
+      "range": {
+        "startLine": 2456,
+        "startChar": 0,
+        "endLine": 2461,
+        "endChar": 5
+      },
+      "revId": "734f43c2dbde046644ec4b8f7502d731db525c85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01e32a9f_d0eb0cf1",
+        "filename": "src/dawn/native/DeviceGuard.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-07-02T14:47:13Z",
+      "side": 1,
+      "message": "This only assigns if the std::optional does not have a value stored which could use a comment. Not obvious to me why that\u0027s the case.\n\nAlso nit: use `defer-\u003ehas_value()` which has a clearer intention.",
+      "range": {
+        "startLine": 54,
+        "startChar": 17,
+        "endLine": 54,
+        "endChar": 26
+      },
+      "revId": "734f43c2dbde046644ec4b8f7502d731db525c85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e5804a2_6d5557c6",
+        "filename": "src/dawn/native/DeviceGuard.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-07-02T14:47:13Z",
+      "side": 1,
+      "message": "Can this be done in DeviceGuardBase?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 5
+      },
+      "revId": "734f43c2dbde046644ec4b8f7502d731db525c85",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
