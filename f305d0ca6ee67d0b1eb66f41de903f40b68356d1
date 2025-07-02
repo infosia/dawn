@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6362e71c_840032b7",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-02T08:58:02Z",
+      "side": 1,
+      "message": "Out of curiosity, do you think this is correct 100% time or are there cases where we should return false @cwallez@chromium.org?",
+      "revId": "f305d0ca6ee67d0b1eb66f41de903f40b68356d1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
