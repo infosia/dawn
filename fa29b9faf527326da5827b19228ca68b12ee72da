@@ -54,6 +54,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "087c178a_18a91465",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-02T02:19:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1aa622b0_9375ab07",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc1d6c90_07c5f130",
@@ -161,6 +179,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2f75402_ae589482",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-02T02:19:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3260b9eb_74333928",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d0876dbc_b7141e96",
@@ -210,6 +246,24 @@
       "side": 1,
       "message": "I don\u0027t know that it would help readability necessarily compared to the suggestion above. Any specific reason for wanting to use a JSON + codegen?",
       "parentUuid": "94c4be52_3fed36cb",
+      "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84284507_0cc05a90",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-02T02:19:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cb760b57_500e2d64",
       "revId": "fa29b9faf527326da5827b19228ca68b12ee72da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
