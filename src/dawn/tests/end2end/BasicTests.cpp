@@ -93,9 +93,13 @@ TEST_P(BasicTests, GetInstanceFeatures) {
     wgpu::GetInstanceFeatures(&out);
 
     auto features = std::span(out.features, out.featureCount);
-    EXPECT_EQ(out.featureCount, UsesWire() ? 0u : 2u);
+    EXPECT_EQ(out.featureCount, UsesWire() ? 0u : 3u);
+
     EXPECT_EQ(UsesWire(), std::find(features.begin(), features.end(),
                                     wgpu::InstanceFeatureName::TimedWaitAny) == features.end());
+    EXPECT_EQ(UsesWire(),
+              std::find(features.begin(), features.end(),
+                        wgpu::InstanceFeatureName::ShaderSourceSPIRV) == features.end());
     EXPECT_EQ(UsesWire(),
               std::find(features.begin(), features.end(),
                         wgpu::InstanceFeatureName::MultipleDevicesPerAdapter) == features.end());
@@ -105,6 +109,7 @@ TEST_P(BasicTests, GetInstanceFeatures) {
     }
     if (UsesWire()) {
         EXPECT_FALSE(wgpu::HasInstanceFeature(wgpu::InstanceFeatureName::TimedWaitAny));
+        EXPECT_FALSE(wgpu::HasInstanceFeature(wgpu::InstanceFeatureName::ShaderSourceSPIRV));
         EXPECT_FALSE(
             wgpu::HasInstanceFeature(wgpu::InstanceFeatureName::MultipleDevicesPerAdapter));
     }
