@@ -220,6 +220,16 @@ ColorSpaceConversionInfo GetNoopRGBColorSpaceConversionInfo();
 
 bool BackendRequiresCompat(wgpu::BackendType backend);
 
+int8_t ConvertFloatToSnorm8(float value);
+
+int16_t ConvertFloatToSnorm16(float value);
+
+uint16_t ConvertFloatToUnorm16(float value);
+
+enum class FormatType { kSnorm8, kSnorm16, kUnorm16 };
+
+FormatType GetFormatType(wgpu::TextureFormat format);
+
 }  // namespace dawn::utils
 
 #endif  // SRC_DAWN_UTILS_WGPUHELPERS_H_
