@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc17c5d1_d589b6e6",
+        "filename": "src/tint/lang/spirv/reader/parser/composite_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-03T21:29:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72df12c7_794959d4",
+      "revId": "62bd620b95b52172f6fc6f23ca60b80d77e86728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f228604_b010f632",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-07-03T20:55:00Z",
       "side": 1,
       "message": "I guess the \u0027else\u0027 case occurs for a runtime sized array, and I think this is the right behaviour.\n\nE.g. \n```glsl\nlayout(set\u003d0,binding\u003d0) buffer B { mat4x4 mats[]; } b;\n```",
+      "revId": "62bd620b95b52172f6fc6f23ca60b80d77e86728",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d76d57fc_203a2fa6",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-03T21:29:36Z",
+      "side": 1,
+      "message": "Added a comment to make this clearer.",
+      "parentUuid": "2f228604_b010f632",
       "revId": "62bd620b95b52172f6fc6f23ca60b80d77e86728",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
