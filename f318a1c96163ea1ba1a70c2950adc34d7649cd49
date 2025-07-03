@@ -215,6 +215,24 @@
       "parentUuid": "152d3414_bc173d26",
       "revId": "f318a1c96163ea1ba1a70c2950adc34d7649cd49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bc36803_c49cd33c",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-03T19:27:19Z",
+      "side": 1,
+      "message": "Almost",
+      "parentUuid": "011f4867_6d3c261e",
+      "revId": "f318a1c96163ea1ba1a70c2950adc34d7649cd49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
