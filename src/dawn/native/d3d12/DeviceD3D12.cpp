@@ -293,7 +293,28 @@ MaybeError Device::CreateZeroBuffer() {
     zeroBufferDescriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
     zeroBufferDescriptor.size = kZeroBufferSize;
     zeroBufferDescriptor.label = "ZeroBuffer_Internal";
+
+    // Clear `mZeroBuffer` from CPU when `Feature::BufferMapExtendedUsages` is supported.
+    const bool supportsBufferMapExtendedUsages =
+        ToBackend(GetPhysicalDevice())->SupportsBufferMapExtendedUsages();
+    if (supportsBufferMapExtendedUsages) {
+        zeroBufferDescriptor.mappedAtCreation = true;
+        zeroBufferDescriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
+    }
     DAWN_TRY_ASSIGN(mZeroBuffer, Buffer::Create(this, Unpack(&zeroBufferDescriptor)));
+
+    if (supportsBufferMapExtendedUsages) {
+        DAWN_TRY(mZeroBuffer->MapAtCreation());
+
+        void* mappedPointer = mZeroBuffer->GetMappedPointer();
+        DAWN_ASSERT(mappedPointer != nullptr);
+        memset(mappedPointer, 0, mZeroBuffer->GetAllocatedSize());
+
+        DAWN_TRY(mZeroBuffer->Unmap());
+        DAWN_ASSERT(mZeroBuffer->IsInitialized());
+
+        return {};
+    }
 
     CommandRecordingContext* commandContext =
         ToBackend(GetQueue())->GetPendingCommandContext(QueueBase::SubmitMode::Passive);
