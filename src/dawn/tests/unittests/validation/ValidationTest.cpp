@@ -403,6 +403,19 @@ void ValidationTest::SetUp(const wgpu::InstanceDescriptor* nativeDesc,
 
     // Set the required features for the device.
     auto requiredFeatures = GetRequiredFeatures();
+
+    const bool isTextureFormatsTier1AlreadyRequested =
+        std::find(requiredFeatures.begin(), requiredFeatures.end(),
+                  wgpu::FeatureName::TextureFormatsTier1) != requiredFeatures.end();
+
+    const bool isRG11B10UFloatRenderableAlreadyRequested =
+        std::find(requiredFeatures.begin(), requiredFeatures.end(),
+                  wgpu::FeatureName::RG11B10UfloatRenderable) != requiredFeatures.end();
+
+    if (isTextureFormatsTier1AlreadyRequested && !isRG11B10UFloatRenderableAlreadyRequested) {
+        requiredFeatures.push_back(wgpu::FeatureName::RG11B10UfloatRenderable);
+    }
+
     deviceDescriptor.requiredFeatures = requiredFeatures.data();
     deviceDescriptor.requiredFeatureCount = requiredFeatures.size();
 
