@@ -147,6 +147,38 @@ ResourceHeapKind GetResourceHeapKind(D3D12_RESOURCE_FLAGS flags, uint32_t resour
     return ResourceHeapKind::Default_OnlyNonRenderableOrDepthTextures;
 }
 
+D3D12_RESOURCE_DIMENSION D3D12TextureDimension(wgpu::TextureDimension dimension) {
+    switch (dimension) {
+        case wgpu::TextureDimension::Undefined:
+            DAWN_UNREACHABLE();
+        case wgpu::TextureDimension::e1D:
+            return D3D12_RESOURCE_DIMENSION_TEXTURE1D;
+        case wgpu::TextureDimension::e2D:
+            return D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+        case wgpu::TextureDimension::e3D:
+            return D3D12_RESOURCE_DIMENSION_TEXTURE3D;
+    }
+}
+
+D3D12_SHADER_COMPONENT_MAPPING D3D12ComponentSwizzle(wgpu::ComponentSwizzle swizzle) {
+    switch (swizzle) {
+        case wgpu::ComponentSwizzle::Zero:
+            return D3D12_SHADER_COMPONENT_MAPPING_FORCE_VALUE_0;
+        case wgpu::ComponentSwizzle::One:
+            return D3D12_SHADER_COMPONENT_MAPPING_FORCE_VALUE_1;
+        case wgpu::ComponentSwizzle::R:
+            return D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_0;
+        case wgpu::ComponentSwizzle::G:
+            return D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_1;
+        case wgpu::ComponentSwizzle::B:
+            return D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_2;
+        case wgpu::ComponentSwizzle::A:
+            return D3D12_SHADER_COMPONENT_MAPPING_FROM_MEMORY_COMPONENT_3;
+
+        case wgpu::ComponentSwizzle::Undefined:
+            DAWN_UNREACHABLE();
+    }
+}
 }  // namespace
 
 // static
@@ -904,7 +936,15 @@ TextureView::TextureView(TextureBase* texture, const UnpackedPtr<TextureViewDesc
     mSrvDesc.Format =
         d3d::D3DShaderResourceViewFormat(GetDevice(), textureFormat, GetFormat(), aspects);
     if (mSrvDesc.Format != DXGI_FORMAT_UNKNOWN) {
-        mSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+        if (auto* swizzleDesc = descriptor.Get<TextureComponentSwizzleDescriptor>()) {
+            mSrvDesc.Shader4ComponentMapping = D3D12_ENCODE_SHADER_4_COMPONENT_MAPPING(
+                D3D12ComponentSwizzle(swizzleDesc->swizzle.r),
+                D3D12ComponentSwizzle(swizzleDesc->swizzle.g),
+                D3D12ComponentSwizzle(swizzleDesc->swizzle.b),
+                D3D12ComponentSwizzle(swizzleDesc->swizzle.a);
+        } else {
+            mSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+        }
 
         // Stencil is accessed using the .g component in the shader. Map it to the zeroth component
         // to match other APIs.
