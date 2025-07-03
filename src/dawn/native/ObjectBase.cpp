@@ -30,6 +30,7 @@
 #include <utility>
 
 #include "absl/strings/str_format.h"
+#include "dawn/common/Log.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ObjectBase.h"
@@ -73,16 +74,37 @@ bool ApiObjectList::Untrack(ApiObjectBase* object) {
 }
 
 void ApiObjectList::Destroy() {
-    LinkedList<ApiObjectBase> objects;
+    std::vector<ApiObjectBase*> objects;
     mObjects.Use([&objects, this](auto lockedObjects) {
         mMarkedDestroyed.store(true, std::memory_order_release);
-        lockedObjects->MoveInto(&objects);
+
+        while (!lockedObjects->empty()) {
+            auto* head = lockedObjects->head();
+
+            ApiObjectBase* value = head->value();
+            objects.push_back(value);
+
+            int count = value->mDestroyCount.fetch_add(1);
+            DAWN_CHECK(count == 0);
+
+            bool removed = head->RemoveFromList();
+            DAWN_ASSERT(removed);
+        }
+        DAWN_ASSERT(lockedObjects->empty());
     });
-    while (!objects.empty()) {
-        auto* head = objects.head();
-        bool removed = head->RemoveFromList();
-        DAWN_ASSERT(removed);
-        head->value()->DestroyImpl();
+
+    for (auto* object : objects) {
+        object->DestroyImpl();
+        int count = object->mDestroyCount.fetch_sub(1);
+        if (count == 2) {
+            // The last reference to the object was dropped after lock was released above. We must
+            // delete the object here since it's now been destroyed. In order for ApiObjectBase to
+            // not skip deletion decrement the destroy count again.
+            object->mDestroyCount--;
+            object->DeleteThis();
+        } else {
+            DAWN_CHECK(count == 1);
+        }
     }
 }
 
@@ -131,7 +153,14 @@ bool ApiObjectBase::IsAlive() const {
 
 void ApiObjectBase::DeleteThis() {
     Destroy();
-    RefCounted::DeleteThis();
+    int value = mDestroyCount.fetch_add(1);
+    if (value == 0) {
+        RefCounted::DeleteThis();
+    } else {
+        DAWN_CHECK(value == 1);
+        // ApiObjectList::Destroy() is going to destroy the object. It inherits the responsibility
+        // to call DeleteThis() as well.
+    }
 }
 
 void ApiObjectBase::LockAndDeleteThis() {

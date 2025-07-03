@@ -173,6 +173,7 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
   private:
     friend class ApiObjectList;
 
+    std::atomic<int> mDestroyCount = 0;
     std::string mLabel;
 };
 

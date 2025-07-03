@@ -215,7 +215,10 @@ void BindGroup::DeleteThis() {
     // the BindGroupLayout+SlabAllocator before running the destructor so this function can access
     // it afterwards and it's not destroyed prematurely.
     Ref<BindGroupLayout> layout = ToBackend(GetLayout());
-    BindGroupBase::DeleteThis();
+    ApiObjectBase::DeleteThis();
+    // This is broken! ApiObjectBase::DeleteThis() might skip deleting the object if
+    // ApiObjectList::Destroy() is running. If that happens this also has to skip deallocation and
+    // do it later.
     layout->DeallocateBindGroup(this);
 }
 
