@@ -462,6 +462,17 @@ class Parser {
                             TINT_ICE() << "can't translate OpSpecConstantOp with VectorShuffle: "
                                           "OpSpecConstantOp maps to a WGSL override declaration, "
                                           "but WGSL overrides must have scalar type";
+                        case spv::Op::OpSelect: {
+                            auto* result_type = Type(inst.type_id());
+                            if (!result_type->IsScalar()) {
+                                TINT_ICE()
+                                    << "can't translate OpSpecConstantOp with Select that returns "
+                                       "a vector: "
+                                       "OpSpecConstantOp maps to a WGSL override declaration, "
+                                       "but WGSL overrides must have scalar type";
+                            }
+                            EmitSpirvBuiltinCall(inst, spirv::BuiltinFn::kSelect, 3);
+                        }
                         default:
                             TINT_ICE() << "Unknown spec constant operation: " << op;
                     }
