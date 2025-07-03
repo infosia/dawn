@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c8b3fb8_53ccfa1c",
+        "filename": "src/tint/lang/core/ir/transform/signed_integer_polyfill.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-03T18:48:07Z",
+      "side": 1,
+      "message": "Nit: replace `as_type` with `bitcast` since this is no longer specific to MSL.",
+      "fixSuggestions": [
+        {
+          "fixId": "d3fc9824_13f1a3ad",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/transform/signed_integer_polyfill.cc",
+              "range": {
+                "startLine": 92,
+                "startChar": 0,
+                "endLine": 93,
+                "endChar": 0
+              },
+              "replacement": "        // Replace `-x` with `bitcast\u003cint\u003e((~bitcast\u003cuint\u003e(x)) + 1)`.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a2ef55b18b65d58c8c3ef60cfac7cd72882e523d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "502baf07_a703e59b",
+        "filename": "src/tint/lang/core/ir/transform/signed_integer_polyfill.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-03T18:48:07Z",
+      "side": 1,
+      "message": "Nit: Maybe `s/MSL/C++/` or something since this is no longer specific to MSL.",
+      "revId": "a2ef55b18b65d58c8c3ef60cfac7cd72882e523d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "795cbd0a_42e30624",
+        "filename": "src/tint/lang/core/ir/transform/signed_integer_polyfill.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-03T18:48:07Z",
+      "side": 1,
+      "message": "Nit: Again not just MSL any more.",
+      "revId": "a2ef55b18b65d58c8c3ef60cfac7cd72882e523d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff7f2ee9_cf5fefc0",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-03T18:48:07Z",
+      "side": 1,
+      "message": "We should bump this below the builtin polyfill to handle integer dot product polyfills.",
+      "revId": "a2ef55b18b65d58c8c3ef60cfac7cd72882e523d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
