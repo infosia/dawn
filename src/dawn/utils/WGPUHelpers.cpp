@@ -24,14 +24,14 @@
 // CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 #include "dawn/utils/WGPUHelpers.h"
 
 #include <cstring>
 #include <iomanip>
 #include <mutex>
+#include <queue>
 #include <sstream>
-
+#include "absl/container/flat_hash_map.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/Log.h"
 #include "dawn/common/Numeric.h"
@@ -425,6 +425,38 @@ bool BackendRequiresCompat(wgpu::BackendType backend) {
         case wgpu::BackendType::Undefined:
             DAWN_UNREACHABLE();
     }
+}
+
+const absl::flat_hash_map<wgpu::FeatureName, absl::flat_hash_set<wgpu::FeatureName>>
+    kImplicitlyEnabledFeaturesMap = {
+        {wgpu::FeatureName::TextureFormatsTier1, {wgpu::FeatureName::RG11B10UfloatRenderable}},
+        // Add other implicit enabling rules here
+};
+
+absl::flat_hash_set<wgpu::FeatureName> FeatureAndImplicitlyEnabled(wgpu::FeatureName featureName) {
+    absl::flat_hash_set<wgpu::FeatureName> allFeatures;
+    std::queue<wgpu::FeatureName> q;
+
+    q.push(featureName);
+    allFeatures.insert(featureName);
+
+    const auto& implicitMap = kImplicitlyEnabledFeaturesMap;
+
+    while (!q.empty()) {
+        wgpu::FeatureName current = q.front();
+        q.pop();
+
+        auto it = implicitMap.find(current);
+        if (it != implicitMap.end()) {
+            for (wgpu::FeatureName implicitlyEnabled : it->second) {
+                if (allFeatures.insert(implicitlyEnabled).second) {
+                    q.push(implicitlyEnabled);
+                }
+            }
+        }
+    }
+
+    return allFeatures;
 }
 
 }  // namespace dawn::utils

@@ -192,6 +192,9 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
             continue;
         }
 
+        // wgpu::FeatureName::CoreFeaturesAndLimits is required implicitly in core mode
+        static constexpr uint32_t kDefaultExpectedFeatureCount = 1u;
+
         wgpu::DeviceDescriptor deviceDescriptor;
         deviceDescriptor.requiredFeatures = &featureName;
         deviceDescriptor.requiredFeatureCount = 1;
@@ -211,10 +214,19 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
             wgpu::SupportedFeatures supportedFeatures;
             device.GetFeatures(&supportedFeatures);
-            // wgpu::FeatureName::CoreFeaturesAndLimits is required implicitly in core mode
-            ASSERT_EQ(1u + 1u, supportedFeatures.featureCount);
-            EXPECT_TRUE(featureName == supportedFeatures.features[0] ||
-                        featureName == supportedFeatures.features[1]);
+            uint32_t expectedFeatureCount = kDefaultExpectedFeatureCount +
+                                            utils::FeatureAndImplicitlyEnabled(featureName).size();
+
+            ASSERT_EQ(expectedFeatureCount, supportedFeatures.featureCount);
+
+            bool foundFeatureName = false;
+            for (uint32_t i = 0; i < supportedFeatures.featureCount; ++i) {
+                if (featureName == supportedFeatures.features[i]) {
+                    foundFeatureName = true;
+                    break;
+                }
+            }
+            EXPECT_TRUE(foundFeatureName);
         }
 
         // Test creating device with AllowUnsafeApis enabled in device toggle descriptor will
@@ -233,10 +245,20 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
                 wgpu::SupportedFeatures supportedFeatures;
                 device.GetFeatures(&supportedFeatures);
-                // wgpu::FeatureName::CoreFeaturesAndLimits is required implicitly in core mode
-                ASSERT_EQ(1u + 1u, supportedFeatures.featureCount);
-                EXPECT_TRUE(featureName == supportedFeatures.features[0] ||
-                            featureName == supportedFeatures.features[1]);
+                uint32_t expectedFeatureCount =
+                    kDefaultExpectedFeatureCount +
+                    utils::FeatureAndImplicitlyEnabled(featureName).size();
+
+                ASSERT_EQ(expectedFeatureCount, supportedFeatures.featureCount);
+
+                bool foundFeatureName = false;
+                for (uint32_t i = 0; i < supportedFeatures.featureCount; ++i) {
+                    if (featureName == supportedFeatures.features[i]) {
+                        foundFeatureName = true;
+                        break;
+                    }
+                }
+                EXPECT_TRUE(foundFeatureName);
             }
 
             // Test on adapter with AllowUnsafeApis disabled.
@@ -246,10 +268,20 @@ TEST_F(DeviceCreationTest, CreateDeviceRequiringExperimentalFeatures) {
 
                 wgpu::SupportedFeatures supportedFeatures;
                 device.GetFeatures(&supportedFeatures);
-                // wgpu::FeatureName::CoreFeaturesAndLimits is required implicitly in core mode
-                ASSERT_EQ(1u + 1u, supportedFeatures.featureCount);
-                EXPECT_TRUE(featureName == supportedFeatures.features[0] ||
-                            featureName == supportedFeatures.features[1]);
+                uint32_t expectedFeatureCount =
+                    kDefaultExpectedFeatureCount +
+                    utils::FeatureAndImplicitlyEnabled(featureName).size();
+
+                ASSERT_EQ(expectedFeatureCount, supportedFeatures.featureCount);
+
+                bool foundFeatureName = false;
+                for (uint32_t i = 0; i < supportedFeatures.featureCount; ++i) {
+                    if (featureName == supportedFeatures.features[i]) {
+                        foundFeatureName = true;
+                        break;
+                    }
+                }
+                EXPECT_TRUE(foundFeatureName);
             }
         }
 
