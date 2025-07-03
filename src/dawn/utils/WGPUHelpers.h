@@ -33,6 +33,8 @@
 #include <array>
 #include <initializer_list>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include "dawn/common/Constants.h"
@@ -213,6 +215,11 @@ ColorSpaceConversionInfo GetYUVBT709ToRGBSRGBColorSpaceConversionInfo();
 ColorSpaceConversionInfo GetNoopRGBColorSpaceConversionInfo();
 
 bool BackendRequiresCompat(wgpu::BackendType backend);
+
+extern const std::unordered_map<wgpu::FeatureName, std::unordered_set<wgpu::FeatureName>>
+    kImplicitlyEnabledFeaturesMap;
+
+std::unordered_set<wgpu::FeatureName> FeatureAndImplicitlyEnabled(wgpu::FeatureName featureName);
 
 }  // namespace dawn::utils
 
