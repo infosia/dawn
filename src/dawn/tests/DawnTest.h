@@ -125,8 +125,14 @@
 #define EXPECT_TEXTURE_FLOAT16_EQ(...) \
     AddTextureExpectation<float, uint16_t>(__FILE__, __LINE__, __VA_ARGS__)
 
-#define EXPECT_TEXTURE_SNORM_BETWEEN(...) \
+#define EXPECT_TEXTURE_SNORM8_BETWEEN(...) \
     AddSnormTextureBoundsExpectation<int8_t>(__FILE__, __LINE__, __VA_ARGS__)
+
+#define EXPECT_TEXTURE_SNORM16_BETWEEN(...) \
+    AddSnormTextureBoundsExpectation<int16_t>(__FILE__, __LINE__, __VA_ARGS__)
+
+#define EXPECT_TEXTURE_UNORM16_BETWEEN(...) \
+    AddSnormTextureBoundsExpectation<uint16_t>(__FILE__, __LINE__, __VA_ARGS__)
 
 // Matcher for C++ types to verify that their internal C-handles are identical.
 MATCHER_P(CHandleIs, cType, "") {
