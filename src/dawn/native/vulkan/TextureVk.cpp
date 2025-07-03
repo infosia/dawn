@@ -390,6 +390,25 @@ Aspect ComputeCombinedAspect(Device* device, const Format& format) {
     return Aspect::None;
 }
 
+VkComponentSwizzle VulkanComponentSwizzle(wgpu::ComponentSwizzle swizzle) {
+    switch (swizzle) {
+        case wgpu::ComponentSwizzle::Zero:
+            return VK_COMPONENT_SWIZZLE_ZERO;
+        case wgpu::ComponentSwizzle::One:
+            return VK_COMPONENT_SWIZZLE_ONE;
+        case wgpu::ComponentSwizzle::R:
+            return VK_COMPONENT_SWIZZLE_R;
+        case wgpu::ComponentSwizzle::G:
+            return VK_COMPONENT_SWIZZLE_G;
+        case wgpu::ComponentSwizzle::B:
+            return VK_COMPONENT_SWIZZLE_B;
+        case wgpu::ComponentSwizzle::A:
+            return VK_COMPONENT_SWIZZLE_A;
+
+        case wgpu::ComponentSwizzle::Undefined:
+            DAWN_UNREACHABLE();
+    }
+}
 }  // namespace
 
 #define SIMPLE_FORMAT_MAPPING(X)                                                      \
@@ -1947,7 +1966,9 @@ MaybeError TextureView::Initialize(const UnpackedPtr<TextureViewDescriptor>& des
     }
 
     Device* device = ToBackend(GetTexture()->GetDevice());
-    VkImageViewCreateInfo createInfo = GetCreateInfo(descriptor->format, descriptor->dimension);
+    auto* swizzleDesc = descriptor.Get<TextureComponentSwizzleDescriptor>();
+    VkImageViewCreateInfo createInfo =
+        GetCreateInfo(descriptor->format, descriptor->dimension, swizzleDesc);
 
     VkImageViewUsageCreateInfo usageInfo = {};
     usageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_USAGE_CREATE_INFO;
@@ -2025,9 +2046,11 @@ VkImageView TextureView::GetHandleForBGRA8UnormStorage() const {
     return mHandleForBGRA8UnormStorage;
 }
 
-VkImageViewCreateInfo TextureView::GetCreateInfo(wgpu::TextureFormat format,
-                                                 wgpu::TextureViewDimension dimension,
-                                                 uint32_t depthSlice) const {
+VkImageViewCreateInfo TextureView::GetCreateInfo(
+    wgpu::TextureFormat format,
+    wgpu::TextureViewDimension dimension,
+    const TextureComponentSwizzleDescriptor* swizzleDesc,
+    uint32_t depthSlice) const {
     Device* device = ToBackend(GetTexture()->GetDevice());
 
     VkImageViewCreateInfo createInfo;
@@ -2050,8 +2073,15 @@ VkImageViewCreateInfo TextureView::GetCreateInfo(wgpu::TextureFormat format,
         createInfo.format = VulkanImageFormat(device, format);
     }
 
-    createInfo.components = VkComponentMapping{VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G,
-                                               VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A};
+    if (swizzleDesc) {
+        createInfo.components = VkComponentMapping{VulkanComponentSwizzle(swizzleDesc->swizzle.r),
+                                                   VulkanComponentSwizzle(swizzleDesc->swizzle.g),
+                                                   VulkanComponentSwizzle(swizzleDesc->swizzle.b),
+                                                   VulkanComponentSwizzle(swizzleDesc->swizzle.a)};
+    } else {
+        createInfo.components = VkComponentMapping{VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G,
+                                                   VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A};
+    }
 
     const SubresourceRange& subresources = GetSubresourceRange();
     createInfo.subresourceRange.baseMipLevel = subresources.baseMipLevel;
@@ -2077,7 +2107,7 @@ ResultOrError<VkImageView> TextureView::GetOrCreate2DViewOn3D(uint32_t depthSlic
 
     Device* device = ToBackend(GetTexture()->GetDevice());
     VkImageViewCreateInfo createInfo =
-        GetCreateInfo(GetFormat().format, wgpu::TextureViewDimension::e2D, depthSlice);
+        GetCreateInfo(GetFormat().format, wgpu::TextureViewDimension::e2D, nullptr, depthSlice);
 
     VkImageView view;
     DAWN_TRY(CheckVkSuccess(
