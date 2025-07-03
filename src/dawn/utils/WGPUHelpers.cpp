@@ -30,7 +30,9 @@
 #include <cstring>
 #include <iomanip>
 #include <mutex>
+#include <queue>
 #include <sstream>
+#include <unordered_map>
 
 #include "dawn/common/Constants.h"
 #include "dawn/common/Log.h"
@@ -425,6 +427,38 @@ bool BackendRequiresCompat(wgpu::BackendType backend) {
         case wgpu::BackendType::Undefined:
             DAWN_UNREACHABLE();
     }
+}
+
+const std::unordered_map<wgpu::FeatureName, std::unordered_set<wgpu::FeatureName>>
+    kImplicitlyEnabledFeaturesMap = {
+        {wgpu::FeatureName::TextureFormatsTier1, {wgpu::FeatureName::RG11B10UfloatRenderable}},
+        // Add other implicit enabling rules here
+};
+
+std::unordered_set<wgpu::FeatureName> FeatureAndImplicitlyEnabled(wgpu::FeatureName featureName) {
+    std::unordered_set<wgpu::FeatureName> allFeatures;
+    std::queue<wgpu::FeatureName> q;
+
+    q.push(featureName);
+    allFeatures.insert(featureName);
+
+    const auto& implicitMap = kImplicitlyEnabledFeaturesMap;
+
+    while (!q.empty()) {
+        wgpu::FeatureName current = q.front();
+        q.pop();
+
+        auto it = implicitMap.find(current);
+        if (it != implicitMap.end()) {
+            for (wgpu::FeatureName implicitlyEnabled : it->second) {
+                if (allFeatures.insert(implicitlyEnabled).second) {
+                    q.push(implicitlyEnabled);
+                }
+            }
+        }
+    }
+
+    return allFeatures;
 }
 
 }  // namespace dawn::utils
