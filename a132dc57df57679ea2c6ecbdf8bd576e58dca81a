@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47de7489_f8af0e36",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-03T20:47:20Z",
+      "side": 1,
+      "message": "LGTM with nits",
+      "revId": "a132dc57df57679ea2c6ecbdf8bd576e58dca81a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df01921d_4505203c",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-03T20:47:20Z",
+      "side": 1,
+      "message": "Comment should say:\n\nReturns a list of errors.",
+      "revId": "a132dc57df57679ea2c6ecbdf8bd576e58dca81a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f611823_d8229698",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-03T20:47:20Z",
+      "side": 1,
+      "message": "nit: \"is a\"",
+      "range": {
+        "startLine": 321,
+        "startChar": 106,
+        "endLine": 321,
+        "endChar": 110
+      },
+      "revId": "a132dc57df57679ea2c6ecbdf8bd576e58dca81a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
