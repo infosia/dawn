@@ -62,6 +62,7 @@ dawn_add_library(
     dawn::dawn_common
   PRIVATE_DEPENDS
     ${private_wgpu_depends}
+    absl::flat_hash_set
 )
 
 # Needed by WGPUHelpers
@@ -91,6 +92,8 @@ dawn_add_library(
     dawn::dawn_common
     dawn::dawn_wire
     dawn::partition_alloc
+  PRIVATE_DEPENDS
+    absl::flat_hash_set
 )
 
 ###############################################################################
