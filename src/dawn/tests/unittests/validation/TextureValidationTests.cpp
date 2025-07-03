@@ -1220,5 +1220,17 @@ TEST_F(TextureFormatsTier1TextureTest, SNORMFormatsAreRenderableWithFeatureEnabl
     }
 }
 
+// Test that RG11B10Ufloat format is valid as render attachment and also it allows
+// multisampling if 'texture-formats-tier1' is enabled.
+TEST_F(TextureFormatsTier1TextureTest, RenderableFeature) {
+    wgpu::TextureDescriptor descriptor;
+    descriptor.size = {1, 1, 1};
+    descriptor.usage = wgpu::TextureUsage::RenderAttachment;
+
+    descriptor.format = wgpu::TextureFormat::RG11B10Ufloat;
+    descriptor.sampleCount = 4;
+    device.CreateTexture(&descriptor);
+}
+
 }  // anonymous namespace
 }  // namespace dawn
