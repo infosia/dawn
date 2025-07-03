@@ -86,6 +86,30 @@
       },
       "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7208798_cef48d36",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-03T10:05:58Z",
+      "side": 1,
+      "message": "That was one my interrogations as well when implementing this. Maybe @cwallez@chromium.org knows where it\u0027s best to call this.",
+      "parentUuid": "af92467a_ad65855f",
+      "range": {
+        "startLine": 848,
+        "startChar": 0,
+        "endLine": 851,
+        "endChar": 72
+      },
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
