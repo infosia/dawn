@@ -3559,11 +3559,10 @@ TEST_F(ClipDistancesValidationTest, ClipDistancesAgainstMaxInterStageLocation) {
     }
 }
 
-// Tests that
-// r8snorm/rg8snorm/rgba8snorm/r16unorm/r16snorm/rg16unorm/rg16snorm/rgba16unorm/rgba16snorm are not
-// renderable if the feature TextureFormatsTier1 is not enabled
-TEST_F(RenderPipelineValidationTest, SNORMFormatsNotRenderableWithoutFeature) {
-    for (const auto format : utils::kTier1AdditionalRenderableFormats) {
+// Tests that KRenderableFormats are not renderable if the feature TextureFormatsTier1
+// is not enabled.
+TEST_F(RenderPipelineValidationTest, NotRenderableWithoutTier1) {
+    for (const auto format : utils::KRenderableFormats) {
         utils::ComboRenderPipelineDescriptor descriptor;
         descriptor.vertex.module = vsModule;
         descriptor.cFragment.module = fsModule;
@@ -3579,11 +3578,10 @@ class TextureFormatsTier1PipelineTest : public RenderPipelineValidationTest {
     }
 };
 
-// Tests that
-// r8snorm/rg8snorm/rgba8snorm/r16unorm/r16snorm/rg16unorm/rg16snorm/rgba16unorm/rgba16snorm must be
-// renderable when the feature TextureFormatsTier1 is enabled.
-TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsRenderableWithFeatureEnabled) {
-    for (const auto format : utils::kTier1AdditionalRenderableFormats) {
+// Tests that KRenderableFormats must be renderable when the feature TextureFormatsTier1
+// is enabled.
+TEST_F(TextureFormatsTier1PipelineTest, RenderableWithTier1) {
+    for (const auto format : utils::KRenderableFormats) {
         utils::ComboRenderPipelineDescriptor descriptor;
         descriptor.vertex.module = vsModule;
         descriptor.cFragment.module = fsModule;
@@ -3592,11 +3590,11 @@ TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsRenderableWithFeatureEnabled
     }
 }
 
-// Tests that
-// r8snorm/rg8snorm/rgba8snorm/r16unorm/r16snorm/rg16unorm/rg16snorm/rgba16unorm/rgba16snorm must be
-// blendable when the feature TextureFormatsTier1 is enabled.
-TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsBlendableWithFeatureEnabled) {
-    for (const auto format : utils::kTier1AdditionalRenderableFormats) {
+// Tests that KRenderableFormats must be blendable when the feature TextureFormatsTier1
+// is enabled.
+TEST_F(TextureFormatsTier1PipelineTest, BlendableWithTier1) {
+    for (const auto format : utils::KRenderableFormats) {
+        SCOPED_TRACE(absl::StrFormat("Test format: %s", format));
         utils::ComboRenderPipelineDescriptor descriptor;
         descriptor.vertex.module = vsModule;
         descriptor.cFragment.module = fsModule;
@@ -3606,11 +3604,11 @@ TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsBlendableWithFeatureEnabled)
     }
 }
 
-// Tests that
-// r8snorm/rg8snorm/rgba8snorm/r16unorm/r16snorm/rg16unorm/rg16snorm/rgba16unorm/rgba16snorm must
-// support multisampling when the TextureFormatsTier1 feature is enabled.
-TEST_F(TextureFormatsTier1PipelineTest, SNORMFormatsMultisampleSupportWithTier1) {
-    for (const auto format : utils::kTier1AdditionalRenderableFormats) {
+// Tests that KRenderableFormats must support multisampling when the TextureFormatsTier1
+// feature is enabled.
+TEST_F(TextureFormatsTier1PipelineTest, MultisampleSupportWithTier1) {
+    for (const auto format : utils::KRenderableFormats) {
+        SCOPED_TRACE(absl::StrFormat("Test format: %s", format));
         utils::ComboRenderPipelineDescriptor descriptor;
         descriptor.vertex.module = vsModule;
         descriptor.cFragment.module = fsModule;
@@ -3655,7 +3653,7 @@ TEST_F(RG11B10UfloatRenderablePipelineTest, RG11B10UfloatBlendableWithFeatureEna
 
 // Tests that rg11b10ufloat must support multisampling when the RG11B10UfloatRenderable feature is
 // enabled.
-TEST_F(RG11B10UfloatRenderablePipelineTest, RG11B10UfloatMultisampleSupportWithTier1) {
+TEST_F(RG11B10UfloatRenderablePipelineTest, RG11B10UfloatMultisampleSupportWithFeatureEnabled) {
     const std::array kTestFormats = {wgpu::TextureFormat::RG11B10Ufloat};
     for (const auto format : kTestFormats) {
         utils::ComboRenderPipelineDescriptor descriptor;

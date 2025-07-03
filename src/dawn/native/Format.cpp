@@ -562,7 +562,9 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
     AddColorFormat(wgpu::TextureFormat::RGB10A2Uint, Cap::Renderable | intMultisampleCaps, ByteSize(4), SampleTypeBit::Uint, ComponentCount(4), RenderTargetPixelByteCost(8), RenderTargetComponentAlignment(4));
     AddColorFormat(wgpu::TextureFormat::RGB10A2Unorm, Cap::Renderable | Cap::Multisample | Cap::Resolve | Cap::Blendable, ByteSize(4), kAnyFloat, ComponentCount(4), RenderTargetPixelByteCost(8), RenderTargetComponentAlignment(4));
 
-    auto isRG11B10UfloatCapabilities = device->HasFeature(Feature::RG11B10UfloatRenderable) ? Cap::Renderable | Cap::Multisample | Cap::Resolve | Cap::Blendable : Cap::None;
+    bool textureFormatsTier1Enabled = device->HasFeature(Feature::TextureFormatsTier1);
+    bool isRG11B10UfloatRenderable = textureFormatsTier1Enabled || device->HasFeature(Feature::RG11B10UfloatRenderable);
+    auto isRG11B10UfloatCapabilities = isRG11B10UfloatRenderable ? Cap::Renderable | Cap::Multisample | Cap::Resolve | Cap::Blendable : Cap::None;
     AddColorFormat(wgpu::TextureFormat::RG11B10Ufloat, isRG11B10UfloatCapabilities, ByteSize(4), kAnyFloat, ComponentCount(3), RenderTargetPixelByteCost(8), RenderTargetComponentAlignment(4));
     AddColorFormat(wgpu::TextureFormat::RGB9E5Ufloat, Cap::None, ByteSize(4), kAnyFloat, ComponentCount(3));
 
@@ -584,7 +586,7 @@ FormatTable BuildFormatTable(const DeviceBase* device) {
     AddColorFormat(wgpu::TextureFormat::RGBA32Float, Cap::Renderable | Cap::StorageROrW | float32BlendableCaps, ByteSize(16), sampleTypeFor32BitFloatFormats, ComponentCount(4), RenderTargetPixelByteCost(16), RenderTargetComponentAlignment(4));
 
     bool norm16TextureFormats = device->HasFeature(Feature::Norm16TextureFormats);
-    bool textureFormatsTier1Enabled = device->HasFeature(Feature::TextureFormatsTier1);
+
     UnsupportedReason unormColorFormatsSupportStatus;
     Cap unormColorFormatsCapabilities;
     if (textureFormatsTier1Enabled) {
