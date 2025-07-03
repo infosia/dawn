@@ -37,13 +37,16 @@
 #include <utility>
 #include <vector>
 
+#include "absl/strings/str_format.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/Math.h"
+#include "dawn/native/ObjectBase.h"
 #include "dawn/tests/DawnTest.h"
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/TestUtils.h"
 #include "dawn/utils/TextureUtils.h"
 #include "dawn/utils/WGPUHelpers.h"
+#include "webgpu/webgpu_cpp.h"
 
 namespace dawn {
 namespace {
@@ -652,6 +655,36 @@ TEST_P(MultithreadTests, CreateAndDestroyBindGroupsInParallel) {
             EXPECT_NE(nullptr, bindGroup.Get());
         }
     });
+}
+
+TEST_P(MultithreadTests, DestroyTextureAndView) {
+    constexpr uint32_t kNumViews = 10;
+    constexpr wgpu::TextureFormat kRenderAttachmentFormat = wgpu::TextureFormat::RGBA8Unorm;
+    constexpr wgpu::TextureUsage kTextureUsage =
+        wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::CopySrc |
+        wgpu::TextureUsage::CopyDst | wgpu::TextureUsage::TextureBinding;
+
+    for (uint32_t j = 0; j < 1000; ++j) {
+        wgpu::Texture texture = CreateTexture(1, 1, kRenderAttachmentFormat, kTextureUsage);
+        wgpu::TextureView textureViews[kNumViews];
+
+        for (uint32_t i = 0; i < kNumViews; ++i) {
+            wgpu::TextureViewDescriptor texDescriptor = {};
+            texDescriptor.format = kRenderAttachmentFormat;
+            texDescriptor.usage = kTextureUsage;
+            texDescriptor.mipLevelCount = 1;
+            textureViews[i] = texture.CreateView(&texDescriptor);
+        }
+
+        utils::RunInParallel(kNumViews, [&](uint32_t id) {
+            if (id == (j % kNumViews)) {
+                texture.Destroy();
+            } else {
+                textureViews[id] = {};
+            }
+        });
+        // , [&]() { texture.Destroy(); }
+    }
 }
 
 class MultithreadCachingTests : public MultithreadTests {

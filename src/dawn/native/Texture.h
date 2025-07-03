@@ -277,11 +277,7 @@ ResultOrError<Ref<TextureViewBase>> TextureBase::GetOrCreateViewFromCache(
     CreateFn createFn) {
     TextureViewQuery query(desc);
 
-    if (!mTextureViewCache) {
-        return createFn(query);
-    }
-
-    return mTextureViewCache->GetOrCreate(query, createFn);
+    return createFn(query);
 }
 
 class TextureViewBase : public ApiObjectBase {
