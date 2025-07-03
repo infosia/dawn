@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34a7d683_395e54cd",
+        "filename": "src/tint/lang/core/ir/validator_type_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-03T16:32:27Z",
+      "side": 1,
+      "message": "The error is implicit signed-ness conversion warning, so I think you just need to slap `u`s on the literals",
+      "revId": "ba4d0233223c1ce99f2f5730b2a2ec0de5d4661a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "662e7c6f_bc72a992",
+        "filename": "src/tint/lang/core/ir/validator_type_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-03T16:32:27Z",
+      "side": 1,
+      "message": "```suggestion\n                      ty.Get\u003ctype::StructMember\u003e(mod.symbols.New(\"a\"), ty.array\u003cu32, 3\u003e(), 0u, 0u, 4u,\n```",
+      "revId": "ba4d0233223c1ce99f2f5730b2a2ec0de5d4661a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
