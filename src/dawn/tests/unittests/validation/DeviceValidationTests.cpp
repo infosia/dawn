@@ -282,6 +282,22 @@ TEST_F(RequestDeviceValidationTest, ErrorTriggersDeviceLost) {
     }
 }
 
+// Test that RG11B10UfloatRenderable is implicitly enabled when TextureFormatsTier1 is active.
+TEST_F(RequestDeviceValidationTest, Implicit) {
+    wgpu::DeviceDescriptor descriptor = {};
+    std::vector<wgpu::FeatureName> features = {wgpu::FeatureName::TextureFormatsTier1};
+    descriptor.requiredFeatures = features.data();
+    descriptor.requiredFeatureCount = features.size();
+
+    EXPECT_CALL(mRequestDeviceCallback,
+                Call(wgpu::RequestDeviceStatus::Success, NotNull(), EmptySizedString()))
+        .WillOnce(WithArgs<1>([](wgpu::Device device) {
+            EXPECT_TRUE(device.HasFeature(wgpu::FeatureName::RG11B10UfloatRenderable));
+        }));
+    adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
+                          mRequestDeviceCallback.Callback());
+}
+
 class DeviceTickValidationTest : public ValidationTest {};
 
 // Device destroy before API-level Tick should always result in no-op and false.
@@ -477,6 +493,30 @@ TEST_F(RequestDeviceWithImmediateDataValidationTest, HigherIsBetter) {
             device.GetLimits(&deviceLimits);
             // Check we got exactly the request because it's between tier0 and tier1.
             EXPECT_EQ(deviceLimits.maxImmediateSize, kDefaultMaxImmediateDataBytes / 2);
+        }));
+    adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
+                          mRequestDeviceCallback.Callback());
+}
+
+class RequestDeviceTier1ValidationTest : public RequestDeviceValidationTest {
+    // Create a compat-defaulting adapter
+    bool UseCompatibilityMode() const override { return true; }
+};
+
+TEST_F(RequestDeviceTier1ValidationTest, Explicit) {
+    wgpu::DeviceDescriptor descriptor = {};
+    std::vector<wgpu::FeatureName> features = {wgpu::FeatureName::TextureFormatsTier1};
+    descriptor.requiredFeatures = features.data();
+    descriptor.requiredFeatureCount = features.size();
+
+    EXPECT_CALL(mRequestDeviceCallback,
+                Call(wgpu::RequestDeviceStatus::Success, NotNull(), EmptySizedString()))
+        .WillOnce(WithArgs<1>([](wgpu::Device device) {
+            EXPECT_TRUE(device.HasFeature(wgpu::FeatureName::RG11B10UfloatRenderable));
+            // Check one of limits to be greater than compat tier.
+            dawn::utils::ComboLimits limits;
+            device.GetLimits(limits.GetLinked());
+            EXPECT_GT(limits.maxStorageBuffersInVertexStage, 0u);
         }));
     adapter.RequestDevice(&descriptor, wgpu::CallbackMode::AllowSpontaneous,
                           mRequestDeviceCallback.Callback());
