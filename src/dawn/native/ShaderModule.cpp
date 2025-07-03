@@ -1445,8 +1445,10 @@ ResultOrError<ShaderModuleParseResult> ParseShaderModule(ShaderModuleParseReques
 #if TINT_BUILD_SPV_READER
     // Handling SPIR-V if enabled.
     if (std::holds_alternative<ShaderModuleParseSpirvDescription>(req.shaderDescription)) {
-        // SpirV toggle should have been validated before checking cache.
+        // SPIRV toggle and instance feature should have been validated before checking cache.
         DAWN_ASSERT(!deviceInfo.toggles.Has(Toggle::DisallowSpirv));
+        DAWN_ASSERT(
+            device->GetInstance()->HasFeature(wgpu::InstanceFeatureName::ShaderSourceSPIRV));
 
         ShaderModuleParseSpirvDescription& spirvDesc =
             std::get<ShaderModuleParseSpirvDescription>(req.shaderDescription);
