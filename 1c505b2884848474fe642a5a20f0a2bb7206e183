@@ -110,6 +110,30 @@
       },
       "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08396568_e52ab3d3",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-03T10:41:38Z",
+      "side": 1,
+      "message": "Ideally, I\u0027d like to override swizzle with `swizzle.WithTrivialFrontendDefaults()` in `GetTextureViewDescriptorWithDefaults()` so that it gets propagated everywhere else but the extension struct makes it hard for me.\n\nI wasn\u0027t able to find similar cases. For instance, ` yCbCrVkDescriptor-\u003eWithTrivialFrontendDefaults();` is called in [third_party/dawn/src/dawn/native/vulkan/TextureVk.cpp](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/TextureVk.cpp;l\u003d1961;drc\u003d13600cd646900af9ca24d3c3bcc086f5989d8d33), not before ;(",
+      "parentUuid": "e7208798_cef48d36",
+      "range": {
+        "startLine": 848,
+        "startChar": 0,
+        "endLine": 851,
+        "endChar": 72
+      },
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
