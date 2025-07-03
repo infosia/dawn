@@ -329,6 +329,7 @@ class TextureView final : public TextureViewBase {
 
     VkImageViewCreateInfo GetCreateInfo(wgpu::TextureFormat format,
                                         wgpu::TextureViewDimension dimension,
+                                        const TextureComponentSwizzleDescriptor* swizzleDesc,
                                         uint32_t depthSlice = 0u) const;
 
     // Dawn API
