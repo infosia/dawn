@@ -144,6 +144,11 @@ TEST_F(FeatureTests, RequireAndGetEnabledFeatures) {
 
         std::unordered_set<wgpu::FeatureName> requiredFeaturesSet =
             FeatureAndDependenciesSet(featureName);
+        if (featureName == wgpu::FeatureName::TextureFormatsTier1) {
+            // RG11B10UfloatRenderable is implicitly enabled by TextureFormatsTier1.
+            requiredFeaturesSet.insert(wgpu::FeatureName::RG11B10UfloatRenderable);
+        }
+
         std::vector<wgpu::FeatureName> features(requiredFeaturesSet.cbegin(),
                                                 requiredFeaturesSet.cend());
         bool requiredExperimentalFeature = false;
