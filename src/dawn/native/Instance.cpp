@@ -158,6 +158,8 @@ wgpu::Status APIGetInstanceLimits(InstanceLimits* limits) {
 
 static constexpr auto kSupportedFeatures = std::array{
     wgpu::InstanceFeatureName::TimedWaitAny,
+    wgpu::InstanceFeatureName::ShaderSourceSPIRV,
+    wgpu::InstanceFeatureName::MultipleDevicesPerAdapter,
 };
 
 bool APIHasInstanceFeature(wgpu::InstanceFeatureName feature) {
