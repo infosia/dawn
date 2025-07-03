@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a204aec0_c0270cb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-03T12:24:09Z",
+      "side": 1,
+      "message": "This CL introduces some thread-safety issues detected by TSAN bots https://ci.chromium.org/ui/p/chromium/builders/ci/Dawn%20Linux%20TSAN%20Release/67092/overview\n\nI think we should at least trigger the tsan trybot (`dawn-try-linux-tsan-rel`) before merging any thread related changes to be safe.\nAlternatively, maybe we should make TSAN bot a part of CQ.",
+      "revId": "6fa1fed68dd0c806b9802d3d3b6805eddd2260a8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
