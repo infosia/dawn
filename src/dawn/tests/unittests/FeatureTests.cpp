@@ -32,6 +32,7 @@
 #include "dawn/native/Instance.h"
 #include "dawn/native/Toggles.h"
 #include "dawn/native/null/DeviceNull.h"
+#include "dawn/utils/WGPUHelpers.h"
 #include "gtest/gtest.h"
 
 namespace dawn {
@@ -120,12 +121,6 @@ TEST_F(FeatureTests, AdapterWithRequiredFeatureDisabled) {
     }
 }
 
-// For a given feature, returns a set containing the feature and its depending features if any to
-// ensure creating device with these features can success
-std::unordered_set<wgpu::FeatureName> FeatureAndDependenciesSet(wgpu::FeatureName feature) {
-    return {feature};
-}
-
 bool IsExperimental(wgpu::FeatureName feature) {
     return native::kFeatureNameAndInfoList[native::FromAPI(feature)].featureState ==
            native::FeatureInfo::FeatureState::Experimental;
@@ -142,8 +137,10 @@ TEST_F(FeatureTests, RequireAndGetEnabledFeatures) {
         native::Feature feature = static_cast<native::Feature>(i);
         wgpu::FeatureName featureName = ToAPI(feature);
 
+        // Enable features that are implicitly enabled by other features.
         std::unordered_set<wgpu::FeatureName> requiredFeaturesSet =
-            FeatureAndDependenciesSet(featureName);
+            dawn::utils::FeatureAndImplicitlyEnabled(featureName);
+
         std::vector<wgpu::FeatureName> features(requiredFeaturesSet.cbegin(),
                                                 requiredFeaturesSet.cend());
         bool requiredExperimentalFeature = false;
