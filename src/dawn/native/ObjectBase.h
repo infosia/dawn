@@ -30,6 +30,7 @@
 
 #include <mutex>
 #include <optional>
+#include <semaphore>
 #include <string>
 
 #include "absl/strings/str_format.h"
@@ -172,6 +173,8 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
 
   private:
     friend class ApiObjectList;
+
+    std::binary_semaphore mDestroySemaphore{1};
 
     std::string mLabel;
 };

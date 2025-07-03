@@ -73,16 +73,23 @@ bool ApiObjectList::Untrack(ApiObjectBase* object) {
 }
 
 void ApiObjectList::Destroy() {
-    LinkedList<ApiObjectBase> objects;
+    std::vector<ApiObjectBase*> objects;
     mObjects.Use([&objects, this](auto lockedObjects) {
         mMarkedDestroyed.store(true, std::memory_order_release);
-        lockedObjects->MoveInto(&objects);
+        while (!lockedObjects->empty()) {
+            auto* head = lockedObjects->head();
+            head->value()->mDestroySemaphore.acquire();
+            objects.push_back(head->value());
+
+            bool removed = head->RemoveFromList();
+            DAWN_ASSERT(removed);
+        }
+
     });
-    while (!objects.empty()) {
-        auto* head = objects.head();
-        bool removed = head->RemoveFromList();
-        DAWN_ASSERT(removed);
-        head->value()->DestroyImpl();
+
+    for (auto* object : objects) {
+        object->DestroyImpl();
+        object->mDestroySemaphore.release();
     }
 }
 
@@ -131,6 +138,7 @@ bool ApiObjectBase::IsAlive() const {
 
 void ApiObjectBase::DeleteThis() {
     Destroy();
+    mDestroySemaphore.acquire();
     RefCounted::DeleteThis();
 }
 
