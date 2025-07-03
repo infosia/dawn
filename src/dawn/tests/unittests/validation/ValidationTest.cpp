@@ -403,6 +403,7 @@ void ValidationTest::SetUp(const wgpu::InstanceDescriptor* nativeDesc,
 
     // Set the required features for the device.
     auto requiredFeatures = GetRequiredFeatures();
+
     deviceDescriptor.requiredFeatures = requiredFeatures.data();
     deviceDescriptor.requiredFeatureCount = requiredFeatures.size();
 
