@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4cd267e_38067478",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-04T20:10:52Z",
+      "side": 1,
+      "message": "LGTM. We\u0027d usually generate all expectation files for all formats for generated builtin tests, not just skips. But that would probably break Gerrit, so we can maybe do that as a follow up.",
+      "revId": "a4396b7afe303bce973df7666c87118eb2bbc2a9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
