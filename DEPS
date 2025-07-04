@@ -63,11 +63,18 @@ vars = {
   # to be compatible we can get rid of this allowlisting mecahnism and remove
   # this condition. Tracking bug for removing this condition: b/349365433
   'non_git_source': 'True',
+
+  # Certain C/C++ atomic operations require the separately built "libatomic"
+  # support library, which is not shipped with compiler-rt by default. See
+  # crbug.com/402171653 for context.
+  # https://chromium-review.googlesource.com/c/chromium/src/+/6402716 says
+  # projects that mirrors //build should set this to False.
+  'use_llvm_libatomic': False,
 }
 
 deps = {
   'buildtools': {
-    'url': '{chromium_git}/chromium/src/buildtools@244e7cf4453305d0c17d500662a69fba2e46a73e',
+    'url': '{chromium_git}/chromium/src/buildtools@f30f8f10c9d1ad97480dc08eb72f7d9d1bf4cf89',
     'condition': 'dawn_standalone',
   },
   'third_party/clang-format/script': {
@@ -105,18 +112,18 @@ deps = {
   },
 
   'third_party/libc++/src': {
-    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libcxx.git@2e25154d49c29fa9aa42c30ad4a027bd30123434',
+    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libcxx.git@b5d83e70a1537fbce965e6319877c76794daaa80',
     'condition': 'dawn_standalone',
   },
 
   'third_party/libc++abi/src': {
-    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libcxxabi.git@8205ccf0f23545ebcd8846363ea1d29e77917a22',
+    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libcxxabi.git@33b29ab05db63a9b90416ae352ea09ac5ca81e11',
     'condition': 'dawn_standalone',
   },
 
   # Required by libc++
   'third_party/llvm-libc/src': {
-    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libc.git@a485ddbbb2ffe528c3ebf82b9d72a7297916531f',
+    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libc.git@e205ed030bab71049235a454a79d145e8fc36bbb',
     'condition': 'dawn_standalone',
   },
 
@@ -131,11 +138,11 @@ deps = {
   # The //build and //tools/clang deps should all be updated in
   # unison, as there are dependencies between them.
   'build': {
-    'url': '{chromium_git}/chromium/src/build@db0d31d702840881c049c523a2226e8e391929bf',
+    'url': '{chromium_git}/chromium/src/build@3c4595444cc6d514600414e468db432e0f05b40f',
     'condition': 'dawn_standalone',
   },
   'tools/clang': {
-    'url': '{chromium_git}/chromium/src/tools/clang@5d9b09742311e059ecdba6d74adcb883e4ebffe5',
+    'url': '{chromium_git}/chromium/src/tools/clang@9659fbf62194e9ce75a5142e345615a266d352d7',
     'condition': 'dawn_standalone',
   },
 
