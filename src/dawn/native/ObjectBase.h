@@ -30,6 +30,7 @@
 
 #include <mutex>
 #include <optional>
+#include <semaphore>
 #include <string>
 
 #include "absl/strings/str_format.h"
@@ -172,6 +173,10 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
 
   private:
     friend class ApiObjectList;
+
+    // Used as a mutex to guard against a destruction/destroy race. std::binary_semaphore ~32 byes
+    // smaller than std::mutex so this helps when each object has one.
+    std::binary_semaphore mDeleteSemaphore{1};
 
     std::string mLabel;
 };
