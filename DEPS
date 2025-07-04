@@ -21,7 +21,7 @@ vars = {
   'dawn_tintd': False, # Also fetches dependencies required for building tintd.
   'dawn_cmake_version': 'version:2@3.23.3',
   'dawn_cmake_win32_sha1': 'b106d66bcdc8a71ea2cdf5446091327bfdb1bcd7',
-  'dawn_gn_version': 'git_revision:487f8353f15456474437df32bb186187b0940b45',
+  'dawn_gn_version': 'git_revision:635a71e20e99db0b08520ca0746b501167a5c7e5',
   # ninja CIPD package version.
   # https://chrome-infra-packages.appspot.com/p/infra/3pp/tools/ninja
   'dawn_ninja_version': 'version:3@1.12.1.chromium.4',
@@ -67,7 +67,7 @@ vars = {
 
 deps = {
   'buildtools': {
-    'url': '{chromium_git}/chromium/src/buildtools@244e7cf4453305d0c17d500662a69fba2e46a73e',
+    'url': '{chromium_git}/chromium/src/buildtools@f7862e515c44313f6942517fef6d7718d92283d3',
     'condition': 'dawn_standalone',
   },
   'third_party/clang-format/script': {
@@ -105,18 +105,18 @@ deps = {
   },
 
   'third_party/libc++/src': {
-    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libcxx.git@2e25154d49c29fa9aa42c30ad4a027bd30123434',
+    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libcxx.git@b5d83e70a1537fbce965e6319877c76794daaa80',
     'condition': 'dawn_standalone',
   },
 
   'third_party/libc++abi/src': {
-    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libcxxabi.git@8205ccf0f23545ebcd8846363ea1d29e77917a22',
+    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libcxxabi.git@33b29ab05db63a9b90416ae352ea09ac5ca81e11',
     'condition': 'dawn_standalone',
   },
 
   # Required by libc++
   'third_party/llvm-libc/src': {
-    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libc.git@a485ddbbb2ffe528c3ebf82b9d72a7297916531f',
+    'url': '{chromium_git}/external/github.com/llvm/llvm-project/libc.git@e205ed030bab71049235a454a79d145e8fc36bbb',
     'condition': 'dawn_standalone',
   },
 
@@ -131,11 +131,11 @@ deps = {
   # The //build and //tools/clang deps should all be updated in
   # unison, as there are dependencies between them.
   'build': {
-    'url': '{chromium_git}/chromium/src/build@db0d31d702840881c049c523a2226e8e391929bf',
+    'url': '{chromium_git}/chromium/src/build@71876cfb44ee7df548f52ae007a1d185d2e58212',
     'condition': 'dawn_standalone',
   },
   'tools/clang': {
-    'url': '{chromium_git}/chromium/src/tools/clang@5d9b09742311e059ecdba6d74adcb883e4ebffe5',
+    'url': '{chromium_git}/chromium/src/tools/clang@9659fbf62194e9ce75a5142e345615a266d352d7',
     'condition': 'dawn_standalone',
   },
 
