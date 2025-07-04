@@ -80,6 +80,24 @@
       "message": "Need to do this for d3d12 as well, which is what the path we are interested in will be using.",
       "revId": "4c0bd4f84889d57d57a3c7e6c491e00ae6a223ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e0e3401_9e733d69",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-04T21:39:32Z",
+      "side": 1,
+      "message": "I asked gemini to do a code review and it said never mentioned this :)",
+      "parentUuid": "a649b6dc_e7b01690",
+      "revId": "4c0bd4f84889d57d57a3c7e6c491e00ae6a223ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
