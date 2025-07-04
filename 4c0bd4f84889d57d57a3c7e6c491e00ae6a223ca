@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "186ce85a_69397c21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-04T21:45:36Z",
+      "side": 1,
+      "message": "There is a ying/yang to this. We will know the exact hlsl which caused the failure which is good.",
+      "parentUuid": "7b1c028d_e0f72d65",
+      "revId": "4c0bd4f84889d57d57a3c7e6c491e00ae6a223ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbb7e5a6_453acaff",
