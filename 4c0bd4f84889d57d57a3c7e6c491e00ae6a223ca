@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b1c028d_e0f72d65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-04T21:33:09Z",
+      "side": 1,
+      "message": "Note that we won\u0027t get the WGSL from this, but I guess we\u0027re hoping that we can reverse-engineer it from the HLSL in these cases.",
+      "revId": "4c0bd4f84889d57d57a3c7e6c491e00ae6a223ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bbb7e5a6_453acaff",
@@ -20,6 +37,47 @@
         "endLine": 390,
         "endChar": 5
       },
+      "revId": "4c0bd4f84889d57d57a3c7e6c491e00ae6a223ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af3e39c3_c79cdfba",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-04T21:33:09Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bbb7e5a6_453acaff",
+      "range": {
+        "startLine": 388,
+        "startChar": 3,
+        "endLine": 390,
+        "endChar": 5
+      },
+      "revId": "4c0bd4f84889d57d57a3c7e6c491e00ae6a223ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a649b6dc_e7b01690",
+        "filename": "src/dawn/native/d3d11/ShaderModuleD3D11.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-04T21:33:09Z",
+      "side": 1,
+      "message": "Need to do this for d3d12 as well, which is what the path we are interested in will be using.",
       "revId": "4c0bd4f84889d57d57a3c7e6c491e00ae6a223ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
