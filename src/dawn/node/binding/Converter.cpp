@@ -28,6 +28,7 @@
 #include "src/dawn/node/binding/Converter.h"
 
 #include <cassert>
+#include <format>
 #include <sstream>
 
 #include "src/dawn/node/binding/GPUBuffer.h"
@@ -1274,22 +1275,54 @@ bool Converter::Convert(wgpu::VertexFormat& out, const interop::GPUVertexFormat&
     return Throw("invalid value for GPUVertexFormat");
 }
 
+bool Converter::Convert(wgpu::TextureView& outView,
+                        const std::variant<interop::Interface<interop::GPUTexture>,
+                                           interop::Interface<interop::GPUTextureView>>& in,
+                        const char* name) {
+    if (auto* view = std::get_if<interop::Interface<interop::GPUTextureView>>(&in)) {
+        if (!Convert(outView, *view)) {
+            return false;
+        }
+    } else if (auto* tex = std::get_if<interop::Interface<interop::GPUTexture>>(&in)) {
+        wgpu::Texture texture;
+        if (!Convert(texture, *tex)) {
+            return false;
+        }
+        outView = texture.CreateView();
+    } else {
+        return Throw(std::format("invalid value for {}", name));
+    }
+    return true;
+}
+
 bool Converter::Convert(wgpu::RenderPassColorAttachment& out,
                         const interop::GPURenderPassColorAttachment& in) {
     out = {};
-    return Convert(out.view, in.view) &&                    //
-           Convert(out.depthSlice, in.depthSlice) &&        //
-           Convert(out.resolveTarget, in.resolveTarget) &&  //
-           Convert(out.clearValue, in.clearValue) &&        //
-           Convert(out.loadOp, in.loadOp) &&                //
+
+    if (!Convert(out.view, in.view, "RenderPassColorAttachment.view")) {
+        return false;
+    }
+
+    if (in.resolveTarget &&
+        !Convert(out.resolveTarget, *in.resolveTarget, "RenderPassColorAttachment.resolveTarget")) {
+        return false;
+    }
+
+    return Convert(out.depthSlice, in.depthSlice) &&  //
+           Convert(out.clearValue, in.clearValue) &&  //
+           Convert(out.loadOp, in.loadOp) &&          //
            Convert(out.storeOp, in.storeOp);
 }
 
 bool Converter::Convert(wgpu::RenderPassDepthStencilAttachment& out,
                         const interop::GPURenderPassDepthStencilAttachment& in) {
     out = {};
-    return Convert(out.view, in.view) &&                            //
-           Convert(out.depthClearValue, in.depthClearValue) &&      //
+
+    if (!Convert(out.view, in.view, "RenderPassDepthStencilAttachment.view")) {
+        return false;
+    }
+
+    return Convert(out.depthClearValue, in.depthClearValue) &&      //
            Convert(out.depthLoadOp, in.depthLoadOp) &&              //
            Convert(out.depthStoreOp, in.depthStoreOp) &&            //
            Convert(out.depthReadOnly, in.depthReadOnly) &&          //
@@ -1347,6 +1380,14 @@ bool Converter::Convert(wgpu::BindGroupEntry& out, const interop::GPUBindGroupEn
 
     if (auto* res = std::get_if<interop::Interface<interop::GPUSampler>>(&in.resource)) {
         return Convert(out.sampler, *res);
+    }
+    if (auto* res = std::get_if<interop::Interface<interop::GPUTexture>>(&in.resource)) {
+        wgpu::Texture texture;
+        if (!Convert(texture, *res)) {
+            return false;
+        }
+        out.textureView = texture.CreateView();
+        return true;
     }
     if (auto* res = std::get_if<interop::Interface<interop::GPUTextureView>>(&in.resource)) {
         return Convert(out.textureView, *res);
