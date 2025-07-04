@@ -36,6 +36,15 @@ if (!is_clang && is_win) {
   assert(!use_custom_libcxx, "MSVC build requires use_custom_libcxx=false")
 }
 
+if (dawn_standalone) {
+  # Certain C/C++ atomic operations require the separately built "libatomic"
+  # support library, which is not shipped with compiler-rt by default. See
+  # crbug.com/402171653 for context.
+  # https://chromium-review.googlesource.com/c/chromium/src/+/6402716 says
+  # projects that mirrors //build should set this to False.
+  use_llvm_libatomic = false
+}
+
 group("benchmarks") {
   testonly = true
   deps = [ "src/tint:benchmarks" ]
