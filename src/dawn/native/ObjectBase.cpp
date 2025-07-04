@@ -28,6 +28,7 @@
 #include <atomic>
 #include <mutex>
 #include <utility>
+#include <vector>
 
 #include "absl/strings/str_format.h"
 #include "dawn/native/Adapter.h"
@@ -73,16 +74,29 @@ bool ApiObjectList::Untrack(ApiObjectBase* object) {
 }
 
 void ApiObjectList::Destroy() {
-    LinkedList<ApiObjectBase> objects;
+    std::vector<ApiObjectBase*> objects;
     mObjects.Use([&objects, this](auto lockedObjects) {
         mMarkedDestroyed.store(true, std::memory_order_release);
-        lockedObjects->MoveInto(&objects);
+
+        // Remove objects from ApiObjectList so they become untracked and aren't destroyed if the
+        // last reference is dropped on another thread.
+        while (!lockedObjects->empty()) {
+            auto* head = lockedObjects->head();
+            objects.push_back(head->value());
+
+            // If the last reference is dropped on another thread, before DestroyImpl() runs below,
+            // this ensures object destruction happens after DestroyImpl().
+            int acquired = head->value()->mDeleteSemaphore.try_acquire();
+            DAWN_CHECK(acquired);
+
+            bool removed = head->RemoveFromList();
+            DAWN_ASSERT(removed);
+        }
     });
-    while (!objects.empty()) {
-        auto* head = objects.head();
-        bool removed = head->RemoveFromList();
-        DAWN_ASSERT(removed);
-        head->value()->DestroyImpl();
+
+    for (ApiObjectBase* object : objects) {
+        object->DestroyImpl();
+        object->mDeleteSemaphore.release();
     }
 }
 
@@ -131,6 +145,7 @@ bool ApiObjectBase::IsAlive() const {
 
 void ApiObjectBase::DeleteThis() {
     Destroy();
+    mDeleteSemaphore.acquire();
     RefCounted::DeleteThis();
 }
 
