@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbb7e5a6_453acaff",
+        "filename": "src/dawn/native/d3d/ShaderUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-04T20:16:58Z",
+      "side": 1,
+      "message": "This should be the correct behavior.",
+      "range": {
+        "startLine": 388,
+        "startChar": 3,
+        "endLine": 390,
+        "endChar": 5
+      },
+      "revId": "4c0bd4f84889d57d57a3c7e6c491e00ae6a223ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
