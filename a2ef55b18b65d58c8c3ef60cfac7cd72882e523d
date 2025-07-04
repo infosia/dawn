@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9f3271b_12fe4f4b",
+        "filename": "src/tint/lang/core/ir/transform/signed_integer_polyfill.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-04T14:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c8b3fb8_53ccfa1c",
+      "revId": "a2ef55b18b65d58c8c3ef60cfac7cd72882e523d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "502baf07_a703e59b",
@@ -49,6 +67,24 @@
       "writtenOn": "2025-07-03T18:48:07Z",
       "side": 1,
       "message": "Nit: Maybe `s/MSL/C++/` or something since this is no longer specific to MSL.",
+      "revId": "a2ef55b18b65d58c8c3ef60cfac7cd72882e523d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14b259fa_c3a5b936",
+        "filename": "src/tint/lang/core/ir/transform/signed_integer_polyfill.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-04T14:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "502baf07_a703e59b",
       "revId": "a2ef55b18b65d58c8c3ef60cfac7cd72882e523d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -70,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c8a3423_59070d33",
+        "filename": "src/tint/lang/core/ir/transform/signed_integer_polyfill.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-04T14:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "795cbd0a_42e30624",
+      "revId": "a2ef55b18b65d58c8c3ef60cfac7cd72882e523d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ff7f2ee9_cf5fefc0",
@@ -83,6 +137,24 @@
       "writtenOn": "2025-07-03T18:48:07Z",
       "side": 1,
       "message": "We should bump this below the builtin polyfill to handle integer dot product polyfills.",
+      "revId": "a2ef55b18b65d58c8c3ef60cfac7cd72882e523d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22cb3b5a_a997d96c",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-04T14:09:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff7f2ee9_cf5fefc0",
       "revId": "a2ef55b18b65d58c8c3ef60cfac7cd72882e523d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
