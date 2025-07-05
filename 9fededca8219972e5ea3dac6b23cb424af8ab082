@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "405e2568_55ee23f8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-05T02:54:25Z",
+      "side": 1,
+      "message": "When I checked, the \"check contents\" issues were the trailing spaces in the error messages that Glslang emits.",
+      "revId": "9fededca8219972e5ea3dac6b23cb424af8ab082",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
