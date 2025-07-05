@@ -697,6 +697,16 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         }
     }
 
+    if (gpu_info::IsIntel(GetVendorId())) {
+        // chromium:426999765: Intel does not handle min i32 correctly.
+        deviceToggles->Default(Toggle::PolyfillAbsSignedInteger, true);
+    }
+
+    if (gpu_info::IsNvidia(GetVendorId())) {
+        // chromium:426999765: Nvidia (GTX 1660) does not handle min i32 correctly.
+        deviceToggles->Default(Toggle::PolyfillAbsSignedInteger, true);
+    }
+
     // Currently this workaround is only needed on Intel Gen9, Gen9.5, Gen12 and Xe GPUs.
     // See http://crbug.com/dawn/1487 for more information.
     if (gpu_info::IsIntelGen9(vendorId, deviceId) || gpu_info::IsIntelGen12LP(vendorId, deviceId) ||
