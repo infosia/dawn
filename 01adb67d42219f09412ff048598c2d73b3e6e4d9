@@ -50,6 +50,24 @@
       "message": "Actually not sure this is right now. There are other assertions that trigger in E2E testing so I need to think through the transform logic more.",
       "revId": "01adb67d42219f09412ff048598c2d73b3e6e4d9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57f32b8d_9e3409f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-05T19:30:23Z",
+      "side": 1,
+      "message": "Can you give examples of failing shaders? The other failures are triggered due to this change specifically? Or already trigger?",
+      "parentUuid": "9d5c9a14_a5c6d0d5",
+      "revId": "01adb67d42219f09412ff048598c2d73b3e6e4d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
