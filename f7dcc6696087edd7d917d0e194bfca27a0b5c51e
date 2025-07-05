@@ -16,6 +16,23 @@
       "message": "Ubuntu 24.04 LTS release has GCC 13.\nI\u0027m not sure we want to spend effort supporting older compilers when newer ones are readily available.\nGCC 15.1 is available.",
       "revId": "f7dcc6696087edd7d917d0e194bfca27a0b5c51e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22d006c3_f9ea3e3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-05T19:49:43Z",
+      "side": 1,
+      "message": "This one seems fine, I think it\u0027s a bit nicer to wrap in the namespace then to reference `stream::` multiple times.",
+      "revId": "f7dcc6696087edd7d917d0e194bfca27a0b5c51e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
