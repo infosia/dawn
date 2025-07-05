@@ -82,6 +82,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "87cc7a2b_fd244fc6",
+        "filename": "src/tint/lang/wgsl/resolver/validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-05T19:48:24Z",
+      "side": 1,
+      "message": "This seems more restrictive then just `buffer dimension`, maybe `must have a 1d buffer dimension`?",
+      "revId": "bb5f4595f514582bc697a6ad934ec38b0f347bae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1e7396f2_49ec9717",
         "filename": "src/tint/lang/wgsl/resolver/validator.cc",
         "patchSetId": 2
