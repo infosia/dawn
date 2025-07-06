@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0a1b895_7bff2217",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-06T16:12:55Z",
+      "side": 1,
+      "message": "I discussed with james on friday and he agree with this ignore. There may be a day where we have a common GEMINI.md or something even more exotic.",
+      "revId": "e6914f9ae6cf0a08d9a928c50648a77c62c45716",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
