@@ -178,6 +178,23 @@
       "parentUuid": "f064dd0a_8db841f0",
       "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adcb4156_7b7e8527",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-06T14:04:51Z",
+      "side": 1,
+      "message": "lgtm. this seems like it fixes an issue and we can refine it later if we want to change how it searches, or to make it copy the binary in some fashion.",
+      "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
