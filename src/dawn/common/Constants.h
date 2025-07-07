@@ -54,12 +54,29 @@ static constexpr uint32_t kImmediateConstantElementByteSize = sizeof(uint32_t);
 static constexpr uint32_t kMaxExternalImmediateConstantsPerPipeline = 16u;
 
 // Vulkan requires min-max push constant bytes is 128 byte, which is
-// equals to 32 32bit constants. D3D12 requires 64 32bit constants limits.
-// Pick 32 here.
-static constexpr uint32_t kMaxImmediateConstantsPerPipeline = 32u;
+// equals to 32 32bit constants.
+// D3D12 root signature limits to 64DWORDs.
+// Each entry in the root signature has a cost towards this 64 DWORD limit:
+//  - Descriptor tables cost 1 DWORD each
+//  - Root constants cost 1 DWORD each, since they are 32-bit values.
+//  - Root descriptors (64-bit GPU virtual addresses) cost 2 DWORDs each.
+// Dawn has at most 4 bind groups, each contains one root descriptor table for
+// cbvUavSrv and one root descriptor table for samplers.
+// Dawn has at most 10 dynamic uniform buffers and 8 dynamic storage buffers. They're
+// implemented by root descriptors.
+// Dawn uses root constants for baseVertex/baseInstance and numWorkgroups X/Y/Z, which
+// at most 3 root constants.
+// Danw uses root constants for dynamic storage buffer lengths, which at most 8 root
+// constants.
+// So, the peak root signature space cost except root constants is 44 DWORD, remains 20
+// DWORDS for root constants for customer immediate data and internal constants.
+// Pick 20u here.
+// TODO(crbug.com/428802462): Modify root signature layout or having spill out mechanism for root
+// signatures in D3D12 backend to relief more space for root constants.
+static constexpr uint32_t kMaxImmediateConstantsPerPipeline = 20u;
 
-// Adapter Max limitation for user immediate constants is 64 bytes.
-static constexpr uint32_t kMaxSupportedImmediateDataBytes = 64u;
+// Adapter Max limitation for user immediate constants is 32 bytes.
+static constexpr uint32_t kMaxSupportedImmediateDataBytes = 32u;
 
 // Device Default limitation for user immediate constants is 16 bytes.
 static constexpr uint32_t kDefaultMaxImmediateDataBytes = 16u;

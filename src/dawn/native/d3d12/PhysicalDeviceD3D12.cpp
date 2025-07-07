@@ -402,6 +402,8 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
                                                  << D3D12_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP;
     }
 
+    limits->v1.maxImmediateSize = kDefaultMaxImmediateDataBytes;
+
     return {};
 }
 
