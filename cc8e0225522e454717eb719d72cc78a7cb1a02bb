@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d08d0dd7_2fd5050a",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-07T15:30:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "edfa1acb_4ad2b003",
+      "revId": "cc8e0225522e454717eb719d72cc78a7cb1a02bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1181a94b_d3727ec2",
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "This was a temp hack to get the -x.",
       "parentUuid": "1181a94b_d3727ec2",
+      "revId": "cc8e0225522e454717eb719d72cc78a7cb1a02bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f80444d_b4edb287",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-07T15:30:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4415ad9_01064102",
       "revId": "cc8e0225522e454717eb719d72cc78a7cb1a02bb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
