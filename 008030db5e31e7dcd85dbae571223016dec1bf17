@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e3637db3_0b7ca2dd",
+        "filename": "src/tint/lang/wgsl/resolver/texel_buffer_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T14:47:44Z",
+      "side": 1,
+      "message": "Probably not. Tint should just accept all the formats, and then Dawn will validate if a given format is actually valid for the target device.\n\nI assume this was copied from the storage texture tests which also have no invalid cases.",
+      "parentUuid": "9fa8b4fa_3d27b801",
+      "revId": "008030db5e31e7dcd85dbae571223016dec1bf17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e1dee7c7_cd5bc6aa",
         "filename": "src/tint/lang/wgsl/resolver/texel_buffer_test.cc",
         "patchSetId": 3
