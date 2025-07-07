@@ -27,6 +27,8 @@
 
 #include "dawn/native/DeviceGuard.h"
 
+#include <utility>
+
 #include "dawn/common/Assert.h"
 #include "dawn/native/Device.h"
 
@@ -36,12 +38,6 @@ namespace detail {
 
 DeviceGuardBase::DeviceGuardBase(std::optional<class Defer>* defer, RecursiveMutex* mutex)
     : mMutex(mutex) {}
-
-DeviceGuardBase::~DeviceGuardBase() {
-    if (mDefer) {
-        *mDefer = std::nullopt;
-    }
-}
 
 }  // namespace detail
 
@@ -53,11 +49,19 @@ DeviceGuard::DeviceGuard(DeviceBase* device,
 
     if (defer && !defer->has_value()) {
         // The first guard created in a thread also creates the defer, i.e. when the optional is
-        // nullopt. We also need to set detail::DeviceGuardBase::mDefer here instead of in the base
-        // constructor because we only want to mutate the device-owned state when we are holding the
-        // lock which only happens after the GuardBase constructor is completed.
-        mDefer = defer;
-        mDefer->emplace();
+        // nullopt. We also need to set detail::DeviceGuardBase::mDeferPtr here instead of in the
+        // base constructor because we only want to mutate the device-owned state when we are
+        // holding the lock which only happens after the GuardBase constructor is completed.
+        mDeferPtr = defer;
+        mDeferPtr->emplace();
+    }
+}
+
+DeviceGuard::~DeviceGuard() {
+    // Move the Defer objects to be owned by the base class so that it will be destroyed after the
+    // lock in this class is released.
+    if (mDeferPtr) {
+        mDefer.emplace(std::move(*mDeferPtr).value());
     }
 }
 
