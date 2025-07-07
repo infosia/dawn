@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0db3923_1b53ce44",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-07T17:12:11Z",
+      "side": 1,
+      "message": "PTAL! Sounds like this is the direction Corentin was thinking based on the comments in the associated bug. Conversations with Kai last week were pointing in a different direction, though, so it\u0027s probably worth talking through some more. I just wanted to have this ready to go if this is the route we choose.",
+      "revId": "26361afcba882255db03cff80d5aced50abdffce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
