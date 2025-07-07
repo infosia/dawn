@@ -304,6 +304,8 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.tintOptions.vertex_pulling_config = std::move(vertexPullingTransformConfig);
     req.tintOptions.enable_integer_range_analysis =
         device->IsToggleEnabled(Toggle::EnableIntegerRangeAnalysisInRobustness);
+    req.tintOptions.polyfill_subgroup_shuffle_xor =
+        device->IsToggleEnabled(Toggle::PolyfillSubgroupShuffleXor);
 
     req.limits = LimitsForCompilationRequest::Create(device->GetLimits().v1);
     req.adapterSupportedLimits = UnsafeUnserializedValue(

@@ -190,6 +190,9 @@ struct Options {
     /// The optional vertex pulling configuration.
     std::optional<VertexPullingConfig> vertex_pulling_config = {};
 
+    /// Set to `true` to generate polyfill for `subgroupShuffleXor`
+    bool polyfill_subgroup_shuffle_xor = false;
+
     /// The bindings.
     Bindings bindings;
 
@@ -211,6 +214,7 @@ struct Options {
                  pixel_local_attachments,
                  array_length_from_uniform,
                  vertex_pulling_config,
+                 polyfill_subgroup_shuffle_xor,
                  bindings);
 };
 
