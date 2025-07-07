@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a9e312a_f42dda0e",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests_win.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-07T20:20:57Z",
+      "side": 1,
+      "message": "Where are these used?",
+      "range": {
+        "startLine": 366,
+        "startChar": 4,
+        "endLine": 378,
+        "endChar": 5
+      },
+      "revId": "9a246070156bb01e9cac774f43ed23c4c9d3770e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
