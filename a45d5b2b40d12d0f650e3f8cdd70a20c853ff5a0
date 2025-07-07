@@ -16,6 +16,24 @@
       "message": "Why was this removed?",
       "revId": "a45d5b2b40d12d0f650e3f8cdd70a20c853ff5a0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59393914_8abad780",
+        "filename": "src/tint/lang/wgsl/ast/builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-07-07T11:52:39Z",
+      "side": 0,
+      "message": "That was a mistake, I must have deleted it by mistake while resolving merge conflicts.",
+      "parentUuid": "42d3a16a_c64c75e9",
+      "revId": "a45d5b2b40d12d0f650e3f8cdd70a20c853ff5a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
