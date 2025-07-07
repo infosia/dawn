@@ -69,6 +69,57 @@
       "parentUuid": "69809c7f_d8d4d36e",
       "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ae5542d_53e6cc12",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T22:01:20Z",
+      "side": 1,
+      "message": "You\u0027ll need to add the `kAllowPointersAndHandlesInStructures` capability to the `ChangeImmediateToUniform` transform since it is running after `ArgumentBuffers` (that\u0027s the CQ failure). Or you could run it before that transform if that makes sense (which would mean that immediates get packed into argument buffers). Maybe that\u0027s the way to go? I can\u0027t remember if we discussed that.",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0db63e52_c7e361b6",
+        "filename": "test/tint/var/uses/immediate.wgsl.expected.msl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T22:01:20Z",
+      "side": 1,
+      "message": "Likewise, is this still failing?",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "914a90e7_5bd4c7aa",
+        "filename": "test/tint/var/uses/immediate_and_instance_index.wgsl.expected.msl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T22:01:20Z",
+      "side": 1,
+      "message": "Why is this still failing?",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
