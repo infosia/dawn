@@ -882,30 +882,45 @@ MaybeError ValidateRenderPassDescriptor(DeviceBase* device,
 
 // Adds a single attachment to the validation state to ensure that it is valid and can report a
 // render width and height.
-MaybeError InitializeValidationStateAttachment(UnpackedPtr<RenderPassDescriptor> descriptor,
+MaybeError InitializeValidationStateAttachment(DeviceBase* device,
+                                               UnpackedPtr<RenderPassDescriptor> descriptor,
                                                RenderPassValidationState* validationState) {
-    if (descriptor->depthStencilAttachment != nullptr) {
-        DAWN_TRY(validationState->AddAttachment(descriptor->depthStencilAttachment->view,
-                                                AttachmentType::DepthStencilAttachment));
-    } else {
-        for (size_t i = 0; i < descriptor->colorAttachmentCount; ++i) {
-            const RenderPassColorAttachment& colorAttachment = descriptor->colorAttachments[i];
-            if (colorAttachment.view != nullptr) {
+    // While only one attachment needs to be added to the validation state every attachment will be
+    // checked with ValidateObject to guard against invalid objects caused by OOM errors.
+    for (size_t i = 0; i < descriptor->colorAttachmentCount; ++i) {
+        const RenderPassColorAttachment& colorAttachment = descriptor->colorAttachments[i];
+        if (colorAttachment.view != nullptr) {
+            DAWN_TRY(device->ValidateObject(colorAttachment.view));
+            if (!validationState->HasAttachment()) {
                 DAWN_TRY(validationState->AddAttachment(colorAttachment.view,
                                                         AttachmentType::ColorAttachment,
                                                         colorAttachment.depthSlice));
-                break;
+            }
+
+            if (colorAttachment.resolveTarget != nullptr) {
+                DAWN_TRY(device->ValidateObject(colorAttachment.resolveTarget));
             }
         }
     }
 
-    if (!validationState->HasAttachment()) {
-        // It's also possible that pixel local storage contains the only attachments.
-        auto pls = descriptor.Get<RenderPassPixelLocalStorage>();
-        if (pls != nullptr && pls->storageAttachmentCount > 0) {
-            const RenderPassStorageAttachment& attachment = pls->storageAttachments[0];
-            DAWN_TRY(validationState->AddAttachment(attachment.storage,
-                                                    AttachmentType::StorageAttachment));
+    if (descriptor->depthStencilAttachment != nullptr) {
+        DAWN_TRY(device->ValidateObject(descriptor->depthStencilAttachment->view));
+        if (!validationState->HasAttachment()) {
+            DAWN_TRY(validationState->AddAttachment(descriptor->depthStencilAttachment->view,
+                                                    AttachmentType::DepthStencilAttachment));
+        }
+    }
+
+    // It's also possible that pixel local storage contains the only attachments.
+    auto pls = descriptor.Get<RenderPassPixelLocalStorage>();
+    if (pls != nullptr && pls->storageAttachmentCount > 0) {
+        for (size_t i = 0; i < pls->storageAttachmentCount; i++) {
+            const RenderPassStorageAttachment& attachment = pls->storageAttachments[i];
+            DAWN_TRY(device->ValidateObject(attachment.storage));
+            if (!validationState->HasAttachment()) {
+                DAWN_TRY(validationState->AddAttachment(attachment.storage,
+                                                        AttachmentType::StorageAttachment));
+            }
         }
     }
 
@@ -1319,7 +1334,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             } else {
                 // If validation is skipped at least one attachment still needs to be added to the
                 // validation state to compute the render width and height from.
-                DAWN_TRY(InitializeValidationStateAttachment(descriptor, &validationState));
+                DAWN_TRY(InitializeValidationStateAttachment(device, descriptor, &validationState));
             }
 
             DAWN_ASSERT(validationState.IsValidState());
