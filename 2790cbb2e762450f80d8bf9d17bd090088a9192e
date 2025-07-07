@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae6ae4ae_52cb8265",
+        "filename": "src/dawn/native/ObjectBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-07T18:31:31Z",
+      "side": 1,
+      "message": "TryAddRef() might be more controversial but it\u0027s the only thing I\u0027ve been able to come up with that doesn\u0027t add a member variables to ApiObjectBase and increase the size of that base class.",
+      "range": {
+        "startLine": 88,
+        "startChar": 63,
+        "endLine": 88,
+        "endChar": 72
+      },
+      "revId": "2790cbb2e762450f80d8bf9d17bd090088a9192e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
