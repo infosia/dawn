@@ -1,0 +1,299 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e1a4227_d5cd0747",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "```suggestion\n        // Update the types of any function parameters and function return types that contain matrices\n```",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "855ca242_01e8ebf8",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "```suggestion\n        // Update any access instructions that produce strided matrices.\n```",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fd7b87e_0517d7a2",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a SPIR-V restriction is it? Why is this needed?",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eeafbf39_ee102153",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "Maybe just add a comment along the lines of `The existing array stride must be correct as the strided matrix was the array element, so we pass through the original values`.\n\nHad to stop and think about this for a minute.",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a49d835_3e059cbe",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "```suggestion\n    /// If we\u0027ve replaced a strided matrix, Then we have an array of strided columns. We need to replace any constant matrices with the equivalent constructed from the arrays.\n```\n\nThis comment confused me, is the re-write correct?",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "196eb108_38440b6c",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "Why does this hold? Why can you assume this is a struct?\n\nUgh, reading below, I think it\u0027s because it\u0027s only used based on `new_struct_type` which is guarded by a nullptr check. But, if `new_struct_type` is null, we just push the rewritten constants? Maybe clearer to separate the two cases?",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3f4577a_0e50d7b5",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "```suggestion\n                // Create a new constant using the strided array type. This has to be an array because we replaced it which means it was a strided matrix.\n```",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "760fbfaf_4d0d9c49",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "This is already in an `InsertBefore` block, do we need a second one?",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f569b67d_ffdd48d2",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "Maybe drop the default and just put the `false` in the usage above?",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "add4e640_760ff461",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "```suggestion\n                if (!original_struct) {\n                    // stride is set to natural matrix stride, nothing to do.\n                    continue;\n                }\n                \n                auto* member \u003d original_struct-\u003eMembers()[const_idx];\n                if (member-\u003eHasMatrixStride() \u0026\u0026 current_type !\u003d member-\u003eType()) {\n                    indexed_through_strided_member \u003d true;\n                }\n```",
+      "range": {
+        "startLine": 262,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 17
+      },
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7859c544_06ea6f06",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Change the type of a pointer instruction result that now contains a strided array, and then\n```\n\nIs this right or should `strided array` be `strided matrix`?",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd92fc82_efe7182d",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "```suggestion\n    /// Convert a value between an [array of] strided matrix and an [array of] strided array.\n```",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd655d5e_d1142267",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "```suggestion\n        Vector\u003ccore::ir::Value*, 8\u003e elements;\n        elements.Reserve(dst_elements.count);\n```",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "549851d2_b3912783",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "Isn\u0027t the `src_element.type` the original strided matrix? Should this be dst_element.type?",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "572a08e4_cc9dd970",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "Maybe one more here were we load the struct, and then we access the loaded struct to pull out the matrix? Just to make sure it handles the extra level of  indirection.",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "717ca4d2_d2ab9836",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "I wonder if there is a nicer way we could deal with this in a followup, since the vector is constant, we don\u0027t really need the matrix in the middle do we?",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b575468f_0e781ec1",
+        "filename": "src/tint/lang/spirv/reader/lower/lower.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T14:51:23Z",
+      "side": 1,
+      "message": "```suggestion\n    // Must come before DecomposeStridedArray\n    RUN_TRANSFORM(lower::DecomposeStridedMatrix, mod);\n```",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
