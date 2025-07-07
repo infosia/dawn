@@ -339,6 +339,11 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::ClearColorWithDraw, true);
     }
 
+    if (gpu_info::IsIntel(GetVendorId()) || gpu_info::IsNvidia(GetVendorId())) {
+        // chromium:426999765: Intel and Nvidia drivers do not handle abs i32 correctly.
+        deviceToggles->Default(Toggle::PolyfillAbsSignedInteger, true);
+    }
+
     // Enable the integer range analysis for shader robustness by default if the corresponding
     // platform feature is enabled.
     deviceToggles->Default(
