@@ -32,7 +32,7 @@
 #include <memory>
 #include <mutex>
 
-#include "absl/container/flat_hash_map.h"
+#include "absl/container/flat_hash_set.h"
 #include "dawn/common/Ref.h"
 #include "dawn/common/RefCounted.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -49,32 +49,58 @@ namespace dawn::native {
 // shutting down the device. RunNow() could be used for more advanced scenarios, for example
 // always doing ShaderModule initial compilation asynchronously, but being able to steal the
 // task if we need it for synchronous pipeline compilation.
-using AsyncTask = std::function<void()>;
+// using AsyncTask = std::function<void()>;
+
+enum class AsyncTaskState : uint8_t {
+    Pending,
+    Running,
+    Finished,
+};
+
+class AsyncTask : public RefCounted {
+  public:
+    AsyncTask();
+
+    AsyncTaskState GetState() const { return mState; }
+
+  private:
+    // Friends with the task manager to privately manage when tasks are executed.
+    friend class AsyncTaskManager;
+    void Run();
+
+    virtual void RunImpl() = 0;
+
+    std::atomic<AsyncTaskState> mState = AsyncTaskState::Pending;
+};
 
 class AsyncTaskManager {
   public:
     explicit AsyncTaskManager(dawn::platform::WorkerTaskPool* workerTaskPool);
 
-    void PostTask(AsyncTask asyncTask);
+    template <typename TaskType, class... Args>
+    Ref<TaskType> PostTask(Args&&... args) {
+        Ref<TaskType> task = AcquireRef(new TaskType(std::forward<Args>(args)...));
+        PostConstructedTask(task);
+        return task;
+    }
+
     void WaitAllPendingTasks();
     bool HasPendingTasks();
 
   private:
-    class WaitableTask : public RefCounted {
-      public:
-        WaitableTask();
-        ~WaitableTask() override;
-
-        AsyncTask asyncTask;
+    struct WaitableTask {
+        Ref<AsyncTask> asyncTask;
         raw_ptr<AsyncTaskManager> taskManager;
         std::unique_ptr<dawn::platform::WaitableEvent> waitableEvent;
     };
 
-    static void DoWaitableTask(void* task);
+    void PostConstructedTask(Ref<AsyncTask> task);
+
+    static void RunTask(void* task);
     void HandleTaskCompletion(WaitableTask* task);
 
     std::mutex mPendingTasksMutex;
-    absl::flat_hash_map<WaitableTask*, Ref<WaitableTask>> mPendingTasks;
+    absl::flat_hash_set<std::unique_ptr<WaitableTask>> mPendingTasks;
     raw_ptr<dawn::platform::WorkerTaskPool> mWorkerTaskPool;
 };
 
