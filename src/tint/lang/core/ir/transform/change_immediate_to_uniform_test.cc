@@ -25,7 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.h"
+#include "src/tint/lang/core/ir/transform/change_immediate_to_uniform.h"
 
 #include <gtest/gtest.h>
 
@@ -37,7 +37,7 @@
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
 
-namespace tint::hlsl::writer::raise {
+namespace tint::core::ir::transform {
 namespace {
 
 using HlslWriterChangeImmediateToUniformTest = core::ir::transform::TransformTest;
@@ -658,4 +658,4 @@ $B1: {  # root
 }
 
 }  // namespace
-}  // namespace tint::hlsl::writer::raise
+}  // namespace tint::core::ir::transform
