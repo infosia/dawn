@@ -232,6 +232,24 @@
       "parentUuid": "ace24ef7_61d6e115",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8bf0be5_2103cfc9",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-07T12:24:25Z",
+      "side": 1,
+      "message": "I\u0027ve just started resuming work on this CL since https://dawn-review.googlesource.com/c/dawn/+/245242 has been merged. PTAL.\n\nAccording to the early results from trybots though, I\u0027ll first have to:\n- update `//gpu` tests in Chromium.\n- fix CTS tests such as `webgpu:api,operation,adapter,requestDevice:invalid`",
+      "parentUuid": "413487da_b4e524ce",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
