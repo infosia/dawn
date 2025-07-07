@@ -64,6 +64,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "627bcab0_53dfa504",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T21:45:17Z",
+      "side": 1,
+      "message": "LGTM with Dan\u0027s nits.",
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03edc3e9_27935482",
@@ -77,6 +94,24 @@
       "writtenOn": "2025-07-07T12:59:25Z",
       "side": 1,
       "message": "DecomposeStorageAccess is an HLSL specific transform, does this still apply? What happens in other backends?",
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adce7538_451e54e5",
+        "filename": "src/tint/lang/core/ir/transform/change_immediate_to_uniform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T21:45:17Z",
+      "side": 1,
+      "message": "I think it still applies. All we\u0027re doing here is skipping variables that are not immediates, and anything that isn\u0027t a pointer cannot be an immediate.",
+      "parentUuid": "03edc3e9_27935482",
       "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
