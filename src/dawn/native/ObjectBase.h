@@ -98,6 +98,8 @@ class ApiObjectList {
     // Destroys and removes all the objects tracked in the list.
     void Destroy();
 
+    std::mutex& GetDestroyMutex() { return mListDestroyMutex; }
+
     template <typename F>
     void ForEach(F fn) const {
         mObjects.Use([&fn](auto lockedObjects) {
@@ -112,6 +114,10 @@ class ApiObjectList {
     // Boolean used to mark the list so that on subsequent calls to Untrack, we don't need to
     // reacquire the lock, and Track on new objects immediately destroys them.
     std::atomic<bool> mMarkedDestroyed{false};
+    // Mutex is held between when Destroy() removes objects from the list and when it has finished
+    // destroying all the objects. This guards against the object being deleted first on another
+    // thread.
+    std::mutex mListDestroyMutex;
     MutexProtected<LinkedList<ApiObjectBase>> mObjects;
 };
 
@@ -138,7 +144,7 @@ class ApiObjectBase : public ObjectBase, public LinkNode<ApiObjectBase> {
     bool IsAlive() const;
 
     // This needs to be public because it can be called from the device owning the object.
-    void Destroy();
+    bool Destroy();
 
     // Dawn API
     void APISetLabel(StringView label);

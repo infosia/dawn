@@ -86,11 +86,15 @@ void ApiObjectList::Destroy() {
             DAWN_ASSERT(removed);
             objectsToDestroy.push_back(head->value());
         }
+
+        mListDestroyMutex.lock();
     });
 
     for (ApiObjectBase* object : objectsToDestroy) {
         object->DestroyImpl();
     }
+
+    mListDestroyMutex.unlock();
 }
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, StringView label) : ObjectBase(device) {
@@ -137,7 +141,14 @@ bool ApiObjectBase::IsAlive() const {
 }
 
 void ApiObjectBase::DeleteThis() {
-    Destroy();
+    if (!Destroy()) {
+        // If the object was destroyed now it's safe to immediately delete it. If the object wasn't
+        // destroyed then either it was destroyed previously or ApiObjectList::Destroy() is about to
+        // destroy it. To guard against races ApiObjectList::Destroy() acquire the destroy mutex
+        // before deleting object. The mutex is not held while running the destructor as that's
+        // unnecessary and introduces the risk of lock-order-inversion problems.
+        std::lock_guard lock(GetObjectTrackingList()->GetDestroyMutex());
+    }
     RefCounted::DeleteThis();
 }
 
@@ -151,12 +162,14 @@ ApiObjectList* ApiObjectBase::GetObjectTrackingList() {
     return GetDevice()->GetObjectTrackingList(GetType());
 }
 
-void ApiObjectBase::Destroy() {
+bool ApiObjectBase::Destroy() {
     ApiObjectList* list = GetObjectTrackingList();
     DAWN_ASSERT(list != nullptr);
     if (list->Untrack(this)) {
         DestroyImpl();
+        return true;
     }
+    return false;
 }
 
 }  // namespace dawn::native
