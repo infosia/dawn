@@ -127,6 +127,20 @@ class SubgroupsTestsBase : public DawnTestWithParams<Params> {
     using DawnTestWithParams<Params>::GetParam;
     using DawnTestWithParams<Params>::SupportsFeatures;
 
+    wgpu::Buffer CreateBuffer(const std::vector<uint32_t>& data,
+                              wgpu::BufferUsage usage = wgpu::BufferUsage::Storage |
+                                                        wgpu::BufferUsage::CopySrc) {
+        uint64_t bufferSize = static_cast<uint64_t>(data.size() * sizeof(uint32_t));
+        return utils::CreateBufferFromData(this->device, data.data(), bufferSize, usage);
+    }
+
+    wgpu::Buffer CreateBuffer(const uint32_t count,
+                              const uint32_t default_val = 0,
+                              wgpu::BufferUsage usage = wgpu::BufferUsage::Storage |
+                                                        wgpu::BufferUsage::CopySrc) {
+        return CreateBuffer(std::vector<uint32_t>(count, default_val), usage);
+    }
+
   protected:
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         // Always require related features if available.
@@ -858,6 +872,192 @@ DAWN_INSTANTIATE_TEST_P(SubgroupsShaderInclusiveTest,
                             SubgroupOpDataType::F16,
                             SubgroupOpDataType::U32,
                             SubgroupOpDataType::I32,
+                        });
+
+// Shuffle tests for subgroupShuffleXor polyfill
+enum class SubgroupShuffleDataType : uint8_t {
+    U32,
+    I32,
+    F32,
+    F16,
+};
+
+std::ostream& operator<<(std::ostream& o, SubgroupShuffleDataType subgroupOpType) {
+    switch (subgroupOpType) {
+        case SubgroupShuffleDataType::F32:
+            o << "f32";
+            break;
+        case SubgroupShuffleDataType::F16:
+            o << "f16";
+            break;
+        case SubgroupShuffleDataType::U32:
+            o << "u32";
+            break;
+        case SubgroupShuffleDataType::I32:
+            o << "i32";
+            break;
+    }
+    return o;
+}
+
+DAWN_TEST_PARAM_STRUCT(SubgroupsShaderShuffleTestsParams, SubgroupShuffleDataType);
+
+// Subgroup inclusive operations are polyfilled on some backends (HLSL) so it is convenient to
+// execution test them here. This is only to establish that the polyfill is working as expected and
+// not to evaluate the accuracy of these subgroup operations.
+// As noted elsewhere, it is very difficult to test product (mul) for integers as subgroup sizes
+// greater than bits of the type (32) will overflow for even the smallest constant (2).
+class SubgroupsShaderShuffleTest : public SubgroupsTestsBase<SubgroupsShaderShuffleTestsParams> {
+  protected:
+    void TestReadSubgroupSize(uint32_t workgroupSize, uintptr_t subgroupXorMask) {
+        auto shaderModule = CreateShaderModuleForReadSubgroupSize(workgroupSize, subgroupXorMask);
+
+        wgpu::ComputePipelineDescriptor csDesc;
+        csDesc.compute.module = shaderModule;
+        auto pipeline = device.CreateComputePipeline(&csDesc);
+        uint32_t extraSlotForSubgroupSize = 1;
+        uint32_t outputBufferSizeInBytes =
+            (workgroupSize + extraSlotForSubgroupSize) * sizeof(uint32_t);
+        wgpu::BufferDescriptor outputBufferDesc;
+        outputBufferDesc.size = outputBufferSizeInBytes;
+        outputBufferDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc;
+        wgpu::Buffer outputBuffer = device.CreateBuffer(&outputBufferDesc);
+        std::vector<uint32_t> inputVec;
+        inputVec.resize(workgroupSize);
+        for (uint32_t i = 0; i < workgroupSize; i++) {
+            inputVec[i] = i;
+        }
+        wgpu::Buffer inputBuffer = this->CreateBuffer(inputVec);
+        wgpu::BindGroup bindGroup = utils::MakeBindGroup(device, pipeline.GetBindGroupLayout(0),
+                                                         {
+                                                             {0, inputBuffer},
+                                                             {1, outputBuffer},
+                                                         });
+
+        wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
+        wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+        pass.SetPipeline(pipeline);
+        pass.SetBindGroup(0, bindGroup);
+        pass.DispatchWorkgroups(1);
+        pass.End();
+        wgpu::CommandBuffer commands = encoder.Finish();
+        queue.Submit(1, &commands);
+
+        EXPECT_BUFFER(outputBuffer, 0, outputBufferSizeInBytes,
+                      new ExpectReadSubgroupSizeOutput(workgroupSize, subgroupXorMask));
+    }
+
+  private:
+    wgpu::ShaderModule CreateShaderModuleForReadSubgroupSize(uint32_t workgroupSize,
+                                                             uint32_t subgroupXorMask) {
+        DAWN_ASSERT((1 <= workgroupSize) && (workgroupSize <= 256));
+        std::stringstream code;
+        EnableExtensions(code) << R"(
+const workgroupSize = )" << workgroupSize
+                               << R"(u;
+
+const subgroupXorMask = )" << subgroupXorMask
+                               << R"(u;
+@group(0) @binding(0) var<storage, read_write> input : array<u32, workgroupSize>;
+@group(0) @binding(1) var<storage, read_write> output : array<u32, workgroupSize + 1>;
+
+@compute @workgroup_size(workgroupSize)
+fn main(
+    @builtin(local_invocation_id) local_id : vec3u,
+      @builtin(subgroup_size) sg_size : u32
+) {
+    // load 'a' with values from memory
+    output[workgroupSize] = sg_size;
+    var a:)" << GetParam().mSubgroupShuffleDataType
+                               << R"( =  )" << GetParam().mSubgroupShuffleDataType
+                               << R"( ( input[local_id.x] );
+                               workgroupBarrier();
+                                a = subgroupShuffleXor(a, subgroupXorMask);
+                                output[local_id.x] = u32( )"
+                               << GetParam().mSubgroupShuffleDataType << R"( (a));
+}
+)";
+        return utils::CreateShaderModule(device, code.str().c_str());
+    }
+
+    class ExpectReadSubgroupSizeOutput : public dawn::detail::Expectation {
+      public:
+        explicit ExpectReadSubgroupSizeOutput(uint32_t workgroupSize, uint32_t subgroupXorMask)
+            : mWorkgroupSize(workgroupSize), mSubgroupXorMask(subgroupXorMask) {}
+        testing::AssertionResult Check(const void* data, size_t size) override {
+            DAWN_ASSERT(size == sizeof(float) * (mWorkgroupSize + 1));
+            const uint32_t* dataArray = static_cast<const uint32_t*>(data);
+            auto sgSize = dataArray[mWorkgroupSize];
+            if (sgSize <= mSubgroupXorMask) {
+                // Generates indeterminante value for mask outside subgroup size
+                return testing::AssertionSuccess();
+            }
+            for (uint32_t i = 0; i < mWorkgroupSize; i++) {
+                uint32_t sg_inv = i % sgSize;
+                uint32_t sg_idx = i / sgSize;
+                uint32_t sg_target_shuffle = mSubgroupXorMask ^ sg_inv;
+                uint32_t shuffle_idx = sg_target_shuffle + sgSize * sg_idx;
+                uint32_t expected_val = shuffle_idx;
+                if (expected_val != dataArray[i]) {
+                    testing::AssertionResult result =
+                        testing::AssertionFailure()
+                        << " wg_size=" << mWorkgroupSize << ", sg_size=" << sgSize
+                        << ", mask=" << mSubgroupXorMask << ", sg_inv=" << sg_inv
+                        << ", sg_idx=" << sg_idx << ", sg_target_shuffle=" << sg_target_shuffle
+                        << ", shuffle_idx=" << shuffle_idx << ", expected_val=" << expected_val;
+                    return result;
+                }
+            }
+
+            return testing::AssertionSuccess();
+        }
+
+      private:
+        uint32_t mWorkgroupSize;
+        uint32_t mSubgroupXorMask;
+    };
+};
+
+TEST_P(SubgroupsShaderShuffleTest, ShuffleExecution) {
+    DAWN_SUPPRESS_TEST_IF(IsWARP());
+
+    DAWN_TEST_UNSUPPORTED_IF(!IsSubgroupsEnabledInWGSL());
+    if (GetParam().mSubgroupShuffleDataType == SubgroupShuffleDataType::F16) {
+        DAWN_TEST_UNSUPPORTED_IF(!IsShaderF16EnabledInWGSL());
+
+        // TODO(361330160): The f16 implementation does not seem produce correct values in
+        // execution. It is not clear if this is due to something wrong with the polyfill or the
+        // underlying exclusive implementation.
+        // This was observed for D3D12 NVIDIA GeForce GTX 1660
+        DAWN_SUPPRESS_TEST_IF(gpu_info::IsNvidiaTuring(GetParam().adapterProperties.vendorID,
+                                                       GetParam().adapterProperties.deviceID));
+        // TODO(361330160): Also fails on MacBookPro16,1 with AMD Radeon Pro 5300M
+        DAWN_SUPPRESS_TEST_IF(gpu_info::IsAMDRDNA1(GetParam().adapterProperties.vendorID,
+                                                   GetParam().adapterProperties.deviceID));
+    }
+
+    for (uint32_t subgroupXorMask : {0x1, 0x5, 0x13}) {
+        for (uint32_t workgroupSize : {128, 256}) {
+            TestReadSubgroupSize(workgroupSize, subgroupXorMask);
+        }
+    }
+}
+
+DAWN_INSTANTIATE_TEST_P(SubgroupsShaderShuffleTest,
+                        {D3D12Backend(), D3D12Backend({}, {"use_dxc"}), MetalBackend(),
+                         VulkanBackend(), D3D12Backend({"polyfill_subgroup_shuffle_xor"}),
+                         D3D12Backend({"polyfill_subgroup_shuffle_xor"}, {"use_dxc"}),
+                         MetalBackend({"polyfill_subgroup_shuffle_xor"}),
+                         VulkanBackend({"polyfill_subgroup_shuffle_xor"}), VulkanBackend(),
+                         D3D12Backend({}, {"polyfill_subgroup_shuffle_xor"}),
+                         D3D12Backend({}, {"use_dxc", "polyfill_subgroup_shuffle_xor"}),
+                         MetalBackend({}, {"polyfill_subgroup_shuffle_xor"}),
+                         VulkanBackend({}, {"polyfill_subgroup_shuffle_xor"})},
+                        {
+                            SubgroupShuffleDataType::F32,
+                            SubgroupShuffleDataType::F16,
+                            SubgroupShuffleDataType::U32,
+                            SubgroupShuffleDataType::I32,
                         });
 
 }  // anonymous namespace
