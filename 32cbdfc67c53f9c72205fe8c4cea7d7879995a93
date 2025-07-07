@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a8d882f_492f92d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-07T08:46:18Z",
+      "side": 1,
+      "message": "PTAL, thanks! Fix the issue that adpater.GetLimits() returns 16 in backend always.",
+      "revId": "32cbdfc67c53f9c72205fe8c4cea7d7879995a93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
