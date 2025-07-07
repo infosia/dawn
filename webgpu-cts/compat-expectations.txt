@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-06-29 12:29:15PM
+# Last rolled: 2025-07-07 05:03:57AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -329,7 +329,6 @@ crbug.com/373670502 [ android-pixel-6 ] webgpu:shader,execution,expression,call,
 # Triaged or Manually-Added Flakes and Failures
 ################################################################################
 
-
 # Generates GL_OUT_OF_MEMORY
 crbug.com/361372970 [ android arm ] webgpu:api,validation,image_copy,layout_related:copy_end_overflows_u64:method="WriteTexture" [ Failure ]
 
@@ -378,8 +377,6 @@ crbug.com/341282603 [ intel-0x4680 linux ] webgpu:api,operation,command_buffer,q
 
 crbug.com/341282605 [ intel-0x4680 linux ] webgpu:shader,execution,limits:switch_case_selectors: [ Failure ]
 crbug.com/341282605 [ intel-0x9bc5 ] webgpu:shader,execution,limits:switch_case_selectors: [ Failure ]
-
-
 
 # sample_texture_combos test is failing on all Compat platforms
 crbug.com/402772749 [ android android-chromium android-pixel-6 angle-opengles arm compat-default mobile ] webgpu:api,operation,sampling,sampler_texture:sample_texture_combos: [ Failure ]
@@ -710,10 +707,8 @@ crbug.com/407076123 [ android-14 android-pixel-6 ] webgpu:api,validation,createB
 crbug.com/407076123 [ linux nvidia ] webgpu:api,validation,createBindGroup:buffer,resource_binding_size:type="read-only-storage" [ Failure ]
 crbug.com/407076123 [ linux nvidia ] webgpu:api,validation,createBindGroup:buffer,resource_binding_size:type="storage" [ Failure ]
 
-
 # Not implemented yet
 crbug.com/342840940 [ angle-opengl arch-x86_64 compat-min-es31 desktop display-server-x memory_ge_16gb nvidia-0x2184 nvidia_ge_31.0.15.4601 release ubuntu ] webgpu:api,validation,capability_checks,features,texture_formats:check_capability_guarantees: [ Failure ]
-
 
 # tint needs to support new storage formats from texture-feature-tier1
 crbug.com/421948908 [ android android-chromium android-pixel-6 angle-opengles arm compat-default mobile ] webgpu:api,validation,state,device_lost,destroy:createRenderBundleEncoder:format="r16snorm";awaitLost=false [ Failure ]
