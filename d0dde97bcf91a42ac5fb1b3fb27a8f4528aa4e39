@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bce8f850_65118660",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-07T08:47:32Z",
+      "side": 1,
+      "message": "This is SetImmediateData() implementation in D3D12 backend. PTAL, thanks!",
+      "revId": "d0dde97bcf91a42ac5fb1b3fb27a8f4528aa4e39",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
