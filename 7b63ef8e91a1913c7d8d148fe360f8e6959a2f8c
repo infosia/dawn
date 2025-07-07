@@ -195,6 +195,23 @@
       "message": "lgtm. this seems like it fixes an issue and we can refine it later if we want to change how it searches, or to make it copy the binary in some fashion.",
       "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6548066_2bdeff45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-07-07T16:11:47Z",
+      "side": 1,
+      "message": "Thanks for the +2\n\nI hacked things down stream in the publishing repo. The current tintd doesn\u0027t build anymore via cmake. Various things need updating. So patching it downstream let me keep tintd at a version that still compiles. Closing this for now.",
+      "revId": "7b63ef8e91a1913c7d8d148fe360f8e6959a2f8c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
