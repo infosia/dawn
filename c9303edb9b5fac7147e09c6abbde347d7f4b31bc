@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2506a1fc_276b2358",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T19:25:59Z",
+      "side": 1,
+      "message": "Doh, I fixed that comment, but in the next CL. Copy-pasta, will fix. This should be the phi block is the merge which is a walk stop block.",
+      "parentUuid": "1fd513c6_92add54f",
+      "revId": "c9303edb9b5fac7147e09c6abbde347d7f4b31bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "63248c78_17c17add",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 2
