@@ -36,27 +36,26 @@
 //  - Buffers and images must be deleted before memories because it is invalid to free memory
 // that still have resources bound to it.
 //  - Vulkan swapchains must be destroyed before their corresponding VkSurface
-#define FENCED_DEVICE_DELETER_TYPES(X) \
-    X(VkBuffer, mBuffersToDelete, DestroyBuffer) \
-    X(VkImage, mImagesToDelete, DestroyImage) \
-    X(VkDeviceMemory, mMemoriesToDelete, FreeMemory) \
-    X(VkPipelineLayout, mPipelineLayoutsToDelete, DestroyPipelineLayout) \
-    X(VkRenderPass, mRenderPassesToDelete, DestroyRenderPass) \
-    X(VkFence, mFencesToDelete, DestroyFence) \
-    X(VkFramebuffer, mFramebuffersToDelete, DestroyFramebuffer) \
-    X(VkImageView, mImageViewsToDelete, DestroyImageView) \
-    X(VkPipeline, mPipelinesToDelete, DestroyPipeline) \
-    X(VkSwapchainKHR, mSwapChainsToDelete, DestroySwapchainKHR) \
-    X(VkSemaphore, mSemaphoresToDelete, DestroySemaphore) \
-    X(VkDescriptorPool, mDescriptorPoolsToDelete, DestroyDescriptorPool) \
-    X(VkQueryPool, mQueryPoolsToDelete, DestroyQueryPool) \
+#define FENCED_DEVICE_DELETER_TYPES(X)                                                           \
+    X(VkBuffer, mBuffersToDelete, DestroyBuffer)                                                 \
+    X(VkImage, mImagesToDelete, DestroyImage)                                                    \
+    X(VkDeviceMemory, mMemoriesToDelete, FreeMemory)                                             \
+    X(VkPipelineLayout, mPipelineLayoutsToDelete, DestroyPipelineLayout)                         \
+    X(VkRenderPass, mRenderPassesToDelete, DestroyRenderPass)                                    \
+    X(VkFence, mFencesToDelete, DestroyFence)                                                    \
+    X(VkFramebuffer, mFramebuffersToDelete, DestroyFramebuffer)                                  \
+    X(VkImageView, mImageViewsToDelete, DestroyImageView)                                        \
+    X(VkPipeline, mPipelinesToDelete, DestroyPipeline)                                           \
+    X(VkSwapchainKHR, mSwapChainsToDelete, DestroySwapchainKHR)                                  \
+    X(VkSemaphore, mSemaphoresToDelete, DestroySemaphore)                                        \
+    X(VkDescriptorPool, mDescriptorPoolsToDelete, DestroyDescriptorPool)                         \
+    X(VkQueryPool, mQueryPoolsToDelete, DestroyQueryPool)                                        \
     X(VkSamplerYcbcrConversion, mSamplerYcbcrConversionsToDelete, DestroySamplerYcbcrConversion) \
     X(VkSampler, mSamplersToDelete, DestroySampler)
 
-#define FENCED_INSTANCE_DELETER_TYPES(X) \
-    X(VkSurfaceKHR, mSurfacesToDelete, DestroySurfaceKHR)
+#define FENCED_INSTANCE_DELETER_TYPES(X) X(VkSurfaceKHR, mSurfacesToDelete, DestroySurfaceKHR)
 
-#define FENCED_DELETER_TYPES(X) \
+#define FENCED_DELETER_TYPES(X)    \
     FENCED_DEVICE_DELETER_TYPES(X) \
     FENCED_INSTANCE_DELETER_TYPES(X)
 
@@ -68,8 +67,7 @@ FencedDeleter::FencedDeleter(Device* device) : mDevice(device) {
 
 FencedDeleter::~FencedDeleter() {
     std::unique_lock<std::mutex> lock(mMutex);
-#define X(Type, queue, ...) \
-    DAWN_ASSERT(queue.Empty());
+#define X(Type, queue, ...) DAWN_ASSERT(queue.Empty());
     FENCED_DELETER_TYPES(X)
 #undef X
 }
@@ -79,15 +77,15 @@ void FencedDeleter::Destroy() {
     mHasWorkCondition.notify_one();
 }
 
-#define X(Type, queue, ...) \
-void FencedDeleter::DeleteWhenUnused(Type handle) { \
-    { \
-        std::unique_lock<std::mutex> lock(mMutex); \
-        queue.Enqueue(handle, GetCurrentDeletionSerial()); \
-    } \
-    mHasDeletions.exchange(true); \
-    mHasWorkCondition.notify_one(); \
-}
+#define X(Type, queue, ...)                                    \
+    void FencedDeleter::DeleteWhenUnused(Type handle) {        \
+        {                                                      \
+            std::unique_lock<std::mutex> lock(mMutex);         \
+            queue.Enqueue(handle, GetCurrentDeletionSerial()); \
+        }                                                      \
+        mHasDeletions.exchange(true);                          \
+        mHasWorkCondition.notify_one();                        \
+    }
 FENCED_DELETER_TYPES(X)
 #undef X
 
@@ -95,8 +93,10 @@ ExecutionSerial FencedDeleter::GetLastPendingDeletionSerial() {
     std::unique_lock<std::mutex> lock(mMutex);
 
     ExecutionSerial lastSerial = kBeginningOfGPUTime;
-#define X(Type, queue, ...) \
-    if (!queue.Empty()) { lastSerial = std::max(lastSerial, queue.LastSerial()); }
+#define X(Type, queue, ...)                                    \
+    if (!queue.Empty()) {                                      \
+        lastSerial = std::max(lastSerial, queue.LastSerial()); \
+    }
     FENCED_DELETER_TYPES(X)
 #undef X
 
@@ -117,25 +117,25 @@ void FencedDeleter::ProcessDeletions(ExecutionSerial completedSerial) {
     VkDevice vkDevice = mDevice->GetVkDevice();
     VkInstance instance = mDevice->GetVkInstance();
 
-#define X(Type, queue, DeleteFn) \
+#define X(Type, queue, DeleteFn)                             \
     for (Type handle : queue.IterateUpTo(completedSerial)) { \
-        mDevice->fn.DeleteFn(vkDevice, handle, nullptr); \
-    } \
+        mDevice->fn.DeleteFn(vkDevice, handle, nullptr);     \
+    }                                                        \
     queue.ClearUpTo(completedSerial);
     FENCED_DEVICE_DELETER_TYPES(X)
 #undef X
 
-#define X(Type, queue, DeleteFn) \
+#define X(Type, queue, DeleteFn)                             \
     for (Type handle : queue.IterateUpTo(completedSerial)) { \
-        mDevice->fn.DeleteFn(instance, handle, nullptr); \
-    } \
+        mDevice->fn.DeleteFn(instance, handle, nullptr);     \
+    }                                                        \
     queue.ClearUpTo(completedSerial);
     FENCED_INSTANCE_DELETER_TYPES(X)
 #undef X
 }
 
 void FencedDeleter::ThreadLoop() {
-    while(true) {
+    while (true) {
         std::unique_lock<std::mutex> lock(mMutex);
         mHasWorkCondition.wait(lock, [this]() { return mThreadShouldExit || mHasDeletions; });
 

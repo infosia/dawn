@@ -358,7 +358,7 @@ MaybeError Device::TickImpl() {
 
     GetResourceMemoryAllocator()->Tick(completedSerial);
     // FIXME: Remove before posting CL
-    //GetFencedDeleter()->Tick(completedSerial);
+    // GetFencedDeleter()->Tick(completedSerial);
 
     DAWN_TRY(queue->SubmitPendingCommands());
     DAWN_TRY(CheckDebugLayerAndGenerateErrors());

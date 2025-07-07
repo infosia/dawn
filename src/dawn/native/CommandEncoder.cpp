@@ -882,32 +882,57 @@ MaybeError ValidateRenderPassDescriptor(DeviceBase* device,
 
 // Adds a single attachment to the validation state to ensure that it is valid and can report a
 // render width and height.
-MaybeError InitializeValidationStateAttachment(UnpackedPtr<RenderPassDescriptor> descriptor,
+MaybeError InitializeValidationStateAttachment(DeviceBase* device,
+                                               UnpackedPtr<RenderPassDescriptor> descriptor,
                                                RenderPassValidationState* validationState) {
-    if (descriptor->depthStencilAttachment != nullptr) {
-        DAWN_TRY(validationState->AddAttachment(descriptor->depthStencilAttachment->view,
-                                                AttachmentType::DepthStencilAttachment));
-    } else {
-        for (size_t i = 0; i < descriptor->colorAttachmentCount; ++i) {
-            const RenderPassColorAttachment& colorAttachment = descriptor->colorAttachments[i];
-            if (colorAttachment.view != nullptr) {
-                DAWN_TRY(validationState->AddAttachment(colorAttachment.view,
-                                                        AttachmentType::ColorAttachment,
-                                                        colorAttachment.depthSlice));
-                break;
+    TextureViewBase* representativeView = nullptr;
+    AttachmentType representativeType = AttachmentType::ColorAttachment;
+    uint32_t representativeDepthSlice = 0;
+
+    // Check every attachment to guard against invalid objects caused by OOM errors.
+    auto CheckAttachment = [&](TextureViewBase* view, AttachmentType type,
+                               uint32_t depthSlice = 0) -> MaybeError {
+        DAWN_ASSERT(view);
+        DAWN_TRY(device->ValidateObject(view));
+        representativeView = view;
+        representativeType = type;
+        representativeDepthSlice = depthSlice;
+        return {};
+    };
+
+    auto pls = descriptor.Get<RenderPassPixelLocalStorage>();
+    if (pls != nullptr && pls->storageAttachmentCount > 0) {
+        for (size_t i = 0; i < pls->storageAttachmentCount; i++) {
+            const RenderPassStorageAttachment& attachment = pls->storageAttachments[i];
+            DAWN_TRY(CheckAttachment(attachment.storage, AttachmentType::StorageAttachment));
+            DAWN_TRY(device->ValidateObject(attachment.storage));
+            if (!validationState->HasAttachment()) {
+                DAWN_TRY(validationState->AddAttachment(attachment.storage,
+                                                        AttachmentType::StorageAttachment));
             }
         }
     }
 
-    if (!validationState->HasAttachment()) {
-        // It's also possible that pixel local storage contains the only attachments.
-        auto pls = descriptor.Get<RenderPassPixelLocalStorage>();
-        if (pls != nullptr && pls->storageAttachmentCount > 0) {
-            const RenderPassStorageAttachment& attachment = pls->storageAttachments[0];
-            DAWN_TRY(validationState->AddAttachment(attachment.storage,
-                                                    AttachmentType::StorageAttachment));
+    if (descriptor->depthStencilAttachment != nullptr) {
+        DAWN_TRY(CheckAttachment(descriptor->depthStencilAttachment->view,
+                                 AttachmentType::DepthStencilAttachment));
+    }
+
+    for (size_t i = 0; i < descriptor->colorAttachmentCount; ++i) {
+        const RenderPassColorAttachment& colorAttachment = descriptor->colorAttachments[i];
+        if (colorAttachment.view != nullptr) {
+            DAWN_TRY(CheckAttachment(colorAttachment.view, AttachmentType::ColorAttachment,
+                                     colorAttachment.depthSlice));
+            if (colorAttachment.resolveTarget != nullptr) {
+                DAWN_TRY(device->ValidateObject(colorAttachment.resolveTarget));
+            }
         }
     }
+
+    // Only one attachment needs to be added to the validation state.
+    DAWN_ASSERT(representativeView);
+    DAWN_TRY(validationState->AddAttachment(representativeView, representativeType,
+                                            representativeDepthSlice));
 
     return {};
 }
@@ -1319,7 +1344,7 @@ Ref<RenderPassEncoder> CommandEncoder::BeginRenderPass(const RenderPassDescripto
             } else {
                 // If validation is skipped at least one attachment still needs to be added to the
                 // validation state to compute the render width and height from.
-                DAWN_TRY(InitializeValidationStateAttachment(descriptor, &validationState));
+                DAWN_TRY(InitializeValidationStateAttachment(device, descriptor, &validationState));
             }
 
             DAWN_ASSERT(validationState.IsValidState());
