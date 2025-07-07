@@ -354,10 +354,14 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
         }
     }
 
+    // Report all remain rootSignature slots as immediate data.
+    limits->v1.maxImmediateSize = availableRootSignatureSlots;
+
     DAWN_ASSERT(2 * limits->v1.maxBindGroups +
                     2 * limits->v1.maxDynamicUniformBuffersPerPipelineLayout +
-                    3 * limits->v1.maxDynamicStorageBuffersPerPipelineLayout <=
-                kMaxRootSignatureSize - kReservedSlots);
+                    3 * limits->v1.maxDynamicStorageBuffersPerPipelineLayout +
+                    limits->v1.maxImmediateSize + kReservedSlots ==
+                kMaxRootSignatureSize);
 
     // https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/sm5-attributes-numthreads
     limits->v1.maxComputeWorkgroupSizeX = D3D12_CS_THREAD_GROUP_MAX_X;
