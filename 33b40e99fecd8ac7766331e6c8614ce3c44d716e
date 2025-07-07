@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b59401f1_f69643f6",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T21:40:42Z",
+      "side": 1,
+      "message": "What\u0027s the issue with WARP for this one?",
+      "revId": "33b40e99fecd8ac7766331e6c8614ce3c44d716e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f282840_292b8037",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T21:40:42Z",
+      "side": 1,
+      "message": "Do we need to do the polyfill for OpenGL too?",
+      "revId": "33b40e99fecd8ac7766331e6c8614ce3c44d716e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
