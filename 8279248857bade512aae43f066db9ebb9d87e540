@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a8d7b47_6f6e2dfc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-07T18:26:35Z",
+      "side": 1,
+      "message": "PTAL. This should be relatively straight forward, it fixes the double destroy problem so the next CL just has to fix the use-after-free.",
+      "revId": "8279248857bade512aae43f066db9ebb9d87e540",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
