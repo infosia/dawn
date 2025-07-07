@@ -28,6 +28,7 @@
 #include <atomic>
 #include <condition_variable>
 #include <functional>
+#include <latch>
 #include <limits>
 #include <memory>
 #include <mutex>
@@ -652,6 +653,47 @@ TEST_P(MultithreadTests, CreateAndDestroyBindGroupsInParallel) {
             EXPECT_NE(nullptr, bindGroup.Get());
         }
     });
+}
+
+TEST_P(MultithreadTests, DestroyTextureAndViews) {
+    constexpr uint32_t kNumViews = 10;
+    constexpr uint32_t kNumThreads = kNumViews + 1;
+    constexpr wgpu::TextureFormat kTextureFormat = wgpu::TextureFormat::R8Unorm;
+    constexpr wgpu::TextureUsage kTextureUsage = wgpu::TextureUsage::CopySrc |
+                                                 wgpu::TextureUsage::CopyDst |
+                                                 wgpu::TextureUsage::RenderAttachment;
+
+    for (uint32_t j = 0; j < 100; ++j) {
+        wgpu::TextureDescriptor texDescriptor = {};
+        texDescriptor.size = {1, 1, kNumViews};
+        texDescriptor.format = kTextureFormat;
+        texDescriptor.usage = kTextureUsage;
+        texDescriptor.mipLevelCount = 1;
+        texDescriptor.sampleCount = 1;
+
+        wgpu::Texture texture = device.CreateTexture(&texDescriptor);
+        wgpu::TextureView textureViews[kNumViews];
+
+        for (uint32_t i = 0; i < kNumViews; ++i) {
+            wgpu::TextureViewDescriptor viewDescriptor = {};
+            viewDescriptor.format = kTextureFormat;
+            viewDescriptor.usage = kTextureUsage;
+            viewDescriptor.mipLevelCount = 1;
+            viewDescriptor.baseArrayLayer = i;
+            viewDescriptor.arrayLayerCount = 1;
+            textureViews[i] = texture.CreateView(&viewDescriptor);
+        }
+
+        std::latch threads_ready(kNumThreads);
+        utils::RunInParallel(kNumThreads, [&](uint32_t id) {
+            threads_ready.arrive_and_wait();
+            if (id == 0) {
+                texture.Destroy();
+            } else {
+                textureViews[id - 1] = {};
+            }
+        });
+    }
 }
 
 class MultithreadCachingTests : public MultithreadTests {

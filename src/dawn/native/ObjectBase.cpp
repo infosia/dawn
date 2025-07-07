@@ -78,18 +78,26 @@ void ApiObjectList::Destroy() {
     mObjects.Use([&objectsToDestroy, this](auto lockedObjects) {
         mMarkedDestroyed.store(true, std::memory_order_release);
 
-        // Remove objects from ApiObjectList while holding the lock. The objects become untracked
-        // so if another thread drops the last reference it won't also call DestroyImpl().
-        while (!lockedObjects->empty()) {
-            auto* head = lockedObjects->head();
-            bool removed = head->RemoveFromList();
-            DAWN_ASSERT(removed);
-            objectsToDestroy.push_back(head->value());
+        // Try to acquire a reference to all objects to ensure they aren't deleted on another thread
+        // before DestroyImpl() runs below. If the object already has zero refs then another thread
+        // is already about to delete it, the object is left in the list to be deleted+destroyed on
+        // the other thread.
+        for (auto* node = lockedObjects->head(); node != lockedObjects->end();) {
+            auto* next = node->next();
+
+            if (ApiObjectBase* object = node->value(); object->TryAddRef()) {
+                objectsToDestroy.push_back(object);
+                bool removed = node->RemoveFromList();
+                DAWN_ASSERT(removed);
+            }
+
+            node = next;
         }
     });
 
     for (ApiObjectBase* object : objectsToDestroy) {
         object->DestroyImpl();
+        object->Release();
     }
 }
 
