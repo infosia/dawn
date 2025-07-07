@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0b609d4_97c7d24c",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T19:22:40Z",
+      "side": 1,
+      "message": "Nit: Looks like it\u0027s always used?\n```suggestion\n    void EmitPhiInLoopMerge(spvtools::opt::Instruction\u0026 inst) {\n```",
+      "revId": "c9303edb9b5fac7147e09c6abbde347d7f4b31bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fd513c6_92add54f",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T19:22:40Z",
+      "side": 1,
+      "message": "What does this comment actually mean in relation to the next couple of lines? I don\u0027t see anything obvious to do with continue targets there?",
+      "revId": "c9303edb9b5fac7147e09c6abbde347d7f4b31bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63248c78_17c17add",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2408,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T19:22:40Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t really need the `tint::Switch` if there\u0027s only one case now.",
+      "revId": "c9303edb9b5fac7147e09c6abbde347d7f4b31bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9468baf6_ee0e1963",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2484,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T19:22:40Z",
+      "side": 1,
+      "message": "Nit: tint::Switch unnecessary as there is only one case.",
+      "revId": "c9303edb9b5fac7147e09c6abbde347d7f4b31bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
