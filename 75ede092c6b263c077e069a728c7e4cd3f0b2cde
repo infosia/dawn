@@ -33,6 +33,24 @@
       "message": "Metal appears to have the concept of `function_constant` attributes. Why do we convert to a uniform buffer instead of using the available function constants?",
       "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69809c7f_d8d4d36e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T15:58:41Z",
+      "side": 1,
+      "message": "`function_constant` is constant at pipeline creation time. Immediate data is set later during pass encoding, and can be updated many times for a single pipeline as needed.",
+      "parentUuid": "b3e7e5d4_5903cab2",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
