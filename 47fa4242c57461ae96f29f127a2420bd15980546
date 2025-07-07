@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d91b6263_e6943b83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-07T23:30:05Z",
+      "side": 1,
+      "message": "LGTM but we should also go ahead and add these. (https://github.com/webgpu-native/webgpu-headers/pull/553)",
+      "revId": "47fa4242c57461ae96f29f127a2420bd15980546",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
