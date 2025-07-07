@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea3b8d77_f9f69a4f",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2159,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0b609d4_97c7d24c",
+      "revId": "c9303edb9b5fac7147e09c6abbde347d7f4b31bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1fd513c6_92add54f",
@@ -53,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3bddd0f_5bb9238f",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2506a1fc_276b2358",
+      "revId": "c9303edb9b5fac7147e09c6abbde347d7f4b31bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "63248c78_17c17add",
@@ -70,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "05c56f3b_e92cb2f0",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2408,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63248c78_17c17add",
+      "revId": "c9303edb9b5fac7147e09c6abbde347d7f4b31bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9468baf6_ee0e1963",
@@ -83,6 +137,24 @@
       "writtenOn": "2025-07-07T19:22:40Z",
       "side": 1,
       "message": "Nit: tint::Switch unnecessary as there is only one case.",
+      "revId": "c9303edb9b5fac7147e09c6abbde347d7f4b31bc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "382f64df_b2c736ea",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2484,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T20:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9468baf6_ee0e1963",
       "revId": "c9303edb9b5fac7147e09c6abbde347d7f4b31bc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
