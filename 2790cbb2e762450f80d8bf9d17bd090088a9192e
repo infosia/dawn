@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "06a58ad6_7929062d",
+        "filename": "src/dawn/common/RefCounted.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-07T20:45:20Z",
+      "side": 1,
+      "message": "I think if we decide to keep this, we should probably just make `TryAddRef` public and not have the friend. The friend here is weird because this in a common utility file and `ApiObjectList` is dawn native specific.",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 21
+      },
+      "revId": "2790cbb2e762450f80d8bf9d17bd090088a9192e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ae6ae4ae_52cb8265",
         "filename": "src/dawn/native/ObjectBase.cpp",
         "patchSetId": 3
@@ -14,6 +37,30 @@
       "writtenOn": "2025-07-07T18:31:31Z",
       "side": 1,
       "message": "TryAddRef() might be more controversial but it\u0027s the only thing I\u0027ve been able to come up with that doesn\u0027t add a member variables to ApiObjectBase and increase the size of that base class.",
+      "range": {
+        "startLine": 88,
+        "startChar": 63,
+        "endLine": 88,
+        "endChar": 72
+      },
+      "revId": "2790cbb2e762450f80d8bf9d17bd090088a9192e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "26a9ee94_dd1751bb",
+        "filename": "src/dawn/native/ObjectBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-07T20:45:20Z",
+      "side": 1,
+      "message": "Hmm personally I think this is a fine solution! Can see what others think also, but this is nice since it\u0027s a fairly simple change and we have some precedence of using `TryAddRef` or equivalents for `WeakRef`s anyways.",
+      "parentUuid": "ae6ae4ae_52cb8265",
       "range": {
         "startLine": 88,
         "startChar": 63,
