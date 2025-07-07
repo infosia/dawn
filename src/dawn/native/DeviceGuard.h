@@ -58,15 +58,18 @@ struct DeviceMutexTraits {
 class DeviceGuardBase {
   protected:
     explicit DeviceGuardBase(std::optional<class Defer>* defer, RecursiveMutex* mutex = nullptr);
-    virtual ~DeviceGuardBase();
 
   protected:
     // Since guards are always stack allocated, they must be cleaned up in the reverse order of
     // creation. That said, the first guard to be created in a given stack will always be the guard
-    // to resolve the defers. This is a raw pointer because the Device is the one that actually owns
-    // the Defer. Note that this is set by the implementing class DeviceGuard to ensure that the
-    // Device lock has been acquired before any modifitcations to it.
-    raw_ptr<std::optional<class Defer>> mDefer = nullptr;
+    // to resolve the defers. The pointer is a raw pointer because the Device is the one that
+    // actually owns the Defer. Note that this is set by the implementing class DeviceGuard to
+    // ensure that the Device lock has been acquired before any modifitcations to it. The actual
+    // Defer object will be moved into if necessary by the destructor DeviceGuard, again because we
+    // don't want to modify Device state without the lock, but we want to destroy the Defer object
+    // without the lock.
+    raw_ptr<std::optional<class Defer>> mDeferPtr = nullptr;
+    std::optional<class Defer> mDefer = std::nullopt;
 
   private:
     // Optionally, this base class may hold a strong reference to the actual mutex. This is used
@@ -84,6 +87,7 @@ class DeviceGuard : public detail::DeviceGuardBase,
                     private ::dawn::detail::Guard<DeviceBase, detail::DeviceMutexTraits> {
   public:
     using GuardBase = ::dawn::detail::Guard<DeviceBase, detail::DeviceMutexTraits>;
+    ~DeviceGuard();
 
   private:
     friend class DeviceBase;
