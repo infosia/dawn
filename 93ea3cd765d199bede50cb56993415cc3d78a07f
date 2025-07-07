@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c811bcea_23d91beb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-07-07T15:43:59Z",
+      "side": 1,
+      "message": "Yea, it can be enabled by default. Eventually we could enable it for non-stable builds only.",
+      "parentUuid": "9965304e_04b8df54",
+      "revId": "93ea3cd765d199bede50cb56993415cc3d78a07f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a5085051_4a7281a8",
         "filename": "src/dawn/native/BlobCache.h",
         "patchSetId": 4
