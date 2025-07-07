@@ -16,6 +16,75 @@
       "message": "PTAL, thanks!",
       "revId": "0f463d39449c60331bb7930ced9e875d7d401e4a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e752c779_cfb4c758",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-07T19:15:26Z",
+      "side": 1,
+      "message": "nit. I think that these tests should be refactored a bit so that we don\u0027t have so much duplicated code. From what it looks like we could have something like:\n\n`TextureFormatsTier1RenderPassTest::TestFormat(wgpu::TextureFormat format, bool withResolve)`\n\nand then the tests could just call that function. Additionally, that helper should add a `SCOPED_TRACE()` call in them so that when we have a failure, we know which format failed.\n\nThis also means that `RG11B10UfloatRenderableRenderPassTest` should probably extend `TextureFormatsTier1RenderPassTest` instead of `RenderPassDescriptorValidationTest`.",
+      "range": {
+        "startLine": 751,
+        "startChar": 8,
+        "endLine": 769,
+        "endChar": 50
+      },
+      "revId": "0f463d39449c60331bb7930ced9e875d7d401e4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7235b018_cc4ff98b",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-07T19:15:26Z",
+      "side": 1,
+      "message": "nit. Probably can revert this change since adding the format name is redundant with the test suite name already.",
+      "range": {
+        "startLine": 833,
+        "startChar": 63,
+        "endLine": 833,
+        "endChar": 76
+      },
+      "revId": "0f463d39449c60331bb7930ced9e875d7d401e4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44427d3d_e7e8e997",
+        "filename": "src/dawn/tests/unittests/validation/RenderPipelineValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3586,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-07T19:15:26Z",
+      "side": 1,
+      "message": "Can\u0027t we just add `wgpu::TextureFormat::RG11B10Ufloat` to this list and rename this test to `RenderableFormats`? (The \"Tier1\" is redundant since that is already in the test suite name also).\n\nAlso, we should add a `SCOPED_TRACE()` call with the format type in the for loop.",
+      "range": {
+        "startLine": 3586,
+        "startChar": 36,
+        "endLine": 3586,
+        "endChar": 69
+      },
+      "revId": "0f463d39449c60331bb7930ced9e875d7d401e4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
