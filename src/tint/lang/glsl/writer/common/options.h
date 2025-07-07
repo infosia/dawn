@@ -287,6 +287,9 @@ struct Options {
     /// Set to `true` to disable the polyfills on integer division and modulo.
     bool disable_polyfill_integer_div_mod = false;
 
+    /// Set to `true` to polyfill signed integer abs builtin.
+    bool polyfill_abs_signed_integer = false;
+
     /// Set to `true` to run ArrayLengthFromTransform workaround
     bool use_array_length_from_uniform = false;
 
@@ -315,6 +318,7 @@ struct Options {
                  enable_integer_range_analysis,
                  disable_workgroup_init,
                  disable_polyfill_integer_div_mod,
+                 polyfill_abs_signed_integer,
                  use_array_length_from_uniform,
                  version,
                  first_vertex_offset,

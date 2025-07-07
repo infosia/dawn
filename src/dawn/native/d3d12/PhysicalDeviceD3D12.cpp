@@ -697,6 +697,11 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         }
     }
 
+    if (gpu_info::IsIntel(GetVendorId()) || gpu_info::IsNvidia(GetVendorId())) {
+        // chromium:426999765: Intel and Nvidia drivers do not handle abs i32 correctly.
+        deviceToggles->Default(Toggle::PolyfillAbsSignedInteger, true);
+    }
+
     // Currently this workaround is only needed on Intel Gen9, Gen9.5, Gen12 and Xe GPUs.
     // See http://crbug.com/dawn/1487 for more information.
     if (gpu_info::IsIntelGen9(vendorId, deviceId) || gpu_info::IsIntelGen12LP(vendorId, deviceId) ||
