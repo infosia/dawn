@@ -25,13 +25,13 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.h"
+#include "src/tint/lang/core/ir/transform/change_immediate_to_uniform.h"
 
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
 
-namespace tint::hlsl::writer::raise {
+namespace tint::core::ir::transform {
 namespace {
 
 /// PIMPL state for the transform.
@@ -148,4 +148,4 @@ Result<SuccessType> ChangeImmediateToUniform(core::ir::Module& ir,
     return Success;
 }
 
-}  // namespace tint::hlsl::writer::raise
+}  // namespace tint::core::ir::transform

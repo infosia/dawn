@@ -25,8 +25,8 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SRC_TINT_LANG_HLSL_WRITER_RAISE_CHANGE_IMMEDIATE_TO_UNIFORM_H_
-#define SRC_TINT_LANG_HLSL_WRITER_RAISE_CHANGE_IMMEDIATE_TO_UNIFORM_H_
+#ifndef SRC_TINT_LANG_CORE_IR_TRANSFORM_CHANGE_IMMEDIATE_TO_UNIFORM_H_
+#define SRC_TINT_LANG_CORE_IR_TRANSFORM_CHANGE_IMMEDIATE_TO_UNIFORM_H_
 
 #include <algorithm>
 #include <optional>
@@ -39,7 +39,7 @@ namespace tint::core::ir {
 class Module;
 }  // namespace tint::core::ir
 
-namespace tint::hlsl::writer::raise {
+namespace tint::core::ir::transform {
 
 struct ChangeImmediateToUniformConfig {
     /// The binding point info.
@@ -57,6 +57,6 @@ struct ChangeImmediateToUniformConfig {
 Result<SuccessType> ChangeImmediateToUniform(core::ir::Module& module,
                                              const ChangeImmediateToUniformConfig& config);
 
-}  // namespace tint::hlsl::writer::raise
+}  // namespace tint::core::ir::transform
 
-#endif  // SRC_TINT_LANG_HLSL_WRITER_RAISE_CHANGE_IMMEDIATE_TO_UNIFORM_H_
+#endif  // SRC_TINT_LANG_CORE_IR_TRANSFORM_CHANGE_IMMEDIATE_TO_UNIFORM_H_
