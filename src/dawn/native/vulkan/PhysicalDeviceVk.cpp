@@ -743,7 +743,7 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
                   kDefaultMaxImmediateDataBytes + std::max(sizeof(RenderImmediateConstants),
                                                            sizeof(ComputeImmediateConstants)));
     DAWN_ASSERT(vkLimits.maxPushConstantsSize >= kVkGuaranteedMaxPushConstantsSize);
-    limits->v1.maxImmediateSize = kDefaultMaxImmediateDataBytes;
+    limits->v1.maxImmediateSize = kMaxSupportedImmediateDataBytes;
 
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryHost) &&
         mDeviceInfo.externalMemoryHostProperties.minImportedHostPointerAlignment <=
