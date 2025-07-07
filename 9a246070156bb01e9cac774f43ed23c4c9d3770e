@@ -46,6 +46,30 @@
       },
       "revId": "9a246070156bb01e9cac774f43ed23c4c9d3770e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13be7beb_65f0a905",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests_win.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-07T20:34:05Z",
+      "side": 1,
+      "message": "Oh, right, sorry I missed that these are virtual function overwrites.",
+      "parentUuid": "7601d4f1_f14d0232",
+      "range": {
+        "startLine": 366,
+        "startChar": 4,
+        "endLine": 378,
+        "endChar": 5
+      },
+      "revId": "9a246070156bb01e9cac774f43ed23c4c9d3770e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
