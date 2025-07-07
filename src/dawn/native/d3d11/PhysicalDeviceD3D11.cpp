@@ -32,6 +32,7 @@
 #include <utility>
 
 #include "dawn/common/Constants.h"
+#include "dawn/common/GPUInfo_autogen.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/Instance.h"
 #include "dawn/native/d3d/D3DError.h"
@@ -337,6 +338,16 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // recording time.
     if (gpu_info::IsIntelGen11OrOlder(vendorId, deviceId)) {
         deviceToggles->Default(Toggle::ClearColorWithDraw, true);
+    }
+
+    if (gpu_info::IsIntel(GetVendorId())) {
+        // chromium:426999765: Intel does not handle min i32 correctly.
+        deviceToggles->Default(Toggle::PolyfillAbsSignedInteger, true);
+    }
+
+    if (gpu_info::IsNvidia(GetVendorId())) {
+        // chromium:426999765: Nvidia (GTX 1660) does not handle min i32 correctly.
+        deviceToggles->Default(Toggle::PolyfillAbsSignedInteger, true);
     }
 
     // Enable the integer range analysis for shader robustness by default if the corresponding
