@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bd482c4_8af5e5d8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-07T14:28:22Z",
+      "side": 1,
+      "message": "Changes to the proto and fuzzer dictionary look good. Rest looks reasonable to me, but James should review for the +2.",
+      "revId": "afb313b0998e58f3853362f072787d9f1eacb36c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
