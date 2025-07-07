@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ab91634_ac74c27a",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-07T18:57:37Z",
+      "side": 1,
+      "message": "nit. Maybe we could make this more explicit and have like:\n\n```\nbool supportsBufferMapExtendedUsages \u003d\n  ToBackend(GetPhysicalDevice())-\u003eSupportsBufferMapExtendedUsages();\n```\n\nand then use that for the clauses instead of checking `mappedAtCreation`?",
+      "range": {
+        "startLine": 297,
+        "startChar": 4,
+        "endLine": 297,
+        "endChar": 89
+      },
+      "revId": "971191d73ba520eb8665f9c6f5186cfd66a59853",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
