@@ -16,6 +16,24 @@
       "message": "nit: keep the break, no point in continuing the iteration",
       "revId": "f66809f12c6d183312eb46d8ae3e0d067fa8a500",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ca58fa7_9f2d16c0",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-07T13:30:08Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "28541556_9597df97",
+      "revId": "f66809f12c6d183312eb46d8ae3e0d067fa8a500",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
