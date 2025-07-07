@@ -81,8 +81,11 @@ class RefCounted {
   protected:
     // Friend class is needed to access the RefCount to TryIncrement.
     friend class detail::WeakRefData;
+    friend class ApiObjectList;
 
     virtual ~RefCounted();
+
+    bool TryAddRef();
 
     void ReleaseAndLockBeforeDestroy();
 
