@@ -40,7 +40,7 @@
 #include "dawn/platform/DawnPlatform.h"
 #include "gtest/gtest.h"
 
-namespace dawn {
+namespace dawn::native {
 namespace {
 
 struct SimpleTaskResult {
@@ -82,14 +82,13 @@ TEST_F(AsyncTaskTest, Basic) {
     platform::Platform platform;
     std::unique_ptr<platform::WorkerTaskPool> pool = platform.CreateWorkerTaskPool();
 
-    native::AsyncTaskManager taskManager(pool.get());
+    AsyncTaskManager taskManager(pool.get());
     ConcurrentTaskResultQueue taskResultQueue;
 
     constexpr size_t kTaskCount = 4u;
     std::set<uint32_t> idset;
     for (uint32_t i = 0; i < kTaskCount; ++i) {
-        native::AsyncTask asyncTask([&taskResultQueue, i] { DoTask(&taskResultQueue, i); });
-        taskManager.PostTask(std::move(asyncTask));
+        taskManager.PostTask([&taskResultQueue, i] { DoTask(&taskResultQueue, i); });
         idset.insert(i);
     }
 
@@ -103,5 +102,28 @@ TEST_F(AsyncTaskTest, Basic) {
     ASSERT_TRUE(idset.empty());
 }
 
+// Test that the task status is updated based on the task's running state
+TEST_F(AsyncTaskTest, Status) {
+    platform::Platform platform;
+    std::unique_ptr<platform::WorkerTaskPool> pool = platform.CreateWorkerTaskPool();
+
+    AsyncTaskManager taskManager(pool.get());
+    ConcurrentTaskResultQueue taskResultQueue;
+
+    // Use a mutex to force the task to wait on the main thread before completing
+    std::mutex mutex;
+    std::unique_lock lock(mutex);
+
+    auto task = taskManager.PostTask([&mutex]() { std::lock_guard<std::mutex> taskLock(mutex); });
+
+    task->WaitUntilAtLeastState(AsyncTaskState::Running);
+    ASSERT_EQ(task->GetState(), AsyncTaskState::Running);
+
+    // Allow the task to complete
+    lock.unlock();
+    task->Wait();
+    ASSERT_EQ(task->GetState(), AsyncTaskState::Finished);
+}
+
 }  // anonymous namespace
-}  // namespace dawn
+}  // namespace dawn::native
