@@ -59,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dae53341_53e4026a",
+        "filename": "src/tint/lang/wgsl/resolver/texel_buffer_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-07-07T20:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1dee7c7_cd5bc6aa",
+      "range": {
+        "startLine": 81,
+        "startChar": 24,
+        "endLine": 81,
+        "endChar": 27
+      },
+      "revId": "008030db5e31e7dcd85dbae571223016dec1bf17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "630ee502_d5cb28f4",
@@ -72,6 +96,30 @@
       "writtenOn": "2025-07-07T12:35:34Z",
       "side": 1,
       "message": "ditto name",
+      "range": {
+        "startLine": 173,
+        "startChar": 23,
+        "endLine": 173,
+        "endChar": 27
+      },
+      "revId": "008030db5e31e7dcd85dbae571223016dec1bf17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8dded42d_42767b31",
+        "filename": "src/tint/lang/wgsl/resolver/texel_buffer_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-07-07T20:57:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "630ee502_d5cb28f4",
       "range": {
         "startLine": 173,
         "startChar": 23,
