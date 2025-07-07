@@ -288,6 +288,8 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                                         : tint::spirv::writer::SpvVersion::kSpv13;
     req.tintOptions.dva_transform_handle =
         GetDevice()->IsToggleEnabled(Toggle::VulkanDirectVariableAccessTransformHandle);
+    req.tintOptions.polyfill_subgroup_shuffle_xor =
+        GetDevice()->IsToggleEnabled(Toggle::PolyfillSubgroupShuffleXor);
     // Pass matrices to user functions by pointer on Qualcomm devices to workaround a known bug.
     // See crbug.com/tint/2045.
     if (ToBackend(GetDevice()->GetPhysicalDevice())->IsAndroidQualcomm()) {
