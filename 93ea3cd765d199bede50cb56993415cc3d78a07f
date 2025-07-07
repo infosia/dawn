@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9965304e_04b8df54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-07T09:22:34Z",
+      "side": 1,
+      "message": "Currently Dawn version (together with adapter info, device features, and device toggles [1]) is embedded into device\u0027s cache key, which should be included in every cache key (e.g. during `CacheRequestImpl::CreateCacheKey`[2]), and the Dawn version is forced validated (in `BlobCache::ValidateCacheKey`[3], get called every time in `LoadInternal`[4] and `StoreInternal`[5]) to ensure that we don\u0027t read cache from older version.\n\nSo it is possible to add a toggle to control the hash embedding. However, I thought this toggle might be enabled by default for now, since we might want to catch the rare case of cache collapse in the field?\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Device.cpp;drc\u003d4506c7306af75e2837838068d5c0248dfc1a2632;l\u003d418\n[2]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CacheRequest.h;drc\u003d65e89ee3bd4c7e6d756760c07d3619d37df3e9c1;l\u003d95\n[3]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlobCache.cpp;drc\u003d71161fd2b1223f835e50aa026d48069d74567a2b;l\u003d87\n[4]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlobCache.cpp;drc\u003d71161fd2b1223f835e50aa026d48069d74567a2b;l\u003d59\n[5]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlobCache.cpp;drc\u003d71161fd2b1223f835e50aa026d48069d74567a2b;l\u003d77",
+      "parentUuid": "87adea5a_822f082a",
+      "revId": "93ea3cd765d199bede50cb56993415cc3d78a07f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a5085051_4a7281a8",
         "filename": "src/dawn/native/BlobCache.h",
         "patchSetId": 4
@@ -48,6 +66,30 @@
       "writtenOn": "2025-07-04T23:02:15Z",
       "side": 1,
       "message": "These can be declared in an anonymous namespace in the cpp file.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 63
+      },
+      "revId": "93ea3cd765d199bede50cb56993415cc3d78a07f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d65fb14_dca9ae12",
+        "filename": "src/dawn/native/BlobCache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-07T09:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5085051_4a7281a8",
       "range": {
         "startLine": 72,
         "startChar": 0,
@@ -71,6 +113,30 @@
       "writtenOn": "2025-07-04T23:02:15Z",
       "side": 1,
       "message": "This can be an anonymous function in the cpp file, it doesn\u0027t depend on any other internals of the blob cache.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 81
+      },
+      "revId": "93ea3cd765d199bede50cb56993415cc3d78a07f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac9ce642_a3231db5",
+        "filename": "src/dawn/native/BlobCache.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-07T09:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "537f1229_cb7dd0ee",
       "range": {
         "startLine": 78,
         "startChar": 0,
