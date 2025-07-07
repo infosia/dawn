@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73197e53_6b1a4b5a",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-07T19:25:17Z",
+      "side": 1,
+      "message": "I assume this means an \"error scope\" (push/popErrorScope) error. That won\u0027t be the case for createBuffer - the error that causes it to return null (throw an exception in JS) is if it runs out of memory in the client-side mapping allocation, in the client-server model used by the spec and by dawn wire. If this happens then I don\u0027t believe we produce an error scope error, just return null: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/wire/client/Buffer.cpp;l\u003d49;drc\u003d7fdf446abc06f53adddc0c7cf4cb31b83e0507c5",
+      "range": {
+        "startLine": 816,
+        "startChar": 10,
+        "endLine": 816,
+        "endChar": 24
+      },
+      "revId": "4914911a84818193d953aebd5b786c15d635ca1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
