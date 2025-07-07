@@ -313,9 +313,6 @@ crbug.com/408556424 [ dawn-backend-validation linux ] webgpu:web_platform,extern
 # Flaky on MacBookPro16,1 (AMD) machines
 crbug.com/372055513 [ amd mac ] webgpu:shader,execution,expression,call,builtin,subgroupBroadcast:workgroup_uniform_load:* [ RetryOnFailure ]
 
-# Android failures
-crbug.com/42240969 [ android qualcomm ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ Failure ]
-
 # cameraCapture gives PermissionDenied by default, but a flag could be added for testing.
 crbug.com/346799721 webgpu:web_platform,external_texture,video:importExternalTexture,cameraCapture:* [ Failure ]
 
@@ -640,15 +637,8 @@ crbug.com/381246932 [ amd-0x7340 ] webgpu:shader,execution,value_init:array:addr
 crbug.com/381246932 [ amd-0x7340 mac ] webgpu:shader,execution,value_init:mat:addressSpace="function";type="f16" [ Failure ]
 crbug.com/381246932 [ amd-0x7340 mac ] webgpu:shader,execution,value_init:mat:addressSpace="private";type="f16" [ Failure ]
 
-crbug.com/42241269 [ intel-0x3e9b mac ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ Failure ]
-crbug.com/42241269 [ amd mac ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ Failure ]
-
 crbug.com/373664084 [ dawn-backend-validation intel-0x4680 webgpu-adapter-default win10 ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:* [ RetryOnFailure ]
 crbug.com/373664084 [ dawn-backend-validation intel-0x9bc5 linux webgpu-adapter-default ] webgpu:web_platform,copyToTexture,ImageBitmap:from_ImageData:* [ RetryOnFailure ]
-
-crbug.com/373670513 [ android-pixel-6 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
-crbug.com/373485785 [ intel win10 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
-crbug.com/373485785 [ android-chromium android-pixel-4 android-r angle-opengles graphite-disabled mobile qualcomm target-cpu-32 ] webgpu:shader,execution,zero_init:compute,zero_init:addressSpace="workgroup";* [ RetryOnFailure ]
 
 # textureSampleCompare:arrayed_2d_coords tests very flaky on Mac AMD
 crbug.com/408244892 [ amd-0x67ef mac ] webgpu:shader,execution,expression,call,builtin,textureSampleCompare:arrayed_2d_coords:format="depth24plus-stencil8";* [ Failure ]
