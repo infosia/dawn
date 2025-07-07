@@ -250,6 +250,24 @@
       "parentUuid": "413487da_b4e524ce",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c523c0ba_62fbf7f7",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-07T19:54:11Z",
+      "side": 1,
+      "message": "I haven\u0027t looked at the failure yet but we probably need to\n1. add the feature name (without changing anything else)\n2. change Chromium to enable it always\n3. then make this change.\n\nI was thinking about doing the first step in https://dawn-review.googlesource.com/c/dawn/+/250555 though I haven\u0027t actually started yet.",
+      "parentUuid": "f8bf0be5_2103cfc9",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
