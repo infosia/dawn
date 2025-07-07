@@ -22,6 +22,30 @@
       },
       "revId": "4914911a84818193d953aebd5b786c15d635ca1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5ad5c8e5_dfc7ad4e",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-07T19:50:57Z",
+      "side": 1,
+      "message": "BTW, there should ideally also be a way to distinguish the two errors in the Kotlin program, for example the two exception types can be different.\n\nJust to clarify, the Kotlin bindings wrap push/popErrorScope around every call and transform the error into an exception? That would mean they can never be used with remoting implementations (dawn wire, or emdawnwebgpu in a Wasm build).",
+      "parentUuid": "73197e53_6b1a4b5a",
+      "range": {
+        "startLine": 816,
+        "startChar": 10,
+        "endLine": 816,
+        "endChar": 24
+      },
+      "revId": "4914911a84818193d953aebd5b786c15d635ca1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
