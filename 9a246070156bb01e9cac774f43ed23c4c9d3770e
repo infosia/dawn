@@ -22,6 +22,30 @@
       },
       "revId": "9a246070156bb01e9cac774f43ed23c4c9d3770e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7601d4f1_f14d0232",
+        "filename": "src/dawn/tests/white_box/SharedTextureMemoryTests_win.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-07T20:31:20Z",
+      "side": 1,
+      "message": "They are used in the common STM tests https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/white_box/SharedTextureMemoryTests.cpp;drc\u003d7fdf446abc06f53adddc0c7cf4cb31b83e0507c5;l\u003d1271",
+      "parentUuid": "7a9e312a_f42dda0e",
+      "range": {
+        "startLine": 366,
+        "startChar": 4,
+        "endLine": 378,
+        "endChar": 5
+      },
+      "revId": "9a246070156bb01e9cac774f43ed23c4c9d3770e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
