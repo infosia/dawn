@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "6688322b_9b3090a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T12:59:25Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"Immedaite\" is a possible misspelling of \"Immediate\".\n\nAnalyzer Description: Checks for common typos.\nOwner: chops-source-team@google.com\n\n\"Immedaite\" is a possible misspelling of \"Immediate\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "675ac527_9fe32903",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T12:59:25Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Spellchecker: \"Immedaite\" is a possible misspelling of \"Immediate\".\n\nAnalyzer Description: Checks for common typos.\nOwner: chops-source-team@google.com\n\n\"Immedaite\" is a possible misspelling of \"Immediate\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cf864b4d_e9ceb092",
@@ -14,6 +60,92 @@
       "writtenOn": "2025-07-07T11:02:56Z",
       "side": 1,
       "message": "This is a simple moving to share the transform among backends. PTAL, thanks!",
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03edc3e9_27935482",
+        "filename": "src/tint/lang/core/ir/transform/change_immediate_to_uniform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T12:59:25Z",
+      "side": 1,
+      "message": "DecomposeStorageAccess is an HLSL specific transform, does this still apply? What happens in other backends?",
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6263cf4b_9ea43936",
+        "filename": "src/tint/lang/core/ir/transform/change_immediate_to_uniform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T12:59:25Z",
+      "side": 1,
+      "message": "```suggestion\n    auto result \u003d ValidateAndDumpIfNeeded(ir, \"core.ChangeImmediateToUniform\",\n```",
+      "range": {
+        "startLine": 136,
+        "startChar": 47,
+        "endLine": 136,
+        "endChar": 51
+      },
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca9d00ad_0b9020fb",
+        "filename": "src/tint/lang/core/ir/transform/change_immediate_to_uniform.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T12:59:25Z",
+      "side": 1,
+      "message": "This comment seems out of date now?",
+      "range": {
+        "startLine": 50,
+        "startChar": 27,
+        "endLine": 52,
+        "endChar": 67
+      },
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77cc12ff_1c223328",
+        "filename": "src/tint/lang/core/ir/transform/change_immediate_to_uniform_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-07T12:59:25Z",
+      "side": 1,
+      "message": "This is no longer `HlslWriter` but `IR`",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 16
+      },
       "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
