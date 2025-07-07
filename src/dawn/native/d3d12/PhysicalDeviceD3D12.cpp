@@ -336,6 +336,15 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
         2 * limits->v1.maxDynamicUniformBuffersPerPipelineLayout -
         3 * limits->v1.maxDynamicStorageBuffersPerPipelineLayout;
 
+    // Report kMaxSupportedImmediateDataBytes if availableRootSignatureSlots is enough.
+    // Otherwise, reserve all available slots for immediates.
+    constexpr uint32_t kMaxSupportedImmediateDataSlots =
+        kMaxSupportedImmediateDataBytes / kImmediateConstantElementByteSize;
+    uint32_t maxImmediateDataSlots =
+        std::min(availableRootSignatureSlots, kMaxSupportedImmediateDataSlots);
+    availableRootSignatureSlots -= maxImmediateDataSlots;
+    limits->v1.maxImmediateSize = maxImmediateDataSlots * kImmediateConstantElementByteSize;
+
     while (availableRootSignatureSlots >= 2) {
         // Start by incrementing maxDynamicStorageBuffersPerPipelineLayout since the
         // default is just 4 and developers likely want more. This scheme currently
@@ -354,10 +363,11 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
         }
     }
 
-    DAWN_ASSERT(2 * limits->v1.maxBindGroups +
-                    2 * limits->v1.maxDynamicUniformBuffersPerPipelineLayout +
-                    3 * limits->v1.maxDynamicStorageBuffersPerPipelineLayout <=
-                kMaxRootSignatureSize - kReservedSlots);
+    DAWN_ASSERT(
+        2 * limits->v1.maxBindGroups + 2 * limits->v1.maxDynamicUniformBuffersPerPipelineLayout +
+            3 * limits->v1.maxDynamicStorageBuffersPerPipelineLayout +
+            limits->v1.maxImmediateSize / kImmediateConstantElementByteSize + kReservedSlots ==
+        kMaxRootSignatureSize);
 
     // https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/sm5-attributes-numthreads
     limits->v1.maxComputeWorkgroupSizeX = D3D12_CS_THREAD_GROUP_MAX_X;
