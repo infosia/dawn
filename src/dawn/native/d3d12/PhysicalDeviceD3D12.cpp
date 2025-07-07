@@ -402,6 +402,25 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsImpl(CombinedLimits* limits)
                                                  << D3D12_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP;
     }
 
+    // D3D12 root signature limits to 64DWORDs.
+    // Each entry in the root signature has a cost towards this 64 DWORD limit:
+    //  - Descriptor tables cost 1 DWORD each
+    //  - Root constants cost 1 DWORD each, since they are 32-bit values.
+    //  - Root descriptors (64-bit GPU virtual addresses) cost 2 DWORDs each.
+    // Dawn has at most 4 bind groups, each contains one root descriptor table for
+    // cbvUavSrv and one root descriptor table for samplers.
+    // Dawn has at most 10 dynamic uniform buffers and 8 dynamic storage buffers. They're
+    // implemented by root descriptors.
+    // Dawn uses root constants for baseVertex/baseInstance and numWorkgroups X/Y/Z, which
+    // at most 3 root constants.
+    // Danw uses root constants for dynamic storage buffer lengths, which at most 8 root
+    // constants.
+    // So, the peak root signature space cost except root constants is 44 DWORD.
+    // And we could support up to 20 root constants, which is 80 bytes in total.
+    // TODO(crbug.com/428802462): Modify root signature layout or having spill out mechanism for
+    // root signatures in D3D12 backend to relief more space for root constants.
+    limits->v1.maxImmediateSize = kMaxSupportedImmediateDataBytes;
+
     return {};
 }
 
