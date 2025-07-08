@@ -67,6 +67,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "199bd776_cf596317",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-08T20:06:00Z",
+      "side": 1,
+      "message": "I think that if you had:\n```\nclass RG11B10UfloatRenderableRenderPassTest : public TextureFormatsTier1RenderPassTest {\n    std::vector\u003cwgpu::FeatureName\u003e GetRequiredFeatures() override {\n        return {wgpu::FeatureName::RG11B10UfloatRenderable};\n    }\n};\n```\nit would work because you would be overriding the required features and not requiring texture format tier 1. But alternatively, you could also write a free function that takes the device as input as well to avoid duplicating the code to avoid making the naming and hierarchy confusing. Or create a base class that they both extend.",
+      "parentUuid": "67c04ff1_db6f0593",
+      "range": {
+        "startLine": 751,
+        "startChar": 8,
+        "endLine": 769,
+        "endChar": 50
+      },
+      "revId": "0f463d39449c60331bb7930ced9e875d7d401e4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7235b018_cc4ff98b",
         "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
         "patchSetId": 2

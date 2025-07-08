@@ -16,6 +16,52 @@
       "message": "Thanks for the comments! PTAL again.",
       "revId": "51e8ce54677363620a3baea81b4e1e04f21d30a3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "307e1145_64a04a8c",
+        "filename": "src/dawn/tests/unittests/validation/ValidationTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-08T20:06:00Z",
+      "side": 1,
+      "message": "Why is this needed? For the tests that actually need those features, you can override `GetRequiredFeatures()` to return a list with them included.",
+      "range": {
+        "startLine": 407,
+        "startChar": 4,
+        "endLine": 417,
+        "endChar": 5
+      },
+      "revId": "51e8ce54677363620a3baea81b4e1e04f21d30a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3fb0c6e_f3c3fb19",
+        "filename": "src/dawn/utils/TextureUtils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-08T20:06:00Z",
+      "side": 1,
+      "message": "nit. lowercase k, but also, why the rename? I think it makes sense to say that these are tier 1 additional renderable formats. Otherwise, the name is a bit misleading.",
+      "range": {
+        "startLine": 283,
+        "startChar": 46,
+        "endLine": 283,
+        "endChar": 47
+      },
+      "revId": "51e8ce54677363620a3baea81b4e1e04f21d30a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
