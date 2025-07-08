@@ -16,6 +16,23 @@
       "message": "Can you add some context to the description as to why this change is being made? Or link to a relevant bug?",
       "revId": "de2030a2ce1ce83e20a1c4cdc359a31b7f2a3a2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc89ea00_0030ff6b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-08T00:52:25Z",
+      "side": 1,
+      "message": "This is superseded by https://dawn-review.googlesource.com/c/dawn/+/251215\n\nPlease disregard this change.",
+      "revId": "de2030a2ce1ce83e20a1c4cdc359a31b7f2a3a2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
