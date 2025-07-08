@@ -703,7 +703,11 @@ ResultOrError<bool> DelayFlushQueue::WaitForQueueSerial(ExecutionSerial serial,
 
     auto commandContext = GetScopedPendingCommandContext(SubmitMode::Passive);
 
-    DAWN_ASSERT(!mPendingQueries.empty());
+    if (mPendingQueries.empty() || serial < mPendingQueries.front().Serial()) {
+        // Empty list must mean the serial have already completed.
+        return true;
+    }
+
     DAWN_ASSERT(serial >= mPendingQueries.front().Serial());
     DAWN_ASSERT(serial <= mPendingQueries.back().Serial());
     auto it =
