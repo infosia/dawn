@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f022b03c_ae680f44",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-08T00:41:27Z",
+      "side": 1,
+      "message": "(Or add a static_assert if that makes any sense, like in PhysicalDeviceVk. I\u0027m guessing it doesn\u0027t make sense for D3D11.)",
+      "parentUuid": "5cd4faf1_933cbe68",
+      "revId": "32cbdfc67c53f9c72205fe8c4cea7d7879995a93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "82b5987f_8078cfdc",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
         "patchSetId": 1
