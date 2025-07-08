@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fadc54ed_037cc602",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-08T02:26:30Z",
+      "side": 1,
+      "message": "making a note that we see the failures from the cts as expected. Now i will try to enable the polyfill and hopefully they will be resolved.",
+      "revId": "d8e929892278cf4cbbe2a48b5aa6f176c36dba42",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
