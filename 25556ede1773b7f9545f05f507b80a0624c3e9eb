@@ -53,6 +53,42 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a34024ed_173ee1d2",
+        "filename": "docs/tint/ir.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-08T18:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae56b99c_63a32ad2",
+      "revId": "25556ede1773b7f9545f05f507b80a0624c3e9eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e136f9fe_8ecb95c0",
+        "filename": "docs/tint/ir.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-08T18:58:09Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "ae56b99c_63a32ad2",
+      "revId": "25556ede1773b7f9545f05f507b80a0624c3e9eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40c4f41d_94262a6b",
@@ -66,6 +102,30 @@
       "writtenOn": "2025-07-08T18:49:09Z",
       "side": 1,
       "message": "Probably drop the \"similar to the AST\" bit and other references to AST transforms since they wont exist for much longer.\n```suggestion\nA transform system is available for IR. Each IR transform is a standalone process. There\nis no transform manager. Data is provided to the transforms through their configuration.\nTransforms mutate the IR in place, and can produce auxiliary information through their result if needed.\n```",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 63
+      },
+      "revId": "25556ede1773b7f9545f05f507b80a0624c3e9eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "376f1314_06507535",
+        "filename": "docs/tint/ir.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-08T18:58:09Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "40c4f41d_94262a6b",
       "range": {
         "startLine": 87,
         "startChar": 0,
