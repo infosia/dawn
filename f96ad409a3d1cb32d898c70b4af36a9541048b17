@@ -16,6 +16,23 @@
       "message": "I realized there is one case this will break: non-designated initializers of WGPUPipelineLayoutDescriptor. Leaving a note here just in case anyone runs into it.",
       "revId": "f96ad409a3d1cb32d898c70b4af36a9541048b17",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "18363048_9be36e9c",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-08T22:03:30Z",
+      "side": 1,
+      "message": "We believe putting this maxImmediateSize limit into the LIMITS_OTHER group inadvertently causes down-binning of maxVertexAttributes from 30 to 16.\nb/430371785\nAdding this comment so I can link to it.",
+      "revId": "f96ad409a3d1cb32d898c70b4af36a9541048b17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
