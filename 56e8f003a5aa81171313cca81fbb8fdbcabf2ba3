@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5ea77f21_f973d738",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-08T05:47:24Z",
+      "side": 1,
+      "message": "Thanks for your comments!",
+      "revId": "56e8f003a5aa81171313cca81fbb8fdbcabf2ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "279a2430_d83a2ba0",
@@ -31,6 +48,30 @@
       "writtenOn": "2025-07-07T20:05:02Z",
       "side": 1,
       "message": "General question, was there a reason that we didn\u0027t extend the existing `TextureFormatTest` class which already has a lot of utilities to do these kinds of test? If it\u0027s just because of trying to split into multiple files, maybe we could add a header and factor common stuff out? It feels wasteful to not reuse some of the utilities we created there.",
+      "range": {
+        "startLine": 77,
+        "startChar": 39,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "56e8f003a5aa81171313cca81fbb8fdbcabf2ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c8ccca6_0bb3409c",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-08T05:47:24Z",
+      "side": 1,
+      "message": "The TextureFormatTest focuses on basic texture sampling and rendering precision. Extending it for the distinct TextureFormatsTier1 capabilities—like render attachment, blending, multisampling with resolve, and storage binding—would reduce test clarity and maintainability due to their unique pipeline, render pass and validation requirements.",
+      "parentUuid": "279a2430_d83a2ba0",
       "range": {
         "startLine": 77,
         "startChar": 39,
@@ -64,6 +105,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9caf4a9_6c2acb23",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-08T05:47:24Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "bc0b83ac_f1d758ff",
+      "range": {
+        "startLine": 506,
+        "startChar": 24,
+        "endLine": 506,
+        "endChar": 31
+      },
+      "revId": "56e8f003a5aa81171313cca81fbb8fdbcabf2ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f48b2496_01af9000",
@@ -77,6 +142,30 @@
       "writtenOn": "2025-07-07T20:05:02Z",
       "side": 1,
       "message": "nit. This is the same as the ones in `TextureFormatsTier1Test`, why not just extend that test suite?",
+      "range": {
+        "startLine": 619,
+        "startChar": 4,
+        "endLine": 664,
+        "endChar": 0
+      },
+      "revId": "56e8f003a5aa81171313cca81fbb8fdbcabf2ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "73ab79cc_5576b551",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-08T05:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f48b2496_01af9000",
       "range": {
         "startLine": 619,
         "startChar": 4,
