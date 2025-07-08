@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6fa35b4e_038517d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-08T10:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6688322b_9b3090a4",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "675ac527_9fe32903",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-07-07T12:59:25Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Spellchecker: \"Immedaite\" is a possible misspelling of \"Immediate\".\n\nAnalyzer Description: Checks for common typos.\nOwner: chops-source-team@google.com\n\n\"Immedaite\" is a possible misspelling of \"Immediate\".\n\nTo bypass Spellchecker, add a footer with DISABLE_SPELLCHECKER",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02bc5abb_b77589a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-08T10:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "675ac527_9fe32903",
       "range": {
         "startLine": 9,
         "startChar": 6,
@@ -118,6 +166,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "95374f9b_2bfd9d22",
+        "filename": "src/tint/lang/core/ir/transform/change_immediate_to_uniform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-08T10:44:31Z",
+      "side": 1,
+      "message": "Agree. Updated comments to be accurate.",
+      "parentUuid": "adce7538_451e54e5",
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6263cf4b_9ea43936",
         "filename": "src/tint/lang/core/ir/transform/change_immediate_to_uniform.cc",
         "patchSetId": 1
@@ -129,6 +195,30 @@
       "writtenOn": "2025-07-07T12:59:25Z",
       "side": 1,
       "message": "```suggestion\n    auto result \u003d ValidateAndDumpIfNeeded(ir, \"core.ChangeImmediateToUniform\",\n```",
+      "range": {
+        "startLine": 136,
+        "startChar": 47,
+        "endLine": 136,
+        "endChar": 51
+      },
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1866ec8d_e45439b5",
+        "filename": "src/tint/lang/core/ir/transform/change_immediate_to_uniform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-08T10:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6263cf4b_9ea43936",
       "range": {
         "startLine": 136,
         "startChar": 47,
@@ -162,6 +252,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2dfea9e_dc9aa934",
+        "filename": "src/tint/lang/core/ir/transform/change_immediate_to_uniform.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-08T10:44:31Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "ca9d00ad_0b9020fb",
+      "range": {
+        "startLine": 50,
+        "startChar": 27,
+        "endLine": 52,
+        "endChar": 67
+      },
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "77cc12ff_1c223328",
@@ -175,6 +289,30 @@
       "writtenOn": "2025-07-07T12:59:25Z",
       "side": 1,
       "message": "This is no longer `HlslWriter` but `IR`",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 16
+      },
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbe615a0_d2c5d79d",
+        "filename": "src/tint/lang/core/ir/transform/change_immediate_to_uniform_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-08T10:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77cc12ff_1c223328",
       "range": {
         "startLine": 43,
         "startChar": 6,
