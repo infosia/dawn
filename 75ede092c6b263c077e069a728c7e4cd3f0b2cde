@@ -138,6 +138,24 @@
       "message": "Why is this still failing?",
       "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df617d9a_28179626",
+        "filename": "test/tint/var/uses/immediate_and_instance_index.wgsl.expected.msl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-08T10:45:42Z",
+      "side": 1,
+      "message": "No. After I removed this manually, the tests passed. But a bit curious, I think `-generate-skip -generate-expected` helps to remove this, but seems no?",
+      "parentUuid": "914a90e7_5bd4c7aa",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
