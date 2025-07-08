@@ -33,6 +33,24 @@
       "message": "I am unsure if it needs to be supported in the wire as well. Perhaps not because Blink doesn\u0027t need it? I\u0027m not sure if there are other wire clients in Chromium.\n\nAnyway if that\u0027s needed it can be a followup CL.",
       "revId": "d90af26541f442a77791851685f51c315750d635",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71a8dd6c_71db7a28",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-08T18:27:00Z",
+      "side": 1,
+      "message": "Oh, I forgot, I think we don\u0027t initialize an instance via the wire, we just inject one we created using Dawn Native in the GPU process. So we don\u0027t need to support this in the wire (though eventually we should).",
+      "parentUuid": "7048b51b_102a59ef",
+      "revId": "d90af26541f442a77791851685f51c315750d635",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
