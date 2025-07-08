@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82280f45_16d8abf6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-08T18:22:30Z",
+      "side": 1,
+      "message": "As discussed we will enable in code without a toggle for all backends/devices.\nWe will keep the end2end test as is but remove the toggle.",
+      "revId": "885a4249e7394c0a16091ecc4d3c99a81078e149",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
