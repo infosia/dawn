@@ -46,6 +46,30 @@
       },
       "revId": "4914911a84818193d953aebd5b786c15d635ca1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d00ec29d_abdbb629",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-07-08T08:27:04Z",
+      "side": 1,
+      "message": "I use uncapturedErrorCallbackInfo to get the errors, which are then thrown as Kotlin exceptions. We don\u0027t support dawn wire or emdawnwebgpu for Kotlin at the moment.\n\nWhat happens if no error is thrown but a null pointer is about to be converted to a Kotlin object with the field as non-optional is that a `java.lang.NullPointerException` is thrown by the `env-\u003eNewObject` that would make the Kotlin object. I filed https://buganizer.corp.google.com/issues/430200712 to make a better error, but for the time being this is good enough I think.\n\nI updated the comment to reflect that.",
+      "parentUuid": "5ad5c8e5_dfc7ad4e",
+      "range": {
+        "startLine": 816,
+        "startChar": 10,
+        "endLine": 816,
+        "endChar": 24
+      },
+      "revId": "4914911a84818193d953aebd5b786c15d635ca1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
