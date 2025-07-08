@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91c2da80_93542bf0",
+        "filename": "tools/android/webgpu/src/main/java/android/dawn/helper/WebGpu.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4157236
+      },
+      "writtenOn": "2025-07-08T12:15:15Z",
+      "side": 1,
+      "message": "To be more idiomatic, you could replace this with \n\nwebgpuSurface \u003d surface?.let { ... }\n\nBut it\u0027s up to you.",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 5
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f80b4fb3_6ac7dfc2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "tools/android/webgpu/src/main/java/android/dawn/helper/WebGpu.kt",
+              "range": {
+                "startLine": 52,
+                "startChar": 0,
+                "endLine": 56,
+                "endChar": 0
+              },
+              "replacement": "    val webgpuSurface \u003d surface?.let {\n        instance.createSurface(\n            SurfaceDescriptor(\n                surfaceSourceAndroidNativeWindow \u003d SurfaceSourceAndroidNativeWindow(\n                    windowFromSurface(it)\n                )\n"
+            },
+            {
+              "path": "tools/android/webgpu/src/main/java/android/dawn/helper/WebGpu.kt",
+              "range": {
+                "startLine": 58,
+                "startChar": 0,
+                "endLine": 59,
+                "endChar": 0
+              },
+              "replacement": "    }\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7217dad98c06889da35960b2788b2f8a75c1ec2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
