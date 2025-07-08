@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5044f94e_1cb224b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 31
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-08T23:49:01Z",
+      "side": 1,
+      "message": "all backends.\n\nMention intel/nivida for motivatio",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "7eee54ccff2ef6b31cd92bf10420ee8b9071da5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
