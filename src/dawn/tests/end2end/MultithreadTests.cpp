@@ -654,6 +654,68 @@ TEST_P(MultithreadTests, CreateAndDestroyBindGroupsInParallel) {
     });
 }
 
+// Test that destroying Texture and associated TextureViews simultaneously on different threads
+// works. These was a data race here previously, see https://crbug.com/396294899 for more details.
+TEST_P(MultithreadTests, DestroyTextureAndViewsAtSameTime) {
+    constexpr uint32_t kNumViews = 10;
+    constexpr uint32_t kNumThreads = kNumViews + 1;
+    constexpr wgpu::TextureFormat kTextureFormat = wgpu::TextureFormat::R8Unorm;
+    constexpr wgpu::TextureUsage kTextureUsage = wgpu::TextureUsage::CopySrc |
+                                                 wgpu::TextureUsage::CopyDst |
+                                                 wgpu::TextureUsage::RenderAttachment;
+
+    dawn::ErrorLog() << "MSVC VERSION=" << _MSC_VER;
+
+    for (uint32_t j = 0; j < 10; ++j) {
+        wgpu::TextureDescriptor texDescriptor = {};
+        texDescriptor.size = {1, 1, kNumViews};
+        texDescriptor.format = kTextureFormat;
+        texDescriptor.usage = kTextureUsage;
+        texDescriptor.mipLevelCount = 1;
+        texDescriptor.sampleCount = 1;
+
+        wgpu::Texture texture = device.CreateTexture(&texDescriptor);
+        wgpu::TextureView textureViews[kNumViews];
+
+        for (uint32_t i = 0; i < kNumViews; ++i) {
+            wgpu::TextureViewDescriptor viewDescriptor = {};
+            viewDescriptor.format = kTextureFormat;
+            viewDescriptor.usage = kTextureUsage;
+            viewDescriptor.mipLevelCount = 1;
+            viewDescriptor.baseArrayLayer = i;
+            viewDescriptor.arrayLayerCount = 1;
+            textureViews[i] = texture.CreateView(&viewDescriptor);
+        }
+
+        // Wait for all threads to be ready to destroy the Texture or TextureViews at the same time.
+        std::mutex mutex;
+        std::condition_variable cv;
+        uint32_t waiting = kNumThreads;
+
+        utils::RunInParallel(kNumThreads, [&](uint32_t id) {
+            bool notify = false;
+            {
+                std::lock_guard lock(mutex);
+                if (--waiting == 0) {
+                    notify = true;
+                }
+            }
+            if (notify) {
+                cv.notify_all();
+            }
+            {
+                std::unique_lock lock(mutex);
+                cv.wait(lock, [&waiting]() { return waiting == 0; });
+            }
+            if (id == 0) {
+                texture.Destroy();
+            } else {
+                textureViews[id - 1] = {};
+            }
+        });
+    }
+}
+
 class MultithreadCachingTests : public MultithreadTests {
   protected:
     wgpu::ShaderModule CreateComputeShaderModule() const {
