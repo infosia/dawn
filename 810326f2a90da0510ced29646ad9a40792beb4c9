@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2241cc3_0a8bc3e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-08T17:23:28Z",
+      "side": 1,
+      "message": "PTAL at the added changes in PhysicalDeviceVk",
+      "revId": "810326f2a90da0510ced29646ad9a40792beb4c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

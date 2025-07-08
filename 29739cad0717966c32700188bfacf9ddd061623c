@@ -16,6 +16,24 @@
       "message": "The [win-dawn-rel failures](https://ci.chromium.org/ui/p/chromium/builders/try/win-dawn-rel/48165/overview) with Win + Nvidia look like real failures. It\u0027s not an infra bug despite reporting \"dawn_end2end_no_dxc_validation_layers_tests on NVIDIA GPU on Windows did not complete, likely due to an infra bug.\"\n\nSome of the [test shards](https://chromium-swarm.appspot.com/task?id\u003d71fc10e949128710) are timing out and reporting BOT_DIED. If I had to guess win + nvidia wasn\u0027t able to use mappable buffers before with vulkan. Now BuffersMapExtendedUsages works and that is significantly slower than not using mappable buffers.\n\nI could make the relaxed requirements not apply on Win+Nvidia to fix it. I could also make BuffersMapExtendedUsages be force disabled on Win+Nvidia+Vulkan since effectively that\u0027s what it is doing?",
       "revId": "29739cad0717966c32700188bfacf9ddd061623c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14ff69ba_5a978880",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-08T17:23:28Z",
+      "side": 1,
+      "message": "I went with disabling BufferMapExtendedUsages for Win+Nvidia+Vulkan as a solution.",
+      "parentUuid": "6df54cfb_f3038d3d",
+      "revId": "29739cad0717966c32700188bfacf9ddd061623c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
