@@ -48,9 +48,10 @@ TEST_F(ResolverGraphiteExtensionTest, r8unorm_UseWithoutExtension) {
                                  core::Access::kWrite),
               Vector{Group(0_a), Binding(0_a)});
 
-    EXPECT_FALSE(r()->Resolve());
-    EXPECT_EQ(r()->error(),
-              R"(error: 'r8unorm' requires the 'chromium_internal_graphite' extension)");
+    // r8unorm is part of "texture-formats-tier1", which may be used in WGSL
+    // unconditionally. The "texture-formats-tier1" feature is checked on the
+    // API side instead.
+    EXPECT_TRUE(r()->Resolve()) << r()->error();
 }
 
 TEST_F(ResolverGraphiteExtensionTest, r8unorm_UseWithExtension) {
