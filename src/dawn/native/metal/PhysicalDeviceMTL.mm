@@ -457,6 +457,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         }
         deviceToggles->Default(Toggle::UsePlaceholderFragmentInVertexOnlyPipeline,
                                usePlaceholderFragmentShader);
+
+        // chromium:426999765: Intel does not handle abs i32 correctly.
+        deviceToggles->Default(Toggle::PolyfillAbsSignedInteger, true);
     }
 
     // On some Intel GPUs using big integer values as clear values in render pass doesn't work
