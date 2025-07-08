@@ -34,6 +34,24 @@
       "parentUuid": "6df54cfb_f3038d3d",
       "revId": "29739cad0717966c32700188bfacf9ddd061623c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "762a07a1_d92ea84e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-08T20:32:01Z",
+      "side": 1,
+      "message": "Well the tests still fail. I\u0027m not sure what\u0027s going on but I compared test shard output for failing shard against a recent test run that passed. I see time to pass in tests like CopyTests_T2B.MappableBufferWithOffsetUnaligned/Vulkan_NVIDIA_GeForce_GTX_1660__e_use_blit_for_snorm_texture_to_buffer_copy__e_use_blit_for_bgra8unorm_texture_to_buffer_copy_TextureFormat_TextureFormat__\u003cformat\u003e go from tens of milliseconds in the passing run to seconds in the failing run so that seems related.\n\nI don\u0027t think this CL should change anything for those tests now. I don\u0027t think they used mappable buffers before and shouldn\u0027t use mappable buffers now. Maybe there is a logic error? I have win+nvidia box so I\u0027ll try running there.",
+      "parentUuid": "14ff69ba_5a978880",
+      "revId": "29739cad0717966c32700188bfacf9ddd061623c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
