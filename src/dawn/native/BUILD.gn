@@ -207,6 +207,8 @@ source_set("sources") {
     "ApplyClearColorValueWithDrawHelper.h",
     "AsyncTask.cpp",
     "AsyncTask.h",
+    "AsyncTaskEvent.cpp",
+    "AsyncTaskEvent.h",
     "AttachmentState.cpp",
     "AttachmentState.h",
     "BackendConnection.cpp",
