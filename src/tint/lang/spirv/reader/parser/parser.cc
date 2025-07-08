@@ -1508,6 +1508,15 @@ class Parser {
                         b_.Constant(u32(execution_mode.GetSingleWordInOperand(3))),
                         b_.Constant(u32(execution_mode.GetSingleWordInOperand(4))));
                     break;
+                case spv::ExecutionMode::DepthGreater:
+                case spv::ExecutionMode::DepthLess:
+                case spv::ExecutionMode::DepthUnchanged:
+                case spv::ExecutionMode::EarlyFragmentTests:
+                    // Unsupported by WGSL. Ignore them for now so the shader at least generates.
+
+                    // TODO(430290062): Issue some kind of warning that we're ignoring these
+                    // execution modes.
+                    break;
                 case spv::ExecutionMode::DepthReplacing:
                 case spv::ExecutionMode::OriginUpperLeft:
                     // These are ignored as they are implicitly supported by Tint IR.
