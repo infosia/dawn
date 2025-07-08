@@ -16,6 +16,64 @@
       "message": "PTAL.",
       "revId": "25556ede1773b7f9545f05f507b80a0624c3e9eb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae56b99c_63a32ad2",
+        "filename": "docs/tint/ir.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-08T18:49:09Z",
+      "side": 1,
+      "message": "Nit: s/and/can/",
+      "fixSuggestions": [
+        {
+          "fixId": "54e5ba82_1d5e59ca",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "docs/tint/ir.md",
+              "range": {
+                "startLine": 81,
+                "startChar": 0,
+                "endLine": 82,
+                "endChar": 0
+              },
+              "replacement": "An IR module can be emitted as IR assembly instructions using the disassembler. This\n"
+            }
+          ]
+        }
+      ],
+      "revId": "25556ede1773b7f9545f05f507b80a0624c3e9eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "40c4f41d_94262a6b",
+        "filename": "docs/tint/ir.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-08T18:49:09Z",
+      "side": 1,
+      "message": "Probably drop the \"similar to the AST\" bit and other references to AST transforms since they wont exist for much longer.\n```suggestion\nA transform system is available for IR. Each IR transform is a standalone process. There\nis no transform manager. Data is provided to the transforms through their configuration.\nTransforms mutate the IR in place, and can produce auxiliary information through their result if needed.\n```",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 63
+      },
+      "revId": "25556ede1773b7f9545f05f507b80a0624c3e9eb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
