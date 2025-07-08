@@ -33,6 +33,24 @@
       "message": "This one seems fine, I think it\u0027s a bit nicer to wrap in the namespace then to reference `stream::` multiple times.",
       "revId": "f7dcc6696087edd7d917d0e194bfca27a0b5c51e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2112fcd_5030a4b5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-08T14:58:39Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1de4424d_59cc458f",
+      "revId": "f7dcc6696087edd7d917d0e194bfca27a0b5c51e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
