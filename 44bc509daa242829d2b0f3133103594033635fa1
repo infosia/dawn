@@ -16,6 +16,23 @@
       "message": "Thanks!",
       "revId": "44bc509daa242829d2b0f3133103594033635fa1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f84e53d0_af180ccf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-08T22:21:23Z",
+      "side": 1,
+      "message": "Lowering to CR+1 because of the test failures and because I might need to fix bug 430371785 first",
+      "revId": "44bc509daa242829d2b0f3133103594033635fa1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
