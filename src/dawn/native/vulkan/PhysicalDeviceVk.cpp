@@ -852,6 +852,14 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
     }
 
+    if (gpu_info::IsNvidia(GetVendorId())) {
+        // chromium:417977426: Known failures on GTX 1660 for subgroup shuffle xor op.
+        deviceToggles->Default(Toggle::PolyfillSubgroupShuffleXor, true);
+    }
+
+    /// just testing
+    deviceToggles->Default(Toggle::PolyfillSubgroupShuffleXor, true);
+
     if (IsAndroidARM()) {
         // dawn:1550: Resolving multiple color targets in a single pass fails on ARM GPUs. To
         // work around the issue, passes that resolve to multiple color targets will instead be
