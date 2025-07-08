@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f66226e_a3d33be1",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-08T23:47:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e78b546_02b57b62",
+      "revId": "33b40e99fecd8ac7766331e6c8614ce3c44d716e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2f282840_292b8037",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "I can add it just in case. I think this raises an important issue which is that the glsl backend (compat) doesnt really have the focus and attention of the other backends. I havent even gone through all the cts failures on compat.",
       "parentUuid": "2f282840_292b8037",
+      "revId": "33b40e99fecd8ac7766331e6c8614ce3c44d716e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1157893e_b3b0af04",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-08T23:47:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa4904e2_71035408",
       "revId": "33b40e99fecd8ac7766331e6c8614ce3c44d716e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
