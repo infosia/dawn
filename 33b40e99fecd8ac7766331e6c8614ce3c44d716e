@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8e78b546_02b57b62",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-08T02:25:43Z",
+      "side": 1,
+      "message": "[ RUN      ] PolyfillBuiltinSimpleTests.AbsWithBranch/D3D11_Microsoft_Basic_Render_Driver_Integrated_GPU\n..\\..\\src\\dawn\\tests\\DawnTest.cpp(1893): error: Value of: result\n  Actual: false (Expected data[0] to be 1543, actual 2147483648\nExpected:\n07 06 00 00 0F 00 00 00 11 00 00 00 7B 00 00 00 \nActual:\n00 00 00 80 0F 00 00 00 11 00 00 00 7B 00 00 00 \n Expectation created at ..\\..\\src\\dawn\\tests\\end2end\\PolyfillBuiltinSimpleTests.cpp:229\n)\nExpected: true\n\nWarp also has the bug. This might be fixed by the fix to signed integer arithmetic or it we might need to enable polyfill for warp.",
+      "parentUuid": "b59401f1_f69643f6",
+      "revId": "33b40e99fecd8ac7766331e6c8614ce3c44d716e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f282840_292b8037",
         "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
         "patchSetId": 27
@@ -31,6 +49,24 @@
       "writtenOn": "2025-07-07T21:40:42Z",
       "side": 1,
       "message": "Do we need to do the polyfill for OpenGL too?",
+      "revId": "33b40e99fecd8ac7766331e6c8614ce3c44d716e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa4904e2_71035408",
+        "filename": "src/dawn/tests/end2end/PolyfillBuiltinSimpleTests.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-08T02:25:43Z",
+      "side": 1,
+      "message": "I can add it just in case. I think this raises an important issue which is that the glsl backend (compat) doesnt really have the focus and attention of the other backends. I havent even gone through all the cts failures on compat.",
+      "parentUuid": "2f282840_292b8037",
       "revId": "33b40e99fecd8ac7766331e6c8614ce3c44d716e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
