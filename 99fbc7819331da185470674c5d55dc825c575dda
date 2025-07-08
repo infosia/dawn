@@ -33,6 +33,24 @@
       "message": "I\u0027m having a hard time figuring out what the use of uninitialized variable was that https://ci.chromium.org/ui/p/chromium/builders/try/linux_chromium_msan_rel_ng/10596/test-results is referring to, though it indicated that it was on this line in the previous patch.\n\nMy best guess is that I was passing attachmentInfo.depthSlice in here directly, but in the code we\u0027re replacing that variable would have only been accessed when the texture dimension was 3D. I feel like the depth slice should always be initialized to at least MAX_INT (because that the uninitialized enum value) but at least but only using the value here if the dimension is 3D it stays closer to the original code.",
       "revId": "99fbc7819331da185470674c5d55dc825c575dda",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f24968a1_4a60f02b",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-08T20:26:15Z",
+      "side": 1,
+      "message": "Discussed offline with Loko and determined that this was indeed the likely reason for the MSAN error.",
+      "parentUuid": "99541c60_ff17a0bb",
+      "revId": "99fbc7819331da185470674c5d55dc825c575dda",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
