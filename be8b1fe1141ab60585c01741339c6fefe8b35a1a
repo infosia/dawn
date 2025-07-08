@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46bdba78_7fe34973",
+        "filename": "test/tint/builtins/gen/literal/textureDimensions/3e16a9.wgsl.expected.glsl",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-08T22:36:56Z",
+      "side": 1,
+      "message": "Haven\u0027t reviewed yet, but this caught my eye, why does this not match? I don\u0027t even see the texel_buffer entry in the candidates below? It feels like this should be matched, no?",
+      "revId": "be8b1fe1141ab60585c01741339c6fefe8b35a1a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
