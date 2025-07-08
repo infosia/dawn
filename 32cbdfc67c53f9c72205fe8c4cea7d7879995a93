@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ba22516_a797db7e",
+        "filename": "src/dawn/native/d3d11/PhysicalDeviceD3D11.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-08T09:10:03Z",
+      "side": 1,
+      "message": "You\u0027re right. Comment is more reasonable. Done.",
+      "parentUuid": "f022b03c_ae680f44",
+      "revId": "32cbdfc67c53f9c72205fe8c4cea7d7879995a93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "82b5987f_8078cfdc",
@@ -66,6 +84,30 @@
       "writtenOn": "2025-07-08T00:40:45Z",
       "side": 1,
       "message": "Also needs to be updated?",
+      "range": {
+        "startLine": 743,
+        "startChar": 18,
+        "endLine": 743,
+        "endChar": 47
+      },
+      "revId": "32cbdfc67c53f9c72205fe8c4cea7d7879995a93",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d038703_571c8b8f",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-08T09:10:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82b5987f_8078cfdc",
       "range": {
         "startLine": 743,
         "startChar": 18,
