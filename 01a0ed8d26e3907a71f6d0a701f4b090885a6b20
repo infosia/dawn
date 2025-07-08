@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4781f1f8_7d065a0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-08T04:16:45Z",
+      "side": 1,
+      "message": "PTAL, I don\u0027t see any usages, unless there is something I\u0027m missing, can we remove this, we can always restore later if we need it.",
+      "revId": "01a0ed8d26e3907a71f6d0a701f4b090885a6b20",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
