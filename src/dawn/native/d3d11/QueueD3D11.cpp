@@ -120,6 +120,8 @@ class DelayFlushQueue final : public Queue {
 
     void MarkPendingQueriesAsComplete(size_t numCompletedQueries);
 
+    MaybeError BlockWaitForLastSubmittedSerial(const ScopedCommandRecordingContext* commandContext);
+
     struct EventQuery {
       public:
         EventQuery(ExecutionSerial serial, ComPtr<ID3D11Query> query)
@@ -694,6 +696,13 @@ ResultOrError<bool> DelayFlushQueue::WaitForQueueSerial(ExecutionSerial serial,
 
     auto commandContext = GetScopedPendingCommandContext(SubmitMode::Passive);
 
+    if (timeout == kMaxExecutionSerial && serial == GetLastSubmittedCommandSerial()) {
+        // If user submits then waits immediately, we can do a small optimization here,
+        // Flush + enqueue SetEvent then wait on the event. This can avoid spinning wait below,
+        // wasting less CPU cycles.
+        DAWN_TRY(BlockWaitForLastSubmittedSerial(&commandContext));
+    }
+
     DAWN_ASSERT(!mPendingQueries.empty());
     DAWN_ASSERT(serial >= mPendingQueries.front().Serial());
     DAWN_ASSERT(serial <= mPendingQueries.back().Serial());
@@ -732,6 +741,21 @@ ResultOrError<bool> DelayFlushQueue::WaitForQueueSerial(ExecutionSerial serial,
     auto numCompletedQueries = std::distance(mPendingQueries.begin(), it) + 1;
     MarkPendingQueriesAsComplete(numCompletedQueries);
     return done;
+}
+
+MaybeError DelayFlushQueue::BlockWaitForLastSubmittedSerial(
+    const ScopedCommandRecordingContext* commandContext) {
+    TRACE_EVENT0(GetDevice()->GetPlatform(), General,
+                 "DelayFlushQueue::BlockWaitForLastSubmittedSerial");
+
+    SystemEventReceiver receiver;
+    DAWN_TRY_ASSIGN(receiver, GetSystemEventReceiver());
+    commandContext->Flush1(D3D11_CONTEXT_TYPE_ALL, receiver.GetPrimitive().Get());
+
+    DWORD result = WaitForSingleObject(receiver.GetPrimitive().Get(), INFINITE);
+    DAWN_INTERNAL_ERROR_IF(result != WAIT_OBJECT_0, "WaitForSingleObject() failed");
+
+    return {};
 }
 
 void DelayFlushQueue::SetEventOnCompletion(ExecutionSerial serial, HANDLE event) {
