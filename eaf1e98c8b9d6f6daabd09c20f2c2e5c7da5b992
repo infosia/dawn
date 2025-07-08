@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a918ce9_a92fe800",
+        "filename": "src/tint/lang/wgsl/resolver/graphite_extension_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-08T18:40:12Z",
+      "side": 1,
+      "message": "The test below is now essentially meaningless, since r8unorm has nothing to do with the Graphite extension anymore.\n\nWe should probably just add the new formats to `StorageTextureFormatTest` in `type_validation_test.cc` instead and then remove these two tests.",
+      "revId": "eaf1e98c8b9d6f6daabd09c20f2c2e5c7da5b992",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
