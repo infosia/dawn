@@ -286,6 +286,24 @@
       "parentUuid": "c523c0ba_62fbf7f7",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8df28c5e_8dee2e53",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-08T18:27:30Z",
+      "side": 1,
+      "message": "2. I think it is OK if we always enable this in Chromium (I thought about this when deciding to make it an instance option, though I did not think about it that deeply). We will just need to do something in Blink to implement the spec\u0027d behavior. One way to do this could be to have an explicit method to expire the adapter, and call it in Blink.",
+      "parentUuid": "a9301639_095d5647",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

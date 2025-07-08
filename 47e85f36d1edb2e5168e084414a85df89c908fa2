@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c5bc2ad_1ac8f3e8",
+        "filename": "src/dawn/native/Adapter.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-08T18:27:30Z",
+      "side": 1,
+      "message": "nit: IMO this could be a bit confusing if someone was debugging and sees that mAdapterIsConsumed is true, but the adapter is still able to create devices.\n\nRather than\n[always set this flag, and only checking it when the instance feature is disabled],\nI would\n[only set it when the instance feature is disabled, and always check it].",
+      "revId": "47e85f36d1edb2e5168e084414a85df89c908fa2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abbe459a_36e848dd",
+        "filename": "src/dawn/native/Instance.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-08T18:27:30Z",
+      "side": 1,
+      "message": "nit: initially thought \"this\" referred to the previous sentence.\n\ns/this/this flag/",
+      "revId": "47e85f36d1edb2e5168e084414a85df89c908fa2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
