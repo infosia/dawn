@@ -33,6 +33,24 @@
       "message": "We believe putting this maxImmediateSize limit into the LIMITS_OTHER group inadvertently causes down-binning of maxVertexAttributes from 30 to 16.\nb/430371785\nAdding this comment so I can link to it.",
       "revId": "f96ad409a3d1cb32d898c70b4af36a9541048b17",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c0dc697c_b0dce065",
+        "filename": "src/dawn/native/Limits.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-08T22:03:37Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "18363048_9be36e9c",
+      "revId": "f96ad409a3d1cb32d898c70b4af36a9541048b17",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
