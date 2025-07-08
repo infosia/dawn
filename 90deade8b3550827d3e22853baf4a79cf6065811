@@ -182,6 +182,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d20f6d74_c2d513fb",
+        "filename": "src/tint/lang/core/ir/transform/change_immediate_to_uniform.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-08T12:29:36Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "95374f9b_2bfd9d22",
+      "revId": "90deade8b3550827d3e22853baf4a79cf6065811",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6263cf4b_9ea43936",
