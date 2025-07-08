@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "caadb89e_fc2bda38",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-08T23:17:23Z",
+      "side": 1,
+      "message": "LGTM, thanks! I don\u0027t have enough context on the bug to say for sure that applying this only to internal_config will be enough but if it works it works!",
+      "revId": "b38b1138585008eff0c1ee51bebf6e7a660796ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
