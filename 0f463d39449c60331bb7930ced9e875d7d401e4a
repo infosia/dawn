@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "67c04ff1_db6f0593",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-08T10:10:29Z",
+      "side": 1,
+      "message": "Thanks for the refactoring suggestion! As for the last suggestion, RG11B10UfloatRenderableRenderPassTest is designed to test the behavior of the RG11B10UfloatRenderable feature. If it extended TextureFormatsTier1RenderPassTest, it would implicitly enable TextureFormatsTier1 as well.",
+      "parentUuid": "e752c779_cfb4c758",
+      "range": {
+        "startLine": 751,
+        "startChar": 8,
+        "endLine": 769,
+        "endChar": 50
+      },
+      "revId": "0f463d39449c60331bb7930ced9e875d7d401e4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7235b018_cc4ff98b",
         "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
         "patchSetId": 2
@@ -54,6 +78,30 @@
       "writtenOn": "2025-07-07T19:15:26Z",
       "side": 1,
       "message": "nit. Probably can revert this change since adding the format name is redundant with the test suite name already.",
+      "range": {
+        "startLine": 833,
+        "startChar": 63,
+        "endLine": 833,
+        "endChar": 76
+      },
+      "revId": "0f463d39449c60331bb7930ced9e875d7d401e4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "abc77f0d_2b4519fb",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-08T10:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7235b018_cc4ff98b",
       "range": {
         "startLine": 833,
         "startChar": 63,
@@ -77,6 +125,30 @@
       "writtenOn": "2025-07-07T19:15:26Z",
       "side": 1,
       "message": "Can\u0027t we just add `wgpu::TextureFormat::RG11B10Ufloat` to this list and rename this test to `RenderableFormats`? (The \"Tier1\" is redundant since that is already in the test suite name also).\n\nAlso, we should add a `SCOPED_TRACE()` call with the format type in the for loop.",
+      "range": {
+        "startLine": 3586,
+        "startChar": 36,
+        "endLine": 3586,
+        "endChar": 69
+      },
+      "revId": "0f463d39449c60331bb7930ced9e875d7d401e4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8afd72d2_c3683c1a",
+        "filename": "src/dawn/tests/unittests/validation/RenderPipelineValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3586,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-08T10:10:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44427d3d_e7e8e997",
       "range": {
         "startLine": 3586,
         "startChar": 36,
