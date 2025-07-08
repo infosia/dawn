@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "df20c82a_15b86a5d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-08T18:09:07Z",
+      "side": 1,
+      "message": "Thank you!",
+      "revId": "d90af26541f442a77791851685f51c315750d635",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7048b51b_102a59ef",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-08T18:09:07Z",
+      "side": 1,
+      "message": "I am unsure if it needs to be supported in the wire as well. Perhaps not because Blink doesn\u0027t need it? I\u0027m not sure if there are other wire clients in Chromium.\n\nAnyway if that\u0027s needed it can be a followup CL.",
+      "revId": "d90af26541f442a77791851685f51c315750d635",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
