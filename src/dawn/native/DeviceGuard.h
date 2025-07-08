@@ -80,8 +80,8 @@ class DeviceGuardBase {
 // device-wide lock. Usually, Guards are scoped via lambda functions, but for the device-wide lock,
 // we provide ways to get this guard and call Defer from the Device. Since the device-wide lock is a
 // temporary solution, this provides a way get the guard without adding lambda scopes everywhere.
-class DeviceGuard : public detail::DeviceGuardBase,
-                    private ::dawn::detail::Guard<DeviceBase, detail::DeviceMutexTraits> {
+class DeviceGuard : private ::dawn::detail::Guard<DeviceBase, detail::DeviceMutexTraits>,
+                    public detail::DeviceGuardBase {
   public:
     using GuardBase = ::dawn::detail::Guard<DeviceBase, detail::DeviceMutexTraits>;
 
