@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c42a158c_a489d2d8",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-08T12:31:57Z",
+      "side": 1,
+      "message": "It hasn\u0027t landed yet to turn them on from the Dawn side: https://dawn-review.googlesource.com/c/dawn/+/243014 (and will probably be a while before it does land)",
+      "parentUuid": "79ae8980_c7d37632",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0db63e52_c7e361b6",
         "filename": "test/tint/var/uses/immediate.wgsl.expected.msl",
         "patchSetId": 1
