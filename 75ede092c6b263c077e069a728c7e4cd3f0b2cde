@@ -141,6 +141,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8fd05bf_89731415",
+        "filename": "test/tint/var/uses/immediate.wgsl.expected.msl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-08T18:29:08Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0db63e52_c7e361b6",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "914a90e7_5bd4c7aa",
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "No. After I removed this manually, the tests passed. But a bit curious, I think `-generate-skip -generate-expected` helps to remove this, but seems no?",
       "parentUuid": "914a90e7_5bd4c7aa",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72e9972e_008d6129",
+        "filename": "test/tint/var/uses/immediate_and_instance_index.wgsl.expected.msl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-08T18:29:08Z",
+      "side": 1,
+      "message": "Strange, I would indeed expect `--generate-expected` to remove this.",
+      "parentUuid": "df617d9a_28179626",
       "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
