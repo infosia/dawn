@@ -169,7 +169,7 @@ void Queue::OnGLUsed() {
     mHasPendingCommands = true;
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
+ResultOrError<bool> Queue::WaitForQueueSerialImpl(ExecutionSerial serial, Nanoseconds timeout) {
     // Search for the first fence >= serial.
     return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<bool> {
         Ref<WrappedEGLSync> sync;
