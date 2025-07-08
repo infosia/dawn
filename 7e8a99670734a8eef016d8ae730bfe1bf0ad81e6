@@ -106,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "58b28cd3_ba769c2f",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-08T00:59:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "046a61c4_3ff1b0c6",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eeafbf39_ee102153",
@@ -499,6 +517,24 @@
       "side": 1,
       "message": "No, we are extracting the element from the source value, and then we convert it to the destination type below if necessary.",
       "parentUuid": "549851d2_b3912783",
+      "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edb674a7_6df27f1d",
+        "filename": "src/tint/lang/spirv/reader/lower/decompose_strided_matrix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-08T00:59:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "9a22fd64_1d8883a3",
       "revId": "7e8a99670734a8eef016d8ae730bfe1bf0ad81e6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
