@@ -75,6 +75,10 @@ class RefCounted {
     // synchronization in place for destruction.
     void Release();
 
+    // Tries to add a reference. Returns false if the ref count is already at 0. This is used when
+    // operating on a raw pointer to a RefCounted instead of a valid Ref that may be soon deleted.
+    bool TryAddRef();
+
     void APIAddRef() { AddRef(); }
     void APIRelease() { Release(); }
 
