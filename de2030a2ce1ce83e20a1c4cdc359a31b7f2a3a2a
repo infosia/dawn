@@ -33,6 +33,42 @@
       "message": "This is superseded by https://dawn-review.googlesource.com/c/dawn/+/251215\n\nPlease disregard this change.",
       "revId": "de2030a2ce1ce83e20a1c4cdc359a31b7f2a3a2a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d17f1d2_f87820e6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-08T01:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc89ea00_0030ff6b",
+      "revId": "de2030a2ce1ce83e20a1c4cdc359a31b7f2a3a2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eef87d5b_24d1c0e5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-08T01:02:21Z",
+      "side": 1,
+      "message": "Superseded by other change, apologies!",
+      "parentUuid": "44f0cb84_1bf07523",
+      "revId": "de2030a2ce1ce83e20a1c4cdc359a31b7f2a3a2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
