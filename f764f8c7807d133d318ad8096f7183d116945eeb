@@ -268,6 +268,24 @@
       "parentUuid": "f8bf0be5_2103cfc9",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9301639_095d5647",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-08T12:18:07Z",
+      "side": 1,
+      "message": "Thanks!\n\n1. I\u0027ve just started https://dawn-review.googlesource.com/c/dawn/+/251354/ to just add the feature name and rebased this CL on top of it.\n2. I\u0027m fixing Chromium tests with https://chromium-review.googlesource.com/c/chromium/src/+/6712176 but I\u0027m having issues as I don\u0027t know how to enable this feature in `WebGPUMailboxTextureTest.AssociateOnTwoDevicesAtTheSameTime` test which is currently failing in trybots. It calls `instance_ \u003d wgpu::Instance(webgpu()-\u003eGetAPIChannel()-\u003eGetWGPUInstance());` which is used not only for tests IIUC. Do you know how to pass an instance descriptor here? Note that my understanding is that this feature should not be always enabled in Chromium. It should be disabled when using WebGPU JavaScript API right?\n3. I\u0027ll wait for all those changes to roll out but in the meantime, does this CL look good to you?\n\nNote that I\u0027ve also sent https://github.com/gpuweb/cts/pull/4417 for review to fix  `webgpu:api,operation,adapter,requestDevice:invalid`.",
+      "parentUuid": "c523c0ba_62fbf7f7",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
