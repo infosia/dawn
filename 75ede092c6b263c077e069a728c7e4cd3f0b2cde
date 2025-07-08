@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "79ae8980_c7d37632",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-08T10:25:43Z",
+      "side": 1,
+      "message": "Good Question. I don\u0027t think we discuss about whether we should support immediates with metal argument buffers.\n\nI\u0027d like to adopt your suggestion about making this transform running after argument buffer transforms.\n\nBTW, I don\u0027t find API side set `options.use_argument_buffers)`. Is it be used in some place or a future method.",
+      "parentUuid": "8ae5542d_53e6cc12",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0db63e52_c7e361b6",
         "filename": "test/tint/var/uses/immediate.wgsl.expected.msl",
         "patchSetId": 1
