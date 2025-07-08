@@ -1009,10 +1009,6 @@ crbug.com/409266267 [ amd mac ] webgpu:shader,execution,expression,call,builtin,
 
 crbug.com/407801079 [ dawn-no-backend-validation no-asan nvidia target-cpu-32 webgpu-dxc-disabled win ] webgpu:shader,execution,expression,binary,af_matrix_scalar_multiplication:matrix_scalar:inputSource="const";cols=4;rows=4 [ Failure ]
 
-# Flaky Win/Intel driver compiler crash in shader,execution,expression,constructor,zero_value
-crbug.com/411694707 [ dawn-no-backend-validation intel win ] webgpu:shader,execution,expression,constructor,zero_value:structure:member_types=["i32","u32","f32","f16","vec3f","vec4i"];* [ Failure ]
-crbug.com/411694707 [ dawn-no-backend-validation intel win ] webgpu:shader,execution,expression,constructor,zero_value:structure:member_types=["bool","u32","f16","vec3f","vec2i"];nested=true [ RetryOnFailure ]
-
 # Not implemented yet
 crbug.com/342840940 webgpu:api,validation,capability_checks,features,texture_formats:check_capability_guarantees: [ Failure ]
 
