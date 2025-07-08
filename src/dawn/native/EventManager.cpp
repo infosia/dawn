@@ -617,6 +617,11 @@ bool EventManager::TrackedEvent::IsReadyToComplete() const {
     }
     if (const auto* queueAndSerial = GetIfQueueAndSerial()) {
         isReady = queueAndSerial->completionSerial <= queueAndSerial->GetCompletedSerial();
+        if (isReady != true) {
+            ErrorLog() << "queueAndSerial->completionSerial=" << queueAndSerial->completionSerial.load();
+            int a = 0;
+            (void)a;
+        }
     }
     return isReady;
 }

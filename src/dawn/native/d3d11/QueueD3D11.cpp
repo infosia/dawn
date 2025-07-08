@@ -682,6 +682,8 @@ ResultOrError<ExecutionSerial> DelayFlushQueue::CheckAndUpdateCompletedSerials()
         mCompletedQueries.clear();
     }
 
+    ErrorLog() << "--> completedSerial=" << completedSerial;
+
     // Finalize Mapping on ready buffers.
     DAWN_TRY(CheckAndMapReadyBuffers(completedSerial));
 
@@ -703,7 +705,12 @@ ResultOrError<bool> DelayFlushQueue::WaitForQueueSerial(ExecutionSerial serial,
 
     auto commandContext = GetScopedPendingCommandContext(SubmitMode::Passive);
 
-    DAWN_ASSERT(!mPendingQueries.empty());
+    if (mPendingQueries.empty() || serial < mPendingQueries.front().Serial()) {
+        // Empty list must mean the serial have already completed. CheckAndUpdateCompletedSerials()
+        // must have already updated the list but UpdateCompletedSerial() hasn't been called yet.
+        return true;
+    }
+
     DAWN_ASSERT(serial >= mPendingQueries.front().Serial());
     DAWN_ASSERT(serial <= mPendingQueries.back().Serial());
     auto it =
