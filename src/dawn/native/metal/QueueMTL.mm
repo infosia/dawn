@@ -91,14 +91,9 @@ void Queue::UpdateWaitingEvents(ExecutionSerial completedSerial) {
 MaybeError Queue::WaitForIdleForDestruction() {
     // Forget all pending commands.
     mCommandContext.AcquireCommands();
-    DAWN_TRY(CheckPassedSerials());
 
-    // Wait for all commands to be finished so we can free resources
-    while (GetCompletedCommandSerial() != GetLastSubmittedCommandSerial()) {
-        usleep(100);
-        DAWN_TRY(CheckPassedSerials());
-    }
-
+    DAWN_TRY(WaitForQueueSerial(GetLastSubmittedCommandSerial(),
+                                std::numeric_limits<Nanoseconds>::max()));
     return {};
 }
 
@@ -250,8 +245,9 @@ Ref<WaitListEvent> Queue::CreateWorkDoneEvent(ExecutionSerial serial) {
     return completionEvent;
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
-    return CreateWorkDoneEvent(serial)->Wait(timeout);
+ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                             Nanoseconds timeout) {
+    return CreateWorkDoneEvent(serial)->Wait(timeout) ? serial : kBeginningOfGPUTime;
 }
 
 }  // namespace dawn::native::metal

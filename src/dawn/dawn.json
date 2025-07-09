@@ -1372,7 +1372,8 @@
                 ]
             },
             {
-                "name": "destroy"
+                "name": "destroy",
+                "no autolock": true
             },
             {
                 "name": "get a hardware buffer properties",
