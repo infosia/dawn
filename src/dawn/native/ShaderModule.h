@@ -364,6 +364,9 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
                                            StringView label,
                                            ParsedCompilationMessages&& compilationMessages);
 
+    void Initialize();
+    std::unique_ptr<ErrorData> GetInitializationError();
+
     ObjectType GetType() const override;
 
     // Return true iff the program has an entrypoint called `entryPoint`.
@@ -414,15 +417,17 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
   protected:
     void DestroyImpl() override;
 
-    MaybeError InitializeBase(ShaderModuleParseResult* parseResult);
-
   private:
     ShaderModuleBase(DeviceBase* device,
                      ObjectBase::ErrorTag tag,
                      StringView label,
                      ParsedCompilationMessages&& compilationMessages);
 
+    virtual MaybeError InitializeImpl();
+
     void WillDropLastExternalRef() override;
+
+    ShaderModuleParseRequest GenerateShaderModuleParseRequest(bool needReflection) const;
 
     // The original data in the descriptor for caching.
     enum class Type { Undefined, Spirv, Wgsl };
@@ -453,6 +458,11 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
     std::unique_ptr<const OwnedCompilationMessages> mCompilationMessages;
 
     const std::vector<tint::wgsl::Extension> mInternalExtensions;
+
+    // Storage of any error generated during initialization. When initialization is fully
+    // asynchronous, this will be removed and inserted into a stored error scope during
+    // initialization.
+    std::optional<CachedValidationError> mInitializationError;
 };
 
 }  // namespace dawn::native
