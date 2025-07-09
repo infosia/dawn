@@ -34,6 +34,24 @@
       "parentUuid": "42b820c6_7922b165",
       "revId": "fba0290fef5e82e15578fe9fa0e96092eeee2bf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7854487_b9be79e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-09T13:06:59Z",
+      "side": 1,
+      "message": "Right, but it seems like it is required? My previous question was why the SKIPs got added for the WGSL expectations. The fix was adding the `requires` line. That ... shouldn\u0027t be the fix as `requires` is optional. So, it\u0027s possible we\u0027re requiring the requires line, or ... something else is happening?\n\nMaybe adding a standalone test which does not have the `requires` line would help as it would ensure it works without the requires.",
+      "parentUuid": "4488f79d_bf1441ef",
+      "revId": "fba0290fef5e82e15578fe9fa0e96092eeee2bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
