@@ -134,6 +134,138 @@
       },
       "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ed6e8cc_066ef031",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:15:33Z",
+      "side": 1,
+      "message": "Mmmmh we should have getters here on the TextureViewBase and not use the descriptor. Likewise for all the other accesses in descriptor actually.\n\nWe still need to check if swizzle is the identity swizzle (as in noop) to call `newTextureViewWithPixelFormat` with a swizzle only when needed so that we don\u0027t break on Mac1.",
+      "parentUuid": "08396568_e52ab3d3",
+      "range": {
+        "startLine": 848,
+        "startChar": 0,
+        "endLine": 851,
+        "endChar": 72
+      },
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cda304a_15342e0f",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:15:33Z",
+      "side": 1,
+      "message": "```suggestion\n    float GetExpectedValue(wgpu::ComponentSwizzle swizzle, std::array\u003cuint8_t, 4\u003e rgbaData) {\n```",
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "581588aa_8005084f",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:15:33Z",
+      "side": 1,
+      "message": "That comment is a bit weird? What does it bring?",
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bbaa8ac_e2a19b0e",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:15:33Z",
+      "side": 1,
+      "message": "Unreachable already says that. It might even be possible to remove the return.\n\n```suggestion\n                return 0.0f;\n```",
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2baf6bfb_3dac2f03",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:15:33Z",
+      "side": 1,
+      "message": "```suggestion\nTEST_P(TextureComponentSwizzleTest, IndividualRSwizzle) {\n```\n\nAnd we should only test component by component. Otherwise we run 6^4 tests that is a LOT.\n\nAlso we need to test that the swizzles on unused colors and on alpha work as expected on formats that don\u0027t have them.",
+      "range": {
+        "startLine": 74,
+        "startChar": 36,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa99fb77_bfae49c0",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:15:33Z",
+      "side": 1,
+      "message": "Just call WriteTexture?",
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10136679_ddbd080c",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:15:33Z",
+      "side": 1,
+      "message": "This will rely on the precision of division done by the shaders that I\u0027m not sure is 100% reliable. It would be better to render to a texture and EXPECT_RGBA8_EQ",
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
