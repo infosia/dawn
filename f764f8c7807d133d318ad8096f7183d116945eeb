@@ -376,6 +376,24 @@
       "parentUuid": "d0c62b80_b0ef5e4e",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3169d7c4_7c5bf2d6",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T10:50:30Z",
+      "side": 1,
+      "message": "I\u0027ve decided to add in latest patchset an explicit method to consume the adapter that will also be used by Blink later.",
+      "parentUuid": "0defbb0a_866bc6bc",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
