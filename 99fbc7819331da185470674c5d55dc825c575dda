@@ -51,6 +51,24 @@
       "parentUuid": "99541c60_ff17a0bb",
       "revId": "99fbc7819331da185470674c5d55dc825c575dda",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dca9f614_c4cd05ac",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:23:06Z",
+      "side": 1,
+      "message": "MSan tells you where the value comes from, but that was truncated in the link you pasted. Looking at the full logs it says:\n\n```\n  Uninitialized value was created by an allocation of \u0027beginCmd\u0027 in the stack frame\n    #0 0x555559de3359 in dawn::native::vulkan::Texture::ClearTexture(dawn::native::vulkan::CommandRecordingContext*, dawn::native::SubresourceRange const\u0026, dawn::native::TextureBase::ClearValue) ./../../third_party/dawn/src/dawn/native/vulkan/TextureVk.cpp:1099:17\n```\n\nWe need to look at the C++ rules for initialization but it seems that something doesn\u0027t get default initialized there.\n\nAlso I don\u0027t see any changes done in this reland?",
+      "parentUuid": "f24968a1_4a60f02b",
+      "revId": "99fbc7819331da185470674c5d55dc825c575dda",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
