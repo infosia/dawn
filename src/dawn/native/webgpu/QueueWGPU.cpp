@@ -151,17 +151,20 @@ MaybeError Queue::SubmitFutureSync() {
     return {};
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
-    return mFuturesInFlight.Use([&](auto futuresInFlight) -> ResultOrError<bool> {
+ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                             Nanoseconds timeout) {
+    return mFuturesInFlight.Use([&](auto futuresInFlight) -> ResultOrError<ExecutionSerial> {
         WGPUFuture future = {kNullFutureID};
+        ExecutionSerial completedSerial = kBeginningOfGPUTime;
         for (const auto& f : *futuresInFlight) {
             if (f.second >= serial) {
                 future = f.first;
+                completedSerial = f.second;
                 break;
             }
         }
         if (future.id == kNullFutureID) {
-            return true;
+            return serial;
         }
 
         WGPUFutureWaitInfo waitInfo = {future, false};
@@ -172,9 +175,9 @@ ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanosecond
 
         switch (status) {
             case WGPUWaitStatus_TimedOut:
-                return false;
+                return kBeginningOfGPUTime;
             case WGPUWaitStatus_Success:
-                return true;
+                return completedSerial;
             default:
                 return DAWN_FORMAT_INTERNAL_ERROR("inner instanceWaitAny status is (%s).",
                                                   FromAPI(status));
