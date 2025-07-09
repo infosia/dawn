@@ -32,6 +32,7 @@
 #include <vector>
 
 #include "dawn/common/Atomic.h"
+#include "dawn/native/Device.h"
 
 namespace dawn::native {
 
@@ -47,18 +48,6 @@ ExecutionSerial ExecutionQueueBase::GetCompletedCommandSerial() const {
     return ExecutionSerial(mCompletedSerial.load(std::memory_order_acquire));
 }
 
-MaybeError ExecutionQueueBase::CheckPassedSerials() {
-    ExecutionSerial completedSerial;
-    DAWN_TRY_ASSIGN(completedSerial, CheckAndUpdateCompletedSerials());
-
-    DAWN_ASSERT(completedSerial <=
-                ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire)));
-
-    // Atomically set mCompletedSerial to completedSerial if completedSerial is larger.
-    FetchMax(mCompletedSerial, uint64_t(completedSerial));
-    return {};
-}
-
 MaybeError ExecutionQueueBase::UpdateCompletedSerial() {
     ExecutionSerial completedSerial;
     DAWN_TRY_ASSIGN(completedSerial, CheckAndUpdateCompletedSerials());
@@ -69,11 +58,39 @@ MaybeError ExecutionQueueBase::UpdateCompletedSerial() {
     return {};
 }
 
+MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Nanoseconds timeout) {
+    // Waiting for queue serial currently needs to be guarded by the device lock.
+    auto deviceGuard = GetDevice()->GetGuard();
+
+    if (waitSerial > GetLastSubmittedCommandSerial()) {
+        // Serial has not been submitted yet. Submit it now.
+        DAWN_TRY(EnsureCommandsFlushed(waitSerial));
+    }
+    // Check the completed serial.
+    if (waitSerial > GetCompletedCommandSerial()) {
+        if (timeout > Nanoseconds(0)) {
+            // Wait on the serial if it hasn't passed yet.
+            bool waitResult = false;
+            DAWN_TRY_ASSIGN(waitResult, WaitForQueueSerialImpl(waitSerial, timeout));
+            if (waitResult) {
+                FetchMax(mCompletedSerial, uint64_t(waitSerial));
+            }
+        }
+    }
+
+    // Update the completed serial now. Note that this may trigger user callbacks which may
+    // re-acquire the device lock and relies on the fact that the device lock is now recursive.
+    return UpdateCompletedSerial();
+}
+
 void ExecutionQueueBase::TrackSerialTask(ExecutionSerial serial, Task&& task) {
     if (serial <= GetCompletedCommandSerial()) {
         task();
         return;
     }
+
+    // Acquire the device-wide lock first before using |mWaitingTasks|.
+    auto deviceGuard = GetDevice()->GetGuard();
     mWaitingTasks->Enqueue(std::move(task), serial);
 }
 
@@ -81,15 +98,19 @@ void ExecutionQueueBase::UpdateCompletedSerialTo(ExecutionSerial completedSerial
     // Atomically set mCompletedSerial to completedSerial if completedSerial is larger.
     FetchMax(mCompletedSerial, uint64_t(completedSerial));
 
+    // Acquire the device-wide lock first before using |mWaitingTasks|.
+    auto deviceGuard = GetDevice()->GetGuard();
     mWaitingTasks.Use([&](auto tasks) {
         // Note that the callbacks need to be called while holding this lock to ensure that callback
         // ordering is enforced. At the moment, that means that re-entrant callbacks that call async
-        // APIs will deadlock. In the future we may consider making this a recursive lock or
-        // providing some other mechanism in order to enable re-entrant async APIs.
-        for (auto task : tasks->IterateUpTo(completedSerial)) {
+        // APIs may deadlock when trying to recursively acquire this lock. In the future we may
+        // consider making this a recursive lock or providing some other mechanism in order to
+        // enable re-entrant async APIs.
+        auto serial = GetCompletedCommandSerial();
+        for (auto task : tasks->IterateUpTo(serial)) {
             task();
         }
-        tasks->ClearUpTo(completedSerial);
+        tasks->ClearUpTo(serial);
     });
 }
 
