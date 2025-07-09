@@ -1,6 +1,69 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "688bc7c3_2903a188",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-09T21:07:59Z",
+      "side": 1,
+      "message": "In general, please avoid duplicating code as it makes it hard to maintain and confusing to readers. Thanks!",
+      "revId": "c1d82452ed419c0ae6e4ada501095b9b9ac4e50c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65ea28bc_1eb5461f",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-09T21:07:59Z",
+      "side": 1,
+      "message": "This logic is duplicated below, please consolidate into helpers.",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 228,
+        "endChar": 9
+      },
+      "revId": "c1d82452ed419c0ae6e4ada501095b9b9ac4e50c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6325e3bb_7483aa21",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-09T21:07:59Z",
+      "side": 1,
+      "message": "nit. This is all duplicated from `TextureFormatsTier1Test`, please extend from that class, move into a separate common class, or move into common free function.",
+      "range": {
+        "startLine": 619,
+        "startChar": 4,
+        "endLine": 663,
+        "endChar": 5
+      },
+      "revId": "c1d82452ed419c0ae6e4ada501095b9b9ac4e50c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fad88b63_55e24c6a",
