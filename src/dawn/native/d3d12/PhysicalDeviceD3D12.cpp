@@ -757,6 +757,11 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::UseBlitForBufferToStencilTextureCopy, true);
     }
 
+    if (gpu_info::IsIntelGen12HP(vendorId, deviceId) ||
+        gpu_info::IsIntelXeLPG(vendorId, deviceId)) {
+        deviceToggles->Default(Toggle::UseD3D12RenderPass, false);
+    }
+
     // Currently these workarounds are needed on Intel Gen9.5 and Gen11 GPUs, as well as
     // AMD GPUS.
     // See http://crbug.com/1237175, http://crbug.com/dawn/1628, and http://crbug.com/dawn/2032
