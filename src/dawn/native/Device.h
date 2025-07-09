@@ -421,11 +421,15 @@ class DeviceBase : public ErrorSink,
     // holding the lock. Otherwise, performs the task now.
     void DeferIfLocked(std::function<void()> f);
 
-    // This method returns true if Feature::ImplicitDeviceSynchronization is turned on and the
-    // device is locked by current thread. This method is only enabled when DAWN_ENABLE_ASSERTS is
+    // These methods are only enabled when DAWN_ENABLE_ASSERTS is
     // turned on. Thus it should only be wrapped inside DAWN_ASSERT() macro. i.e.
     // DAWN_ASSERT(device.IsLockedByCurrentThread())
+    //   - IsLockedByCurrentThreadIfNeeded: Returns true if Feature::ImplicitDeviceSynchronization
+    //     is turned off or the device is locked by the current thread.
+    //   - IsNotLockedByCurrentThread: Returns true if Feature::ImplicitDeviceSynchronization is
+    //     turned off or the device is NOT locked by the current thread.
     bool IsLockedByCurrentThreadIfNeeded() const;
+    bool IsNotLockedByCurrentThread() const;
 
     Ref<ComputePipelineBase> AddOrGetCachedComputePipeline(
         Ref<ComputePipelineBase> computePipeline);

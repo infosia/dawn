@@ -73,7 +73,8 @@ class SystemEventQueue final : public Queue {
     MaybeError Initialize();
     MaybeError NextSerial() override;
     ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
-    ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
+    ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                          Nanoseconds timeout) override;
     void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
 
   private:
@@ -109,7 +110,8 @@ class DelayFlushQueue final : public Queue {
     MaybeError Initialize();
     MaybeError NextSerial() override;
     ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
-    ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) override;
+    ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                          Nanoseconds timeout) override;
     void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
 
   private:
@@ -380,9 +382,9 @@ MaybeError Queue::WaitForIdleForDestruction() {
 
     DAWN_TRY(NextSerial());
     // Wait for all in-flight commands to finish executing
-    DAWN_TRY_ASSIGN(std::ignore, WaitForQueueSerial(GetLastSubmittedCommandSerial(),
-                                                    std::numeric_limits<Nanoseconds>::max()));
-    return CheckPassedSerials();
+    DAWN_TRY_ASSIGN(std::ignore, WaitForQueueSerialImpl(GetLastSubmittedCommandSerial(),
+                                                        std::numeric_limits<Nanoseconds>::max()));
+    return UpdateCompletedSerial();
 }
 
 // MonitoredFenceQueue:
@@ -521,7 +523,7 @@ ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials(
             return completedSerial;
         }));
 
-    // Also check for completed events processed by WaitForQueueSerial()
+    // Also check for completed events processed by WaitForQueueSerialImpl()
     mCompletedEvents.Use([&](auto completedEvents) {
         returnedReceivers.reserve(returnedReceivers.size() + completedEvents->size());
         for (auto& event : *completedEvents) {
@@ -541,8 +543,8 @@ ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials(
     return completedSerial;
 }
 
-ResultOrError<bool> SystemEventQueue::WaitForQueueSerial(ExecutionSerial serial,
-                                                         Nanoseconds timeout) {
+ResultOrError<bool> SystemEventQueue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                             Nanoseconds timeout) {
     ExecutionSerial completedSerial = GetCompletedCommandSerial();
     if (serial <= completedSerial) {
         return true;
@@ -691,8 +693,8 @@ ResultOrError<ExecutionSerial> DelayFlushQueue::CheckAndUpdateCompletedSerials()
     return completedSerial;
 }
 
-ResultOrError<bool> DelayFlushQueue::WaitForQueueSerial(ExecutionSerial serial,
-                                                        Nanoseconds timeout) {
+ResultOrError<bool> DelayFlushQueue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                            Nanoseconds timeout) {
     ExecutionSerial completedSerial = GetCompletedCommandSerial();
     if (serial <= completedSerial) {
         return true;
