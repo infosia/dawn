@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc1e2f5c_7465d56e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:16:45Z",
+      "side": 1,
+      "message": "LGTM! One reason we put the cache in the frontend is because it would take care of both the caching in D3D11 and Vulkan. +CC Brandon as FYI.",
+      "revId": "5c6fa6d5c68b88e25f359a89e14c70da2ef23ef6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
