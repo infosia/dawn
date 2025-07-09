@@ -16,6 +16,24 @@
       "message": "Actually, one question, why is `requires texel_buffers` required to make the test pass a `require` line is optional, unlike an `enable` which is required.",
       "revId": "fba0290fef5e82e15578fe9fa0e96092eeee2bf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4488f79d_bf1441ef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-09T12:53:54Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be required, but there\u0027s no harm in testing it.",
+      "parentUuid": "42b820c6_7922b165",
+      "revId": "fba0290fef5e82e15578fe9fa0e96092eeee2bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
