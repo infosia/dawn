@@ -33,6 +33,29 @@
       "message": "LGTM, we\u0027ll really need to rework Format.cpp, it is totally unreadable.",
       "revId": "20fa6711a9101d4ceaf3bd971e30c05ecc73ce9b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22838719_421926d2",
+        "filename": "src/dawn/utils/TextureUtils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-09T18:27:03Z",
+      "side": 1,
+      "message": "We should put these in the `#ifndef __EMSCRIPTEN__` block for now because some of these formats aren\u0027t available in Emscripten yet and this file is included in the samples which are built for WASM. I am trying to add some WASM builds to CQ soon so that this will be more obviously surfaced.",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 40
+      },
+      "revId": "20fa6711a9101d4ceaf3bd971e30c05ecc73ce9b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
