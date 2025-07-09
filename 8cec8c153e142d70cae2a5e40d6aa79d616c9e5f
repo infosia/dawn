@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "8cec8c153e142d70cae2a5e40d6aa79d616c9e5f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02afb83b_0e51b235",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-09T12:31:39Z",
+      "side": 1,
+      "message": "I\u0027m not sure how useful it is to special case this scenario, since we would have folded away constant expressions like this before generating IR. Are you seeing this sort of pattern coming out of other transforms before robustness?",
+      "revId": "8cec8c153e142d70cae2a5e40d6aa79d616c9e5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1cb1f364_033c2703",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-09T12:31:39Z",
+      "side": 1,
+      "message": "Why do we need to do this?",
+      "revId": "8cec8c153e142d70cae2a5e40d6aa79d616c9e5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
