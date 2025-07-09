@@ -89,6 +89,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ac50dea_e33e6070",
+        "filename": "src/dawn/tests/unittests/validation/RenderPassDescriptorValidationTests.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-09T02:03:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "199bd776_cf596317",
+      "range": {
+        "startLine": 751,
+        "startChar": 8,
+        "endLine": 769,
+        "endChar": 50
+      },
+      "revId": "0f463d39449c60331bb7930ced9e875d7d401e4a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7235b018_cc4ff98b",
