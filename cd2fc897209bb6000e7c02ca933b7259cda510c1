@@ -16,6 +16,23 @@
       "message": "Is there more to do to add this? Is this enough, just a boolean that it was used?",
       "revId": "cd2fc897209bb6000e7c02ca933b7259cda510c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d334b47_c6c6196f",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T08:57:29Z",
+      "side": 1,
+      "message": "Do you know if this will result in a UKM so we know what origin is using the deprecated path?",
+      "revId": "cd2fc897209bb6000e7c02ca933b7259cda510c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
