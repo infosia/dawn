@@ -118,20 +118,16 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     core_polyfills.pack_4xu8_clamp = true;
     core_polyfills.pack_unpack_4x8_norm = options.polyfill_pack_unpack_4x8_norm;
     core_polyfills.abs_signed_int = true;
+    core_polyfills.subgroup_shuffle_xor = options.polyfill_subgroup_shuffle_xor;
     RUN_TRANSFORM(core::ir::transform::BuiltinPolyfill, module, core_polyfills);
 
     core::ir::transform::ConversionPolyfillConfig conversion_polyfills;
     conversion_polyfills.ftoi = true;
     RUN_TRANSFORM(core::ir::transform::ConversionPolyfill, module, conversion_polyfills);
 
-    if (!options.disable_robustness) {
+    if ((true)) {
         core::ir::transform::RobustnessConfig config;
-        if (options.disable_image_robustness) {
-            config.clamp_texture = false;
-        }
-        config.disable_runtime_sized_array_index_clamping =
-            options.disable_runtime_sized_array_index_clamping;
-        config.use_integer_range_analysis = options.enable_integer_range_analysis;
+
         RUN_TRANSFORM(core::ir::transform::Robustness, module, config);
     }
 
