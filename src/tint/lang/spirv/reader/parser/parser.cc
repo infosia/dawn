@@ -1109,6 +1109,7 @@ class Parser {
         if (src->Is<core::ir::FunctionParam>()) {
             return src;
         }
+        printf("Propagate value_id %d\n", id);
 
         auto* blk = tint::Switch(
             src,  //
@@ -1145,7 +1146,10 @@ class Parser {
                     [&](core::ir::ExitIf* ei) { return ei->If(); },
                     [&](core::ir::ExitSwitch* es) { return es->Switch(); },
                     [&](core::ir::ExitLoop* el) { return el->Loop(); },
-                    [&](core::ir::NextIteration* ni) { return ni->Loop(); },
+                    [&](core::ir::NextIteration* ni) {
+                        ni->PushOperand(src);
+                        return nullptr;
+                    },
                     [&](core::ir::Continue* cont) {
                         // The propagation is going through a `continue`. This means
                         // this is the only path to the continuing block, but it also
@@ -1189,6 +1193,7 @@ class Parser {
                 continue;
             }
 
+            printf("PROPAGATION ADD result to %p\n", ctrl);
             // Add a new result to the control instruction
             ctrl->AddResult(b_.InstructionResult(src->Type()));
             // The source instruction is now the control result we just inserted
@@ -1199,6 +1204,87 @@ class Parser {
             blk = ctrl->Block();
         }
         return src;
+    }
+
+    // Returns true if the `exit` is in `blk` or any of the parent blocks of `blk`
+    bool IsContainedInBlock(core::ir::Exit* exit, core::ir::Block* blk) {
+        core::ir::Block* parent_blk = exit->Block();
+        while (parent_blk) {
+            if (parent_blk == blk) {
+                return true;
+            }
+
+            if (!parent_blk->Parent()) {
+                break;
+            }
+            parent_blk = parent_blk->Parent()->Block();
+        }
+        return false;
+    }
+
+    // A map of { `phi value id` -> { `control_instruction` -> terminator operand index } }
+    std::unordered_map<uint32_t, std::unordered_map<core::ir::ControlInstruction*, uint32_t>>
+        phi_to_control_terminator_index_;
+
+    // Propagate a block param value out of a control instruction. This isn't the same as the other
+    // propagate as we only need to pull it out through a single blocks exit for the control
+    // instruction.
+    core::ir::Value* PropagatePhi(uint32_t phi_id, core::ir::BlockParam* bp) {
+        printf("PROP PHI %d\n", phi_id);
+
+        auto* mb = bp->Block();
+        auto* ctrl = mb->Parent();
+
+        uint32_t idx = 0;
+        auto InsertTerminatorOperands = [&] {
+            for (auto exit : ctrl->Exits()) {
+                idx = exit->Operands().Length();
+                exit->PushOperand(nullptr);
+            }
+        };
+
+        // Determine if we've already inserted this Phi as a return of the given instruction.
+        bool needs_result = false;
+        auto phi_iter = phi_to_control_terminator_index_.find(phi_id);
+        if (phi_iter == phi_to_control_terminator_index_.end()) {
+            // No found, so need to insert all the operands
+            printf("INSERT TERMS\n");
+            InsertTerminatorOperands();
+            needs_result = true;
+
+            std::unordered_map<core::ir::ControlInstruction*, uint32_t> phi_map;
+            phi_map.insert({ctrl, idx});
+            phi_to_control_terminator_index_.insert({phi_id, std::move(phi_map)});
+
+        } else {
+            auto ctrl_iter = phi_iter->second.find(ctrl);
+            if (ctrl_iter == phi_iter->second.end()) {
+                // Control not seen for this phi, insert all operands
+                InsertTerminatorOperands();
+                printf("INSERT TERMS 2\n");
+                needs_result = true;
+
+                phi_iter->second.insert({ctrl, idx});
+            } else {
+                idx = ctrl_iter->second + 1;
+                ctrl_iter->second += 1;
+            }
+        }
+        printf("%d %p %d\n", phi_id, ctrl, idx);
+
+        for (auto exit : ctrl->Exits()) {
+            if (IsContainedInBlock(exit, mb)) {
+                exit->SetOperand(idx, bp);
+            }
+        }
+
+        if (needs_result) {
+            printf("ADD RESULTS %p\n", ctrl);
+            auto* res = b_.InstructionResult(bp->Type());
+            ctrl->AddResult(res);
+            AddValue(phi_id, res);
+        }
+        return ctrl->Result(idx);
     }
 
     // Returns true if the value is a constant value
@@ -1248,7 +1334,7 @@ class Parser {
 
             auto* construct = b_.Construct(iter->second.type, args);
             current_block_->Append(construct);
-            AddValue(id, construct->Result());
+            values_.Replace(id, construct->Result());
             return construct->Result();
         }
 
@@ -1269,7 +1355,10 @@ class Parser {
         }
 
         auto* new_v = Propagate(id, v);
-        values_.Replace(id, new_v);
+        if (!new_v->Is<core::ir::BlockParam>()) {
+            values_.Replace(id, new_v);
+            printf("Replace %d with %p\n", id, new_v);
+        }
         return new_v;
     }
 
@@ -1342,6 +1431,7 @@ class Parser {
     void AddValue(uint32_t result_id, core::ir::Value* value) {
         id_stack_.back().insert(result_id);
         values_.Replace(result_id, value);
+        printf("Add value -- REP %d %p\n", result_id, value);
     }
 
     /// Emit an instruction to the current block and associates the result to
@@ -2125,6 +2215,8 @@ class Parser {
     };
 
     void EmitPhi(spvtools::opt::Instruction& inst) {
+        printf("EMIT PHI %d\n", inst.result_id());
+
         auto num_ops = inst.NumInOperands();
 
         // If there are no operands, then the phi is in a unreachable block, ignore it.
@@ -2200,17 +2292,32 @@ class Parser {
         EmitPhiInLoopContinue(inst);
     }
 
-    void AddOperandToTerminator(core::ir::Terminator* term, uint32_t id) {
+    void AddOperandToTerminator(uint32_t phi_id, core::ir::Terminator* term, uint32_t id) {
         // If the ID is a constant, then we just directly emit it, it isn't an OpPhi value
         if (IdIsConstant(id)) {
             term->PushOperand(Value(id));
             return;
         }
-        // If we've already seen the value, and it's still in scope, then we can just emit as it
-        // isn't referencing a later value.
-        if (values_.Contains(id) && IdIsInScope(id)) {
-            term->PushOperand(Value(id));
-            return;
+        // If we've already seen the value, then we can emit it as this isn't referencing a later
+        // value.
+        auto val = values_.Get(id);
+        if (val) {
+            // If we've already seen the value, and it's still in scope, then we can just emit as it
+            // isn't referencing a later value.
+            if (IdIsInScope(id)) {
+                term->PushOperand(Value(id));
+                return;
+            }
+
+            // The value was a block param, that means it was a Phi which we've removed and
+            // converted. We need to pass that Phi out of the control instruction, but we only want
+            // to add it to exit instructions, not all terminators, so this isn't a full
+            // Propagation.
+            if (auto* bp = (*val)->As<core::ir::BlockParam>()) {
+                auto* v = PropagatePhi(id, bp);
+                term->PushOperand(v);
+                return;
+            }
         }
 
         // Value isn't known, or isn't in scope, push a placeholder for the operand value. We store
@@ -2292,9 +2399,9 @@ class Parser {
                 }
             }
 
-            AddOperandToTerminator(term, value_id);
+            AddOperandToTerminator(inst.result_id(), term, value_id);
         }
-
+        printf("LOOP MERGE ADD RESULT %p\n", loop);
         auto* res = b_.InstructionResult(type);
         loop->AddResult(res);
         AddValue(inst.result_id(), res);
@@ -2312,7 +2419,7 @@ class Parser {
                 auto* term = iter->As<core::ir::Terminator>();
                 TINT_ASSERT(term);
 
-                AddOperandToTerminator(term, default_value.value());
+                AddOperandToTerminator(inst.result_id(), term, default_value.value());
             }
         }
     }
@@ -2343,7 +2450,7 @@ class Parser {
                 continue;
             }
 
-            AddOperandToTerminator(term, value_id);
+            AddOperandToTerminator(inst.result_id(), term, value_id);
         }
 
         // Add the block param to the continuing block
@@ -2366,7 +2473,7 @@ class Parser {
                 auto* term = sibling->As<core::ir::Terminator>();
                 TINT_ASSERT(term);
 
-                AddOperandToTerminator(term, default_value.value());
+                AddOperandToTerminator(inst.result_id(), term, default_value.value());
             }
         }
     }
@@ -2459,7 +2566,7 @@ class Parser {
                 }
             }
 
-            AddOperandToTerminator(term, value_id);
+            AddOperandToTerminator(inst.result_id(), term, value_id);
         }
 
         // Add the block param to the body
@@ -2493,7 +2600,7 @@ class Parser {
             }
 
             auto* term = value_ir_blk->Terminator();
-            AddOperandToTerminator(term, value_id);
+            AddOperandToTerminator(inst.result_id(), term, value_id);
 
             if (auto* exit = term->As<core::ir::ExitIf>()) {
                 if (ctrl) {
@@ -2588,7 +2695,7 @@ class Parser {
                 term = value_ir_blk->Terminator();
             }
 
-            AddOperandToTerminator(term, value_id);
+            AddOperandToTerminator(inst.result_id(), term, value_id);
 
             if (auto* exit = term->As<core::ir::ExitSwitch>()) {
                 if (ctrl) {
