@@ -33,6 +33,24 @@
       "message": "IMHO we should special case a few methods instead of adding logic in the generator that will be used for a single method and might make things difficult to debug in the future when other methods with nullable returns need to be handled a different way. We can do it later after initial release of the bindings in alpha but can we have a TODO?",
       "revId": "7ccee6cee739b17c4e1d483630aab71dee90505e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c80c5536_699bfbac",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1004846
+      },
+      "writtenOn": "2025-07-09T12:34:46Z",
+      "side": 1,
+      "message": "Since we want to catch and throw a different (not NullPointerException) error in this case (https://b.corp.google.com/issues/430200712) we will need such special code anyway. I updated the bug. We can take the return type hack out after that.",
+      "parentUuid": "68088252_40f248d9",
+      "revId": "7ccee6cee739b17c4e1d483630aab71dee90505e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
