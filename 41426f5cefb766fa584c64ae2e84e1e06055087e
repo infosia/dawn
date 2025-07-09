@@ -16,6 +16,46 @@
       "message": "LGTM but needs second review",
       "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27730485_a0f3717f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-09T22:25:07Z",
+      "side": 1,
+      "message": "Hmm, I am a bit hesitant about this change as I suspect it may break native Dawn users since most people are just passing the default `InstanceDescriptor`. I\u0027m wondering if it would be possible to keep it default enabled for native, maybe with a warning for now to give some time for users to migrate?",
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "accd6fcc_8a6945fb",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-09T22:25:07Z",
+      "side": 1,
+      "message": "Does this actually need to be exposed upwards in the API?",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 32
+      },
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
