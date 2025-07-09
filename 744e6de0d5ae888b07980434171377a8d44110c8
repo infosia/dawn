@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "964160dd_f79f14b2",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-09T17:02:59Z",
+      "side": 1,
+      "message": "Added a intro discussing the need for a corpus and generally revises a bunch of this text, so I think this is addressed.",
+      "parentUuid": "29267b34_6f319048",
+      "revId": "744e6de0d5ae888b07980434171377a8d44110c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "da28cbc3_f170f53c",
@@ -31,6 +49,30 @@
       "writtenOn": "2025-07-09T15:18:38Z",
       "side": 1,
       "message": "```suggestion\n```\n\nMay as well just remove it from the doc?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 3
+      },
+      "revId": "744e6de0d5ae888b07980434171377a8d44110c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adf5394c_48c93d05",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-09T17:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da28cbc3_f170f53c",
       "range": {
         "startLine": 82,
         "startChar": 0,
@@ -58,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a14368ba_1c5c226f",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-09T17:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c00cc9e3_c8e4b1d5",
+      "revId": "744e6de0d5ae888b07980434171377a8d44110c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac36055f_51bb5aeb",
@@ -71,6 +131,24 @@
       "writtenOn": "2025-07-09T15:18:38Z",
       "side": 1,
       "message": "```suggestion\naren\u0027t any binaries that need to be built for the basic WGSL corpus\n```",
+      "revId": "744e6de0d5ae888b07980434171377a8d44110c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebf5914b_8d157e38",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-09T17:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac36055f_51bb5aeb",
       "revId": "744e6de0d5ae888b07980434171377a8d44110c8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -92,6 +170,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ca5d6aa_95bad6b5",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-09T17:02:59Z",
+      "side": 1,
+      "message": "`####` and `#####` were rendering the same for me, so I was trying to make things more visually distinct. With the removal of GN vs script level subsections this isn\u0027t needed anymore.",
+      "parentUuid": "60d33549_62b3d69c",
+      "revId": "744e6de0d5ae888b07980434171377a8d44110c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5d29bdc9_fa72185c",
@@ -105,6 +201,30 @@
       "writtenOn": "2025-07-09T15:18:38Z",
       "side": 1,
       "message": "Just remove",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 11
+      },
+      "revId": "744e6de0d5ae888b07980434171377a8d44110c8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ab6f534_8a4c4789",
+        "filename": "docs/tint/fuzzers.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-09T17:02:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d29bdc9_fa72185c",
       "range": {
         "startLine": 122,
         "startChar": 0,
