@@ -35,6 +35,7 @@
 namespace dawn::native {
 
 Blob CreateBlob(size_t size) {
+
     if (size > 0) {
         uint8_t* ptr = new uint8_t[size];
         return Blob::UnsafeCreateWithDeleter(ptr, size, [=] { delete[] ptr; });
