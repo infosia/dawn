@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e98170a0_4a235384",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T14:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48201569_c99f3053",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 27
+      },
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eb2e23ec_7469f4dc",
@@ -162,6 +186,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1fd6a3ab_322b4800",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T14:40:10Z",
+      "side": 1,
+      "message": "Are you saying I should introduce a new `GetTextureComponentSwizzleDescriptor()` in TextureViewBase` and use it instead of the descriptor to know if it\u0027s the identity swizzle? Shall we have a helper function in `TextureViewBase` that returns whether the swizzle is the identity swizzle as well then?",
+      "parentUuid": "9ed6e8cc_066ef031",
+      "range": {
+        "startLine": 848,
+        "startChar": 0,
+        "endLine": 851,
+        "endChar": 72
+      },
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1cda304a_15342e0f",
         "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
         "patchSetId": 11
@@ -173,6 +221,24 @@
       "writtenOn": "2025-07-09T09:15:33Z",
       "side": 1,
       "message": "```suggestion\n    float GetExpectedValue(wgpu::ComponentSwizzle swizzle, std::array\u003cuint8_t, 4\u003e rgbaData) {\n```",
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3ef095f_d3a9f2c6",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T14:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cda304a_15342e0f",
       "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -194,6 +260,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99662451_3b52c5e7",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T14:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "581588aa_8005084f",
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2bbaa8ac_e2a19b0e",
@@ -207,6 +291,24 @@
       "writtenOn": "2025-07-09T09:15:33Z",
       "side": 1,
       "message": "Unreachable already says that. It might even be possible to remove the return.\n\n```suggestion\n                return 0.0f;\n```",
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c83164cc_8f6bf651",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T14:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bbaa8ac_e2a19b0e",
       "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -234,6 +336,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e247c61_c5ecf05a",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T14:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2baf6bfb_3dac2f03",
+      "range": {
+        "startLine": 74,
+        "startChar": 36,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fa99fb77_bfae49c0",
@@ -251,6 +377,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4404b6b0_955d7591",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T14:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa99fb77_bfae49c0",
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "10136679_ddbd080c",
@@ -264,6 +408,24 @@
       "writtenOn": "2025-07-09T09:15:33Z",
       "side": 1,
       "message": "This will rely on the precision of division done by the shaders that I\u0027m not sure is 100% reliable. It would be better to render to a texture and EXPECT_RGBA8_EQ",
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d8d0492_aa35b8c6",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T14:40:10Z",
+      "side": 1,
+      "message": "This test ran successfully on Metal, Vulkan, and D3D. See WIP CLs linked from Gerrit. Shall we do that for the CTS instead?",
+      "parentUuid": "10136679_ddbd080c",
       "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
