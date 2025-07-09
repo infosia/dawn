@@ -1109,6 +1109,7 @@ class Parser {
         if (src->Is<core::ir::FunctionParam>()) {
             return src;
         }
+        printf("PROPAGATE %d\n", id);
 
         auto* blk = tint::Switch(
             src,  //
@@ -1131,6 +1132,7 @@ class Parser {
                 TINT_ASSERT(ctrl);
 
                 for (auto exit : ctrl->Exits()) {
+                    printf("PUSH B\n");
                     tint::Switch(
                         exit.Value(),  //
                         [&](core::ir::ExitLoop* el) { el->PushOperand(src); },
@@ -1162,6 +1164,7 @@ class Parser {
                         auto* loop = cont->Loop();
                         loop->Continuing()->AddParam(param);
 
+                        printf("PUSH C\n");
                         cont->PushOperand(src);
 
                         // Set `src` as the `param` so it's returned as the new value
@@ -1176,6 +1179,7 @@ class Parser {
                 }
 
                 for (auto& exit : ctrl->Exits()) {
+                    printf("PUSH D %p %p\n", exit, src);
                     exit->PushOperand(src);
                 }
             }
@@ -1201,6 +1205,10 @@ class Parser {
         return src;
     }
 
+    // Returns true if the value is a constant value
+    bool IdIsConstant(uint32_t id) { return SpvConstant(id) || spec_composites_.contains(id); }
+
+    // Returns true if this value is currently in scope
     bool IdIsInScope(uint32_t id) {
         for (auto iter = id_stack_.rbegin(); iter != id_stack_.rend(); ++iter) {
             if (iter->count(id) > 0) {
@@ -1224,6 +1232,7 @@ class Parser {
     core::ir::Value* ValueNoPropagate(uint32_t id) {
         auto v = values_.Get(id);
         if (v) {
+            printf("%s\n", (*v)->TypeInfo().name);
             return *v;
         }
 
@@ -1584,7 +1593,21 @@ class Parser {
         // in the block.
         auto replace = values_to_replace_.back();
         for (auto& val : replace) {
+            printf("Replacing value %d in %s\n", val.value_id, val.terminator->TypeInfo().name);
+
             auto* value = ValueNoPropagate(val.value_id);
+
+            // If the value is a block param, but that block is not in the current block stack, then
+            // we have to force a propagate.
+            if (auto* bp = value->As<core::ir::BlockParam>()) {
+                printf("PROPAGATE %d\n", val.value_id);
+                value = Propagate(val.value_id, value);
+                printf("ADD VAL >>>>\n");
+                AddValue(val.value_id, value);
+            }
+
+            printf("SET %d to %p\n", val.idx, value);
+
             val.terminator->SetOperand(val.idx, value);
         }
 
@@ -1618,6 +1641,7 @@ class Parser {
                     // If there were phi values, push them to this instruction
                     for (auto value_id : phi_values_from_loop_header) {
                         auto* value = Value(value_id);
+                        printf("INCOMING %s %d\n", incoming->TypeInfo().name, value_id);
                         incoming->PushOperand(value);
                     }
                 }
@@ -1661,6 +1685,7 @@ class Parser {
             for (auto value_id : phis->second) {
                 auto* value = Value(value_id);
 
+                printf("PUSH E\n");
                 tint::Switch(
                     loop->Continuing()->Terminator(),  //
                     [&](core::ir::NextIteration* ni) { ni->PushOperand(value); },
@@ -2200,6 +2225,17 @@ class Parser {
     // the required value and then fill it in at the end of the block emission. This is because a
     // PHI can refer to a value which is defined after the PHI itself.
     void AddOperandToTerminator(core::ir::Terminator* term, uint32_t id) {
+        printf("A operand to terminatro OP (%p) %s gets %d\n", term, term->TypeInfo().name, id);
+
+        if (IdIsConstant(id)) {
+            term->PushOperand(Value(id));
+            return;
+        }
+        if (values_.Contains(id) && IdIsInScope(id)) {
+            term->PushOperand(Value(id));
+            return;
+        }
+
         auto operand_idx = term->PushOperand(nullptr);
         values_to_replace_.back().push_back(ReplacementValue{
             .terminator = term,
@@ -2473,6 +2509,7 @@ class Parser {
             // control instruction and do the work later.
             if (blk_id == header_id) {
                 value_for_default_block = Value(value_id);
+                printf("DEFAULT %d\n", value_id);
                 continue;
             }
 
@@ -2490,6 +2527,7 @@ class Parser {
                 TINT_UNREACHABLE();
             }
         }
+
         // No control instruction means that both true/false branches are the merge itself, so we
         // can just ignore the if, if we have a default then assign it straight through.
         if (!ctrl) {
@@ -2508,6 +2546,8 @@ class Parser {
             } else {
                 term = ctrl->False()->Terminator();
             }
+            printf("PUSH DEF? (%p) %s -> %s\n", term, term->TypeInfo().name,
+                   value_for_default_block.value()->TypeInfo().name);
             term->PushOperand(value_for_default_block.value());
         }
 
@@ -2597,6 +2637,7 @@ class Parser {
 
         // If the default block needs to be assigned a value
         if (value_for_default_block) {
+            printf("PUSH A\n");
             ctrl->DefaultBlock()->Terminator()->PushOperand(value_for_default_block.value());
         }
 
