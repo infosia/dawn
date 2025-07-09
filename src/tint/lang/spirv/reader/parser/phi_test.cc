@@ -1996,5 +1996,66 @@ TEST_F(SpirvParserTest, Phi_InLoopBody) {
 )");
 }
 
+TEST_F(SpirvParserTest, Phi_Propagated) {
+    EXPECT_IR(R"(
+               OpCapability Shader
+               OpMemoryModel Logical GLSL450
+               OpEntryPoint Fragment %main "main"
+               OpExecutionMode %main OriginUpperLeft
+               OpName %main "main"
+       %void = OpTypeVoid
+         %80 = OpTypeFunction %void
+        %int = OpTypeInt 32 1
+          %1 = OpConstant %int 1
+          %2 = OpConstant %int 2
+          %3 = OpConstant %int 3
+          %4 = OpConstant %int 4
+          %5 = OpConstant %int 5
+       %bool = OpTypeBool
+          %8 = OpConstantTrue %bool
+       %main = OpFunction %void None %80
+         %21 = OpLabel
+               OpBranch %22
+
+         ; 1st loop
+         %22 = OpLabel
+         %23 = OpPhi %int %1 %21 %2 %25
+         %24 = OpIAdd %int %23 %23
+               OpLoopMerge %30 %25 None
+               OpBranchConditional %8 %25 %30
+         %25 = OpLabel
+               OpBranch %22
+
+         ; loop merge && if start
+         %30 = OpLabel
+               OpSelectionMerge %34 None
+               OpBranchConditional %8 %35 %34
+         %35 = OpLabel
+               OpBranch %36
+
+         ; 2nd loop
+         %36 = OpLabel
+         %37 = OpPhi %int %3 %35 %4 %39
+         %40 = OpPhi %int %23 %35 %5 %39
+         %41 = OpIAdd %int %37 %40
+               OpLoopMerge %43 %39 None
+               OpBranchConditional %8 %39 %43
+         %39 = OpLabel
+               OpBranch %36
+         %43 = OpLabel
+               OpBranch %34
+
+         ; if merge
+         %34 = OpLabel
+         %45 = OpPhi %int %2 %30 %37 %43
+         %46 = OpIAdd %int %45 %45
+               OpReturn
+               OpFunctionEnd
+)",
+              R"(
+  ...
+)");
+}
+
 }  // namespace
 }  // namespace tint::spirv::reader
