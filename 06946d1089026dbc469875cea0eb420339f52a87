@@ -34,6 +34,24 @@
       "parentUuid": "7cf76dde_ebcb5ab8",
       "revId": "06946d1089026dbc469875cea0eb420339f52a87",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e132c8c_d9b1e4c0",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-07-09T04:53:40Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "d85b25b0_03dce75c",
+      "revId": "06946d1089026dbc469875cea0eb420339f52a87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
