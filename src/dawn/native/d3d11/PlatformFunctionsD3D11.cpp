@@ -34,8 +34,8 @@ namespace dawn::native::d3d11 {
 PlatformFunctions::PlatformFunctions() = default;
 PlatformFunctions::~PlatformFunctions() = default;
 
-MaybeError PlatformFunctions::LoadFunctions() {
-    DAWN_TRY(Base::LoadFunctions());
+MaybeError PlatformFunctions::LoadFunctions(const std::vector<std::string>& searchPaths) {
+    DAWN_TRY(Base::LoadFunctions(searchPaths));
 
     DAWN_TRY(LoadD3D11());
     return {};

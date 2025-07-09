@@ -39,18 +39,15 @@ namespace dawn::native::d3d12 {
 PlatformFunctions::PlatformFunctions() = default;
 PlatformFunctions::~PlatformFunctions() = default;
 
-MaybeError PlatformFunctions::LoadFunctions() {
-    DAWN_TRY(Base::LoadFunctions());
-
-    const auto modulePath = GetModuleDirectory();
-    const std::string& pathToPrepend = modulePath.value_or("");
+MaybeError PlatformFunctions::LoadFunctions(const std::vector<std::string>& searchPaths) {
+    DAWN_TRY(Base::LoadFunctions(searchPaths));
 
 #if DAWN_USE_BUILT_DXC
-    LoadDXCLibraries(pathToPrepend);
+    LoadDXCLibraries(searchPaths);
 #endif
     DAWN_TRY(LoadD3D12());
     DAWN_TRY(LoadD3D11());
-    LoadPIXRuntime(pathToPrepend);
+    LoadPIXRuntime(searchPaths);
     return {};
 }
 
@@ -99,41 +96,50 @@ bool PlatformFunctions::IsPIXEventRuntimeLoaded() const {
     return mPIXEventRuntimeLib.Valid();
 }
 
-void PlatformFunctions::LoadPIXRuntime(const std::string& pathToPrepend) {
+void PlatformFunctions::LoadPIXRuntime(const std::vector<std::string>& searchPaths) {
     // TODO(dawn:766):
     // In UWP PIX should be statically linked WinPixEventRuntime_UAP.lib
     // So maybe we should put WinPixEventRuntime as a third party package
     // Currently PIX is not going to be loaded in UWP since the following
     // mPIXEventRuntimeLib.Open will fail.
-    if (!mPIXEventRuntimeLib.Open(pathToPrepend + "WinPixEventRuntime.dll") ||
-        !mPIXEventRuntimeLib.GetProc(&pixBeginEventOnCommandList, "PIXBeginEventOnCommandList") ||
-        !mPIXEventRuntimeLib.GetProc(&pixEndEventOnCommandList, "PIXEndEventOnCommandList") ||
-        !mPIXEventRuntimeLib.GetProc(&pixSetMarkerOnCommandList, "PIXSetMarkerOnCommandList")) {
+
+    for (const std::string& searchPath : searchPaths) {
+        if (mPIXEventRuntimeLib.Open(searchPath + "WinPixEventRuntime.dll") &&
+            mPIXEventRuntimeLib.GetProc(&pixBeginEventOnCommandList,
+                                        "PIXBeginEventOnCommandList") &&
+            mPIXEventRuntimeLib.GetProc(&pixEndEventOnCommandList, "PIXEndEventOnCommandList") &&
+            mPIXEventRuntimeLib.GetProc(&pixSetMarkerOnCommandList, "PIXSetMarkerOnCommandList")) {
+            return;  // Successfully loaded
+        }
         mPIXEventRuntimeLib.Close();
     }
 }
 
-void PlatformFunctions::LoadDXCLibraries(const std::string& pathToPrepend) {
+void PlatformFunctions::LoadDXCLibraries(const std::vector<std::string>& searchPaths) {
     // TODO(dawn:766)
     // Statically linked with dxcompiler.lib in UWP
     // currently linked with dxcompiler.lib making CoreApp unable to activate
     // LoadDXIL and LoadDXCompiler will fail in UWP, but LoadFunctions() can still be
     // successfully executed.
 
-    DynamicLib dxilLib;
-    // DXIL must be loaded before DXC, otherwise shader signing is unavailable
-    if (!dxilLib.Open(pathToPrepend + "dxil.dll")) {
+    for (const std::string& searchPath : searchPaths) {
+        DynamicLib dxilLib;
+        // DXIL must be loaded before DXC, otherwise shader signing is unavailable
+        if (!dxilLib.Open(searchPath + "dxil.dll")) {
+            continue;
+        }
+
+        DynamicLib dxCompilerLib;
+        if (!dxCompilerLib.Open(searchPath + "dxcompiler.dll") ||
+            !dxCompilerLib.GetProc(&dxcCreateInstance, "DxcCreateInstance", nullptr)) {
+            continue;
+        }
+
+        // Successfully loaded both libraries
+        mDXCompilerLib = std::move(dxCompilerLib);
+        mDXILLib = std::move(dxilLib);
         return;
     }
-
-    DynamicLib dxCompilerLib;
-    if (!dxCompilerLib.Open(pathToPrepend + "dxcompiler.dll") ||
-        !dxCompilerLib.GetProc(&dxcCreateInstance, "DxcCreateInstance", nullptr)) {
-        return;
-    }
-
-    mDXCompilerLib = std::move(dxCompilerLib);
-    mDXILLib = std::move(dxilLib);
 }
 
 }  // namespace dawn::native::d3d12

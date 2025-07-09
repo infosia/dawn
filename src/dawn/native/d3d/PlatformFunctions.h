@@ -31,6 +31,7 @@
 #include <d3dcompiler.h>
 
 #include <string>
+#include <vector>
 
 #include "dawn/common/DynamicLib.h"
 #include "dawn/native/Error.h"
@@ -46,7 +47,7 @@ class PlatformFunctions {
     PlatformFunctions();
     virtual ~PlatformFunctions();
 
-    MaybeError LoadFunctions();
+    MaybeError LoadFunctions(const std::vector<std::string>& searchPaths);
     uint64_t GetWindowsBuildNumber() const;
 
     // Functions from dxgi.dll
@@ -71,7 +72,7 @@ class PlatformFunctions {
 
   private:
     MaybeError LoadDXGI();
-    MaybeError LoadFXCompiler();
+    MaybeError LoadFXCompiler(const std::vector<std::string>& searchPaths);
     MaybeError LoadKernelBase();
     void InitWindowsVersion();
 
