@@ -142,6 +142,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c269b1d1_db62bc03",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-09T14:49:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e45f45bd_df038d81",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0db63e52_c7e361b6",
@@ -226,6 +244,24 @@
       "side": 1,
       "message": "Strange, I would indeed expect `--generate-expected` to remove this.",
       "parentUuid": "df617d9a_28179626",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f8fc280_7b1794df",
+        "filename": "test/tint/var/uses/immediate_and_instance_index.wgsl.expected.msl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-09T14:49:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "72e9972e_008d6129",
       "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
