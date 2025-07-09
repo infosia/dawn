@@ -331,7 +331,7 @@ MaybeError Device::SubmitPendingOperations() {
     }
     mPendingOperations.clear();
 
-    DAWN_TRY(GetQueue()->CheckPassedSerials());
+    DAWN_TRY(GetQueue()->UpdateCompletedSerial());
 
     return {};
 }
@@ -464,7 +464,7 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     return {};
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
+ResultOrError<bool> Queue::WaitForQueueSerialImpl(ExecutionSerial serial, Nanoseconds timeout) {
     return true;
 }
 
