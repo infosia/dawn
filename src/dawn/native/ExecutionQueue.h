@@ -58,13 +58,7 @@ class ExecutionQueueBase {
     // Whether the execution queue has scheduled commands to be submitted or executing.
     bool HasScheduledCommands() const;
 
-    // Check for passed fences and set the new completed serial. Note that the two functions below
-    // effectively do the same thing initially, however, |UpdateCompletedSerials| requires
-    // that the device-wide lock is NOT held since it may additionally trigger user callbacks. Note
-    // that for the purpose of going forwards, |CheckPassedSerials| should not be used anymore since
-    // it assumes that the device-wide lock IS held.
-    // TODO(crbug.com/42240396): Remove |CheckPassedSerials| in favor of |UpdateCompletedSerial|.
-    MaybeError CheckPassedSerials();
+    // Check for passed fences and set the new completed serial.
     MaybeError UpdateCompletedSerial();
 
     // For the commands being internally recorded in backend, that were not urgent to submit, this

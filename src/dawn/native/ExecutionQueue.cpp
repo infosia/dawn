@@ -47,18 +47,6 @@ ExecutionSerial ExecutionQueueBase::GetCompletedCommandSerial() const {
     return ExecutionSerial(mCompletedSerial.load(std::memory_order_acquire));
 }
 
-MaybeError ExecutionQueueBase::CheckPassedSerials() {
-    ExecutionSerial completedSerial;
-    DAWN_TRY_ASSIGN(completedSerial, CheckAndUpdateCompletedSerials());
-
-    DAWN_ASSERT(completedSerial <=
-                ExecutionSerial(mLastSubmittedSerial.load(std::memory_order_acquire)));
-
-    // Atomically set mCompletedSerial to completedSerial if completedSerial is larger.
-    FetchMax(mCompletedSerial, uint64_t(completedSerial));
-    return {};
-}
-
 MaybeError ExecutionQueueBase::UpdateCompletedSerial() {
     ExecutionSerial completedSerial;
     DAWN_TRY_ASSIGN(completedSerial, CheckAndUpdateCompletedSerials());
@@ -86,10 +74,11 @@ void ExecutionQueueBase::UpdateCompletedSerialTo(ExecutionSerial completedSerial
         // ordering is enforced. At the moment, that means that re-entrant callbacks that call async
         // APIs will deadlock. In the future we may consider making this a recursive lock or
         // providing some other mechanism in order to enable re-entrant async APIs.
-        for (auto task : tasks->IterateUpTo(completedSerial)) {
+        auto serial = GetCompletedCommandSerial();
+        for (auto task : tasks->IterateUpTo(serial)) {
             task();
         }
-        tasks->ClearUpTo(completedSerial);
+        tasks->ClearUpTo(serial);
     });
 }
 
