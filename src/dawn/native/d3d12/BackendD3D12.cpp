@@ -47,7 +47,7 @@ MaybeError Backend::Initialize() {
         // Put function initialization in curly braces to avoid the temptation to use the
         // std::move-ed `functions` variable later in the method.
         auto functions = std::make_unique<PlatformFunctions>();
-        DAWN_TRY(functions->LoadFunctions());
+        DAWN_TRY(functions->LoadFunctions(GetInstance()->GetRuntimeSearchPaths()));
 
         DAWN_TRY(Base::Initialize(std::move(functions)));
     }
