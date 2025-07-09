@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4d49fc2_1bdf80f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T08:56:32Z",
+      "side": 1,
+      "message": "LGTM Loko PTAL as well for second trusted human.",
+      "revId": "5fe31e6cfba51b49bdf7514dcdb5c42eae8702c5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
