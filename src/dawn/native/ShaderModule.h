@@ -374,6 +374,8 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
                                            StringView label,
                                            ParsedCompilationMessages&& compilationMessages);
 
+    MaybeError Initialize();
+    
     ObjectType GetType() const override;
 
     // Return true iff the program has an entrypoint called `entryPoint`.
@@ -432,6 +434,8 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
                      StringView label,
                      ParsedCompilationMessages&& compilationMessages);
 
+    virtual MaybeError InitializeImpl();
+
     void WillDropLastExternalRef() override;
 
     // The original data in the descriptor for caching.
@@ -439,6 +443,9 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
     Type mType;
     std::vector<uint32_t> mOriginalSpirv;
     std::string mWgsl;
+
+    // All the data needed for a tint parse. wgsl or spirv data has the same lifetime as this ShaderModule.
+    ShaderModuleParseResult mParseRequest;
 
     // Secure hash computed from shader code and other metadata to be used as a cache key
     // representing the shader module.

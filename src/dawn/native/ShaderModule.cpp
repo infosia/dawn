@@ -1593,16 +1593,28 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
     size_t shaderCodeByteSize = 0;
     uint8_t* shaderCode = nullptr;
 
+    // Create a copy of the descriptor with wgsl and spirv data sourced from members of this object
+ ShaderModuleDescriptor localDescriptor;
+        ShaderSourceWGSL localWgslDescriptor;
+        ShaderSourceSPIRV localSpirvDescriptor;
+
     if (auto* spirvDesc = descriptor.Get<ShaderSourceSPIRV>()) {
         mType = Type::Spirv;
         mOriginalSpirv.assign(spirvDesc->code, spirvDesc->code + spirvDesc->codeSize);
         shaderCodeByteSize = mOriginalSpirv.size() * sizeof(decltype(mOriginalSpirv)::value_type);
         shaderCode = reinterpret_cast<uint8_t*>(mOriginalSpirv.data());
+
+        localSpirvDescriptor.codeSize = mOriginalSpirv.size();
+        localSpirvDescriptor.code = mOriginalSpirv.data();
+        localDescriptor.nextInChain = &localSpirvDescriptor;
     } else if (auto* wgslDesc = descriptor.Get<ShaderSourceWGSL>()) {
         mType = Type::Wgsl;
         mWgsl = std::string(wgslDesc->code);
         shaderCodeByteSize = mWgsl.size() * sizeof(decltype(mWgsl)::value_type);
         shaderCode = reinterpret_cast<uint8_t*>(mWgsl.data());
+
+        localWgslDescriptor.code = std::string_view(mWgsl);
+        localDescriptor.nextInChain = &localWgslDescriptor;
     } else {
         DAWN_ASSERT(false);
     }
@@ -1630,6 +1642,8 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
     hasher.Update(shaderCode, shaderCodeByteSize);
 
     mHash = hasher.Finalize();
+
+    mParseRequest = BuildShaderModuleParseRequest(device, mHash, Unpack(&localDescriptor), mInternalExtensions, true);
 }
 
 ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
@@ -1660,6 +1674,77 @@ Ref<ShaderModuleBase> ShaderModuleBase::MakeError(DeviceBase* device,
                                                   ParsedCompilationMessages&& compilationMessages) {
     return AcquireRef(
         new ShaderModuleBase(device, ObjectBase::kError, label, std::move(compilationMessages)));
+}
+
+MaybeError ShaderModuleBase::Initialize() {
+
+    
+    auto task = [&, shaderModuleRef = Ref<ShaderModuleBase>(this)](){
+        auto parseResultOrError = [&]() -> ResultOrError<ShaderModuleParseResult> {
+            // Check blob cache first before calling ParseShaderModule. ShaderModuleParseResult
+            // returned from blob cache or ParseShaderModule will hold compilation messages and
+            // validation errors if any. ShaderModuleParseResult from ParseShaderModule also
+            // holds tint program.
+            CacheResult<ShaderModuleParseResult> result;
+            DAWN_TRY_LOAD_OR_RUN(result, this, std::move(req),
+                                 ShaderModuleParseResult::FromBlob, ParseShaderModule,
+                                 "ShaderModuleParsing");
+            GetBlobCache()->EnsureStored(result);
+            return result.Acquire();
+        }();
+
+                ShaderModuleParseResult parseResult = result.Acquire();
+
+                // If ShaderModuleParseResult has validation error, move the compilation messages to
+                // *outputParseResult so that we can create an error shader module from it, and then
+                // return the validation error.
+                if (parseResult.HasError()) {
+                    auto error = parseResult.cachedValidationError->ToErrorData();
+                    if (outputParseResult) {
+                        *outputParseResult = std::move(parseResult);
+                    }
+                    return error;
+                }
+                // Otherwise with no error, create a shader module from parse result and return it.
+                Ref<ShaderModuleBase> shaderModule;
+                DAWN_TRY_ASSIGN(shaderModule,
+                                CreateShaderModuleImpl(unpacked, internalExtensions, &parseResult));
+                shaderModule->SetContentHash(blueprintHash);
+                return shaderModule;
+
+
+    InitializeImpl();
+
+    DAWN_ASSERT(!parseResult->HasError());
+    if (parseResult->HasTintProgram()) {
+        mTintData.Use([&](auto tintData) {
+            tintData->tintProgram = std::move(parseResult->tintProgram.UnsafeGetValue().value());
+        });
+    }
+    DAWN_ASSERT(parseResult->metadataTable.has_value());
+    mEntryPoints = std::move(parseResult->metadataTable.value());
+
+    for (auto stage : IterateStages(kAllStages)) {
+        mEntryPointCounts[stage] = 0;
+    }
+    for (auto& [name, metadata] : mEntryPoints) {
+        SingleShaderStage stage = metadata->stage;
+        if (mEntryPointCounts[stage] == 0) {
+            mDefaultEntryPointNames[stage] = name;
+        }
+        mEntryPointCounts[stage]++;
+    }
+
+    // Move the compilation messages if initialized successfully. Compilation messages should be
+    // inject only once for each shader module.
+    DAWN_ASSERT(mCompilationMessages == nullptr);
+    // Move the compilationMessages into the shader module and emit the tint errors and warnings
+    mCompilationMessages =
+        std::make_unique<OwnedCompilationMessages>(std::move(parseResult->compilationMessages));
+    }
+
+    return {};
+
 }
 
 ObjectType ShaderModuleBase::GetType() const {
@@ -1866,6 +1951,10 @@ MaybeError ShaderModuleBase::InitializeBase(ShaderModuleParseResult* parseResult
     mCompilationMessages =
         std::make_unique<OwnedCompilationMessages>(std::move(parseResult->compilationMessages));
 
+    return {};
+}
+
+MaybeError ShaderModuleBase::InitializeImpl() {
     return {};
 }
 
