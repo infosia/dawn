@@ -70,6 +70,30 @@
       },
       "revId": "4914911a84818193d953aebd5b786c15d635ca1d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad977d0a_c921bb9e",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-09T00:34:14Z",
+      "side": 1,
+      "message": "Ahh got it, thanks for the clarification! LGTM",
+      "parentUuid": "d00ec29d_abdbb629",
+      "range": {
+        "startLine": 816,
+        "startChar": 10,
+        "endLine": 816,
+        "endChar": 24
+      },
+      "revId": "4914911a84818193d953aebd5b786c15d635ca1d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
