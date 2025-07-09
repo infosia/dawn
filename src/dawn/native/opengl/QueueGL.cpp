@@ -169,20 +169,23 @@ void Queue::OnGLUsed() {
     mHasPendingCommands = true;
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
+ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                             Nanoseconds timeout) {
     // Search for the first fence >= serial.
-    return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<bool> {
+    return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<ExecutionSerial> {
         Ref<WrappedEGLSync> sync;
+        ExecutionSerial completedSerial = kBeginningOfGPUTime;
         for (auto it = fencesInFlight->begin(); it != fencesInFlight->end(); ++it) {
             if (it->second >= serial) {
                 sync = it->first;
+                completedSerial = it->second;
                 break;
             }
         }
         if (sync == nullptr) {
             // Fence sync not found. This serial must have already completed.
             // Return a success status.
-            return true;
+            return serial;
         }
 
         // Wait for the fence sync.
@@ -191,9 +194,9 @@ ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanosecond
 
         switch (result) {
             case EGL_TIMEOUT_EXPIRED:
-                return false;
+                return kBeginningOfGPUTime;
             case EGL_CONDITION_SATISFIED:
-                return true;
+                return completedSerial;
             default:
                 DAWN_UNREACHABLE();
         }
@@ -300,8 +303,6 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
             fenceSerial = tentativeSerial;
 
             fencesInFlight->pop_front();
-
-            DAWN_ASSERT(fenceSerial > GetCompletedCommandSerial());
         }
         return fenceSerial;
     });
@@ -314,7 +315,7 @@ void Queue::ForceEventualFlushOfCommands() {
 MaybeError Queue::WaitForIdleForDestruction() {
     const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
     DAWN_GL_TRY(gl, Finish());
-    DAWN_TRY(CheckPassedSerials());
+    DAWN_TRY(UpdateCompletedSerial());
     DAWN_ASSERT(mFencesInFlight->empty());
     mHasPendingCommands = false;
     return {};

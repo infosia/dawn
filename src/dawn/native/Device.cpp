@@ -510,26 +510,26 @@ void DeviceBase::WillDropLastExternalRef() {
         if (mLostEvent) {
             mLostEvent->mDevice = nullptr;
         }
-
-        // DeviceBase uses RefCountedWithExternalCount to break refcycles.
-        //
-        // DeviceBase holds multiple Refs to various API objects (pipelines, buffers, etc.) which
-        // are used to implement various device-level facilities. These objects are cached on the
-        // device, so we want to keep them around instead of making transient allocations. However,
-        // many of the objects also hold a Ref<Device> back to their parent device.
-        //
-        // In order to break this cycle and prevent leaks, when the application drops the last
-        // external ref and WillDropLastExternalRef is called, the device clears out any member refs
-        // to API objects that hold back-refs to the device - thus breaking any reference cycles.
-        //
-        // Currently, this is done by calling Destroy on the device to cease all in-flight work and
-        // drop references to internal objects. We may want to lift this in the future, but it would
-        // make things more complex because there might be pending tasks which hold a ref back to
-        // the device - either directly or indirectly. We would need to ensure those tasks don't
-        // create new reference cycles, and we would need to continuously try draining the pending
-        // tasks to clear out all remaining refs.
-        Destroy();
     }
+
+    // DeviceBase uses RefCountedWithExternalCount to break refcycles.
+    //
+    // DeviceBase holds multiple Refs to various API objects (pipelines, buffers, etc.) which
+    // are used to implement various device-level facilities. These objects are cached on the
+    // device, so we want to keep them around instead of making transient allocations. However,
+    // many of the objects also hold a Ref<Device> back to their parent device.
+    //
+    // In order to break this cycle and prevent leaks, when the application drops the last
+    // external ref and WillDropLastExternalRef is called, the device clears out any member refs
+    // to API objects that hold back-refs to the device - thus breaking any reference cycles.
+    //
+    // Currently, this is done by calling Destroy on the device to cease all in-flight work and
+    // drop references to internal objects. We may want to lift this in the future, but it would
+    // make things more complex because there might be pending tasks which hold a ref back to
+    // the device - either directly or indirectly. We would need to ensure those tasks don't
+    // create new reference cycles, and we would need to continuously try draining the pending
+    // tasks to clear out all remaining refs.
+    Destroy();
 
     // Flush last remaining callback tasks.
     if (mCallbackTaskManager) {
@@ -602,100 +602,121 @@ void DeviceBase::DestroyObjects() {
 }
 
 void DeviceBase::Destroy() {
-    // Skip if we are already destroyed.
-    if (mState == State::Destroyed) {
-        return;
-    }
+    // This function is split into two helpers because depending on whether Toggle::WaitIsThreadSafe
+    // is enabled, we need to call WaitForIdleForDestruction with or without holding the device
+    // lock.
 
-    // This function may be called re-entrantly inside APITick(). Tick triggers callbacks
-    // inside which the application may destroy the device. Thus, we should be careful not
-    // to delete objects that are needed inside Tick after callbacks have been called.
-    //  - mCallbackTaskManager is not deleted since we flush the callback queue at the end
-    // of Tick(). Note: that flush should always be empty since all callbacks are drained
-    // inside Destroy() so there should be no outstanding tasks holding objects alive.
-    //  - Similarly, mAsyncTaskManager is not deleted since we use it to return a status
-    // from Tick() whether or not there is any more pending work.
+    // Helper that destroys all the frontend objects before waiting for the backend to be ready for
+    // full destruction. Returns true if waiting is necessary, otherwise returns false.
+    auto DestroyFrontend = [&]() -> bool {
+        // This function may be called re-entrantly inside APITick(). Tick triggers callbacks
+        // inside which the application may destroy the device. Thus, we should be careful not
+        // to delete objects that are needed inside Tick after callbacks have been called.
+        //  - mCallbackTaskManager is not deleted since we flush the callback queue at the end
+        // of Tick(). Note: that flush should always be empty since all callbacks are drained
+        // inside Destroy() so there should be no outstanding tasks holding objects alive.
+        //  - Similarly, mAsyncTaskManager is not deleted since we use it to return a status
+        // from Tick() whether or not there is any more pending work.
 
-    // Skip handling device facilities if they haven't even been created (or failed doing so)
-    if (mState != State::BeingCreated) {
-        // The device is being destroyed so it will be lost, call the application callback.
-        HandleDeviceLost(wgpu::DeviceLostReason::Destroyed, "Device was destroyed.");
+        // Skip handling device facilities if they haven't even been created (or failed doing so)
+        if (mState != State::BeingCreated) {
+            // The device is being destroyed so it will be lost, call the application callback.
+            HandleDeviceLost(wgpu::DeviceLostReason::Destroyed, "Device was destroyed.");
 
-        // Call all the callbacks immediately as the device is about to shut down.
-        // TODO(crbug.com/dawn/826): Cancel the tasks that are in flight if possible.
-        mAsyncTaskManager->WaitAllPendingTasks();
-        mCallbackTaskManager->HandleShutDown();
+            // Call all the callbacks immediately as the device is about to shut down.
+            // TODO(crbug.com/dawn/826): Cancel the tasks that are in flight if possible.
+            mAsyncTaskManager->WaitAllPendingTasks();
+            mCallbackTaskManager->HandleShutDown();
 
-        // Finish destroying all objects owned by the device. Note that this must be done before
-        // DestroyImpl() as it may relinquish resources that will be freed by backends in the
-        // DestroyImpl() call.
-        DestroyObjects();
-    }
+            // Finish destroying all objects owned by the device. Note that this must be done before
+            // DestroyImpl() as it may relinquish resources that will be freed by backends in the
+            // DestroyImpl() call.
+            DestroyObjects();
+        }
 
-    // Disconnect the device, depending on which state we are currently in.
-    switch (mState) {
-        case State::BeingCreated:
-            // The GPU timeline was never started so we don't have to wait.
-            break;
+        // Alive is the only state which can have GPU work happening. We want to wait for all of it
+        // to complete before proceeding with destruction.
+        if (mState == State::Alive) {
+            // If the device was previously alive, transition the state to |BeingDisconnected| now
+            // to avoid any new work and set the flag to wait for idle.
+            mState = State::BeingDisconnected;
+            return true;
+        }
+        return false;
+    };
 
-        case State::Alive:
-            // Alive is the only state which can have GPU work happening. Wait for all of it to
-            // complete before proceeding with destruction.
+    // Helper that finishes tearing down all remaining backend stuff, i.e. deallocations and object
+    // releases.
+    auto DestroyBackend = [&]() {
+        if (mState != State::BeingCreated) {
+            // The GPU timeline is finished.
+            mQueue->AssumeCommandsComplete();
+            DAWN_ASSERT(mQueue->GetCompletedCommandSerial() ==
+                        mQueue->GetLastSubmittedCommandSerial());
+            mQueue->Tick(mQueue->GetCompletedCommandSerial());
+
+            // Call TickImpl once last time to clean up resources
             // Ignore errors so that we can continue with destruction
+            IgnoreErrors(TickImpl());
+        }
+
+        // At this point GPU operations are always finished, so we are in the disconnected state.
+        // Note that currently this state change is required because some of the backend
+        // implementations of DestroyImpl checks that we are disconnected before doing work.
+        mState = State::Disconnected;
+
+        mDynamicUploader = nullptr;
+        mEmptyBindGroupLayout = nullptr;
+        mEmptyPipelineLayout = nullptr;
+        mInternalPipelineStore = nullptr;
+        mExternalTexturePlaceholderView = nullptr;
+        mTemporaryUniformBuffer = nullptr;
+
+        // Note: mQueue is not released here since the application may still get it after calling
+        // Destroy() via APIGetQueue.
+        if (mQueue != nullptr) {
+            mQueue->AssumeCommandsComplete();
+            mQueue->Destroy();
+        }
+
+        // Now that the GPU timeline is empty, destroy the backend device.
+        DestroyImpl();
+
+        mCaches = nullptr;
+        mState = State::Destroyed;
+    };
+
+    if (IsToggleEnabled(Toggle::WaitIsThreadSafe)) {
+        bool waitForIdle = false;
+        {
+            auto deviceGuard = GetGuard();
+            // Skip if we are already destroyed.
+            if (mState == State::Destroyed) {
+                return;
+            }
+            waitForIdle = DestroyFrontend();
+        }
+        // If we need to wait for idle, we do so now without the device lock.
+        if (waitForIdle) {
+            // Ignore errors so that we can continue with destruction.
             IgnoreErrors(mQueue->WaitForIdleForDestruction());
-            break;
-
-        case State::BeingDisconnected:
-            // Getting disconnected is a transient state happening in a single API call so there
-            // is always an external reference keeping the Device alive, which means the
-            // destructor cannot run while BeingDisconnected.
-            DAWN_UNREACHABLE();
-            break;
-
-        case State::Disconnected:
-            break;
-
-        case State::Destroyed:
-            // If we are already destroyed we should've skipped this work entirely.
-            DAWN_UNREACHABLE();
-            break;
+        }
+        {
+            auto deviceGuard = GetGuard();
+            DestroyBackend();
+        }
+    } else {
+        auto deviceGuard = GetGuard();
+        // Skip if we are already destroyed.
+        if (mState == State::Destroyed) {
+            return;
+        }
+        if (DestroyFrontend()) {
+            // Ignore errors so that we can continue with destruction.
+            IgnoreErrors(mQueue->WaitForIdleForDestruction());
+        }
+        DestroyBackend();
     }
-
-    if (mState != State::BeingCreated) {
-        // The GPU timeline is finished.
-        mQueue->AssumeCommandsComplete();
-        DAWN_ASSERT(mQueue->GetCompletedCommandSerial() == mQueue->GetLastSubmittedCommandSerial());
-        mQueue->Tick(mQueue->GetCompletedCommandSerial());
-
-        // Call TickImpl once last time to clean up resources
-        // Ignore errors so that we can continue with destruction
-        IgnoreErrors(TickImpl());
-    }
-
-    // At this point GPU operations are always finished, so we are in the disconnected state.
-    // Note that currently this state change is required because some of the backend
-    // implementations of DestroyImpl checks that we are disconnected before doing work.
-    mState = State::Disconnected;
-
-    mDynamicUploader = nullptr;
-    mEmptyBindGroupLayout = nullptr;
-    mEmptyPipelineLayout = nullptr;
-    mInternalPipelineStore = nullptr;
-    mExternalTexturePlaceholderView = nullptr;
-    mTemporaryUniformBuffer = nullptr;
-
-    // Note: mQueue is not released here since the application may still get it after calling
-    // Destroy() via APIGetQueue.
-    if (mQueue != nullptr) {
-        mQueue->AssumeCommandsComplete();
-        mQueue->Destroy();
-    }
-
-    // Now that the GPU timeline is empty, destroy the backend device.
-    DestroyImpl();
-
-    mCaches = nullptr;
-    mState = State::Destroyed;
 }
 
 void DeviceBase::APIDestroy() {
@@ -711,7 +732,7 @@ void DeviceBase::HandleDeviceLost(wgpu::DeviceLostReason reason, std::string_vie
 void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
                              InternalErrorType additionalAllowedErrors,
                              wgpu::DeviceLostReason lostReason) {
-    auto deviceGuard(GetGuard());
+    auto deviceGuard = GetGuard();
     AppendDebugLayerMessages(error.get());
 
     InternalErrorType type = error->GetType();
@@ -728,16 +749,31 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
     if (type == InternalErrorType::DeviceLost) {
         mState = State::Disconnected;
 
-        // If the ErrorInjector is enabled, then the device loss might be fake and the device
-        // still be executing commands. Force a wait for idle in this case, with State being
-        // Disconnected so we can detect this case in WaitForIdleForDestruction.
-        if (ErrorInjectorEnabled()) {
-            IgnoreErrors(mQueue->WaitForIdleForDestruction());
-        }
+        if (IsToggleEnabled(Toggle::WaitIsThreadSafe)) {
+            DeferIfLocked([this]() {
+                // If the ErrorInjector is enabled, then the device loss might be fake and the
+                // device still be executing commands. Force a wait for idle in this case, with
+                // State being Disconnected so we can detect this case in WaitForIdleForDestruction.
+                if (ErrorInjectorEnabled()) {
+                    IgnoreErrors(mQueue->WaitForIdleForDestruction());
+                }
 
-        // A real device lost happened. Set the state to disconnected as the device cannot be
-        // used. Also tags all commands as completed since the device stopped running.
-        mQueue->AssumeCommandsComplete();
+                // A real device lost happened. Set the state to disconnected as the device cannot
+                // be used. Also tags all commands as completed since the device stopped running.
+                auto deviceGuard = GetGuard();
+                mQueue->AssumeCommandsComplete();
+            });
+        } else {
+            // If the ErrorInjector is enabled, then the device loss might be fake and the device
+            // still be executing commands. Force a wait for idle in this case, with State being
+            // Disconnected so we can detect this case in WaitForIdleForDestruction.
+            if (ErrorInjectorEnabled()) {
+                IgnoreErrors(mQueue->WaitForIdleForDestruction());
+            }
+            // A real device lost happened. Set the state to disconnected as the device cannot be
+            // used. Also tags all commands as completed since the device stopped running.
+            mQueue->AssumeCommandsComplete();
+        }
     } else if (!(allowedErrors & type)) {
         // If we receive an error which we did not explicitly allow, assume the backend can't
         // recover and proceed with device destruction. We first wait for all previous commands to
@@ -751,12 +787,26 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
         // threads in a multithreaded scenario?
         mState = State::BeingDisconnected;
 
-        // Ignore errors so that we can continue with destruction
-        // Assume all commands are complete after WaitForIdleForDestruction (because they were)
-        IgnoreErrors(mQueue->WaitForIdleForDestruction());
-        IgnoreErrors(TickImpl());
-        mQueue->AssumeCommandsComplete();
-        mState = State::Disconnected;
+        if (IsToggleEnabled(Toggle::WaitIsThreadSafe)) {
+            DeferIfLocked([this]() {
+                // Ignore errors so that we can continue with destruction
+                // Assume all commands are complete after WaitForIdleForDestruction (because they
+                // were)
+                IgnoreErrors(mQueue->WaitForIdleForDestruction());
+
+                auto deviceGuard = GetGuard();
+                IgnoreErrors(TickImpl());
+                mQueue->AssumeCommandsComplete();
+                mState = State::Disconnected;
+            });
+        } else {
+            // Ignore errors so that we can continue with destruction
+            // Assume all commands are complete after WaitForIdleForDestruction (because they were)
+            IgnoreErrors(mQueue->WaitForIdleForDestruction());
+            IgnoreErrors(TickImpl());
+            mQueue->AssumeCommandsComplete();
+            mState = State::Disconnected;
+        }
 
         // Now everything is as if the device was lost.
         type = InternalErrorType::DeviceLost;
@@ -1572,7 +1622,7 @@ MaybeError DeviceBase::Tick() {
     // To avoid overly ticking, we only want to tick when:
     // 1. the last submitted serial has moved beyond the completed serial
     // 2. or the backend still has pending commands to submit.
-    DAWN_TRY(mQueue->CheckPassedSerials());
+    DAWN_TRY(mQueue->UpdateCompletedSerial());
     DAWN_TRY(TickImpl());
 
     // TODO(crbug.com/dawn/833): decouple TickImpl from updating the serial so that we can
@@ -2486,6 +2536,10 @@ bool DeviceBase::IsLockedByCurrentThreadIfNeeded() const {
     return mMutex == nullptr || mMutex->IsLockedByCurrentThread();
 }
 
+bool DeviceBase::IsNotLockedByCurrentThread() const {
+    return mMutex == nullptr || !mMutex->IsLockedByCurrentThread();
+}
+
 void DeviceBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump) const {
     DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
     std::string prefix = absl::StrFormat("device_%p", static_cast<const void*>(this));
@@ -2530,7 +2584,7 @@ AllocatorMemoryInfo DeviceBase::GetAllocatorMemoryInfo() const {
 
 bool DeviceBase::ReduceMemoryUsage() {
     DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
-    if (ConsumedError(GetQueue()->CheckPassedSerials())) {
+    if (ConsumedError(GetQueue()->UpdateCompletedSerial())) {
         return false;
     }
     GetDynamicUploader()->Deallocate(GetQueue()->GetCompletedCommandSerial(), /*freeAll=*/true);
