@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3af29106_35687884",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-09T12:23:41Z",
+      "side": 1,
+      "message": "LGTM with one nit",
+      "revId": "57ddf197f55db400bc1102b499f706b845899ac0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "545083e8_4f4c7298",
+        "filename": "src/tint/cmd/common/helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-09T12:23:41Z",
+      "side": 1,
+      "message": "Nit: Change this name too",
+      "fixSuggestions": [
+        {
+          "fixId": "b983c40a_d78a49b6",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/cmd/common/helper.cc",
+              "range": {
+                "startLine": 525,
+                "startChar": 0,
+                "endLine": 526,
+                "endChar": 0
+              },
+              "replacement": "            return \"ReadWriteTexelBuffer\";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "57ddf197f55db400bc1102b499f706b845899ac0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
