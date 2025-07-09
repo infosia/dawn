@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fad88b63_55e24c6a",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T10:10:23Z",
+      "side": 1,
+      "message": "Can we have block comments and also a comment that describe at high-level what we do here?",
+      "revId": "c1d82452ed419c0ae6e4ada501095b9b9ac4e50c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
