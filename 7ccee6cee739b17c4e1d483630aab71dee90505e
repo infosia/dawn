@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de5802c3_9701543e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-09T00:41:43Z",
+      "side": 1,
+      "message": "\u003e The dawn directory requires source formatting. Please run: git cl format\n\nFYI if you use `git cl upload` to upload, it will check this before uploading.",
+      "revId": "7ccee6cee739b17c4e1d483630aab71dee90505e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
