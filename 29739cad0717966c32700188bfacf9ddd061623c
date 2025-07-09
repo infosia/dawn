@@ -52,6 +52,24 @@
       "parentUuid": "14ff69ba_5a978880",
       "revId": "29739cad0717966c32700188bfacf9ddd061623c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85e4f2dc_f00bcaf4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T13:19:02Z",
+      "side": 1,
+      "message": "Because this fails only when running with the VVLs I\u0027d lean towards doing that, but also filing an issue on https://github.com/KhronosGroup/Vulkan-ValidationLayers to ask what could be causing HUGE perf differences when using uncached coherent buffers.",
+      "parentUuid": "762a07a1_d92ea84e",
+      "revId": "29739cad0717966c32700188bfacf9ddd061623c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
