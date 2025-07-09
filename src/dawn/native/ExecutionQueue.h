@@ -35,6 +35,7 @@
 #include "dawn/common/SerialMap.h"
 #include "dawn/native/Error.h"
 #include "dawn/native/IntegerTypes.h"
+#include "dawn/native/ObjectBase.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native {
@@ -43,7 +44,7 @@ namespace dawn::native {
 // update of the various ExecutionSerials related to that work.
 // TODO(dawn:831, dawn:1413): Make usage of the ExecutionQueue thread-safe. Right now it is
 // only partially safe - where observation of the last-submitted and pending serials is atomic.
-class ExecutionQueueBase {
+class ExecutionQueueBase : public ApiObjectBase {
   public:
     using Task = std::function<void()>;
 
@@ -58,13 +59,7 @@ class ExecutionQueueBase {
     // Whether the execution queue has scheduled commands to be submitted or executing.
     bool HasScheduledCommands() const;
 
-    // Check for passed fences and set the new completed serial. Note that the two functions below
-    // effectively do the same thing initially, however, |UpdateCompletedSerials| requires
-    // that the device-wide lock is NOT held since it may additionally trigger user callbacks. Note
-    // that for the purpose of going forwards, |CheckPassedSerials| should not be used anymore since
-    // it assumes that the device-wide lock IS held.
-    // TODO(crbug.com/42240396): Remove |CheckPassedSerials| in favor of |UpdateCompletedSerial|.
-    MaybeError CheckPassedSerials();
+    // Check for passed fences and set the new completed serial.
     MaybeError UpdateCompletedSerial();
 
     // For the commands being internally recorded in backend, that were not urgent to submit, this
@@ -93,7 +88,7 @@ class ExecutionQueueBase {
 
     // Wait at most `timeout` synchronously for the ExecutionSerial to pass. Returns true
     // if the serial passed.
-    virtual ResultOrError<bool> WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) = 0;
+    MaybeError WaitForQueueSerial(ExecutionSerial waitSerial, Nanoseconds timeout);
 
     // Tracks a new task to complete when |serial| is reached.
     void TrackSerialTask(ExecutionSerial serial, Task&& task);
@@ -112,6 +107,8 @@ class ExecutionQueueBase {
     bool mInSubmit = false;
 
   protected:
+    using ApiObjectBase::ApiObjectBase;
+
     // Currently, the queue has two paths for serial updating, one is via DeviceBase::Tick which
     // calls into the backend specific polling mechanisms implemented in
     // CheckAndUpdateCompletedSerials. Alternatively, the backend can actively call
@@ -122,6 +119,11 @@ class ExecutionQueueBase {
     // Each backend should implement to check their passed fences if there are any and return a
     // completed serial. Return 0 should indicate no fences to check.
     virtual ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() = 0;
+
+    // Each backend should implement their own way to wait for serials.
+    virtual ResultOrError<bool> WaitForQueueSerialImpl(ExecutionSerial waitSerial,
+                                                       Nanoseconds timeout) = 0;
+
     // mCompletedSerial tracks the last completed command serial that the fence has returned.
     // mLastSubmittedSerial tracks the last submitted command serial.
     // During device removal, the serials could be artificially incremented
@@ -129,6 +131,12 @@ class ExecutionQueueBase {
     std::atomic<uint64_t> mCompletedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
     std::atomic<uint64_t> mLastSubmittedSerial = static_cast<uint64_t>(kBeginningOfGPUTime);
 
+    // This member is implicitly doubly protected by the device-wide lock and |MutexProtected|.
+    // Whenever we use this value, we must first acquire the device-wide lock, then
+    // acquire the value from the MutexProtected wrapper. This is currently necessary because there
+    // exists functions that acquire the device-wide lock before the protecting mutex, and there
+    // also exists tasks that may acquire the device-wide lock, i.e. re-entrant callbacks. As a
+    // result, if we do not always acquire the device-wide lock first, we can result in deadlocks.
     MutexProtected<SerialMap<ExecutionSerial, Task>> mWaitingTasks;
 
     // Indicates whether the backend has pending commands to be submitted as soon as possible.
