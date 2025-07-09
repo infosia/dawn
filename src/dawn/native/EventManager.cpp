@@ -179,14 +179,9 @@ void WaitQueueSerials(const QueueWaitSerialsMap& queueWaitSerials, Nanoseconds t
                         DAWN_TRY_ASSIGN(waitResult, queue->WaitForQueueSerial(waitSerial, timeout));
                     }
                 }
-                return {};
+                return queue->UpdateCompletedSerial();
             }(),
             "waiting for work in %s.", queue.Get());
-
-        // Updating completed serial cannot hold the device-wide lock because it may cause user
-        // callbacks to fire.
-        error = device->ConsumedError(queue->UpdateCompletedSerial(),
-                                      "updating completed serial in %s", queue.Get());
     }
 }
 
@@ -351,7 +346,7 @@ FutureID EventManager::TrackEvent(Ref<TrackedEvent>&& event) {
 
     if (const auto* queueAndSerial = event->GetIfQueueAndSerial()) {
         if (auto q = queueAndSerial->queue.Promote()) {
-            q->TrackSerialTask(queueAndSerial->completionSerial, [this, event]() {
+            q->TrackSerialTask(queueAndSerial->completionSerial, [this, q, event]() {
                 // If this is executed, we can be sure that the raw pointer to this EventManager is
                 // valid because the Queue is alive and:
                 //   Queue -[refs]->
@@ -359,7 +354,9 @@ FutureID EventManager::TrackEvent(Ref<TrackedEvent>&& event) {
                 //       Adapter -[refs]->
                 //         Instance -[owns]->
                 //           EventManager.
-                SetFutureReady(event.Get());
+                // Note that we also defer setting the event ready until after we release the device
+                // lock in order to support re-entrant API calls.
+                q->GetDevice()->DeferIfLocked([&]() { SetFutureReady(event.Get()); });
             });
         }
     }

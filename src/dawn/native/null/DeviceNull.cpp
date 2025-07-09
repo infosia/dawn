@@ -331,7 +331,7 @@ MaybeError Device::SubmitPendingOperations() {
     }
     mPendingOperations.clear();
 
-    DAWN_TRY(GetQueue()->CheckPassedSerials());
+    DAWN_TRY(GetQueue()->UpdateCompletedSerial());
 
     return {};
 }

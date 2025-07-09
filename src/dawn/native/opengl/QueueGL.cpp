@@ -314,7 +314,7 @@ void Queue::ForceEventualFlushOfCommands() {
 MaybeError Queue::WaitForIdleForDestruction() {
     const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
     DAWN_GL_TRY(gl, Finish());
-    DAWN_TRY(CheckPassedSerials());
+    DAWN_TRY(UpdateCompletedSerial());
     DAWN_ASSERT(mFencesInFlight->empty());
     mHasPendingCommands = false;
     return {};

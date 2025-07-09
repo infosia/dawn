@@ -94,7 +94,7 @@ ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanosecond
     bool didComplete = WaitAnySystemEvent(events.begin(), events.end(), timeout);
     // Return the SystemEventReceiver to the pool of receivers so it can be re-waited in the
     // future.
-    // The caller should call CheckPassedSerials() which will clear passed system events.
+    // The caller should call UpdateCompletedSerial() which will clear passed system events.
     mSystemEventReceivers->Enqueue(std::move(*receiver), serial);
 
     return didComplete;

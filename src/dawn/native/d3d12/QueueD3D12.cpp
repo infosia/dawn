@@ -162,7 +162,7 @@ MaybeError Queue::WaitForSerial(ExecutionSerial serial) {
     }
     DAWN_TRY_ASSIGN(std::ignore,
                     WaitForQueueSerial(serial, std::numeric_limits<Nanoseconds>::max()));
-    return CheckPassedSerials();
+    return UpdateCompletedSerial();
 }
 
 bool Queue::HasPendingCommands() const {

@@ -382,7 +382,7 @@ MaybeError Queue::WaitForIdleForDestruction() {
     // Wait for all in-flight commands to finish executing
     DAWN_TRY_ASSIGN(std::ignore, WaitForQueueSerial(GetLastSubmittedCommandSerial(),
                                                     std::numeric_limits<Nanoseconds>::max()));
-    return CheckPassedSerials();
+    return UpdateCompletedSerial();
 }
 
 // MonitoredFenceQueue:
