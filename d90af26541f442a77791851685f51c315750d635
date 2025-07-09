@@ -51,6 +51,24 @@
       "parentUuid": "7048b51b_102a59ef",
       "revId": "d90af26541f442a77791851685f51c315750d635",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3dace7f_2e74966e",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-09T22:10:36Z",
+      "side": 1,
+      "message": "Actually, the wire doesn\u0027t even support creating an instance. So we don\u0027t need to do anything, until maybe someday we support creating an instance via the wire.\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/wire/client/Instance.cpp;l\u003d357;drc\u003d2752c7d71a190c8512f38ceda922253d23876fb4",
+      "parentUuid": "71a8dd6c_71db7a28",
+      "revId": "d90af26541f442a77791851685f51c315750d635",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
