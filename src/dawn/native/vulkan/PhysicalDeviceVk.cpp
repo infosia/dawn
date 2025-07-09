@@ -854,6 +854,14 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         deviceToggles->Default(Toggle::VulkanDirectVariableAccessTransformHandle, true);
     }
 
+    if (gpu_info::IsNvidia(GetVendorId())) {
+        // chromium:417977426: Known failures on GTX 1660 for subgroup shuffle xor op.
+        deviceToggles->Default(Toggle::PolyfillSubgroupShuffleXor, true);
+    }
+
+    /// just testing
+    deviceToggles->Default(Toggle::PolyfillSubgroupShuffleXor, true);
+
     if (IsAndroidARM()) {
         // dawn:1550: Resolving multiple color targets in a single pass fails on ARM GPUs. To
         // work around the issue, passes that resolve to multiple color targets will instead be
@@ -990,15 +998,8 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     // By default try to skip robustness transform on textures according to the Vulkan extension
     // VK_EXT_robustness2.
     deviceToggles->Default(Toggle::VulkanUseImageRobustAccess2, true);
-    // The environment can only request to use VK_EXT_robustness2 when the extension is available.
-    // Override the decision if it is not applicable or robustBufferAccess2 is false.
-    if (!GetDeviceInfo().HasExt(DeviceExt::Robustness2) ||
-        GetDeviceInfo().robustness2Features.robustBufferAccess2 == VK_FALSE) {
+
         deviceToggles->ForceSet(Toggle::VulkanUseBufferRobustAccess2, false);
-    }
-    // By default try to disable index clamping on the runtime-sized arrays on storage buffers in
-    // Tint robustness transform according to the Vulkan extension VK_EXT_robustness2.
-    deviceToggles->Default(Toggle::VulkanUseBufferRobustAccess2, true);
 
     // Enable the polyfill versions of dot4I8Packed() and dot4U8Packed() when the SPIR-V capability
     // `DotProductInput4x8BitPackedKHR` is not supported.
