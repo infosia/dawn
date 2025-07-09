@@ -16,6 +16,24 @@
       "message": "```suggestion\n#if TINT_BUILD_SPV_READER \u0026\u0026 TINT_BUILD_WGSL_WRITER\n```",
       "revId": "331c73046482bddb21a4d8ca0dae3440a07f5cff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78ec9557_cc3a50dd",
+        "filename": "src/tint/api/tint.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-09T16:00:54Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "39b12dfb_07d354c1",
+      "revId": "331c73046482bddb21a4d8ca0dae3440a07f5cff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
