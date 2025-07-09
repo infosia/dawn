@@ -432,13 +432,6 @@ DeviceBase::DeviceBase() : mState(State::Alive), mToggles(ToggleStage::Device) {
 }
 
 DeviceBase::~DeviceBase() {
-    // Assert that we do not have a Defer object. If we do, it means that we created a Guard for
-    // deletion, and then recursively acquired a normal Guard. This case is not currently allowed
-    // since the Defer object would be dangling by the time that the lock is actually released. This
-    // may be possible by making the Defer object recounted, but as of the time of writing, this
-    // shouldn't be needed, and developers should avoid adding code that does this.
-    DAWN_ASSERT(!mDefer);
-
     // We need to explicitly release the Queue before we complete the destructor so that the
     // Queue does not get destroyed after the Device.
     mQueue = nullptr;
@@ -487,7 +480,7 @@ MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descripto
     }
 
     if (HasFeature(Feature::ImplicitDeviceSynchronization)) {
-        mMutex = AcquireRef(new RecursiveMutex);
+        mMutex = AcquireRef(new DeviceMutex);
     } else {
         mMutex = nullptr;
     }
@@ -602,7 +595,6 @@ void DeviceBase::DestroyObjects() {
 }
 
 void DeviceBase::Destroy() {
-    // Skip if we are already destroyed.
     if (mState == State::Destroyed) {
         return;
     }
@@ -632,33 +624,21 @@ void DeviceBase::Destroy() {
         DestroyObjects();
     }
 
-    // Disconnect the device, depending on which state we are currently in.
-    switch (mState) {
-        case State::BeingCreated:
-            // The GPU timeline was never started so we don't have to wait.
-            break;
-
-        case State::Alive:
-            // Alive is the only state which can have GPU work happening. Wait for all of it to
-            // complete before proceeding with destruction.
-            // Ignore errors so that we can continue with destruction
+    // Alive is the only state which can have GPU work happening. We want to wait for all of it
+    // to complete before proceeding with destruction.
+    if (mState == State::Alive) {
+        // If the device was previously alive, transition the state to |BeingDisconnected| now
+        // to avoid any new work and set the flag to wait for idle.
+        mState = State::BeingDisconnected;
+        if (IsToggleEnabled(Toggle::WaitIsThreadSafe)) {
+            // Ignore errors so that we can continue with destruction.
+            Unlock();
             IgnoreErrors(mQueue->WaitForIdleForDestruction());
-            break;
-
-        case State::BeingDisconnected:
-            // Getting disconnected is a transient state happening in a single API call so there
-            // is always an external reference keeping the Device alive, which means the
-            // destructor cannot run while BeingDisconnected.
-            DAWN_UNREACHABLE();
-            break;
-
-        case State::Disconnected:
-            break;
-
-        case State::Destroyed:
-            // If we are already destroyed we should've skipped this work entirely.
-            DAWN_UNREACHABLE();
-            break;
+            Lock();
+        } else {
+            // Ignore errors so that we can continue with destruction.
+            IgnoreErrors(mQueue->WaitForIdleForDestruction());
+        }
     }
 
     if (mState != State::BeingCreated) {
@@ -711,7 +691,7 @@ void DeviceBase::HandleDeviceLost(wgpu::DeviceLostReason reason, std::string_vie
 void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
                              InternalErrorType additionalAllowedErrors,
                              wgpu::DeviceLostReason lostReason) {
-    auto deviceGuard(GetGuard());
+    auto deviceGuard = GetGuard();
     AppendDebugLayerMessages(error.get());
 
     InternalErrorType type = error->GetType();
@@ -728,16 +708,31 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
     if (type == InternalErrorType::DeviceLost) {
         mState = State::Disconnected;
 
-        // If the ErrorInjector is enabled, then the device loss might be fake and the device
-        // still be executing commands. Force a wait for idle in this case, with State being
-        // Disconnected so we can detect this case in WaitForIdleForDestruction.
-        if (ErrorInjectorEnabled()) {
-            IgnoreErrors(mQueue->WaitForIdleForDestruction());
-        }
+        if (IsToggleEnabled(Toggle::WaitIsThreadSafe)) {
+            DeferIfLocked([this]() {
+                // If the ErrorInjector is enabled, then the device loss might be fake and the
+                // device still be executing commands. Force a wait for idle in this case, with
+                // State being Disconnected so we can detect this case in WaitForIdleForDestruction.
+                if (ErrorInjectorEnabled()) {
+                    IgnoreErrors(mQueue->WaitForIdleForDestruction());
+                }
 
-        // A real device lost happened. Set the state to disconnected as the device cannot be
-        // used. Also tags all commands as completed since the device stopped running.
-        mQueue->AssumeCommandsComplete();
+                // A real device lost happened. Set the state to disconnected as the device cannot
+                // be used. Also tags all commands as completed since the device stopped running.
+                auto deviceGuard = GetGuard();
+                mQueue->AssumeCommandsComplete();
+            });
+        } else {
+            // If the ErrorInjector is enabled, then the device loss might be fake and the device
+            // still be executing commands. Force a wait for idle in this case, with State being
+            // Disconnected so we can detect this case in WaitForIdleForDestruction.
+            if (ErrorInjectorEnabled()) {
+                IgnoreErrors(mQueue->WaitForIdleForDestruction());
+            }
+            // A real device lost happened. Set the state to disconnected as the device cannot be
+            // used. Also tags all commands as completed since the device stopped running.
+            mQueue->AssumeCommandsComplete();
+        }
     } else if (!(allowedErrors & type)) {
         // If we receive an error which we did not explicitly allow, assume the backend can't
         // recover and proceed with device destruction. We first wait for all previous commands to
@@ -751,12 +746,26 @@ void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
         // threads in a multithreaded scenario?
         mState = State::BeingDisconnected;
 
-        // Ignore errors so that we can continue with destruction
-        // Assume all commands are complete after WaitForIdleForDestruction (because they were)
-        IgnoreErrors(mQueue->WaitForIdleForDestruction());
-        IgnoreErrors(TickImpl());
-        mQueue->AssumeCommandsComplete();
-        mState = State::Disconnected;
+        if (IsToggleEnabled(Toggle::WaitIsThreadSafe)) {
+            DeferIfLocked([this]() {
+                // Ignore errors so that we can continue with destruction
+                // Assume all commands are complete after WaitForIdleForDestruction (because they
+                // were)
+                IgnoreErrors(mQueue->WaitForIdleForDestruction());
+
+                auto deviceGuard = GetGuard();
+                IgnoreErrors(TickImpl());
+                mQueue->AssumeCommandsComplete();
+                mState = State::Disconnected;
+            });
+        } else {
+            // Ignore errors so that we can continue with destruction
+            // Assume all commands are complete after WaitForIdleForDestruction (because they were)
+            IgnoreErrors(mQueue->WaitForIdleForDestruction());
+            IgnoreErrors(TickImpl());
+            mQueue->AssumeCommandsComplete();
+            mState = State::Disconnected;
+        }
 
         // Now everything is as if the device was lost.
         type = InternalErrorType::DeviceLost;
@@ -1572,7 +1581,7 @@ MaybeError DeviceBase::Tick() {
     // To avoid overly ticking, we only want to tick when:
     // 1. the last submitted serial has moved beyond the completed serial
     // 2. or the backend still has pending commands to submit.
-    DAWN_TRY(mQueue->CheckPassedSerials());
+    DAWN_TRY(mQueue->UpdateCompletedSerial());
     DAWN_TRY(TickImpl());
 
     // TODO(crbug.com/dawn/833): decouple TickImpl from updating the serial so that we can
@@ -2453,6 +2462,18 @@ MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
     return {};
 }
 
+void DeviceBase::Lock() {
+    if (mMutex) {
+        mMutex->Lock();
+    }
+}
+
+void DeviceBase::Unlock() {
+    if (mMutex) {
+        mMutex->Unlock();
+    }
+}
+
 DeviceGuard DeviceBase::GetGuard() {
     return DeviceGuard(this);
 }
@@ -2476,19 +2497,23 @@ void DeviceBase::DeferIfLocked(std::function<void()> f) {
 
     // If we don't have a Defer, that means we are not locked, so we can just run the defer task
     // now.
-    if (!mDefer) {
+    if (!mMutex->mDefer) {
         f();
         return;
     }
 
     // Otherwise, verify that we are only calling this in the thread that is holding the lock and
     // defer the function.
-    DAWN_ASSERT(mMutex->IsLockedByCurrentThread() && mDefer);
-    mDefer->Append(std::move(f));
+    DAWN_ASSERT(mMutex->IsLockedByCurrentThread() && mMutex->mDefer);
+    mMutex->mDefer->Append(std::move(f));
 }
 
 bool DeviceBase::IsLockedByCurrentThreadIfNeeded() const {
     return mMutex == nullptr || mMutex->IsLockedByCurrentThread();
+}
+
+bool DeviceBase::IsNotLockedByCurrentThread() const {
+    return mMutex == nullptr || !mMutex->IsLockedByCurrentThread();
 }
 
 void DeviceBase::DumpMemoryStatistics(dawn::native::MemoryDump* dump) const {
@@ -2535,7 +2560,7 @@ AllocatorMemoryInfo DeviceBase::GetAllocatorMemoryInfo() const {
 
 bool DeviceBase::ReduceMemoryUsage() {
     DAWN_ASSERT(IsLockedByCurrentThreadIfNeeded());
-    if (ConsumedError(GetQueue()->CheckPassedSerials())) {
+    if (ConsumedError(GetQueue()->UpdateCompletedSerial())) {
         return false;
     }
     GetDynamicUploader()->Deallocate(GetQueue()->GetCompletedCommandSerial(), /*freeAll=*/true);

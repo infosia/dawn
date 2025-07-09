@@ -421,11 +421,15 @@ class DeviceBase : public ErrorSink,
     // holding the lock. Otherwise, performs the task now.
     void DeferIfLocked(std::function<void()> f);
 
-    // This method returns true if Feature::ImplicitDeviceSynchronization is turned on and the
-    // device is locked by current thread. This method is only enabled when DAWN_ENABLE_ASSERTS is
+    // These methods are only enabled when DAWN_ENABLE_ASSERTS is
     // turned on. Thus it should only be wrapped inside DAWN_ASSERT() macro. i.e.
     // DAWN_ASSERT(device.IsLockedByCurrentThread())
+    //   - IsLockedByCurrentThreadIfNeeded: Returns true if Feature::ImplicitDeviceSynchronization
+    //     is turned off or the device is locked by the current thread.
+    //   - IsNotLockedByCurrentThread: Returns true if Feature::ImplicitDeviceSynchronization is
+    //     turned off or the device is NOT locked by the current thread.
     bool IsLockedByCurrentThreadIfNeeded() const;
+    bool IsNotLockedByCurrentThread() const;
 
     Ref<ComputePipelineBase> AddOrGetCachedComputePipeline(
         Ref<ComputePipelineBase> computePipeline);
@@ -455,6 +459,11 @@ class DeviceBase : public ErrorSink,
   protected:
     // Constructor used only for mocking and testing.
     DeviceBase();
+
+    // Protected function to allow granular lock/unlock in internal implementations where the Guards
+    // may be more cumbersome. Prefer to use the Guard when possible.
+    void Lock();
+    void Unlock();
 
     void ForceEnableFeatureForTesting(Feature feature);
 
@@ -629,8 +638,7 @@ class DeviceBase : public ErrorSink,
     // this is a currently a recursive lock, but should only really be used recursively for error
     // handling.
     friend class DeviceGuard;
-    Ref<RecursiveMutex> mMutex = nullptr;
-    std::optional<class Defer> mDefer = std::nullopt;
+    Ref<DeviceMutex> mMutex = nullptr;
 };
 
 ResultOrError<Ref<PipelineLayoutBase>> ValidateLayoutAndGetComputePipelineDescriptorWithDefaults(
