@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71ffb285_db4e3fa9",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:26:03Z",
+      "side": 1,
+      "message": "Can we have a test that the webgpu.h query of `device.HasFeature(RG11B10UfloatRenderable)` returns true when only `TextureFormatsTier1` is enabled?",
+      "revId": "bd789089d2dc5e94e63b7cb5d5ac97606b25eeb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9ed16f3_645d3ffc",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:26:03Z",
+      "side": 1,
+      "message": "```suggestion\n    // Handle features that implicitly enable other features.\n    if (mEnabledFeatures.IsEnabled(Feature::TextureFormatsTier1)) {\n```",
+      "revId": "bd789089d2dc5e94e63b7cb5d5ac97606b25eeb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
