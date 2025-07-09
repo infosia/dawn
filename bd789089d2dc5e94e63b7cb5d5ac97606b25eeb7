@@ -33,6 +33,52 @@
       "message": "```suggestion\n    // Handle features that implicitly enable other features.\n    if (mEnabledFeatures.IsEnabled(Feature::TextureFormatsTier1)) {\n```",
       "revId": "bd789089d2dc5e94e63b7cb5d5ac97606b25eeb7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "337d7740_3ef1a2bf",
+        "filename": "src/dawn/tests/unittests/validation/RenderPipelineValidationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 3563,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-09T18:32:27Z",
+      "side": 1,
+      "message": "nit. `NotRenderableWithoutTier1` (to be consistent with the test names below).",
+      "range": {
+        "startLine": 3563,
+        "startChar": 37,
+        "endLine": 3563,
+        "endChar": 64
+      },
+      "revId": "bd789089d2dc5e94e63b7cb5d5ac97606b25eeb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc6784da_321a875f",
+        "filename": "src/dawn/tests/unittests/validation/TextureValidationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-09T18:32:27Z",
+      "side": 1,
+      "message": "nit. Can drop this part of the name since its redundant with the suite name already.",
+      "range": {
+        "startLine": 1211,
+        "startChar": 70,
+        "endLine": 1211,
+        "endChar": 79
+      },
+      "revId": "bd789089d2dc5e94e63b7cb5d5ac97606b25eeb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
