@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49f51e6b_cfc61705",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:58:50Z",
+      "side": 1,
+      "message": "Can you remind me of when this happens? When we have a Draw or a Dispatch, we should always have a pipeline.",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbc290f7_bf706e6d",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:58:50Z",
+      "side": 1,
+      "message": "These are only used in the loog.",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2124b7ea_2b38f436",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:58:50Z",
+      "side": 1,
+      "message": "```suggestion\n                         uint32_t registerOffset) const {\n```",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36c89c7c_2cd68595",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:58:50Z",
+      "side": 1,
+      "message": "We need something new here because in D3D12 a root signature layout change invalidates the whole root signature. So as a first approximation, if the layout changes, we need to set all immediates as dirty.",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "27b70e1a_3140a234",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:58:50Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4465a27_d3ed94dd",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:58:50Z",
+      "side": 1,
+      "message": "Can we have this logic grouped with [1]? Also ASSERT that what we end up using fits in the root signature? (we can turn a lot of that comment into code that counts).",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d6a2b67_2bb4d571",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:58:50Z",
+      "side": 1,
+      "message": "Can we nave a TODO to move these to immediates in the future?",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
