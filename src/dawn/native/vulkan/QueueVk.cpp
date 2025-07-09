@@ -148,8 +148,6 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
             fenceSerial = tentativeSerial;
 
             mUnusedFences->push_back(fence);
-
-            DAWN_ASSERT(fenceSerial > GetCompletedCommandSerial());
             fencesInFlight->pop_front();
         }
         return fenceSerial;
@@ -184,9 +182,6 @@ MaybeError Queue::WaitForIdleForDestruction() {
     mFencesInFlight.Use([&](auto fencesInFlight) {
         while (!fencesInFlight->empty()) {
             VkFence fence = fencesInFlight->front().first;
-            ExecutionSerial fenceSerial = fencesInFlight->front().second;
-            DAWN_ASSERT(fenceSerial > GetCompletedCommandSerial());
-
             VkResult result = VkResult::WrapUnsafe(VK_TIMEOUT);
             do {
                 // If WaitForIdleForDesctruction is called while we are Disconnected, it means that
@@ -472,7 +467,8 @@ void Queue::DestroyImpl() {
     QueueBase::DestroyImpl();
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
+ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                             Nanoseconds timeout) {
     Device* device = ToBackend(GetDevice());
     VkDevice vkDevice = device->GetVkDevice();
     // If the client has passed a finite timeout, the function will eventually return due to
@@ -483,18 +479,21 @@ ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanosecond
     // TODO(crbug.com/344798087): Handle the issue of timeouts in a more general way further up the
     // stack.
     while (1) {
+        ExecutionSerial completedSerial = kBeginningOfGPUTime;
         VkResult waitResult = mFencesInFlight.Use([&](auto fencesInFlight) {
             // Search from for the first fence >= serial.
             VkFence waitFence = VK_NULL_HANDLE;
             for (auto it = fencesInFlight->begin(); it != fencesInFlight->end(); ++it) {
                 if (it->second >= serial) {
                     waitFence = it->first;
+                    completedSerial = it->second;
                     break;
                 }
             }
             if (waitFence == VK_NULL_HANDLE) {
                 // Fence not found. This serial must have already completed.
                 // Return a VK_SUCCESS status.
+                completedSerial = serial;
                 return VkResult::WrapUnsafe(VK_SUCCESS);
             }
             // Wait for the fence.
@@ -517,10 +516,10 @@ ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanosecond
             if (static_cast<uint64_t>(timeout) == std::numeric_limits<uint64_t>::max()) {
                 continue;
             }
-            return false;
+            return kBeginningOfGPUTime;
         }
         DAWN_TRY(CheckVkSuccess(::VkResult(waitResult), "vkWaitForFences"));
-        return true;
+        return completedSerial;
     }
 }
 
