@@ -169,7 +169,7 @@ void Queue::OnGLUsed() {
     mHasPendingCommands = true;
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
+ResultOrError<bool> Queue::WaitForQueueSerialImpl(ExecutionSerial serial, Nanoseconds timeout) {
     // Search for the first fence >= serial.
     return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<bool> {
         Ref<WrappedEGLSync> sync;
@@ -314,7 +314,7 @@ void Queue::ForceEventualFlushOfCommands() {
 MaybeError Queue::WaitForIdleForDestruction() {
     const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
     DAWN_GL_TRY(gl, Finish());
-    DAWN_TRY(CheckPassedSerials());
+    DAWN_TRY(UpdateCompletedSerial());
     DAWN_ASSERT(mFencesInFlight->empty());
     mHasPendingCommands = false;
     return {};

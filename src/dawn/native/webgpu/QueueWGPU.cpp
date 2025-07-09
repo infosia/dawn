@@ -151,7 +151,7 @@ MaybeError Queue::SubmitFutureSync() {
     return {};
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
+ResultOrError<bool> Queue::WaitForQueueSerialImpl(ExecutionSerial serial, Nanoseconds timeout) {
     return mFuturesInFlight.Use([&](auto futuresInFlight) -> ResultOrError<bool> {
         WGPUFuture future = {kNullFutureID};
         for (const auto& f : *futuresInFlight) {
