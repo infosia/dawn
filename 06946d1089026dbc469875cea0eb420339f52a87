@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cf76dde_ebcb5ab8",
+        "filename": "src/tint/lang/wgsl/inspector/resource_binding.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-09T01:46:04Z",
+      "side": 1,
+      "message": "Nit: Suggest using `kReadWriteTexelBuffer` to be more explicit and also in case we do add a write-only texel buffer access mode in the future. Same with the other changes.",
+      "revId": "06946d1089026dbc469875cea0eb420339f52a87",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
