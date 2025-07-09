@@ -33,6 +33,24 @@
       "message": "Do you know if this will result in a UKM so we know what origin is using the deprecated path?",
       "revId": "cd2fc897209bb6000e7c02ca933b7259cda510c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fdffe57d_0ad9377d",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-07-09T23:29:27Z",
+      "side": 1,
+      "message": "Haha, I thought you\u0027d know and tell me how to fix it if it did not! 😅\n\nChecking though, no, it does not so I\u0027m looking into how to add a UKM from Dawn, it looks like either \n\n(a) I need to add a new entry point to DawnPlatform for bool UKM\n\nor\n\n(b) I should add a case in Blink [here](https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/dawn_platform.cc;l\u003d229?q\u003dsymbol:HistogramBoolean\u0026ss\u003dchromium\u0026start\u003d11) that\u0027s like\n\n    if (!strcmp(name, \"BGRA8UnormStorageTextureReadOnlyUsage\")) {\n      // do the UKM stuff\n    } else {\n      // do the UMA stuff\n    }\n\nDo you have a preference?",
+      "parentUuid": "6d334b47_c6c6196f",
+      "revId": "cd2fc897209bb6000e7c02ca933b7259cda510c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
