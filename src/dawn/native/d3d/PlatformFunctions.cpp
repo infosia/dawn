@@ -30,6 +30,7 @@
 #include <comdef.h>
 #include <versionhelpers.h>
 
+#include <utility>
 #include <vector>
 
 #include "dawn/common/SystemUtils.h"
@@ -61,9 +62,9 @@ PlatformFunctions::PlatformFunctions() : mCurrentBuildNumber(0) {}
 
 PlatformFunctions::~PlatformFunctions() = default;
 
-MaybeError PlatformFunctions::LoadFunctions() {
+MaybeError PlatformFunctions::LoadFunctions(std::span<const std::string> searchPaths) {
     DAWN_TRY(LoadDXGI());
-    DAWN_TRY(LoadFXCompiler());
+    DAWN_TRY(LoadFXCompiler(searchPaths));
     DAWN_TRY(LoadKernelBase());
     InitWindowsVersion();
     return {};
@@ -92,12 +93,13 @@ MaybeError PlatformFunctions::LoadDXGI() {
     return {};
 }
 
-MaybeError PlatformFunctions::LoadFXCompiler() {
+MaybeError PlatformFunctions::LoadFXCompiler(std::span<const std::string> searchPaths) {
 #if DAWN_PLATFORM_IS(WINUWP)
     d3dCompile = &D3DCompile;
     d3dDisassemble = &D3DDisassemble;
 #else
     std::string error;
+    DynamicLib fxCompilerLib;
 #if defined(DAWN_FORCE_SYSTEM_COMPONENT_LOAD)
     // https://crbug.com/399358291. Since Skia's build system is not able to locate the Windows
     // SDK tools, d3dcompiler_47.dll is not copied into the build location. Tests fail when we
@@ -105,16 +107,21 @@ MaybeError PlatformFunctions::LoadFXCompiler() {
     // that comes with the OS. The OS compiler contains functionality and heap corruption bugs
     // on older Windows versions so care must be taken to always ship with the latest SDK
     // compiler.
-    const bool loadSuccess = mFXCompilerLib.OpenSystemLibrary(L"d3dcompiler_47.dll", &error);
+    fxCompilerLib.OpenSystemLibrary(L"d3dcompiler_47.dll", &error);
 #else
-    const auto modulePath = GetModuleDirectory();
-    const std::string& pathToPrepend = modulePath.value_or("");
-    const bool loadSuccess = mFXCompilerLib.Open(pathToPrepend + "d3dcompiler_47.dll", &error);
+    for (const std::string& searchPath : searchPaths) {
+        const std::string libraryPath = searchPath + "d3dcompiler_47.dll";
+        if (!fxCompilerLib.Open(libraryPath, &error)) {
+            continue;
+        }
+    }
 #endif
-    if (!loadSuccess || !mFXCompilerLib.GetProc(&d3dCompile, "D3DCompile", &error) ||
-        !mFXCompilerLib.GetProc(&d3dDisassemble, "D3DDisassemble", &error)) {
+    if (!fxCompilerLib.Valid() || !fxCompilerLib.GetProc(&d3dCompile, "D3DCompile", &error) ||
+        !fxCompilerLib.GetProc(&d3dDisassemble, "D3DDisassemble", &error)) {
         return DAWN_INTERNAL_ERROR(error.c_str());
     }
+
+    mFXCompilerLib = std::move(fxCompilerLib);
 #endif
     return {};
 }
