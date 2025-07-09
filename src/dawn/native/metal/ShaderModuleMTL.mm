@@ -107,10 +107,9 @@ namespace dawn::native::metal {
 ResultOrError<Ref<ShaderModule>> ShaderModule::Create(
     Device* device,
     const UnpackedPtr<ShaderModuleDescriptor>& descriptor,
-    const std::vector<tint::wgsl::Extension>& internalExtensions,
-    ShaderModuleParseResult* parseResult) {
+    const std::vector<tint::wgsl::Extension>& internalExtensions) {
     Ref<ShaderModule> module = AcquireRef(new ShaderModule(device, descriptor, internalExtensions));
-    DAWN_TRY(module->Initialize(parseResult));
+    module->Initialize();
     return module;
 }
 
@@ -120,10 +119,6 @@ ShaderModule::ShaderModule(Device* device,
     : ShaderModuleBase(device, descriptor, std::move(internalExtensions)) {}
 
 ShaderModule::~ShaderModule() = default;
-
-MaybeError ShaderModule::Initialize(ShaderModuleParseResult* parseResult) {
-    return InitializeBase(parseResult);
-}
 
 namespace {
 
