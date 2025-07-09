@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3f36630a_0e8c24d5",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-09T10:39:43Z",
+      "side": 1,
+      "message": "Ah, I think assert is more accurate.",
+      "parentUuid": "49f51e6b_cfc61705",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "dbc290f7_bf706e6d",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 5
@@ -31,6 +49,24 @@
       "writtenOn": "2025-07-09T09:58:50Z",
       "side": 1,
       "message": "These are only used in the loog.",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0f05aba_f8175cd0",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-09T10:39:43Z",
+      "side": 1,
+      "message": "Sry, but what does this mean?\n\nI think this is used in `SetRootConstant()`?",
+      "parentUuid": "dbc290f7_bf706e6d",
       "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -65,6 +101,24 @@
       "writtenOn": "2025-07-09T09:58:50Z",
       "side": 1,
       "message": "We need something new here because in D3D12 a root signature layout change invalidates the whole root signature. So as a first approximation, if the layout changes, we need to set all immediates as dirty.",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8421ea3_4a38b5d4",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-09T10:39:43Z",
+      "side": 1,
+      "message": "Sry but would you mind to provide a example?\n\nCurrently I relies on bind groupt tracker to help me set correct root signature before draw or dispatch. And we have OnSetPipeline to ensure dirty for next pipeline. And I think we setup internal constants always.\n\nSo I\u0027m a bit confuse about this. An simple example is appreciate, thanks!",
+      "parentUuid": "36c89c7c_2cd68595",
       "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
