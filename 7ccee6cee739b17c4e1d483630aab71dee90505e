@@ -16,6 +16,23 @@
       "message": "\u003e The dawn directory requires source formatting. Please run: git cl format\n\nFYI if you use `git cl upload` to upload, it will check this before uploading.",
       "revId": "7ccee6cee739b17c4e1d483630aab71dee90505e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68088252_40f248d9",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T12:20:56Z",
+      "side": 1,
+      "message": "IMHO we should special case a few methods instead of adding logic in the generator that will be used for a single method and might make things difficult to debug in the future when other methods with nullable returns need to be handled a different way. We can do it later after initial release of the bindings in alpha but can we have a TODO?",
+      "revId": "7ccee6cee739b17c4e1d483630aab71dee90505e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
