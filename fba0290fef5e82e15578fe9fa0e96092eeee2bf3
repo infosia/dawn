@@ -52,6 +52,24 @@
       "parentUuid": "4488f79d_bf1441ef",
       "revId": "fba0290fef5e82e15578fe9fa0e96092eeee2bf3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7cdea9b_88fade5a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-09T15:10:12Z",
+      "side": 1,
+      "message": "Agree, worth adding a separate test (maybe another unit test alongside the other resolve unit tests you added), that shows you can use the builtins without `requires`.",
+      "parentUuid": "e7854487_b9be79e8",
+      "revId": "fba0290fef5e82e15578fe9fa0e96092eeee2bf3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
