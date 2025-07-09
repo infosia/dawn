@@ -61,7 +61,7 @@ Ref<ShaderModuleMock> ShaderModuleMock::Create(
                                                         /* needReflection*/ true))
             .AcquireSuccess();
 
-    shaderModule->InitializeBase(&parseResult).AcquireSuccess();
+    shaderModule->Initialize().AcquireSuccess();
     return shaderModule;
 }
 
