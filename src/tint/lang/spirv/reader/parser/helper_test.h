@@ -53,7 +53,7 @@ namespace tint::spirv::reader {
 
 // Helper macro to run the parser and compare the disassembled IR to a string.
 // Automatically prefixes the IR disassembly with a newline to improve formatting of tests.
-#define EXPECT_IR(asm, ir) EXPECT_IR_SPV(asm, ir, SPV_ENV_UNIVERSAL_1_0)
+#define EXPECT_IR(asm, ir) EXPECT_IR_SPV(asm, ir, SPV_ENV_VULKAN_1_1)
 
 /// Base helper class for testing the SPIR-V parser implementation.
 template <typename BASE>
@@ -63,7 +63,7 @@ class SpirvParserTestHelperBase : public BASE {
     /// @param spirv_asm the SPIR-V assembly to parse
     /// @returns the disassembled Tint IR or an error
     Result<std::string> Run(std::string spirv_asm,
-                            spv_target_env spv_version = SPV_ENV_UNIVERSAL_1_0) {
+                            spv_target_env spv_version = SPV_ENV_VULKAN_1_1) {
         // Assemble the SPIR-V input.
         auto binary = Assemble(spirv_asm, spv_version);
         if (binary != Success) {

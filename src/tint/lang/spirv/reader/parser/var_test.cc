@@ -589,6 +589,7 @@ using BuiltinInputTest = SpirvParserTestWithParam<BuiltinCase>;
 TEST_P(BuiltinInputTest, Enum) {
     auto params = GetParam();
     EXPECT_IR(R"(
+               OpCapability GroupNonUniform
                OpCapability Shader
                OpCapability SampleRateShading
                OpMemoryModel Logical GLSL450
@@ -666,6 +667,11 @@ INSTANTIATE_TEST_SUITE_P(
             "arr_u32_1",
             "SampleMask",
             "%1:ptr<__in, array<u32, 1>, read> = var undef @builtin(sample_mask)",
+        },
+        BuiltinCase{
+            "u32",
+            "SubgroupSize",
+            "%1:ptr<__in, u32, read> = var undef @builtin(subgroup_size)",
         },
         BuiltinCase{
             "u32",
