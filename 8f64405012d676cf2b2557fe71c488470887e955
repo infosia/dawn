@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02e2a95e_aeb955e5",
+        "filename": "src/dawn/native/d3d12/DeviceD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T10:03:42Z",
+      "side": 1,
+      "message": "We could use Dawn reentrantly to avoid the need to call MapAtCreation manually as that might move a bit in the future.\n\n```suggestion\n    BufferBase zeroBufferBase;\n    if (ToBackend(GetPhysicalDevice())-\u003eSupportsBufferMapExtendedUsages()) {\n        zeroBufferDescriptor.mappedAtCreation \u003d true;\n        zeroBufferDescriptor.usage \u003d wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;\n        \n        DAWN_TRY_ASSIGN(zeroBufferBase, device-\u003eCreateBuffer(\u0026 zeroBufferDescriptor)); // Need to check if this can return nullptr and fail creation in that case.\n\n        void* mappedPointer \u003d zeroBufferBase-\u003eGetMappedPointer();\n        DAWN_ASSERT(mappedPointer !\u003d nullptr);\n        memset(mappedPointer, 0, zeroBufferBase-\u003eGetAllocatedSize());\n        DAWN_TRY(zeroBufferBase-\u003eUnmap());\n    } else {\n        DAWN_TRY_ASSIGN(zeroBufferBase, device-\u003eCreateBuffer(\u0026 zeroBufferDescriptor)); // Need to check if this can return nullptr and fail creation in that case.\n    }\n    \n    mZeroBuffer \u003d ToBackend(zeroBufferBase);\n```",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 5
+      },
+      "revId": "8f64405012d676cf2b2557fe71c488470887e955",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
