@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5987c270_6c5146d0",
+        "filename": "src/dawn/native/Adapter.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T08:32:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c5bc2ad_1ac8f3e8",
+      "revId": "47e85f36d1edb2e5168e084414a85df89c908fa2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abbe459a_36e848dd",
@@ -31,6 +49,24 @@
       "writtenOn": "2025-07-08T18:27:30Z",
       "side": 1,
       "message": "nit: initially thought \"this\" referred to the previous sentence.\n\ns/this/this flag/",
+      "revId": "47e85f36d1edb2e5168e084414a85df89c908fa2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac5cf27f_fecc863a",
+        "filename": "src/dawn/native/Instance.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T08:32:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abbe459a_36e848dd",
       "revId": "47e85f36d1edb2e5168e084414a85df89c908fa2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

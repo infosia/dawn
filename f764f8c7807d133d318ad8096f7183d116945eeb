@@ -340,6 +340,24 @@
       "parentUuid": "3a3bee4d_385e5580",
       "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0c62b80_b0ef5e4e",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-09T08:32:04Z",
+      "side": 1,
+      "message": "I\u0027m confused. The chromium gl test `WebGPUMailboxTextureTest.AssociateOnTwoDevicesAtTheSameTime` uses Dawn Wire which does not support any WGPUInstanceFeatureName. How can I enable this feature in Chromium to allow one adapter to use multiple devices then? Would it be better to refactor/remove this test?",
+      "parentUuid": "c7af5244_9ea38cd8",
+      "revId": "f764f8c7807d133d318ad8096f7183d116945eeb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
