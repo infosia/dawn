@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f618d736_a171219f",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T12:08:21Z",
+      "side": 1,
+      "message": "They are not used outside the loop so they can be defined in it. This is a comment that Geoff also made on other ImmediateDataTrackers. Please do a self-reviews to look for easy simplifications like this before sending it for wider review.",
+      "parentUuid": "c0f05aba_f8175cd0",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2124b7ea_2b38f436",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 5
@@ -84,6 +102,40 @@
       "writtenOn": "2025-07-09T09:58:50Z",
       "side": 1,
       "message": "```suggestion\n                         uint32_t registerOffset) const {\n```",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ede9c2de_780db06b",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T12:08:21Z",
+      "side": 1,
+      "message": "[3]",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08046c54_7c8b7902",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T12:08:21Z",
+      "side": 1,
+      "message": "[2]",
       "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -119,6 +171,24 @@
       "side": 1,
       "message": "Sry but would you mind to provide a example?\n\nCurrently I relies on bind groupt tracker to help me set correct root signature before draw or dispatch. And we have OnSetPipeline to ensure dirty for next pipeline. And I think we setup internal constants always.\n\nSo I\u0027m a bit confuse about this. An simple example is appreciate, thanks!",
       "parentUuid": "36c89c7c_2cd68595",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78579a5f_780b603f",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T12:08:21Z",
+      "side": 1,
+      "message": "I\u0027m not sure that an example will help. It\u0027s more important to understand how D3D12 is specified as understanding the exact semantic leads to better solutions.\n\nWhat I mean is that when the call at [2] happens, all the contents of the root signature, constants, descriptors and descriptor tables is invalidated. Which is why we pass `false` at [3] for `CanInheritBindGroups`. We should have something similar for root constants as they get invalidated the same way.",
+      "parentUuid": "e8421ea3_4a38b5d4",
       "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
