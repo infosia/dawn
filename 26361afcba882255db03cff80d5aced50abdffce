@@ -33,6 +33,24 @@
       "message": "We could also do something like:\n\n```\nTextureView* specimenAttachment \u003d nullptr;\n// Validate all attachments like so:\n// Could be hoisted in an OnAttachment local lambda.\nspecimenAttachment \u003d colorAttachment.view\nDAWN_TRY(device-\u003eValidateObject(specimenAttachment));\n\n// Afterwards\nDAWN_ASSERT(specimenAttachment !\u003d nullptr);\nAddAttachment(specimenAttachment);\n```\n\nThis makes AddAttachment called only once.",
       "revId": "26361afcba882255db03cff80d5aced50abdffce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7d69c1a_e8014876",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-09T19:51:11Z",
+      "side": 1,
+      "message": "Gave that a try, thanks!",
+      "parentUuid": "8e2ca0b0_74eb73e5",
+      "revId": "26361afcba882255db03cff80d5aced50abdffce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
