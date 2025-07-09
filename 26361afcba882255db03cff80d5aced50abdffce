@@ -16,6 +16,23 @@
       "message": "PTAL! Sounds like this is the direction Corentin was thinking based on the comments in the associated bug. Conversations with Kai last week were pointing in a different direction, though, so it\u0027s probably worth talking through some more. I just wanted to have this ready to go if this is the route we choose.",
       "revId": "26361afcba882255db03cff80d5aced50abdffce",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e2ca0b0_74eb73e5",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-09T09:04:24Z",
+      "side": 1,
+      "message": "We could also do something like:\n\n```\nTextureView* specimenAttachment \u003d nullptr;\n// Validate all attachments like so:\n// Could be hoisted in an OnAttachment local lambda.\nspecimenAttachment \u003d colorAttachment.view\nDAWN_TRY(device-\u003eValidateObject(specimenAttachment));\n\n// Afterwards\nDAWN_ASSERT(specimenAttachment !\u003d nullptr);\nAddAttachment(specimenAttachment);\n```\n\nThis makes AddAttachment called only once.",
+      "revId": "26361afcba882255db03cff80d5aced50abdffce",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
