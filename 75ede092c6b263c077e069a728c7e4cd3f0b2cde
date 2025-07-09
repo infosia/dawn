@@ -126,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e45f45bd_df038d81",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-09T02:18:33Z",
+      "side": 1,
+      "message": "Thanks for info! Then I think I\u0027d like to keep the immediates as a standalone buffer. I don\u0027t think the API setBytes|setFragmentBytes|setVertexBytes could handles a argument buffer attribute. But I\u0027ll do more investigation on it.",
+      "parentUuid": "c42a158c_a489d2d8",
+      "revId": "75ede092c6b263c077e069a728c7e4cd3f0b2cde",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0db63e52_c7e361b6",
         "filename": "test/tint/var/uses/immediate.wgsl.expected.msl",
         "patchSetId": 1
