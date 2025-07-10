@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0584c6a6_a4bca0c4",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T13:10:07Z",
+      "side": 1,
+      "message": "Should we allow this extension only when some extension like \"DawnNative\" is present?",
+      "revId": "308a24c3afea49b44911a8cfac1a2372658c5f78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83399072_63ee82b0",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T13:10:07Z",
+      "side": 1,
+      "message": "Can this be broken off to a separate bool like \"consumeOnSuccess\"?",
+      "range": {
+        "startLine": 317,
+        "startChar": 30,
+        "endLine": 318,
+        "endChar": 89
+      },
+      "revId": "308a24c3afea49b44911a8cfac1a2372658c5f78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9ed9263_a3961673",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T13:10:07Z",
+      "side": 1,
+      "message": "Please unify this handling with the ShaderSource_SPIRV that Kai (?) added in the last few days.",
+      "revId": "308a24c3afea49b44911a8cfac1a2372658c5f78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
