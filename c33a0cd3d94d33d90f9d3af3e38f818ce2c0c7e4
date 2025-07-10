@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05a75bd8_37f81ba0",
+        "filename": "src/dawn/tests/end2end/BasicTests.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-10T05:47:34Z",
+      "side": 1,
+      "message": "nit. I think this would be a little bit easier to maintain if we have two lists/arryas (something like) `kExpectedWireFeatures` and `kExpectedNonWireFeatures` and then we loop through them to check expectations. Would be easier if we add more features in the future to update those lists.",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 97
+      },
+      "revId": "c33a0cd3d94d33d90f9d3af3e38f818ce2c0c7e4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
