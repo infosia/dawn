@@ -186,6 +186,10 @@ void ExecutionQueueBase::TrackSerialTask(ExecutionSerial serial, Task&& task) {
     task();
 }
 
+bool ExecutionQueueBase::HasPendingSerialTasks() const {
+    return !mWaitingTasks.Empty();
+}
+
 void ExecutionQueueBase::UpdateCompletedSerialTo(ExecutionSerial completedSerial) {
     std::vector<Task> tasks;
     {

@@ -98,6 +98,9 @@ class ExecutionQueueBase : public ApiObjectBase {
     // Tracks new tasks to complete when |serial| is reached.
     void TrackSerialTask(ExecutionSerial serial, Task&& task);
 
+    // Returns true if there are any Serial Tasks waiting to be processed.
+    bool HasPendingSerialTasks() const;
+
     // In the 'Normal' mode, currently recorded commands in the backend submitted in the next Tick.
     // However in the 'Passive' mode, the submission will be postponed as late as possible, for
     // example, until the client has explictly issued a submission.
