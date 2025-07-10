@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22ec3057_22d015ed",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T13:04:18Z",
+      "side": 1,
+      "message": "Is this just the format\u0027s texel size?",
+      "range": {
+        "startLine": 57,
+        "startChar": 8,
+        "endLine": 57,
+        "endChar": 29
+      },
+      "revId": "1140bc21455b8418d0ca688d1bf829eafe332761",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4108d018_d4e6604f",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T13:04:18Z",
+      "side": 1,
+      "message": "```suggestion\n    constexpr std::array\u003cwgpu::ComponentSwizzle, 6\u003e kComponentSwizzles \u003d {\n```",
+      "revId": "1140bc21455b8418d0ca688d1bf829eafe332761",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08de2332_6f7d72c2",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T13:04:18Z",
+      "side": 1,
+      "message": "```suggestion\n// generated (0.0 or 1.0) by `textureLoad` due to the base format missing components.\n```",
+      "revId": "1140bc21455b8418d0ca688d1bf829eafe332761",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b5f3516_3d72ae04",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T13:04:18Z",
+      "side": 1,
+      "message": "Let\u0027s split these into multiple tests?",
+      "revId": "1140bc21455b8418d0ca688d1bf829eafe332761",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "235838bf_c9a05964",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T13:04:18Z",
+      "side": 1,
+      "message": "In the CTS we will also need to test with the whole zoo of textures (that it works or that it is validated out):\n\n - Swizzle for storage textures.\n - Depth textures used as texture_depth\n - Depth textures used as texture_2d\u003cf32\u003e\n - Stencil textures used as texture_2d\u003cu32\u003e\n - Multisampled color textures.\n - Multisampled depth textures.\n \nAlso the various ways to use the view: Load/Fetch, Sampling, Gather, maybe the compare versions etc.",
+      "revId": "1140bc21455b8418d0ca688d1bf829eafe332761",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
