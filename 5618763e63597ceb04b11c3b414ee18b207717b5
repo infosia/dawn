@@ -22,6 +22,30 @@
       },
       "revId": "5618763e63597ceb04b11c3b414ee18b207717b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffe17567_e15eefc3",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-10T01:47:25Z",
+      "side": 1,
+      "message": "Great question, we don\u0027t actually have any deprecated items anymore. Maybe we don\u0027t need to support those anymore? (Or maybe we should keep both deprecations and enum value proxies in case we need them in the future for renaming Dawn extensions or moving Dawn things into core? And hope they don\u0027t bitrot too much.)",
+      "parentUuid": "3be934d5_9df8c9bd",
+      "range": {
+        "startLine": 172,
+        "startChar": 16,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "5618763e63597ceb04b11c3b414ee18b207717b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
