@@ -16,6 +16,75 @@
       "message": "Thanks for your comments! I have revised two tests influenced by the change of device.cpp, PTAL again.",
       "revId": "3f302efa7a4df43931adeebe76e08b52b530b456",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df493647_1ca85195",
+        "filename": "src/dawn/tests/unittests/native/DeviceCreationTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-10T05:52:09Z",
+      "side": 1,
+      "message": "nit. maybe just 2u? Not sure why it was like that before but I don\u0027t feel like it\u0027s useful to have 1u + 1u over just 2u. Or maybe we can have a `static constexpr uint32_t kDefaultExpectedFeatureCount \u003d 2u`, and use it for all the places below as well.",
+      "range": {
+        "startLine": 215,
+        "startChar": 44,
+        "endLine": 215,
+        "endChar": 51
+      },
+      "revId": "3f302efa7a4df43931adeebe76e08b52b530b456",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "585f5169_63efac61",
+        "filename": "src/dawn/tests/unittests/native/DeviceCreationTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-10T05:52:09Z",
+      "side": 1,
+      "message": "nit. ditto",
+      "range": {
+        "startLine": 247,
+        "startChar": 48,
+        "endLine": 247,
+        "endChar": 56
+      },
+      "revId": "3f302efa7a4df43931adeebe76e08b52b530b456",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56333ab9_af337171",
+        "filename": "src/dawn/tests/unittests/native/DeviceCreationTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-10T05:52:09Z",
+      "side": 1,
+      "message": "nit. ditto",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 56
+      },
+      "revId": "3f302efa7a4df43931adeebe76e08b52b530b456",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
