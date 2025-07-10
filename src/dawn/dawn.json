@@ -2335,7 +2335,9 @@
             {"value": 55, "name": "chromium experimental subgroup matrix", "tags": ["dawn"]},
             {"value": 56, "name": "shared fence EGL sync", "tags": ["dawn", "native"]},
             {"value": 57, "name": "dawn device allocator control", "tags": ["dawn"]},
-            {"value": 58, "name": "texture formats tier1", "tags": ["dawn"]}
+            {"value": 58, "name": "texture formats tier1", "tags": ["dawn"]},
+            {"value": 59, "name": "shared texture memory D3D12 resource", "tags": ["dawn", "native"]}
+
         ]
     },
     "filter mode": {
@@ -3879,7 +3881,8 @@
             {"value": 67, "name": "dawn host mapped pointer limits", "tags": ["dawn"]},
             {"value": 68, "name": "render pass descriptor resolve rect", "tags": ["dawn"]},
             {"value": 69, "name": "request adapter WebGPU backend options", "tags": ["dawn", "native"]},
-            {"value": 70, "name": "dawn fake device initialize error for testing", "tags": ["dawn"]}
+            {"value": 70, "name": "dawn fake device initialize error for testing", "tags": ["dawn"]},
+            {"value": 71, "name": "shared texture memory D3D12 resource descriptor", "tags": ["dawn", "native"]}
         ]
     },
     "texture": {
