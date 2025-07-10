@@ -49,6 +49,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "610be9e6_1c94762f",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-10T20:38:28Z",
+      "side": 1,
+      "message": "the code hasn\u0027t created the device yet.  comment needs updating?",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 40
+      },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "074a8d4b_34bc5eb4",
         "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
         "patchSetId": 5
@@ -66,6 +89,47 @@
         "endLine": 86,
         "endChar": 26
       },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9209089_f7d172d8",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-10T20:38:28Z",
+      "side": 1,
+      "message": "I suggest your comment go into the code:\n\nWe (as a team) should make sure this test does something, even as we evolve the set of devices in our CQ and CI.  Right now this test is useful because we have NV 1660s. As long as we have desktop-class NV devices on the CQ/CI then that\u0027s fine.  When that change, change the conditions here.",
+      "parentUuid": "074a8d4b_34bc5eb4",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 26
+      },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8141b4d8_1fe6eb88",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-10T20:38:28Z",
+      "side": 1,
+      "message": "I suggest adding one \"alignment\"  limit, where \"better\" means smaller and divides into the larger limit.\n\nE.g. minUniformBufferOffsetAlignment",
       "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

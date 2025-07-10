@@ -22,6 +22,30 @@
       },
       "revId": "33f153cfa92ac215870b8c55fd918e0df7448933",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2cec8e09_9d880310",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-10T20:38:28Z",
+      "side": 1,
+      "message": "I think the problem is DawnTestBase::SetUp and DawnTestBase::TearDown are not virtual.\n\nI *think* if you made those virtual, then you can make your test class inherit from DawnTestWithParams, and then override those methods in the derived class.\nThey should still call the base class setup and teardown. (You know, call parent setup before doing your own stuff, and call tear down base after doing your own stuff.)\n\nPlease give that a try. That would be preferable to this, if you can make it work.",
+      "parentUuid": "6523ddb1_c4a6f7d1",
+      "range": {
+        "startLine": 683,
+        "startChar": 17,
+        "endLine": 683,
+        "endChar": 42
+      },
+      "revId": "33f153cfa92ac215870b8c55fd918e0df7448933",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
