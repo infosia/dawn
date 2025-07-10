@@ -43,6 +43,7 @@ struct SharedTextureMemoryD3D11Texture2DDescriptor;
 
 namespace d3d12 {
 struct SharedBufferMemoryD3D12ResourceDescriptor;
+struct SharedTextureMemoryD3D12ResourceDescriptor;
 }
 
 namespace opengl {
@@ -88,14 +89,19 @@ constexpr inline wgpu::SType STypeForImpl<d3d11::SharedTextureMemoryD3D11Texture
     wgpu::SType(WGPUSType_SharedTextureMemoryD3D11Texture2DDescriptor);
 
 template <>
-struct AdditionalExtensions<SharedTextureMemoryDescriptor> {
-    using List =
-        AdditionalExtensionsList<const d3d11::SharedTextureMemoryD3D11Texture2DDescriptor*>;
-};
-
-template <>
 constexpr inline wgpu::SType STypeForImpl<d3d12::SharedBufferMemoryD3D12ResourceDescriptor> =
     wgpu::SType(WGPUSType_SharedBufferMemoryD3D12ResourceDescriptor);
+
+template <>
+constexpr inline wgpu::SType STypeForImpl<d3d12::SharedTextureMemoryD3D12ResourceDescriptor> =
+    wgpu::SType(WGPUSType_SharedTextureMemoryD3D12ResourceDescriptor);
+
+template <>
+struct AdditionalExtensions<SharedTextureMemoryDescriptor> {
+    using List =
+        AdditionalExtensionsList<const d3d11::SharedTextureMemoryD3D11Texture2DDescriptor*,
+                                  const d3d12::SharedTextureMemoryD3D12ResourceDescriptor*>;
+};
 
 template <>
 struct AdditionalExtensions<SharedBufferMemoryDescriptor> {
