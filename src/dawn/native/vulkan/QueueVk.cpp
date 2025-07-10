@@ -139,6 +139,7 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
             // Fence are added in order, so we can stop searching as soon
             // as we see one that's not ready.
             if (result == VK_NOT_READY) {
+                UpdateCompletedSerialTo(fenceSerial);
                 return fenceSerial;
             } else {
                 DAWN_TRY(CheckVkSuccess(::VkResult(result), "GetFenceStatus"));
@@ -152,6 +153,7 @@ ResultOrError<ExecutionSerial> Queue::CheckAndUpdateCompletedSerials() {
             DAWN_ASSERT(fenceSerial > GetCompletedCommandSerial());
             fencesInFlight->pop_front();
         }
+        UpdateCompletedSerialTo(fenceSerial);
         return fenceSerial;
     });
 }
@@ -167,7 +169,7 @@ MaybeError Queue::WaitForIdleForDestruction() {
     if (mRecordingContext.used) {
         CommandPoolAndBuffer commands = {mRecordingContext.commandPool,
                                          mRecordingContext.commandBuffer};
-        mUnusedCommands.push_back(commands);
+        mUnusedCommands->push_back(commands);
         mRecordingContext = CommandRecordingContext();
     }
 
@@ -264,16 +266,20 @@ ResultOrError<CommandPoolAndBuffer> Queue::BeginVkCommandBuffer() {
     Device* device = ToBackend(GetDevice());
     VkDevice vkDevice = device->GetVkDevice();
 
-    CommandPoolAndBuffer commands;
-
     // First try to recycle unused command pools.
-    if (!mUnusedCommands.empty()) {
-        commands = mUnusedCommands.back();
-        mUnusedCommands.pop_back();
-        DAWN_TRY_WITH_CLEANUP(
-            CheckVkSuccess(device->fn.ResetCommandPool(vkDevice, commands.pool, 0),
-                           "vkResetCommandPool"),
-            { DestroyCommandPoolAndBuffer(device->fn, vkDevice, commands); });
+    auto result =
+        mUnusedCommands.Use([&](auto unusedCommands) -> std::optional<CommandPoolAndBuffer> {
+            if (!unusedCommands->empty()) {
+                CommandPoolAndBuffer recycledCommands = unusedCommands->back();
+                unusedCommands->pop_back();
+                return recycledCommands;
+            }
+            return std::nullopt;
+        });
+
+    CommandPoolAndBuffer commands;
+    if (result) {
+        commands = *result;
     } else {
         // Create a new command pool for our commands and allocate the command buffer.
         VkCommandPoolCreateInfo createInfo;
@@ -312,13 +318,6 @@ ResultOrError<CommandPoolAndBuffer> Queue::BeginVkCommandBuffer() {
         { DestroyCommandPoolAndBuffer(device->fn, vkDevice, commands); });
 
     return commands;
-}
-
-void Queue::RecycleCompletedCommands(ExecutionSerial completedSerial) {
-    for (auto& commands : mCommandsInFlight.IterateUpTo(completedSerial)) {
-        mUnusedCommands.push_back(commands);
-    }
-    mCommandsInFlight.ClearUpTo(completedSerial);
 }
 
 MaybeError Queue::SubmitPendingCommandsImpl() {
@@ -375,12 +374,27 @@ MaybeError Queue::SubmitPendingCommandsImpl() {
     }
     IncrementLastSubmittedCommandSerial();
     ExecutionSerial lastSubmittedSerial = GetLastSubmittedCommandSerial();
+
     mFencesInFlight->emplace_back(fence, lastSubmittedSerial);
 
     for (size_t i = 0; i < mRecordingContext.commandBufferList.size(); ++i) {
-        CommandPoolAndBuffer submittedCommands = {mRecordingContext.commandPoolList[i],
-                                                  mRecordingContext.commandBufferList[i]};
-        mCommandsInFlight.Enqueue(submittedCommands, lastSubmittedSerial);
+        CommandPoolAndBuffer commands = {mRecordingContext.commandPoolList[i],
+                                         mRecordingContext.commandBufferList[i]};
+        TrackSerialTask(lastSubmittedSerial, [commands, this]() {
+            Device* device = ToBackend(GetDevice());
+            VkDevice vkDevice = device->GetVkDevice();
+
+            MaybeError result = CheckVkSuccess(
+                device->fn.ResetCommandPool(vkDevice, commands.pool, 0), "vkResetCommandPool");
+            if (result.IsError()) {
+                // TODO: Do failures here need to be reported somehow?
+                result.AcquireError();
+                DestroyCommandPoolAndBuffer(device->fn, vkDevice, commands);
+                return;
+            }
+
+            mUnusedCommands->push_back(commands);
+        });
     }
 
     for (auto texture : mRecordingContext.specialSyncTextures) {
@@ -445,13 +459,14 @@ void Queue::DestroyImpl() {
 
     // Some commands might still be marked as in-flight if we shut down because of a device
     // loss. Recycle them as unused so that we free them below.
-    RecycleCompletedCommands(kMaxExecutionSerial);
-    DAWN_ASSERT(mCommandsInFlight.Empty());
+    UpdateCompletedSerialTo(kMaxExecutionSerial);
 
-    for (const CommandPoolAndBuffer& commands : mUnusedCommands) {
-        DestroyCommandPoolAndBuffer(device->fn, vkDevice, commands);
-    }
-    mUnusedCommands.clear();
+    mUnusedCommands.Use([&](auto unusedCommands) {
+        for (const CommandPoolAndBuffer& commands : *unusedCommands) {
+            DestroyCommandPoolAndBuffer(device->fn, vkDevice, commands);
+        }
+        unusedCommands->clear();
+    });
 
     // Some fences might still be marked as in-flight if we shut down because of a device loss.
     // Delete them since at this point all commands are complete.
