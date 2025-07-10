@@ -111,6 +111,9 @@ D3D12EndingAccessResolveSubresourceParameters(TextureView* resolveDestination,
     if (useRenderPass && renderPass->hasExpandResolveRect) {
         subresourceParameters.DstX = renderPass->resolveOffsetX;
         subresourceParameters.DstY = renderPass->resolveOffsetY;
+        std::cout << __func__ << "," << __LINE__
+                  << ", warpigpu, renderPass->resolveOffsetX= " << renderPass->resolveOffsetX
+                  << "\n";
         subresourceParameters.SrcRect = {
             static_cast<int32_t>(renderPass->colorOffsetX),
             static_cast<int32_t>(renderPass->colorOffsetY),

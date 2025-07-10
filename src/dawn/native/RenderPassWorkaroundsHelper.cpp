@@ -266,6 +266,9 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnPostEncoding(
                 // TODO(402810062): Enable render pass functionality using either
                 // ResolveSubresourceRegion (manual resolve) or
                 // D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS (in-pass resolve).
+                std::cout << __func__ << "," << __LINE__
+                          << ", warpigpu, useRenderPass = " << useRenderPass
+                          << ", warpigpu, isD3D12 = " << isD3D12 << "\n";
                 if (!isD3D12) {
                     // Do partial resolve first in one render pass.
                     DAWN_TRY(ResolveMultisampleWithDraw(device, encoder, resolveRect,
@@ -371,6 +374,7 @@ MaybeError RenderPassWorkaroundsHelper::ApplyOnRenderPassStart(
         // Perform ExpandResolveTexture load op's emulation after the render pass starts.
         // Backend that doesn't support CanTextureLoadResolveTargetInTheSameRenderpass() can
         // implement this load op internally.
+        std::cout << __func__ << "," << __LINE__ << ", warpigpu\n";
         DAWN_TRY(ExpandResolveTextureWithDraw(device, rpEncoder, rpDesc));
     }
 

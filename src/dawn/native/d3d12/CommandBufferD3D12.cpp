@@ -1396,6 +1396,7 @@ MaybeError CommandBuffer::SetupRenderPass(CommandRecordingContext* commandContex
                 ToBackend(view->GetTexture())->GetD3D12Resource(), &viewDesc, baseDescriptor);
 
             renderPassBuilder->SetRenderTargetView(i, baseDescriptor, false);
+            std::cout << __func__ << "," << __LINE__ << ", warpigpu" << "\n";
 
             // Set color load operation.
             renderPassBuilder->SetRenderTargetBeginningAccess(
