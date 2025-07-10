@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5404d37b_5f2a055c",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-10T22:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98929225_fac6d631",
+      "range": {
+        "startLine": 908,
+        "startChar": 29,
+        "endLine": 908,
+        "endChar": 43
+      },
+      "revId": "2339437ab9498c70de45898da6b529859880e66c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a7583cd_cf9ef3da",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-07-10T12:52:31Z",
       "side": 1,
       "message": "We could also add a SetSpecimenAttachment() that takes just the view and check no previous data was given.",
+      "revId": "2339437ab9498c70de45898da6b529859880e66c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5e30578_68cac48f",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-10T22:37:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a7583cd_cf9ef3da",
       "revId": "2339437ab9498c70de45898da6b529859880e66c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -106,6 +148,24 @@
       "writtenOn": "2025-07-10T12:52:31Z",
       "side": 1,
       "message": "Unrelated code snuck in this CL.",
+      "revId": "2339437ab9498c70de45898da6b529859880e66c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "adfbb5f7_09ad6535",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-10T22:37:21Z",
+      "side": 1,
+      "message": "Oops! Yeah. Accidental rebase against a WIP change. Fixed.",
+      "parentUuid": "7e589cc6_32419b2f",
       "revId": "2339437ab9498c70de45898da6b529859880e66c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
