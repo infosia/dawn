@@ -128,6 +128,30 @@
       },
       "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98abb5fe_1acbbabb",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-10T08:37:40Z",
+      "side": 1,
+      "message": "I\u0027ve followed your suggestion and added an extension to DeviceDescriptor that tells dawn to consume the adapter.",
+      "parentUuid": "bf9cc5bf_7dbd160b",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 32
+      },
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
