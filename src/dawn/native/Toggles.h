@@ -72,7 +72,6 @@ enum class Toggle {
     FlushBeforeClientWaitSync,
     UseTempBufferInSmallFormatTextureToTextureCopyFromGreaterToLessMipLevel,
     EmitHLSLDebugSymbols,
-    DisallowSpirv,
     DumpShaders,
     DumpShadersOnFailure,
     DisableWorkgroupInit,
