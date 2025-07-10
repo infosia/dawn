@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <limits>
 #include <memory>
 #include <sstream>
 #include <string>
@@ -38,12 +39,57 @@
 #include "dawn/utils/ComboRenderPipelineDescriptor.h"
 #include "dawn/utils/WGPUHelpers.h"
 
+#if TINT_BUILD_SPV_READER && !defined(__EMSCRIPTEN__)
+#include "spirv-tools/optimizer.hpp"
+#endif  // TINT_BUILD_SPV_READER && !defined(__EMSCRIPTEN__)
+
 namespace dawn {
 namespace {
 
 class ShaderModuleValidationTest : public ValidationTest {};
 
-#if TINT_BUILD_SPV_READER
+#if TINT_BUILD_SPV_READER && !defined(__EMSCRIPTEN__)
+
+wgpu::ShaderModule CreateShaderModuleFromASM(
+    const wgpu::Device& device,
+    const char* source,
+    wgpu::DawnShaderModuleSPIRVOptionsDescriptor* spirv_options) {
+    // Use SPIRV-Tools's C API to assemble the SPIR-V assembly text to binary. Because the types
+    // aren't RAII, we don't return directly on success and instead always go through the code
+    // path that destroys the SPIRV-Tools objects.
+    wgpu::ShaderModule result = nullptr;
+
+    spv_context context = spvContextCreate(SPV_ENV_UNIVERSAL_1_3);
+    DAWN_ASSERT(context != nullptr);
+
+    spv_binary spirv = nullptr;
+    spv_diagnostic diagnostic = nullptr;
+    if (spvTextToBinary(context, source, strlen(source), &spirv, &diagnostic) == SPV_SUCCESS) {
+        DAWN_ASSERT(spirv != nullptr);
+        DAWN_ASSERT(spirv->wordCount <= std::numeric_limits<uint32_t>::max());
+
+        wgpu::ShaderSourceSPIRV spirvDesc;
+        spirvDesc.codeSize = static_cast<uint32_t>(spirv->wordCount);
+        spirvDesc.code = spirv->code;
+        spirvDesc.nextInChain = spirv_options;
+
+        wgpu::ShaderModuleDescriptor descriptor;
+        descriptor.nextInChain = &spirvDesc;
+        result = device.CreateShaderModule(&descriptor);
+    } else {
+        DAWN_ASSERT(diagnostic != nullptr);
+        dawn::WarningLog() << "CreateShaderModuleFromASM SPIRV assembly error:"
+                           << diagnostic->position.line + 1 << ":"
+                           << diagnostic->position.column + 1 << ": " << diagnostic->error;
+    }
+
+    spvDiagnosticDestroy(diagnostic);
+    spvBinaryDestroy(spirv);
+    spvContextDestroy(context);
+
+    return result;
+}
+
 // Test case with a simpler shader that should successfully be created
 TEST_F(ShaderModuleValidationTest, CreationSuccess) {
     const char* shader = R"(
@@ -249,7 +295,7 @@ TEST_F(ShaderModuleValidationTest, NonUniformDerivatives_FlagSetToTrue) {
     utils::CreateShaderModuleFromASM(device, kShaderWithNonUniformDerivative, &spirv_options_desc);
 }
 
-#endif  // TINT_BUILD_SPV_READER
+#endif  // TINT_BUILD_SPV_READER && !defined(__EMSCRIPTEN__)
 
 // Test that it is invalid to create a shader module with no chained descriptor. (It must be
 // WGSL or SPIRV, not empty)
