@@ -80,6 +80,30 @@
       },
       "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33ec5d32_309daf2c",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-10T01:23:25Z",
+      "side": 1,
+      "message": "Couldn\u0027t Blink just ensure that `MultipleDevicesPerAdapter` is enabled on the instance it creates then? Or is this for like a migration/transition thing?",
+      "parentUuid": "643da13c_c99f4be5",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 32
+      },
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
