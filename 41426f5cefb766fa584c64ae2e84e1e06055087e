@@ -176,6 +176,30 @@
       },
       "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3fc885b_ada27b3d",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-10T20:46:30Z",
+      "side": 1,
+      "message": "Oh, my bad, sorry François. It seems like we have one instance per command buffer (wire)? which is for Web content so we could just disable MultipleDevicesPerAdapter on those? I thought everything would be using the instance from [here](https://source.chromium.org/chromium/chromium/src/+/main:gpu/ipc/service/gpu_init.cc;l\u003d1292;drc\u003d59941535ecc1a62e988608ad8bab0dbdbb730eb5) which at least I\u0027m guessing is the one we use for Skia. (That was surprisingly hard to find because code search call chart didn\u0027t seem to include it properly.) ODML and gpu_info_collection also have their own.\n\nI do think eventually we might consolidate some of the instances, if we need to unify Future handling or something. But looks like that would require more refactoring than I thought, so we don\u0027t really need to design around it now.\n\nDawnConsumeAdapterDescriptor is definitely fine, but it _would_ be simpler if we can use MultipleDevicesPerAdapter directly since it\u0027s standard. I\u0027m just not totally confident whether that would do the correct thing or not in chrome. I guess if we try it and it works, then it should be fine!",
+      "parentUuid": "44825558_5f749c1d",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 32
+      },
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
