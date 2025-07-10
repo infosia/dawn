@@ -229,6 +229,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "71a0279f_43d72fe4",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T07:40:45Z",
+      "side": 1,
+      "message": "Ok thank you for the explanation and for adding a TODO in the base class!",
+      "parentUuid": "4810975d_56d65a5c",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "27b70e1a_3140a234",
