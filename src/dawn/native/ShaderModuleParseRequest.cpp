@@ -73,10 +73,10 @@ ShaderModuleParseRequest BuildShaderModuleParseRequest(
 #if TINT_BUILD_SPV_READER
     // Handling SPIR-V if enabled.
     if (const auto* spirvDesc = descriptor.Get<ShaderSourceSPIRV>()) {
-        // SPIRV toggle and instance feature should have been validated before checking cache.
-        DAWN_ASSERT(!device->IsToggleEnabled(Toggle::DisallowSpirv));
+        // wgpu::InstanceFeatureName::ShaderSourceSPIRV should have already been validated.
         DAWN_ASSERT(
             device->GetInstance()->HasFeature(wgpu::InstanceFeatureName::ShaderSourceSPIRV));
+
         // Descriptor should not contain WGSL part.
         DAWN_ASSERT(descriptor.Get<ShaderSourceWGSL>() == nullptr);
 
