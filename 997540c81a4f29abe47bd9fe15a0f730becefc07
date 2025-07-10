@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8cf6781_a2262cb2",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-10T17:32:50Z",
+      "side": 1,
+      "message": "Set iif was set by require",
+      "range": {
+        "startLine": 1305,
+        "startChar": 24,
+        "endLine": 1305,
+        "endChar": 42
+      },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1133ab11_1e6bd1ae",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-10T17:32:50Z",
+      "side": 1,
+      "message": "Unset if set.",
+      "range": {
+        "startLine": 1322,
+        "startChar": 7,
+        "endLine": 1322,
+        "endChar": 50
+      },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
