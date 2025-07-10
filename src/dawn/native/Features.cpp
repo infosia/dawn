@@ -419,6 +419,10 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
      {"Supports configuring device allocator via DawnDeviceAllocatorControl",
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
       "dawn_device_allocator_control.md",
+      FeatureInfo::FeatureState::Experimental}},
+    {Feature::SharedTextureMemoryD3D12Resource,
+     {"Support importing ID3D12Resource as shared texture memory.",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/shared_texture.md",
       FeatureInfo::FeatureState::Experimental}}};
 
 }  // anonymous namespace

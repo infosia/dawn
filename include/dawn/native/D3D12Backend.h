@@ -28,6 +28,7 @@
 #ifndef INCLUDE_DAWN_NATIVE_D3D12BACKEND_H_
 #define INCLUDE_DAWN_NATIVE_D3D12BACKEND_H_
 
+#include <d3d11on12.h>
 #include <d3d12.h>
 #include <dxgi1_4.h>
 #include <wrl/client.h>
@@ -48,6 +49,11 @@ enum MemorySegment {
 
 DAWN_NATIVE_EXPORT Microsoft::WRL::ComPtr<ID3D12Device> GetD3D12Device(WGPUDevice device);
 
+DAWN_NATIVE_EXPORT Microsoft::WRL::ComPtr<ID3D11On12Device> GetD3D11On12Device(WGPUDevice device);
+
+DAWN_NATIVE_EXPORT Microsoft::WRL::ComPtr<ID3D12CommandQueue> GetD3D12CommandQueue(
+    WGPUDevice device);
+
 DAWN_NATIVE_EXPORT uint64_t SetExternalMemoryReservation(WGPUDevice device,
                                                          uint64_t requestedReservationSize,
                                                          MemorySegment memorySegment);
@@ -61,6 +67,23 @@ struct DAWN_NATIVE_EXPORT SharedBufferMemoryD3D12ResourceDescriptor : wgpu::Chai
     // This ID3D12Resource object must be created from the same ID3D12Device used in the
     // WGPUDevice.
     Microsoft::WRL::ComPtr<ID3D12Resource> resource;
+};
+
+struct DAWN_NATIVE_EXPORT SharedTextureMemoryD3D12ResourceDescriptor : wgpu::ChainedStruct {
+    SharedTextureMemoryD3D12ResourceDescriptor() {
+        sType = static_cast<wgpu::SType>(WGPUSType_SharedTextureMemoryD3D12ResourceDescriptor);
+    }
+
+    // This ID3D12Resource object must be created from the same ID3D12Device used in the
+    // WGPUDevice.
+    Microsoft::WRL::ComPtr<ID3D12Resource> texture;
+
+    // If this flag is true, Dawn is required to signal a fence before EndAccess() and return it in
+    // SharedTextureMemoryEndAccessState's fences list.
+    // If it's false, no fence signaling is needed and EndAccess() might return empty fence list.
+    // Note: this flag is not relevant if the feature SharedFenceDXGISharedHandle is disabled/not
+    // supported.
+    bool requiresEndAccessFence = true;
 };
 
 }  // namespace dawn::native::d3d12

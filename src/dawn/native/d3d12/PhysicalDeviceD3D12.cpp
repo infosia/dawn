@@ -205,6 +205,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
 
     EnableFeature(Feature::SharedTextureMemoryDXGISharedHandle);
     EnableFeature(Feature::SharedFenceDXGISharedHandle);
+    EnableFeature(Feature::SharedTextureMemoryD3D12Resource);
 
     if (GetDeviceInfo().isUMA && GetDeviceInfo().isCacheCoherentUMA) {
         EnableFeature(Feature::BufferMapExtendedUsages);
