@@ -186,6 +186,11 @@ void ExecutionQueueBase::TrackSerialTask(ExecutionSerial serial, Task&& task) {
     task();
 }
 
+bool ExecutionQueueBase::HasPendingSerialTasks() {
+    std::lock_guard<std::mutex> lock(mMutex);
+    return !mWaitingTasks.Empty();
+}
+
 void ExecutionQueueBase::UpdateCompletedSerialTo(ExecutionSerial completedSerial) {
     std::vector<Task> tasks;
     {
