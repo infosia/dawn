@@ -30,6 +30,7 @@
 #include <utility>
 
 #include "dawn/native/ChainUtils.h"
+#include "dawn/native/D3D12Backend.h"
 #include "dawn/native/d3d/D3DError.h"
 #include "dawn/native/d3d/KeyedMutex.h"
 #include "dawn/native/d3d/UtilsD3D.h"
@@ -94,6 +95,63 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
 
     auto result = AcquireRef(new SharedTextureMemory(
         device, label, properties, std::move(d3d12Resource), std::move(keyedMutex)));
+    result->Initialize();
+    return result;
+}
+
+// static
+ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemory::Create(
+    Device* device,
+    StringView label,
+    const SharedTextureMemoryD3D12ResourceDescriptor* descriptor) {
+    DAWN_INVALID_IF(descriptor->texture == nullptr, "D3D12Resource is missing.");
+
+    ComPtr<ID3D12Resource> d3d12Resource = descriptor->texture;
+
+    D3D12_RESOURCE_DESC desc = d3d12Resource->GetDesc();
+    DAWN_INVALID_IF(desc.Dimension != D3D12_RESOURCE_DIMENSION_TEXTURE2D,
+                    "Resource dimension (%d) was not Texture2D", desc.Dimension);
+    DAWN_INVALID_IF(desc.DepthOrArraySize != 1, "Resource DepthOrArraySize (%d) was not 1",
+                    desc.DepthOrArraySize);
+    DAWN_INVALID_IF(desc.MipLevels != 1, "Resource MipLevels (%d) was not 1", desc.MipLevels);
+    DAWN_INVALID_IF(desc.SampleDesc.Count != 1, "Resource SampleDesc.Count (%d) was not 1",
+                    desc.SampleDesc.Count);
+
+    const CombinedLimits& limits = device->GetLimits();
+    DAWN_INVALID_IF(desc.Width > limits.v1.maxTextureDimension2D,
+                    "Resource Width (%u) exceeds maxTextureDimension2D (%u).", desc.Width,
+                    limits.v1.maxTextureDimension2D);
+    DAWN_INVALID_IF(desc.Height > limits.v1.maxTextureDimension2D,
+                    "Resource Height (%u) exceeds maxTextureDimension2D (%u).", desc.Height,
+                    limits.v1.maxTextureDimension2D);
+
+    DAWN_INVALID_IF(!(desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS),
+                    "Resource did not have D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS flag");
+
+    SharedTextureMemoryProperties properties;
+    properties.size = {static_cast<uint32_t>(desc.Width), static_cast<uint32_t>(desc.Height), 1};
+
+    DAWN_TRY_ASSIGN(properties.format, d3d::FromUncompressedColorDXGITextureFormat(desc.Format));
+
+    // The usages that the underlying D3D12 texture supports are partially
+    // dependent on its creation flags. Note that the SharedTextureMemory
+    // frontend takes care of stripping out any usages that are not supported
+    // for `format`.
+    wgpu::TextureUsage storageBindingUsage =
+        (desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS)
+            ? wgpu::TextureUsage::StorageBinding
+            : wgpu::TextureUsage::None;
+    wgpu::TextureUsage renderAttachmentUsage =
+        (desc.Flags & D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET)
+            ? wgpu::TextureUsage::RenderAttachment
+            : wgpu::TextureUsage::None;
+
+    properties.usage = wgpu::TextureUsage::CopySrc | wgpu::TextureUsage::CopyDst |
+                       wgpu::TextureUsage::TextureBinding | storageBindingUsage |
+                       renderAttachmentUsage;
+
+    auto result = AcquireRef(
+        new SharedTextureMemory(device, label, properties, std::move(d3d12Resource), nullptr));
     result->Initialize();
     return result;
 }

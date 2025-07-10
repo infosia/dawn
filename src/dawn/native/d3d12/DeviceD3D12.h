@@ -72,6 +72,8 @@ class Device final : public d3d::Device {
     MaybeError TickImpl() override;
 
     ID3D12Device* GetD3D12Device() const;
+    ComPtr<ID3D11On12Device> GetD3D11on12Device();
+    ComPtr<ID3D12CommandQueue> GetD3D12CommandQueue() const;
 
     ComPtr<ID3D12CommandSignature> GetDispatchIndirectSignature() const;
     ComPtr<ID3D12CommandSignature> GetDrawIndirectSignature() const;
