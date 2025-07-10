@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "872fc0f1_7cbc5c2e",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-10T02:56:12Z",
+      "side": 1,
+      "message": "For example:\n\n```\nfor (var x \u003d 2; x \u003c 3; x++) {\n    for (var y \u003d 3; y \u003c 4; y++) {\n        // Range of x: [2, 2]\n        // Range of y: [3, 3]\n        // min(x, y) \u003d\u003d 2\n    }\n}\n```",
+      "parentUuid": "02afb83b_0e51b235",
+      "revId": "8cec8c153e142d70cae2a5e40d6aa79d616c9e5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1cb1f364_033c2703",
         "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "writtenOn": "2025-07-09T12:31:39Z",
       "side": 1,
       "message": "Why do we need to do this?",
+      "revId": "8cec8c153e142d70cae2a5e40d6aa79d616c9e5f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1c47930_271eb699",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-10T02:56:12Z",
+      "side": 1,
+      "message": "For example, the range of `min(a, i32::kHighestValue)` is all `i32` values when `a` has no valid range. Now in this Integer Range Analysis implementation range being whole `i32` or `u32` is invalid.",
+      "parentUuid": "1cb1f364_033c2703",
       "revId": "8cec8c153e142d70cae2a5e40d6aa79d616c9e5f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
