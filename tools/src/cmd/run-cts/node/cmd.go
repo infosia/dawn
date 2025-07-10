@@ -211,7 +211,6 @@ func (c *cmd) processFlags(fsReader oswrapper.FilesystemReader) error {
 	}
 
 	c.flags.dawn.SetOptions(node.Options{
-		BinDir:            c.flags.bin,
 		Backend:           c.flags.backend,
 		Adapter:           c.flags.adapterName,
 		Validate:          c.flags.validate,
