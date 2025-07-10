@@ -46,6 +46,30 @@
       },
       "revId": "5618763e63597ceb04b11c3b414ee18b207717b5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec31b7ed_94478a41",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-10T02:38:21Z",
+      "side": 1,
+      "message": "Split those out into separate CLs for now, and added \"deprecated\" to the allowed tags.",
+      "parentUuid": "ffe17567_e15eefc3",
+      "range": {
+        "startLine": 172,
+        "startChar": 16,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "5618763e63597ceb04b11c3b414ee18b207717b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
