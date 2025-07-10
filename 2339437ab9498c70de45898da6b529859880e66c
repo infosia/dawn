@@ -1,6 +1,63 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b09cc873_eade6b99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T12:52:31Z",
+      "side": 1,
+      "message": "+CC Loko for discussion about getters. I\u0027m not sure what the best approach would be. Maybe we need to embrace that getters must be allowed on error objects? Not sure.",
+      "revId": "2339437ab9498c70de45898da6b529859880e66c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98929225_fac6d631",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T12:52:31Z",
+      "side": 1,
+      "message": "We might even (follow up?) only `device-\u003eValidateObjectNotError()` which wouldn\u0027t do the check that the parent device of the object is `this` (plus assert we are in no validation mode).",
+      "range": {
+        "startLine": 908,
+        "startChar": 29,
+        "endLine": 908,
+        "endChar": 43
+      },
+      "revId": "2339437ab9498c70de45898da6b529859880e66c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a7583cd_cf9ef3da",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T12:52:31Z",
+      "side": 1,
+      "message": "We could also add a SetSpecimenAttachment() that takes just the view and check no previous data was given.",
+      "revId": "2339437ab9498c70de45898da6b529859880e66c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca19edbd_4c3dd280",
@@ -14,6 +71,41 @@
       "writtenOn": "2025-07-10T02:10:44Z",
       "side": 1,
       "message": "This fix is very localized to the particular crash the fuzzer found, I\u0027m not sure if it\u0027s going to find others but it definitely could.\n\nThat said the crash was in `GetSize`, could we just make `GetSize` not crash for error textures? Seems to me it should work fine on error textures.",
+      "revId": "2339437ab9498c70de45898da6b529859880e66c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c8af86b_08d5f3eb",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T12:52:31Z",
+      "side": 1,
+      "message": "There\u0027s very few places where textures are used directly\n\n - WriteTexture doesn\u0027t skip the validation https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Queue.cpp;drc\u003d89d86374d4eaae6c7f911be96bd00ff23427684a;l\u003d356\n - CopyB2T and friends where we should add the check in the non-validation case https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CommandEncoder.cpp;drc\u003d6fa1fed68dd0c806b9802d3d3b6805eddd2260a8;l\u003d1638\n - Render passes (this CL)\n - BindGroup creation where we should add the check.\n \nAh but then we need to add the validation of the bindgroup as well. That\u0027s a bit annoying. Anyways, lots of tiny things to fix over time.\n\nAlso same thing for buffers.\n\nOr make the frontend getters for descriptor info allowed in error objects, I\u0027m not sure that we can 100% make sure that the data will not cause crashes in other places though. WDYT?",
+      "parentUuid": "ca19edbd_4c3dd280",
+      "revId": "2339437ab9498c70de45898da6b529859880e66c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e589cc6_32419b2f",
+        "filename": "src/dawn/native/vulkan/DeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T12:52:31Z",
+      "side": 1,
+      "message": "Unrelated code snuck in this CL.",
       "revId": "2339437ab9498c70de45898da6b529859880e66c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
