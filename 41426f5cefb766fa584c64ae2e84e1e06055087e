@@ -104,6 +104,30 @@
       },
       "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf9cc5bf_7dbd160b",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-10T01:49:24Z",
+      "side": 1,
+      "message": "Blink would need MultipleDevicesPerAdapter to be disabled, but other parts of Chromium need it to enabled (currently - I\u0027m not sure how hard of a requirement this is).\n\nI don\u0027t think we can have multiple instances because all the parts of Chromium have to interoperate.",
+      "parentUuid": "33ec5d32_309daf2c",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 32
+      },
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
