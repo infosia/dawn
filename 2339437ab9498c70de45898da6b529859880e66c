@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca19edbd_4c3dd280",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-10T02:10:44Z",
+      "side": 1,
+      "message": "This fix is very localized to the particular crash the fuzzer found, I\u0027m not sure if it\u0027s going to find others but it definitely could.\n\nThat said the crash was in `GetSize`, could we just make `GetSize` not crash for error textures? Seems to me it should work fine on error textures.",
+      "revId": "2339437ab9498c70de45898da6b529859880e66c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
