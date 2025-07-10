@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e81f2e9a_33cda695",
+        "filename": "src/dawn/tests/unittests/native/DeviceCreationTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-10T06:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df493647_1ca85195",
+      "range": {
+        "startLine": 215,
+        "startChar": 44,
+        "endLine": 215,
+        "endChar": 51
+      },
+      "revId": "3f302efa7a4df43931adeebe76e08b52b530b456",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "585f5169_63efac61",
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "45be76d4_58a67ee1",
+        "filename": "src/dawn/tests/unittests/native/DeviceCreationTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-10T06:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "585f5169_63efac61",
+      "range": {
+        "startLine": 247,
+        "startChar": 48,
+        "endLine": 247,
+        "endChar": 56
+      },
+      "revId": "3f302efa7a4df43931adeebe76e08b52b530b456",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56333ab9_af337171",
@@ -77,6 +125,30 @@
       "writtenOn": "2025-07-10T05:52:09Z",
       "side": 1,
       "message": "nit. ditto",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 56
+      },
+      "revId": "3f302efa7a4df43931adeebe76e08b52b530b456",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c26e20be_b965f2a4",
+        "filename": "src/dawn/tests/unittests/native/DeviceCreationTests.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-10T06:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56333ab9_af337171",
       "range": {
         "startLine": 270,
         "startChar": 0,
