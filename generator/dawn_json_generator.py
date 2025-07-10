@@ -108,7 +108,6 @@ def validate_and_get_tags(json_data):
         'emscripten',
         'native',
         'compat',
-        'deprecated',
         'art',
     }
 
@@ -170,13 +169,12 @@ class EnumType(Type):
             if prefix == 0 and 'native' in tags:
                 prefix = 0x0001_0000
 
-            if 'deprecated' not in tags:
-                # Emscripten implements some Dawn extensions, and some upstream things that
-                # aren't in Dawn yet.
-                if 'emscripten' in tags and 'dawn' not in tags:
-                    assert value_name.startswith('emscripten'), name
-                else:
-                    assert not value_name.startswith('emscripten'), name
+            # Emscripten implements some Dawn extensions, and some upstream things that
+            # aren't in Dawn yet.
+            if 'emscripten' in tags and 'dawn' not in tags:
+                assert value_name.startswith('emscripten'), name
+            else:
+                assert not value_name.startswith('emscripten'), name
 
             value += prefix
 
@@ -1211,12 +1209,11 @@ class MultiGeneratorFromDawnJSON(Generator):
 
         params_dawn = parse_json(
             loaded_json,
-            enabled_tags=['compat', 'dawn', 'native', 'deprecated'])
+            enabled_tags=['compat', 'dawn', 'native'])
 
         params_all = parse_json(loaded_json,
                                 enabled_tags=[
-                                    'compat', 'dawn', 'emscripten', 'native',
-                                    'deprecated'
+                                    'compat', 'dawn', 'emscripten', 'native'
                                 ])
 
         metadata = params_dawn['metadata']
@@ -1463,7 +1460,7 @@ class MultiGeneratorFromDawnJSON(Generator):
         if 'wire' in targets:
             params_dawn_wire = parse_json(
                 loaded_json,
-                enabled_tags=['compat', 'dawn', 'deprecated'],
+                enabled_tags=['compat', 'dawn'],
                 disabled_tags=['native'])
             additional_params = compute_wire_params(params_dawn_wire,
                                                     wire_json)
