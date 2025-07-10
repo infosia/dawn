@@ -214,6 +214,17 @@ ID3D12Device* Device::GetD3D12Device() const {
     return mD3d12Device.Get();
 }
 
+ComPtr<ID3D11On12Device> Device::GetD3D11on12Device() {
+    ComPtr<ID3D11On12Device> d3d11On12Device;
+    d3d11On12Device = GetOrCreateD3D11on12Device().AcquireSuccess();
+    DAWN_ASSERT(d3d11On12Device != nullptr);
+    return d3d11On12Device;
+}
+
+ComPtr<ID3D12CommandQueue> Device::GetD3D12CommandQueue() const {
+    return ToBackend(GetQueue())->GetCommandQueue();
+}
+
 ResultOrError<ComPtr<ID3D11On12Device>> Device::GetOrCreateD3D11on12Device() {
     if (mD3d11On12Device == nullptr) {
         ComPtr<ID3D11Device> d3d11Device;
@@ -463,7 +474,8 @@ ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImp
 
     wgpu::SType type;
     DAWN_TRY_ASSIGN(
-        type, (unpacked.ValidateBranches<Branch<SharedTextureMemoryDXGISharedHandleDescriptor>>()));
+        type, (unpacked.ValidateBranches<Branch<SharedTextureMemoryDXGISharedHandleDescriptor>,
+                                         Branch<SharedTextureMemoryD3D12ResourceDescriptor>>()));
 
     switch (type) {
         case wgpu::SType::SharedTextureMemoryDXGISharedHandleDescriptor:
@@ -473,6 +485,13 @@ ResultOrError<Ref<SharedTextureMemoryBase>> Device::ImportSharedTextureMemoryImp
             return SharedTextureMemory::Create(
                 this, descriptor->label,
                 unpacked.Get<SharedTextureMemoryDXGISharedHandleDescriptor>());
+        case wgpu::SType::SharedTextureMemoryD3D12ResourceDescriptor:
+            DAWN_INVALID_IF(!HasFeature(Feature::SharedTextureMemoryD3D12Resource),
+                            "%s is not enabled.",
+                            wgpu::FeatureName::SharedTextureMemoryD3D12Resource);
+            return SharedTextureMemory::Create(
+                this, descriptor->label,
+                unpacked.Get<SharedTextureMemoryD3D12ResourceDescriptor>());
         default:
             DAWN_UNREACHABLE();
     }
@@ -681,6 +700,19 @@ MaybeError Device::CheckDebugLayerAndGenerateErrors() {
     ComPtr<ID3D12InfoQueue> infoQueue;
     DAWN_TRY(CheckHRESULT(mD3d12Device.As(&infoQueue),
                           "D3D12 QueryInterface ID3D12Device to ID3D12InfoQueue"));
+    // Build a filter that denies our one message ID
+    D3D12_MESSAGE_ID denyIDs[] = {
+        D3D12_MESSAGE_ID_CREATERESOURCE_STATE_IGNORED,  // This triggers a break exception during
+                                                        // the first call to
+                                                        // CreateCommittedResource.
+    };
+    D3D12_INFO_QUEUE_FILTER filter{};
+    filter.DenyList.NumIDs = 1;
+    filter.DenyList.pIDList = denyIDs;
+
+    // Persistently add to the storage filter so the message is never stored
+    infoQueue->AddRetrievalFilterEntries(&filter);
+
     uint64_t totalErrors = infoQueue->GetNumStoredMessagesAllowedByRetrievalFilter();
 
     // Check if any errors have occurred otherwise we would be creating an empty error. Note

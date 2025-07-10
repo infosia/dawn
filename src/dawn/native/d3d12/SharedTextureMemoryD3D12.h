@@ -39,9 +39,15 @@ class KeyedMutex;
 
 namespace d3d12 {
 class Device;
+struct SharedTextureMemoryD3D12ResourceDescriptor;
 
 class SharedTextureMemory final : public d3d::SharedTextureMemory {
   public:
+    static ResultOrError<Ref<SharedTextureMemory>> Create(
+        Device* device,
+        StringView label,
+        const SharedTextureMemoryD3D12ResourceDescriptor* descriptor);
+
     static ResultOrError<Ref<SharedTextureMemory>> Create(
         Device* device,
         StringView label,
