@@ -16,6 +16,46 @@
       "message": "Thanks for your comments!",
       "revId": "55b45e02dba0ca6b839ca1c117b95f8ab9080fb7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42fa3f20_14055035",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T12:32:15Z",
+      "side": 1,
+      "message": "What I meant in the previous comment was to tag a block of code that will contain all the default enabling. Like so:\n\n```suggestion\n        // Enable features that are implicitly enabled by other features.\n        if (featureName \u003d\u003d wgpu::FeatureName::TextureFormatsTier1) {\n            requiredFeaturesSet.insert(wgpu::FeatureName::RG11B10UfloatRenderable);\n        }\n\n```\n\nBecause the newly added comment just restates the code, but comments are better used to add more context (for info not in the code) or structure (so readers can skip chunks) to code.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "55b45e02dba0ca6b839ca1c117b95f8ab9080fb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eee85ed9_38d311fa",
+        "filename": "src/dawn/tests/unittests/native/DeviceCreationTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-10T12:32:15Z",
+      "side": 1,
+      "message": "Instead of hardcoding this in the test (which will grow larger and larger are more features implicitly enable others), can we add a FeatureAndImplicitlyEnabled helper functions that returns a map? We might also need to update src/dawn/unittests/FeatureTests.cpp in the same way.",
+      "revId": "55b45e02dba0ca6b839ca1c117b95f8ab9080fb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
