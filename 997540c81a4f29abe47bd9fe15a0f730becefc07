@@ -45,6 +45,29 @@
       },
       "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "074a8d4b_34bc5eb4",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-10T17:33:48Z",
+      "side": 1,
+      "message": "We have at least one GTX 1660 Nvidia on our farm that will verify this code.",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 26
+      },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
