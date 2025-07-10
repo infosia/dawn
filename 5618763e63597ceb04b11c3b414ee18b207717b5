@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3be934d5_9df8c9bd",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-10T01:25:42Z",
+      "side": 1,
+      "message": "Does this need to be in the allowed tags?",
+      "range": {
+        "startLine": 172,
+        "startChar": 16,
+        "endLine": 172,
+        "endChar": 26
+      },
+      "revId": "5618763e63597ceb04b11c3b414ee18b207717b5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
