@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b866b6a7_a6adb63a",
+        "filename": "src/dawn/native/Device.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-10T05:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9ed16f3_645d3ffc",
+      "revId": "bd789089d2dc5e94e63b7cb5d5ac97606b25eeb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "337d7740_3ef1a2bf",
@@ -58,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "12e5f950_df76d584",
+        "filename": "src/dawn/tests/unittests/validation/RenderPipelineValidationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 3563,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-10T05:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "337d7740_3ef1a2bf",
+      "range": {
+        "startLine": 3563,
+        "startChar": 37,
+        "endLine": 3563,
+        "endChar": 64
+      },
+      "revId": "bd789089d2dc5e94e63b7cb5d5ac97606b25eeb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fc6784da_321a875f",
@@ -71,6 +113,30 @@
       "writtenOn": "2025-07-09T18:32:27Z",
       "side": 1,
       "message": "nit. Can drop this part of the name since its redundant with the suite name already.",
+      "range": {
+        "startLine": 1211,
+        "startChar": 70,
+        "endLine": 1211,
+        "endChar": 79
+      },
+      "revId": "bd789089d2dc5e94e63b7cb5d5ac97606b25eeb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e97ce8c_511fb51e",
+        "filename": "src/dawn/tests/unittests/validation/TextureValidationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-10T05:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc6784da_321a875f",
       "range": {
         "startLine": 1211,
         "startChar": 70,

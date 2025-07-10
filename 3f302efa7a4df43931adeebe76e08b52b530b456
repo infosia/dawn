@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34ac54a9_b13511f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-10T05:16:55Z",
+      "side": 1,
+      "message": "Thanks for your comments! I have revised two tests influenced by the change of device.cpp, PTAL again.",
+      "revId": "3f302efa7a4df43931adeebe76e08b52b530b456",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
