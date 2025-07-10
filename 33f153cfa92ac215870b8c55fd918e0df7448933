@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6523ddb1_c4a6f7d1",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-10T17:32:04Z",
+      "side": 1,
+      "message": "I couldnt find a simple way of doing this without adding this new virtual function.",
+      "range": {
+        "startLine": 683,
+        "startChar": 17,
+        "endLine": 683,
+        "endChar": 42
+      },
+      "revId": "33f153cfa92ac215870b8c55fd918e0df7448933",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
