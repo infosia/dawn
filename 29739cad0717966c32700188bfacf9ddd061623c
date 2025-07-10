@@ -70,6 +70,24 @@
       "parentUuid": "762a07a1_d92ea84e",
       "revId": "29739cad0717966c32700188bfacf9ddd061623c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61f14c17_1c6aefd2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-10T21:05:22Z",
+      "side": 1,
+      "message": "I managed to reproduce locally. Using uncached coherent buffers on Win+Nvidia+Vulkan is much slower for some reason. Vulkan_NVIDIA_RTX_A5000__e_use_blit_for_snorm_texture_to_buffer_copy__e_use_blit_for_bgra8unorm_texture_to_buffer_copy_TextureFormat_TextureFormat__BGRA8Unorm goes from ~250ms to ~4400ms for example.\n\nThere was a separate call to SupportsBufferMapExtendedUsages() in DeviceVk that I wasn\u0027t disabling for Win+Nvidia. So it were still using mappable buffers sometimes in PS6. I changed DeviceVk to check feature status coming from PhysicalDeviceVk so there is one source of truth. Dawn no longer uses mappable buffers and all looks good locally (hopefully CQ is happy). PTAL at this change once CQ passes!\n\n\u003e Because this fails only when running with the VVLs I\u0027d lean towards doing that, but also filing an issue on https://github.com/KhronosGroup/Vulkan-ValidationLayers to ask what could be causing HUGE perf differences when using uncached coherent buffers.\n\nI tested this without VVL enabled and the tests exhibit the same slowdown. I think it\u0027s only failing in validation enabled tests are a bit slower to start and the extra slow down pushes one of the shards of the 30 minute timeout.",
+      "parentUuid": "85e4f2dc_f00bcaf4",
+      "revId": "29739cad0717966c32700188bfacf9ddd061623c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
