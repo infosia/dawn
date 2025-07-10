@@ -56,6 +56,30 @@
       },
       "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "643da13c_c99f4be5",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-10T00:27:58Z",
+      "side": 1,
+      "message": "The plan was to use this to implement one-device-per-adapter in Blink.\n\nHowever I\u0027m realizing now that this won\u0027t work, because we aren\u0027t supposed to consume the adapter unless requestDevice succeeds. But Blink can\u0027t know whether it succeeds until it gets called back.\n\nInstead I think we need an extension to DeviceDescriptor that tells dawn to consume the adapter.",
+      "parentUuid": "accd6fcc_8a6945fb",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 32
+      },
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
