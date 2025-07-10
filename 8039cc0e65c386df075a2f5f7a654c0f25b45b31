@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "579eaef8_af112b29",
+        "filename": "src/tint/lang/spirv/reader/parser/helper_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-10T01:00:04Z",
+      "side": 1,
+      "message": "Why change this one instead of just calling the other one?",
+      "revId": "8039cc0e65c386df075a2f5f7a654c0f25b45b31",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
