@@ -86,6 +86,24 @@
       "parentUuid": "fdffe57d_0ad9377d",
       "revId": "cd2fc897209bb6000e7c02ca933b7259cda510c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "466efb4f_c519e2cb",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-07-10T23:41:31Z",
+      "side": 1,
+      "message": "(a) seems like it\u0027s a lot of code. \n\nFor (b). Do want want to make a prefix or suffix? Could do this\n\n```\nif (!strncmp(name, \"UKM.\", 4)) {\n  // do the UKM stuff (and skipping the UKM prefix when passing the name on)\n} else {\n  // do the UMA stuff\n}\n```\n\nI don\u0027t know if that\u0027s better or not but, AFAICT, right now, just calling `DANW_HISTOGRAM_XXX` adds a UMA value, no extra work required. \n\nThe prefix would mean you could add `DAWN_HISTOGRAM_X(..., \"UKM.MyValue\")\u0027 in dawn and and blink would at least take the first branch and could warn or ignore if it\u0027s not handled. That would still allow adding UMAs without changing blink and allow adding UKMs to dawn, committing, and later adding the support in blink.",
+      "parentUuid": "ace022a4_99472266",
+      "revId": "cd2fc897209bb6000e7c02ca933b7259cda510c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
