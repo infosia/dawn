@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b9db6cdf_a758373b",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-11T05:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65ea28bc_1eb5461f",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 228,
+        "endChar": 9
+      },
+      "revId": "c1d82452ed419c0ae6e4ada501095b9b9ac4e50c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6325e3bb_7483aa21",
@@ -64,6 +88,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "db24eded_1fb3842e",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-11T05:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6325e3bb_7483aa21",
+      "range": {
+        "startLine": 619,
+        "startChar": 4,
+        "endLine": 663,
+        "endChar": 5
+      },
+      "revId": "c1d82452ed419c0ae6e4ada501095b9b9ac4e50c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fad88b63_55e24c6a",
@@ -77,6 +125,24 @@
       "writtenOn": "2025-07-09T10:10:23Z",
       "side": 1,
       "message": "Can we have block comments and also a comment that describe at high-level what we do here?",
+      "revId": "c1d82452ed419c0ae6e4ada501095b9b9ac4e50c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f19b7a3_051691ab",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-11T05:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fad88b63_55e24c6a",
       "revId": "c1d82452ed419c0ae6e4ada501095b9b9ac4e50c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

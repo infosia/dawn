@@ -108,6 +108,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1d3b2ccc_8019451b",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-11T05:08:29Z",
+      "side": 1,
+      "message": "Thanks for your suggestion! I have cleared the duplicate logic.",
+      "parentUuid": "ebd0912c_477131ba",
+      "range": {
+        "startLine": 77,
+        "startChar": 39,
+        "endLine": 77,
+        "endChar": 47
+      },
+      "revId": "56e8f003a5aa81171313cca81fbb8fdbcabf2ba3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bc0b83ac_f1d758ff",
         "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
         "patchSetId": 4
