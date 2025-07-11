@@ -548,9 +548,7 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::SharedTextureMemoryOpaqueFD);
     }
 
-    // Using mappable buffers on Windows + NVIDIA is significantly slower and
-    // causes test timeouts.
-    if (!IsWinNvidia() && SupportsBufferMapExtendedUsages(mDeviceInfo)) {
+    if (SupportsBufferMapExtendedUsages(mDeviceInfo)) {
         EnableFeature(Feature::BufferMapExtendedUsages);
     }
 
@@ -770,13 +768,11 @@ MaybeError PhysicalDevice::InitializeSupportedLimitsInternal(wgpu::FeatureLevel 
     // Vulkan needs to have enough push constant range size for all
     // internal and external immediate data usages.
     constexpr uint32_t kVkGuaranteedMaxPushConstantsSize = 128;  // from Vulkan spec
-    constexpr uint32_t kMaxInternalConstants =
-        std::max(sizeof(RenderImmediateConstants) - sizeof(UserImmediateConstants),
-                 sizeof(ComputeImmediateConstants) - sizeof(UserImmediateConstants));
     static_assert(kVkGuaranteedMaxPushConstantsSize >=
-                  kMaxSupportedImmediateDataBytes + kMaxInternalConstants);
+                  kDefaultMaxImmediateDataBytes + std::max(sizeof(RenderImmediateConstants),
+                                                           sizeof(ComputeImmediateConstants)));
     DAWN_ASSERT(vkLimits.maxPushConstantsSize >= kVkGuaranteedMaxPushConstantsSize);
-    limits->v1.maxImmediateSize = kMaxSupportedImmediateDataBytes;
+    limits->v1.maxImmediateSize = kDefaultMaxImmediateDataBytes;
 
     if (mDeviceInfo.HasExt(DeviceExt::ExternalMemoryHost) &&
         mDeviceInfo.externalMemoryHostProperties.minImportedHostPointerAlignment <=
@@ -1082,14 +1078,6 @@ bool PhysicalDevice::IsIntelMesa() const {
         return mDeviceInfo.driverProperties.driverID == VK_DRIVER_ID_INTEL_OPEN_SOURCE_MESA_KHR;
     }
     return false;
-}
-
-bool PhysicalDevice::IsWinNvidia() const {
-#if DAWN_PLATFORM_IS(WINDOWS)
-    return gpu_info::IsNvidia(GetVendorId());
-#else
-    return false;
-#endif
 }
 
 bool PhysicalDevice::IsSwiftshader() const {

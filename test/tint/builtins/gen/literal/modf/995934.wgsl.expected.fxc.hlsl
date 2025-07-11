@@ -1,43 +1,5 @@
 SKIP: INVALID
 
-//
-// fragment_main
-//
-struct modf_result_vec4_f16 {
-  vector<float16_t, 4> fract;
-  vector<float16_t, 4> whole;
-};
-
-
-void modf_995934() {
-  modf_result_vec4_f16 res = {(float16_t(-0.5h)).xxxx, (float16_t(-1.0h)).xxxx};
-}
-
-void fragment_main() {
-  modf_995934();
-}
-
-//
-// compute_main
-//
-struct modf_result_vec4_f16 {
-  vector<float16_t, 4> fract;
-  vector<float16_t, 4> whole;
-};
-
-
-void modf_995934() {
-  modf_result_vec4_f16 res = {(float16_t(-0.5h)).xxxx, (float16_t(-1.0h)).xxxx};
-}
-
-[numthreads(1, 1, 1)]
-void compute_main() {
-  modf_995934();
-}
-
-//
-// vertex_main
-//
 struct modf_result_vec4_f16 {
   vector<float16_t, 4> fract;
   vector<float16_t, 4> whole;
@@ -56,17 +18,31 @@ void modf_995934() {
   modf_result_vec4_f16 res = {(float16_t(-0.5h)).xxxx, (float16_t(-1.0h)).xxxx};
 }
 
-VertexOutput vertex_main_inner() {
-  VertexOutput v = (VertexOutput)0;
-  v.pos = (0.0f).xxxx;
+void fragment_main() {
   modf_995934();
-  VertexOutput v_1 = v;
-  return v_1;
+}
+
+[numthreads(1, 1, 1)]
+void compute_main() {
+  modf_995934();
+}
+
+VertexOutput vertex_main_inner() {
+  VertexOutput tint_symbol = (VertexOutput)0;
+  tint_symbol.pos = (0.0f).xxxx;
+  modf_995934();
+  VertexOutput v = tint_symbol;
+  return v;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_2 = vertex_main_inner();
-  vertex_main_outputs v_3 = {v_2.pos};
-  return v_3;
+  VertexOutput v_1 = vertex_main_inner();
+  vertex_main_outputs v_2 = {v_1.pos};
+  return v_2;
 }
 
+FXC validation failure:
+<scrubbed_path>(2,10-18): error X3000: syntax error: unexpected token 'float16_t'
+
+
+tint executable returned error: exit status 1

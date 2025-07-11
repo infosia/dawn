@@ -215,24 +215,10 @@ class Printer {
             return res.Failure();
         }
 
-        uint32_t version = 0u;
-        switch (options_.spirv_version) {
-            case SpvVersion::kSpv13:
-                version = 0x10300u;
-                break;
-            case SpvVersion::kSpv14:
-                version = 0x10400u;
-                break;
-            case SpvVersion::kSpv15:
-                version = 0x10500u;
-                break;
-            default:
-                TINT_ICE() << "unsupported SPIR-V version";
-        }
-
         // Serialize the module into binary SPIR-V.
         BinaryWriter writer;
-        writer.WriteHeader(module_.IdBound(), kWriterVersion, version);
+        writer.WriteHeader(module_.IdBound(), kWriterVersion,
+                           static_cast<uint32_t>(options_.spirv_version));
         writer.WriteModule(module_);
 
         output_.spirv = std::move(writer.Result());
@@ -2821,63 +2807,6 @@ class Printer {
             case core::TexelFormat::kR8Unorm:
                 module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
                 return SpvImageFormatR8;
-            case core::TexelFormat::kR8Snorm:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatR8Snorm;
-            case core::TexelFormat::kR8Uint:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatR8ui;
-            case core::TexelFormat::kR8Sint:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatR8i;
-            case core::TexelFormat::kRg8Unorm:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRg8;
-            case core::TexelFormat::kRg8Snorm:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRg8Snorm;
-            case core::TexelFormat::kRg8Uint:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRg8ui;
-            case core::TexelFormat::kRg8Sint:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRg8i;
-            case core::TexelFormat::kR16Uint:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatR16ui;
-            case core::TexelFormat::kR16Sint:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatR16i;
-            case core::TexelFormat::kR16Float:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatR16f;
-            case core::TexelFormat::kRg16Uint:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRg16ui;
-            case core::TexelFormat::kRg16Sint:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRg16i;
-            case core::TexelFormat::kRg16Float:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRg16f;
-            case core::TexelFormat::kR16Unorm:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatR16;
-            case core::TexelFormat::kR16Snorm:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatR16Snorm;
-            case core::TexelFormat::kRg16Unorm:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRg16;
-            case core::TexelFormat::kRg16Snorm:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRg16Snorm;
-            case core::TexelFormat::kRgba16Unorm:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRgba16;
-            case core::TexelFormat::kRgba16Snorm:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRgba16Snorm;
             case core::TexelFormat::kR32Uint:
                 return SpvImageFormatR32ui;
             case core::TexelFormat::kR32Sint:
@@ -2913,15 +2842,6 @@ class Printer {
                 return SpvImageFormatRgba32i;
             case core::TexelFormat::kRgba32Float:
                 return SpvImageFormatRgba32f;
-            case core::TexelFormat::kRgb10A2Uint:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRgb10a2ui;
-            case core::TexelFormat::kRgb10A2Unorm:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatRgb10A2;
-            case core::TexelFormat::kRg11B10Ufloat:
-                module_.PushCapability(SpvCapabilityStorageImageExtendedFormats);
-                return SpvImageFormatR11fG11fB10f;
             case core::TexelFormat::kUndefined:
                 return SpvImageFormatUnknown;
         }

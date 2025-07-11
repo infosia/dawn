@@ -80,9 +80,6 @@ class Store final : public Castable<Store, OperandInstruction<2, 0>> {
     /// @returns the value being stored
     const Value* From() const { return Operand(kFromOperandOffset); }
 
-    /// @param from the value being stored
-    void SetFrom(Value* from) { SetOperand(kFromOperandOffset, from); }
-
     /// @returns the friendly name for the instruction
     std::string FriendlyName() const override { return "store"; }
 

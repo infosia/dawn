@@ -275,7 +275,8 @@ TEST_F(SpirvParserTest, OpUnreachable_TopLevel) {
 )");
 }
 
-TEST_F(SpirvParserTest, OpUnreachable_InsideIf) {
+// TODO(dsinclair): Requires OpSelectionMerge and OpBranchConditional
+TEST_F(SpirvParserTest, DISABLED_OpUnreachable_InsideIf) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -298,21 +299,16 @@ TEST_F(SpirvParserTest, OpUnreachable_InsideIf) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    if true [t: $B2, f: $B3] {  # if_1
-      $B2: {  # true
-        unreachable
-      }
-      $B3: {  # false
-        exit_if  # if_1
-      }
+    %2:void = if true [t: $B2] {
+      unreachable
     }
-    ret
   }
 }
 )");
 }
 
-TEST_F(SpirvParserTest, OpUnreachable_InsideLoop) {
+// TODO(dsinclair): Requires OpBranch
+TEST_F(SpirvParserTest, DISABLED_OpUnreachable_InsideLoop) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -339,24 +335,9 @@ TEST_F(SpirvParserTest, OpUnreachable_InsideLoop) {
               R"(
 %main = @compute @workgroup_size(1u, 1u, 1u) func():void {
   $B1: {
-    loop [b: $B2, c: $B3] {  # loop_1
-      $B2: {  # body
-        %2:bool = or true, true
-        if %2 [t: $B4, f: $B5] {  # if_1
-          $B4: {  # true
-            unreachable
-          }
-          $B5: {  # false
-            unreachable
-          }
-        }
-        unreachable
-      }
-      $B3: {  # continuing
-        next_iteration  # -> $B2
-      }
+    %2:void = loop %true []
+      unreachable
     }
-    ret
   }
 }
 )");
@@ -397,29 +378,6 @@ TEST_F(SpirvParserTest, OpUnreachable_InNonVoidFunction) {
 )");
 }
 
-TEST_F(SpirvParserTest, OpTerminateInvocation) {
-    EXPECT_IR(R"(
-               OpCapability Shader
-               OpExtension "SPV_KHR_terminate_invocation"
-               OpMemoryModel Logical GLSL450
-               OpEntryPoint Fragment %main "main"
-               OpExecutionMode %main OriginUpperLeft
-       %void = OpTypeVoid
-    %ep_type = OpTypeFunction %void
-       %main = OpFunction %void None %ep_type
-         %10 = OpLabel
-               OpTerminateInvocation
-               OpFunctionEnd)",
-              R"(
-%main = @fragment func():void {
-  $B1: {
-    discard
-    ret
-  }
-}
-)");
-}
-
 TEST_F(SpirvParserTest, OpKill_TopLevel) {
     EXPECT_IR(R"(
                OpCapability Shader
@@ -442,7 +400,8 @@ TEST_F(SpirvParserTest, OpKill_TopLevel) {
 )");
 }
 
-TEST_F(SpirvParserTest, OpKill_InsideIf) {
+// TODO(dsinclair): Requires OpSelectionMerge and OpBranchConditional
+TEST_F(SpirvParserTest, DISABLED_OpKill_InsideIf) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -465,14 +424,9 @@ TEST_F(SpirvParserTest, OpKill_InsideIf) {
               R"(
 %main = @fragment func():void {
   $B1: {
-    if true [t: $B2, f: $B3] {  # if_1
-      $B2: {  # true
-        discard
-        ret
-      }
-      $B3: {  # false
-        exit_if  # if_1
-      }
+    %2:void = if true [t: $B2] {
+      discard
+      ret
     }
     discard
     ret
@@ -481,7 +435,8 @@ TEST_F(SpirvParserTest, OpKill_InsideIf) {
 )");
 }
 
-TEST_F(SpirvParserTest, OpKill_InsideLoop) {
+// TODO(dsinclair): Requires OpBranch
+TEST_F(SpirvParserTest, DISABLED_OpKill_InsideLoop) {
     EXPECT_IR(R"(
                OpCapability Shader
                OpMemoryModel Logical GLSL450
@@ -508,23 +463,9 @@ TEST_F(SpirvParserTest, OpKill_InsideLoop) {
               R"(
 %main = @fragment func():void {
   $B1: {
-    loop [b: $B2, c: $B3] {  # loop_1
-      $B2: {  # body
-        %2:bool = or true, true
-        if %2 [t: $B4, f: $B5] {  # if_1
-          $B4: {  # true
-            discard
-            ret
-          }
-          $B5: {  # false
-            unreachable
-          }
-        }
-        unreachable
-      }
-      $B3: {  # continuing
-        next_iteration  # -> $B2
-      }
+    %2:void = loop %true []
+      discard
+      ret
     }
     discard
     ret

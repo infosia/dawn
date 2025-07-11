@@ -29,16 +29,17 @@
     {%- set type = arg.type %}
     {%- set optional = arg.optional %}
     {%- set default_value = arg.default_value %}
-    {%- if arg == None -%}
-        Unit
-    {%- elif arg.type.name.get() == 'string view' -%}
+    {%- if arg.type.name.get() == 'string view' -%}
         String{{ '?' if optional }}
         {%- if emit_defaults and optional-%}
             {{ ' ' }}= null
         {%- endif %}
     {% elif type.name.get() == 'void' %}
-        {{- assert(arg.length and arg.constant_length != 1) -}}  {# void with length is binary data #}
-        java.nio.ByteBuffer{{ ' = java.nio.ByteBuffer.allocateDirect(0)' if emit_defaults }}
+        {%- if arg.length and arg.constant_length != 1 -%}  {# void with length is binary data #}
+            java.nio.ByteBuffer{{ ' = java.nio.ByteBuffer.allocateDirect(0)' if emit_defaults }}
+        {%- else -%}
+            Unit  {# raw void is C type for no return type; Kotlin equivalent is Unit #}
+        {%- endif -%}
     {%- elif arg.length and arg.length != 'constant' %}
         {# * annotation can mean an array, e.g. an output argument #}
         {%- if type.category in ['bitmask', 'callback function', 'callback info', 'enum', 'function pointer', 'object', 'structure'] -%}
@@ -113,7 +114,7 @@
             {{ unreachable_code('Unsupported native type: ' + type.name.get()) }}
         {%- endif -%}
         {%- if optional -%}
-            {{ unreachable_code('Optional natives not supported: ' + type.name.get()) }}
+            {%- set ns.type_name = ns.type_name + '?' -%}
         {%- endif -%}
         {{ ns.type_name }}
         {%- if ns.default_value not in [None, undefined] -%} {{ ' ' }}={{ ' ' }}

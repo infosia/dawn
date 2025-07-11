@@ -116,18 +116,6 @@ class Switch final : public Castable<Switch, ControlInstruction> {
     /// @returns the friendly name for the instruction
     std::string FriendlyName() const override { return "switch"; }
 
-    /// @returns the default block for the switch, or nullptr if non-exists
-    ir::Block* DefaultBlock() {
-        for (auto& c : cases_) {
-            for (auto& s : c.selectors) {
-                if (s.IsDefault()) {
-                    return c.block.Get();
-                }
-            }
-        }
-        return nullptr;
-    }
-
   private:
     Vector<Case, 4> cases_;
 };

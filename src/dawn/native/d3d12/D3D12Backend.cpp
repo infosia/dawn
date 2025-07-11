@@ -50,7 +50,7 @@ uint64_t SetExternalMemoryReservation(WGPUDevice device,
                                       MemorySegment memorySegment) {
     Device* backendDevice = ToBackend(FromAPI(device));
 
-    auto deviceGuard = backendDevice->GetGuard();
+    auto deviceLock(backendDevice->GetScopedLock());
 
     return backendDevice->GetResidencyManager()->SetExternalMemoryReservation(
         memorySegment, requestedReservationSize);

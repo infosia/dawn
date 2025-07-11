@@ -922,45 +922,6 @@ fn f() {
 )");
 }
 
-TEST_F(IRToProgramTest, InvalidCharacters) {
-    auto* fn = b.Function("f", ty.void_(), core::ir::Function::PipelineStage::kFragment);
-
-    b.Append(fn->Block(), [&] {
-        // Invalid
-        Var("_", true);
-        Var("__", true);
-        Var(" ", true);
-        Var("1", true);
-        Var("struct-a", true);
-        Var("struct a", true);
-
-        // Valid
-        Var("a", true);
-        Var("A", true);
-        Var("a_", true);
-        Var("a1", true);
-        Var("struct_a", true);
-        b.Return(fn);
-    });
-
-    EXPECT_WGSL(R"(
-@fragment
-fn f() {
-  var v : bool = true;
-  var v_1 : bool = true;
-  var v_2 : bool = true;
-  var v_3 : bool = true;
-  var v_4 : bool = true;
-  var v_5 : bool = true;
-  var a : bool = true;
-  var A : bool = true;
-  var a_ : bool = true;
-  var a1 : bool = true;
-  var struct_a : bool = true;
-}
-)");
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // Unary ops
 ////////////////////////////////////////////////////////////////////////////////
@@ -3522,31 +3483,6 @@ struct S {
   @size(12u)
   b : u32,
   c : f32,
-}
-
-fn f(x : S) {
-}
-)");
-}
-
-TEST_F(IRToProgramTest, StructMemberOffset_FirstMember) {
-    auto* S = ty.Struct(mod.symbols.New("S"),
-                        Vector{
-                            ty.Get<core::type::StructMember>(mod.symbols.New("a"), ty.i32(), 0u,
-                                                             12u, 4u, 4u, core::IOAttributes{}),
-                        });
-
-    auto* fn = b.Function("f", ty.void_());
-    auto* x = b.FunctionParam("x", S);
-    fn->SetParams({x});
-    b.Append(fn->Block(), [&] { b.Return(fn); });
-
-    EXPECT_WGSL(R"(
-struct S {
-  tint_pad_0 : u32,
-  tint_pad_4 : u32,
-  tint_pad_8 : u32,
-  a : i32,
 }
 
 fn f(x : S) {
