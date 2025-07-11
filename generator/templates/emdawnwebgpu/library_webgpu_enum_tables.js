@@ -70,10 +70,18 @@
     // These appear in the final build result so should be kept minimal.
     globalThis.WEBGPU_INT_TO_STRING_TABLES = `
         {% for type in by_category["enum"] if not type.json_data.get("emscripten_no_enum_table") %}
-            {{type.name.CamelCase()}}: {% if type.contiguousFromZero -%}
+            {{type.name.CamelCase()}}: {% if type.contiguous and type.startValue < 10 -%}
                 [
+                    {% for i in range(type.startValue) %}
+                        ,
+                    {% endfor %}
                     {% for value in type.values %}
-                        {{as_jsEnumValue(value)}},
+                        {% set jsEnumValue = as_jsEnumValue(value) %}
+                        {% if jsEnumValue == 'undefined' %}
+                            ,
+                        {% else %}
+                            {{ jsEnumValue }},
+                        {% endif %}
                     {% endfor %}
                 ]
             {%- else -%}
