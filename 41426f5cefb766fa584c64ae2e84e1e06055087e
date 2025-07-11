@@ -200,6 +200,30 @@
       },
       "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6561d2c8_2324a6ae",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-11T07:35:41Z",
+      "side": 1,
+      "message": "We could skip adding the `MultipleDevicesPerAdapter` in all instance created in Chromium and I think it would work today. However I think that eventually we will want to start sharing instances in Chromium, and keep adapters alive explicitly to share things more easily between subcomponents of Chromium. For that reason it might be better to go with the chained descriptor that Francois added as it gives more flexibility. We can always simplify later if needed.",
+      "parentUuid": "e3fc885b_ada27b3d",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 32
+      },
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
