@@ -135,6 +135,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b862908_6cca358d",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-11T16:20:11Z",
+      "side": 1,
+      "message": "Given that there are active issues on the bots that this change can address I\u0027m going to land it, but I do think that it\u0027s a good idea to keep the conversation rolling and figure out a unified approach to handling invalid objects due to OOM when validation is disabled.\n\nWorth pointing out that it\u0027s not just `GetSize` in this particular case. We have at least one other related issue where it failed on `GetSampleCount`. See https://issues.chromium.org/issues/429011232 I think more generally we should assume any getter on an invalid object is susceptible to this class of error. (At the very least for textures and buffers?)\n\nIt\u0027s worth noting that when using the wire client values from the descriptor are cached and returned regardless of whether the object is an error object or not. (See https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/wire/client/Texture.cpp;l\u003d53;drc\u003d6f18728664c962ba99e4d3adda42a883dfb331ee;bpv\u003d1;bpt\u003d1) Not sure if that\u0027s an intentional difference between wire and direct API calls, but doesn\u0027t seem like it would be a bad idea to unify the behavior where we can.\n\nFiled https://issues.chromium.org/u/1/issues/431097627 to make sure we don\u0027t lose track of this issue.",
+      "parentUuid": "1c8af86b_08d5f3eb",
+      "revId": "2339437ab9498c70de45898da6b529859880e66c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e589cc6_32419b2f",
