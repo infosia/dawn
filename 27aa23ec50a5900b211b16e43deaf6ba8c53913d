@@ -16,6 +16,24 @@
       "message": "This would be more friendly if it emitted a message rather than a plain assert.\n\nSPIR-V 1.5 supports non-const target ID",
       "revId": "27aa23ec50a5900b211b16e43deaf6ba8c53913d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a77d7692_44965e24",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2168,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-11T17:26:42Z",
+      "side": 1,
+      "message": "This is the scope, not the target ID, and the scope is constant is it not?\n\nYou can see the value check above on line 2158 for broadcast.",
+      "parentUuid": "1b24bc8c_e180e45c",
+      "revId": "27aa23ec50a5900b211b16e43deaf6ba8c53913d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
