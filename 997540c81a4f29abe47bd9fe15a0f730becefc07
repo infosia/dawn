@@ -142,6 +142,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd867424_2cd4f170",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T14:20:37Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f4504524_cbfb29d3",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 40
+      },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "074a8d4b_34bc5eb4",
@@ -203,6 +227,30 @@
       "side": 1,
       "message": "Let me try a comment for the entire suite.",
       "parentUuid": "d9209089_f7d172d8",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 26
+      },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d4f81443_2a0f3d1c",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T14:20:37Z",
+      "side": 1,
+      "message": "Very nice.",
+      "parentUuid": "93d70cac_3f013e36",
       "range": {
         "startLine": 86,
         "startChar": 18,
