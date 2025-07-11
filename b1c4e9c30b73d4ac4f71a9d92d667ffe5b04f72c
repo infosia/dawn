@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6394161e_3a8cbb1a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-11T23:51:32Z",
+      "side": 1,
+      "message": "The `next_iteration` is going to the loop body, not out of the loop. So, these should not then propagate out of the loop.\n\nPreviously it was accidentally propagating a next iteration value (which goes to the continuing, out through the loop itself. So you\u0027d only notice it if you were looking at the propagated loop values.",
+      "parentUuid": "03a778db_6c920991",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "68292900_c427fb12",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
@@ -65,6 +83,24 @@
       "writtenOn": "2025-07-11T19:20:16Z",
       "side": 1,
       "message": "comment references `exit`.. Is this copypasta?",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bb28262_2f9f584b",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-11T23:51:32Z",
+      "side": 1,
+      "message": "Renamed the variable for clarity and missed the comment, will fix.",
+      "parentUuid": "68292900_c427fb12",
       "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -88,6 +124,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "187c6efd_831b4062",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-11T23:51:32Z",
+      "side": 1,
+      "message": "I struggled with these names. I like the `current` in the name because it changes. What does `inner` mean if you\u0027re moving through multiple levels of nesting?\n\nThe idea was the current_propagating_block was the block we will currently be coming from and the `current_propagation_control` is the control instruction for that block.\n\nAs we walk up the nesting the current changes. But maybe just `current_blk` and `current_ctrl` would work?",
+      "parentUuid": "5f761d20_334ff49f",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a86cbda1_0954b383",
         "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
         "patchSetId": 4
@@ -99,6 +153,24 @@
       "writtenOn": "2025-07-11T19:20:16Z",
       "side": 1,
       "message": "prefer auto*",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a471c447_864704e5",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2302,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-11T23:51:32Z",
+      "side": 1,
+      "message": "It\u0027s not actually a pointer, it\u0027s a hashmap result thingy. It contains a pointer, and you can kinda treat it as a pointer to the underlying thing.",
+      "parentUuid": "a86cbda1_0954b383",
       "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -139,6 +211,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "191aeeaf_2683d93f",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2139,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-11T23:51:32Z",
+      "side": 1,
+      "message": "I\u0027m hesitant because these were kinda sensitive to removing things and it staring to work.",
+      "parentUuid": "47e471e1_b9a19bd6",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2b45efaa_6088d121",
         "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
         "patchSetId": 4
@@ -150,6 +240,30 @@
       "writtenOn": "2025-07-11T19:20:16Z",
       "side": 1,
       "message": "I presume this second 3i is from %31.  Would help a bit if it were a different value, so it could be distinguished from the first operand of this instruction.",
+      "range": {
+        "startLine": 2186,
+        "startChar": 27,
+        "endLine": 2186,
+        "endChar": 30
+      },
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec0c0df7_2f1ea437",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2186,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-11T23:51:32Z",
+      "side": 1,
+      "message": "Yea, one is from `28` and the other from `31`. I can add a 4 and pass that through.",
+      "parentUuid": "2b45efaa_6088d121",
       "range": {
         "startLine": 2186,
         "startChar": 27,
@@ -179,6 +293,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8f8be524_71fdeb7d",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2220,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-11T23:51:32Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "c7c4f816_16cab845",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "edd7ad1c_a30d1f90",
         "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
         "patchSetId": 4
@@ -190,6 +322,24 @@
       "writtenOn": "2025-07-11T19:20:16Z",
       "side": 1,
       "message": "test should have a comment to look for what ends up as %6 here.\n\nI think that\u0027s the point of this test?",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b09cb43d_8faddc70",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2262,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-11T23:51:32Z",
+      "side": 1,
+      "message": "Most of these tests case about hte final phi in the merge block, so in this case `42` is what we really really care about.",
+      "parentUuid": "edd7ad1c_a30d1f90",
       "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
