@@ -232,6 +232,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee628fbd_c5f89406",
+        "filename": "src/dawn/native/metal/TextureMTL.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-11T06:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88e0a18f_a6d57109",
+      "range": {
+        "startLine": 848,
+        "startChar": 0,
+        "endLine": 851,
+        "endChar": 72
+      },
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1cda304a_15342e0f",
@@ -468,6 +492,24 @@
       "side": 1,
       "message": "It\u0027d be nice to do the change here because it seems brittle to rely on the accuracy of the division, even if it happens to pass on the HW we have on CQ.",
       "parentUuid": "2d8d0492_aa35b8c6",
+      "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e75376c1_07a6f73f",
+        "filename": "src/dawn/tests/end2end/TextureComponentSwizzleTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-11T06:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c4d278c_43c90128",
       "revId": "1c505b2884848474fe642a5a20f0a2bb7206e183",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
