@@ -113,6 +113,20 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(core::ir::transform::MultiplanarExternalTexture, module, multiplanar_map);
 
     if (!options.disable_robustness) {
+        core::ir::transform::RobustnessConfig config{};
+        config.bindings_ignored = std::unordered_set<BindingPoint>(
+            options.bindings.ignored_by_robustness_transform.cbegin(),
+            options.bindings.ignored_by_robustness_transform.cend());
+
+        // Direct3D guarantees to return zero for any resource that is accessed out of bounds, and
+        // according to the description of the assembly store_uav_typed, out of bounds addressing
+        // means nothing gets written to memory.
+        config.clamp_texture = false;
+
+        config.use_integer_range_analysis = options.enable_integer_range_analysis;
+
+        RUN_TRANSFORM(core::ir::transform::Robustness, module, config);
+
         RUN_TRANSFORM(core::ir::transform::PreventInfiniteLoops, module);
     }
 
@@ -163,22 +177,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         RUN_TRANSFORM(raise::ReplaceDefaultOnlySwitch, module);
         RUN_TRANSFORM(raise::LocalizeStructArrayAssignment, module);
         RUN_TRANSFORM(raise::ReplaceNonIndexableMatVecStores, module);
-    }
-
-    if (!options.disable_robustness) {
-        core::ir::transform::RobustnessConfig config{};
-        config.bindings_ignored = std::unordered_set<BindingPoint>(
-            options.bindings.ignored_by_robustness_transform.cbegin(),
-            options.bindings.ignored_by_robustness_transform.cend());
-
-        // Direct3D guarantees to return zero for any resource that is accessed out of bounds, and
-        // according to the description of the assembly store_uav_typed, out of bounds addressing
-        // means nothing gets written to memory.
-        config.clamp_texture = false;
-
-        config.use_integer_range_analysis = options.enable_integer_range_analysis;
-
-        RUN_TRANSFORM(core::ir::transform::Robustness, module, config);
     }
 
     // ArrayLengthFromUniform must run after Robustness, which introduces arrayLength calls.
