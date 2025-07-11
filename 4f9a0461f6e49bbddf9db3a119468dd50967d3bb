@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ddbe1c0_d675e350",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-11T23:08:56Z",
+      "side": 1,
+      "message": "One of the build steps on `linux-clang-*` is broken on this branch for some reason. Definitely unrelated, but I will have to bypass CQ.",
+      "revId": "4f9a0461f6e49bbddf9db3a119468dd50967d3bb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
