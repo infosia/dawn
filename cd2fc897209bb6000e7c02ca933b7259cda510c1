@@ -104,6 +104,24 @@
       "parentUuid": "ace022a4_99472266",
       "revId": "cd2fc897209bb6000e7c02ca933b7259cda510c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63c99490_791aec65",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-07-11T00:08:30Z",
+      "side": 1,
+      "message": "Hmmm.... Actually I don\u0027t know how this would work. The code that makes HistogramBoolean generate a UMA is in `gpu/command_buffer/service/dawn_platform.cc` but I\u0027m guessing we need something that emits from the renderer. That sounds like a lot of work. \n\nI suppose another hack would be to look for the warning being emitted in the renderer...",
+      "parentUuid": "466efb4f_c519e2cb",
+      "revId": "cd2fc897209bb6000e7c02ca933b7259cda510c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
