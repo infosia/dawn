@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8a8e389b_e853d1f5",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-11T09:22:31Z",
+      "side": 1,
+      "message": "Shall I resolve?",
+      "parentUuid": "96935e5b_ad79b769",
+      "revId": "308a24c3afea49b44911a8cfac1a2372658c5f78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "83399072_63ee82b0",
         "filename": "src/dawn/native/Adapter.cpp",
         "patchSetId": 32

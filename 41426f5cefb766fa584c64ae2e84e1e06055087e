@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2b7e3018_d0cd42bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-11T09:22:31Z",
+      "side": 1,
+      "message": "@kainino@chromium.org @cwallez@chromium.org What do you think?",
+      "parentUuid": "27730485_a0f3717f",
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "accd6fcc_8a6945fb",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 30
@@ -216,6 +234,30 @@
       "side": 1,
       "message": "We could skip adding the `MultipleDevicesPerAdapter` in all instance created in Chromium and I think it would work today. However I think that eventually we will want to start sharing instances in Chromium, and keep adapters alive explicitly to share things more easily between subcomponents of Chromium. For that reason it might be better to go with the chained descriptor that Francois added as it gives more flexibility. We can always simplify later if needed.",
       "parentUuid": "e3fc885b_ada27b3d",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 32
+      },
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f46f409_7e121401",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-11T09:22:31Z",
+      "side": 1,
+      "message": "FYI We\u0027ve already added `MultipleDevicesPerAdapter` in `DawnInstance::Create()` so that `WebGPUMailboxTextureTest.AssociateOnTwoDevicesAtTheSameTime` succeeds. See  https://chromium-review.googlesource.com/c/chromium/src/+/6712176 \n\nAnd https://chromium-review.googlesource.com/c/chromium/src/+/6718467 is what I\u0027m currently thinking of for Chromium/Blink.",
+      "parentUuid": "6561d2c8_2324a6ae",
       "range": {
         "startLine": 133,
         "startChar": 16,
