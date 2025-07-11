@@ -22,6 +22,30 @@
       },
       "revId": "bb1863686908297b3645e93cbaa620538d7b3456",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45077cfa_b8a6421f",
+        "filename": "generator/templates/emdawnwebgpu/library_webgpu_enum_tables.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-11T23:10:19Z",
+      "side": 1,
+      "message": "It\u0027s arbitrary, it just affects how many `,,,,,,` we\u0027ll generate before falling back to the object notation. In practice they\u0027re all either 0 or 1. Commented.",
+      "parentUuid": "2767938a_167ec084",
+      "range": {
+        "startLine": 73,
+        "startChar": 83,
+        "endLine": 73,
+        "endChar": 85
+      },
+      "revId": "bb1863686908297b3645e93cbaa620538d7b3456",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
