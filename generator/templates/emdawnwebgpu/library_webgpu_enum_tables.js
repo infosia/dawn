@@ -76,6 +76,13 @@
                         {{as_jsEnumValue(value)}},
                     {% endfor %}
                 ]
+            {%- elif type.contiguousFromOne -%}
+                [
+                    ,
+                    {% for value in type.values %}
+                        {{as_jsEnumValue(value)}},
+                    {% endfor %}
+                ]
             {%- else -%}
                 {
                     {% for value in type.values %}
