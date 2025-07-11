@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5924390a_2cba8f4f",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T19:58:13Z",
+      "side": 1,
+      "message": "Is this already a part of the gn builds also? Not sure if you are able to test it given the flag issue with the gn release emscripten builds atm though...",
+      "range": {
+        "startLine": 332,
+        "startChar": 16,
+        "endLine": 332,
+        "endChar": 50
+      },
+      "revId": "0524c378419ac910d0948e8b28321dc5d742f793",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
