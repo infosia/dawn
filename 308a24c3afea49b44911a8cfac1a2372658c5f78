@@ -59,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d64a7ef5_3a5520e5",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-11T09:07:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83399072_63ee82b0",
+      "range": {
+        "startLine": 317,
+        "startChar": 30,
+        "endLine": 318,
+        "endChar": 89
+      },
+      "revId": "308a24c3afea49b44911a8cfac1a2372658c5f78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d9ed9263_a3961673",
@@ -90,6 +114,24 @@
       "side": 1,
       "message": "Good catch, I forgot we were doing basically the same thing, I should have noticed. My CL landed _just_ now. https://dawn-review.googlesource.com/c/dawn/+/250555",
       "parentUuid": "d9ed9263_a3961673",
+      "revId": "308a24c3afea49b44911a8cfac1a2372658c5f78",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d6fd86a_ef40f221",
+        "filename": "src/dawn/native/Instance.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-11T09:07:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2747411c_b3f35559",
       "revId": "308a24c3afea49b44911a8cfac1a2372658c5f78",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
