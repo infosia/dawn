@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f1a3dd5_31ff63ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-11T19:45:12Z",
+      "side": 1,
+      "message": "bajones: I think cwallez@ is out. Can you take a look as the second reviewer?",
+      "revId": "99a0919b9fb3dcc8c3ea759f2c094f5ba7235d45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
