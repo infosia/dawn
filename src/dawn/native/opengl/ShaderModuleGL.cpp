@@ -121,6 +121,17 @@ void GenerateCombinedSamplerInfo(
     const BindingMap& externalTextureExpansionMap,
     std::vector<CombinedSampler>* combinedSamplers,
     tint::glsl::writer::CombinedTextureSamplerInfo* samplerTextureToName) {
+    // Helper to create a CombinedSamplerElement because the query for arraySize uses the
+    // conversions to typed integers.
+    auto MakeCombinedSamplerElement = [](const EntryPointMetadata& metadata,
+                                         tint::BindingPoint bindPoint) -> CombinedSamplerElement {
+        CombinedSamplerElement element;
+        element.group = BindGroupIndex(bindPoint.group);
+        element.binding = BindingNumber(bindPoint.binding);
+        element.arraySize = metadata.bindings.at(element.group).at(element.binding).arraySize;
+        return element;
+    };
+
     // Helper to avoid duplicated logic for when a CombinedSampler is determined.
     auto AddCombinedSampler =
         [&](tint::BindingPoint textureWGSL, tint::BindingPoint textureRemapped,
@@ -128,16 +139,11 @@ void GenerateCombinedSamplerInfo(
             // Dawn needs pre-remapping WGSL bind points.
             CombinedSampler combinedSampler = {{
                 .samplerLocation = std::nullopt,
-                .textureLocation = {{
-                    .group = BindGroupIndex(textureWGSL.group),
-                    .binding = BindingNumber(textureWGSL.binding),
-                }},
+                .textureLocation = MakeCombinedSamplerElement(metadata, textureWGSL),
             }};
             if (samplerWGSL.has_value()) {
-                combinedSampler.samplerLocation = {{{
-                    .group = BindGroupIndex(samplerWGSL->group),
-                    .binding = BindingNumber(samplerWGSL->binding),
-                }}};
+                combinedSampler.samplerLocation =
+                    MakeCombinedSamplerElement(metadata, samplerWGSL.value());
             }
             combinedSamplers->push_back(combinedSampler);
 
@@ -297,8 +303,8 @@ std::string GetBindingName(BindGroupIndex group, BindingNumber bindingNumber) {
     return o.str();
 }
 
-bool operator<(const BindingLocation& a, const BindingLocation& b) {
-    return std::tie(a.group, a.binding) < std::tie(b.group, b.binding);
+bool operator<(const CombinedSamplerElement& a, const CombinedSamplerElement& b) {
+    return std::tie(a.group, a.binding, a.arraySize) < std::tie(b.group, b.binding, b.arraySize);
 }
 
 bool operator<(const CombinedSampler& a, const CombinedSampler& b) {
