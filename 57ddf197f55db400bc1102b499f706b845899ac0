@@ -51,6 +51,24 @@
       ],
       "revId": "57ddf197f55db400bc1102b499f706b845899ac0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85bc0ca1_04d95192",
+        "filename": "src/tint/cmd/common/helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-11T16:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "545083e8_4f4c7298",
+      "revId": "57ddf197f55db400bc1102b499f706b845899ac0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
