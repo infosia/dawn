@@ -140,6 +140,24 @@
       "parentUuid": "63c99490_791aec65",
       "revId": "cd2fc897209bb6000e7c02ca933b7259cda510c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "406e509a_fd689bdf",
+        "filename": "src/dawn/native/BindGroupLayoutInternal.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-07-11T17:20:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure they can only be emitted from the renderer but I\u0027m assuming there is no info in the gpu process about which URL to associate them with. In any case. If we just want to start with a UMA, then the code as is should be good.",
+      "parentUuid": "ad8a4d11_da79632e",
+      "revId": "cd2fc897209bb6000e7c02ca933b7259cda510c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
