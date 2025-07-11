@@ -39,19 +39,60 @@
 
 namespace dawn::native {
 
-static constexpr uint64_t kErrorPayload = 0;
-static constexpr uint64_t kNotErrorPayload = 1;
+// The ref count payload holds 3 potential states:
+// NotInitialized: The object is still in the process of initialization and does not know if
+//                 it will be an error yet.
+// InitializedError: The object is initialized and is an error.
+// InitializedNotError: The object is initialized and is valid.
+//
+// The following state flows are possible:
+//  * NotInitialized -> InitializedError
+//  * NotInitialized -> InitializedNoError
+//
+// All states are valid initial states.
+//
+// The values of the states are chosen so that valid transitions can be made with atomic AND and OR
+// operations on the existing payload. NotInitialized is all zeros so that it can be ORd with the
+// target state to make the transition.
+static constexpr uint64_t kNotInitializedPayload = 0b00;
+static constexpr uint64_t kInitializedErrorPayload = 0b01;
+static constexpr uint64_t kInitializedNoErrorPayload = 0b11;
 
-ErrorMonad::ErrorMonad() : RefCounted(kNotErrorPayload) {}
-ErrorMonad::ErrorMonad(ErrorTag) : RefCounted(kErrorPayload) {}
+static constexpr uint64_t kInitializedMask = 0b1;
+
+ErrorMonad::ErrorMonad() : RefCounted(kInitializedNoErrorPayload) {}
+ErrorMonad::ErrorMonad(ErrorTag) : RefCounted(kInitializedErrorPayload) {}
+ErrorMonad::ErrorMonad(DelayedInitializationTag) : RefCounted(kNotInitializedPayload) {}
+
+bool ErrorMonad::IsInitialized() const {
+    return GetRefCountPayload() & kInitializedMask;
+}
 
 bool ErrorMonad::IsError() const {
-    return GetRefCountPayload() == kErrorPayload;
+    uint64_t payload = GetRefCountPayload();
+    // ASSERT that the error state is initialized but also return that this is an error if it has
+    // not been initialized in release builds. This makes sure that invalid accesses to initializing
+    // objects are avoided.
+    DAWN_ASSERT(payload & kInitializedMask);
+    return payload != kInitializedNoErrorPayload;
+}
+
+void ErrorMonad::SetInitializedError() {
+    uint64_t previousPayload = RefCountPayloadFetchOr(kInitializedErrorPayload);
+    DAWN_ASSERT(previousPayload == kNotInitializedPayload);
+}
+
+void ErrorMonad::SetInitializedNoError() {
+    uint64_t previousPayload = RefCountPayloadFetchOr(kInitializedNoErrorPayload);
+    DAWN_ASSERT(previousPayload == kNotInitializedPayload);
 }
 
 ObjectBase::ObjectBase(DeviceBase* device) : ErrorMonad(), mDevice(device) {}
 
 ObjectBase::ObjectBase(DeviceBase* device, ErrorTag) : ErrorMonad(kError), mDevice(device) {}
+
+ObjectBase::ObjectBase(DeviceBase* device, DelayedInitializationTag)
+    : ErrorMonad(kDelayedInitialization), mDevice(device) {}
 
 InstanceBase* ObjectBase::GetInstance() const {
     return mDevice->GetInstance();
@@ -107,6 +148,11 @@ ApiObjectBase::ApiObjectBase(DeviceBase* device, StringView label) : ObjectBase(
 }
 
 ApiObjectBase::ApiObjectBase(DeviceBase* device, ErrorTag tag, StringView label)
+    : ObjectBase(device, tag) {
+    mLabel = std::string(label);
+}
+
+ApiObjectBase::ApiObjectBase(DeviceBase* device, DelayedInitializationTag tag, StringView label)
     : ObjectBase(device, tag) {
     mLabel = std::string(label);
 }
