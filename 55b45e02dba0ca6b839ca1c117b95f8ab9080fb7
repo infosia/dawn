@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d2bfa61_35c3f2bf",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-11T07:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42fa3f20_14055035",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "55b45e02dba0ca6b839ca1c117b95f8ab9080fb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "eee85ed9_38d311fa",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-07-10T12:32:15Z",
       "side": 1,
       "message": "Instead of hardcoding this in the test (which will grow larger and larger are more features implicitly enable others), can we add a FeatureAndImplicitlyEnabled helper functions that returns a map? We might also need to update src/dawn/unittests/FeatureTests.cpp in the same way.",
+      "revId": "55b45e02dba0ca6b839ca1c117b95f8ab9080fb7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cab6e621_c8e17cc7",
+        "filename": "src/dawn/tests/unittests/native/DeviceCreationTests.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-11T07:11:58Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "eee85ed9_38d311fa",
       "revId": "55b45e02dba0ca6b839ca1c117b95f8ab9080fb7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
