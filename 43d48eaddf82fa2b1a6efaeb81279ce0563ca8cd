@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c8de290_580291d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T21:07:49Z",
+      "side": 1,
+      "message": "Also do we need to update the emscripten bindings as well? (If we do it should be caught by mac-dbg build now!)",
+      "revId": "43d48eaddf82fa2b1a6efaeb81279ce0563ca8cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b17b2e3_9a06a577",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T21:07:49Z",
+      "side": 1,
+      "message": "Maybe roll the upstream with this change so this doesn\u0027t have a diff?",
+      "range": {
+        "startLine": 1,
+        "startChar": 4,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "43d48eaddf82fa2b1a6efaeb81279ce0563ca8cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
