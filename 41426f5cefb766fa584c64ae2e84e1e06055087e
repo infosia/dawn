@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fb118496_e659f309",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 30
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-11T22:29:48Z",
+      "side": 1,
+      "message": "I think it\u0027s a small enough change that Dawn users can fix it when they roll Dawn.",
+      "parentUuid": "2b7e3018_d0cd42bf",
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "accd6fcc_8a6945fb",
         "filename": "src/dawn/dawn.json",
         "patchSetId": 30
@@ -258,6 +276,30 @@
       "side": 1,
       "message": "FYI We\u0027ve already added `MultipleDevicesPerAdapter` in `DawnInstance::Create()` so that `WebGPUMailboxTextureTest.AssociateOnTwoDevicesAtTheSameTime` succeeds. See  https://chromium-review.googlesource.com/c/chromium/src/+/6712176 \n\nAnd https://chromium-review.googlesource.com/c/chromium/src/+/6718467 is what I\u0027m currently thinking of for Chromium/Blink.",
       "parentUuid": "6561d2c8_2324a6ae",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 32
+      },
+      "revId": "41426f5cefb766fa584c64ae2e84e1e06055087e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad1d25dd_0073d63a",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 30
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-11T22:29:48Z",
+      "side": 1,
+      "message": "SGTM, if Corentin also agrees we will probably share instances in Chromium, then let\u0027s keep this.",
+      "parentUuid": "8f46f409_7e121401",
       "range": {
         "startLine": 133,
         "startChar": 16,
