@@ -246,6 +246,24 @@
       "parentUuid": "8141b4d8_1fe6eb88",
       "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "793f1221_2b5c90ee",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-11T12:57:50Z",
+      "side": 1,
+      "message": "This didnt work. I will check again on how to do this in the morning.",
+      "parentUuid": "64f46924_883b339b",
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
