@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1126aec8_a965301f",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T19:52:16Z",
+      "side": 1,
+      "message": "Fine for now, but maybe we should actually have `self.contiguous` and `self.startValue` instead?",
+      "range": {
+        "startLine": 145,
+        "startChar": 8,
+        "endLine": 146,
+        "endChar": 37
+      },
+      "revId": "aefa8c92997c1577fffb1f11f40aa8943fc3b37f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "977db0c7_32b474f6",
+        "filename": "src/emdawnwebgpu/tests/SpotTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T19:52:16Z",
+      "side": 1,
+      "message": "nit. Maybe add some context in a comment for why we added this test.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 29
+      },
+      "revId": "aefa8c92997c1577fffb1f11f40aa8943fc3b37f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
