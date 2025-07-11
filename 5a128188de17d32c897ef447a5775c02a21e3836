@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ce7239c_539b5f52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-11T22:15:20Z",
+      "side": 1,
+      "message": "PTAL again, sorry, I missed that changes were needed in TextureUtils.",
+      "revId": "5a128188de17d32c897ef447a5775c02a21e3836",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
