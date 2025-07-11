@@ -22,6 +22,30 @@
       },
       "revId": "0524c378419ac910d0948e8b28321dc5d742f793",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "320c0496_e575db4e",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-11T21:01:01Z",
+      "side": 1,
+      "message": "No, we don\u0027t have GN targets for emdawnwebgpu_tests_* yet.",
+      "parentUuid": "5924390a_2cba8f4f",
+      "range": {
+        "startLine": 332,
+        "startChar": 16,
+        "endLine": 332,
+        "endChar": 50
+      },
+      "revId": "0524c378419ac910d0948e8b28321dc5d742f793",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
