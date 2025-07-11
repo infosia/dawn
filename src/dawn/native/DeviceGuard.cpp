@@ -29,6 +29,7 @@
 
 #include <utility>
 
+#include "absl/base/no_destructor.h"
 #include "dawn/common/Assert.h"
 #include "dawn/native/Device.h"
 
@@ -38,7 +39,16 @@ namespace detail {
 
 DeviceGuardBase::DeviceGuardBase(RecursiveMutex* mutex) : mMutex(mutex) {}
 
+Ref<RecursiveMutex>& GetNullRecursiveMutex() {
+    static absl::NoDestructor<Ref<RecursiveMutex>> kNullRecursiveMutex(
+        Ref<RecursiveMutex>(nullptr));
+    return *kNullRecursiveMutex;
+}
+
 }  // namespace detail
+
+DeviceGuard::DeviceGuard(std::nullptr_t)
+    : detail::DeviceGuardBase(nullptr), GuardBase(nullptr, detail::GetNullRecursiveMutex()) {}
 
 DeviceGuard::DeviceGuard(DeviceBase* device, RecursiveMutex* mutex)
     : detail::DeviceGuardBase(mutex), GuardBase(device, device->mMutex) {
