@@ -312,6 +312,24 @@
       "parentUuid": "64f46924_883b339b",
       "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8ecebe5_91bbc2c1",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-11T15:33:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "793f1221_2b5c90ee",
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
