@@ -163,7 +163,6 @@ class SharedResourceMemoryContents : public RefCounted {
     bool HasWriteAccess() const;
     bool HasExclusiveReadAccess() const;
     int GetReadAccessCount() const;
-    bool HasAccess() const;
 
   private:
     friend class SharedResourceMemory;

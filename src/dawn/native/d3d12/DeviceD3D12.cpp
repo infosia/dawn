@@ -272,6 +272,7 @@ ComPtr<ID3D12CommandSignature> Device::GetDrawIndexedIndirectSignature() const {
 // Ensure DXC if use_dxc toggles are set and validated.
 MaybeError Device::EnsureDXCIfRequired() {
     if (IsToggleEnabled(Toggle::UseDXC)) {
+        DAWN_ASSERT(ToBackend(GetPhysicalDevice())->GetBackend()->IsDXCAvailable());
         DAWN_TRY(ToBackend(GetPhysicalDevice())->GetBackend()->EnsureDxcCompiler());
         DAWN_TRY(ToBackend(GetPhysicalDevice())->GetBackend()->EnsureDxcLibrary());
         DAWN_TRY(ToBackend(GetPhysicalDevice())->GetBackend()->EnsureDxcValidator());
@@ -290,46 +291,26 @@ MutexProtected<ResidencyManager>& Device::GetResidencyManager() const {
 
 MaybeError Device::CreateZeroBuffer() {
     BufferDescriptor zeroBufferDescriptor;
+    zeroBufferDescriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
     zeroBufferDescriptor.size = kZeroBufferSize;
     zeroBufferDescriptor.label = "ZeroBuffer_Internal";
+    DAWN_TRY_ASSIGN(mZeroBuffer, Buffer::Create(this, Unpack(&zeroBufferDescriptor)));
 
-    Ref<BufferBase> zeroBufferBase;
+    CommandRecordingContext* commandContext =
+        ToBackend(GetQueue())->GetPendingCommandContext(QueueBase::SubmitMode::Passive);
 
-    // Clear zero buffer from CPU when `Feature::BufferMapExtendedUsages` is supported.
-    if (ToBackend(GetPhysicalDevice())->SupportsBufferMapExtendedUsages()) {
-        zeroBufferDescriptor.mappedAtCreation = true;
-        zeroBufferDescriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::MapWrite;
+    return GetDynamicUploader()->WithUploadReservation(
+        kZeroBufferSize, kCopyBufferToBufferOffsetAlignment,
+        [&](UploadReservation reservation) -> MaybeError {
+            memset(reservation.mappedPointer, 0u, kZeroBufferSize);
 
-        DAWN_TRY_ASSIGN(zeroBufferBase, CreateBuffer(&zeroBufferDescriptor));
+            CopyFromStagingToBufferHelper(commandContext, reservation.buffer.Get(),
+                                          reservation.offsetInBuffer, mZeroBuffer.Get(), 0,
+                                          kZeroBufferSize);
 
-        void* mappedPointer = zeroBufferBase->GetMappedPointer();
-        DAWN_ASSERT(mappedPointer != nullptr);
-        memset(mappedPointer, 0, zeroBufferBase->GetAllocatedSize());
-        DAWN_TRY(zeroBufferBase->Unmap());
-    } else {
-        zeroBufferDescriptor.usage = wgpu::BufferUsage::CopySrc | wgpu::BufferUsage::CopyDst;
-
-        DAWN_TRY_ASSIGN(zeroBufferBase, CreateBuffer(&zeroBufferDescriptor));
-
-        CommandRecordingContext* commandContext =
-            ToBackend(GetQueue())->GetPendingCommandContext(QueueBase::SubmitMode::Passive);
-
-        DAWN_TRY(GetDynamicUploader()->WithUploadReservation(
-            kZeroBufferSize, kCopyBufferToBufferOffsetAlignment,
-            [&](UploadReservation reservation) -> MaybeError {
-                memset(reservation.mappedPointer, 0u, kZeroBufferSize);
-
-                CopyFromStagingToBufferHelper(commandContext, reservation.buffer.Get(),
-                                              reservation.offsetInBuffer, zeroBufferBase.Get(), 0,
-                                              kZeroBufferSize);
-
-                zeroBufferBase->SetInitialized(true);
-                return {};
-            }));
-    }
-
-    mZeroBuffer = ToBackend(zeroBufferBase);
-    return {};
+            mZeroBuffer->SetInitialized(true);
+            return {};
+        });
 }
 
 MaybeError Device::ClearBufferToZero(CommandRecordingContext* commandContext,
@@ -723,7 +704,6 @@ void Device::AppendDeviceLostMessage(ErrorData* error) {
         HRESULT result = mD3d12Device->GetDeviceRemovedReason();
         error->AppendBackendMessage("Device removed reason: %s (0x%08X)",
                                     d3d::HRESULTAsString(result), result);
-        RecordDeviceRemovedReason(result);
     }
 }
 

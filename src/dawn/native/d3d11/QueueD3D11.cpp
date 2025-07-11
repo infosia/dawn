@@ -120,8 +120,6 @@ class DelayFlushQueue final : public Queue {
 
     void MarkPendingQueriesAsComplete(size_t numCompletedQueries);
 
-    MaybeError BlockWaitForLastSubmittedSerial(const ScopedCommandRecordingContext* commandContext);
-
     struct EventQuery {
       public:
         EventQuery(ExecutionSerial serial, ComPtr<ID3D11Query> query)
@@ -410,9 +408,6 @@ MaybeError MonitoredFenceQueue::NextSerial() {
 }
 
 ResultOrError<ExecutionSerial> MonitoredFenceQueue::CheckAndUpdateCompletedSerials() {
-    // TODO(crbug.com/40643114): Revisit whether this lock is needed for this backend.
-    auto deviceGuard = GetDevice()->GetGuard();
-
     ExecutionSerial completedSerial = ExecutionSerial(mFence->GetCompletedValue());
     if (completedSerial == ExecutionSerial(UINT64_MAX)) [[unlikely]] {
         // GetCompletedValue returns UINT64_MAX if the device was removed.
@@ -471,9 +466,6 @@ MaybeError SystemEventQueue::NextSerial() {
 }
 
 ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials() {
-    // TODO(crbug.com/40643114): Revisit whether this lock is needed for this backend.
-    auto deviceGuard = GetDevice()->GetGuard();
-
     ExecutionSerial completedSerial;
     std::vector<SystemEventReceiver> returnedReceivers;
     // Check for completed events in the pending list.
@@ -534,8 +526,7 @@ ResultOrError<ExecutionSerial> SystemEventQueue::CheckAndUpdateCompletedSerials(
     DAWN_TRY(CheckAndMapReadyBuffers(completedSerial));
 
     if (!returnedReceivers.empty()) {
-        DAWN_TRY(ReturnSystemEventReceivers(
-            std::span(returnedReceivers.data(), returnedReceivers.size())));
+        DAWN_TRY(ReturnSystemEventReceivers(std::move(returnedReceivers)));
     }
 
     return completedSerial;
@@ -667,9 +658,6 @@ MaybeError DelayFlushQueue::CheckPendingQueries(
 }
 
 ResultOrError<ExecutionSerial> DelayFlushQueue::CheckAndUpdateCompletedSerials() {
-    // TODO(crbug.com/40643114): Revisit whether this lock is needed for this backend.
-    auto deviceGuard = GetDevice()->GetGuard();
-
     ExecutionSerial completedSerial;
     {
         auto commandContext = GetScopedPendingCommandContext(SubmitMode::Passive);
@@ -705,14 +693,6 @@ ResultOrError<bool> DelayFlushQueue::WaitForQueueSerial(ExecutionSerial serial,
     }
 
     auto commandContext = GetScopedPendingCommandContext(SubmitMode::Passive);
-
-    if (uint64_t(timeout) == std::numeric_limits<uint64_t>::max() &&
-        serial == GetLastSubmittedCommandSerial()) {
-        // If user submits then waits immediately, we can do a small optimization here,
-        // Flush + enqueue SetEvent then wait on the event. This can avoid spinning wait below,
-        // wasting less CPU cycles.
-        DAWN_TRY(BlockWaitForLastSubmittedSerial(&commandContext));
-    }
 
     DAWN_ASSERT(!mPendingQueries.empty());
     DAWN_ASSERT(serial >= mPendingQueries.front().Serial());
@@ -752,22 +732,6 @@ ResultOrError<bool> DelayFlushQueue::WaitForQueueSerial(ExecutionSerial serial,
     auto numCompletedQueries = std::distance(mPendingQueries.begin(), it) + 1;
     MarkPendingQueriesAsComplete(numCompletedQueries);
     return done;
-}
-
-MaybeError DelayFlushQueue::BlockWaitForLastSubmittedSerial(
-    const ScopedCommandRecordingContext* commandContext) {
-    TRACE_EVENT0(GetDevice()->GetPlatform(), General,
-                 "DelayFlushQueue::BlockWaitForLastSubmittedSerial");
-
-    SystemEventReceiver receiver;
-    DAWN_TRY_ASSIGN(receiver, GetSystemEventReceiver());
-    commandContext->Flush1(D3D11_CONTEXT_TYPE_ALL, receiver.GetPrimitive().Get());
-
-    DWORD result = WaitForSingleObject(receiver.GetPrimitive().Get(), INFINITE);
-    DAWN_INTERNAL_ERROR_IF(result != WAIT_OBJECT_0, "WaitForSingleObject() failed");
-
-    SystemEventReceiver returnedReceivers[] = {std::move(receiver)};
-    return ReturnSystemEventReceivers(returnedReceivers);
 }
 
 void DelayFlushQueue::SetEventOnCompletion(ExecutionSerial serial, HANDLE event) {

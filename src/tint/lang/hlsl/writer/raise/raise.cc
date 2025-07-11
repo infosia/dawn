@@ -37,7 +37,6 @@
 #include "src/tint/lang/core/ir/transform/binding_remapper.h"
 #include "src/tint/lang/core/ir/transform/builtin_polyfill.h"
 #include "src/tint/lang/core/ir/transform/builtin_scalarize.h"
-#include "src/tint/lang/core/ir/transform/change_immediate_to_uniform.h"
 #include "src/tint/lang/core/ir/transform/conversion_polyfill.h"
 #include "src/tint/lang/core/ir/transform/demote_to_helper.h"
 #include "src/tint/lang/core/ir/transform/direct_variable_access.h"
@@ -47,7 +46,6 @@
 #include "src/tint/lang/core/ir/transform/remove_terminator_args.h"
 #include "src/tint/lang/core/ir/transform/rename_conflicts.h"
 #include "src/tint/lang/core/ir/transform/robustness.h"
-#include "src/tint/lang/core/ir/transform/signed_integer_polyfill.h"
 #include "src/tint/lang/core/ir/transform/value_to_let.h"
 #include "src/tint/lang/core/ir/transform/vectorize_scalar_matrix_constructors.h"
 #include "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.h"
@@ -57,6 +55,7 @@
 #include "src/tint/lang/hlsl/writer/common/options.h"
 #include "src/tint/lang/hlsl/writer/raise/binary_polyfill.h"
 #include "src/tint/lang/hlsl/writer/raise/builtin_polyfill.h"
+#include "src/tint/lang/hlsl/writer/raise/change_immediate_to_uniform.h"
 #include "src/tint/lang/hlsl/writer/raise/decompose_storage_access.h"
 #include "src/tint/lang/hlsl/writer/raise/decompose_uniform_access.h"
 #include "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.h"
@@ -147,7 +146,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         core_polyfills.radians = true;
         core_polyfills.reflect_vec2_f32 = options.polyfill_reflect_vec2_f32;
         core_polyfills.texture_sample_base_clamp_to_edge_2d_f32 = true;
-        core_polyfills.abs_signed_int = true;
         RUN_TRANSFORM(core::ir::transform::BuiltinPolyfill, module, core_polyfills);
     }
 
@@ -234,10 +232,10 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     // uniform access instructions) and after DirectVariableAccess(to handle immediate pointers
     // being passed as function parameters).
     {
-        core::ir::transform::ChangeImmediateToUniformConfig config = {
+        raise::ChangeImmediateToUniformConfig config = {
             .immediate_binding_point = options.immediate_binding_point,
         };
-        RUN_TRANSFORM(core::ir::transform::ChangeImmediateToUniform, module, config);
+        RUN_TRANSFORM(raise::ChangeImmediateToUniform, module, config);
     }
     // Comes after DecomposeStorageAccess and ChangeImmediateToUniform.
     RUN_TRANSFORM(raise::DecomposeUniformAccess, module);
@@ -250,15 +248,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
     }
 
     RUN_TRANSFORM(raise::BinaryPolyfill, module);
-
-    // TODO(crbug.com/429211395): Resolve unsigned/signed casting issues with DXC.
-    constexpr bool kEnableSignedIntegerPolyfill = false;
-    if (kEnableSignedIntegerPolyfill) {
-        core::ir::transform::SignedIntegerPolyfillConfig signed_integer_cfg{
-            .signed_negation = true, .signed_arithmetic = true, .signed_shiftleft = true};
-        RUN_TRANSFORM(core::ir::transform::SignedIntegerPolyfill, module, signed_integer_cfg);
-    }
-
     // BuiltinPolyfill must come after BinaryPolyfill and DecomposeStorageAccess as they add
     // builtins
     RUN_TRANSFORM(raise::BuiltinPolyfill, module);

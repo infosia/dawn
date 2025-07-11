@@ -33,7 +33,6 @@
 #include "src/tint/lang/core/ir/transform/binding_remapper.h"
 #include "src/tint/lang/core/ir/transform/builtin_polyfill.h"
 #include "src/tint/lang/core/ir/transform/builtin_scalarize.h"
-#include "src/tint/lang/core/ir/transform/change_immediate_to_uniform.h"
 #include "src/tint/lang/core/ir/transform/conversion_polyfill.h"
 #include "src/tint/lang/core/ir/transform/demote_to_helper.h"
 #include "src/tint/lang/core/ir/transform/multiplanar_external_texture.h"
@@ -43,7 +42,6 @@
 #include "src/tint/lang/core/ir/transform/remove_terminator_args.h"
 #include "src/tint/lang/core/ir/transform/rename_conflicts.h"
 #include "src/tint/lang/core/ir/transform/robustness.h"
-#include "src/tint/lang/core/ir/transform/signed_integer_polyfill.h"
 #include "src/tint/lang/core/ir/transform/value_to_let.h"
 #include "src/tint/lang/core/ir/transform/vectorize_scalar_matrix_constructors.h"
 #include "src/tint/lang/core/ir/transform/vertex_pulling.h"
@@ -57,6 +55,7 @@
 #include "src/tint/lang/msl/writer/raise/packed_vec3.h"
 #include "src/tint/lang/msl/writer/raise/shader_io.h"
 #include "src/tint/lang/msl/writer/raise/simd_ballot.h"
+#include "src/tint/lang/msl/writer/raise/unary_polyfill.h"
 
 namespace tint::msl::writer {
 
@@ -108,7 +107,6 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
         core_polyfills.pack_4xu8_clamp = true;
         core_polyfills.radians = true;
         core_polyfills.texture_sample_base_clamp_to_edge_2d_f32 = true;
-        core_polyfills.abs_signed_int = true;
         RUN_TRANSFORM(core::ir::transform::BuiltinPolyfill, module, core_polyfills);
     }
 
@@ -152,27 +150,16 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
                   raise::ShaderIOConfig{options.emit_vertex_point_size, options.fixed_sample_mask});
     RUN_TRANSFORM(raise::PackedVec3, module);
     RUN_TRANSFORM(raise::SimdBallot, module);
+
     // ArgumentBuffers must come before ModuleScopeVars
     if (options.use_argument_buffers) {
         RUN_TRANSFORM(raise::ArgumentBuffers, module);
     }
-
-    // ChangeImmediateToUniform must come before ModuleScopeVars
-    {
-        core::ir::transform::ChangeImmediateToUniformConfig config = {
-            .immediate_binding_point = options.immediate_binding_point,
-        };
-        RUN_TRANSFORM(core::ir::transform::ChangeImmediateToUniform, module, config);
-    }
-
     RUN_TRANSFORM(raise::ModuleScopeVars, module);
 
+    RUN_TRANSFORM(raise::UnaryPolyfill, module);
     RUN_TRANSFORM(raise::BinaryPolyfill, module);
     RUN_TRANSFORM(raise::BuiltinPolyfill, module);
-    // After 'BuiltinPolyfill' as that transform can introduce signed dot products.
-    core::ir::transform::SignedIntegerPolyfillConfig signed_integer_cfg{
-        .signed_negation = true, .signed_arithmetic = true, .signed_shiftleft = true};
-    RUN_TRANSFORM(core::ir::transform::SignedIntegerPolyfill, module, signed_integer_cfg);
 
     core::ir::transform::BuiltinScalarizeConfig scalarize_config{
         .scalarize_clamp = options.scalarize_max_min_clamp,

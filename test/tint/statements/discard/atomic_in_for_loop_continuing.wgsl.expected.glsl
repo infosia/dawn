@@ -30,19 +30,17 @@ int foo_inner(float v_1, vec2 coord) {
       } else {
         break;
       }
-      int v_2 = i;
-      uint v_3 = uint(result);
-      result = int((v_3 + uint(v_2)));
+      result = (result + i);
       {
         uint tint_low_inc = (tint_loop_idx.x - 1u);
         tint_loop_idx.x = tint_low_inc;
         uint tint_carry = uint((tint_low_inc == 4294967295u));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
-        int v_4 = 0;
+        int v_2 = 0;
         if (continue_execution) {
-          v_4 = atomicAdd(v.inner, 1);
+          v_2 = atomicAdd(v.inner, 1);
         }
-        i = v_4;
+        i = v_2;
       }
       continue;
     }

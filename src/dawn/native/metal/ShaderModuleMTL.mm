@@ -463,11 +463,7 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
 
     // If possible we will use relaxed math as a pragma in the source rather than this fast math
     // global compiler option. See crbug.com/425650181
-    if (@available(macOS 15.0, iOS 18.0, *)) {
-        // This empty bock is intentional due to the mechanism to support @available.
-        // (the @available must be in a plain 'if' statement)
-        // Without this empty block one would get '-Wunsupported-availability-guard'
-    } else {
+    if (!@available(macOS 15.0, iOS 18.0, *)) {
         (*compileOptions).fastMathEnabled = !GetStrictMath().value_or(false);
     }
 

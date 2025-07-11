@@ -11,7 +11,5 @@ void main() {
   ivec3 a = ivec3(1, 2, 3);
   int b = 0;
   ivec3 v_3 = a;
-  int v_4 = b;
-  uint v_5 = uint(b);
-  ivec3 r = tint_div_v3i32(v_3, ivec3(int((v_5 + uint(v_4)))));
+  ivec3 r = tint_div_v3i32(v_3, ivec3((b + b)));
 }

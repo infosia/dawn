@@ -38,7 +38,7 @@ namespace dawn::native::metal {
 
 void WaitForCommandsToBeScheduled(WGPUDevice device) {
     Device* backendDevice = ToBackend(FromAPI(device));
-    auto deviceGuard = backendDevice->GetGuard();
+    auto deviceLock(backendDevice->GetScopedLock());
     ToBackend(backendDevice->GetQueue())->WaitForCommandsToBeScheduled();
 }
 

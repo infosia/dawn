@@ -161,7 +161,7 @@ void RenderPassEncoder::TrackQueryAvailability(QuerySetBase* querySet, uint32_t 
 
 void RenderPassEncoder::APIEnd() {
     // The encoding context might create additional resources, so we need to lock the device.
-    auto deviceGuard = GetDevice()->GetGuard();
+    auto deviceLock(GetDevice()->GetScopedLock());
     End();
 }
 

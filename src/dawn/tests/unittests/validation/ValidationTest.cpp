@@ -193,10 +193,6 @@ void ValidationTest::SetUp() {
 
     wgpu::InstanceDescriptor instanceDesc = {};
     instanceDesc.nextInChain = &instanceToggles;
-    static constexpr auto kRequiredFeatures =
-        std::array{wgpu::InstanceFeatureName::ShaderSourceSPIRV};
-    instanceDesc.requiredFeatureCount = kRequiredFeatures.size();
-    instanceDesc.requiredFeatures = kRequiredFeatures.data();
 
     SetUp(&instanceDesc);
 }

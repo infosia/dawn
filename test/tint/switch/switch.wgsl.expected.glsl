@@ -13,8 +13,7 @@ void a() {
     }
     default:
     {
-      uint v = uint(a_1);
-      a_1 = int((v + uint(2)));
+      a_1 = (a_1 + 2);
       break;
     }
   }
