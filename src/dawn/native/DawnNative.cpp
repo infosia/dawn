@@ -272,28 +272,28 @@ const FeatureInfo* GetFeatureInfo(wgpu::FeatureName feature) {
 }
 
 void DumpMemoryStatistics(WGPUDevice device, MemoryDump* dump) {
-    auto deviceGuard = FromAPI(device)->GetGuard();
+    auto deviceLock(FromAPI(device)->GetScopedLock());
     FromAPI(device)->DumpMemoryStatistics(dump);
 }
 
 MemoryUsageInfo ComputeEstimatedMemoryUsageInfo(WGPUDevice device) {
-    auto deviceGuard = FromAPI(device)->GetGuard();
+    auto deviceLock(FromAPI(device)->GetScopedLock());
     return FromAPI(device)->ComputeEstimatedMemoryUsage();
 }
 
 AllocatorMemoryInfo GetAllocatorMemoryInfo(WGPUDevice device) {
-    auto deviceGuard = FromAPI(device)->GetGuard();
+    auto deviceLock(FromAPI(device)->GetScopedLock());
     return FromAPI(device)->GetAllocatorMemoryInfo();
 }
 
 bool ReduceMemoryUsage(WGPUDevice device) {
-    auto deviceGuard = FromAPI(device)->GetGuard();
+    auto deviceLock(FromAPI(device)->GetScopedLock());
     return FromAPI(device)->ReduceMemoryUsage();
 }
 
 void PerformIdleTasks(const wgpu::Device& device) {
     auto* deviceBase = FromAPI(device.Get());
-    auto deviceGuard = deviceBase->GetGuard();
+    auto deviceLock(deviceBase->GetScopedLock());
     deviceBase->PerformIdleTasks();
 }
 

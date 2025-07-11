@@ -131,8 +131,6 @@ class InstanceBase final : public ErrorSink, public RefCountedWithExternalCount<
     void AddDevice(DeviceBase* device);
     void RemoveDevice(DeviceBase* device);
 
-    bool HasFeature(wgpu::InstanceFeatureName feature) const;
-
     const std::vector<std::string>& GetRuntimeSearchPaths() const;
 
     const Ref<CallbackTaskManager>& GetCallbackTaskManager() const;
@@ -208,7 +206,6 @@ class InstanceBase final : public ErrorSink, public RefCountedWithExternalCount<
     TogglesState mToggles;
     TogglesInfo mTogglesInfo;
 
-    absl::flat_hash_set<wgpu::InstanceFeatureName> mInstanceFeatures;
     absl::flat_hash_set<wgpu::WGSLLanguageFeatureName> mWGSLFeatures;
     absl::flat_hash_set<tint::wgsl::LanguageFeature> mTintLanguageFeatures;
 

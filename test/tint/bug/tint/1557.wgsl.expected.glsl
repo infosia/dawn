@@ -18,8 +18,7 @@ void g() {
       if ((j >= 1)) {
         break;
       }
-      uint v_1 = uint(j);
-      j = int((v_1 + uint(1)));
+      j = (j + 1);
       int k = f();
       {
         uint tint_low_inc = (tint_loop_idx.x - 1u);

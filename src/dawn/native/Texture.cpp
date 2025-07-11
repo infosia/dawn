@@ -423,8 +423,7 @@ MaybeError ValidateTextureUsage(const DeviceBase* device,
                     usage, wgpu::TextureUsage::RenderAttachment, textureDimension);
 
     DAWN_INVALID_IF(
-        !(format->supportsReadOnlyStorageUsage || format->supportsWriteOnlyStorageUsage) &&
-            (usage & wgpu::TextureUsage::StorageBinding),
+        !format->supportsStorageUsage && (usage & wgpu::TextureUsage::StorageBinding),
         "The texture usage (%s) includes %s, which is incompatible with the format (%s).", usage,
         wgpu::TextureUsage::StorageBinding, format->format);
 
@@ -1036,9 +1035,6 @@ void TextureBase::DestroyImpl() {
     // Drop all the cache references to TextureViews.
     mTextureViewCache = nullptr;
 
-    // Clear the default view associated with the texture.
-    mDefaultView = nullptr;
-
     // Destroy all of the views associated with the texture as well.
     mTextureViews.Destroy();
 }
@@ -1077,7 +1073,6 @@ void TextureBase::WillDropLastExternalRef() {
     // Drop all the additional references to TextureViews that we were holding as a part of the
     // cache.
     mTextureViewCache = nullptr;
-    mDefaultView = nullptr;
 }
 
 std::string TextureBase::GetSizeLabel() const {
@@ -1396,9 +1391,6 @@ Extent3D TextureBase::GetMipLevelSubresourceVirtualSize(uint32_t level, Aspect a
 
 ResultOrError<Ref<TextureViewBase>> TextureBase::CreateView(
     const TextureViewDescriptor* descriptor) {
-    if (descriptor == nullptr) {
-        return GetOrCreateDefaultView();
-    }
     return GetDevice()->CreateTextureView(this, descriptor);
 }
 
@@ -1467,20 +1459,6 @@ uint64_t TextureBase::ComputeEstimatedByteSize() const {
         byteSize *= mBaseSize.depthOrArrayLayers;
     }
     return byteSize;
-}
-
-ResultOrError<Ref<TextureViewBase>> TextureBase::GetOrCreateDefaultView() {
-    // Texture view caching is not enabled, so don't cache the default view.
-    if (!mTextureViewCache) {
-        return GetDevice()->CreateTextureView(this, nullptr);
-    }
-
-    // Lazily initialize and cache a default view when asked for it.
-    if (!mDefaultView) {
-        DAWN_TRY_ASSIGN(mDefaultView, GetDevice()->CreateTextureView(this, nullptr));
-    }
-    DAWN_ASSERT(mDefaultView);
-    return mDefaultView;
 }
 
 void TextureBase::APIDestroy() {

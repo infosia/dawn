@@ -17,8 +17,7 @@ void foo() {
       v4u[min(uint(i), 3u)] = 1u;
       v2b[min(uint(i), 1u)] = true;
       {
-        uint v = uint(i);
-        i = int((v + uint(1)));
+        i = (i + 1);
       }
       continue;
     }
@@ -35,8 +34,7 @@ void main() {
       }
       foo();
       {
-        uint v_1 = uint(i);
-        i = int((v_1 + uint(1)));
+        i = (i + 1);
       }
       continue;
     }

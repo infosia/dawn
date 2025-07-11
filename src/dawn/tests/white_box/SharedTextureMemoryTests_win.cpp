@@ -32,7 +32,6 @@
 #include <webgpu/webgpu_cpp.h>
 #include <wrl/client.h>
 
-#include <memory>
 #include <sstream>
 #include <string>
 #include <utility>
@@ -53,10 +52,6 @@ enum class Mode {
     D3D11Texture2D,
 };
 
-struct BeginState : public SharedTextureMemoryTestBackend::BackendBeginState {
-    wgpu::SharedTextureMemoryD3D11BeginState beginState{};
-};
-
 class Backend : public SharedTextureMemoryTestBackend {
   public:
     template <Mode kMode>
@@ -71,37 +66,34 @@ class Backend : public SharedTextureMemoryTestBackend {
         return &b;
     }
 
-    template <Mode kMode>
     static Backend* GetInstanceWithoutEndAccessFence() {
-        static Backend b(kMode, /*useKeyedMutex=*/false,
+        static Backend b(Mode::D3D11Texture2D, /*useKeyedMutex=*/false,
                          /*requiresEndAccessFence=*/false);
         return &b;
     }
 
     std::string Name() const override {
-        std::ostringstream ss;
         switch (mMode) {
             case Mode::D3D11Texture2D: {
+                std::ostringstream ss;
                 ss << "D3D11Texture2D";
-            } break;
+                if (mUseKeyedMutex) {
+                    ss << " KeyedMutex";
+                }
+
+                if (!mRequiresEndAccessFence) {
+                    ss << " NoEndAccessFence";
+                }
+
+                return ss.str();
+            }
             case Mode::DXGISharedHandle: {
-                ss << "DXGISharedHandle";
-            } break;
+                return mUseKeyedMutex ? "DXGISharedHandle KeyedMutex" : "DXGISharedHandle";
+            }
         }
-        if (mUseKeyedMutex) {
-            ss << " KeyedMutex";
-        }
-
-        if (!mRequiresEndAccessFence) {
-            ss << " NoEndAccessFence";
-        }
-
-        return ss.str();
     }
 
-    bool UseSameDevice() const override {
-        return mMode == Mode::D3D11Texture2D || !mRequiresEndAccessFence;
-    }
+    bool UseSameDevice() const override { return mMode == Mode::D3D11Texture2D; }
     bool SupportsConcurrentRead() const override { return true; }
 
     void SetUp(const wgpu::Device& device) override {
@@ -205,6 +197,7 @@ class Backend : public SharedTextureMemoryTestBackend {
             case Mode::D3D11Texture2D: {
                 native::d3d11::SharedTextureMemoryD3D11Texture2DDescriptor texture2DDesc;
                 texture2DDesc.texture = std::move(d3d11Texture);
+                texture2DDesc.requiresEndAccessFence = mRequiresEndAccessFence;
 
                 wgpu::SharedTextureMemoryDescriptor desc;
                 desc.nextInChain = &texture2DDesc;
@@ -361,20 +354,6 @@ class Backend : public SharedTextureMemoryTestBackend {
             }
         }
         return memories;
-    }
-
-    std::unique_ptr<BackendBeginState> ChainInitialBeginState(
-        wgpu::SharedTextureMemoryBeginAccessDescriptor* beginDesc) override {
-        auto state = std::make_unique<BeginState>();
-        state->beginState.requiresEndAccessFence = mRequiresEndAccessFence;
-        beginDesc->nextInChain = &state->beginState;
-        return state;
-    }
-
-    std::unique_ptr<BackendBeginState> ChainBeginState(
-        wgpu::SharedTextureMemoryBeginAccessDescriptor* beginDesc,
-        const wgpu::SharedTextureMemoryEndAccessState& endState) override {
-        return ChainInitialBeginState(beginDesc);
     }
 
   private:
@@ -600,34 +579,30 @@ DAWN_INSTANTIATE_PREFIXED_TEST_P(D3D,
                                   Backend::GetKeyedMutexInstance<Mode::DXGISharedHandle>()},
                                  {1});
 
-DAWN_INSTANTIATE_PREFIXED_TEST_P(
-    D3D,
-    SharedTextureMemoryTests,
-    {D3D11Backend(), D3D11Backend({"d3d11_delay_flush_to_gpu"}),
-     D3D11Backend({"d3d11_disable_fence"}), D3D12Backend()},
-    {Backend::GetInstance<Mode::DXGISharedHandle>(),
-     Backend::GetKeyedMutexInstance<Mode::DXGISharedHandle>(),
-     Backend::GetInstanceWithoutEndAccessFence<Mode::DXGISharedHandle>()},
-    {1});
+DAWN_INSTANTIATE_PREFIXED_TEST_P(D3D,
+                                 SharedTextureMemoryTests,
+                                 {D3D11Backend(), D3D11Backend({"d3d11_delay_flush_to_gpu"}),
+                                  D3D11Backend({"d3d11_disable_fence"}), D3D12Backend()},
+                                 {Backend::GetInstance<Mode::DXGISharedHandle>(),
+                                  Backend::GetKeyedMutexInstance<Mode::DXGISharedHandle>()},
+                                 {1});
 
-DAWN_INSTANTIATE_PREFIXED_TEST_P(
-    D3D11,
-    SharedTextureMemoryNoFeatureTests,
-    {D3D11Backend(), D3D11Backend({"d3d11_disable_fence"})},
-    {Backend::GetInstance<Mode::D3D11Texture2D>(),
-     Backend::GetKeyedMutexInstance<Mode::D3D11Texture2D>(),
-     Backend::GetInstanceWithoutEndAccessFence<Mode::D3D11Texture2D>()},
-    {1, 2});
+DAWN_INSTANTIATE_PREFIXED_TEST_P(D3D11,
+                                 SharedTextureMemoryNoFeatureTests,
+                                 {D3D11Backend(), D3D11Backend({"d3d11_disable_fence"})},
+                                 {Backend::GetInstance<Mode::D3D11Texture2D>(),
+                                  Backend::GetKeyedMutexInstance<Mode::D3D11Texture2D>(),
+                                  Backend::GetInstanceWithoutEndAccessFence()},
+                                 {1, 2});
 
-DAWN_INSTANTIATE_PREFIXED_TEST_P(
-    D3D11,
-    SharedTextureMemoryTests,
-    {D3D11Backend(), D3D11Backend({"d3d11_delay_flush_to_gpu"}),
-     D3D11Backend({"d3d11_disable_fence"})},
-    {Backend::GetInstance<Mode::D3D11Texture2D>(),
-     Backend::GetKeyedMutexInstance<Mode::D3D11Texture2D>(),
-     Backend::GetInstanceWithoutEndAccessFence<Mode::D3D11Texture2D>()},
-    {1, 2});
+DAWN_INSTANTIATE_PREFIXED_TEST_P(D3D11,
+                                 SharedTextureMemoryTests,
+                                 {D3D11Backend(), D3D11Backend({"d3d11_delay_flush_to_gpu"}),
+                                  D3D11Backend({"d3d11_disable_fence"})},
+                                 {Backend::GetInstance<Mode::D3D11Texture2D>(),
+                                  Backend::GetKeyedMutexInstance<Mode::D3D11Texture2D>(),
+                                  Backend::GetInstanceWithoutEndAccessFence()},
+                                 {1, 2});
 
 DAWN_INSTANTIATE_PREFIXED_TEST_P(D3D11,
                                  SharedTextureMemoryWithFenceDisabledTests,

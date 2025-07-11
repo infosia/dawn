@@ -992,6 +992,8 @@ sem::Function* Resolver::Function(const ast::Function* decl) {
 
     if (decl->IsEntryPoint()) {
         // Determine if the return type has a location
+        bool permissive = validator_.IsValidationDisabled(
+            decl->attributes, ast::DisabledValidation::kFunctionParameter);
         for (auto* attribute : decl->return_type_attributes) {
             Mark(attribute);
             enum Status { kSuccess, kErrored, kInvalid };
@@ -1005,6 +1007,17 @@ sem::Function* Resolver::Function(const ast::Function* decl) {
                     func->SetReturnLocation(value.Get());
                     return kSuccess;
                 },
+                [&](const ast::BlendSrcAttribute* attr) {
+                    if (!permissive) {
+                        return kInvalid;
+                    }
+                    auto value = BlendSrcAttribute(attr);
+                    if (value != Success) {
+                        return kErrored;
+                    }
+                    func->SetReturnIndex(value.Get());
+                    return kSuccess;
+                },
                 [&](const ast::BuiltinAttribute*) { return kSuccess; },
                 [&](const ast::InternalAttribute* attr) {
                     return InternalAttribute(attr) ? kSuccess : kErrored;
@@ -1012,6 +1025,18 @@ sem::Function* Resolver::Function(const ast::Function* decl) {
                 [&](const ast::InterpolateAttribute*) { return kSuccess; },
                 [&](const ast::InvariantAttribute* attr) {
                     return InvariantAttribute(attr) ? kSuccess : kErrored;
+                },
+                [&](const ast::BindingAttribute* attr) {
+                    if (!permissive) {
+                        return kInvalid;
+                    }
+                    return BindingAttribute(attr) == Success ? kSuccess : kErrored;
+                },
+                [&](const ast::GroupAttribute* attr) {
+                    if (!permissive) {
+                        return kInvalid;
+                    }
+                    return GroupAttribute(attr) == Success ? kSuccess : kErrored;
                 },
                 [&](Default) { return kInvalid; });
 
@@ -2678,8 +2703,6 @@ const core::type::Type* Resolver::BuiltinType(core::BuiltinType builtin_ty,
             return StorageTexture(ident, core::type::TextureDimension::k2dArray);
         case core::BuiltinType::kTextureStorage3D:
             return StorageTexture(ident, core::type::TextureDimension::k3d);
-        case core::BuiltinType::kTexelBuffer:
-            return TexelBuffer(ident);
         case core::BuiltinType::kInputAttachment:
             return InputAttachment(ident);
         case core::BuiltinType::kAtomicCompareExchangeResultI32:
@@ -3089,31 +3112,6 @@ const core::type::SubgroupMatrix* Resolver::SubgroupMatrix(const ast::Identifier
     }
 
     return validator_.SubgroupMatrix(out, ident->source) ? out : nullptr;
-}
-
-const core::type::TexelBuffer* Resolver::TexelBuffer(const ast::Identifier* ident) {
-    auto* tmpl_ident = TemplatedIdentifier(ident, 2);
-    if (DAWN_UNLIKELY(!tmpl_ident)) {
-        return nullptr;
-    }
-
-    auto format = sem_.GetTexelFormat(tmpl_ident->arguments[0]);
-    if (DAWN_UNLIKELY(format == core::TexelFormat::kUndefined)) {
-        return nullptr;
-    }
-
-    auto access = sem_.GetAccess(tmpl_ident->arguments[1]);
-    if (DAWN_UNLIKELY(access == core::Access::kUndefined)) {
-        return nullptr;
-    }
-
-    auto* out = b.Types().texel_buffer(format, access);
-
-    if (DAWN_UNLIKELY(!validator_.TexelBuffer(out, ident->source))) {
-        return nullptr;
-    }
-
-    return out;
 }
 
 const ast::TemplatedIdentifier* Resolver::TemplatedIdentifier(const ast::Identifier* ident,

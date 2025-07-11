@@ -79,7 +79,6 @@ set(private_headers
     "CreatePipelineAsyncEvent.h"
     "dawn_platform.h"
     "Device.h"
-    "DeviceGuard.h"
     "DynamicUploader.h"
     "EncodingContext.h"
     "EnumClassBitmasks.h"
@@ -199,7 +198,6 @@ set(sources
     "CopyTextureForBrowserHelper.cpp"
     "CreatePipelineAsyncEvent.cpp"
     "Device.cpp"
-    "DeviceGuard.cpp"
     "DynamicUploader.cpp"
     "EncodingContext.cpp"
     "Error.cpp"
@@ -293,14 +291,11 @@ list(APPEND conditional_private_platform_depends
     ${CMAKE_DL_LIBS}
 )
 
-# Only win32 app needs to link with user32.lib and onecore_apiset.lib
+# Only win32 app needs to link with user32.lib
 # In UWP, all availiable APIs are defined in WindowsApp.lib
 # and is automatically linked when WINDOWS_STORE set
 if (WIN32 AND NOT WINDOWS_STORE)
-  list(APPEND conditional_private_platform_depends
-       user32.lib
-       onecore_apiset.lib
-  )
+  list(APPEND conditional_private_platform_depends user32.lib)
 endif()
 
 # DXGIGetDebugInterface1 is defined in dxgi.lib
@@ -717,7 +712,6 @@ if (DAWN_ENABLE_VULKAN)
         "vulkan/ExternalHandle.h"
         "vulkan/FencedDeleter.h"
         "vulkan/Forward.h"
-        "vulkan/FramebufferCache.h"
         "vulkan/PhysicalDeviceVk.h"
         "vulkan/PipelineVk.h"
         "vulkan/PipelineCacheVk.h"
@@ -759,7 +753,6 @@ if (DAWN_ENABLE_VULKAN)
         "vulkan/DescriptorSetAllocator.cpp"
         "vulkan/DeviceVk.cpp"
         "vulkan/FencedDeleter.cpp"
-        "vulkan/FramebufferCache.cpp"
         "vulkan/PhysicalDeviceVk.cpp"
         "vulkan/PipelineVk.cpp"
         "vulkan/PipelineCacheVk.cpp"

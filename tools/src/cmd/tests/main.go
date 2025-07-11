@@ -1033,37 +1033,21 @@ func invokeWithServer(tintPath string, tintServer *tintServerState, args ...stri
 	result := make(chan testResult, 1)
 	go func() {
 		// Send the test arguments to the Tint server.
-		_, inErr := tintServer.stdin.Write([]byte("\"" + strings.Join(args, "\" \"") + "\"\n"))
+		_, in_err := tintServer.stdin.Write([]byte("\"" + strings.Join(args, "\" \"") + "\"\n"))
 
 		// Read from stdout and stderr until the next null character.
-		// Perform these as two asynchronous operations to prevent buffering of large output from
-		// blocking progress.
-		type readResult struct {
-			str string
-			err error
+		read := func(stream io.ReadCloser) (str string, err error) {
+			reader := bufio.NewReader(stream)
+			result, err := reader.ReadString(0)
+			return strings.TrimSuffix(result, "\x00"), err
 		}
-		read := func(stream io.ReadCloser) chan readResult {
-			resultChannel := make(chan readResult, 1)
-			go func() {
-				reader := bufio.NewReader(stream)
-				result, err := reader.ReadString(0)
-				resultChannel <- readResult{strings.TrimSuffix(result, "\x00"), err}
-			}()
-			return resultChannel
-		}
-		stdoutChannel := read(tintServer.stdout)
-		stderrChannel := read(tintServer.stderr)
-
-		// Read the results from the channels.
-		stdoutResult := <-stdoutChannel
-		stderrResult := <-stderrChannel
-		stdoutStr, outErr := stdoutResult.str, stdoutResult.err
-		stderrStr, errErr := stderrResult.str, stderrResult.err
-		str := stderrStr + stdoutStr
+		stdout_str, out_err := read(tintServer.stdout)
+		stderr_str, err_err := read(tintServer.stderr)
+		str := stderr_str + stdout_str
 
 		result <- testResult{
 			output: str,
-			ok:     inErr == nil && outErr == nil && errErr == nil,
+			ok:     in_err == nil && out_err == nil && err_err == nil,
 		}
 	}()
 
