@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba40a61a_2d80e8f8",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T17:09:05Z",
+      "side": 1,
+      "message": "I\u0027d like to see a test case for this branch:  If \u0027min\u0027 is called with vector values, then it should yield an invalid range.",
+      "revId": "a38a997ea469b7e401c24035219db34a3949b07d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
