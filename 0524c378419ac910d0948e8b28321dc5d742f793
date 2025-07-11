@@ -46,6 +46,30 @@
       },
       "revId": "0524c378419ac910d0948e8b28321dc5d742f793",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4829c134_49080541",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-11T23:09:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "320c0496_e575db4e",
+      "range": {
+        "startLine": 332,
+        "startChar": 16,
+        "endLine": 332,
+        "endChar": 50
+      },
+      "revId": "0524c378419ac910d0948e8b28321dc5d742f793",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
