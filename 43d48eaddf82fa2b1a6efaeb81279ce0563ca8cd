@@ -39,6 +39,30 @@
       },
       "revId": "43d48eaddf82fa2b1a6efaeb81279ce0563ca8cd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88b7192f_21de1d2a",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T21:08:26Z",
+      "side": 1,
+      "message": "Nvm, I just saw the child CL lol.",
+      "parentUuid": "9b17b2e3_9a06a577",
+      "range": {
+        "startLine": 1,
+        "startChar": 4,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "43d48eaddf82fa2b1a6efaeb81279ce0563ca8cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
