@@ -2439,7 +2439,10 @@ MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
 }
 
 DeviceGuard DeviceBase::GetGuard() {
-    return DeviceGuard(this);
+    if (HasFeature(Feature::ImplicitDeviceSynchronization)) {
+        return DeviceGuard(this);
+    }
+    return DeviceGuard(nullptr);
 }
 
 DeviceGuard DeviceBase::GetGuardForDelete() {
@@ -2448,7 +2451,10 @@ DeviceGuard DeviceBase::GetGuardForDelete() {
     // a refcounted object to handle the case when the Device is destroyed while the lock is held,
     // resulting in a dangling pointer to the Defer owned by the Device. As a proxy assertion,
     // ~DeviceBase checks that the Defer object is not set.
-    return DeviceGuard(this, mMutex.Get());
+    if (HasFeature(Feature::ImplicitDeviceSynchronization)) {
+        return DeviceGuard(this, mMutex.Get());
+    }
+    return DeviceGuard(nullptr);
 }
 
 void DeviceBase::DeferIfLocked(std::function<void()> f) {
