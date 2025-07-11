@@ -330,6 +330,24 @@
       "parentUuid": "793f1221_2b5c90ee",
       "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10a53c53_b3c9eb56",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T22:48:55Z",
+      "side": 1,
+      "message": "I asked for an Alignment check.  \ne.g.  minStorageBufferOffsetAlignment should be positive and evenly divide 256.\n\nImplicitly that would check that an adapter never reports something like 1024.\n\nOn the other hand, the spec requires the worst value to be 256, so if a test fails here, then the adapter will also fail CTS.\nSo this is fine to land now.  Better to have this patch than to not have this patch.",
+      "parentUuid": "a8ecebe5_91bbc2c1",
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
