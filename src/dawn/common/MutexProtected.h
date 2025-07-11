@@ -68,7 +68,7 @@ struct MutexProtectedTraits<Ref<T>> {
     using ObjectType = T;
 
     static MutexType CreateMutex() { return AcquireRef(new Mutex()); }
-    static Mutex* GetMutex(MutexType& m) { return m.Get(); }
+    static Mutex* GetMutex(const MutexType& m) { return m.Get(); }
     static ObjectType* GetObj(Ref<T>* const obj) { return obj->Get(); }
     static const ObjectType* GetObj(const Ref<T>* const obj) { return obj->Get(); }
 };
