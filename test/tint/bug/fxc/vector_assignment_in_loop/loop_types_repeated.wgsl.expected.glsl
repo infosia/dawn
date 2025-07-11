@@ -26,8 +26,7 @@ void main() {
       v4u_2[min(uint(i), 3u)] = 1u;
       v2b_2[min(uint(i), 1u)] = true;
       {
-        uint v = uint(i);
-        i = int((v + uint(1)));
+        i = (i + 1);
       }
       continue;
     }

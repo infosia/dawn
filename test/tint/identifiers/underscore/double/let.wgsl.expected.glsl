@@ -10,8 +10,5 @@ void main() {
   int v_1 = a;
   int b = a;
   int v_2 = v_1;
-  uint v_3 = uint(a);
-  uint v_4 = uint(int((v_3 + uint(v_1))));
-  uint v_5 = uint(int((v_4 + uint(b))));
-  v.inner = int((v_5 + uint(v_2)));
+  v.inner = (((a + v_1) + b) + v_2);
 }

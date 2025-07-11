@@ -1,3 +1,5 @@
+SKIP: FAILED
+
 //
 // main1
 //

@@ -17,8 +17,7 @@ void f() {
         tint_loop_idx.x = tint_low_inc;
         uint tint_carry = uint((tint_low_inc == 4294967295u));
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
-        uint v = uint(i);
-        i = int((v + uint(1)));
+        i = (i + 1);
       }
       continue;
     }

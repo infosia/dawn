@@ -1,43 +1,5 @@
 SKIP: INVALID
 
-//
-// fragment_main
-//
-struct frexp_result_vec3_f16 {
-  vector<float16_t, 3> fract;
-  int3 exp;
-};
-
-
-void frexp_ae4a66() {
-  frexp_result_vec3_f16 res = {(float16_t(0.5h)).xxx, (int(1)).xxx};
-}
-
-void fragment_main() {
-  frexp_ae4a66();
-}
-
-//
-// compute_main
-//
-struct frexp_result_vec3_f16 {
-  vector<float16_t, 3> fract;
-  int3 exp;
-};
-
-
-void frexp_ae4a66() {
-  frexp_result_vec3_f16 res = {(float16_t(0.5h)).xxx, (int(1)).xxx};
-}
-
-[numthreads(1, 1, 1)]
-void compute_main() {
-  frexp_ae4a66();
-}
-
-//
-// vertex_main
-//
 struct frexp_result_vec3_f16 {
   vector<float16_t, 3> fract;
   int3 exp;
@@ -56,17 +18,31 @@ void frexp_ae4a66() {
   frexp_result_vec3_f16 res = {(float16_t(0.5h)).xxx, (int(1)).xxx};
 }
 
-VertexOutput vertex_main_inner() {
-  VertexOutput v = (VertexOutput)0;
-  v.pos = (0.0f).xxxx;
+void fragment_main() {
   frexp_ae4a66();
-  VertexOutput v_1 = v;
-  return v_1;
+}
+
+[numthreads(1, 1, 1)]
+void compute_main() {
+  frexp_ae4a66();
+}
+
+VertexOutput vertex_main_inner() {
+  VertexOutput tint_symbol = (VertexOutput)0;
+  tint_symbol.pos = (0.0f).xxxx;
+  frexp_ae4a66();
+  VertexOutput v = tint_symbol;
+  return v;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_2 = vertex_main_inner();
-  vertex_main_outputs v_3 = {v_2.pos};
-  return v_3;
+  VertexOutput v_1 = vertex_main_inner();
+  vertex_main_outputs v_2 = {v_1.pos};
+  return v_2;
 }
 
+FXC validation failure:
+<scrubbed_path>(2,10-18): error X3000: syntax error: unexpected token 'float16_t'
+
+
+tint executable returned error: exit status 1

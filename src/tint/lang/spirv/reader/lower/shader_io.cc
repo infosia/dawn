@@ -27,7 +27,6 @@
 
 #include "src/tint/lang/spirv/reader/lower/shader_io.h"
 
-#include <string>
 #include <utility>
 
 #include "src/tint/lang/core/ir/builder.h"
@@ -74,12 +73,10 @@ struct State {
         }};
 
     /// Process the module.
-    Result<SuccessType> Process() {
+    void Process() {
         // Process outputs first, as that may introduce new functions that input variables need to
         // be propagated through.
-        if (auto result = ProcessOutputs(); result != Success) {
-            return result;
-        }
+        ProcessOutputs();
         ProcessInputs();
 
         auto clean_members = [](const core::type::Struct* strct) {
@@ -104,14 +101,13 @@ struct State {
         for (auto& strct : input_structs) {
             clean_members(strct);
         }
-        return Success;
     }
 
     /// Process output variables.
     /// Changes output variables to the `private` address space and wraps entry points that produce
     /// outputs with new functions that copy the outputs from the private variables to the return
     /// value.
-    Result<SuccessType> ProcessOutputs() {
+    void ProcessOutputs() {
         // Update entry point functions to return their outputs, using a wrapper function.
         // Use a worklist as `ProcessEntryPointOutputs()` will add new functions.
         Vector<core::ir::Function*, 4> entry_points;
@@ -121,11 +117,8 @@ struct State {
             }
         }
         for (auto& ep : entry_points) {
-            if (auto result = ProcessEntryPointOutputs(ep); result != Success) {
-                return result;
-            }
+            ProcessEntryPointOutputs(ep);
         }
-        return Success;
     }
 
     /// Process input variables.
@@ -244,10 +237,10 @@ struct State {
     /// Process the outputs of an entry point function, adding a wrapper function to forward outputs
     /// through the return value.
     /// @param ep the entry point
-    Result<SuccessType> ProcessEntryPointOutputs(core::ir::Function* ep) {
+    void ProcessEntryPointOutputs(core::ir::Function* ep) {
         const auto& referenced_outputs = referenced_output_vars.TransitiveReferences(ep);
         if (referenced_outputs.IsEmpty()) {
-            return Success;
+            return;
         }
 
         // Add a wrapper function to return either a single value or a struct.
@@ -278,7 +271,6 @@ struct State {
             // Copy the variable attributes to the struct member.
             auto var_attributes = var->Attributes();
             auto var_type = var->Result()->Type()->UnwrapPtr();
-            Result<SuccessType> result = Success;
             b.Append(wrapper->Block(), [&] {
                 if (auto* str = var_type->As<core::type::Struct>()) {
                     bool skipped_member_emission = false;
@@ -313,24 +305,15 @@ struct State {
                     // match due to the skipping.
                     if (skipped_member_emission) {
                         for (auto& usage : var->Result()->UsagesUnsorted()) {
-                            auto* access = usage->instruction->As<core::ir::Access>();
-                            TINT_ASSERT(access);
-                            auto* const_idx = access->Indices()[0]->As<core::ir::Constant>();
-                            TINT_ASSERT(const_idx);
-
-                            // Check that pointsize members are only assigned values of 1.0.
-                            auto* member = str->Members()[const_idx->Value()->ValueAs<uint32_t>()];
-                            if (member->Attributes().builtin == core::BuiltinValue::kPointSize) {
-                                result = ValidatePointSizeStore(access);
-                                return;
-                            }
+                            TINT_ASSERT(usage->instruction->Is<core::ir::Access>());
                         }
                     }
                 } else {
                     // Don't want to emit point size as it doesn't exist in WGSL.
                     if (var->Attributes().builtin == core::BuiltinValue::kPointSize) {
+                        // TODO(dsinclair): Validate that all accesses of this variable are then
+                        // used only to assign the value of 1.0.
                         var->SetInitializer(b.Constant(1.0_f));
-                        result = ValidatePointSizeStore(var);
                         return;
                     }
 
@@ -357,9 +340,6 @@ struct State {
                               var_attributes);
                 }
             });
-            if (result != Success) {
-                return result;
-            }
         }
 
         if (output_descriptors.Length() == 1) {
@@ -381,43 +361,6 @@ struct State {
                 b.Return(wrapper, b.Construct(str, std::move(results)));
             });
         }
-        return Success;
-    }
-
-    /// Validates that a `point_size` builtin is only ever stored to with the constant value `1.0`,
-    /// or is loaded from.
-    /// @param point_size the `point_size` pointer
-    /// @returns success if the validation passes, otherwise a failure.
-    Result<SuccessType> ValidatePointSizeStore(core::ir::Instruction* point_size) {
-        Vector<core::ir::Instruction*, 4> worklist;
-        point_size->Result()->ForEachUseUnsorted([&](core::ir::Usage use) {  //
-            worklist.Push(use.instruction);
-        });
-
-        while (!worklist.IsEmpty()) {
-            auto* inst = worklist.Pop();
-            if (auto* store = inst->As<core::ir::Store>()) {
-                auto* constant = store->From()->As<core::ir::Constant>();
-                if (!constant) {
-                    return Failure{"store to point_size is not a constant"};
-                }
-                TINT_ASSERT(constant->Type()->Is<core::type::F32>());
-                if (constant->Value()->ValueAs<f32>() != 1.0f) {
-                    return Failure{"store to point_size is not 1.0"};
-                }
-            } else if (inst->Is<core::ir::Load>()) {
-                // Load instructions are OK.
-            } else if (auto* let = inst->As<core::ir::Let>()) {
-                // Check all uses of the let instruction.
-                let->Result()->ForEachUseUnsorted([&](core::ir::Usage use) {  //
-                    worklist.Push(use.instruction);
-                });
-            } else {
-                return Failure{"unhandled use of a point_size variable: " +
-                               std::string(inst->TypeInfo().name)};
-            }
-        }
-        return Success;
     }
 
     /// Returns true if the struct member should be skipped on emission
@@ -442,6 +385,8 @@ struct State {
         // `gl_ClipDistance` and `gl_CullDistance`.
 
         if (member_attributes.builtin == core::BuiltinValue::kPointSize) {
+            // TODO(dsinclair): Validate that all accesses of this member are then used only to
+            // assign the value of 1.0.
             return true;
         }
         if (member_attributes.builtin == core::BuiltinValue::kCullDistance) {
@@ -750,13 +695,14 @@ Result<SuccessType> ShaderIO(core::ir::Module& ir) {
                                               core::ir::Capability::kAllowOverrides,
                                               core::ir::Capability::kAllowPhonyInstructions,
                                               core::ir::Capability::kAllowNonCoreTypes,
-                                              core::ir::Capability::kAllowStructMatrixDecorations,
                                           });
     if (result != Success) {
         return result.Failure();
     }
 
-    return State{ir}.Process();
+    State{ir}.Process();
+
+    return Success;
 }
 
 }  // namespace tint::spirv::reader::lower

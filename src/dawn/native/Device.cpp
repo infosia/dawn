@@ -432,13 +432,6 @@ DeviceBase::DeviceBase() : mState(State::Alive), mToggles(ToggleStage::Device) {
 }
 
 DeviceBase::~DeviceBase() {
-    // Assert that we do not have a Defer object. If we do, it means that we created a Guard for
-    // deletion, and then recursively acquired a normal Guard. This case is not currently allowed
-    // since the Defer object would be dangling by the time that the lock is actually released. This
-    // may be possible by making the Defer object recounted, but as of the time of writing, this
-    // shouldn't be needed, and developers should avoid adding code that does this.
-    DAWN_ASSERT(!mDefer);
-
     // We need to explicitly release the Queue before we complete the destructor so that the
     // Queue does not get destroyed after the Device.
     mQueue = nullptr;
@@ -487,12 +480,12 @@ MaybeError DeviceBase::Initialize(const UnpackedPtr<DeviceDescriptor>& descripto
     }
 
     if (HasFeature(Feature::ImplicitDeviceSynchronization)) {
-        mMutex = AcquireRef(new RecursiveMutex);
+        mMutex = AcquireRef(new Mutex);
     } else {
         mMutex = nullptr;
     }
 
-    GetInstance()->AddDevice(this);
+    mAdapter->GetInstance()->AddDevice(this);
 
     return {};
 }
@@ -502,7 +495,7 @@ void DeviceBase::WillDropLastExternalRef() {
         // This will be invoked by API side, so we need to lock.
         // Note: we cannot hold the lock when flushing the callbacks so have to limit the scope of
         // the lock.
-        auto deviceGuard = GetGuard();
+        auto deviceLock(GetScopedLock());
 
         // Set DeviceLostEvent to pass a null device to the callback (which may happen in Destroy()
         // depending on the CallbackMode). This also makes DeviceLostEvent skip unregistering the
@@ -538,7 +531,7 @@ void DeviceBase::WillDropLastExternalRef() {
         } while (!mCallbackTaskManager->IsEmpty());
     }
 
-    auto deviceGuard = GetGuard();
+    auto deviceLock(GetScopedLock());
     // Drop the device's reference to the queue. Because the application dropped the last external
     // reference, it's UB if they try to get the queue from APIGetQueue().
     mQueue = nullptr;
@@ -551,11 +544,11 @@ void DeviceBase::WillDropLastExternalRef() {
         mLoggingCallbackInfo = kEmptyLoggingCallbackInfo;
     }
 
-    GetInstance()->RemoveDevice(this);
+    mAdapter->GetInstance()->RemoveDevice(this);
 
     // Once last external ref dropped, all callbacks should be forwarded to Instance's callback
     // queue instead.
-    mCallbackTaskManager = GetInstance()->GetCallbackTaskManager();
+    mCallbackTaskManager = mAdapter->GetInstance()->GetCallbackTaskManager();
 }
 
 void DeviceBase::DestroyObjects() {
@@ -585,7 +578,6 @@ void DeviceBase::DestroyObjects() {
         ObjectType::BindGroupLayout,
         ObjectType::BindGroupLayoutInternal,
         ObjectType::ShaderModule,
-        ObjectType::SharedBufferMemory,
         ObjectType::SharedTextureMemory,
         ObjectType::SharedFence,
         ObjectType::ExternalTexture,
@@ -711,7 +703,6 @@ void DeviceBase::HandleDeviceLost(wgpu::DeviceLostReason reason, std::string_vie
 void DeviceBase::HandleError(std::unique_ptr<ErrorData> error,
                              InternalErrorType additionalAllowedErrors,
                              wgpu::DeviceLostReason lostReason) {
-    auto deviceGuard(GetGuard());
     AppendDebugLayerMessages(error.get());
 
     InternalErrorType type = error->GetType();
@@ -870,7 +861,7 @@ Future DeviceBase::APIPopErrorScope(const WGPUPopErrorScopeCallbackInfo& callbac
     {
         // TODO(crbug.com/dawn/831) Manually acquire device lock instead of relying on code-gen for
         // re-entrancy.
-        auto deviceGuard = GetGuard();
+        auto deviceLock(GetScopedLock());
 
         if (IsLost()) {
             scope = ErrorScope(wgpu::ErrorType::NoError, "");
@@ -905,14 +896,6 @@ MaybeError DeviceBase::ValidateObject(const ApiObjectBase* object) const {
                     object->GetDevice(), this);
 
     // TODO(dawn:563): Preserve labels for error objects.
-    DAWN_INVALID_IF(object->IsError(), "%s is invalid.", object);
-
-    return {};
-}
-
-MaybeError DeviceBase::IsNotErrorObject(const ApiObjectBase* object) const {
-    DAWN_ASSERT(!IsValidationEnabled());
-    DAWN_ASSERT(object != nullptr);
     DAWN_INVALID_IF(object->IsError(), "%s is invalid.", object);
 
     return {};
@@ -1225,7 +1208,7 @@ BufferBase* DeviceBase::APICreateBuffer(const BufferDescriptor* rawDescriptor) {
             // Creating a buffer from a host-mapped pointer doesn't require the lock.
             return CreateBufferImpl(descriptor);
         } else {
-            auto deviceGuard = GetGuard();
+            auto deviceLock(GetScopedLock());
             return CreateBufferImpl(descriptor);
         }
     })();
@@ -1247,7 +1230,7 @@ BufferBase* DeviceBase::APICreateBuffer(const BufferDescriptor* rawDescriptor) {
     // 3. Mapping at creation. The buffer may be either valid or ErrorBuffer.
     if (rawDescriptor->mappedAtCreation) {
         // MapAtCreation requires the device lock in case it allocates staging memory.
-        auto deviceGuard = GetGuard();
+        auto deviceLock(GetScopedLock());
 
         MaybeError mapResult =
             fakeOOMAtNativeMap
@@ -1265,6 +1248,9 @@ BufferBase* DeviceBase::APICreateBuffer(const BufferDescriptor* rawDescriptor) {
     // If there was a deferredError saved from earlier, surface it now.
     if (deferredError) {
         deferredError->AppendContext("calling %s.CreateBuffer(%s).", this, rawDescriptor);
+
+        // TODO(dawn:1662): Make error handling thread-safe.
+        auto deviceLock(GetScopedLock());
         ConsumeError(std::move(deferredError), InternalErrorType::OutOfMemory);
     }
     return ReturnToAPI(std::move(buffer));
@@ -1289,6 +1275,9 @@ ComputePipelineBase* DeviceBase::APICreateComputePipeline(
         return ReturnToAPI(resultOrError.AcquireSuccess());
     }
 
+    // Acquire the device lock for error handling.
+    // TODO(dawn:1662): Make error handling thread-safe.
+    auto deviceLock(GetScopedLock());
     Ref<ComputePipelineBase> result;
     if (ConsumedError(std::move(resultOrError), &result, InternalErrorType::Internal,
                       "calling %s.CreateComputePipeline(%s).", this, descriptor)) {
@@ -1429,6 +1418,9 @@ RenderPipelineBase* DeviceBase::APICreateRenderPipeline(
         return ReturnToAPI(resultOrError.AcquireSuccess());
     }
 
+    // Acquire the device lock for error handling.
+    // TODO(dawn:1662): Make error handling thread-safe.
+    auto deviceLock(GetScopedLock());
     Ref<RenderPipelineBase> result;
     if (ConsumedError(std::move(resultOrError), &result, InternalErrorType::Internal,
                       "calling %s.CreateRenderPipeline(%s).", this, descriptor)) {
@@ -1459,7 +1451,7 @@ ShaderModuleBase* DeviceBase::APICreateShaderModule(const ShaderModuleDescriptor
     DAWN_ASSERT(errorShaderModule != nullptr && errorShaderModule->IsError());
 
     // Acquire the device lock for error handling, and return the error shader module.
-    auto deviceGuard = GetGuard();
+    auto deviceLock(GetScopedLock());
     // Emit error, including Tint errors and warnings for the error shader module.
     auto consumedError = ConsumedError(creationResult.AcquireError(), InternalErrorType::Internal,
                                        "calling %s.CreateShaderModule(%s).", this, descriptor);
@@ -1539,7 +1531,7 @@ bool DeviceBase::APITick() {
     {
         // Note: we cannot hold the lock when flushing the callbacks so have to limit the scope of
         // the lock here.
-        auto deviceGuard = GetGuard();
+        auto deviceLock(GetScopedLock());
         tickError = ConsumedError(Tick());
     }
 
@@ -1551,7 +1543,7 @@ bool DeviceBase::APITick() {
         return false;
     }
 
-    auto deviceGuard = GetGuard();
+    auto deviceLock(GetScopedLock());
     // We don't throw an error when device is lost. This allows pending callbacks to be
     // executed even after the Device is lost/destroyed.
     if (IsLost()) {
@@ -2162,10 +2154,8 @@ ResultOrError<Ref<ShaderModuleBase>> DeviceBase::CreateShaderModule(
     // Module type specific validation
     switch (moduleType) {
         case wgpu::SType::ShaderSourceSPIRV: {
-            DAWN_INVALID_IF(
-                !TINT_BUILD_SPV_READER || IsToggleEnabled(Toggle::DisallowSpirv) ||
-                    !GetInstance()->HasFeature(wgpu::InstanceFeatureName::ShaderSourceSPIRV),
-                "SPIR-V is disallowed.");
+            DAWN_INVALID_IF(!TINT_BUILD_SPV_READER || IsToggleEnabled(Toggle::DisallowSpirv),
+                            "SPIR-V is disallowed.");
             break;
         }
         case wgpu::SType::ShaderSourceWGSL: {
@@ -2277,11 +2267,6 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
 
     TextureViewDescriptor desc;
     DAWN_TRY_ASSIGN(desc, GetTextureViewDescriptorWithDefaults(texture, descriptorOrig));
-    std::string generatedLabel;
-    if (descriptorOrig == nullptr) {
-        generatedLabel = absl::StrFormat("defaulted from %s", texture);
-        desc.label = {generatedLabel.data(), generatedLabel.length()};
-    }
 
     UnpackedPtr<TextureViewDescriptor> descriptor;
     if (IsValidationEnabled()) {
@@ -2340,7 +2325,7 @@ void DeviceBase::FlushCallbackTaskQueue() {
         // mCallbackTaskManager alive.
         // TODO(crbug.com/dawn/752): In future, all devices should use InstanceBase's callback queue
         // manager from the start. So we won't need to care about data race at that point.
-        auto deviceGuard = GetGuard();
+        auto deviceLock(GetScopedLock());
         callbackTaskManager = mCallbackTaskManager;
     }
 
@@ -2448,38 +2433,12 @@ MaybeError DeviceBase::CopyFromStagingToTexture(BufferBase* source,
     return {};
 }
 
-DeviceGuard DeviceBase::GetGuard() {
-    return DeviceGuard(this);
+Mutex::AutoLockAndHoldRef DeviceBase::GetScopedLockSafeForDelete() {
+    return Mutex::AutoLockAndHoldRef(mMutex);
 }
 
-DeviceGuard DeviceBase::GetGuardForDelete() {
-    // When acquiring the guard for deletion, we do not currently enable Defer. This is not
-    // currently enforced by any assertions here because it would require making the Defer class
-    // a refcounted object to handle the case when the Device is destroyed while the lock is held,
-    // resulting in a dangling pointer to the Defer owned by the Device. As a proxy assertion,
-    // ~DeviceBase checks that the Defer object is not set.
-    return DeviceGuard(this, mMutex.Get());
-}
-
-void DeviceBase::DeferIfLocked(std::function<void()> f) {
-    // If we are not using implicit synchronized mode, we don't have a device-wide lock, so we can
-    // just run the defer task now.
-    if (mMutex == nullptr) {
-        f();
-        return;
-    }
-
-    // If we don't have a Defer, that means we are not locked, so we can just run the defer task
-    // now.
-    if (!mDefer) {
-        f();
-        return;
-    }
-
-    // Otherwise, verify that we are only calling this in the thread that is holding the lock and
-    // defer the function.
-    DAWN_ASSERT(mMutex->IsLockedByCurrentThread() && mDefer);
-    mDefer->Append(std::move(f));
+Mutex::AutoLock DeviceBase::GetScopedLock() {
+    return Mutex::AutoLock(mMutex.Get());
 }
 
 bool DeviceBase::IsLockedByCurrentThreadIfNeeded() const {

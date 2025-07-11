@@ -65,7 +65,6 @@
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/array.h"
-#include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/bool.h"
 #include "src/tint/lang/core/type/depth_multisampled_texture.h"
 #include "src/tint/lang/core/type/depth_texture.h"
@@ -707,9 +706,6 @@ class Printer : public tint::TextGenerator {
             type,  //
             [&](const core::type::Array* ary) { EmitArrayType(out, ary, name, name_printed); },
             [&](const core::type::Atomic* a) { EmitType(out, a->Type(), name, name_printed); },
-            [&](const core::type::BindingArray* ary) {
-                EmitBindingArrayType(out, ary, name, name_printed);
-            },
             [&](const core::type::Bool*) { out << "bool"; },
             [&](const core::type::I32*) { out << "int"; },
             [&](const core::type::U32*) { out << "uint"; },
@@ -875,24 +871,6 @@ class Printer : public tint::TextGenerator {
             }
         }
         out << args.str();
-    }
-
-    void EmitBindingArrayType(StringStream& out,
-                              const core::type::BindingArray* ary,
-                              const std::string& name,
-                              bool* name_printed) {
-        EmitType(out, ary->ElemType());
-
-        if (!name.empty()) {
-            out << " " << name;
-            if (name_printed) {
-                *name_printed = true;
-            }
-        }
-
-        auto* constant_count = ary->Count()->As<core::type::ConstantArrayCount>();
-        TINT_ASSERT(constant_count != nullptr);
-        out << "[" << constant_count->value << "]";
     }
 
     void EmitTextureType(StringStream& out, const core::type::Texture* t) {
@@ -1291,72 +1269,6 @@ class Printer : public tint::TextGenerator {
                     break;
                 case core::TexelFormat::kR8Unorm:
                     out << "r8";
-                    break;
-                case core::TexelFormat::kR8Uint:
-                    out << "r8ui";
-                    break;
-                case core::TexelFormat::kRg8Uint:
-                    out << "rg8ui";
-                    break;
-                case core::TexelFormat::kR16Uint:
-                    out << "r16ui";
-                    break;
-                case core::TexelFormat::kRg16Uint:
-                    out << "rg16ui";
-                    break;
-                case core::TexelFormat::kR8Sint:
-                    out << "r8i";
-                    break;
-                case core::TexelFormat::kRg8Sint:
-                    out << "rg8i";
-                    break;
-                case core::TexelFormat::kR16Sint:
-                    out << "r16i";
-                    break;
-                case core::TexelFormat::kRg16Sint:
-                    out << "rg16i";
-                    break;
-                case core::TexelFormat::kR8Snorm:
-                    out << "r8_snorm";
-                    break;
-                case core::TexelFormat::kRg8Unorm:
-                    out << "rg8";
-                    break;
-                case core::TexelFormat::kRg8Snorm:
-                    out << "rg8_snorm";
-                    break;
-                case core::TexelFormat::kR16Float:
-                    out << "r16f";
-                    break;
-                case core::TexelFormat::kRg16Float:
-                    out << "rg16f";
-                    break;
-                case core::TexelFormat::kRgb10A2Uint:
-                    out << "rgb10_a2ui";
-                    break;
-                case core::TexelFormat::kRgb10A2Unorm:
-                    out << "rgb10_a2";
-                    break;
-                case core::TexelFormat::kRg11B10Ufloat:
-                    out << "r11f_g11f_b10f";
-                    break;
-                case core::TexelFormat::kR16Unorm:
-                    out << "r16";
-                    break;
-                case core::TexelFormat::kR16Snorm:
-                    out << "r16_snorm";
-                    break;
-                case core::TexelFormat::kRg16Unorm:
-                    out << "rg16";
-                    break;
-                case core::TexelFormat::kRg16Snorm:
-                    out << "rg16_snorm";
-                    break;
-                case core::TexelFormat::kRgba16Unorm:
-                    out << "rgba16";
-                    break;
-                case core::TexelFormat::kRgba16Snorm:
-                    out << "rgba16_snorm";
                     break;
                 case core::TexelFormat::kUndefined:
                     TINT_UNREACHABLE() << "invalid texel format";

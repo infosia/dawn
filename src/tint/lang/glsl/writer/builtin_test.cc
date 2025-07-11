@@ -62,7 +62,7 @@ TEST_F(GlslWriterTest, BuiltinGeneric) {
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
 void main() {
   int x = 1;
-  int w = max(x, int((~(uint(x)) + 1u)));
+  int w = abs(x);
 }
 )");
 }
@@ -325,7 +325,7 @@ void foo_inner(uint tint_local_index) {
     atomicExchange(v.b, 0u);
   }
   barrier();
-  int x = atomicAdd(v.a, int((~(uint(123)) + 1u)));
+  int x = atomicAdd(v.a, -(123));
   uint y = atomicAdd(v.b, -(123u));
 }
 layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
@@ -879,19 +879,18 @@ TEST_F(GlslWriterTest, BuiltinTextureDimensions_2d_WithU32Lod) {
     Options opts{};
     opts.bindings.texture[{0, 0}] = {0};
     opts.bindings.texture_builtins_from_uniform.ubo_binding = {0};
-    opts.bindings.texture_builtins_from_uniform.ubo_contents = {
-        {.offset = 0, .count = 1, .binding = {0}}};
+    opts.bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering = {{0}};
     ASSERT_TRUE(Generate(opts)) << err_ << output_.glsl;
     EXPECT_EQ(output_.glsl, GlslHeader() + R"(precision highp float;
 precision highp int;
 
 layout(binding = 0, std140)
 uniform f_TintTextureUniformData_ubo {
-  uvec4 metadata[1];
+  uint tint_builtin_value_0;
 } v_1;
 uniform highp sampler2D f_v;
 void main() {
-  uvec2 x = uvec2(textureSize(f_v, int(min(3u, (v_1.metadata[(0u / 4u)][(0u % 4u)] - 1u)))));
+  uvec2 x = uvec2(textureSize(f_v, int(min(3u, (v_1.tint_builtin_value_0 - 1u)))));
 }
 )");
 }
@@ -1492,20 +1491,7 @@ TEST_F(GlslWriterTest, DotI32) {
 precision highp int;
 
 int tint_int_dot(ivec4 x, ivec4 y) {
-  uint v = uint(x.x);
-  int v_1 = int((v * uint(y.x)));
-  uint v_2 = uint(x.y);
-  int v_3 = int((v_2 * uint(y.y)));
-  uint v_4 = uint(v_1);
-  int v_5 = int((v_4 + uint(v_3)));
-  uint v_6 = uint(x.z);
-  int v_7 = int((v_6 * uint(y.z)));
-  uint v_8 = uint(v_5);
-  int v_9 = int((v_8 + uint(v_7)));
-  uint v_10 = uint(x.w);
-  int v_11 = int((v_10 * uint(y.w)));
-  uint v_12 = uint(v_9);
-  return int((v_12 + uint(v_11)));
+  return ((((x.x * y.x) + (x.y * y.y)) + (x.z * y.z)) + (x.w * y.w));
 }
 void main() {
   ivec4 x = ivec4(2);

@@ -26,8 +26,7 @@ void foo() {
         barrier();
         int v_2 = b;
         barrier();
-        uint v_3 = uint(i);
-        i = int((v_3 + uint(v_2)));
+        i = (i + v_2);
       }
       continue;
     }
