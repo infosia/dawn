@@ -2140,6 +2140,9 @@ class Parser {
                 case spv::Op::OpGroupNonUniformElect:
                     EmitSubgroupBuiltin(inst, core::BuiltinFn::kSubgroupElect);
                     break;
+                case spv::Op::OpGroupNonUniformBroadcast:
+                    EmitSubgroupBroadcast(inst);
+                    break;
                 default:
                     TINT_UNIMPLEMENTED()
                         << "unhandled SPIR-V instruction: " << static_cast<uint32_t>(inst.opcode());
@@ -2147,9 +2150,24 @@ class Parser {
         }
     }
 
-    void EmitSubgroupBuiltin(spvtools::opt::Instruction& inst, core::BuiltinFn fn) {
-        uint32_t scope = inst.GetSingleWordInOperand(0);
+    void EmitSubgroupBroadcast(spvtools::opt::Instruction& inst) {
+        auto val = Value(inst.GetSingleWordInOperand(1));
 
+        // TODO(431054356): Convert non-constant values into a `subgroupShuffle` when we support
+        // SPIR-V >= 1.5 source.
+        if (!val->Is<core::ir::Constant>()) {
+            TINT_ICE() << "non-constant OpGroupNonUniformBroadcast values not supported";
+        }
+
+        EmitSubgroupBuiltin(inst, core::BuiltinFn::kSubgroupBroadcast);
+    }
+
+    void EmitSubgroupBuiltin(spvtools::opt::Instruction& inst, core::BuiltinFn fn) {
+        auto scope_val = Value(inst.GetSingleWordInOperand(0));
+        auto* cnst = scope_val->As<core::ir::Constant>();
+        TINT_ASSERT(cnst);
+
+        uint32_t scope = cnst->Value()->ValueAs<uint32_t>();
         if (static_cast<spv::Scope>(scope) != spv::Scope::Subgroup) {
             TINT_ICE() << "subgroup scope required for GroupNonUniform instructions";
         }
