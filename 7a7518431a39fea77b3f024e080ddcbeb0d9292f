@@ -22,6 +22,30 @@
       },
       "revId": "7a7518431a39fea77b3f024e080ddcbeb0d9292f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ccce0e9_741087e7",
+        "filename": "generator/templates/emdawnwebgpu/library_webgpu_enum_tables.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-11T22:13:54Z",
+      "side": 1,
+      "message": "Oops, dead branch. For some reason this didn\u0027t crash.\n\nAlso missed an instance of contiguousFromZero that I didn\u0027t realize was used in dawn native.",
+      "parentUuid": "aa9750f9_a9c68cf4",
+      "range": {
+        "startLine": 87,
+        "startChar": 26,
+        "endLine": 87,
+        "endChar": 43
+      },
+      "revId": "7a7518431a39fea77b3f024e080ddcbeb0d9292f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
