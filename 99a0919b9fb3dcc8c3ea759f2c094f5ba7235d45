@@ -16,6 +16,23 @@
       "message": "bajones: I think cwallez@ is out. Can you take a look as the second reviewer?",
       "revId": "99a0919b9fb3dcc8c3ea759f2c094f5ba7235d45",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "360c3a00_d6be5126",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-11T20:14:20Z",
+      "side": 1,
+      "message": "LGTM, thanks for addressing Loko\u0027s feedback!",
+      "revId": "99a0919b9fb3dcc8c3ea759f2c094f5ba7235d45",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
