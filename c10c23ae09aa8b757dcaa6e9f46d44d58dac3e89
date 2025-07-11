@@ -33,6 +33,121 @@
       "message": "LGTM, thanks!",
       "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d5442ca5_98de1130",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T20:07:17Z",
+      "side": 1,
+      "message": "nit. Disable default hash validation",
+      "range": {
+        "startLine": 269,
+        "startChar": 34,
+        "endLine": 269,
+        "endChar": 66
+      },
+      "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42b71949_72e2424a",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T20:07:17Z",
+      "side": 1,
+      "message": "nit. Don\u0027t need this duplicated comment here.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 89
+      },
+      "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33557cac_b20b0c43",
+        "filename": "src/dawn/native/BlobCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T20:07:17Z",
+      "side": 1,
+      "message": "nit. Generates a blob that holds the actual stored bytes which may be different depending on whether hash validation is enabled.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 74
+      },
+      "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fa6c844_f2aa8251",
+        "filename": "src/dawn/native/BlobCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T20:07:17Z",
+      "side": 1,
+      "message": "```\n// If hash validation is enabled: \n//   StoreInternal inserts a has of |value| as a prefix.\n//   LoadInternal validates that the hash of the content after the prefix matches.\n```",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a681432e_43cd09ed",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T20:07:17Z",
+      "side": 1,
+      "message": "nit loading/storing from/to the blob cache",
+      "range": {
+        "startLine": 664,
+        "startChar": 65,
+        "endLine": 664,
+        "endChar": 80
+      },
+      "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
