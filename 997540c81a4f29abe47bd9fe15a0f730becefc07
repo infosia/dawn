@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c96f6644_5197bfff",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1305,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-11T04:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8cf6781_a2262cb2",
+      "range": {
+        "startLine": 1305,
+        "startChar": 24,
+        "endLine": 1305,
+        "endChar": 42
+      },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1133ab11_1e6bd1ae",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2521691_6519318a",
+        "filename": "src/dawn/tests/DawnTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-11T04:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1133ab11_1e6bd1ae",
+      "range": {
+        "startLine": 1322,
+        "startChar": 7,
+        "endLine": 1322,
+        "endChar": 50
+      },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "610be9e6_1c94762f",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-07-10T20:38:28Z",
       "side": 1,
       "message": "the code hasn\u0027t created the device yet.  comment needs updating?",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 40
+      },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4504524_cbfb29d3",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-11T04:59:43Z",
+      "side": 1,
+      "message": "\u0027SetUp\u0027 does create a device and sets the limits for the device which is all that is required for this test. Perhaps there is more?",
+      "parentUuid": "610be9e6_1c94762f",
       "range": {
         "startLine": 70,
         "startChar": 22,
@@ -119,6 +191,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "93d70cac_3f013e36",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-11T04:59:43Z",
+      "side": 1,
+      "message": "Let me try a comment for the entire suite.",
+      "parentUuid": "d9209089_f7d172d8",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 26
+      },
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8141b4d8_1fe6eb88",
         "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
         "patchSetId": 5
@@ -130,6 +226,24 @@
       "writtenOn": "2025-07-10T20:38:28Z",
       "side": 1,
       "message": "I suggest adding one \"alignment\"  limit, where \"better\" means smaller and divides into the larger limit.\n\nE.g. minUniformBufferOffsetAlignment",
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64f46924_883b339b",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-11T04:59:43Z",
+      "side": 1,
+      "message": "Looks like apple silicon supports 32\n\nhttps://web3dsurvey.com/webgpu/limits/minUniformBufferOffsetAlignment",
+      "parentUuid": "8141b4d8_1fe6eb88",
       "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

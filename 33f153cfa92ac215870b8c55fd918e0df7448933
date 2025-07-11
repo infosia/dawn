@@ -46,6 +46,30 @@
       },
       "revId": "33f153cfa92ac215870b8c55fd918e0df7448933",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e82293f6_56ae106e",
+        "filename": "src/dawn/tests/DawnTest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-11T04:59:43Z",
+      "side": 1,
+      "message": "I tried this before and I ran into the issue where i need to use \u0027mBackendAdapter\u0027 to call the \u0027SetUseTieredLimits\u0027. However this is private. I cannot use the \u0027adapter\u0027 as it is not created until after \u0027SetUp\u0027 is called. However this is chicken egg because afaik i need to set the tier before calling the base \u0027SetUp\u0027\n\nMaybe there is another way that works or I could make \u0027mBackendAdapter\u0027 a protected member.",
+      "parentUuid": "2cec8e09_9d880310",
+      "range": {
+        "startLine": 683,
+        "startChar": 17,
+        "endLine": 683,
+        "endChar": 42
+      },
+      "revId": "33f153cfa92ac215870b8c55fd918e0df7448933",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
