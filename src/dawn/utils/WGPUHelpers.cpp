@@ -492,23 +492,4 @@ uint16_t ConvertFloatToUnorm16(float value) {
     return static_cast<uint16_t>(clampedValue);
 }
 
-FormatType GetFormatType(wgpu::TextureFormat format) {
-    switch (format) {
-        case wgpu::TextureFormat::R8Snorm:
-        case wgpu::TextureFormat::RG8Snorm:
-        case wgpu::TextureFormat::RGBA8Snorm:
-            return FormatType::kSnorm8;
-        case wgpu::TextureFormat::R16Snorm:
-        case wgpu::TextureFormat::RG16Snorm:
-        case wgpu::TextureFormat::RGBA16Snorm:
-            return FormatType::kSnorm16;
-        case wgpu::TextureFormat::R16Unorm:
-        case wgpu::TextureFormat::RG16Unorm:
-        case wgpu::TextureFormat::RGBA16Unorm:
-            return FormatType::kUnorm16;
-        default:
-            DAWN_UNREACHABLE();
-    }
-}
-
 }  // namespace dawn::utils

@@ -166,7 +166,6 @@ class TextureFormatsTier1Test : public DawnTest {
     void CalculateAndCheckPixels(wgpu::Texture texture,
                                  wgpu::TextureFormat format,
                                  const std::vector<float>& originData) {
-        utils::FormatType formatType = utils::GetFormatType(format);
         uint32_t componentCount = utils::GetTextureComponentCount(format);
 
         // Define vectors for expected bounds for each possible format type.
@@ -183,8 +182,10 @@ class TextureFormatsTier1Test : public DawnTest {
             // https://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm#3.2.3.4%20FLOAT%20-%3E%20SNORM
             float tolerance = 0.6f;
 
-            switch (formatType) {
-                case utils::FormatType::kSnorm8: {
+            switch (format) {
+                case wgpu::TextureFormat::R8Snorm:
+                case wgpu::TextureFormat::RG8Snorm:
+                case wgpu::TextureFormat::RGBA8Snorm: {
                     float scaledComponent = floatComponent * 127.0f;
                     int8_t lowerExpectation =
                         utils::ConvertFloatToSnorm8(scaledComponent - tolerance);
@@ -194,7 +195,9 @@ class TextureFormatsTier1Test : public DawnTest {
                     expectedUpperBoundSnorm8.push_back(upperExpectation);
                     break;
                 }
-                case utils::FormatType::kSnorm16: {
+                case wgpu::TextureFormat::R16Snorm:
+                case wgpu::TextureFormat::RG16Snorm:
+                case wgpu::TextureFormat::RGBA16Snorm: {
                     float scaledComponent = floatComponent * 32767.0f;
                     int16_t lowerExpectation =
                         utils::ConvertFloatToSnorm16(scaledComponent - tolerance);
@@ -204,7 +207,9 @@ class TextureFormatsTier1Test : public DawnTest {
                     expectedUpperBoundSnorm16.push_back(upperExpectation);
                     break;
                 }
-                case utils::FormatType::kUnorm16: {
+                case wgpu::TextureFormat::R16Unorm:
+                case wgpu::TextureFormat::RG16Unorm:
+                case wgpu::TextureFormat::RGBA16Unorm: {
                     float clampedComponent = floatComponent * 65535.0f;
                     uint16_t lowerExpectation =
                         utils::ConvertFloatToUnorm16(clampedComponent - tolerance);
@@ -214,24 +219,34 @@ class TextureFormatsTier1Test : public DawnTest {
                     expectedUpperBoundUnorm16.push_back(upperExpectation);
                     break;
                 }
+                default:
+                    DAWN_UNREACHABLE();
             }
         }
 
         // Perform the texture pixel validation based on the determined format type.
         // It asserts that the pixel at {0,0} with size {1,1} falls within the calculated bounds.
-        switch (formatType) {
-            case utils::FormatType::kSnorm8:
-                EXPECT_TEXTURE_SNORM8_BETWEEN(expectedLowerBoundSnorm8, expectedUpperBoundSnorm8,
-                                              texture, {0, 0}, {1, 1}, format);
+        switch (format) {
+            case wgpu::TextureFormat::R8Snorm:
+            case wgpu::TextureFormat::RG8Snorm:
+            case wgpu::TextureFormat::RGBA8Snorm:
+                EXPECT_TEXTURE_NORM_BETWEEN(expectedLowerBoundSnorm8, expectedUpperBoundSnorm8,
+                                            texture, {0, 0}, {1, 1}, format);
                 break;
-            case utils::FormatType::kSnorm16:
-                EXPECT_TEXTURE_SNORM16_BETWEEN(expectedLowerBoundSnorm16, expectedUpperBoundSnorm16,
-                                               texture, {0, 0}, {1, 1}, format);
+            case wgpu::TextureFormat::R16Snorm:
+            case wgpu::TextureFormat::RG16Snorm:
+            case wgpu::TextureFormat::RGBA16Snorm:
+                EXPECT_TEXTURE_NORM_BETWEEN(expectedLowerBoundSnorm16, expectedUpperBoundSnorm16,
+                                            texture, {0, 0}, {1, 1}, format);
                 break;
-            case utils::FormatType::kUnorm16:
-                EXPECT_TEXTURE_UNORM16_BETWEEN(expectedLowerBoundUnorm16, expectedUpperBoundUnorm16,
-                                               texture, {0, 0}, {1, 1}, format);
+            case wgpu::TextureFormat::R16Unorm:
+            case wgpu::TextureFormat::RG16Unorm:
+            case wgpu::TextureFormat::RGBA16Unorm:
+                EXPECT_TEXTURE_NORM_BETWEEN(expectedLowerBoundUnorm16, expectedUpperBoundUnorm16,
+                                            texture, {0, 0}, {1, 1}, format);
                 break;
+            default:
+                DAWN_UNREACHABLE();
         }
     }
 };
