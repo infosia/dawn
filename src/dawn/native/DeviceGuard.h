@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_DEVICEGUARD_H_
 #define SRC_DAWN_NATIVE_DEVICEGUARD_H_
 
+#include <cstddef>
 #include <mutex>
 #include <optional>
 
@@ -94,6 +95,7 @@ class DeviceGuard : public detail::DeviceGuardBase,
     // mDefer member.
     using detail::DeviceGuardBase::mDefer;
 
+    explicit DeviceGuard(std::nullptr_t);
     explicit DeviceGuard(DeviceBase* device,
                          RecursiveMutex* mutex = nullptr);
 };
