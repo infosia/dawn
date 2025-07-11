@@ -38,7 +38,7 @@
 
 namespace dawn {
 
-static constexpr size_t kPayloadBits = 1;
+static constexpr size_t kPayloadBits = 2;
 static constexpr uint64_t kPayloadMask = (uint64_t(1) << kPayloadBits) - 1;
 static constexpr uint64_t kRefCountIncrement = (uint64_t(1) << kPayloadBits);
 
@@ -59,6 +59,20 @@ uint64_t RefCount::GetPayload() const {
     // anything except the atomicity of the load, which is enough since any past values of the
     // atomic will have the correct payload bits.
     return kPayloadMask & mRefCount.load(std::memory_order_relaxed);
+}
+
+uint64_t RefCount::PayloadFetchAnd(uint64_t arg) {
+    DAWN_ASSERT((arg & kPayloadMask) == arg);
+
+    // TODO: Determine if memory_order_relaxed is enough. May affect GetPayload too.
+    return kPayloadMask & mRefCount.fetch_and(arg | ~kPayloadMask, std::memory_order_relaxed);
+}
+
+uint64_t RefCount::PayloadFetchOr(uint64_t arg) {
+    DAWN_ASSERT((arg & kPayloadMask) == arg);
+
+    // TODO: Determine if memory_order_relaxed is enough. May affect GetPayload too.
+    return kPayloadMask & mRefCount.fetch_or(arg, std::memory_order_relaxed);
 }
 
 bool RefCount::Increment() {
@@ -134,6 +148,14 @@ uint64_t RefCounted::GetRefCountForTesting() const {
 
 uint64_t RefCounted::GetRefCountPayload() const {
     return mRefCount.GetPayload();
+}
+
+uint64_t RefCounted::RefCountPayloadFetchAnd(uint64_t arg) {
+    return mRefCount.PayloadFetchAnd(arg);
+}
+
+uint64_t RefCounted::RefCountPayloadFetchOr(uint64_t arg) {
+    return mRefCount.PayloadFetchOr(arg);
 }
 
 void RefCounted::AddRef() {
