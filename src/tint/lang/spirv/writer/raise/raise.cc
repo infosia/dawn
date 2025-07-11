@@ -78,10 +78,6 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     RUN_TRANSFORM(core::ir::transform::BindingRemapper, module, remapper_data);
 
-    if (!options.disable_robustness) {
-        RUN_TRANSFORM(core::ir::transform::PreventInfiniteLoops, module);
-    }
-
     // PrepareImmediateData must come before any transform that needs internal immediate data.
     core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
     if (options.depth_range_offsets) {
@@ -133,6 +129,8 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
             options.disable_runtime_sized_array_index_clamping;
         config.use_integer_range_analysis = options.enable_integer_range_analysis;
         RUN_TRANSFORM(core::ir::transform::Robustness, module, config);
+
+        RUN_TRANSFORM(core::ir::transform::PreventInfiniteLoops, module);
     }
 
     RUN_TRANSFORM(core::ir::transform::MultiplanarExternalTexture, module, multiplanar_map);

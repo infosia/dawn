@@ -83,10 +83,6 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
                                   array_length_from_uniform_options);
     RUN_TRANSFORM(core::ir::transform::BindingRemapper, module, remapper_data);
 
-    if (!options.disable_robustness) {
-        RUN_TRANSFORM(core::ir::transform::PreventInfiniteLoops, module);
-    }
-
     {
         core::ir::transform::BinaryPolyfillConfig binary_polyfills{};
         binary_polyfills.int_div_mod = !options.disable_polyfill_integer_div_mod;
@@ -122,6 +118,8 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
         core::ir::transform::RobustnessConfig config{};
         config.use_integer_range_analysis = options.enable_integer_range_analysis;
         RUN_TRANSFORM(core::ir::transform::Robustness, module, config);
+
+        RUN_TRANSFORM(core::ir::transform::PreventInfiniteLoops, module);
     }
 
     RUN_TRANSFORM(core::ir::transform::MultiplanarExternalTexture, module, multiplanar_map);
