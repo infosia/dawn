@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2767938a_167ec084",
+        "filename": "generator/templates/emdawnwebgpu/library_webgpu_enum_tables.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-11T22:34:00Z",
+      "side": 1,
+      "message": "Is 10 just arbitrary or was this supposed to be 1? Otherwise maybe just add a comment as to why 10.",
+      "range": {
+        "startLine": 73,
+        "startChar": 83,
+        "endLine": 73,
+        "endChar": 85
+      },
+      "revId": "bb1863686908297b3645e93cbaa620538d7b3456",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
