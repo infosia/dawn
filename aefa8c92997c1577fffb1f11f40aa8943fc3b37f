@@ -48,6 +48,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1174318d_143366cf",
+        "filename": "generator/dawn_json_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-11T23:13:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2496a9b8_2e714e9f",
+      "range": {
+        "startLine": 145,
+        "startChar": 8,
+        "endLine": 146,
+        "endChar": 37
+      },
+      "revId": "aefa8c92997c1577fffb1f11f40aa8943fc3b37f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "977db0c7_32b474f6",
