@@ -2140,6 +2140,9 @@ class Parser {
                 case spv::Op::OpGroupNonUniformElect:
                     EmitSubgroupBuiltin(inst, core::BuiltinFn::kSubgroupElect);
                     break;
+                case spv::Op::OpGroupNonUniformBroadcastFirst:
+                    EmitSubgroupBuiltin(inst, core::BuiltinFn::kSubgroupBroadcastFirst);
+                    break;
                 case spv::Op::OpGroupNonUniformBroadcast:
                     EmitSubgroupBroadcast(inst);
                     break;
