@@ -837,33 +837,39 @@ constexpr NumberMatcher kF32TexelFormatMatcher {
 /* match */ [](MatchState&, Number number) -> Number {
     switch (static_cast<core::TexelFormat>(number.Value())) {
       case core::TexelFormat::kR8Unorm:
-      case core::TexelFormat::kR8Snorm:
-      case core::TexelFormat::kRg8Unorm:
-      case core::TexelFormat::kRg8Snorm:
       case core::TexelFormat::kBgra8Unorm:
       case core::TexelFormat::kRgba8Unorm:
       case core::TexelFormat::kRgba8Snorm:
-      case core::TexelFormat::kR16Unorm:
-      case core::TexelFormat::kR16Snorm:
-      case core::TexelFormat::kRg16Unorm:
-      case core::TexelFormat::kRg16Snorm:
-      case core::TexelFormat::kRgba16Unorm:
-      case core::TexelFormat::kRgba16Snorm:
-      case core::TexelFormat::kR16Float:
-      case core::TexelFormat::kRg16Float:
       case core::TexelFormat::kRgba16Float:
       case core::TexelFormat::kR32Float:
       case core::TexelFormat::kRg32Float:
       case core::TexelFormat::kRgba32Float:
-      case core::TexelFormat::kRgb10A2Unorm:
-      case core::TexelFormat::kRg11B10Ufloat:
         return number;
       default:
         return Number::invalid;
     }
   },
 /* print */ [](MatchState*, StyledText& out) {
-  out<< style::Enum("r8unorm")<< style::Plain(", ") << style::Enum("r8snorm")<< style::Plain(", ") << style::Enum("rg8unorm")<< style::Plain(", ") << style::Enum("rg8snorm")<< style::Plain(", ") << style::Enum("bgra8unorm")<< style::Plain(", ") << style::Enum("rgba8unorm")<< style::Plain(", ") << style::Enum("rgba8snorm")<< style::Plain(", ") << style::Enum("r16unorm")<< style::Plain(", ") << style::Enum("r16snorm")<< style::Plain(", ") << style::Enum("rg16unorm")<< style::Plain(", ") << style::Enum("rg16snorm")<< style::Plain(", ") << style::Enum("rgba16unorm")<< style::Plain(", ") << style::Enum("rgba16snorm")<< style::Plain(", ") << style::Enum("r16float")<< style::Plain(", ") << style::Enum("rg16float")<< style::Plain(", ") << style::Enum("rgba16float")<< style::Plain(", ") << style::Enum("r32float")<< style::Plain(", ") << style::Enum("rg32float")<< style::Plain(", ") << style::Enum("rgba32float")<< style::Plain(", ") << style::Enum("rgb10a2unorm")<< style::Plain(" or ") << style::Enum("rg11b10ufloat");
+  out<< style::Enum("r8unorm")<< style::Plain(", ") << style::Enum("bgra8unorm")<< style::Plain(", ") << style::Enum("rgba8unorm")<< style::Plain(", ") << style::Enum("rgba8snorm")<< style::Plain(", ") << style::Enum("rgba16float")<< style::Plain(", ") << style::Enum("r32float")<< style::Plain(", ") << style::Enum("rg32float")<< style::Plain(" or ") << style::Enum("rgba32float");
+  }
+};
+
+/// EnumMatcher for 'match u32_texel_format'
+constexpr NumberMatcher kU32TexelFormatMatcher {
+/* match */ [](MatchState&, Number number) -> Number {
+    switch (static_cast<core::TexelFormat>(number.Value())) {
+      case core::TexelFormat::kRgba8Uint:
+      case core::TexelFormat::kRgba16Uint:
+      case core::TexelFormat::kR32Uint:
+      case core::TexelFormat::kRg32Uint:
+      case core::TexelFormat::kRgba32Uint:
+        return number;
+      default:
+        return Number::invalid;
+    }
+  },
+/* print */ [](MatchState*, StyledText& out) {
+  out<< style::Enum("rgba8uint")<< style::Plain(", ") << style::Enum("rgba16uint")<< style::Plain(", ") << style::Enum("r32uint")<< style::Plain(", ") << style::Enum("rg32uint")<< style::Plain(" or ") << style::Enum("rgba32uint");
   }
 };
 
@@ -871,11 +877,7 @@ constexpr NumberMatcher kF32TexelFormatMatcher {
 constexpr NumberMatcher kI32TexelFormatMatcher {
 /* match */ [](MatchState&, Number number) -> Number {
     switch (static_cast<core::TexelFormat>(number.Value())) {
-      case core::TexelFormat::kR8Sint:
-      case core::TexelFormat::kRg8Sint:
       case core::TexelFormat::kRgba8Sint:
-      case core::TexelFormat::kR16Sint:
-      case core::TexelFormat::kRg16Sint:
       case core::TexelFormat::kRgba16Sint:
       case core::TexelFormat::kR32Sint:
       case core::TexelFormat::kRg32Sint:
@@ -886,31 +888,7 @@ constexpr NumberMatcher kI32TexelFormatMatcher {
     }
   },
 /* print */ [](MatchState*, StyledText& out) {
-  out<< style::Enum("r8sint")<< style::Plain(", ") << style::Enum("rg8sint")<< style::Plain(", ") << style::Enum("rgba8sint")<< style::Plain(", ") << style::Enum("r16sint")<< style::Plain(", ") << style::Enum("rg16sint")<< style::Plain(", ") << style::Enum("rgba16sint")<< style::Plain(", ") << style::Enum("r32sint")<< style::Plain(", ") << style::Enum("rg32sint")<< style::Plain(" or ") << style::Enum("rgba32sint");
-  }
-};
-
-/// EnumMatcher for 'match u32_texel_format'
-constexpr NumberMatcher kU32TexelFormatMatcher {
-/* match */ [](MatchState&, Number number) -> Number {
-    switch (static_cast<core::TexelFormat>(number.Value())) {
-      case core::TexelFormat::kR8Uint:
-      case core::TexelFormat::kRg8Uint:
-      case core::TexelFormat::kR16Uint:
-      case core::TexelFormat::kRg16Uint:
-      case core::TexelFormat::kRgba8Uint:
-      case core::TexelFormat::kRgba16Uint:
-      case core::TexelFormat::kR32Uint:
-      case core::TexelFormat::kRg32Uint:
-      case core::TexelFormat::kRgba32Uint:
-      case core::TexelFormat::kRgb10A2Uint:
-        return number;
-      default:
-        return Number::invalid;
-    }
-  },
-/* print */ [](MatchState*, StyledText& out) {
-  out<< style::Enum("r8uint")<< style::Plain(", ") << style::Enum("rg8uint")<< style::Plain(", ") << style::Enum("r16uint")<< style::Plain(", ") << style::Enum("rg16uint")<< style::Plain(", ") << style::Enum("rgba8uint")<< style::Plain(", ") << style::Enum("rgba16uint")<< style::Plain(", ") << style::Enum("r32uint")<< style::Plain(", ") << style::Enum("rg32uint")<< style::Plain(", ") << style::Enum("rgba32uint")<< style::Plain(" or ") << style::Enum("rgb10a2uint");
+  out<< style::Enum("rgba8sint")<< style::Plain(", ") << style::Enum("rgba16sint")<< style::Plain(", ") << style::Enum("r32sint")<< style::Plain(", ") << style::Enum("rg32sint")<< style::Plain(" or ") << style::Enum("rgba32sint");
   }
 };
 
@@ -967,8 +945,8 @@ constexpr NumberMatcher kNumberMatchers[] = {
   /* [6] */ kFunctionMatcher,
   /* [7] */ kStorageMatcher,
   /* [8] */ kF32TexelFormatMatcher,
-  /* [9] */ kI32TexelFormatMatcher,
-  /* [10] */ kU32TexelFormatMatcher,
+  /* [9] */ kU32TexelFormatMatcher,
+  /* [10] */ kI32TexelFormatMatcher,
 };
 
 constexpr MatcherIndex kMatcherIndices[] = {
@@ -1038,37 +1016,37 @@ constexpr MatcherIndex kMatcherIndices[] = {
   /* [63] */ MatcherIndex(8),
   /* [64] */ MatcherIndex(4),
   /* [65] */ MatcherIndex(25),
-  /* [66] */ MatcherIndex(9),
+  /* [66] */ MatcherIndex(10),
   /* [67] */ MatcherIndex(4),
   /* [68] */ MatcherIndex(25),
-  /* [69] */ MatcherIndex(10),
+  /* [69] */ MatcherIndex(9),
   /* [70] */ MatcherIndex(4),
   /* [71] */ MatcherIndex(26),
   /* [72] */ MatcherIndex(8),
   /* [73] */ MatcherIndex(4),
   /* [74] */ MatcherIndex(26),
-  /* [75] */ MatcherIndex(9),
+  /* [75] */ MatcherIndex(10),
   /* [76] */ MatcherIndex(4),
   /* [77] */ MatcherIndex(26),
-  /* [78] */ MatcherIndex(10),
+  /* [78] */ MatcherIndex(9),
   /* [79] */ MatcherIndex(4),
   /* [80] */ MatcherIndex(28),
   /* [81] */ MatcherIndex(8),
   /* [82] */ MatcherIndex(4),
   /* [83] */ MatcherIndex(28),
-  /* [84] */ MatcherIndex(9),
+  /* [84] */ MatcherIndex(10),
   /* [85] */ MatcherIndex(4),
   /* [86] */ MatcherIndex(28),
-  /* [87] */ MatcherIndex(10),
+  /* [87] */ MatcherIndex(9),
   /* [88] */ MatcherIndex(4),
   /* [89] */ MatcherIndex(27),
   /* [90] */ MatcherIndex(8),
   /* [91] */ MatcherIndex(4),
   /* [92] */ MatcherIndex(27),
-  /* [93] */ MatcherIndex(9),
+  /* [93] */ MatcherIndex(10),
   /* [94] */ MatcherIndex(4),
   /* [95] */ MatcherIndex(27),
-  /* [96] */ MatcherIndex(10),
+  /* [96] */ MatcherIndex(9),
   /* [97] */ MatcherIndex(4),
   /* [98] */ MatcherIndex(12),
   /* [99] */ MatcherIndex(1),
@@ -1135,17 +1113,17 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [1] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [2] */
     /* usage */ core::ParameterUsage::kDdx,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [3] */
     /* usage */ core::ParameterUsage::kDdy,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [4] */
@@ -1160,17 +1138,17 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [6] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [7] */
     /* usage */ core::ParameterUsage::kDdx,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [8] */
     /* usage */ core::ParameterUsage::kDdy,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [9] */
@@ -1185,17 +1163,17 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [11] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [12] */
     /* usage */ core::ParameterUsage::kDdx,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [13] */
     /* usage */ core::ParameterUsage::kDdy,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [14] */
@@ -1210,17 +1188,17 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [16] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [17] */
     /* usage */ core::ParameterUsage::kDdx,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [18] */
     /* usage */ core::ParameterUsage::kDdy,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [19] */
@@ -1240,12 +1218,12 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [22] */
     /* usage */ core::ParameterUsage::kDdx,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [23] */
     /* usage */ core::ParameterUsage::kDdy,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [24] */
@@ -1300,7 +1278,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [34] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [35] */
@@ -1320,7 +1298,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [38] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [39] */
@@ -1340,7 +1318,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [42] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [43] */
@@ -1380,7 +1358,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [50] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [51] */
@@ -1400,7 +1378,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [54] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [55] */
@@ -1420,7 +1398,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [58] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [59] */
@@ -1440,7 +1418,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [62] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [63] */
@@ -1480,17 +1458,17 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [70] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [71] */
     /* usage */ core::ParameterUsage::kDdx,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [72] */
     /* usage */ core::ParameterUsage::kDdy,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [73] */
@@ -1505,12 +1483,12 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [75] */
     /* usage */ core::ParameterUsage::kDdx,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [76] */
     /* usage */ core::ParameterUsage::kDdy,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [77] */
@@ -1520,7 +1498,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [78] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [79] */
@@ -1540,7 +1518,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [82] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [83] */
@@ -1560,7 +1538,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [86] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [87] */
@@ -1580,7 +1558,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [90] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [91] */
@@ -1670,7 +1648,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [108] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [109] */
@@ -1685,7 +1663,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [111] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [112] */
@@ -1700,7 +1678,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [114] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [115] */
@@ -1715,7 +1693,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [117] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [118] */
@@ -1745,7 +1723,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [123] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [124] */
@@ -1775,7 +1753,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [129] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [130] */
@@ -1820,7 +1798,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [138] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(66),
+    /* matcher_indices */ MatcherIndicesIndex(69),
   },
   {
     /* [139] */
@@ -1835,7 +1813,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [141] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [142] */
@@ -1850,7 +1828,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [144] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [145] */
@@ -1880,7 +1858,7 @@ constexpr ParameterInfo kParameters[] = {
   {
     /* [150] */
     /* usage */ core::ParameterUsage::kCoords,
-    /* matcher_indices */ MatcherIndicesIndex(69),
+    /* matcher_indices */ MatcherIndicesIndex(66),
   },
   {
     /* [151] */

@@ -1,12 +1,5 @@
 SKIP: INVALID
 
-Error parsing GLSL shader:
-ERROR: 0:12: 'int' : must be qualified as flat in
-ERROR: 0:12: '' : compilation terminated 
-ERROR: 2 compilation errors.  No code generated.
-
-
-
 #version 310 es
 precision highp float;
 precision highp int;
@@ -28,5 +21,12 @@ void main() {
   vec4 v = gl_FragCoord;
   f_inner(v, FBF(f_Input, f_Input_1));
 }
+error: Error parsing GLSL shader:
+ERROR: 0:12: 'int' : must be qualified as flat in
+ERROR: 0:12: '' : compilation terminated 
+ERROR: 2 compilation errors.  No code generated.
+
+
+
 
 tint executable returned error: exit status 1

@@ -10,8 +10,7 @@ struct tint_module_vars_struct {
 
 int abs_4ad288() {
   int arg_0 = 1;
-  int const v = arg_0;
-  int res = max(v, as_type<int>((~(as_type<uint>(v)) + 1u)));
+  int res = abs(arg_0);
   return res;
 }
 
@@ -31,8 +30,7 @@ struct tint_module_vars_struct {
 
 int abs_4ad288() {
   int arg_0 = 1;
-  int const v = arg_0;
-  int res = max(v, as_type<int>((~(as_type<uint>(v)) + 1u)));
+  int res = abs(arg_0);
   return res;
 }
 
@@ -58,8 +56,7 @@ struct vertex_main_outputs {
 
 int abs_4ad288() {
   int arg_0 = 1;
-  int const v = arg_0;
-  int res = max(v, as_type<int>((~(as_type<uint>(v)) + 1u)));
+  int res = abs(arg_0);
   return res;
 }
 
@@ -71,9 +68,9 @@ VertexOutput vertex_main_inner() {
 }
 
 vertex vertex_main_outputs vertex_main() {
-  VertexOutput const v_1 = vertex_main_inner();
+  VertexOutput const v = vertex_main_inner();
   vertex_main_outputs tint_wrapper_result = {};
-  tint_wrapper_result.VertexOutput_pos = v_1.pos;
-  tint_wrapper_result.VertexOutput_prevent_dce = v_1.prevent_dce;
+  tint_wrapper_result.VertexOutput_pos = v.pos;
+  tint_wrapper_result.VertexOutput_prevent_dce = v.prevent_dce;
   return tint_wrapper_result;
 }

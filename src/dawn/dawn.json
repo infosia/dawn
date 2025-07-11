@@ -58,6 +58,7 @@
     },
     "proc": {
         "category": "function pointer",
+        "returns": "void",
         "args": []
     },
     "get proc address": {
@@ -83,6 +84,7 @@
         "category": "structure",
         "chained": "in",
         "chain roots": ["request adapter options"],
+        "tags": ["upstream", "emscripten"],
         "members": [
             {"name": "xr compatible", "type": "bool"}
         ]
@@ -151,6 +153,7 @@
             },
             {
                 "name": "get features",
+                "returns": "void",
                 "args": [
                     {"name": "features", "type": "supported features", "annotation": "*"}
                 ]
@@ -316,6 +319,7 @@
         "methods": [
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -349,6 +353,7 @@
         "methods": [
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -627,6 +632,7 @@
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -646,7 +652,8 @@
                 "returns": "buffer map state"
             },
             {
-                "name": "unmap"
+                "name": "unmap",
+                "no autolock": true
             },
             {
                 "name": "destroy"
@@ -766,6 +773,7 @@
         "methods": [
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -898,6 +906,7 @@
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -1058,6 +1067,7 @@
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -1095,6 +1105,7 @@
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -1213,7 +1224,7 @@
             {
                 "name": "create buffer",
                 "no autolock": true,
-                "returns": {"type": "buffer", "optional": true},
+                "returns": "buffer",
                 "args": [
                     {"name": "descriptor", "type": "buffer descriptor", "annotation": "const*"}
                 ]
@@ -1394,6 +1405,7 @@
             },
             {
                 "name": "get features",
+                "returns": "void",
                 "args": [
                     {"name": "features", "type": "supported features", "annotation": "*"}
                 ]
@@ -1459,6 +1471,7 @@
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -1699,18 +1712,22 @@
         "methods": [
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
             },
             {
-                "name": "destroy"
+                "name": "destroy",
+                "returns": "void"
             },
             {
-                "name": "expire"
+                "name": "expire",
+                "returns": "void"
             },
             {
-                "name": "refresh"
+                "name": "refresh",
+                "returns": "void"
             }
         ]
     },
@@ -1762,6 +1779,7 @@
         "methods": [
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -1826,6 +1844,7 @@
         "methods": [
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -2066,21 +2085,13 @@
             {"name": "is swapchain", "type": "bool", "default": "false"}
         ]
     },
-    "shared texture memory D3D11 begin state": {
-        "category": "structure",
-        "chained": "in",
-        "chain roots": ["shared texture memory begin access descriptor"],
-        "tags": ["dawn", "native"],
-        "members": [
-            {"name": "requires end access fence", "type": "bool", "default": "true"}
-        ]
-    },
     "shared fence": {
         "category": "object",
         "tags": ["dawn", "native"],
         "methods": [
             {
                 "name": "export info",
+                "returns": "void",
                 "args": [
                     {"name": "info", "type": "shared fence export info", "annotation": "*"}
                 ]
@@ -2273,7 +2284,7 @@
             {"value": 17, "name": "dual source blending"},
             {"value": 18, "name": "subgroups"},
             {"value": 19, "name": "texture formats tier1"},
-            {"value": 20, "name": "texture formats tier2"},
+            {"value": 20, "name": "texture formats tier2", "tags": ["upstream"]},
 
             {"value": 0, "name": "dawn internal usages", "tags": ["dawn"]},
             {"value": 1, "name": "dawn multi planar formats", "tags": ["dawn"]},
@@ -2442,7 +2453,7 @@
                 "returns": "wait status",
                 "args": [
                     {"name": "future count", "type": "size_t"},
-                    {"name": "futures", "type": "future wait info", "annotation": "*", "length": "future count", "optional": true, "no_default": true},
+                    {"name": "futures", "type": "future wait info", "annotation": "*", "length": "future count"},
                     {"name": "timeout NS", "type": "uint64_t"}
                 ]
             },
@@ -2513,8 +2524,8 @@
         "category": "enum",
         "values": [
             {"value": 1, "name": "timed wait any"},
-            {"value": 2, "name": "shader source SPIRV"},
-            {"value": 3, "name": "multiple devices per adapter"}
+            {"value": 2, "name": "shader source SPIRV", "tags": ["upstream"]},
+            {"value": 3, "name": "multiple devices per adapter", "tags": ["upstream"]}
         ]
     },
     "instance descriptor": {
@@ -2528,6 +2539,7 @@
     },
     "get instance features": {
         "category": "function",
+        "returns": "void",
         "args": [
             {"name": "features", "type": "supported instance features", "annotation": "*"}
         ]
@@ -2656,6 +2668,7 @@
         "methods": [
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -2668,7 +2681,7 @@
         "members": [
             {"name": "label", "type": "string view", "optional": true},
             {"name": "bind group layout count", "type": "size_t"},
-            {"name": "bind group layouts", "type": "bind group layout", "annotation": "const*", "length": "bind group layout count", "array_element_optional": true},
+            {"name": "bind group layouts", "type": "bind group layout", "annotation": "const*", "length": "bind group layout count", "optional": true},
             {"name": "immediate size", "type": "uint32_t", "default": 0}
         ]
     },
@@ -2737,6 +2750,7 @@
         "methods": [
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -2830,6 +2844,7 @@
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -2872,6 +2887,7 @@
         "methods": [
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -2974,6 +2990,7 @@
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3297,6 +3314,7 @@
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3324,6 +3342,7 @@
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3468,6 +3487,7 @@
         "methods": [
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3503,6 +3523,7 @@
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3600,6 +3621,7 @@
         "methods": [
             {
                 "name": "configure",
+                "returns": "void",
                 "args": [
                     {"name": "config", "type": "surface configuration", "annotation": "const*"}
                 ]
@@ -3614,6 +3636,7 @@
             },
             {
                 "name": "get current texture",
+                "returns": "void",
                 "args": [
                     {"name": "surface texture", "type": "surface texture", "annotation": "*"}
                 ]
@@ -3625,10 +3648,12 @@
             },
             {
                 "name": "unconfigure",
+                "returns": "void",
                 "args": []
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -3770,6 +3795,7 @@
         "category": "structure",
         "chained": "in",
         "chain roots": ["surface descriptor"],
+        "tags": ["upstream", "emscripten"],
         "members": [
             {"name": "color space", "type": "predefined color space"},
             {"name": "tone mapping mode", "type": "tone mapping mode"}
@@ -3777,6 +3803,7 @@
     },
     "predefined color space": {
         "category": "enum",
+        "tags": ["upstream", "emscripten"],
         "values": [
             {"value": 1, "name": "sRGB"},
             {"value": 2, "name": "display p3"}
@@ -3784,6 +3811,7 @@
     },
     "tone mapping mode": {
         "category": "enum",
+        "tags": ["upstream", "emscripten"],
         "values": [
             {"value": 1, "name": "standard"},
             {"value": 2, "name": "extended"}
@@ -3810,8 +3838,8 @@
             {"value": 7, "name": "surface source wayland surface"},
             {"value": 8, "name": "surface source android native window"},
             {"value": 9, "name": "surface source XCB window"},
-            {"value": 10, "name": "surface color management"},
-            {"value": 11, "name": "request adapter WebXR options"},
+            {"value": 10, "name": "surface color management", "tags": ["upstream", "emscripten"]},
+            {"value": 11, "name": "request adapter WebXR options", "tags": ["upstream", "emscripten"]},
 
             {"value": 0, "name": "compatibility mode limits", "tags": ["compat"]},
             {"value": 1, "name": "texture binding view dimension descriptor", "tags": ["compat"]},
@@ -3889,8 +3917,7 @@
             {"value": 68, "name": "render pass descriptor resolve rect", "tags": ["dawn"]},
             {"value": 69, "name": "request adapter WebGPU backend options", "tags": ["dawn", "native"]},
             {"value": 70, "name": "dawn fake device initialize error for testing", "tags": ["dawn"]},
-            {"value": 71, "name": "texture component swizzle descriptor", "tags": ["dawn"]},
-            {"value": 72, "name": "shared texture memory D3D11 begin state", "tags": ["dawn", "native"]}
+            {"value": 71, "name": "texture component swizzle descriptor", "tags": ["dawn"]}
         ]
     },
     "texture": {
@@ -3913,6 +3940,7 @@
             },
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -4178,6 +4206,7 @@
         "methods": [
             {
                 "name": "set label",
+                "returns": "void",
                 "args": [
                     {"name": "label", "type": "string view"}
                 ]
@@ -4372,16 +4401,15 @@
       "category": "native"
     },
     "void": {
-        "category": "native"
+        "category": "native",
+        "wasm type": "v"
     },
     "void *": {
         "category": "native",
-        "is nullable pointer": true,
         "wasm type": "p"
     },
     "void const *": {
         "category": "native",
-        "is nullable pointer": true,
         "wasm type": "p"
     },
     "int": {

@@ -75,7 +75,8 @@ TEST_P(Builtin_1arg, Vector) {
 INSTANTIATE_TEST_SUITE_P(
     SpirvWriterTest,
     Builtin_1arg,
-    testing::Values(BuiltinTestCase{kF32, core::BuiltinFn::kAbs, "FAbs"},
+    testing::Values(BuiltinTestCase{kI32, core::BuiltinFn::kAbs, "SAbs"},
+                    BuiltinTestCase{kF32, core::BuiltinFn::kAbs, "FAbs"},
                     BuiltinTestCase{kF16, core::BuiltinFn::kAbs, "FAbs"},
                     BuiltinTestCase{kF32, core::BuiltinFn::kAcos, "Acos"},
                     BuiltinTestCase{kF16, core::BuiltinFn::kAcos, "Acos"},
@@ -161,26 +162,6 @@ TEST_F(SpirvWriterTest, Builtin_Abs_u32) {
           %4 = OpLabel
                OpReturnValue %arg
                OpFunctionEnd
-)");
-}
-
-// Test that abs of a signed integer is implemented as max(x,-x);
-TEST_F(SpirvWriterTest, Builtin_Abs_i32) {
-    auto* func = b.Function("foo", MakeScalarType(kI32));
-    b.Append(func->Block(), [&] {
-        auto* arg = MakeScalarValue(kI32);
-        auto* result = b.Call(MakeScalarType(kI32), core::BuiltinFn::kAbs, arg);
-        b.Return(func, result);
-        mod.SetName(arg, "arg");
-    });
-
-    ASSERT_TRUE(Generate()) << Error() << output_;
-    EXPECT_INST(R"(
-          %6 = OpBitcast %uint %arg
-          %8 = OpNot %uint %6
-          %9 = OpIAdd %uint %8 %uint_1
-         %11 = OpBitcast %int %9
-         %12 = OpExtInst %int %13 SMax %arg %11
 )");
 }
 
@@ -1306,20 +1287,11 @@ TEST_F(SpirvWriterTest, Builtin_Dot_vec2i) {
     EXPECT_INST(R"(
           %8 = OpCompositeExtract %int %arg1 0
           %9 = OpCompositeExtract %int %arg2 0
-         %11 = OpBitcast %uint %8
-         %12 = OpBitcast %uint %9
-         %13 = OpIMul %uint %11 %12
-         %14 = OpBitcast %int %13
-         %15 = OpCompositeExtract %int %arg1 1
-         %16 = OpCompositeExtract %int %arg2 1
-         %17 = OpBitcast %uint %15
-         %18 = OpBitcast %uint %16
-         %19 = OpIMul %uint %17 %18
-         %20 = OpBitcast %int %19
-         %21 = OpBitcast %uint %14
-         %22 = OpBitcast %uint %20
-         %23 = OpIAdd %uint %21 %22
-         %24 = OpBitcast %int %23
+         %10 = OpIMul %int %8 %9
+         %11 = OpCompositeExtract %int %arg1 1
+         %12 = OpCompositeExtract %int %arg2 1
+         %13 = OpIMul %int %11 %12
+     %result = OpIAdd %int %10 %13
 )");
 }
 

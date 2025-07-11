@@ -22,9 +22,7 @@ void main() {
         tint_loop_idx.y = (tint_loop_idx.y - tint_carry);
         uint v_2 = min(uint(x), 9u);
         int x_1 = v.inner[v_2];
-        int v_3 = x_1;
-        uint v_4 = uint(i);
-        i = int((v_4 + uint(v_3)));
+        i = (i + x_1);
         if ((i > 10)) { break; }
       }
       continue;

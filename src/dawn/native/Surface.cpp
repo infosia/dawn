@@ -102,10 +102,6 @@ ResultOrError<UnpackedPtr<SurfaceDescriptor>> ValidateSurfaceDescriptor(
     UnpackedPtr<SurfaceDescriptor> descriptor;
     DAWN_TRY_ASSIGN(descriptor, ValidateAndUnpack(rawDescriptor));
 
-    if (descriptor.Get<SurfaceColorManagement>()) {
-        return DAWN_VALIDATION_ERROR("SurfaceColorManagement unsupported.");
-    }
-
     wgpu::SType type;
     DAWN_TRY_ASSIGN(
         type, (descriptor.ValidateBranches<
@@ -490,7 +486,7 @@ MaybeError Surface::Configure(const SurfaceConfiguration* configIn) {
     }
 
     {
-        auto deviceGuard = GetCurrentDevice()->GetGuard();
+        auto deviceLock(GetCurrentDevice()->GetScopedLock());
         ResultOrError<Ref<SwapChainBase>> maybeNewSwapChain =
             GetCurrentDevice()->CreateSwapChain(this, previousSwapChain, &config);
 
@@ -575,7 +571,7 @@ MaybeError Surface::GetCurrentTexture(SurfaceTexture* surfaceTexture) const {
         return {};
     }
 
-    auto deviceGuard = GetCurrentDevice()->GetGuard();
+    auto deviceLock(GetCurrentDevice()->GetScopedLock());
     DAWN_TRY_ASSIGN(*surfaceTexture, mSwapChain->GetCurrentTexture());
 
     return {};
@@ -632,7 +628,7 @@ wgpu::Status Surface::APIPresent() {
         DAWN_INVALID_IF(IsError(), "%s is invalid.", this);
         DAWN_INVALID_IF(!mSwapChain.Get(), "%s is not successfully configured.", this);
         {
-            auto deviceGuard = GetCurrentDevice()->GetGuard();
+            auto deviceLock(GetCurrentDevice()->GetScopedLock());
             DAWN_TRY(mSwapChain->Present());
         }
         return {};

@@ -276,8 +276,6 @@ source_set("sources") {
     "CreatePipelineAsyncEvent.h",
     "Device.cpp",
     "Device.h",
-    "DeviceGuard.cpp",
-    "DeviceGuard.h",
     "DynamicUploader.cpp",
     "DynamicUploader.h",
     "EncodingContext.cpp",
@@ -440,7 +438,6 @@ source_set("sources") {
   # In UWP, all available APIs are defined in WindowsApp.lib
   if (is_win && !dawn_is_winuwp) {
     libs += [
-      "onecore.lib",
       "user32.lib",
       "delayimp.lib",
     ]
@@ -843,8 +840,6 @@ source_set("sources") {
       "vulkan/FencedDeleter.cpp",
       "vulkan/FencedDeleter.h",
       "vulkan/Forward.h",
-      "vulkan/FramebufferCache.cpp",
-      "vulkan/FramebufferCache.h",
       "vulkan/PhysicalDeviceVk.cpp",
       "vulkan/PhysicalDeviceVk.h",
       "vulkan/PipelineCacheVk.cpp",

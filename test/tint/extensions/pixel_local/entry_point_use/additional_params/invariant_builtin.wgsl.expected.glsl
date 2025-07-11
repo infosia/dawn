@@ -1,5 +1,5 @@
 SKIP: INVALID
 
-pixel_local address space is not supported by the GLSL backend
+error: pixel_local address space is not supported by the 
 
 tint executable returned error: exit status 1

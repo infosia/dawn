@@ -1,37 +1,5 @@
 SKIP: INVALID
 
-//
-// fragment_main
-//
-
-RWByteAddressBuffer prevent_dce : register(u0);
-float16_t asin_11dfda() {
-  float16_t res = float16_t(0.499755859375h);
-  return res;
-}
-
-void fragment_main() {
-  prevent_dce.Store<float16_t>(0u, asin_11dfda());
-}
-
-//
-// compute_main
-//
-
-RWByteAddressBuffer prevent_dce : register(u0);
-float16_t asin_11dfda() {
-  float16_t res = float16_t(0.499755859375h);
-  return res;
-}
-
-[numthreads(1, 1, 1)]
-void compute_main() {
-  prevent_dce.Store<float16_t>(0u, asin_11dfda());
-}
-
-//
-// vertex_main
-//
 struct VertexOutput {
   float4 pos;
   float16_t prevent_dce;
@@ -43,22 +11,39 @@ struct vertex_main_outputs {
 };
 
 
+RWByteAddressBuffer prevent_dce : register(u0);
 float16_t asin_11dfda() {
   float16_t res = float16_t(0.499755859375h);
   return res;
 }
 
+void fragment_main() {
+  prevent_dce.Store<float16_t>(0u, asin_11dfda());
+}
+
+[numthreads(1, 1, 1)]
+void compute_main() {
+  prevent_dce.Store<float16_t>(0u, asin_11dfda());
+}
+
 VertexOutput vertex_main_inner() {
-  VertexOutput v = (VertexOutput)0;
-  v.pos = (0.0f).xxxx;
-  v.prevent_dce = asin_11dfda();
-  VertexOutput v_1 = v;
-  return v_1;
+  VertexOutput tint_symbol = (VertexOutput)0;
+  tint_symbol.pos = (0.0f).xxxx;
+  tint_symbol.prevent_dce = asin_11dfda();
+  VertexOutput v = tint_symbol;
+  return v;
 }
 
 vertex_main_outputs vertex_main() {
-  VertexOutput v_2 = vertex_main_inner();
-  vertex_main_outputs v_3 = {v_2.prevent_dce, v_2.pos};
-  return v_3;
+  VertexOutput v_1 = vertex_main_inner();
+  VertexOutput v_2 = v_1;
+  VertexOutput v_3 = v_1;
+  vertex_main_outputs v_4 = {v_3.prevent_dce, v_2.pos};
+  return v_4;
 }
 
+FXC validation failure:
+<scrubbed_path>(3,3-11): error X3000: unrecognized identifier 'float16_t'
+
+
+tint executable returned error: exit status 1

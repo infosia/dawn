@@ -92,7 +92,6 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.hlsl.shaderModel = 50;
     req.hlsl.disableSymbolRenaming = device->IsToggleEnabled(Toggle::DisableSymbolRenaming);
     req.hlsl.dumpShaders = device->IsToggleEnabled(Toggle::DumpShaders);
-    req.hlsl.dumpShadersOnFailure = device->IsToggleEnabled(Toggle::DumpShadersOnFailure);
     req.hlsl.tintOptions.remapped_entry_point_name = device->GetIsolatedEntryPointName();
 
     req.bytecode.hasShaderF16Feature = false;
@@ -102,6 +101,7 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     req.bytecode.compiler = d3d::Compiler::FXC;
     req.bytecode.d3dCompile =
         UnsafeUnserializedValue(pD3DCompile{device->GetFunctions()->d3dCompile});
+    req.bytecode.compilerVersion = D3D_COMPILER_VERSION;
     DAWN_ASSERT(device->GetDeviceInfo().shaderModel == 50);
     switch (stage) {
         case SingleShaderStage::Vertex:

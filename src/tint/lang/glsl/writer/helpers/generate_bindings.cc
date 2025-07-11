@@ -33,7 +33,6 @@
 #include "src/tint/api/common/binding_point.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/var.h"
-#include "src/tint/lang/core/type/binding_array.h"
 #include "src/tint/lang/core/type/external_texture.h"
 #include "src/tint/lang/core/type/pointer.h"
 #include "src/tint/lang/core/type/storage_texture.h"
@@ -46,7 +45,6 @@ Bindings GenerateBindings(const core::ir::Module& module) {
     Bindings bindings{};
     // Set a next_binding point for the texture-builtins-from-uniform buffer.
     bindings.texture_builtins_from_uniform.ubo_binding = {0u};
-    uint32_t texture_builtin_offset = 0;
 
     // Track the next available GLSL binding number.
     // NOTE: GLSL does not have a concept of groups, so the next GLSL binding number
@@ -82,33 +80,20 @@ Bindings GenerateBindings(const core::ir::Module& module) {
 
             binding::BindingInfo info{get_binding(bp.value())};
             switch (ptr_type->AddressSpace()) {
-                case core::AddressSpace::kHandle: {
-                    // Handle binding_array<handle> before logic dependent on the base handle type.
-                    const core::type::Type* handle_type = ptr_type->StoreType();
-                    uint32_t count = 1;
-                    if (auto* ba = handle_type->As<core::type::BindingArray>()) {
-                        handle_type = ba->ElemType();
-                        count = ba->Count()->As<core::type::ConstantArrayCount>()->value;
-                    }
-
+                case core::AddressSpace::kHandle:
                     Switch(
-                        handle_type,
+                        ptr_type->StoreType(),  //
                         [&](const core::type::Sampler*) { bindings.sampler.emplace(*bp, info); },
                         [&](const core::type::StorageTexture*) {
                             bindings.storage_texture.emplace(*bp, info);
                         },
                         [&](const core::type::Texture*) {
                             bindings.texture.emplace(*bp, info);
-
                             // Add all texture variables to the texture-builtin-from-uniform map.
-                            bindings.texture_builtins_from_uniform.ubo_contents.push_back(
-                                {.offset = texture_builtin_offset,
-                                 .count = count,
-                                 .binding = info});
-                            texture_builtin_offset += count;
+                            bindings.texture_builtins_from_uniform.ubo_bindingpoint_ordering
+                                .emplace_back(info);
                         });
                     break;
-                }
                 case core::AddressSpace::kStorage:
                     bindings.storage.emplace(*bp, info);
                     break;

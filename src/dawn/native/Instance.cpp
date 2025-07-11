@@ -158,8 +158,6 @@ wgpu::Status APIGetInstanceLimits(InstanceLimits* limits) {
 
 static constexpr auto kSupportedFeatures = std::array{
     wgpu::InstanceFeatureName::TimedWaitAny,
-    wgpu::InstanceFeatureName::ShaderSourceSPIRV,
-    wgpu::InstanceFeatureName::MultipleDevicesPerAdapter,
 };
 
 bool APIHasInstanceFeature(wgpu::InstanceFeatureName feature) {
@@ -287,11 +285,6 @@ MaybeError InstanceBase::Initialize(const UnpackedPtr<InstanceDescriptor>& descr
     }
     mRuntimeSearchPaths.push_back("");
 
-    if (descriptor->requiredFeatureCount > 0) {
-        auto features = std::span(descriptor->requiredFeatures, descriptor->requiredFeatureCount);
-        mInstanceFeatures = {features.begin(), features.end()};
-    }
-
     mCallbackTaskManager = AcquireRef(new CallbackTaskManager());
     DAWN_TRY(mEventManager.Initialize(descriptor));
     GatherWGSLFeatures(descriptor.Get<DawnWGSLBlocklist>());
@@ -339,6 +332,10 @@ Future InstanceBase::APIRequestAdapter(const RequestAdapterOptions* options,
         }
     };
 
+    static constexpr RequestAdapterOptions kDefaultOptions = {};
+    if (options == nullptr) {
+        options = &kDefaultOptions;
+    }
     auto adapters = EnumerateAdapters(options);
 
     FutureID futureID = GetEventManager()->TrackEvent(AcquireRef(new RequestAdapterEvent(
@@ -380,15 +377,11 @@ std::vector<Ref<AdapterBase>> InstanceBase::EnumerateAdapters(
     if (options == nullptr) {
         // Default path that returns all WebGPU core adapters on the system with default
         // toggles.
-        options = &kDefaultOptions;
+        return EnumerateAdapters(&kDefaultOptions);
     }
 
     RequestAdapterOptions rawOptions = options->WithTrivialFrontendDefaults();
     UnpackedPtr<RequestAdapterOptions> unpacked = Unpack(&rawOptions);
-    if (unpacked.Get<RequestAdapterWebXROptions>()) {
-        ConsumedErrorAndWarnOnce(DAWN_VALIDATION_ERROR("RequestAdapterWebXROptions unsupported."));
-        return {};
-    }
     auto* togglesDesc = unpacked.Get<DawnTogglesDescriptor>();
 
     std::vector<Ref<AdapterBase>> adapters;
@@ -591,10 +584,6 @@ void InstanceBase::AddDevice(DeviceBase* device) {
 
 void InstanceBase::RemoveDevice(DeviceBase* device) {
     mDevicesList.Use([&](auto deviceList) { deviceList->erase(device); });
-}
-
-bool InstanceBase::HasFeature(wgpu::InstanceFeatureName feature) const {
-    return mInstanceFeatures.contains(feature);
 }
 
 bool InstanceBase::ProcessEvents() {
