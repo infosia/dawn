@@ -16,6 +16,182 @@
       "message": "PTAL.",
       "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59960b6c_19f53379",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T19:20:16Z",
+      "side": 1,
+      "message": "I think the logic is good.\nA style thing: use auto* when getting a pointer.\n\nKey issue is readability,\nincluding need comments to help understand the tests.",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "03a778db_6c920991",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T19:20:16Z",
+      "side": 1,
+      "message": "This is a subtle change.\n\nIf I understand correctly, this says the src value propagates out via the pseudo-call to the loop header.  And that after that no more propagation is needed. That makes sense.\n\nIs it strange that we didn\u0027t encounter this before?",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68292900_c427fb12",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T19:20:16Z",
+      "side": 1,
+      "message": "comment references `exit`.. Is this copypasta?",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f761d20_334ff49f",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T19:20:16Z",
+      "side": 1,
+      "message": "I find the names \u0027curent_propagation_block\u0027 and \u0027current_propagation_control\u0027 confusing.\n\nHow about \u0027inner_block\u0027 and \u0027outer_block\u0027?  And implicitly we know the value is available in the inner_block and has to be propagated to the outer block?",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a86cbda1_0954b383",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2302,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T19:20:16Z",
+      "side": 1,
+      "message": "prefer auto*",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf7ff019_cd0cc840",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2000,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T19:20:16Z",
+      "side": 1,
+      "message": "These test cases need a preparatory comment about what to look for:   what values are being tracked and emitted.  e.g. what % spirv id to look for in the source, and where it ends up in the Tint IR.",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47e471e1_b9a19bd6",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2139,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T19:20:16Z",
+      "side": 1,
+      "message": "%31 is unused.  Remove it?",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b45efaa_6088d121",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2186,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T19:20:16Z",
+      "side": 1,
+      "message": "I presume this second 3i is from %31.  Would help a bit if it were a different value, so it could be distinguished from the first operand of this instruction.",
+      "range": {
+        "startLine": 2186,
+        "startChar": 27,
+        "endLine": 2186,
+        "endChar": 30
+      },
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7c4f816_16cab845",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2220,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T19:20:16Z",
+      "side": 1,
+      "message": "%29 is propagated via a continue branch to the continue target at %30, and so %29 becomes a block param on the continuing block.",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edd7ad1c_a30d1f90",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2262,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-11T19:20:16Z",
+      "side": 1,
+      "message": "test should have a comment to look for what ends up as %6 here.\n\nI think that\u0027s the point of this test?",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
