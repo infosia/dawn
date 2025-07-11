@@ -16,6 +16,63 @@
       "message": "Thanks for the comment! PTAL again.",
       "revId": "b2d4bbce18053d09c52503e5e89dd34d7c9a96fb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2e898bcb_376ad051",
+        "filename": "src/dawn/tests/unittests/FeatureTests.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-11T07:19:50Z",
+      "side": 1,
+      "message": "```suggestion\n            utils::FeatureAndImplicitlyEnabled(featureName);\n```",
+      "revId": "b2d4bbce18053d09c52503e5e89dd34d7c9a96fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85361d86_9d04899d",
+        "filename": "src/dawn/utils/WGPUHelpers.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-11T07:19:50Z",
+      "side": 1,
+      "message": "```suggestion\n#include \u003cstring\u003e\n#include \u003cunordered_set\u003e\n#include \u003cvector\u003e\n```",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 2
+      },
+      "revId": "b2d4bbce18053d09c52503e5e89dd34d7c9a96fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a811fad2_168f1021",
+        "filename": "src/dawn/utils/WGPUHelpers.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-11T07:19:50Z",
+      "side": 1,
+      "message": "nit: this is only used in WGPUHelpers.cpp so it doesn\u0027t need to be declared in the header.",
+      "revId": "b2d4bbce18053d09c52503e5e89dd34d7c9a96fb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
