@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4eefc0d_f904b381",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-11T21:36:05Z",
+      "side": 1,
+      "message": "No, the implementation in `library_webgpu.js` was already (incorrectly) returning nothing. Unfortunately nothing catches this because it\u0027s implemented in JS, so the JS returned `undefined` which coerced to `0`.",
+      "parentUuid": "5c8de290_580291d6",
+      "revId": "43d48eaddf82fa2b1a6efaeb81279ce0563ca8cd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9b17b2e3_9a06a577",
