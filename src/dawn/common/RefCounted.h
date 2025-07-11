@@ -47,6 +47,9 @@ class RefCount {
     uint64_t GetValueForTesting() const;
     uint64_t GetPayload() const;
 
+    uint64_t PayloadFetchAnd(uint64_t arg);
+    uint64_t PayloadFetchOr(uint64_t arg);
+
     // Add a reference, return true if the previous count is 0.
     bool Increment();
 
@@ -69,6 +72,8 @@ class RefCounted {
 
     uint64_t GetRefCountForTesting() const;
     uint64_t GetRefCountPayload() const;
+    uint64_t RefCountPayloadFetchAnd(uint64_t arg);
+    uint64_t RefCountPayloadFetchOr(uint64_t arg);
 
     void AddRef();
     // Release() is called by internal code, so it's assumed that there is already a thread
