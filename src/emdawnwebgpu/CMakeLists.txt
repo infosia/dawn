@@ -316,36 +316,38 @@ if (EMSCRIPTEN)
             gmock_main_wasmsafe
         )
 
-        add_executable(emdawnwebgpu_tests_asyncify ${emdawnwebgpu_test_sources})
-        set_target_properties(emdawnwebgpu_tests_asyncify PROPERTIES
-            SUFFIX ".html")
+        add_library(emdawnwebgpu_tests)
         target_link_libraries(
-            emdawnwebgpu_tests_asyncify
+            emdawnwebgpu_tests
             PUBLIC
                 ${emdawnwebgpu_test_deps}
         )
+        # Build with Closure so we can look at code size, and to test that Closure minification
+        # works, and to let Closure statically analyze our JS. Note that LTO
+        # (CMAKE_INTERPROCEDURAL_OPTIMIZATION) is also enabled which has mixed impact on code size.
+        target_link_options(emdawnwebgpu_tests
+            PUBLIC
+                "$<$<CONFIG:Release,MinSizeRel>:--closure=1>"
+        )
+
+        add_executable(emdawnwebgpu_tests_asyncify ${emdawnwebgpu_test_sources})
+        set_target_properties(emdawnwebgpu_tests_asyncify PROPERTIES
+            SUFFIX ".html")
+        target_link_libraries(emdawnwebgpu_tests_asyncify PUBLIC emdawnwebgpu_tests)
         target_link_options(emdawnwebgpu_tests_asyncify
             PUBLIC
                 # We need Asyncify or JSPI for Future tests.
                 "-sASYNCIFY=1"
-                # Test that Closure minification and externs work.
-                "$<$<CONFIG:Release>:--closure=1>"
         )
 
         add_executable(emdawnwebgpu_tests_jspi ${emdawnwebgpu_test_sources})
         set_target_properties(emdawnwebgpu_tests_jspi PROPERTIES
             SUFFIX ".html")
-        target_link_libraries(
-            emdawnwebgpu_tests_jspi
-            PUBLIC
-                ${emdawnwebgpu_test_deps}
-        )
+        target_link_libraries(emdawnwebgpu_tests_jspi PUBLIC emdawnwebgpu_tests)
         target_link_options(emdawnwebgpu_tests_jspi
             PUBLIC
                 # We need Asyncify or JSPI for Future tests.
                 "-sJSPI=1"
-                # Test that Closure minification and externs work.
-                "$<$<CONFIG:Release>:--closure=1>"
         )
 
         DawnJSONGenerator(
@@ -365,6 +367,7 @@ if (EMSCRIPTEN)
             SUFFIX ".js")
         target_link_options(emdawnwebgpu_link_test
             PRIVATE
+                # Unconditionally enable Closure for its static analysis.
                 --closure=1
         )
         target_link_libraries(
