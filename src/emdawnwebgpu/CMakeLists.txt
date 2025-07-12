@@ -318,6 +318,9 @@ if (EMSCRIPTEN)
 
         # Build with Closure so we can look at code size, and to test that Closure minification
         # works, and to let Closure statically analyze our JS.
+        # Note that LTO (CMAKE_INTERPROCEDURAL_OPTIMIZATION) is also enabled, which is important
+        # because webgpu.cpp wants to be able to be inlined into the application code for code size
+        # and performance.
         add_library(enable_closure INTERFACE)
         target_link_options(enable_closure
             INTERFACE
