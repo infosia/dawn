@@ -348,6 +348,24 @@
       "parentUuid": "a8ecebe5_91bbc2c1",
       "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6455959_3f280098",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-12T02:59:58Z",
+      "side": 1,
+      "message": "We discussed this in person. We cannot conservatively establish a smaller check than 256 and the default is 256. \n\nI agree we should revist this and more. I dont think this \"SupportedFeatureArch\" is complete. We should do it for all limits and find conservative tests for all backends. \nI will follow up this patch with another patch.",
+      "parentUuid": "10a53c53_b3c9eb56",
+      "revId": "997540c81a4f29abe47bd9fe15a0f730becefc07",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
