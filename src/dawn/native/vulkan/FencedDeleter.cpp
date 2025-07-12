@@ -29,121 +29,79 @@
 
 #include <algorithm>
 
+#include "dawn/native/IntegerTypes.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/vulkan/DeviceVk.h"
+
+// Listed in order of deletion.
+//  - Buffers and images must be deleted before memories because it is invalid to free memory
+// that still have resources bound to it.
+//  - Vulkan swapchains must be destroyed before their corresponding VkSurface
+#define FENCED_DEVICE_DELETER_TYPES(X)                                                           \
+    X(VkBuffer, mBuffersToDelete, DestroyBuffer)                                                 \
+    X(VkImage, mImagesToDelete, DestroyImage)                                                    \
+    X(VkDeviceMemory, mMemoriesToDelete, FreeMemory)                                             \
+    X(VkPipelineLayout, mPipelineLayoutsToDelete, DestroyPipelineLayout)                         \
+    X(VkRenderPass, mRenderPassesToDelete, DestroyRenderPass)                                    \
+    X(VkFence, mFencesToDelete, DestroyFence)                                                    \
+    X(VkFramebuffer, mFramebuffersToDelete, DestroyFramebuffer)                                  \
+    X(VkImageView, mImageViewsToDelete, DestroyImageView)                                        \
+    X(VkPipeline, mPipelinesToDelete, DestroyPipeline)                                           \
+    X(VkSwapchainKHR, mSwapChainsToDelete, DestroySwapchainKHR)                                  \
+    X(VkSemaphore, mSemaphoresToDelete, DestroySemaphore)                                        \
+    X(VkDescriptorPool, mDescriptorPoolsToDelete, DestroyDescriptorPool)                         \
+    X(VkQueryPool, mQueryPoolsToDelete, DestroyQueryPool)                                        \
+    X(VkSamplerYcbcrConversion, mSamplerYcbcrConversionsToDelete, DestroySamplerYcbcrConversion) \
+    X(VkSampler, mSamplersToDelete, DestroySampler)
+
+#define FENCED_INSTANCE_DELETER_TYPES(X) X(VkSurfaceKHR, mSurfacesToDelete, DestroySurfaceKHR)
+
+#define FENCED_DELETER_TYPES(X)    \
+    FENCED_DEVICE_DELETER_TYPES(X) \
+    FENCED_INSTANCE_DELETER_TYPES(X)
 
 namespace dawn::native::vulkan {
 
 FencedDeleter::FencedDeleter(Device* device) : mDevice(device) {}
 
 FencedDeleter::~FencedDeleter() {
-    DAWN_ASSERT(mBuffersToDelete.Empty());
-    DAWN_ASSERT(mDescriptorPoolsToDelete.Empty());
-    DAWN_ASSERT(mFencesToDelete.Empty());
-    DAWN_ASSERT(mFramebuffersToDelete.Empty());
-    DAWN_ASSERT(mImagesToDelete.Empty());
-    DAWN_ASSERT(mImageViewsToDelete.Empty());
-    DAWN_ASSERT(mMemoriesToDelete.Empty());
-    DAWN_ASSERT(mPipelinesToDelete.Empty());
-    DAWN_ASSERT(mPipelineLayoutsToDelete.Empty());
-    DAWN_ASSERT(mQueryPoolsToDelete.Empty());
-    DAWN_ASSERT(mRenderPassesToDelete.Empty());
-    DAWN_ASSERT(mSamplerYcbcrConversionsToDelete.Empty());
-    DAWN_ASSERT(mSamplersToDelete.Empty());
-    DAWN_ASSERT(mSemaphoresToDelete.Empty());
-    DAWN_ASSERT(mSurfacesToDelete.Empty());
-    DAWN_ASSERT(mSwapChainsToDelete.Empty());
+    std::unique_lock<std::mutex> lock(mMutex);
+
+    // Delete all the remaining VkDevice child objects immediately since the FencedDeleter should
+    // only be destroyed when the GPU timeline is finished.
+    DeleteUpTo(kMaxExecutionSerial);
+
+    // Assert that all deletion queues have been cleared.
+#define X(Type, queue, ...) DAWN_ASSERT(queue.Empty());
+    FENCED_DELETER_TYPES(X)
+#undef X
 }
 
-void FencedDeleter::DeleteWhenUnused(VkBuffer buffer) {
-    mBuffersToDelete.Enqueue(buffer, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkDescriptorPool pool) {
-    mDescriptorPoolsToDelete.Enqueue(pool, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkDeviceMemory memory) {
-    mMemoriesToDelete.Enqueue(memory, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkFence fence) {
-    mFencesToDelete.Enqueue(fence, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkFramebuffer framebuffer) {
-    mFramebuffersToDelete.Enqueue(framebuffer, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkImage image) {
-    mImagesToDelete.Enqueue(image, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkImageView view) {
-    mImageViewsToDelete.Enqueue(view, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkPipeline pipeline) {
-    mPipelinesToDelete.Enqueue(pipeline, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkPipelineLayout layout) {
-    mPipelineLayoutsToDelete.Enqueue(layout, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkQueryPool querypool) {
-    mQueryPoolsToDelete.Enqueue(querypool, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkRenderPass renderPass) {
-    mRenderPassesToDelete.Enqueue(renderPass, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkSamplerYcbcrConversion samplerYcbcrConversion) {
-    mSamplerYcbcrConversionsToDelete.Enqueue(samplerYcbcrConversion, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkSampler sampler) {
-    mSamplersToDelete.Enqueue(sampler, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkSemaphore semaphore) {
-    mSemaphoresToDelete.Enqueue(semaphore, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkSurfaceKHR surface) {
-    mSurfacesToDelete.Enqueue(surface, GetCurrentDeletionSerial());
-}
-
-void FencedDeleter::DeleteWhenUnused(VkSwapchainKHR swapChain) {
-    mSwapChainsToDelete.Enqueue(swapChain, GetCurrentDeletionSerial());
-}
+#define X(Type, queue, ...)                              \
+    void FencedDeleter::DeleteWhenUnused(Type handle) {  \
+        ExecutionSerial deletionSerial;                  \
+        {                                                \
+            std::unique_lock<std::mutex> lock(mMutex);   \
+            deletionSerial = GetCurrentDeletionSerial(); \
+            queue.Enqueue(handle, deletionSerial);       \
+        }                                                \
+        // Must be called after releasing the mMutex lock to avoid deadlock \
+        // if the task is executed synchronously (such as during device \
+        // destruction.) \
+        EnsureTask(deletionSerial);                                  \
+    }
+FENCED_DELETER_TYPES(X)
+#undef X
 
 ExecutionSerial FencedDeleter::GetLastPendingDeletionSerial() {
+    std::unique_lock<std::mutex> lock(mMutex);
     ExecutionSerial lastSerial = kBeginningOfGPUTime;
-    auto GetLastSubmitted = [&lastSerial](auto& queue) {
-        if (!queue.Empty()) {
-            lastSerial = std::max(lastSerial, queue.LastSerial());
-        }
-    };
-
-    GetLastSubmitted(mBuffersToDelete);
-    GetLastSubmitted(mDescriptorPoolsToDelete);
-    GetLastSubmitted(mFencesToDelete);
-    GetLastSubmitted(mFramebuffersToDelete);
-    GetLastSubmitted(mImagesToDelete);
-    GetLastSubmitted(mImageViewsToDelete);
-    GetLastSubmitted(mMemoriesToDelete);
-    GetLastSubmitted(mPipelinesToDelete);
-    GetLastSubmitted(mPipelineLayoutsToDelete);
-    GetLastSubmitted(mQueryPoolsToDelete);
-    GetLastSubmitted(mRenderPassesToDelete);
-    GetLastSubmitted(mSamplerYcbcrConversionsToDelete);
-    GetLastSubmitted(mSamplersToDelete);
-    GetLastSubmitted(mSemaphoresToDelete);
-    GetLastSubmitted(mSurfacesToDelete);
-    GetLastSubmitted(mSwapChainsToDelete);
-
+#define X(Type, queue, ...)                                    \
+    if (!queue.Empty()) {                                      \
+        lastSerial = std::max(lastSerial, queue.LastSerial()); \
+    }
+    FENCED_DELETER_TYPES(X)
+#undef X
     return lastSerial;
 }
 
@@ -151,91 +109,46 @@ ExecutionSerial FencedDeleter::GetCurrentDeletionSerial() {
     return mDevice->GetQueue()->GetPendingCommandSerial();
 }
 
-void FencedDeleter::Tick(ExecutionSerial completedSerial) {
+void FencedDeleter::DeleteUpTo(ExecutionSerial completedSerial) {
     VkDevice vkDevice = mDevice->GetVkDevice();
     VkInstance instance = mDevice->GetVkInstance();
 
-    // Buffers and images must be deleted before memories because it is invalid to free memory
-    // that still have resources bound to it.
-    for (VkBuffer buffer : mBuffersToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroyBuffer(vkDevice, buffer, nullptr);
-    }
-    mBuffersToDelete.ClearUpTo(completedSerial);
-    for (VkImage image : mImagesToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroyImage(vkDevice, image, nullptr);
-    }
-    mImagesToDelete.ClearUpTo(completedSerial);
+#define X(Type, queue, DeleteFn)                             \
+    for (Type handle : queue.IterateUpTo(completedSerial)) { \
+        mDevice->fn.DeleteFn(vkDevice, handle, nullptr);     \
+    }                                                        \
+    queue.ClearUpTo(completedSerial);
+    FENCED_DEVICE_DELETER_TYPES(X)
+#undef X
 
-    for (VkDeviceMemory memory : mMemoriesToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.FreeMemory(vkDevice, memory, nullptr);
-    }
-    mMemoriesToDelete.ClearUpTo(completedSerial);
+#define X(Type, queue, DeleteFn)                             \
+    for (Type handle : queue.IterateUpTo(completedSerial)) { \
+        mDevice->fn.DeleteFn(instance, handle, nullptr);     \
+    }                                                        \
+    queue.ClearUpTo(completedSerial);
+    FENCED_INSTANCE_DELETER_TYPES(X)
+#undef X
+}
 
-    for (VkPipelineLayout layout : mPipelineLayoutsToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroyPipelineLayout(vkDevice, layout, nullptr);
-    }
-    mPipelineLayoutsToDelete.ClearUpTo(completedSerial);
+void FencedDeleter::EnsureTask(ExecutionSerial deletionSerial) {
+    // Schedules a new task to process deletions if the deletion serial is newer than the one for
+    // the last scheduled task. Grouping deletion tasks together by serial like this ensures that
+    // the deletion order encoded at the top of the file is preserved for all deletions within a
+    // given serial. Dependenant deletions (such deleting memories before the buffers that use them)
+    // must not span multiple serials.
 
-    for (VkRenderPass renderPass : mRenderPassesToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroyRenderPass(vkDevice, renderPass, nullptr);
+    // The deletion serials used are always from GetPendingCommandSerial()
+    // and as such will never go backwards or be an already completed serial, so checking for a
+    // newer serial should be sufficent criteria for new task creation.
+    if (mLastTaskSerial.exchange(deletionSerial) != deletionSerial) {
+        // The this pointer here should remain valid for the lifetime of the tasks because the
+        // deleter is owned by the device and will only be destroyed once the queue's serial tasks
+        // have been flushed.
+        mDevice->GetQueue()->TrackSerialTask(deletionSerial, [this, deletionSerial]() {
+            std::unique_lock<std::mutex> lock(mMutex);
+            DeleteUpTo(deletionSerial);
+        });
     }
-    mRenderPassesToDelete.ClearUpTo(completedSerial);
-
-    for (VkFence fence : mFencesToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroyFence(vkDevice, fence, nullptr);
-    }
-    mFencesToDelete.ClearUpTo(completedSerial);
-
-    for (VkFramebuffer framebuffer : mFramebuffersToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroyFramebuffer(vkDevice, framebuffer, nullptr);
-    }
-    mFramebuffersToDelete.ClearUpTo(completedSerial);
-
-    for (VkImageView view : mImageViewsToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroyImageView(vkDevice, view, nullptr);
-    }
-    mImageViewsToDelete.ClearUpTo(completedSerial);
-
-    for (VkPipeline pipeline : mPipelinesToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroyPipeline(vkDevice, pipeline, nullptr);
-    }
-    mPipelinesToDelete.ClearUpTo(completedSerial);
-
-    // Vulkan swapchains must be destroyed before their corresponding VkSurface
-    for (VkSwapchainKHR swapChain : mSwapChainsToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroySwapchainKHR(vkDevice, swapChain, nullptr);
-    }
-    mSwapChainsToDelete.ClearUpTo(completedSerial);
-    for (VkSurfaceKHR surface : mSurfacesToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroySurfaceKHR(instance, surface, nullptr);
-    }
-    mSurfacesToDelete.ClearUpTo(completedSerial);
-
-    for (VkSemaphore semaphore : mSemaphoresToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroySemaphore(vkDevice, semaphore, nullptr);
-    }
-    mSemaphoresToDelete.ClearUpTo(completedSerial);
-
-    for (VkDescriptorPool pool : mDescriptorPoolsToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroyDescriptorPool(vkDevice, pool, nullptr);
-    }
-    mDescriptorPoolsToDelete.ClearUpTo(completedSerial);
-
-    for (VkQueryPool pool : mQueryPoolsToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroyQueryPool(vkDevice, pool, nullptr);
-    }
-    mQueryPoolsToDelete.ClearUpTo(completedSerial);
-
-    for (VkSamplerYcbcrConversion samplerYcbcrConversion :
-         mSamplerYcbcrConversionsToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroySamplerYcbcrConversion(vkDevice, samplerYcbcrConversion, nullptr);
-    }
-    mSamplerYcbcrConversionsToDelete.ClearUpTo(completedSerial);
-
-    for (VkSampler sampler : mSamplersToDelete.IterateUpTo(completedSerial)) {
-        mDevice->fn.DestroySampler(vkDevice, sampler, nullptr);
-    }
-    mSamplersToDelete.ClearUpTo(completedSerial);
 }
 
 }  // namespace dawn::native::vulkan

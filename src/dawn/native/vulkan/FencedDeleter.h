@@ -28,6 +28,9 @@
 #ifndef SRC_DAWN_NATIVE_VULKAN_FENCEDDELETER_H_
 #define SRC_DAWN_NATIVE_VULKAN_FENCEDDELETER_H_
 
+#include <atomic>
+#include <mutex>
+
 #include "dawn/common/SerialQueue.h"
 #include "dawn/common/vulkan_platform.h"
 #include "dawn/native/IntegerTypes.h"
@@ -65,9 +68,10 @@ class FencedDeleter {
     // Returns the serial used for deleting the resources.
     ExecutionSerial GetCurrentDeletionSerial();
 
-    void Tick(ExecutionSerial completedSerial);
-
   private:
+    void DeleteUpTo(ExecutionSerial completedSerial);
+    void EnsureTask(ExecutionSerial deletionSerial);
+
     raw_ptr<Device> mDevice = nullptr;
     SerialQueue<ExecutionSerial, VkBuffer> mBuffersToDelete;
     SerialQueue<ExecutionSerial, VkDescriptorPool> mDescriptorPoolsToDelete;
@@ -85,6 +89,9 @@ class FencedDeleter {
     SerialQueue<ExecutionSerial, VkSemaphore> mSemaphoresToDelete;
     SerialQueue<ExecutionSerial, VkSurfaceKHR> mSurfacesToDelete;
     SerialQueue<ExecutionSerial, VkSwapchainKHR> mSwapChainsToDelete;
+
+    std::atomic<ExecutionSerial> mLastTaskSerial = kBeginningOfGPUTime;
+    std::mutex mMutex;
 };
 
 }  // namespace dawn::native::vulkan
