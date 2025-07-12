@@ -650,15 +650,20 @@ var LibraryWebGPU = {
   // ----------------------------------------------------------------------------
 
   emwgpuDelete__sig: 'vp',
-  emwgpuDelete: (ptr) => {
-    delete WebGPU.Internals.jsObjects[ptr];
+  emwgpuDelete: (objectPtr) => {
+    delete WebGPU.Internals.jsObjects[objectPtr];
   },
 
   emwgpuSetLabel__deps: ['$UTF8ToString'],
   emwgpuSetLabel__sig: 'vppp',
-  emwgpuSetLabel: (ptr, data, length) => {
-    var obj = WebGPU.getJsObject(ptr);
+  emwgpuSetLabel: (objectPtr, data, length) => {
+    var obj = WebGPU.getJsObject(objectPtr);
     obj.label = UTF8ToString(data, length);
+  },
+
+  emwgpuObjectDestroy__sig: 'vp',
+  emwgpuObjectDestroy: (objectPtr) => {
+    WebGPU.getJsObject(objectPtr).destroy();
   },
 
   // Returns a FutureID that was resolved, or kNullFutureId if timed out.
@@ -1825,10 +1830,6 @@ var LibraryWebGPU = {
     return ptr;
   },
 
-  emwgpuDeviceDestroy: (devicePtr) => {
-    WebGPU.getJsObject(devicePtr).destroy()
-  },
-
   wgpuDeviceGetFeatures__deps: ['malloc'],
   wgpuDeviceGetFeatures: (devicePtr, supportedFeatures) => {
     var device = WebGPU.getJsObject(devicePtr);
@@ -2056,10 +2057,6 @@ var LibraryWebGPU = {
   // --------------------------------------------------------------------------
   // Methods of QuerySet
   // --------------------------------------------------------------------------
-
-  wgpuQuerySetDestroy: (querySetPtr) => {
-    WebGPU.getJsObject(querySetPtr).destroy();
-  },
 
   wgpuQuerySetGetCount: (querySetPtr) => {
     var querySet = WebGPU.getJsObject(querySetPtr);
@@ -2565,10 +2562,6 @@ var LibraryWebGPU = {
     var ptr = _emwgpuCreateTextureView({{{ gpu.NULLPTR }}});
     WebGPU.Internals.jsObjectInsert(ptr, texture.createView(desc));
     return ptr;
-  },
-
-  wgpuTextureDestroy: (texturePtr) => {
-    WebGPU.getJsObject(texturePtr).destroy();
   },
 
   wgpuTextureGetDepthOrArrayLayers: (texturePtr) => {

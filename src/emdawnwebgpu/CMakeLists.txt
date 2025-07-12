@@ -361,8 +361,7 @@ if (EMSCRIPTEN)
         # The test is just that this links, not that it runs (it will just
         # crash), so just build to .js. Since it has a main() function, this is
         # the same as building to .html, but skipping the .html file.
-        # This makes real calls into the API (though with constexpr arguments)
-        # so it also serves as a very basic code size test.
+        # This makes real (bogus) API calls to serve as a basic code size test.
         set_target_properties(emdawnwebgpu_link_test PROPERTIES
             SUFFIX ".js")
         target_link_options(emdawnwebgpu_link_test
