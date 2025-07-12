@@ -324,6 +324,9 @@ if (EMSCRIPTEN)
         )
         # Build with Closure so we can look at code size, and to test that Closure minification
         # works, and to let Closure statically analyze our JS.
+        # Note that LTO (CMAKE_INTERPROCEDURAL_OPTIMIZATION) is also enabled, which is important
+        # because webgpu.cpp wants to be able to be inlined into the application code for code size
+        # and performance.
         target_link_options(emdawnwebgpu_tests
             PUBLIC
                 "$<$<CONFIG:Release,MinSizeRel>:--closure=1>"

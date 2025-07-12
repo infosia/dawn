@@ -1,8 +1,9 @@
 # Tint Profiling
 
 Profiling is always something of an art form due to the interactions between the compiler and the machine code.
-Here is some guidance
-* Profile fully optimized builds. This includes LTO (use_thin_lto = true in args.gn).
+Here is some guidance:
+
+* For build setup, read the general profiling tips in [../profiling.md](../profiling.md).
 * Fix clock frequencies where possible (usually easier on external devices like ChromeOS/Android)
 * Determinism (this is probably a given for running the tint compiler directly)
 
