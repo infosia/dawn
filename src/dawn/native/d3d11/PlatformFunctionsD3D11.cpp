@@ -37,6 +37,9 @@ PlatformFunctions::~PlatformFunctions() = default;
 MaybeError PlatformFunctions::LoadFunctions() {
     DAWN_TRY(Base::LoadFunctions());
 
+    // Load FX compiler unconditionally since that's the only compiler we can use for D3D11.
+    DAWN_TRY(EnsureFXCompiler());
+
     DAWN_TRY(LoadD3D11());
     return {};
 }

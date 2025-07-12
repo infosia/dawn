@@ -92,6 +92,10 @@ IDXGIFactory4* Backend::GetFactory() const {
     return mFactory.Get();
 }
 
+MaybeError Backend::EnsureFXCompiler() {
+    return mFunctions.get()->EnsureFXCompiler();
+}
+
 const PlatformFunctions* Backend::GetFunctions() const {
     return mFunctions.get();
 }
