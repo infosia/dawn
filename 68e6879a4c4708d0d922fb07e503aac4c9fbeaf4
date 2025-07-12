@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1a10b59_6b2a21c2",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2162,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-12T04:24:06Z",
+      "side": 1,
+      "message": "There is a bug here, the SPIR-V version allows a `bool` operand but `bool` is not supported for a `SubgroupBroadcast` in WGSL. We\u0027ll need to convert the value.",
+      "revId": "68e6879a4c4708d0d922fb07e503aac4c9fbeaf4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
