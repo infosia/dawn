@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c458f87_55fbf5a6",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2144,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-12T04:24:43Z",
+      "side": 1,
+      "message": "Support `bool` value from SPIR-V which doesn\u0027t have an overload in WGSL.",
+      "revId": "4c4265eeab5bc5f26464cd8d2f30a8a8230eb33f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
