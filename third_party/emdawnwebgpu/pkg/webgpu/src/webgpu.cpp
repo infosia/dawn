@@ -54,8 +54,9 @@ static constexpr size_t kTimedWaitAnyMaxCountDefault = 64;
 // Declarations for JS emwgpu functions (defined in library_webgpu.js)
 // ----------------------------------------------------------------------------
 extern "C" {
-void emwgpuDelete(void* ptr);
-void emwgpuSetLabel(void* ptr, const char* data, size_t length);
+void emwgpuDelete(void* objectPtr);
+void emwgpuSetLabel(void* objectPtr, const char* data, size_t length);
+void emwgpuObjectDestroy(void* objectPtr);
 
 // Note that for the JS entry points, we pass the FutureIDs as uint64_t pointer
 // and deref it in JS on the other side. The timeout, however, is converted to
@@ -76,7 +77,6 @@ void emwgpuDeviceCreateShaderModule(
     WGPUDevice device,
     const WGPUShaderModuleDescriptor* descriptor,
     WGPUShaderModule shader);
-void emwgpuDeviceDestroy(WGPUDevice device);
 
 // Buffer mapping operations that has work that needs to be done on the JS side.
 void emwgpuBufferDestroy(WGPUBuffer buffer);
@@ -1578,7 +1578,7 @@ void WGPUDeviceImpl::Destroy(DropDeviceFromDeviceLostEvent dropDevice) {
       mDeviceLostFutureId, dropDevice, WGPUDeviceLostReason_Destroyed,
       "Device was destroyed.");
 
-  emwgpuDeviceDestroy(this);
+  emwgpuObjectDestroy(this);
 }
 
 WGPUQueue WGPUDeviceImpl::GetQueue() const {
@@ -2098,6 +2098,10 @@ WGPUWaitStatus wgpuInstanceWaitAny(WGPUInstance instance,
 // Methods of QuerySet
 // ----------------------------------------------------------------------------
 
+void wgpuQuerySetDestroy(WGPUQuerySet querySet) {
+  emwgpuObjectDestroy(querySet);
+}
+
 // ----------------------------------------------------------------------------
 // Methods of Queue
 // ----------------------------------------------------------------------------
@@ -2201,6 +2205,10 @@ WGPUStatus wgpuSurfaceGetCapabilities(WGPUSurface,
 // ----------------------------------------------------------------------------
 // Methods of Texture
 // ----------------------------------------------------------------------------
+
+void wgpuTextureDestroy(WGPUTexture texture) {
+  emwgpuObjectDestroy(texture);
+}
 
 // ----------------------------------------------------------------------------
 // Methods of TextureView
