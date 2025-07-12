@@ -63,7 +63,6 @@ PlatformFunctions::~PlatformFunctions() = default;
 
 MaybeError PlatformFunctions::LoadFunctions() {
     DAWN_TRY(LoadDXGI());
-    DAWN_TRY(LoadFXCompiler());
     InitWindowsVersion();
     return {};
 }
@@ -91,7 +90,12 @@ MaybeError PlatformFunctions::LoadDXGI() {
     return {};
 }
 
-MaybeError PlatformFunctions::LoadFXCompiler() {
+MaybeError PlatformFunctions::EnsureFXCompiler() {
+    if (mFXCompilerLib.Valid()) {
+        // The library is already loaded, no need to load it again.
+        return {};
+    }
+
 #if DAWN_PLATFORM_IS(WINUWP)
     d3dCompile = &D3DCompile;
     d3dDisassemble = &D3DDisassemble;
