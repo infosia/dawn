@@ -28,7 +28,6 @@
 #include <vector>
 
 #include "dawn/common/GPUInfo.h"
-#include "dawn/common/GPUInfo_autogen.h"
 #include "dawn/tests/DawnTest.h"
 
 // The purpose of these tests is to prevent regressions of features and limits on architectures that
@@ -118,6 +117,23 @@ TEST_P(FeatureArchInfoTest_TieredMaxLimits, AppleMaxTextureDimension2D) {
     // Apple silicon should report > 16k. Most modern devices should support > 16k. Update this when
     // appropriate.
     EXPECT_GE(GetAdapterLimits().maxTextureDimension2D, 16384u);
+}
+
+TEST_P(FeatureArchInfoTest_TieredMaxLimits, MaxUniformBufferBindingSize) {
+    // Swiftshader will return a lower limit than any modern device on CQ.
+    DAWN_TEST_UNSUPPORTED_IF(!IsSwiftshader());
+    EXPECT_GE(GetAdapterLimits().maxUniformBufferBindingSize, 65536u);
+    // Check that the device was created with the requested limit.
+    EXPECT_EQ(GetSupportedLimits().maxUniformBufferBindingSize,
+              GetAdapterLimits().maxUniformBufferBindingSize);
+}
+
+TEST_P(FeatureArchInfoTest_MaxLimits, MinUniformBufferOffsetAlignment) {
+    // All devices on CQ report 256. A value of 32 is commonplace on iOS.
+    EXPECT_LE(GetAdapterLimits().minUniformBufferOffsetAlignment, 256u);
+    // Check that the device was created with the requested limit.
+    EXPECT_EQ(GetSupportedLimits().minUniformBufferOffsetAlignment,
+              GetAdapterLimits().minUniformBufferOffsetAlignment);
 }
 
 DAWN_INSTANTIATE_TEST(FeatureArchInfoTest_MaxLimits,
