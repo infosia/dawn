@@ -356,10 +356,11 @@ if (EMSCRIPTEN)
         add_executable(emdawnwebgpu_link_test
             ${EMDAWNWEBGPU_LINK_TEST_CPP_SOURCES}
         )
-        # The test is just that this links, not that it runs (it doesn't do
-        # anything interesting), so just build to .js. Since it has a main()
-        # function, this is the same as building to .html, but skipping the
-        # .html file. It _is_ runnable if invoked via <script> or `node`.
+        # The test is just that this links, not that it runs (it will just
+        # crash), so just build to .js. Since it has a main() function, this is
+        # the same as building to .html, but skipping the .html file.
+        # This makes real calls into the API (though with constexpr arguments)
+        # so it also serves as a very basic code size test.
         set_target_properties(emdawnwebgpu_link_test PROPERTIES
             SUFFIX ".js")
         target_link_options(emdawnwebgpu_link_test
