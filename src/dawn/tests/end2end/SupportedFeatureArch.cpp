@@ -28,7 +28,6 @@
 #include <vector>
 
 #include "dawn/common/GPUInfo.h"
-#include "dawn/common/GPUInfo_autogen.h"
 #include "dawn/tests/DawnTest.h"
 
 // The purpose of these tests is to prevent regressions of features and limits on architectures that
@@ -118,6 +117,10 @@ TEST_P(FeatureArchInfoTest_TieredMaxLimits, AppleMaxTextureDimension2D) {
     // Apple silicon should report > 16k. Most modern devices should support > 16k. Update this when
     // appropriate.
     EXPECT_GE(GetAdapterLimits().maxTextureDimension2D, 16384u);
+}
+
+TEST_P(FeatureArchInfoTest_TieredMaxLimits, MinUniformBufferOffsetAlignment) {
+    EXPECT_GE(GetAdapterLimits().maxUniformBufferBindingSize, 65536u);
 }
 
 DAWN_INSTANTIATE_TEST(FeatureArchInfoTest_MaxLimits,
