@@ -358,7 +358,6 @@ MaybeError Device::TickImpl() {
     });
 
     GetResourceMemoryAllocator()->Tick(completedSerial);
-    GetFencedDeleter()->Tick(completedSerial);
 
     DAWN_TRY(queue->SubmitPendingCommands());
     DAWN_TRY(CheckDebugLayerAndGenerateErrors());
