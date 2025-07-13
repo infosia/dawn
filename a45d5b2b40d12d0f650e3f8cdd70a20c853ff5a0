@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57784e39_0f781b67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-13T16:20:48Z",
+      "side": 1,
+      "message": "This CL caused end2end tests to time out on the UHD 770 bots https://ci.chromium.org/ui/p/chromium/builders/luci.chromium.ci/Dawn%20Win10%20x64%20Release%20%28Intel%20UHD%20770%29\n\nProof:\n- The revert fixes the timeouts on `dawn-try-win-x64-intel-uhd770-rel` https://dawn-review.googlesource.com/c/dawn/+/252434?checksRunsSelected\u003ddawn-try-win-x64-intel-uhd770-rel\u0026tab\u003dchecks\n- The reapply caused the timeouts again https://dawn-review.googlesource.com/c/dawn/+/252435?checksRunsSelected\u003ddawn-try-win-x64-intel-uhd770-rel\u0026tab\u003dchecks\n\nIt looks like the new way we load the dlls made some tests take longer than before.\n- For example, previously `AdapterEnumerationTests.OnlyD3D11` only took 13ms.\n- But after the CL, it now takes 107 ms.\n\nFurthermore, the CL makes GL backend unable to load the libEGL.dll anymore https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/DisplayEGL.cpp;drc\u003dede56a97b66cd6305865582b0b0d5336db71682c;l\u003d81\n```\nWarning: Failed to load libEGL.dll: \"DynamicLib.Open: libEGL.dll Windows Error: 87\".\n - While trying to discover a BackendType::OpenGLES adapter.\n```\nIt\u0027s possible that this caused the `LoadLibraryEx` function to take longer to search for the dll.",
+      "revId": "a45d5b2b40d12d0f650e3f8cdd70a20c853ff5a0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
