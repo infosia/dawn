@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5dbd624_da64b00d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-14T18:36:47Z",
+      "side": 1,
+      "message": "Could we add a script (or update an existing one) or something that we could easily invoke that would generate this information? Seems useful to be able to do this. It would be even cooler if it could be run between commits or something and if it produced both the before/after stats. Feel free to do in a follow up.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 196
+      },
+      "revId": "79d867eda5a0ebb473b82214aebf7758d9cc76d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
