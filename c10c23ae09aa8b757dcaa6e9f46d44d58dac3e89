@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64824be3_25b4d7da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-14T02:59:17Z",
+      "side": 1,
+      "message": "Thanks for reviewing!",
+      "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d5442ca5_98de1130",
@@ -48,6 +65,30 @@
       "writtenOn": "2025-07-11T20:07:17Z",
       "side": 1,
       "message": "nit. Disable default hash validation",
+      "range": {
+        "startLine": 269,
+        "startChar": 34,
+        "endLine": 269,
+        "endChar": 66
+      },
+      "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1bf51da_58e980cf",
+        "filename": "src/dawn/native/Adapter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-14T02:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5442ca5_98de1130",
       "range": {
         "startLine": 269,
         "startChar": 34,
@@ -81,6 +122,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bccdebbc_2c6923a6",
+        "filename": "src/dawn/native/BlobCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-14T02:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42b71949_72e2424a",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 89
+      },
+      "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33557cac_b20b0c43",
@@ -94,6 +159,30 @@
       "writtenOn": "2025-07-11T20:07:17Z",
       "side": 1,
       "message": "nit. Generates a blob that holds the actual stored bytes which may be different depending on whether hash validation is enabled.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 74
+      },
+      "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1007b742_5fd2347b",
+        "filename": "src/dawn/native/BlobCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-14T02:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33557cac_b20b0c43",
       "range": {
         "startLine": 69,
         "startChar": 7,
@@ -127,6 +216,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "022223c4_01a1124a",
+        "filename": "src/dawn/native/BlobCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-14T02:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fa6c844_f2aa8251",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a681432e_43cd09ed",
@@ -140,6 +253,30 @@
       "writtenOn": "2025-07-11T20:07:17Z",
       "side": 1,
       "message": "nit loading/storing from/to the blob cache",
+      "range": {
+        "startLine": 664,
+        "startChar": 65,
+        "endLine": 664,
+        "endChar": 80
+      },
+      "revId": "c10c23ae09aa8b757dcaa6e9f46d44d58dac3e89",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b27f066_24154b6f",
+        "filename": "src/dawn/native/Toggles.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-14T02:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a681432e_43cd09ed",
       "range": {
         "startLine": 664,
         "startChar": 65,
