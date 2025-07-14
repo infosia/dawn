@@ -34,6 +34,24 @@
       "parentUuid": "1b24bc8c_e180e45c",
       "revId": "27aa23ec50a5900b211b16e43deaf6ba8c53913d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3aa8f9c1_6c93510f",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2168,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-14T16:24:29Z",
+      "side": 1,
+      "message": "I can\u0027t find the rule that Scope ID is a const (OpConstant). I expected it in the Vulkan environment spec, but can\u0027t find it there.\n\nIn offline discussion we uncovered confusion between the target ID (last argument) vs. execution scope ID (which is what this is).  Target ID is constant until SPIR-V 1.5.  No special rule is given for execution scope.\n\nHowever, I found that the spirv-tools validator requires execution scope to be an OpConstant; and if cooperative matrix is enabled, then it can be a spec constant.\nSee https://github.com/KhronosGroup/SPIRV-Tools/blob/257a227fbadf8176ea386c7d8fb9b889cbf08640/source/val/validate_scopes.cpp#L54 \n\nSo this code won\u0027t have to handle the non-OpConstant case;  but I still suggest it should have a more friendly erroring behaviour",
+      "parentUuid": "a77d7692_44965e24",
+      "revId": "27aa23ec50a5900b211b16e43deaf6ba8c53913d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
