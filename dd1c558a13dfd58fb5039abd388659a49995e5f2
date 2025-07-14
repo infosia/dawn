@@ -158,6 +158,24 @@
       "parentUuid": "54784b03_e7e8bfa4",
       "revId": "dd1c558a13dfd58fb5039abd388659a49995e5f2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68b841a1_4f5ff415",
+        "filename": "src/dawn/native/Serializable.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-14T02:59:49Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "04d41fd2_ee86586a",
+      "revId": "dd1c558a13dfd58fb5039abd388659a49995e5f2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
