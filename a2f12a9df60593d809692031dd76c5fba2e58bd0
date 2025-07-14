@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa202032_6534a804",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-14T08:47:26Z",
+      "side": 1,
+      "message": "This CL add a new transform for array length, which pick array length from immediate blocks.\n\nAdding this because metal backend only have 1 buffer slots for both customer immediate data and internal constants.\n\nAssume both array length transform (from uniform and from immediate) will live together for a while for different backend until we handles management mechanism in API side.\n\nPTAL, thanks.\n\nNote, not sure how to do fuzz tests update because we require a ImmediateConstantLayout object. Any suggestions?",
+      "revId": "a2f12a9df60593d809692031dd76c5fba2e58bd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
