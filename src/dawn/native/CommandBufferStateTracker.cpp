@@ -35,6 +35,7 @@
 
 #include "absl/container/flat_hash_map.h"
 #include "absl/container/inlined_vector.h"
+#include "absl/strings/str_format.h"
 #include "dawn/common/Assert.h"
 #include "dawn/native/BindGroup.h"
 #include "dawn/native/ComputePassEncoder.h"
@@ -274,9 +275,14 @@ Return FindStorageBufferBindingAliasing(const PipelineLayoutBase* pipelineLayout
     }
 }
 
+bool IsPlaneAspect(Aspect aspects) {
+    return (aspects & (Aspect::Plane0 | Aspect::Plane1 | Aspect::Plane2)) != 0;
+}
+
 bool TextureViewsMatch(const TextureViewBase* a, const TextureViewBase* b) {
     DAWN_ASSERT(a->GetTexture() == b->GetTexture());
-    return a->GetFormat().GetIndex() == b->GetFormat().GetIndex() &&
+    return (a->GetFormat().GetIndex() == b->GetFormat().GetIndex() ||
+            (IsPlaneAspect(a->GetAspects()) && IsPlaneAspect(b->GetAspects()))) &&
            a->GetDimension() == b->GetDimension() && a->GetBaseMipLevel() == b->GetBaseMipLevel() &&
            a->GetLevelCount() == b->GetLevelCount() &&
            a->GetBaseArrayLayer() == b->GetBaseArrayLayer() &&
