@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a79a604_7d5cc68c",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-14T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f36630a_0e8c24d5",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbc290f7_bf706e6d",
@@ -107,6 +125,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c96ba79_ebeadbbe",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-14T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95a579ec_1899ff72",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2124b7ea_2b38f436",
@@ -120,6 +156,24 @@
       "writtenOn": "2025-07-09T09:58:50Z",
       "side": 1,
       "message": "```suggestion\n                         uint32_t registerOffset) const {\n```",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ee31728_3c70919e",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-14T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2124b7ea_2b38f436",
       "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -249,6 +303,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "e1c94aaa_dd2ae69f",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1283,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-14T10:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71a0279f_43d72fe4",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "27b70e1a_3140a234",
         "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
         "patchSetId": 5
@@ -294,6 +366,24 @@
       "writtenOn": "2025-07-09T09:58:50Z",
       "side": 1,
       "message": "Can we nave a TODO to move these to immediates in the future?",
+      "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f95bdd75_2a0ce81f",
+        "filename": "src/dawn/native/d3d12/PipelineLayoutD3D12.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-14T10:42:25Z",
+      "side": 1,
+      "message": "Done by promote the TODO from bottom to top.",
+      "parentUuid": "0d6a2b67_2bb4d571",
       "revId": "2539e7d08f19eef0ab09ad23ade569b27b849e58",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
