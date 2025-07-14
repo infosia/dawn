@@ -52,6 +52,24 @@
       "parentUuid": "a77d7692_44965e24",
       "revId": "27aa23ec50a5900b211b16e43deaf6ba8c53913d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db2fb55e_1b91bb1f",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2168,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-14T16:27:31Z",
+      "side": 1,
+      "message": "you know.  I\u0027ll call this a nit.\nThe spir-v validator will error out first.   I suggest doing a followup later to improve the ICE.",
+      "parentUuid": "3aa8f9c1_6c93510f",
+      "revId": "27aa23ec50a5900b211b16e43deaf6ba8c53913d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
