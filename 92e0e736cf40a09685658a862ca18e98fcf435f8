@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fd3be7e_becda47f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003446
+      },
+      "writtenOn": "2025-07-14T18:55:21Z",
+      "side": 1,
+      "message": "lgtm. I\u0027m glad this was so small!\n\nDo we have any worries that this is going to bite us later? Like IIRC there\u0027s a push to expose YUV in WebGPU. Does that intersect with this check?",
+      "revId": "92e0e736cf40a09685658a862ca18e98fcf435f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
