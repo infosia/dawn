@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cc2df2a_376fa1a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-07-14T18:29:21Z",
+      "side": 1,
+      "message": "Gregg, Corentin: PTAL. Thanks!",
+      "revId": "0e59f25567890be2436203b3b7ae1b78f9ad4372",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
