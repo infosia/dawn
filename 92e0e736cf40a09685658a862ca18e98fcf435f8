@@ -16,6 +16,24 @@
       "message": "lgtm. I\u0027m glad this was so small!\n\nDo we have any worries that this is going to bite us later? Like IIRC there\u0027s a push to expose YUV in WebGPU. Does that intersect with this check?",
       "revId": "92e0e736cf40a09685658a862ca18e98fcf435f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "429e45cc_3172200b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-07-14T21:44:01Z",
+      "side": 1,
+      "message": "I\u0027m not aware of that work. Do you have a link?\n\nThe current multiplanar stuff supports YCbCr, which is the digital form of the YUV color space, AIUI. Perhaps you meant it\u0027ll support YUV (or YCbCr) formats without having to combine planes in a shader? If so, I don\u0027t think it\u0027ll be a problem, since those formats wouldn\u0027t be tagged with separate PlaneX aspects.",
+      "parentUuid": "2fd3be7e_becda47f",
+      "revId": "92e0e736cf40a09685658a862ca18e98fcf435f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
