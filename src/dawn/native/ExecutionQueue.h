@@ -121,8 +121,8 @@ class ExecutionQueueBase : public ApiObjectBase {
     virtual ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() = 0;
 
     // Each backend should implement their own way to wait for serials.
-    virtual ResultOrError<bool> WaitForQueueSerialImpl(ExecutionSerial waitSerial,
-                                                       Nanoseconds timeout) = 0;
+    virtual ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial waitSerial,
+                                                                  Nanoseconds timeout) = 0;
 
     // mCompletedSerial tracks the last completed command serial that the fence has returned.
     // mLastSubmittedSerial tracks the last submitted command serial.

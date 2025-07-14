@@ -73,8 +73,8 @@ class SystemEventQueue final : public Queue {
     MaybeError Initialize();
     MaybeError NextSerial() override;
     ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
-    ResultOrError<bool> WaitForQueueSerialImpl(ExecutionSerial serial,
-                                               Nanoseconds timeout) override;
+    ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                          Nanoseconds timeout) override;
     void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
 
   private:
@@ -110,8 +110,8 @@ class DelayFlushQueue final : public Queue {
     MaybeError Initialize();
     MaybeError NextSerial() override;
     ResultOrError<ExecutionSerial> CheckAndUpdateCompletedSerials() override;
-    ResultOrError<bool> WaitForQueueSerialImpl(ExecutionSerial serial,
-                                               Nanoseconds timeout) override;
+    ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                          Nanoseconds timeout) override;
     void SetEventOnCompletion(ExecutionSerial serial, HANDLE event) override;
 
   private:
