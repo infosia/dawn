@@ -58,6 +58,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95df7425_9b4df88e",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2219,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-14T17:30:52Z",
+      "side": 1,
+      "message": "I understand. This is a spirv dialect operation.",
+      "parentUuid": "92b7e73c_445337dc",
+      "range": {
+        "startLine": 2219,
+        "startChar": 9,
+        "endLine": 2219,
+        "endChar": 73
+      },
+      "revId": "649b4d88a8e972ec21b7fdc7095bfc7adf5831a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a72e4520_58416a48",
@@ -118,6 +142,24 @@
       "writtenOn": "2025-07-14T17:25:14Z",
       "side": 1,
       "message": "Missing UMin and FMin?",
+      "revId": "649b4d88a8e972ec21b7fdc7095bfc7adf5831a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af85e85e_0f76d03d",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-14T17:30:52Z",
+      "side": 1,
+      "message": "no. The core instructions are invoked.",
+      "parentUuid": "797d6c00_30bdf5e6",
       "revId": "649b4d88a8e972ec21b7fdc7095bfc7adf5831a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
