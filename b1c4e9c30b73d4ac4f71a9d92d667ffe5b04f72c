@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "acbafcd7_351236a2",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-14T16:07:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "6394161e_3a8cbb1a",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68292900_c427fb12",
@@ -211,6 +229,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9371a218_da8669bf",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2302,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-14T16:07:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a471c447_864704e5",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf7ff019_cd0cc840",
@@ -277,6 +313,24 @@
       "side": 1,
       "message": "I\u0027m hesitant because these were kinda sensitive to removing things and it staring to work.",
       "parentUuid": "47e471e1_b9a19bd6",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "506484d5_4d0924ab",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2139,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-14T16:07:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "191aeeaf_2683d93f",
       "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
