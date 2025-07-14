@@ -22,6 +22,30 @@
       },
       "revId": "3d2d74ff3f8a51352bb5a665edb8d0166197f70a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa08a572_ee43bae7",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-14T20:30:05Z",
+      "side": 0,
+      "message": "lol. I just adjusted for it inside the g3 build file...",
+      "parentUuid": "6d71b126_80282baf",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "3d2d74ff3f8a51352bb5a665edb8d0166197f70a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

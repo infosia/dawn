@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "04c6c68d_6a708338",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-14T20:30:05Z",
+      "side": 1,
+      "message": "good. thanks.",
+      "range": {
+        "startLine": 137,
+        "startChar": 73,
+        "endLine": 138,
+        "endChar": 13
+      },
+      "revId": "5e149c0a707d80fce760387cf32c508959961b21",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
