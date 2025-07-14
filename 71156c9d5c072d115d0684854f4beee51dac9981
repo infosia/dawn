@@ -16,6 +16,52 @@
       "message": "PTAL.",
       "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a8ce667_83a6991a",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-07-14T08:15:05Z",
+      "side": 1,
+      "message": "I don\u0027t understand which mode is used under what kinds of situation, could you educate me a little bit?",
+      "range": {
+        "startLine": 1480,
+        "startChar": 12,
+        "endLine": 1485,
+        "endChar": 25
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38061569_2ac3db49",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-07-14T08:15:05Z",
+      "side": 1,
+      "message": "How do you like putting them roughly this way?\n```\nstruct ResolveRect {\n   uint32_t srcX;\n   uint32_t srcY;\n   uint32_t dstX;\n   uint32_t dstY;\n   uint32_t width;\n   uint32_t height;\n\n   ResolveRect() \u003d default;\n   bool hasValue() { return width !\u003d 0 \u0026\u0026 height !\u003d 0; }\n} resolveRect;\n```",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
