@@ -2168,11 +2168,23 @@ class Parser {
                     EmitSubgroupBuiltin(inst, spirv::BuiltinFn::kGroupNonUniformQuadSwap);
                     break;
                 case spv::Op::OpGroupNonUniformSMin:
-                    EmitSubgroupSMin(inst);
+                    EmitSubgroupMinMax(inst, spirv::BuiltinFn::kGroupNonUniformSMin);
                     break;
+<<<<<<< PATCH SET (b670ed5c94aa5e80c3b94dec7f49a57073328d24 [spirv-reader][ir] Add support for OpGroupNonUniform*Max)
+                case spv::Op::OpGroupNonUniformSMax:
+                    EmitSubgroupMinMax(inst, spirv::BuiltinFn::kGroupNonUniformSMax);
+                    break;
+||||||| BASE
+                    break;
+=======
+>>>>>>> BASE      (b87791f4144388da0086ec62d603386c87664658 [spirv-reader][ir] Add support for OpGroupNonUniform*Min)
                 case spv::Op::OpGroupNonUniformUMin:
                 case spv::Op::OpGroupNonUniformFMin:
-                    EmitSubgroupMin(inst);
+                    EmitSubgroupMinMax(inst, core::BuiltinFn::kSubgroupMin);
+                    break;
+                case spv::Op::OpGroupNonUniformUMax:
+                case spv::Op::OpGroupNonUniformFMax:
+                    EmitSubgroupMinMax(inst, core::BuiltinFn::kSubgroupMax);
                     break;
                 default:
                     TINT_UNIMPLEMENTED()
@@ -2192,32 +2204,31 @@ class Parser {
         }
     }
 
-    void EmitSubgroupMin(spvtools::opt::Instruction& inst) {
+    void EmitSubgroupMinMax(spvtools::opt::Instruction& inst, core::BuiltinFn fn) {
         ValidateScope(inst);
 
         auto group = inst.GetSingleWordInOperand(1);
         if (static_cast<spv::GroupOperation>(group) != spv::GroupOperation::Reduce) {
-            TINT_ICE() << "group operand Reduce required for `Min` instructions";
+            TINT_ICE() << "group operand Reduce required for `Min`/`Max` instructions";
         }
 
-        Emit(b_.Call(Type(inst.type_id()), core::BuiltinFn::kSubgroupMin, Args(inst, 4)),
-             inst.result_id());
+        Emit(b_.Call(Type(inst.type_id()), fn, Args(inst, 4)), inst.result_id());
     }
 
-    void EmitSubgroupSMin(spvtools::opt::Instruction& inst) {
+    void EmitSubgroupMinMax(spvtools::opt::Instruction& inst, spirv::BuiltinFn fn) {
         ValidateScope(inst);
 
         auto group = inst.GetSingleWordInOperand(1);
         if (static_cast<spv::GroupOperation>(group) != spv::GroupOperation::Reduce) {
-            TINT_ICE() << "group operand Reduce required for `Min` instructions";
+            TINT_ICE() << "group operand Reduce required for `Min`/`Max` instructions";
         }
 
-        Emit(b_.Call<spirv::ir::BuiltinCall>(
-                 Type(inst.type_id()), spirv::BuiltinFn::kGroupNonUniformSMin,
-                 Vector{Value(inst.GetSingleWordInOperand(0)),  //
-                        b_.Constant(u32(inst.GetSingleWordInOperand(1))),
-                        Value(inst.GetSingleWordInOperand(2))}),
-             inst.result_id());
+        Emit(
+            b_.Call<spirv::ir::BuiltinCall>(Type(inst.type_id()), fn,                      //
+                                            Vector{Value(inst.GetSingleWordInOperand(0)),  //
+                                                   b_.Constant(u32(inst.GetSingleWordInOperand(1))),
+                                                   Value(inst.GetSingleWordInOperand(2))}),
+            inst.result_id());
     }
 
     void EmitSubgroupBuiltin(spvtools::opt::Instruction& inst, spirv::BuiltinFn fn) {
