@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4484c388_62faf0c7",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2172,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-14T17:31:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6768097c_be26a71a",
+      "revId": "649b4d88a8e972ec21b7fdc7095bfc7adf5831a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92b7e73c_445337dc",
@@ -71,6 +89,30 @@
       "writtenOn": "2025-07-14T17:30:52Z",
       "side": 1,
       "message": "I understand. This is a spirv dialect operation.",
+      "parentUuid": "92b7e73c_445337dc",
+      "range": {
+        "startLine": 2219,
+        "startChar": 9,
+        "endLine": 2219,
+        "endChar": 73
+      },
+      "revId": "649b4d88a8e972ec21b7fdc7095bfc7adf5831a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "720fbde8_6929dc2a",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2219,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-14T17:31:26Z",
+      "side": 1,
+      "message": "Because in the other case we don\u0027t generate a spirv intrinsic, so we don\u0027t pass the value through. We check it was correct and then generated the WGSL intrinsic instead.\n\nFor SMin, you can pass a u32 value in which we need to convert to i32 and back again to maintain semantics.",
       "parentUuid": "92b7e73c_445337dc",
       "range": {
         "startLine": 2219,
@@ -131,6 +173,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "90fe29d1_46e4fbfc",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 1859,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-14T17:31:26Z",
+      "side": 1,
+      "message": "SMin takes an `integer` and doesn\u0027t differentiate on signedness.",
+      "parentUuid": "1a5abe26_27b77736",
+      "range": {
+        "startLine": 1859,
+        "startChar": 52,
+        "endLine": 1859,
+        "endChar": 57
+      },
+      "revId": "649b4d88a8e972ec21b7fdc7095bfc7adf5831a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "797d6c00_30bdf5e6",
         "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
         "patchSetId": 1
@@ -159,6 +225,24 @@
       "writtenOn": "2025-07-14T17:30:52Z",
       "side": 1,
       "message": "no. The core instructions are invoked.",
+      "parentUuid": "797d6c00_30bdf5e6",
+      "revId": "649b4d88a8e972ec21b7fdc7095bfc7adf5831a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "491a2cef_552c2e66",
+        "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-14T17:31:26Z",
+      "side": 1,
+      "message": "No, we don\u0027t have spirv intrinsics for them.",
       "parentUuid": "797d6c00_30bdf5e6",
       "revId": "649b4d88a8e972ec21b7fdc7095bfc7adf5831a7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
