@@ -105,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2915d7f7_a701f7eb",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bb28262_2f9f584b",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f761d20_334ff49f",
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "I struggled with these names. I like the `current` in the name because it changes. What does `inner` mean if you\u0027re moving through multiple levels of nesting?\n\nThe idea was the current_propagating_block was the block we will currently be coming from and the `current_propagation_control` is the control instruction for that block.\n\nAs we walk up the nesting the current changes. But maybe just `current_blk` and `current_ctrl` would work?",
       "parentUuid": "5f761d20_334ff49f",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80931daf_132d2ea8",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1230,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187c6efd_831b4062",
       "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -188,6 +224,24 @@
       "writtenOn": "2025-07-11T19:20:16Z",
       "side": 1,
       "message": "These test cases need a preparatory comment about what to look for:   what values are being tracked and emitted.  e.g. what % spirv id to look for in the source, and where it ends up in the Tint IR.",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d55c4a47_51e45a68",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2000,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf7ff019_cd0cc840",
       "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -274,6 +328,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "259ea4ce_6c330ba1",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2186,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec0c0df7_2f1ea437",
+      "range": {
+        "startLine": 2186,
+        "startChar": 27,
+        "endLine": 2186,
+        "endChar": 30
+      },
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c7c4f816_16cab845",
@@ -309,6 +387,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "71fe6127_ed85f60c",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2220,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f8be524_71fdeb7d",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "edd7ad1c_a30d1f90",
@@ -340,6 +436,24 @@
       "side": 1,
       "message": "Most of these tests case about hte final phi in the merge block, so in this case `42` is what we really really care about.",
       "parentUuid": "edd7ad1c_a30d1f90",
+      "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86f8b255_a7c52177",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2262,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b09cb43d_8faddc70",
       "revId": "b1c4e9c30b73d4ac4f71a9d92d667ffe5b04f72c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
