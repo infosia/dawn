@@ -16,6 +16,24 @@
       "message": "Just before committing I am thinking that since we use DAWN_CHECK, would the user be completely unable to open the browser if they have a bad cache for e.g. Graphite\u0027s shader? Does Chrome embeds a routine to help recovering from such status, like clearing all cache if multiple crashes occurs?",
       "revId": "0d246ef102218883a2007ab87a24ae5055f1b74a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43a3e05e_4271c84e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-07-14T16:07:57Z",
+      "side": 1,
+      "message": "The GPU cache is supposed to be cleared after repeated crashes (though I can\u0027t find the exact code that does it right now).\n\nStill, you\u0027re probably right that it shouldn\u0027t be a CHECK. An assert + log error + skip the entry is probably better.",
+      "parentUuid": "94b52e33_9bdc0d4f",
+      "revId": "0d246ef102218883a2007ab87a24ae5055f1b74a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
