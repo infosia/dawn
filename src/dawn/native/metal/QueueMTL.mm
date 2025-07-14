@@ -250,8 +250,9 @@ Ref<WaitListEvent> Queue::CreateWorkDoneEvent(ExecutionSerial serial) {
     return completionEvent;
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerialImpl(ExecutionSerial serial, Nanoseconds timeout) {
-    return CreateWorkDoneEvent(serial)->Wait(timeout);
+ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                             Nanoseconds timeout) {
+    return CreateWorkDoneEvent(serial)->Wait(timeout) ? serial : kBeginningOfGPUTime;
 }
 
 }  // namespace dawn::native::metal

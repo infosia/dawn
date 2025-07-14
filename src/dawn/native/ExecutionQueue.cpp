@@ -68,11 +68,9 @@ MaybeError ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial waitSerial, Na
     if (waitSerial > GetCompletedCommandSerial()) {
         if (timeout > Nanoseconds(0)) {
             // Wait on the serial if it hasn't passed yet.
-            bool waitResult = false;
-            DAWN_TRY_ASSIGN(waitResult, WaitForQueueSerialImpl(waitSerial, timeout));
-            if (waitResult) {
-                FetchMax(mCompletedSerial, uint64_t(waitSerial));
-            }
+            ExecutionSerial completedSerial = kBeginningOfGPUTime;
+            DAWN_TRY_ASSIGN(completedSerial, WaitForQueueSerialImpl(waitSerial, timeout));
+            FetchMax(mCompletedSerial, uint64_t(completedSerial));
         }
     }
 
