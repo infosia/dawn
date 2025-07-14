@@ -83,6 +83,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1a5abe26_27b77736",
+        "filename": "src/tint/lang/spirv/spirv.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 1859,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-14T17:28:36Z",
+      "side": 1,
+      "message": "Ah, the core builtin is used for FMax.\nSo shouldn\u0027t it also be used for UMax?  Can you narrow this down to i32?",
+      "parentUuid": "a72e4520_58416a48",
+      "range": {
+        "startLine": 1859,
+        "startChar": 52,
+        "endLine": 1859,
+        "endChar": 57
+      },
+      "revId": "649b4d88a8e972ec21b7fdc7095bfc7adf5831a7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "797d6c00_30bdf5e6",
         "filename": "src/tint/lang/spirv/writer/printer/printer.cc",
         "patchSetId": 1
