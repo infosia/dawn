@@ -274,9 +274,13 @@ Return FindStorageBufferBindingAliasing(const PipelineLayoutBase* pipelineLayout
     }
 }
 
+bool TextureFormatsMatch(const Format& a, const Format& b) {
+    return a.GetIndex() == b.GetIndex() || (a.IsMultiPlanar() && b.IsMultiPlanar());
+}
+
 bool TextureViewsMatch(const TextureViewBase* a, const TextureViewBase* b) {
     DAWN_ASSERT(a->GetTexture() == b->GetTexture());
-    return a->GetFormat().GetIndex() == b->GetFormat().GetIndex() &&
+    return TextureFormatsMatch(a->GetFormat(), b->GetFormat()) &&
            a->GetDimension() == b->GetDimension() && a->GetBaseMipLevel() == b->GetBaseMipLevel() &&
            a->GetLevelCount() == b->GetLevelCount() &&
            a->GetBaseArrayLayer() == b->GetBaseArrayLayer() &&
