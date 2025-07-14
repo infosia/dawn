@@ -70,6 +70,24 @@
       "parentUuid": "3aa8f9c1_6c93510f",
       "revId": "27aa23ec50a5900b211b16e43deaf6ba8c53913d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e163dff5_e40c0cb2",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2168,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-14T16:37:32Z",
+      "side": 1,
+      "message": "Ha, found the rule.\n\nAll \u003cid\u003e used for Scope \u003cid\u003e and Memory Semantics \u003cid\u003e must be of an OpConstant.\n\n\nThat\u0027s in SPIR-V 2.16.2",
+      "parentUuid": "db2fb55e_1b91bb1f",
+      "revId": "27aa23ec50a5900b211b16e43deaf6ba8c53913d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
