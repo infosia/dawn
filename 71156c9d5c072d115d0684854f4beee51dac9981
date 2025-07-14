@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb895917_ad51f726",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-14T08:28:48Z",
+      "side": 1,
+      "message": "Thanks Jie!",
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a8ce667_83a6991a",
@@ -43,6 +60,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e320ac1e_29cd5f2e",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-14T08:28:48Z",
+      "side": 1,
+      "message": "cmd-\u003ecolorOffsetX(...) are used for either:\n1), D3D12_RENDER_PASS_ENDING_ACCESS_RESOLVE_SUBRESOURCE_PARAMETERS, when render pass is available.\n2), or ResolveSubresourceRegion, when no render pass.",
+      "parentUuid": "6a8ce667_83a6991a",
+      "range": {
+        "startLine": 1480,
+        "startChar": 12,
+        "endLine": 1485,
+        "endChar": 25
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "38061569_2ac3db49",
         "filename": "src/dawn/native/Commands.h",
         "patchSetId": 1
@@ -54,6 +95,30 @@
       "writtenOn": "2025-07-14T08:15:05Z",
       "side": 1,
       "message": "How do you like putting them roughly this way?\n```\nstruct ResolveRect {\n   uint32_t srcX;\n   uint32_t srcY;\n   uint32_t dstX;\n   uint32_t dstY;\n   uint32_t width;\n   uint32_t height;\n\n   ResolveRect() \u003d default;\n   bool hasValue() { return width !\u003d 0 \u0026\u0026 height !\u003d 0; }\n} resolveRect;\n```",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "800edab4_fe5f9293",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-14T08:28:48Z",
+      "side": 1,
+      "message": "I first think of this ResolveRect. But after check commands.h, I noticed a lot of commands are like this:\nstruct SetViewportCmd {\n    float x, y, width, height, minDepth, maxDepth;\n};  I still don\u0027t know which is better.",
+      "parentUuid": "38061569_2ac3db49",
       "range": {
         "startLine": 168,
         "startChar": 0,
