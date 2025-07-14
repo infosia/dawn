@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a80b17ca_a45f364f",
+        "filename": "src/dawn/tests/end2end/TextureFormatsTier1Tests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-14T02:59:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17213b72_caae1e36",
+      "range": {
+        "startLine": 579,
+        "startChar": 4,
+        "endLine": 583,
+        "endChar": 7
+      },
+      "revId": "38405dc4ff56252a6b19359be0c85b7f1efe352a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "957aaefa_0115abdc",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-07-11T20:51:14Z",
       "side": 1,
       "message": "These are causing failures in emscripten builds because of references to the snorm types. I think we don\u0027t actually need these. Maybe we can just make the switch/case in the test a bit more verbose and actually handle all the format? I also put together some other suggestions in https://dawn-review.googlesource.com/c/dawn/+/252259 for you to take a look at to use template deduction guides to avoid needing to create different macros for the expectations.",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 53
+      },
+      "revId": "38405dc4ff56252a6b19359be0c85b7f1efe352a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "682c636e_09adf344",
+        "filename": "src/dawn/utils/WGPUHelpers.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-14T02:59:44Z",
+      "side": 1,
+      "message": "Thanks a lot!",
+      "parentUuid": "957aaefa_0115abdc",
       "range": {
         "startLine": 229,
         "startChar": 0,
