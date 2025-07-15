@@ -33,6 +33,24 @@
       "message": "I think we should split this out to it\u0027s own file and just duplicate any code needed.\n\nAt the point when immediates are done, will we need to take array length from uniforms anymore, or can we delete that path completely?",
       "revId": "a2f12a9df60593d809692031dd76c5fba2e58bd0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4cf47724_590e3d50",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-15T01:55:12Z",
+      "side": 1,
+      "message": "We\u0027re considering a mechanism that fallback some root signature things into uniform if root signature is too large or OOB (https://issues.chromium.org/issues/428802462). So maybe we should keep the array length from uniforms.",
+      "parentUuid": "b6454353_dbec6565",
+      "revId": "a2f12a9df60593d809692031dd76c5fba2e58bd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
