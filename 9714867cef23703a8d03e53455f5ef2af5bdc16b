@@ -105,6 +105,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "07023b1e_b2650ba2",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-15T13:49:23Z",
+      "side": 1,
+      "message": "immediate buffers have same alignment requirements as uniform buffer. So we have to keep this.",
+      "parentUuid": "a602c21e_e97bebf8",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0ab52abe_bcd77b18",
         "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
         "patchSetId": 4
@@ -116,6 +134,24 @@
       "writtenOn": "2025-07-15T13:01:17Z",
       "side": 1,
       "message": "Why does the immedate version of this transform pass in `buffer_sizes_array_elements_num` while the uniform version calculates it?",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adc9806d_29d4a1cf",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-15T13:49:23Z",
+      "side": 1,
+      "message": "uniform uses if condition(condition to check whether uniform buffer has been issued) to prevent re-calculate this again and again. However, immediate block is an external object, and it needs the num_elements in immediate transform and we can reuse this info here to emit calculations.",
+      "parentUuid": "0ab52abe_bcd77b18",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -219,6 +255,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "99b7f7e1_88bdfb5b",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-15T13:49:23Z",
+      "side": 1,
+      "message": "Ok, I tend to do a fully replacement.",
+      "parentUuid": "08ecf925_e4ec4416",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ad648b3c_6511e2de",
         "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate_test.cc",
         "patchSetId": 4
@@ -230,6 +284,24 @@
       "writtenOn": "2025-07-15T13:01:17Z",
       "side": 1,
       "message": "Does this always get created even when not needed?",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0262f189_b517015e",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-15T13:49:23Z",
+      "side": 1,
+      "message": "Unfortunately, yes. The logic we do with immediate block is that we provide the attributes first and issue them. Then we go into array_length trasnform. So we miss the chance to not issue immediate block in some cases. Do you have some ideas?",
+      "parentUuid": "ad648b3c_6511e2de",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

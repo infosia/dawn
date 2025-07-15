@@ -69,6 +69,24 @@
       "parentUuid": "4cf47724_590e3d50",
       "revId": "a2f12a9df60593d809692031dd76c5fba2e58bd0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23e2f4e1_74075a40",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-15T13:49:23Z",
+      "side": 1,
+      "message": "(If we add spill logic)\n\u003ebuffer? Or does it spill all of them to uniform?\nWe (plan to) spill all of them to uniform.\n\n\u003eIf we sometimes have to spill, is the benefit here that immediates are typically faster?\n(If you mean spill happens in driver) I think it should be the same perf as uniform.\nBut if no spill happens in driver, immediate should be faster.\n\nHowever, I made my mind to replace uniform with immediate until we find some real case that keeping them in root signature cause problem.",
+      "parentUuid": "e26d8129_17df387a",
+      "revId": "a2f12a9df60593d809692031dd76c5fba2e58bd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
