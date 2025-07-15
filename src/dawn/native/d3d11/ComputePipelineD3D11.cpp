@@ -79,7 +79,7 @@ MaybeError ComputePipeline::InitializeImpl() {
     DAWN_TRY_ASSIGN(compiledShader,
                     ToBackend(programmableStage.module)
                         ->Compile(programmableStage, SingleShaderStage::Compute,
-                                  ToBackend(GetLayout()), compileFlags, GetImmediateMask()));
+                                  ToBackend(GetLayout()), compileFlags, GetImmediateMask(), GetLabel()));
     DAWN_TRY(CheckHRESULT(device->GetD3D11Device()->CreateComputeShader(
                               compiledShader.shaderBlob.Data(), compiledShader.shaderBlob.Size(),
                               nullptr, &mComputeShader),

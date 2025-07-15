@@ -79,10 +79,11 @@ ResultOrError<d3d::CompiledShader> ShaderModule::Compile(
     const PipelineLayout* layout,
     uint32_t compileFlags,
     const ImmediateConstantMask& pipelineImmediateMask,
+    const std::string& label,
     const std::optional<dawn::native::d3d::InterStageShaderVariablesMask>& usedInterstageVariables,
     const std::optional<tint::hlsl::writer::PixelLocalOptions>& pixelLocalOptions) {
     Device* device = ToBackend(GetDevice());
-    TRACE_EVENT0(device->GetPlatform(), General, "ShaderModuleD3D11::Compile");
+    TRACE_EVENT1(device->GetPlatform(), General, "ShaderModuleD3D11::Compile", "label", label);
     DAWN_ASSERT(!IsError());
 
     const EntryPointMetadata& entryPoint = GetEntryPoint(programmableStage.entryPoint);

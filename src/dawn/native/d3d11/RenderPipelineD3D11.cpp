@@ -477,7 +477,7 @@ MaybeError RenderPipeline::InitializeShaders() {
                         ToBackend(programmableStage.module)
                             ->Compile(programmableStage, SingleShaderStage::Vertex,
                                       ToBackend(GetLayout()), compileFlags | additionalCompileFlags,
-                                      GetImmediateMask(), usedInterstageVariables));
+                                      GetImmediateMask(), GetLabel(), usedInterstageVariables));
         const Blob& shaderBlob = compiledShader[SingleShaderStage::Vertex].shaderBlob;
         DAWN_TRY(CheckHRESULT(device->GetD3D11Device()->CreateVertexShader(
                                   shaderBlob.Data(), shaderBlob.Size(), nullptr, &mVertexShader),
@@ -543,7 +543,7 @@ MaybeError RenderPipeline::InitializeShaders() {
             compiledShader[SingleShaderStage::Fragment],
             ToBackend(programmableStage.module)
                 ->Compile(programmableStage, SingleShaderStage::Fragment, ToBackend(GetLayout()),
-                          compileFlags | additionalCompileFlags, GetImmediateMask(),
+                          compileFlags | additionalCompileFlags, GetImmediateMask(), GetLabel(),
                           usedInterstageVariables, pixelLocalOptions));
         DAWN_TRY(CheckHRESULT(device->GetD3D11Device()->CreatePixelShader(
                                   compiledShader[SingleShaderStage::Fragment].shaderBlob.Data(),
