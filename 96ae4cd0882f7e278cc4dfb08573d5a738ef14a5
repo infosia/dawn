@@ -22,6 +22,30 @@
       },
       "revId": "96ae4cd0882f7e278cc4dfb08573d5a738ef14a5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f94e6487_9f05e37e",
+        "filename": "generator/templates/emdawnwebgpu/LinkTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-15T00:31:10Z",
+      "side": 1,
+      "message": "I\u0027m not very familiar with declval, how would it be used here? Seems like it can only be used inside decltype which I\u0027m not using.\n\nWithout the volatile here the code size is much smaller. I think it\u0027s because code that gets linked in from webgpu.cpp, statically analyzed to crash, and then it removes the rest of the code including all the linkages to library_webgpu.js.",
+      "parentUuid": "a2661109_19b8440b",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 9
+      },
+      "revId": "96ae4cd0882f7e278cc4dfb08573d5a738ef14a5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
