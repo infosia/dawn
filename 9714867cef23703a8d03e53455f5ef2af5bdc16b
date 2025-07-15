@@ -121,6 +121,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c0a538b_87360e3f",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:54:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "07023b1e_b2650ba2",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0ab52abe_bcd77b18",
@@ -152,6 +170,24 @@
       "side": 1,
       "message": "uniform uses if condition(condition to check whether uniform buffer has been issued) to prevent re-calculate this again and again. However, immediate block is an external object, and it needs the num_elements in immediate transform and we can reuse this info here to emit calculations.",
       "parentUuid": "0ab52abe_bcd77b18",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70de510d_0f6bb8f9",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:54:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "adc9806d_29d4a1cf",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -271,6 +307,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "894e2f75_d3dc296c",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:54:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "99b7f7e1_88bdfb5b",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad648b3c_6511e2de",
@@ -302,6 +356,24 @@
       "side": 1,
       "message": "Unfortunately, yes. The logic we do with immediate block is that we provide the attributes first and issue them. Then we go into array_length trasnform. So we miss the chance to not issue immediate block in some cases. Do you have some ideas?",
       "parentUuid": "ad648b3c_6511e2de",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c42fc71_f3fbb567",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:54:15Z",
+      "side": 1,
+      "message": "In this case there are no storage buffers which require array length, so it just puts the value into the immediate regardless, that seems like it wastes space when we don\u0027t need too?",
+      "parentUuid": "0262f189_b517015e",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

@@ -87,6 +87,24 @@
       "parentUuid": "e26d8129_17df387a",
       "revId": "a2f12a9df60593d809692031dd76c5fba2e58bd0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14a74d25_454579fd",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:54:15Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "23e2f4e1_74075a40",
+      "revId": "a2f12a9df60593d809692031dd76c5fba2e58bd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
