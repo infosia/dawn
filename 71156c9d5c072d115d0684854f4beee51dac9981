@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "84f64d52_894e0af1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-07-15T01:37:45Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a8ce667_83a6991a",
@@ -82,6 +99,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1495e57_2bc7450c",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-07-15T01:37:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e320ac1e_29cd5f2e",
+      "range": {
+        "startLine": 1480,
+        "startChar": 12,
+        "endLine": 1485,
+        "endChar": 25
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "38061569_2ac3db49",
@@ -119,6 +160,30 @@
       "side": 1,
       "message": "I first think of this ResolveRect. But after check commands.h, I noticed a lot of commands are like this:\nstruct SetViewportCmd {\n    float x, y, width, height, minDepth, maxDepth;\n};  I still don\u0027t know which is better.",
       "parentUuid": "38061569_2ac3db49",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31270920_a5db15c6",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2025-07-15T01:37:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "800edab4_fe5f9293",
       "range": {
         "startLine": 168,
         "startChar": 0,
