@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff483caa_cdb45fec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-15T18:01:46Z",
+      "side": 1,
+      "message": "Some tests like https://dawn-review.googlesource.com/c/dawn/+/252837/7/src/tint/lang/wgsl/resolver/primitive_id_extension_test.cc would be needed as well.\n\nI\u0027ll abandon my WIP CL I just started late this afternoon ;)",
+      "revId": "d7e390a514cd89d65e084d57417142351ca45f51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
