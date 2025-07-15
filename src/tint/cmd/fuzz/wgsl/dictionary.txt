@@ -333,6 +333,7 @@
 "pointer_composite_access"
 "position"
 "pow"
+"primitive_id"
 "private"
 "ptr"
 "quadBroadcast"
