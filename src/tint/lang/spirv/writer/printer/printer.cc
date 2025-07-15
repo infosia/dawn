@@ -399,6 +399,8 @@ class Printer {
             case core::BuiltinValue::kClipDistances:
                 module_.PushCapability(SpvCapabilityClipDistance);
                 return SpvBuiltInClipDistance;
+            case core::BuiltinValue::kPrimitiveId:
+                return SpvBuiltInPrimitiveId;
             case core::BuiltinValue::kUndefined:
                 return SpvBuiltInMax;
         }
