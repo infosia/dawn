@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6bebf2b_7dffe5d5",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T14:39:43Z",
+      "side": 1,
+      "message": "u-nit: we could separate the boolean to make it easier to read.",
+      "revId": "7da2595929b0c74bcdbd2d5ac6576c4e1da09f6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
