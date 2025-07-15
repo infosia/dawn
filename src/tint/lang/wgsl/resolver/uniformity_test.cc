@@ -845,7 +845,8 @@ INSTANTIATE_TEST_SUITE_P(UniformityAnalysisTest,
                                            BuiltinEntry{"front_facing", "bool", false},
                                            BuiltinEntry{"sample_index", "u32", false},
                                            BuiltinEntry{"sample_mask", "u32", false},
-                                           BuiltinEntry{"subgroup_size", "u32", false}),
+                                           BuiltinEntry{"subgroup_size", "u32", false},
+                                           BuiltinEntry{"primitive_id", "u32", false}),
                          [](const ::testing::TestParamInfo<FragmentBuiltin::ParamType>& p) {
                              return p.param.name;
                          });
