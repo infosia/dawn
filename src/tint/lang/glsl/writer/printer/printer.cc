@@ -1987,6 +1987,8 @@ const char* GLSLBuiltinToString(core::BuiltinValue builtin, core::AddressSpace a
         }
         case core::BuiltinValue::kPointSize:
             return "gl_PointSize";
+        case core::BuiltinValue::kPrimitiveId:
+            return "gl_PrimitiveId";
         default:
             TINT_UNREACHABLE();
     }
