@@ -51,6 +51,24 @@
       "parentUuid": "b6454353_dbec6565",
       "revId": "a2f12a9df60593d809692031dd76c5fba2e58bd0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e26d8129_17df387a",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_uniform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "Does that mean some of the values could come from immediates and some from the uniform buffer? Or does it spill all of them to uniform?\n\nIf we sometimes have to spill, is the benefit here that immediates are typically faster?",
+      "parentUuid": "4cf47724_590e3d50",
+      "revId": "a2f12a9df60593d809692031dd76c5fba2e58bd0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

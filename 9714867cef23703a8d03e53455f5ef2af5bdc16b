@@ -16,6 +16,222 @@
       "message": "Split transform into new files, PTAL, thanks!",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8347cb0a_9b40e45a",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "```suggestion\n    /// The total number of buffer sizes provided in the immediate buffer\n```",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "844f9ae1_5b45417d",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "```suggestion\n    /// The immediate buffer variable that holds the total size of each storage buffer.\n```",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b515993a_734b679c",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "The work to pass the values through function parameters was done in response to a metal shader compiler bug where in certain cases the compiler would take a long time dealing with the uniform buffer calculations.\n\nWe may want to investigate if the same issue happens with immediate data on metal or if we can remove this and simplify the transform to just reading from the var.",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "344d4f20_6bfddf1c",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "```suggestion\n                // Load the total storage buffer size from the immediate buffer.\n```",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a602c21e_e97bebf8",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "Do immediate buffers have this same alignment requirement? If not, can we just pack u32\u0027s and drop the need to index through a vec4?",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ab52abe_bcd77b18",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "Why does the immedate version of this transform pass in `buffer_sizes_array_elements_num` while the uniform version calculates it?",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f6e122c5_eaa0061d",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "```suggestion\n#include \u003cunordered_map\u003e\n\n#include \"src/tint/api/common/binding_point.h\"\n#include \"src/tint/lang/core/ir/validator.h\"\n#include \"src/tint/utils/result.h\"\n```",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2870f0c_03ed0663",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "```suggestion\n    /// `true` if the transformed module needs the storage buffer sizes immediate data.\n```",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f605ed7a_2d7141ca",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "```suggestion\n/// The offset of `buffer_sizes` in the immediate block is provided by config.\n```",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d79f4412_5c5ef089",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "```suggestion\n/// @param buffer_sizes_offset The offset in immediate block where buffer sizes start.\n/// @param buffer_sizes_array_elements_num the number of buffer sizes that will be set into the immediate buffer\n/// @returns the transform result or failure\n```\n\n\nOr is this 1/4th of the number of buffer sizes because the array is made of vec4s ? So, this would be the number of vec4s used to store buffer sizes?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 44
+      },
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08ecf925_e4ec4416",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "So, do we actually want to replace? Or, we need to keep both?",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad648b3c_6511e2de",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T13:01:17Z",
+      "side": 1,
+      "message": "Does this always get created even when not needed?",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
