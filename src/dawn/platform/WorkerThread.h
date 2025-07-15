@@ -28,18 +28,69 @@
 #ifndef SRC_DAWN_PLATFORM_WORKERTHREAD_H_
 #define SRC_DAWN_PLATFORM_WORKERTHREAD_H_
 
+#include <condition_variable>
 #include <memory>
+#include <mutex>
+#include <queue>
+#include <thread>
+#include <vector>
 
 #include "dawn/common/NonCopyable.h"
 #include "dawn/platform/DawnPlatform.h"
 
 namespace dawn::platform {
 
+class AsyncWaitableEventImpl {
+  public:
+    AsyncWaitableEventImpl() : mIsComplete(false) {}
+
+    void Wait() {
+        std::unique_lock<std::mutex> lock(mMutex);
+        mCondition.wait(lock, [this] { return mIsComplete; });
+    }
+
+    bool IsComplete() {
+        std::lock_guard<std::mutex> lock(mMutex);
+        return mIsComplete;
+    }
+
+    void MarkAsComplete() {
+        {
+            std::lock_guard<std::mutex> lock(mMutex);
+            mIsComplete = true;
+        }
+        mCondition.notify_all();
+    }
+
+  private:
+    std::mutex mMutex;
+    std::condition_variable mCondition;
+    bool mIsComplete;
+};
+
+struct AsyncWorkerThreadPoolTask {
+    dawn::platform::PostWorkerTaskCallback callback;
+    void* userdata;
+    std::shared_ptr<AsyncWaitableEventImpl> waitableEventImpl;
+};
+
 class AsyncWorkerThreadPool : public dawn::platform::WorkerTaskPool, public NonCopyable {
   public:
+    static constexpr uint32_t kDefaultThreadCount = 2;
+
+    explicit AsyncWorkerThreadPool(uint32_t threadCount = kDefaultThreadCount);
+
     std::unique_ptr<dawn::platform::WaitableEvent> PostWorkerTask(
         dawn::platform::PostWorkerTaskCallback callback,
         void* userdata) override;
+
+  private:
+    void ThreadLoop();
+
+    std::vector<std::thread> mThreads;
+    std::queue<AsyncWorkerThreadPoolTask> mPendingTasks;
+    std::mutex mMutex;
+    std::condition_variable mCondition;
 };
 
 }  // namespace dawn::platform
