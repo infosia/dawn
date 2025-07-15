@@ -214,6 +214,8 @@ ColorSpaceConversionInfo GetNoopRGBColorSpaceConversionInfo();
 
 bool BackendRequiresCompat(wgpu::BackendType backend);
 
+uint32_t PackRG11B10Ufloat(float r, float g, float b);
+
 }  // namespace dawn::utils
 
 #endif  // SRC_DAWN_UTILS_WGPUHELPERS_H_
