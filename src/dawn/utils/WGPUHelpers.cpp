@@ -27,6 +27,7 @@
 
 #include "dawn/utils/WGPUHelpers.h"
 
+#include <algorithm>
 #include <cstring>
 #include <iomanip>
 #include <mutex>
@@ -425,6 +426,18 @@ bool BackendRequiresCompat(wgpu::BackendType backend) {
         case wgpu::BackendType::Undefined:
             DAWN_UNREACHABLE();
     }
+}
+
+uint32_t PackRG11B10Ufloat(float r, float g, float b) {
+    float clampedR = std::clamp(r, 0.0f, 1.0f);
+    float clampedG = std::clamp(g, 0.0f, 1.0f);
+    float clampedB = std::clamp(b, 0.0f, 1.0f);
+
+    uint32_t packedR = static_cast<uint32_t>(clampedR * 2047.0f + 0.5f);
+    uint32_t packedG = static_cast<uint32_t>(clampedG * 2047.0f + 0.5f);
+    uint32_t packedB = static_cast<uint32_t>(clampedB * 1023.0f + 0.5f);
+
+    return (packedB << 22) | (packedG << 11) | packedR;
 }
 
 }  // namespace dawn::utils
