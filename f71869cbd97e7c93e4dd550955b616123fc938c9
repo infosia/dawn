@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c97508d0_c291d658",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-15T23:49:05Z",
+      "side": 1,
+      "message": "This is a speculative revert but if `linux-dawn-nvidia-1660-exp-rel` passes then that seems to indicate that this CL was the culprit.",
+      "revId": "f71869cbd97e7c93e4dd550955b616123fc938c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
