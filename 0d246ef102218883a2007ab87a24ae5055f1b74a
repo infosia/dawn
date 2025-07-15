@@ -52,6 +52,24 @@
       "parentUuid": "94b52e33_9bdc0d4f",
       "revId": "0d246ef102218883a2007ab87a24ae5055f1b74a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71fabf28_a10d2e74",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-07-15T13:33:36Z",
+      "side": 1,
+      "message": "Already we have some code that generates crash reports (without crashing) on errors: https://source.chromium.org/chromium/chromium/src/+/main:gpu/command_buffer/service/dawn_context_provider.cc;l\u003d109-129;drc\u003dea3bd0aab9dc634a1416592034a4bd316e64df31\n\nI think it makes sense to remove the CHECK before landing.",
+      "parentUuid": "9b3b4a9c_0b87f8da",
+      "revId": "0d246ef102218883a2007ab87a24ae5055f1b74a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
