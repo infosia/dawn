@@ -16,6 +16,24 @@
       "message": "As is, this can\u0027t be turned off. Would there ever be a case a user would want this off? In which case we probably need this to be a default flag, and then we add an option. But, we can always do that later if someone requests it. So, feel free to ignore.",
       "revId": "414b0933a91093ceb0f1c592766edf0086330d2e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fd83b72_811cddb1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-15T00:31:19Z",
+      "side": 1,
+      "message": "I\u0027m not aware of one. Note it\u0027s not enabled for RelWithDebInfo, I\u0027m not really sure whether it makes sense for that one. But I figure we\u0027ll handle it if/when someone finds issue with it.",
+      "parentUuid": "4f3fd44a_fbd35fab",
+      "revId": "414b0933a91093ceb0f1c592766edf0086330d2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
