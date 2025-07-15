@@ -288,6 +288,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8a100acd_34861a13",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-15T14:11:18Z",
+      "side": 1,
+      "message": "The `DawnPartialLoadResolveTexture` has two parts:\n- The expand step.\n- The resolve step.\n\nIt looks like D3D12 backend will still re-use the expand step in `BlitColorToColorWithDraw.cpp`. That means the resolve texture will be used as a source texture in this render pass (`D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE` state). Is that conflicted with `D3D12_RESOURCE_STATE_RESOLVE_DEST` state here?\n\nI\u0027m not sure why D3D12 validation layer didn\u0027t complain anything.\n\nFurthermore, if a D3D12 render pass is used, can we actually use a texture in both `D3D12_RESOURCE_STATE_RESOLVE_DEST` \u0026 `D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE ` state? I\u0027m not sure whether it\u0027s allowed.",
+      "range": {
+        "startLine": 1410,
+        "startChar": 36,
+        "endLine": 1410,
+        "endChar": 69
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0767450c_5680b469",
         "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.h",
         "patchSetId": 1
