@@ -16,6 +16,24 @@
       "message": "Can we separate the condition in a few booleans so that it makes more sense but also add comments so that readers in the future don\u0027t get confused as to what\u0027s going on? This works because of a lot of factors that are non-trivial.\n\n - We need to special case because ExternalTextures may end up using two planes of the same YUV texture.\n   - This cannot happen in OpenGL that actually needs the validation of texture views matching so it\u0027s safe for backends to ignore this here.\n   - The formats may not match because the Y and UV planes have different format counts.\n - We don\u0027t allow creating multiplanar texture views directly in WebGPU so this code cannot be triggered on purpose by JS and instead is only hit when Chromium creates a YUV texture itself.\n \nBut IMHO we could more simply change `TextureViewsAllMatch` to check `TextureViewsMatch` first and then if that fails still `continue` if `first` is multiplanar, with a comment explaining why we special case. This makes the special case more clear.",
       "revId": "a3071e7f1001eb5b454a0de703b48aa298f35c96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ca01bdb_1d777bab",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-07-15T13:32:43Z",
+      "side": 1,
+      "message": "\u003e Can we separate the condition in a few booleans so that it makes more sense but also add comments so that readers in the future don\u0027t get confused as to what\u0027s going on? This works because of a lot of factors that are non-trivial.\n\u003e \n\u003e  - We need to special case because ExternalTextures may end up using two planes of the same YUV texture.\n\u003e    - This cannot happen in OpenGL that actually needs the validation of texture views matching so it\u0027s safe for backends to ignore this here.\n\u003e    - The formats may not match because the Y and UV planes have different format counts.\n\u003e  - We don\u0027t allow creating multiplanar texture views directly in WebGPU so this code cannot be triggered on purpose by JS and instead is only hit when Chromium creates a YUV texture itself.\n\nWill do.\n\n\u003e But IMHO we could more simply change `TextureViewsAllMatch` to check `TextureViewsMatch` first and then if that fails still `continue` if `first` is multiplanar, with a comment explaining why we special case. This makes the special case more clear.\n\nI tried that first, wth view-\u003eGetFormat().IsMultiPlanar(), but it failed since the view formats are R8 and RG8, for example.\n\nOr should I use texture-\u003eGetFormat().IsMultiPlanar()?",
+      "parentUuid": "f1695c96_5ea3ffdc",
+      "revId": "a3071e7f1001eb5b454a0de703b48aa298f35c96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
