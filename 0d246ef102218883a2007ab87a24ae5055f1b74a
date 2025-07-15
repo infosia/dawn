@@ -34,6 +34,24 @@
       "parentUuid": "94b52e33_9bdc0d4f",
       "revId": "0d246ef102218883a2007ab87a24ae5055f1b74a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b3b4a9c_0b87f8da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-15T06:32:16Z",
+      "side": 1,
+      "message": "Shell we make it a follow up if we are going to change the `DAWN_CHECK` to more robustness check? IIRC `DAWN_CHECK` can help collecting the cache collapse rate in field by submitting crash report, can we send the report without crashing the GPU?",
+      "parentUuid": "94b52e33_9bdc0d4f",
+      "revId": "0d246ef102218883a2007ab87a24ae5055f1b74a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
