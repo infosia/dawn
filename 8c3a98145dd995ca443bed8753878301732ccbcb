@@ -84,6 +84,41 @@
       "message": "Opened https://dawn-review.googlesource.com/c/All-Projects/+/252814 that would have allowed the submit.",
       "revId": "8c3a98145dd995ca443bed8753878301732ccbcb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a11edc23_46e85b25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-15T08:33:30Z",
+      "side": 1,
+      "message": "I don\u0027t have permission to open this url.",
+      "parentUuid": "9a36cb5b_4a4ac839",
+      "revId": "8c3a98145dd995ca443bed8753878301732ccbcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9140c3de_5c6e70de",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-15T08:33:30Z",
+      "side": 1,
+      "message": "I think I need some help getting permission to open the url and submit the CL.",
+      "revId": "8c3a98145dd995ca443bed8753878301732ccbcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
