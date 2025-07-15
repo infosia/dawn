@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c92f8836_ffdf01b4",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T07:20:58Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "6e41803c6a3f50d681211a7be2f475c1e6556953",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62c4da53_a1bb36f9",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T07:20:58Z",
+      "side": 1,
+      "message": "Here it seems that we will always report less than 4 bytes of available immediate size because the loop at [1] will never return before `availableRootSignatureSlots` is not 0 or 1. We need to reserve the immediate data before handing out the rest of the slots to the various limits.",
+      "revId": "6e41803c6a3f50d681211a7be2f475c1e6556953",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
