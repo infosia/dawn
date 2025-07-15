@@ -68,6 +68,8 @@ MaybeError CommandRecordingContext::ExecuteCommandList(Device* device,
         DAWN_TRY(texture->SynchronizeTextureBeforeUse(this));
     }
 
+    device->EmitLog(wgpu::LoggingType::Info,
+                    "Executing command list with shared buffers andshared textures.");
     MaybeError error =
         CheckHRESULT(mD3d12CommandList->Close(), "D3D12 closing pending command list");
     if (error.IsError()) {
