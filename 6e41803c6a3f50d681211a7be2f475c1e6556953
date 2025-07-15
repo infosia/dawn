@@ -33,6 +33,24 @@
       "message": "Here it seems that we will always report less than 4 bytes of available immediate size because the loop at [1] will never return before `availableRootSignatureSlots` is not 0 or 1. We need to reserve the immediate data before handing out the rest of the slots to the various limits.",
       "revId": "6e41803c6a3f50d681211a7be2f475c1e6556953",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f890c6cb_48486e0c",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-15T07:33:23Z",
+      "side": 1,
+      "message": "Ah, right, I missed this algorithm. It seems that we have to reserve immediate data and cap it to kMaxSupportedImmediates. Thanks for catching this.",
+      "parentUuid": "62c4da53_a1bb36f9",
+      "revId": "6e41803c6a3f50d681211a7be2f475c1e6556953",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
