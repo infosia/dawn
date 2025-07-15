@@ -27,6 +27,7 @@
 
 #include "dawn/utils/WGPUHelpers.h"
 
+#include <algorithm>
 #include <cstring>
 #include <iomanip>
 #include <mutex>
