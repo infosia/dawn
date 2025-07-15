@@ -250,7 +250,6 @@ MaybeError Queue::SubmitPendingCommandBuffer() {
     [*pendingCommands addCompletedHandler:^(id<MTLCommandBuffer>) {
         TRACE_EVENT_ASYNC_END0(platform, GPUWork, "DeviceMTL::SubmitPendingCommandBuffer",
                                uint64_t(pendingSerial));
-
         this->UpdateCompletedSerialTo(pendingSerial);
         this->UpdateCommandsCompletedEvents(pendingSerial);
     }];
