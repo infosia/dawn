@@ -34,6 +34,24 @@
       "parentUuid": "f1695c96_5ea3ffdc",
       "revId": "a3071e7f1001eb5b454a0de703b48aa298f35c96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "065fc0b7_ae96b387",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-07-15T14:34:50Z",
+      "side": 1,
+      "message": "Changed to check the format of the underying texture, as suggested above.\n\nNote that I still put the check in TextureViewsMatch() so we can check the\nrest of the view parameters. This could catch bugs in Chrome.\n\nAdded a comment.",
+      "parentUuid": "1ca01bdb_1d777bab",
+      "revId": "a3071e7f1001eb5b454a0de703b48aa298f35c96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
