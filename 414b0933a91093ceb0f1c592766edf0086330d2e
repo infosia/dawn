@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "43dc557b_189d3f66",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-15T03:01:25Z",
+      "side": 1,
+      "message": "Hm, apparently this causes linking to fail on Linux and Windows...",
+      "revId": "414b0933a91093ceb0f1c592766edf0086330d2e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4f3fd44a_fbd35fab",
         "filename": "CMakeLists.txt",
         "patchSetId": 5
