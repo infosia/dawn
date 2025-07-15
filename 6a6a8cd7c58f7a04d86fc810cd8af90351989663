@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd4305d7_c5322181",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-15T19:55:51Z",
+      "side": 1,
+      "message": "commented on the proposal snippet",
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bb518207_57cea6a0",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-15T19:55:51Z",
+      "side": 1,
+      "message": "\u0027enable\u0027",
+      "range": {
+        "startLine": 20,
+        "startChar": 51,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e74d25bb_37e259ae",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-15T19:55:51Z",
+      "side": 1,
+      "message": "Clarify which GPUPrimitiveTopology this feature applies to.\nBest to be explicit about it.",
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9fa7803_4e58d99c",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-15T19:55:51Z",
+      "side": 1,
+      "message": "? Your sentence is about instacnes. Did you copy the wrong thing from the HLSL spec?",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 17
+      },
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c00ec43_55810f3c",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-15T19:55:51Z",
+      "side": 1,
+      "message": "Clarify which GPUPrimitiveTopology this feature applies to.\nBest to be explicit about it.",
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b561d848_bae0a09d",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-15T19:55:51Z",
+      "side": 1,
+      "message": "Interaction with uniformity:  This value is uniform across the primitive.",
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
