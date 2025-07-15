@@ -54,6 +54,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2d05a4ae_3dbb61ad",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T09:00:51Z",
+      "side": 1,
+      "message": "This can be the default value and not appear at all in this function as it\u0027s a bit confusing at the moment given the amount of backend-specific comments.",
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6a8ce667_83a6991a",
         "filename": "src/dawn/native/CommandEncoder.cpp",
         "patchSetId": 1
@@ -125,6 +142,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aede5bc5_3ab6e4dc",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1487,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T09:00:51Z",
+      "side": 1,
+      "message": "Can we have a TODO to remove this when needed?",
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "794d612f_efc3aa27",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T09:00:51Z",
+      "side": 1,
+      "message": "Can the addition of the non-default `ResolveRect` be done inside the `workaroundsHelper` since there is already a special-case done at [2]?",
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "38061569_2ac3db49",
         "filename": "src/dawn/native/Commands.h",
         "patchSetId": 1
@@ -190,6 +241,64 @@
         "endLine": 175,
         "endChar": 0
       },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00a705e9_6467f1a8",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T09:00:51Z",
+      "side": 1,
+      "message": "IMHO it would be nice to have it as in Jie\u0027s suggestion to fix [1].",
+      "parentUuid": "31270920_a5db15c6",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc4a9af1_5d8280ef",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T09:00:51Z",
+      "side": 1,
+      "message": "[2] We should avoid putting backend-specific handling in the frontend. Instead we can use one of the device queries, like `CanTextureLoadResolveTargetInTheSameRenderpass` or a new `SupportsSubRectResolve`.",
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0767450c_5680b469",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T09:00:51Z",
+      "side": 1,
+      "message": "[1] This is the only place that takes the whole `BeginRenderPassCmd` in this file. It there a reason why that structure was not passed previously? It\u0027s very weird and inconsistent to pass it only for the end resolve. We could pass the `ResolveRect` here instead.",
       "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
