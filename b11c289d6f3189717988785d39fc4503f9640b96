@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5abc2c59_c3bd0bd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T12:54:42Z",
+      "side": 1,
+      "message": "Kai, Loko PTAL, my review doesn\u0027t count anymore as I am the latest uploader.",
+      "revId": "b11c289d6f3189717988785d39fc4503f9640b96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
