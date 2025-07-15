@@ -67,6 +67,23 @@
       "message": "Adding CR+2 for Loko\u0027s while we investigate the Gerrit conditions. I didn\u0027t actually rereview.",
       "revId": "8c3a98145dd995ca443bed8753878301732ccbcb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a36cb5b_4a4ac839",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T07:43:42Z",
+      "side": 1,
+      "message": "Opened https://dawn-review.googlesource.com/c/All-Projects/+/252814 that would have allowed the submit.",
+      "revId": "8c3a98145dd995ca443bed8753878301732ccbcb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
