@@ -16,6 +16,24 @@
       "message": "Some tests like https://dawn-review.googlesource.com/c/dawn/+/252837/7/src/tint/lang/wgsl/resolver/primitive_id_extension_test.cc would be needed as well.\n\nI\u0027ll abandon my WIP CL I just started late this afternoon ;)",
       "revId": "d7e390a514cd89d65e084d57417142351ca45f51",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50765329_f5c2a8ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-15T18:03:42Z",
+      "side": 1,
+      "message": "Nice, I can pull some of your tests into this CL, I hadn\u0027t gotten to comprehensive testing yet, was just starting to look for feedback on the extension md file.",
+      "parentUuid": "ff483caa_cdb45fec",
+      "revId": "d7e390a514cd89d65e084d57417142351ca45f51",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
