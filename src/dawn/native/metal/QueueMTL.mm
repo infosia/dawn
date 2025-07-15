@@ -91,14 +91,9 @@ void Queue::UpdateWaitingEvents(ExecutionSerial completedSerial) {
 MaybeError Queue::WaitForIdleForDestruction() {
     // Forget all pending commands.
     mCommandContext.AcquireCommands();
-    DAWN_TRY(UpdateCompletedSerial());
 
-    // Wait for all commands to be finished so we can free resources
-    while (GetCompletedCommandSerial() != GetLastSubmittedCommandSerial()) {
-        usleep(100);
-        DAWN_TRY(UpdateCompletedSerial());
-    }
-
+    DAWN_TRY(WaitForQueueSerial(GetLastSubmittedCommandSerial(),
+                                std::numeric_limits<Nanoseconds>::max()));
     return {};
 }
 
@@ -239,7 +234,7 @@ Ref<WaitListEvent> Queue::CreateWorkDoneEvent(ExecutionSerial serial) {
         // This serial may have just completed. If it did, mark the event complete.
         // Also check for device loss. Otherwise, we could enqueue the event
         // after mWaitingEvents has been flushed for device loss, and it'll never get cleaned up.
-        if (GetDevice()->IsLost() || serial <= GetCompletedCommandSerial()) {
+        if (serial <= GetCompletedCommandSerial()) {
             completionEvent->Signal();
         } else {
             // Insert the event into the list which will be signaled inside Metal's queue
