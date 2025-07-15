@@ -53,7 +53,6 @@ Queue::~Queue() = default;
 void Queue::DestroyImpl() {
     // Forget all pending commands.
     mCommandContext.AcquireCommands();
-    UpdateWaitingEvents(kMaxExecutionSerial);
     mCommandQueue = nullptr;
     mLastSubmittedCommands = nullptr;
 
@@ -77,15 +76,6 @@ MaybeError Queue::Initialize() {
     DAWN_TRY_ASSIGN(mSharedFence, GetOrCreateSharedFence());
 
     return mCommandContext.PrepareNextCommandBuffer(*mCommandQueue);
-}
-
-void Queue::UpdateWaitingEvents(ExecutionSerial completedSerial) {
-    mWaitingEvents.Use([&](auto events) {
-        for (auto& s : events->IterateUpTo(completedSerial)) {
-            std::move(s)->Signal();
-        }
-        events->ClearUpTo(completedSerial);
-    });
 }
 
 MaybeError Queue::WaitForIdleForDestruction() {
@@ -167,7 +157,6 @@ MaybeError Queue::SubmitPendingCommandBuffer() {
                                uint64_t(pendingSerial));
 
         this->UpdateCompletedSerialTo(pendingSerial);
-        this->UpdateWaitingEvents(pendingSerial);
     }];
 
     TRACE_EVENT_ASYNC_BEGIN0(platform, GPUWork, "DeviceMTL::SubmitPendingCommandBuffer",
@@ -234,19 +223,12 @@ void Queue::ForceEventualFlushOfCommands() {
 
 Ref<WaitListEvent> Queue::CreateWorkDoneEvent(ExecutionSerial serial) {
     Ref<WaitListEvent> completionEvent = AcquireRef(new WaitListEvent());
-    mWaitingEvents.Use([&](auto events) {
-        // Now that we hold the lock, check against completed serial before inserting.
-        // This serial may have just completed. If it did, mark the event complete.
-        // Also check for device loss. Otherwise, we could enqueue the event
-        // after mWaitingEvents has been flushed for device loss, and it'll never get cleaned up.
-        if (GetDevice()->IsLost() || serial <= GetCompletedCommandSerial()) {
-            completionEvent->Signal();
-        } else {
-            // Insert the event into the list which will be signaled inside Metal's queue
-            // completion handler.
-            events->Enqueue(completionEvent, serial);
-        }
-    });
+    if (serial <= GetCompletedCommandSerial()) {
+        completionEvent->Signal();
+        return completionEvent;
+    }
+
+    TrackSerialTask(serial, [completionEvent]() { completionEvent->Signal(); });
     return completionEvent;
 }
 
