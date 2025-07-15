@@ -34,6 +34,24 @@
       "parentUuid": "659c7268_3b518058",
       "revId": "60f5c95f25288cd9821f7be0cb9a53c7e08aef0c",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "753dcba6_99f8e74f",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T12:32:25Z",
+      "side": 1,
+      "message": "Thanks for the update, it looks correct to me!",
+      "parentUuid": "2aadd65c_b14c840b",
+      "revId": "60f5c95f25288cd9821f7be0cb9a53c7e08aef0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
