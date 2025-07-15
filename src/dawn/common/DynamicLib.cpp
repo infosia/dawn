@@ -78,7 +78,12 @@ bool DynamicLib::Open(const std::string& filename, std::string* error) {
 #if DAWN_PLATFORM_IS(WINUWP)
     mHandle = LoadPackagedLibrary(UTF8ToWStr(filename.c_str()).c_str(), 0);
 #else
-    mHandle = LoadLibraryA(filename.c_str());
+#if defined(DAWN_FORCE_SYSTEM_COMPONENT_LOAD)
+    const DWORD loadLibraryFlags = LOAD_LIBRARY_SEARCH_SYSTEM32;
+#else
+    const DWORD loadLibraryFlags = 0;
+#endif
+    mHandle = LoadLibraryExA(filename.c_str(), nullptr, loadLibraryFlags);
 #endif
     if (mHandle == nullptr && error != nullptr) {
         *error =
