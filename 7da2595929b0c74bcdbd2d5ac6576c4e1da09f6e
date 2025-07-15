@@ -52,6 +52,24 @@
       "parentUuid": "c744e1b4_0fdaf155",
       "revId": "7da2595929b0c74bcdbd2d5ac6576c4e1da09f6e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebc6308e_406955db",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T15:31:51Z",
+      "side": 1,
+      "message": "I meant a separate, named boolean in a variable. This is useful to break down hard to read paren soups ^^",
+      "parentUuid": "2d919feb_67dec526",
+      "revId": "7da2595929b0c74bcdbd2d5ac6576c4e1da09f6e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
