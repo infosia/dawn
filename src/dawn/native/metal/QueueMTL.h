@@ -93,6 +93,11 @@ class Queue final : public QueueBase {
     // needed. See old draft code: https://dawn-review.googlesource.com/c/dawn/+/137502/29
     MutexProtected<SerialMap<ExecutionSerial, Ref<WaitListEvent>>> mCommandsCompletedEvents;
 
+    // mLastSubmittedCommands will be accessed in a Metal schedule handler that can be fired on
+    // a different thread so we guard access to it with a mutex.
+    std::mutex mLastSubmittedCommandsMutex;
+    NSPRef<id<MTLCommandBuffer>> mLastSubmittedCommands;
+
     // A shared event that can be exported for synchronization with other users of Metal.
     // MTLSharedEvent is not available until macOS 10.14+ so use just `id`.
     NSPRef<id> mMtlSharedEvent;
