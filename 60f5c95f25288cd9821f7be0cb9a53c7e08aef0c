@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "659c7268_3b518058",
+        "filename": "src/dawn/native/d3d12/PhysicalDeviceD3D12.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T08:51:01Z",
+      "side": 1,
+      "message": "And now we need to decrease the available root signature to account for the immediates.\n\nBut also I think this will entirely remove the additional `maxDynamicStorageBuffersPerPipelineLayout` which might cause some people to complain. Let\u0027s watch for that.",
+      "revId": "60f5c95f25288cd9821f7be0cb9a53c7e08aef0c",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
