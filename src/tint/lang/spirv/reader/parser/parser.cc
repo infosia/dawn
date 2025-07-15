@@ -1741,7 +1741,10 @@ class Parser {
         //  b) It has inbound branches. This works around a case where you can have a continuing
         //     where uses values which are very difficult to propagate, but the continuing is never
         //     reached anyway, so the propagation is useless.
+        bool skipped_continue = true;
         if (continue_id != src_id && !loop->Continuing()->InboundSiblingBranches().IsEmpty()) {
+            skipped_continue = false;
+
             const auto& bb_continue = current_spirv_function_->FindBlock(continue_id);
 
             current_blocks_.insert(loop->Continuing());
@@ -1760,7 +1763,7 @@ class Parser {
         auto phis = continue_blk_phis_.find(continue_id);
         if (phis != continue_blk_phis_.end()) {
             for (auto value_id : phis->second) {
-                auto* value = Value(value_id, false);
+                auto* value = skipped_continue ? nullptr : Value(value_id, false);
 
                 tint::Switch(
                     loop->Continuing()->Terminator(),  //
