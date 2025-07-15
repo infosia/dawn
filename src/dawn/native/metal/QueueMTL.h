@@ -62,7 +62,6 @@ class Queue final : public QueueBase {
     ~Queue() override;
 
     MaybeError Initialize();
-    void UpdateWaitingEvents(ExecutionSerial completedSerial);
 
     MaybeError SubmitImpl(uint32_t commandCount, CommandBufferBase* const* commands) override;
     bool HasPendingCommands() const override;
@@ -79,13 +78,6 @@ class Queue final : public QueueBase {
     // a different thread so we guard access to it with a mutex.
     std::mutex mLastSubmittedCommandsMutex;
     NSPRef<id<MTLCommandBuffer>> mLastSubmittedCommands;
-
-    // This mutex must be held to access mWaitingEvents (which may happen in a Metal driver
-    // thread).
-    // TODO(crbug.com/dawn/2065): If we atomically knew a conservative lower bound on the
-    // mWaitingEvents serials, we could avoid taking this lock sometimes. Optimize if needed.
-    // See old draft code: https://dawn-review.googlesource.com/c/dawn/+/137502/29
-    MutexProtected<SerialMap<ExecutionSerial, Ref<WaitListEvent>>> mWaitingEvents;
 
     // A shared event that can be exported for synchronization with other users of Metal.
     // MTLSharedEvent is not available until macOS 10.14+ so use just `id`.
