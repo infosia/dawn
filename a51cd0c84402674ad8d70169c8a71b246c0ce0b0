@@ -16,6 +16,57 @@
       "message": "PTAL again, thanks!",
       "revId": "a51cd0c84402674ad8d70169c8a71b246c0ce0b0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92749810_8c59cd1e",
+        "filename": "src/dawn/utils/CMakeLists.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T07:31:13Z",
+      "side": 1,
+      "message": "This should be a public dependency because it is exposed in the header, such that all targets using this one will need to at least know how to include Abseil.",
+      "revId": "a51cd0c84402674ad8d70169c8a71b246c0ce0b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f8feb5e_fc64f27b",
+        "filename": "src/dawn/utils/CMakeLists.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T07:31:13Z",
+      "side": 1,
+      "message": "Also don\u0027t we need to do the same change in BUILD.gn?",
+      "revId": "a51cd0c84402674ad8d70169c8a71b246c0ce0b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c87d08a_a331a649",
+        "filename": "src/dawn/utils/CMakeLists.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-15T07:31:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a51cd0c84402674ad8d70169c8a71b246c0ce0b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
