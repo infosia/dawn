@@ -1578,6 +1578,10 @@ class Printer : public tint::TextGenerator {
                     << arr->ConstantCount().value_or(0) << "];";
                 continue;
             }
+            if (mem->Attributes().builtin == core::BuiltinValue::kPrimitiveId) {
+                out << "uint " << mem_name << " [[primitive_id]];";
+                continue;
+            }
 
             EmitType(out, ty);
             out << " " << mem_name;
