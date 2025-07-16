@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06f5e09d_8560c56f",
+        "filename": "README.chromium",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-16T21:46:44Z",
+      "side": 1,
+      "message": "Do we usually update this?",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "98e7ff299e9c11d34d56de207065216d9769f80a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
