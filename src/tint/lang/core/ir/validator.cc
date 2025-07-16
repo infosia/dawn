@@ -1850,7 +1850,7 @@ void Validator::CheckType(const core::type::Type* root,
 
                 for (auto* member : str->Members()) {
                     if (member->RowMajor()) {
-                        diag() << "Row major annotation now allowed on structures";
+                        diag() << "Row major annotation not allowed on structures";
                         return false;
                     }
                     if (member->HasMatrixStride()) {
