@@ -33,6 +33,24 @@
       "message": "Since the revert seems stuck and I have a fix in https://dawn-review.googlesource.com/c/dawn/+/253195 maybe we can just land that?",
       "revId": "f71869cbd97e7c93e4dd550955b616123fc938c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "814ec1b4_769fccbf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-16T19:11:12Z",
+      "side": 1,
+      "message": "It\u0027s stuck because of the extra CQ bot, I don\u0027t know why that\u0027s not working since I used it a few days ago. But yes!",
+      "parentUuid": "bfa60e3b_35c26d0c",
+      "revId": "f71869cbd97e7c93e4dd550955b616123fc938c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
