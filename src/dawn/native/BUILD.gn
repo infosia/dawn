@@ -730,6 +730,11 @@ source_set("sources") {
     ]
   }
 
+  if (dawn_enable_record_playback) {
+    deps += [ "webgpu/protos:webgpu_cmd_proto" ]
+    public_deps += [ "${dawn_root}/third_party/protobuf:protobuf_full" ]
+  }
+
   if ((dawn_enable_opengl || dawn_enable_vulkan) &&
       dawn_enable_spirv_validation) {
     sources += [
