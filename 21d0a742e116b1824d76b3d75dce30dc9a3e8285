@@ -16,6 +16,24 @@
       "message": "Just for my own edification (and because I don\u0027t know much about the Node bindings): what\u0027s the reason for this change? textureBindingViewDimension is optional in WebGPU; why is it non-optional here?",
       "revId": "21d0a742e116b1824d76b3d75dce30dc9a3e8285",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8c78ea9_3528be67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002926
+      },
+      "writtenOn": "2025-07-16T16:55:33Z",
+      "side": 1,
+      "message": "I was going to ask the same question",
+      "parentUuid": "8ecda11b_a8f2adb8",
+      "revId": "21d0a742e116b1824d76b3d75dce30dc9a3e8285",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
