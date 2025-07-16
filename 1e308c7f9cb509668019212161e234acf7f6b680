@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7408035c_8c0853e0",
+        "filename": "src/dawn/utils/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-16T06:48:31Z",
+      "side": 1,
+      "message": "These should go in [1] and replaced with :abseil like in [2]",
+      "revId": "1e308c7f9cb509668019212161e234acf7f6b680",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c1549737_6b099606",
+        "filename": "src/dawn/utils/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-16T06:48:31Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "1e308c7f9cb509668019212161e234acf7f6b680",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "590b8c6f_d1734833",
+        "filename": "src/dawn/utils/BUILD.gn",
+        "patchSetId": 33
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-16T06:48:31Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "1e308c7f9cb509668019212161e234acf7f6b680",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
