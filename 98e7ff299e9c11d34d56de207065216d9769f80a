@@ -94,6 +94,30 @@
       },
       "revId": "98e7ff299e9c11d34d56de207065216d9769f80a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecf48778_f7a1e5e4",
+        "filename": "README.chromium",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-16T23:30:20Z",
+      "side": 1,
+      "message": "buildtools dep, but yeah.\n\nFrom the template, I would have assumed it would be Dawn\u0027s own commit hash.\nBut that would be circular; I think you\u0027d have to have the README.chromium file outside the git repo it describes, like dawn\u0027s own third_party/foo has a src subdir where the git submodule lives.\n\nIt looks like the cq filters don\u0027t ignore README.chromium. So I\u0027d like to land first, then change this line back, so we get the improvement first.",
+      "parentUuid": "270b9460_15740e05",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "98e7ff299e9c11d34d56de207065216d9769f80a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
