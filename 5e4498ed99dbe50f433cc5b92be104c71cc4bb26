@@ -16,6 +16,24 @@
       "message": "Is something that will never pass, or something that we still need to deal with?\n\nIf it will never pass you can update to `SKIP: INVALID` to make it clear the result itself is invalid.",
       "revId": "5e4498ed99dbe50f433cc5b92be104c71cc4bb26",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f8d357a_138e6818",
+        "filename": "test/tint/builtins/gen/literal/textureDimensions/60d83f.wgsl.expected.spvasm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-07-16T05:01:06Z",
+      "side": 1,
+      "message": "This should now be resolved by [253074](https://dawn-review.googlesource.com/c/dawn/+/253074/1).",
+      "parentUuid": "2a20dfff_5dab23f9",
+      "revId": "5e4498ed99dbe50f433cc5b92be104c71cc4bb26",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
