@@ -16,6 +16,23 @@
       "message": "I believe the message is correct, bgra8unorm should be polyfilled to rgba8unorm for spirv.",
       "revId": "7a6931aba7e58252215e8476c634e2ad6e1e8429",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dc11b4c_3d49c746",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-16T12:38:26Z",
+      "side": 1,
+      "message": "@rharrison for a second review",
+      "revId": "7a6931aba7e58252215e8476c634e2ad6e1e8429",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
