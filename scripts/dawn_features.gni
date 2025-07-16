@@ -61,6 +61,9 @@ declare_args() {
 
   # Whether to build Dawn's NodeJS bindings
   dawn_build_node_bindings = false
+
+  # Is protobuf support present
+  dawn_has_protobuf = dawn_standalone || build_with_chromium
 }
 
 declare_args() {
@@ -125,6 +128,10 @@ declare_args() {
   # Disable SPIR-V validation on Android because it adds a significant amount
   # to the binary size, and Tint's output should be well-formed.
   dawn_enable_spirv_validation = dawn_enable_vulkan && !is_android
+
+  # Enables the compilation of Dawn record & playback on WebGPUBackend
+  dawn_enable_record_playback =
+      dawn_enable_webgpu_on_webgpu && dawn_has_protobuf
 }
 
 # UWP only supports CoreWindow for windowing
