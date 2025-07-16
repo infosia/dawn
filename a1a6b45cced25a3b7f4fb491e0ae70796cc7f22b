@@ -34,6 +34,24 @@
       "parentUuid": "85a86da8_c4d04f42",
       "revId": "a1a6b45cced25a3b7f4fb491e0ae70796cc7f22b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3f515fd_69282d3b",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-16T22:30:35Z",
+      "side": 1,
+      "message": "Never mind it fails on D3D12 too. I don\u0027t know what the condition should be.",
+      "parentUuid": "a77efc30_6da6689f",
+      "revId": "a1a6b45cced25a3b7f4fb491e0ae70796cc7f22b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
