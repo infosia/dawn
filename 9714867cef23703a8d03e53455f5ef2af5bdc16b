@@ -676,6 +676,24 @@
       "parentUuid": "2c279837_dfcaa7fb",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "854d3de1_82c9108e",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-16T13:43:00Z",
+      "side": 1,
+      "message": "Sorry, Peter you were just an FYI. The question about making the change now was for Shaobo about inclusion of the immediate buffer when not needed.",
+      "parentUuid": "d619c69d_212d2481",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
