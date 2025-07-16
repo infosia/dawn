@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "25d093b2_ba741f54",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-16T09:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8347cb0a_9b40e45a",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "844f9ae1_5b45417d",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-07-15T13:01:17Z",
       "side": 1,
       "message": "```suggestion\n    /// The immediate buffer variable that holds the total size of each storage buffer.\n```",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "babaf655_5ae76b85",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-16T09:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "844f9ae1_5b45417d",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -118,6 +154,24 @@
       "writtenOn": "2025-07-15T13:01:17Z",
       "side": 1,
       "message": "```suggestion\n                // Load the total storage buffer size from the immediate buffer.\n```",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01d713cd_96b59937",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-16T09:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "344d4f20_6bfddf1c",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -251,6 +305,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b1b21695_51335702",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-16T09:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6e122c5_eaa0061d",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 34
+      },
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2870f0c_03ed0663",
@@ -264,6 +342,24 @@
       "writtenOn": "2025-07-15T13:01:17Z",
       "side": 1,
       "message": "```suggestion\n    /// `true` if the transformed module needs the storage buffer sizes immediate data.\n```",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1738b0f2_6ec2843b",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-16T09:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2870f0c_03ed0663",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -285,6 +381,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0df3f03_5bac1207",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-16T09:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f605ed7a_2d7141ca",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d79f4412_5c5ef089",
@@ -298,6 +412,30 @@
       "writtenOn": "2025-07-15T13:01:17Z",
       "side": 1,
       "message": "```suggestion\n/// @param buffer_sizes_offset The offset in immediate block where buffer sizes start.\n/// @param buffer_sizes_array_elements_num the number of buffer sizes that will be set into the immediate buffer\n/// @returns the transform result or failure\n```\n\n\nOr is this 1/4th of the number of buffer sizes because the array is made of vec4s ? So, this would be the number of vec4s used to store buffer sizes?",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 44
+      },
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "523116e8_49281d44",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-16T09:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d79f4412_5c5ef089",
       "range": {
         "startLine": 75,
         "startChar": 0,
