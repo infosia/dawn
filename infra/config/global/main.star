@@ -392,6 +392,7 @@ def add_ci_builder(name, os, properties):
         siso.project.DEFAULT_TRUSTED,
         siso.remote_jobs.DEFAULT,
     )
+    properties_ci["gardener_rotations"] = ["dawn"]
     properties_ci.update(properties)
     shadow_properties_ci = get_common_properties(
         os,
@@ -399,6 +400,7 @@ def add_ci_builder(name, os, properties):
         siso.project.DEFAULT_UNTRUSTED,
         siso.remote_jobs.DEFAULT,
     )
+    shadow_properties_ci["gardener_rotations"] = ["dawn"]
     shadow_properties_ci.update(properties)
     schedule_ci = None
     if fuzzer:
@@ -763,6 +765,7 @@ luci.builder(
     properties = {
         "repo_name": "dawn",
         "runhooks": True,
+        "gardener_rotations": ["dawn"],
     },
     caches = [
         swarming.cache("golang"),
