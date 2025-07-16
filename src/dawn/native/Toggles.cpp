@@ -710,6 +710,11 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "Don't validate the required VkImage size against the size of the AHardwareBuffer on import. "
       "Some drivers report the wrong size.",
       "https://crbug.com/333424893", ToggleStage::Device}},
+    {Toggle::EnableTexelBuffers,
+     {"enable_texel_buffers",
+      "Enable the texel buffer prototype feature, which allows using buffers as textures.",
+      "https://github.com/gpuweb/gpuweb/blob/main/proposals/texel-buffers.md",
+      ToggleStage::Device}},
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
 }};
 
