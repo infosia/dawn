@@ -71,6 +71,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abd264fc_0ce8e09b",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-16T08:37:43Z",
+      "side": 1,
+      "message": "Thanks for the info. Let me add a config to control whether we use \"pass values through function parameters\". For D3D11 backend, immediate is indeed backed by a uniform buffer. But we could check on vulkan, d3d12 and metal backend.",
+      "parentUuid": "b515993a_734b679c",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "344d4f20_6bfddf1c",
         "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
         "patchSetId": 4
