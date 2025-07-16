@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82ce3d7c_b16169c2",
+        "filename": "src/dawn/utils/CMakeLists.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-16T03:18:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92749810_8c59cd1e",
+      "revId": "a51cd0c84402674ad8d70169c8a71b246c0ce0b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4f8feb5e_fc64f27b",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c84e3936_6f936c70",
+        "filename": "src/dawn/utils/CMakeLists.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-16T03:18:01Z",
+      "side": 1,
+      "message": "When I changed Build.gn like patchset33, several tryjobs failed like this https://logs.chromium.org/logs/chromium/buildbucket/cr-buildbucket/8709290355235897617/+/u/generate_build_files__with_patch_/stdout. The tryjobs went successfully when Build.gn didn\u0027t be revised like patchset 31.",
+      "parentUuid": "4f8feb5e_fc64f27b",
+      "revId": "a51cd0c84402674ad8d70169c8a71b246c0ce0b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c87d08a_a331a649",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-07-15T07:31:13Z",
       "side": 1,
       "message": "ditto",
+      "revId": "a51cd0c84402674ad8d70169c8a71b246c0ce0b0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "465c29d7_60a1a2b4",
+        "filename": "src/dawn/utils/CMakeLists.txt",
+        "patchSetId": 31
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-16T03:18:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c87d08a_a331a649",
       "revId": "a51cd0c84402674ad8d70169c8a71b246c0ce0b0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
