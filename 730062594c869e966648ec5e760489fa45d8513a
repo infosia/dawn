@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7d51ffcc_135a5199",
+        "filename": ".gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000277
+      },
+      "writtenOn": "2025-07-16T19:09:41Z",
+      "side": 1,
+      "message": "mac_sdk_min \u003d \"12\"",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 19
+      },
+      "revId": "730062594c869e966648ec5e760489fa45d8513a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
