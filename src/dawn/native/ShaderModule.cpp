@@ -1633,6 +1633,10 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
         mOriginalSpirv.assign(spirvDesc->code, spirvDesc->code + spirvDesc->codeSize);
         shaderCodeByteSize = mOriginalSpirv.size() * sizeof(decltype(mOriginalSpirv)::value_type);
         shaderCode = reinterpret_cast<uint8_t*>(mOriginalSpirv.data());
+        if (auto* spirvOptions = descriptor.Get<DawnShaderModuleSPIRVOptionsDescriptor>()) {
+            mAllowSpirvNonUniformDerivitives =
+                static_cast<bool>(spirvOptions->allowNonUniformDerivatives);
+        }
     } else if (auto* wgslDesc = descriptor.Get<ShaderSourceWGSL>()) {
         mType = Type::Wgsl;
         mWgsl = std::string(wgslDesc->code);
@@ -1649,6 +1653,7 @@ ShaderModuleBase::ShaderModuleBase(DeviceBase* device,
     ShaderModuleHasher hasher;
     // Hash the metadata.
     hasher.Update(mType);
+    hasher.Update(mAllowSpirvNonUniformDerivitives);
     // mStrictMath is a std::optional<bool>, and the bool value might not get initialized by default
     // constructor and thus contains dirty data.
     bool strictMathAssigned = mStrictMath.has_value();
@@ -1770,9 +1775,14 @@ Ref<TintProgram> ShaderModuleBase::GetTintProgram() {
         ShaderModuleDescriptor descriptor;
         ShaderSourceWGSL wgslDescriptor;
         ShaderSourceSPIRV spirvDescriptor;
+        DawnShaderModuleSPIRVOptionsDescriptor spirvOptionsDescriptor;
 
         switch (mType) {
             case Type::Spirv:
+                spirvOptionsDescriptor.allowNonUniformDerivatives =
+                    mAllowSpirvNonUniformDerivitives;
+                spirvDescriptor.nextInChain = &spirvOptionsDescriptor;
+
                 spirvDescriptor.codeSize = mOriginalSpirv.size();
                 spirvDescriptor.code = mOriginalSpirv.data();
                 descriptor.nextInChain = &spirvDescriptor;
