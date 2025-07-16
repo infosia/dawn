@@ -70,6 +70,30 @@
       },
       "revId": "98e7ff299e9c11d34d56de207065216d9769f80a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "270b9460_15740e05",
+        "filename": "README.chromium",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-16T23:14:53Z",
+      "side": 1,
+      "message": "Huh.. I\u0027ve never seen this file changed before for any rolls, so I was just curious? Does it make sense to make this a hash that\u0027s specific to the `build` dep though? I feel like that doesn\u0027t make sense?",
+      "parentUuid": "617780ba_5305c702",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "98e7ff299e9c11d34d56de207065216d9769f80a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
