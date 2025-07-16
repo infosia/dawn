@@ -76,6 +76,26 @@ GLenum TargetForTextureViewDimension(wgpu::TextureViewDimension dimension, uint3
     }
 }
 
+GLenum GLComponentSwizzle(wgpu::ComponentSwizzle swizzle) {
+    switch (swizzle) {
+        case wgpu::ComponentSwizzle::Zero:
+            return GL_ZERO;
+        case wgpu::ComponentSwizzle::One:
+            return GL_ONE;
+        case wgpu::ComponentSwizzle::R:
+            return GL_RED;
+        case wgpu::ComponentSwizzle::G:
+            return GL_GREEN;
+        case wgpu::ComponentSwizzle::B:
+            return GL_BLUE;
+        case wgpu::ComponentSwizzle::A:
+            return GL_ALPHA;
+
+        case wgpu::ComponentSwizzle::Undefined:
+            DAWN_UNREACHABLE();
+    }
+}
+
 bool RequiresCreatingNewTextureView(
     const TextureBase* texture,
     const UnpackedPtr<TextureViewDescriptor>& textureViewDescriptor) {
@@ -123,6 +143,16 @@ bool RequiresCreatingNewTextureView(
         // GL_DEPTH_STENCIL_TEXTURE_MODE. Choose the stencil aspect for the
         // extra handle since it is likely sampled less often.
         return true;
+    }
+
+    // TODO(414312052): Use TextureViewBase::UsesNonDefaultSwizzle() instead of
+    // textureViewDescriptor.
+    if (auto* swizzleDesc = textureViewDescriptor.Get<TextureComponentSwizzleDescriptor>()) {
+        auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
+        if (swizzle.r != wgpu::ComponentSwizzle::R || swizzle.g != wgpu::ComponentSwizzle::G ||
+            swizzle.b != wgpu::ComponentSwizzle::B || swizzle.a != wgpu::ComponentSwizzle::A) {
+            return true;
+        }
     }
 
     return false;
@@ -636,11 +666,23 @@ ResultOrError<Ref<TextureView>> TextureView::Create(
     // Wrap the handle in a TextureView class early so that it is deleted if initialization fails
     Ref<TextureView> view = AcquireRef(new TextureView(texture, descriptor, handle, ownsHandle));
 
+    GLenum target = view->GetGLTarget();
     if (ownsHandle == OwnsHandle::Yes) {
-        DAWN_GL_TRY(gl, TextureView(handle, view->GetGLTarget(), ToBackend(texture)->GetHandle(),
+        DAWN_GL_TRY(gl, TextureView(handle, target, ToBackend(texture)->GetHandle(),
                                     view->GetInternalFormat(), descriptor->baseMipLevel,
                                     descriptor->mipLevelCount, descriptor->baseArrayLayer,
                                     descriptor->arrayLayerCount));
+    }
+
+    if (view->UsesNonDefaultSwizzle()) {
+        DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_R,
+                                      GLComponentSwizzle(view->GetSwizzleRed())));
+        DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_G,
+                                      GLComponentSwizzle(view->GetSwizzleGreen())));
+        DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_B,
+                                      GLComponentSwizzle(view->GetSwizzleBlue())));
+        DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_A,
+                                      GLComponentSwizzle(view->GetSwizzleAlpha())));
     }
 
     return view;
