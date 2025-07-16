@@ -16,6 +16,23 @@
       "message": "PTAL",
       "revId": "68467f6854d27a8b36203ca777115510e3bfcf0a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9c93464_cc68c83b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-16T18:05:36Z",
+      "side": 1,
+      "message": "LGTM from me, but adding Kai just in case also.",
+      "revId": "68467f6854d27a8b36203ca777115510e3bfcf0a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
