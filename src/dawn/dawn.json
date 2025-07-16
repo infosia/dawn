@@ -4209,6 +4209,18 @@
             }
         ]
     },
+    "texel buffer view": {
+        "category": "object",
+        "tags": ["dawn"],
+        "methods": [
+            {
+                "name": "set label",
+                "args": [
+                    {"name": "label", "type": "string view"}
+                ]
+            }
+        ]
+    },
     "texture view dimension": {
         "category": "enum",
         "values": [
