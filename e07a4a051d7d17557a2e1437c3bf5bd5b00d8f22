@@ -33,6 +33,24 @@
       "message": "I am not sure why this shows up here, given it doesn\u0027t seem to do so in ANGLE, which I sort of based this on:\n\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/infra/config/main.star;l\u003d311;drc\u003dd8c00a9d42834118e90c3a8a7fb562bcf86a7145\n\nAlso I am not sure if sheriff_rotations is still needed.",
       "revId": "e07a4a051d7d17557a2e1437c3bf5bd5b00d8f22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fa31af0_a341a37f",
+        "filename": "infra/config/global/generated/cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-16T23:37:55Z",
+      "side": 1,
+      "message": "Unclear from\nhttps://source.chromium.org/search?q\u003dgardener_rotations%20OR%20sheriff_rotations\u0026sq\u003d\u0026ss\u003dchromium%2Finfra%2Finfra_superproject:infra%2Fgo%2Fsrc%2Finfra%2Fappengine%2Fsheriff-o-matic%2F\nso I\u0027ve just added it.",
+      "parentUuid": "a7c08657_1b97364e",
+      "revId": "e07a4a051d7d17557a2e1437c3bf5bd5b00d8f22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
