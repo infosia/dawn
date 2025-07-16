@@ -118,6 +118,30 @@
       },
       "revId": "98e7ff299e9c11d34d56de207065216d9769f80a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1217b639_18f54c1e",
+        "filename": "README.chromium",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-16T23:32:27Z",
+      "side": 1,
+      "message": "Sgtm. If you want to chain a cl child to this one that updates that back to DEPS I can review it! Thanks everyone for pushing these rolls through!",
+      "parentUuid": "ecf48778_f7a1e5e4",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "98e7ff299e9c11d34d56de207065216d9769f80a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
