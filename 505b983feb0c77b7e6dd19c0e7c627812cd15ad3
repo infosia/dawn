@@ -16,6 +16,40 @@
       "message": "Hi David and James, \n\nCould you take a look at this CL?\n\nThanks!",
       "revId": "505b983feb0c77b7e6dd19c0e7c627812cd15ad3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2fb1f0aa_56441882",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-16T12:47:08Z",
+      "side": 1,
+      "message": "Why does this move robustness up instead of prevent infinite loops down?",
+      "revId": "505b983feb0c77b7e6dd19c0e7c627812cd15ad3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68800e74_2926dce9",
+        "filename": "src/tint/lang/spirv/writer/raise/raise.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-16T12:47:08Z",
+      "side": 1,
+      "message": "same question",
+      "revId": "505b983feb0c77b7e6dd19c0e7c627812cd15ad3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
