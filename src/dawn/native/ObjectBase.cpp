@@ -76,13 +76,54 @@ void ApiObjectList::Destroy() {
     LinkedList<ApiObjectBase> objects;
     mObjects.Use([&objects, this](auto lockedObjects) {
         mMarkedDestroyed.store(true, std::memory_order_release);
+<<<<<<< HEAD   (15442662beda24122f371b96b37532329e50edc6 [M139] [dawn][native] Split maxImmediateSize into a separate)
         lockedObjects->MoveInto(&objects);
+||||||| BASE
+
+        // Remove objects from ApiObjectList while holding the lock. The objects become untracked
+        // so if another thread drops the last reference it won't also call DestroyImpl().
+        while (!lockedObjects->empty()) {
+            auto* head = lockedObjects->head();
+            bool removed = head->RemoveFromList();
+            DAWN_ASSERT(removed);
+            objectsToDestroy.push_back(head->value());
+        }
+=======
+
+        // Try to acquire a reference to all objects to ensure they aren't deleted on another thread
+        // before DestroyImpl() runs below. If the object already has zero refs then another thread
+        // is about to delete it, the object is left in the list so it gets deleted+destroyed on the
+        // other thread.
+        for (auto* node = lockedObjects->head(); node != lockedObjects->end();) {
+            auto* next = node->next();
+
+            if (ApiObjectBase* object = node->value(); object->TryAddRef()) {
+                objectsToDestroy.push_back(object);
+                bool removed = node->RemoveFromList();
+                DAWN_ASSERT(removed);
+            }
+
+            node = next;
+        }
+>>>>>>> CHANGE (698f64de7d484f16cf2357e3b7a8b806462e3e3f Fix ApiObjectList::Destroy() race)
     });
+<<<<<<< HEAD   (15442662beda24122f371b96b37532329e50edc6 [M139] [dawn][native] Split maxImmediateSize into a separate)
     while (!objects.empty()) {
         auto* head = objects.head();
         bool removed = head->RemoveFromList();
         DAWN_ASSERT(removed);
         head->value()->DestroyImpl();
+||||||| BASE
+
+    for (ApiObjectBase* object : objectsToDestroy) {
+        object->DestroyImpl();
+=======
+
+    for (ApiObjectBase* object : objectsToDestroy) {
+        object->DestroyImpl();
+        // `object` may be deleted here if last real reference was dropped on another thread.
+        object->Release();
+>>>>>>> CHANGE (698f64de7d484f16cf2357e3b7a8b806462e3e3f Fix ApiObjectList::Destroy() race)
     }
 }
 
