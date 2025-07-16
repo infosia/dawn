@@ -1,6 +1,6 @@
 SKIP: FAILED
 
-../../src/tint/lang/spirv/writer/raise/builtin_polyfill.cc:123 internal compiler error: Switch() matched no cases. Type: tint::core::type::TexelBuffer
+../../src/tint/lang/spirv/writer/printer/printer.cc:2852 internal compiler error: bgra8unorm should have been polyfilled to rgba8unorm
 
 ********************************************************************
 *  The tint shader compiler has encountered an unexpected error.   *
