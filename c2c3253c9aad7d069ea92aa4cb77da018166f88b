@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edfb02b7_1f1065a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-16T13:08:35Z",
+      "side": 1,
+      "message": "Can we have an associated issue?\n\nAlso can we had a more descriptive commit message? \"An error\" doesn\u0027t help when looking at a commit log.\n\n```\n[dawn][native] Fix conversion from Tint to Dawn TextureFormats.\n\nR16Float and RG16Float were swapped.\n\nBug: something\n```",
+      "revId": "c2c3253c9aad7d069ea92aa4cb77da018166f88b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
