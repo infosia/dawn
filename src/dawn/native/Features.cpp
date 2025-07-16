@@ -428,6 +428,11 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
      {"Supports configuring device allocator via DawnDeviceAllocatorControl",
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
       "dawn_device_allocator_control.md",
+      FeatureInfo::FeatureState::Experimental}},
+    {Feature::TexelBuffers,
+     {"Prototype support for texel buffers, which are buffers that can be used as textures.",
+      "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/tint/extensions/"
+      "texel_buffers.md",
       FeatureInfo::FeatureState::Experimental}}};
 
 }  // anonymous namespace

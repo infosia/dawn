@@ -172,6 +172,8 @@ enum class Toggle {
     D3D11DelayFlushToGPU,
     IgnoreImportedAHardwareBufferVulkanImageSize,
 
+    EnableTexelBuffers,
+
     EnumCount,
     InvalidEnum = EnumCount,
 };
