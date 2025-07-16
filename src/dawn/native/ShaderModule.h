@@ -428,6 +428,7 @@ class ShaderModuleBase : public RefCountedWithExternalCount<ApiObjectBase>,
     enum class Type { Undefined, Spirv, Wgsl };
     Type mType;
     std::vector<uint32_t> mOriginalSpirv;
+    bool mAllowSpirvNonUniformDerivitives = false;
     std::string mWgsl;
 
     // Secure hash computed from shader code and other metadata to be used as a cache key
