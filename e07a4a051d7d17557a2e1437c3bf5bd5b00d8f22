@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "95b8285e_809d80b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-16T23:30:02Z",
+      "side": 1,
+      "message": "I am unsure if this will do the trick, but PTAL or maybe you can suggest someone who would know?",
+      "revId": "e07a4a051d7d17557a2e1437c3bf5bd5b00d8f22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
