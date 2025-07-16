@@ -461,14 +461,17 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
         (*compileOptions).preserveInvariance = true;
     }
 
-    // If possible we will use relaxed math as a pragma in the source rather than this fast math
-    // global compiler option. See crbug.com/425650181
     if (@available(macOS 15.0, iOS 18.0, *)) {
         // This empty bock is intentional due to the mechanism to support @available.
         // (the @available must be in a plain 'if' statement)
         // Without this empty block one would get '-Wunsupported-availability-guard'
     } else {
+// Silence the warning that fastMathEnabled is deprecated since we cannot remove it until the
+// minimum support macOS version is macOS 15.0.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         (*compileOptions).fastMathEnabled = !GetStrictMath().value_or(false);
+#pragma clang diagnostic pop
     }
 
     auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
