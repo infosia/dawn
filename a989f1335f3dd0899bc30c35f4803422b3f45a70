@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6c72a735_a94430c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-07-16T23:56:31Z",
+      "side": 1,
+      "message": "LGTM once you remove the properties from the shadow builders. Not sure if this will work as intended, but it looks correct to me.",
+      "revId": "a989f1335f3dd0899bc30c35f4803422b3f45a70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffda15c6_b0726793",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-07-16T23:56:31Z",
+      "side": 1,
+      "message": "I think we don\u0027t want this set for shadow buckets. Builds run in those are pretty much by definition experimental and uncommitted.",
+      "range": {
+        "startLine": 406,
+        "startChar": 3,
+        "endLine": 407,
+        "endChar": 57
+      },
+      "revId": "a989f1335f3dd0899bc30c35f4803422b3f45a70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
