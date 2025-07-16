@@ -16,6 +16,29 @@
       "message": "PTAL.",
       "revId": "f0c315727b3d2aab948e1245491bcb17022b27ae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7d2fdbb6_06f9c9e5",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3052,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-16T17:22:38Z",
+      "side": 1,
+      "message": "Only Bias can come before the Lod parameter, and Bias is \"Only valid with implicit-lod instructions.\"\nSo this index is correct.",
+      "range": {
+        "startLine": 3052,
+        "startChar": 16,
+        "endLine": 3052,
+        "endChar": 47
+      },
+      "revId": "f0c315727b3d2aab948e1245491bcb17022b27ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
