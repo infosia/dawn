@@ -16,6 +16,23 @@
       "message": "Loko: PTAL. Thanks!",
       "revId": "d4cb38f3029c99c1dec2dd84a2b301f8bf5acf7b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b8751b1_fd092956",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-07-16T19:47:07Z",
+      "side": 1,
+      "message": "FYI, merge was approved here: https://issues.chromium.org/issues/432247061",
+      "revId": "d4cb38f3029c99c1dec2dd84a2b301f8bf5acf7b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
