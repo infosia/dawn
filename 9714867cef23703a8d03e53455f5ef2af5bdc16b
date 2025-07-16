@@ -141,6 +141,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19daf883_a4e6369a",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-16T12:43:45Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c44ca7a3_aa9ee46e",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "344d4f20_6bfddf1c",
@@ -620,6 +638,24 @@
       "side": 1,
       "message": "@petermcneeley@chromium.org and others have been discussing a way to say a module is restricted from having things added into it. Peter, another data point for your proposed changes to capabilities being useful.\n\nWe should be able to take a look at the current IR transforms and see if any of them add arrayLength at the moment at least to understand if we\u0027re adding it already.",
       "parentUuid": "d1d22208_cc3657a3",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c279837_dfcaa7fb",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-16T12:43:45Z",
+      "side": 1,
+      "message": "Is the plan to make this change now, or hold off for a later time?",
+      "parentUuid": "54b6101c_01a18423",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
