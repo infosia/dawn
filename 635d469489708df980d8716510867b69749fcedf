@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c35c25a6_4326f631",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-16T02:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7aa2962_6994dd34",
+      "revId": "635d469489708df980d8716510867b69749fcedf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4641b2c2_e901106f",
@@ -58,6 +76,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "33fb6148_3adc3446",
+        "filename": "src/tint/lang/spirv/reader/parser/parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2498,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-16T02:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4641b2c2_e901106f",
+      "range": {
+        "startLine": 2498,
+        "startChar": 15,
+        "endLine": 2498,
+        "endChar": 43
+      },
+      "revId": "635d469489708df980d8716510867b69749fcedf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b7085363_6fa30469",
@@ -71,6 +113,24 @@
       "writtenOn": "2025-07-15T20:57:59Z",
       "side": 1,
       "message": "I\u0027d add:  %258 is defined in a selection construct headed by %211, and needs to be propagated out of that \"if\" first, and then propagated from the phi.",
+      "revId": "635d469489708df980d8716510867b69749fcedf",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14921339_fc73afc3",
+        "filename": "src/tint/lang/spirv/reader/parser/phi_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2361,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-16T02:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7085363_6fa30469",
       "revId": "635d469489708df980d8716510867b69749fcedf",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
