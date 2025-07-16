@@ -16,6 +16,24 @@
       "message": "Failing on https://ci.chromium.org/ui/p/chromium/builders/ci/Dawn%20Win10%20x64%20Release%20%28Intel%20UHD%20770%29\nCould you take a look?",
       "revId": "a1a6b45cced25a3b7f4fb491e0ae70796cc7f22b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a77efc30_6da6689f",
+        "filename": "src/dawn/tests/end2end/SupportedFeatureArch.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-16T22:28:11Z",
+      "side": 1,
+      "message": "Oh I think it\u0027s because it\u0027s D3D11. I can fix this.",
+      "parentUuid": "85a86da8_c4d04f42",
+      "revId": "a1a6b45cced25a3b7f4fb491e0ae70796cc7f22b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
