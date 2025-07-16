@@ -354,7 +354,8 @@ WGPUStringView ToOutputStringView(const std::string& s) {
   X(ShaderModule)        \
   X(Surface)             \
   X(Texture)             \
-  X(TextureView)
+  X(TextureView)         \
+  X(TexelBufferView)
 
 // X Macro to help generate boilerplate code for all passthrough object types.
 // Passthrough objects refer to objects that are implemented via JS objects.
@@ -374,7 +375,8 @@ WGPUStringView ToOutputStringView(const std::string& s) {
   X(Sampler)             \
   X(Surface)             \
   X(Texture)             \
-  X(TextureView)
+  X(TextureView)         \
+  X(TexelBufferView)
 // clang-format on
 
 // ----------------------------------------------------------------------------

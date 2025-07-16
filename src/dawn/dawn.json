@@ -340,7 +340,8 @@
             {"name": "offset", "type": "uint64_t", "default": "0"},
             {"name": "size", "type": "uint64_t", "default": "whole size"},
             {"name": "sampler", "type": "sampler", "optional": true},
-            {"name": "texture view", "type": "texture view", "optional": true}
+            {"name": "texture view", "type": "texture view", "optional": true},
+            {"name": "texel buffer view", "type": "texel buffer view", "optional": true}
         ]
     },
     "bind group descriptor": {
@@ -4198,6 +4199,17 @@
         ]
     },
     "texture view": {
+        "category": "object",
+        "methods": [
+            {
+                "name": "set label",
+                "args": [
+                    {"name": "label", "type": "string view"}
+                ]
+            }
+        ]
+    },
+    "texel buffer view": {
         "category": "object",
         "methods": [
             {
