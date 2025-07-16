@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a20dfff_5dab23f9",
+        "filename": "test/tint/builtins/gen/literal/textureDimensions/60d83f.wgsl.expected.spvasm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-16T02:45:03Z",
+      "side": 1,
+      "message": "Is something that will never pass, or something that we still need to deal with?\n\nIf it will never pass you can update to `SKIP: INVALID` to make it clear the result itself is invalid.",
+      "revId": "5e4498ed99dbe50f433cc5b92be104c71cc4bb26",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
