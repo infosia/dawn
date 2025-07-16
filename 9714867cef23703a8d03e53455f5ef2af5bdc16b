@@ -89,6 +89,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c44ca7a3_aa9ee46e",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-16T08:48:40Z",
+      "side": 1,
+      "message": "\u003ein response to a metal shader compiler bug where in certain cases the compiler would take a long time\n\nOh, I just missed the info about it is a metal shader compiler bug. Metal \"immediate\" is quite similar to \"internal uniform buffer\" instead of specific concepts in vulkan (push constants) and d3d12 (root constants).\n\nAnd in API side, array_length is already uploaded by `SetBytes`(`SetVertexBytes|SetFragmentBytes`) https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/CommandBufferMTL.mm;drc\u003d26482a8fc4b21563e377885df71b24b439f25427;l\u003d507.\n\nSo I think `immediate` doesn\u0027t helps the issue :(",
+      "parentUuid": "abd264fc_0ce8e09b",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "344d4f20_6bfddf1c",
         "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.cc",
         "patchSetId": 4
