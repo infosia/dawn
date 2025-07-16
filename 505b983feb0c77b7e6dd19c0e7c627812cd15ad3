@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34a6ea9f_ec44502e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-16T07:20:58Z",
+      "side": 1,
+      "message": "Hi David and James, \n\nCould you take a look at this CL?\n\nThanks!",
+      "revId": "505b983feb0c77b7e6dd19c0e7c627812cd15ad3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
