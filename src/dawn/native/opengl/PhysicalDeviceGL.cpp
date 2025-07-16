@@ -300,6 +300,11 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     if (mFunctions.IsGLExtensionSupported("GL_EXT_float_blend")) {
         EnableFeature(Feature::Float32Blendable);
     }
+
+    // TextureComponentSwizzle requires OpenGL ES 3.1.
+    if (mFunctions.IsAtLeastGLES(3, 1)) {
+        EnableFeature(Feature::TextureComponentSwizzle);
+    }
 }
 
 namespace {

@@ -76,6 +76,26 @@ GLenum TargetForTextureViewDimension(wgpu::TextureViewDimension dimension, uint3
     }
 }
 
+GLenum GLComponentSwizzle(wgpu::ComponentSwizzle swizzle) {
+    switch (swizzle) {
+        case wgpu::ComponentSwizzle::Zero:
+            return GL_ZERO;
+        case wgpu::ComponentSwizzle::One:
+            return GL_ONE;
+        case wgpu::ComponentSwizzle::R:
+            return GL_RED;
+        case wgpu::ComponentSwizzle::G:
+            return GL_GREEN;
+        case wgpu::ComponentSwizzle::B:
+            return GL_BLUE;
+        case wgpu::ComponentSwizzle::A:
+            return GL_ALPHA;
+
+        case wgpu::ComponentSwizzle::Undefined:
+            DAWN_UNREACHABLE();
+    }
+}
+
 bool RequiresCreatingNewTextureView(
     const TextureBase* texture,
     const UnpackedPtr<TextureViewDescriptor>& textureViewDescriptor) {
@@ -123,6 +143,16 @@ bool RequiresCreatingNewTextureView(
         // GL_DEPTH_STENCIL_TEXTURE_MODE. Choose the stencil aspect for the
         // extra handle since it is likely sampled less often.
         return true;
+    }
+
+    // TODO(414312052): Use TextureViewBase::UsesNonDefaultSwizzle() instead of
+    // textureViewDescriptor.
+    if (auto* swizzleDesc = textureViewDescriptor.Get<TextureComponentSwizzleDescriptor>()) {
+        auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
+        if (swizzle.r != wgpu::ComponentSwizzle::R || swizzle.g != wgpu::ComponentSwizzle::G ||
+            swizzle.b != wgpu::ComponentSwizzle::B || swizzle.a != wgpu::ComponentSwizzle::A) {
+            return true;
+        }
     }
 
     return false;
@@ -641,6 +671,13 @@ ResultOrError<Ref<TextureView>> TextureView::Create(
                                     view->GetInternalFormat(), descriptor->baseMipLevel,
                                     descriptor->mipLevelCount, descriptor->baseArrayLayer,
                                     descriptor->arrayLayerCount));
+    }
+
+    if (UsesNonDefaultSwizzle()) {
+        DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_R, GLComponentSwizzle(GetSwizzleRed()));
+        DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_G, GLComponentSwizzle(GetSwizzleGreen()));
+        DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_B, GLComponentSwizzle(GetSwizzleBlue()));
+        DAWN_GL_TRY(gl, TexParameteri(target, GL_TEXTURE_SWIZZLE_A, GLComponentSwizzle(GetSwizzleAlpha()));
     }
 
     return view;
