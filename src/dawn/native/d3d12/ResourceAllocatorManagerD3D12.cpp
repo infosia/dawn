@@ -121,16 +121,22 @@ uint64_t GetInitialResourcePlacementAlignment(
     }
 }
 
+bool IsDepthFormat(DXGI_FORMAT format) {
+    switch (format) {
+        case DXGI_FORMAT_D16_UNORM:
+        case DXGI_FORMAT_D32_FLOAT:
+        case DXGI_FORMAT_D24_UNORM_S8_UINT:
+        case DXGI_FORMAT_D32_FLOAT_S8X24_UINT:
+            return true;
+        default:
+            return false;
+    }
+}
+
 bool IsClearValueOptimizable(DeviceBase* device, const D3D12_RESOURCE_DESC& resourceDescriptor) {
     if (device->IsToggleEnabled(Toggle::D3D12DontSetClearValueOnDepthTextureCreation)) {
-        switch (resourceDescriptor.Format) {
-            case DXGI_FORMAT_D16_UNORM:
-            case DXGI_FORMAT_D32_FLOAT:
-            case DXGI_FORMAT_D24_UNORM_S8_UINT:
-            case DXGI_FORMAT_D32_FLOAT_S8X24_UINT:
-                return false;
-            default:
-                break;
+        if (IsDepthFormat(resourceDescriptor.Format)) {
+            return false;
         }
     }
 
@@ -272,9 +278,22 @@ uint32_t ComputeExtraArraySizeForIntelGen12(uint32_t width,
     return 0;
 }
 
-bool ShouldAllocateAsCommittedResource(Device* device, bool forceAllocateAsCommittedResource) {
-    return forceAllocateAsCommittedResource ||
-           device->IsToggleEnabled(Toggle::DisableResourceSuballocation);
+bool ShouldAllocateAsCommittedResource(Device* device,
+                                       const D3D12_RESOURCE_DESC& resourceDescriptor,
+                                       bool forceAllocateAsCommittedResource) {
+    if (forceAllocateAsCommittedResource) {
+        return true;
+    }
+    if (device->IsToggleEnabled(Toggle::DisableResourceSuballocation)) {
+        return true;
+    }
+    if (device->IsToggleEnabled(Toggle::DisableSubAllocationForSampled2DDepthTexture)) {
+        if (IsDepthFormat(resourceDescriptor.Format)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 D3D12_HEAP_FLAGS GetHeapFlagsForCommittedResource(Device* device,
@@ -365,7 +384,8 @@ ResultOrError<ResourceHeapAllocation> ResourceAllocatorManager::AllocateMemory(
     // For very small resources, it is inefficient to suballocate given the min. heap
     // size could be much larger then the resource allocation.
     // Attempt to satisfy the request using sub-allocation (placed resource in a heap).
-    if (!ShouldAllocateAsCommittedResource(mDevice, forceAllocateAsCommittedResource)) {
+    if (!ShouldAllocateAsCommittedResource(mDevice, resourceDescriptor,
+                                           forceAllocateAsCommittedResource)) {
         ResourceHeapAllocation subAllocation;
         DAWN_TRY_ASSIGN(subAllocation, CreatePlacedResource(resourceHeapKind, revisedDescriptor,
                                                             optimizedClearValue, initialUsage));

@@ -158,6 +158,7 @@ enum class Toggle {
     VulkanAddWorkToEmptyResolvePass,
     EnableIntegerRangeAnalysisInRobustness,
     UseSpirv14,
+    DisableSubAllocationForSampled2DDepthTexture,
 
     // Unresolved issues.
     NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,

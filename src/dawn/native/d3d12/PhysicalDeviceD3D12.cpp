@@ -812,6 +812,12 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         }
     }
 
+    if (gpu_info::IsIntelXe2HPG(vendorId, deviceId) ||
+        gpu_info::IsIntelXe2LPG(vendorId, deviceId)) {
+        deviceToggles->Default(
+            Toggle::DisableSubAllocationFor2DTextureWithCopyDstOrRenderAttachment, true);
+    }
+
     if (gpu_info::IsNvidia(vendorId)) {
         deviceToggles->Default(Toggle::D3D12ForceStencilComponentReplicateSwizzle, true);
         deviceToggles->Default(Toggle::D3D12ExpandShaderResourceStateTransitionsToCopySource, true);

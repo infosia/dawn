@@ -54,12 +54,14 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::NonzeroClearResourcesOnCreationForTesting,
      {"nonzero_clear_resources_on_creation_for_testing",
       "Clears texture to full 1 bits as soon as they are created, but doesn't update the tracking "
-      "state of the texture. This way we can test the logic of clearing textures that use recycled "
+      "state of the texture. This way we can test the logic of clearing textures that use "
+      "recycled "
       "memory.",
       "https://crbug.com/dawn/145", ToggleStage::Device}},
     {Toggle::AlwaysResolveIntoZeroLevelAndLayer,
      {"always_resolve_into_zero_level_and_layer",
-      "When the resolve target is a texture view that is created on the non-zero level or layer of "
+      "When the resolve target is a texture view that is created on the non-zero level or layer "
+      "of "
       "a texture, we first resolve into a temporarily 2D texture with only one mipmap level and "
       "one array layer, and copy the result of MSAA resolve into the true resolve target. This "
       "workaround is enabled by default on the Metal drivers that have bugs when setting non-zero "
@@ -68,7 +70,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/dawn/56", ToggleStage::Device}},
     {Toggle::LazyClearResourceOnFirstUse,
      {"lazy_clear_resource_on_first_use",
-      "Clears resource to zero on first usage. This initializes the resource so that no dirty bits "
+      "Clears resource to zero on first usage. This initializes the resource so that no dirty "
+      "bits "
       "from recycled memory is present in the new resource.",
       "https://crbug.com/dawn/145", ToggleStage::Device}},
     {Toggle::DisableLazyClearForMappedAtCreationBuffer,
@@ -84,7 +87,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
      {"use_temporary_buffer_in_texture_to_texture_copy",
       "Split texture-to-texture copy into two copies: copy from source texture into a temporary "
       "buffer, and copy from the temporary buffer into the destination texture when copying "
-      "between compressed textures that don't have block-aligned sizes. This workaround is enabled "
+      "between compressed textures that don't have block-aligned sizes. This workaround is "
+      "enabled "
       "by default on all Vulkan drivers to solve an issue in the Vulkan SPEC about the "
       "texture-to-texture copies with compressed formats. See #1005 "
       "(https://github.com/KhronosGroup/Vulkan-Docs/issues/1005) for more details.",
@@ -103,7 +107,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::UseD3D12ResidencyManagement,
      {"use_d3d12_residency_management",
       "Enable residency management. This allows page-in and page-out of resource heaps in GPU "
-      "memory. This component improves overcommitted performance by keeping the most recently used "
+      "memory. This component improves overcommitted performance by keeping the most recently "
+      "used "
       "resources local to the GPU. Turning this component off can cause allocation failures when "
       "application memory exceeds physical device memory.",
       "https://crbug.com/dawn/193", ToggleStage::Device}},
@@ -124,7 +129,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::VulkanUseS8,
      {"vulkan_use_s8",
       "Vulkan has a pure stencil8 format but it is not universally available. When this toggle is "
-      "on, the backend will use S8 for the stencil8 format, otherwise it will fallback to D32S8 or "
+      "on, the backend will use S8 for the stencil8 format, otherwise it will fallback to D32S8 "
+      "or "
       "D24S8.",
       "https://crbug.com/dawn/666", ToggleStage::Device}},
     {Toggle::MetalDisableSamplerCompare,
@@ -197,7 +203,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/1161355", ToggleStage::Device}},
     {Toggle::EmitHLSLDebugSymbols,
      {"emit_hlsl_debug_symbols",
-      "Sets the D3DCOMPILE_SKIP_OPTIMIZATION and D3DCOMPILE_DEBUG compilation flags when compiling "
+      "Sets the D3DCOMPILE_SKIP_OPTIMIZATION and D3DCOMPILE_DEBUG compilation flags when "
+      "compiling "
       "HLSL code. Enables better shader debugging with external graphics debugging tools.",
       "https://crbug.com/dawn/776", ToggleStage::Device}},
     {Toggle::DisallowSpirv,
@@ -233,7 +240,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/dawn/1016", ToggleStage::Device}},
     {Toggle::UseUserDefinedLabelsInBackend,
      {"use_user_defined_labels_in_backend",
-      "Enables setting labels on backend-specific APIs that label objects. The labels used will be "
+      "Enables setting labels on backend-specific APIs that label objects. The labels used will "
+      "be "
       "those of the corresponding frontend objects if non-empty and default labels otherwise. "
       "Defaults to false unless backend validation is enabled in which case it defaults to true. "
       "NOTE: On Vulkan, backend labels are required to map errors back to the device with which "
@@ -241,7 +249,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/dawn/840", ToggleStage::Device}},
     {Toggle::UsePlaceholderFragmentInVertexOnlyPipeline,
      {"use_placeholder_fragment_in_vertex_only_pipeline",
-      "Use a placeholder empty fragment shader in vertex only render pipeline. This toggle must be "
+      "Use a placeholder empty fragment shader in vertex only render pipeline. This toggle must "
+      "be "
       "enabled for OpenGL ES backend, the Vulkan Backend, and serves as a workaround by default "
       "enabled on some Metal "
       "devices with Intel GPU to ensure the depth result is correct.",
@@ -264,7 +273,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       ToggleStage::Device}},
     {Toggle::TimestampQuantization,
      {"timestamp_quantization",
-      "Enable timestamp queries quantization to reduce the precision of timers that can be created "
+      "Enable timestamp queries quantization to reduce the precision of timers that can be "
+      "created "
       "with timestamp queries.",
       "https://crbug.com/dawn/1800", ToggleStage::Device}},
     {Toggle::ClearBufferBeforeResolveQueries,
@@ -279,19 +289,22 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/dawn/1302", ToggleStage::Device}},
     {Toggle::MetalRenderR8RG8UnormSmallMipToTempTexture,
      {"metal_render_r8_rg8_unorm_small_mip_to_temp_texture",
-      "Metal Intel devices have issues with r8unorm and rg8unorm textures where rendering to small "
+      "Metal Intel devices have issues with r8unorm and rg8unorm textures where rendering to "
+      "small "
       "mips (level >= 2) doesn't work correctly. Workaround this issue by detecting this case and "
       "rendering to a temporary texture instead (with copies before and after if needed).",
       "https://crbug.com/dawn/1071", ToggleStage::Device}},
     {Toggle::DisableBlobCache,
      {"disable_blob_cache",
-      "Disables usage of the blob cache (backed by the platform cache if set/passed). Prevents any "
+      "Disables usage of the blob cache (backed by the platform cache if set/passed). Prevents "
+      "any "
       "persistent caching capabilities, i.e. pipeline caching.",
       "https://crbug.com/dawn/549", ToggleStage::Device}},
     {Toggle::D3D12ForceClearCopyableDepthStencilTextureOnCreation,
      {"d3d12_force_clear_copyable_depth_stencil_texture_on_creation",
       "Always clearing copyable depth stencil textures when creating them instead of skipping the "
-      "initialization when the entire subresource is the copy destination as a workaround on Intel "
+      "initialization when the entire subresource is the copy destination as a workaround on "
+      "Intel "
       "D3D12 drivers.",
       "https://crbug.com/dawn/1487", ToggleStage::Device}},
     {Toggle::D3D12DontSetClearValueOnDepthTextureCreation,
@@ -320,7 +333,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/dawn/727", ToggleStage::Device}},
     {Toggle::D3D12UseTempBufferInTextureToTextureCopyBetweenDifferentDimensions,
      {"d3d12_use_temp_buffer_in_texture_to_texture_copy_between_different_dimensions",
-      "Use an intermediate temporary buffer when copying between textures of different dimensions. "
+      "Use an intermediate temporary buffer when copying between textures of different "
+      "dimensions. "
       "Force-enabled on D3D12 when the driver does not have the "
       "TextureCopyBetweenDimensionsSupported feature.",
       "https://crbug.com/dawn/1216", ToggleStage::Device}},
@@ -342,7 +356,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/dawn/1473", ToggleStage::Device}},
     {Toggle::MetalDisableTimestampPeriodEstimation,
      {"metal_disable_timestamp_period_estimation",
-      "Calling sampleTimestamps:gpuTimestamp: from MTLDevice to estimate timestamp period leads to "
+      "Calling sampleTimestamps:gpuTimestamp: from MTLDevice to estimate timestamp period leads "
+      "to "
       "GPU overheating on some specific Intel GPUs due to driver issue, such as Intel Iris "
       "Plus Graphics 655. Enable this workaround to skip timestamp period estimation and use a "
       "default value instead on the specific GPUs.",
@@ -444,7 +459,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/dawn/2079", ToggleStage::Device}},
     {Toggle::UseBlitForRG11B10UfloatTextureCopy,
      {"use_blit_for_rg11b10ufloat_texture_copy",
-      "Use a blit instead of a copy command to copy rg11b10ufloat texture to a texture or a buffer."
+      "Use a blit instead of a copy command to copy rg11b10ufloat texture to a texture or a "
+      "buffer."
       "Workaround for OpenGLES.",
       "https://crbug.com/381214487", ToggleStage::Device}},
     {Toggle::UseBlitForFloat16TextureCopy,
@@ -459,7 +475,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/381214487", ToggleStage::Device}},
     {Toggle::UseBlitForT2B,
      {"use_blit_for_t2b",
-      "Use a compute based blit instead of a copy command to copy texture with supported format to "
+      "Use a compute based blit instead of a copy command to copy texture with supported format "
+      "to "
       "a buffer.",
       "https://crbug.com/dawn/348654098", ToggleStage::Device}},
     {Toggle::UseBlitForB2T,
@@ -502,7 +519,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/chromium/1361662", ToggleStage::Device}},
     {Toggle::D3D12UseRootSignatureVersion1_1,
      {"d3d12_use_root_signature_version_1_1",
-      "Use D3D12 Root Signature Version 1.1 to make additional guarantees about the descriptors in "
+      "Use D3D12 Root Signature Version 1.1 to make additional guarantees about the descriptors "
+      "in "
       "a descriptor heap and the data pointed to by the descriptors so that the drivers can make "
       "better optimizations on them.",
       "https://crbug.com/tint/1890", ToggleStage::Device}},
@@ -582,7 +600,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::EnableImmediateErrorHandling,
      {"enable_immediate_error_handling",
       "Have the uncaptured error callback invoked immediately when an error occurs, rather than "
-      "waiting for the next Tick. This enables using the stack trace in which the uncaptured error "
+      "waiting for the next Tick. This enables using the stack trace in which the uncaptured "
+      "error "
       "occurred when breaking into the uncaptured error callback.",
       "https://crbug.com/dawn/1789", ToggleStage::Device}},
     {Toggle::VulkanUseStorageInputOutput16,
@@ -607,8 +626,10 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/341254292", ToggleStage::Device}},
     {Toggle::D3D12ExpandShaderResourceStateTransitionsToCopySource,
      {"d3d12_expand_shader_resource_state_transitions_to_copy_source",
-      "When transitioning to any shader resource states PIXEL or NON_PIXEL_SHADER_RESOURCE include "
-      "COPY_SOURCE too on Nvidia since the shader resource states seem to miss flushing all caches "
+      "When transitioning to any shader resource states PIXEL or NON_PIXEL_SHADER_RESOURCE "
+      "include "
+      "COPY_SOURCE too on Nvidia since the shader resource states seem to miss flushing all "
+      "caches "
       "and layout transitions causing rendering corruption.",
       "https://crbug.com/356905061", ToggleStage::Device}},
     {Toggle::GLDepthBiasModifier,
@@ -665,10 +686,16 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::UseSpirv14,
      {"use_spirv_1_4", "Use SPIR-V 1.4 if available", "https://crbug.com/422421915",
       ToggleStage::Device}},
+    {Toggle::DisableSubAllocationForSampled2DDepthTexture,
+     {"disable_sub_allocation_for_sampled_2d_depth_texture",
+      "Disable resource sub-allocation for 2D depth textures with SampledTexture usage. This "
+      "toggle is enabled as a workaround on Intel Xe2 GPUs.",
+      "https://crbug.com/1237175", ToggleStage::Device}},
     {Toggle::NoWorkaroundSampleMaskBecomesZeroForAllButLastColorTarget,
      {"no_workaround_sample_mask_becomes_zero_for_all_but_last_color_target",
       "MacOS 12.0+ Intel has a bug where the sample mask is only applied for the last color "
-      "target. If there are multiple color targets, all but the last one will use a sample mask "
+      "target. If there are multiple color targets, all but the last one will use a sample "
+      "mask "
       "of zero.",
       "https://crbug.com/dawn/1462", ToggleStage::Device}},
     {Toggle::NoWorkaroundIndirectBaseVertexNotApplied,
@@ -688,7 +715,8 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
       "https://crbug.com/chromium/329702368", ToggleStage::Device}},
     {Toggle::VulkanSkipDraw,
      {"vulkan_skip_draw",
-      "Some chrome tests run with swiftshader, they don't care about the pixel output. This toggle "
+      "Some chrome tests run with swiftshader, they don't care about the pixel output. This "
+      "toggle "
       "allows skipping expensive draw operations for them.",
       "https://crbug.com/chromium/331688266", ToggleStage::Device}},
     {Toggle::D3D11UseUnmonitoredFence,
@@ -701,13 +729,16 @@ static constexpr ToggleEnumAndInfoList kToggleNameAndInfoList = {{
     {Toggle::D3D11DelayFlushToGPU,
      {"d3d11_delay_flush_to_gpu",
       "When this toggle is enabled, Queue::Submit() might not flush the commands to GPU "
-      "immediately. A flush will happen when IDXGISwapChain::Present() is called or applications "
-      "use Instance.WaitAny() to wait for a GPU operation to finish. This toggle is intended to "
+      "immediately. A flush will happen when IDXGISwapChain::Present() is called or "
+      "applications "
+      "use Instance.WaitAny() to wait for a GPU operation to finish. This toggle is intended "
+      "to "
       "reduce the fixed overhead associated with each flushing.",
       "https://crbug.com/chromium/377716220", ToggleStage::Device}},
     {Toggle::IgnoreImportedAHardwareBufferVulkanImageSize,
      {"ignore_imported_ahardwarebuffer_vulkan_image_size",
-      "Don't validate the required VkImage size against the size of the AHardwareBuffer on import. "
+      "Don't validate the required VkImage size against the size of the AHardwareBuffer on "
+      "import. "
       "Some drivers report the wrong size.",
       "https://crbug.com/333424893", ToggleStage::Device}},
     // Comment to separate the }} so it is clearer what to copy-paste to add a toggle.
