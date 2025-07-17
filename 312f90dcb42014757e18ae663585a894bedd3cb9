@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "947fdcbd_757ba9d7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:47:37Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "312f90dcb42014757e18ae663585a894bedd3cb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a703f5eb_b8536204",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:47:37Z",
+      "side": 1,
+      "message": "```suggestion\n}\n\n// Test that SharedBufferMemory correctly handles EndAccess on a buffer that was destroyed\n```",
+      "range": {
+        "startLine": 130,
+        "startChar": 1,
+        "endLine": 131,
+        "endChar": 5
+      },
+      "revId": "312f90dcb42014757e18ae663585a894bedd3cb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
