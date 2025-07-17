@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12d59e40_be029741",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-17T20:41:58Z",
+      "side": 1,
+      "message": "I believe this broke the dawn-skia roll: https://skia-review.googlesource.com/c/skia/+/1021737\n\nHowever I don\u0027t want to revert immediately because that might be more painful. Please use your judgement",
+      "revId": "c5c16f115ce936af0fa05c94910f43ebedad7a6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
