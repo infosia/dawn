@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c2362ec_4dc9c858",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-17T01:58:06Z",
+      "side": 1,
+      "message": "PTAL. PS3 has the fix for the UBSAN issue.",
+      "revId": "8fc696f0127f2748f9835d3ef3129b9a90a23175",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
