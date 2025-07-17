@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aa9d2cb2_351b930f",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:27:45Z",
+      "side": 1,
+      "message": "Why did GL ES 3.0 come in the discussion? What\u0027s the difference between 3.0 and 3.1?",
+      "parentUuid": "a957b3a0_c2bffe72",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d645928f_082ff0a6",
         "filename": "src/dawn/native/opengl/TextureGL.cpp",
         "patchSetId": 7
