@@ -34,6 +34,24 @@
       "parentUuid": "8ecda11b_a8f2adb8",
       "revId": "21d0a742e116b1824d76b3d75dce30dc9a3e8285",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f3070a6_e1dd3c0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-17T05:51:48Z",
+      "side": 1,
+      "message": "Looking at `out/Default/gen/src/dawn/node/src/dawn/node/interop/WebGPU.h`, I see that `std::optional` is added for `textureBindingViewDimension` regardless of the `?` in the IDL file. That\u0027s why I\u0027ve removed it.\n\n```cpp\n// dictionary GPUTextureDescriptor\nclass GPUTextureDescriptor : public GPUObjectDescriptorBase {\npublic:\n...  \n  std::optional\u003cGPUTextureViewDimension\u003e textureBindingViewDimension;\n};\n```\n\nAlso, the proposal at https://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md#1-texture-view-dimension-may-be-specified says:\n\n```webidl\npartial dictionary GPUTextureDescriptor {\n    GPUTextureViewDimension textureBindingViewDimension;\n}\n```",
+      "parentUuid": "a8c78ea9_3528be67",
+      "revId": "21d0a742e116b1824d76b3d75dce30dc9a3e8285",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
