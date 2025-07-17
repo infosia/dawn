@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64be8072_6c6da1ba",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-17T03:10:47Z",
+      "side": 1,
+      "message": "Done\n\nI find both of them can work.",
+      "parentUuid": "2fb1f0aa_56441882",
+      "revId": "505b983feb0c77b7e6dd19c0e7c627812cd15ad3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68800e74_2926dce9",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-07-16T12:47:08Z",
       "side": 1,
       "message": "same question",
+      "revId": "505b983feb0c77b7e6dd19c0e7c627812cd15ad3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b840ee5_8cc26e0f",
+        "filename": "src/tint/lang/spirv/writer/raise/raise.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-17T03:10:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68800e74_2926dce9",
       "revId": "505b983feb0c77b7e6dd19c0e7c627812cd15ad3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
