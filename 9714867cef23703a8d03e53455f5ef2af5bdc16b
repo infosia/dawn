@@ -694,6 +694,24 @@
       "parentUuid": "d619c69d_212d2481",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1eee96a_4ae11048",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-17T00:56:15Z",
+      "side": 1,
+      "message": "Plan to fix it by making `buffer_size_start_offset` and `buffer_sizes_array_elements_num ` to `std::optional` first and make `immediate_data_config` empty(Assume in API side we detect no array_length usage and not pass buffer sizes at all) in these tests to remove these non used immediate block.",
+      "parentUuid": "854d3de1_82c9108e",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
