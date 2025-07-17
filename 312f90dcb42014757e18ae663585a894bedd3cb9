@@ -39,6 +39,30 @@
       },
       "revId": "312f90dcb42014757e18ae663585a894bedd3cb9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a95beec9_7d7690f9",
+        "filename": "src/dawn/tests/white_box/SharedBufferMemoryTests.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000861
+      },
+      "writtenOn": "2025-07-17T17:19:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a703f5eb_b8536204",
+      "range": {
+        "startLine": 130,
+        "startChar": 1,
+        "endLine": 131,
+        "endChar": 5
+      },
+      "revId": "312f90dcb42014757e18ae663585a894bedd3cb9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
