@@ -67,6 +67,23 @@
       "message": "Still looks good to me, thanks",
       "revId": "6c0543eaba28d4c0bb49af491a2248c415990f15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06581a2e_faebbb4d",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2080,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:19:41Z",
+      "side": 1,
+      "message": "Since we always use a swizzle in Vulkan we could unconditionally do the conversion.",
+      "revId": "6c0543eaba28d4c0bb49af491a2248c415990f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
