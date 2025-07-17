@@ -149,6 +149,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7e21e1ed_0b25d356",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-17T14:24:14Z",
+      "side": 1,
+      "message": "From the D3D11 functional spec\n\nhttps://microsoft.github.io/DirectX-Specs/d3d/archive/D3D11_3_FunctionalSpec.htm#:~:text\u003ddeclaration%20for%20Shaders.-,8.17%20PrimitiveID,-PrimitiveID%20is%20a\n\n\u003e PrimitiveID is a 32-bit unsigned integer scalar counter value ...\n\n\u003e Should the 32-bit PrimitiveID calculation overflow, it simply wraps.\n\nSo there\u0027s no copypasta there.  It\u0027s only a bug in the friendlier docs.",
+      "parentUuid": "77f71f29_b3dd2f93",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 17
+      },
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2c00ec43_55810f3c",
         "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
         "patchSetId": 4
