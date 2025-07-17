@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4ac67cb_f1d70ef7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T00:00:08Z",
+      "side": 1,
+      "message": "Note that we saw that this CL was also breaking dawn-\u003eg3 roll, but David was trying to get it to work forwards.",
+      "revId": "49224bde47921fe7b8d351081957712368e27703",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
