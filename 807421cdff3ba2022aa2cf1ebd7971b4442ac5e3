@@ -16,6 +16,23 @@
       "message": "@Corentin and @Loko, PTAL",
       "revId": "807421cdff3ba2022aa2cf1ebd7971b4442ac5e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a08b0d38_ea40c439",
+        "filename": "src/dawn/native/d3d12/PlatformFunctionsD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:45:29Z",
+      "side": 1,
+      "message": "This means that we cannot use DXC unless DAWN_USE_BUILT_DXC is set? That sounds fine to me.",
+      "revId": "807421cdff3ba2022aa2cf1ebd7971b4442ac5e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
