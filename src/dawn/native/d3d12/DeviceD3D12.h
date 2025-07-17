@@ -51,6 +51,7 @@ class ResidencyManager;
 class SamplerHeapCache;
 class ShaderVisibleDescriptorAllocator;
 class StagingDescriptorAllocator;
+class Texture;
 
 #define ASSERT_SUCCESS(hr)                 \
     do {                                   \
@@ -291,6 +292,8 @@ class Device final : public d3d::Device {
 
     // Shader profiles used for compiling shader with DXC
     PerStage<std::wstring> mDxcShaderProfiles;
+
+    Ref<Texture> mFakePresentTexture;
 };
 
 }  // namespace dawn::native::d3d12
