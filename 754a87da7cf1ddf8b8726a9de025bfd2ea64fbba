@@ -67,6 +67,23 @@
       "message": "Still looks good to me, thanks",
       "revId": "754a87da7cf1ddf8b8726a9de025bfd2ea64fbba",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1330800_d330c714",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:20:50Z",
+      "side": 1,
+      "message": "Same comment as for Vulkan.",
+      "revId": "754a87da7cf1ddf8b8726a9de025bfd2ea64fbba",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
