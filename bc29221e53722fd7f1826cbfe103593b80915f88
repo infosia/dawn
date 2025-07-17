@@ -33,6 +33,40 @@
       "message": "Please review",
       "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25068416_7306ac1f",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-17T05:59:06Z",
+      "side": 1,
+      "message": "If I get it right, `mFunctions.IsAtLeastGLES(3, 1)` will return true iif **using OpenGLES instead of OpenGL desktop** [1] and version \u003e GLES3.1.\n\nShould we also enable this feature on desktop OpenGL, since it is supported since OpenGL 3.3 [2]? Maybe something like\n```\nif (mFunctions.IsAtLeastGLES(3, 1) || mFunctions.IsAtLeastGL(3, 3)) {\n    EnableFeature(Feature::TextureComponentSwizzle);\n}\n```\n\nBy the way, [2] said OpenGL ES 3.0 supports texture swizzle?\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/OpenGLFunctions.cpp;l\u003d61\n[2]: https://www.g-truc.net/post-0734.html",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d645928f_082ff0a6",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-17T05:59:06Z",
+      "side": 1,
+      "message": "Since this `RequiresCreatingNewTextureView` function is called by `TextureView::Create` [1], I am not sure if we can use `TextureViewBase::UsesNonDefaultSwizzle()`.\n\nMaybe we have to somehow make a static method, e.g. `static bool TextureViewBase::UsesNonDefaultSwizzle(wgpu::ComponentSwizzle swizzle)`? I am not sure...\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/TextureGL.cpp;l\u003d625",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
