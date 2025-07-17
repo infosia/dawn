@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b54cab0_c24f1458",
+        "filename": "src/dawn/native/DeviceGuard.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-17T21:54:54Z",
+      "side": 1,
+      "message": "Non-blocking, but it would be nice if we can have two create functions instead of having this constructor determine which of two things to do based on its inputs.\n\nE.g. `DeviceGuard::Create{With,Without}Defer`",
+      "revId": "27ca9b693856cc9b6f62c5b12df5219deb1bbc32",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
