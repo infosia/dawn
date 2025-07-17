@@ -16,6 +16,24 @@
       "message": "We need to add to compat validation that the views match if we do this. +CC Stephen. But also this is not the correct spot for this since without texture views we need to apply swizzling at [draw time](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/CommandBufferGL.cpp;drc\u003d81e90f7fd7f313059f04559fd65cb99fe56b6641;l\u003d403) when we know which view is used. Please add a test with two different swizzles of the same view that are used in the same render pass as it would highlight that issue.",
       "revId": "9afe457f70eadfc154209462d6d087d602b6518e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9446749a_122f6c6f",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-17T12:12:32Z",
+      "side": 1,
+      "message": "Since createView() takes a swizzle descriptor, how can you have two different swizzles of the same view? Did you mean two views with different swizzles from the same texture?",
+      "parentUuid": "d0467837_a549717d",
+      "revId": "9afe457f70eadfc154209462d6d087d602b6518e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
