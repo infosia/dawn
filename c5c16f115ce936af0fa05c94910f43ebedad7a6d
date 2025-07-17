@@ -16,6 +16,24 @@
       "message": "I believe this broke the dawn-skia roll: https://skia-review.googlesource.com/c/skia/+/1021737\n\nHowever I don\u0027t want to revert immediately because that might be more painful. Please use your judgement",
       "revId": "c5c16f115ce936af0fa05c94910f43ebedad7a6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95831b4b_b75304d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-17T21:17:08Z",
+      "side": 1,
+      "message": "Example logs:\nhttps://logs.chromium.org/logs/skia/723034e2ad951b11/+/steps/ninja/0/stdout\nI think this should be reproducible by building skia (or chrome?) locally on any platform with an updated dawn dep.\n\n```\nld.lld: error: undefined symbol: absl::hash_internal::LowLevelHashLenGt16(void const*, unsigned long, unsigned long, unsigned long const*)\n\u003e\u003e\u003e referenced by hash.cc:64 (../../../../../../skia/third_party/externals/abseil-cpp/absl/hash/internal/hash.cc:64)\n\u003e\u003e\u003e               hash.hash.o:(absl::hash_internal::MixingHashState::CombineLargeContiguousImpl64(unsigned long, unsigned char const*, unsigned long)) in archive libskia.a\n\u003e\u003e\u003e referenced by hash.cc:64 (../../../../../../skia/third_party/externals/abseil-cpp/absl/hash/internal/hash.cc:64)\n\u003e\u003e\u003e               hash.hash.o:(absl::hash_internal::MixingHashState::LowLevelHashImpl(unsigned char const*, unsigned long)) in archive libskia.a\n\u003e\u003e\u003e referenced by hash.cc:64 (../../../../../../skia/third_party/externals/abseil-cpp/absl/hash/internal/hash.cc:64)\n\u003e\u003e\u003e               hash.hash.o:(absl::hash_internal::MixingHashState::CombineContiguousImpl(unsigned long, unsigned char const*, unsigned long, std::integral_constant\u003cint, 8\u003e)) in archive libskia.a\n```",
+      "parentUuid": "12d59e40_be029741",
+      "revId": "c5c16f115ce936af0fa05c94910f43ebedad7a6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
