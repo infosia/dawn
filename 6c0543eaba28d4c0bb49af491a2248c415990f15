@@ -84,6 +84,24 @@
       "message": "Since we always use a swizzle in Vulkan we could unconditionally do the conversion.",
       "revId": "6c0543eaba28d4c0bb49af491a2248c415990f15",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "292d793b_02833c5c",
+        "filename": "src/dawn/native/vulkan/TextureVk.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2080,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-17T09:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06581a2e_faebbb4d",
+      "revId": "6c0543eaba28d4c0bb49af491a2248c415990f15",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
