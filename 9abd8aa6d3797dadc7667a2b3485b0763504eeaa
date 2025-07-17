@@ -16,6 +16,305 @@
       "message": "PTAL, thanks!",
       "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b8330f3_680ab848",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "nit. Duplicate comment.",
+      "range": {
+        "startLine": 232,
+        "startChar": 12,
+        "endLine": 232,
+        "endChar": 68
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a6832cf_007fd46b",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "nit. Fold into `wgpu::TextureFormat::R16Unorm` case",
+      "range": {
+        "startLine": 233,
+        "startChar": 12,
+        "endLine": 233,
+        "endChar": 46
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79b13650_9af26f21",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "nit. Fold into `wgpu::TextureFormat::RGBA16Unorm` case",
+      "range": {
+        "startLine": 239,
+        "startChar": 12,
+        "endLine": 239,
+        "endChar": 47
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e32f0c1f_a552213a",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "nit. Fold into `case wgpu::TextureFormat::R16Snorm` case",
+      "range": {
+        "startLine": 246,
+        "startChar": 12,
+        "endLine": 246,
+        "endChar": 46
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44c9beaf_1861f4db",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "nit. Fold into `wgpu::TextureFormat::RG16Snorm` case",
+      "range": {
+        "startLine": 252,
+        "startChar": 12,
+        "endLine": 252,
+        "endChar": 47
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2da581d_93b7dd5b",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "nit. Duplicate comment.",
+      "range": {
+        "startLine": 300,
+        "startChar": 12,
+        "endLine": 300,
+        "endChar": 67
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd0a711b_95ded708",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "nit. Fold into `wgpu::TextureFormat::R8Unorm` case",
+      "range": {
+        "startLine": 301,
+        "startChar": 12,
+        "endLine": 301,
+        "endChar": 44
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14409858_e5704909",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "nit. Fold into `wgpu::TextureFormat::RG8Unorm` case",
+      "range": {
+        "startLine": 307,
+        "startChar": 12,
+        "endLine": 307,
+        "endChar": 45
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c22070d3_f251bca0",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "nit. Fold into `wgpu::TextureFormat::R8Snorm` case",
+      "range": {
+        "startLine": 314,
+        "startChar": 12,
+        "endLine": 314,
+        "endChar": 44
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5d9611f2_4459f995",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "nit. Fold into `wgpu::TextureFormat::RG8Snorm` case",
+      "range": {
+        "startLine": 320,
+        "startChar": 12,
+        "endLine": 320,
+        "endChar": 45
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad9dd3c7_91d76688",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "```\ncase wgpu::TextureFormat::R8Uint:\ncase wgpu::TextureFormat::R16Uint:\ncase wgpu::TextureFormat::R32Uint:\n    return \"vec4u(u32(value), 0u, 0u, 1u)\";\ncase wgpu::TextureFormat::RG8Uint:\ncase wgpu::TextureFormat::RG16Uint:\ncase wgpu::TextureFormat::RG32Uint\n    return \"vec4u(u32(value), u32(value) * 2u, 0u, 1u)\";\n```",
+      "range": {
+        "startLine": 385,
+        "startChar": 12,
+        "endLine": 404,
+        "endChar": 68
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f252ff3_15c3f642",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "```\ncase wgpu::TextureFormat::R8Sint:\ncase wgpu::TextureFormat::R16Sint:\ncase wgpu::TextureFormat::R32Sint:\n    return \"vec4i(i32(value), 0, 0, 1)\";\ncase wgpu::TextureFormat::RG8Sint:\ncase wgpu::TextureFormat::RG16Sint:\ncase wgpu::TextureFormat::RG32Sint:\n    return \"vec4i(i32(value), -i32(value), 0, 1)\";\n```",
+      "range": {
+        "startLine": 413,
+        "startChar": 12,
+        "endLine": 429,
+        "endChar": 62
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d14f6da4_e4c7e635",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 2091,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T18:39:01Z",
+      "side": 1,
+      "message": "I think that you should just use `kTier1AdditionalStorageFormats` instead of introducing `kTier1AdditionalStorageFormatsTemp`, and add an explicit `if (format \u003d\u003d wgpu::TextureFormat::RG11B10Ufloat) { continue; }` line in the for loop. Also, please add a `SCOPED_TRACE` in the for loop with the format name.",
+      "range": {
+        "startLine": 2091,
+        "startChar": 4,
+        "endLine": 2091,
+        "endChar": 82
+      },
+      "revId": "9abd8aa6d3797dadc7667a2b3485b0763504eeaa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
