@@ -32,12 +32,13 @@
 
 #include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/ObjectWGPU.h"
+#include "dawn/native/webgpu/RecordPlaybackManager.h"
 
 namespace dawn::native::webgpu {
 
 class Device;
 
-class Buffer final : public BufferBase, public ObjectWGPU<WGPUBuffer> {
+class Buffer final : public BufferBase, public ObjectWGPU<WGPUBuffer>, public CapturedObject {
   public:
     static ResultOrError<Ref<Buffer>> Create(Device* device,
                                              const UnpackedPtr<BufferDescriptor>& descriptor);

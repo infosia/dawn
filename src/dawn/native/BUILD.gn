@@ -726,6 +726,8 @@ source_set("sources") {
       "webgpu/PhysicalDeviceWGPU.h",
       "webgpu/QueueWGPU.cpp",
       "webgpu/QueueWGPU.h",
+      "webgpu/RecordPlaybackManager.cpp",
+      "webgpu/RecordPlaybackManager.h",
       "webgpu/WebGPUError.h",
     ]
   }

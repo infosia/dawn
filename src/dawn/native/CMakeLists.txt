@@ -588,6 +588,7 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
         "webgpu/ObjectWGPU.h"
         "webgpu/PhysicalDeviceWGPU.h"
         "webgpu/QueueWGPU.h"
+        "webgpu/RecordPlaybackManager.h"
         "webgpu/WebGPUError.h"
     )
     list(APPEND sources
@@ -597,6 +598,7 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
         "webgpu/DeviceWGPU.cpp"
         "webgpu/PhysicalDeviceWGPU.cpp"
         "webgpu/QueueWGPU.cpp"
+        "webgpu/RecordPlaybackManager.cpp"
     )
 endif()
 
