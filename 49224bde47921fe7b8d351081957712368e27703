@@ -33,6 +33,24 @@
       "message": "Oh so Skia is not always using the same Windows SDK as Chromium?",
       "revId": "49224bde47921fe7b8d351081957712368e27703",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79f2e445_3e3dbb5c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-17T01:23:11Z",
+      "side": 1,
+      "message": "Apparently not. I didn\u0027t look into it, I only saw that it was failing to compile.",
+      "parentUuid": "772de195_1f7a06b8",
+      "revId": "49224bde47921fe7b8d351081957712368e27703",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
