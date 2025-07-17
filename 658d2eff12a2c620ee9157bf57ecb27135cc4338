@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9feeca33_2abdc62a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-17T19:24:28Z",
+      "side": 1,
+      "message": "PTAL! I make no claims that this is a great thread pool, but I do feel confident it should be better for an environment with a lot of async tasks than \"new std::thread for each task\". 😊",
+      "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
