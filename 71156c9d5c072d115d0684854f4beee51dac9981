@@ -479,6 +479,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "27f1ad58_10748a94",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-17T09:22:44Z",
+      "side": 1,
+      "message": "\u003e We shouldn\u0027t do resource transitions here as it should already be done in [1] or [4].\n\nI think [4] only correctly assigns `D3D12_RESOURCE_STATE_RESOLVE_DEST` when D3D12 render pass is [not used](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/CommandBufferD3D12.cpp;drc\u003dfd85c972694b3c1b6680052c35acf7d194471838;l\u003d1789). When the render pass is used, it is currently relying on the transition done before `BeginRenderPass`. I think we should remove the transition here, and move it to [this place](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/CommandBufferD3D12.cpp;drc\u003dfd85c972694b3c1b6680052c35acf7d194471838;l\u003d1788) where the `ID3D12CommandList::EndRenderPass` is called.",
+      "parentUuid": "6bea8e1d_b0531579",
+      "range": {
+        "startLine": 1410,
+        "startChar": 36,
+        "endLine": 1410,
+        "endChar": 69
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0767450c_5680b469",
         "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.h",
         "patchSetId": 1
