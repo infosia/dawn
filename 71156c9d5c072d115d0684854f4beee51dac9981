@@ -431,6 +431,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1f25beb5_220db6ea",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:43:09Z",
+      "side": 1,
+      "message": "We shouldn\u0027t do resource transitions here as it should already be done in [1] or [4].\n\nAlso the resolving is done at [2] then [3] that has the correct resource transition at [4].",
+      "parentUuid": "61ecffe4_d7e0e1b1",
+      "range": {
+        "startLine": 1410,
+        "startChar": 36,
+        "endLine": 1410,
+        "endChar": 69
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0767450c_5680b469",
         "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.h",
         "patchSetId": 1

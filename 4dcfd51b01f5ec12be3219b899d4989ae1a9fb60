@@ -16,6 +16,137 @@
       "message": "Updated, PTAL",
       "revId": "4dcfd51b01f5ec12be3219b899d4989ae1a9fb60",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e0de74e_1d73a714",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:43:09Z",
+      "side": 1,
+      "message": "How is the constructor with parameter in any order easier to read than for example a designated initializer?",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 39
+      },
+      "revId": "4dcfd51b01f5ec12be3219b899d4989ae1a9fb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9658098_c48075f7",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:43:09Z",
+      "side": 1,
+      "message": "```suggestion\n    bool HasValue();\n```\n\nAnd the implementation can go in the .cpp.",
+      "revId": "4dcfd51b01f5ec12be3219b899d4989ae1a9fb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d9cd562_ff094aa9",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:43:09Z",
+      "side": 1,
+      "message": "All backends can resolve, the exact capability is more `CanResolveSubRect` here.",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 37
+      },
+      "revId": "4dcfd51b01f5ec12be3219b899d4989ae1a9fb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cd6e30d1_7ee11f5d",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:43:09Z",
+      "side": 1,
+      "message": "[3]",
+      "revId": "4dcfd51b01f5ec12be3219b899d4989ae1a9fb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdb79196_67a589a5",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:43:09Z",
+      "side": 1,
+      "message": "[4]",
+      "revId": "4dcfd51b01f5ec12be3219b899d4989ae1a9fb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b09fc8c7_27f70afe",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:43:09Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "4dcfd51b01f5ec12be3219b899d4989ae1a9fb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2623b00a_9d18c76b",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1809,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:43:09Z",
+      "side": 1,
+      "message": "[2]",
+      "revId": "4dcfd51b01f5ec12be3219b899d4989ae1a9fb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
