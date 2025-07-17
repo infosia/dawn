@@ -64,6 +64,9 @@
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 
+#include "renderdoc_app.h"
+#include <iostream>
+
 namespace dawn::native::d3d12 {
 namespace {
 // TODO(dawn:155): Figure out these values.
@@ -74,6 +77,27 @@ static constexpr uint8_t kAttachmentDescriptorHeapSize = 64;
 static constexpr uint64_t kZeroBufferSize = 1024 * 1024 * 4;  // 4 Mb
 
 static constexpr uint64_t kMaxDebugMessagesToPrint = 5;
+
+RENDERDOC_API_1_1_2* GetRenderDocAPI()
+{
+    static RENDERDOC_API_1_1_2 *rdoc_api = NULL;
+    if (rdoc_api) {
+        return rdoc_api;
+    }
+
+    // At init, on windows
+    if(HMODULE mod = GetModuleHandleA("renderdoc.dll"))
+    {
+        pRENDERDOC_GetAPI RENDERDOC_GetAPI =
+            (pRENDERDOC_GetAPI)GetProcAddress(mod, "RENDERDOC_GetAPI");
+        int ret = RENDERDOC_GetAPI(eRENDERDOC_API_Version_1_1_2, (void **)&rdoc_api);
+        assert(ret == 1);
+        (void)ret;
+    }
+
+    return rdoc_api;
+}
+
 }  // namespace
 
 // static
@@ -89,6 +113,12 @@ ResultOrError<Ref<Device>> Device::Create(AdapterBase* adapter,
 
 MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     mD3d12Device = ToBackend(GetPhysicalDevice())->GetDevice();
+
+    auto rdoc = GetRenderDocAPI();
+    if (rdoc) {
+        std::cerr << "Starting frame capture" << std::endl;
+        rdoc->StartFrameCapture(mD3d12Device.Get(), nullptr);
+    }
 
     // Querying for the ID3D12DebugDevice interface will tell us whether the debug layer
     // is enabled. The debug layer can be enabled internally via command line flags or externally
@@ -198,6 +228,19 @@ MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
     }
 
     DAWN_TRY(CreateZeroBuffer());
+
+    TextureDescriptor textureDescriptor;
+    textureDescriptor.size = {1, 1, 1};
+    textureDescriptor.usage = wgpu::TextureUsage::RenderAttachment;
+    textureDescriptor.format = wgpu::TextureFormat::RGBA8Unorm;
+    Ref<TextureBase> fakeTextureBase;
+    DAWN_TRY_ASSIGN(fakeTextureBase, CreateTexture(&textureDescriptor));
+
+    mFakePresentTexture = ToBackend(fakeTextureBase);
+    mFakePresentTexture->SetIsSwapchainTexture(true);
+    if (!rdoc) {
+        mFakePresentTexture->NotifySwapChainPresentToPIX();
+    }
 
     SetLabelImpl();
 
@@ -729,6 +772,16 @@ void Device::AppendDeviceLostMessage(ErrorData* error) {
 }
 
 void Device::DestroyImpl() {
+
+    auto rdoc = GetRenderDocAPI();
+    if (!rdoc) {
+        mFakePresentTexture->NotifySwapChainPresentToPIX();
+    } else {
+        std::cerr << "Ending frame capture" << std::endl;
+        rdoc->EndFrameCapture(mD3d12Device.Get(), nullptr);
+    }
+    mFakePresentTexture = nullptr;
+
     DAWN_ASSERT(GetState() == State::Disconnected);
 
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
