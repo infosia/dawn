@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c902b051_ee80ee2c",
+        "filename": "src/dawn/native/DeviceGuard.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-17T00:54:42Z",
+      "side": 1,
+      "message": "nit: Maybe we could just choose to construct a null DeviceGuard if this is null? I think it would avoid needing the NoDestructor.",
+      "range": {
+        "startLine": 54,
+        "startChar": 56,
+        "endLine": 54,
+        "endChar": 70
+      },
+      "revId": "32404e9d927b358e6c138ce10fb4eaf1c41f5673",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
