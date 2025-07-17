@@ -16,6 +16,24 @@
       "message": "Why is this option removed?",
       "revId": "084bc110c7e8730903079bee185314fb26c0f1e2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80f60226_ed9db8ae",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-17T08:05:29Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "9bb968e9_e7f99480",
+      "revId": "084bc110c7e8730903079bee185314fb26c0f1e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
