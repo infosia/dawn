@@ -22,6 +22,30 @@
       },
       "revId": "20dbe69c31d2e38ca9fdaf40159d4a1d8ded4404",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7467df53_5ff14ba4",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-17T21:44:52Z",
+      "side": 0,
+      "message": "Skia does not use it. But apparently I never finished making the Chromium CL for this? So gotta do that first.",
+      "parentUuid": "d99e0a5b_25f99619",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 54
+      },
+      "revId": "20dbe69c31d2e38ca9fdaf40159d4a1d8ded4404",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
