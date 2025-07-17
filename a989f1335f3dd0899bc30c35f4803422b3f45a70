@@ -39,6 +39,30 @@
       },
       "revId": "a989f1335f3dd0899bc30c35f4803422b3f45a70",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64a41924_6abc455b",
+        "filename": "infra/config/global/main.star",
+        "patchSetId": 3
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-17T00:08:03Z",
+      "side": 1,
+      "message": "OK, wasn\u0027t sure, couldn\u0027t tell if `notifies` applied to both.",
+      "parentUuid": "ffda15c6_b0726793",
+      "range": {
+        "startLine": 406,
+        "startChar": 3,
+        "endLine": 407,
+        "endChar": 57
+      },
+      "revId": "a989f1335f3dd0899bc30c35f4803422b3f45a70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

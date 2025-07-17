@@ -69,6 +69,24 @@
       "parentUuid": "7fa31af0_a341a37f",
       "revId": "e07a4a051d7d17557a2e1437c3bf5bd5b00d8f22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "419c6f90_23e0c1d6",
+        "filename": "infra/config/global/generated/cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-17T00:08:03Z",
+      "side": 1,
+      "message": "Oh, I thought I checked that but you\u0027re right. Actually, `properties_ci` changes the `properties_j` entries and `shadow_properties_ci` changes the `buckets` entries.\n\nThis is a bit odd because it\u0027s the opposite of ANGLE. But actually I noticed ANGLE doesn\u0027t have `properties_j` at all, so maybe it\u0027s fine?",
+      "parentUuid": "e9695789_a416af28",
+      "revId": "e07a4a051d7d17557a2e1437c3bf5bd5b00d8f22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
