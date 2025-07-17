@@ -35,11 +35,12 @@
 #include "dawn/native/ToBackend.h"
 #include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/ObjectWGPU.h"
+#include "dawn/native/webgpu/RecordPlaybackManager.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native::webgpu {
 
-class Device final : public DeviceBase, public ObjectWGPU<WGPUDevice> {
+class Device final : public DeviceBase, public ObjectWGPU<WGPUDevice>, public CapturedObject {
   public:
     static ResultOrError<Ref<Device>> Create(AdapterBase* adapter,
                                              WGPUAdapter innerAdapter,

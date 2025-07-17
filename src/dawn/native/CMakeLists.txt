@@ -588,6 +588,7 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
         "webgpu/ObjectWGPU.h"
         "webgpu/PhysicalDeviceWGPU.h"
         "webgpu/QueueWGPU.h"
+        "webgpu/RecordPlaybackManager.h"
         "webgpu/WebGPUError.h"
     )
     list(APPEND sources
@@ -597,12 +598,13 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
         "webgpu/DeviceWGPU.cpp"
         "webgpu/PhysicalDeviceWGPU.cpp"
         "webgpu/QueueWGPU.cpp"
+        "webgpu/RecordPlaybackManager.cpp"
     )
     if (DAWN_ENABLE_RECORD_PLAYBACK)
         # protobuf_generate(
         #     TARGET dawn_webgpu_cmd_proto
         #     PROTOS "webgpu/protos/cmd.proto"
-        #     PROTOC_OUT_DIR "${DAWN_BUILD_GEN_DIR}"
+        #     PROTOC_OUT_DIR "${DAWN_BUILD_GEN_DIR}/src/dawn/proto/"
         # )
         # target_link_libraries(dawn_native PUBLIC
         #     dawn_webgpu_cmd_proto
