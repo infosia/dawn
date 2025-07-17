@@ -503,6 +503,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "289eda9d_94050973",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-17T09:26:11Z",
+      "side": 1,
+      "message": "anw, the D3D validation layer not catching this seems to be problematic. Since CQ relies on the validation layer to catch these transition errors but for some reasons, it didn\u0027t work reliably.",
+      "parentUuid": "27f1ad58_10748a94",
+      "range": {
+        "startLine": 1410,
+        "startChar": 36,
+        "endLine": 1410,
+        "endChar": 69
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0767450c_5680b469",
         "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.h",
         "patchSetId": 1
