@@ -891,6 +891,12 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) c
         // Report highest supported shader model version, instead of actual applied version.
         d3dProperties->shaderModel = GetDeviceInfo().highestSupportedShaderModel;
     }
+
+    if (auto* archProps = info.Get<DawnAdapterPropertiesArchitectureInfo>()) {
+        archProps->rendererType = GetDeviceInfo().isTileBasedRenderer
+                                      ? wgpu::RendererType::TileBased
+                                      : wgpu::RendererType::ImmediateMode;
+    }
 }
 
 }  // namespace dawn::native::d3d12

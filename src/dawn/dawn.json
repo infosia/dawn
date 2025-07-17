@@ -2708,6 +2708,14 @@
             {"value": 2, "name": "high performance"}
         ]
     },
+    "renderer type": {
+        "category": "enum",
+        "values": [
+            {"value": 0, "name": "undefined", "jsrepr": "undefined"},
+            {"value": 1, "name": "tile based"},
+            {"value": 2, "name": "immediate mode"}
+        ]
+    },
     "present mode": {
         "category": "enum",
         "emscripten_no_enum_table": true,
@@ -3899,7 +3907,8 @@
             {"value": 70, "name": "dawn fake device initialize error for testing", "tags": ["dawn"]},
             {"value": 71, "name": "texture component swizzle descriptor", "tags": ["dawn"]},
             {"value": 72, "name": "shared texture memory D3D11 begin state", "tags": ["dawn", "native"]},
-            {"value": 73, "name": "dawn consume adapter descriptor", "tags": ["dawn"]}
+            {"value": 73, "name": "dawn consume adapter descriptor", "tags": ["dawn"]},
+            {"value": 74, "name": "dawn adapter properties architecture info", "tags": ["dawn", "native"]}
         ]
     },
     "texture": {
@@ -4449,6 +4458,15 @@
         "tags": ["dawn"],
         "members": [
             {"name": "power preference", "type": "power preference"}
+        ]
+    },
+    "dawn adapter properties architecture info": {
+        "category": "structure",
+        "chained": "out",
+        "chain roots": ["adapter info"],
+        "tags": ["dawn"],
+        "members": [
+            {"name": "renderer type", "type": "renderer type", "default": "undefined"}
         ]
     },
     "heap property": {

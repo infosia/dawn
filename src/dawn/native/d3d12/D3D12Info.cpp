@@ -51,6 +51,7 @@ ResultOrError<D3D12DeviceInfo> GatherDeviceInfo(const PhysicalDevice& physicalDe
 
     info.isUMA = arch.UMA;
     info.isCacheCoherentUMA = arch.CacheCoherentUMA;
+    info.isTileBasedRenderer = arch.TileBasedRenderer;
 
     D3D12_FEATURE_DATA_D3D12_OPTIONS featureOptions = {};
     DAWN_TRY(CheckHRESULT(physicalDevice.GetDevice()->CheckFeatureSupport(

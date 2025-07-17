@@ -99,6 +99,13 @@ int CompareIntelMesaDriverVersion(const DriverVersion& version1, const DriverVer
     return 0;
 }
 
+bool IsTileBasedRenderer(PCIVendorID vendorId, PCIDeviceID) {
+    // deviceId is unused for now but could be changed in future
+    return IsARM(vendorId) || IsImgTec(vendorId) || IsQualcomm_PCI(vendorId) ||
+           IsQualcomm_ACPI(vendorId) || IsBroadcom(vendorId) || IsApple(vendorId) ||
+           IsHuawei(vendorId);
+}
+
 // Intel GPUs
 bool IsSkylake(PCIDeviceID deviceId) {
     return (deviceId & 0xFF00) == 0x1900;

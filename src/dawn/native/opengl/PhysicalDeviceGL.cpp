@@ -565,6 +565,12 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
     return {};
 }
 
-void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {}
+void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) const {
+    if (auto* archProps = info.Get<DawnAdapterPropertiesArchitectureInfo>()) {
+        archProps->rendererType = gpu_info::IsTileBasedRenderer(GetVendorId(), GetDeviceId())
+                                      ? wgpu::RendererType::TileBased
+                                      : wgpu::RendererType::ImmediateMode;
+    }
+}
 
 }  // namespace dawn::native::opengl
