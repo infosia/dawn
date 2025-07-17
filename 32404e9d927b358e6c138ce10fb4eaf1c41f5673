@@ -22,6 +22,30 @@
       },
       "revId": "32404e9d927b358e6c138ce10fb4eaf1c41f5673",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e92700c_8f591ace",
+        "filename": "src/dawn/native/DeviceGuard.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T17:45:44Z",
+      "side": 1,
+      "message": "Changed it to be a lot simpler since it was failing for some reason the other way anyways.",
+      "parentUuid": "c902b051_ee80ee2c",
+      "range": {
+        "startLine": 54,
+        "startChar": 56,
+        "endLine": 54,
+        "endChar": 70
+      },
+      "revId": "32404e9d927b358e6c138ce10fb4eaf1c41f5673",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
