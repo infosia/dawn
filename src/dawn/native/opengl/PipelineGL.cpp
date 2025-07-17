@@ -55,9 +55,6 @@ PipelineGL::~PipelineGL() = default;
 MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
                                       const PipelineLayout* layout,
                                       const PerStage<ProgrammableStage>& stages,
-                                      bool usesVertexIndex,
-                                      bool usesInstanceIndex,
-                                      bool usesFragDepth,
                                       VertexAttributeMask bgraSwizzleAttributes) {
     mProgram = DAWN_GL_TRY(gl, CreateProgram());
 
@@ -78,8 +75,7 @@ MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
         bool needsSSBOLengthUniformBuffer = false;
         std::vector<CombinedSampler> stageCombinedSamplers;
         GLuint shader;
-        DAWN_TRY_ASSIGN(shader, module->CompileShader(gl, stages[stage], stage, usesVertexIndex,
-                                                      usesInstanceIndex, usesFragDepth,
+        DAWN_TRY_ASSIGN(shader, module->CompileShader(gl, stages[stage], stage,
                                                       bgraSwizzleAttributes, &stageCombinedSamplers,
                                                       layout, &mBindingPointEmulatedBuiltins,
                                                       &needsSSBOLengthUniformBuffer));

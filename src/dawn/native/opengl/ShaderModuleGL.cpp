@@ -438,9 +438,6 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
     const OpenGLFunctions& gl,
     const ProgrammableStage& programmableStage,
     SingleShaderStage stage,
-    bool usesVertexIndex,
-    bool usesInstanceIndex,
-    bool usesFragDepth,
     VertexAttributeMask bgraSwizzleAttributes,
     std::vector<CombinedSampler>* combinedSamplersOut,
     const PipelineLayout* layout,
@@ -517,16 +514,16 @@ ResultOrError<GLuint> ShaderModule::CompileShader(
 
     req.tintOptions.disable_robustness = false;
 
-    if (usesVertexIndex) {
+    if (entryPointMetaData.usesVertexIndex) {
         req.tintOptions.first_vertex_offset = 4 * PipelineLayout::ImmediateLocation::FirstVertex;
     }
 
-    if (usesInstanceIndex) {
+    if (entryPointMetaData.usesInstanceIndex) {
         req.tintOptions.first_instance_offset =
             4 * PipelineLayout::ImmediateLocation::FirstInstance;
     }
 
-    if (usesFragDepth) {
+    if (entryPointMetaData.usesFragDepth) {
         req.tintOptions.depth_range_offsets = {4 * PipelineLayout::ImmediateLocation::MinDepth,
                                                4 * PipelineLayout::ImmediateLocation::MaxDepth};
     }

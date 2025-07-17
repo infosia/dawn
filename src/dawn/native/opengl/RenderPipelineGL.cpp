@@ -228,7 +228,6 @@ MaybeError RenderPipeline::InitializeImpl() {
     }
 
     DAWN_TRY(InitializeBase(ToBackend(GetDevice())->GetGL(), ToBackend(GetLayout()), GetAllStages(),
-                            UsesVertexIndex(), UsesInstanceIndex(), UsesFragDepth(),
                             bgraSwizzleAttributes));
     DAWN_TRY(CreateVAOForVertexState());
     return {};

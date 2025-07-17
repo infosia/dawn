@@ -47,8 +47,7 @@ void ComputePipeline::DestroyImpl() {
 
 MaybeError ComputePipeline::InitializeImpl() {
     return InitializeBase(ToBackend(GetDevice())->GetGL(), ToBackend(GetLayout()), GetAllStages(),
-                          /* usesVertexIndex */ false, /* usesInstanceIndex */ false,
-                          /* usesFragDepth */ false, /* bgraSwizzleAttributes */ {});
+                          /* bgraSwizzleAttributes */ {});
 }
 
 MaybeError ComputePipeline::ApplyNow() {
