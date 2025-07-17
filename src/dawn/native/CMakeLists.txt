@@ -598,6 +598,29 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
         "webgpu/PhysicalDeviceWGPU.cpp"
         "webgpu/QueueWGPU.cpp"
     )
+    if (DAWN_ENABLE_RECORD_PLAYBACK)
+        # protobuf_generate(
+        #     TARGET dawn_webgpu_cmd_proto
+        #     PROTOS "webgpu/protos/cmd.proto"
+        #     PROTOC_OUT_DIR "${DAWN_BUILD_GEN_DIR}"
+        # )
+        # target_link_libraries(dawn_native PUBLIC
+        #     dawn_webgpu_cmd_proto
+        #     libprotobuf
+        # )
+        # list(APPEND DAWN_PROTO_TARGETS "webgpu/protos/cmd.proto")
+        list(APPEND DAWN_PROTO_TARGETS dawn_native)
+        foreach(PROTO_TARGET ${DAWN_PROTO_TARGETS})
+            generate_protos(
+                TARGET ${PROTO_TARGET}
+                # IMPORT_DIRS "${DAWN_SOURCE_DIR}"
+                IMPORT_DIRS "webgpu/protos/"
+                PROTOC_OUT_DIR "${DAWN_BUILD_GEN_DIR}")
+            target_include_directories(${PROTO_TARGET} PRIVATE "${DAWN_BUILD_GEN_DIR}/src/dawn/")
+            target_include_directories(${PROTO_TARGET} PUBLIC "${DAWN_BUILD_GEN_DIR}")
+            target_link_libraries(${PROTO_TARGET} PUBLIC libprotobuf)
+        endforeach()
+    endif()
 endif()
 
 if ((DAWN_ENABLE_OPENGL OR DAWN_ENABLE_VULKAN) AND DAWN_ENABLE_SPIRV_VALIDATION)
