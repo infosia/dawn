@@ -69,6 +69,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "722a84bc_0d799751",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-17T08:14:41Z",
+      "side": 1,
+      "message": "Good idea, thank you! Acknowledged",
+      "parentUuid": "2d05a4ae_3dbb61ad",
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6a8ce667_83a6991a",
@@ -157,6 +175,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfd21d45_5fa4beb7",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1487,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-17T08:14:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "aede5bc5_3ab6e4dc",
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "794d612f_efc3aa27",
@@ -170,6 +206,24 @@
       "writtenOn": "2025-07-15T09:00:51Z",
       "side": 1,
       "message": "Can the addition of the non-default `ResolveRect` be done inside the `workaroundsHelper` since there is already a special-case done at [2]?",
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "924e277f_57939226",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-17T08:14:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "794d612f_efc3aa27",
       "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -269,6 +323,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11e105fc_fc40abd5",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-17T08:14:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "00a705e9_6467f1a8",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cc4a9af1_5d8280ef",
@@ -282,6 +360,24 @@
       "writtenOn": "2025-07-15T09:00:51Z",
       "side": 1,
       "message": "[2] We should avoid putting backend-specific handling in the frontend. Instead we can use one of the device queries, like `CanTextureLoadResolveTargetInTheSameRenderpass` or a new `SupportsSubRectResolve`.",
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9440d958_f779f686",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-17T08:14:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cc4a9af1_5d8280ef",
       "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -311,6 +407,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "61ecffe4_d7e0e1b1",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-17T08:14:41Z",
+      "side": 1,
+      "message": "Good catch, thanks Quyen!\n\nI think this should be D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE.\nBut I still didn\u0027t understand why D3D12_RESOURCE_STATE_RENDER_TARGET works with textureLoad during Expand, and D3D12 validation layer doesn\u0027t complain.",
+      "parentUuid": "8a100acd_34861a13",
+      "range": {
+        "startLine": 1410,
+        "startChar": 36,
+        "endLine": 1410,
+        "endChar": 69
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0767450c_5680b469",
         "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.h",
         "patchSetId": 1
@@ -322,6 +442,24 @@
       "writtenOn": "2025-07-15T09:00:51Z",
       "side": 1,
       "message": "[1] This is the only place that takes the whole `BeginRenderPassCmd` in this file. It there a reason why that structure was not passed previously? It\u0027s very weird and inconsistent to pass it only for the end resolve. We could pass the `ResolveRect` here instead.",
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "276d1863_426a053a",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-17T08:14:41Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0767450c_5680b469",
       "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
