@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d99e0a5b_25f99619",
+        "filename": "generator/templates/api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-17T01:25:05Z",
+      "side": 0,
+      "message": "Did you make sure to check if we are using the emscripten ifdefs instead of these in Skia code? I know that Skis was one of the reasons why I hadn\u0027t updated these yet.",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 54
+      },
+      "revId": "20dbe69c31d2e38ca9fdaf40159d4a1d8ded4404",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
