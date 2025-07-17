@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bb968e9_e7f99480",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 13
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-17T01:22:11Z",
+      "side": 0,
+      "message": "Why is this option removed?",
+      "revId": "084bc110c7e8730903079bee185314fb26c0f1e2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
