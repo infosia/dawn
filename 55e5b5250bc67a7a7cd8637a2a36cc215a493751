@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb9ea0ee_9c685764",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-17T14:28:24Z",
+      "side": 1,
+      "message": "LGTM. I\u0027ll leave it for James to +2 in case he sees something I missed. He\u0027s back in the office tomorrow.",
+      "revId": "55e5b5250bc67a7a7cd8637a2a36cc215a493751",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
