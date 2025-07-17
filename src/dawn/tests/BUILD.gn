@@ -589,6 +589,7 @@ source_set("end2end_tests_sources") {
   ]
 
   sources = [
+    "end2end/AdapterArchitectureInfoTests.cpp",
     "end2end/AdapterCreationTests.cpp",
     "end2end/AdapterEnumerationTests.cpp",
     "end2end/AdapterFormatCapabilitiesVkTests.cpp",

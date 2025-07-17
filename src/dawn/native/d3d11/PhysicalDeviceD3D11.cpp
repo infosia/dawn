@@ -400,6 +400,12 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) c
     if (auto* d3dProperties = info.Get<AdapterPropertiesD3D>()) {
         d3dProperties->shaderModel = GetDeviceInfo().shaderModel;
     }
+
+    if (auto* archProps = info.Get<DawnAdapterPropertiesArchitectureInfo>()) {
+        archProps->rendererType = GetDeviceInfo().isTileBasedRenderer
+                                      ? wgpu::RendererType::TileBased
+                                      : wgpu::RendererType::ImmediateMode;
+    }
 }
 
 }  // namespace dawn::native::d3d11

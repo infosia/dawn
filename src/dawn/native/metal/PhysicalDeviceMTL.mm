@@ -979,5 +979,11 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) c
         configs[1].N = 8;
         configs[1].K = 8;
     }
+
+    if (auto* archProps = info.Get<DawnAdapterPropertiesArchitectureInfo>()) {
+        archProps->rendererType = gpu_info::IsTileBasedRenderer(GetVendorId(), GetDeviceId())
+                                      ? wgpu::RendererType::TileBased
+                                      : wgpu::RendererType::ImmediateMode;
+    }
 }
 }  // namespace dawn::native::metal

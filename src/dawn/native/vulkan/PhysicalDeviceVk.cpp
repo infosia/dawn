@@ -1305,6 +1305,12 @@ void PhysicalDevice::PopulateBackendProperties(UnpackedPtr<AdapterInfo>& info) c
         subgroupMatrixConfigs->configCount = count;
         memcpy(configs, mSubgroupMatrixConfigs.data(), count * sizeof(SubgroupMatrixConfig));
     }
+
+    if (auto* archProps = info.Get<DawnAdapterPropertiesArchitectureInfo>()) {
+        archProps->rendererType = gpu_info::IsTileBasedRenderer(GetVendorId(), GetDeviceId())
+                                      ? wgpu::RendererType::TileBased
+                                      : wgpu::RendererType::ImmediateMode;
+    }
 }
 
 void PhysicalDevice::PopulateBackendFormatCapabilities(
