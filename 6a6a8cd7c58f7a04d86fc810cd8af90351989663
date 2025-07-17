@@ -171,6 +171,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bdfd2c4_b9b8d4bb",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-17T18:21:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e21e1ed_0b25d356",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 17
+      },
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c00ec43_55810f3c",
