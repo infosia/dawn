@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "242ac1f4_1edcfc6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-17T01:59:32Z",
+      "side": 1,
+      "message": "Make that PS4, PS3 was a weird rebase.",
+      "revId": "a9c3ba1b1f16416ff9534dff4ba6ca5dbabeee25",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
