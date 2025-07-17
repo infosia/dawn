@@ -73,6 +73,9 @@ class IntelWindowsDriverVersion {
 // - Return 0 if version1 and version2 represent same driver version
 int CompareIntelMesaDriverVersion(const DriverVersion& version1, const DriverVersion& version2);
 
+// Whether the device is TBR or IMR
+bool IsTileBasedRenderer(PCIVendorID vendorId, PCIDeviceID deviceId);
+
 // Intel architectures
 bool IsSkylake(PCIDeviceID deviceId);
 bool IsIrisPlus655(PCIDeviceID deviceId);
