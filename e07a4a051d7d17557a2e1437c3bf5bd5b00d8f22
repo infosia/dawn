@@ -87,6 +87,24 @@
       "parentUuid": "e9695789_a416af28",
       "revId": "e07a4a051d7d17557a2e1437c3bf5bd5b00d8f22",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ffc659c_bc131e82",
+        "filename": "infra/config/global/generated/cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-17T00:09:27Z",
+      "side": 1,
+      "message": "Nvm the `buckets` entry was also shadow properties.\n\nSeems for some reason Dawn uses `properties_j` and ANGLE uses `properties`. Probably something causes one or the other to fall back to a different syntax, or something.",
+      "parentUuid": "419c6f90_23e0c1d6",
+      "revId": "e07a4a051d7d17557a2e1437c3bf5bd5b00d8f22",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
