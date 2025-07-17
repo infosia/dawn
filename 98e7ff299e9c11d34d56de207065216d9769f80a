@@ -142,6 +142,30 @@
       },
       "revId": "98e7ff299e9c11d34d56de207065216d9769f80a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9bbe7078_d79e485a",
+        "filename": "README.chromium",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-17T00:10:51Z",
+      "side": 1,
+      "message": "posted https://dawn-review.googlesource.com/c/dawn/+/253219",
+      "parentUuid": "1217b639_18f54c1e",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "98e7ff299e9c11d34d56de207065216d9769f80a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
