@@ -455,6 +455,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6bea8e1d_b0531579",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-17T09:21:29Z",
+      "side": 1,
+      "message": "When the texture is used as the source of the expanding step, it will have [kResolveAttachmentLoadingUsage](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PassResourceUsageTracker.cpp;drc\u003dfd85c972694b3c1b6680052c35acf7d194471838;l\u003d139) not `wgpu::TextureUsage::TextureBinding`. This is special usage we assign in front-end so that the backend should know how to handle this specifically. It also helps prevent front-end from detecting that the texture is used as both resource and render attachment in the same render pass and would have thrown a validation error.\n\nFor example, vulkan has to add certain [usage bits](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/TextureVk.cpp;drc\u003dfd85c972694b3c1b6680052c35acf7d194471838;l\u003d159) for it during resource transitions.\n\nWe should do the same for D3D12 [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/TextureD3D12.cpp;drc\u003dfd85c972694b3c1b6680052c35acf7d194471838;l\u003d63), in D3D12, I think can just simply set the resource usage to `D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE`",
+      "parentUuid": "1f25beb5_220db6ea",
+      "range": {
+        "startLine": 1410,
+        "startChar": 36,
+        "endLine": 1410,
+        "endChar": 69
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0767450c_5680b469",
         "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.h",
         "patchSetId": 1
