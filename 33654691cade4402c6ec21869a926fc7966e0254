@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62e6ba86_4b095edb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000243
+      },
+      "writtenOn": "2025-07-17T09:48:47Z",
+      "side": 1,
+      "message": "I fixed presubmit, ptal again.",
+      "revId": "33654691cade4402c6ec21869a926fc7966e0254",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
