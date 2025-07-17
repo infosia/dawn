@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a957b3a0_c2bffe72",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-17T07:42:44Z",
+      "side": 1,
+      "message": "Reading https://www.g-truc.net/post-0734.html makes me think ` mFunctions.IsAtLeastGL(3, 3)` would be nice to add but I\u0027m not sure it\u0027s worth enabling it in OpenGL ES 3.0 given the extra complexity. I\u0027m not well-versed in OpenGL extensions though so I may be missing some stuff.",
+      "parentUuid": "25068416_7306ac1f",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d645928f_082ff0a6",
         "filename": "src/dawn/native/opengl/TextureGL.cpp",
         "patchSetId": 7
@@ -65,6 +83,24 @@
       "writtenOn": "2025-07-17T05:59:06Z",
       "side": 1,
       "message": "Since this `RequiresCreatingNewTextureView` function is called by `TextureView::Create` [1], I am not sure if we can use `TextureViewBase::UsesNonDefaultSwizzle()`.\n\nMaybe we have to somehow make a static method, e.g. `static bool TextureViewBase::UsesNonDefaultSwizzle(wgpu::ComponentSwizzle swizzle)`? I am not sure...\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/TextureGL.cpp;l\u003d625",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0411355c_744d6c59",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-17T07:42:44Z",
+      "side": 1,
+      "message": "This TODO and the [other one](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/TextureMTL.mm;l\u003d179;drc\u003de095571be47008e6deca936cd0b8b45d1c937ca9) are left for me to figure out after the backends have been enabled so that I get a full picture.",
+      "parentUuid": "d645928f_082ff0a6",
       "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
