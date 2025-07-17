@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1b20e2e9_ffaab25e",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-17T02:21:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb518207_57cea6a0",
+      "range": {
+        "startLine": 20,
+        "startChar": 51,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e74d25bb_37e259ae",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-07-15T19:55:51Z",
       "side": 1,
       "message": "Clarify which GPUPrimitiveTopology this feature applies to.\nBest to be explicit about it.",
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "78bb398d_cd700cf9",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-17T02:21:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e74d25bb_37e259ae",
       "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -83,6 +125,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "77f71f29_b3dd2f93",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-17T02:21:52Z",
+      "side": 1,
+      "message": "So, I copied the right sentence, but I think the HLSL docs have a copy-pasta bug in them. See https://learn.microsoft.com/en-us/windows/win32/direct3d11/d3d10-graphics-programming-guide-input-assembler-stage-using. See the end of the 2nd paragraph under PrimitiveID, and then compare that to the end of the 2nd paragraph under InstanceID.\n\nSo, I think we need an HLSL person to clarify if that PrimtiveID paragraph is correct and just needs a `s/instance/primitive/g` or if it\u0027s wrong.",
+      "parentUuid": "a9fa7803_4e58d99c",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 17
+      },
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2c00ec43_55810f3c",
         "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
         "patchSetId": 4
@@ -94,6 +160,24 @@
       "writtenOn": "2025-07-15T19:55:51Z",
       "side": 1,
       "message": "Clarify which GPUPrimitiveTopology this feature applies to.\nBest to be explicit about it.",
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad8c0197_2e635626",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-17T02:21:52Z",
+      "side": 1,
+      "message": "done above.",
+      "parentUuid": "2c00ec43_55810f3c",
       "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -111,6 +195,24 @@
       "writtenOn": "2025-07-15T19:55:51Z",
       "side": 1,
       "message": "Interaction with uniformity:  This value is uniform across the primitive.",
+      "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "344a17ae_d7b68f42",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-17T02:21:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b561d848_bae0a09d",
       "revId": "6a6a8cd7c58f7a04d86fc810cd8af90351989663",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
