@@ -16,6 +16,46 @@
       "message": "PTAL, thanks!",
       "revId": "4569b10f891a2cce28fdb9e4a9d1cabc7745ae49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f11fbded_050b6ae7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-18T16:09:52Z",
+      "side": 1,
+      "message": "LGTM with one small suggestion.",
+      "revId": "4569b10f891a2cce28fdb9e4a9d1cabc7745ae49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d3b9f49_8154b70d",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-18T16:09:52Z",
+      "side": 1,
+      "message": "Similar to my comment on the min CL - this looks like it\u0027s just a very slight shortcut, since the range computation below achieves the same result anyway. I\u0027d suggest taking these shortcuts out to keep the code a little simpler.",
+      "range": {
+        "startLine": 1227,
+        "startChar": 0,
+        "endLine": 1232,
+        "endChar": 13
+      },
+      "revId": "4569b10f891a2cce28fdb9e4a9d1cabc7745ae49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
