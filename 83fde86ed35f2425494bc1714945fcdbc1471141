@@ -18,6 +18,40 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "99dc3280_a21ae7b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-07-18T19:06:42Z",
+      "side": 1,
+      "message": "LGTM2",
+      "revId": "83fde86ed35f2425494bc1714945fcdbc1471141",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab8c4a46_079de684",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-07-18T19:06:42Z",
+      "side": 1,
+      "message": "Out of curiosity, could we use std views and ranges here instead of Range? Or is it incompatible with TypedInteger?",
+      "revId": "83fde86ed35f2425494bc1714945fcdbc1471141",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12824a35_1dd4440a",
