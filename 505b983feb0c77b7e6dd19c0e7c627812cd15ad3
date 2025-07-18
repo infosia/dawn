@@ -88,6 +88,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cf5ad12_cb771cb0",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-18T20:15:46Z",
+      "side": 1,
+      "message": "All sounds right to me.",
+      "parentUuid": "9ee68c7b_4a85a61e",
+      "revId": "505b983feb0c77b7e6dd19c0e7c627812cd15ad3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68800e74_2926dce9",
