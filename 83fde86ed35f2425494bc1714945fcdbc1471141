@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a7c5150_b0baafb9",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-07-18T19:18:12Z",
+      "side": 1,
+      "message": "Never mind; I see they\u0027re banned in the C++ style guide. https://chromium.googlesource.com/chromium/src/+/main/styleguide/c++/c++-features.md#range-factories-and-range-adaptors-banned. Pity.",
+      "parentUuid": "ab8c4a46_079de684",
+      "revId": "83fde86ed35f2425494bc1714945fcdbc1471141",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12824a35_1dd4440a",
