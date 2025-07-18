@@ -124,7 +124,7 @@ class PipelineGL {
 // used by multiple shader stages and should be reused between them.
 class EmulatedTextureBuiltinRegistrar {
   public:
-    EmulatedTextureBuiltinRegistrar(const PipelineLayout* layout);
+    explicit EmulatedTextureBuiltinRegistrar(const PipelineLayout* layout);
 
     // Returns the index of the emulated builtin data in the UBO.
     uint32_t Register(BindGroupIndex group, BindingIndex binding, TextureQuery query);
