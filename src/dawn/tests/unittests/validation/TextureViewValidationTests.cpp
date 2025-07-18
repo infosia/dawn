@@ -1003,8 +1003,8 @@ TEST_F(TextureViewValidationTest, Usage) {
     }
 }
 
-// Test setting swizzle when creating a texture view requires feature.
-TEST_F(TextureViewValidationTest, SwizzleRequiresFeature) {
+// Test setting non-default swizzle when creating a texture view requires feature.
+TEST_F(TextureViewValidationTest, NonDefaultSwizzleRequiresFeature) {
     wgpu::TextureDescriptor textureDesc = {};
     textureDesc.size = {kWidth, kHeight, kDepth};
     textureDesc.usage = wgpu::TextureUsage::StorageBinding | wgpu::TextureUsage::RenderAttachment;
@@ -1014,6 +1014,9 @@ TEST_F(TextureViewValidationTest, SwizzleRequiresFeature) {
     wgpu::TextureViewDescriptor viewDesc = {};
     wgpu::TextureComponentSwizzleDescriptor swizzleDesc = {};
     viewDesc.nextInChain = &swizzleDesc;
+    texture.CreateView(&viewDesc);
+
+    swizzleDesc.swizzle.r = wgpu::ComponentSwizzle::One;
     ASSERT_DEVICE_ERROR(texture.CreateView(&viewDesc));
 }
 

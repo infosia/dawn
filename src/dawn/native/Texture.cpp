@@ -482,6 +482,16 @@ wgpu::TextureUsage GetTextureViewUsage(wgpu::TextureUsage sourceTextureUsage,
                                                             : sourceTextureUsage;
 }
 
+bool IsNonDefaultSwizzle(const TextureComponentSwizzle& swizzle) {
+    // TODO(414312052): Refine this condition. A view might not be strictly necessary
+    // in case of the given swizzle works identically to default with the original
+    // format, e.g. a R8Unorm texture with swizzle.r set to R and swizzle.g set to One.
+    // This current check provides a correct, though potentially overly broad,
+    // first approximation.
+    return swizzle.r != wgpu::ComponentSwizzle::R || swizzle.g != wgpu::ComponentSwizzle::G ||
+           swizzle.b != wgpu::ComponentSwizzle::B || swizzle.a != wgpu::ComponentSwizzle::A;
+}
+
 MaybeError ValidateTextureComponentSwizzle(const DeviceBase* device,
                                            const TextureBase* texture,
                                            const UnpackedPtr<TextureViewDescriptor>& descriptor) {
@@ -490,9 +500,11 @@ MaybeError ValidateTextureComponentSwizzle(const DeviceBase* device,
         return {};
     }
 
-    DAWN_INVALID_IF(!device->HasFeature(Feature::TextureComponentSwizzle),
-                    "swizzle used without the %s feature enabled.",
-                    wgpu::FeatureName::TextureComponentSwizzle);
+    auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
+    DAWN_INVALID_IF(
+        IsNonDefaultSwizzle(swizzle) && !device->HasFeature(Feature::TextureComponentSwizzle),
+        "non-default swizzle used without the %s feature enabled.",
+        wgpu::FeatureName::TextureComponentSwizzle);
 
     wgpu::TextureUsage usage = GetTextureViewUsage(texture->GetUsage(), descriptor->usage);
     if ((usage & (wgpu::TextureUsage::RenderAttachment | wgpu::TextureUsage::StorageBinding)) ==
@@ -500,7 +512,6 @@ MaybeError ValidateTextureComponentSwizzle(const DeviceBase* device,
         return {};
     }
 
-    auto swizzle = swizzleDesc->swizzle.WithTrivialFrontendDefaults();
     DAWN_INVALID_IF(swizzle.r != wgpu::ComponentSwizzle::R,
                     "The texture view's component swizzle r (%s) must be %s when usage "
                     "includes %s or %s.",
@@ -1716,13 +1727,9 @@ wgpu::ComponentSwizzle TextureViewBase::GetSwizzleAlpha() const {
 }
 
 bool TextureViewBase::UsesNonDefaultSwizzle() const {
-    // TODO(414312052): Refine this condition. A view might not be strictly necessary
-    // in case of the given swizzle works identically to default with the original
-    // format, e.g. a R8Unorm texture with swizzle.r set to R and swizzle.g set to One.
-    // This current check provides a correct, though potentially overly broad,
-    // first approximation.
-    return mSwizzleRed != wgpu::ComponentSwizzle::R || mSwizzleGreen != wgpu::ComponentSwizzle::G ||
-           mSwizzleBlue != wgpu::ComponentSwizzle::B || mSwizzleAlpha != wgpu::ComponentSwizzle::A;
+    TextureComponentSwizzle swizzle = {
+        .r = mSwizzleRed, .g = mSwizzleGreen, .b = mSwizzleBlue, .a = mSwizzleAlpha};
+    return IsNonDefaultSwizzle(swizzle);
 }
 
 bool TextureViewBase::IsYCbCr() const {
