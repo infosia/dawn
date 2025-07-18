@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd6f17e4_20d5e2d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-18T05:32:21Z",
+      "side": 1,
+      "message": "Thanks for your advice! I can\u0027t open\nhttps://dawn-review.googlesource.com/c/All-Projects/+/252814 by a permission issue. Could you please vote again or advise on how to proceed?",
+      "revId": "b89a07a9e8830d3e519d15cc135239b93dbde317",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
