@@ -34,6 +34,24 @@
       "parentUuid": "280b5db8_4da269ed",
       "revId": "4f61c1ca16b77c5b42e5f1275d4bceae4cd3284f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1eb6407_90645a77",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-18T13:09:53Z",
+      "side": 1,
+      "message": "There are D3D11 \u0026 D3D12 backends which use D3D API to query whether it\u0027s TBR or not. They don\u0027t rely on matching vendor ID manually, which in theory can be future proof. For other backends, I just use simple vendor ID matching to make the feature complete. As that\u0027s only way to do that on those backends afaik.\n\nWe could do vendorID matching in the applications but IMO that\u0027s just basically duplicated code of IsAMD(), IsApple(), etc from Dawn and it might be error prone and not future proof compared to doing inside Dawn.",
+      "parentUuid": "ef12406b_e21faa83",
+      "revId": "4f61c1ca16b77c5b42e5f1275d4bceae4cd3284f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
