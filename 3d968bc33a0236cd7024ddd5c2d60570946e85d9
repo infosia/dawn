@@ -16,6 +16,23 @@
       "message": "Kai PTAL as well for Code-Review requirements.",
       "revId": "3d968bc33a0236cd7024ddd5c2d60570946e85d9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8f6d645_5a0f2564",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-18T19:17:20Z",
+      "side": 1,
+      "message": "Thank you!",
+      "revId": "3d968bc33a0236cd7024ddd5c2d60570946e85d9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
