@@ -52,6 +52,24 @@
       "parentUuid": "95831b4b_b75304d3",
       "revId": "c5c16f115ce936af0fa05c94910f43ebedad7a6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b3cde29b_5df36574",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T12:36:03Z",
+      "side": 1,
+      "message": "Do we need to roll Abseil in Skia at the same time we roll Dawn?",
+      "parentUuid": "b93715ca_468c0597",
+      "revId": "c5c16f115ce936af0fa05c94910f43ebedad7a6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
