@@ -1,6 +1,40 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff781161_f3fe55cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-18T21:27:01Z",
+      "side": 1,
+      "message": "can\u0027t finish the review. Gerrit is timing out.",
+      "revId": "8c25039fdea472c4d5e2af8b819fd5d3be3c05ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fa459fc_003c92c0",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000033
+      },
+      "writtenOn": "2025-07-18T21:27:01Z",
+      "side": 1,
+      "message": "This would be annoying to test.",
+      "revId": "8c25039fdea472c4d5e2af8b819fd5d3be3c05ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f289ac1c_83f321bb",
