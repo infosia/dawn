@@ -65,6 +65,7 @@ using SubstituteOverrideConfig = std::unordered_map<tint::OverrideId, double>;
     X(uint32_t, maxSubgroupSize)                                                     \
     X(std::string, entryPointName)                                                   \
     X(bool, usesSubgroupMatrix)                                                      \
+    X(bool, useStrictMath)                                                           \
     X(bool, disableSymbolRenaming)                                                   \
     X(tint::msl::writer::Options, tintOptions)                                       \
     X(UnsafeUnserializedValue<dawn::platform::Platform*>, platform)
@@ -218,10 +219,10 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     const ProgrammableStage& programmableStage,
     SingleShaderStage stage,
     const PipelineLayout* layout,
-    ShaderModule::MetalFunctionData* out,
     uint32_t sampleMask,
     const RenderPipeline* renderPipeline,
-    const BindingInfoArray& moduleBindingInfo) {
+    const BindingInfoArray& moduleBindingInfo,
+    bool useStrictMath) {
     std::ostringstream errorStream;
     errorStream << "Tint MSL failure:\n";
 
@@ -278,6 +279,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.disableSymbolRenaming = device->IsToggleEnabled(Toggle::DisableSymbolRenaming);
     req.usesSubgroupMatrix = programmableStage.metadata->usesSubgroupMatrix;
     req.platform = UnsafeUnserializedValue(device->GetPlatform());
+    req.useStrictMath = useStrictMath;
 
     req.tintOptions.strip_all_names = !req.disableSymbolRenaming;
     req.tintOptions.remapped_entry_point_name = device->GetIsolatedEntryPointName();
@@ -296,8 +298,8 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.tintOptions.disable_polyfill_integer_div_mod =
         device->IsToggleEnabled(Toggle::DisablePolyfillsOnIntegerDivisonAndModulo);
     req.tintOptions.scalarize_max_min_clamp = device->IsToggleEnabled(Toggle::ScalarizeMaxMinClamp);
-    req.tintOptions.enable_module_constant =
-        device->IsToggleEnabled(Toggle::MetalEnableModuleConstant);
+    req.tintOptions.disable_module_constant_f16 =
+        device->IsToggleEnabled(Toggle::MetalDisableModuleConstantF16);
     req.tintOptions.vertex_pulling_config = std::move(vertexPullingTransformConfig);
     req.tintOptions.enable_integer_range_analysis =
         device->IsToggleEnabled(Toggle::EnableIntegerRangeAnalysisInRobustness);
@@ -374,17 +376,28 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
                                     r.adapterSupportedLimits.UnsafeGetValue()));
             }
 
+            auto msl = std::move(result->msl);
+            // Metal supports math_mode as both compiler option and as a pragma. We add the
+            // math_mode here as a string conditional on OSx version as the compiler option only
+            // exists for MacOS after 15. See the Metal 4 spec for more information.
+            // Note: this math_mode takes precedence over global flags provide to the compiler
+            // (including the deprecated fastMathEnabled compiler option).
+            std::string math_mode_heading;
+            if (@available(macOS 15.0, iOS 18.0, *)) {
+                math_mode_heading = "\n#pragma METAL fp math_mode(";
+                math_mode_heading += r.useStrictMath ? "safe" : "relaxed";
+                math_mode_heading += +")\n";
+            }
             // Metal uses Clang to compile the shader as C++14. Disable everything in the -Wall
             // category. -Wunused-variable in particular comes up a lot in generated code, and
             // some (old?) Metal drivers accidentally treat it as a MTLLibraryErrorCompileError
             // instead of a warning.
-            auto msl = std::move(result->msl);
             msl = R"(
                     #ifdef __clang__
                     #pragma clang diagnostic ignored "-Wall"
                     #endif
                 )" +
-                  msl;
+                  math_mode_heading + msl;
 
             return MslCompilation{{
                 std::move(msl),
@@ -428,9 +441,10 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     }
 
     CacheResult<MslCompilation> mslCompilation;
-    DAWN_TRY_ASSIGN(mslCompilation,
-                    TranslateToMSL(GetDevice(), programmableStage, stage, layout, out, sampleMask,
-                                   renderPipeline, GetEntryPoint(entryPointName).bindings));
+    DAWN_TRY_ASSIGN(
+        mslCompilation,
+        TranslateToMSL(GetDevice(), programmableStage, stage, layout, sampleMask, renderPipeline,
+                       GetEntryPoint(entryPointName).bindings, GetStrictMath().value_or(false)));
 
     out->needsStorageBufferLength = mslCompilation->needsStorageBufferLength;
     out->workgroupAllocations = std::move(mslCompilation->workgroupAllocations);
@@ -446,7 +460,20 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
         (*compileOptions).preserveInvariance = true;
     }
 
-    (*compileOptions).fastMathEnabled = !GetStrictMath().value_or(false);
+    // If possible we will use relaxed math as a pragma in the source rather than this fast math
+    // global compiler option. See crbug.com/425650181
+    if (@available(macOS 15.0, iOS 18.0, *)) {
+        // This empty bock is intentional due to the mechanism to support @available.
+        // (the @available must be in a plain 'if' statement)
+        // Without this empty block one would get '-Wunsupported-availability-guard'
+    } else {
+// Silence the warning that fastMathEnabled is deprecated since we cannot remove it until the
+// minimum support macOS version is macOS 15.0.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        (*compileOptions).fastMathEnabled = !GetStrictMath().value_or(false);
+#pragma clang diagnostic pop
+    }
 
     auto mtlDevice = ToBackend(GetDevice())->GetMTLDevice();
     NSError* error = nullptr;
@@ -461,9 +488,13 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     }
 
     if (error != nullptr) {
+        // clang-format formats the `mslCompilation->msl` below oddly as `mslCompilation -> msl`.
+        // clang-format off
         DAWN_INVALID_IF(error.code != MTLLibraryErrorCompileWarning,
-                        "Unable to create library object: %s.",
-                        [error.localizedDescription UTF8String]);
+                        "ShaderModuleMTL: Unable to create library object: %s from "
+                        "produced MSL shader below:\n\n%s",
+                        [error.localizedDescription UTF8String], mslCompilation->msl);
+        // clang-format on
     }
     DAWN_ASSERT(library != nil);
     timer.RecordMicroseconds("Metal.newLibraryWithSource.CacheMiss");
@@ -482,7 +513,6 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
                 availableFunctions += "\n - \"";
                 availableFunctions += [fn UTF8String];
             }
-
             return DAWN_FORMAT_INTERNAL_ERROR(
                 "ShaderModuleMTL: failed to get the MTLFunction \'%s\' from produced MSL "
                 "shader below:\n\n%s\n\nAvailable functions are:%s",
@@ -499,6 +529,9 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
         GetEntryPoint(entryPointName).usedVertexInputs.any()) {
         out->needsStorageBufferLength = true;
     }
+
+    // For emitting MSL in error message if render pipeline creation fails.
+    out->msl = std::move(mslCompilation->msl);
 
     return {};
 }
