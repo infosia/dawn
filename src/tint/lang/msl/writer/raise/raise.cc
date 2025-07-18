@@ -30,6 +30,8 @@
 #include <utility>
 
 #include "src/tint/api/common/binding_point.h"
+#include "src/tint/lang/core/ir/module.h"
+#include "src/tint/lang/core/ir/transform/array_length_from_immediate.h"
 #include "src/tint/lang/core/ir/transform/array_length_from_uniform.h"
 #include "src/tint/lang/core/ir/transform/binary_polyfill.h"
 #include "src/tint/lang/core/ir/transform/binding_remapper.h"
@@ -39,6 +41,7 @@
 #include "src/tint/lang/core/ir/transform/conversion_polyfill.h"
 #include "src/tint/lang/core/ir/transform/demote_to_helper.h"
 #include "src/tint/lang/core/ir/transform/multiplanar_external_texture.h"
+#include "src/tint/lang/core/ir/transform/prepare_immediate_data.h"
 #include "src/tint/lang/core/ir/transform/preserve_padding.h"
 #include "src/tint/lang/core/ir/transform/prevent_infinite_loops.h"
 #include "src/tint/lang/core/ir/transform/remove_continue_in_switch.h"
@@ -50,6 +53,9 @@
 #include "src/tint/lang/core/ir/transform/vectorize_scalar_matrix_constructors.h"
 #include "src/tint/lang/core/ir/transform/vertex_pulling.h"
 #include "src/tint/lang/core/ir/transform/zero_init_workgroup_memory.h"
+#include "src/tint/lang/core/type/array.h"
+#include "src/tint/lang/core/type/u32.h"
+#include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/msl/writer/common/option_helpers.h"
 #include "src/tint/lang/msl/writer/raise/argument_buffers.h"
 #include "src/tint/lang/msl/writer/raise/binary_polyfill.h"
@@ -79,11 +85,29 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
         RUN_TRANSFORM(core::ir::transform::VertexPulling, module, *options.vertex_pulling_config);
     }
 
+    // Populate binding-related options before prepare immediate data transform
+    // to ensure buffer_sizes is set correctly.
     tint::transform::multiplanar::BindingsMap multiplanar_map{};
     RemapperData remapper_data{};
-    ArrayLengthFromUniformOptions array_length_from_uniform_options{};
+    ArrayLengthOptions array_length_from_constants{};
     PopulateBindingRelatedOptions(options, remapper_data, multiplanar_map,
-                                  array_length_from_uniform_options);
+                                  array_length_from_constants);
+
+    // PrepareImmediateData must come before any transform that needs internal immediates.
+    core::ir::transform::PrepareImmediateDataConfig immediate_data_config;
+    if (options.array_length_from_constants.buffer_sizes_offset) {
+        immediate_data_config.AddInternalImmediateData(
+            options.array_length_from_constants.buffer_sizes_offset.value(),
+            module.symbols.New("tint_storage_buffer_sizes"),
+            module.Types().array(
+                module.Types().vec4<core::u32>(),
+                array_length_from_constants.buffer_sizes_array_elements_num.value()));
+    }
+    auto immediate_data_layout =
+        core::ir::transform::PrepareImmediateData(module, immediate_data_config);
+    if (immediate_data_layout != Success) {
+        return immediate_data_layout.Failure();
+    }
     RUN_TRANSFORM(core::ir::transform::BindingRemapper, module, remapper_data);
 
     if (!options.disable_robustness) {
@@ -127,14 +151,31 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
 
     RUN_TRANSFORM(core::ir::transform::MultiplanarExternalTexture, module, multiplanar_map);
 
-    auto array_length_from_uniform_result = core::ir::transform::ArrayLengthFromUniform(
-        module, BindingPoint{0u, array_length_from_uniform_options.ubo_binding},
-        array_length_from_uniform_options.bindpoint_to_size_index);
-    if (array_length_from_uniform_result != Success) {
-        return array_length_from_uniform_result.Failure();
+    // TODO(crbug.com/366291600): Replace ArrayLengthFromUniform with ArrayLengthFromImmediates
+    if (options.array_length_from_constants.ubo_binding) {
+        auto array_length_from_uniform_result = core::ir::transform::ArrayLengthFromUniform(
+            module, BindingPoint{0u, array_length_from_constants.ubo_binding.value()},
+            array_length_from_constants.bindpoint_to_size_index);
+        if (array_length_from_uniform_result != Success) {
+            return array_length_from_uniform_result.Failure();
+        }
+        raise_result.needs_storage_buffer_sizes =
+            array_length_from_uniform_result->needs_storage_buffer_sizes;
     }
-    raise_result.needs_storage_buffer_sizes =
-        array_length_from_uniform_result->needs_storage_buffer_sizes;
+
+    if (options.array_length_from_constants.buffer_sizes_offset) {
+        TINT_ASSERT(!options.array_length_from_constants.ubo_binding);
+        auto array_length_from_immediate_result = core::ir::transform::ArrayLengthFromImmediates(
+            module, immediate_data_layout.Get(),
+            array_length_from_constants.buffer_sizes_offset.value(),
+            array_length_from_constants.buffer_sizes_array_elements_num.value(),
+            array_length_from_constants.bindpoint_to_size_index);
+        if (array_length_from_immediate_result != Success) {
+            return array_length_from_immediate_result.Failure();
+        }
+        raise_result.needs_storage_buffer_sizes =
+            array_length_from_immediate_result->needs_storage_buffer_sizes;
+    }
 
     if (!options.disable_workgroup_init) {
         RUN_TRANSFORM(core::ir::transform::ZeroInitWorkgroupMemory, module);
@@ -162,7 +203,15 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
         raise::ArgumentBuffersConfig cfg{
             .group_to_argument_buffer_info = std::move(options.group_to_argument_buffer_info),
         };
-        cfg.skip_bindings.insert(BindingPoint{0u, array_length_from_uniform_options.ubo_binding});
+
+        if (options.immediate_binding_point) {
+            cfg.skip_bindings.insert(options.immediate_binding_point.value());
+        }
+
+        if (options.array_length_from_constants.ubo_binding) {
+            cfg.skip_bindings.insert(
+                BindingPoint{0u, array_length_from_constants.ubo_binding.value()});
+        }
 
         if (options.vertex_pulling_config) {
             auto group = options.vertex_pulling_config->pulling_group;
