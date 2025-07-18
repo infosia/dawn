@@ -34,6 +34,24 @@
       "parentUuid": "223b77fd_4e97ef0f",
       "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc66d1ba_4c8f36e0",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-18T08:22:39Z",
+      "side": 1,
+      "message": "See https://gpuweb.github.io/gpuweb/#dom-gpuprimitivestate-unclippeddepth for instance.",
+      "parentUuid": "0ada3f80_0c7c8ad9",
+      "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
