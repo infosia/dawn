@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32858dfb_9788facc",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-18T08:43:26Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to transition the color texture to `D3D12_RESOURCE_STATE_RESOLVE_SOURCE` if it\u0027s not used in `ResolveSubresource*`. For example, if we use `EndRenderPass` instead, only the resolve texture needs to be transitioned to `D3D12_RESOURCE_STATE_RESOLVE_DEST`",
+      "revId": "6b9ec0932c4c1337f1c83fa0e3bd547e229218ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

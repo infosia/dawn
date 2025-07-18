@@ -575,6 +575,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "811ede92_1b29e6b2",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-18T08:43:26Z",
+      "side": 1,
+      "message": "In order to correctly use barriers in this case. We need to:\n1. transition the resolve target to `D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE` before the draw in the expand step.\n2. transition the resolve target to `D3D12_RESOURCE_STATE_RESOLVE_DEST` before `EndRenderPass` or `ResolveSubresource`.\n\nI still don\u0027t see you do 1 in any place.\n\nIn PS5, the resolve target now has `D3D12_RESOURCE_STATE_RENDER_TARGET` state before the draw. That doesn\u0027t look correct. We need to change [TextureD3D12](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/TextureD3D12.cpp;drc\u003dfd85c972694b3c1b6680052c35acf7d194471838;l\u003d63) as I mentioned to correctly set the correct state for `kResolveAttachmentLoadingUsage` usage front-end assigns to the resolve texture. `D3D12_RESOURCE_STATE_RENDER_TARGET` is not a correct state for the resolve target anyway. That state is for the color attachment. Front-end also does [assign](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CommandEncoder.cpp;drc\u003d97fcb728c60747e9d6886f1ae7b93628cc62526c;l\u003d1407) `RenderAttachment` usage to the resolve target. But in D3D12, we don\u0027t need to translate that use to `D3D12_RESOURCE_STATE_RENDER_TARGET` state for the resolve target.\n\nNote that for resolve texture, front-end never assigns `TextureBinding` usage even though it\u0027s used in the expand step\u0027s fragment shader. Hence this [code](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/TextureD3D12.cpp;drc\u003dfd85c972694b3c1b6680052c35acf7d194471838;l\u003d82) won\u0027t be reached automatically.",
+      "parentUuid": "ff147f6a_28da44a2",
+      "range": {
+        "startLine": 1410,
+        "startChar": 36,
+        "endLine": 1410,
+        "endChar": 69
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0767450c_5680b469",
         "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.h",
         "patchSetId": 1
