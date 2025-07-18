@@ -1,0 +1,49 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73256c6f_8dd4e249",
+        "filename": "src/tint/lang/core/ir/analysis/loop_analysis.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-18T16:23:54Z",
+      "side": 1,
+      "message": "Nit: prefer `auto` here, which keeps it on one line",
+      "fixSuggestions": [
+        {
+          "fixId": "9de93bbd_11170738",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "src/tint/lang/core/ir/analysis/loop_analysis.cc",
+              "range": {
+                "startLine": 247,
+                "startChar": 0,
+                "endLine": 249,
+                "endChar": 0
+              },
+              "replacement": "                        auto* constant_value \u003d binary-\u003eRHS()-\u003eAs\u003cConstant\u003e()-\u003eValue();\n"
+            },
+            {
+              "path": "src/tint/lang/core/ir/analysis/loop_analysis.cc",
+              "range": {
+                "startLine": 258,
+                "startChar": 0,
+                "endLine": 260,
+                "endChar": 0
+              },
+              "replacement": "                        auto* constant_value \u003d binary-\u003eLHS()-\u003eAs\u003cConstant\u003e()-\u003eValue();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "40ce42e2e92c826fc96f7f58ed8e71e52a9b40c6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
