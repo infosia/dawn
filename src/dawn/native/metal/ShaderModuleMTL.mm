@@ -218,7 +218,6 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     const ProgrammableStage& programmableStage,
     SingleShaderStage stage,
     const PipelineLayout* layout,
-    ShaderModule::MetalFunctionData* out,
     uint32_t sampleMask,
     const RenderPipeline* renderPipeline,
     const BindingInfoArray& moduleBindingInfo) {
@@ -428,9 +427,21 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     }
 
     CacheResult<MslCompilation> mslCompilation;
+<<<<<<< HEAD   (2718e81fdf5dd073a99565c8c782098589239be1 Fix ApiObjectList::Destroy() race)
     DAWN_TRY_ASSIGN(mslCompilation,
                     TranslateToMSL(GetDevice(), programmableStage, stage, layout, out, sampleMask,
                                    renderPipeline, GetEntryPoint(entryPointName).bindings));
+||||||| BASE
+    DAWN_TRY_ASSIGN(mslCompilation,
+                    TranslateToMSL(GetDevice(), programmableStage, stage, layout, out, sampleMask,
+                                   renderPipeline, GetEntryPoint(entryPointName).bindings,
+                                   GetStrictMath().value_or(false)));
+=======
+    DAWN_TRY_ASSIGN(
+        mslCompilation,
+        TranslateToMSL(GetDevice(), programmableStage, stage, layout, sampleMask, renderPipeline,
+                       GetEntryPoint(entryPointName).bindings, GetStrictMath().value_or(false)));
+>>>>>>> CHANGE (4b97c56324e5b31394618a40b9946c73ac24abcf [graphite] [metal] Emit MSL in error message on failed pipel)
 
     out->needsStorageBufferLength = mslCompilation->needsStorageBufferLength;
     out->workgroupAllocations = std::move(mslCompilation->workgroupAllocations);
@@ -461,9 +472,13 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     }
 
     if (error != nullptr) {
+        // clang-format formats the `mslCompilation->msl` below oddly as `mslCompilation -> msl`.
+        // clang-format off
         DAWN_INVALID_IF(error.code != MTLLibraryErrorCompileWarning,
-                        "Unable to create library object: %s.",
-                        [error.localizedDescription UTF8String]);
+                        "ShaderModuleMTL: Unable to create library object: %s from "
+                        "produced MSL shader below:\n\n%s",
+                        [error.localizedDescription UTF8String], mslCompilation->msl);
+        // clang-format on
     }
     DAWN_ASSERT(library != nil);
     timer.RecordMicroseconds("Metal.newLibraryWithSource.CacheMiss");
@@ -482,7 +497,6 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
                 availableFunctions += "\n - \"";
                 availableFunctions += [fn UTF8String];
             }
-
             return DAWN_FORMAT_INTERNAL_ERROR(
                 "ShaderModuleMTL: failed to get the MTLFunction \'%s\' from produced MSL "
                 "shader below:\n\n%s\n\nAvailable functions are:%s",
@@ -499,6 +513,9 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
         GetEntryPoint(entryPointName).usedVertexInputs.any()) {
         out->needsStorageBufferLength = true;
     }
+
+    // For emitting MSL in error message if render pipeline creation fails.
+    out->msl = std::move(mslCompilation->msl);
 
     return {};
 }
