@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f289ac1c_83f321bb",
+        "filename": "test/tint/extensions/primitive_id/basic.wgsl.expected.glsl",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-18T20:54:48Z",
+      "side": 1,
+      "message": "Needs `--glsl-desktop` in the test flags to make it pass maybe?",
+      "revId": "8c25039fdea472c4d5e2af8b819fd5d3be3c05ab",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
