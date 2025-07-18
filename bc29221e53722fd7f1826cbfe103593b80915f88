@@ -108,6 +108,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "996270c9_50942904",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-18T07:02:18Z",
+      "side": 1,
+      "message": "Feature checking logic here and above (e.g. [1]) seems check the GL version independently from `PhysicalDevice::InitializeImpl()`, which reflect the features\u0027 intrinsic requirement.\n\nI thought just checking `mFunctions.IsAtLeastGLES(3, 1) || mFunctions.IsAtLeastGL(3, 3)` might be good enough since it is a safe condition (never report false support) and cover all devices we might be interested?\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/PhysicalDeviceGL.cpp;drc\u003d83f69a4f154f58598b5321ac5a5ecc9756898122;l\u003d277",
+      "parentUuid": "67c550cd_13c22876",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d645928f_082ff0a6",
         "filename": "src/dawn/native/opengl/TextureGL.cpp",
         "patchSetId": 7
