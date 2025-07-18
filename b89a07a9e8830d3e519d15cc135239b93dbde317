@@ -16,6 +16,24 @@
       "message": "Thanks for your advice! I can\u0027t open\nhttps://dawn-review.googlesource.com/c/All-Projects/+/252814 by a permission issue. Could you please vote again or advise on how to proceed?",
       "revId": "b89a07a9e8830d3e519d15cc135239b93dbde317",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcd51c60_f559e146",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T07:47:12Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter, that CL let\u0027s non-committer commit with a +1 and a +2 instead of two +2. Now we need another +1 from either Jiawei or Loko for example.",
+      "parentUuid": "dd6f17e4_20d5e2d0",
+      "revId": "b89a07a9e8830d3e519d15cc135239b93dbde317",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
