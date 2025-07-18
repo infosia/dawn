@@ -16,6 +16,23 @@
       "message": "Updated. PTAL again, thanks!",
       "revId": "93f16e56d9b0e9df140639e1bb4e8f5c09e800ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b91ccc41_592978ca",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-18T19:42:25Z",
+      "side": 1,
+      "message": "Nit: kArrayLengthFromImmediateCapabilities",
+      "revId": "93f16e56d9b0e9df140639e1bb4e8f5c09e800ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
