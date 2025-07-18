@@ -34,6 +34,24 @@
       "parentUuid": "d0467837_a549717d",
       "revId": "9afe457f70eadfc154209462d6d087d602b6518e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c8bbe72_3441c23c",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T12:34:59Z",
+      "side": 1,
+      "message": "Basically we need to add swizzle to this constraint https://github.com/gpuweb/gpuweb/blob/main/proposals/compatibility-mode.md#5-views-of-the-same-texture-used-in-a-single-draw-may-not-differ-in-aspect-or-mip-levels (with validation tests as well)",
+      "parentUuid": "9446749a_122f6c6f",
+      "revId": "9afe457f70eadfc154209462d6d087d602b6518e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

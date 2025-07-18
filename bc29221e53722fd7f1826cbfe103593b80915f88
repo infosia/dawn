@@ -126,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "80ad536b_db3c9c00",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T12:34:59Z",
+      "side": 1,
+      "message": "Checking version seems good, but why not check against GLES 3.0 then if it is supported there as well?",
+      "parentUuid": "996270c9_50942904",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d645928f_082ff0a6",
         "filename": "src/dawn/native/opengl/TextureGL.cpp",
         "patchSetId": 7
