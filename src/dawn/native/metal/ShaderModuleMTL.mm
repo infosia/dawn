@@ -129,7 +129,7 @@ tint::msl::writer::Bindings GenerateBindingInfo(
     SingleShaderStage stage,
     const PipelineLayout* layout,
     const BindingInfoArray& moduleBindingInfo,
-    tint::msl::writer::ArrayLengthFromUniformOptions& arrayLengthFromUniform,
+    tint::msl::writer::ArrayLengthOptions& arrayLengthFromConstants,
     bool useArgumentBuffers) {
     tint::msl::writer::Bindings bindings;
 
@@ -172,7 +172,7 @@ tint::msl::writer::Bindings GenerateBindingInfo(
                             // Use the ShaderIndex as the indices for the buffer size lookups in
                             // the array length uniform transform. This is used to compute the
                             // size of variable length arrays in storage buffers.
-                            arrayLengthFromUniform.bindpoint_to_size_index.emplace(
+                            arrayLengthFromConstants.bindpoint_to_size_index.emplace(
                                 srcBindingPoint, dstBindingPoint.binding);
                             break;
                         case wgpu::BufferBindingType::BindingNotUsed:
@@ -231,13 +231,13 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     std::ostringstream errorStream;
     errorStream << "Tint MSL failure:\n";
 
-    tint::msl::writer::ArrayLengthFromUniformOptions arrayLengthFromUniform;
-    arrayLengthFromUniform.ubo_binding = kBufferLengthBufferSlot;
+    tint::msl::writer::ArrayLengthOptions arrayLengthFromConstants;
+    arrayLengthFromConstants.ubo_binding = kBufferLengthBufferSlot;
 
     bool useArgumentBuffers = device->IsToggleEnabled(Toggle::MetalUseArgumentBuffers);
 
     tint::msl::writer::Bindings bindings = GenerateBindingInfo(
-        stage, layout, moduleBindingInfo, arrayLengthFromUniform, useArgumentBuffers);
+        stage, layout, moduleBindingInfo, arrayLengthFromConstants, useArgumentBuffers);
 
     OptionalVertexPullingTransformConfig vertexPullingTransformConfig;
     if (stage == SingleShaderStage::Vertex &&
@@ -266,8 +266,8 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
 
             // Use the ShaderIndex as the indices for the buffer size lookups in the array
             // length uniform transform.
-            arrayLengthFromUniform.bindpoint_to_size_index.emplace(srcBindingPoint,
-                                                                   dstBindingPoint.binding);
+            arrayLengthFromConstants.bindpoint_to_size_index.emplace(srcBindingPoint,
+                                                                     dstBindingPoint.binding);
         }
     }
 
@@ -306,7 +306,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.tintOptions.emit_vertex_point_size =
         stage == SingleShaderStage::Vertex &&
         renderPipeline->GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList;
-    req.tintOptions.array_length_from_uniform = std::move(arrayLengthFromUniform);
+    req.tintOptions.array_length_from_constants = std::move(arrayLengthFromConstants);
     req.tintOptions.pixel_local_attachments = std::move(pixelLocalAttachments);
     req.tintOptions.bindings = std::move(bindings);
     req.tintOptions.disable_polyfill_integer_div_mod =

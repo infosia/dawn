@@ -119,15 +119,27 @@ struct Bindings {
 
 /// Options used to specify a mapping of binding points to indices into a UBO
 /// from which to load buffer sizes.
-struct ArrayLengthFromUniformOptions {
+/// TODO(crbug.com/366291600): Remove ubo_binding after switch to immediates.
+struct ArrayLengthOptions {
     /// The MSL binding point to use to generate a uniform buffer from which to read buffer sizes.
-    uint32_t ubo_binding;
+    std::optional<uint32_t> ubo_binding;
+
+    /// The offset in immediate block for buffer sizes.
+    std::optional<uint32_t> buffer_sizes_offset;
+
+    /// The number of vec4s used to store buffer sizes that will be set into the immediate block.
+    std::optional<uint32_t> buffer_sizes_array_elements_num;
+
     /// The mapping from the storage buffer binding points in WGSL binding-point space to the index
     /// into the uniform buffer where the length of the buffer is stored.
     std::unordered_map<BindingPoint, uint32_t> bindpoint_to_size_index;
 
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
-    TINT_REFLECT(ArrayLengthFromUniformOptions, ubo_binding, bindpoint_to_size_index);
+    TINT_REFLECT(ArrayLengthOptions,
+                 ubo_binding,
+                 buffer_sizes_offset,
+                 buffer_sizes_array_elements_num,
+                 bindpoint_to_size_index);
 };
 
 /// Configuration options used for generating MSL.
@@ -188,8 +200,8 @@ struct Options {
     std::unordered_map<uint32_t, uint32_t> pixel_local_attachments;
 
     /// Options used to specify a mapping of binding points to indices into a UBO
-    /// from which to load buffer sizes.
-    ArrayLengthFromUniformOptions array_length_from_uniform = {};
+    /// or immediate block from which to load buffer sizes.
+    ArrayLengthOptions array_length_from_constants = {};
 
     /// The optional vertex pulling configuration.
     std::optional<VertexPullingConfig> vertex_pulling_config = {};
@@ -216,7 +228,7 @@ struct Options {
                  buffer_size_ubo_index,
                  fixed_sample_mask,
                  pixel_local_attachments,
-                 array_length_from_uniform,
+                 array_length_from_constants,
                  vertex_pulling_config,
                  immediate_binding_point,
                  bindings);
