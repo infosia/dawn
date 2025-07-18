@@ -127,6 +127,102 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94cc0679_b441e39d",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-18T22:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05389fac_1306d1dd",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e4e8fa7_7fe9a35d",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-18T22:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06d71d3f_a9cbcd6e",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86bc205d_047dc48a",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-18T22:32:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd83f7ed_c726aa79",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71213910_d77c844f",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-18T22:32:06Z",
+      "side": 1,
+      "message": "LOL, okay! Okay! I get it. You must REALLY want a comment on this function. 😄",
+      "parentUuid": "cf64b03f_de2088c8",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a0d6a80_c7c2a427",
@@ -140,6 +236,30 @@
       "writtenOn": "2025-07-18T18:40:55Z",
       "side": 1,
       "message": "We might be able to reuse some of the code that Sunny wrote in `native/WaitListEvent.*` here instead. I think the `WaitListEvent` might be an even more general version of this. Can do in a follow up though since this is just what we had before.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 2
+      },
+      "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "603e1266_557788a3",
+        "filename": "src/dawn/platform/WorkerThread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-18T22:32:06Z",
+      "side": 1,
+      "message": "Ack.\n\nFor what it\u0027s worth I did look briefly at how hard it would be to just use WaitListEvent in this scenario. Shouldn\u0027t be too bad? The biggest incompatibility point is that WaitListEvent::Wait() requires a timeout and dawn::platform::WaitableEvent::Wait() does not take one.\n\nAlso, I\u0027m not clear on if there\u0027s laying issues with having dependencies on dawn::native from dawn::platform.",
+      "parentUuid": "9a0d6a80_c7c2a427",
       "range": {
         "startLine": 43,
         "startChar": 0,

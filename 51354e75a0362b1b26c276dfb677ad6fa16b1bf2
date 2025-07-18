@@ -22,6 +22,30 @@
       },
       "revId": "51354e75a0362b1b26c276dfb677ad6fa16b1bf2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bebc6f21_251450b2",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-18T22:32:06Z",
+      "side": 0,
+      "message": "Because it\u0027s included as a member of the AsyncWorkerThreadPoolTask struct that we use to track pending tasks.",
+      "parentUuid": "374f9bd3_34dacdca",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 2
+      },
+      "revId": "51354e75a0362b1b26c276dfb677ad6fa16b1bf2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
