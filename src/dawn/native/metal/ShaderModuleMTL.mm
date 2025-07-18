@@ -28,6 +28,7 @@
 #include "dawn/native/metal/ShaderModuleMTL.h"
 
 #include "dawn/common/MatchVariant.h"
+#include "dawn/common/Math.h"
 #include "dawn/common/Range.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BindGroupLayout.h"
@@ -130,7 +131,7 @@ tint::msl::writer::Bindings GenerateBindingInfo(
     SingleShaderStage stage,
     const PipelineLayout* layout,
     const BindingInfoArray& moduleBindingInfo,
-    tint::msl::writer::ArrayLengthFromUniformOptions& arrayLengthFromUniform,
+    tint::msl::writer::ArrayLengthOptions& arrayLengthFromConstants,
     bool useArgumentBuffers) {
     tint::msl::writer::Bindings bindings;
 
@@ -173,7 +174,7 @@ tint::msl::writer::Bindings GenerateBindingInfo(
                             // Use the ShaderIndex as the indices for the buffer size lookups in
                             // the array length uniform transform. This is used to compute the
                             // size of variable length arrays in storage buffers.
-                            arrayLengthFromUniform.bindpoint_to_size_index.emplace(
+                            arrayLengthFromConstants.bindpoint_to_size_index.emplace(
                                 srcBindingPoint, dstBindingPoint.binding);
                             break;
                         case wgpu::BufferBindingType::BindingNotUsed:
@@ -278,17 +279,24 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     uint32_t sampleMask,
     const RenderPipeline* renderPipeline,
     const BindingInfoArray& moduleBindingInfo,
-    bool useStrictMath) {
+    bool useStrictMath,
+    const ImmediateConstantMask& pipelineImmediateMask) {
     std::ostringstream errorStream;
     errorStream << "Tint MSL failure:\n";
 
-    tint::msl::writer::ArrayLengthFromUniformOptions arrayLengthFromUniform;
-    arrayLengthFromUniform.ubo_binding = kBufferLengthBufferSlot;
+    tint::msl::writer::ArrayLengthOptions arrayLengthFromConstants;
+
+    // Storage buffer sizes are stored into immediate block at the end. The format is vec4<u32>
+    // array. Immediate block requires vec4<u32> array aligns to 16 bytes.
+    arrayLengthFromConstants.buffer_sizes_offset =
+        pipelineImmediateMask.count() > 0
+            ? RoundUp(pipelineImmediateMask.count() * kImmediateConstantElementByteSize, 16)
+            : 0u;
 
     bool useArgumentBuffers = device->IsToggleEnabled(Toggle::MetalUseArgumentBuffers);
 
     tint::msl::writer::Bindings bindings = GenerateBindingInfo(
-        stage, layout, moduleBindingInfo, arrayLengthFromUniform, useArgumentBuffers);
+        stage, layout, moduleBindingInfo, arrayLengthFromConstants, useArgumentBuffers);
 
     std::unordered_map<uint32_t, tint::msl::writer::ArgumentBufferInfo> argumentBufferInfo =
         GenerateArgumentBufferInfo(stage, layout, moduleBindingInfo, useArgumentBuffers);
@@ -320,8 +328,8 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
 
             // Use the ShaderIndex as the indices for the buffer size lookups in the array
             // length uniform transform.
-            arrayLengthFromUniform.bindpoint_to_size_index.emplace(srcBindingPoint,
-                                                                   dstBindingPoint.binding);
+            arrayLengthFromConstants.bindpoint_to_size_index.emplace(srcBindingPoint,
+                                                                     dstBindingPoint.binding);
         }
     }
 
@@ -352,7 +360,6 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.tintOptions.strip_all_names = !req.disableSymbolRenaming;
     req.tintOptions.remapped_entry_point_name = device->GetIsolatedEntryPointName();
     req.tintOptions.disable_robustness = !device->IsRobustnessEnabled();
-    req.tintOptions.buffer_size_ubo_index = kBufferLengthBufferSlot;
     req.tintOptions.fixed_sample_mask = sampleMask;
     req.tintOptions.disable_workgroup_init = false;
     req.tintOptions.disable_demote_to_helper =
@@ -360,7 +367,8 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
     req.tintOptions.emit_vertex_point_size =
         stage == SingleShaderStage::Vertex &&
         renderPipeline->GetPrimitiveTopology() == wgpu::PrimitiveTopology::PointList;
-    req.tintOptions.array_length_from_uniform = std::move(arrayLengthFromUniform);
+    req.tintOptions.immediate_binding_point = tint::BindingPoint{0, kImmediateBlockBufferSlot};
+    req.tintOptions.array_length_from_constants = std::move(arrayLengthFromConstants);
     req.tintOptions.pixel_local_attachments = std::move(pixelLocalAttachments);
     req.tintOptions.bindings = std::move(bindings);
     req.tintOptions.disable_polyfill_integer_div_mod =
@@ -494,6 +502,7 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
 MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
                                         const ProgrammableStage& programmableStage,
                                         const PipelineLayout* layout,
+                                        const ImmediateConstantMask& pipelineImmediateMask,
                                         ShaderModule::MetalFunctionData* out,
                                         uint32_t sampleMask,
                                         const RenderPipeline* renderPipeline) {
@@ -511,10 +520,10 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
     }
 
     CacheResult<MslCompilation> mslCompilation;
-    DAWN_TRY_ASSIGN(
-        mslCompilation,
-        TranslateToMSL(GetDevice(), programmableStage, stage, layout, sampleMask, renderPipeline,
-                       GetEntryPoint(entryPointName).bindings, GetStrictMath().value_or(false)));
+    DAWN_TRY_ASSIGN(mslCompilation,
+                    TranslateToMSL(GetDevice(), programmableStage, stage, layout, sampleMask,
+                                   renderPipeline, GetEntryPoint(entryPointName).bindings,
+                                   GetStrictMath().value_or(false), pipelineImmediateMask));
 
     out->needsStorageBufferLength = mslCompilation->needsStorageBufferLength;
     out->workgroupAllocations = std::move(mslCompilation->workgroupAllocations);
