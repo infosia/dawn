@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37b54106_1667be5f",
+        "filename": "src/dawn/native/CommandBufferStateTracker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T14:30:51Z",
+      "side": 1,
+      "message": "Stephen, FYI at this point we should probably precompute a packed u32 for all of these to do a single comparison of members instead of N.",
+      "revId": "da1e49b56fb9c93cebbadd441f6953dbaf68ae27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b307415_b71d760d",
+        "filename": "src/dawn/tests/unittests/validation/CompatValidationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 2006,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T14:30:51Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by ClangTidy: check: cppcoreguidelines-use-enum-class\n\nAnalyzer Description: Runs clang-tidy checks against chromium\nOwner: gbiv@chromium.org\n\ncheck: cppcoreguidelines-use-enum-class\n\nenum \u0027SwizzleChannel\u0027 is unscoped, use \u0027enum class\u0027 instead (https://clang.llvm.org/extra/clang-tidy/checks/cppcoreguidelines/use-enum-class.html)\n\n(Note: You can add `Skip-Clang-Tidy-Checks: cppcoreguidelines-use-enum-class` footer to the CL description to skip the check)\n\n(Lint observed on `android-clang-tidy-rel` and `linux-clang-tidy-rel`)",
+      "range": {
+        "startLine": 2006,
+        "startChar": 0,
+        "endLine": 2006,
+        "endChar": 0
+      },
+      "revId": "da1e49b56fb9c93cebbadd441f6953dbaf68ae27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "364410af_a27f429b",
+        "filename": "src/dawn/tests/unittests/validation/CompatValidationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 2044,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T14:30:51Z",
+      "side": 1,
+      "message": "Please add a comment before the test explaining what it does.",
+      "revId": "da1e49b56fb9c93cebbadd441f6953dbaf68ae27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
