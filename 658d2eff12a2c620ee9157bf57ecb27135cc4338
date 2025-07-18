@@ -33,6 +33,121 @@
       "message": "Swapping Geoff instead of me for this has he is working in the same space at the moment.",
       "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd83f7ed_c726aa79",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-18T18:40:55Z",
+      "side": 1,
+      "message": "We should add a comment either in the header or here that this function should only be called while holding the mutex.",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06d71d3f_a9cbcd6e",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-18T18:40:55Z",
+      "side": 1,
+      "message": "We should add a comment either in the header or here that this function should only be called while holding the mutex.",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf64b03f_de2088c8",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-18T18:40:55Z",
+      "side": 1,
+      "message": "We should add a comment either in the header or here that this function should only be called while holding the mutex.",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05389fac_1306d1dd",
+        "filename": "src/dawn/platform/WorkerThread.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-18T18:40:55Z",
+      "side": 1,
+      "message": "We should add a comment either in the header or here that this function should only be called while holding the mutex.",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 94,
+        "endChar": 43
+      },
+      "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a0d6a80_c7c2a427",
+        "filename": "src/dawn/platform/WorkerThread.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-18T18:40:55Z",
+      "side": 1,
+      "message": "We might be able to reuse some of the code that Sunny wrote in `native/WaitListEvent.*` here instead. I think the `WaitListEvent` might be an even more general version of this. Can do in a follow up though since this is just what we had before.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 2
+      },
+      "revId": "658d2eff12a2c620ee9157bf57ecb27135cc4338",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
