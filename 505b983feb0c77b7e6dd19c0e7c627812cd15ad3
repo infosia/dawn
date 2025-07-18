@@ -72,6 +72,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9ee68c7b_4a85a61e",
+        "filename": "src/tint/lang/msl/writer/raise/raise.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-18T08:25:52Z",
+      "side": 1,
+      "message": "Hi Dan,\n\nAfter more investigation I think we still need to move robustness up and before the \n`BinaryPolyfill` transform because `BinaryPolyfill` will replace `divide` with a polyfill function which cannot be recognized by the current Integer Range Analysis algorithm.",
+      "parentUuid": "64be8072_6c6da1ba",
+      "revId": "505b983feb0c77b7e6dd19c0e7c627812cd15ad3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "68800e74_2926dce9",
         "filename": "src/tint/lang/spirv/writer/raise/raise.cc",
         "patchSetId": 8
