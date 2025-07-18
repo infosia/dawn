@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "280b5db8_4da269ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-18T08:28:07Z",
+      "side": 1,
+      "message": "I would like to have an API to report whether an adapter is TBR or IMR. PTAL whether this approach looks correct. Thanks",
+      "revId": "4f61c1ca16b77c5b42e5f1275d4bceae4cd3284f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
