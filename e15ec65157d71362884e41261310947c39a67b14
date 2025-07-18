@@ -16,6 +16,97 @@
       "message": "Thanks for your suggetions!",
       "revId": "e15ec65157d71362884e41261310947c39a67b14",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa6103c2_8eae5c00",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T08:05:50Z",
+      "side": 1,
+      "message": "Tests should not be using private dawn::native code unless they are whitebox tests, which this isn\u0027t.",
+      "revId": "e15ec65157d71362884e41261310947c39a67b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "368b9d82_ea42a700",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2003,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T08:05:50Z",
+      "side": 1,
+      "message": "```suggestion\n        }\n\n        return {};\n```",
+      "range": {
+        "startLine": 2000,
+        "startChar": 0,
+        "endLine": 2003,
+        "endChar": 9
+      },
+      "revId": "e15ec65157d71362884e41261310947c39a67b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b78ce6d_936178c9",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2016,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T08:05:50Z",
+      "side": 1,
+      "message": "TODO(1123456789) maybe?",
+      "revId": "e15ec65157d71362884e41261310947c39a67b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c32e0ba0_e9e2ed7a",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T08:05:50Z",
+      "side": 1,
+      "message": "There is a helper in TextureFormatTests that could help IIRC.",
+      "revId": "e15ec65157d71362884e41261310947c39a67b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d163f788_934acc74",
+        "filename": "src/dawn/utils/TextureUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T08:05:50Z",
+      "side": 1,
+      "message": "This format is now just not for Chromium but also part of the tier1 extension. We should check also if we can retire that r8 extension in the future.\n\n```suggestion\n        case wgpu::TextureFormat::R8Unorm:\n```",
+      "revId": "e15ec65157d71362884e41261310947c39a67b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
