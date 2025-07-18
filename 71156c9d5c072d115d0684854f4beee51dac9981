@@ -549,6 +549,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff147f6a_28da44a2",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1410,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-18T02:32:43Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e91eaacf_dbc2bd63",
+      "range": {
+        "startLine": 1410,
+        "startChar": 36,
+        "endLine": 1410,
+        "endChar": 69
+      },
+      "revId": "71156c9d5c072d115d0684854f4beee51dac9981",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0767450c_5680b469",

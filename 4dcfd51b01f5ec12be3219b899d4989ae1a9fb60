@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "773b75e3_5ad9e60a",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-18T02:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e0de74e_1d73a714",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 39
+      },
+      "revId": "4dcfd51b01f5ec12be3219b899d4989ae1a9fb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e9658098_c48075f7",
@@ -58,6 +82,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "483b5b74_cb9f03d7",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-18T02:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9658098_c48075f7",
+      "revId": "4dcfd51b01f5ec12be3219b899d4989ae1a9fb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3d9cd562_ff094aa9",
@@ -71,6 +113,30 @@
       "writtenOn": "2025-07-17T08:43:09Z",
       "side": 1,
       "message": "All backends can resolve, the exact capability is more `CanResolveSubRect` here.",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 37
+      },
+      "revId": "4dcfd51b01f5ec12be3219b899d4989ae1a9fb60",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "94f2f860_3e009df1",
+        "filename": "src/dawn/native/RenderPassWorkaroundsHelper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-18T02:32:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d9cd562_ff094aa9",
       "range": {
         "startLine": 243,
         "startChar": 20,

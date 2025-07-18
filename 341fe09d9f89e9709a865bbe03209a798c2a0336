@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86fb09b0_601282c5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-18T02:32:43Z",
+      "side": 1,
+      "message": "Updated, PTAL.\nBTW, I create a doc to tell the difference barrier usage between PR3 and PR4 here: https://docs.google.com/spreadsheets/d/1HOrdyIrfFssujQ-PbswhSvxE-NL5q7-m-ZqtB4B_2ig/edit",
+      "revId": "341fe09d9f89e9709a865bbe03209a798c2a0336",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
