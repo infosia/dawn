@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "beb5b346_e2d887cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-07-18T17:33:15Z",
+      "side": 1,
+      "message": "Yea that\u0027s a lot of double nested arrays and things called \u0027index\u0027.",
+      "revId": "83fde86ed35f2425494bc1714945fcdbc1471141",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "12824a35_1dd4440a",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-07-18T17:33:15Z",
+      "side": 1,
+      "message": "nit: slight preference for keeping this as two branches instead of the early-exit just because both cases do \n```uniformsToSet.push_back(textureUnit);\ntextureUnit++;```",
+      "range": {
+        "startLine": 134,
+        "startChar": 13,
+        "endLine": 150,
+        "endChar": 69
+      },
+      "revId": "83fde86ed35f2425494bc1714945fcdbc1471141",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b98fd9b6_b8a0a4cc",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-07-18T17:33:15Z",
+      "side": 1,
+      "message": "The previous code checked if this was -1. Was it intentional to remove that?",
+      "range": {
+        "startLine": 157,
+        "startChar": 8,
+        "endLine": 157,
+        "endChar": 85
+      },
+      "revId": "83fde86ed35f2425494bc1714945fcdbc1471141",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
