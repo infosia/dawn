@@ -142,6 +142,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbbb9991_95c5f7da",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-18T13:56:03Z",
+      "side": 1,
+      "message": "Let\u0027s try that then.",
+      "parentUuid": "80ad536b_db3c9c00",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d645928f_082ff0a6",
