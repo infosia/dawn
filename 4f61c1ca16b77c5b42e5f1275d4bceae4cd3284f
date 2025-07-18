@@ -16,6 +16,24 @@
       "message": "I would like to have an API to report whether an adapter is TBR or IMR. PTAL whether this approach looks correct. Thanks",
       "revId": "4f61c1ca16b77c5b42e5f1275d4bceae4cd3284f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef12406b_e21faa83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T12:46:01Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised that we add this to Dawn when we\u0027re just matching on the vendorID which can be done in the application. Also all the backends return the same thing basically so I\u0027m not sure it is very useful that it be done in Dawn?",
+      "parentUuid": "280b5db8_4da269ed",
+      "revId": "4f61c1ca16b77c5b42e5f1275d4bceae4cd3284f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
