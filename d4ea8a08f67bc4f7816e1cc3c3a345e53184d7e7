@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "43d1b2cf_be4ecf72",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002701
+      },
+      "writtenOn": "2025-07-18T18:22:11Z",
+      "side": 1,
+      "message": "PTAL - RS for merge",
+      "revId": "d4ea8a08f67bc4f7816e1cc3c3a345e53184d7e7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
