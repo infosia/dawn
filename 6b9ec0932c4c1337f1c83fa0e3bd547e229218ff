@@ -34,6 +34,24 @@
       "parentUuid": "32858dfb_9788facc",
       "revId": "6b9ec0932c4c1337f1c83fa0e3bd547e229218ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16c1222e_7ce3561a",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-18T09:10:32Z",
+      "side": 1,
+      "message": "anw, I got this error when running your CL locally with debug layer:\n```\nD3D12 ERROR: ID3D12CommandList::ResourceBarrier: Invalid Resource Barrier within a\nRender Pass: A bound RT must not be transitioned within its Render Pass. RT Index:\n0 [ EXECUTION ERROR #1202: RENDER_PASS_INVALID_RESOURCE_BARRIER]\n```\nWhich means we shouldn\u0027t transition the color texture (render target) within the render pass. But it\u0027s ok to transition the resolve texture.",
+      "parentUuid": "69c315ba_04c0c0ac",
+      "revId": "6b9ec0932c4c1337f1c83fa0e3bd547e229218ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
