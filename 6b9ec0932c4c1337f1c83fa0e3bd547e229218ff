@@ -16,6 +16,24 @@
       "message": "I don\u0027t think we need to transition the color texture to `D3D12_RESOURCE_STATE_RESOLVE_SOURCE` if it\u0027s not used in `ResolveSubresource*`. For example, if we use `EndRenderPass` instead, only the resolve texture needs to be transitioned to `D3D12_RESOURCE_STATE_RESOLVE_DEST`",
       "revId": "6b9ec0932c4c1337f1c83fa0e3bd547e229218ff",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69c315ba_04c0c0ac",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-18T08:50:36Z",
+      "side": 1,
+      "message": "Note in this [doc](https://learn.microsoft.com/en-us/windows/win32/api/d3d12/ne-d3d12-d3d12_render_pass_ending_access_type#:~:text\u003dYou%20should%20ensure%20that%20the%20resolve%20destination%20is%20in%20the%20D3D12_RESOURCE_STATE_RESOLVE_DEST%20resource%20state%20when%20the%20render%20pass%20ends.), for `D3D12_RENDER_PASS_ENDING_ACCESS_TYPE_RESOLVE` it only mentions that the resolve texture need to be in `D3D12_RESOURCE_STATE_RESOLVE_DEST` when the render pass ends. It doesn\u0027t mention anything about the color texture needs to be in `D3D12_RESOURCE_STATE_RESOLVE_SOURCE`",
+      "parentUuid": "32858dfb_9788facc",
+      "revId": "6b9ec0932c4c1337f1c83fa0e3bd547e229218ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
