@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a7c6e9a_aeb38493",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T12:12:45Z",
+      "side": 1,
+      "message": "Did more fixes for MSVC, please take a look again.",
+      "revId": "87da3ae69b3f4416b566851828aa565e7977cea0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
