@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "223b77fd_4e97ef0f",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-18T08:10:02Z",
+      "side": 1,
+      "message": "IDK what we should do actually, I thought we were breaking all of Chromium but since we aren\u0027t then maybe we don\u0027t need this change?",
+      "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
