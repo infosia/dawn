@@ -91,14 +91,9 @@ void Queue::UpdateWaitingEvents(ExecutionSerial completedSerial) {
 MaybeError Queue::WaitForIdleForDestruction() {
     // Forget all pending commands.
     mCommandContext.AcquireCommands();
-    DAWN_TRY(CheckPassedSerials());
 
-    // Wait for all commands to be finished so we can free resources
-    while (GetCompletedCommandSerial() != GetLastSubmittedCommandSerial()) {
-        usleep(100);
-        DAWN_TRY(CheckPassedSerials());
-    }
-
+    DAWN_TRY(WaitForQueueSerial(GetLastSubmittedCommandSerial(),
+                                std::numeric_limits<Nanoseconds>::max()));
     return {};
 }
 
@@ -161,13 +156,16 @@ MaybeError Queue::SubmitPendingCommandBuffer() {
     // Update the completed serial once the completed handler is fired. Make a local copy of
     // mLastSubmittedSerial so it is captured by value.
     ExecutionSerial pendingSerial = GetPendingCommandSerial();
-    // This ObjC block runs on a different thread
+    // This ObjC block runs on a different thread, add a reference and release it in the completed
+    // handler to the queue to ensure we don't reference deleted addresses.
+    AddRef();
     [*pendingCommands addCompletedHandler:^(id<MTLCommandBuffer>) {
         TRACE_EVENT_ASYNC_END0(platform, GPUWork, "DeviceMTL::SubmitPendingCommandBuffer",
                                uint64_t(pendingSerial));
 
         this->UpdateCompletedSerialTo(pendingSerial);
         this->UpdateWaitingEvents(pendingSerial);
+        this->Release();
     }];
 
     TRACE_EVENT_ASYNC_BEGIN0(platform, GPUWork, "DeviceMTL::SubmitPendingCommandBuffer",
@@ -250,8 +248,9 @@ Ref<WaitListEvent> Queue::CreateWorkDoneEvent(ExecutionSerial serial) {
     return completionEvent;
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerial(ExecutionSerial serial, Nanoseconds timeout) {
-    return CreateWorkDoneEvent(serial)->Wait(timeout);
+ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                             Nanoseconds timeout) {
+    return CreateWorkDoneEvent(serial)->Wait(timeout) ? serial : kBeginningOfGPUTime;
 }
 
 }  // namespace dawn::native::metal

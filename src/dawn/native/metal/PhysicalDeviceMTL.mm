@@ -538,6 +538,9 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
     deviceToggles->Default(
         Toggle::EnableIntegerRangeAnalysisInRobustness,
         platform->IsFeatureEnabled(platform::Features::kWebGPUEnableRangeAnalysisForRobustness));
+
+    // Metal waiting is already thread safe.
+    deviceToggles->Default(Toggle::WaitIsThreadSafe, true);
 }
 
 MaybeError PhysicalDevice::InitializeImpl() {
