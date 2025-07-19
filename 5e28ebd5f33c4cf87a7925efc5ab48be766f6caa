@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5006b9c_b1bf8962",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-19T00:32:31Z",
+      "side": 1,
+      "message": "hm, I guess editing your CL description and then trying to use rubber-stamper to land it did not quite work ^_^",
+      "revId": "5e28ebd5f33c4cf87a7925efc5ab48be766f6caa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
