@@ -4178,6 +4178,17 @@
             {"name": "usage", "type": "texture usage"}
         ]
     },
+    "texel buffer view descriptor": {
+        "category": "structure",
+        "tags": ["dawn"],
+        "extensible": "in",
+        "members": [
+            {"name": "label", "type": "string view", "optional": true},
+            {"name": "format", "type": "texture format"},
+            {"name": "offset", "type": "uint64_t", "default": "0"},
+            {"name": "size", "type": "uint64_t", "default": "whole size"}
+        ]
+    },
     "texture component swizzle descriptor": {
         "category": "structure",
         "tags": ["dawn"],
