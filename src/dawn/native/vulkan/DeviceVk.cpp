@@ -64,6 +64,7 @@
 #include "dawn/native/vulkan/SharedFenceVk.h"
 #include "dawn/native/vulkan/SharedTextureMemoryVk.h"
 #include "dawn/native/vulkan/SwapChainVk.h"
+#include "dawn/native/vulkan/TexelBufferViewVk.h"
 #include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
@@ -249,6 +250,11 @@ ResultOrError<Ref<TextureViewBase>> Device::CreateTextureViewImpl(
     TextureBase* texture,
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
     return TextureView::Create(texture, mNextTextureViewId++, descriptor);
+}
+ResultOrError<Ref<TexelBufferViewBase>> Device::CreateTexelBufferViewImpl(
+    BufferBase* buffer,
+    const UnpackedPtr<TexelBufferViewDescriptor>& descriptor) {
+    return TexelBufferView::Create(buffer, descriptor);
 }
 Ref<PipelineCacheBase> Device::GetOrCreatePipelineCacheImpl(const CacheKey& key) {
     if (IsToggleEnabled(Toggle::VulkanMonolithicPipelineCache)) {

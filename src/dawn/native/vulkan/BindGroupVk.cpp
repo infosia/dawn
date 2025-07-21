@@ -38,6 +38,7 @@
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/SamplerVk.h"
+#include "dawn/native/vulkan/TexelBufferViewVk.h"
 #include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
@@ -77,6 +78,8 @@ MaybeError BindGroup::InitializeImpl() {
     ityp::stack_vec<uint32_t, VkDescriptorBufferInfo, kMaxOptimalBindingsPerGroup> writeBufferInfo(
         bindingCount);
     ityp::stack_vec<uint32_t, VkDescriptorImageInfo, kMaxOptimalBindingsPerGroup> writeImageInfo(
+        bindingCount);
+    ityp::stack_vec<uint32_t, VkBufferView, kMaxOptimalBindingsPerGroup> writeTexelBufferViews(
         bindingCount);
 
     uint32_t numWrites = 0;
@@ -174,6 +177,18 @@ MaybeError BindGroup::InitializeImpl() {
         writeImageInfo[writeIndex].imageView = handle;
         writeImageInfo[writeIndex].imageLayout = VK_IMAGE_LAYOUT_GENERAL;
         write->pImageInfo = &writeImageInfo[writeIndex];
+    }
+
+    for (BindingIndex i : layout->GetTexelBufferIndices()) {
+        TexelBufferView* view = ToBackend(GetBindingAsTexelBufferView(i));
+        VkBufferView handle = view->GetHandle();
+        if (handle == VK_NULL_HANDLE) {
+            continue;
+        }
+
+        auto [writeIndex, write] = AddWrite(i);
+        writeTexelBufferViews[writeIndex] = handle;
+        write->pTexelBufferView = AsVkArray(&writeTexelBufferViews[writeIndex]);
     }
 
     for (BindingIndex i : layout->GetInputAttachmentIndices()) {
