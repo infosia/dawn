@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee7f6ae9_1c89e583",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T15:40:49Z",
+      "side": 1,
+      "message": "Something about primitive restart?",
+      "revId": "b57a50b96fbbfd4de388085d3271c1efab85b6cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20faf565_aaf5e3f8",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T15:40:49Z",
+      "side": 1,
+      "message": "So quad uniform (non uniform as far as WGSL is concerned) but not subgroup uniform.",
+      "range": {
+        "startLine": 51,
+        "startChar": 29,
+        "endLine": 51,
+        "endChar": 58
+      },
+      "revId": "b57a50b96fbbfd4de388085d3271c1efab85b6cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
