@@ -52,6 +52,7 @@
 #include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/SystemEvent.h"
+#include "dawn/native/TexelBufferView.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
@@ -107,7 +108,60 @@ class ErrorBuffer final : public BufferBase {
 // GetMappedRange on a zero-sized buffer returns a pointer to this value.
 static uint32_t sZeroSizedMappingData = 0xCAFED00D;
 
+// Supported Texel buffer formats proposed in
+// https://github.com/gpuweb/gpuweb/blob/main/proposals/texel-buffers.md#plain-color-formats
+bool IsFormatSupportedForTexelBuffer(wgpu::TextureFormat format) {
+    switch (format) {
+        case wgpu::TextureFormat::RGBA8Unorm:
+        case wgpu::TextureFormat::RGBA8Uint:
+        case wgpu::TextureFormat::RGBA8Sint:
+        case wgpu::TextureFormat::RGBA16Uint:
+        case wgpu::TextureFormat::RGBA16Sint:
+        case wgpu::TextureFormat::RGBA16Float:
+        case wgpu::TextureFormat::R32Uint:
+        case wgpu::TextureFormat::R32Sint:
+        case wgpu::TextureFormat::R32Float:
+        case wgpu::TextureFormat::RGBA32Uint:
+        case wgpu::TextureFormat::RGBA32Sint:
+        case wgpu::TextureFormat::RGBA32Float:
+            return true;
+        default:
+            return false;
+    }
+}
+
 }  // anonymous namespace
+
+ResultOrError<UnpackedPtr<TexelBufferViewDescriptor>> ValidateTexelBufferViewDescriptor(
+    const BufferBase* buffer,
+    const TexelBufferViewDescriptor* descriptor) {
+    UnpackedPtr<TexelBufferViewDescriptor> desc;
+    DAWN_TRY_ASSIGN(desc, ValidateAndUnpack(descriptor));
+
+    DAWN_INVALID_IF(!(buffer->GetUsage() & wgpu::BufferUsage::TexelBuffer),
+                    "Buffer usage (%s) missing TexelBuffer bit.", buffer->GetUsage());
+
+    DAWN_INVALID_IF(
+        desc->offset > buffer->GetSize() || desc->size > buffer->GetSize() - desc->offset,
+        "Texel buffer view range (offset %u, size %u) exceeds buffer size %u.", desc->offset,
+        desc->size, buffer->GetSize());
+
+    DAWN_INVALID_IF(desc->format == wgpu::TextureFormat::Undefined, "Format is undefined.");
+    DAWN_INVALID_IF(!IsFormatSupportedForTexelBuffer(desc->format),
+                    "Texel buffer view format (%s) is not allowed for texel buffers.",
+                    desc->format);
+
+    const Format& formatInfo = buffer->GetDevice()->GetValidInternalFormat(desc->format);
+    uint32_t texelSize = formatInfo.GetAspectInfo(Aspect::Color).block.byteSize;
+    DAWN_INVALID_IF(desc->offset % texelSize != 0,
+                    "Texel buffer view offset (%u) must be %u-byte aligned.", desc->offset,
+                    texelSize);
+    DAWN_INVALID_IF(desc->size % texelSize != 0,
+                    "Texel buffer view size (%u) is not a multiple of texel size %u.", desc->size,
+                    texelSize);
+
+    return desc;
+}
 
 wgpu::BufferUsage ComputeInternalBufferUsages(const DeviceBase* device,
                                               wgpu::BufferUsage usage,
@@ -942,6 +996,22 @@ void BufferBase::DumpMemoryStatistics(MemoryDump* dump, const char* prefix) cons
                     GetAllocatedSize());
     dump->AddString(name.c_str(), "label", GetLabel());
     dump->AddString(name.c_str(), "usage", absl::StrFormat("%s", GetInternalUsage()));
+}
+
+ResultOrError<Ref<TexelBufferViewBase>> BufferBase::CreateTexelView(
+    const TexelBufferViewDescriptor* descriptor) {
+    DAWN_ASSERT(descriptor != nullptr);
+    return GetDevice()->CreateTexelBufferView(this, descriptor);
+}
+
+TexelBufferViewBase* BufferBase::APICreateTexelView(const TexelBufferViewDescriptor* descriptor) {
+    DeviceBase* device = GetDevice();
+    Ref<TexelBufferViewBase> result;
+    if (device->ConsumedError(CreateTexelView(descriptor), &result,
+                              "calling %s.CreateTexelView(%s).", this, descriptor)) {
+        result = TexelBufferViewBase::MakeError(device, descriptor ? descriptor->label : nullptr);
+    }
+    return ReturnToAPI(std::move(result));
 }
 
 ApiObjectList* BufferBase::GetTexelBufferViewTrackingList() {
