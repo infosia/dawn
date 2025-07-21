@@ -56,6 +56,30 @@
       },
       "revId": "4569b10f891a2cce28fdb9e4a9d1cabc7745ae49",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bd8274f9_cb0abdbe",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-21T01:46:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d3b9f49_8154b70d",
+      "range": {
+        "startLine": 1227,
+        "startChar": 0,
+        "endLine": 1232,
+        "endChar": 13
+      },
+      "revId": "4569b10f891a2cce28fdb9e4a9d1cabc7745ae49",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
