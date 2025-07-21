@@ -79,6 +79,7 @@
 #include "dawn/native/SharedTextureMemory.h"
 #include "dawn/native/Surface.h"
 #include "dawn/native/SwapChain.h"
+#include "dawn/native/TexelBufferView.h"
 #include "dawn/native/Texture.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/native/WaitListEvent.h"
@@ -2328,6 +2329,37 @@ ResultOrError<Ref<TextureViewBase>> DeviceBase::CreateTextureView(
         descriptor, [&](const TextureViewQuery&) -> ResultOrError<Ref<TextureViewBase>> {
             return CreateTextureViewImpl(texture, descriptor);
         });
+}
+
+ResultOrError<Ref<TexelBufferViewBase>> DeviceBase::CreateTexelBufferView(
+    BufferBase* buffer,
+    const TexelBufferViewDescriptor* descriptorOrig) {
+    DAWN_TRY(ValidateIsAlive());
+    DAWN_TRY(ValidateObject(buffer));
+
+    TexelBufferViewDescriptor desc =
+        GetTexelBufferViewDescriptorWithDefaults(buffer, descriptorOrig);
+    std::string generatedLabel;
+    if (descriptorOrig == nullptr) {
+        generatedLabel = absl::StrFormat("defaulted from %s", buffer);
+        desc.label = {generatedLabel.data(), generatedLabel.length()};
+    }
+
+    UnpackedPtr<TexelBufferViewDescriptor> descriptor;
+    if (IsValidationEnabled()) {
+        DAWN_TRY_ASSIGN_CONTEXT(descriptor, ValidateTexelBufferViewDescriptor(buffer, &desc),
+                                "validating %s", &desc);
+    } else {
+        descriptor = Unpack(&desc);
+    }
+
+    return CreateTexelBufferViewImpl(buffer, descriptor);
+}
+
+ResultOrError<Ref<TexelBufferViewBase>> DeviceBase::CreateTexelBufferViewImpl(
+    BufferBase* buffer,
+    const UnpackedPtr<TexelBufferViewDescriptor>& descriptor) {
+    return AcquireRef(new TexelBufferViewBase(buffer, descriptor));
 }
 
 // Other implementation details

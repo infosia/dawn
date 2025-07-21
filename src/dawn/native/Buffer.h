@@ -76,6 +76,13 @@ wgpu::BufferUsage ComputeInternalBufferUsages(const DeviceBase* device,
                                               wgpu::BufferUsage usage,
                                               size_t bufferSize);
 
+TexelBufferViewDescriptor GetTexelBufferViewDescriptorWithDefaults(
+    const BufferBase* buffer,
+    const TexelBufferViewDescriptor* descriptor);
+ResultOrError<UnpackedPtr<TexelBufferViewDescriptor>> ValidateTexelBufferViewDescriptor(
+    const BufferBase* buffer,
+    const TexelBufferViewDescriptor* descriptor);
+
 class BufferBase : public SharedResource {
   public:
     enum class BufferState {
@@ -142,6 +149,10 @@ class BufferBase : public SharedResource {
     wgpu::BufferUsage APIGetUsage() const;
     wgpu::BufferMapState APIGetMapState() const;
     uint64_t APIGetSize() const;
+
+    ResultOrError<Ref<TexelBufferViewBase>> CreateTexelView(
+        const TexelBufferViewDescriptor* descriptor);
+    TexelBufferViewBase* APICreateTexelView(const TexelBufferViewDescriptor* descriptor);
 
     ApiObjectList* GetTexelBufferViewTrackingList();
 
