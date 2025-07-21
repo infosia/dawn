@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-07-18 11:55:53AM
+# Last rolled: 2025-07-21 08:14:36AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -127,7 +127,6 @@ crbug.com/42241110 webgpu:api,validation,error_scope:simple:errorType="out-of-me
 # The "Skip" expectations in this section are expected to be removable at some
 # point.
 ################################################################################
-
 
 ### TEMPORARY ANDROID SKIPS
 
@@ -849,6 +848,7 @@ crbug.com/0000 [ android-pixel-6 ] webgpu:api,operation,adapter,requestDevice:st
 crbug.com/0000 [ intel linux ] webgpu:api,operation,adapter,requestDevice:stale: [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,operation,adapter,requestDevice:stale: [ Failure ]
 crbug.com/0000 [ intel-0x9bc5 linux ] webgpu:api,operation,command_buffer,copyTextureToTexture:color_textures,non_compressed,array:srcFormat="rgba32float";dstFormat="rgba32float";dimension="3d" [ Failure ]
+crbug.com/0000 [ android-pixel-6 ] webgpu:api,operation,command_buffer,copyTextureToTexture:copy_depth_stencil:format="depth24plus-stencil8" [ Failure ]
 crbug.com/0000 [ intel linux ] webgpu:api,operation,compute,basic:large_dispatch:dispatchSize="maximum" [ Failure ]
 crbug.com/0000 [ linux nvidia ] webgpu:api,validation,buffer,create:limit: [ Failure ]
 crbug.com/0000 [ android arm ] webgpu:api,validation,error_scope:simple:errorType="validation";errorFilter="out-of-memory" [ Skip ]
