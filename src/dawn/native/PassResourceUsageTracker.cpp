@@ -36,6 +36,7 @@
 #include "dawn/native/ExternalTexture.h"
 #include "dawn/native/Format.h"
 #include "dawn/native/QuerySet.h"
+#include "dawn/native/TexelBufferView.h"
 #include "dawn/native/Texture.h"
 
 namespace dawn::native {
@@ -163,6 +164,27 @@ void SyncScopeUsageTracker::AddBindGroup(BindGroupBase* group) {
                         DAWN_UNREACHABLE();
                 }
             },
+            [&](const TexelBufferBindingInfo& layout) {
+                TexelBufferViewBase* view = group->GetBindingAsTexelBufferView(bindingIndex);
+                BufferBase* buffer = view->GetBuffer();
+                wgpu::BufferUsage usage;
+                switch (layout.access) {
+                    case wgpu::TexelBufferAccess::ReadWrite:
+                        usage = wgpu::BufferUsage::Storage;
+                        break;
+                    case wgpu::TexelBufferAccess::ReadOnly:
+                        if (buffer->GetUsage() & wgpu::BufferUsage::Storage) {
+                            usage = wgpu::BufferUsage::Storage;
+                        } else {
+                            usage = kReadOnlyTexelBuffer;
+                        }
+                        break;
+                    case wgpu::TexelBufferAccess::BindingNotUsed:
+                    case wgpu::TexelBufferAccess::Undefined:
+                        DAWN_UNREACHABLE();
+                }
+                BufferUsedAs(buffer, usage, bindingInfo.visibility);
+            },
             [&](const SamplerBindingInfo&) {},  //
             [&](const StaticSamplerBindingInfo&) {},
             [&](const InputAttachmentBindingInfo&) {
@@ -232,6 +254,10 @@ void ComputePassResourceUsageTracker::AddResourcesReferencedByBindGroup(BindGrou
             [&](const StorageTextureBindingInfo&) {
                 mUsage.referencedTextures.insert(
                     group->GetBindingAsTextureView(index)->GetTexture());
+            },
+            [&](const TexelBufferBindingInfo&) {
+                mUsage.referencedBuffers.insert(
+                    group->GetBindingAsTexelBufferView(index)->GetBuffer());
             },
             [](const SamplerBindingInfo&) {}, [](const StaticSamplerBindingInfo&) {},
             [&](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });

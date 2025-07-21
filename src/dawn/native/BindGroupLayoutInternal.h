@@ -186,6 +186,7 @@ class BindGroupLayoutInternalBase : public ApiObjectBase,
         // Textures
         Order_SampledTexture,
         Order_StorageTexture,
+        Order_TexelBuffer,
         Order_InputAttachment,
         // Samplers
         Order_StaticSampler,

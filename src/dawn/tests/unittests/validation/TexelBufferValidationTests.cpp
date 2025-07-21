@@ -28,6 +28,7 @@
 #include <vector>
 
 #include "dawn/tests/unittests/validation/ValidationTest.h"
+#include "dawn/utils/WGPUHelpers.h"
 
 namespace dawn {
 namespace {
@@ -57,6 +58,68 @@ TEST_F(TexelBufferValidationTest, MappableUsageRequiresExtendedFeature) {
 
     desc.usage = wgpu::BufferUsage::TexelBuffer | wgpu::BufferUsage::MapWrite;
     ASSERT_DEVICE_ERROR(device.CreateBuffer(&desc));
+}
+
+// Vertex stage visibility requires read-only access.
+TEST_F(TexelBufferValidationTest, VertexVisibilityRequiresReadOnly) {
+    wgpu::TexelBufferBindingLayout layout = {};
+    layout.access = wgpu::TexelBufferAccess::ReadWrite;
+    layout.format = wgpu::TextureFormat::RGBA8Uint;
+
+    wgpu::BindGroupLayoutEntry entry = {};
+    entry.binding = 0;
+    entry.visibility = wgpu::ShaderStage::Vertex;
+    entry.nextInChain = &layout;
+
+    wgpu::BindGroupLayoutDescriptor desc = {};
+    desc.entryCount = 1;
+    desc.entries = &entry;
+
+    ASSERT_DEVICE_ERROR(device.CreateBindGroupLayout(&desc));
+}
+
+// The format of a bound texel buffer view must match the layout.
+TEST_F(TexelBufferValidationTest, ViewFormatMustMatchLayout) {
+    wgpu::BufferDescriptor desc;
+    desc.size = 256;
+    desc.usage = wgpu::BufferUsage::TexelBuffer;
+    wgpu::Buffer buffer = device.CreateBuffer(&desc);
+
+    wgpu::TexelBufferViewDescriptor viewDesc = {};
+    viewDesc.format = wgpu::TextureFormat::RGBA8Uint;
+    viewDesc.offset = 0;
+    viewDesc.size = 256;
+    wgpu::TexelBufferView view = buffer.CreateTexelView(&viewDesc);
+
+    wgpu::TexelBufferBindingLayout layout = {};
+    layout.access = wgpu::TexelBufferAccess::ReadOnly;
+    layout.format = wgpu::TextureFormat::R32Uint;
+
+    wgpu::BindGroupLayout bgl =
+        utils::MakeBindGroupLayout(device, {{0, wgpu::ShaderStage::Compute, &layout}});
+
+    ASSERT_DEVICE_ERROR(utils::MakeBindGroup(device, bgl, {{0, view}}));
+}
+
+// Read-write texel buffer bindings require the buffer to also have STORAGE usage.
+TEST_F(TexelBufferValidationTest, ReadWriteBindingRequiresStorageUsage) {
+    wgpu::BufferDescriptor desc;
+    desc.size = 256;
+    desc.usage = wgpu::BufferUsage::TexelBuffer;
+    wgpu::Buffer buffer = device.CreateBuffer(&desc);
+
+    wgpu::TexelBufferViewDescriptor viewDesc = {};
+    viewDesc.format = wgpu::TextureFormat::R32Uint;
+    wgpu::TexelBufferView view = buffer.CreateTexelView(&viewDesc);
+
+    wgpu::TexelBufferBindingLayout layout = {};
+    layout.access = wgpu::TexelBufferAccess::ReadWrite;
+    layout.format = wgpu::TextureFormat::R32Uint;
+
+    wgpu::BindGroupLayout bgl =
+        utils::MakeBindGroupLayout(device, {{0, wgpu::ShaderStage::Compute, &layout}});
+
+    ASSERT_DEVICE_ERROR(utils::MakeBindGroup(device, bgl, {{0, view}}));
 }
 
 class TexelBufferValidationWithExtendedMapTest : public TexelBufferValidationTest {
