@@ -16,6 +16,29 @@
       "message": "LGTM, adding Loko.",
       "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0633fb56_41c691ca",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-21T23:20:11Z",
+      "side": 1,
+      "message": "Isn\u0027t the plan to make it an extension? Otherwise, this is technically a breaking change in terms of ABI stability (I think)?",
+      "range": {
+        "startLine": 344,
+        "startChar": 12,
+        "endLine": 344,
+        "endChar": 88
+      },
+      "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
