@@ -39,6 +39,8 @@
 # Kind:      lib
 ################################################################################
 tint_add_target(tint_lang_core_ir_analysis lib
+  lang/core/ir/analysis/for_loop_analysis.cc
+  lang/core/ir/analysis/for_loop_analysis.h
   lang/core/ir/analysis/integer_range_analysis.cc
   lang/core/ir/analysis/integer_range_analysis.h
   lang/core/ir/analysis/loop_analysis.cc
@@ -73,6 +75,7 @@ tint_target_add_external_dependencies(tint_lang_core_ir_analysis lib
 # Kind:      test
 ################################################################################
 tint_add_target(tint_lang_core_ir_analysis_test test
+  lang/core/ir/analysis/for_loop_analysis_test.cc
   lang/core/ir/analysis/integer_range_analysis_test.cc
   lang/core/ir/analysis/loop_analysis_test.cc
 )

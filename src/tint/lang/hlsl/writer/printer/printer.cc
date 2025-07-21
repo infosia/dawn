@@ -40,6 +40,7 @@
 #include "src/tint/lang/core/enums.h"
 #include "src/tint/lang/core/fluent_types.h"
 #include "src/tint/lang/core/ir/access.h"
+#include "src/tint/lang/core/ir/analysis/for_loop_analysis.h"
 #include "src/tint/lang/core/ir/bitcast.h"
 #include "src/tint/lang/core/ir/block.h"
 #include "src/tint/lang/core/ir/break_if.h"
@@ -316,9 +317,18 @@ class Printer : public tint::TextGenerator {
     }
 
     void EmitBlock(const core::ir::Block* block) {
+        auto pred = [](const core::ir::Instruction*) -> bool { return true; };
+        EmitBlock(block, pred);
+    }
+
+    template <typename T>
+    void EmitBlock(const core::ir::Block* block, T&& predicate) {
         TINT_SCOPED_ASSIGNMENT(current_block_, block);
 
         for (auto* inst : *block) {
+            if (!predicate(inst)) {
+                continue;
+            }
             Switch(
                 inst,
                 // Discard and TerminateInvocation must come before Call.
@@ -497,6 +507,8 @@ class Printer : public tint::TextGenerator {
         //   }
         // }
 
+        core::ir::analysis::ForLoopAnalysis analysis(*l);
+
         auto emit_continuing = [&] {
             Line() << "{";
             {
@@ -512,10 +524,21 @@ class Printer : public tint::TextGenerator {
             const ScopedIndent init(current_buffer_);
             EmitBlock(l->Initializer());
 
-            Line() << "while(true) {";
+            if (analysis.GetTargetIf()) {
+                auto out = Line();
+                out << "for(; ";
+
+                EmitValue(out, analysis.GetIfCondition());
+                out << " ;) {";
+            } else {
+                Line() << "while(true) {";
+            }
+
             {
                 const ScopedIndent si(current_buffer_);
-                EmitBlock(l->Body());
+                EmitBlock(l->Body(), [&analysis](const core::ir::Instruction* inst) {
+                    return !analysis.IsConditionInstruction(inst);
+                });
             }
             Line() << "}";
         }
