@@ -74,6 +74,9 @@ VkBufferUsageFlags VulkanBufferUsage(wgpu::BufferUsage usage) {
     if (usage & (wgpu::BufferUsage::Storage | kInternalStorageBuffer | kReadOnlyStorageBuffer)) {
         flags |= VK_BUFFER_USAGE_STORAGE_BUFFER_BIT;
     }
+    if (usage & wgpu::BufferUsage::TexelBuffer) {
+        flags |= VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT;
+    }
     if (usage & wgpu::BufferUsage::Indirect) {
         flags |= VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT;
     }
@@ -148,6 +151,9 @@ VkAccessFlags VulkanAccessFlags(wgpu::BufferUsage usage) {
     if (usage & kReadOnlyStorageBuffer) {
         flags |= VK_ACCESS_SHADER_READ_BIT;
     }
+    if (usage & kReadOnlyTexelBuffer) {
+        flags |= VK_ACCESS_SHADER_READ_BIT;
+    }
     if (usage & kIndirectBufferForBackendResourceTracking) {
         flags |= VK_ACCESS_INDIRECT_COMMAND_READ_BIT;
     }
@@ -171,8 +177,9 @@ MemoryKind GetMemoryKindFor(wgpu::BufferUsage bufferUsage) {
     // `VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT`.
     constexpr wgpu::BufferUsage kDeviceLocalBufferUsages =
         wgpu::BufferUsage::Index | wgpu::BufferUsage::QueryResolve | wgpu::BufferUsage::Storage |
-        wgpu::BufferUsage::Uniform | wgpu::BufferUsage::Vertex | kInternalStorageBuffer |
-        kReadOnlyStorageBuffer | kIndirectBufferForBackendResourceTracking;
+        wgpu::BufferUsage::Uniform | wgpu::BufferUsage::TexelBuffer | wgpu::BufferUsage::Vertex |
+        kInternalStorageBuffer | kReadOnlyStorageBuffer | kReadOnlyTexelBuffer |
+        kIndirectBufferForBackendResourceTracking;
     if (bufferUsage & kDeviceLocalBufferUsages) {
         requestKind |= MemoryKind::DeviceLocal;
     }

@@ -142,6 +142,30 @@ TEST_F(TexelBufferValidationTest, BindingHelperChainsTexelBufferBindingEntry) {
     EXPECT_EQ(texelEntry->texelBufferView.Get(), view.Get());
 }
 
+// Creating a bind group without chaining a TexelBufferBindingEntry fails.
+TEST_F(TexelBufferValidationTest, BindGroupMissingTexelBufferBindingEntry) {
+    constexpr uint64_t kSize = 4 * 4;
+    wgpu::Buffer buffer = CreateTexelBuffer(kSize, wgpu::BufferUsage::TexelBuffer);
+
+    TexelBufferLayoutDescriptor helper(wgpu::TexelBufferAccess::ReadOnly,
+                                       wgpu::ShaderStage::Compute, wgpu::TextureFormat::R32Uint);
+    wgpu::BindGroupLayout bgl = device.CreateBindGroupLayout(&helper.desc);
+
+    // Attempt to bind the buffer directly without the required TexelBufferBindingEntry chain.
+    wgpu::BindGroupEntry entry = {};
+    entry.binding = 0;
+    entry.buffer = buffer;
+    entry.offset = 0;
+    entry.size = kSize;
+
+    wgpu::BindGroupDescriptor bgDesc = {};
+    bgDesc.layout = bgl;
+    bgDesc.entryCount = 1;
+    bgDesc.entries = &entry;
+
+    ASSERT_DEVICE_ERROR(device.CreateBindGroup(&bgDesc));
+}
+
 // The format of a bound texel buffer view must match the layout.
 TEST_F(TexelBufferValidationTest, ViewFormatMustMatchLayout) {
     wgpu::BufferDescriptor desc;

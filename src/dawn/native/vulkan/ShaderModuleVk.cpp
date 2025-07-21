@@ -197,8 +197,7 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
                     bindings.storage_texture.emplace(srcBindingPoint, dstBindingPoint);
                 },
                 [&](const TexelBufferBindingInfo& bindingInfo) {
-                    // TODO(crbug/382544164): Prototype texel buffer feature
-                    DAWN_UNREACHABLE();
+                    bindings.storage_texture.emplace(srcBindingPoint, dstBindingPoint);
                 },
                 [&](const ExternalTextureBindingInfo& bindingInfo) {
                     const auto& bindingMap = bgl->GetExternalTextureBindingExpansionMap();
