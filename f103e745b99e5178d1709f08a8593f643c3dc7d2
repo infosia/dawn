@@ -129,6 +129,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7fe5719_6598e8cf",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T12:36:24Z",
+      "side": 1,
+      "message": "Yeah but https://source.chromium.org/chromium/chromium/src/+/main:third_party/angle/third_party/dawn/src/dawn/native/vulkan/TextureVk.cpp;drc\u003dddf2e1f61d20171ecd10ae3be70acb750a56686d;l\u003d680 makes it seem that the bit is only used on its own.\n\nAh it\u0027s because we special case render attachment in Vulkan https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/vulkan/CommandBufferVk.cpp;drc\u003dddf2e1f61d20171ecd10ae3be70acb750a56686d;l\u003d293\n\nCan we move the handling of `kResolveAttachmentLoadingUsage` in the handling of `RenderAttachment` then since resolve attachment are always render attachments?",
+      "parentUuid": "1c8ecdcd_2a51780d",
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9d23da0f_7133b297",
         "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
         "patchSetId": 11
