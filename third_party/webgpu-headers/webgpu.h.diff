@@ -92,6 +92,22 @@
      uint64_t offset;
      uint32_t bytesPerRow;
 @@
+     WGPUSamplerBindingLayout sampler;
+     WGPUTextureBindingLayout texture;
+     WGPUStorageTextureBindingLayout storageTexture;
++    WGPUTexelBufferBindingLayout texelBuffer;
+ } WGPUBindGroupLayoutEntry WGPU_STRUCTURE_ATTRIBUTE;
+ 
+ #define WGPU_BIND_GROUP_LAYOUT_ENTRY_INIT _wgpu_MAKE_INIT_STRUCT(WGPUBindGroupLayoutEntry, { \
+@@
+     /*.sampler=*/_wgpu_STRUCT_ZERO_INIT _wgpu_COMMA \
+     /*.texture=*/_wgpu_STRUCT_ZERO_INIT _wgpu_COMMA \
+     /*.storageTexture=*/_wgpu_STRUCT_ZERO_INIT _wgpu_COMMA \
++    /*.texelBuffer=*/_wgpu_STRUCT_ZERO_INIT _wgpu_COMMA \
+ })
+ 
+ typedef struct WGPUBlendState {
+@@
  typedef void (*WGPUProcBindGroupLayoutAddRef)(WGPUBindGroupLayout bindGroupLayout) WGPU_FUNCTION_ATTRIBUTE;
  typedef void (*WGPUProcBindGroupLayoutRelease)(WGPUBindGroupLayout bindGroupLayout) WGPU_FUNCTION_ATTRIBUTE;
  

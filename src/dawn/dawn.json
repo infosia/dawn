@@ -526,7 +526,8 @@
             {"name": "buffer", "type": "buffer binding layout", "default": "zero"},
             {"name": "sampler", "type": "sampler binding layout", "default": "zero"},
             {"name": "texture", "type": "texture binding layout", "default": "zero"},
-            {"name": "storage texture", "type": "storage texture binding layout", "default": "zero"}
+            {"name": "storage texture", "type": "storage texture binding layout", "default": "zero"},
+            {"name": "texel buffer", "type": "texel buffer binding layout", "default": "zero"}
         ]
     },
     "bind group layout descriptor": {
