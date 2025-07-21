@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6f7a4a1_6b41b923",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-21T05:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa6103c2_8eae5c00",
+      "revId": "e15ec65157d71362884e41261310947c39a67b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "368b9d82_ea42a700",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-07-18T08:05:50Z",
       "side": 1,
       "message": "```suggestion\n        }\n\n        return {};\n```",
+      "range": {
+        "startLine": 2000,
+        "startChar": 0,
+        "endLine": 2003,
+        "endChar": 9
+      },
+      "revId": "e15ec65157d71362884e41261310947c39a67b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59ab253b_2b245709",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2003,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-21T05:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "368b9d82_ea42a700",
       "range": {
         "startLine": 2000,
         "startChar": 0,
@@ -75,6 +117,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3b5cba5_4f45efad",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2016,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-21T05:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b78ce6d_936178c9",
+      "revId": "e15ec65157d71362884e41261310947c39a67b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c32e0ba0_e9e2ed7a",
@@ -92,6 +152,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a62d504d_42218330",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 2017,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-21T05:41:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c32e0ba0_e9e2ed7a",
+      "revId": "e15ec65157d71362884e41261310947c39a67b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d163f788_934acc74",
@@ -105,6 +183,24 @@
       "writtenOn": "2025-07-18T08:05:50Z",
       "side": 1,
       "message": "This format is now just not for Chromium but also part of the tier1 extension. We should check also if we can retire that r8 extension in the future.\n\n```suggestion\n        case wgpu::TextureFormat::R8Unorm:\n```",
+      "revId": "e15ec65157d71362884e41261310947c39a67b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a149053d_fc9125a1",
+        "filename": "src/dawn/utils/TextureUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-21T05:41:44Z",
+      "side": 1,
+      "message": "As we discussed here (https://dawn-review.googlesource.com/c/dawn/+/247975/1..17), r8unormstorage can be enabled via Tier 1.",
+      "parentUuid": "d163f788_934acc74",
       "revId": "e15ec65157d71362884e41261310947c39a67b14",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
