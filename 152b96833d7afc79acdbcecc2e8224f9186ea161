@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bc7c5df_a704a271",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-21T22:22:31Z",
+      "side": 1,
+      "message": "LGTM, adding Loko for Dawn stuff.\n\nAlso FYI to Corentin who I think was the one questioning the need for a dedicated texel buffer view when we discussed at the F2F. We\u0027re sticking with this direction for now so if you feel super strongly that this should be implicit please let us know!",
+      "revId": "152b96833d7afc79acdbcecc2e8224f9186ea161",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
