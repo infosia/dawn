@@ -972,18 +972,18 @@ ResultOrError<Ref<TexelBufferViewBase>> BufferBase::CreateTexelView(
     const TexelBufferViewDescriptor* descriptor) {
     DeviceBase* device = GetDevice();
     DAWN_TRY(device->ValidateIsAlive());
+    TexelBufferViewDescriptor desc = {};
+    if (descriptor != nullptr) {
+        desc = *descriptor;
+    } else {
+        desc.size = wgpu::kWholeSize;
+    }
 
     UnpackedPtr<TexelBufferViewDescriptor> unpacked;
     if (device->IsValidationEnabled()) {
-        DAWN_TRY_ASSIGN_CONTEXT(unpacked, ValidateTexelBufferViewDescriptor(this, descriptor),
+        DAWN_TRY_ASSIGN_CONTEXT(unpacked, ValidateTexelBufferViewDescriptor(this, &desc),
                                 "validating %s", descriptor);
     } else {
-        TexelBufferViewDescriptor desc = {};
-        if (descriptor != nullptr) {
-            desc = *descriptor;
-        } else {
-            desc.size = wgpu::kWholeSize;
-        }
         uint64_t size = desc.size == wgpu::kWholeSize ? GetSize() - desc.offset : desc.size;
         desc.size = size;
         unpacked = Unpack(&desc);
