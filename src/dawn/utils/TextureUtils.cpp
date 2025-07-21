@@ -1033,6 +1033,8 @@ const char* GetWGSLImageFormatQualifier(wgpu::TextureFormat textureFormat) {
             return "rgb10a2uint";
         case wgpu::TextureFormat::RGB10A2Unorm:
             return "rgb10a2unorm";
+        case wgpu::TextureFormat::RG11B10Ufloat:
+            return "rg11b10ufloat";
 
 #ifndef __EMSCRIPTEN__
         // Unorm and Snorm 16 formats.

@@ -300,6 +300,9 @@ constexpr std::array<wgpu::TextureFormat, 10> kTier1AdditionalRenderableFormats 
     wgpu::TextureFormat::R16Snorm,    wgpu::TextureFormat::RG16Unorm,
     wgpu::TextureFormat::RG16Snorm,   wgpu::TextureFormat::RGBA16Unorm,
     wgpu::TextureFormat::RGBA16Snorm, wgpu::TextureFormat::RG11B10Ufloat};
+
+constexpr std::array<wgpu::TextureFormat, 1> kTier1AdditionalStorageFormats1 = {
+    wgpu::TextureFormat::RG11B10Ufloat};
 #endif  // __EMSCRIPTEN__
 
 class SubsamplingFactor {
