@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66ca144f_8718ff55",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-21T03:41:18Z",
+      "side": 1,
+      "message": "This is not needed. `kResolveAttachmentLoadingUsage` is already assigned to the resolve texture [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/PassResourceUsageTracker.cpp;drc\u003dd0260a368e65b2be56d179d21fab90976fd494b8;l\u003d139).\n\nThis is because we use sampleType\u003dkInternalResolveAttachmentSampleType in BlitWithDraw.cpp [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BlitColorToColorWithDraw.cpp;drc\u003dbd7d95c700d0ede7ef119c063c6a0b2c2d6cd1a7;l\u003d228)",
+      "range": {
+        "startLine": 1426,
+        "startChar": 55,
+        "endLine": 1426,
+        "endChar": 85
+      },
+      "revId": "9f0da4e541b503d7c7ebab77b79e092f9a8379fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
