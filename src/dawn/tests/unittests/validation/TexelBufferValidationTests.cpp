@@ -25,8 +25,10 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <algorithm>
 #include <vector>
 
+#include "dawn/native/BindGroupLayoutInternal.h"
 #include "dawn/tests/unittests/validation/ValidationTest.h"
 #include "dawn/utils/WGPUHelpers.h"
 
@@ -140,6 +142,104 @@ TEST_F(TexelBufferValidationTest, BindingHelperChainsTexelBufferBindingEntry) {
     const auto* texelEntry =
         reinterpret_cast<const wgpu::TexelBufferBindingEntry*>(entry.nextInChain);
     EXPECT_EQ(texelEntry->texelBufferView.Get(), view.Get());
+}
+
+// The format of a bound texel buffer view must match the layout.
+TEST_F(TexelBufferValidationTest, ViewFormatMustMatchLayout) {
+    wgpu::BufferDescriptor desc;
+    desc.size = 256;
+    desc.usage = wgpu::BufferUsage::TexelBuffer;
+    wgpu::Buffer buffer = device.CreateBuffer(&desc);
+
+    wgpu::TexelBufferViewDescriptor viewDesc = {};
+    viewDesc.format = wgpu::TextureFormat::RGBA8Uint;
+    viewDesc.offset = 0;
+    viewDesc.size = 256;
+    wgpu::TexelBufferView view = buffer.CreateTexelView(&viewDesc);
+
+    wgpu::TexelBufferBindingLayout layout = {};
+    layout.access = wgpu::TexelBufferAccess::ReadOnly;
+    layout.format = wgpu::TextureFormat::R32Uint;
+
+    wgpu::BindGroupLayout bgl =
+        utils::MakeBindGroupLayout(device, {{0, wgpu::ShaderStage::Compute, &layout}});
+
+    ASSERT_DEVICE_ERROR(utils::MakeBindGroup(device, bgl, {{0, view}}));
+}
+
+// Read-write texel buffer bindings require the buffer to also have STORAGE usage.
+TEST_F(TexelBufferValidationTest, ReadWriteBindingRequiresStorageUsage) {
+    wgpu::BufferDescriptor desc;
+    desc.size = 256;
+    desc.usage = wgpu::BufferUsage::TexelBuffer;
+    wgpu::Buffer buffer = device.CreateBuffer(&desc);
+
+    wgpu::TexelBufferViewDescriptor viewDesc = {};
+    viewDesc.format = wgpu::TextureFormat::R32Uint;
+    viewDesc.offset = 0;
+    viewDesc.size = 4;
+    wgpu::TexelBufferView view = buffer.CreateTexelView(&viewDesc);
+
+    wgpu::TexelBufferBindingLayout layout = {};
+    layout.access = wgpu::TexelBufferAccess::ReadWrite;
+    layout.format = wgpu::TextureFormat::R32Uint;
+
+    wgpu::BindGroupLayout bgl =
+        utils::MakeBindGroupLayout(device, {{0, wgpu::ShaderStage::Compute, &layout}});
+
+    ASSERT_DEVICE_ERROR(utils::MakeBindGroup(device, bgl, {{0, view}}));
+}
+
+// Texel buffer bindings are excluded from texture iteration.
+TEST_F(TexelBufferValidationTest, TextureIterationExcludesTexelBuffers) {
+    DAWN_SKIP_TEST_IF(UsesWire());
+
+    wgpu::BindGroupLayoutEntry entries[2] = {};
+    entries[0].binding = 0;
+    entries[0].visibility = wgpu::ShaderStage::Compute;
+    entries[0].texture.sampleType = wgpu::TextureSampleType::Float;
+    entries[0].texture.viewDimension = wgpu::TextureViewDimension::e2D;
+
+    wgpu::TexelBufferBindingLayout texelLayout = {};
+    texelLayout.access = wgpu::TexelBufferAccess::ReadOnly;
+    texelLayout.format = wgpu::TextureFormat::RGBA8Uint;
+
+    entries[1].binding = 1;
+    entries[1].visibility = wgpu::ShaderStage::Compute;
+    entries[1].nextInChain = &texelLayout;
+
+    wgpu::BindGroupLayoutDescriptor desc = {};
+    desc.entryCount = 2;
+    desc.entries = entries;
+    wgpu::BindGroupLayout bgl = device.CreateBindGroupLayout(&desc);
+
+    dawn::native::BindGroupLayoutInternalBase* internal =
+        dawn::native::FromAPI(bgl.Get())->GetInternalBindGroupLayout();
+
+    auto textureRange = internal->GetTextureIndices();
+    auto texelRange = internal->GetTexelBufferIndices();
+
+    size_t textureCount = 0;
+    for (auto _ : textureRange) {
+        ++textureCount;
+    }
+    EXPECT_EQ(textureCount, 1u);
+
+    size_t texelCount = 0;
+    for (auto _ : texelRange) {
+        ++texelCount;
+    }
+    EXPECT_EQ(texelCount, 1u);
+
+    auto texelIndex = *texelRange.begin();
+    bool found = false;
+    for (auto index : textureRange) {
+        if (index == texelIndex) {
+            found = true;
+            break;
+        }
+    }
+    EXPECT_FALSE(found);
 }
 
 class TexelBufferValidationWithExtendedMapTest : public TexelBufferValidationTest {
