@@ -508,7 +508,14 @@
             {"name": "view dimension", "type": "texture view dimension", "default": "2D"}
         ]
     },
-
+    "texel buffer binding layout": {
+        "category": "structure",
+        "extensible": "in",
+        "members": [
+            {"name": "access", "type": "texel buffer access", "default": "read write"},
+            {"name": "format", "type": "texture format"}
+        ]
+    },
     "bind group layout entry": {
         "category": "structure",
         "extensible": "in",
