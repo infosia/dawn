@@ -167,6 +167,9 @@ class Device final : public DeviceBase {
     ResultOrError<Ref<TextureViewBase>> CreateTextureViewImpl(
         TextureBase* texture,
         const UnpackedPtr<TextureViewDescriptor>& descriptor) override;
+    ResultOrError<Ref<TexelBufferViewBase>> CreateTexelBufferViewImpl(
+        BufferBase* buffer,
+        const UnpackedPtr<TexelBufferViewDescriptor>& descriptor) override;
     Ref<ComputePipelineBase> CreateUninitializedComputePipelineImpl(
         const UnpackedPtr<ComputePipelineDescriptor>& descriptor) override;
     Ref<RenderPipelineBase> CreateUninitializedRenderPipelineImpl(
