@@ -179,6 +179,7 @@ struct BindingInitializationHelper {
 #ifndef __EMSCRIPTEN__
     BindingInitializationHelper(uint32_t binding, const wgpu::ExternalTexture& externalTexture);
 #endif  // __EMSCRIPTEN__
+    BindingInitializationHelper(uint32_t binding, const wgpu::TexelBufferView& texelBufferView);
     BindingInitializationHelper(uint32_t binding,
                                 const wgpu::Buffer& buffer,
                                 uint64_t offset = 0,
@@ -191,6 +192,7 @@ struct BindingInitializationHelper {
     uint32_t binding;
     wgpu::Sampler sampler;
     wgpu::TextureView textureView;
+    wgpu::TexelBufferView texelBufferView;
     wgpu::Buffer buffer;
 #ifndef __EMSCRIPTEN__
     wgpu::ExternalTextureBindingEntry externalTextureBindingEntry;
