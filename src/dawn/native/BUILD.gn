@@ -884,6 +884,8 @@ source_set("sources") {
       "vulkan/StreamImplVk.cpp",
       "vulkan/SwapChainVk.cpp",
       "vulkan/SwapChainVk.h",
+      "vulkan/TexelBufferViewVk.cpp",
+      "vulkan/TexelBufferViewVk.h",
       "vulkan/TextureVk.cpp",
       "vulkan/TextureVk.h",
       "vulkan/UniqueVkHandle.h",
