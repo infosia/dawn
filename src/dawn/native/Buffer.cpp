@@ -307,6 +307,11 @@ ResultOrError<UnpackedPtr<BufferDescriptor>> ValidateBufferDescriptor(
 
     DAWN_INVALID_IF(usage == wgpu::BufferUsage::None, "Buffer usages must not be 0.");
 
+    if (usage & wgpu::BufferUsage::TexelBuffer) {
+        DAWN_INVALID_IF(!device->HasFeature(Feature::TexelBuffers), "%s is not enabled.",
+                        wgpu::FeatureName::TexelBuffers);
+    }
+
     if (!device->HasFeature(Feature::BufferMapExtendedUsages)) {
         const wgpu::BufferUsage kMapWriteAllowedUsages =
             wgpu::BufferUsage::MapWrite | wgpu::BufferUsage::CopySrc;
