@@ -31,6 +31,7 @@
 #include "dawn/common/Range.h"
 #include "dawn/common/ityp_stack_vec.h"
 #include "dawn/native/ExternalTexture.h"
+#include "dawn/native/TexelBufferView.h"
 #include "dawn/native/vulkan/BindGroupLayoutVk.h"
 #include "dawn/native/vulkan/BufferVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
@@ -63,6 +64,8 @@ BindGroup::~BindGroup() = default;
 MaybeError BindGroup::InitializeImpl() {
     // Now do a write of a single descriptor set with all possible chained data allocated on the
     // stack.
+    Device* device = ToBackend(GetDevice());
+
     const uint32_t bindingCount = static_cast<uint32_t>((GetLayout()->GetBindingCount()));
     ityp::stack_vec<uint32_t, VkWriteDescriptorSet, kMaxOptimalBindingsPerGroup> writes(
         bindingCount);
@@ -70,6 +73,10 @@ MaybeError BindGroup::InitializeImpl() {
         bindingCount);
     ityp::stack_vec<uint32_t, VkDescriptorImageInfo, kMaxOptimalBindingsPerGroup> writeImageInfo(
         bindingCount);
+    ityp::stack_vec<uint32_t, VkBufferView, kMaxOptimalBindingsPerGroup> writeTexelBufferViews(
+        bindingCount);
+
+    mTexelBufferViews.reserve(bindingCount);
 
     uint32_t numWrites = 0;
     for (BindingIndex bindingIndex : Range(GetLayout()->GetBindingCount())) {
@@ -173,6 +180,36 @@ MaybeError BindGroup::InitializeImpl() {
                 write.pImageInfo = &writeImageInfo[numWrites];
                 return true;
             },
+            [&](const TexelBufferBindingInfo& layout) -> bool {
+                TexelBufferViewBase* view = GetBindingAsTexelBufferView(bindingIndex);
+                Buffer* buffer = ToBackend(view->GetBuffer());
+                Device* device = ToBackend(buffer->GetDevice());
+                VkBuffer handle = buffer->GetHandle();
+                if (handle == VK_NULL_HANDLE) {
+                    return false;
+                }
+
+                VkBufferViewCreateInfo createInfo;
+                createInfo.sType = VK_STRUCTURE_TYPE_BUFFER_VIEW_CREATE_INFO;
+                createInfo.pNext = nullptr;
+                createInfo.flags = 0;
+                createInfo.buffer = handle;
+                createInfo.format = VulkanImageFormat(device, view->GetFormat());
+                createInfo.offset = view->GetOffset();
+                createInfo.range = view->GetSize();
+
+                mTexelBufferViews.push_back(VK_NULL_HANDLE);
+                VkBufferView& bufferView = mTexelBufferViews.back();
+                if (device->fn.CreateBufferView(device->GetVkDevice(), &createInfo, nullptr,
+                                                AsVkArray(&bufferView)) != VK_SUCCESS) {
+                    mTexelBufferViews.pop_back();
+                    return false;
+                }
+
+                writeTexelBufferViews[numWrites] = bufferView;
+                write.pTexelBufferView = AsVkArray(&writeTexelBufferViews[numWrites]);
+                return true;
+            },
             [&](const InputAttachmentBindingInfo&) -> bool {
                 TextureView* view = ToBackend(GetBindingAsTextureView(bindingIndex));
 
@@ -197,7 +234,6 @@ MaybeError BindGroup::InitializeImpl() {
         }
     }
 
-    Device* device = ToBackend(GetDevice());
     // TODO(crbug.com/dawn/855): Batch these updates
     device->fn.UpdateDescriptorSets(device->GetVkDevice(), numWrites, writes.data(), 0, nullptr);
 
@@ -209,6 +245,14 @@ MaybeError BindGroup::InitializeImpl() {
 void BindGroup::DestroyImpl() {
     BindGroupBase::DestroyImpl();
     ToBackend(GetLayout())->DeallocateDescriptorSet(&mDescriptorSetAllocation);
+
+    Device* device = ToBackend(GetDevice());
+    for (VkBufferView view : mTexelBufferViews) {
+        if (view != VK_NULL_HANDLE) {
+            device->fn.DestroyBufferView(device->GetVkDevice(), view, nullptr);
+        }
+    }
+    mTexelBufferViews.clear();
 }
 
 void BindGroup::DeleteThis() {
