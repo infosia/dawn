@@ -52,6 +52,57 @@
       "parentUuid": "ef12406b_e21faa83",
       "revId": "4f61c1ca16b77c5b42e5f1275d4bceae4cd3284f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "822621f3_4fb813d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T12:46:36Z",
+      "side": 1,
+      "message": "Thank you for your patience. LGTM!",
+      "revId": "4f61c1ca16b77c5b42e5f1275d4bceae4cd3284f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc9053db_1082301a",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 4464,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T12:46:36Z",
+      "side": 1,
+      "message": "Unless you plan on adding more info, I guess the following could be nicer?\n\n```suggestion\n    \"dawn adapter properties renderer type\": {\n```",
+      "revId": "4f61c1ca16b77c5b42e5f1275d4bceae4cd3284f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47314c80_8c3bb570",
+        "filename": "src/dawn/native/opengl/PhysicalDeviceGL.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T12:46:36Z",
+      "side": 1,
+      "message": "WDYT of adding this logic in the frontend before the call to `PopulateBackendProperties` but let backend overwrite it? It would mean only backends with specific APIs to determine the renderer mode would need to have logic for it.",
+      "revId": "4f61c1ca16b77c5b42e5f1275d4bceae4cd3284f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
