@@ -107,6 +107,41 @@
       "message": "Does this ever happen? Looking at the Vulkan backend, it seems like it shouldn\u0027t?",
       "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1c8ecdcd_2a51780d",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-21T10:09:03Z",
+      "side": 1,
+      "message": "Currently front-end will assign `kResolveAttachmentLoadingUsage | RenderAttachment` to a resolve target.\nReaching here, the function would have returned `D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE | D3D12_RESOURCE_STATE_RENDER_TARGET` combined states. And it\u0027s invalid in D3D12. A resource cannot be both in resource state and render target state. We shouldn\u0027t transition the resolve texture to render target state anw, because it\u0027s not a render target. It\u0027s only used in the resolve step when the render pass ends.\n\nThe vulkan backend doesn\u0027t have conflicting problems when translating `kResolveAttachmentLoadingUsage | RenderAttachment` to access \u0026 stage bits iirc.",
+      "parentUuid": "9b7852c0_5439f69b",
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d23da0f_7133b297",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-21T10:09:03Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

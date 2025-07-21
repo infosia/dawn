@@ -94,6 +94,30 @@
       },
       "revId": "9f0da4e541b503d7c7ebab77b79e092f9a8379fd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f350349d_3a719a1c",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-21T10:09:03Z",
+      "side": 1,
+      "message": "\u003e Thanks! kResolveAttachmentLoadingUsage is set when load op is ExpandResolveTexture. When load op is clear or load, kResolveAttachmentLoadingUsage is still required here?\n\nWhen the load op is clear or load, we don\u0027t read the resolve texture in the expanding step. Hence we don\u0027t need kResolveAttachmentLoadingUsage nor transitioning the resolve texture to `D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE` state in the D3D12 backend.\n\nI agree with Corentin that we shouldn\u0027t add any backend-specific logic to the front-end code. Given that you already skip assigning `D3D12_RESOURCE_STATE_RENDER_TARGET` state if kResolveAttachmentLoadingUsage is present in [1], there is no need to explicitly skip `RenderAttachment` usage in the front-end either.",
+      "parentUuid": "add807c2_cb6d2203",
+      "range": {
+        "startLine": 1426,
+        "startChar": 55,
+        "endLine": 1426,
+        "endChar": 85
+      },
+      "revId": "9f0da4e541b503d7c7ebab77b79e092f9a8379fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
