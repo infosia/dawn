@@ -39,6 +39,30 @@
       },
       "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48b21e42_e1331f4f",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-21T23:46:25Z",
+      "side": 1,
+      "message": "The proposal was that this would just be a feature, not an extension. Are you saying that this is a breaking change for the native headers? Can we make it a chained struct for native with it being just a language feature for WebGPU (presumably yes, since that\u0027s what we do for extensions)?",
+      "parentUuid": "0633fb56_41c691ca",
+      "range": {
+        "startLine": 344,
+        "startChar": 12,
+        "endLine": 344,
+        "endChar": 88
+      },
+      "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
