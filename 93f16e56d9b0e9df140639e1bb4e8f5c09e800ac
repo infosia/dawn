@@ -33,6 +33,24 @@
       "message": "Nit: kArrayLengthFromImmediateCapabilities",
       "revId": "93f16e56d9b0e9df140639e1bb4e8f5c09e800ac",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cec07a3_282ab80e",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-21T01:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b91ccc41_592978ca",
+      "revId": "93f16e56d9b0e9df140639e1bb4e8f5c09e800ac",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
