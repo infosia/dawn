@@ -283,6 +283,23 @@ class StorageTextureTests : public DawnTest {
                 break;
             }
 
+            case wgpu::TextureFormat::RG11B10Ufloat: {
+                uint32_t* valuePtr = static_cast<uint32_t*>(pixelValuePtr);
+
+                auto MakeRG11B10 = [](uint32_t r, uint32_t g, uint32_t b) {
+                    DAWN_ASSERT((r & 0x7FF) == r);
+                    DAWN_ASSERT((g & 0x7FF) == g);
+                    DAWN_ASSERT((b & 0x3FF) == b);
+                    return r | g << 11 | b << 22;
+                };
+
+                constexpr uint32_t kFloat11One = 0x3C0;
+                constexpr uint32_t kFloat10Zero = 0;
+
+                *valuePtr = MakeRG11B10(kFloat11One, kFloat11One, kFloat10Zero);
+                break;
+            }
+
             default:
                 DAWN_UNREACHABLE();
                 break;
@@ -423,6 +440,9 @@ class StorageTextureTests : public DawnTest {
             case wgpu::TextureFormat::RGB10A2Unorm:
                 return "vec4f(f32(value) / 1023.0, f32(value) * 2.0 / 1023.0, "
                        "f32(value) * 3.0 / 1023.0, 3.0)";
+
+            case wgpu::TextureFormat::RG11B10Ufloat:
+                return "vec4f(1.0, 1.0, 0.0, 1.0)";
 
             default:
                 DAWN_UNREACHABLE();
@@ -2011,12 +2031,8 @@ class Tier1StorageValidationTests : public StorageTextureTests {
 
 TEST_P(Tier1StorageValidationTests, WriteonlyStorageTextureInFragmentShader) {
     DAWN_TEST_UNSUPPORTED_IF(!IsTextureFormatsTier1Supported());
-    for (const auto format : utils::kTier1AdditionalStorageFormats) {
+    for (const auto format : utils::kTier1AdditionalStorageFormats1) {
         SCOPED_TRACE(absl::StrFormat("Test format: %s", format));
-        // RG11B10Ufloat is WIP
-        if (format == wgpu::TextureFormat::RG11B10Ufloat) {
-            continue;
-        }
         // Prepare the write-only storage texture.
         wgpu::Texture writeonlyStorageTexture =
             CreateTexture(format, wgpu::TextureUsage::StorageBinding | wgpu::TextureUsage::CopySrc,
