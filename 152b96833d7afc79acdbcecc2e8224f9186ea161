@@ -16,6 +16,29 @@
       "message": "LGTM, adding Loko for Dawn stuff.\n\nAlso FYI to Corentin who I think was the one questioning the need for a dedicated texel buffer view when we discussed at the F2F. We\u0027re sticking with this direction for now so if you feel super strongly that this should be implicit please let us know!",
       "revId": "152b96833d7afc79acdbcecc2e8224f9186ea161",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "478faff6_f9b08272",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 4183,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-21T23:11:56Z",
+      "side": 1,
+      "message": "I would start off with the `\"tags\": [\"dawn\"],` included and we can promote it to be upstream also once we have standardized it and updated webgpu.h. (This should also remove the need for the diff file to be modified.)",
+      "range": {
+        "startLine": 4183,
+        "startChar": 8,
+        "endLine": 4183,
+        "endChar": 27
+      },
+      "revId": "152b96833d7afc79acdbcecc2e8224f9186ea161",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
