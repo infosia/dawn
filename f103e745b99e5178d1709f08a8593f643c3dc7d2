@@ -16,6 +16,97 @@
       "message": "Updated, PTAL",
       "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71583166_a08a3e1f",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T08:43:39Z",
+      "side": 1,
+      "message": "I\u0027m a bit worried about this, adding backend-specific barrier tracking in the frontend is extremely brittle. Why do we have to do that instead of skipping that `kResolveAttachmentLoadingUsage` in D3D12\u0027s TransitionUsagesForPass? My understanding was that we skip the validation [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/CommandValidation.cpp;drc\u003dbd7d95c700d0ede7ef119c063c6a0b2c2d6cd1a7;l\u003d157) to avoid the `TextureBinding|RenderAttachment` validation error.",
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a5d0ca7_3051dc59",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T08:43:39Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16a7df12_d3cade92",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1885,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T08:43:39Z",
+      "side": 1,
+      "message": "This is redundant with [1]. Can we do something like\n\n```\n// \u003cthe comment is here because it explains why we do the loop\u003e\nfor (ColorAttachmentIndex i : renderPass-\u003eattachmentState-\u003eGetColorAttachmentsMask()) {\n  the transition\n}\n\nif (useRenderPass) {\n // ...\n} else {\n  // ...\n}\n\n```",
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c82688d_77c53491",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T08:43:39Z",
+      "side": 1,
+      "message": "```suggestion\n    if (usage \u0026 kResolveAttachmentLoadingUsage) {\n        // The MSAA expansion step loads the resource in a shader.\n        resourceState |\u003d D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;\n    }\n```",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 5
+      },
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b7852c0_5439f69b",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T08:43:39Z",
+      "side": 1,
+      "message": "Does this ever happen? Looking at the Vulkan backend, it seems like it shouldn\u0027t?",
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

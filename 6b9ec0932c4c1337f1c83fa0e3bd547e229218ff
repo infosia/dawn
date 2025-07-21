@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "daf5cc75_49c95c23",
+        "filename": "src/dawn/native/Commands.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T08:43:39Z",
+      "side": 1,
+      "message": "```suggestion\n    bool HasValue() const;\n```",
+      "revId": "6b9ec0932c4c1337f1c83fa0e3bd547e229218ff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "32858dfb_9788facc",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 6
