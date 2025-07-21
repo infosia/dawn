@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b8f6792a_de7273db",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-21T19:41:12Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m treating this as a big switch for \"we\u0027re in a backend that has much laxer rules, so please look the other way\".",
+      "parentUuid": "1a684420_ed8c0131",
+      "revId": "9684557d7ef28d9a938ded1e18187483421790c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "25e8d4ef_03025e34",
         "filename": "src/tint/lang/core/ir/validator_test.cc",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2025-07-21T17:24:47Z",
       "side": 1,
       "message": "Could you add a test showing that turning on the capability allows things to pass?",
+      "revId": "9684557d7ef28d9a938ded1e18187483421790c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b53f8dc6_8f53346c",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-21T19:41:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25e8d4ef_03025e34",
       "revId": "9684557d7ef28d9a938ded1e18187483421790c3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
