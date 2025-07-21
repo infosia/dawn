@@ -70,7 +70,7 @@ namespace tint::core::ir {
 ///                     out
 ///
 /// ```
-class Loop final : public Castable<Loop, ControlInstruction> {
+class Loop : public Castable<Loop, ControlInstruction> {
   public:
     /// Constructor (no results, no operands, no blocks)
     /// @param id the instruction id
@@ -131,7 +131,7 @@ class Loop final : public Castable<Loop, ControlInstruction> {
     /// @returns the friendly name for the instruction
     std::string FriendlyName() const override { return "loop"; }
 
-  private:
+  protected:
     ConstPropagatingPtr<ir::Block> initializer_;
     ConstPropagatingPtr<ir::MultiInBlock> body_;
     ConstPropagatingPtr<ir::MultiInBlock> continuing_;

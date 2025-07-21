@@ -41,6 +41,8 @@
 tint_add_target(tint_lang_hlsl_ir lib
   lang/hlsl/ir/builtin_call.cc
   lang/hlsl/ir/builtin_call.h
+  lang/hlsl/ir/for_loop.cc
+  lang/hlsl/ir/for_loop.h
   lang/hlsl/ir/member_builtin_call.cc
   lang/hlsl/ir/member_builtin_call.h
   lang/hlsl/ir/ternary.cc
@@ -78,6 +80,7 @@ tint_target_add_external_dependencies(tint_lang_hlsl_ir lib
 ################################################################################
 tint_add_target(tint_lang_hlsl_ir_test test
   lang/hlsl/ir/builtin_call_test.cc
+  lang/hlsl/ir/for_loop_test.cc
   lang/hlsl/ir/member_builtin_call_test.cc
   lang/hlsl/ir/ternary_test.cc
 )

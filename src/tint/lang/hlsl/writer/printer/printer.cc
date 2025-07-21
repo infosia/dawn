@@ -99,6 +99,7 @@
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/core/type/void.h"
 #include "src/tint/lang/hlsl/ir/builtin_call.h"
+#include "src/tint/lang/hlsl/ir/for_loop.h"
 #include "src/tint/lang/hlsl/ir/member_builtin_call.h"
 #include "src/tint/lang/hlsl/ir/ternary.h"
 #include "src/tint/lang/hlsl/type/byte_address_buffer.h"
@@ -497,6 +498,10 @@ class Printer : public tint::TextGenerator {
         //   }
         // }
 
+        // The 'ForLoop' is a child class of 'Loop'. It is the same as 'Loop' except it will also
+        // have condition.
+        auto* for_loop = l->As<hlsl::ir::ForLoop>();
+
         auto emit_continuing = [&] {
             Line() << "{";
             {
@@ -512,7 +517,16 @@ class Printer : public tint::TextGenerator {
             const ScopedIndent init(current_buffer_);
             EmitBlock(l->Initializer());
 
-            Line() << "while(true) {";
+            if (for_loop) {
+                auto out = Line();
+                out << "for(; ";
+
+                EmitValue(out, for_loop->ConditionValue());
+                out << " ;) {";
+            } else {
+                Line() << "while(true) {";
+            }
+
             {
                 const ScopedIndent si(current_buffer_);
                 EmitBlock(l->Body());

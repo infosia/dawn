@@ -40,11 +40,13 @@ cc_library(
   name = "ir",
   srcs = [
     "builtin_call.cc",
+    "for_loop.cc",
     "member_builtin_call.cc",
     "ternary.cc",
   ],
   hdrs = [
     "builtin_call.h",
+    "for_loop.h",
     "member_builtin_call.h",
     "ternary.h",
   ],
@@ -77,6 +79,7 @@ cc_library(
   alwayslink = True,
   srcs = [
     "builtin_call_test.cc",
+    "for_loop_test.cc",
     "member_builtin_call_test.cc",
     "ternary_test.cc",
   ],

@@ -119,6 +119,7 @@ struct LoopAnalysisImpl {
 
     /// Analyze a loop.
     void AnalyzeLoop(Loop& loop) {
+        printf("analys Loop \n");
         if (auto* init_block = loop.Initializer()) {
             // Look for variables that could be used as iteration indices.
             for (auto* inst : *init_block) {
@@ -131,6 +132,8 @@ struct LoopAnalysisImpl {
                 if (!pty->StoreType()->IsIntegerScalar()) {
                     break;
                 }
+
+                printf("is integer \n ");
 
                 // Check if the variable is an index that gives this loop a finite range.
                 if (IsFiniteLoopIndex(loop, *var)) {
@@ -173,11 +176,14 @@ struct LoopAnalysisImpl {
             return false;
         }
 
+        printf(" is single store loop  \n");
         // Check that the store we found is either incrementing or decrementing the index by `1`.
         if (!IsIncrementOrDecrementOfVar(index, single_store_in_continue_block->From())) {
+            printf("is not 1 \n");
             return false;
         }
 
+        printf("looks good now we check break if");
         // We have proven that the variable increments exactly once per iteration.
         // Now check that the loop body begins with a break-if construct that will is guaranteed to
         // exit the loop if the index reaches the loop bound.

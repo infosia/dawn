@@ -32,7 +32,11 @@
 
 #include "src/tint/lang/core/fluent_types.h"  // IWYU pragma: export
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/clone_context.h"
+#include "src/tint/lang/core/ir/loop.h"
 #include "src/tint/lang/core/ir/module.h"
+#include "src/tint/lang/core/ir/multi_in_block.h"
+#include "src/tint/lang/core/ir/store.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/depth_multisampled_texture.h"
 #include "src/tint/lang/core/type/depth_texture.h"
@@ -45,6 +49,7 @@
 #include "src/tint/lang/core/type/vector.h"
 #include "src/tint/lang/hlsl/builtin_fn.h"
 #include "src/tint/lang/hlsl/ir/builtin_call.h"
+
 #include "src/tint/lang/hlsl/ir/member_builtin_call.h"
 #include "src/tint/lang/hlsl/ir/ternary.h"
 #include "src/tint/lang/hlsl/type/int8_t4_packed.h"
@@ -80,11 +85,13 @@ struct State {
         // Find the bitcasts that need replacing.
         Vector<core::ir::Bitcast*, 4> bitcast_worklist;
         Vector<core::ir::CoreBuiltinCall*, 4> call_worklist;
+
         for (auto* inst : ir.Instructions()) {
             if (auto* bitcast = inst->As<core::ir::Bitcast>()) {
                 bitcast_worklist.Push(bitcast);
                 continue;
             }
+
             if (auto* call = inst->As<core::ir::CoreBuiltinCall>()) {
                 switch (call->Func()) {
                     case core::BuiltinFn::kAcosh:

@@ -75,7 +75,7 @@ class NextIteration final : public Castable<NextIteration, Terminator> {
     void SetLoop(ir::Loop* loop);
 
     /// @returns the friendly name for the instruction
-    std::string FriendlyName() const override { return "next_iteration"; }
+    std::string FriendlyName() const override { return "next_iteration2"; }
 
   private:
     ConstPropagatingPtr<ir::Loop> loop_;

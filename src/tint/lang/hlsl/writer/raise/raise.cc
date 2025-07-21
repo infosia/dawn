@@ -62,6 +62,7 @@
 #include "src/tint/lang/hlsl/writer/raise/localize_struct_array_assignment.h"
 #include "src/tint/lang/hlsl/writer/raise/pixel_local.h"
 #include "src/tint/lang/hlsl/writer/raise/promote_initializers.h"
+#include "src/tint/lang/hlsl/writer/raise/reconstruct_for_loops.h"
 #include "src/tint/lang/hlsl/writer/raise/replace_default_only_switch.h"
 #include "src/tint/lang/hlsl/writer/raise/replace_non_indexable_mat_vec_stores.h"
 #include "src/tint/lang/hlsl/writer/raise/shader_io.h"
@@ -134,7 +135,12 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
         config.use_integer_range_analysis = options.enable_integer_range_analysis;
 
         RUN_TRANSFORM(core::ir::transform::Robustness, module, config);
+    }
 
+    if ((true) || options.compiler == Options::Compiler::kFXC) {
+        RUN_TRANSFORM(raise::ReconstuctForLoops, module);
+    }
+    if ((false) && !options.disable_robustness) {
         RUN_TRANSFORM(core::ir::transform::PreventInfiniteLoops, module);
     }
 
@@ -287,6 +293,14 @@ Result<SuccessType> Raise(core::ir::Module& module, const Options& options) {
 
     // Anything which runs after this needs to handle `Capabilities::kAllowModuleScopedLets`
     RUN_TRANSFORM(raise::PromoteInitializers, module);
+
+    if ((true) && !options.disable_robustness) {
+        RUN_TRANSFORM(core::ir::transform::PreventInfiniteLoops, module);
+    }
+
+    if ((false) || options.compiler == Options::Compiler::kFXC) {
+        RUN_TRANSFORM(raise::ReconstuctForLoops, module);
+    }
 
     return Success;
 }

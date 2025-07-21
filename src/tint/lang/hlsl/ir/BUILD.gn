@@ -47,6 +47,8 @@ libtint_source_set("ir") {
   sources = [
     "builtin_call.cc",
     "builtin_call.h",
+    "for_loop.cc",
+    "for_loop.h",
     "member_builtin_call.cc",
     "member_builtin_call.h",
     "ternary.cc",
@@ -78,6 +80,7 @@ if (tint_build_unittests) {
   tint_unittests_source_set("unittests") {
     sources = [
       "builtin_call_test.cc",
+      "for_loop_test.cc",
       "member_builtin_call_test.cc",
       "ternary_test.cc",
     ]
