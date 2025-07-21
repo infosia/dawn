@@ -49,6 +49,7 @@ class FencedDeleter {
     void DeleteWhenUnused(VkFramebuffer framebuffer);
     void DeleteWhenUnused(VkImage image);
     void DeleteWhenUnused(VkImageView view);
+    void DeleteWhenUnused(VkBufferView view);
     void DeleteWhenUnused(VkPipelineLayout layout);
     void DeleteWhenUnused(VkRenderPass renderPass);
     void DeleteWhenUnused(VkPipeline pipeline);
@@ -76,6 +77,7 @@ class FencedDeleter {
     SerialQueue<ExecutionSerial, VkFramebuffer> mFramebuffersToDelete;
     SerialQueue<ExecutionSerial, VkImage> mImagesToDelete;
     SerialQueue<ExecutionSerial, VkImageView> mImageViewsToDelete;
+    SerialQueue<ExecutionSerial, VkBufferView> mBufferViewsToDelete;
     SerialQueue<ExecutionSerial, VkPipeline> mPipelinesToDelete;
     SerialQueue<ExecutionSerial, VkPipelineLayout> mPipelineLayoutsToDelete;
     SerialQueue<ExecutionSerial, VkQueryPool> mQueryPoolsToDelete;
