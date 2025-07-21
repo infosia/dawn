@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c0af19d_0f2a562c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4236064
+      },
+      "writtenOn": "2025-07-21T13:10:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is the best approach, as I don\u0027t know my way around Dawn, however I decided to create this CL to start a discussion about it.\n\nBasically, we are trying to enable `-Wexit-time-destructors` as default warning in Chromium (see crbug.com/430332953 for rationale). This of course has run into issues with third party code, which we can try to either fix, or suppress those warnings. For this particular case though, the tint benchmark codegen falls under `gen/` and it would be better if a proper fix could be submitted in this case.\n\nAlternatively, I could repurpose this CL to pass `-Wno-exit-time-destructors` to several Dawn targets.",
+      "revId": "f5901fc6b16a2f92bf2fed507e3d6e64df197d2b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
