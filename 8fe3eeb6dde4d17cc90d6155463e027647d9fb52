@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21d2a35e_9fdf6674",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-21T22:33:38Z",
+      "side": 1,
+      "message": "As an experimental WGSL language feature, the WGSL side is already guarded behind the usual \"unsafe WebGPU\" flags. Do we really need a new Dawn feature here, or can we piggy back any API-side guards on the status of the WGSL language feature?\n\nWe don\u0027t usually have new API surface tied to WGSL language features in this way so I\u0027m not sure what the preferred approach is for Dawn. Adding Corentin and Loko for thoughts.",
+      "revId": "8fe3eeb6dde4d17cc90d6155463e027647d9fb52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
