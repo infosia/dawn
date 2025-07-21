@@ -70,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c43b424_d0cef363",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T12:03:25Z",
+      "side": 1,
+      "message": "This is not like an `std::range` but more like a Python `range` builtin function. It is used to easily iterate over ranges of TypedInteger without having to write a lot of boilerplate due to them being TypedInteger.",
+      "parentUuid": "5a7c5150_b0baafb9",
+      "revId": "83fde86ed35f2425494bc1714945fcdbc1471141",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12824a35_1dd4440a",
@@ -93,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc202e06_974e23f4",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T12:03:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12824a35_1dd4440a",
+      "range": {
+        "startLine": 134,
+        "startChar": 13,
+        "endLine": 150,
+        "endChar": 69
+      },
+      "revId": "83fde86ed35f2425494bc1714945fcdbc1471141",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b98fd9b6_b8a0a4cc",
@@ -106,6 +148,30 @@
       "writtenOn": "2025-07-18T17:33:15Z",
       "side": 1,
       "message": "The previous code checked if this was -1. Was it intentional to remove that?",
+      "range": {
+        "startLine": 157,
+        "startChar": 8,
+        "endLine": 157,
+        "endChar": 85
+      },
+      "revId": "83fde86ed35f2425494bc1714945fcdbc1471141",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5682baa_99e101fd",
+        "filename": "src/dawn/native/opengl/PipelineGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T12:03:25Z",
+      "side": 1,
+      "message": "That\u0027s done on purpose, I checked that in GL calls to glUniform will silently ignore calls when the location is -1 (so we don\u0027t need to duplicate that handling of when GL drivers optimize out the bindings)",
+      "parentUuid": "b98fd9b6_b8a0a4cc",
       "range": {
         "startLine": 157,
         "startChar": 8,
