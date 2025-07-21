@@ -329,6 +329,11 @@ BindingInitializationHelper::BindingInitializationHelper(uint32_t binding,
                                                          const wgpu::TextureView& textureView)
     : binding(binding), textureView(textureView) {}
 
+BindingInitializationHelper::BindingInitializationHelper(
+    uint32_t binding,
+    const wgpu::TexelBufferView& texelBufferView)
+    : binding(binding), texelBufferView(texelBufferView) {}
+
 BindingInitializationHelper::BindingInitializationHelper(uint32_t binding,
                                                          const wgpu::Buffer& buffer,
                                                          uint64_t offset,
@@ -346,6 +351,7 @@ wgpu::BindGroupEntry BindingInitializationHelper::GetAsBinding() const {
     result.binding = binding;
     result.sampler = sampler;
     result.textureView = textureView;
+    result.texelBufferView = texelBufferView;
     result.buffer = buffer;
     result.offset = offset;
     result.size = size;
