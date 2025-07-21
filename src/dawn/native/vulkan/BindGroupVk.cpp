@@ -65,6 +65,7 @@ BindGroup::~BindGroup() = default;
 
 MaybeError BindGroup::InitializeImpl() {
     const auto* layout = ToBackend(GetLayout());
+    Device* device = ToBackend(GetDevice());
 
     // Now do a write of a single descriptor set with all possible chained data allocated on the
     // stack if possible. We need to preallocate the vectors to avoid reallocation that would
@@ -77,6 +78,8 @@ MaybeError BindGroup::InitializeImpl() {
     ityp::stack_vec<uint32_t, VkDescriptorBufferInfo, kMaxOptimalBindingsPerGroup> writeBufferInfo(
         bindingCount);
     ityp::stack_vec<uint32_t, VkDescriptorImageInfo, kMaxOptimalBindingsPerGroup> writeImageInfo(
+        bindingCount);
+    ityp::stack_vec<uint32_t, VkBufferView, kMaxOptimalBindingsPerGroup> writeTexelBufferViews(
         bindingCount);
 
     uint32_t numWrites = 0;
@@ -176,6 +179,18 @@ MaybeError BindGroup::InitializeImpl() {
         write->pImageInfo = &writeImageInfo[writeIndex];
     }
 
+    for (BindingIndex i : layout->GetTexelBufferIndices()) {
+        TexelBufferView* view = ToBackend(GetBindingAsTexelBufferView(i));
+        VkBufferView handle = view->GetHandle();
+        if (handle == VK_NULL_HANDLE) {
+            continue;
+        }
+
+        auto [writeIndex, write] = AddWrite(i);
+        writeTexelBufferViews[writeIndex] = handle;
+        write->pTexelBufferView = AsVkArray(&writeTexelBufferViews[writeIndex]);
+    }
+
     for (BindingIndex i : layout->GetInputAttachmentIndices()) {
         TextureView* view = ToBackend(GetBindingAsTextureView(i));
 
@@ -190,7 +205,6 @@ MaybeError BindGroup::InitializeImpl() {
         write->pImageInfo = &writeImageInfo[writeIndex];
     }
 
-    Device* device = ToBackend(GetDevice());
     // TODO(https://crbug.com/42242088): Batch these updates
     device->fn.UpdateDescriptorSets(device->GetVkDevice(), numWrites, writes.data(), 0, nullptr);
 
