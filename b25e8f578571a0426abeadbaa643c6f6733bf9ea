@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "82bdfcc0_93a6209f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4236064
+      },
+      "writtenOn": "2025-07-21T22:36:17Z",
+      "side": 1,
+      "message": "@rharrison@chromium.org, I just noticed now that there is an `AUTHORS` file in the root of the project. Would it be appropriate for me to add myself as an author due to this small change?",
+      "revId": "b25e8f578571a0426abeadbaa643c6f6733bf9ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
