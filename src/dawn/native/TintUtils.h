@@ -159,9 +159,8 @@ tint::Bindings GenerateBindingRemapping(const PipelineLayoutBase* layout,
                         srcBindingPoint,
                         BindingPointFor(group, bgl->AsBindingIndex(apiBindingIndex)));
                 },
-                [](const TexelBufferBindingInfo& bindingInfo) {
-                    // TODO(crbug/382544164): Prototype texel buffer feature
-                    DAWN_UNREACHABLE();
+                [](const TexelBufferBindingInfo&) {
+                    // TODO(crbug.com/382544164): Prototype texel buffer feature
                 },
                 [&](const ExternalTextureBindingInfo& bindingInfo) {
                     // TODO(491363837): Add YCBCR texture information as tint::ExternalYCBCRTexture

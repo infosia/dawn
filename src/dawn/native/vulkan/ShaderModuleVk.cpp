@@ -156,6 +156,29 @@ ResultOrError<ShaderModule::ModuleAndSpirv> ShaderModule::GetHandleAndSpirv(
             };
         });
 
+    // TODO(crbug.com/382544164): Map texel buffers to storage_texture in Tint.
+    // This is a temporary measure until GenerateBindingRemapping supports texel buffers.
+    for (BindGroupIndex group : in.layout->GetBindGroupLayoutsMask()) {
+        const BindGroupLayoutInternalBase* bgl = in.layout->GetBindGroupLayout(group);
+        for (const auto& [bindingNumber, apiBindingIndex] : bgl->GetBindingMap()) {
+            if (!(bgl->GetAPIBindingInfo(apiBindingIndex).visibility &
+                  StageBit(in.stage->metadata->stage))) {
+                continue;
+            }
+            const auto& bindingInfo = bgl->GetAPIBindingInfo(apiBindingIndex).bindingLayout;
+            if (std::holds_alternative<TexelBufferBindingInfo>(bindingInfo)) {
+                tint::BindingPoint srcBindingPoint{uint32_t(group), uint32_t(bindingNumber)};
+                tint::BindingPoint dstBindingPoint = {
+                    uint32_t(startOfBindGroups + group),
+                    uint32_t(bgl->AsBindingIndex(apiBindingIndex)),
+                };
+                // TODO(crbug.com/382544164): have a new binding type in the remapping instead of
+                // using storage_texture.
+                bindings.storage_texture.emplace(srcBindingPoint, dstBindingPoint);
+            }
+        }
+    }
+
     // Post process the binding remapping to make statically paired texture point at the sampler
     // binding point instead.
     std::unordered_set<tint::BindingPoint> staticallyPairedTextureBindingPoints;
