@@ -120,6 +120,8 @@ wgpu::PipelineLayout MakePipelineLayout(const wgpu::Device& device,
 extern wgpu::ExternalTextureBindingLayout kExternalTextureBindingLayout;
 #endif  // __EMSCRIPTEN__
 
+extern wgpu::TexelBufferBindingLayout kTexelBufferBindingLayout;
+
 // Helpers to make creating bind group layouts look nicer:
 //
 //   dawn::utils::MakeBindGroupLayout(device, {
@@ -154,7 +156,9 @@ struct BindingLayoutEntryInitializationHelper : wgpu::BindGroupLayoutEntry {
                                            wgpu::ShaderStage entryVisibility,
                                            wgpu::ExternalTextureBindingLayout* bindingLayout);
 #endif  // __EMSCRIPTEN__
-
+    BindingLayoutEntryInitializationHelper(uint32_t entryBinding,
+                                           wgpu::ShaderStage entryVisibility,
+                                           wgpu::TexelBufferBindingLayout* bindingLayout);
     // NOLINTNEXTLINE(runtime/explicit)
     BindingLayoutEntryInitializationHelper(const wgpu::BindGroupLayoutEntry& entry);
 };
@@ -179,6 +183,7 @@ struct BindingInitializationHelper {
 #ifndef __EMSCRIPTEN__
     BindingInitializationHelper(uint32_t binding, const wgpu::ExternalTexture& externalTexture);
 #endif  // __EMSCRIPTEN__
+    BindingInitializationHelper(uint32_t binding, const wgpu::TexelBufferView& texelBufferView);
     BindingInitializationHelper(uint32_t binding,
                                 const wgpu::Buffer& buffer,
                                 uint64_t offset = 0,
@@ -191,9 +196,10 @@ struct BindingInitializationHelper {
     uint32_t binding;
     wgpu::Sampler sampler;
     wgpu::TextureView textureView;
+    mutable wgpu::TexelBufferBindingEntry texelBufferBindingEntry = {};
     wgpu::Buffer buffer;
 #ifndef __EMSCRIPTEN__
-    wgpu::ExternalTextureBindingEntry externalTextureBindingEntry;
+    mutable wgpu::ExternalTextureBindingEntry externalTextureBindingEntry;
 #endif  // __EMSCRIPTEN__
     uint64_t offset = 0;
     uint64_t size = 0;
