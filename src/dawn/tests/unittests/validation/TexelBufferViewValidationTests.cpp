@@ -26,6 +26,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "dawn/tests/unittests/validation/ValidationTest.h"
+#include "dawn/utils/WGPUHelpers.h"
 #include "webgpu/webgpu_cpp.h"
 
 namespace dawn {
@@ -108,6 +109,32 @@ TEST_F(TexelBufferViewValidationTest, RangeExceedsBuffer) {
     viewDesc.size = 512;  // Larger than buffer
 
     ASSERT_DEVICE_ERROR(buffer.CreateTexelView(&viewDesc));
+}
+
+// BindingInitializationHelper should chain a TexelBufferBindingEntry when initialized
+// with a TexelBufferView.
+TEST_F(TexelBufferViewValidationTest, BindingHelperChainsTexelBufferBindingEntry) {
+    constexpr uint64_t kSize = 4 * 4;
+    wgpu::Buffer buffer = CreateTexelBuffer(kSize, wgpu::BufferUsage::TexelBuffer);
+
+    wgpu::TexelBufferViewDescriptor viewDesc;
+    viewDesc.format = wgpu::TextureFormat::RGBA8Uint;
+    viewDesc.offset = 0;
+    viewDesc.size = kSize;
+    wgpu::TexelBufferView view = buffer.CreateTexelView(&viewDesc);
+
+    utils::BindingInitializationHelper helper(0, view);
+    wgpu::BindGroupEntry entry = helper.GetAsBinding();
+
+    EXPECT_EQ(entry.buffer, nullptr);
+    EXPECT_EQ(entry.textureView, nullptr);
+
+    ASSERT_NE(entry.nextInChain, nullptr);
+    EXPECT_EQ(entry.nextInChain->sType, wgpu::SType::TexelBufferBindingEntry);
+
+    const auto* texelEntry =
+        reinterpret_cast<const wgpu::TexelBufferBindingEntry*>(entry.nextInChain);
+    EXPECT_EQ(texelEntry->texelBufferView.Get(), view.Get());
 }
 
 }  // anonymous namespace
