@@ -250,6 +250,11 @@ ResultOrError<Ref<TextureViewBase>> Device::CreateTextureViewImpl(
     const UnpackedPtr<TextureViewDescriptor>& descriptor) {
     return TextureView::Create(texture, mNextTextureViewId++, descriptor);
 }
+ResultOrError<Ref<TexelBufferViewBase>> Device::CreateTexelBufferViewImpl(
+    BufferBase* buffer,
+    const UnpackedPtr<TexelBufferViewDescriptor>& descriptor) {
+    return TexelBufferView::Create(buffer, descriptor);
+}
 Ref<PipelineCacheBase> Device::GetOrCreatePipelineCacheImpl(const CacheKey& key) {
     if (IsToggleEnabled(Toggle::VulkanMonolithicPipelineCache)) {
         std::call_once(mMonolithicPipelineCacheFlag, [this]() {

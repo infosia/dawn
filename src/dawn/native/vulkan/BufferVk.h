@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_VULKAN_BUFFERVK_H_
 
 #include "dawn/native/Buffer.h"
+#include "dawn/native/TexelBufferView.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 #include "absl/container/flat_hash_set.h"
@@ -115,6 +116,27 @@ class Buffer final : public BufferBase {
     bool mHostVisible : 1;
     bool mHostCoherent : 1;
     bool mHasWriteTransitioned : 1;
+};
+
+class TexelBufferView final : public TexelBufferViewBase {
+  public:
+    static ResultOrError<Ref<TexelBufferView>> Create(
+        BufferBase* buffer,
+        const UnpackedPtr<TexelBufferViewDescriptor>& descriptor);
+
+    VkBufferView GetHandle() const;
+
+  private:
+    using TexelBufferViewBase::TexelBufferViewBase;
+    ~TexelBufferView() override;
+
+    MaybeError Initialize(const UnpackedPtr<TexelBufferViewDescriptor>& descriptor);
+    void DestroyImpl() override;
+
+    // Dawn API
+    void SetLabelImpl() override;
+
+    VkBufferView mHandle = VK_NULL_HANDLE;
 };
 
 }  // namespace dawn::native::vulkan

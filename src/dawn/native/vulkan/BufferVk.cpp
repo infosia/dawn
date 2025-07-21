@@ -39,11 +39,13 @@
 #include "dawn/native/CommandBuffer.h"
 #include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/Queue.h"
+#include "dawn/native/dawn_platform.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "dawn/native/vulkan/FencedDeleter.h"
 #include "dawn/native/vulkan/QueueVk.h"
 #include "dawn/native/vulkan/ResourceHeapVk.h"
 #include "dawn/native/vulkan/ResourceMemoryAllocatorVk.h"
+#include "dawn/native/vulkan/TextureVk.h"
 #include "dawn/native/vulkan/UtilsVulkan.h"
 #include "dawn/native/vulkan/VulkanError.h"
 #include "partition_alloc/pointers/raw_ptr.h"
@@ -72,6 +74,10 @@ VkBufferUsageFlags VulkanBufferUsage(wgpu::BufferUsage usage) {
     }
     if (usage & (wgpu::BufferUsage::Storage | kInternalStorageBuffer | kReadOnlyStorageBuffer)) {
         flags |= VK_BUFFER_USAGE_STORAGE_BUFFER_BIT;
+    }
+    if (usage & wgpu::BufferUsage::TexelBuffer) {
+        flags |=
+            VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT | VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT;
     }
     if (usage & wgpu::BufferUsage::Indirect) {
         flags |= VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT;
@@ -147,6 +153,9 @@ VkAccessFlags VulkanAccessFlags(wgpu::BufferUsage usage) {
     if (usage & kReadOnlyStorageBuffer) {
         flags |= VK_ACCESS_SHADER_READ_BIT;
     }
+    if (usage & kReadOnlyTexelBuffer) {
+        flags |= VK_ACCESS_SHADER_READ_BIT;
+    }
     if (usage & kIndirectBufferForBackendResourceTracking) {
         flags |= VK_ACCESS_INDIRECT_COMMAND_READ_BIT;
     }
@@ -170,8 +179,9 @@ MemoryKind GetMemoryKindFor(wgpu::BufferUsage bufferUsage) {
     // `VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT`.
     constexpr wgpu::BufferUsage kDeviceLocalBufferUsages =
         wgpu::BufferUsage::Index | wgpu::BufferUsage::QueryResolve | wgpu::BufferUsage::Storage |
-        wgpu::BufferUsage::Uniform | wgpu::BufferUsage::Vertex | kInternalStorageBuffer |
-        kReadOnlyStorageBuffer | kIndirectBufferForBackendResourceTracking;
+        wgpu::BufferUsage::Uniform | wgpu::BufferUsage::TexelBuffer | wgpu::BufferUsage::Vertex |
+        kInternalStorageBuffer | kReadOnlyStorageBuffer | kReadOnlyTexelBuffer |
+        kIndirectBufferForBackendResourceTracking;
     if (bufferUsage & kDeviceLocalBufferUsages) {
         requestKind |= MemoryKind::DeviceLocal;
     }
@@ -772,5 +782,59 @@ void Buffer::ClearBuffer(CommandRecordingContext* recordingContext,
     // Note: Allocated size must be a multiple of 4.
     DAWN_ASSERT(size % 4 == 0);
     device->fn.CmdFillBuffer(recordingContext->commandBuffer, mHandle, offset, size, clearValue);
+}
+
+// TexelBufferView
+
+// static
+ResultOrError<Ref<TexelBufferView>> TexelBufferView::Create(
+    BufferBase* buffer,
+    const UnpackedPtr<TexelBufferViewDescriptor>& descriptor) {
+    Ref<TexelBufferView> view = AcquireRef(new TexelBufferView(buffer, descriptor));
+    DAWN_TRY(view->Initialize(descriptor));
+    return view;
+}
+
+TexelBufferView::~TexelBufferView() = default;
+
+MaybeError TexelBufferView::Initialize(const UnpackedPtr<TexelBufferViewDescriptor>& descriptor) {
+    Buffer* buffer = ToBackend(GetBuffer());
+    VkBuffer handle = buffer->GetHandle();
+    if (buffer->IsDestroyed() || handle == VK_NULL_HANDLE) {
+        return {};
+    }
+
+    Device* device = ToBackend(GetDevice());
+
+    VkBufferViewCreateInfo createInfo{};
+    createInfo.sType = VK_STRUCTURE_TYPE_BUFFER_VIEW_CREATE_INFO;
+    createInfo.buffer = handle;
+    createInfo.format = VulkanImageFormat(device, GetFormat());
+    createInfo.offset = GetOffset();
+    createInfo.range = GetSize();
+
+    DAWN_TRY(CheckVkSuccess(
+        device->fn.CreateBufferView(device->GetVkDevice(), &createInfo, nullptr, &*mHandle),
+        "CreateBufferView"));
+
+    SetLabelImpl();
+    return {};
+}
+
+void TexelBufferView::DestroyImpl() {
+    Device* device = ToBackend(GetDevice());
+    if (mHandle != VK_NULL_HANDLE) {
+        device->GetFencedDeleter()->DeleteWhenUnused(mHandle);
+        mHandle = VK_NULL_HANDLE;
+    }
+    TexelBufferViewBase::DestroyImpl();
+}
+
+VkBufferView TexelBufferView::GetHandle() const {
+    return mHandle;
+}
+
+void TexelBufferView::SetLabelImpl() {
+    SetDebugName(ToBackend(GetDevice()), mHandle, "Dawn_TexelBufferView", GetLabel());
 }
 }  // namespace dawn::native::vulkan
