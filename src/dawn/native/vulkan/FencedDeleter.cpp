@@ -43,6 +43,7 @@ FencedDeleter::~FencedDeleter() {
     DAWN_ASSERT(mFramebuffersToDelete.Empty());
     DAWN_ASSERT(mImagesToDelete.Empty());
     DAWN_ASSERT(mImageViewsToDelete.Empty());
+    DAWN_ASSERT(mBufferViewsToDelete.Empty());
     DAWN_ASSERT(mMemoriesToDelete.Empty());
     DAWN_ASSERT(mPipelinesToDelete.Empty());
     DAWN_ASSERT(mPipelineLayoutsToDelete.Empty());
@@ -81,6 +82,10 @@ void FencedDeleter::DeleteWhenUnused(VkImage image) {
 
 void FencedDeleter::DeleteWhenUnused(VkImageView view) {
     mImageViewsToDelete.Enqueue(view, GetCurrentDeletionSerial());
+}
+
+void FencedDeleter::DeleteWhenUnused(VkBufferView view) {
+    mBufferViewsToDelete.Enqueue(view, GetCurrentDeletionSerial());
 }
 
 void FencedDeleter::DeleteWhenUnused(VkPipeline pipeline) {
@@ -133,6 +138,7 @@ ExecutionSerial FencedDeleter::GetLastPendingDeletionSerial() {
     GetLastSubmitted(mFramebuffersToDelete);
     GetLastSubmitted(mImagesToDelete);
     GetLastSubmitted(mImageViewsToDelete);
+    GetLastSubmitted(mBufferViewsToDelete);
     GetLastSubmitted(mMemoriesToDelete);
     GetLastSubmitted(mPipelinesToDelete);
     GetLastSubmitted(mPipelineLayoutsToDelete);
@@ -195,6 +201,11 @@ void FencedDeleter::Tick(ExecutionSerial completedSerial) {
         mDevice->fn.DestroyImageView(vkDevice, view, nullptr);
     }
     mImageViewsToDelete.ClearUpTo(completedSerial);
+
+    for (VkBufferView view : mBufferViewsToDelete.IterateUpTo(completedSerial)) {
+        mDevice->fn.DestroyBufferView(vkDevice, view, nullptr);
+    }
+    mBufferViewsToDelete.ClearUpTo(completedSerial);
 
     for (VkPipeline pipeline : mPipelinesToDelete.IterateUpTo(completedSerial)) {
         mDevice->fn.DestroyPipeline(vkDevice, pipeline, nullptr);
