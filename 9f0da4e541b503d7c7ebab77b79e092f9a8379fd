@@ -46,6 +46,30 @@
       },
       "revId": "9f0da4e541b503d7c7ebab77b79e092f9a8379fd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4faaf1a_95ed4839",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-21T07:11:14Z",
+      "side": 1,
+      "message": "Thanks! kResolveAttachmentLoadingUsage is set when load op is ExpandResolveTexture. When load op is clear or load, kResolveAttachmentLoadingUsage is still required here?",
+      "parentUuid": "e2ed67fd_5ddd72ce",
+      "range": {
+        "startLine": 1426,
+        "startChar": 55,
+        "endLine": 1426,
+        "endChar": 85
+      },
+      "revId": "9f0da4e541b503d7c7ebab77b79e092f9a8379fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
