@@ -56,6 +56,7 @@
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "tint/lang/wgsl/enums.h"
 
 namespace dawn::native {
 
@@ -306,6 +307,12 @@ ResultOrError<UnpackedPtr<BufferDescriptor>> ValidateBufferDescriptor(
     wgpu::BufferUsage usage = descriptor->usage;
 
     DAWN_INVALID_IF(usage == wgpu::BufferUsage::None, "Buffer usages must not be 0.");
+
+    if (usage & wgpu::BufferUsage::TexelBuffer) {
+        const auto& wgslFeatures = device->GetWGSLAllowedFeatures().features;
+        DAWN_INVALID_IF(!wgslFeatures.count(tint::wgsl::LanguageFeature::kTexelBuffers),
+                        "%s is not enabled.", wgpu::WGSLLanguageFeatureName::TexelBuffers);
+    }
 
     if (!device->HasFeature(Feature::BufferMapExtendedUsages)) {
         const wgpu::BufferUsage kMapWriteAllowedUsages =
