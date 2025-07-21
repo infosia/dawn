@@ -54,6 +54,7 @@ namespace dawn::native::vulkan {
     X(VkFence, DestroyFence, device)                                   \
     X(VkFramebuffer, DestroyFramebuffer, device)                       \
     X(VkImageView, DestroyImageView, device)                           \
+    X(VkBufferView, DestroyBufferView, device)                         \
     X(VkPipeline, DestroyPipeline, device)                             \
     X(VkSwapchainKHR, DestroySwapchainKHR, device)                     \
     X(VkSurfaceKHR, DestroySurfaceKHR, instance)                       \

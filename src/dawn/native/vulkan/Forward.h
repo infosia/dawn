@@ -47,6 +47,7 @@ class RenderPipeline;
 class ResourceHeap;
 class Sampler;
 class ShaderModule;
+class TexelBufferView;
 class SharedTextureMemory;
 class SharedFence;
 class SwapChain;
@@ -69,6 +70,7 @@ struct VulkanBackendTraits {
     using ResourceHeapType = ResourceHeap;
     using SamplerType = Sampler;
     using ShaderModuleType = ShaderModule;
+    using TexelBufferViewType = TexelBufferView;
     using SharedTextureMemoryType = SharedTextureMemory;
     using SharedFenceType = SharedFence;
     using SwapChainType = SwapChain;
