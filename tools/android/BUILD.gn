@@ -193,6 +193,7 @@ dawn_json_generator("kotlin_gen") {
     "java/android/dawn/SurfaceSourceAndroidNativeWindow.kt",
     "java/android/dawn/SurfaceTexture.kt",
     "java/android/dawn/Texture.kt",
+    "java/android/dawn/TexelBufferAccess.kt",
     "java/android/dawn/TexelBufferView.kt",
     "java/android/dawn/TexelBufferViewDescriptor.kt",
     "java/android/dawn/TexelCopyBufferInfo.kt",
