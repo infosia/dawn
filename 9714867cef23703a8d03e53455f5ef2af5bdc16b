@@ -748,6 +748,24 @@
       "parentUuid": "898de590_8b36e4f6",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa85e6b2_e7a672a8",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-21T02:10:19Z",
+      "side": 1,
+      "message": "Is it possible to detect whether `Robustness` requires `arrayLength` through tint resolve phase?\n\n(If it is not possible for dawn api side to know above info)\nAlternative, I think `PrepareImmediateData` transform might need to extend to support adding `buffer_sizes` attribute dynamically and regenerate the immediate block. But for now, I\u0027d like to keep Dawn API side as the one who decide what\u0027s the immediate block looks like (might generate unused immediate blocks as the previous test cases)",
+      "parentUuid": "54b7fe24_1386a2e7",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
