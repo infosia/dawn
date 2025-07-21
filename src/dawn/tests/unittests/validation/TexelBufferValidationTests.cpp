@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef __EMSCRIPTEN__
 #include <vector>
 
 #include "dawn/tests/unittests/validation/ValidationTest.h"
@@ -97,3 +98,4 @@ TEST_F(TexelBufferFeatureDisabledTest, RequiresFeature) {
 
 }  // anonymous namespace
 }  // namespace dawn
+#endif  // __EMSCRIPTEN__
