@@ -616,6 +616,12 @@ MaybeError BindGroupTracker::ApplyBindGroup(BindGroupIndex index) {
                 }
                 return {};
             },
+            [&](const TexelBufferBindingInfo&) -> MaybeError {
+                // D3D11 does not support texel buffers.
+                // TODO(crbug/382544164): Prototype texel buffer feature
+                DAWN_UNREACHABLE();
+                return {};
+            },
             [](const InputAttachmentBindingInfo&) -> MaybeError {
                 DAWN_UNREACHABLE();
                 return {};

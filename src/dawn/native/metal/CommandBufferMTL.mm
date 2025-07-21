@@ -37,6 +37,7 @@
 #include "dawn/native/ExternalTexture.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/RenderBundle.h"
+#include "dawn/native/TexelBufferView.h"
 #include "dawn/native/metal/BindGroupLayoutMTL.h"
 #include "dawn/native/metal/BindGroupMTL.h"
 #include "dawn/native/metal/BufferMTL.h"
@@ -688,6 +689,7 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                 },
                 [&](const TextureBindingInfo&) { HandleTextureBinding(); },
                 [&](const StorageTextureBindingInfo&) { HandleTextureBinding(); },
+                [&](const TexelBufferBindingInfo&) { DAWN_UNREACHABLE(); },
                 [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
         }
     }
