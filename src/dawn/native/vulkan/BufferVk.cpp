@@ -74,6 +74,11 @@ VkBufferUsageFlags VulkanBufferUsage(wgpu::BufferUsage usage) {
     if (usage & (wgpu::BufferUsage::Storage | kInternalStorageBuffer | kReadOnlyStorageBuffer)) {
         flags |= VK_BUFFER_USAGE_STORAGE_BUFFER_BIT;
     }
+    if (usage & (wgpu::BufferUsage::TexelBuffer | kReadOnlyTexelBuffer)) {
+        flags |= VK_BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT;
+        // TODO(crbug.com/382544164): Also set VK_BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT once
+        // read-only texel buffers are mapped to VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER.
+    }
     if (usage & wgpu::BufferUsage::Indirect) {
         flags |= VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT;
     }
@@ -142,10 +147,11 @@ VkAccessFlags VulkanAccessFlags(wgpu::BufferUsage usage) {
     if (usage & wgpu::BufferUsage::Uniform) {
         flags |= VK_ACCESS_UNIFORM_READ_BIT;
     }
-    if (usage & (wgpu::BufferUsage::Storage | kInternalStorageBuffer)) {
+    if (usage &
+        (wgpu::BufferUsage::Storage | kInternalStorageBuffer | wgpu::BufferUsage::TexelBuffer)) {
         flags |= VK_ACCESS_SHADER_READ_BIT | VK_ACCESS_SHADER_WRITE_BIT;
     }
-    if (usage & kReadOnlyStorageBuffer) {
+    if (usage & (kReadOnlyStorageBuffer | kReadOnlyTexelBuffer)) {
         flags |= VK_ACCESS_SHADER_READ_BIT;
     }
     if (usage & kIndirectBufferForBackendResourceTracking) {
@@ -171,8 +177,9 @@ MemoryKind GetMemoryKindFor(wgpu::BufferUsage bufferUsage) {
     // `VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT`.
     constexpr wgpu::BufferUsage kDeviceLocalBufferUsages =
         wgpu::BufferUsage::Index | wgpu::BufferUsage::QueryResolve | wgpu::BufferUsage::Storage |
-        wgpu::BufferUsage::Uniform | wgpu::BufferUsage::Vertex | kInternalStorageBuffer |
-        kReadOnlyStorageBuffer | kIndirectBufferForBackendResourceTracking;
+        wgpu::BufferUsage::Uniform | wgpu::BufferUsage::TexelBuffer | wgpu::BufferUsage::Vertex |
+        kInternalStorageBuffer | kReadOnlyStorageBuffer | kReadOnlyTexelBuffer |
+        kIndirectBufferForBackendResourceTracking;
     if (bufferUsage & kDeviceLocalBufferUsages) {
         requestKind |= MemoryKind::DeviceLocal;
     }

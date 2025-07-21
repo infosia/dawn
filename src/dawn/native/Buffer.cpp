@@ -137,6 +137,9 @@ ResultOrError<UnpackedPtr<TexelBufferViewDescriptor>> ValidateTexelBufferViewDes
     DAWN_TRY_ASSIGN(formatInfo, ValidateTexelBufferFormat(buffer->GetDevice(), desc->format));
     uint32_t texelSize = formatInfo->GetAspectInfo(Aspect::Color).block.byteSize;
 
+    DAWN_INVALID_IF(desc->offset % kTexelBufferOffsetAlignment != 0,
+                    "Texel buffer view offset (%u) must be a multiple of %u.", desc->offset,
+                    kTexelBufferOffsetAlignment);
     DAWN_INVALID_IF(desc->offset % texelSize != 0,
                     "Texel buffer view offset (%u) must be %u-byte aligned.", desc->offset,
                     texelSize);

@@ -48,6 +48,7 @@ namespace dawn::native::vulkan {
 //  - Vulkan swapchains must be destroyed before their corresponding VkSurface
 #define FENCED_DELETER_TYPES(X)                                        \
     X(VkBuffer, DestroyBuffer, device)                                 \
+    X(VkBufferView, DestroyBufferView, device)                         \
     X(VkImage, DestroyImage, device)                                   \
     X(VkDeviceMemory, FreeMemory, device)                              \
     X(VkPipelineLayout, DestroyPipelineLayout, device)                 \
