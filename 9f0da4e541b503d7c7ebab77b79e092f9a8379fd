@@ -22,6 +22,30 @@
       },
       "revId": "9f0da4e541b503d7c7ebab77b79e092f9a8379fd",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2ed67fd_5ddd72ce",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-21T03:43:35Z",
+      "side": 1,
+      "message": "I mentioned that these things are already done by front-end. We already implemented this expanding feature in vulkan backend and that backend also relies on the special `kResolveAttachmentLoadingUsage` usage. This is not a new thing that we need to do in the front-end.",
+      "parentUuid": "66ca144f_8718ff55",
+      "range": {
+        "startLine": 1426,
+        "startChar": 55,
+        "endLine": 1426,
+        "endChar": 85
+      },
+      "revId": "9f0da4e541b503d7c7ebab77b79e092f9a8379fd",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
