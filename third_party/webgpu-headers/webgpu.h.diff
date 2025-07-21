@@ -12,6 +12,7 @@
  struct WGPUSurfaceSourceXCBWindow;
  struct WGPUSurfaceSourceXlibWindow;
  struct WGPUSurfaceTexture;
++struct WGPUTexelBufferBindingLayout;
 +struct WGPUTexelBufferViewDescriptor;
  struct WGPUTexelCopyBufferLayout;
  struct WGPUTextureBindingLayout;
@@ -59,6 +60,18 @@
      /*.status=*/_wgpu_ENUM_ZERO_INIT(WGPUSurfaceGetCurrentTextureStatus) _wgpu_COMMA \
  })
  
++typedef struct WGPUTexelBufferBindingLayout {
++    WGPUChainedStruct * nextInChain;
++    WGPUTexelBufferAccess access;
++    WGPUTextureFormat format;
++} WGPUTexelBufferBindingLayout WGPU_STRUCTURE_ATTRIBUTE;
++
++#define WGPU_TEXEL_BUFFER_BINDING_LAYOUT_INIT _wgpu_MAKE_INIT_STRUCT(WGPUTexelBufferBindingLayout, { \
++    /*.nextInChain=*/NULL _wgpu_COMMA \
++    /*.access=*/WGPUTexelBufferAccess_Undefined _wgpu_COMMA \
++    /*.format=*/WGPUTextureFormat_Undefined _wgpu_COMMA \
++})
++
 +typedef struct WGPUTexelBufferViewDescriptor {
 +    WGPUChainedStruct * nextInChain;
 +    WGPUStringView label;
