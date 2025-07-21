@@ -156,6 +156,8 @@ namespace {{native_namespace}} {
                         {% set forced_default_value = "{ nullptr, wgpu::TextureSampleType::BindingNotUsed, wgpu::TextureViewDimension::e2D, false }" %}
                     {% elif member.name.canonical_case() == "storage texture" %}
                         {% set forced_default_value = "{ nullptr, wgpu::StorageTextureAccess::BindingNotUsed, wgpu::TextureFormat::Undefined, wgpu::TextureViewDimension::e2D }" %}
+                    {% elif member.name.canonical_case() == "texel buffer" %}
+                        {% set forced_default_value = "{ nullptr, wgpu::TexelBufferAccess::BindingNotUsed, wgpu::TextureFormat::Undefined }" %}
                     {% endif %}
                 {% endif %}
                 {% set member_declaration = as_annotated_frontendType(member) + render_cpp_default_value(member, forced_default_value) %}

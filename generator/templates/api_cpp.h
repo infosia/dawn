@@ -796,6 +796,8 @@ static_assert(offsetof(ChainedStruct, sType) == offsetof({{c_prefix}}ChainedStru
                     {% set forced_default_value = "{ nullptr, TextureSampleType::BindingNotUsed, TextureViewDimension::e2D, false }" %}
                 {% elif member.name.canonical_case() == "storage texture" %}
                     {% set forced_default_value = "{ nullptr, StorageTextureAccess::BindingNotUsed, TextureFormat::Undefined, TextureViewDimension::e2D }" %}
+                {% elif member.name.canonical_case() == "texel buffer" %}
+                    {% set forced_default_value = "{ nullptr, TexelBufferAccess::BindingNotUsed, TextureFormat::Undefined }" %}
                 {% endif %}
             {% endif %}
             {% set member_declaration = render_member_declaration(member, type.has_free_members_function, forced_default_value) %}
