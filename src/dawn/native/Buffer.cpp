@@ -56,6 +56,7 @@
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "tint/lang/wgsl/enums.h"
 
 namespace dawn::native {
 
@@ -114,6 +115,11 @@ wgpu::BufferUsage ComputeInternalBufferUsages(const DeviceBase* device,
     // ValidateSyncScopeResourceUsage will make sure we don't use both at the same time.
     if (usage & wgpu::BufferUsage::Storage) {
         usage |= kReadOnlyStorageBuffer;
+    }
+
+    // Texel buffers support read-only access without requiring storage usage.
+    if (usage & wgpu::BufferUsage::TexelBuffer) {
+        usage |= kReadOnlyTexelBuffer;
     }
 
     // The query resolve buffer need to be used as a storage buffer in the internal compute
@@ -306,6 +312,11 @@ ResultOrError<UnpackedPtr<BufferDescriptor>> ValidateBufferDescriptor(
     wgpu::BufferUsage usage = descriptor->usage;
 
     DAWN_INVALID_IF(usage == wgpu::BufferUsage::None, "Buffer usages must not be 0.");
+
+    if (usage & wgpu::BufferUsage::TexelBuffer) {
+        DAWN_INVALID_IF(!device->AreTexelBuffersEnabled(), "%s is not enabled.",
+                        wgpu::WGSLLanguageFeatureName::TexelBuffers);
+    }
 
     if (!device->HasFeature(Feature::BufferMapExtendedUsages)) {
         const wgpu::BufferUsage kMapWriteAllowedUsages =
