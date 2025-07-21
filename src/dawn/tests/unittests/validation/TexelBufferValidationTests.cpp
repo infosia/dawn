@@ -25,6 +25,7 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef __EMSCRIPTEN__
 #include <vector>
 
 #include "dawn/tests/unittests/validation/ValidationTest.h"
@@ -106,12 +107,31 @@ class TexelBufferFeatureDisabledTest : public ValidationTest {
 };
 
 // Creating a buffer with texel buffer bit without enabling the feature fails.
-TEST_F(TexelBufferFeatureDisabledTest, RequiresFeature) {
+TEST_F(TexelBufferFeatureDisabledTest, BufferRequiresFeature) {
     wgpu::BufferDescriptor desc;
     desc.size = 4;
     desc.usage = wgpu::BufferUsage::TexelBuffer;
     ASSERT_DEVICE_ERROR(device.CreateBuffer(&desc));
 }
 
+// Creating a texel buffer layout without enabling the feature fails.
+TEST_F(TexelBufferFeatureDisabledTest, LayoutRequiresFeature) {
+    wgpu::TexelBufferBindingLayout layout = {};
+    layout.access = wgpu::TexelBufferAccess::ReadOnly;
+    layout.format = wgpu::TextureFormat::RGBA8Uint;
+
+    wgpu::BindGroupLayoutEntry entry = {};
+    entry.binding = 0;
+    entry.visibility = wgpu::ShaderStage::Fragment;
+    entry.nextInChain = &layout;
+
+    wgpu::BindGroupLayoutDescriptor desc = {};
+    desc.entryCount = 1;
+    desc.entries = &entry;
+
+    ASSERT_DEVICE_ERROR(device.CreateBindGroupLayout(&desc));
+}
+
 }  // anonymous namespace
 }  // namespace dawn
+#endif  // __EMSCRIPTEN__
