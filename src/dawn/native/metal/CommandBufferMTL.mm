@@ -688,6 +688,11 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                 },
                 [&](const TextureBindingInfo&) { HandleTextureBinding(); },
                 [&](const StorageTextureBindingInfo&) { HandleTextureBinding(); },
+                [&](const TexelBufferBindingInfo&) {
+                    // Metal does not support texel buffers.
+                    // TODO(crbug/382544164): Prototype texel buffer feature
+                    DAWN_UNREACHABLE();
+                },
                 [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
         }
     }
@@ -717,6 +722,11 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                 },
                 [&](const TextureBindingInfo&) {},  //
                 [&](const StorageTextureBindingInfo&) {},
+                [&](const TexelBufferBindingInfo&) {
+                    // Metal does not support texel buffers.
+                    // TODO(crbug/382544164): Prototype texel buffer feature
+                    DAWN_CHECK(false);
+                },
                 [](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); });
         }
 
