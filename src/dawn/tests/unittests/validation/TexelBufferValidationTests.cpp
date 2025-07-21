@@ -108,15 +108,36 @@ class TexelBufferFeatureDisabledTest : public ValidationTest {
         wireDesc.nextInChain = &wgslControl;
 
         ValidationTest::SetUp(&nativeDesc, &wireDesc);
+        // TODO(crbug/382544164): Prototype texel buffer feature
+        // Implement texel buffers for wire.
+        DAWN_SKIP_TEST_IF(UsesWire());
     }
 };
 
 // Creating a buffer with texel buffer bit without enabling the feature fails.
-TEST_F(TexelBufferFeatureDisabledTest, RequiresFeature) {
+TEST_F(TexelBufferFeatureDisabledTest, BufferRequiresFeature) {
     wgpu::BufferDescriptor desc;
     desc.size = 4;
     desc.usage = wgpu::BufferUsage::TexelBuffer;
     ASSERT_DEVICE_ERROR(device.CreateBuffer(&desc));
+}
+
+// Creating a texel buffer layout without enabling the feature fails.
+TEST_F(TexelBufferFeatureDisabledTest, LayoutRequiresFeature) {
+    wgpu::TexelBufferBindingLayout layout = {};
+    layout.access = wgpu::TexelBufferAccess::ReadOnly;
+    layout.format = wgpu::TextureFormat::RGBA8Uint;
+
+    wgpu::BindGroupLayoutEntry entry = {};
+    entry.binding = 0;
+    entry.visibility = wgpu::ShaderStage::Fragment;
+    entry.nextInChain = &layout;
+
+    wgpu::BindGroupLayoutDescriptor desc = {};
+    desc.entryCount = 1;
+    desc.entries = &entry;
+
+    ASSERT_DEVICE_ERROR(device.CreateBindGroupLayout(&desc));
 }
 
 }  // anonymous namespace
