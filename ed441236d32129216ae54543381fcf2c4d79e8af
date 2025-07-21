@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d81b9988_ab5f3f8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000283
+      },
+      "writtenOn": "2025-07-21T21:42:03Z",
+      "side": 1,
+      "message": "Correctness wise, I think this is good. I\u0027m also adding similar tracking to AsyncTaskManager so we may have two layers doing similar thread management logic. This is just for platforms that don\u0027t override the WorkerTaskPool though so I think it\u0027s good.",
+      "revId": "ed441236d32129216ae54543381fcf2c4d79e8af",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
