@@ -47,6 +47,7 @@ namespace dawn::native::vulkan {
 // that still have resources bound to it.
 //  - Vulkan swapchains must be destroyed before their corresponding VkSurface
 #define FENCED_DELETER_TYPES(X)                                        \
+    X(VkBufferView, DestroyBufferView, device)                         \
     X(VkBuffer, DestroyBuffer, device)                                 \
     X(VkImage, DestroyImage, device)                                   \
     X(VkDeviceMemory, FreeMemory, device)                              \

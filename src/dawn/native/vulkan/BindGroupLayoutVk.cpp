@@ -177,10 +177,22 @@ VkDescriptorType VulkanDescriptorType(const BindingInfo& bindingInfo) {
         },
         [](const TextureBindingInfo&) { return VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE; },
         [](const StorageTextureBindingInfo&) { return VK_DESCRIPTOR_TYPE_STORAGE_IMAGE; },
-        [](const TexelBufferBindingInfo&) {
-            // TODO(crbug/382544164): Prototype texel buffer feature
+        [](const TexelBufferBindingInfo& layout) -> VkDescriptorType {
+            switch (layout.access) {
+                case wgpu::TexelBufferAccess::ReadOnly:
+                    // TODO(crbug.com/382544164): Investigate whether read-only texel buffers
+                    // should use VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER for broader format
+                    // support, or stay on VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER for bindless
+                    // compatibility (uniform texel buffers have limited bindless support on
+                    // Vulkan and would require a separate descriptor array in the resource
+                    // table).
+                    [[fallthrough]];
+                case wgpu::TexelBufferAccess::ReadWrite:
+                    return VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER;
+                case wgpu::TexelBufferAccess::Undefined:
+                    DAWN_UNREACHABLE();
+            }
             DAWN_UNREACHABLE();
-            return VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER;
         },
 
         [](const InputAttachmentBindingInfo&) { return VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT; },

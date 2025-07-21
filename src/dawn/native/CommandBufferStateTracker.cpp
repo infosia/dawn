@@ -185,6 +185,11 @@ Return FindStorageBufferBindingAliasing(const PipelineLayoutBase* pipelineLayout
                 textureBindingIndices.emplace_back(groupIndex, bindingIndex);
             }
         }
+
+        // TODO(crbug.com/382544164): Add aliasing detection for writable texel buffer bindings,
+        // similar to the storage buffer and storage texture checks above. This requires discussion
+        // about whether the current O(N^2) approach should be extended or replaced with a more
+        // general solution that covers all writable binding types uniformly.
     }
 
     // Iterate through each buffer bindings to find if any writable storage bindings aliasing

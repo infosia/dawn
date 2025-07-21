@@ -149,6 +149,7 @@ set(end2end_sources
     "end2end/SubgroupsTests.cpp"
     "end2end/SubresourceRenderAttachmentTests.cpp"
     "end2end/SupportedFeatureArch.cpp"
+    "end2end/TexelBufferTests.cpp"
     "end2end/Texture3DTests.cpp"
     "end2end/TextureComponentSwizzleTests.cpp"
     "end2end/TextureCorruptionTests.cpp"

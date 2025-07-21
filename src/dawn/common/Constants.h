@@ -87,6 +87,10 @@ inline constexpr float kLodMax = 1000.0;
 // on macOS, but we decide to do it on all platforms.
 inline constexpr uint64_t kCopyBufferToBufferOffsetAlignment = 4u;
 
+// Required offset alignment for GPUTexelBufferViewDescriptor::offset, as specified in
+// https://github.com/gpuweb/gpuweb/blob/main/proposals/texel-buffers.md
+inline constexpr uint64_t kTexelBufferOffsetAlignment = 256u;
+
 // Metal has a maximum size of 32Kb for a counter set buffer. Each query is 8 bytes.
 // So, the maximum nymber of queries is 32Kb / 8.
 inline constexpr uint32_t kMaxQueryCount = 4096;
