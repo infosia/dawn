@@ -87,6 +87,7 @@
 #include "dawn/platform/metrics/HistogramMacros.h"
 #include "dawn/platform/tracing/TraceEvent.h"
 #include "partition_alloc/pointers/raw_ptr.h"
+#include "tint/lang/wgsl/enums.h"
 
 namespace dawn::native {
 
@@ -1744,6 +1745,11 @@ void DeviceBase::SetWGSLExtensionAllowList() {
 
 const tint::wgsl::AllowedFeatures& DeviceBase::GetWGSLAllowedFeatures() const {
     return mWGSLAllowedFeatures;
+}
+
+bool DeviceBase::AreTexelBuffersEnabled() const {
+    const auto& features = GetWGSLAllowedFeatures().features;
+    return features.count(tint::wgsl::LanguageFeature::kTexelBuffers);
 }
 
 bool DeviceBase::IsValidationEnabled() const {
