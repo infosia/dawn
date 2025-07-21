@@ -52,6 +52,7 @@
 #include "dawn/native/PhysicalDevice.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/SystemEvent.h"
+#include "dawn/native/TexelBufferView.h"
 #include "dawn/native/ValidationUtils_autogen.h"
 #include "dawn/platform/DawnPlatform.h"
 #include "dawn/platform/tracing/TraceEvent.h"
@@ -939,6 +940,51 @@ void BufferBase::DumpMemoryStatistics(MemoryDump* dump, const char* prefix) cons
                     GetAllocatedSize());
     dump->AddString(name.c_str(), "label", GetLabel());
     dump->AddString(name.c_str(), "usage", absl::StrFormat("%s", GetInternalUsage()));
+}
+
+ResultOrError<Ref<TexelBufferViewBase>> BufferBase::CreateTexelView(
+    const TexelBufferViewDescriptor* descriptor) {
+    DeviceBase* device = GetDevice();
+    DAWN_TRY(device->ValidateIsAlive());
+
+    TexelBufferViewDescriptor desc = {};
+    if (descriptor != nullptr) {
+        desc = *descriptor;
+    } else {
+        desc.size = wgpu::kWholeSize;
+    }
+
+    DAWN_INVALID_IF(desc.format == wgpu::TextureFormat::Undefined, "Format is undefined.");
+    DAWN_INVALID_IF(!(GetUsage() & wgpu::BufferUsage::TexelBuffer),
+                    "Buffer usage (%s) missing TexelBuffer bit.", GetUsage());
+
+    uint64_t size = desc.size == wgpu::kWholeSize ? GetSize() - desc.offset : desc.size;
+    DAWN_INVALID_IF(desc.offset + size > GetSize(),
+                    "Texel buffer view range (offset %u, size %u) exceeds buffer size %u.",
+                    desc.offset, size, GetSize());
+    const Format& formatInfo = device->GetValidInternalFormat(desc.format);
+    uint32_t texelSize = formatInfo.GetAspectInfo(Aspect::Color).block.byteSize;
+    DAWN_INVALID_IF(desc.offset % 256 != 0,
+                    "Texel buffer view offset (%u) must be 256-byte aligned.", desc.offset);
+    DAWN_INVALID_IF(size % texelSize != 0,
+                    "Texel buffer view size (%u) is not a multiple of texel size %u.", size,
+                    texelSize);
+
+    desc.size = size;
+
+    UnpackedPtr<TexelBufferViewDescriptor> unpacked = Unpack(&desc);
+    Ref<TexelBufferViewBase> view = AcquireRef(new TexelBufferViewBase(this, unpacked));
+    return view;
+}
+
+TexelBufferViewBase* BufferBase::APICreateTexelView(const TexelBufferViewDescriptor* descriptor) {
+    DeviceBase* device = GetDevice();
+    Ref<TexelBufferViewBase> result;
+    if (device->ConsumedError(CreateTexelView(descriptor), &result,
+                              "calling %s.CreateTexelView(%s).", this, descriptor)) {
+        result = TexelBufferViewBase::MakeError(device, descriptor ? descriptor->label : nullptr);
+    }
+    return ReturnToAPI(std::move(result));
 }
 
 ApiObjectList* BufferBase::GetTexelBufferViewTrackingList() {
