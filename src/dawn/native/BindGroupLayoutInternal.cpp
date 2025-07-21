@@ -255,6 +255,22 @@ MaybeError ValidateBindGroupLayoutEntry(DeviceBase* device,
         }
     }
 
+    if (auto* texelBufferLayout = entry.Get<TexelBufferBindingLayout>()) {
+        bindingMemberCount++;
+        DAWN_INVALID_IF(!device->HasFeature(Feature::TexelBuffers), "%s is not enabled.",
+                        wgpu::FeatureName::TexelBuffers);
+        DAWN_INVALID_IF(arraySize > 1,
+                        "BindGroupLayoutEntry bindingArraySize (%u) > 1 for a texel buffer entry.",
+                        arraySize);
+
+        DAWN_INVALID_IF(entry->visibility & wgpu::ShaderStage::Vertex &&
+                            texelBufferLayout->access != wgpu::TexelBufferAccess::ReadOnly,
+                        "Vertex visibility requires read-only texel buffer access.");
+
+        DAWN_INVALID_IF(texelBufferLayout->format == wgpu::TextureFormat::Undefined,
+                        "Texel buffer layout format is undefined.");
+    }
+
     if (entry.Get<ExternalTextureBindingLayout>()) {
         bindingMemberCount++;
         DAWN_INVALID_IF(arraySize > 1,
@@ -265,11 +281,11 @@ MaybeError ValidateBindGroupLayoutEntry(DeviceBase* device,
 
     DAWN_INVALID_IF(bindingMemberCount == 0,
                     "BindGroupLayoutEntry had none of buffer, sampler, texture, "
-                    "storageTexture, or externalTexture set");
+                    "storageTexture, texelBuffer, or externalTexture set");
 
     DAWN_INVALID_IF(bindingMemberCount != 1,
                     "BindGroupLayoutEntry had more than one of buffer, sampler, texture, "
-                    "storageTexture, or externalTexture set");
+                    "storageTexture, texelBuffer, or externalTexture set");
 
     DAWN_INVALID_IF(
         arraySize > 1 && entry->texture.sampleType == wgpu::TextureSampleType::BindingNotUsed,
@@ -431,6 +447,8 @@ BindingInfo ConvertToBindingInfo(const UnpackedPtr<BindGroupLayoutEntry>& bindin
         }
     } else if (binding->storageTexture.access != wgpu::StorageTextureAccess::BindingNotUsed) {
         bindingInfo.bindingLayout = StorageTextureBindingInfo::From(binding->storageTexture);
+    } else if (auto* texelBufferLayout = binding.Get<TexelBufferBindingLayout>()) {
+        bindingInfo.bindingLayout = TexelBufferBindingInfo::From(*texelBufferLayout);
     } else if (auto* staticSamplerBindingLayout = binding.Get<StaticSamplerBindingLayout>()) {
         bindingInfo.bindingLayout = StaticSamplerBindingInfo::From(*staticSamplerBindingLayout);
     } else {
@@ -510,9 +528,10 @@ bool SortBindingsCompare(const BindingInfo& a, const BindingInfo& b) {
             [&](const BufferBindingInfo& layout) { return layout.hasDynamicOffset ? 0 : 1; },
             [&](const TextureBindingInfo&) { return 2; },
             [&](const StorageTextureBindingInfo&) { return 3; },
-            [&](const SamplerBindingInfo&) { return 4; },
-            [&](const StaticSamplerBindingInfo&) { return 5; },
-            [&](const InputAttachmentBindingInfo&) { return 6; });
+            [&](const TexelBufferBindingInfo&) { return 4; },
+            [&](const SamplerBindingInfo&) { return 5; },
+            [&](const StaticSamplerBindingInfo&) { return 6; },
+            [&](const InputAttachmentBindingInfo&) { return 7; });
     };
 
     auto aPriority = TypePriority(a);
@@ -595,7 +614,7 @@ BindGroupLayoutInternalBase::BindGroupLayoutInternalBase(
                 }
             },
             [&](const TextureBindingInfo&) {}, [&](const StorageTextureBindingInfo&) {},
-            [&](const SamplerBindingInfo&) {},
+            [&](const TexelBufferBindingInfo&) {}, [&](const SamplerBindingInfo&) {},
             [&](const StaticSamplerBindingInfo& layout) {
                 mStaticSamplerCount++;
                 if (layout.isUsedForSingleTextureBinding) {

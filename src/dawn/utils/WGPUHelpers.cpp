@@ -299,11 +299,21 @@ BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
 // ExternalTextureBindingLayout never contains data, so just make one that can be reused instead
 // of declaring a new one every time it's needed.
 wgpu::ExternalTextureBindingLayout kExternalTextureBindingLayout = {};
+wgpu::TexelBufferBindingLayout kTexelBufferBindingLayout = {};
 
 BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
     uint32_t entryBinding,
     wgpu::ShaderStage entryVisibility,
     wgpu::ExternalTextureBindingLayout* bindingLayout) {
+    binding = entryBinding;
+    visibility = entryVisibility;
+    nextInChain = bindingLayout;
+}
+
+BindingLayoutEntryInitializationHelper::BindingLayoutEntryInitializationHelper(
+    uint32_t entryBinding,
+    wgpu::ShaderStage entryVisibility,
+    wgpu::TexelBufferBindingLayout* bindingLayout) {
     binding = entryBinding;
     visibility = entryVisibility;
     nextInChain = bindingLayout;
@@ -329,6 +339,13 @@ BindingInitializationHelper::BindingInitializationHelper(uint32_t binding,
                                                          const wgpu::TextureView& textureView)
     : binding(binding), textureView(textureView) {}
 
+BindingInitializationHelper::BindingInitializationHelper(
+    uint32_t binding,
+    const wgpu::TexelBufferView& texelBufferView)
+    : binding(binding) {
+    texelBufferBindingEntry.texelBufferView = texelBufferView;
+}
+
 BindingInitializationHelper::BindingInitializationHelper(uint32_t binding,
                                                          const wgpu::Buffer& buffer,
                                                          uint64_t offset,
@@ -349,8 +366,16 @@ wgpu::BindGroupEntry BindingInitializationHelper::GetAsBinding() const {
     result.buffer = buffer;
     result.offset = offset;
     result.size = size;
+
+    if (texelBufferBindingEntry.texelBufferView != nullptr) {
+        // Insert the texel buffer entry at the head of the chain while
+        // preserving any existing chained structures on `result`.
+        texelBufferBindingEntry.nextInChain = &kTexelBufferBindingLayout;
+        result.nextInChain = &texelBufferBindingEntry;
+    }
 #ifndef __EMSCRIPTEN__
     if (externalTextureBindingEntry.externalTexture != nullptr) {
+        externalTextureBindingEntry.nextInChain = &kExternalTextureBindingLayout;
         result.nextInChain = &externalTextureBindingEntry;
     }
 #endif  // __EMSCRIPTEN__

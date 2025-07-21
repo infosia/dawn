@@ -28,6 +28,7 @@
 #include <vector>
 
 #include "dawn/tests/unittests/validation/ValidationTest.h"
+#include "dawn/utils/WGPUHelpers.h"
 
 namespace dawn {
 namespace {
@@ -41,6 +42,13 @@ class TexelBufferValidationTest : public ValidationTest {
 
     std::vector<wgpu::FeatureName> GetRequiredFeatures() override {
         return {wgpu::FeatureName::TexelBuffers};
+    }
+
+    wgpu::Buffer CreateTexelBuffer(uint64_t size) {
+        wgpu::BufferDescriptor desc;
+        desc.size = size;
+        desc.usage = wgpu::BufferUsage::TexelBuffer;
+        return device.CreateBuffer(&desc);
     }
 };
 
@@ -61,6 +69,44 @@ TEST_F(TexelBufferValidationTest, MappableUsageRequiresExtendedFeature) {
 
     desc.usage = wgpu::BufferUsage::TexelBuffer | wgpu::BufferUsage::MapWrite;
     ASSERT_DEVICE_ERROR(device.CreateBuffer(&desc));
+}
+
+// Vertex stage visibility requires read-only access.
+TEST_F(TexelBufferValidationTest, VertexVisibilityRequiresReadOnly) {
+    wgpu::TexelBufferBindingLayout layout = {};
+    layout.access = wgpu::TexelBufferAccess::ReadWrite;
+    layout.format = wgpu::TextureFormat::RGBA8Uint;
+
+    wgpu::BindGroupLayoutEntry entry = {};
+    entry.binding = 0;
+    entry.visibility = wgpu::ShaderStage::Vertex;
+    entry.nextInChain = &layout;
+
+    wgpu::BindGroupLayoutDescriptor desc = {};
+    desc.entryCount = 1;
+    desc.entries = &entry;
+
+    ASSERT_DEVICE_ERROR(device.CreateBindGroupLayout(&desc));
+}
+
+// The format of a bound texel buffer view must match the layout.
+TEST_F(TexelBufferValidationTest, ViewFormatMustMatchLayout) {
+    wgpu::Buffer buffer = CreateTexelBuffer(256);
+
+    wgpu::TexelBufferViewDescriptor viewDesc = {};
+    viewDesc.format = wgpu::TextureFormat::RGBA8Uint;
+    viewDesc.offset = 0;
+    viewDesc.size = 256;
+    wgpu::TexelBufferView view = buffer.CreateView(&viewDesc);
+
+    wgpu::TexelBufferBindingLayout layout = {};
+    layout.access = wgpu::TexelBufferAccess::ReadOnly;
+    layout.format = wgpu::TextureFormat::R32Uint;
+
+    wgpu::BindGroupLayout bgl =
+        utils::MakeBindGroupLayout(device, {{0, wgpu::ShaderStage::Compute, &layout}});
+
+    ASSERT_DEVICE_ERROR(utils::MakeBindGroup(device, bgl, {{0, view}}));
 }
 
 class TexelBufferFeatureDisabledTest : public TexelBufferValidationTest {

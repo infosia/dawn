@@ -317,6 +317,30 @@ MaybeError ValidateStorageTextureBinding(DeviceBase* device,
     return {};
 }
 
+MaybeError ValidateTexelBufferBinding(DeviceBase* device,
+                                      const BindGroupEntry& entry,
+                                      const TexelBufferBindingInfo& layout,
+                                      UsageValidationMode mode) {
+    DAWN_INVALID_IF(entry.texelBufferView == nullptr, "Binding entry texelBufferView not set.");
+
+    DAWN_INVALID_IF(
+        entry.buffer != nullptr || entry.sampler != nullptr || entry.textureView != nullptr,
+        "Expected only texelBufferView to be set for binding entry.");
+
+    DAWN_INVALID_IF(entry.nextInChain != nullptr, "nextInChain must be nullptr.");
+
+    DAWN_TRY(device->ValidateObject(entry.texelBufferView));
+
+    BufferBase* buffer = entry.texelBufferView->GetBuffer();
+    DAWN_TRY(ValidateCanUseAs(buffer, wgpu::BufferUsage::TexelBuffer, mode));
+
+    DAWN_INVALID_IF(entry.texelBufferView->GetFormat() != layout.format,
+                    "Format (%s) of %s expected to be (%s).", entry.texelBufferView->GetFormat(),
+                    entry.texelBufferView, layout.format);
+
+    return {};
+}
+
 MaybeError ValidateSamplerBinding(const DeviceBase* device,
                                   const BindGroupEntry& entry,
                                   const SamplerBindingInfo& layout) {
@@ -552,6 +576,12 @@ MaybeError ValidateBindGroupDescriptor(DeviceBase* device,
                                  "validating entries[%u] as a Storage Texture."
                                  "\nExpected entry layout: %s",
                                  i, layout);
+                return {};
+            },
+            [&](const TexelBufferBindingInfo& layout) -> MaybeError {
+                DAWN_TRY_CONTEXT(ValidateTexelBufferBinding(device, entry, layout, mode),
+                                 "validating entries[%u] as a Texel Buffer.",
+                                 "\nExpected entry layout: %s", i, layout);
                 return {};
             },
             [&](const SamplerBindingInfo& layout) -> MaybeError {

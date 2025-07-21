@@ -63,6 +63,7 @@ enum class BindingInfoType {
     Sampler,
     Texture,
     StorageTexture,
+    TexelBuffer,
     ExternalTexture,
     StaticSampler,
     // Internal to vulkan only.
@@ -101,6 +102,15 @@ DAWN_SERIALIZABLE(struct, StorageTextureBindingInfo, STORAGE_TEXTURE_BINDING_INF
     static StorageTextureBindingInfo From(const StorageTextureBindingLayout& layout);
 };
 #undef STORAGE_TEXTURE_BINDING_INFO_MEMBER
+
+// A mirror of wgpu::TexelBufferBindingLayout for use inside dawn::native.
+#define TEXEL_BUFFER_BINDING_INFO_MEMBER(X) \
+    X(wgpu::TextureFormat, format)          \
+    X(wgpu::TexelBufferAccess, access)
+DAWN_SERIALIZABLE(struct, TexelBufferBindingInfo, TEXEL_BUFFER_BINDING_INFO_MEMBER) {
+    static TexelBufferBindingInfo From(const TexelBufferBindingLayout& layout);
+};
+#undef TEXEL_BUFFER_BINDING_INFO_MEMBER
 
 // A mirror of wgpu::SamplerBindingLayout for use inside dawn::native.
 #define SAMPLER_BINDING_INFO_MEMBER(X)                                               \
@@ -150,6 +160,7 @@ struct BindingInfo {
                  SamplerBindingInfo,
                  TextureBindingInfo,
                  StorageTextureBindingInfo,
+                 TexelBufferBindingInfo,
                  StaticSamplerBindingInfo,
                  InputAttachmentBindingInfo>
         bindingLayout;
@@ -171,6 +182,7 @@ struct PerStageBindingCounts {
     uint32_t samplerCount;
     uint32_t storageBufferCount;
     uint32_t storageTextureCount;
+    uint32_t texelBufferCount;
     uint32_t uniformBufferCount;
     uint32_t externalTextureCount;
     uint32_t staticSamplerCount;

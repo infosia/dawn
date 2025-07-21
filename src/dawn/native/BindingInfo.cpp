@@ -46,6 +46,9 @@ BindingInfoType GetBindingInfoType(const BindingInfo& info) {
         [](const StorageTextureBindingInfo&) -> BindingInfoType {
             return BindingInfoType::StorageTexture;
         },
+        [](const TexelBufferBindingInfo&) -> BindingInfoType {
+            return BindingInfoType::TexelBuffer;
+        },
         [](const StaticSamplerBindingInfo&) -> BindingInfoType {
             return BindingInfoType::StaticSampler;
         },
@@ -105,6 +108,8 @@ void IncrementBindingCounts(BindingCounts* bindingCounts,
         }
     } else if (entry->storageTexture.access != wgpu::StorageTextureAccess::BindingNotUsed) {
         perStageBindingCountMember = &PerStageBindingCounts::storageTextureCount;
+    } else if (entry.Get<TexelBufferBindingLayout>()) {
+        perStageBindingCountMember = &PerStageBindingCounts::texelBufferCount;
     } else if (entry.Get<ExternalTextureBindingLayout>()) {
         perStageBindingCountMember = &PerStageBindingCounts::externalTextureCount;
     } else if (entry.Get<StaticSamplerBindingLayout>()) {
@@ -132,6 +137,7 @@ void AccumulateBindingCounts(BindingCounts* bindingCounts, const BindingCounts& 
         bindingCounts->perStage[stage].storageBufferCount += rhs.perStage[stage].storageBufferCount;
         bindingCounts->perStage[stage].storageTextureCount +=
             rhs.perStage[stage].storageTextureCount;
+        bindingCounts->perStage[stage].texelBufferCount += rhs.perStage[stage].texelBufferCount;
         bindingCounts->perStage[stage].uniformBufferCount += rhs.perStage[stage].uniformBufferCount;
         bindingCounts->perStage[stage].externalTextureCount +=
             rhs.perStage[stage].externalTextureCount;
@@ -329,6 +335,17 @@ StorageTextureBindingInfo StorageTextureBindingInfo::From(
     return {{
         .format = defaultedLayout.format,
         .viewDimension = defaultedLayout.viewDimension,
+        .access = defaultedLayout.access,
+    }};
+}
+
+// TexelBufferBindingInfo
+
+// static
+TexelBufferBindingInfo TexelBufferBindingInfo::From(const TexelBufferBindingLayout& layout) {
+    TexelBufferBindingLayout defaultedLayout = layout.WithTrivialFrontendDefaults();
+    return {{
+        .format = defaultedLayout.format,
         .access = defaultedLayout.access,
     }};
 }

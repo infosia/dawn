@@ -471,6 +471,16 @@
         ]
     },
 
+    "texel buffer binding entry": {
+        "category": "structure",
+        "tags": ["dawn"],
+        "chained": "in",
+        "chain roots": ["bind group entry"],
+        "members": [
+            {"name": "texel buffer view", "type": "texel buffer view"}
+        ]
+    },
+
     "external texture binding layout": {
         "category": "structure",
         "chained": "in",
@@ -489,6 +499,16 @@
             {"value": 4, "name": "read write"}
         ]
     },
+    "texel buffer access": {
+        "category": "enum",
+        "tags": ["dawn"],
+        "values": [
+            {"value": 0, "name": "binding not used"},
+            {"value": 1, "name": "undefined", "jsrepr": "undefined", "valid": false},
+            {"value": 2, "name": "read only"},
+            {"value": 3, "name": "read write"}
+        ]
+    },
     "storage texture binding layout": {
         "category": "structure",
         "extensible": "in",
@@ -498,7 +518,16 @@
             {"name": "view dimension", "type": "texture view dimension", "default": "2D"}
         ]
     },
-
+    "texel buffer binding layout": {
+        "category": "structure",
+        "tags": ["dawn"],
+        "chained": "in",
+        "chain roots": ["bind group layout entry"],
+        "members": [
+            {"name": "access", "type": "texel buffer access", "default": "read write"},
+            {"name": "format", "type": "texture format"}
+        ]
+    },
     "bind group layout entry": {
         "category": "structure",
         "extensible": "in",
@@ -3909,7 +3938,9 @@
             {"value": 70, "name": "dawn fake device initialize error for testing", "tags": ["dawn"]},
             {"value": 71, "name": "texture component swizzle descriptor", "tags": ["dawn"]},
             {"value": 72, "name": "shared texture memory D3D11 begin state", "tags": ["dawn", "native"]},
-            {"value": 73, "name": "dawn consume adapter descriptor", "tags": ["dawn"]}
+            {"value": 73, "name": "dawn consume adapter descriptor", "tags": ["dawn"]},
+            {"value": 74, "name": "texel buffer binding entry", "tags": ["dawn"]},
+            {"value": 75, "name": "texel buffer binding layout", "tags": ["dawn"]}
         ]
     },
     "texture": {
