@@ -203,6 +203,24 @@
       "parentUuid": "d163f788_934acc74",
       "revId": "e15ec65157d71362884e41261310947c39a67b14",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4cfa62b_80dea374",
+        "filename": "src/dawn/utils/TextureUtils.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-21T08:09:50Z",
+      "side": 1,
+      "message": "Let\u0027s see with Graghite folks if they can use texture-tier1 instead of that extension so hopefully it can be removed soon.",
+      "parentUuid": "a149053d_fc9125a1",
+      "revId": "e15ec65157d71362884e41261310947c39a67b14",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
