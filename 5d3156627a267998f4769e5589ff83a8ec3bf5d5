@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "692cccea_9099b880",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-21T22:24:13Z",
+      "side": 1,
+      "message": "LGTM on the basis that this is how Texture handles TextureViews, but adding Loko again for more Dawn expertise.",
+      "revId": "5d3156627a267998f4769e5589ff83a8ec3bf5d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
