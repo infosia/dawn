@@ -99,6 +99,7 @@ VkDescriptorType VulkanDescriptorType(const BindingInfo& bindingInfo) {
         },
         [](const TextureBindingInfo&) { return VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE; },
         [](const StorageTextureBindingInfo&) { return VK_DESCRIPTOR_TYPE_STORAGE_IMAGE; },
+        [](const TexelBufferBindingInfo&) { return VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER; },
         [](const InputAttachmentBindingInfo&) { return VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT; });
 }
 

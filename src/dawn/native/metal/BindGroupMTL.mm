@@ -103,6 +103,7 @@ MaybeError BindGroup::InitializeImpl() {
             },
             [&](const TextureBindingInfo&) { HandleTextureBinding(); },
             [&](const StorageTextureBindingInfo&) { HandleTextureBinding(); },
+            [&](const TexelBufferBindingInfo&) { DAWN_CHECK(false); },
             [](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); });
     }
 

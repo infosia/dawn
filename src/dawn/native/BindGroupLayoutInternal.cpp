@@ -476,21 +476,7 @@ BindingInfo ConvertToBindingInfo(const UnpackedPtr<BindGroupLayoutEntry>& bindin
     } else if (binding->storageTexture.access != wgpu::StorageTextureAccess::BindingNotUsed) {
         bindingInfo.bindingLayout = StorageTextureBindingInfo::From(binding->storageTexture);
     } else if (auto* texelBufferLayout = binding.Get<TexelBufferBindingLayout>()) {
-        // Placeholder implementation for `TexelBufferBindingLayout` from `TexelBufferBindingInfo`.
-        BufferBindingInfo bufferInfo{};
-        switch (texelBufferLayout->access) {
-            case wgpu::TexelBufferAccess::ReadOnly:
-                bufferInfo.type = wgpu::BufferBindingType::ReadOnlyStorage;
-                break;
-            case wgpu::TexelBufferAccess::ReadWrite:
-                bufferInfo.type = wgpu::BufferBindingType::Storage;
-                break;
-            default:
-                DAWN_UNREACHABLE();
-        }
-        bufferInfo.minBindingSize = 0;
-        bufferInfo.hasDynamicOffset = false;
-        bindingInfo.bindingLayout = bufferInfo;
+        bindingInfo.bindingLayout = TexelBufferBindingInfo::From(*texelBufferLayout);
     } else if (auto* staticSamplerBindingLayout = binding.Get<StaticSamplerBindingLayout>()) {
         bindingInfo.bindingLayout = StaticSamplerBindingInfo::From(*staticSamplerBindingLayout);
     } else {
@@ -571,9 +557,10 @@ bool SortBindingsCompare(const BindingInfo& a, const BindingInfo& b) {
             [&](const BufferBindingInfo& layout) { return layout.hasDynamicOffset ? 0 : 1; },
             [&](const TextureBindingInfo&) { return 2; },
             [&](const StorageTextureBindingInfo&) { return 3; },
-            [&](const SamplerBindingInfo&) { return 4; },
-            [&](const StaticSamplerBindingInfo&) { return 5; },
-            [&](const InputAttachmentBindingInfo&) { return 6; });
+            [&](const TexelBufferBindingInfo&) { return 4; },
+            [&](const SamplerBindingInfo&) { return 5; },
+            [&](const StaticSamplerBindingInfo&) { return 6; },
+            [&](const InputAttachmentBindingInfo&) { return 7; });
     };
 
     auto aPriority = TypePriority(a);
@@ -656,7 +643,7 @@ BindGroupLayoutInternalBase::BindGroupLayoutInternalBase(
                 }
             },
             [&](const TextureBindingInfo&) {}, [&](const StorageTextureBindingInfo&) {},
-            [&](const SamplerBindingInfo&) {},
+            [&](const TexelBufferBindingInfo&) {}, [&](const SamplerBindingInfo&) {},
             [&](const StaticSamplerBindingInfo& layout) {
                 mStaticSamplerCount++;
                 if (layout.isUsedForSingleTextureBinding) {
@@ -769,6 +756,9 @@ size_t BindGroupLayoutInternalBase::ComputeContentHash() {
             [&](const StorageTextureBindingInfo& layout) {
                 recorder.Record(BindingInfoType::StorageTexture, layout.access, layout.format,
                                 layout.viewDimension);
+            },
+            [&](const TexelBufferBindingInfo& layout) {
+                recorder.Record(BindingInfoType::TexelBuffer, layout.format, layout.access);
             },
             [&](const StaticSamplerBindingInfo& layout) {
                 recorder.Record(BindingInfoType::StaticSampler, layout.sampler->GetContentHash());

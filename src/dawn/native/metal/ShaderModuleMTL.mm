@@ -191,6 +191,7 @@ tint::msl::writer::Bindings GenerateBindingInfo(
                 [&](const StorageTextureBindingInfo& bindingInfo) {
                     bindings.storage_texture.emplace(srcBindingPoint, dstBindingPoint);
                 },
+                [&](const TexelBufferBindingInfo& bindingInfo) { DAWN_UNREACHABLE(); },
                 [&](const ExternalTextureBindingInfo& bindingInfo) {
                     const auto& etBindingMap = bgl->GetExternalTextureBindingExpansionMap();
                     const auto& expansion = etBindingMap.find(binding);
@@ -260,7 +261,7 @@ std::unordered_map<uint32_t, tint::msl::writer::ArgumentBufferInfo> GenerateArgu
                 },
                 [&](const SamplerBindingInfo& bindingInfo) {},
                 [&](const StaticSamplerBindingInfo& bindingInfo) {},
-                [&](const TextureBindingInfo& bindingInfo) {},
+                [&](const TextureBindingInfo& bindingInfo) {}, [](const TexelBufferBindingInfo&) {},
                 [&](const StorageTextureBindingInfo& bindingInfo) {},
                 [](const InputAttachmentBindingInfo&) { DAWN_CHECK(false); });
         }
