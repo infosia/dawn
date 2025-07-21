@@ -16,6 +16,23 @@
       "message": "LGTM on the basis that this is how Texture handles TextureViews, but adding Loko again for more Dawn expertise.",
       "revId": "5d3156627a267998f4769e5589ff83a8ec3bf5d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44df28d7_26a2586e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-21T23:21:55Z",
+      "side": 1,
+      "message": "LGTM, but it\u0027s a bit weird to implement this entirely on its own since we aren\u0027t actually adding anything to the list in this change. I think it would have made a bit more sense to add this with the child change when we actually implement the new View.",
+      "revId": "5d3156627a267998f4769e5589ff83a8ec3bf5d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
