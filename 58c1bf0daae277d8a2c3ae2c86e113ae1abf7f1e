@@ -63,6 +63,30 @@
       },
       "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ef808f2_2b8311d4",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-21T23:59:28Z",
+      "side": 1,
+      "message": "Yes, sorry, when I said extension, I meant chained struct extension. And yes, we can definitely have it as a chained struct while it being just a language feature.",
+      "parentUuid": "48b21e42_e1331f4f",
+      "range": {
+        "startLine": 344,
+        "startChar": 12,
+        "endLine": 344,
+        "endChar": 88
+      },
+      "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
