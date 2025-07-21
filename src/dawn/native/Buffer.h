@@ -142,6 +142,9 @@ class BufferBase : public SharedResource {
     wgpu::BufferMapState APIGetMapState() const;
     uint64_t APIGetSize() const;
 
+    ResultOrError<Ref<TexelBufferViewBase>> CreateView(const TexelBufferViewDescriptor* descriptor);
+    TexelBufferViewBase* APICreateView(const TexelBufferViewDescriptor* descriptor);
+
     ApiObjectList* GetTexelBufferViewTrackingList();
 
   protected:
