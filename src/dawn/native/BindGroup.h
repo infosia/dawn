@@ -73,6 +73,7 @@ class BindGroupBase : public ApiObjectBase {
     BufferBinding GetBindingAsBufferBinding(BindingIndex bindingIndex);
     SamplerBase* GetBindingAsSampler(BindingIndex bindingIndex) const;
     TextureViewBase* GetBindingAsTextureView(BindingIndex bindingIndex);
+    TexelBufferViewBase* GetBindingAsTexelBufferView(BindingIndex bindingIndex);
     const ityp::span<uint32_t, uint64_t>& GetUnverifiedBufferSizes() const;
     const std::vector<Ref<ExternalTextureBase>>& GetBoundExternalTextures() const;
 

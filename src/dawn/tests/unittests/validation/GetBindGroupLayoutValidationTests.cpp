@@ -551,6 +551,7 @@ TEST_F(GetBindGroupLayoutTests, ExternalTextureBindingType) {
 
 // Tests that the texel buffer binding type matches with a texel_buffer declared in the shader.
 TEST_F(GetBindGroupLayoutTests, TexelBufferBindingType) {
+    DAWN_SKIP_TEST_IF(UsesWire());
     wgpu::TexelBufferBindingLayout layout = {};
     layout.access = wgpu::TexelBufferAccess::ReadOnly;
     layout.format = wgpu::TextureFormat::RGBA8Uint;

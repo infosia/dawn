@@ -129,7 +129,11 @@ std::string ToTextureSyncScopeResourceUsage(wgpu::TextureUsage syncScopeTextureU
 MaybeError ValidateSyncScopeResourceUsage(const SyncScopeResourceUsage& scope) {
     // Buffers can only be used as single-write or multiple read.
     for (size_t i = 0; i < scope.bufferSyncInfos.size(); ++i) {
-        const wgpu::BufferUsage usage = scope.bufferSyncInfos[i].usage;
+        wgpu::BufferUsage usage = scope.bufferSyncInfos[i].usage;
+        if (usage & wgpu::BufferUsage::Storage) {
+            usage &= ~kReadOnlyTexelBuffer;
+        }
+
         bool readOnly = IsSubset(usage, kReadOnlyBufferUsages);
         bool singleUse = wgpu::HasZeroOrOneBits(usage);
 
