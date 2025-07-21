@@ -490,6 +490,15 @@
             {"value": 4, "name": "read write"}
         ]
     },
+    "texel buffer access": {
+        "category": "enum",
+        "values": [
+            {"value": 0, "name": "binding not used"},
+            {"value": 1, "name": "undefined", "jsrepr": "undefined", "valid": false},
+            {"value": 2, "name": "read only"},
+            {"value": 3, "name": "read write"}
+        ]
+    },
     "storage texture binding layout": {
         "category": "structure",
         "extensible": "in",
