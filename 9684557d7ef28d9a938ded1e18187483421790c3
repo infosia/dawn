@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ae3a8f6_3055b954",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-21T17:24:47Z",
+      "side": 1,
+      "message": "overall looks good, just one question and one additional test requested",
+      "revId": "9684557d7ef28d9a938ded1e18187483421790c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1a684420_ed8c0131",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-21T17:24:47Z",
+      "side": 1,
+      "message": "Is there a subset of non-constructible things (i.e. not a pointer or a handle) that are not covered by this capability that should still be rejected by this check or is more of a big switch for don\u0027t worry about constructibility?",
+      "revId": "9684557d7ef28d9a938ded1e18187483421790c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25e8d4ef_03025e34",
+        "filename": "src/tint/lang/core/ir/validator_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-21T17:24:47Z",
+      "side": 1,
+      "message": "Could you add a test showing that turning on the capability allows things to pass?",
+      "revId": "9684557d7ef28d9a938ded1e18187483421790c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
