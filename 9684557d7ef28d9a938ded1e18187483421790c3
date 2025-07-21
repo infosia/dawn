@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4436c2de_69c88646",
+        "filename": "src/tint/lang/core/ir/validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-21T19:47:52Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b8f6792a_de7273db",
+      "revId": "9684557d7ef28d9a938ded1e18187483421790c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "25e8d4ef_03025e34",
