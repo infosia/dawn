@@ -142,6 +142,29 @@
       "message": "[1]",
       "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6832608c_788231fc",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1820,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-21T10:22:25Z",
+      "side": 1,
+      "message": "Is this still failing after the latest barrier fixes?\nI don\u0027t see WARP failing with these tests on my local machine",
+      "range": {
+        "startLine": 1820,
+        "startChar": 8,
+        "endLine": 1820,
+        "endChar": 32
+      },
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
