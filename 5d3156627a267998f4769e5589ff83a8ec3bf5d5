@@ -33,6 +33,24 @@
       "message": "LGTM, but it\u0027s a bit weird to implement this entirely on its own since we aren\u0027t actually adding anything to the list in this change. I think it would have made a bit more sense to add this with the child change when we actually implement the new View.",
       "revId": "5d3156627a267998f4769e5589ff83a8ec3bf5d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0462e513_dee648a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-07-21T23:45:50Z",
+      "side": 1,
+      "message": "I agree it would have made a lot more sense. Do you recommend to rebase and squash onto child or just to have it in mind for future CLs?",
+      "parentUuid": "44df28d7_26a2586e",
+      "revId": "5d3156627a267998f4769e5589ff83a8ec3bf5d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
