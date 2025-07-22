@@ -4,12 +4,8 @@ void main() {
   {
     uint2 tint_loop_idx = (4294967295u).xx;
     i.Store(0u, (i.Load(0u) - 1u));
-    while(true) {
+    while((i.Load(0u) < 10u)) {
       if (all((tint_loop_idx == (0u).xx))) {
-        break;
-      }
-      if ((i.Load(0u) < 10u)) {
-      } else {
         break;
       }
       {

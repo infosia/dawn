@@ -6,23 +6,15 @@ bool func_3() {
   {
     uint2 tint_loop_idx = (4294967295u).xx;
     int i = int(0);
-    while(true) {
+    while((i < asint(b[0u].x))) {
       if (all((tint_loop_idx == (0u).xx))) {
-        break;
-      }
-      if ((i < asint(b[0u].x))) {
-      } else {
         break;
       }
       {
         uint2 tint_loop_idx_1 = (4294967295u).xx;
         int j = int(-1);
-        while(true) {
+        while((j == int(1))) {
           if (all((tint_loop_idx_1 == (0u).xx))) {
-            break;
-          }
-          if ((j == int(1))) {
-          } else {
             break;
           }
           return false;

@@ -34,12 +34,8 @@ void main_inner(uint3 GlobalInvocationID) {
   {
     uint2 tint_loop_idx = (4294967295u).xx;
     uint i = 0u;
-    while(true) {
+    while((i < uniforms[0u].w)) {
       if (all((tint_loop_idx == (0u).xx))) {
-        break;
-      }
-      if ((i < uniforms[0u].w)) {
-      } else {
         break;
       }
       uint v_2 = i;
