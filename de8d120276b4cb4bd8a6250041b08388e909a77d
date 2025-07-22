@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0cef259a_2987737d",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-22T14:19:47Z",
+      "side": 1,
+      "message": "This comment is again adding too much context that looks like it could be important to a reader and make them more confused than necessary. Comment need to explain why we do things, or at a rough level what happens (so readers can skip blocks), not unrelated context and in most cases not the details of the lines (since the code says it better).\n\nFor example:\n\n// Use ResolveSubresource when there is no resolveRect so we don\u0027t have to specify the extra information ResolveSubresourceRegion requires.",
+      "range": {
+        "startLine": 829,
+        "startChar": 0,
+        "endLine": 838,
+        "endChar": 45
+      },
+      "revId": "de8d120276b4cb4bd8a6250041b08388e909a77d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aa519710_1883f859",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 14
