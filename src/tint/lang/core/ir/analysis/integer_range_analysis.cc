@@ -258,12 +258,19 @@ struct IntegerRangeAnalysisImpl {
 
     IntegerRangeInfo GetInfo(const Binary* binary) {
         return integer_binary_range_info_map_.GetOrAdd(binary, [&]() -> IntegerRangeInfo {
-            IntegerRangeInfo range_lhs = GetInfo(binary->LHS());
-            if (!range_lhs.IsValid()) {
-                return {};
-            }
             IntegerRangeInfo range_rhs = GetInfo(binary->RHS());
             if (!range_rhs.IsValid()) {
+                return {};
+            }
+
+            // We may compute the range of a `modulo` binary when the LHS doesn't have a valid
+            // range.
+            if (binary->Op() == BinaryOp::kModulo) {
+                return ComputeIntegerRangeForBinaryModulo(binary->LHS(), range_rhs);
+            }
+
+            IntegerRangeInfo range_lhs = GetInfo(binary->LHS());
+            if (!range_lhs.IsValid()) {
                 return {};
             }
 
@@ -1120,6 +1127,123 @@ struct IntegerRangeAnalysisImpl {
             uint64_t min_bound = lhs_u32.min_bound >> rhs_u32.max_bound;
             uint64_t max_bound = lhs_u32.max_bound >> rhs_u32.min_bound;
             return IntegerRangeInfo(min_bound, max_bound);
+        }
+    }
+
+    IntegerRangeInfo ComputeIntegerRangeForBinaryModulo(const Value* lhs,
+                                                        const IntegerRangeInfo& rhs_range) {
+        TINT_ASSERT(rhs_range.IsValid());
+
+        if (!lhs->Type()->IsIntegerScalar()) {
+            return {};
+        }
+        IntegerRangeInfo lhs_range = GetInfo(lhs);
+        if (!lhs_range.IsValid()) {
+            lhs_range = GetFullRangeWithSameIntegerRangeInfoType(rhs_range);
+        }
+
+        if (std::holds_alternative<IntegerRangeInfo::SignedIntegerRange>(rhs_range.range)) {
+            // Currently we require `lhs` must be non-negative.
+            auto lhs_i32 = std::get<IntegerRangeInfo::SignedIntegerRange>(lhs_range.range);
+            if (lhs_i32.min_bound < 0) {
+                return {};
+            }
+
+            // Currently we only accept `rhs` as a constant positive integer.
+            auto rhs_i32 = std::get<IntegerRangeInfo::SignedIntegerRange>(rhs_range.range);
+            if (rhs_i32.min_bound != rhs_i32.max_bound) {
+                return {};
+            }
+            int64_t rhs_const = rhs_i32.min_bound;
+            if (rhs_const <= 0) {
+                return {};
+            }
+
+            // Suppose the range of `lhs` is [a, b], `rhs` is a constant positive integer. Let:
+            // a_mod = a % rhs (0 <= a_mod <= rhs - 1), b_mod = b % rhs (0 <= b_mod <= rhs - 1)
+            // d1 = a / rhs, d2 = b / rhs (d1 <= d2)
+            // Then a = d1 * rhs + a_mod, b = d2 * rhs + b_mod
+            //
+            // If (d1 > d2):
+            // Let d1 = d2 + d (d >= 1)
+            // b - a = d2 * rhs + b_mod - ((d2 + d) * rhs + a_mod)
+            //       = b_mod - d * rhs - a_mod          // a_mod >= 0
+            //       <= b_mod - d * rhs                 // d >= 1
+            //       <= b_mod - rhs < 0 (impossible as `b >= a`)
+            if (lhs_i32.min_bound / rhs_const < lhs_i32.max_bound / rhs_const) {
+                // If (d1 < d2):
+                // Let d2 = d1 + d (d >= 1)
+                // b = (d1 + d) * rhs + b_mod
+                // b - a = (d1 + d) * rhs + b_mod - (d1 * rhs + a_mod)
+                //       = d * rhs + b_mod - a_mod      // d >= 1
+                //       >= rhs + b_mod - a_mod
+                // (1)
+                //    b_mod >= 0
+                // => b - a >= rhs - a_mod
+                // =>     b >= a + (rhs - a_mod) > a    // rhs > a_mod
+                //        b >= d1 * rhs + a_mod + (rhs - a_mod) > a
+                //        b >= (d1 + 1) * rhs > a
+                // So there must be a k = (d1 + 1) * rhs) in (a, b] that satisfies `k % rhs == 0`
+                // (2)
+                // k > a, a >= 0 => k > 0 => k - 1 >= 0
+                // b >= k
+                //   > k - 1 = (d1 + 1) * rhs) - 1 = d1 * rhs + (rhs - 1)
+                //   >= d1 * rhs + a_mod = a            // rhs - 1 >= a_mod
+                // So there must be a (k - 1) = (d1 * rhs + (rhs - 1)) in [a, b] that satisfies
+                // ((k - 1) % rhs == rhs - 1)
+                // Based on (1) and (2), the range of `lhs % rhs` is `[0, rhs - 1]`.
+                return IntegerRangeInfo(0, rhs_const - 1);
+            } else {
+                // If (d1 == d2):
+                // Let d = d1 = d2
+                // a = d * rhs + a_mod, b = d * rhs + b_mod
+                // a = d * rhs + a_mod <= d * rhs + b_mod = b
+                // => a_mod <= b_mod
+                // Randomly choose x in range [a, b], let x_mod = x % rhs
+                // x = dx * rhs + x_mod (0 <= x_mod < rhs)
+                // a <= x <= b
+                // d * rhs + a_mod <= dx * rhs + x_mod <= d * rhs + b_mod
+                // a_mod <= (dx - d) * rhs + x_mod <= b_mod
+                // (1)   0 <= a_mod <= (dx - d) * rhs + x_mod
+                //           -x_mod <= (dx - d) * rhs
+                //      rhs - x_mod <= (dx - d) * rhs + rhs
+                //  0 < rhs - x_mod <= (dx - d + 1) * rhs
+                //       dx - d + 1 > 0
+                //               dx > d - 1
+                // (2) (dx - d) * rhs + x_mod <= b_mod < rhs
+                //       (dx - d) * rhs - rhs < -x_mod <= 0
+                //         (dx - d - 1) * rhs < 0
+                //                 dx - d - 1 < 0
+                //                 dx < d + 1
+                // Based on (1) and (2),  dx = d
+                // So a_mod <= x_mod <= b_mod. The range of `lhs % rhs` is `[a_mod, b_mod]`.
+
+                int64_t min_bound = lhs_i32.min_bound % rhs_const;
+                int64_t max_bound = lhs_i32.max_bound % rhs_const;
+                TINT_ASSERT(min_bound <= max_bound);
+                return IntegerRangeInfo(min_bound, max_bound);
+            }
+        } else {
+            // Currently we only accept `rhs` as a constant positive integer.
+            auto rhs_u32 = std::get<IntegerRangeInfo::UnsignedIntegerRange>(rhs_range.range);
+            if (rhs_u32.min_bound != rhs_u32.max_bound) {
+                return {};
+            }
+            uint64_t rhs_const = rhs_u32.min_bound;
+            if (rhs_const == 0) {
+                return {};
+            }
+
+            // `lhs` must not be negative.
+            auto lhs_u32 = std::get<IntegerRangeInfo::UnsignedIntegerRange>(lhs_range.range);
+            if (lhs_u32.min_bound / rhs_const < lhs_u32.max_bound / rhs_const) {
+                return IntegerRangeInfo(0, rhs_const - 1);
+            } else {
+                uint64_t min_bound = lhs_u32.min_bound % rhs_const;
+                uint64_t max_bound = lhs_u32.max_bound % rhs_const;
+                TINT_ASSERT(min_bound <= max_bound);
+                return IntegerRangeInfo(min_bound, max_bound);
+            }
         }
     }
 
