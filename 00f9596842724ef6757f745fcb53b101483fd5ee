@@ -39,6 +39,30 @@
       },
       "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32685d00_84d5597c",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-22T19:10:18Z",
+      "side": 1,
+      "message": "That would require too many changes in this CL. Can I do that in a follow-up CL?",
+      "parentUuid": "2d940408_98a72e01",
+      "range": {
+        "startLine": 50,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
