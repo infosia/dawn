@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35c6e800_a9b0a963",
+        "filename": "src/dawn/native/DeviceGuard.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-22T21:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "324188c8_a577a3b9",
+      "revId": "4da66190df30284afa39612d5ff9da0d2a2f173e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "40bfb52b_dc2e081c",
@@ -35,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb45ae17_9ff4e08f",
+        "filename": "src/dawn/native/DeviceGuard.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-22T21:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40bfb52b_dc2e081c",
+      "revId": "4da66190df30284afa39612d5ff9da0d2a2f173e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "674169dc_9d209768",
@@ -48,6 +84,24 @@
       "writtenOn": "2025-07-21T20:13:33Z",
       "side": 1,
       "message": "similar here",
+      "revId": "4da66190df30284afa39612d5ff9da0d2a2f173e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6809ea4_745baa5b",
+        "filename": "src/dawn/native/DeviceGuard.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-22T21:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "674169dc_9d209768",
       "revId": "4da66190df30284afa39612d5ff9da0d2a2f173e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
