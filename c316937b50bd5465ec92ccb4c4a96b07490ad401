@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06891bef_1a78160c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-22T13:15:40Z",
+      "side": 1,
+      "message": "Updated, PTAL.",
+      "revId": "c316937b50bd5465ec92ccb4c4a96b07490ad401",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8e36fafc_bd31d71c",
@@ -24,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a2c4a1e_7e412306",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-22T13:15:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e36fafc_bd31d71c",
+      "range": {
+        "startLine": 821,
+        "startChar": 1,
+        "endLine": 823,
+        "endChar": 0
+      },
+      "revId": "c316937b50bd5465ec92ccb4c4a96b07490ad401",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c392a32_b187a31f",
@@ -37,6 +78,30 @@
       "writtenOn": "2025-07-22T12:22:39Z",
       "side": 1,
       "message": "This comment is more confusing than anything since this is the code path where we only do 2.",
+      "range": {
+        "startLine": 830,
+        "startChar": 1,
+        "endLine": 834,
+        "endChar": 0
+      },
+      "revId": "c316937b50bd5465ec92ccb4c4a96b07490ad401",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52ac5074_b4bcfd7a",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-22T13:15:40Z",
+      "side": 1,
+      "message": "Updated",
+      "parentUuid": "4c392a32_b187a31f",
       "range": {
         "startLine": 830,
         "startChar": 1,

@@ -16,6 +16,24 @@
       "message": "It\u0027s ok to keep the loop and loop twice over the attachments. There are extremely few of them.",
       "revId": "6492a99241107d5228185d3526b0556c714e698f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e87d401_b5ab4c99",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-22T13:15:40Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "58b3df95_3af1c418",
+      "revId": "6492a99241107d5228185d3526b0556c714e698f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
