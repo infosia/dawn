@@ -802,6 +802,24 @@
       "parentUuid": "99f3f8a0_e11d4601",
       "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbd49730_019c0196",
+        "filename": "src/tint/lang/core/ir/transform/array_length_from_immediate_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-22T02:12:57Z",
+      "side": 1,
+      "message": "Yes, SGTM.",
+      "parentUuid": "b712f005_3f1f2f65",
+      "revId": "9714867cef23703a8d03e53455f5ef2af5bdc16b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
