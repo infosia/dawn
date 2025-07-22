@@ -7,12 +7,8 @@ void e() {
     uint3 v_1 = (0u).xxx;
     v.GetDimensions(0u, v_1.x, v_1.y, v_1.z);
     uint level = v_1.z;
-    while(true) {
+    while((level > 0u)) {
       if (all((tint_loop_idx == (0u).xx))) {
-        break;
-      }
-      if ((level > 0u)) {
-      } else {
         break;
       }
       {

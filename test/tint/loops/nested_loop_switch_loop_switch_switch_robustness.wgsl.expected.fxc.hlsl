@@ -5,12 +5,8 @@ void main() {
   {
     uint2 tint_loop_idx = (4294967295u).xx;
     int i = int(0);
-    while(true) {
+    while((i < int(2))) {
       if (all((tint_loop_idx == (0u).xx))) {
-        break;
-      }
-      if ((i < int(2))) {
-      } else {
         break;
       }
       bool tint_continue = false;
@@ -20,12 +16,8 @@ void main() {
           {
             uint2 tint_loop_idx_1 = (4294967295u).xx;
             int j = int(0);
-            while(true) {
+            while((j < int(2))) {
               if (all((tint_loop_idx_1 == (0u).xx))) {
-                break;
-              }
-              if ((j < int(2))) {
-              } else {
                 break;
               }
               bool tint_continue_1 = false;
