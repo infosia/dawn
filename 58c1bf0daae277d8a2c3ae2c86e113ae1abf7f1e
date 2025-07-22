@@ -111,6 +111,23 @@
       },
       "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f07a0779_ff2cbc93",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-22T12:07:48Z",
+      "side": 1,
+      "message": "ditto (from previous CLs), webgpu.h changes should have the dawn tag for now.",
+      "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
