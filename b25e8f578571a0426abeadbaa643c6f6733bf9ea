@@ -34,6 +34,41 @@
       "parentUuid": "82bdfcc0_93a6209f",
       "revId": "b25e8f578571a0426abeadbaa643c6f6733bf9ea",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "952e4bb2_059ff144",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-22T14:21:07Z",
+      "side": 1,
+      "message": "We don\u0027t really maintain `AUTHORS` since the commit log has the same information in Git. If it\u0027s important to you, it\u0027s fine to add yourself but we don\u0027t require it.",
+      "parentUuid": "fc18b7e1_cd277667",
+      "revId": "b25e8f578571a0426abeadbaa643c6f6733bf9ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f83e15b7_2cec93ad",
+        "filename": "src/tint/cmd/bench/generate_benchmark_inputs.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-22T14:21:07Z",
+      "side": 1,
+      "message": "Benchmarks are never compiled on non-clang compilers?",
+      "revId": "b25e8f578571a0426abeadbaa643c6f6733bf9ea",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
