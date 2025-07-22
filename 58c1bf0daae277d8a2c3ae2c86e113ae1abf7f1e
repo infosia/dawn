@@ -87,6 +87,30 @@
       },
       "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "305b9c6e_7ce24c64",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-22T12:05:48Z",
+      "side": 1,
+      "message": "We want to have webgpu.h be API stable and adding structure elements is a breaking change so even if this is a WGSL feature, in terms of the API it needs to be an extension struct.",
+      "parentUuid": "9ef808f2_2b8311d4",
+      "range": {
+        "startLine": 344,
+        "startChar": 12,
+        "endLine": 344,
+        "endChar": 88
+      },
+      "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
