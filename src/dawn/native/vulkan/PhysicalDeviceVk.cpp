@@ -1254,7 +1254,7 @@ ResultOrError<PhysicalDeviceSurfaceCapabilities> PhysicalDevice::GetSurfaceCapab
 const AHBFunctions* PhysicalDevice::GetOrLoadAHBFunctions() {
 #if DAWN_PLATFORM_IS(ANDROID)
     if (mAHBFunctions == nullptr) {
-        mAHBFunctions = std::make_unique<AHBFunctions>();
+        mAHBFunctions = std::make_unique<AHBFunctions>(GetInstance()->GetRuntimeSearchPaths());
     }
     return mAHBFunctions.get();
 #else
