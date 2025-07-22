@@ -16,6 +16,29 @@
       "message": "PTAL. The webgpu failures are unrelated and already exist on the bots.",
       "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d940408_98a72e01",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-22T18:47:05Z",
+      "side": 1,
+      "message": "In my experimental change https://dawn-review.googlesource.com/c/dawn/+/251875, I actually made `WaitForQueueSerialImpl` return the new serial that\u0027s ready instead of a bool. And made it such that it would return `kBeginningOfGPUTime` if it failed. I think that would be better here also since that would help me rebase my change later when I get back to this, and also, it would make that function a lot more similar to `CheckAndUpdateCompletedSerials` which also returns an `ExecutionSerial`.",
+      "range": {
+        "startLine": 50,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
