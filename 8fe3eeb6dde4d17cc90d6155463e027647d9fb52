@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "025bd2c0_6c5276e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-22T11:59:02Z",
+      "side": 1,
+      "message": "The precedent for enables is that there is a respective API feature. I\u0027m actually mildly suprised that this is a WGSL language feature and not an enable but we can see about that with the group (or was it already discussed?)",
+      "parentUuid": "21d2a35e_9fdf6674",
+      "revId": "8fe3eeb6dde4d17cc90d6155463e027647d9fb52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "31f8cd9a_2080f2b5",
         "filename": "src/dawn/native/Toggles.h",
         "patchSetId": 4
