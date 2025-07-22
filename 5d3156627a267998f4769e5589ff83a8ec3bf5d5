@@ -51,6 +51,24 @@
       "parentUuid": "44df28d7_26a2586e",
       "revId": "5d3156627a267998f4769e5589ff83a8ec3bf5d5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db371104_558943eb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-22T12:03:45Z",
+      "side": 1,
+      "message": "While it\u0027s good to make separable commits, this is missing too much context IMHO. We should probably squash this in the commit that adds the creation of the TexelBufferView.",
+      "parentUuid": "0462e513_dee648a3",
+      "revId": "5d3156627a267998f4769e5589ff83a8ec3bf5d5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
