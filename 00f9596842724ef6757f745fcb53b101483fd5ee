@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5ae98cd_91874de8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-22T11:23:16Z",
+      "side": 1,
+      "message": "PTAL. The webgpu failures are unrelated and already exist on the bots.",
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
