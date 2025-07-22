@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e994373a_a21d1cf2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-22T12:09:19Z",
+      "side": 1,
+      "message": "Whoops went one commit too high in the chain ^^",
+      "revId": "3fdf92a1ff85b2745fce3391ce8ab1b011dbf8ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22e486a4_0e1db217",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-22T12:09:19Z",
+      "side": 1,
+      "message": "ditto the \"dawn\", but also can we add validation for this usage now (that it requires the feature to be enabled, cannot be used with mappable usage unless we have the extended mappable usages), and unittests for this validation?",
+      "revId": "3fdf92a1ff85b2745fce3391ce8ab1b011dbf8ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
