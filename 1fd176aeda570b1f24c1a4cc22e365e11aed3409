@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dd12ec8b_5e84d258",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-07-22T17:06:59Z",
+      "side": 1,
+      "message": "\"The other CL\" is originally created at https://github.com/google/dawn/pull/33. The Pull Request on Github is still in \"open\" state, but its corresponding (imported) CL is merged already as 9588ba6b46fa4b6eea7069b6894c87b1bcf9e0ff in https://dawn-review.googlesource.com/c/dawn/+/238874.\n\nThere are a few differences. the PR in Github uses DAWN_BUILD_MONOLITHIC_LIBRARY\u003dstatic|dynamic, while the merged CL uses DAWN_BUILD_MONOLITHIC_LIBRARY\u003dON|OFF and use BUILD_SHARED_LIBS to control static/dynamic linking.",
+      "parentUuid": "ccd8d837_84ede54f",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d83bb941_f36b7934",
         "filename": ".github/workflows/ci.yml",
         "patchSetId": 8
