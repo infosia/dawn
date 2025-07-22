@@ -98,6 +98,30 @@
       },
       "revId": "b57a50b96fbbfd4de388085d3271c1efab85b6cb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "517cb4a7_f387cb62",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-22T15:38:03Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d2f29c96_9ecb6087",
+      "range": {
+        "startLine": 51,
+        "startChar": 29,
+        "endLine": 51,
+        "endChar": 58
+      },
+      "revId": "b57a50b96fbbfd4de388085d3271c1efab85b6cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
