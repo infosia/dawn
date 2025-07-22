@@ -56,6 +56,48 @@
       },
       "revId": "b57a50b96fbbfd4de388085d3271c1efab85b6cb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b46d1048_82a92f66",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-22T00:24:27Z",
+      "side": 1,
+      "message": "I can find for GLSL and SPIR-V that primitive restart does not reset primitive ID, but I can\u0027t find anything for HLSL or MSL?\n\nAdded a line with a comment to verify for HLSL and MSL.",
+      "parentUuid": "ee7f6ae9_1c89e583",
+      "revId": "b57a50b96fbbfd4de388085d3271c1efab85b6cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2f29c96_9ecb6087",
+        "filename": "docs/tint/extensions/chromium_experimental_primitive_id.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-22T00:24:27Z",
+      "side": 1,
+      "message": "Yes, I believe that\u0027s correct.",
+      "parentUuid": "20faf565_aaf5e3f8",
+      "range": {
+        "startLine": 51,
+        "startChar": 29,
+        "endLine": 51,
+        "endChar": 58
+      },
+      "revId": "b57a50b96fbbfd4de388085d3271c1efab85b6cb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
