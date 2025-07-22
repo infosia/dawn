@@ -107,6 +107,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "fef510bc_39ce67e2",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1885,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-22T12:22:39Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem done, why was ResolveMultisampledRenderPass changed to act only on a view? Can we first transition all the resolve dest textures and then either call `EndRenderPass` or `ResolveMultisampledRenderPass`? Concretely the code would be:\n\n```\n                // Both the D3D12 render pass API and the \"immediate mode\" resolve require the destination to be in the D3D12_RESOURCE_STATE_RESOLVE_DEST state. However the D3D12 render pass API doesn\u0027t require a transition for the resolve source so we defer that to ResolveMultisampledRenderPass.\n                // See https://learn.microsoft.com/en-us/windows/win32/api/d3d12/ne-d3d12-d3d12_render_pass_ending_access_type\n                for (ColorAttachmentIndex i :\n                     renderPass-\u003eattachmentState-\u003eGetColorAttachmentsMask()) {\n                    TextureViewBase* resolveTarget \u003d\n                        renderPass-\u003ecolorAttachments[i].resolveTarget.Get();\n                    if (resolveTarget \u003d\u003d nullptr) {\n                        continue;\n                    }\n                    ToBackend(resolveTarget-\u003eGetTexture())-\u003eTrackUsageAndTransitionNow(\n                            commandContext, D3D12_RESOURCE_STATE_RESOLVE_DEST,\n                            resolveTarget-\u003eGetSubresourceRange());\n                }\n                \n                if (useRenderPass) {\n                    commandContext-\u003eGetCommandList4()-\u003eEndRenderPass();\n                } else if (renderPass-\u003eattachmentState-\u003eGetSampleCount() \u003e 1) {\n                    ResolveMultisampledRenderPass(commandContext, renderPass);\n                }\n```",
+      "parentUuid": "66b1987e_27e3cf6f",
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0c82688d_77c53491",
         "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
         "patchSetId": 11
