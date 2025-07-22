@@ -63,6 +63,30 @@
       },
       "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85260033_d3a89e84",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-22T20:14:23Z",
+      "side": 1,
+      "message": "Sure, that\u0027s fine by me, though it shouldn\u0027t be too much more changes. You can just patch in the relevant changes from my experimental change and they \"should\" work? I think that tests are failing in my CL because I was also messing around with trying to get the lock to work properly.",
+      "parentUuid": "32685d00_84d5597c",
+      "range": {
+        "startLine": 50,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
