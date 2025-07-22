@@ -179,6 +179,7 @@ dawn_add_library(
         webgpu_c
         webgpu_cpp
     PRIVATE_DEPENDS
+        absl::flat_hash_set
         absl::inlined_vector
         absl::no_destructor
         absl::overload
