@@ -14,12 +14,8 @@ float4 main_inner(float2 vUV) {
   int i = int(0);
   {
     uint2 tint_loop_idx = (4294967295u).xx;
-    while(true) {
+    while((i < int(1))) {
       if (all((tint_loop_idx == (0u).xx))) {
-        break;
-      }
-      if ((i < int(1))) {
-      } else {
         break;
       }
       float3 offset = float3((random.x).xxx);

@@ -2703,6 +2703,31 @@ fn main(@builtin(global_invocation_id) xyz: vec3u) {
 )");
 }
 
+TEST_P(ShaderTests, ForLoopReconstuctionFXC) {
+    // TODO(crbug.com/dawn/2350): Investigate, fix.
+    DAWN_TEST_UNSUPPORTED_IF(IsD3D11());
+
+    wgpu::ComputePipeline pipeline = CreateComputePipeline(R"(
+@group(0) @binding(3) var<uniform> U: u32;
+@group(0) @binding(1) var dst_image2d : texture_storage_2d<rgba32uint, write>;
+@group(0) @binding(2) var src_image2d : texture_2d<f32>;
+var<workgroup> outputs : array<array<vec4<u32>, 32>, 8>;
+@compute @workgroup_size(32, 1, 8)
+
+fn main(@builtin(local_invocation_id) lid : vec3<u32>) {
+  for (var S = lid.z; S < U; S += 1u) {
+  }
+
+  for (var s_group = 0u; s_group < U; s_group += 1u) {
+    outputs[lid.z][lid.x] = vec4<u32>(textureLoad(src_image2d, vec2u(U), 0));
+    workgroupBarrier();
+    var result = outputs[lid.z][lid.x];;
+    textureStore(dst_image2d, vec2u(U), result);
+  }
+}
+)");
+}
+
 DAWN_INSTANTIATE_TEST(ShaderTests,
                       D3D11Backend(),
                       D3D12Backend(),

@@ -3,12 +3,8 @@ int f() {
   int i = int(0);
   {
     uint2 tint_loop_idx = (4294967295u).xx;
-    while(true) {
+    while((i < int(4))) {
       if (all((tint_loop_idx == (0u).xx))) {
-        break;
-      }
-      if ((i < int(4))) {
-      } else {
         break;
       }
       i = (i + int(1));

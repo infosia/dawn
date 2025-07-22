@@ -23,12 +23,8 @@ void main() {
     tint_array_copy[min(v_1, 7u)] = v_2;
     InnerS v_3[8] = tint_array_copy;
     s1.a1 = v_3;
-    while(true) {
+    while((i < int(4))) {
       if (all((tint_loop_idx == (0u).xx))) {
-        break;
-      }
-      if ((i < int(4))) {
-      } else {
         break;
       }
       {
