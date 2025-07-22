@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa519710_1883f859",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1894,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-22T13:26:08Z",
+      "side": 1,
+      "message": "This comment is only applicable to `useRenderPass` path. It\u0027s not correct for `ResolveMultisampledRenderPass()` case. It\u0027s better to just remove the comment.",
+      "range": {
+        "startLine": 1886,
+        "startChar": 20,
+        "endLine": 1894,
+        "endChar": 126
+      },
+      "revId": "de8d120276b4cb4bd8a6250041b08388e909a77d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "030aed7c_f9be98b7",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1728,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-22T13:26:08Z",
+      "side": 1,
+      "message": "Why do we need to clear the resolve target? Do we check the pixels outside the resolve region in this test?",
+      "range": {
+        "startLine": 1718,
+        "startChar": 8,
+        "endLine": 1728,
+        "endChar": 9
+      },
+      "revId": "de8d120276b4cb4bd8a6250041b08388e909a77d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

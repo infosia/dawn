@@ -219,6 +219,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b991257f_78602601",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-22T13:26:08Z",
+      "side": 1,
+      "message": "@xing.xu@intel.com could you move this snippet\n```\n    if (usage \u0026 kResolveAttachmentLoadingUsage) {\n        // The MSAA expansion step loads the resource in a shader.\n        resourceState |\u003d D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;\n    }\n```\nto this if block as @cwallez@chromium.org suggested?",
+      "parentUuid": "a7fe5719_6598e8cf",
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9d23da0f_7133b297",
         "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
         "patchSetId": 11
