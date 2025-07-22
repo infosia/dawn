@@ -16,6 +16,23 @@
       "message": "PTAL!",
       "revId": "6d93515fc4c9ce88fca541dcd8cb0d4345336adc",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "582bb73b_e62a140a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-07-22T02:57:50Z",
+      "side": 1,
+      "message": "LGTM\n\n(IMHO, we should use push constants for this instead of a UBO.)\n\nThanks for the bugfix!",
+      "revId": "6d93515fc4c9ce88fca541dcd8cb0d4345336adc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
