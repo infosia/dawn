@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "649896e9_dec8a6d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-22T12:02:06Z",
+      "side": 1,
+      "message": "The group seemed to agree that this is a preferable approach so let\u0027s go with a view object yeah.",
+      "parentUuid": "2bc7c5df_a704a271",
+      "revId": "152b96833d7afc79acdbcecc2e8224f9186ea161",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "478faff6_f9b08272",
