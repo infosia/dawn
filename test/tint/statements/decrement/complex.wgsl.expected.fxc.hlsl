@@ -44,12 +44,8 @@ void main() {
     int v_7 = idx3();
     int v_8 = (asint(buffer.Load((((0u + (v_5 * 64u)) + v_6) + (min(uint(v_7), 3u) * 4u)))) - int(1));
     buffer.Store((((0u + (v_5 * 64u)) + v_6) + (min(uint(v_7), 3u) * 4u)), asuint(v_8));
-    while(true) {
+    while((v < 10u)) {
       if (all((tint_loop_idx == (0u).xx))) {
-        break;
-      }
-      if ((v < 10u)) {
-      } else {
         break;
       }
       {

@@ -4,12 +4,8 @@ void foo() {
   {
     uint2 tint_loop_idx = (4294967295u).xx;
     int i = int(0);
-    while(true) {
+    while((i < int(3))) {
       if (all((tint_loop_idx == (0u).xx))) {
-        break;
-      }
-      if ((i < int(3))) {
-      } else {
         break;
       }
       {

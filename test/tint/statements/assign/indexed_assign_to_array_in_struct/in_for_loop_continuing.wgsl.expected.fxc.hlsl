@@ -17,12 +17,8 @@ void main() {
   {
     uint2 tint_loop_idx = (4294967295u).xx;
     int i = int(0);
-    while(true) {
+    while((i < int(4))) {
       if (all((tint_loop_idx == (0u).xx))) {
-        break;
-      }
-      if ((i < int(4))) {
-      } else {
         break;
       }
       i = (i + int(1));
