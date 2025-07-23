@@ -75,10 +75,11 @@ MaybeError Queue::ReturnSystemEventReceivers(std::span<SystemEventReceiver> rece
     return {};
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerialImpl(ExecutionSerial serial, Nanoseconds timeout) {
+ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                             Nanoseconds timeout) {
     ExecutionSerial completedSerial = GetCompletedCommandSerial();
     if (serial <= completedSerial) {
-        return true;
+        return serial;
     }
 
     auto receiver = mSystemEventReceivers->TakeOne(serial);
@@ -97,7 +98,7 @@ ResultOrError<bool> Queue::WaitForQueueSerialImpl(ExecutionSerial serial, Nanose
     // The caller should call CheckPassedSerials() which will clear passed system events.
     mSystemEventReceivers->Enqueue(std::move(*receiver), serial);
 
-    return didComplete;
+    return didComplete ? serial : kBeginningOfGPUTime;
 }
 
 MaybeError Queue::RecycleSystemEventReceivers(ExecutionSerial completedSerial) {
