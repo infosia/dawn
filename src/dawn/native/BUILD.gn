@@ -728,6 +728,7 @@ source_set("sources") {
       "webgpu/QueueWGPU.h",
       "webgpu/WebGPUError.h",
     ]
+    deps += [ "${dawn_root}/src/dawn/devtool:devtool" ]
   }
 
   if ((dawn_enable_opengl || dawn_enable_vulkan) &&
