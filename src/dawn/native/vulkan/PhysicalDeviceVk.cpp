@@ -333,6 +333,12 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::ClipDistances);
     }
 
+    // primitive_id is exposed through either geometry or tesselation shader features.
+    if (mDeviceInfo.features.geometryShader == VK_TRUE ||
+        mDeviceInfo.features.tessellationShader == VK_TRUE) {
+        EnableFeature(Feature::ChromiumExperimentalPrimitiveId);
+    }
+
     bool shaderF16Enabled = false;
     if (mDeviceInfo.HasExt(DeviceExt::ShaderFloat16Int8) &&
         mDeviceInfo.HasExt(DeviceExt::_16BitStorage) &&

@@ -516,6 +516,15 @@ ResultOrError<VulkanDeviceKnobs> Device::CreateDevice(VkPhysicalDevice vkPhysica
         usedKnobs.features.depthClamp = VK_TRUE;
     }
 
+    if (HasFeature(Feature::ChromiumExperimentalPrimitiveId)) {
+        if (mDeviceInfo.features.geometryShader) {
+            usedKnobs.features.geometryShader = VK_TRUE;
+        } else if (mDeviceInfo.features.tessellationShader) {
+            usedKnobs.features.tessellationShader = VK_TRUE;
+        }
+        DAWN_ASSERT(usedKnobs.features.tessellationShader == VK_TRUE);
+    }
+
     bool shaderFloat16Int8FeaturesAdded = false;
     if (HasFeature(Feature::ShaderF16)) {
         DAWN_ASSERT(usedKnobs.HasExt(DeviceExt::ShaderFloat16Int8) &&
