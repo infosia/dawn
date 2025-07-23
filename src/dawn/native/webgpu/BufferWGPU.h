@@ -30,6 +30,7 @@
 
 #include "dawn/native/Buffer.h"
 
+#include "dawn/native/devtool/RecordPlaybackManager.h"
 #include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/ObjectWGPU.h"
 
