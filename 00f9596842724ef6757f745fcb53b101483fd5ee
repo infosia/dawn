@@ -87,6 +87,30 @@
       },
       "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eed1a9ca_e4329c66",
+        "filename": "src/dawn/native/ExecutionQueue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-23T10:35:06Z",
+      "side": 1,
+      "message": "Done in the follow-up patch https://dawn-review.googlesource.com/c/dawn/+/254374",
+      "parentUuid": "85260033_d3a89e84",
+      "range": {
+        "startLine": 50,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 18
+      },
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
