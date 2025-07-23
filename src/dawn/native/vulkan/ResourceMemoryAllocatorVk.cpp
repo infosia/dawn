@@ -487,13 +487,23 @@ VkMemoryPropertyFlags ResourceMemoryAllocator::GetRequiredMemoryPropertyFlags(
     // Mappable resource must be host visible and host coherent.
     if (IsMemoryKindMappable(memoryKind)) {
         vkFlags |= VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT;
-        vkFlags |= VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 
-        // For device local mappable buffers prefer to use host coherent plus host cached memory
-        // when it's available for better host access performance.
-        DAWN_ASSERT(!(memoryKind & MemoryKind::HostCached));
-        if (memoryKind & MemoryKind::DeviceLocal && mUseHostCachedForMappable) {
-            vkFlags |= VK_MEMORY_PROPERTY_HOST_CACHED_BIT;
+        if (memoryKind & MemoryKind::DeviceLocal) {
+            vkFlags |= VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+
+            // For device local mappable buffers prefer to use host coherent plus host cached memory
+            // when it's available for better host access performance.
+            DAWN_ASSERT(!(memoryKind & MemoryKind::HostCached));
+            if (mUseHostCachedForMappable) {
+                vkFlags |= VK_MEMORY_PROPERTY_HOST_CACHED_BIT;
+            }
+        } else {
+            // For read only buffers prefer host cached memory for read performance.
+            if (!(memoryKind & MemoryKind::WriteMappable)) {
+                vkFlags |= VK_MEMORY_PROPERTY_HOST_CACHED_BIT;
+            } else {
+                vkFlags |= VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+            }
         }
     }
 
