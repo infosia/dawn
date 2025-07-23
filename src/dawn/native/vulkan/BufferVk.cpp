@@ -34,6 +34,7 @@
 #include <utility>
 #include <vector>
 
+#include "dawn/common/Assert.h"
 #include "dawn/common/GPUInfo.h"
 #include "dawn/native/ChainUtils.h"
 #include "dawn/native/CommandBuffer.h"
@@ -517,6 +518,16 @@ bool Buffer::IsCPUWritableAtCreation() const {
 }
 
 MaybeError Buffer::MapAtCreationImpl() {
+    if (!mHostCoherent) {
+        // If the buffer is mapped on creation then it's for write which requires a flush.
+        mFlushRangeOnUnmap = VkMappedMemoryRange{
+            .sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE,
+            .pNext = nullptr,
+            .memory = ToBackend(mMemoryAllocation.GetResourceHeap())->GetMemory(),
+            .offset = mMemoryAllocation.GetOffset(),
+            .size = mAllocatedSize};
+    }
+
     return {};
 }
 
@@ -534,11 +545,49 @@ MaybeError Buffer::MapAsyncImpl(wgpu::MapMode mode, size_t offset, size_t size) 
         TransitionUsageNow(recordingContext, wgpu::BufferUsage::MapWrite);
     }
 
+    if (!mHostCoherent) {
+        Device* device = ToBackend(GetDevice());
+        VkDeviceSize requiredAlignment =
+            device->GetDeviceInfo().properties.limits.nonCoherentAtomSize;
+
+        DAWN_ASSERT(mMemoryAllocation.GetOffset() == 0);
+        size_t alignedOffset = AlignDown(offset, requiredAlignment);
+        size_t adjustedSize = size + (offset - alignedOffset);
+        size_t alignedSize = alignedOffset + adjustedSize == mAllocatedSize
+                                 ? adjustedSize
+                                 : Align(adjustedSize, requiredAlignment);
+
+        DAWN_ASSERT(alignedOffset + alignedSize <= mAllocatedSize);
+        VkMappedMemoryRange range = {
+            .sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE,
+            .pNext = nullptr,
+            .memory = ToBackend(mMemoryAllocation.GetResourceHeap())->GetMemory(),
+            .offset = alignedOffset,
+            .size = alignedSize};
+
+        // Map reads always require invalidation. Map writes only require invalidation if the buffer
+        // could have been modified by the GPU.
+        if (mode & wgpu::MapMode::Read ||
+            !IsSubset(GetInternalUsage(), kReadOnlyBufferUsages | wgpu::BufferUsage::MapWrite)) {
+            device->fn.InvalidateMappedMemoryRanges(device->GetVkDevice(), 1, &range);
+        }
+
+        if (mode & wgpu::MapMode::Write) {
+            DAWN_ASSERT(!mFlushRangeOnUnmap);
+            mFlushRangeOnUnmap = range;
+        }
+    }
+
     return {};
 }
 
 void Buffer::UnmapImpl() {
-    // No need to do anything, we keep CPU-visible memory mapped at all time.
+    // We keep CPU-visible memory mapped at all times.
+    if (mFlushRangeOnUnmap) {
+        Device* device = ToBackend(GetDevice());
+        device->fn.FlushMappedMemoryRanges(device->GetVkDevice(), 1, &mFlushRangeOnUnmap.value());
+        mFlushRangeOnUnmap.reset();
+    }
 }
 
 void* Buffer::GetMappedPointerImpl() {
@@ -652,6 +701,7 @@ void Buffer::DestroyImpl() {
     //   other threads using the buffer since there are no other live refs.
     BufferBase::DestroyImpl();
 
+    mFlushRangeOnUnmap.reset();
     ToBackend(GetDevice())->GetResourceMemoryAllocator()->Deallocate(&mMemoryAllocation);
 
     if (mHandle != VK_NULL_HANDLE) {

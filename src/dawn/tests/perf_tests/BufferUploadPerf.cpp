@@ -102,6 +102,85 @@ std::ostream& operator<<(std::ostream& ostream, const BufferUploadParams& param)
     return ostream;
 }
 
+struct BufferReadParams : public AdapterTestParam {
+    BufferReadParams(const AdapterTestParam& param, UploadSize uploadSize)
+        : AdapterTestParam(param), uploadSize(uploadSize) {}
+
+    UploadSize uploadSize;
+};
+std::ostream& operator<<(std::ostream& ostream, const BufferReadParams& param) {
+    ostream << static_cast<const AdapterTestParam&>(param);
+
+    switch (param.uploadSize) {
+        case UploadSize::BufferSize_1KB:
+            ostream << "_BufferSize_1KB";
+            break;
+        case UploadSize::BufferSize_64KB:
+            ostream << "_BufferSize_64KB";
+            break;
+        case UploadSize::BufferSize_1MB:
+            ostream << "_BufferSize_1MB";
+            break;
+        case UploadSize::BufferSize_4MB:
+            ostream << "_BufferSize_4MB";
+            break;
+        case UploadSize::BufferSize_16MB:
+            ostream << "_BufferSize_16MB";
+            break;
+    }
+
+    return ostream;
+}
+
+class BufferReadPerf : public DawnPerfTestWithParams<BufferReadParams> {
+  public:
+    BufferReadPerf()
+        : DawnPerfTestWithParams(kNumIterations, 1),
+          data(static_cast<size_t>(GetParam().uploadSize)) {}
+
+    void SetUp() override {
+        DawnPerfTestWithParams<BufferReadParams>::SetUp();
+
+        wgpu::BufferDescriptor desc = {};
+        desc.size = data.size();
+        desc.usage = wgpu::BufferUsage::CopyDst | wgpu::BufferUsage::MapRead;
+
+        dst = device.CreateBuffer(&desc);
+
+        MapAsyncAndWait(dst, wgpu::MapMode::Read, 0, data.size());
+        mapped = static_cast<const uint8_t*>(dst.GetConstMappedRange());
+        ASSERT_TRUE(mapped);
+    }
+
+    void MapAsyncAndWait(const wgpu::Buffer& buffer,
+                         wgpu::MapMode mode,
+                         size_t offset,
+                         size_t size) {
+        wgpu::Future future = buffer.MapAsync(mode, offset, size, wgpu::CallbackMode::WaitAnyOnly,
+                                              [](wgpu::MapAsyncStatus status, wgpu::StringView) {
+                                                  ASSERT_EQ(wgpu::MapAsyncStatus::Success, status);
+                                              });
+        wgpu::FutureWaitInfo waitInfo = {future};
+        GetInstance().WaitAny(1, &waitInfo, UINT64_MAX);
+        ASSERT_TRUE(waitInfo.completed);
+    }
+
+  private:
+    void Step() override {
+        for (unsigned int i = 0; i < kNumIterations; ++i) {
+            memcpy(data.data(), mapped, data.size());
+        }
+    }
+
+    wgpu::Buffer dst;
+    const uint8_t* mapped = nullptr;
+    std::vector<uint8_t> data;
+};
+
+TEST_P(BufferReadPerf, Run) {
+    RunTest();
+}
+
 // Test uploading |kBufferSize| bytes of data |kNumIterations| times.
 class BufferUploadPerf : public DawnPerfTestWithParams<BufferUploadParams> {
   public:
@@ -309,6 +388,12 @@ void BufferMapExtendedUsagesPerf::MapAsyncAndWait(const wgpu::Buffer& buffer,
 TEST_P(BufferMapExtendedUsagesPerf, Run) {
     RunTest();
 }
+
+DAWN_INSTANTIATE_TEST_P(BufferReadPerf,
+                        {D3D12Backend(), MetalBackend(), OpenGLBackend(), VulkanBackend()},
+                        {UploadSize::BufferSize_1KB, UploadSize::BufferSize_64KB,
+                         UploadSize::BufferSize_1MB, UploadSize::BufferSize_4MB,
+                         UploadSize::BufferSize_16MB});
 
 DAWN_INSTANTIATE_TEST_P(BufferUploadPerf,
                         {D3D12Backend(), MetalBackend(), OpenGLBackend(), VulkanBackend()},
