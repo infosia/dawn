@@ -30,4 +30,5 @@ import("../../../../scripts/dawn_overrides_with_defaults.gni")
 
 proto_library("devtool_cmd_proto") {
   sources = [ "cmd.proto" ]
+  use_protobuf_full = false
 }

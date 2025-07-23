@@ -33,7 +33,17 @@ if (dawn_enable_devtool_playback) {
   dawn_component("playback") {
     DEFINE_PREFIX = "DAWN_DEVTOOL_PLAYBACK"
 
-    deps = [ "protos:devtool_cmd_proto" ]
-    public_deps = [ "${dawn_root}/third_party/protobuf:protobuf_full" ]
+    sources = [
+      "CmdPb.h",
+      "ObjectType.h",
+      "Replayer.cpp",
+      "Replayer.h",
+    ]
+    deps = [
+      "${dawn_root}/src/dawn:proc",
+      "${dawn_root}/src/dawn/common",
+      "${dawn_root}/src/dawn/native:abseil",
+    ]
+    public_deps = [ "protos:devtool_cmd_proto" ]
   }
 }

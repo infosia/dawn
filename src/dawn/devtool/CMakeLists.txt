@@ -25,15 +25,28 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+set(playback_headers
+    "CmdPb.h"
+    "ObjectType.h"
+    "Replayer.h"
+)
 set(playback_sources
     $<TARGET_OBJECTS:dawn_devtool_proto_objects>
+    "Replayer.cpp"
 )
 set(playback_depends
-    libprotobuf
+    dawn_devtool_proto_objects
+    webgpu_c
+    dawn::dawn_common
 )
 dawn_add_library(
     dawn_devtool_playback
+    UTILITY_TARGET dawn_internal_config
+    PRIVATE_HEADERS ${playback_headers}
     SOURCES ${playback_sources}
     DEPENDS ${playback_depends}
 )
-target_include_directories(dawn_devtool_playback PUBLIC "${DAWN_BUILD_GEN_DIR}")
+target_include_directories(dawn_devtool_playback PRIVATE
+    "${Dawn_SOURCE_DIR}/src"
+    "${DAWN_BUILD_GEN_DIR}"
+)
