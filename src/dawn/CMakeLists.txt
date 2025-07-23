@@ -111,6 +111,9 @@ endif()
 if (DAWN_BUILD_NODE_BINDINGS)
   add_subdirectory(node)
 endif()
+if (DAWN_ENABLE_DEVTOOL)
+  add_subdirectory(devtool)
+endif()
 
 ###############################################################################
 # libdawn_proc
