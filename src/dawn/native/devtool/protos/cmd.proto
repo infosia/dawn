@@ -31,8 +31,30 @@ syntax = "proto3";
 
 package dawn.native.devtool.cmd.pb;
 
+message SnapshotDeviceState {
+    uint64 id = 1;
+}
+
+message SnapshotQueueState {
+    uint64 id = 1;
+}
+
+message SnapshotBufferState {
+    uint64 id = 1;
+}
+
+message SnapshotGlobalState {
+    // repeated SnapshotDeviceState devices = 1;
+    SnapshotDeviceState device = 1;
+    repeated SnapshotQueueState queues = 2;
+    repeated SnapshotBufferState buffers = 3;
+}
+
 message Block {
-    repeated Cmd cmds = 1;
+    // uint64 deviceId = 1;
+    // SnapshotGlobalState globalState = 2;
+    SnapshotGlobalState globalState = 1;
+    repeated Cmd cmds = 15;
 }
 
 message Cmd {
@@ -51,14 +73,14 @@ message BufferDescriptor {
 }
 
 message DeviceCreateBufferCmd {
-    uint32 deviceId = 1;
+    uint64 deviceId = 1;
     BufferDescriptor bufferDescriptor = 2;
-    uint32 resultId = 3;
+    uint64 resultId = 3;
 }
 
 message QueueWriteBufferCmd {
-    uint32 queueId = 1;
-    uint32 bufferId = 2;
+    uint64 queueId = 1;
+    uint64 bufferId = 2;
     uint64 bufferOffset = 3;
     bytes data = 4;
 }
