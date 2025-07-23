@@ -16,6 +16,24 @@
       "message": "LGTM, are tests already enabled on the Vulkan backend and will start running after this CL?",
       "revId": "2d65a82c1bfdd624c71db240fcf791ab675401b3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a538535_0c67fe4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-23T20:17:33Z",
+      "side": 1,
+      "message": "Yea I think so. I briefly looked at the tests in the CQ run and it seems like they are running. I also think that before the tests existed already but were being skipped because the feature wasn\u0027t available.",
+      "parentUuid": "bdc59173_f09f2ed0",
+      "revId": "2d65a82c1bfdd624c71db240fcf791ab675401b3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
