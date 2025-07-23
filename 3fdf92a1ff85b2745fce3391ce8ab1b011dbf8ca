@@ -33,6 +33,24 @@
       "message": "ditto the \"dawn\", but also can we add validation for this usage now (that it requires the feature to be enabled, cannot be used with mappable usage unless we have the extended mappable usages), and unittests for this validation?",
       "revId": "3fdf92a1ff85b2745fce3391ce8ab1b011dbf8ca",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "741b5112_f062db6f",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-07-23T18:43:34Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "22e486a4_0e1db217",
+      "revId": "3fdf92a1ff85b2745fce3391ce8ab1b011dbf8ca",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
