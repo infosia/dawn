@@ -33,7 +33,18 @@ if (dawn_enable_devtool_record) {
   dawn_component("devtool_record") {
     DEFINE_PREFIX = "DAWN_DEVTOOL_RECORD"
 
-    deps = [ "protos:devtool_cmd_proto" ]
+    sources = [
+      "IncludeCmdPb.h",
+      "RecordManager.cpp",
+      "RecordManager.h",
+    ]
+    configs = [ "${dawn_root}/src/dawn/native:internal" ]
+    deps = [
+      "${dawn_root}/src/dawn/common",
+      "${dawn_root}/src/dawn/native",
+      "${dawn_root}/src/dawn/native:sources",
+      "protos:devtool_cmd_proto",
+    ]
     public_deps = [ "${dawn_root}/third_party/protobuf:protobuf_full" ]
   }
 }
@@ -42,7 +53,17 @@ if (dawn_enable_devtool_playback) {
   dawn_component("devtool_playback") {
     DEFINE_PREFIX = "DAWN_DEVTOOL_PLAYBACK"
 
-    deps = [ "protos:devtool_cmd_proto" ]
+    sources = [
+      "IncludeCmdPb.h",
+      "PlaybackManager.cpp",
+      "PlaybackManager.h",
+    ]
+    configs = [ "${dawn_root}/src/dawn/native:internal" ]
+    deps = [
+      "${dawn_root}/src/dawn:proc",
+      "${dawn_root}/src/dawn/common",
+      "protos:devtool_cmd_proto",
+    ]
     public_deps = [ "${dawn_root}/third_party/protobuf:protobuf_full" ]
   }
 }
