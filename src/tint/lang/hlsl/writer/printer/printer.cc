@@ -1703,6 +1703,8 @@ class Printer : public tint::TextGenerator {
                 return "SV_Coverage";
             case core::BuiltinValue::kPrimitiveId:
                 return "SV_PrimitiveId";
+            case core::BuiltinValue::kBarycentricCoord:
+                return "SV_Barycentrics";
             default:
                 break;
         }
