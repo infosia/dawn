@@ -601,8 +601,12 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
 endif()
 
 if (DAWN_ENABLE_RECORD_PLAYBACK)
+    list(APPEND private_headers
+        "devtool/RecordPlaybackManager.h"
+    )
     list(APPEND sources
         "devtool/protos/cmd.proto"
+        "devtool/RecordPlaybackManager.cpp"
     )
     list(APPEND conditional_private_depends libprotobuf)
 endif()
