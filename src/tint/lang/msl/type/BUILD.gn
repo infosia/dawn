@@ -51,6 +51,8 @@ libtint_source_set("type") {
     "gradient.h",
     "level.cc",
     "level.h",
+    "string.cc",
+    "string.h",
   ]
   deps = [
     "${dawn_root}/src/utils",
@@ -74,6 +76,7 @@ if (tint_build_unittests) {
       "bias_test.cc",
       "gradient_test.cc",
       "level_test.cc",
+      "string_test.cc",
     ]
     deps = [
       "${dawn_root}/src/utils",
