@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01e8cc15_66901514",
+        "filename": "src/dawn/tests/end2end/ShaderTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2707,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-23T20:59:47Z",
+      "side": 1,
+      "message": "is this not supported?",
+      "range": {
+        "startLine": 2707,
+        "startChar": 4,
+        "endLine": 2707,
+        "endChar": 51
+      },
+      "revId": "825ab32ac825d95ce6dc81d9720e97b31c39a110",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34f0dc03_e6ac5564",
+        "filename": "src/tint/lang/hlsl/writer/printer/printer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-23T20:59:47Z",
+      "side": 1,
+      "message": "Comments on this bug etc",
+      "range": {
+        "startLine": 512,
+        "startChar": 44,
+        "endLine": 512,
+        "endChar": 59
+      },
+      "revId": "825ab32ac825d95ce6dc81d9720e97b31c39a110",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
