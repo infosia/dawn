@@ -51,6 +51,24 @@
       "message": "This shouldn\u0027t be needed if the feature is marked experimental as using the feature will require the AllowUnsafeAPIs toggle.",
       "revId": "8fe3eeb6dde4d17cc90d6155463e027647d9fb52",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fae7efc_682a78ef",
+        "filename": "src/dawn/native/Toggles.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-07-23T18:42:55Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "31f8cd9a_2080f2b5",
+      "revId": "8fe3eeb6dde4d17cc90d6155463e027647d9fb52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
