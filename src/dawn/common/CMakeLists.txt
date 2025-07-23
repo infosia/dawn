@@ -151,7 +151,6 @@ elseif(APPLE)
     )
 endif()
 
-
 if (CMAKE_SYSTEM_NAME STREQUAL "Android")
     find_library(log_lib log)
     list(APPEND conditional_private_depends
