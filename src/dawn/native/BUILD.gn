@@ -730,6 +730,11 @@ source_set("sources") {
     ]
   }
 
+  
+  if (dawn_enable_devtool_playback) {
+    deps += [ "${dawn_root}/src/dawn/devtool:devtool_playback" ]
+  }
+
   if ((dawn_enable_opengl || dawn_enable_vulkan) &&
       dawn_enable_spirv_validation) {
     sources += [

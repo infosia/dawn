@@ -33,16 +33,48 @@ if (dawn_enable_devtool_record) {
   dawn_component("devtool_record") {
     DEFINE_PREFIX = "DAWN_DEVTOOL_RECORD"
 
-    deps = [ "protos:devtool_cmd_proto" ]
+    include_dirs = [
+      "${dawn_root}/include",
+      "${dawn_root}/src",
+      "${dawn_gen_root}/include",
+      "${dawn_gen_root}/src",
+    ]
+    sources = [
+      "IncludeCmdPb.h",
+      "RecordManager.cpp",
+      "RecordManager.h",
+    ]
+    deps = [
+      "protos:devtool_cmd_proto",
+      "${dawn_root}/src/dawn/native:native",
+    ]
     public_deps = [ "${dawn_root}/third_party/protobuf:protobuf_full" ]
   }
 }
 
 if (dawn_enable_devtool_playback) {
+  #group("playback") {
+  #  deps = [ ":devtool_playback" ]
+  #}
+
   dawn_component("devtool_playback") {
     DEFINE_PREFIX = "DAWN_DEVTOOL_PLAYBACK"
-
-    deps = [ "protos:devtool_cmd_proto" ]
+    
+    include_dirs = [
+      "${dawn_root}/include",
+      "${dawn_root}/src",
+      "${dawn_gen_root}/include",
+      "${dawn_gen_root}/src",
+    ]
+    sources = [
+      "IncludeCmdPb.h",
+      "PlaybackManager.cpp",
+      "PlaybackManager.h",
+    ]
+    deps = [
+      "protos:devtool_cmd_proto",
+      "${dawn_root}/src/dawn:proc",
+    ]
     public_deps = [ "${dawn_root}/third_party/protobuf:protobuf_full" ]
   }
 }

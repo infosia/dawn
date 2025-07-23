@@ -35,14 +35,19 @@ if(DAWN_ENABLE_DEVTOOL)
     )
 
     if (DAWN_ENABLE_DEVTOOL_RECORD)
+        set(record_headers
+            "RecordManager.h"
+        )
         set(record_sources
             $<TARGET_OBJECTS:dawn_devtool_proto_objects>
+            "RecordManager.cpp"
         )
         set(record_depends
             libprotobuf
         )
         dawn_add_library(
             dawn_devtool_record
+            PRIVATE_HEADERS ${record_headers}
             SOURCES ${record_sources}
             PUBLIC_DEPENDS record_depends
         )
@@ -50,14 +55,19 @@ if(DAWN_ENABLE_DEVTOOL)
     endif()
 
     if (DAWN_ENABLE_DEVTOOL_PLAYBACK)
+        set(playback_headers
+            "PlaybackManager.h"
+        )
         set(playback_sources
             $<TARGET_OBJECTS:dawn_devtool_proto_objects>
+            "PlaybackManager.cpp"
         )
         set(playback_depends
             libprotobuf
         )
         dawn_add_library(
             dawn_devtool_playback
+            PRIVATE_HEADERS ${playback_headers}
             SOURCES ${playback_sources}
             PUBLIC_DEPENDS playback_depends
         )
