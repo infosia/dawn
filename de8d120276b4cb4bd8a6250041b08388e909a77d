@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e5c98d7_cbb9dcc4",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-23T06:50:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0cef259a_2987737d",
+      "range": {
+        "startLine": 829,
+        "startChar": 0,
+        "endLine": 838,
+        "endChar": 45
+      },
+      "revId": "de8d120276b4cb4bd8a6250041b08388e909a77d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa519710_1883f859",
@@ -47,6 +71,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d59a16e_89e6c680",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1894,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-23T06:50:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa519710_1883f859",
+      "range": {
+        "startLine": 1886,
+        "startChar": 20,
+        "endLine": 1894,
+        "endChar": 126
+      },
+      "revId": "de8d120276b4cb4bd8a6250041b08388e909a77d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "030aed7c_f9be98b7",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-07-22T13:26:08Z",
       "side": 1,
       "message": "Why do we need to clear the resolve target? Do we check the pixels outside the resolve region in this test?",
+      "range": {
+        "startLine": 1718,
+        "startChar": 8,
+        "endLine": 1728,
+        "endChar": 9
+      },
+      "revId": "de8d120276b4cb4bd8a6250041b08388e909a77d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a516ecfa_2e39224a",
+        "filename": "src/dawn/tests/end2end/MultisampledRenderingTests.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1728,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-23T06:50:23Z",
+      "side": 1,
+      "message": "I think no need now, it will be automatically cleared if not initialized. Done",
+      "parentUuid": "030aed7c_f9be98b7",
       "range": {
         "startLine": 1718,
         "startChar": 8,
