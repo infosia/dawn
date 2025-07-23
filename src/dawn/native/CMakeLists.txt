@@ -600,6 +600,13 @@ if (DAWN_ENABLE_WEBGPU_ON_WEBGPU)
     )
 endif()
 
+if (DAWN_ENABLE_RECORD_PLAYBACK)
+    list(APPEND sources
+        "devtool/protos/cmd.proto"
+    )
+    list(APPEND conditional_private_depends libprotobuf)
+endif()
+
 if ((DAWN_ENABLE_OPENGL OR DAWN_ENABLE_VULKAN) AND DAWN_ENABLE_SPIRV_VALIDATION)
     list(APPEND private_headers
         "SpirvValidation.h"
@@ -925,6 +932,14 @@ endif()
 if (IOS)
     target_compile_options(dawn_native_objects PRIVATE -fno-objc-arc)
     target_compile_options(dawn_native PRIVATE -fno-objc-arc)
+endif()
+
+if (DAWN_ENABLE_RECORD_PLAYBACK)
+    generate_protos(
+            TARGET dawn_native_objects
+            PROTO_FILES "${DAWN_SRC_DIR}/dawn/native/devtool/protos/cmd.proto"
+            PROTOC_OUT_DIR "${DAWN_BUILD_GEN_DIR}/proto/")
+    target_include_directories(dawn_native_objects PRIVATE "${DAWN_BUILD_GEN_DIR}/proto/")
 endif()
 
 if (DAWN_BUILD_MONOLITHIC_LIBRARY)
