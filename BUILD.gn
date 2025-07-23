@@ -104,12 +104,20 @@ group("emdawnwebgpu") {
   }
 }
 
+group("devtool") {
+  deps = [
+    "src/dawn/devtool:devtool_playback",
+    "src/dawn/devtool:devtool_record",
+  ]
+}
+
 group("all") {
   testonly = true
   deps = [
     ":android",
     ":benchmarks",
     ":cmds",
+    ":devtool",
     ":emdawnwebgpu",
     ":fuzzers",
     ":libs",

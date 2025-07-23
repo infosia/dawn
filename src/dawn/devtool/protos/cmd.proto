@@ -29,7 +29,7 @@
 
 syntax = "proto3";
 
-package dawn.native.devtool.cmd.pb;
+package dawn.devtool.cmd.pb;
 
 message SnapshotDeviceState {
     uint64 id = 1;
