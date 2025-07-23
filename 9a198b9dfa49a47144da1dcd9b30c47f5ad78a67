@@ -16,6 +16,46 @@
       "message": "Updated, PTAL",
       "revId": "9a198b9dfa49a47144da1dcd9b30c47f5ad78a67",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8f749148_e8cf0fe2",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-23T07:41:11Z",
+      "side": 1,
+      "message": "I missed this one earlier. This will break the optimization that render attachments use loadOps instead of `EnsureSubresourceContentInitialized` since `RenderAttachment \u0026 ~kResolveAttachmentLoadingUsage` is `RenderAttachment`. Did you mean to have the condition be:\n\n```\nif (syncInfo.usage \u0026 ~(wgpu::TextureUsage::RenderAttachment | kResolveAttachmentLoadingUsage)) {\n```\n?",
+      "revId": "9a198b9dfa49a47144da1dcd9b30c47f5ad78a67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e50f866_37987453",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-23T07:41:11Z",
+      "side": 1,
+      "message": "```suggestion\n    }\n    if (usage \u0026 (wgpu::TextureUsage::TextureBinding | kReadOnlyStorageTexture)) {\n```",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 2
+      },
+      "revId": "9a198b9dfa49a47144da1dcd9b30c47f5ad78a67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
