@@ -164,6 +164,18 @@ source_set("headers") {
   ]
 }
 
+source_set("recorder") {
+  sources = [
+    "webgpu/Recorder.cpp",
+    "webgpu/Recorder.h",
+  ]
+  public_configs = [ "${dawn_root}/src/dawn/native:internal" ]
+  public_deps = [
+    "${dawn_root}/src/dawn/common",
+    "${dawn_root}/src/dawn/devtool/protos:devtool_cmd_proto",
+  ]
+}
+
 # The meat of the compilation for dawn native so that we can cheaply have
 # shared_library / static_library versions of it. It compiles all the files
 # except those that define exported symbols.
@@ -728,6 +740,7 @@ source_set("sources") {
       "webgpu/QueueWGPU.h",
       "webgpu/WebGPUError.h",
     ]
+    public_deps += [ ":recorder" ]
   }
 
   if ((dawn_enable_opengl || dawn_enable_vulkan) &&
