@@ -111,6 +111,9 @@ class Buffer final : public BufferBase {
     wgpu::BufferUsage mReadUsage = wgpu::BufferUsage::None;
     wgpu::ShaderStage mReadShaderStages = wgpu::ShaderStage::None;
 
+    // Memory range that was mapped for write and needs to be flushed.
+    std::optional<VkMappedMemoryRange> mFlushRangeOnUnmap;
+
     bool mHostVisible : 1;
     bool mHostCoherent : 1;
     bool mHasWriteTransitioned : 1;
