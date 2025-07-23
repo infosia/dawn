@@ -16,6 +16,63 @@
       "message": "PTAL, thanks!",
       "revId": "266590719464a34a9b2d1459ab964441743ab2da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d3c18e5_17c22d2c",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-23T07:45:55Z",
+      "side": 1,
+      "message": "Do you plan to use this with a `dimension` that\u0027s not `2D` in the future? Right now all the slice handling is dead code.",
+      "revId": "266590719464a34a9b2d1459ab964441743ab2da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28954077_d87e140a",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-23T07:45:55Z",
+      "side": 1,
+      "message": "```suggestion\n        ostream \u003c\u003c \"  for (var slice : i32 \u003d 0; slice \u003c sliceCount; slice +\u003d 1) {\\n\";\n```\n\nditto below",
+      "revId": "266590719464a34a9b2d1459ab964441743ab2da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb97ac00_950833c4",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-23T07:45:55Z",
+      "side": 1,
+      "message": "type no longer need to be explicit in WGSL so this can be removed potentially",
+      "range": {
+        "startLine": 611,
+        "startChar": 45,
+        "endLine": 611,
+        "endChar": 66
+      },
+      "revId": "266590719464a34a9b2d1459ab964441743ab2da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
