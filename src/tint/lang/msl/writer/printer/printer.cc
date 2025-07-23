@@ -99,6 +99,7 @@
 #include "src/tint/lang/msl/type/bias.h"
 #include "src/tint/lang/msl/type/gradient.h"
 #include "src/tint/lang/msl/type/level.h"
+#include "src/tint/lang/msl/type/string.h"
 #include "src/tint/lang/msl/writer/common/options.h"
 #include "src/tint/lang/msl/writer/common/printer_support.h"
 #include "src/tint/utils/macros/scoped_assignment.h"
@@ -961,7 +962,13 @@ class Printer : public tint::TextGenerator {
             return;
         }
 
-        out << c->Func() << "(";
+        // Some builtins need special-casing for the name they use.
+        if (c->Func() == msl::BuiltinFn::kOsLog) {
+            out << "os_log_default.log(";
+        } else {
+            out << c->Func() << "(";
+        }
+
         bool needs_comma = false;
         for (const auto* arg : c->Args()) {
             if (needs_comma) {
@@ -1727,6 +1734,14 @@ class Printer : public tint::TextGenerator {
 
         tint::Switch(
             c->Type(),  //
+            [&](const type::String* str) {
+                out << "\"";
+                auto count = str->ConstantCount();
+                for (size_t i = 0; i < *count; i++) {
+                    out << c->Index(i)->ValueAs<char>();
+                }
+                out << "\"";
+            },  //
             [&](const core::type::Bool*) { out << (c->ValueAs<bool>() ? "true" : "false"); },
             [&](const core::type::I32*) { PrintI32(out, c->ValueAs<i32>()); },
             [&](const core::type::U32*) { out << c->ValueAs<u32>() << "u"; },

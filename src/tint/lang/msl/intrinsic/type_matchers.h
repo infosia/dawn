@@ -34,6 +34,7 @@
 #include "src/tint/lang/msl/type/bias.h"
 #include "src/tint/lang/msl/type/gradient.h"
 #include "src/tint/lang/msl/type/level.h"
+#include "src/tint/lang/msl/type/string.h"
 
 namespace tint::msl::intrinsic {
 
@@ -113,6 +114,25 @@ inline bool MatchPackedVec3(core::intrinsic::MatchState&, const core::type::Type
 inline const core::type::Vector* BuildPackedVec3(core::intrinsic::MatchState& state,
                                                  const core::type::Type* el) {
     return state.types.Get<core::type::Vector>(el, 3u, /* packed */ true);
+}
+
+inline bool MatchString(core::intrinsic::MatchState&,
+                        const core::type::Type* ty,
+                        core::intrinsic::Number& N) {
+    if (auto* s = ty->As<type::String>()) {
+        if (auto count = s->Count()->As<core::type::ConstantArrayCount>()) {
+            N = core::intrinsic::Number(count->value);
+            return true;
+        }
+    }
+    return false;
+}
+
+inline const core::type::Type* BuildString(core::intrinsic::MatchState& state,
+                                           const core::type::Type*,
+                                           core::intrinsic::Number C) {
+    return state.types.Get<type::String>(
+        state.types.u8(), state.types.Get<core::type::ConstantArrayCount>(C.Value()));
 }
 
 }  // namespace tint::msl::intrinsic
