@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "581ec72c_16b31dfa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-23T20:20:13Z",
+      "side": 1,
+      "message": "IMHO, this change could also be squashed into the change that implements the `TexelViewBuffer`. It just makes more sense together.",
+      "revId": "d454d4d4b31373e385c17266c86a15d247bd7432",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
