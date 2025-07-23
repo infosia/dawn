@@ -63,9 +63,11 @@ group("abseil") {
   } else {
     public_deps = [
       "${dawn_root}/third_party/gn/abseil-cpp:bits",
+      "${dawn_root}/third_party/gn/abseil-cpp:check",
       "${dawn_root}/third_party/gn/abseil-cpp:flat_hash_map",
       "${dawn_root}/third_party/gn/abseil-cpp:flat_hash_set",
       "${dawn_root}/third_party/gn/abseil-cpp:inlined_vector",
+      "${dawn_root}/third_party/gn/abseil-cpp:log",
       "${dawn_root}/third_party/gn/abseil-cpp:span",
       "${dawn_root}/third_party/gn/abseil-cpp:str_format",
       "${dawn_root}/third_party/gn/abseil-cpp:string_view",
@@ -161,6 +163,18 @@ source_set("headers") {
     "${dawn_root}/include/dawn/native/OpenGLBackend.h",
     "${dawn_root}/include/dawn/native/VulkanBackend.h",
     "${dawn_root}/include/dawn/native/WebGPUBackend.h",
+  ]
+}
+
+source_set("recorder") {
+  sources = [
+    "webgpu/Recorder.cpp",
+    "webgpu/Recorder.h",
+  ]
+  public_configs = [ "${dawn_root}/src/dawn/native:internal" ]
+  public_deps = [
+    "${dawn_root}/src/dawn/common",
+    "${dawn_root}/src/dawn/devtool/protos:devtool_cmd_proto",
   ]
 }
 
@@ -728,6 +742,8 @@ source_set("sources") {
       "webgpu/QueueWGPU.h",
       "webgpu/WebGPUError.h",
     ]
+    deps += [ ":abseil" ]
+    public_deps += [ ":recorder" ]
   }
 
   if ((dawn_enable_opengl || dawn_enable_vulkan) &&
