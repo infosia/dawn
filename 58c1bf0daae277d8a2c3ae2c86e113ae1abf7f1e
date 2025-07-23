@@ -113,6 +113,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b66117f_f5dca3dc",
+        "filename": "src/dawn/dawn.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-07-23T18:43:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "305b9c6e_7ce24c64",
+      "range": {
+        "startLine": 344,
+        "startChar": 12,
+        "endLine": 344,
+        "endChar": 88
+      },
+      "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f07a0779_ff2cbc93",
@@ -126,6 +150,24 @@
       "writtenOn": "2025-07-22T12:07:48Z",
       "side": 1,
       "message": "ditto (from previous CLs), webgpu.h changes should have the dawn tag for now.",
+      "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "873689f0_de07d31a",
+        "filename": "third_party/webgpu-headers/webgpu.h.diff",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 3954660
+      },
+      "writtenOn": "2025-07-23T18:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f07a0779_ff2cbc93",
       "revId": "58c1bf0daae277d8a2c3ae2c86e113ae1abf7f1e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
