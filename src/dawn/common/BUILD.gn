@@ -87,6 +87,9 @@ config("internal_config") {
   if (dawn_enable_webgpu_on_webgpu) {
     defines += [ "DAWN_ENABLE_BACKEND_WEBGPU" ]
   }
+  if (dawn_enable_devtool_playback) {
+    defines += [ "DAWN_ENABLE_DEVTOOL_PLAYBACK" ]
+  }
   if (dawn_enable_opengl) {
     defines += [ "DAWN_ENABLE_BACKEND_OPENGL" ]
   }
