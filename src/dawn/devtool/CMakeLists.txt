@@ -25,42 +25,28 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-if(DAWN_ENABLE_DEVTOOL)
-    add_library(dawn_devtool_proto_objects OBJECT)
-
-    generate_protos(
-        TARGET dawn_devtool_proto_objects
-        PROTO_FILES "${CMAKE_CURRENT_SOURCE_DIR}/protos/cmd.proto"
-        PROTOC_OUT_DIR "${DAWN_BUILD_GEN_DIR}/dawn/devtool/proto"
-    )
-
-    if (DAWN_ENABLE_DEVTOOL_RECORD)
-        set(record_sources
-            $<TARGET_OBJECTS:dawn_devtool_proto_objects>
-        )
-        set(record_depends
-            libprotobuf
-        )
-        dawn_add_library(
-            dawn_devtool_record
-            SOURCES ${record_sources}
-            PUBLIC_DEPENDS record_depends
-        )
-        target_include_directories(dawn_devtool_record PUBLIC "${DAWN_BUILD_GEN_DIR}/dawn/devtool/proto")
-    endif()
-
-    if (DAWN_ENABLE_DEVTOOL_PLAYBACK)
-        set(playback_sources
-            $<TARGET_OBJECTS:dawn_devtool_proto_objects>
-        )
-        set(playback_depends
-            libprotobuf
-        )
-        dawn_add_library(
-            dawn_devtool_playback
-            SOURCES ${playback_sources}
-            PUBLIC_DEPENDS playback_depends
-        )
-        target_include_directories(dawn_devtool_playback PUBLIC "${DAWN_BUILD_GEN_DIR}/dawn/devtool/proto")
-    endif()
-endif()
+set(playback_headers
+    "CmdPb.h"
+    "ObjectType.h"
+    "Replayer.h"
+)
+set(playback_sources
+    $<TARGET_OBJECTS:dawn_devtool_proto_objects>
+    "Replayer.cpp"
+)
+set(playback_depends
+    dawn_devtool_proto_objects
+    webgpu_c
+    dawn::dawn_common
+)
+dawn_add_library(
+    dawn_devtool_playback
+    UTILITY_TARGET dawn_internal_config
+    PRIVATE_HEADERS ${playback_headers}
+    SOURCES ${playback_sources}
+    DEPENDS ${playback_depends}
+)
+target_include_directories(dawn_devtool_playback PRIVATE
+    "${Dawn_SOURCE_DIR}/src"
+    "${DAWN_BUILD_GEN_DIR}"
+)
