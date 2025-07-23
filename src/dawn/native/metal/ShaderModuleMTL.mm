@@ -460,6 +460,13 @@ MaybeError ShaderModule::CreateFunction(SingleShaderStage stage,
         (*compileOptions).preserveInvariance = true;
     }
 
+    // TODO(433534277): Warn if the pipeline uses print but it is not available or enabled.
+    if (GetDevice()->IsToggleEnabled(Toggle::EnableShaderPrint)) {
+        if (@available(macOS 15.0, iOS 18.0, *)) {
+            (*compileOptions).enableLogging = true;
+        }
+    }
+
     // If possible we will use relaxed math as a pragma in the source rather than this fast math
     // global compiler option. See crbug.com/425650181
     if (@available(macOS 15.0, iOS 18.0, *)) {
