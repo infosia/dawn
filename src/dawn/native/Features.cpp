@@ -428,7 +428,10 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
      {"Supports configuring device allocator via DawnDeviceAllocatorControl",
       "https://dawn.googlesource.com/dawn/+/refs/heads/main/docs/dawn/features/"
       "dawn_device_allocator_control.md",
-      FeatureInfo::FeatureState::Experimental}}};
+      FeatureInfo::FeatureState::Experimental}},
+    {Feature::ChromiumExperimentalPrimitiveId,
+     {"Supports the \"enable chromium_experimental_primitive_id;\" directive in WGSL",
+      "https://gpuweb.github.io/gpuweb/#primitive-id", FeatureInfo::FeatureState::Experimental}}};
 
 }  // anonymous namespace
 
