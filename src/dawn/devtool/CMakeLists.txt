@@ -26,41 +26,71 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 if(DAWN_ENABLE_DEVTOOL)
-    add_library(dawn_devtool_proto_objects OBJECT)
-
+    add_library(dawn_devtool_proto_objects OBJECT
+        "${Dawn_SOURCE_DIR}/src/dawn/devtool/protos/cmd.proto"
+    )
     generate_protos(
         TARGET dawn_devtool_proto_objects
-        PROTO_FILES "${CMAKE_CURRENT_SOURCE_DIR}/protos/cmd.proto"
-        PROTOC_OUT_DIR "${DAWN_BUILD_GEN_DIR}/dawn/devtool/proto"
+        PROTOC_OUT_DIR "${DAWN_BUILD_GEN_DIR}/dawn/devtool"
+    )
+    target_link_libraries(dawn_devtool_proto_objects PUBLIC libprotobuf)
+    target_include_directories(dawn_devtool_proto_objects PUBLIC
+        "${DAWN_BUILD_GEN_DIR}/dawn/devtool"
     )
 
     if (DAWN_ENABLE_DEVTOOL_RECORD)
+        set(record_headers
+            "CmdPb.h"
+            "Recorder.h"
+        )
         set(record_sources
             $<TARGET_OBJECTS:dawn_devtool_proto_objects>
+            "Recorder.cpp"
         )
         set(record_depends
-            libprotobuf
+            dawn_devtool_proto_objects
+            dawn::dawn_common
+            dawn::dawn_native_objects
+            tint_api
         )
         dawn_add_library(
             dawn_devtool_record
+            UTILITY_TARGET dawn_internal_config
+            PRIVATE_HEADERS ${record_headers}
             SOURCES ${record_sources}
-            PUBLIC_DEPENDS record_depends
+            DEPENDS ${record_depends}
         )
-        target_include_directories(dawn_devtool_record PUBLIC "${DAWN_BUILD_GEN_DIR}/dawn/devtool/proto")
+        target_include_directories(dawn_devtool_record PRIVATE
+            "${DAWN_SRC_DIR}"
+            "${DAWN_BUILD_GEN_DIR}"
+        )
     endif()
 
     if (DAWN_ENABLE_DEVTOOL_PLAYBACK)
+        set(playback_headers
+            "CmdPb.h"
+            "ObjectType.h"
+            "Replayer.h"
+        )
         set(playback_sources
             $<TARGET_OBJECTS:dawn_devtool_proto_objects>
+            "Replayer.cpp"
         )
         set(playback_depends
-            libprotobuf
+            dawn_devtool_proto_objects
+            webgpu_c
+            dawn::dawn_common
         )
         dawn_add_library(
             dawn_devtool_playback
+            UTILITY_TARGET dawn_internal_config
+            PRIVATE_HEADERS ${playback_headers}
             SOURCES ${playback_sources}
-            PUBLIC_DEPENDS playback_depends
+            DEPENDS ${playback_depends}
         )
-        target_include_directories(dawn_devtool_playback PUBLIC "${DAWN_BUILD_GEN_DIR}/dawn/devtool/proto")
+        target_include_directories(dawn_devtool_playback PRIVATE
+            "${DAWN_SRC_DIR}"
+            "${DAWN_BUILD_GEN_DIR}"
+        )
     endif()
 endif()
