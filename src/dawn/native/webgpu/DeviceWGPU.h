@@ -33,6 +33,7 @@
 
 #include "dawn/native/Device.h"
 #include "dawn/native/ToBackend.h"
+#include "dawn/native/devtool/RecordPlaybackManager.h"
 #include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/ObjectWGPU.h"
 #include "partition_alloc/pointers/raw_ptr.h"
