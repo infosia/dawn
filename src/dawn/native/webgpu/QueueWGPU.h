@@ -32,6 +32,7 @@
 #include <utility>
 #include "dawn/common/MutexProtected.h"
 #include "dawn/native/Queue.h"
+#include "dawn/native/devtool/RecordPlaybackManager.h"
 #include "dawn/native/webgpu/Forward.h"
 #include "dawn/native/webgpu/ObjectWGPU.h"
 
