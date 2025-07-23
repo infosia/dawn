@@ -206,6 +206,13 @@ int SampleBase::Run(unsigned int delay) {
     dawn::InfoLog() << "  device: \"" << info.device << "\"";
     dawn::InfoLog() << "  subgroupSizes: { min: " << info.subgroupMinSize
                     << " max: " << info.subgroupMaxSize << " }";
+    dawn::InfoLog() << "  features:";
+
+    wgpu::SupportedFeatures supportedFeatures;
+    sample->adapter.GetFeatures(&supportedFeatures);
+    for (uint32_t i = 0; i < supportedFeatures.featureCount; ++i) {
+        dawn::InfoLog() << "    - " << supportedFeatures.features[i];
+    }
 
     // Create device descriptor with callbacks and toggles
     wgpu::DeviceDescriptor deviceDesc = {};

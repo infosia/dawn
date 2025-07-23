@@ -1630,6 +1630,9 @@ bool Converter::Convert(wgpu::FeatureName& out, interop::GPUFeatureName in) {
         case interop::GPUFeatureName::kChromiumExperimentalPrimitiveId:
             out = wgpu::FeatureName::ChromiumExperimentalPrimitiveId;
             return true;
+        case interop::GPUFeatureName::kChromiumExperimentalBarycentricCoord:
+            out = wgpu::FeatureName::ChromiumExperimentalBarycentricCoord;
+            return true;
     }
     return false;
 }
@@ -1665,6 +1668,7 @@ bool Converter::Convert(interop::GPUFeatureName& out, wgpu::FeatureName in) {
         CASE(TextureFormatsTier2, kTextureFormatsTier2);
         CASE(TextureComponentSwizzle, kTextureComponentSwizzle);
         CASE(ChromiumExperimentalPrimitiveId, kChromiumExperimentalPrimitiveId);
+        CASE(ChromiumExperimentalBarycentricCoord, kChromiumExperimentalBarycentricCoord);
 
 #undef CASE
 

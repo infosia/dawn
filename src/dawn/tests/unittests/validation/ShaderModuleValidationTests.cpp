@@ -883,6 +883,10 @@ const struct WGSLExtensionInfo kExtensions[] = {
     {"chromium_experimental_framebuffer_fetch", true, {"framebuffer-fetch"}, {}},
     {"chromium_experimental_subgroup_matrix", true, {"chromium-experimental-subgroup-matrix"}, {}},
     {"chromium_experimental_primitive_id", true, {"chromium-experimental-primitive-id"}, {}},
+    {"chromium_experimental_barycentric_coord",
+     true,
+     {"chromium-experimental-barycentric-coord"},
+     {}},
 
     // Currently the following WGSL extensions are not enabled under any situation.
     /*

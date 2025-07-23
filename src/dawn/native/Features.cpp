@@ -431,7 +431,11 @@ static constexpr FeatureEnumAndInfo kFeatureInfo[] = {
       FeatureInfo::FeatureState::Experimental}},
     {Feature::ChromiumExperimentalPrimitiveId,
      {"Supports the \"enable chromium_experimental_primitive_id;\" directive in WGSL",
-      "https://gpuweb.github.io/gpuweb/#primitive-id", FeatureInfo::FeatureState::Experimental}}};
+      "https://gpuweb.github.io/gpuweb/#primitive-id", FeatureInfo::FeatureState::Experimental}},
+    {Feature::ChromiumExperimentalBarycentricCoord,
+     {"Supports the \"enable chromium_experimental_barycentric_coord;\" directive in WGSL",
+      "https://gpuweb.github.io/gpuweb/#barycentric-coord",
+      FeatureInfo::FeatureState::Experimental}}};
 
 }  // anonymous namespace
 
