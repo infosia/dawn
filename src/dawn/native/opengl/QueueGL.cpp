@@ -169,9 +169,10 @@ void Queue::OnGLUsed() {
     mHasPendingCommands = true;
 }
 
-ResultOrError<bool> Queue::WaitForQueueSerialImpl(ExecutionSerial serial, Nanoseconds timeout) {
+ResultOrError<ExecutionSerial> Queue::WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                             Nanoseconds timeout) {
     // Search for the first fence >= serial.
-    return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<bool> {
+    return mFencesInFlight.Use([&](auto fencesInFlight) -> ResultOrError<ExecutionSerial> {
         Ref<WrappedEGLSync> sync;
         for (auto it = fencesInFlight->begin(); it != fencesInFlight->end(); ++it) {
             if (it->second >= serial) {
@@ -182,7 +183,7 @@ ResultOrError<bool> Queue::WaitForQueueSerialImpl(ExecutionSerial serial, Nanose
         if (sync == nullptr) {
             // Fence sync not found. This serial must have already completed.
             // Return a success status.
-            return true;
+            return serial;
         }
 
         // Wait for the fence sync.
@@ -191,9 +192,9 @@ ResultOrError<bool> Queue::WaitForQueueSerialImpl(ExecutionSerial serial, Nanose
 
         switch (result) {
             case EGL_TIMEOUT_EXPIRED:
-                return false;
+                return kBeginningOfGPUTime;
             case EGL_CONDITION_SATISFIED:
-                return true;
+                return serial;
             default:
                 DAWN_UNREACHABLE();
         }
