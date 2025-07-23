@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba7e7b7f_ad5275cf",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-23T12:27:44Z",
+      "side": 1,
+      "message": "Yes, this will not, removed.",
+      "parentUuid": "a84ddf4a_d904a67d",
+      "revId": "9a198b9dfa49a47144da1dcd9b30c47f5ad78a67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03e870e4_d2506c24",
@@ -66,6 +84,30 @@
       "writtenOn": "2025-07-23T08:26:01Z",
       "side": 1,
       "message": "This is not actually correct IMO, `(syncInfo.usage \u0026 ~kResolveAttachmentLoadingUsage) !\u003d 0` means `RenderAttachment` will always be cleared here, it breaks the original intention of this code. The intention of this code is \"not clearing the render target explicitly here\" since it will be cleared using loadOp.\n\nInstead of doing this, can we add this code to [RecordRenderPass](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d12/CommandBufferD3D12.cpp;drc\u003d4eaa7ecc4adc54dc936063562327f3d0c599f403;l\u003d1582)\n\n\n```\nvoid CommandBuffer::RecordRenderPasss(...)\n  if (renderPass-\u003eresolveRect.HasValue() \u0026\u0026 resolveRect !\u003d renderSize) {\n    // The resolve texture also has `RenderAttachment` usage but if there is a\n    // resolve rect, the texture would only be partially filled. In this case we\n    // need to initialize the texture otherwise the regions outside the resolve\n    // rect would contain undefined pixels.\n    DAWN_TRY(resolveTexture-\u003eEnsureSubresourceContentInitialized(commandContext, range));\n  }\n```",
+      "range": {
+        "startLine": 380,
+        "startChar": 16,
+        "endLine": 383,
+        "endChar": 17
+      },
+      "revId": "9a198b9dfa49a47144da1dcd9b30c47f5ad78a67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7162e854_4d404234",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-23T12:27:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "03e870e4_d2506c24",
       "range": {
         "startLine": 380,
         "startChar": 16,
@@ -99,6 +141,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa502dfc_4822eef6",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-23T12:27:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e50f866_37987453",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 2
+      },
+      "revId": "9a198b9dfa49a47144da1dcd9b30c47f5ad78a67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dbcbe072_459e5a89",
@@ -112,6 +178,30 @@
       "writtenOn": "2025-07-23T08:26:01Z",
       "side": 1,
       "message": "a texture that has `kLoadingResolveTextureUsage`  usually has `RenderAttachment` usage  also, hence we could handle both of them in one if block like this:\n\n```suggestion\n    if (usage \u0026 wgpu::TextureUsage::RenderAttachment) {\n        if (usage \u0026 (kResolveAttachmentLoadingUsage)) {\n            // Special case for MSAA resolve operations: the resolve target needs to be accessible as a\n            // shader resource during expanding step. Resolve target is also not a render target in D3D12 term\n            // so we can skip assigning the render target stage.\n            // Note: this is important because if we assigned both shader resource and render target state, D3D12 would complain that it\u0027s an invalid combination of states.\n            resourceState |\u003d D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;\n        }\n        else if (format.HasDepthOrStencil()) {\n            resourceState |\u003d D3D12_RESOURCE_STATE_DEPTH_WRITE;\n        } else {\n            resourceState |\u003d D3D12_RESOURCE_STATE_RENDER_TARGET;\n        }\n    }\n```",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 5
+      },
+      "revId": "9a198b9dfa49a47144da1dcd9b30c47f5ad78a67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5a10cae_1f6d30a0",
+        "filename": "src/dawn/native/d3d12/TextureD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-23T12:27:44Z",
+      "side": 1,
+      "message": "Updated, Thanks!",
+      "parentUuid": "dbcbe072_459e5a89",
       "range": {
         "startLine": 88,
         "startChar": 4,

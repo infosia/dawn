@@ -37,6 +37,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "c8d606cc_d41b05f2",
+        "filename": "src/dawn/native/CommandEncoder.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1408,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-23T12:27:44Z",
+      "side": 1,
+      "message": "Thanks Quyen help to answer this.",
+      "parentUuid": "71583166_a08a3e1f",
+      "revId": "f103e745b99e5178d1709f08a8593f643c3dc7d2",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "8a5d0ca7_3051dc59",
         "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
         "patchSetId": 11
