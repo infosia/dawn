@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "01679d9b_40272b56",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-23T15:59:58Z",
+      "side": 1,
+      "message": "Things that I still want to check out for this change: Ensure that the HLSL path is doing the right thing, figure out how to hook up the interpolation mode, document the extension, and verify that all of the backends actually work once the Dawn changes are ready. In the meantime, I\u0027d appreciate if you could take a look and make sure I\u0027m not doing anything crazy!",
+      "revId": "d1d793df6a593becf363f86cd35a5d976e82fb62",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
