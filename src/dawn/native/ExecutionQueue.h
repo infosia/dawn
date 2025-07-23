@@ -119,8 +119,8 @@ class ExecutionQueueBase {
     void UpdateCompletedSerialTo(ExecutionSerial completedSerial);
 
     // Backend specific wait function.
-    virtual ResultOrError<bool> WaitForQueueSerialImpl(ExecutionSerial serial,
-                                                       Nanoseconds timeout) = 0;
+    virtual ResultOrError<ExecutionSerial> WaitForQueueSerialImpl(ExecutionSerial serial,
+                                                                  Nanoseconds timeout) = 0;
 
   private:
     // Each backend should implement to check their passed fences if there are any and return a

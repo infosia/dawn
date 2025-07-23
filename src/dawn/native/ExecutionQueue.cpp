@@ -49,10 +49,10 @@ ExecutionSerial ExecutionQueueBase::GetCompletedCommandSerial() const {
 
 ResultOrError<bool> ExecutionQueueBase::WaitForQueueSerial(ExecutionSerial serial,
                                                            Nanoseconds timeout) {
-    bool succeeded;
-    DAWN_TRY_ASSIGN(succeeded, WaitForQueueSerialImpl(serial, timeout));
+    ExecutionSerial lastCompletedSerial;
+    DAWN_TRY_ASSIGN(lastCompletedSerial, WaitForQueueSerialImpl(serial, timeout));
 
-    if (!succeeded) {
+    if (lastCompletedSerial < serial) {
         return false;
     }
 
