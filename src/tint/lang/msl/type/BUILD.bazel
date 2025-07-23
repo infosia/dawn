@@ -42,11 +42,13 @@ cc_library(
     "bias.cc",
     "gradient.cc",
     "level.cc",
+    "string.cc",
   ],
   hdrs = [
     "bias.h",
     "gradient.h",
     "level.h",
+    "string.h",
   ],
   deps = [
     "//src/tint/api/common",
@@ -73,6 +75,7 @@ cc_library(
     "bias_test.cc",
     "gradient_test.cc",
     "level_test.cc",
+    "string_test.cc",
   ],
   deps = [
     "//src/tint/lang/core/type",
