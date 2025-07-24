@@ -16,6 +16,24 @@
       "message": "I think this comment is out of date.",
       "revId": "b74c4815b8e5d21438a54c8fc21e6d45a06f52c9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2dd65857_e58657a7",
+        "filename": "src/dawn/tests/end2end/PrimitiveIdTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-24T19:31:02Z",
+      "side": 1,
+      "message": "Done. Thanks for catching that!",
+      "parentUuid": "cf74b2ad_d3d9d58a",
+      "revId": "b74c4815b8e5d21438a54c8fc21e6d45a06f52c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
