@@ -70,6 +70,24 @@
       "parentUuid": "9b3b4a9c_0b87f8da",
       "revId": "0d246ef102218883a2007ab87a24ae5055f1b74a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fce690a5_70cfc249",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-24T09:18:30Z",
+      "side": 1,
+      "message": "Chrome currently doesn\u0027t clear the cache if there are crashes in Dawn afaik. There was a mechanism to do that for ANGLE\u0027s shader binary compilations. But not for Dawn. Dawn also does the the compilations on background threads, even if the shaders are in cache, hence it\u0027s hard for chrome to know whether the crash is because of shaders or anything else.\n\nIf we want to clear the cache, maybe consider adding a new method to `CachingInterface` to notify chrome that we are compilation a shader.",
+      "parentUuid": "71fabf28_a10d2e74",
+      "revId": "0d246ef102218883a2007ab87a24ae5055f1b74a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
