@@ -68,6 +68,15 @@ Result ValidateUsingMetal(const std::string& src_original, MslVersion version) {
         case MslVersion::kMsl_2_3:
             compileOptions.languageVersion = MTLLanguageVersion2_3;
             break;
+        case MslVersion::kMsl_3_2:
+            if (@available(macOS 15.0, iOS 18.0, *)) {
+                compileOptions.languageVersion = MTLLanguageVersion3_2;
+            } else {
+                result.output = "MSL 3.2 was requested but is not supported in this platform";
+                result.failed = true;
+                return result;
+            }
+            break;
     }
 
     id<MTLLibrary> library = [device newLibraryWithSource:source
