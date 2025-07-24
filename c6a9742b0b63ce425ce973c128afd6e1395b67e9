@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "c6a9742b0b63ce425ce973c128afd6e1395b67e9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffda7541_34fe9fa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-24T08:00:33Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "c6a9742b0b63ce425ce973c128afd6e1395b67e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "569cc47d_f2747f31",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-24T08:00:33Z",
+      "side": 1,
+      "message": "Can we do the refactor of Format.cpp already? This is impossible to usefully review. (or schedule it very soon?)",
+      "revId": "c6a9742b0b63ce425ce973c128afd6e1395b67e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
