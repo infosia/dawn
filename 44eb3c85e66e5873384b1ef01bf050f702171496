@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60337ba2_be048e83",
+        "filename": "src/tint/lang/msl/writer/raise/convert_print_to_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T15:53:25Z",
+      "side": 1,
+      "message": "Why `f` and not `h`?",
+      "revId": "44eb3c85e66e5873384b1ef01bf050f702171496",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68dea5ac_05cfe903",
+        "filename": "src/tint/lang/msl/writer/raise/convert_print_to_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T15:53:25Z",
+      "side": 1,
+      "message": "What does `hl` mean? I assumed `h` was half?",
+      "revId": "44eb3c85e66e5873384b1ef01bf050f702171496",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
