@@ -166,6 +166,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b19509ca_685d116d",
+        "filename": "src/dawn/native/d3d12/QueueD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-24T10:19:42Z",
+      "side": 1,
+      "message": "Why would the allocation leak? std::ignore is just a placeholder for an unused variable right?\n\nThis should be equivalent to\n```\n[[maybe_unused]] bool success;\nDAWN_TRY_ASSIGN(\n  success,\n  WaitForQueueSerialImpl(serial, std::numeric_limits\u003cNanoseconds\u003e::max()));\n```",
+      "parentUuid": "44c7385e_abbcc6cc",
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ed30aaef_ceac4ee1",
         "filename": "src/dawn/native/d3d12/QueueD3D12.cpp",
         "patchSetId": 6
@@ -177,6 +195,24 @@
       "writtenOn": "2025-07-24T09:51:22Z",
       "side": 1,
       "message": "Shouldn\u0027t this call the non-impl version that will update the serial so the call to `CheckPassedSerials` below can be removed?",
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f16dd0f_69b64b03",
+        "filename": "src/dawn/native/d3d12/QueueD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-24T10:19:42Z",
+      "side": 1,
+      "message": "CheckPassedSerials also checks and recycles the fences list.",
+      "parentUuid": "ed30aaef_ceac4ee1",
       "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
