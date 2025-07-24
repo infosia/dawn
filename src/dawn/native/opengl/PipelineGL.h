@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_PIPELINEGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_PIPELINEGL_H_
 
+#include <future>
 #include <utility>
 #include <vector>
 
@@ -38,6 +39,7 @@
 
 #include "dawn/native/PerStage.h"
 #include "dawn/native/opengl/BindingPoint.h"
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native {
@@ -46,6 +48,7 @@ struct ProgrammableStage;
 
 namespace dawn::native::opengl {
 
+class Device;
 struct OpenGLFunctions;
 class PipelineLayout;
 class Sampler;
@@ -59,7 +62,7 @@ class PipelineGL {
 
     const std::vector<GLuint>& GetTextureUnitsForSampler(GLuint index) const;
     const std::vector<GLuint>& GetTextureUnitsForTextureView(GLuint index) const;
-    GLuint GetProgramHandle() const;
+    const FutureHandle& GetProgramHandle() const;
 
     const BindingPointToFunctionAndOffset& GetBindingPointBuiltinDataInfo() const;
     bool NeedsTextureBuiltinUniformBuffer() const;
@@ -67,32 +70,31 @@ class PipelineGL {
     bool NeedsSSBOLengthUniformBuffer() const;
 
   protected:
+    class SharedData : public RefCounted {
+      public:
+        SharedData();
+        ~SharedData() override;
+
+        Ref<FutureHandle> mHandle;
+        std::vector<std::vector<GLuint>> mUnitsForSamplers;
+        std::vector<std::vector<GLuint>> mUnitsForTextures;
+        std::vector<GLuint> mPlaceholderSamplerUnits;
+        Ref<Sampler> mPlaceholderSampler;
+        bool mNeedsSSBOLengthUniformBuffer = false;
+        BindingPointToFunctionAndOffset mBindingPointEmulatedBuiltins;
+    };
+
     MaybeError ApplyNow(const OpenGLFunctions& gl, const PipelineLayout* layout);
-    MaybeError InitializeBase(const OpenGLFunctions& gl,
+    MaybeError InitializeBase(Device* device,
                               const PipelineLayout* layout,
                               const PerStage<ProgrammableStage>& stages,
                               bool usesVertexIndex,
                               bool usesInstanceIndex,
                               bool usesFragDepth,
                               VertexAttributeMask bgraSwizzleAttributes);
-    void DeleteProgram(const OpenGLFunctions& gl);
+    void DeleteProgram(Device* device);
 
-  private:
-    GLuint mProgram;
-    std::vector<std::vector<GLuint>> mUnitsForSamplers;
-    std::vector<std::vector<GLuint>> mUnitsForTextures;
-    std::vector<GLuint> mPlaceholderSamplerUnits;
-    // TODO(enga): This could live on the Device, or elsewhere, but currently it makes Device
-    // destruction complex as it requires the sampler to be destroyed before the sampler cache.
-    Ref<Sampler> mPlaceholderSampler;
-
-    // Flag indicates if this pipeline has ssbo.length and need to use the array length from uniform
-    // workaround.
-    bool mNeedsSSBOLengthUniformBuffer = false;
-
-    // Reflect info from tint: a map from texture binding point to extra data need to push into the
-    // internal uniform buffer.
-    BindingPointToFunctionAndOffset mBindingPointEmulatedBuiltins;
+    Ref<SharedData> mSharedData;
 };
 
 }  // namespace dawn::native::opengl

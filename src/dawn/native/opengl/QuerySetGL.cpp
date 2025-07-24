@@ -28,8 +28,11 @@
 #include "dawn/native/opengl/QuerySetGL.h"
 
 #include <utility>
+#include <vector>
 
 #include "dawn/native/opengl/DeviceGL.h"
+#include "dawn/native/opengl/FutureHandle.h"
+#include "dawn/native/opengl/QueueGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
 
 namespace dawn::native::opengl {
@@ -38,30 +41,63 @@ namespace dawn::native::opengl {
 ResultOrError<Ref<QuerySet>> QuerySet::Create(Device* device,
                                               const QuerySetDescriptor* descriptor) {
     Ref<QuerySet> querySet = AcquireRef(new QuerySet(device, descriptor));
-
-    if (querySet->mQueries.size() > 0) {
-        const OpenGLFunctions& gl = device->GetGL();
-        DAWN_GL_TRY(gl, GenQueries(descriptor->count, querySet->mQueries.data()));
-    }
-
-    return std::move(querySet);
+    DAWN_TRY(querySet->Initialize());
+    return querySet;
 }
 
 QuerySet::QuerySet(Device* device, const QuerySetDescriptor* descriptor)
-    : QuerySetBase(device, descriptor), mQueries(descriptor->count) {}
+    : QuerySetBase(device, descriptor) {
+    mHandles.resize(descriptor->count);
+}
+
+MaybeError QuerySet::Initialize() {
+    Device* device = ToBackend(GetDevice());
+    Queue* queue = ToBackend(device->GetQueue());
+    uint32_t count = mHandles.size();
+
+    Ref<QuerySet> self = this;
+    DAWN_TRY(queue->AddGLTask([self, device, count]() mutable -> MaybeError {
+        const OpenGLFunctions& gl = device->GetGL();
+        std::vector<GLuint> glHandles(count);
+        if (count > 0) {
+            DAWN_GL_TRY(gl, GenQueries(count, glHandles.data()));
+        }
+        for (uint32_t i = 0; i < count; ++i) {
+            self->mHandles[i]->Set(glHandles[i]);
+        }
+        return {};
+    }));
+
+    return {};
+}
 
 QuerySet::~QuerySet() = default;
 
 void QuerySet::DestroyImpl() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-    if (mQueries.size() > 0) {
-        DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteQueries(mQueries.size(), mQueries.data()));
-    }
+    Device* device = ToBackend(GetDevice());
+    Queue* queue = ToBackend(device->GetQueue());
+    std::vector<Ref<FutureHandle>> handles = std::move(mHandles);
+
+    IgnoreErrors(queue->AddGLTask([device, handles = std::move(handles)]() -> MaybeError {
+        std::vector<GLuint> glHandles;
+        glHandles.reserve(handles.size());
+        for (const auto& handle : handles) {
+            glHandles.push_back(handle->GetOrDefault());
+        }
+
+        const OpenGLFunctions& gl = device->GetGL();
+        if (!glHandles.empty()) {
+            DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteQueries(glHandles.size(), glHandles.data()));
+        }
+        return {};
+    }));
+
     QuerySetBase::DestroyImpl();
 }
 
-GLuint QuerySet::Get(uint32_t index) const {
-    return mQueries[index];
+const FutureHandle& QuerySet::Get(uint32_t index) const {
+    DAWN_ASSERT(index < mHandles.size());
+    return *mHandles[index].Get();
 }
 
 }  // namespace dawn::native::opengl

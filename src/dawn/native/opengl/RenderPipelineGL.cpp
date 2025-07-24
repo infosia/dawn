@@ -27,9 +27,13 @@
 
 #include "dawn/native/opengl/RenderPipelineGL.h"
 
+#include <future>
+
 #include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/Forward.h"
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/PersistentPipelineStateGL.h"
+#include "dawn/native/opengl/QueueGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
 
 namespace dawn::native::opengl {
@@ -218,7 +222,8 @@ Ref<RenderPipeline> RenderPipeline::CreateUninitialized(
 RenderPipeline::RenderPipeline(Device* device,
                                const UnpackedPtr<RenderPipelineDescriptor>& descriptor)
     : RenderPipelineBase(device, descriptor),
-      mVertexArrayObject(0),
+      PipelineGL(),
+      mVAOHandle(AcquireRef(new FutureHandle())),
       mGlPrimitiveTopology(GLPrimitiveTopology(GetPrimitiveTopology())) {}
 
 MaybeError RenderPipeline::InitializeImpl() {
@@ -227,7 +232,7 @@ MaybeError RenderPipeline::InitializeImpl() {
         bgraSwizzleAttributes.set(i, GetAttribute(i).format == wgpu::VertexFormat::Unorm8x4BGRA);
     }
 
-    DAWN_TRY(InitializeBase(ToBackend(GetDevice())->GetGL(), ToBackend(GetLayout()), GetAllStages(),
+    DAWN_TRY(InitializeBase(ToBackend(GetDevice()), ToBackend(GetLayout()), GetAllStages(),
                             UsesVertexIndex(), UsesInstanceIndex(), UsesFragDepth(),
                             bgraSwizzleAttributes));
     DAWN_TRY(CreateVAOForVertexState());
@@ -238,10 +243,20 @@ RenderPipeline::~RenderPipeline() = default;
 
 void RenderPipeline::DestroyImpl() {
     RenderPipelineBase::DestroyImpl();
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteVertexArrays(1, &mVertexArrayObject));
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, BindVertexArray(0));
-    DeleteProgram(gl);
+
+    Device* device = ToBackend(GetDevice());
+    Queue* queue = ToBackend(device->GetQueue());
+    Ref<FutureHandle> vaoHandle = mVAOHandle;
+
+    IgnoreErrors(queue->AddGLTask([device, vaoHandle]() -> MaybeError {
+        const OpenGLFunctions& gl = device->GetGL();
+        GLuint glHandle = vaoHandle->GetOrDefault();
+        DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteVertexArrays(1, &glHandle));
+        DAWN_GL_TRY_IGNORE_ERRORS(gl, BindVertexArray(0));
+        return {};
+    }));
+
+    DeleteProgram(device);
 }
 
 GLenum RenderPipeline::GetGLPrimitiveTopology() const {
@@ -253,46 +268,55 @@ VertexAttributeMask RenderPipeline::GetAttributesUsingVertexBuffer(VertexBufferS
     return mAttributesUsingVertexBuffer[slot];
 }
 
+const FutureHandle& RenderPipeline::GetVAOHandle() const {
+    return *mVAOHandle.Get();
+}
+
 MaybeError RenderPipeline::CreateVAOForVertexState() {
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
+    Device* device = ToBackend(GetDevice());
+    Queue* queue = ToBackend(device->GetQueue());
 
-    DAWN_GL_TRY(gl, GenVertexArrays(1, &mVertexArrayObject));
-    DAWN_GL_TRY(gl, BindVertexArray(mVertexArrayObject));
+    Ref<RenderPipeline> me = this;
+    return queue->AddGLTask([me, device]() mutable -> MaybeError {
+        const OpenGLFunctions& gl = device->GetGL();
+        GLuint vao = 0;
+        DAWN_GL_TRY(gl, GenVertexArrays(1, &vao));
+        DAWN_GL_TRY(gl, BindVertexArray(vao));
 
-    for (VertexAttributeLocation location : GetAttributeLocationsUsed()) {
-        const auto& attribute = GetAttribute(location);
-        GLuint glAttrib = static_cast<GLuint>(static_cast<uint8_t>(location));
-        DAWN_GL_TRY(gl, EnableVertexAttribArray(glAttrib));
+        for (VertexAttributeLocation location : me->GetAttributeLocationsUsed()) {
+            const auto& attribute = me->GetAttribute(location);
+            GLuint glAttrib = static_cast<GLuint>(static_cast<uint8_t>(location));
+            DAWN_GL_TRY(gl, EnableVertexAttribArray(glAttrib));
 
-        mAttributesUsingVertexBuffer[attribute.vertexBufferSlot][location] = true;
-        const VertexBufferInfo& vertexBuffer = GetVertexBuffer(attribute.vertexBufferSlot);
+            me->mAttributesUsingVertexBuffer[attribute.vertexBufferSlot][location] = true;
+            const VertexBufferInfo& vertexBuffer = me->GetVertexBuffer(attribute.vertexBufferSlot);
 
-        if (vertexBuffer.arrayStride == 0) {
-            // Emulate a stride of zero (constant vertex attribute) by
-            // setting the attribute instance divisor to a huge number.
-            DAWN_GL_TRY(gl, VertexAttribDivisor(glAttrib, 0xffffffff));
-        } else {
-            switch (vertexBuffer.stepMode) {
-                case wgpu::VertexStepMode::Vertex:
-                    break;
-                case wgpu::VertexStepMode::Instance:
-                    DAWN_GL_TRY(gl, VertexAttribDivisor(glAttrib, 1));
-                    break;
-                case wgpu::VertexStepMode::Undefined:
-                    DAWN_UNREACHABLE();
+            if (vertexBuffer.arrayStride == 0) {
+                // Emulate a stride of zero (constant vertex attribute) by
+                // setting the attribute instance divisor to a huge number.
+                DAWN_GL_TRY(gl, VertexAttribDivisor(glAttrib, 0xffffffff));
+            } else {
+                switch (vertexBuffer.stepMode) {
+                    case wgpu::VertexStepMode::Vertex:
+                        break;
+                    case wgpu::VertexStepMode::Instance:
+                        DAWN_GL_TRY(gl, VertexAttribDivisor(glAttrib, 1));
+                        break;
+                    case wgpu::VertexStepMode::Undefined:
+                        DAWN_UNREACHABLE();
+                }
             }
         }
-    }
-
-    return {};
+        me->mVAOHandle->Set(vao);
+        return {};
+    });
 }
 
 MaybeError RenderPipeline::ApplyNow(PersistentPipelineState& persistentPipelineState) {
     const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
     DAWN_TRY(PipelineGL::ApplyNow(gl, ToBackend(GetLayout())));
 
-    DAWN_ASSERT(mVertexArrayObject);
-    DAWN_GL_TRY(gl, BindVertexArray(mVertexArrayObject));
+    DAWN_GL_TRY(gl, BindVertexArray(GetVAOHandle()));
 
     DAWN_TRY(ApplyFrontFaceAndCulling(gl, GetFrontFace(), GetCullMode()));
 

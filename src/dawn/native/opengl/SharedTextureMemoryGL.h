@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_OPENGL_SHARED_TEXTURE_MEMORY_GL_H_
 
 #include "dawn/native/SharedTextureMemory.h"
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native::opengl {
@@ -37,7 +38,7 @@ class Device;
 
 class SharedTextureMemory : public SharedTextureMemoryBase {
   public:
-    virtual ResultOrError<GLuint> GenerateGLTexture() = 0;
+    virtual ResultOrError<Ref<FutureHandle>> GenerateGLTexture() = 0;
 
   protected:
     SharedTextureMemory(Device* device,

@@ -29,9 +29,12 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <utility>
 
 #include "dawn/common/Assert.h"
 #include "dawn/native/opengl/DeviceGL.h"
+#include "dawn/native/opengl/FutureHandle.h"
+#include "dawn/native/opengl/QueueGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
 
 namespace dawn::native::opengl {
@@ -99,56 +102,70 @@ ResultOrError<Ref<Sampler>> Sampler::Create(Device* device, const SamplerDescrip
 }
 
 Sampler::Sampler(Device* device, const SamplerDescriptor* descriptor)
-    : SamplerBase(device, descriptor) {}
+    : SamplerBase(device, descriptor), mHandle(AcquireRef(new FutureHandle())) {}
 
 Sampler::~Sampler() = default;
 
 void Sampler::DestroyImpl() {
+    Device* device = ToBackend(GetDevice());
+    Queue* queue = ToBackend(device->GetQueue());
+    Ref<FutureHandle> handle = mHandle;
+
+    IgnoreErrors(queue->AddGLTask([device, handle = std::move(handle)]() -> MaybeError {
+        const OpenGLFunctions& gl = device->GetGL();
+        GLuint glHandle = handle->GetOrDefault();
+        if (glHandle != 0) {
+            DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteSamplers(1, &glHandle));
+        }
+        return {};
+    }));
+
     SamplerBase::DestroyImpl();
-    const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteSamplers(1, &mHandle));
 }
 
 MaybeError Sampler::Initialize(const SamplerDescriptor* descriptor) {
     Device* device = ToBackend(GetDevice());
-    const OpenGLFunctions& gl = device->GetGL();
+    Queue* queue = ToBackend(device->GetQueue());
 
-    DAWN_GL_TRY(gl, GenSamplers(1, &mHandle));
+    Ref<FutureHandle> futureHandle = mHandle;
+    return queue->AddGLTask([futureHandle, device, desc = *descriptor,
+                             maxAnisotropy = GetMaxAnisotropy()]() mutable -> MaybeError {
+        const OpenGLFunctions& gl = device->GetGL();
+        GLuint handle = 0;
+        DAWN_GL_TRY(gl, GenSamplers(1, &handle));
 
-    DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_MAG_FILTER,
-                                      MagFilterMode(descriptor->magFilter)));
-    DAWN_GL_TRY(gl,
-                SamplerParameteri(mHandle, GL_TEXTURE_MIN_FILTER,
-                                  MinFilterMode(descriptor->minFilter, descriptor->mipmapFilter)));
+        DAWN_GL_TRY(
+            gl, SamplerParameteri(handle, GL_TEXTURE_MAG_FILTER, MagFilterMode(desc.magFilter)));
+        DAWN_GL_TRY(gl, SamplerParameteri(handle, GL_TEXTURE_MIN_FILTER,
+                                          MinFilterMode(desc.minFilter, desc.mipmapFilter)));
 
-    DAWN_GL_TRY(gl,
-                SamplerParameteri(mHandle, GL_TEXTURE_WRAP_R, WrapMode(descriptor->addressModeW)));
-    DAWN_GL_TRY(gl,
-                SamplerParameteri(mHandle, GL_TEXTURE_WRAP_S, WrapMode(descriptor->addressModeU)));
-    DAWN_GL_TRY(gl,
-                SamplerParameteri(mHandle, GL_TEXTURE_WRAP_T, WrapMode(descriptor->addressModeV)));
+        DAWN_GL_TRY(gl, SamplerParameteri(handle, GL_TEXTURE_WRAP_R, WrapMode(desc.addressModeW)));
+        DAWN_GL_TRY(gl, SamplerParameteri(handle, GL_TEXTURE_WRAP_S, WrapMode(desc.addressModeU)));
+        DAWN_GL_TRY(gl, SamplerParameteri(handle, GL_TEXTURE_WRAP_T, WrapMode(desc.addressModeV)));
 
-    DAWN_GL_TRY(gl, SamplerParameterf(mHandle, GL_TEXTURE_MIN_LOD, descriptor->lodMinClamp));
-    DAWN_GL_TRY(gl, SamplerParameterf(mHandle, GL_TEXTURE_MAX_LOD, descriptor->lodMaxClamp));
+        DAWN_GL_TRY(gl, SamplerParameterf(handle, GL_TEXTURE_MIN_LOD, desc.lodMinClamp));
+        DAWN_GL_TRY(gl, SamplerParameterf(handle, GL_TEXTURE_MAX_LOD, desc.lodMaxClamp));
 
-    if (descriptor->compare != wgpu::CompareFunction::Undefined) {
-        DAWN_GL_TRY(gl,
-                    SamplerParameteri(mHandle, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE));
-        DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_COMPARE_FUNC,
-                                          ToOpenGLCompareFunction(descriptor->compare)));
-    }
+        if (desc.compare != wgpu::CompareFunction::Undefined) {
+            DAWN_GL_TRY(
+                gl, SamplerParameteri(handle, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE));
+            DAWN_GL_TRY(gl, SamplerParameteri(handle, GL_TEXTURE_COMPARE_FUNC,
+                                              ToOpenGLCompareFunction(desc.compare)));
+        }
 
-    if (HasAnisotropicFiltering(gl)) {
-        uint16_t value =
-            std::min<uint16_t>(GetMaxAnisotropy(), device->GetMaxTextureMaxAnisotropy());
-        DAWN_GL_TRY(gl, SamplerParameteri(mHandle, GL_TEXTURE_MAX_ANISOTROPY, value));
-    }
+        if (HasAnisotropicFiltering(gl)) {
+            uint16_t value =
+                std::min<uint16_t>(maxAnisotropy, device->GetMaxTextureMaxAnisotropy());
+            DAWN_GL_TRY(gl, SamplerParameteri(handle, GL_TEXTURE_MAX_ANISOTROPY, value));
+        }
 
-    return {};
+        futureHandle->Set(handle);
+        return {};
+    });
 }
 
-GLuint Sampler::GetHandle() const {
-    return mHandle;
+const FutureHandle& Sampler::GetHandle() const {
+    return *mHandle.Get();
 }
 
 }  // namespace dawn::native::opengl

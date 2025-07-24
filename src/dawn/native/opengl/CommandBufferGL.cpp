@@ -48,6 +48,7 @@
 #include "dawn/native/opengl/PersistentPipelineStateGL.h"
 #include "dawn/native/opengl/PipelineLayoutGL.h"
 #include "dawn/native/opengl/QuerySetGL.h"
+#include "dawn/native/opengl/QueueGL.h"
 #include "dawn/native/opengl/RenderPipelineGL.h"
 #include "dawn/native/opengl/SamplerGL.h"
 #include "dawn/native/opengl/TextureGL.h"
@@ -689,7 +690,7 @@ Extent3D ComputeTextureCopyExtent(const TextureCopy& textureCopy, const Extent3D
 CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor)
     : CommandBufferBase(encoder, descriptor) {}
 
-MaybeError CommandBuffer::Execute() {
+MaybeError CommandBuffer::Execute(Queue* queue) {
     const OpenGLFunctions& gl = ToBackend(GetDevice())->GetGL();
 
     auto LazyClearSyncScope = [](const SyncScopeResourceUsage& scope) -> MaybeError {
@@ -776,6 +777,7 @@ MaybeError CommandBuffer::Execute() {
 
                 ToBackend(copy->source)->TrackUsage();
                 ToBackend(copy->destination)->TrackUsage();
+                queue->TrackCopyDstBuffer(ToBackend(copy->destination));
                 break;
             }
 
@@ -941,6 +943,7 @@ MaybeError CommandBuffer::Execute() {
                 DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_PACK_BUFFER, 0));
                 DAWN_GL_TRY(gl, DeleteFramebuffers(1, &readFBO));
 
+                queue->TrackCopyDstBuffer(buffer);
                 buffer->TrackUsage();
                 break;
             }
@@ -996,9 +999,7 @@ MaybeError CommandBuffer::Execute() {
 
                 if (!clearedToZero) {
                     const std::vector<uint8_t> clearValues(cmd->size, 0u);
-                    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, dstBuffer->GetHandle()));
-                    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, cmd->offset, cmd->size,
-                                                  clearValues.data()));
+                    DAWN_TRY(dstBuffer->Write(0, clearValues.data(), clearValues.size()));
                 }
 
                 dstBuffer->TrackUsage();
@@ -1060,8 +1061,7 @@ MaybeError CommandBuffer::Execute() {
                 uint8_t* data = mCommands.NextData<uint8_t>(size);
                 DAWN_TRY(dstBuffer->EnsureDataInitializedAsDestination(offset, size));
 
-                DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, dstBuffer->GetHandle()));
-                DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, offset, size, data));
+                DAWN_TRY(dstBuffer->Write(offset, data, size));
 
                 dstBuffer->TrackUsage();
                 break;
