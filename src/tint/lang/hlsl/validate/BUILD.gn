@@ -45,7 +45,7 @@ if (tint_build_hlsl_writer) {
       "validate.h",
     ]
     deps = [
-      "${dawn_root}/src/utils:utils",
+      "${dawn_root}/src/utils",
       "${tint_src_dir}/lang/wgsl/ast",
       "${tint_src_dir}/utils/command",
       "${tint_src_dir}/utils/containers",
