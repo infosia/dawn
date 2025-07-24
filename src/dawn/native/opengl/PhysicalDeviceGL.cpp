@@ -107,9 +107,6 @@ bool IsSwiftShader(std::string_view renderer) {
 ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType backendType,
                                                           Ref<DisplayEGL> display,
                                                           bool forceES31AndMinExtensions) {
-    const EGLFunctions& egl = display->egl;
-    EGLDisplay eglDisplay = display->GetDisplay();
-
     // Create a temporary context and make it current during the creation of the PhysicalDevice so
     // that we can query the limits and other properties. Assumes that the limit are the same
     // irrespective of the context creation options.
@@ -119,21 +116,13 @@ ResultOrError<Ref<PhysicalDevice>> PhysicalDevice::Create(wgpu::BackendType back
                                        /*useANGLETextureSharing*/ false,
                                        /*forceES31AndMinExtensions*/ forceES31AndMinExtensions));
 
-    EGLSurface prevDrawSurface = egl.GetCurrentSurface(EGL_DRAW);
-    EGLSurface prevReadSurface = egl.GetCurrentSurface(EGL_READ);
-    EGLContext prevContext = egl.GetCurrentContext();
-
-    context->MakeCurrent();
+    ContextEGL::ScopedMakeCurrent makeCurrent(context.get());
     // Needed to request extensions here to initialize supported gl extensions set
     context->RequestRequiredExtensionsExplicitly();
 
     Ref<PhysicalDevice> physicalDevice =
         AcquireRef(new PhysicalDevice(backendType, std::move(display)));
-    DAWN_TRY_WITH_CLEANUP(physicalDevice->Initialize(), {
-        egl.MakeCurrent(eglDisplay, prevDrawSurface, prevReadSurface, prevContext);
-    });
-
-    egl.MakeCurrent(eglDisplay, prevDrawSurface, prevReadSurface, prevContext);
+    DAWN_TRY(physicalDevice->Initialize());
 
     return physicalDevice;
 }
