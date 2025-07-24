@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7d429c8_779d2b9b",
+        "filename": "src/tint/lang/msl/type/string.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T15:38:20Z",
+      "side": 1,
+      "message": "Why do we need to attach the u8 element type here?",
+      "revId": "85b69bd3eca8163f259cd880ce583511da2d4874",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
