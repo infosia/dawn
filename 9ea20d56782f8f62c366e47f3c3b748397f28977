@@ -33,6 +33,24 @@
       "message": "Dan, Loko or James please provide the second review.",
       "revId": "9ea20d56782f8f62c366e47f3c3b748397f28977",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc6b402f_264bce91",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-24T11:44:04Z",
+      "side": 1,
+      "message": "We discussed this one in our sync yesterday and I believe we agreed to drop this change for now.\n\nDiego: If you still agree, you have to pull this out of the chain of CLs so that the others CLs do not depend on it.",
+      "parentUuid": "06c238f6_fadbad6e",
+      "revId": "9ea20d56782f8f62c366e47f3c3b748397f28977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

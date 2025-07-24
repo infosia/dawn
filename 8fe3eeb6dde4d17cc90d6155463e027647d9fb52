@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "83893b59_ca1aebf0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-24T11:44:04Z",
+      "side": 1,
+      "message": "Yeah, we discussed at the F2F and the resolution was to make this a core language feature instead of an extension since we can support it everywhere.",
+      "parentUuid": "025bd2c0_6c5276e9",
+      "revId": "8fe3eeb6dde4d17cc90d6155463e027647d9fb52",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "31f8cd9a_2080f2b5",
         "filename": "src/dawn/native/Toggles.h",
         "patchSetId": 4
