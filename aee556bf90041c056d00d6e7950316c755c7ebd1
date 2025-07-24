@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf2b5740_a56f653e",
+        "filename": "src/dawn/native/TexelBufferView.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-24T07:56:09Z",
+      "side": 1,
+      "message": "Can we `ASSERT(!IsError())` in all the getters? We should be doing that like in other objects as it helps catch missing validation.",
+      "revId": "aee556bf90041c056d00d6e7950316c755c7ebd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
