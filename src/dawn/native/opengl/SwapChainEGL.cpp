@@ -100,7 +100,7 @@ MaybeError SwapChainEGL::Initialize(SwapChainBase* previousSwapChain) {
 MaybeError SwapChainEGL::PresentImpl() {
     Device* device = ToBackend(GetDevice());
     EGLDisplay display = device->GetEGLDisplay();
-    const EGLFunctions& egl = device->GetEGL(false);
+    const EGLFunctions& egl = device->GetEGL();
 
     // Do the reverse-Y blit from the fake surface texture to the default framebuffer.
     {
@@ -157,7 +157,7 @@ ResultOrError<SwapChainTextureInfo> SwapChainEGL::GetCurrentTextureImpl() {
 void SwapChainEGL::DetachFromSurfaceImpl() {
     if (mEGLSurface != EGL_NO_SURFACE) {
         Device* device = ToBackend(GetDevice());
-        device->GetEGL(false).DestroySurface(device->GetEGLDisplay(), mEGLSurface);
+        device->GetEGL().DestroySurface(device->GetEGLDisplay(), mEGLSurface);
         mEGLSurface = EGL_NO_SURFACE;
     }
 

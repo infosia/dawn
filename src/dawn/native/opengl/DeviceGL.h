@@ -28,7 +28,9 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_DEVICEGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_DEVICEGL_H_
 
+#include <future>
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
 #include "dawn/native/dawn_platform.h"
@@ -48,6 +50,7 @@ class AHBFunctions;
 namespace dawn::native::opengl {
 
 class ContextEGL;
+class WrappedEGLSync;
 
 class Device final : public DeviceBase {
   public:
@@ -62,11 +65,11 @@ class Device final : public DeviceBase {
 
     MaybeError Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor);
 
-    // Returns all the OpenGL entry points and ensures that the associated GL context is current.
+    // Returns all the OpenGL entry points.
     const OpenGLFunctions& GetGL() const;
 
     // Helper functions to get access to relevant EGL objects.
-    const EGLFunctions& GetEGL(bool makeCurrent) const;
+    const EGLFunctions& GetEGL() const;
     EGLDisplay GetEGLDisplay() const;
     ContextEGL* GetContext() const;
 
@@ -105,10 +108,55 @@ class Device final : public DeviceBase {
     bool MayRequireDuplicationOfIndirectParameters() const override;
     bool ShouldApplyIndexBufferOffsetToFirstIndex() const override;
 
+    bool CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
+                                                      wgpu::BufferUsage originalUsage,
+                                                      size_t bufferSize) const override;
+
     const AHBFunctions* GetOrLoadAHBFunctions();
 
     const Buffer* GetInternalTextureBuiltinsUniformBuffer() const;
     const Buffer* GetInternalArrayLengthUniformBuffer() const;
+
+    // Fake ID system
+    GLuint NextBufferFakeId();
+    std::shared_future<GLuint> GetBufferFuture(GLuint fakeId);
+    void TrackBuffer(GLuint fakeId, std::shared_future<GLuint> future);
+    void UntrackBuffer(GLuint fakeId);
+
+    GLuint NextTextureFakeId();
+    std::shared_future<GLuint> GetTextureFuture(GLuint fakeId);
+    void TrackTexture(GLuint fakeId, std::shared_future<GLuint> future);
+    void UntrackTexture(GLuint fakeId);
+
+    GLuint NextProgramFakeId();
+    std::shared_future<GLuint> GetProgramFuture(GLuint fakeId);
+    void TrackProgram(GLuint fakeId, std::shared_future<GLuint> future);
+    void UntrackProgram(GLuint fakeId);
+
+    GLuint NextSamplerFakeId();
+    std::shared_future<GLuint> GetSamplerFuture(GLuint fakeId);
+    void TrackSampler(GLuint fakeId, std::shared_future<GLuint> future);
+    void UntrackSampler(GLuint fakeId);
+
+    GLuint NextQueryFakeId();
+    std::shared_future<GLuint> GetQueryFuture(GLuint fakeId);
+    void TrackQuery(GLuint fakeId, std::shared_future<GLuint> future);
+    void UntrackQuery(GLuint fakeId);
+
+    GLuint NextVAOFakeId();
+    std::shared_future<GLuint> GetVAOFuture(GLuint fakeId);
+    void TrackVAO(GLuint fakeId, std::shared_future<GLuint> future);
+    void UntrackVAO(GLuint fakeId);
+
+    GLuint NextTextureViewFakeId();
+    std::shared_future<GLuint> GetTextureViewFuture(GLuint fakeId);
+    void TrackTextureView(GLuint fakeId, std::shared_future<GLuint> future);
+    void UntrackTextureView(GLuint fakeId);
+
+    GLuint NextFenceFakeId();
+    std::shared_future<Ref<WrappedEGLSync>> GetFenceFuture(GLuint fakeId);
+    void TrackFence(GLuint fakeId, std::shared_future<Ref<WrappedEGLSync>> future);
+    void UntrackFence(GLuint fakeId);
 
   private:
     Device(AdapterBase* adapter,
@@ -175,6 +223,32 @@ class Device final : public DeviceBase {
 #if DAWN_PLATFORM_IS(ANDROID)
     std::unique_ptr<AHBFunctions> mAHBFunctions;
 #endif  // DAWN_PLATFORM_IS(ANDROID)
+
+    // Fake ID system
+    std::atomic<GLuint> mNextBufferFakeId{1};
+    MutexProtected<std::unordered_map<GLuint, std::shared_future<GLuint>>> mBufferIDFutures;
+
+    std::atomic<GLuint> mNextTextureFakeId{1};
+    MutexProtected<std::unordered_map<GLuint, std::shared_future<GLuint>>> mTextureIDFutures;
+
+    std::atomic<GLuint> mNextProgramFakeId{1};
+    MutexProtected<std::unordered_map<GLuint, std::shared_future<GLuint>>> mProgramIDFutures;
+
+    std::atomic<GLuint> mNextSamplerFakeId{1};
+    MutexProtected<std::unordered_map<GLuint, std::shared_future<GLuint>>> mSamplerIDFutures;
+
+    std::atomic<GLuint> mNextQueryFakeId{1};
+    MutexProtected<std::unordered_map<GLuint, std::shared_future<GLuint>>> mQueryIDFutures;
+
+    std::atomic<GLuint> mNextVAOFakeId{1};
+    MutexProtected<std::unordered_map<GLuint, std::shared_future<GLuint>>> mVAOIDFutures;
+
+    std::atomic<GLuint> mNextTextureViewFakeId{1};
+    MutexProtected<std::unordered_map<GLuint, std::shared_future<GLuint>>> mTextureViewIDFutures;
+
+    std::atomic<GLuint> mNextFenceFakeId{1};
+    MutexProtected<std::unordered_map<GLuint, std::shared_future<Ref<WrappedEGLSync>>>>
+        mFenceIDFutures;
 };
 
 }  // namespace dawn::native::opengl

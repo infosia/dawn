@@ -38,15 +38,19 @@ Ref<ComputePipeline> ComputePipeline::CreateUninitialized(
     return AcquireRef(new ComputePipeline(device, descriptor));
 }
 
+ComputePipeline::ComputePipeline(Device* device,
+                                 const UnpackedPtr<ComputePipelineDescriptor>& descriptor)
+    : ComputePipelineBase(device, descriptor), PipelineGL() {}
+
 ComputePipeline::~ComputePipeline() = default;
 
 void ComputePipeline::DestroyImpl() {
     ComputePipelineBase::DestroyImpl();
-    DeleteProgram(ToBackend(GetDevice())->GetGL());
+    DeleteProgram(ToBackend(GetDevice()));
 }
 
 MaybeError ComputePipeline::InitializeImpl() {
-    return InitializeBase(ToBackend(GetDevice())->GetGL(), ToBackend(GetLayout()), GetAllStages(),
+    return InitializeBase(ToBackend(GetDevice()), ToBackend(GetLayout()), GetAllStages(),
                           /* usesVertexIndex */ false, /* usesInstanceIndex */ false,
                           /* usesFragDepth */ false, /* bgraSwizzleAttributes */ {});
 }

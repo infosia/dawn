@@ -212,9 +212,9 @@ void ContextEGL::RequestRequiredExtensionsExplicitly() {
     glRequestExtension("GL_EXT_color_buffer_half_float");
 }
 
-void ContextEGL::MakeCurrent() {
-    EGLBoolean success = mDisplay->egl.MakeCurrent(mDisplay->GetDisplay(), mCurrentSurface,
-                                                   mCurrentSurface, mContext);
+void ContextEGL::MakeCurrent(EGLContext context, EGLSurface drawSurface, EGLSurface readSurface) {
+    EGLBoolean success =
+        mDisplay->egl.MakeCurrent(mDisplay->GetDisplay(), drawSurface, readSurface, context);
     IgnoreErrors(
         CheckEGL(mDisplay->egl, static_cast<EGLBoolean>(success == EGL_TRUE), "eglMakeCurrent"));
 }
@@ -234,6 +234,21 @@ ContextEGL::ScopedMakeSurfaceCurrent::ScopedMakeSurfaceCurrent(ContextEGL* conte
 
 ContextEGL::ScopedMakeSurfaceCurrent::~ScopedMakeSurfaceCurrent() {
     mContext->mCurrentSurface = mContext->mOffscreenSurface;
+}
+
+ContextEGL::ScopedMakeCurrent::ScopedMakeCurrent(ContextEGL* context) : mContext(context) {
+    mContext->mMutex.lock();
+
+    mPrevContext = mContext->mDisplay->egl.GetCurrentContext();
+    mPrevDrawSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_DRAW);
+    mPrevReadSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_READ);
+    mContext->MakeCurrent(mContext->mContext, mContext->mCurrentSurface, mContext->mCurrentSurface);
+}
+
+ContextEGL::ScopedMakeCurrent::~ScopedMakeCurrent() {
+    mContext->MakeCurrent(mPrevContext, mPrevDrawSurface, mPrevReadSurface);
+
+    mContext->mMutex.unlock();
 }
 
 }  // namespace dawn::native::opengl

@@ -29,12 +29,14 @@
 #define SRC_DAWN_NATIVE_OPENGL_SHARED_FENCE_EGL_H_
 
 #include "dawn/native/SystemHandle.h"
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/SharedFenceGL.h"
 #include "dawn/native/opengl/UtilsEGL.h"
 
 namespace dawn::native::opengl {
 
 class Device;
+class WrappedEGLSync;
 
 class SharedFenceEGL : public SharedFence {
   public:
@@ -49,7 +51,7 @@ class SharedFenceEGL : public SharedFence {
                    StringView label,
                    wgpu::SharedFenceType type,
                    SystemHandle&& handle,
-                   Ref<WrappedEGLSync> sync);
+                   FutureHandleBase<Ref<WrappedEGLSync>> sync);
 
     MaybeError ServerWait(uint64_t signaledValue) override;
 
@@ -58,7 +60,7 @@ class SharedFenceEGL : public SharedFence {
 
     wgpu::SharedFenceType mType;
     SystemHandle mHandle;
-    Ref<WrappedEGLSync> mSync;
+    FutureHandleBase<Ref<WrappedEGLSync>> mSync;
 };
 
 }  // namespace dawn::native::opengl
