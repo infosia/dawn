@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7e94d92_e73f2d86",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-24T09:08:34Z",
+      "side": 1,
+      "message": "Please take a look, thanks!\n\nThis patchset make `BlobCache::Load` with hash validation return an internal error if failed, and the callers of it can handle this case as a cache miss while record it into histogram.\n\nIn this way related unit-tests are also added, previously we can\u0027t test `DAWN_ASSERT` or `DAWN_CHECK`.",
+      "revId": "6c8194ba8160c17499025a1c094aec8cd68f7c70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
