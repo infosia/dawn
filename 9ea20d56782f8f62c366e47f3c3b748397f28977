@@ -16,6 +16,23 @@
       "message": "Lol calm down on the CQ+2 button, you need to have two reviews to have CQ+2 go through. You can if CQ+2 will work on the left panel with the \"Code-Review\" requirements.",
       "revId": "9ea20d56782f8f62c366e47f3c3b748397f28977",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "06c238f6_fadbad6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-24T07:51:56Z",
+      "side": 1,
+      "message": "Dan, Loko or James please provide the second review.",
+      "revId": "9ea20d56782f8f62c366e47f3c3b748397f28977",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
