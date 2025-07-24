@@ -37,13 +37,14 @@ struct BeginRenderPassCmd;
 namespace dawn::native::opengl {
 
 class Device;
+class Queue;
 struct OpenGLFunctions;
 
 class CommandBuffer final : public CommandBufferBase {
   public:
     CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor);
 
-    MaybeError Execute();
+    MaybeError Execute(Queue* queue);
 
   private:
     MaybeError ExecuteComputePass();

@@ -155,9 +155,7 @@ Device::~Device() {
 }
 
 MaybeError Device::Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor) {
-    // Directly set the context current and use mGL instead of calling GetGL as GetGL will notify
-    // the (yet inexistent) queue that GL was used.
-    mContext->MakeCurrent();
+    ContextEGL::ScopedMakeCurrent makeCurrent(mContext.get());
     mContext->RequestRequiredExtensionsExplicitly();
 
     const OpenGLFunctions& gl = mGL;
@@ -381,8 +379,6 @@ Ref<TextureBase> Device::CreateTextureWrappingEGLImage(const ExternalImageDescri
 ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
     const ExternalImageDescriptor* descriptor,
     ::EGLImage image) {
-    const OpenGLFunctions& gl = GetGL();
-
     TextureDescriptor reifiedDescriptor =
         FromAPI(descriptor->cTextureDescriptor)->WithTrivialFrontendDefaults();
     UnpackedPtr<TextureDescriptor> textureDescriptor;
@@ -392,8 +388,11 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
     // The EGLImage was created from outside of Dawn so it must be on the same display that was
     // provided to create the device. The best check we can do is that we indeed have
     // EGL_KHR_image_base.
-    DAWN_ASSERT(GetEGL(false).HasExt(EGLExt::ImageBase));
+    DAWN_ASSERT(GetEGL().HasExt(EGLExt::ImageBase));
 
+    ContextEGL::ScopedMakeCurrent makeCurrent(mContext.get());
+
+    const OpenGLFunctions& gl = GetGL();
     GLuint tex;
     DAWN_GL_TRY(gl, GenTextures(1, &tex));
     DAWN_GL_TRY(gl, BindTexture(GL_TEXTURE_2D, tex));
@@ -414,9 +413,14 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingEGLImageImpl(
             width, height, &textureDescriptor->size);
     }
 
-    // TODO(dawn:803): Validate the OpenGL texture format from the EGLImage against the format
-    // in the passed-in TextureDescriptor.
-    auto result = AcquireRef(new Texture(this, textureDescriptor, tex, OwnsHandle::No));
+    auto promise = std::make_shared<std::promise<GLuint>>();
+    std::shared_future<GLuint> future = promise->get_future();
+    FutureHandle handle(NextTextureFakeId(), future);
+    TrackTexture(handle.GetFakeId(), std::move(future));
+
+    promise->set_value(tex);
+
+    auto result = AcquireRef(new Texture(this, textureDescriptor, handle, OwnsHandle::No));
     result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
                                                result->GetAllSubresources());
     return result;
@@ -435,8 +439,6 @@ Ref<TextureBase> Device::CreateTextureWrappingGLTexture(const ExternalImageDescr
 ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
     const ExternalImageDescriptor* descriptor,
     GLuint texture) {
-    const OpenGLFunctions& gl = GetGL();
-
     TextureDescriptor reifiedDescriptor =
         FromAPI(descriptor->cTextureDescriptor)->WithTrivialFrontendDefaults();
     UnpackedPtr<TextureDescriptor> textureDescriptor;
@@ -446,6 +448,10 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
         return DAWN_VALIDATION_ERROR("Device does not support ANGLE GL texture sharing.");
     }
     DAWN_TRY(ValidateTextureCanBeWrapped(textureDescriptor));
+
+    ContextEGL::ScopedMakeCurrent makeCurrent(mContext.get());
+
+    const OpenGLFunctions& gl = GetGL();
 
     DAWN_GL_TRY(gl, BindTexture(GL_TEXTURE_2D, texture));
 
@@ -461,7 +467,14 @@ ResultOrError<Ref<TextureBase>> Device::CreateTextureWrappingGLTextureImpl(
             width, height, &textureDescriptor->size);
     }
 
-    auto result = AcquireRef(new Texture(this, textureDescriptor, texture, OwnsHandle::No));
+    auto promise = std::make_shared<std::promise<GLuint>>();
+    std::shared_future<GLuint> future = promise->get_future();
+    FutureHandle handle(NextTextureFakeId(), future);
+    TrackTexture(handle.GetFakeId(), std::move(future));
+
+    promise->set_value(texture);
+
+    auto result = AcquireRef(new Texture(this, textureDescriptor, handle, OwnsHandle::No));
     result->SetIsSubresourceContentInitialized(descriptor->isInitialized,
                                                result->GetAllSubresources());
     return result;
@@ -527,7 +540,6 @@ const AHBFunctions* Device::GetOrLoadAHBFunctions() {
 }
 
 const OpenGLFunctions& Device::GetGL() const {
-    mContext->MakeCurrent();
     ToBackend(GetQueue())->OnGLUsed();
     return mGL;
 }
@@ -536,11 +548,7 @@ int Device::GetMaxTextureMaxAnisotropy() const {
     return mMaxTextureMaxAnisotropy;
 }
 
-const EGLFunctions& Device::GetEGL(bool makeCurrent) const {
-    if (makeCurrent) {
-        mContext->MakeCurrent();
-        ToBackend(GetQueue())->OnGLUsed();
-    }
+const EGLFunctions& Device::GetEGL() const {
     return ToBackend(GetPhysicalDevice())->GetDisplay()->egl;
 }
 
@@ -558,6 +566,140 @@ const Buffer* Device::GetInternalTextureBuiltinsUniformBuffer() const {
 
 const Buffer* Device::GetInternalArrayLengthUniformBuffer() const {
     return mArrayLengthBuffer.Get();
+}
+
+bool Device::CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
+                                                          wgpu::BufferUsage originalUsage,
+                                                          size_t bufferSize) const {
+    return false;
+}
+
+GLuint Device::NextBufferFakeId() {
+    return mNextBufferFakeId++;
+}
+
+std::shared_future<GLuint> Device::GetBufferFuture(GLuint fakeId) {
+    return mBufferIDFutures.Use([&](const auto& futures) { return futures->at(fakeId); });
+}
+
+void Device::TrackBuffer(GLuint fakeId, std::shared_future<GLuint> future) {
+    mBufferIDFutures.Use([&](auto futures) { futures->emplace(fakeId, std::move(future)); });
+}
+
+void Device::UntrackBuffer(GLuint fakeId) {
+    mBufferIDFutures.Use([&](auto futures) { futures->erase(fakeId); });
+}
+
+GLuint Device::NextTextureFakeId() {
+    return mNextTextureFakeId++;
+}
+
+std::shared_future<GLuint> Device::GetTextureFuture(GLuint fakeId) {
+    return mTextureIDFutures.Use([&](const auto& futures) { return futures->at(fakeId); });
+}
+
+void Device::TrackTexture(GLuint fakeId, std::shared_future<GLuint> future) {
+    mTextureIDFutures.Use([&](auto futures) { futures->emplace(fakeId, std::move(future)); });
+}
+
+void Device::UntrackTexture(GLuint fakeId) {
+    mTextureIDFutures.Use([&](auto futures) { futures->erase(fakeId); });
+}
+
+GLuint Device::NextProgramFakeId() {
+    return mNextProgramFakeId++;
+}
+
+std::shared_future<GLuint> Device::GetProgramFuture(GLuint fakeId) {
+    return mProgramIDFutures.Use([&](const auto& futures) { return futures->at(fakeId); });
+}
+
+void Device::TrackProgram(GLuint fakeId, std::shared_future<GLuint> future) {
+    mProgramIDFutures.Use([&](auto futures) { futures->emplace(fakeId, std::move(future)); });
+}
+
+void Device::UntrackProgram(GLuint fakeId) {
+    mProgramIDFutures.Use([&](auto futures) { futures->erase(fakeId); });
+}
+
+GLuint Device::NextSamplerFakeId() {
+    return mNextSamplerFakeId++;
+}
+
+std::shared_future<GLuint> Device::GetSamplerFuture(GLuint fakeId) {
+    return mSamplerIDFutures.Use([&](const auto& futures) { return futures->at(fakeId); });
+}
+
+void Device::TrackSampler(GLuint fakeId, std::shared_future<GLuint> future) {
+    mSamplerIDFutures.Use([&](auto futures) { futures->emplace(fakeId, std::move(future)); });
+}
+
+void Device::UntrackSampler(GLuint fakeId) {
+    mSamplerIDFutures.Use([&](auto futures) { futures->erase(fakeId); });
+}
+
+GLuint Device::NextQueryFakeId() {
+    return mNextQueryFakeId++;
+}
+
+std::shared_future<GLuint> Device::GetQueryFuture(GLuint fakeId) {
+    return mQueryIDFutures.Use([&](const auto& futures) { return futures->at(fakeId); });
+}
+
+void Device::TrackQuery(GLuint fakeId, std::shared_future<GLuint> future) {
+    mQueryIDFutures.Use([&](auto futures) { futures->emplace(fakeId, std::move(future)); });
+}
+
+void Device::UntrackQuery(GLuint fakeId) {
+    mQueryIDFutures.Use([&](auto futures) { futures->erase(fakeId); });
+}
+
+GLuint Device::NextVAOFakeId() {
+    return mNextVAOFakeId++;
+}
+
+std::shared_future<GLuint> Device::GetVAOFuture(GLuint fakeId) {
+    return mVAOIDFutures.Use([&](const auto& futures) { return futures->at(fakeId); });
+}
+
+void Device::TrackVAO(GLuint fakeId, std::shared_future<GLuint> future) {
+    mVAOIDFutures.Use([&](auto futures) { futures->emplace(fakeId, std::move(future)); });
+}
+
+void Device::UntrackVAO(GLuint fakeId) {
+    mVAOIDFutures.Use([&](auto futures) { futures->erase(fakeId); });
+}
+
+GLuint Device::NextTextureViewFakeId() {
+    return mNextTextureViewFakeId++;
+}
+
+std::shared_future<GLuint> Device::GetTextureViewFuture(GLuint fakeId) {
+    return mTextureViewIDFutures.Use([&](const auto& futures) { return futures->at(fakeId); });
+}
+
+void Device::TrackTextureView(GLuint fakeId, std::shared_future<GLuint> future) {
+    mTextureViewIDFutures.Use([&](auto futures) { futures->emplace(fakeId, std::move(future)); });
+}
+
+void Device::UntrackTextureView(GLuint fakeId) {
+    mTextureViewIDFutures.Use([&](auto futures) { futures->erase(fakeId); });
+}
+
+GLuint Device::NextFenceFakeId() {
+    return mNextFenceFakeId++;
+}
+
+std::shared_future<Ref<WrappedEGLSync>> Device::GetFenceFuture(GLuint fakeId) {
+    return mFenceIDFutures.Use([&](const auto& futures) { return futures->at(fakeId); });
+}
+
+void Device::TrackFence(GLuint fakeId, std::shared_future<Ref<WrappedEGLSync>> future) {
+    mFenceIDFutures.Use([&](auto futures) { futures->emplace(fakeId, std::move(future)); });
+}
+
+void Device::UntrackFence(GLuint fakeId) {
+    mFenceIDFutures.Use([&](auto futures) { futures->erase(fakeId); });
 }
 
 }  // namespace dawn::native::opengl
