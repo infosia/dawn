@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f082ed4_c810d4ca",
+        "filename": "src/tint/lang/msl/writer/raise/convert_print_to_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T23:19:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "043e5993_1c833cea",
+      "revId": "44eb3c85e66e5873384b1ef01bf050f702171496",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "68dea5ac_05cfe903",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "MSL spec says:\n\n\u003e Metal supports the hl length modifier for 4-byte types like int and float, which you need to use when printing vectors.",
       "parentUuid": "68dea5ac_05cfe903",
+      "revId": "44eb3c85e66e5873384b1ef01bf050f702171496",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e674330b_f61c1ed5",
+        "filename": "src/tint/lang/msl/writer/raise/convert_print_to_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T23:19:26Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "78322efd_69c0ccb1",
       "revId": "44eb3c85e66e5873384b1ef01bf050f702171496",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
