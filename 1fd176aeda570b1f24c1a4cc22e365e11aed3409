@@ -92,6 +92,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d42dc80b_7e58440e",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3625603
+      },
+      "writtenOn": "2025-07-24T22:12:29Z",
+      "side": 1,
+      "message": "There is another ongoing CL: https://dawn-review.googlesource.com/c/dawn/+/254234\n\nThis CL brings back the `DAWN_BUILD_MONOLITHIC_LIBRARY\u003dSTATIC|SHARED`, which seems to work again. (using `BUILD_SHARED_LIBS` does not work because it causes other issue, eg. building DXC failure)",
+      "parentUuid": "dd12ec8b_5e84d258",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d83bb941_f36b7934",
         "filename": ".github/workflows/ci.yml",
         "patchSetId": 8
