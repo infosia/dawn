@@ -48,6 +48,7 @@
 #include "dawn/native/opengl/PhysicalDeviceGL.h"
 #include "dawn/native/opengl/PipelineLayoutGL.h"
 #include "dawn/native/opengl/QuerySetGL.h"
+#include "dawn/native/opengl/QueueGL.h"
 #include "dawn/native/opengl/RenderPipelineGL.h"
 #include "dawn/native/opengl/SamplerGL.h"
 #include "dawn/native/opengl/TextureGL.h"
@@ -685,12 +686,12 @@ MaybeError ResolveMultisampledRenderTargets(const OpenGLFunctions& gl,
             TextureView* colorView = ToBackend(renderPass->colorAttachments[i].view.Get());
 
             DAWN_GL_TRY(gl, BindFramebuffer(GL_READ_FRAMEBUFFER, readFbo));
-            DAWN_TRY(colorView->BindToFramebuffer(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
+            DAWN_TRY(colorView->BindToFramebuffer(gl, GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
 
             TextureView* resolveView =
                 ToBackend(renderPass->colorAttachments[i].resolveTarget.Get());
             DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, writeFbo));
-            DAWN_TRY(resolveView->BindToFramebuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
+            DAWN_TRY(resolveView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
             DAWN_GL_TRY(gl, BlitFramebuffer(0, 0, renderPass->width, renderPass->height, 0, 0,
                                             renderPass->width, renderPass->height,
                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
@@ -731,7 +732,7 @@ Extent3D ComputeTextureCopyExtent(const TextureCopy& textureCopy, const Extent3D
 CommandBuffer::CommandBuffer(CommandEncoder* encoder, const CommandBufferDescriptor* descriptor)
     : CommandBufferBase(encoder, descriptor) {}
 
-MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
+MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl, Queue* queue) {
     auto LazyClearSyncScope = [](const SyncScopeResourceUsage& scope) -> MaybeError {
         for (size_t i = 0; i < scope.textures.size(); i++) {
             Texture* texture = ToBackend(scope.textures[i]);
@@ -816,6 +817,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
 
                 ToBackend(copy->source)->TrackUsage();
                 ToBackend(copy->destination)->TrackUsage();
+                queue->TrackCopyDstBuffer(ToBackend(copy->destination));
                 break;
             }
 
@@ -981,6 +983,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                 DAWN_GL_TRY(gl, BindBuffer(GL_PIXEL_PACK_BUFFER, 0));
                 DAWN_GL_TRY(gl, DeleteFramebuffers(1, &readFBO));
 
+                queue->TrackCopyDstBuffer(buffer);
                 buffer->TrackUsage();
                 break;
             }
@@ -1036,9 +1039,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
 
                 if (!clearedToZero) {
                     const std::vector<uint8_t> clearValues(cmd->size, 0u);
-                    DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, dstBuffer->GetHandle()));
-                    DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, cmd->offset, cmd->size,
-                                                  clearValues.data()));
+                    DAWN_TRY(dstBuffer->Write(gl, 0, clearValues.data(), clearValues.size()));
                 }
 
                 dstBuffer->TrackUsage();
@@ -1100,8 +1101,7 @@ MaybeError CommandBuffer::Execute(const OpenGLFunctions& gl) {
                 uint8_t* data = mCommands.NextData<uint8_t>(size);
                 DAWN_TRY(dstBuffer->EnsureDataInitializedAsDestination(offset, size));
 
-                DAWN_GL_TRY(gl, BindBuffer(GL_ARRAY_BUFFER, dstBuffer->GetHandle()));
-                DAWN_GL_TRY(gl, BufferSubData(GL_ARRAY_BUFFER, offset, size, data));
+                DAWN_TRY(dstBuffer->Write(gl, offset, data, size));
 
                 dstBuffer->TrackUsage();
                 break;
@@ -1156,7 +1156,7 @@ MaybeError CommandBuffer::ExecuteComputePass(const OpenGLFunctions& gl) {
             case Command::SetComputePipeline: {
                 SetComputePipelineCmd* cmd = mCommands.NextCommand<SetComputePipelineCmd>();
                 lastPipeline = ToBackend(cmd->pipeline).Get();
-                DAWN_TRY(lastPipeline->ApplyNow());
+                DAWN_TRY(lastPipeline->ApplyNow(gl));
 
                 bindGroupTracker.OnSetPipeline(lastPipeline);
                 break;
@@ -1227,7 +1227,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             GLenum glAttachment = GL_COLOR_ATTACHMENT0 + static_cast<uint8_t>(i);
 
             // Attach color buffers.
-            DAWN_TRY(textureView->BindToFramebuffer(GL_DRAW_FRAMEBUFFER, glAttachment,
+            DAWN_TRY(textureView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, glAttachment,
                                                     renderPass->colorAttachments[i].depthSlice));
             drawBuffers[i] = glAttachment;
             attachmentCount = ityp::PlusOne(i);
@@ -1250,7 +1250,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
                 DAWN_UNREACHABLE();
             }
 
-            DAWN_TRY(textureView->BindToFramebuffer(GL_DRAW_FRAMEBUFFER, glAttachment));
+            DAWN_TRY(textureView->BindToFramebuffer(gl, GL_DRAW_FRAMEBUFFER, glAttachment));
         }
     }
 
@@ -1452,7 +1452,7 @@ MaybeError CommandBuffer::ExecuteRenderPass(BeginRenderPassCmd* renderPass,
             case Command::SetRenderPipeline: {
                 SetRenderPipelineCmd* cmd = iter->NextCommand<SetRenderPipelineCmd>();
                 lastPipeline = ToBackend(cmd->pipeline).Get();
-                DAWN_TRY(lastPipeline->ApplyNow(persistentPipelineState));
+                DAWN_TRY(lastPipeline->ApplyNow(gl, persistentPipelineState));
 
                 vertexStateBufferBindingTracker.OnSetPipeline(lastPipeline);
                 bindGroupTracker.OnSetPipeline(lastPipeline);

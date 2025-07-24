@@ -28,9 +28,11 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_QUERYSETGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_QUERYSETGL_H_
 
+#include <future>
 #include <vector>
 
 #include "dawn/native/QuerySet.h"
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native::opengl {
@@ -42,14 +44,16 @@ class QuerySet final : public QuerySetBase {
     static ResultOrError<Ref<QuerySet>> Create(Device* device,
                                                const QuerySetDescriptor* descriptor);
 
-    GLuint Get(uint32_t index) const;
+    const FutureHandle& Get(uint32_t index) const;
 
   private:
     QuerySet(Device* device, const QuerySetDescriptor* descriptor);
-
     ~QuerySet() override;
+
+    MaybeError Initialize();
     void DestroyImpl() override;
-    std::vector<GLuint> mQueries;
+
+    std::vector<Ref<FutureHandle>> mHandles;
 };
 
 }  // namespace dawn::native::opengl

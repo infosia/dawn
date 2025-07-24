@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_RENDERPIPELINEGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_RENDERPIPELINEGL_H_
 
+#include <future>
 #include <vector>
 
 #include "dawn/native/RenderPipeline.h"
@@ -37,6 +38,7 @@
 
 namespace dawn::native::opengl {
 
+struct OpenGLFunctions;
 class Device;
 class PersistentPipelineState;
 
@@ -49,7 +51,8 @@ class RenderPipeline final : public RenderPipelineBase, public PipelineGL {
     GLenum GetGLPrimitiveTopology() const;
     VertexAttributeMask GetAttributesUsingVertexBuffer(VertexBufferSlot slot) const;
 
-    MaybeError ApplyNow(PersistentPipelineState& persistentPipelineState);
+    MaybeError ApplyNow(const OpenGLFunctions& gl,
+                        PersistentPipelineState& persistentPipelineState);
 
     MaybeError InitializeImpl() override;
 
@@ -59,12 +62,12 @@ class RenderPipeline final : public RenderPipelineBase, public PipelineGL {
     void DestroyImpl() override;
 
     MaybeError CreateVAOForVertexState();
+    const FutureHandle& GetVAOHandle() const;
 
     MaybeError ApplyDepthStencilState(const OpenGLFunctions& gl,
                                       PersistentPipelineState* persistentPipelineState);
 
-    // TODO(yunchao.he@intel.com): vao need to be deduplicated between pipelines.
-    GLuint mVertexArrayObject;
+    Ref<FutureHandle> mVAOHandle;
     GLenum mGlPrimitiveTopology;
 
     PerVertexBuffer<VertexAttributeMask> mAttributesUsingVertexBuffer;

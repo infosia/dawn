@@ -109,7 +109,7 @@ ResultOrError<Ref<WrappedEGLSync>> WrappedEGLSync::Create(Device* device,
 
     EGLSyncKHR sync = EGL_NO_SYNC;
     // eglCreateSync requires a current context.
-    DAWN_TRY(device->ExecuteGLWork([&](const OpenGLFunctions&) -> MaybeError {
+    DAWN_TRY(device->ExecuteImmediateGLWork([&](const OpenGLFunctions&) -> MaybeError {
         if (egl.HasExt(EGLExt::FenceSync)) {
             sync = egl.CreateSyncKHR(display->GetDisplay(), type, attribs);
         } else {

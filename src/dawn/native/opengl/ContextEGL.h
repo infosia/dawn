@@ -33,9 +33,10 @@
 #include <utility>
 
 #include "dawn/common/NonMovable.h"
+#include "dawn/common/Ref.h"
 #include "dawn/common/egl_platform.h"
-#include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
+#include "dawn/native/opengl/opengl_platform.h"
 #include "partition_alloc/pointers/raw_ptr.h"
 
 namespace dawn::native::opengl {
@@ -101,7 +102,6 @@ class ContextEGL : NonMovable {
 
         raw_ptr<ContextEGL> mContext = nullptr;
         ContextState mPrevState;
-        std::unique_lock<std::mutex> mLock;
     };
 
     ResultOrError<ScopedMakeCurrent> MakeCurrent();
@@ -115,9 +115,6 @@ class ContextEGL : NonMovable {
                           bool disableEGL15Robustness,
                           bool forceES31AndMinExtensions,
                           EGLint angleVirtualizationGroup);
-
-    // This mutex is used to make sure only one thread can enter ScopedMakeCurrent at a time.
-    std::mutex mExclusiveMakeCurrentMutex;
 
     Ref<DisplayEGL> mDisplay;
     ContextState mState;

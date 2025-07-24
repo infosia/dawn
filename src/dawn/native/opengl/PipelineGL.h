@@ -36,6 +36,7 @@
 #include "dawn/native/IntegerTypes.h"
 #include "dawn/native/PerStage.h"
 #include "dawn/native/Pipeline.h"
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/IntegerTypes.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
@@ -47,6 +48,7 @@ namespace dawn::native::opengl {
 
 struct OpenGLFunctions;
 class Buffer;
+class Device;
 class PipelineLayout;
 class Sampler;
 class TextureView;
@@ -83,7 +85,7 @@ class PipelineGL {
 
     const std::vector<TextureUnit>& GetTextureUnitsForSampler(FlatBindingIndex index) const;
     const std::vector<TextureUnit>& GetTextureUnitsForTextureView(FlatBindingIndex index) const;
-    GLuint GetProgramHandle() const;
+    const FutureHandle& GetProgramHandle() const;
 
     const EmulatedTextureBuiltinInfo& GetEmulatedTextureBuiltinInfo() const;
     bool NeedsTextureBuiltinUniformBuffer() const;
@@ -91,32 +93,41 @@ class PipelineGL {
     bool NeedsSSBOLengthUniformBuffer() const;
 
   protected:
+    // Ref counted data to be passed to lambda and support deferred initialization & destroy.
+    class SharedData : public RefCounted {
+      public:
+        SharedData();
+        ~SharedData() override;
+
+        Ref<FutureHandle> mHandle;
+
+        ityp::vector<FlatBindingIndex, std::vector<TextureUnit>> mUnitsForSamplers;
+        ityp::vector<FlatBindingIndex, std::vector<TextureUnit>> mUnitsForTextures;
+        std::vector<TextureUnit> mPlaceholderSamplerUnits;
+        // TODO(enga): This could live on the Device, or elsewhere, but currently it makes Device
+        // destruction complex as it requires the sampler to be destroyed before the sampler cache.
+        Ref<Sampler> mPlaceholderSampler;
+
+        // Flag indicates if this pipeline has ssbo.length and need to use the array length from
+        // uniform workaround.
+        bool mNeedsSSBOLengthUniformBuffer = false;
+
+        // Reflect info from tint: a map from texture binding point to extra data need to push into
+        // the internal uniform buffer.
+        EmulatedTextureBuiltinInfo mEmulatedTextureBuiltinInfo;
+    };
+
     MaybeError ApplyNow(const OpenGLFunctions& gl, const PipelineLayout* layout);
-    MaybeError InitializeBase(const OpenGLFunctions& gl,
+    MaybeError InitializeBase(Device* device,
                               const PipelineLayout* layout,
                               const PerStage<ProgrammableStage>& stages,
                               bool usesVertexIndex,
                               bool usesInstanceIndex,
                               bool usesFragDepth,
                               VertexAttributeMask bgraSwizzleAttributes);
-    void DeleteProgram(const OpenGLFunctions& gl);
+    void DeleteProgram(Device* device);
 
-  private:
-    GLuint mProgram;
-    ityp::vector<FlatBindingIndex, std::vector<TextureUnit>> mUnitsForSamplers;
-    ityp::vector<FlatBindingIndex, std::vector<TextureUnit>> mUnitsForTextures;
-    std::vector<TextureUnit> mPlaceholderSamplerUnits;
-    // TODO(enga): This could live on the Device, or elsewhere, but currently it makes Device
-    // destruction complex as it requires the sampler to be destroyed before the sampler cache.
-    Ref<Sampler> mPlaceholderSampler;
-
-    // Flag indicates if this pipeline has ssbo.length and need to use the array length from uniform
-    // workaround.
-    bool mNeedsSSBOLengthUniformBuffer = false;
-
-    // Reflect info from tint: a map from texture binding point to extra data need to push into the
-    // internal uniform buffer.
-    EmulatedTextureBuiltinInfo mEmulatedTextureBuiltinInfo;
+    Ref<SharedData> mSharedData;
 };
 
 // Helper class used to allocate the emulated texture builtins in the UBO during the initialization

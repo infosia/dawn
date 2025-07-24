@@ -37,6 +37,7 @@
 
 namespace dawn::native::opengl {
 
+class Buffer;
 class Device;
 class SharedFence;
 
@@ -46,6 +47,8 @@ class Queue final : public QueueBase {
 
     void OnGLUsed();
     MaybeError SubmitFenceSync();
+
+    void TrackCopyDstBuffer(Ref<Buffer> buffer);
 
     // Returns a shared fence which represents work done up to lastUsageSerial. It may be a cached
     // fence or newly created.
@@ -80,6 +83,8 @@ class Queue final : public QueueBase {
 
     // Has pending GL commands which are not associated with a fence.
     bool mHasPendingCommands = false;
+
+    SerialMap<ExecutionSerial, Ref<Buffer>> mPendingCopyDstBuffers;
 };
 
 }  // namespace dawn::native::opengl

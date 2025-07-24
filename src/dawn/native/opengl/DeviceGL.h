@@ -30,8 +30,10 @@
 
 #include <functional>
 #include <memory>
+#include <type_traits>
 #include <utility>
 #include <vector>
+#include <thread>
 
 #include "dawn/common/MutexProtected.h"
 #include "dawn/native/dawn_platform.h"
@@ -39,6 +41,7 @@
 #include "dawn/common/Platform.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/QuerySet.h"
+#include "dawn/native/opengl/ContextEGL.h"
 #include "dawn/native/opengl/EGLFunctions.h"
 #include "dawn/native/opengl/Forward.h"
 #include "dawn/native/opengl/GLFormat.h"
@@ -73,8 +76,8 @@ class Device final : public DeviceBase {
     template <typename Fn>
     MaybeError AddGLWork(Fn&& work) {
         MarkGLUsed();
-        if (CanExecuteGLWorkImmediately()) {
-            return work(GetGL(/*makeCurrent=*/false));
+        if (mContext->IsInScopedMakeCurrent()) {
+            return work(mGL);
         }
         mPendingGLWorkList.Use([&](auto workList) { workList->push_back(std::forward<Fn>(work)); });
         return {};
@@ -82,19 +85,31 @@ class Device final : public DeviceBase {
     MaybeError ExecutePendingGLWork();
 
     // Shortcut for AddGLWork + ExecutePendingGLWork.
+    // Note: this will flush any pending GL work before running the provided function.
     template <typename Fn>
-    MaybeError ExecuteGLWork(Fn&& work) {
+    MaybeError FlushPendingAndExecuteGLWork(Fn&& work) {
         DAWN_TRY(AddGLWork(std::forward<Fn>(work)));
         return ExecutePendingGLWork();
     }
 
-    // TODO(451928481): remove this from public access once all places are updated to use
-    // AddGLWork().
-    // Returns all the OpenGL entry points and ensures that the associated GL context is current.
-    const OpenGLFunctions& GetGL(bool makeCurrent = true) const;
+    // Execute the GL work immediately without flushing pending tasks.
+    // This is used for tasks that don't depend on previous tasks such as resource creations.
+    template <typename Fn>
+    auto ExecuteImmediateGLWork(Fn&& work) -> std::invoke_result_t<Fn, const OpenGLFunctions&> {
+        ContextEGL::ScopedMakeCurrent scopedCurrentContext;
+        DAWN_TRY_ASSIGN(scopedCurrentContext, mContext->MakeCurrent());
+
+        auto result = work(mGL);
+        if (DAWN_UNLIKELY(result.IsError())) {
+            return std::move(result);
+        }
+
+        DAWN_TRY(scopedCurrentContext.End());
+        return std::move(result);
+    }
 
     // Helper functions to get access to relevant EGL objects.
-    const EGLFunctions& GetEGL(bool makeCurrent) const;
+    const EGLFunctions& GetEGL() const;
     EGLDisplay GetEGLDisplay() const;
     ContextEGL* GetContext() const;
 
@@ -137,6 +152,8 @@ class Device final : public DeviceBase {
 
     const Buffer* GetInternalTextureBuiltinsUniformBuffer() const;
     const Buffer* GetInternalArrayLengthUniformBuffer() const;
+
+    bool IsOnCreationThread() const;
 
   private:
     Device(AdapterBase* adapter,
@@ -187,7 +204,6 @@ class Device final : public DeviceBase {
     void DestroyImpl() override;
 
     void MarkGLUsed();
-    bool CanExecuteGLWorkImmediately() const;
 
     const OpenGLFunctions mGL;
 
@@ -207,6 +223,8 @@ class Device final : public DeviceBase {
 #if DAWN_PLATFORM_IS(ANDROID)
     std::unique_ptr<AHBFunctions> mAHBFunctions;
 #endif  // DAWN_PLATFORM_IS(ANDROID)
+
+    std::thread::id mCreationThreadId;
 };
 
 }  // namespace dawn::native::opengl

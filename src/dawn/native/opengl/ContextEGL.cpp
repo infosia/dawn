@@ -252,6 +252,7 @@ void ContextEGL::RequestRequiredExtensionsExplicitly() {
     glRequestExtension("GL_APPLE_texture_format_BGRA8888");
     glRequestExtension("GL_EXT_color_buffer_float");
     glRequestExtension("GL_EXT_color_buffer_half_float");
+    glRequestExtension("GL_EXT_color_buffer_half_float");
 }
 
 bool ContextEGL::IsInScopedMakeCurrent() const {
@@ -301,9 +302,7 @@ bool ContextEGL::ContextState::operator!=(const ContextState& other) const {
 ContextEGL::ScopedMakeCurrent::ScopedMakeCurrent(ContextEGL* context) : mContext(context) {}
 
 ContextEGL::ScopedMakeCurrent::ScopedMakeCurrent(ScopedMakeCurrent&& src)
-    : mContext(std::move(src.mContext)),
-      mPrevState(std::move(src.mPrevState)),
-      mLock(std::move(src.mLock)) {
+    : mContext(std::move(src.mContext)), mPrevState(std::move(src.mPrevState)) {
     src.mContext = nullptr;
 }
 
@@ -314,7 +313,6 @@ ContextEGL::ScopedMakeCurrent& ContextEGL::ScopedMakeCurrent::operator=(ScopedMa
     mContext = std::move(src.mContext);
     src.mContext = nullptr;
     mPrevState = std::move(src.mPrevState);
-    mLock = std::move(src.mLock);
     return *this;
 }
 
@@ -328,7 +326,6 @@ MaybeError ContextEGL::ScopedMakeCurrent::Initialize() {
     if (!mContext) {
         return {};
     }
-    mLock = std::unique_lock<std::mutex>(mContext->mExclusiveMakeCurrentMutex);
 
     mPrevState.context = mContext->mDisplay->egl.GetCurrentContext();
     mPrevState.drawSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_DRAW);
@@ -338,6 +335,7 @@ MaybeError ContextEGL::ScopedMakeCurrent::Initialize() {
         auto result = MakeContextCurrent(mContext->mDisplay.Get(), mContext->mState);
         if (DAWN_UNLIKELY(result.IsError())) {
             mContext = nullptr;
+            DAWN_CHECK(false);
             return result;
         }
     }

@@ -53,6 +53,7 @@ ExternalImageDescriptorGLTexture::ExternalImageDescriptorGLTexture()
 WGPUTexture WrapExternalEGLImage(WGPUDevice device,
                                  const ExternalImageDescriptorEGLImage* descriptor) {
     Device* backendDevice = ToBackend(FromAPI(device));
+    auto deviceGuard = backendDevice->GetGuard();
     Ref<TextureBase> texture =
         backendDevice->CreateTextureWrappingEGLImage(descriptor, descriptor->image);
     return ToAPI(ReturnToAPI(std::move(texture)));
@@ -61,6 +62,7 @@ WGPUTexture WrapExternalEGLImage(WGPUDevice device,
 WGPUTexture WrapExternalGLTexture(WGPUDevice device,
                                   const ExternalImageDescriptorGLTexture* descriptor) {
     Device* backendDevice = ToBackend(FromAPI(device));
+    auto deviceGuard = backendDevice->GetGuard();
     Ref<TextureBase> texture =
         backendDevice->CreateTextureWrappingGLTexture(descriptor, descriptor->texture);
     return ToAPI(ReturnToAPI(std::move(texture)));

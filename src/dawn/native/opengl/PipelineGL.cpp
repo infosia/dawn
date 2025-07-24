@@ -48,168 +48,182 @@
 
 namespace dawn::native::opengl {
 
-PipelineGL::PipelineGL() : mProgram(0) {}
+PipelineGL::SharedData::SharedData() = default;
+PipelineGL::SharedData::~SharedData() = default;
+
+PipelineGL::PipelineGL() : mSharedData(AcquireRef(new SharedData())) {}
 
 PipelineGL::~PipelineGL() = default;
 
-MaybeError PipelineGL::InitializeBase(const OpenGLFunctions& gl,
+MaybeError PipelineGL::InitializeBase(Device* device,
                                       const PipelineLayout* layout,
                                       const PerStage<ProgrammableStage>& stages,
                                       bool usesVertexIndex,
                                       bool usesInstanceIndex,
                                       bool usesFragDepth,
                                       VertexAttributeMask bgraSwizzleAttributes) {
-    mProgram = DAWN_GL_TRY(gl, CreateProgram());
+    mSharedData->mHandle = AcquireRef(new FutureHandle());
+    Ref<SharedData> sharedData = mSharedData;
+    return device->AddGLWork([=](const auto& gl) mutable -> MaybeError {
+        auto program = DAWN_GL_TRY(gl, CreateProgram());
 
-    // Compute the set of active stages.
-    wgpu::ShaderStage activeStages = wgpu::ShaderStage::None;
-    for (SingleShaderStage stage : IterateStages(kAllStages)) {
-        if (stages[stage].module != nullptr) {
-            activeStages |= StageBit(stage);
+        // Compute the set of active stages.
+        wgpu::ShaderStage activeStages = wgpu::ShaderStage::None;
+        for (SingleShaderStage stage : IterateStages(kAllStages)) {
+            if (stages[stage].module != nullptr) {
+                activeStages |= StageBit(stage);
+            }
         }
-    }
 
-    // Create an OpenGL shader for each stage and gather the list of combined samplers.
-    std::set<CombinedSampler> combinedSamplers;
-    mNeedsSSBOLengthUniformBuffer = false;
-    std::vector<GLuint> glShaders;
-    EmulatedTextureBuiltinRegistrar emulatedTextureBuiltins(layout);
-    for (SingleShaderStage stage : IterateStages(activeStages)) {
-        ShaderModule* module = ToBackend(stages[stage].module.Get());
-        bool needsSSBOLengthUniformBuffer = false;
-        std::vector<CombinedSampler> stageCombinedSamplers;
-        GLuint shader;
-        DAWN_TRY_ASSIGN(
-            shader,
-            module->CompileShader(gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex,
-                                  usesFragDepth, bgraSwizzleAttributes, &stageCombinedSamplers,
-                                  layout, &emulatedTextureBuiltins, &needsSSBOLengthUniformBuffer));
+        // Create an OpenGL shader for each stage and gather the list of combined samplers.
+        std::set<CombinedSampler> combinedSamplers;
+        sharedData->mNeedsSSBOLengthUniformBuffer = false;
+        std::vector<GLuint> glShaders;
+        EmulatedTextureBuiltinRegistrar emulatedTextureBuiltins(layout);
+        for (SingleShaderStage stage : IterateStages(activeStages)) {
+            ShaderModule* module = ToBackend(stages[stage].module.Get());
+            bool needsSSBOLengthUniformBuffer = false;
+            std::vector<CombinedSampler> stageCombinedSamplers;
+            GLuint shader;
+            DAWN_TRY_ASSIGN(
+                shader, module->CompileShader(
+                            gl, stages[stage], stage, usesVertexIndex, usesInstanceIndex,
+                            usesFragDepth, bgraSwizzleAttributes, &stageCombinedSamplers, layout,
+                            &emulatedTextureBuiltins, &needsSSBOLengthUniformBuffer));
 
-        mNeedsSSBOLengthUniformBuffer |= needsSSBOLengthUniformBuffer;
-        combinedSamplers.insert(stageCombinedSamplers.begin(), stageCombinedSamplers.end());
+            sharedData->mNeedsSSBOLengthUniformBuffer |= needsSSBOLengthUniformBuffer;
+            combinedSamplers.insert(stageCombinedSamplers.begin(), stageCombinedSamplers.end());
 
-        DAWN_GL_TRY(gl, AttachShader(mProgram, shader));
-        glShaders.push_back(shader);
-    }
-
-    mEmulatedTextureBuiltinInfo = emulatedTextureBuiltins.AcquireInfo();
-
-    // Link all the shaders together.
-    DAWN_GL_TRY(gl, LinkProgram(mProgram));
-
-    GLint linkStatus = GL_FALSE;
-    DAWN_GL_TRY(gl, GetProgramiv(mProgram, GL_LINK_STATUS, &linkStatus));
-    if (linkStatus == GL_FALSE) {
-        GLint infoLogLength = 0;
-        DAWN_GL_TRY(gl, GetProgramiv(mProgram, GL_INFO_LOG_LENGTH, &infoLogLength));
-
-        if (infoLogLength > 1) {
-            std::vector<char> buffer(infoLogLength);
-            DAWN_GL_TRY(gl, GetProgramInfoLog(mProgram, infoLogLength, nullptr, &buffer[0]));
-            return DAWN_VALIDATION_ERROR("Program link failed:\n%s", buffer.data());
+            DAWN_GL_TRY(gl, AttachShader(program, shader));
+            glShaders.push_back(shader);
         }
-    }
 
-    // Compute links between stages for combined samplers, then bind them to texture units
-    DAWN_GL_TRY(gl, UseProgram(mProgram));
-    const auto& indices = layout->GetBindingIndexInfo();
+        sharedData->mEmulatedTextureBuiltinInfo = emulatedTextureBuiltins.AcquireInfo();
 
-    mUnitsForSamplers.resize(layout->GetNumSamplers());
-    mUnitsForTextures.resize(layout->GetNumSampledTextures());
+        // Link all the shaders together.
+        DAWN_GL_TRY(gl, LinkProgram(program));
 
-    // Assign combined texture/samplers to GL texture units.
-    TextureUnit textureUnit{0};
-    for (const auto& combined : combinedSamplers) {
-        // All the texture/samplers of a binding_array are set in a single glUniform1iv, gather them
-        // all in this vector.
-        absl::InlinedVector<GLint, 1> uniformsToSet;
+        GLint linkStatus = GL_FALSE;
+        DAWN_GL_TRY(gl, GetProgramiv(program, GL_LINK_STATUS, &linkStatus));
+        if (linkStatus == GL_FALSE) {
+            GLint infoLogLength = 0;
+            DAWN_GL_TRY(gl, GetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength));
 
-        BindingIndex textureArrayStart = combined.textureLocation.index;
-        for (auto textureArrayElement : Range(combined.textureLocation.shaderArraySize)) {
-            FlatBindingIndex textureGLIndex =
-                indices[combined.textureLocation.group][textureArrayStart + textureArrayElement];
-            mUnitsForTextures[textureGLIndex].push_back(textureUnit);
+            if (infoLogLength > 1) {
+                std::vector<char> buffer(infoLogLength);
+                DAWN_GL_TRY(gl, GetProgramInfoLog(program, infoLogLength, nullptr, &buffer[0]));
+                return DAWN_VALIDATION_ERROR("Program link failed:\n%s", buffer.data());
+            }
+        }
 
-            // Record that the placeholder sampler must be set for this texture unit if no sampler
-            // is used in the shader.
-            if (!combined.samplerLocation) {
-                mPlaceholderSamplerUnits.push_back(textureUnit);
-            } else {
-                // Record that the sampler used in the shader must be set for this texture unit.
-                BindingIndex samplerBindingIndex = combined.samplerLocation->index;
-                FlatBindingIndex samplerGLIndex =
-                    indices[combined.samplerLocation->group][samplerBindingIndex];
-                mUnitsForSamplers[samplerGLIndex].push_back(textureUnit);
+        // Compute links between stages for combined samplers, then bind them to texture units
+        DAWN_GL_TRY(gl, UseProgram(program));
+        const auto& indices = layout->GetBindingIndexInfo();
+
+        sharedData->mUnitsForSamplers.resize(layout->GetNumSamplers());
+        sharedData->mUnitsForTextures.resize(layout->GetNumSampledTextures());
+
+        // Assign combined texture/samplers to GL texture units.
+        TextureUnit textureUnit{0};
+        for (const auto& combined : combinedSamplers) {
+            // All the texture/samplers of a binding_array are set in a single glUniform1iv, gather
+            // them all in this vector.
+            absl::InlinedVector<GLint, 1> uniformsToSet;
+
+            BindingIndex textureArrayStart = combined.textureLocation.index;
+            for (auto textureArrayElement : Range(combined.textureLocation.shaderArraySize)) {
+                FlatBindingIndex textureGLIndex = indices[combined.textureLocation.group]
+                                                         [textureArrayStart + textureArrayElement];
+                sharedData->mUnitsForTextures[textureGLIndex].push_back(textureUnit);
+
+                // Record that the placeholder sampler must be set for this texture unit if no
+                // sampler is used in the shader.
+                if (!combined.samplerLocation) {
+                    sharedData->mPlaceholderSamplerUnits.push_back(textureUnit);
+                } else {
+                    // Record that the sampler used in the shader must be set for this texture unit.
+                    BindingIndex samplerBindingIndex = combined.samplerLocation->index;
+                    FlatBindingIndex samplerGLIndex =
+                        indices[combined.samplerLocation->group][samplerBindingIndex];
+                    sharedData->mUnitsForSamplers[samplerGLIndex].push_back(textureUnit);
+                }
+
+                uniformsToSet.push_back(GLint(textureUnit));
+                textureUnit++;
             }
 
-            uniformsToSet.push_back(GLint(textureUnit));
-            textureUnit++;
+            std::string name = combined.GetName();
+            GLint location = DAWN_GL_TRY(gl, GetUniformLocation(program, name.c_str()));
+            // Non-arrayed GLSL variables cannot be set with glUniform1iv
+            if (uniformsToSet.size() == 1) {
+                DAWN_GL_TRY(gl, Uniform1i(location, uniformsToSet[0]));
+            } else {
+                DAWN_GL_TRY(gl, Uniform1iv(location, uniformsToSet.size(), uniformsToSet.data()));
+            }
         }
 
-        std::string name = combined.GetName();
-        GLint location = DAWN_GL_TRY(gl, GetUniformLocation(mProgram, name.c_str()));
-        // Non-arrayed GLSL variables cannot be set with glUniform1iv
-        if (uniformsToSet.size() == 1) {
-            DAWN_GL_TRY(gl, Uniform1i(location, uniformsToSet[0]));
-        } else {
-            DAWN_GL_TRY(gl, Uniform1iv(location, uniformsToSet.size(), uniformsToSet.data()));
+        if (!sharedData->mPlaceholderSamplerUnits.empty()) {
+            Ref<SamplerBase> sampler;
+            DAWN_TRY_ASSIGN(sampler, layout->GetDevice()->CreateSampler());
+            sharedData->mPlaceholderSampler = ToBackend(std::move(sampler));
         }
-    }
 
-    if (!mPlaceholderSamplerUnits.empty()) {
-        Ref<SamplerBase> sampler;
-        DAWN_TRY_ASSIGN(sampler, layout->GetDevice()->CreateSampler());
-        mPlaceholderSampler = ToBackend(std::move(sampler));
-    }
+        for (GLuint glShader : glShaders) {
+            DAWN_GL_TRY(gl, DetachShader(program, glShader));
+            DAWN_GL_TRY(gl, DeleteShader(glShader));
+        }
 
-    for (GLuint glShader : glShaders) {
-        DAWN_GL_TRY(gl, DetachShader(mProgram, glShader));
-        DAWN_GL_TRY(gl, DeleteShader(glShader));
-    }
+        sharedData->mHandle->Set(program);
 
-    return {};
+        return {};
+    });
 }
 
-void PipelineGL::DeleteProgram(const OpenGLFunctions& gl) {
-    DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteProgram(mProgram));
+void PipelineGL::DeleteProgram(Device* device) {
+    Ref<FutureHandle> handle = mSharedData->mHandle;
+
+    IgnoreErrors(device->AddGLWork([handle](const auto& gl) -> MaybeError {
+        DAWN_GL_TRY_IGNORE_ERRORS(gl, DeleteProgram(handle->GetOrDefault()));
+        return {};
+    }));
 }
 
 const std::vector<TextureUnit>& PipelineGL::GetTextureUnitsForSampler(
     FlatBindingIndex index) const {
-    DAWN_ASSERT(index < mUnitsForSamplers.size());
-    return mUnitsForSamplers[index];
+    DAWN_ASSERT(index < mSharedData->mUnitsForSamplers.size());
+    return mSharedData->mUnitsForSamplers[index];
 }
 
 const std::vector<TextureUnit>& PipelineGL::GetTextureUnitsForTextureView(
     FlatBindingIndex index) const {
-    DAWN_ASSERT(index < mUnitsForTextures.size());
-    return mUnitsForTextures[index];
+    DAWN_ASSERT(index < mSharedData->mUnitsForTextures.size());
+    return mSharedData->mUnitsForTextures[index];
 }
 
-GLuint PipelineGL::GetProgramHandle() const {
-    return mProgram;
+const FutureHandle& PipelineGL::GetProgramHandle() const {
+    return *mSharedData->mHandle.Get();
 }
 
 MaybeError PipelineGL::ApplyNow(const OpenGLFunctions& gl, const PipelineLayout* layout) {
-    DAWN_GL_TRY(gl, UseProgram(mProgram));
-    for (TextureUnit unit : mPlaceholderSamplerUnits) {
-        DAWN_ASSERT(mPlaceholderSampler.Get() != nullptr);
-        DAWN_GL_TRY(gl, BindSampler(GLuint(unit), mPlaceholderSampler->GetHandle()));
+    DAWN_GL_TRY(gl, UseProgram(GetProgramHandle()));
+    for (TextureUnit unit : mSharedData->mPlaceholderSamplerUnits) {
+        DAWN_ASSERT(mSharedData->mPlaceholderSampler.Get() != nullptr);
+        DAWN_GL_TRY(gl, BindSampler(GLuint(unit), mSharedData->mPlaceholderSampler->GetHandle()));
     }
 
     return {};
 }
 
 const EmulatedTextureBuiltinInfo& PipelineGL::GetEmulatedTextureBuiltinInfo() const {
-    return mEmulatedTextureBuiltinInfo;
+    return mSharedData->mEmulatedTextureBuiltinInfo;
 }
 
 bool PipelineGL::NeedsTextureBuiltinUniformBuffer() const {
-    return !mEmulatedTextureBuiltinInfo.empty();
+    return !mSharedData->mEmulatedTextureBuiltinInfo.empty();
 }
 
 bool PipelineGL::NeedsSSBOLengthUniformBuffer() const {
-    return mNeedsSSBOLengthUniformBuffer;
+    return mSharedData->mNeedsSSBOLengthUniformBuffer;
 }
 
 // EmulatedTextureBuiltinRegistrar

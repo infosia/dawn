@@ -34,6 +34,7 @@
 #include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/DisplayEGL.h"
 #include "dawn/native/opengl/PhysicalDeviceGL.h"
+#include "dawn/native/opengl/QueueGL.h"
 #include "dawn/native/opengl/TextureGL.h"
 #include "dawn/native/opengl/UtilsEGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
@@ -56,51 +57,54 @@ SwapChainEGL::SwapChainEGL(DeviceBase* dev, Surface* sur, const SurfaceConfigura
 SwapChainEGL::~SwapChainEGL() = default;
 
 MaybeError SwapChainEGL::Initialize(SwapChainBase* previousSwapChain) {
-    const Device* device = ToBackend(GetDevice());
+    Device* device = ToBackend(GetDevice());
 
-    if (previousSwapChain != nullptr) {
-        // TODO(crbug.com/dawn/269): figure out what should happen when surfaces are used by
-        // multiple backends one after the other. It probably needs to block until the backend
-        // and GPU are completely finished with the previous swapchain.
-        DAWN_INVALID_IF(previousSwapChain->GetBackendType() != GetBackendType(),
-                        "OpenGL SwapChain cannot switch backend types from %s to %s.",
-                        previousSwapChain->GetBackendType(), GetBackendType());
+    return device->FlushPendingAndExecuteGLWork([&](const auto& gl) -> MaybeError {
+        if (previousSwapChain != nullptr) {
+            // TODO(crbug.com/dawn/269): figure out what should happen when surfaces are used by
+            // multiple backends one after the other. It probably needs to block until the backend
+            // and GPU are completely finished with the previous swapchain.
+            DAWN_INVALID_IF(previousSwapChain->GetBackendType() != GetBackendType(),
+                            "OpenGL SwapChain cannot switch backend types from %s to %s.",
+                            previousSwapChain->GetBackendType(), GetBackendType());
 
-        // TODO(crbug.com/dawn/269): figure out what should happen when surfaces are used by
-        // a different EGL display. We probably need to block until the GPU is completely
-        // finished with the previous work, and then a bit more.
-        DAWN_INVALID_IF(
-            previousSwapChain->GetDevice()->GetPhysicalDevice() != device->GetPhysicalDevice(),
-            "OpenGL SwapChain cannot switch between contexts for %s and %s.",
-            previousSwapChain->GetDevice(), device);
+            // TODO(crbug.com/dawn/269): figure out what should happen when surfaces are used by
+            // a different EGL display. We probably need to block until the GPU is completely
+            // finished with the previous work, and then a bit more.
+            DAWN_INVALID_IF(
+                previousSwapChain->GetDevice()->GetPhysicalDevice() != device->GetPhysicalDevice(),
+                "OpenGL SwapChain cannot switch between contexts for %s and %s.",
+                previousSwapChain->GetDevice(), device);
 
-        // The EGLSurface created depends on the format; only reuse it if we have the same one.
-        if (previousSwapChain->GetFormat() == GetFormat()) {
-            SwapChainEGL* previousEGLSwapChain =
-                reinterpret_cast<SwapChainEGL*>(ToBackend(previousSwapChain));
-            std::swap(previousEGLSwapChain->mEGLSurface, mEGLSurface);
+            // The EGLSurface created depends on the format; only reuse it if we have the same one.
+            if (previousSwapChain->GetFormat() == GetFormat()) {
+                SwapChainEGL* previousEGLSwapChain =
+                    reinterpret_cast<SwapChainEGL*>(ToBackend(previousSwapChain));
+                std::swap(previousEGLSwapChain->mEGLSurface, mEGLSurface);
+            }
+
+            previousSwapChain->DetachFromSurface();
         }
 
-        previousSwapChain->DetachFromSurface();
-    }
+        const DisplayEGL* display = ToBackend(device->GetPhysicalDevice())->GetDisplay();
 
-    const DisplayEGL* display = ToBackend(device->GetPhysicalDevice())->GetDisplay();
+        // Create the EGLSurface if needed.
+        if (mEGLSurface == EGL_NO_SURFACE) {
+            DAWN_TRY(CreateEGLSurface(display));
+        }
 
-    // Create the EGLSurface if needed.
-    if (mEGLSurface == EGL_NO_SURFACE) {
-        DAWN_TRY(CreateEGLSurface(display));
-    }
+        EGLint swapInterval = GetPresentMode() == wgpu::PresentMode::Immediate ? 0 : 1;
+        display->egl.SwapInterval(display->GetDisplay(), swapInterval);
 
-    EGLint swapInterval = GetPresentMode() == wgpu::PresentMode::Immediate ? 0 : 1;
-    display->egl.SwapInterval(display->GetDisplay(), swapInterval);
-
-    return {};
+        return {};
+    });
 }
 
 MaybeError SwapChainEGL::PresentImpl() {
     Device* device = ToBackend(GetDevice());
     EGLDisplay display = device->GetEGLDisplay();
-    const EGLFunctions& egl = device->GetEGL(false);
+
+    const EGLFunctions& egl = device->GetEGL();
 
     // Do the reverse-Y blit from the fake surface texture to the default framebuffer.
     {
@@ -112,23 +116,28 @@ MaybeError SwapChainEGL::PresentImpl() {
         DAWN_TRY(CheckEGL(egl, egl.QuerySurface(display, mEGLSurface, EGL_HEIGHT, &surfaceHeight),
                           "getting surface height"));
 
-        const OpenGLFunctions& gl = device->GetGL();
+        auto result = device->FlushPendingAndExecuteGLWork([&](const auto& gl) -> MaybeError {
+            GLuint readFbo = 0;
+            DAWN_GL_TRY(gl, GenFramebuffers(1, &readFbo));
+            DAWN_GL_TRY(gl, BindFramebuffer(GL_READ_FRAMEBUFFER, readFbo));
+            DAWN_TRY(
+                mTextureView->BindToFramebuffer(gl, GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
 
-        GLuint readFbo = 0;
-        DAWN_GL_TRY(gl, GenFramebuffers(1, &readFbo));
-        DAWN_GL_TRY(gl, BindFramebuffer(GL_READ_FRAMEBUFFER, readFbo));
-        DAWN_TRY(mTextureView->BindToFramebuffer(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0));
+            DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
+            DAWN_GL_TRY(gl, Scissor(0, 0, surfaceWidth, surfaceHeight));
+            DAWN_GL_TRY(gl, BlitFramebuffer(0, 0, mTexture->GetWidth(Aspect::Color),
+                                            mTexture->GetHeight(Aspect::Color), 0, surfaceHeight,
+                                            surfaceWidth, 0, GL_COLOR_BUFFER_BIT, GL_LINEAR));
 
-        DAWN_GL_TRY(gl, BindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
-        DAWN_GL_TRY(gl, Scissor(0, 0, surfaceWidth, surfaceHeight));
-        DAWN_GL_TRY(gl, BlitFramebuffer(0, 0, mTexture->GetWidth(Aspect::Color),
-                                        mTexture->GetHeight(Aspect::Color), 0, surfaceHeight,
-                                        surfaceWidth, 0, GL_COLOR_BUFFER_BIT, GL_LINEAR));
+            DAWN_GL_TRY(gl, DeleteFramebuffers(1, &readFbo));
 
-        DAWN_GL_TRY(gl, DeleteFramebuffers(1, &readFbo));
+            egl.SwapBuffers(display, mEGLSurface);
+
+            return {};
+        });
+
+        DAWN_TRY(std::move(result));
     }
-
-    egl.SwapBuffers(display, mEGLSurface);
 
     mTexture->APIDestroy();
     mTexture = nullptr;
@@ -157,7 +166,7 @@ ResultOrError<SwapChainTextureInfo> SwapChainEGL::GetCurrentTextureImpl() {
 void SwapChainEGL::DetachFromSurfaceImpl() {
     if (mEGLSurface != EGL_NO_SURFACE) {
         Device* device = ToBackend(GetDevice());
-        device->GetEGL(false).DestroySurface(device->GetEGLDisplay(), mEGLSurface);
+        device->GetEGL().DestroySurface(device->GetEGLDisplay(), mEGLSurface);
         mEGLSurface = EGL_NO_SURFACE;
     }
 
