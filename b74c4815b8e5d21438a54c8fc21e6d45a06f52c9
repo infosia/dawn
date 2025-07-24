@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf74b2ad_d3d9d58a",
+        "filename": "src/dawn/tests/end2end/PrimitiveIdTests.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T19:13:40Z",
+      "side": 1,
+      "message": "I think this comment is out of date.",
+      "revId": "b74c4815b8e5d21438a54c8fc21e6d45a06f52c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
