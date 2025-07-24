@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8f0cfedc_23aece26",
+        "filename": "src/tint/cmd/tint/main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T15:59:08Z",
+      "side": 1,
+      "message": "eww.....",
+      "revId": "b9d35516c5ff3da7a3e807954295a504cbeb6ff6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "815a4541_bed55c3c",
         "filename": "src/tint/lang/msl/validate/validate_metal.mm",
         "patchSetId": 5
@@ -14,6 +31,58 @@
       "writtenOn": "2025-07-24T15:52:20Z",
       "side": 1,
       "message": "Ugh, even if these macro guards work the E2E tests will still fail on the bots since they don\u0027t have a new enough macOS, so we hit the error below.\n\nThat means we can\u0027t actually enable the tests on the bots any time soon...",
+      "revId": "b9d35516c5ff3da7a3e807954295a504cbeb6ff6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abc6c60c_e11757b0",
+        "filename": "src/tint/lang/msl/validate/validate_metal.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T15:59:08Z",
+      "side": 1,
+      "message": "Add a comment and file a bug?",
+      "parentUuid": "815a4541_bed55c3c",
+      "revId": "b9d35516c5ff3da7a3e807954295a504cbeb6ff6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "951cf89d_7d5b2cb3",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T15:59:08Z",
+      "side": 1,
+      "message": "I guess we can\u0027t attach `log` as a member function because then we\u0027d need to create some kind of `os_log_default` object, bummer.",
+      "revId": "b9d35516c5ff3da7a3e807954295a504cbeb6ff6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f02ac59_9909175a",
+        "filename": "src/tint/lang/msl/writer/printer/printer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T15:59:08Z",
+      "side": 1,
+      "message": "What happens if the string has an embedded \"?",
       "revId": "b9d35516c5ff3da7a3e807954295a504cbeb6ff6",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
