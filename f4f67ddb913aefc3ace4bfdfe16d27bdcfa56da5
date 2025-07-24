@@ -16,6 +16,40 @@
       "message": "PTAL. The biggest question marks I have about this change is whether or not we can expand the supported devices on Mac and if compat support is practical. I think those can be follow-ups if needed, though.",
       "revId": "f4f67ddb913aefc3ace4bfdfe16d27bdcfa56da5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "401f5fdf_c1263528",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T17:11:59Z",
+      "side": 1,
+      "message": "Should this point to the md file for now? Or is the assumption that we\u0027ll have something up for the spec fast enough?",
+      "revId": "f4f67ddb913aefc3ace4bfdfe16d27bdcfa56da5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3f5765e_59038ff8",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-24T17:11:59Z",
+      "side": 1,
+      "message": "Currently the Tint side only enables the SPIR-V Geometry extension, if we want to expose this as either geometry or tesselation, then we may need to do some work on the tint side (like, if we have to enable a different extension)",
+      "revId": "f4f67ddb913aefc3ace4bfdfe16d27bdcfa56da5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
