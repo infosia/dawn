@@ -16,6 +16,23 @@
       "message": "Done, PTAL",
       "revId": "ef58e7a1eb694fb9f989c7f9d5407aa6e3efe958",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "726ec6a4_d2cc0e29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000280
+      },
+      "writtenOn": "2025-07-24T13:40:54Z",
+      "side": 1,
+      "message": "Mark the \"unsolved\" one (indeed resolved) as resolved",
+      "revId": "ef58e7a1eb694fb9f989c7f9d5407aa6e3efe958",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
