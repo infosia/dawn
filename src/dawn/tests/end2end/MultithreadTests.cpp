@@ -88,7 +88,7 @@ class MultithreadTests : public DawnTest {
         DAWN_TEST_UNSUPPORTED_IF(UsesWire());
 
         // TODO(crbug.com/dawn/1679): OpenGL backend doesn't support thread safe API yet.
-        DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
+        // DAWN_TEST_UNSUPPORTED_IF(IsOpenGL() || IsOpenGLES());
     }
 
     wgpu::Buffer CreateBuffer(uint32_t size, wgpu::BufferUsage usage) {
