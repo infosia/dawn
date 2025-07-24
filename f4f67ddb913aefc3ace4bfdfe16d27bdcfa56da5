@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb0e386c_e648603f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-24T16:03:38Z",
+      "side": 1,
+      "message": "PTAL. The biggest question marks I have about this change is whether or not we can expand the supported devices on Mac and if compat support is practical. I think those can be follow-ups if needed, though.",
+      "revId": "f4f67ddb913aefc3ace4bfdfe16d27bdcfa56da5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
