@@ -966,6 +966,11 @@ bool GenerateMsl([[maybe_unused]] const Options& options,
     auto msl_version = tint::msl::validate::MslVersion::kMsl_2_3;
 
     if (options.validate && options.skip_hash.count(hash) == 0) {
+        // Metal os_log functionality requires MSL 3.2.
+        if (result->msl.find("os_log_default.log") != std::string::npos) {
+            msl_version = tint::msl::validate::MslVersion::kMsl_3_2;
+        }
+
         tint::msl::validate::Result res;
 #if TINT_BUILD_IS_MAC
         res = tint::msl::validate::ValidateUsingMetal(result->msl, msl_version);
