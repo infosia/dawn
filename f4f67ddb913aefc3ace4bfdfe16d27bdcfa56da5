@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "34dea361_a5eca331",
+        "filename": "src/dawn/native/Features.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-24T19:01:48Z",
+      "side": 1,
+      "message": "No, we\u0027re definitely not gonna have the spec changes in place. Changed this to the .md, thanks!",
+      "parentUuid": "401f5fdf_c1263528",
+      "revId": "f4f67ddb913aefc3ace4bfdfe16d27bdcfa56da5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c3f5765e_59038ff8",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-07-24T17:11:59Z",
       "side": 1,
       "message": "Currently the Tint side only enables the SPIR-V Geometry extension, if we want to expose this as either geometry or tesselation, then we may need to do some work on the tint side (like, if we have to enable a different extension)",
+      "revId": "f4f67ddb913aefc3ace4bfdfe16d27bdcfa56da5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5b6615c_d6d31b73",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-24T19:01:48Z",
+      "side": 1,
+      "message": "I think for a first pass it\u0027s fine to reduce this to just geometry. Added a TODO to suggest that we could expand it in the future.",
+      "parentUuid": "c3f5765e_59038ff8",
       "revId": "f4f67ddb913aefc3ace4bfdfe16d27bdcfa56da5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
