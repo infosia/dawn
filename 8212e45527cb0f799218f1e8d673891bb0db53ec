@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45a18b0b_2ef44c9a",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-24T16:59:53Z",
+      "side": 1,
+      "message": "The spec doesn\u0027t guarantee host cached + host visible memory exists so I added a check that is available.",
+      "revId": "8212e45527cb0f799218f1e8d673891bb0db53ec",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}

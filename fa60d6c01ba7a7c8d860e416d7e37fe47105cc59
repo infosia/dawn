@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c117c43b_e0ea2d70",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-24T16:59:53Z",
+      "side": 1,
+      "message": "FWIW I\u0027d like to pull this logic out of RMA and into it\u0027s own class in order to write unit tests against it. The logic here + GetRequiredMemorPropertyFlags() keeps getting more complicated and could use some tests.",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
