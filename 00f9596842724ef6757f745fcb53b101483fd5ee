@@ -182,6 +182,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7e638a5_716c266a",
+        "filename": "src/dawn/native/d3d12/QueueD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-24T13:19:40Z",
+      "side": 1,
+      "message": "Ah sorry I thought this was a MaybeError, my bad.",
+      "parentUuid": "b19509ca_685d116d",
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ed30aaef_ceac4ee1",
@@ -213,6 +231,24 @@
       "side": 1,
       "message": "CheckPassedSerials also checks and recycles the fences list.",
       "parentUuid": "ed30aaef_ceac4ee1",
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32f4def2_92764f42",
+        "filename": "src/dawn/native/d3d12/QueueD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-24T13:19:40Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "1f16dd0f_69b64b03",
       "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
