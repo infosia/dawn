@@ -152,7 +152,23 @@ Result<RaiseResult> Raise(core::ir::Module& module, const Options& options) {
     RUN_TRANSFORM(raise::SimdBallot, module);
     // ArgumentBuffers must come before ModuleScopeVars
     if (options.use_argument_buffers) {
-        RUN_TRANSFORM(raise::ArgumentBuffers, module);
+        raise::ArgumentBuffersConfig cfg{};
+
+        cfg.skip_bindings.insert(BindingPoint{0u, array_length_from_uniform_options.ubo_binding});
+
+        if (options.vertex_pulling_config) {
+            auto group = options.vertex_pulling_config->pulling_group;
+            for (uint32_t i = 0; i < options.vertex_pulling_config->vertex_state.size(); ++i) {
+                BindingPoint bp{group, i};
+                auto iter = remapper_data.find(bp);
+                if (iter != remapper_data.end()) {
+                    bp = iter->second;
+                }
+                cfg.skip_bindings.insert(bp);
+            }
+        }
+
+        RUN_TRANSFORM(raise::ArgumentBuffers, module, cfg);
     }
 
     // ChangeImmediateToUniform must come before ModuleScopeVars

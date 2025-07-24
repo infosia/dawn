@@ -425,11 +425,13 @@ ResultOrError<CacheResult<MslCompilation>> TranslateToMSL(
         },
         "Metal.CompileShaderToMSL");
 
-    if (device->IsToggleEnabled(Toggle::DumpShaders)) {
-        std::ostringstream dumpedMsg;
-        dumpedMsg << "/* Dumped generated MSL */\n" << mslCompilation->msl;
-        device->EmitLog(wgpu::LoggingType::Info, dumpedMsg.str().c_str());
-    }
+    printf("COMPILE\n");
+    //    if (device->IsToggleEnabled(Toggle::DumpShaders)) {
+    std::ostringstream dumpedMsg;
+    dumpedMsg << "/* Dumped generated MSL */\n" << mslCompilation->msl;
+    printf("%s\n", dumpedMsg.str().c_str());
+    device->EmitLog(wgpu::LoggingType::Info, dumpedMsg.str().c_str());
+    //    }
 
     return mslCompilation;
 }

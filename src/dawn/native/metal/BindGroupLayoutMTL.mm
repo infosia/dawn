@@ -52,7 +52,7 @@ BindGroupLayout::BindGroupLayout(DeviceBase* device, const BindGroupLayoutDescri
         desc.index = static_cast<uint32_t>(bindingInfo.binding);
         // TODO(dsinclair): Fix the type and access
         desc.dataType = MTLDataTypePointer;
-        desc.access = MTLArgumentAccessReadOnly;
+        desc.access = MTLBindingAccessReadOnly;
 
         if (bindingInfo.visibility & wgpu::ShaderStage::Vertex) {
             mVertexArgumentDescriptors.push_back(desc);
