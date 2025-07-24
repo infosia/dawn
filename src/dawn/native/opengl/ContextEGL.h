@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_OPENGL_CONTEXTEGL_H_
 
 #include <memory>
+#include <mutex>
 #include <utility>
 
 #include "dawn/common/NonMovable.h"
@@ -69,9 +70,23 @@ class ContextEGL : NonMovable {
     };
     [[nodiscard]] ScopedMakeSurfaceCurrent MakeSurfaceCurrentScope(EGLSurface surface);
 
-    void MakeCurrent();
+    class ScopedMakeCurrent : NonMovable {
+      public:
+        ScopedMakeCurrent(ContextEGL* context);
+        ~ScopedMakeCurrent();
+
+      private:
+        raw_ptr<ContextEGL> mContext;
+        EGLContext mPrevContext = EGL_NO_CONTEXT;
+        EGLSurface mPrevDrawSurface = EGL_NO_SURFACE;
+        EGLSurface mPrevReadSurface = EGL_NO_SURFACE;
+    };
 
   private:
+    void MakeCurrent(EGLContext context, EGLSurface drawSurface, EGLSurface readSurface);
+
+    std::recursive_mutex mMutex;
+
     Ref<DisplayEGL> mDisplay;
     EGLContext mContext = EGL_NO_CONTEXT;
     EGLSurface mCurrentSurface = EGL_NO_SURFACE;

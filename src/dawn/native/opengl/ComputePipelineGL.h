@@ -49,7 +49,7 @@ class ComputePipeline final : public ComputePipelineBase, public PipelineGL {
     MaybeError InitializeImpl() override;
 
   private:
-    using ComputePipelineBase::ComputePipelineBase;
+    ComputePipeline(Device* device, const UnpackedPtr<ComputePipelineDescriptor>& descriptor);
     ~ComputePipeline() override;
     void DestroyImpl() override;
 };
