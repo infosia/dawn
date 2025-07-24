@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5cc21382_b33e9d94",
+        "filename": "src/dawn/native/d3d12/CommandBufferD3D12.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-24T13:18:32Z",
+      "side": 1,
+      "message": "Yeah the final solution Quyen suggested is good. Thanks for the update.",
+      "parentUuid": "ba7e7b7f_ad5275cf",
+      "revId": "9a198b9dfa49a47144da1dcd9b30c47f5ad78a67",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "03e870e4_d2506c24",
