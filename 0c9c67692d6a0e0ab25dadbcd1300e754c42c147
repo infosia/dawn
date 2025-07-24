@@ -16,6 +16,29 @@
       "message": "Updated, PTAL",
       "revId": "0c9c67692d6a0e0ab25dadbcd1300e754c42c147",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4693d76f_32150e32",
+        "filename": "src/dawn/native/d3d12/RenderPassBuilderD3D12.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003501
+      },
+      "writtenOn": "2025-07-24T09:13:28Z",
+      "side": 1,
+      "message": "On tile based GPUs, this means the color texture\u0027s pixels would be loaded into the tile cache, which could be expensive.\n\nNote that this access is for the color texture, not for the resolve texture.\nIdeally we want to use D3D12_RENDER_PASS_BEGINNING_ACCESS_TYPE_DISCARD since the color texture\u0027s pixels should be irrelevant if we load the content of the resolve texture into it. However, if we only load the resolve texture partially then we have to preserve the other pixels of the color texture.\n\nI\u0027m not sure what is the best way to handle this. Maybe just include a TODO here \"TODO(402810062): consider not loading the MSAA texture on tile based GPUs.\"\n\nHopefully they/Qualcomm add memoryless feature to D3D12 so we don\u0027t have to use this partial load/resolve to save memory in future.",
+      "range": {
+        "startLine": 47,
+        "startChar": 19,
+        "endLine": 47,
+        "endChar": 67
+      },
+      "revId": "0c9c67692d6a0e0ab25dadbcd1300e754c42c147",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
