@@ -47,6 +47,38 @@ BindGroup::BindGroup(Device* device, const BindGroupDescriptor* descriptor)
 BindGroup::~BindGroup() = default;
 
 MaybeError BindGroup::InitializeImpl() {
+    auto* device = ToBackend(GetDevice());
+
+    if (!device->IsToggleEnabled(Toggle::MetalUseArgumentBuffers)) {
+        return {};
+    }
+
+    auto layout = ToBackend(GetLayout());
+
+    {
+        auto& descriptors = layout->GetVertexArgumentDescriptors();
+        if (!descriptors.empty()) {
+            NSArray* ary = [NSArray arrayWithObjects:descriptors.data() count:descriptors.size()];
+            mVertexArgumentEncoder = [device->GetMTLDevice() newArgumentEncoderWithArguments:ary];
+        }
+    }
+
+    {
+        auto& descriptors = layout->GetFragmentArgumentDescriptors();
+        if (!descriptors.empty()) {
+            NSArray* ary = [NSArray arrayWithObjects:descriptors.data() count:descriptors.size()];
+            mFragmentArgumentEncoder = [device->GetMTLDevice() newArgumentEncoderWithArguments:ary];
+        }
+    }
+
+    {
+        auto& descriptors = layout->GetComputeArgumentDescriptors();
+        if (!descriptors.empty()) {
+            NSArray* ary = [NSArray arrayWithObjects:descriptors.data() count:descriptors.size()];
+            mComputeArgumentEncoder = [device->GetMTLDevice() newArgumentEncoderWithArguments:ary];
+        }
+    }
+
     return {};
 }
 
