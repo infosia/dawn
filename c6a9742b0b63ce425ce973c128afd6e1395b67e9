@@ -50,6 +50,24 @@
       "message": "Can we do the refactor of Format.cpp already? This is impossible to usefully review. (or schedule it very soon?)",
       "revId": "c6a9742b0b63ce425ce973c128afd6e1395b67e9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "add582a3_fae42bac",
+        "filename": "src/dawn/native/Format.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-24T09:40:14Z",
+      "side": 1,
+      "message": "Discussed at the meeting today, it will be after tier2.",
+      "parentUuid": "569cc47d_f2747f31",
+      "revId": "c6a9742b0b63ce425ce973c128afd6e1395b67e9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
