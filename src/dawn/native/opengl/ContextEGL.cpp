@@ -32,6 +32,7 @@
 #include <utility>
 #include <vector>
 
+#include "dawn/common/Log.h"
 #include "dawn/native/opengl/DisplayEGL.h"
 #include "dawn/native/opengl/UtilsEGL.h"
 
@@ -81,6 +82,40 @@ MaybeError ContextEGL::Initialize(wgpu::BackendType backend,
                                   bool useANGLETextureSharing,
                                   bool forceES31AndMinExtensions) {
     const EGLFunctions& egl = mDisplay->egl;
+
+#if 1
+    // Reuse ANGLE context
+    auto currentContext = mDisplay->egl.GetCurrentContext();
+    auto currentDrawSurface = mDisplay->egl.GetCurrentSurface(EGL_DRAW);
+    auto currentReadSurface = mDisplay->egl.GetCurrentSurface(EGL_READ);
+
+    DAWN_ASSERT(currentDrawSurface == currentReadSurface);
+    if (currentContext) {
+        GLint majorVersion = 0;
+        GLint minorVersion = 0;
+
+        auto procGetIntegerv = mDisplay->egl.GetProcAddress("glGetIntegerv");
+        auto procGetError = mDisplay->egl.GetProcAddress("glGetError");
+        if (procGetIntegerv && procGetError) {
+            auto glGetIntegerv = reinterpret_cast<PFNGLGETINTEGERVPROC>(procGetIntegerv);
+            auto glGetError = reinterpret_cast<PFNGLGETERRORPROC>(procGetError);
+            glGetIntegerv(GL_MAJOR_VERSION, &majorVersion);
+            glGetIntegerv(GL_MINOR_VERSION, &minorVersion);
+            if (glGetError() != GL_NO_ERROR) {
+                // GLES 2.0 context might not support querying GL_MAJOR_VERSION/GL_MINOR_VERSION
+                majorVersion = minorVersion = 0;
+            }
+        }
+
+        if (majorVersion >= 3 && minorVersion >= 1) {
+            mContext = currentContext;
+            mCurrentSurface = mOffscreenSurface = currentDrawSurface;
+            InfoLog() << "reuse existing EGL context";
+            return {};
+        }
+    }
+#endif
+    
 
     // Unless EGL_KHR_no_config is present, we need to choose an EGLConfig on context creation that
     // will lock the EGLContext to be use with a single kind of color buffer. In that case the
@@ -212,9 +247,9 @@ void ContextEGL::RequestRequiredExtensionsExplicitly() {
     glRequestExtension("GL_EXT_color_buffer_half_float");
 }
 
-void ContextEGL::MakeCurrent() {
-    EGLBoolean success = mDisplay->egl.MakeCurrent(mDisplay->GetDisplay(), mCurrentSurface,
-                                                   mCurrentSurface, mContext);
+void ContextEGL::MakeCurrent(EGLContext context, EGLSurface drawSurface, EGLSurface readSurface) {
+    EGLBoolean success =
+        mDisplay->egl.MakeCurrent(mDisplay->GetDisplay(), drawSurface, readSurface, context);
     IgnoreErrors(
         CheckEGL(mDisplay->egl, static_cast<EGLBoolean>(success == EGL_TRUE), "eglMakeCurrent"));
 }
@@ -234,6 +269,30 @@ ContextEGL::ScopedMakeSurfaceCurrent::ScopedMakeSurfaceCurrent(ContextEGL* conte
 
 ContextEGL::ScopedMakeSurfaceCurrent::~ScopedMakeSurfaceCurrent() {
     mContext->mCurrentSurface = mContext->mOffscreenSurface;
+}
+
+ContextEGL::ScopedMakeCurrent::ScopedMakeCurrent(ContextEGL* context) : mContext(context) {
+    mContext->mMutex.lock();
+
+    mPrevContext = mContext->mDisplay->egl.GetCurrentContext();
+    mPrevDrawSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_DRAW);
+    mPrevReadSurface = mContext->mDisplay->egl.GetCurrentSurface(EGL_READ);
+
+    if (mPrevContext == mContext->mContext && mPrevDrawSurface == mContext->mCurrentSurface &&
+        mPrevReadSurface == mContext->mCurrentSurface) {
+        return;
+    }
+
+    mContext->MakeCurrent(mContext->mContext, mContext->mCurrentSurface, mContext->mCurrentSurface);
+}
+
+ContextEGL::ScopedMakeCurrent::~ScopedMakeCurrent() {
+    if (mPrevContext != mContext->mContext || mPrevDrawSurface != mContext->mCurrentSurface ||
+        mPrevReadSurface != mContext->mCurrentSurface) {
+        mContext->MakeCurrent(mPrevContext, mPrevDrawSurface, mPrevReadSurface);
+    }
+
+    mContext->mMutex.unlock();
 }
 
 }  // namespace dawn::native::opengl

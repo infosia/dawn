@@ -34,6 +34,7 @@
 #include "dawn/native/opengl/DeviceGL.h"
 #include "dawn/native/opengl/DisplayEGL.h"
 #include "dawn/native/opengl/PhysicalDeviceGL.h"
+#include "dawn/native/opengl/QueueGL.h"
 #include "dawn/native/opengl/TextureGL.h"
 #include "dawn/native/opengl/UtilsEGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
@@ -57,6 +58,8 @@ SwapChainEGL::~SwapChainEGL() = default;
 
 MaybeError SwapChainEGL::Initialize(SwapChainBase* previousSwapChain) {
     const Device* device = ToBackend(GetDevice());
+
+    ContextEGL::ScopedMakeCurrent makeCurrent(device->GetContext());
 
     if (previousSwapChain != nullptr) {
         // TODO(crbug.com/dawn/269): figure out what should happen when surfaces are used by
@@ -99,8 +102,10 @@ MaybeError SwapChainEGL::Initialize(SwapChainBase* previousSwapChain) {
 
 MaybeError SwapChainEGL::PresentImpl() {
     Device* device = ToBackend(GetDevice());
+    Queue* queue = ToBackend(device->GetQueue());
     EGLDisplay display = device->GetEGLDisplay();
-    const EGLFunctions& egl = device->GetEGL(false);
+
+    const EGLFunctions& egl = device->GetEGL();
 
     // Do the reverse-Y blit from the fake surface texture to the default framebuffer.
     {
@@ -111,6 +116,10 @@ MaybeError SwapChainEGL::PresentImpl() {
                           "getting surface width"));
         DAWN_TRY(CheckEGL(egl, egl.QuerySurface(display, mEGLSurface, EGL_HEIGHT, &surfaceHeight),
                           "getting surface height"));
+
+        ContextEGL::ScopedMakeCurrent makeCurrent(device->GetContext());
+
+        DAWN_TRY(queue->FlushGLTasks());
 
         const OpenGLFunctions& gl = device->GetGL();
 
@@ -126,9 +135,9 @@ MaybeError SwapChainEGL::PresentImpl() {
                                         surfaceWidth, 0, GL_COLOR_BUFFER_BIT, GL_LINEAR));
 
         DAWN_GL_TRY(gl, DeleteFramebuffers(1, &readFbo));
-    }
 
-    egl.SwapBuffers(display, mEGLSurface);
+        egl.SwapBuffers(display, mEGLSurface);
+    }
 
     mTexture->APIDestroy();
     mTexture = nullptr;
@@ -157,7 +166,7 @@ ResultOrError<SwapChainTextureInfo> SwapChainEGL::GetCurrentTextureImpl() {
 void SwapChainEGL::DetachFromSurfaceImpl() {
     if (mEGLSurface != EGL_NO_SURFACE) {
         Device* device = ToBackend(GetDevice());
-        device->GetEGL(false).DestroySurface(device->GetEGLDisplay(), mEGLSurface);
+        device->GetEGL().DestroySurface(device->GetEGLDisplay(), mEGLSurface);
         mEGLSurface = EGL_NO_SURFACE;
     }
 
