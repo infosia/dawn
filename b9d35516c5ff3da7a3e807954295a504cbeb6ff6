@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "815a4541_bed55c3c",
+        "filename": "src/tint/lang/msl/validate/validate_metal.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-24T15:52:20Z",
+      "side": 1,
+      "message": "Ugh, even if these macro guards work the E2E tests will still fail on the bots since they don\u0027t have a new enough macOS, so we hit the error below.\n\nThat means we can\u0027t actually enable the tests on the bots any time soon...",
+      "revId": "b9d35516c5ff3da7a3e807954295a504cbeb6ff6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
