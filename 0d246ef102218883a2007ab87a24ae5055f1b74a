@@ -88,6 +88,24 @@
       "parentUuid": "71fabf28_a10d2e74",
       "revId": "0d246ef102218883a2007ab87a24ae5055f1b74a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1d383f7_38633c16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-24T09:33:12Z",
+      "side": 1,
+      "message": "Thanks! Now the CL will treat the collapsed cache item as cache miss, and in this case we will store the new result (which should be correct) back to cache.",
+      "parentUuid": "fce690a5_70cfc249",
+      "revId": "0d246ef102218883a2007ab87a24ae5055f1b74a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
