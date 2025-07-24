@@ -35,6 +35,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cbc51b4f_55695a42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-24T09:51:22Z",
+      "side": 1,
+      "message": "LGTM too",
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d940408_98a72e01",
@@ -126,6 +143,40 @@
         "endLine": 50,
         "endChar": 18
       },
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44c7385e_abbcc6cc",
+        "filename": "src/dawn/native/d3d12/QueueD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-24T09:51:22Z",
+      "side": 1,
+      "message": "Note that if this turned out to be an error, an ASSERT will trigger in Debug and an allocation will leak in Release.",
+      "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed30aaef_ceac4ee1",
+        "filename": "src/dawn/native/d3d12/QueueD3D12.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-24T09:51:22Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this call the non-impl version that will update the serial so the call to `CheckPassedSerials` below can be removed?",
       "revId": "00f9596842724ef6757f745fcb53b101483fd5ee",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
