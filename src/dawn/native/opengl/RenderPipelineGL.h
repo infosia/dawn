@@ -28,6 +28,7 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_RENDERPIPELINEGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_RENDERPIPELINEGL_H_
 
+#include <future>
 #include <vector>
 
 #include "dawn/native/RenderPipeline.h"
@@ -59,12 +60,12 @@ class RenderPipeline final : public RenderPipelineBase, public PipelineGL {
     void DestroyImpl() override;
 
     MaybeError CreateVAOForVertexState();
+    const FutureHandle& GetVAOHandle() const;
 
     MaybeError ApplyDepthStencilState(const OpenGLFunctions& gl,
                                       PersistentPipelineState* persistentPipelineState);
 
-    // TODO(yunchao.he@intel.com): vao need to be deduplicated between pipelines.
-    GLuint mVertexArrayObject;
+    FutureHandle mVAOHandle;
     GLenum mGlPrimitiveTopology;
 
     PerVertexBuffer<VertexAttributeMask> mAttributesUsingVertexBuffer;

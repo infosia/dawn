@@ -29,20 +29,29 @@
 #define SRC_DAWN_NATIVE_OPENGL_QUEUEGL_H_
 
 #include <deque>
+#include <functional>
 #include <utility>
+#include <vector>
 
+#include "dawn/common/MutexProtected.h"
 #include "dawn/native/Queue.h"
 #include "dawn/native/opengl/UtilsEGL.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native::opengl {
 
+class Buffer;
 class Device;
 class SharedFence;
 
 class Queue final : public QueueBase {
   public:
     static ResultOrError<Ref<Queue>> Create(Device* device, const QueueDescriptor* descriptor);
+
+    MaybeError AddGLTask(std::function<MaybeError()> task);
+    MaybeError FlushGLTasks();
+
+    void TrackCopyDstBuffer(Ref<Buffer> buffer);
 
     void OnGLUsed();
     MaybeError SubmitFenceSync();
@@ -76,6 +85,10 @@ class Queue final : public QueueBase {
 
     uint32_t mEGLSyncType;
     MutexProtected<std::deque<std::pair<Ref<WrappedEGLSync>, ExecutionSerial>>> mFencesInFlight;
+
+    MutexProtected<std::vector<std::function<MaybeError()>>> mPendingGLTasks;
+
+    SerialMap<ExecutionSerial, Ref<Buffer>> mPendingCopyDstBuffers;
 
     // Has pending GL commands which are not associated with a fence.
     bool mHasPendingCommands = false;

@@ -28,8 +28,11 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_SAMPLERGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_SAMPLERGL_H_
 
+#include <future>
+
 #include "dawn/native/Sampler.h"
 
+#include "dawn/native/opengl/FutureHandle.h"
 #include "dawn/native/opengl/opengl_platform.h"
 
 namespace dawn::native::opengl {
@@ -40,7 +43,7 @@ class Sampler final : public SamplerBase {
   public:
     static ResultOrError<Ref<Sampler>> Create(Device* device, const SamplerDescriptor* descriptor);
 
-    GLuint GetHandle() const;
+    const FutureHandle& GetHandle() const;
 
   private:
     Sampler(Device* device, const SamplerDescriptor* descriptor);
@@ -49,7 +52,7 @@ class Sampler final : public SamplerBase {
     MaybeError Initialize(const SamplerDescriptor* descriptor);
     void DestroyImpl() override;
 
-    GLuint mHandle = 0;
+    FutureHandle mHandle;
 };
 
 }  // namespace dawn::native::opengl

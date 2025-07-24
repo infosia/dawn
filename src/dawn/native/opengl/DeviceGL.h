@@ -28,7 +28,9 @@
 #ifndef SRC_DAWN_NATIVE_OPENGL_DEVICEGL_H_
 #define SRC_DAWN_NATIVE_OPENGL_DEVICEGL_H_
 
+#include <future>
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
 #include "dawn/native/dawn_platform.h"
@@ -48,6 +50,7 @@ class AHBFunctions;
 namespace dawn::native::opengl {
 
 class ContextEGL;
+class WrappedEGLSync;
 
 class Device final : public DeviceBase {
   public:
@@ -62,11 +65,11 @@ class Device final : public DeviceBase {
 
     MaybeError Initialize(const UnpackedPtr<DeviceDescriptor>& descriptor);
 
-    // Returns all the OpenGL entry points and ensures that the associated GL context is current.
+    // Returns all the OpenGL entry points.
     const OpenGLFunctions& GetGL() const;
 
     // Helper functions to get access to relevant EGL objects.
-    const EGLFunctions& GetEGL(bool makeCurrent) const;
+    const EGLFunctions& GetEGL() const;
     EGLDisplay GetEGLDisplay() const;
     ContextEGL* GetContext() const;
 
@@ -104,6 +107,10 @@ class Device final : public DeviceBase {
 
     bool MayRequireDuplicationOfIndirectParameters() const override;
     bool ShouldApplyIndexBufferOffsetToFirstIndex() const override;
+
+    bool CanAddStorageUsageToBufferWithoutSideEffects(wgpu::BufferUsage storageUsage,
+                                                      wgpu::BufferUsage originalUsage,
+                                                      size_t bufferSize) const override;
 
     const AHBFunctions* GetOrLoadAHBFunctions();
 

@@ -30,6 +30,7 @@
 #include <utility>
 
 #include "dawn/native/opengl/DeviceGL.h"
+#include "dawn/native/opengl/QueueGL.h"
 #include "dawn/native/opengl/TextureGL.h"
 #include "dawn/native/opengl/UtilsGL.h"
 
@@ -46,7 +47,7 @@ ResultOrError<Ref<SharedTextureMemory>> SharedTextureMemoryEGL::Create(
     StringView label,
     const SharedTextureMemoryAHardwareBufferDescriptor* descriptor) {
 #if DAWN_PLATFORM_IS(ANDROID)
-    const EGLFunctions& egl = device->GetEGL(false);
+    const EGLFunctions& egl = device->GetEGL();
     DAWN_ASSERT(egl.HasExt(EGLExt::ImageNativeBuffer) && egl.HasExt(EGLExt::GetNativeClientBuffer));
 
     ::AHardwareBuffer* aHardwareBuffer = static_cast<struct AHardwareBuffer*>(descriptor->handle);
@@ -89,24 +90,39 @@ SharedTextureMemoryEGL::SharedTextureMemoryEGL(Device* device,
 void SharedTextureMemoryEGL::DestroyImpl() {
     if (mEGLImage) {
         Device* device = ToBackend(GetDevice());
-        const EGLFunctions& egl = device->GetEGL(false);
-
-        egl.DestroyImage(device->GetEGLDisplay(), mEGLImage);
+        Queue* queue = ToBackend(device->GetQueue());
+        auto image = mEGLImage;
         mEGLImage = nullptr;
+
+        IgnoreErrors(queue->AddGLTask([device, image]() -> MaybeError {
+            const EGLFunctions& egl = device->GetEGL();
+
+            egl.DestroyImage(device->GetEGLDisplay(), image);
+
+            return {};
+        }));
     }
 }
 
-ResultOrError<GLuint> SharedTextureMemoryEGL::GenerateGLTexture() {
+ResultOrError<FutureHandle> SharedTextureMemoryEGL::GenerateGLTexture() {
     Device* device = ToBackend(GetDevice());
-    const OpenGLFunctions& gl = device->GetGL();
+    auto promise = std::make_shared<std::promise<GLuint>>();
+    auto future = promise->get_future();
 
-    GLuint tex;
-    DAWN_GL_TRY(gl, GenTextures(1, &tex));
-    DAWN_GL_TRY(gl, BindTexture(GL_TEXTURE_2D, tex));
-    DAWN_GL_TRY(gl, EGLImageTargetTexture2DOES(GL_TEXTURE_2D, mEGLImage));
-    DAWN_GL_TRY(gl, TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0));
+    Ref<SharedTextureMemoryEGL> self = this;
+    DAWN_TRY(
+        ToBackend(device->GetQueue())->AddGLTask([self, device, promise]() mutable -> MaybeError {
+            const OpenGLFunctions& gl = device->GetGL();
+            GLuint tex;
+            DAWN_GL_TRY(gl, GenTextures(1, &tex));
+            DAWN_GL_TRY(gl, BindTexture(GL_TEXTURE_2D, tex));
+            DAWN_GL_TRY(gl, EGLImageTargetTexture2DOES(GL_TEXTURE_2D, self->mEGLImage));
+            DAWN_GL_TRY(gl, TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0));
+            promise->set_value(tex);
+            return {};
+        }));
 
-    return tex;
+    return FutureHandle(std::move(future));
 }
 
 }  // namespace dawn::native::opengl
