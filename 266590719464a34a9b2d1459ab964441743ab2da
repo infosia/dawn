@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15794eae_544716dc",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-24T01:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d3c18e5_17c22d2c",
+      "revId": "266590719464a34a9b2d1459ab964441743ab2da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "28954077_d87e140a",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-07-23T07:45:55Z",
       "side": 1,
       "message": "```suggestion\n        ostream \u003c\u003c \"  for (var slice : i32 \u003d 0; slice \u003c sliceCount; slice +\u003d 1) {\\n\";\n```\n\nditto below",
+      "revId": "266590719464a34a9b2d1459ab964441743ab2da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef0886b0_6954d0b8",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-24T01:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28954077_d87e140a",
       "revId": "266590719464a34a9b2d1459ab964441743ab2da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -75,6 +111,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed14488b_671cb189",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-24T01:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb97ac00_950833c4",
+      "range": {
+        "startLine": 611,
+        "startChar": 45,
+        "endLine": 611,
+        "endChar": 66
+      },
+      "revId": "266590719464a34a9b2d1459ab964441743ab2da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "151d7dac_dc36d713",
@@ -88,6 +148,30 @@
       "writtenOn": "2025-07-23T20:14:21Z",
       "side": 1,
       "message": "I think you can probably add something like this in this test suite so that it just skips all tests if we don\u0027t have the feature enabled:\nhttps://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/QueryTests.cpp;l\u003d635?q\u003dskip\u0026ss\u003dchromium%2Fchromium%2Fsrc:third_party%2Fdawn%2Fsrc%2Fdawn%2Ftests%2Fend2end%2F\n\nIt would allow us to eliminate all the `DAWN_TEST_UNSUPPORTED_IF(!IsTextureFormatsTier1Supported())` calls in the tests below.",
+      "range": {
+        "startLine": 2065,
+        "startChar": 6,
+        "endLine": 2065,
+        "endChar": 33
+      },
+      "revId": "266590719464a34a9b2d1459ab964441743ab2da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b87f5738_034d907c",
+        "filename": "src/dawn/tests/end2end/StorageTextureTests.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-24T01:55:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "151d7dac_dc36d713",
       "range": {
         "startLine": 2065,
         "startChar": 6,
