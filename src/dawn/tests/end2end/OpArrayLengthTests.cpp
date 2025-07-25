@@ -35,18 +35,28 @@
 namespace dawn {
 namespace {
 
-class OpArrayLengthTest : public DawnTest {
+constexpr uint32_t kImmediateDataBytes = 12;
+
+using HasUserImmediateData = bool;
+DAWN_TEST_PARAM_STRUCT(OpArrayLengthTestParams, HasUserImmediateData);
+
+class OpArrayLengthTest : public DawnTestWithParams<OpArrayLengthTestParams> {
   protected:
     void GetRequiredLimits(const dawn::utils::ComboLimits& supported,
                            dawn::utils::ComboLimits& required) override {
         // Just copy all the limits, though all we really care about is
         // maxStorageBuffersInFragmentStage
         // maxStorageBuffersInVertexStage
+        // maxImmediateSize
         supported.UnlinkedCopyTo(&required);
+
+        if (GetParam().mHasUserImmediateData) {
+            required.maxImmediateSize = kDefaultMaxImmediateDataBytes;
+        }
     }
 
     void SetUp() override {
-        DawnTest::SetUp();
+        DawnTestWithParams<OpArrayLengthTestParams>::SetUp();
 
         // Create buffers of various size to check the length() implementation
         wgpu::BufferDescriptor bufferDesc;
@@ -60,6 +70,15 @@ class OpArrayLengthTest : public DawnTest {
         bufferDesc.size = 512 + 256;
         mStorageBuffer512 = device.CreateBuffer(&bufferDesc);
 
+        if (GetParam().mHasUserImmediateData) {
+            mImmediateDataInterface = R"(
+                enable chromium_experimental_immediate;
+                struct Immediate {
+                    num: vec3<f32>,
+                };
+                var<immediate> constants: Immediate;
+            )";
+        }
         // Common shader code to use these buffers in shaders, assuming they are in bindgroup index
         // 0.
         mShaderInterface = R"(
@@ -113,11 +132,16 @@ class OpArrayLengthTest : public DawnTest {
     wgpu::Buffer mStorageBuffer512;
 
     std::string mShaderInterface;
+    std::string mImmediateDataInterface = "";
     std::array<uint32_t, 3> mExpectedLengths;
 };
 
 // Test OpArrayLength in the compute stage
 TEST_P(OpArrayLengthTest, Compute) {
+    if (GetParam().mHasUserImmediateData) {
+        DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxImmediateSize < kImmediateDataBytes);
+    }
+
     // Create a buffer to hold the result sizes and create a bindgroup for it.
     wgpu::BufferDescriptor bufferDesc;
     bufferDesc.usage = wgpu::BufferUsage::Storage | wgpu::BufferUsage::CopySrc;
@@ -136,11 +160,15 @@ TEST_P(OpArrayLengthTest, Compute) {
     wgpu::PipelineLayoutDescriptor plDesc;
     plDesc.bindGroupLayoutCount = 2;
     plDesc.bindGroupLayouts = bgls;
+
+    if (GetParam().mHasUserImmediateData) {
+        plDesc.immediateSize = kImmediateDataBytes;
+    }
     wgpu::PipelineLayout pl = device.CreatePipelineLayout(&plDesc);
 
     wgpu::ComputePipelineDescriptor pipelineDesc;
     pipelineDesc.layout = pl;
-    pipelineDesc.compute.module = utils::CreateShaderModule(device, (R"(
+    pipelineDesc.compute.module = utils::CreateShaderModule(device, (mImmediateDataInterface + R"(
         struct ResultBuffer {
             data : array<u32, 3>
         }
@@ -156,8 +184,13 @@ TEST_P(OpArrayLengthTest, Compute) {
     wgpu::BindGroup bindGroup = MakeBindGroup(bindGroupLayout);
 
     // Run a single instance of the compute shader
+    // std::array<float, 3> immediateData = {0.1, 0.3, 0.5};
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     wgpu::ComputePassEncoder pass = encoder.BeginComputePass();
+    if (GetParam().mHasUserImmediateData) {
+        // pass.SetImmediateData(0, immediateData.data(),
+        //                       immediateData.size() * sizeof(uint32_t));
+    }
     pass.SetPipeline(pipeline);
     pass.SetBindGroup(0, bindGroup);
     pass.SetBindGroup(1, resultBindGroup);
@@ -178,16 +211,21 @@ TEST_P(OpArrayLengthTest, Fragment) {
 
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInFragmentStage < 3);
 
+    if (GetParam().mHasUserImmediateData) {
+        DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxImmediateSize < kImmediateDataBytes);
+    }
+
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
 
     // Create the pipeline that computes the length of the buffers and writes it to the only render
     // pass pixel.
-    wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, R"(
+    wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, mImmediateDataInterface + R"(
         @vertex fn main() -> @builtin(position) vec4f {
             return vec4f(0.0, 0.0, 0.0, 1.0);
         })");
 
-    wgpu::ShaderModule fsModule = utils::CreateShaderModule(device, (mShaderInterface + R"(
+    wgpu::ShaderModule fsModule =
+        utils::CreateShaderModule(device, (mImmediateDataInterface + mShaderInterface + R"(
         @fragment fn main() -> @location(0) vec4f {
             var fragColor : vec4f;
             fragColor.r = f32(arrayLength(&buffer1.data)) / 255.0;
@@ -196,24 +234,31 @@ TEST_P(OpArrayLengthTest, Fragment) {
             fragColor.a = 0.0;
             return fragColor;
         })")
-                                                                        .c_str());
+                                              .c_str());
 
     wgpu::BindGroupLayout bindGroupLayout = MakeBindGroupLayout(wgpu::ShaderStage::Fragment);
+
+    uint32_t immediateDataByteSize = GetParam().mHasUserImmediateData ? kImmediateDataBytes : 0u;
 
     utils::ComboRenderPipelineDescriptor descriptor;
     descriptor.vertex.module = vsModule;
     descriptor.cFragment.module = fsModule;
     descriptor.primitive.topology = wgpu::PrimitiveTopology::PointList;
     descriptor.cTargets[0].format = renderPass.colorFormat;
-    descriptor.layout = utils::MakeBasicPipelineLayout(device, &bindGroupLayout);
+    descriptor.layout =
+        utils::MakeBasicPipelineLayout(device, &bindGroupLayout, immediateDataByteSize);
     wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&descriptor);
 
     wgpu::BindGroup bindGroup = MakeBindGroup(bindGroupLayout);
 
     // "Draw" the lengths to the texture.
+    std::array<float, 3> immediateData = {0.1, 0.3, 0.5};
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     {
         wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+        if (GetParam().mHasUserImmediateData) {
+            pass.SetImmediateData(0, immediateData.data(), immediateData.size() * sizeof(uint32_t));
+        }
         pass.SetPipeline(pipeline);
         pass.SetBindGroup(0, bindGroup);
         pass.Draw(1);
@@ -232,11 +277,16 @@ TEST_P(OpArrayLengthTest, Fragment) {
 TEST_P(OpArrayLengthTest, Vertex) {
     DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxStorageBuffersInVertexStage < 3);
 
+    if (GetParam().mHasUserImmediateData) {
+        DAWN_TEST_UNSUPPORTED_IF(GetSupportedLimits().maxImmediateSize < kImmediateDataBytes);
+    }
+
     utils::BasicRenderPass renderPass = utils::CreateBasicRenderPass(device, 1, 1);
 
     // Create the pipeline that computes the length of the buffers and writes it to the only render
     // pass pixel.
-    wgpu::ShaderModule vsModule = utils::CreateShaderModule(device, (mShaderInterface + R"(
+    wgpu::ShaderModule vsModule =
+        utils::CreateShaderModule(device, (mImmediateDataInterface + mShaderInterface + R"(
         struct VertexOut {
             @location(0) color : vec4f,
             @builtin(position) position : vec4f,
@@ -252,7 +302,7 @@ TEST_P(OpArrayLengthTest, Vertex) {
             output.position = vec4f(0.0, 0.0, 0.0, 1.0);
             return output;
         })")
-                                                                        .c_str());
+                                              .c_str());
 
     wgpu::ShaderModule fsModule = utils::CreateShaderModule(device, R"(
         @fragment
@@ -262,20 +312,27 @@ TEST_P(OpArrayLengthTest, Vertex) {
 
     wgpu::BindGroupLayout bindGroupLayout = MakeBindGroupLayout(wgpu::ShaderStage::Vertex);
 
+    uint32_t immediateDataByteSize = GetParam().mHasUserImmediateData ? kImmediateDataBytes : 0u;
+
     utils::ComboRenderPipelineDescriptor descriptor;
     descriptor.vertex.module = vsModule;
     descriptor.cFragment.module = fsModule;
     descriptor.primitive.topology = wgpu::PrimitiveTopology::PointList;
     descriptor.cTargets[0].format = renderPass.colorFormat;
-    descriptor.layout = utils::MakeBasicPipelineLayout(device, &bindGroupLayout);
+    descriptor.layout =
+        utils::MakeBasicPipelineLayout(device, &bindGroupLayout, immediateDataByteSize);
     wgpu::RenderPipeline pipeline = device.CreateRenderPipeline(&descriptor);
 
     wgpu::BindGroup bindGroup = MakeBindGroup(bindGroupLayout);
 
     // "Draw" the lengths to the texture.
+    std::array<float, 3> immediateData = {0.1, 0.3, 0.5};
     wgpu::CommandEncoder encoder = device.CreateCommandEncoder();
     {
         wgpu::RenderPassEncoder pass = encoder.BeginRenderPass(&renderPass.renderPassInfo);
+        if (GetParam().mHasUserImmediateData) {
+            pass.SetImmediateData(0, immediateData.data(), immediateData.size() * sizeof(uint32_t));
+        }
         pass.SetPipeline(pipeline);
         pass.SetBindGroup(0, bindGroup);
         pass.Draw(1);
@@ -290,14 +347,11 @@ TEST_P(OpArrayLengthTest, Vertex) {
     EXPECT_PIXEL_RGBA8_EQ(expectedColor, renderPass.color, 0, 0);
 }
 
-DAWN_INSTANTIATE_TEST(OpArrayLengthTest,
-                      D3D11Backend(),
-                      D3D12Backend(),
-                      MetalBackend(),
-                      OpenGLBackend(),
-                      OpenGLESBackend(),
-                      OpenGLESBackend({"gl_use_array_length_from_uniform"}),
-                      VulkanBackend());
+DAWN_INSTANTIATE_TEST_P(OpArrayLengthTest,
+                        {D3D11Backend(), D3D12Backend(), MetalBackend(), OpenGLBackend(),
+                         OpenGLESBackend(), OpenGLESBackend({"gl_use_array_length_from_uniform"}),
+                         VulkanBackend()},
+                        {true, false});
 
 }  // anonymous namespace
 }  // namespace dawn
