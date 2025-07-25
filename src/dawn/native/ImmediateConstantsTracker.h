@@ -105,6 +105,8 @@ class UserImmediateConstantsTrackerBase {
 
     void SetDirtyBitsForTesting(ImmediateConstantMask dirtyBits) { mDirty = dirtyBits; }
 
+    void ResetDirtyBits() { mDirty.reset(); }
+
   protected:
     template <typename U>
     void UpdateImmediateConstants(size_t dataOffset, const U& data) {
