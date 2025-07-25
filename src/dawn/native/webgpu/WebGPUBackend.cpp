@@ -30,4 +30,24 @@
 
 #include "dawn/native/WebGPUBackend.h"
 
-namespace dawn::native::webgpu {}  // namespace dawn::native::webgpu
+#include <memory>
+#include "dawn/native/webgpu/BufferWGPU.h"
+#include "dawn/native/webgpu/DeviceWGPU.h"
+#include "dawn/native/webgpu/QueueWGPU.h"
+
+namespace dawn::native::webgpu {
+
+void StartRecording(WGPUDevice device) {
+    Device* deviceWGPU = ToBackend(FromAPI(device));
+    deviceWGPU->SetRecord(std::make_unique<Recorder>());
+    auto record = deviceWGPU->GetRecorder();
+    record->StartCapture(deviceWGPU);
+}
+
+void EndRecording(WGPUDevice device, std::ostream& out) {
+    Device* deviceWGPU = ToBackend(FromAPI(device));
+    auto record = deviceWGPU->GetRecorder();
+    record->End(out);
+}
+
+}  // namespace dawn::native::webgpu

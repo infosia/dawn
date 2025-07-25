@@ -36,9 +36,12 @@ if (dawn_enable_devtool_playback) {
     sources = [
       "CmdPb.h",
       "ObjectType.h",
+      "Playback.cpp",
+      "Playback.h",
       "Replayer.cpp",
       "Replayer.h",
     ]
+
     deps = [
       "${dawn_root}/src/dawn:proc",
       "${dawn_root}/src/dawn/common",

@@ -771,6 +771,11 @@ source_set("end2end_tests_sources") {
   if (dawn_enable_opengles) {
     sources += [ "end2end/GLExplicitExtensionsTests.cpp" ]
   }
+
+  if (dawn_enable_devtool_playback) {
+    sources += [ "end2end/RecordPlaybackTests.cpp" ]
+    deps += [ "${dawn_root}/src/dawn/devtool:playback" ]
+  }
 }
 
 source_set("white_box_tests_sources") {
