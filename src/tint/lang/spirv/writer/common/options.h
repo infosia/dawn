@@ -208,6 +208,9 @@ struct Options {
     /// `unpack4x8unorm` builtins
     bool polyfill_pack_unpack_4x8_norm = false;
 
+    /// Set to `true` to generate polyfill for `subgroupBroadcast(f16)`
+    bool polyfill_subgroup_broadcast_f16 = false;
+
     /// Set to `true` to disable the polyfills on integer division and modulo.
     bool disable_polyfill_integer_div_mod = false;
 
@@ -244,6 +247,7 @@ struct Options {
                  pass_matrix_by_pointer,
                  polyfill_dot_4x8_packed,
                  polyfill_pack_unpack_4x8_norm,
+                 polyfill_subgroup_broadcast_f16,
                  disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
                  use_vulkan_memory_model,
