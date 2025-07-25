@@ -30,6 +30,11 @@
 
 #include "dawn/native/DawnNative.h"
 
+#include <iostream>
+
+#include "dawn/native/DawnNative.h"
+#include "dawn/native/dawn_native_export.h"
+#include "webgpu/webgpu.h"
 namespace dawn::native::webgpu {}  // namespace dawn::native::webgpu
 
 #endif  // INCLUDE_DAWN_NATIVE_WEBGPUBACKEND_H_

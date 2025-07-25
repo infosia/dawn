@@ -175,6 +175,9 @@ source_set("sources") {
     "${dawn_root}/src/tint/api",
     "${dawn_root}/src/tint/lang/wgsl",
   ]
+  if (dawn_enable_devtool_record) {
+    deps += [ "${dawn_root}/src/dawn/devtool:devtool_record" ]
+  }
   defines = []
   libs = []
   data_deps = []
@@ -965,6 +968,8 @@ dawn_component("native") {
   deps = [
     ":sources",
     "${dawn_root}/src/dawn/common",
+
+    # "${dawn_root}/src/dawn/devtool:devtool_record",
   ]
   sources = [ "DawnNative.cpp" ]
   configs = [ ":internal" ]
