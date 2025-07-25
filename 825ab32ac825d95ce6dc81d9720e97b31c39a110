@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bc730a7_0f1aa10f",
+        "filename": "src/dawn/tests/end2end/ShaderTests.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2707,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-25T15:32:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01e8cc15_66901514",
+      "range": {
+        "startLine": 2707,
+        "startChar": 4,
+        "endLine": 2707,
+        "endChar": 51
+      },
+      "revId": "825ab32ac825d95ce6dc81d9720e97b31c39a110",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "34f0dc03_e6ac5564",
