@@ -372,6 +372,8 @@ void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platfo
 
 void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platform,
                                                TogglesState* deviceToggles) const {
+    // TODO REMOVE ME AFTER CQ
+    deviceToggles->Default(Toggle::PolyfillSubgroupBroadcastF16, true);
     {
         bool haveStoreAndMSAAResolve = false;
 #if DAWN_PLATFORM_IS(MACOS)
