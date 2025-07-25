@@ -1174,9 +1174,8 @@ struct State {
     /// @param call the builtin call instruction
     void SubgroupBroadcast(ir::CoreBuiltinCall* call) {
         // This polyfill is implemented by bitcasting f16 values to unsigned integers,
-        // performing the broadcast on the integer types, and then bitcasting back.
-        // This is necessary for backends that don't natively support f16 subgroup ops.
-        // The target integer type for broadcast is u32. Uses vec<f16> specific bit casting.
+        // performing the broadcast on the integer types, and then bitcasting back. The target
+        // integer type for broadcast is u32. Uses vec<f16> specific bit casting.
         //
         // f16       -> broadcast as u32 after packing with a zero, then unpack
         // vec2<f16> -> broadcast as u32
@@ -1186,8 +1185,6 @@ struct State {
         auto* value = call->Args()[0];
         auto* type = value->Type();
 
-        // This polyfill is only for f16 types. If the value is not an f16 scalar or
-        // vector, we don't need to do anything.
         if (!type->DeepestElement()->Is<core::type::F16>()) {
             return;
         }
@@ -1260,7 +1257,7 @@ struct State {
                         TINT_UNREACHABLE()
                             << "unhandled f16 vector width in subgroupBroadcast polyfill";
                 }
-            } else { // Scalar f16
+            } else {  // Scalar f16
                 // Construct a vec2<f16>(0, value), then bitcast to u32.
                 auto* vec_val = b.Construct(ty.vec2<f16>(), value, b.Zero(ty.f16()))->Result();
                 auto* u32_val = b.Bitcast(ty.u32(), vec_val)->Result();
