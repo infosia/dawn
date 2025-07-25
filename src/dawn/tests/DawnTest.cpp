@@ -1250,7 +1250,7 @@ wgpu::Device DawnTestBase::CreateDevice(std::string isolationKey) {
         .Times(AtMost(1))
         .RetiresOnSaturation();
 
-    apiDevice.SetLoggingCallback([](wgpu::LoggingType type, wgpu::StringView message) {
+    apiDevice.SetLoggingCallback([&](wgpu::LoggingType type, wgpu::StringView message) {
         std::string_view view = {message.data, message.length};
         switch (type) {
             case wgpu::LoggingType::Verbose:
