@@ -60,6 +60,20 @@ class Device final : public DeviceBase, public ObjectWGPU<WGPUDevice> {
 
     const DawnProcTable& wgpu;
 
+    // record replay related
+    void SetRecord(std::unique_ptr<devtool::RecordCommandSerializer> record);
+    void SetReplay(std::unique_ptr<devtool::PlaybackCommandDeserializer> playback);
+    devtool::RecordCommandSerializer* GetRecordCommandSerializer() const;
+    devtool::PlaybackCommandDeserializer* GetPlaybackCommandDeserializer() const;
+
+    // temp
+    bool IsRecord() const;
+    bool IsPlayback() const;
+
+    // temp public
+    std::unique_ptr<devtool::RecordCommandSerializer> mRecord = nullptr;
+    std::unique_ptr<devtool::PlaybackCommandDeserializer> mPlayback = nullptr;
+
   private:
     Device(AdapterBase* adapter,
            WGPUAdapter innerAdapter,

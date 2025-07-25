@@ -30,6 +30,24 @@
 
 #include "dawn/native/DawnNative.h"
 
-namespace dawn::native::webgpu {}  // namespace dawn::native::webgpu
+#include <iostream>
+
+#include "dawn/native/DawnNative.h"
+#include "dawn/native/dawn_native_export.h"
+#include "webgpu/webgpu.h"
+
+// TODO: move to devtool namespace
+namespace dawn::native::webgpu {
+DAWN_NATIVE_EXPORT void StartRecording(WGPUDevice device);
+
+DAWN_NATIVE_EXPORT void EndRecording(WGPUDevice device, std::ostream& out);
+
+DAWN_NATIVE_EXPORT void StartPlayback(WGPUDevice device, std::istream& in);
+// DAWN_NATIVE_EXPORT void EndPlayback();
+
+// Retrieves a replayed buffer by its ID from the trace.
+DAWN_NATIVE_EXPORT WGPUBuffer GetResource(WGPUDevice device, uint32_t id);
+
+}  // namespace dawn::native::webgpu
 
 #endif  // INCLUDE_DAWN_NATIVE_WEBGPUBACKEND_H_
