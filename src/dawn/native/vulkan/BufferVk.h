@@ -74,6 +74,10 @@ class Buffer final : public BufferBase {
                                                  CommandRecordingContext* recordingContext,
                                                  const absl::flat_hash_set<Ref<Buffer>>& buffers);
 
+    void BeginComputePass() { mBarrieredLockIdx = 0; }
+
+    int mBarrieredLockIdx = 0;
+
   private:
     ~Buffer() override;
     using BufferBase::BufferBase;

@@ -489,6 +489,10 @@ void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
             srcStage = VulkanPipelineStage(mReadUsage, mReadShaderStages);
         }
 
+        skipBarrier |= recordingContext->ShouldSkipBarriered(
+            srcAccess, VulkanAccessFlags(usage), srcStage, VulkanPipelineStage(usage, shaderStage),
+            mBarrieredLockIdx);
+
         mLastWriteUsage = usage;
         mLastWriteShaderStage = shaderStage;
 
@@ -506,9 +510,9 @@ void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
         MarkUsedInPendingCommands();
     }
 
-    recordingContext->AddBufferBarrier(srcAccess, /* dstAccess */ VulkanAccessFlags(usage),
-                                       srcStage,
-                                       /* dstStage */ VulkanPipelineStage(usage, shaderStage));
+    recordingContext->AddBufferBarrier(
+        srcAccess, /* dstAccess */ VulkanAccessFlags(usage), srcStage,
+        /* dstStage */ VulkanPipelineStage(usage, shaderStage), this);
 }
 
 bool Buffer::IsCPUWritableAtCreation() const {

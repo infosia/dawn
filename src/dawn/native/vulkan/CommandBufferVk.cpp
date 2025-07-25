@@ -888,10 +888,11 @@ MaybeError CommandBuffer::RecordCommands(CommandRecordingContext* recordingConte
                     commands = recordingContext->commandBuffer;
                 }
 
+                recordingContext->BeginComputePass();
                 DAWN_TRY(
                     RecordComputePass(recordingContext, cmd,
                                       GetResourceUsages().computePasses[nextComputePassNumber]));
-
+                recordingContext->EndComputePass();
                 nextComputePassNumber++;
                 break;
             }
@@ -1034,6 +1035,9 @@ MaybeError CommandBuffer::RecordComputePass(CommandRecordingContext* recordingCo
                                             const ComputePassResourceUsage& resourceUsages) {
     Device* device = ToBackend(GetDevice());
 
+    for (auto* res : resourceUsages.referencedBuffers) {
+        ToBackend(res)->BeginComputePass();
+    }
     // Write timestamp at the beginning of compute pass if it's set
     if (computePassCmd->timestampWrites.beginningOfPassWriteIndex !=
         wgpu::kQuerySetIndexUndefined) {

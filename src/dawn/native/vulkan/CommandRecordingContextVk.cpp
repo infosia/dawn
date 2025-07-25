@@ -27,6 +27,7 @@
 
 #include "src/dawn/native/vulkan/CommandRecordingContextVk.h"
 
+#include "dawn/native/vulkan/BufferVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "vulkan/vulkan_core.h"
 
@@ -46,7 +47,8 @@ constexpr VkPipelineStageFlags vertexStages = VK_PIPELINE_STAGE_VERTEX_INPUT_BIT
 void CommandRecordingContext::AddBufferBarrier(VkAccessFlags srcAccessMask,
                                                VkAccessFlags dstAccessMask,
                                                VkPipelineStageFlags srcStages,
-                                               VkPipelineStageFlags dstStages) {
+                                               VkPipelineStageFlags dstStages,
+                                               Buffer* buffer) {
     BufferBarrier* barrier = nullptr;
     if (dstStages & vertexStages) {
         barrier = &mVertexBufferBarrier;
@@ -58,6 +60,31 @@ void CommandRecordingContext::AddBufferBarrier(VkAccessFlags srcAccessMask,
     barrier->bufferDstAccessMask |= dstAccessMask;
     barrier->bufferSrcStages |= srcStages;
     barrier->bufferDstStages |= dstStages;
+    buffer->mBarrieredLockIdx = mBarrierHistory.size();
+}
+
+bool CommandRecordingContext::ShouldSkipBarriered(VkAccessFlags srcAccessMask,
+                                                  VkAccessFlags dstAccessMask,
+                                                  VkPipelineStageFlags srcStages,
+                                                  VkPipelineStageFlags dstStages,
+                                                  int buffer_barrier_idx) {
+    // not bothering to track for vb
+    if (dstStages & vertexStages) {
+        return false;
+    }
+
+    for (int i = buffer_barrier_idx + 1; i < (int)mBarrierHistory.size(); i++) {
+        auto& curr_barrier = mBarrierHistory[i];
+        if (curr_barrier.bufferSrcStages == srcStages &&
+            curr_barrier.bufferDstAccessMask == dstStages) {
+            if ((curr_barrier.bufferDstAccessMask & dstAccessMask) == dstAccessMask &&
+                (curr_barrier.bufferSrcAccessMask & srcAccessMask) == dstAccessMask) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 void CommandRecordingContext::EmitBufferBarriers(Device* device) {
@@ -84,6 +111,8 @@ void CommandRecordingContext::EmitBufferBarriers(Device* device) {
     };
     CreateBarrierIfNeeded(mVertexBufferBarrier);
     CreateBarrierIfNeeded(mNonVertexBufferBarrier);
+
+    mBarrierHistory.push_back(mNonVertexBufferBarrier);
 
     if (idx > 0) {
         device->fn.CmdPipelineBarrier(commandBuffer, srcStages, dstStages, 0, idx, barriers.data(),

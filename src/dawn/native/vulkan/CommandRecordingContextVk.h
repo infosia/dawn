@@ -38,7 +38,7 @@
 namespace dawn::native::vulkan {
 
 class Texture;
-
+class Buffer;
 // Wrapping class that currently associates a command buffer to it's corresponding pool.
 // TODO(dawn:1601) Revisit this structure since it is where the 1:1 mapping is implied.
 //                 Also consider reusing this in CommandRecordingContext below instead of
@@ -92,8 +92,18 @@ struct CommandRecordingContext {
     void AddBufferBarrier(VkAccessFlags srcAccessMask,
                           VkAccessFlags dstAccessMask,
                           VkPipelineStageFlags srcStages,
-                          VkPipelineStageFlags dstStages);
+                          VkPipelineStageFlags dstStages,
+                          Buffer* buffer);
     void EmitBufferBarriers(Device* device);
+
+    bool ShouldSkipBarriered(VkAccessFlags srcAccessMask,
+                             VkAccessFlags dstAccessMask,
+                             VkPipelineStageFlags srcStages,
+                             VkPipelineStageFlags dstStages,
+                             int buffer_barrier_idx);
+
+    void BeginComputePass() { mBarrierHistory.clear(); }
+    void EndComputePass() { mBarrierHistory.clear(); }
 
   private:
     struct BufferBarrier {
@@ -105,6 +115,8 @@ struct CommandRecordingContext {
 
     BufferBarrier mVertexBufferBarrier;
     BufferBarrier mNonVertexBufferBarrier;
+
+    std::vector<BufferBarrier> mBarrierHistory;
 };
 
 }  // namespace dawn::native::vulkan
