@@ -52,6 +52,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65594edc_a4bbc4ca",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-25T19:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73f33979_44011f12",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7e75cfeb_bcac2e0d",
@@ -65,6 +83,24 @@
       "writtenOn": "2025-07-25T16:18:03Z",
       "side": 1,
       "message": "Can we make it work even if we don\u0027t suballocate yet? (it will just be a `memoryOffset \u003d allocation.GetOffset() + offset`)",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6a85b55_68638952",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-25T19:23:08Z",
+      "side": 1,
+      "message": "Right, I think that is fine as long as allocation.GetOffset() is aligned to nonCoherentAtomSize. ResourceMemoryAllocator already does that for suballocations. Done.",
+      "parentUuid": "7e75cfeb_bcac2e0d",
       "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -104,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bdeabdf_c3af09b6",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-25T19:23:08Z",
+      "side": 1,
+      "message": "Ah of course MapAsyncTask does that. I added FinalizeMapAyncImpl() and we can update the D3D11/GL buffers in a follow up.",
+      "parentUuid": "df61c9bf_2477ad30",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "462c454e_b2c5ee77",
@@ -117,6 +171,30 @@
       "writtenOn": "2025-07-25T16:18:03Z",
       "side": 1,
       "message": "The tracking of mFlushRangeOnUnmap is redundant with the information that the frontend already knows. What do you think of passing the same arguments to UnmapImpl as we pass to MapAsyncImpl? (we\u0027d need to set MapMode::Write when mappind at creation).",
+      "range": {
+        "startLine": 600,
+        "startChar": 8,
+        "endLine": 600,
+        "endChar": 26
+      },
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb42167b_1046f525",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-25T19:23:08Z",
+      "side": 1,
+      "message": "I added a TODO for this for now as I\u0027d rather not change mapped at creation mode in this CL in case that causes some problems.",
+      "parentUuid": "462c454e_b2c5ee77",
       "range": {
         "startLine": 600,
         "startChar": 8,
@@ -178,6 +256,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "20de1bf8_c8ed1306",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-25T19:23:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b088dfad_0e9a266e",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f1b18be_af79c74b",
@@ -191,6 +287,30 @@
       "writtenOn": "2025-07-25T16:18:03Z",
       "side": 1,
       "message": "(thinking about the Nvidia Vulkan issue we had previously): on desktop GPUs we want to use these heaps only if the driver exposes \"Resizeable BAR\" or \"Smart Access Memory\". We can detect this by checking if the heap size is larger than 256 MB since that\u0027s the BAR size without these features.",
+      "range": {
+        "startLine": 197,
+        "startChar": 73,
+        "endLine": 201,
+        "endChar": 88
+      },
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02a63c0a_be842ffc",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-25T19:23:08Z",
+      "side": 1,
+      "message": "sgtm. I added a TODO at SupportsBufferMapExtendedUsages().",
+      "parentUuid": "5f1b18be_af79c74b",
       "range": {
         "startLine": 197,
         "startChar": 73,
@@ -249,6 +369,24 @@
       "writtenOn": "2025-07-25T16:18:03Z",
       "side": 1,
       "message": "We could also decide to always use CACHED instead of COHERENT since we are adding handling now. (though this CL only handles the read case so the write case will need to be added)",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "943a7eed_87e0dd1c",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-25T19:23:08Z",
+      "side": 1,
+      "message": "I actually found that BufferUploadPerf.Run/*_MappedAtCreation_* tests were a bit slower on Mali when using host cached memory. It wasn\u0027t much different than host coherent but there is no big win there.",
+      "parentUuid": "0fce95c8_c2101703",
       "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
