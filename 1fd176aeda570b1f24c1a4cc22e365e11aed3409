@@ -146,6 +146,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7b121e47_02586888",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-07-25T21:16:53Z",
+      "side": 1,
+      "message": "@yulong.fs@gmail.com Looks good now. Right now I have the same CI issues as main: https://github.com/google/dawn/actions/runs/16529169039/job/46750011026.",
+      "parentUuid": "de230bde_ddde876a",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d83bb941_f36b7934",
         "filename": ".github/workflows/ci.yml",
         "patchSetId": 8
