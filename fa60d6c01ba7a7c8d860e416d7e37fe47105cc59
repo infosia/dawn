@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "4d6a572c_516e1d29",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001591
+      },
+      "writtenOn": "2025-07-25T14:57:27Z",
+      "side": 1,
+      "message": "This looks reasonable to me, but leaving to @cwallez to +2 because I think he has a better understanding of Vulkan\u0027s memory model.",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "c117c43b_e0ea2d70",
         "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
         "patchSetId": 6
