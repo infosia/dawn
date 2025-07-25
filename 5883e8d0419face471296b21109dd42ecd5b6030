@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7321102_52f17322",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-25T08:51:53Z",
+      "side": 1,
+      "message": "Thanks for your review!",
+      "parentUuid": "bcfabe97_87444116",
+      "revId": "5883e8d0419face471296b21109dd42ecd5b6030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2ca7906_77d4c6e6",
@@ -41,6 +59,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "92192f1f_34ea463d",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-25T08:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2ca7906_77d4c6e6",
+      "range": {
+        "startLine": 1166,
+        "startChar": 15,
+        "endLine": 1166,
+        "endChar": 17
+      },
+      "revId": "5883e8d0419face471296b21109dd42ecd5b6030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f1b2f0b8_20b9ea3c",
@@ -54,6 +96,30 @@
       "writtenOn": "2025-07-24T17:30:38Z",
       "side": 1,
       "message": "I recommend stating at the beginning what you\u0027re trying to achieve with this proof:\n\n// We can ignore the case of da \u003e db. Proof: ...",
+      "range": {
+        "startLine": 1170,
+        "startChar": 12,
+        "endLine": 1170,
+        "endChar": 14
+      },
+      "revId": "5883e8d0419face471296b21109dd42ecd5b6030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b3d4f47_a3972d28",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1170,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-25T08:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1b2f0b8_20b9ea3c",
       "range": {
         "startLine": 1170,
         "startChar": 12,
@@ -89,6 +155,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "fcd9285e_085e5d80",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-25T08:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d96e84b_b0799a4e",
+      "range": {
+        "startLine": 1210,
+        "startChar": 19,
+        "endLine": 1210,
+        "endChar": 27
+      },
+      "revId": "5883e8d0419face471296b21109dd42ecd5b6030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "93ebd64f_745a4f5b",
         "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
         "patchSetId": 5
@@ -100,6 +190,24 @@
       "writtenOn": "2025-07-24T17:30:38Z",
       "side": 1,
       "message": "It took me a while to understand why it splits into these two cases.\nAt first I thought it was mostly driven by the comment on line 1250 but that\u0027s an assumption known from the type checking of the IR.\n\nnit: If this CL goes to another edit, I recommend adding a comment describing the split cases. Something like:\n\n// lhs_max \u003d q_max * rhs_const + r_max; // 0 \u003c\u003d r_max \u003c rhs_const\n// lhs_min \u003d q_min * rhs_const + r_min; // 0 \u003c\u003d r_min \u003c rhs_const\n// Split into two cases:\n//   if q_max \u003d\u003d q_min then ...\n//   otherwise use the whole remainder range:  [ 0, rhs_const - 1].",
+      "revId": "5883e8d0419face471296b21109dd42ecd5b6030",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f369633f_423c596e",
+        "filename": "src/tint/lang/core/ir/analysis/integer_range_analysis.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2025-07-25T08:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93ebd64f_745a4f5b",
       "revId": "5883e8d0419face471296b21109dd42ecd5b6030",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
