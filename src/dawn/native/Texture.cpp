@@ -34,6 +34,7 @@
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/HashUtils.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BlitBufferToTexture.h"
@@ -1021,6 +1022,7 @@ TextureBase::TextureBase(DeviceBase* device,
       mFormatEnumForReflection(descriptor->format) {}
 
 void TextureBase::DestroyImpl() {
+    DAWN_DEBUG() << "DestroyImpl called on: " << this;
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
     // - It may be called if the texture is explicitly destroyed with APIDestroy.
     //   This case is NOT thread-safe and needs proper synchronization with other
@@ -1286,6 +1288,9 @@ void TextureBase::SetIsSubresourceContentInitialized(bool isInitialized,
 MaybeError TextureBase::ValidateCanUseInSubmitNow() const {
     DAWN_ASSERT(!IsError());
     if (mState.destroyed || !mState.hasAccess) [[unlikely]] {
+        if (mState.destroyed) {
+            DAWN_DEBUG() << "Failed validation because of destroyed: " << this;
+        }
         DAWN_INVALID_IF(mState.destroyed, "Destroyed texture %s used in a submit.", this);
         if (!mState.hasAccess) [[unlikely]] {
             if (mSharedResourceMemoryContents != nullptr) {
