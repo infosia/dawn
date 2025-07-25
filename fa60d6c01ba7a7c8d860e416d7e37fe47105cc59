@@ -18,6 +18,57 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f02dd481_9f86b97a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-25T16:18:03Z",
+      "side": 1,
+      "message": "+CC Quyen for the potential D3D11 mapping improvement.",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73f33979_44011f12",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-25T16:18:03Z",
+      "side": 1,
+      "message": "nit: Maybe comment that this handles Vulkan validation constraints around `nonCoherentAtomSize` so we don\u0027t need to look inside the function to know why it needs to exist.",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e75cfeb_bcac2e0d",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-25T16:18:03Z",
+      "side": 1,
+      "message": "Can we make it work even if we don\u0027t suballocate yet? (it will just be a `memoryOffset \u003d allocation.GetOffset() + offset`)",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "335dfdaf_a4e0d5d9",
@@ -35,6 +86,121 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "df61c9bf_2477ad30",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-25T16:18:03Z",
+      "side": 1,
+      "message": "Yes `vkInvalidateMappedMemoryRanges` here happens before the end of the GPU commands. The task you are thinking of inserting is the same at the MapAsyncTask in Buffer.cpp, that call [`SetMapped`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Buffer.cpp;drc\u003d4e5bc997187b317fd1da3b0a0456ee7e50b3d306;l\u003d459). It seems that we now have three backends that could use a signal from the frontend when a mapping is effective so it\u0027s worth adding another hook for that. ([D3D11](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/d3d11/BufferD3D11.cpp;drc\u003d8c55820034cee5d7146587f35ab04c9456308244;l\u003d523) and [GL](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/BufferGL.cpp;drc\u003d8c55820034cee5d7146587f35ab04c9456308244;l\u003d218) which both would want to call the Map() only when we know the buffer is no longer in use)\n\nMaybe \"FinalizeMapAsyncImpl\"? And rename BufferBase::SetMapped to FinalizeMapAsync?",
+      "parentUuid": "335dfdaf_a4e0d5d9",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "462c454e_b2c5ee77",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-25T16:18:03Z",
+      "side": 1,
+      "message": "The tracking of mFlushRangeOnUnmap is redundant with the information that the frontend already knows. What do you think of passing the same arguments to UnmapImpl as we pass to MapAsyncImpl? (we\u0027d need to set MapMode::Write when mappind at creation).",
+      "range": {
+        "startLine": 600,
+        "startChar": 8,
+        "endLine": 600,
+        "endChar": 26
+      },
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38d71f24_35635799",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-25T16:18:03Z",
+      "side": 1,
+      "message": "Note: In the future we might want to buffer all the calls to `vkFlushMappedMemoryRanges` to the next queue submission. But it could also get tricky with Dawn\u0027s reentrancy.",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f23ec67_5450766f",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-25T16:18:03Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b088dfad_0e9a266e",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-25T16:18:03Z",
+      "side": 1,
+      "message": "We don\u0027t need this as UnmapImpl is already called in [1]. IMHO it\u0027s ok to do the slight unnecessary work when destroying a mapped buffer.",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f1b18be_af79c74b",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-25T16:18:03Z",
+      "side": 1,
+      "message": "(thinking about the Nvidia Vulkan issue we had previously): on desktop GPUs we want to use these heaps only if the driver exposes \"Resizeable BAR\" or \"Smart Access Memory\". We can detect this by checking if the heap size is larger than 256 MB since that\u0027s the BAR size without these features.",
+      "range": {
+        "startLine": 197,
+        "startChar": 73,
+        "endLine": 201,
+        "endChar": 88
+      },
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c117c43b_e0ea2d70",
@@ -48,6 +214,41 @@
       "writtenOn": "2025-07-24T16:59:53Z",
       "side": 1,
       "message": "FWIW I\u0027d like to pull this logic out of RMA and into it\u0027s own class in order to write unit tests against it. The logic here + GetRequiredMemorPropertyFlags() keeps getting more complicated and could use some tests.",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f40f4ca_57756f91",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-25T16:18:03Z",
+      "side": 1,
+      "message": "Sounds good, we can have a few examples of representative GPU heaps and check that the correct heaps are returned.",
+      "parentUuid": "c117c43b_e0ea2d70",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fce95c8_c2101703",
+        "filename": "src/dawn/native/vulkan/ResourceMemoryAllocatorVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-25T16:18:03Z",
+      "side": 1,
+      "message": "We could also decide to always use CACHED instead of COHERENT since we are adding handling now. (though this CL only handles the read case so the write case will need to be added)",
       "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
