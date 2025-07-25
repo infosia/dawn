@@ -30,18 +30,33 @@ import("../../../scripts/dawn_overrides_with_defaults.gni")
 import("${dawn_root}/scripts/dawn_component.gni")
 
 if (dawn_enable_devtool_playback) {
+  # source_set("playback_headers") {
+  #   sources = [
+  #     "Playback.h",
+  #   ]
+  #   all_dependent_configs = [ "${dawn_root}/include/dawn:public" ]
+  # }
+
   dawn_component("playback") {
     DEFINE_PREFIX = "DAWN_DEVTOOL_PLAYBACK"
 
     sources = [
       "CmdPb.h",
       "ObjectType.h",
+      "Playback.cpp",
+      "Playback.h",
       "Replayer.cpp",
       "Replayer.h",
     ]
+
+    # configs = [ "${dawn_root}/src/dawn/native:internal" ]
+
+    # all_dependent_configs = [ "${dawn_root}/include/dawn:public" ]
     deps = [
       "${dawn_root}/src/dawn:proc",
       "${dawn_root}/src/dawn/common",
+
+      # ":playback_headers"
     ]
     public_deps = [ "protos:devtool_cmd_proto" ]
   }

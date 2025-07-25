@@ -69,6 +69,8 @@ class Replayer {
         return true;
     }
 
+    // std::vector<WGPUBuffer> GetBuffers(WGPUDevices device);
+
     // TODO(crbug.com/413053623): More playback control API
 
   private:
