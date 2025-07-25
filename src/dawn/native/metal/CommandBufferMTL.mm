@@ -562,6 +562,8 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
         bool needsFragArgBuffer = false;
         bool needsComputeArgBuffer = false;
 
+        std::vector<uint32_t> dynamicOffsetData;
+
         // TODO(crbug.com/dawn/854): Maintain buffers and offsets arrays in BindGroup
         // so that we only have to do one setVertexBuffers and one setFragmentBuffers
         // call here.
@@ -648,6 +650,8 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     if (layout.hasDynamicOffset) {
                         // Dynamic buffers are packed at the front of BindingIndices.
                         offset += dynamicOffsets[bindingIndex];
+
+                        dynamicOffsetData.push_back(offset);
                     }
 
                     if (hasVertStage) {
@@ -713,6 +717,24 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                 [&](const TextureBindingInfo&) { HandleTextureBinding(); },
                 [&](const StorageTextureBindingInfo&) { HandleTextureBinding(); },
                 [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
+        }
+
+        if (!dynamicOffsetData.empty()) {
+            if (needsVertexArgBuffer) {
+                [render setVertexBytes:dynamicOffsetData.data()
+                                length:dynamicOffsetData.size() * sizeof(uint32_t)
+                               atIndex:1];
+            }
+            if (needsFragArgBuffer) {
+                [render setFragmentBytes:dynamicOffsetData.data()
+                                  length:dynamicOffsetData.size() * sizeof(uint32_t)
+                                 atIndex:1];
+            }
+            if (needsComputeArgBuffer) {
+                [compute setBytes:dynamicOffsetData.data()
+                           length:dynamicOffsetData.size() * sizeof(uint32_t)
+                          atIndex:1];
+            }
         }
 
         // TODO(dsinclair): The `atIndex` in each of these should be provided by Dawn to be unique

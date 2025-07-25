@@ -33,6 +33,7 @@
 #include "src/tint/lang/core/ir/builder.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/binding_array.h"
+#include "src/tint/lang/msl/ir/reinterpret_cast.h"
 
 namespace tint::msl::writer::raise {
 namespace {
@@ -73,9 +74,13 @@ struct State {
     /// A map from block to its containing function.
     Hashmap<core::ir::Block*, core::ir::Function*, 64> block_to_function{};
 
+    /// Maps from a group number to the dynamic offset buffer
+    Hashmap<uint32_t, core::ir::Value*, 8> group_to_dynamic_offset_buffer{};
+
     // The name of the argument buffer structures.
     static constexpr const char* kArgBufferName = "tint_arg_buffer_struct";
     static constexpr const char* kArgBufferParamName = "tint_arg_buffer";
+    static constexpr const char* kDynamicOffsetParamName = "tint_dynamic_offset_buffer";
 
     /// Process the module.
     void Process() {
@@ -170,7 +175,7 @@ struct State {
             vars.Push(var);
         }
 
-        // Metal requires the argument buffer `id` entries to be in increasing order. SOrt the Vars
+        // Metal requires the argument buffer `id` entries to be in increasing order. Sort the Vars
         // such that when we create the struct we will create it in ascending order.
         vars.Sort([&](const auto* va, const auto* vb) {
             return va->BindingPoint() < vb->BindingPoint();
@@ -235,6 +240,22 @@ struct State {
             func->Block()->Prepend(ld);
 
             id_to_arg_buffer.Add(buffer_id, ld->Result());
+
+            // If this buffer requires a dynamic offset buffer attached, create the function
+            // parameter
+            if (config.binding_info_to_offset_index.contains(buffer_id)) {
+                auto dynamic_buffer_name =
+                    std::string(kDynamicOffsetParamName) + "_" + std::to_string(buffer_id);
+                auto* dynamic_buffer_param =
+                    b.FunctionParam(dynamic_buffer_name, ty.ptr(storage, ty.array<u32>(), read));
+                dynamic_buffer_param->SetBindingPoint(BindingPoint{0, 1});
+                func->AppendParam(dynamic_buffer_param);
+
+                auto* dynamic_buffer_ld = b.Load(dynamic_buffer_param);
+                func->Block()->Prepend(dynamic_buffer_ld);
+
+                group_to_dynamic_offset_buffer.Add(buffer_id, dynamic_buffer_ld->Result());
+            }
         }
     }
 
@@ -291,12 +312,42 @@ struct State {
         }
 
         if (func->IsEntryPoint()) {
-            auto* arg_buffer = *id_to_arg_buffer.Get(var->BindingPoint()->group);
+            auto group = var->BindingPoint()->group;
+            auto binding = var->BindingPoint()->binding;
+
+            auto* arg_buffer = *id_to_arg_buffer.Get(group);
             auto idx = *var_to_struct_idx.Get(var);
 
             auto* access = b.Access(type, arg_buffer, u32(idx));
             access->InsertBefore(inst);
-            return access->Result();
+
+            auto grp_iter = config.binding_info_to_offset_index.find(group);
+            if (grp_iter == config.binding_info_to_offset_index.end()) {
+                return access->Result();
+            }
+
+            auto binding_iter = grp_iter->second.find(binding);
+            if (binding_iter == grp_iter->second.end()) {
+                return access->Result();
+            }
+
+            TINT_ASSERT(group_to_dynamic_offset_buffer.Contains(group));
+
+            core::ir::Value* offset_buffer = group_to_dynamic_offset_buffer.GetOr(group, nullptr);
+            TINT_ASSERT(offset_buffer);
+
+            core::ir::Value* result = nullptr;
+            b.InsertAfter(access, [&] {
+                auto* offset =
+                    b.Access(ty.u32(), offset_buffer, b.Constant(u32(binding_iter->second)));
+
+                result =
+                    b.Append(b.ir.CreateInstruction<ir::ReinterpretCast>(
+                                 b.InstructionResult(type), access->Result(), offset->Result()))
+                        ->Result();
+            });
+
+            return result;
         }
 
         return AddModuleVarsToFunction(func, var);

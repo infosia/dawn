@@ -53,6 +53,8 @@ libtint_source_set("ir") {
     "member_builtin_call.h",
     "memory_order.cc",
     "memory_order.h",
+    "reinterpret_cast.cc",
+    "reinterpret_cast.h",
   ]
   deps = [
     "${dawn_root}/src/utils:utils",
@@ -81,6 +83,7 @@ if (tint_build_unittests) {
     sources = [
       "builtin_call_test.cc",
       "member_builtin_call_test.cc",
+      "reinterpret_cast_test.cc",
     ]
     deps = [
       "${dawn_root}/src/utils:utils",

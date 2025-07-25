@@ -34,6 +34,7 @@
 #include "dawn/native/metal/DeviceMTL.h"
 #include "dawn/native/metal/SamplerMTL.h"
 #include "dawn/native/metal/TextureMTL.h"
+#include "dawn/native/metal/UtilsMetal.h"
 
 namespace dawn::native::metal {
 
@@ -73,6 +74,10 @@ MaybeError BindGroup::InitializeImpl() {
             mVertexArgumentBuffer =
                 [device->GetMTLDevice() newBufferWithLength:vertArgumentBufferLength options:0];
             [mVertexArgumentEncoder setArgumentBuffer:mVertexArgumentBuffer offset:0];
+
+            // TODO(dsinclair): Remove, this isn't right ...
+            NSRef<NSString> debugName = MakeDebugName(device, "Dawn_buffer", "ArgumentBuffer");
+            [mVertexArgumentBuffer setLabel:debugName.Get()];
         }
     }
     {
@@ -102,6 +107,7 @@ MaybeError BindGroup::InitializeImpl() {
         }
     }
 
+    uint32_t numDynamicBuffers = 0;
     for (BindingIndex bindingIndex : Range(layout->GetBindingCount())) {
         const BindingInfo& bindingInfo = layout->GetBindingInfo(bindingIndex);
 
@@ -134,12 +140,8 @@ MaybeError BindGroup::InitializeImpl() {
                 const id<MTLBuffer> buffer = ToBackend(binding.buffer)->GetMTLBuffer();
                 NSUInteger offset = binding.offset;
 
-                // TODO(crbug.com/dawn/854): Record bound buffer status to use
-                // setBufferOffset to achieve better performance.
                 if (layout.hasDynamicOffset) {
-                    // Dynamic buffers are packed at the front of BindingIndices.
-                    // TODO(dsinclair): Handle dynamic offsets ...
-                    // offset += dynamicOffsets[bindingIndex];
+                    numDynamicBuffers += 1;
                 }
 
                 if (hasVertStage) {
