@@ -30,22 +30,45 @@ import("../../../scripts/dawn_overrides_with_defaults.gni")
 import("${dawn_root}/scripts/dawn_component.gni")
 
 if (dawn_enable_devtool_record) {
-  dawn_component("devtool_record") {
-    DEFINE_PREFIX = "DAWN_DEVTOOL_RECORD"
+  # dawn_component("devtool_record") {
+  #   DEFINE_PREFIX = "DAWN_DEVTOOL_RECORD"
 
+  #   sources = [
+  #     "IncludeCmdPb.h",
+  #     "RecordManager.cpp",
+  #     "RecordManager.h",
+  #   ]
+  #   configs = [ "${dawn_root}/src/dawn/native:internal" ]
+  #   deps = [
+  #     "${dawn_root}/src/dawn/common",
+  #     "${dawn_root}/src/dawn/native",
+  #     "${dawn_root}/src/dawn/native:sources",
+  #     "protos:devtool_cmd_proto",
+  #   ]
+  #   public_deps = [ "${dawn_root}/third_party/protobuf:protobuf_full" ]
+  # }
+
+  source_set("headers") {
     sources = [
+      "Devtool.h",
+    ]
+    all_dependent_configs = [ "${dawn_root}/include/dawn:public" ]
+  }
+
+  source_set("devtool_record") {
+    sources = [
+      "Devtool.cpp",
       "IncludeCmdPb.h",
       "RecordManager.cpp",
       "RecordManager.h",
     ]
-    configs = [ "${dawn_root}/src/dawn/native:internal" ]
-    deps = [
+    public_configs = [ "${dawn_root}/src/dawn/native:internal" ]
+    public_deps = [
       "${dawn_root}/src/dawn/common",
-      "${dawn_root}/src/dawn/native",
-      "${dawn_root}/src/dawn/native:sources",
       "protos:devtool_cmd_proto",
+      "${dawn_root}/third_party/protobuf:protobuf_full",
+      ":headers",
     ]
-    public_deps = [ "${dawn_root}/third_party/protobuf:protobuf_full" ]
   }
 }
 
