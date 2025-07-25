@@ -110,6 +110,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bad033d5_9c764fd5",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-07-25T08:59:37Z",
+      "side": 1,
+      "message": "@yulong.fs@gmail.com Thank you for the update. I will update as soon a https://dawn-review.googlesource.com/c/dawn/+/254234 lands.",
+      "parentUuid": "d42dc80b_7e58440e",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d83bb941_f36b7934",
         "filename": ".github/workflows/ci.yml",
         "patchSetId": 8
