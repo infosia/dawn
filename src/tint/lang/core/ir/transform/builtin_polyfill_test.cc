@@ -2583,6 +2583,194 @@ TEST_F(IR_BuiltinPolyfillTest, Dot4U8Packed) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_BuiltinPolyfillTest, SubgroupBroadcastF16_NoPolyfill) {
+    Build(core::BuiltinFn::kSubgroupBroadcast, ty.f16(), Vector{ty.f16(), ty.u32()});
+
+    auto* src = R"(
+%foo = func(%arg:f16, %arg_1:u32):f16 {  # %arg_1: 'arg'
+  $B1: {
+    %result:f16 = subgroupBroadcast %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = src;
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_broadcast_f16 = false;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, SubgroupBroadcast_F32_NotPolyfilled) {
+    Build(core::BuiltinFn::kSubgroupBroadcast, ty.f32(), Vector{ty.f32(), ty.u32()});
+
+    auto* src = R"(
+%foo = func(%arg:f32, %arg_1:u32):f32 {  # %arg_1: 'arg'
+  $B1: {
+    %result:f32 = subgroupBroadcast %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = src;
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_broadcast_f16 = true;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, SubgroupBroadcastF16_Scalar) {
+    Build(core::BuiltinFn::kSubgroupBroadcast, ty.f16(), Vector{ty.f16(), ty.u32()});
+
+    auto* src = R"(
+%foo = func(%arg:f16, %arg_1:u32):f16 {  # %arg_1: 'arg'
+  $B1: {
+    %result:f16 = subgroupBroadcast %arg, %arg_1
+    ret %result
+  }
+}
+)";
+
+    auto* expect = R"(
+%foo = func(%arg:f16, %arg_1:u32):f16 {  # %arg_1: 'arg'
+  $B1: {
+    %4:vec2<f16> = construct %arg, 0.0h
+    %5:u32 = bitcast %4
+    %6:u32 = subgroupBroadcast %5, %arg_1
+    %7:vec2<f16> = bitcast %6
+    %8:f16 = access %7, 0u
+    ret %8
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_broadcast_f16 = true;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, SubgroupBroadcastF16_Vec2) {
+    Build(core::BuiltinFn::kSubgroupBroadcast, ty.vec2<f16>(), Vector{ty.vec2<f16>(), ty.u32()});
+
+    auto* src = R"(
+%foo = func(%arg:vec2<f16>, %arg_1:u32):vec2<f16> {  # %arg_1: 'arg'
+  $B1: {
+    %result:vec2<f16> = subgroupBroadcast %arg, %arg_1
+    ret %result
+  }
+}
+)";
+
+    auto* expect = R"(
+%foo = func(%arg:vec2<f16>, %arg_1:u32):vec2<f16> {  # %arg_1: 'arg'
+  $B1: {
+    %4:u32 = bitcast %arg
+    %5:u32 = subgroupBroadcast %4, %arg_1
+    %6:vec2<f16> = bitcast %5
+    ret %6
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_broadcast_f16 = true;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, SubgroupBroadcastF16_Vec3) {
+    Build(core::BuiltinFn::kSubgroupBroadcast, ty.vec3<f16>(), Vector{ty.vec3<f16>(), ty.u32()});
+
+    auto* src = R"(
+%foo = func(%arg:vec3<f16>, %arg_1:u32):vec3<f16> {  # %arg_1: 'arg'
+  $B1: {
+    %result:vec3<f16> = subgroupBroadcast %arg, %arg_1
+    ret %result
+  }
+}
+)";
+
+    auto* expect = R"(
+%foo = func(%arg:vec3<f16>, %arg_1:u32):vec3<f16> {  # %arg_1: 'arg'
+  $B1: {
+    %4:f16 = access %arg, 0u
+    %5:f16 = access %arg, 1u
+    %6:f16 = access %arg, 2u
+    %7:vec2<f16> = construct %4, %5
+    %8:u32 = bitcast %7
+    %9:u32 = subgroupBroadcast %8, %arg_1
+    %10:vec2<f16> = bitcast %9
+    %11:vec2<f16> = construct %6, 0.0h
+    %12:u32 = bitcast %11
+    %13:u32 = subgroupBroadcast %12, %arg_1
+    %14:vec2<f16> = bitcast %13
+    %15:f16 = access %14, 0u
+    %16:vec3<f16> = construct %10, %15
+    ret %16
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_broadcast_f16 = true;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, SubgroupBroadcastF16_Vec4) {
+    Build(core::BuiltinFn::kSubgroupBroadcast, ty.vec4<f16>(), Vector{ty.vec4<f16>(), ty.u32()});
+
+    auto* src = R"(
+%foo = func(%arg:vec4<f16>, %arg_1:u32):vec4<f16> {  # %arg_1: 'arg'
+  $B1: {
+    %result:vec4<f16> = subgroupBroadcast %arg, %arg_1
+    ret %result
+  }
+}
+)";
+
+    auto* expect = R"(
+%foo = func(%arg:vec4<f16>, %arg_1:u32):vec4<f16> {  # %arg_1: 'arg'
+  $B1: {
+    %4:vec2<u32> = bitcast %arg
+    %5:u32 = access %4, 0u
+    %6:u32 = access %4, 1u
+    %7:u32 = subgroupBroadcast %5, %arg_1
+    %8:u32 = subgroupBroadcast %6, %arg_1
+    %9:vec2<u32> = construct %7, %8
+    %10:vec4<f16> = bitcast %9
+    ret %10
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_broadcast_f16 = true;
+    Run(BuiltinPolyfill, config);
+
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(IR_BuiltinPolyfillTest, Reflect_NoPolyfill) {
     Build(core::BuiltinFn::kReflect, ty.vec2<f32>(), Vector{ty.vec2<f32>(), ty.vec2<f32>()});
     auto* src = R"(
