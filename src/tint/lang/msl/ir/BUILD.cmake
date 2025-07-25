@@ -49,6 +49,8 @@ tint_add_target(tint_lang_msl_ir lib
   lang/msl/ir/member_builtin_call.h
   lang/msl/ir/memory_order.cc
   lang/msl/ir/memory_order.h
+  lang/msl/ir/reinterpret_cast.cc
+  lang/msl/ir/reinterpret_cast.h
 )
 
 tint_target_add_dependencies(tint_lang_msl_ir lib
@@ -83,6 +85,7 @@ tint_target_add_external_dependencies(tint_lang_msl_ir lib
 tint_add_target(tint_lang_msl_ir_test test
   lang/msl/ir/builtin_call_test.cc
   lang/msl/ir/member_builtin_call_test.cc
+  lang/msl/ir/reinterpret_cast_test.cc
 )
 
 tint_target_add_dependencies(tint_lang_msl_ir_test test

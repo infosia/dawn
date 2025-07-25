@@ -52,6 +52,8 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
     id<MTLBuffer> GetFragmentArgumentBuffer() { return mFragmentArgumentBuffer; }
     id<MTLBuffer> GetComputeArgumentBuffer() { return mComputeArgumentBuffer; }
 
+    id<MTLBuffer> GetDynamicOffsetBuffer() { return mDynamicOffsetBuffer; }
+
   private:
     ~BindGroup() override;
 
@@ -66,6 +68,8 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
     id<MTLBuffer> mVertexArgumentBuffer;
     id<MTLBuffer> mFragmentArgumentBuffer;
     id<MTLBuffer> mComputeArgumentBuffer;
+
+    id<MTLBuffer> mDynamicOffsetBuffer;
 };
 
 }  // namespace dawn::native::metal

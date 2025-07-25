@@ -46,8 +46,12 @@ struct ArgumentBuffersConfig {
     // The set of bindings which should not go into argument buffers.
     std::unordered_set<tint::BindingPoint> skip_bindings;
 
+    /// Dynamic offsets map. The map is group -> binding -> offset
+    std::unordered_map<uint32_t, std::unordered_map<uint32_t, uint32_t>>
+        binding_info_to_offset_index;
+
     /// Reflect the fields of this class so that it can be used by tint::ForeachField()
-    TINT_REFLECT(ArgumentBuffersConfig, skip_bindings);
+    TINT_REFLECT(ArgumentBuffersConfig, skip_bindings, binding_info_to_offset_index);
 };
 
 /// ArgumentBuffers is a transform that replaces module-scope variables with entry-point

@@ -96,6 +96,7 @@
 #include "src/tint/lang/msl/ir/component.h"
 #include "src/tint/lang/msl/ir/member_builtin_call.h"
 #include "src/tint/lang/msl/ir/memory_order.h"
+#include "src/tint/lang/msl/ir/reinterpret_cast.h"
 #include "src/tint/lang/msl/type/bias.h"
 #include "src/tint/lang/msl/type/gradient.h"
 #include "src/tint/lang/msl/type/level.h"
@@ -264,6 +265,10 @@ class Printer : public tint::TextGenerator {
         }
         return Switch(
             value->As<core::ir::InstructionResult>()->Instruction(),
+            [&](const msl::ir::ReinterpretCast*) {
+                // Reinterpret cast is always a pointer
+                return true;
+            },
             [&](const core::ir::Var*) {
                 // Variable declarations are always references.
                 return false;
@@ -502,17 +507,18 @@ class Printer : public tint::TextGenerator {
             [&](const core::ir::Constant* c) { EmitConstant(out, c); },  //
             [&](const core::ir::InstructionResult* r) {
                 Switch(
-                    r->Instruction(),                                                    //
-                    [&](const core::ir::Binary* b) { EmitBinary(out, b); },              //
-                    [&](const core::ir::CoreUnary* u) { EmitUnary(out, u); },            //
-                    [&](const core::ir::Convert* b) { EmitConvert(out, b); },            //
-                    [&](const core::ir::Let* l) { out << NameOf(l->Result()); },         //
-                    [&](const core::ir::Load* l) { EmitLoad(out, l); },                  //
-                    [&](const core::ir::Construct* c) { EmitConstruct(out, c); },        //
-                    [&](const core::ir::Var* var) { out << NameOf(var->Result()); },     //
-                    [&](const core::ir::Bitcast* b) { EmitBitcast(out, b); },            //
-                    [&](const core::ir::Access* a) { EmitAccess(out, a); },              //
-                    [&](const msl::ir::BuiltinCall* c) { EmitMslBuiltinCall(out, c); },  //
+                    r->Instruction(),                                                         //
+                    [&](const core::ir::Binary* b) { EmitBinary(out, b); },                   //
+                    [&](const core::ir::CoreUnary* u) { EmitUnary(out, u); },                 //
+                    [&](const core::ir::Convert* b) { EmitConvert(out, b); },                 //
+                    [&](const core::ir::Let* l) { out << NameOf(l->Result()); },              //
+                    [&](const core::ir::Load* l) { EmitLoad(out, l); },                       //
+                    [&](const core::ir::Construct* c) { EmitConstruct(out, c); },             //
+                    [&](const core::ir::Var* var) { out << NameOf(var->Result()); },          //
+                    [&](const core::ir::Bitcast* b) { EmitBitcast(out, b); },                 //
+                    [&](const core::ir::Access* a) { EmitAccess(out, a); },                   //
+                    [&](const msl::ir::BuiltinCall* c) { EmitMslBuiltinCall(out, c); },       //
+                    [&](const msl::ir::ReinterpretCast* c) { EmitReinterpretCast(out, c); },  //
                     [&](const msl::ir::MemberBuiltinCall* c) {
                         EmitMslMemberBuiltinCall(out, c);
                     },                                                                         //
@@ -526,6 +532,18 @@ class Printer : public tint::TextGenerator {
             },                                                            //
             [&](const core::ir::FunctionParam* p) { out << NameOf(p); },  //
             TINT_ICE_ON_NO_MATCH);
+    }
+
+    // This is a bit weird in that the reinterpret cast allows adding an offset so we can do pointer
+    // arithmetic on the pointer before turning it into the result type.
+    void EmitReinterpretCast(StringStream& out, const msl::ir::ReinterpretCast* c) {
+        out << "reinterpret_cast<";
+        EmitType(out, c->Result()->Type());
+        out << ">(reinterpret_cast<const constant char*>(";
+        EmitValue(out, c->Val());
+        out << ") + ";
+        EmitValue(out, c->Offset());
+        out << ")";
     }
 
     void EmitUnary(StringStream& out, const core::ir::CoreUnary* u) {

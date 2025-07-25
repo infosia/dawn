@@ -562,6 +562,8 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
         bool needsFragArgBuffer = false;
         bool needsComputeArgBuffer = false;
 
+        std::vector<uint32_t> dynamicOffsetData;
+
         // TODO(crbug.com/dawn/854): Maintain buffers and offsets arrays in BindGroup
         // so that we only have to do one setVertexBuffers and one setFragmentBuffers
         // call here.
@@ -648,6 +650,8 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     if (layout.hasDynamicOffset) {
                         // Dynamic buffers are packed at the front of BindingIndices.
                         offset += dynamicOffsets[bindingIndex];
+
+                        dynamicOffsetData.push_back(offset);
                     }
 
                     if (hasVertStage) {
@@ -713,6 +717,31 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                 [&](const TextureBindingInfo&) { HandleTextureBinding(); },
                 [&](const StorageTextureBindingInfo&) { HandleTextureBinding(); },
                 [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
+        }
+
+        if (!dynamicOffsetData.empty()) {
+            auto buffer = group->GetDynamicOffsetBuffer();
+
+            // TODO(dsinclair): This is probably in the wrong spot? Where do I upload the dynamic
+            // offsets into this buffer to make sure it's there for each draw call?
+            memcpy(buffer.contents, dynamicOffsetData.data(),
+                   dynamicOffsetData.size() * sizeof(uint32_t));
+
+            // TODO(dsinclair): Should this be an ensure blit?
+            //[commandContext->EnsureBlit() fillBuffer:buffer
+            //                                   range:NSMakeRange(0, dynamicOffsetsData.size() *
+            //                                   sizeof(uint32_t))
+            //                                   value:0u];
+
+            if (needsVertexArgBuffer) {
+                [render setVertexBuffer:buffer offset:0 atIndex:1];
+            }
+            if (needsFragArgBuffer) {
+                [render setFragmentBuffer:buffer offset:0 atIndex:1];
+            }
+            if (needsComputeArgBuffer) {
+                [compute setBuffer:buffer offset:0 atIndex:1];
+            }
         }
 
         // TODO(dsinclair): The `atIndex` in each of these should be provided by Dawn to be unique
