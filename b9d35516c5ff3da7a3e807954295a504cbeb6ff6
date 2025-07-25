@@ -71,6 +71,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6a5305d_152b4865",
+        "filename": "src/tint/lang/msl/validate/validate_metal.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-25T11:45:51Z",
+      "side": 1,
+      "message": "Done.\n\nThe macro guard does now work though, so that\u0027s something.",
+      "parentUuid": "abc6c60c_e11757b0",
+      "revId": "b9d35516c5ff3da7a3e807954295a504cbeb6ff6",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "951cf89d_7d5b2cb3",
