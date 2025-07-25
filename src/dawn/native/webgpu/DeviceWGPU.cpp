@@ -137,7 +137,14 @@ ResultOrError<Ref<BindGroupLayoutInternalBase>> Device::CreateBindGroupLayoutImp
 }
 ResultOrError<Ref<BufferBase>> Device::CreateBufferImpl(
     const UnpackedPtr<BufferDescriptor>& descriptor) {
-    return Buffer::Create(this, descriptor);
+    // return Buffer::Create(this, descriptor);
+    Ref<BufferBase> buffer;
+    DAWN_TRY_ASSIGN(buffer, Buffer::Create(this, descriptor));
+
+    if (IsRecord()) {
+        mRecord->EncodeDeviceCreateBuffer(this, ToBackend(buffer.Get()), descriptor);
+    }
+    return buffer;
 }
 ResultOrError<Ref<CommandBufferBase>> Device::CreateCommandBuffer(
     CommandEncoder* encoder,
@@ -236,6 +243,33 @@ uint64_t Device::GetOptimalBufferToTextureCopyOffsetAlignment() const {
 
 float Device::GetTimestampPeriodInNS() const {
     return 1.0f;
+}
+
+// Record Replay related temp
+bool Device::IsRecord() const {
+    return mRecord != nullptr;
+    // Is capturing?
+}
+
+bool Device::IsPlayback() const {
+    return mPlayback != nullptr;
+}
+
+void Device::SetRecord(std::unique_ptr<devtool::RecordCommandSerializer> record) {
+    mRecord = std::move(record);
+    mPlayback = nullptr;
+}
+
+void Device::SetReplay(std::unique_ptr<devtool::PlaybackCommandDeserializer> playback) {
+    mPlayback = std::move(playback);
+    mRecord = nullptr;
+}
+
+devtool::RecordCommandSerializer* Device::GetRecordCommandSerializer() const {
+    return mRecord.get();
+}
+devtool::PlaybackCommandDeserializer* Device::GetPlaybackCommandDeserializer() const {
+    return mPlayback.get();
 }
 
 }  // namespace dawn::native::webgpu

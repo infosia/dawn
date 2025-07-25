@@ -32,6 +32,7 @@
 
 #include "dawn/common/StringViewUtils.h"
 #include "dawn/native/Buffer.h"
+#include "dawn/native/devtool/RecordManager.h"
 #include "dawn/native/webgpu/DeviceWGPU.h"
 #include "dawn/native/webgpu/QueueWGPU.h"
 
