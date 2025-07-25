@@ -30,39 +30,55 @@ import("../../../scripts/dawn_overrides_with_defaults.gni")
 import("${dawn_root}/scripts/dawn_component.gni")
 
 if (dawn_enable_devtool_record) {
-  dawn_component("devtool_record") {
-    DEFINE_PREFIX = "DAWN_DEVTOOL_RECORD"
+  source_set("record_headers") {
+    sources = [ "Record.h" ]
+    all_dependent_configs = [ "${dawn_root}/include/dawn:public" ]
+  }
 
+  source_set("devtool_record") {
     sources = [
       "IncludeCmdPb.h",
+      "Record.cpp",
       "RecordManager.cpp",
       "RecordManager.h",
     ]
-    configs = [ "${dawn_root}/src/dawn/native:internal" ]
-    deps = [
+    public_configs = [ "${dawn_root}/src/dawn/native:internal" ]
+    public_deps = [
+      ":record_headers",
       "${dawn_root}/src/dawn/common",
-      "${dawn_root}/src/dawn/native",
-      "${dawn_root}/src/dawn/native:sources",
+      "${dawn_root}/third_party/protobuf:protobuf_full",
       "protos:devtool_cmd_proto",
     ]
-    public_deps = [ "${dawn_root}/third_party/protobuf:protobuf_full" ]
   }
 }
 
 if (dawn_enable_devtool_playback) {
+  # source_set("playback_headers") {
+  #   sources = [
+  #     "Playback.h",
+  #   ]
+  #   all_dependent_configs = [ "${dawn_root}/include/dawn:public" ]
+  # }
+
   dawn_component("devtool_playback") {
     DEFINE_PREFIX = "DAWN_DEVTOOL_PLAYBACK"
 
     sources = [
       "IncludeCmdPb.h",
+      "Playback.cpp",
+      "Playback.h",
       "PlaybackManager.cpp",
       "PlaybackManager.h",
     ]
     configs = [ "${dawn_root}/src/dawn/native:internal" ]
+
+    # all_dependent_configs = [ "${dawn_root}/include/dawn:public" ]
     deps = [
       "${dawn_root}/src/dawn:proc",
       "${dawn_root}/src/dawn/common",
       "protos:devtool_cmd_proto",
+
+      # ":playback_headers"
     ]
     public_deps = [ "${dawn_root}/third_party/protobuf:protobuf_full" ]
   }

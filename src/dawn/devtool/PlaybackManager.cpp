@@ -105,6 +105,10 @@ bool PlaybackCommandDeserializer::SetId(void* object, ObjectId id) {
     return true;
 }
 
+// std::vector<WGPUBuffer> PlaybackCommandDeserializer::GetBuffers(WGPUDevice device) {
+
+// }
+
 void PlaybackCommandDeserializer::InitFromSnapshotGlobalState(
     WGPUDevice device,
     const cmd::pb::SnapshotGlobalState& globalState) {
