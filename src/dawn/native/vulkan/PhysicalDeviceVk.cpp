@@ -473,9 +473,12 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
     EnableFeature(Feature::AdapterPropertiesVk);
     EnableFeature(Feature::DawnLoadResolveTexture);
 
-    // The function subgroupBroadcast(f16) fails for some edge cases on intel gen-9 devices.
-    // See crbug.com/391680973
-    const bool kForceDisableSubgroups = gpu_info::IsIntelGen9(GetVendorId(), GetDeviceId());
+    // The function subgroupBroadcast(f16) fails for some edge cases on intel gen-9 devices. See
+    // crbug.com/391680973. We disable subgroups on this device unless the user has explicitly
+    // enabled the 'polyfill_subgroup_broadcast_f16' toggle.
+    const bool kForceDisableSubgroups =
+        gpu_info::IsIntelGen9(GetVendorId(), GetDeviceId()) &&
+        !deviceToggles->IsEnabled(Toggle::PolyfillSubgroupBroadcastF16);
 
     // Enable Subgroups feature if:
     // 1. Vulkan API version is 1.1 or later, and
