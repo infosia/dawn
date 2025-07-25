@@ -31,6 +31,7 @@
 #include <memory>
 #include <vector>
 
+#include "dawn/devtool/Recorder.h"
 #include "dawn/native/Device.h"
 #include "dawn/native/ToBackend.h"
 #include "dawn/native/webgpu/Forward.h"
@@ -58,6 +59,18 @@ class Device final : public DeviceBase, public ObjectWGPU<WGPUDevice> {
     WGPUInstance GetInnerInstance() const;
 
     const DawnProcTable& wgpu;
+
+#if defined(DAWN_ENABLE_DEVTOOL_RECORD)
+    // record replay related
+    void SetRecord(std::unique_ptr<devtool::Recorder> record);
+    devtool::Recorder* GetRecorder() const;
+
+    // temp
+    bool IsRecording() const;
+
+    // temp public
+    std::unique_ptr<devtool::Recorder> mRecord = nullptr;
+#endif
 
   private:
     Device(AdapterBase* adapter,

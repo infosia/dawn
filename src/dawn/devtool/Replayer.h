@@ -53,6 +53,8 @@ class Replayer {
     //   - Objects exist outside of the record range (e.g. Device, default Queue).
     bool SetId(void* object, ObjectId id);
 
+    // std::vector<WGPUBuffer> GetBuffers(WGPUDevices device);
+
     // TODO(crbug.com/413053623): More playback control API
 
   private:
