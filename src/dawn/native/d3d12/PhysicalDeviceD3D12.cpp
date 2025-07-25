@@ -190,9 +190,12 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::ShaderF16);
     }
 
-    // The function subgroupBroadcast(f16) fails for some edge cases on intel gen-9 devices.
-    // See crbug.com/391680973
-    const bool kForceDisableSubgroups = gpu_info::IsIntelGen9(GetVendorId(), GetDeviceId());
+    // The function subgroupBroadcast(f16) fails for some edge cases on intel gen-9 devices. See
+    // crbug.com/391680973. We disable subgroups on this device unless the user has explicitly
+    // enabled the 'polyfill_subgroup_broadcast_f16' toggle.
+    const bool kForceDisableSubgroups =
+        gpu_info::IsIntelGen9(GetVendorId(), GetDeviceId()) &&
+        !deviceToggles->IsEnabled(Toggle::PolyfillSubgroupBroadcastF16);
     // Subgroups feature requires SM >= 6.0 and capabilities flags.
     if (!kForceDisableSubgroups && mDeviceInfo.supportsWaveOps) {
         EnableFeature(Feature::Subgroups);
@@ -627,7 +630,6 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
 #else
     const bool dxcAvailable = false;
 #endif
-
     const bool useResourceHeapTier2 = (GetDeviceInfo().resourceHeapTier >= 2);
     deviceToggles->Default(Toggle::UseD3D12ResourceHeapTier2, useResourceHeapTier2);
     deviceToggles->Default(Toggle::UseD3D12RenderPass, GetDeviceInfo().supportsRenderPass);
