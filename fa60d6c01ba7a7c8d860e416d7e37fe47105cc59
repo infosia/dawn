@@ -18,6 +18,23 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "335dfdaf_a4e0d5d9",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1004831
+      },
+      "writtenOn": "2025-07-25T15:12:10Z",
+      "side": 1,
+      "message": "I have been investigating the dawn_end2end_test failures. They are not deterministic but all involve reading from a mapped buffer and getting the wrong value. It seems like I broke something synchronization related in this CL.\n\nI do see memory barriers being inserted on read with `VK_ACCESS_HOST_READ_BIT` and `VK_PIPELINE_STAGE_HOST_BIT` so I think that is working. Looking at the order of events I\u0027m thinking the vkInvalidateMappedMemoryRanges() call here is done at the wrong time? This code runs before before the barrier passes on the device.\n\nDoes that sound correct? If so, I guess I need to run vkInvalidateMappedMemoryRanges() once the completed serial passes next current command serial. I have a vague understanding of all this so I could use some guidance. Do I insert a task so that queue runs it [here](https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/Queue.cpp;l\u003d285-297;drc\u003d4e5bc997187b317fd1da3b0a0456ee7e50b3d306) and if so are there good examples on doing that?",
+      "revId": "fa60d6c01ba7a7c8d860e416d7e37fe47105cc59",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "c117c43b_e0ea2d70",
