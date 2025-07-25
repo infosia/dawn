@@ -30,6 +30,7 @@
 #include "absl/strings/str_format.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/IOSurfaceUtils.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
 #include "dawn/common/Platform.h"
 #include "dawn/native/ChainUtils.h"
@@ -343,6 +344,9 @@ ResultOrError<Ref<Texture>> Texture::Create(Device* device,
 ResultOrError<Ref<Texture>> Texture::CreateFromSharedTextureMemory(
     SharedTextureMemory* memory,
     const UnpackedPtr<TextureDescriptor>& descriptor) {
+    if (descriptor->size.width == 800 && descriptor->size.height == 600) {
+        DAWN_DEBUG() << "CreateFromSharedTextureMemory";
+    }
     // Note: Initialized state is set on memory.BeginAccess, so we leave
     // subresources as uninitialized at this point.
 

@@ -161,6 +161,9 @@ if (is_wasm) {
       "--closure-args=--externs=" + rebase_path(
               "../../third_party/emdawnwebgpu/pkg/webgpu/src/webgpu-externs.js"),
     ]
+    if (is_debug) {
+      ldflags += [ "-gsource-map" ]
+    }
   }
 
   # Dawn's WebGPU bindings for Emscripten. These don't actually use Dawn at all,

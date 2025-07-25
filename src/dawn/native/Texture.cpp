@@ -34,6 +34,7 @@
 #include "dawn/common/Assert.h"
 #include "dawn/common/Constants.h"
 #include "dawn/common/HashUtils.h"
+#include "dawn/common/Log.h"
 #include "dawn/common/Math.h"
 #include "dawn/native/Adapter.h"
 #include "dawn/native/BlitBufferToTexture.h"
@@ -982,6 +983,10 @@ TextureBase::TextureBase(DeviceBase* device, const UnpackedPtr<TextureDescriptor
       mUsage(descriptor->usage),
       mInternalUsage(mUsage),
       mFormatEnumForReflection(descriptor->format) {
+    if (descriptor->size.width == 800 && descriptor->size.height == 600) {
+        DAWN_DEBUG() << "Created a 800x600 texture: " << std::string(descriptor->label) << " " << this;
+    }
+
     uint32_t subresourceCount =
         mMipLevelCount * GetArrayLayers() * GetAspectCount(mFormat->aspects);
     mIsSubresourceContentInitializedAtIndex = std::vector<bool>(subresourceCount, false);
@@ -1021,6 +1026,10 @@ TextureBase::TextureBase(DeviceBase* device,
       mFormatEnumForReflection(descriptor->format) {}
 
 void TextureBase::DestroyImpl() {
+    if (mBaseSize.width == 800 && mBaseSize.height == 600) {
+        DAWN_DEBUG() << "DestroyImpl on 800x600 texture: " << this;
+    }
+
     // TODO(crbug.com/dawn/831): DestroyImpl is called from two places.
     // - It may be called if the texture is explicitly destroyed with APIDestroy.
     //   This case is NOT thread-safe and needs proper synchronization with other
@@ -1074,6 +1083,10 @@ void TextureBase::WillAddFirstExternalRef() {
 }
 
 void TextureBase::WillDropLastExternalRef() {
+    if (mBaseSize.width == 800 && mBaseSize.height == 600) {
+        DAWN_DEBUG() << "WillDropLastExternalRef on 800x600 texture: " << this;
+    }
+
     // Drop all the additional references to TextureViews that we were holding as a part of the
     // cache.
     mTextureViewCache = nullptr;
@@ -1286,6 +1299,9 @@ void TextureBase::SetIsSubresourceContentInitialized(bool isInitialized,
 MaybeError TextureBase::ValidateCanUseInSubmitNow() const {
     DAWN_ASSERT(!IsError());
     if (mState.destroyed || !mState.hasAccess) [[unlikely]] {
+        if (mState.destroyed) {
+            DAWN_DEBUG() << "Failed validation because of destroyed: " << this;
+        }
         DAWN_INVALID_IF(mState.destroyed, "Destroyed texture %s used in a submit.", this);
         if (!mState.hasAccess) [[unlikely]] {
             if (mSharedResourceMemoryContents != nullptr) {
@@ -1484,6 +1500,10 @@ ResultOrError<Ref<TextureViewBase>> TextureBase::GetOrCreateDefaultView() {
 }
 
 void TextureBase::APIDestroy() {
+    if (mBaseSize.width == 800 && mBaseSize.height == 600) {
+        DAWN_ASSERT(false);
+        DAWN_DEBUG() << "APIDestroy on 800x600 texture: " << this;
+    }
     Destroy();
 }
 

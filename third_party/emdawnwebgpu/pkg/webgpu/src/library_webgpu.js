@@ -2224,7 +2224,7 @@ var LibraryWebGPU = {
 
   wgpuRenderPassEncoderDraw: (passPtr, vertexCount, instanceCount, firstVertex, firstInstance) => {
     var pass = WebGPU.getJsObject(passPtr);
-    pass.draw(vertexCount, instanceCount, firstVertex, firstInstance);
+    pass.draw(vertexCount, instanceCount, firstVertex, firstInstance >>>= 0);
   },
 
   wgpuRenderPassEncoderDrawIndexed: (passPtr, indexCount, instanceCount, firstIndex, baseVertex, firstInstance) => {

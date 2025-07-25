@@ -1487,6 +1487,11 @@ TextureBase* DeviceBase::APICreateTexture(const TextureDescriptor* descriptor) {
                       "calling %s.CreateTexture(%s).", this, descriptor)) {
         result = TextureBase::MakeError(this, descriptor);
     }
+
+    if (descriptor->size.width == 800 && descriptor->size.height == 600) {
+        DAWN_DEBUG() << "Created a 800x600 texture: " << result.Get();
+    }
+
     return ReturnToAPI(std::move(result));
 }
 

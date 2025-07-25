@@ -620,6 +620,7 @@ class EventManager : NonMovable {
         auto eventIt = mEvents.find(futureId);
         if (eventIt == mEvents.end()) {
           infos[i].completed = true;
+          anyCompleted = true;
           continue;
         }
 
@@ -849,20 +850,24 @@ struct WGPUShaderModuleImpl final : public EventSource, public RefCounted {
 
   struct WGPUCompilationInfoDeleter {
     void operator()(WGPUCompilationInfo* compilationInfo) {
+      DEBUG_PRINTF("compilationInfo ptr: %p\n", compilationInfo);
       if (!compilationInfo) {
         return;
       }
 
-      if (compilationInfo->messageCount) {
-        // Since we allocate all the messages in a single block, we only need to
-        // free the first pointer.
-        free(const_cast<char*>(compilationInfo->messages[0].message.data));
-      }
-      if (compilationInfo->messages) {
-        free(reinterpret_cast<WGPUDawnCompilationMessageUtf16*>(
-            compilationInfo->messages[0].nextInChain));
-        free(const_cast<WGPUCompilationMessage*>(compilationInfo->messages));
-      }
+      // DEBUG_PRINTF("compilationInfo messageCount: %zu\n", compilationInfo->messageCount);
+      // if (compilationInfo->messageCount) {
+      //   // Since we allocate all the messages in a single block, we only need to
+      //   // free the first pointer.
+      //   free(const_cast<char*>(compilationInfo->messages[0].message.data));
+      // }
+      // DEBUG_PRINTF("compilationInfo messages: %p\n", compilationInfo->messages);
+      // if (compilationInfo->messages) {
+      //   DEBUG_PRINTF("compilationInfo utf16: %p\n", compilationInfo->messages[0].nextInChain);
+      //   free(reinterpret_cast<WGPUDawnCompilationMessageUtf16*>(
+      //       compilationInfo->messages[0].nextInChain));
+      //   free(const_cast<WGPUCompilationMessage*>(compilationInfo->messages));
+      // }
       delete compilationInfo;
     }
   };
@@ -1510,7 +1515,13 @@ WGPUFuture WGPUBufferImpl::MapAsync(WGPUMapMode mode,
     return WGPUFuture{futureId};
   }
 
-  assert(mPendingMapRequest.mode == WGPUMapMode_None);
+  if (mMapState == WGPUBufferMapState_Mapped) {
+    GetEventManager().SetFutureReady<MapAsyncEvent>(
+        futureId, WGPUMapAsyncStatus_Error,
+        "Buffer is already mapped.");
+    return WGPUFuture{futureId};
+  }
+
   mMapState = WGPUBufferMapState_Pending;
   mPendingMapRequest = {futureId, mode};
 
