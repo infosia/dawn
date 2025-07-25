@@ -138,7 +138,14 @@ ResultOrError<Ref<BindGroupLayoutInternalBase>> Device::CreateBindGroupLayoutImp
 }
 ResultOrError<Ref<BufferBase>> Device::CreateBufferImpl(
     const UnpackedPtr<BufferDescriptor>& descriptor) {
-    return Buffer::Create(this, descriptor);
+    // return Buffer::Create(this, descriptor);
+    Ref<BufferBase> buffer;
+    DAWN_TRY_ASSIGN(buffer, Buffer::Create(this, descriptor));
+
+    if (IsRecording()) {
+        mRecord->EncodeDeviceCreateBuffer(this, ToBackend(buffer.Get()), descriptor);
+    }
+    return buffer;
 }
 ResultOrError<Ref<CommandBufferBase>> Device::CreateCommandBuffer(
     CommandEncoder* encoder,
@@ -234,6 +241,21 @@ uint64_t Device::GetOptimalBufferToTextureCopyOffsetAlignment() const {
 
 float Device::GetTimestampPeriodInNS() const {
     return 1.0f;
+}
+
+// Record Replay related temp
+bool Device::IsRecording() const {
+    return mRecord != nullptr;
+    // Is capturing?
+}
+
+void Device::SetRecord(std::unique_ptr<devtool::Recorder> record) {
+    mRecord = std::move(record);
+    // mPlayback = nullptr;
+}
+
+devtool::Recorder* Device::GetRecorder() const {
+    return mRecord.get();
 }
 
 }  // namespace dawn::native::webgpu

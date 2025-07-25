@@ -175,6 +175,9 @@ source_set("sources") {
     "${dawn_root}/src/tint/api",
     "${dawn_root}/src/tint/lang/wgsl",
   ]
+  if (dawn_enable_devtool_record) {
+    deps += [ "${dawn_root}/src/dawn/devtool:record" ]
+  }
   defines = []
   libs = []
   data_deps = []

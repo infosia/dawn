@@ -56,6 +56,8 @@ class Replayer {
     template <ObjectType type, typename WGPUHandle>
     bool SetId(WGPUHandle object, ObjectId id);
 
+    // std::vector<WGPUBuffer> GetBuffers(WGPUDevices device);
+
     // TODO(crbug.com/413053623): More playback control API
 
   private:
