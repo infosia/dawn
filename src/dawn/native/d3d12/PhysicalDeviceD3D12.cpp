@@ -190,11 +190,8 @@ void PhysicalDevice::InitializeSupportedFeaturesImpl() {
         EnableFeature(Feature::ShaderF16);
     }
 
-    // The function subgroupBroadcast(f16) fails for some edge cases on intel gen-9 devices.
-    // See crbug.com/391680973
-    const bool kForceDisableSubgroups = gpu_info::IsIntelGen9(GetVendorId(), GetDeviceId());
     // Subgroups feature requires SM >= 6.0 and capabilities flags.
-    if (!kForceDisableSubgroups && mDeviceInfo.supportsWaveOps) {
+    if (mDeviceInfo.supportsWaveOps) {
         EnableFeature(Feature::Subgroups);
     }
 #endif
@@ -441,6 +438,24 @@ FeatureValidationResult PhysicalDevice::ValidateFeatureSupportedWithTogglesImpl(
             default:
                 break;
         }
+    } else {
+        switch (feature) {
+            // The function subgroupBroadcast(f16) fails for some edge cases on Intel Gen-9 devices.
+            // See crbug.com/391680973. We disable subgroups on this device unless the user has
+            // explicitly enabled the 'polyfill_subgroup_broadcast_f16' toggle.
+            case wgpu::FeatureName::Subgroups:
+                if (toggles.GetStage() >= ToggleStage::Device &&
+                    gpu_info::IsIntelGen9(GetVendorId(), GetDeviceId()) &&
+                    !toggles.IsEnabled(Toggle::PolyfillSubgroupBroadcastF16)) {
+                    return FeatureValidationResult(
+                        absl::StrFormat("Intel Gen-9 devices require "
+                                        "`polyfill_subgroup_broadcast_f16` to enable %s.",
+                                        feature));
+                }
+                break;
+            default:
+                break;
+        }
     }
     // Validate applied shader version.
     switch (feature) {
@@ -627,7 +642,6 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
 #else
     const bool dxcAvailable = false;
 #endif
-
     const bool useResourceHeapTier2 = (GetDeviceInfo().resourceHeapTier >= 2);
     deviceToggles->Default(Toggle::UseD3D12ResourceHeapTier2, useResourceHeapTier2);
     deviceToggles->Default(Toggle::UseD3D12RenderPass, GetDeviceInfo().supportsRenderPass);
