@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d93daa9_cb40e791",
+        "filename": "src/tint/lang/core/ir/validator_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-26T01:27:47Z",
+      "side": 1,
+      "message": "Hm, should this point to the Call? (Can we make it point to the call?) Maybe with a note which function triggered the recusion?",
+      "revId": "5a41eaf96b56965724407e112fcae039b0ffec99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
