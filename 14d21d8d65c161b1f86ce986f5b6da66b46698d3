@@ -41,6 +41,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c35c8537_8344f2f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-26T15:54:31Z",
+      "side": 1,
+      "message": "This would only happen if it was enabled by default for the backend. Since this is a toggle it will not be activated by the tint end2end tests",
+      "parentUuid": "7063e8e4_5096798f",
+      "revId": "14d21d8d65c161b1f86ce986f5b6da66b46698d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3fdea96b_150ae790",
