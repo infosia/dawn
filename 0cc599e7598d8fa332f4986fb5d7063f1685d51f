@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f598ff76_49388198",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4232029
+      },
+      "writtenOn": "2025-07-26T05:43:10Z",
+      "side": 1,
+      "message": "Hi,\nI tested the change locally, and it worked. However, the CI is failing with a build error related to Protobuf and constinit, which I wasn\u0027t expecting. After looking into it, I found it’s a known issue on macOS with Xcode/Clang.\n\nTo help CI proceed, I temporarily disabled DAWN_ENABLE_INSTALL in the cache config file. It doesn’t affect the feature I added — just helps bypass the CMake export error.\n\nPlease let me know if there’s a better way to handle this. Thanks so much!",
+      "revId": "0cc599e7598d8fa332f4986fb5d7063f1685d51f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
