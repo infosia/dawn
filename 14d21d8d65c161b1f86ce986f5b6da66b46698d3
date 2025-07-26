@@ -61,6 +61,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "45055b44_752318b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-26T19:12:35Z",
+      "side": 1,
+      "message": "To avoid creating a relation change you can setup dawn to always squash for gerrit\nhttps://github.com/google/dawn/blob/main/CONTRIBUTING.md#gerrit-setup\n\nI use the chromium workflow",
+      "revId": "14d21d8d65c161b1f86ce986f5b6da66b46698d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3fdea96b_150ae790",
         "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
         "patchSetId": 3
