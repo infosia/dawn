@@ -506,6 +506,15 @@ void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
         MarkUsedInPendingCommands();
     }
 
+    bool enabled_skip_redundant =
+        GetDevice()->IsToggleEnabled(Toggle::VulkanAvoidRedundantBufferBarriers);
+    if (enabled_skip_redundant &&
+        recordingContext->IsRedundantBarrier(srcAccess, VulkanAccessFlags(usage), srcStage,
+                                             VulkanPipelineStage(usage, shaderStage),
+                                             GetInterBarrierFenceIdx())) {
+        return;
+    }
+
     recordingContext->AddBufferBarrier(srcAccess, /* dstAccess */ VulkanAccessFlags(usage),
                                        srcStage,
                                        /* dstStage */ VulkanPipelineStage(usage, shaderStage));
