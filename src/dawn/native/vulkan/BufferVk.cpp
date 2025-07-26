@@ -506,6 +506,12 @@ void Buffer::TrackUsageAndGetResourceBarrier(CommandRecordingContext* recordingC
         MarkUsedInPendingCommands();
     }
 
+    if (recordingContext->IsRedundantBarrier(srcAccess, VulkanAccessFlags(usage), srcStage,
+                                             VulkanPipelineStage(usage, shaderStage),
+                                             mBarrieredLockIdx)) {
+        return;
+    }
+
     recordingContext->AddBufferBarrier(srcAccess, /* dstAccess */ VulkanAccessFlags(usage),
                                        srcStage,
                                        /* dstStage */ VulkanPipelineStage(usage, shaderStage));

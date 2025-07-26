@@ -74,6 +74,10 @@ class Buffer final : public BufferBase {
                                                  CommandRecordingContext* recordingContext,
                                                  const absl::flat_hash_set<Ref<Buffer>>& buffers);
 
+    void SetBufferInterBarrierFenceIdx(size_t fence_idx = 0) { mBarrieredLockIdx = fence_idx; }
+
+    size_t mBarrieredLockIdx = 0u;
+
   private:
     ~Buffer() override;
     using BufferBase::BufferBase;

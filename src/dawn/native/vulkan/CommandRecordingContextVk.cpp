@@ -27,6 +27,7 @@
 
 #include "src/dawn/native/vulkan/CommandRecordingContextVk.h"
 
+#include "dawn/native/vulkan/BufferVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "vulkan/vulkan_core.h"
 
@@ -60,6 +61,34 @@ void CommandRecordingContext::AddBufferBarrier(VkAccessFlags srcAccessMask,
     barrier->bufferDstStages |= dstStages;
 }
 
+void CommandRecordingContext::BufferInterBarrierFence(Buffer* buffer) {
+    buffer->SetBufferInterBarrierFenceIdx(mNonVertexBarrierHistory.size());
+}
+
+bool CommandRecordingContext::IsRedundantBarrier(VkAccessFlags srcAccessMask,
+                                                 VkAccessFlags dstAccessMask,
+                                                 VkPipelineStageFlags srcStages,
+                                                 VkPipelineStageFlags dstStages,
+                                                 int buffer_barrier_idx) {
+    // not bothering to track for vb
+    if (dstStages & vertexStages) {
+        return false;
+    }
+
+    for (size_t i = buffer_barrier_idx; i < mNonVertexBarrierHistory.size(); i++) {
+        auto& curr_barrier = mNonVertexBarrierHistory[i];
+        if (curr_barrier.bufferSrcStages == srcStages &&
+            curr_barrier.bufferDstStages == dstStages) {
+            if ((curr_barrier.bufferDstAccessMask & dstAccessMask) == dstAccessMask &&
+                (curr_barrier.bufferSrcAccessMask & srcAccessMask) == srcAccessMask) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 void CommandRecordingContext::EmitBufferBarriers(Device* device) {
     std::array<VkMemoryBarrier, 2> barriers;
     size_t idx = 0;
@@ -84,6 +113,8 @@ void CommandRecordingContext::EmitBufferBarriers(Device* device) {
     };
     CreateBarrierIfNeeded(mVertexBufferBarrier);
     CreateBarrierIfNeeded(mNonVertexBufferBarrier);
+
+    mNonVertexBarrierHistory.push_back(mNonVertexBufferBarrier);
 
     if (idx > 0) {
         device->fn.CmdPipelineBarrier(commandBuffer, srcStages, dstStages, 0, idx, barriers.data(),
