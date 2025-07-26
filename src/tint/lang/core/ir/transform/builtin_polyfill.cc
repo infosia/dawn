@@ -1174,9 +1174,8 @@ struct State {
     /// @param call the builtin call instruction
     void SubgroupBroadcast(ir::CoreBuiltinCall* call) {
         // This polyfill is implemented by bitcasting f16 values to unsigned integers,
-        // performing the broadcast on the integer types, and then bitcasting back.
-        // This is necessary for backends that don't natively support f16 subgroup ops.
-        // The target integer type for broadcast is u32. Uses vec<f16> specific bit casting.
+        // performing the broadcast on the uint type, and then bitcasting back. Uses vec<f16>
+        // specific bit casting.
         //
         // f16       -> broadcast as u32 after packing with a zero, then unpack
         // vec2<f16> -> broadcast as u32
@@ -1186,8 +1185,6 @@ struct State {
         auto* value = call->Args()[0];
         auto* type = value->Type();
 
-        // This polyfill is only for f16 types. If the value is not an f16 scalar or
-        // vector, we don't need to do anything.
         if (!type->DeepestElement()->Is<core::type::F16>()) {
             return;
         }
@@ -1229,8 +1226,7 @@ struct State {
                                 ->Result();
                         auto* broadcasted_vec_z =
                             b.Bitcast(ty.vec2<f16>(), broadcasted_u32_z)->Result();
-                        auto* broadcasted_z =
-                            b.Access(ty.f16(), broadcasted_vec_z, 0_u)->Result();
+                        auto* broadcasted_z = b.Access(ty.f16(), broadcasted_vec_z, 0_u)->Result();
 
                         result = b.Construct(vec_ty, broadcasted_xy, broadcasted_z)->Result();
                         break;
@@ -1243,16 +1239,18 @@ struct State {
                         auto* u32_comp1 = b.Access(ty.u32(), v2u32_val, 1_u)->Result();
 
                         auto* broadcasted_u32_comp0 =
-                            b.Call(ty.u32(), core::BuiltinFn::kSubgroupBroadcast, u32_comp0, lane_id)
+                            b.Call(ty.u32(), core::BuiltinFn::kSubgroupBroadcast, u32_comp0,
+                                   lane_id)
                                 ->Result();
                         auto* broadcasted_u32_comp1 =
-                            b.Call(ty.u32(), core::BuiltinFn::kSubgroupBroadcast, u32_comp1, lane_id)
+                            b.Call(ty.u32(), core::BuiltinFn::kSubgroupBroadcast, u32_comp1,
+                                   lane_id)
                                 ->Result();
 
                         // Reconstruct vec2<u32> and bitcast back.
-                        auto* broadcasted_v2u32 =
-                            b.Construct(ty.vec2<u32>(), broadcasted_u32_comp0, broadcasted_u32_comp1)
-                                ->Result();
+                        auto* broadcasted_v2u32 = b.Construct(ty.vec2<u32>(), broadcasted_u32_comp0,
+                                                              broadcasted_u32_comp1)
+                                                      ->Result();
                         result = b.Bitcast(vec_ty, broadcasted_v2u32)->Result();
                         break;
                     }
@@ -1260,7 +1258,7 @@ struct State {
                         TINT_UNREACHABLE()
                             << "unhandled f16 vector width in subgroupBroadcast polyfill";
                 }
-            } else { // Scalar f16
+            } else {  // Scalar f16
                 // Construct a vec2<f16>(0, value), then bitcast to u32.
                 auto* vec_val = b.Construct(ty.vec2<f16>(), value, b.Zero(ty.f16()))->Result();
                 auto* u32_val = b.Bitcast(ty.u32(), vec_val)->Result();

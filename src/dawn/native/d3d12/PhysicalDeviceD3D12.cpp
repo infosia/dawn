@@ -627,7 +627,7 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
 #else
     const bool dxcAvailable = false;
 #endif
-    // TODO REMOVE ME AFTER CQ
+    // REMOVE ME AFTER CQ
     deviceToggles->Default(Toggle::PolyfillSubgroupBroadcastF16, true);
 
     const bool useResourceHeapTier2 = (GetDeviceInfo().resourceHeapTier >= 2);

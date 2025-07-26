@@ -860,7 +860,7 @@ void PhysicalDevice::SetupBackendAdapterToggles(dawn::platform::Platform* platfo
 
 void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platform,
                                                TogglesState* deviceToggles) const {
-    // TODO REMOVE ME AFTER CQ
+    // REMOVE ME AFTER CQ
     deviceToggles->Default(Toggle::PolyfillSubgroupBroadcastF16, true);
 
     // TODO(crbug.com/dawn/857): tighten this workaround when this issue is fixed in both
