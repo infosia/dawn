@@ -27,8 +27,14 @@
 
 #include "dawn/native/metal/BindGroupMTL.h"
 
+#include "dawn/common/MatchVariant.h"
+#include "dawn/common/Range.h"
 #include "dawn/native/metal/BindGroupLayoutMTL.h"
+#include "dawn/native/metal/BufferMTL.h"
 #include "dawn/native/metal/DeviceMTL.h"
+#include "dawn/native/metal/SamplerMTL.h"
+#include "dawn/native/metal/TextureMTL.h"
+#include "dawn/native/metal/UtilsMetal.h"
 
 namespace dawn::native::metal {
 
@@ -47,6 +53,131 @@ BindGroup::BindGroup(Device* device, const BindGroupDescriptor* descriptor)
 BindGroup::~BindGroup() = default;
 
 MaybeError BindGroup::InitializeImpl() {
+    auto* device = ToBackend(GetDevice());
+    if (!device->IsToggleEnabled(Toggle::MetalUseArgumentBuffers)) {
+        return {};
+    }
+
+    // TODO(dsinclair): Make sure the argument encoder and argument buffers get cleaned up ....
+    // TODO(dsinclair): The argument buffers should probably work in some kind of pool instead
+    //                  of being allocated here
+
+    auto layout = ToBackend(GetLayout());
+    {
+        auto& descriptors = layout->GetVertexArgumentDescriptors();
+        if (!descriptors.empty()) {
+            NSArray* ary = [NSArray arrayWithObjects:descriptors.data() count:descriptors.size()];
+            mVertexArgumentEncoder = [device->GetMTLDevice() newArgumentEncoderWithArguments:ary];
+
+            NSUInteger vertArgumentBufferLength = mVertexArgumentEncoder.encodedLength;
+
+            mVertexArgumentBuffer =
+                [device->GetMTLDevice() newBufferWithLength:vertArgumentBufferLength options:0];
+            [mVertexArgumentEncoder setArgumentBuffer:mVertexArgumentBuffer offset:0];
+
+            // TODO(dsinclair): Remove, this isn't right ...
+            NSRef<NSString> debugName = MakeDebugName(device, "Dawn_buffer", "ArgumentBuffer");
+            [mVertexArgumentBuffer setLabel:debugName.Get()];
+        }
+    }
+    {
+        auto& descriptors = layout->GetFragmentArgumentDescriptors();
+        if (!descriptors.empty()) {
+            NSArray* ary = [NSArray arrayWithObjects:descriptors.data() count:descriptors.size()];
+            mFragmentArgumentEncoder = [device->GetMTLDevice() newArgumentEncoderWithArguments:ary];
+
+            NSUInteger fragArgumentBufferLength = mFragmentArgumentEncoder.encodedLength;
+
+            mFragmentArgumentBuffer =
+                [device->GetMTLDevice() newBufferWithLength:fragArgumentBufferLength options:0];
+            [mFragmentArgumentEncoder setArgumentBuffer:mFragmentArgumentBuffer offset:0];
+        }
+    }
+    {
+        auto& descriptors = layout->GetComputeArgumentDescriptors();
+        if (!descriptors.empty()) {
+            NSArray* ary = [NSArray arrayWithObjects:descriptors.data() count:descriptors.size()];
+            mComputeArgumentEncoder = [device->GetMTLDevice() newArgumentEncoderWithArguments:ary];
+
+            NSUInteger argumentBufferLength = mComputeArgumentEncoder.encodedLength;
+
+            mComputeArgumentBuffer =
+                [device->GetMTLDevice() newBufferWithLength:argumentBufferLength options:0];
+            [mComputeArgumentEncoder setArgumentBuffer:mComputeArgumentBuffer offset:0];
+        }
+    }
+
+    uint32_t numDynamicBuffers = 0;
+    for (BindingIndex bindingIndex : Range(layout->GetBindingCount())) {
+        const BindingInfo& bindingInfo = layout->GetBindingInfo(bindingIndex);
+
+        bool hasVertStage = bindingInfo.visibility & wgpu::ShaderStage::Vertex;
+        bool hasFragStage = bindingInfo.visibility & wgpu::ShaderStage::Fragment;
+        bool hasComputeStage = bindingInfo.visibility & wgpu::ShaderStage::Compute;
+
+        uint32_t dstBinding = uint32_t(bindingIndex - bindingInfo.indexInArray);
+
+        auto HandleTextureBinding = [&]() {
+            auto textureView = ToBackend(GetBindingAsTextureView(bindingIndex));
+
+            id<MTLTexture> texture = textureView->GetMTLTexture();
+            if (hasVertStage) {
+                [mVertexArgumentEncoder setTexture:texture atIndex:dstBinding];
+            }
+            if (hasFragStage) {
+                [mFragmentArgumentEncoder setTexture:texture atIndex:dstBinding];
+            }
+            if (hasComputeStage) {
+                [mComputeArgumentEncoder setTexture:texture atIndex:dstBinding];
+            }
+        };
+
+        MatchVariant(
+            bindingInfo.bindingLayout,
+            [&](const BufferBindingInfo& layout) {
+                const BufferBinding& binding = GetBindingAsBufferBinding(bindingIndex);
+
+                const id<MTLBuffer> buffer = ToBackend(binding.buffer)->GetMTLBuffer();
+                NSUInteger offset = binding.offset;
+
+                if (layout.hasDynamicOffset) {
+                    numDynamicBuffers += 1;
+                }
+
+                if (hasVertStage) {
+                    [mVertexArgumentEncoder setBuffer:buffer offset:offset atIndex:dstBinding];
+                }
+                if (hasFragStage) {
+                    [mFragmentArgumentEncoder setBuffer:buffer offset:offset atIndex:dstBinding];
+                }
+                if (hasComputeStage) {
+                    [mComputeArgumentEncoder setBuffer:buffer offset:offset atIndex:dstBinding];
+                }
+            },
+            [&](const SamplerBindingInfo&) {
+                auto sampler = ToBackend(GetBindingAsSampler(bindingIndex));
+                id<MTLSamplerState> samplerState = sampler->GetMTLSamplerState();
+                if (hasVertStage) {
+                    [mVertexArgumentEncoder setSamplerState:samplerState atIndex:dstBinding];
+                }
+                if (hasFragStage) {
+                    [mFragmentArgumentEncoder setSamplerState:samplerState atIndex:dstBinding];
+                }
+                if (hasComputeStage) {
+                    [mComputeArgumentEncoder setSamplerState:samplerState atIndex:dstBinding];
+                }
+            },
+            [&](const StaticSamplerBindingInfo&) {
+                // Static samplers are handled in the frontend.
+                // TODO(crbug.com/dawn/2482): Implement static samplers in the
+                // Metal backend.
+                DAWN_UNREACHABLE();
+            },
+            [&](const TextureBindingInfo&) { HandleTextureBinding(); },
+            [&](const StorageTextureBindingInfo&) { HandleTextureBinding(); },
+            [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
+    }
+
     return {};
 }
 

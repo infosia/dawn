@@ -31,6 +31,8 @@
 #include "dawn/common/PlacementAllocated.h"
 #include "dawn/native/BindGroup.h"
 
+#import <Metal/Metal.h>
+
 namespace dawn::native::metal {
 
 class Device;
@@ -42,12 +44,28 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
 
     BindGroup(Device* device, const BindGroupDescriptor* descriptor);
 
+    id<MTLArgumentEncoder> GetVertexArgumentEncoder() { return mVertexArgumentEncoder; }
+    id<MTLArgumentEncoder> GetFragmentArgumentEncoder() { return mFragmentArgumentEncoder; }
+    id<MTLArgumentEncoder> GetComputeArgumentEncoder() { return mComputeArgumentEncoder; }
+
+    id<MTLBuffer> GetVertexArgumentBuffer() { return mVertexArgumentBuffer; }
+    id<MTLBuffer> GetFragmentArgumentBuffer() { return mFragmentArgumentBuffer; }
+    id<MTLBuffer> GetComputeArgumentBuffer() { return mComputeArgumentBuffer; }
+
   private:
     ~BindGroup() override;
 
     MaybeError InitializeImpl() override;
 
     void DeleteThis() override;
+
+    id<MTLArgumentEncoder> mVertexArgumentEncoder;
+    id<MTLArgumentEncoder> mFragmentArgumentEncoder;
+    id<MTLArgumentEncoder> mComputeArgumentEncoder;
+
+    id<MTLBuffer> mVertexArgumentBuffer;
+    id<MTLBuffer> mFragmentArgumentBuffer;
+    id<MTLBuffer> mComputeArgumentBuffer;
 };
 
 }  // namespace dawn::native::metal

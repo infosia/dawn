@@ -170,6 +170,8 @@ class AnimometerSample : public SampleBase {
 
             for (size_t i = 0; i < kNumTriangles; i++) {
                 uint32_t offset = i * sizeof(ShaderData);
+                // Note, this is not optimal, it's designed to match a similar test and be
+                // comparable to WebGL.
                 pass.SetBindGroup(0, bindGroup, 1, &offset);
                 pass.Draw(3);
             }
