@@ -39,6 +39,30 @@
       },
       "revId": "bea17faaea12bc45877dbb33c6e4d21841204460",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32b1b6f1_5a577e24",
+        "filename": "src/dawn/native/webgpu/ObjectWGPU.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-07-28T19:45:44Z",
+      "side": 1,
+      "message": "\u003e Maybe this could have a ctor that takes the inner handle?\n\nProbably no. the mInnerHandle can be assigned by async function (`requestDevice`, although now it\u0027s using `createDevice` of dawn::native but this is more of a temp implementation). It can be hard assigning it via constructor.\n\n\u003e release of the WGPU native object\n\nrelease of mInnerHandle can happen at other places than the deconstructor. (e.g. `webgpu::Device::DestroyImpl` for `webgpu::Device::mInnerHandle`)\n\nSo it\u0027s better keep `mInnerHandle` as a protected member to give more freedom of control.",
+      "parentUuid": "538c1468_d078008b",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 16
+      },
+      "revId": "bea17faaea12bc45877dbb33c6e4d21841204460",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
