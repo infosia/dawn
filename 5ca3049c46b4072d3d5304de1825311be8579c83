@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a186e7c_425a4415",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-28T09:09:18Z",
+      "side": 1,
+      "message": "Hi, James,\nI\u0027m a bit lost about the bots result. I think I didn\u0027t change \"write_bench.cc\" in logic view but it seems I got a duplicated binding-point error. Do you have any thoughts about this?",
+      "revId": "5ca3049c46b4072d3d5304de1825311be8579c83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
