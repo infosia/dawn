@@ -90,7 +90,7 @@
 # results: [ Failure RetryOnFailure Skip Slow ]
 # END TAG HEADER
 
-# Last rolled: 2025-07-18 11:55:53AM
+# Last rolled: 2025-07-28 05:07:34AM
 
 # conflicts_allowed: true
 # full_wildcard_support: true
@@ -127,7 +127,6 @@ crbug.com/42241110 webgpu:api,validation,error_scope:simple:errorType="out-of-me
 # The "Skip" expectations in this section are expected to be removable at some
 # point.
 ################################################################################
-
 
 ### TEMPORARY ANDROID SKIPS
 
