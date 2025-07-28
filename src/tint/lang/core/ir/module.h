@@ -36,6 +36,7 @@
 #include "src/tint/lang/core/ir/function.h"
 #include "src/tint/lang/core/ir/instruction.h"
 #include "src/tint/lang/core/ir/value.h"
+#include "src/tint/lang/core/ir/var.h"
 #include "src/tint/lang/core/type/manager.h"
 #include "src/tint/utils/containers/const_propagating_ptr.h"
 #include "src/tint/utils/containers/filtered_iterator.h"
@@ -178,6 +179,12 @@ class Module {
     /// @returns the functions in the module, in dependency order
     Vector<const Function*, 16> DependencyOrderedFunctions() const;
 
+    /// Get or create a module-scope variable for the given builtin.
+    /// The variable will be initialized at the start of each entry point that uses the builtin.
+    /// @param builtin the builtin to get or create a variable for
+    /// @returns the variable
+    Var* GetOrCreateBuiltinVar(core::BuiltinValue builtin);
+
     /// Removes `func` from the module and destroys it.
     /// @param func the function to destroy
     void Destroy(Function* func);
@@ -212,6 +219,9 @@ class Module {
         /// The value allocator
         BlockAllocator<Value> values;
     } allocators_;
+
+    /// A map of builtin values to their module-scope variables.
+    Hashmap<core::BuiltinValue, ir::Var*, 2> builtin_vars_;
 
     Instruction::Id next_instruction_id_ = 0;
 };

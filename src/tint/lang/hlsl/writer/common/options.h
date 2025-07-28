@@ -240,6 +240,9 @@ struct Options {
     /// `unpack4xI8` and `unpack4xU8` builtins
     bool polyfill_pack_unpack_4x8 = false;
 
+    /// Set to `true` to generate polyfill for `subgroupShuffleXor`
+    bool polyfill_subgroup_shuffle_xor = false;
+
     /// The downstream compiler which will be used
     Compiler compiler = Compiler::kDXC;
 
@@ -287,6 +290,7 @@ struct Options {
                  disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
                  polyfill_pack_unpack_4x8,
+                 polyfill_subgroup_shuffle_xor,
                  compiler,
                  array_length_from_uniform,
                  interstage_locations,

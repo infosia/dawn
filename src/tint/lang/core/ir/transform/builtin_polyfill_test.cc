@@ -2049,6 +2049,92 @@ TEST_F(IR_BuiltinPolyfillTest, InsertBits_Full_Vec4I32) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_BuiltinPolyfillTest, SubgroupShuffleXor_NoPolyfill) {
+    Build(core::BuiltinFn::kSubgroupShuffleXor, ty.i32(), Vector{ty.i32(), ty.u32()});
+    auto* src = R"(
+%foo = func(%arg:i32, %arg_1:u32):i32 {  # %arg_1: 'arg'
+  $B1: {
+    %result:i32 = subgroupShuffleXor %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = src;
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_shuffle_xor = false;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, SubgroupShuffleXor_I32) {
+    Build(core::BuiltinFn::kSubgroupShuffleXor, ty.i32(), Vector{ty.i32(), ty.u32()});
+    auto* src = R"(
+%foo = func(%arg:i32, %arg_1:u32):i32 {  # %arg_1: 'arg'
+  $B1: {
+    %result:i32 = subgroupShuffleXor %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+$B1: {  # root
+  %subgroup_invocation_id:ptr<private, u32, read_write> = var 0u
+}
+
+%foo = func(%arg:i32, %arg_1:u32):i32 {  # %arg_1: 'arg'
+  $B2: {
+    %5:u32 = load %subgroup_invocation_id
+    %6:u32 = xor %5, %arg_1
+    %result:i32 = subgroupShuffle %arg, %6
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_shuffle_xor = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, SubgroupShuffleXor_Vec4F32) {
+    Build(core::BuiltinFn::kSubgroupShuffleXor, ty.vec4<f32>(), Vector{ty.vec4<f32>(), ty.u32()});
+    auto* src = R"(
+%foo = func(%arg:vec4<f32>, %arg_1:u32):vec4<f32> {  # %arg_1: 'arg'
+  $B1: {
+    %result:vec4<f32> = subgroupShuffleXor %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+$B1: {  # root
+  %subgroup_invocation_id:ptr<private, u32, read_write> = var 0u
+}
+
+%foo = func(%arg:vec4<f32>, %arg_1:u32):vec4<f32> {  # %arg_1: 'arg'
+  $B2: {
+    %5:u32 = load %subgroup_invocation_id
+    %6:u32 = xor %5, %arg_1
+    %result:vec4<f32> = subgroupShuffle %arg, %6
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_shuffle_xor = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(IR_BuiltinPolyfillTest, TextureSampleBaseClampToEdge_2d_f32_NoPolyfill) {
     auto* texture_ty = ty.sampled_texture(core::type::TextureDimension::k2d, ty.f32());
     Build(core::BuiltinFn::kTextureSampleBaseClampToEdge, ty.vec4<f32>(),
