@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "25a1da26_ee1464c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-28T21:27:26Z",
+      "side": 1,
+      "message": "PTAL\n\nThis is a somewhat bulky change, since it includes a bunch of refactoring I did as part of implementing the feature. I currently have the various WIP patches in a non-squashed stack locally, so I can divide this up into 2 CLs; a refactoring CL + feature CL, if that would be preferred/this is too large.",
+      "revId": "5968c0238fed68b32b30decbf0a4eb759d3634a3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
