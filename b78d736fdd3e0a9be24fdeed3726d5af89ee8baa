@@ -34,6 +34,24 @@
       "parentUuid": "a809dbfb_4b832908",
       "revId": "b78d736fdd3e0a9be24fdeed3726d5af89ee8baa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70c83c03_87256add",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T14:18:44Z",
+      "side": 1,
+      "message": "I just checked. \u0027SubgroupsBroadcastTests\u0027 does not appear to have vectorized variants",
+      "parentUuid": "6b450ca4_17532b43",
+      "revId": "b78d736fdd3e0a9be24fdeed3726d5af89ee8baa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
