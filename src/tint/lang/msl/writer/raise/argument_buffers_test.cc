@@ -68,7 +68,7 @@ TEST_F(MslWriter_ArgumentBuffersTest, NoArgumentBuffers) {
 
     auto* expect = src;
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -122,7 +122,7 @@ $B1: {  # root
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -176,7 +176,7 @@ $B1: {  # root
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -261,7 +261,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -322,7 +322,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -382,7 +382,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -446,7 +446,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -522,7 +522,7 @@ $B1: {  # root
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -592,7 +592,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -673,7 +673,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -758,7 +758,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -839,7 +839,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -924,7 +924,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1006,7 +1006,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1090,7 +1090,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1194,7 +1194,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1300,7 +1300,7 @@ tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
 
     EXPECT_EQ(expect, str());
 }
@@ -1411,7 +1411,95 @@ $B1: {  # root
 }
 )";
 
-    Run(ArgumentBuffers);
+    Run(ArgumentBuffers, ArgumentBuffersConfig{});
+
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(MslWriter_ArgumentBuffersTest, SkipBuffers) {
+    auto* var_a = b.Var("a", ty.ptr<storage, i32, core::Access::kRead>());
+    auto* var_b = b.Var("b", ty.ptr<storage, u32, core::Access::kReadWrite>());
+    auto* var_c = b.Var("c", ty.ptr<storage, f32, core::Access::kReadWrite>());
+    var_a->SetBindingPoint(1, 2);
+    var_b->SetBindingPoint(3, 4);
+    var_c->SetBindingPoint(3, 2);
+    mod.root_block->Append(var_a);
+    mod.root_block->Append(var_b);
+    mod.root_block->Append(var_c);
+
+    auto* func = b.Function("foo", ty.void_(), core::ir::Function::PipelineStage::kFragment);
+    b.Append(func->Block(), [&] {
+        auto* load_a = b.Load(var_a);
+        auto* load_b = b.Load(var_b);
+        auto* load_c = b.Load(var_c);
+        auto* conv_b = b.Convert(ty.i32(), load_b);
+        auto* conv_c = b.Convert(ty.i32(), load_c);
+        auto* add = b.Add<i32>(b.Add<i32>(load_a, conv_b), conv_c);
+        auto* conv = b.Convert(ty.u32(), add);
+        b.Store(var_b, conv);
+        b.Return(func);
+    });
+
+    auto* src = R"(
+$B1: {  # root
+  %a:ptr<storage, i32, read> = var undef @binding_point(1, 2)
+  %b:ptr<storage, u32, read_write> = var undef @binding_point(3, 4)
+  %c:ptr<storage, f32, read_write> = var undef @binding_point(3, 2)
+}
+
+%foo = @fragment func():void {
+  $B2: {
+    %5:i32 = load %a
+    %6:u32 = load %b
+    %7:f32 = load %c
+    %8:i32 = convert %6
+    %9:i32 = convert %7
+    %10:i32 = add %5, %8
+    %11:i32 = add %10, %9
+    %12:u32 = convert %11
+    store %b, %12
+    ret
+  }
+}
+)";
+    EXPECT_EQ(src, str());
+
+    auto* expect = R"(
+tint_arg_buffer_struct_1 = struct @align(1), @core.explicit_layout {
+  a:ptr<storage, i32, read> @offset(0), @binding_point(1, 2)
+}
+
+tint_arg_buffer_struct_3 = struct @align(1), @core.explicit_layout {
+  c:ptr<storage, f32, read_write> @offset(0), @binding_point(3, 2)
+}
+
+$B1: {  # root
+  %b:ptr<storage, u32, read_write> = var undef @binding_point(3, 4)
+}
+
+%foo = @fragment func(%tint_arg_buffer_1:ptr<uniform, tint_arg_buffer_struct_1, read> [@binding_point(1, 0)], %tint_arg_buffer_3:ptr<uniform, tint_arg_buffer_struct_3, read> [@binding_point(3, 0)]):void {
+  $B2: {
+    %5:tint_arg_buffer_struct_3 = load %tint_arg_buffer_3
+    %6:tint_arg_buffer_struct_1 = load %tint_arg_buffer_1
+    %7:ptr<storage, i32, read> = access %6, 0u
+    %8:i32 = load %7
+    %9:u32 = load %b
+    %10:ptr<storage, f32, read_write> = access %5, 0u
+    %11:f32 = load %10
+    %12:i32 = convert %9
+    %13:i32 = convert %11
+    %14:i32 = add %8, %12
+    %15:i32 = add %14, %13
+    %16:u32 = convert %15
+    store %b, %16
+    ret
+  }
+}
+)";
+
+    ArgumentBuffersConfig cfg{};
+    cfg.skip_bindings.insert(BindingPoint{.group = 3, .binding = 4});
+    Run(ArgumentBuffers, cfg);
 
     EXPECT_EQ(expect, str());
 }
