@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1533dcad_c5969b0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T13:40:51Z",
+      "side": 1,
+      "message": "I expect the naming to change a bit here and this needs to remain isolated to compute because we have no central location for command buffer submission",
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
