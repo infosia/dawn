@@ -16,6 +16,24 @@
       "message": "Why did this one need to change?",
       "revId": "ecc046d293580d68581a73739a559b16b936bfa3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92a27c3d_e661bc76",
+        "filename": "src/tint/lang/hlsl/writer/construct_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T18:11:14Z",
+      "side": 1,
+      "message": "It was passing a var directly to the constructor. The type of a `var` is a pointer, so you can\u0027t do that without loading from it first. Making it a `let` makes it simpler.\n\nThe output then changes because it\u0027s hitting the `VectorizeScalarMatrixConstructor` transform, which it should have been doing before but it didn\u0027t because the arguments were pointers instead of scalars.",
+      "parentUuid": "d3df5d78_834d6f5b",
+      "revId": "ecc046d293580d68581a73739a559b16b936bfa3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
