@@ -16,6 +16,40 @@
       "message": "PTAL, thanks!",
       "revId": "5f17c217db099f7e86eb2ebd01aa1a259136a091",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1143d0cc_637be4e3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-28T18:59:21Z",
+      "side": 1,
+      "message": "Oops, I missed this in my CL (https://dawn-review.googlesource.com/c/dawn/+/252260). Thanks for the fix!",
+      "revId": "5f17c217db099f7e86eb2ebd01aa1a259136a091",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24c1e9d7_62918e3f",
+        "filename": "src/dawn/utils/TextureUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-28T18:59:21Z",
+      "side": 1,
+      "message": "nit: also mention this change in the commit message",
+      "revId": "5f17c217db099f7e86eb2ebd01aa1a259136a091",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
