@@ -28,6 +28,8 @@
 #ifndef SRC_DAWN_NATIVE_METAL_BINDGROUPMTL_H_
 #define SRC_DAWN_NATIVE_METAL_BINDGROUPMTL_H_
 
+#import <Metal/Metal.h>
+
 #include "dawn/common/PlacementAllocated.h"
 #include "dawn/native/BindGroup.h"
 
@@ -42,12 +44,28 @@ class BindGroup final : public BindGroupBase, public PlacementAllocated {
 
     BindGroup(Device* device, const BindGroupDescriptor* descriptor);
 
+    id<MTLBuffer> GetVertexArgumentBuffer() { return mVertexArgumentBuffer; }
+    id<MTLBuffer> GetFragmentArgumentBuffer() { return mFragmentArgumentBuffer; }
+    id<MTLBuffer> GetComputeArgumentBuffer() { return mComputeArgumentBuffer; }
+
+    bool HasDynamicOffsets() const { return mHasDynamicOffsets; }
+
   private:
     ~BindGroup() override;
 
     MaybeError InitializeImpl() override;
 
     void DeleteThis() override;
+
+    id<MTLArgumentEncoder> mVertexArgumentEncoder;
+    id<MTLArgumentEncoder> mFragmentArgumentEncoder;
+    id<MTLArgumentEncoder> mComputeArgumentEncoder;
+
+    id<MTLBuffer> mVertexArgumentBuffer;
+    id<MTLBuffer> mFragmentArgumentBuffer;
+    id<MTLBuffer> mComputeArgumentBuffer;
+
+    bool mHasDynamicOffsets = false;
 };
 
 }  // namespace dawn::native::metal

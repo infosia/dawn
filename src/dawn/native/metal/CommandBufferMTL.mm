@@ -137,19 +137,19 @@ void SetSampleBufferAttachments(PassDescriptor* descriptor, BeginPass* cmd) {
     if (querySet == nullptr) {
         return;
     }
-        SampleBufferAttachment<PassDescriptor> sampleBufferAttachment;
-        sampleBufferAttachment.SetSampleBuffer(descriptor,
-                                               ToBackend(querySet)->GetCounterSampleBuffer());
-        uint32_t beginningOfPassWriteIndex = cmd->timestampWrites.beginningOfPassWriteIndex;
-        sampleBufferAttachment.SetStartSampleIndex(
-            descriptor, beginningOfPassWriteIndex != wgpu::kQuerySetIndexUndefined
-                            ? NSUInteger(beginningOfPassWriteIndex)
-                            : MTLCounterDontSample);
-        uint32_t endOfPassWriteIndex = cmd->timestampWrites.endOfPassWriteIndex;
-        sampleBufferAttachment.SetEndSampleIndex(
-            descriptor, endOfPassWriteIndex != wgpu::kQuerySetIndexUndefined
-                            ? NSUInteger(endOfPassWriteIndex)
-                            : MTLCounterDontSample);
+    SampleBufferAttachment<PassDescriptor> sampleBufferAttachment;
+    sampleBufferAttachment.SetSampleBuffer(descriptor,
+                                           ToBackend(querySet)->GetCounterSampleBuffer());
+    uint32_t beginningOfPassWriteIndex = cmd->timestampWrites.beginningOfPassWriteIndex;
+    sampleBufferAttachment.SetStartSampleIndex(
+        descriptor, beginningOfPassWriteIndex != wgpu::kQuerySetIndexUndefined
+                        ? NSUInteger(beginningOfPassWriteIndex)
+                        : MTLCounterDontSample);
+    uint32_t endOfPassWriteIndex = cmd->timestampWrites.endOfPassWriteIndex;
+    sampleBufferAttachment.SetEndSampleIndex(descriptor,
+                                             endOfPassWriteIndex != wgpu::kQuerySetIndexUndefined
+                                                 ? NSUInteger(endOfPassWriteIndex)
+                                                 : MTLCounterDontSample);
 }
 
 NSRef<MTLComputePassDescriptor> CreateMTLComputePassDescriptor(BeginComputePassCmd* computePass) {
@@ -518,16 +518,28 @@ struct StorageBufferLengthTracker {
 // texture tables in contiguous order.
 class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
   public:
-    explicit BindGroupTracker(StorageBufferLengthTracker* lengthTracker)
-        : BindGroupTrackerBase(), mLengthTracker(lengthTracker) {}
+    BindGroupTracker(StorageBufferLengthTracker* lengthTracker, bool useArgumentBuffers)
+        : BindGroupTrackerBase(),
+          mLengthTracker(lengthTracker),
+          mUseArgumentBuffers(useArgumentBuffers) {}
 
     template <typename Encoder>
     void Apply(Encoder encoder) {
         BeforeApply();
+
+        uint32_t curBufferIdx = kArgumentBufferSlotMax;
         for (BindGroupIndex index : mDirtyBindGroupsObjectChangedOrIsDynamic) {
-            ApplyBindGroup(encoder, index, ToBackend(mBindGroups[index]), GetDynamicOffsets(index),
-                           ToBackend(mPipelineLayout));
+            BindGroup* group = ToBackend(mBindGroups[index]);
+
+            uint32_t argumentBufferIdx = curBufferIdx--;
+            std::optional<uint32_t> dynamicBufferIdx = std::nullopt;
+            if (group->HasDynamicOffsets()) {
+                dynamicBufferIdx = curBufferIdx--;
+            }
+            ApplyBindGroup(encoder, index, group, argumentBufferIdx, dynamicBufferIdx,
+                           GetDynamicOffsets(index), ToBackend(mPipelineLayout));
         }
+
         AfterApply();
     }
 
@@ -540,8 +552,16 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                             id<MTLComputeCommandEncoder> compute,
                             BindGroupIndex index,
                             BindGroup* group,
+                            uint32_t argumentBufferIdx,
+                            std::optional<uint32_t> dynamicBufferIdx,
                             const ityp::span<BindingIndex, uint64_t>& dynamicOffsets,
                             PipelineLayout* pipelineLayout) {
+        bool needsVertexArgBuffer = false;
+        bool needsFragArgBuffer = false;
+        bool needsComputeArgBuffer = false;
+
+        std::vector<uint32_t> dynamicOffsetData;
+
         // TODO(crbug.com/dawn/854): Maintain buffers and offsets arrays in BindGroup
         // so that we only have to do one setVertexBuffers and one setFragmentBuffers
         // call here.
@@ -562,14 +582,26 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
             if (hasVertStage) {
                 vertIndex = pipelineLayout->GetBindingIndexInfo(
                     SingleShaderStage::Vertex)[index][bindingIndex];
+
+                if (mUseArgumentBuffers) {
+                    needsVertexArgBuffer |= true;
+                }
             }
             if (hasFragStage) {
                 fragIndex = pipelineLayout->GetBindingIndexInfo(
                     SingleShaderStage::Fragment)[index][bindingIndex];
+
+                if (mUseArgumentBuffers) {
+                    needsFragArgBuffer |= true;
+                }
             }
             if (hasComputeStage) {
                 computeIndex = pipelineLayout->GetBindingIndexInfo(
                     SingleShaderStage::Compute)[index][bindingIndex];
+
+                if (mUseArgumentBuffers) {
+                    needsComputeArgBuffer |= true;
+                }
             }
 
             auto HandleTextureBinding = [&]() {
@@ -578,17 +610,26 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                 if (hasVertStage &&
                     mBoundTextures[SingleShaderStage::Vertex][vertIndex] != texture) {
                     mBoundTextures[SingleShaderStage::Vertex][vertIndex] = texture;
-                    [render setVertexTexture:texture atIndex:vertIndex];
+
+                    if (!mUseArgumentBuffers) {
+                        [render setVertexTexture:texture atIndex:vertIndex];
+                    }
                 }
                 if (hasFragStage &&
                     mBoundTextures[SingleShaderStage::Fragment][fragIndex] != texture) {
                     mBoundTextures[SingleShaderStage::Fragment][fragIndex] = texture;
-                    [render setFragmentTexture:texture atIndex:fragIndex];
+
+                    if (!mUseArgumentBuffers) {
+                        [render setFragmentTexture:texture atIndex:fragIndex];
+                    }
                 }
                 if (hasComputeStage &&
                     mBoundTextures[SingleShaderStage::Compute][computeIndex] != texture) {
                     mBoundTextures[SingleShaderStage::Compute][computeIndex] = texture;
-                    [compute setTexture:texture atIndex:computeIndex];
+
+                    if (!mUseArgumentBuffers) {
+                        [compute setTexture:texture atIndex:computeIndex];
+                    }
                 }
             };
 
@@ -605,29 +646,37 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     if (layout.hasDynamicOffset) {
                         // Dynamic buffers are packed at the front of BindingIndices.
                         offset += dynamicOffsets[bindingIndex];
+
+                        dynamicOffsetData.push_back(offset);
                     }
 
                     if (hasVertStage) {
                         mLengthTracker->data[SingleShaderStage::Vertex][vertIndex] = binding.size;
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Vertex;
-                        [render setVertexBuffers:&buffer
-                                         offsets:&offset
-                                       withRange:NSMakeRange(vertIndex, 1)];
+                        if (!mUseArgumentBuffers) {
+                            [render setVertexBuffers:&buffer
+                                             offsets:&offset
+                                           withRange:NSMakeRange(vertIndex, 1)];
+                        }
                     }
                     if (hasFragStage) {
                         mLengthTracker->data[SingleShaderStage::Fragment][fragIndex] = binding.size;
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Fragment;
-                        [render setFragmentBuffers:&buffer
-                                           offsets:&offset
-                                         withRange:NSMakeRange(fragIndex, 1)];
+                        if (!mUseArgumentBuffers) {
+                            [render setFragmentBuffers:&buffer
+                                               offsets:&offset
+                                             withRange:NSMakeRange(fragIndex, 1)];
+                        }
                     }
                     if (hasComputeStage) {
                         mLengthTracker->data[SingleShaderStage::Compute][computeIndex] =
                             binding.size;
                         mLengthTracker->dirtyStages |= wgpu::ShaderStage::Compute;
-                        [compute setBuffers:&buffer
-                                    offsets:&offset
-                                  withRange:NSMakeRange(computeIndex, 1)];
+                        if (!mUseArgumentBuffers) {
+                            [compute setBuffers:&buffer
+                                        offsets:&offset
+                                      withRange:NSMakeRange(computeIndex, 1)];
+                        }
                     }
                 },
                 [&](const SamplerBindingInfo&) {
@@ -636,18 +685,24 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                     if (hasVertStage &&
                         mBoundSamplers[SingleShaderStage::Vertex][vertIndex] != samplerState) {
                         mBoundSamplers[SingleShaderStage::Vertex][vertIndex] = samplerState;
-                        [render setVertexSamplerState:samplerState atIndex:vertIndex];
+                        if (!mUseArgumentBuffers) {
+                            [render setVertexSamplerState:samplerState atIndex:vertIndex];
+                        }
                     }
                     if (hasFragStage &&
                         mBoundSamplers[SingleShaderStage::Fragment][fragIndex] != samplerState) {
                         mBoundSamplers[SingleShaderStage::Fragment][fragIndex] = samplerState;
-                        [render setFragmentSamplerState:samplerState atIndex:fragIndex];
+                        if (!mUseArgumentBuffers) {
+                            [render setFragmentSamplerState:samplerState atIndex:fragIndex];
+                        }
                     }
                     if (hasComputeStage &&
                         mBoundSamplers[SingleShaderStage::Compute][computeIndex] != samplerState) {
                         mBoundSamplers[SingleShaderStage::Compute][computeIndex] = samplerState;
-                        [compute setSamplerState:sampler->GetMTLSamplerState()
-                                         atIndex:computeIndex];
+                        if (!mUseArgumentBuffers) {
+                            [compute setSamplerState:sampler->GetMTLSamplerState()
+                                             atIndex:computeIndex];
+                        }
                     }
                 },
                 [&](const StaticSamplerBindingInfo&) {
@@ -659,6 +714,47 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
                 [&](const TextureBindingInfo&) { HandleTextureBinding(); },
                 [&](const StorageTextureBindingInfo&) { HandleTextureBinding(); },
                 [](const InputAttachmentBindingInfo&) { DAWN_UNREACHABLE(); });
+        }
+
+        if (!mUseArgumentBuffers) {
+            return;
+        }
+
+        if (!dynamicOffsetData.empty()) {
+            DAWN_ASSERT(dynamicBufferIdx.has_value());
+
+            // Needs to match the dynamic offset numbers
+            if (needsVertexArgBuffer) {
+                [render setVertexBytes:dynamicOffsetData.data()
+                                length:dynamicOffsetData.size() * sizeof(uint32_t)
+                               atIndex:dynamicBufferIdx.value()];
+            }
+            if (needsFragArgBuffer) {
+                [render setFragmentBytes:dynamicOffsetData.data()
+                                  length:dynamicOffsetData.size() * sizeof(uint32_t)
+                                 atIndex:dynamicBufferIdx.value()];
+            }
+            if (needsComputeArgBuffer) {
+                [compute setBytes:dynamicOffsetData.data()
+                           length:dynamicOffsetData.size() * sizeof(uint32_t)
+                          atIndex:dynamicBufferIdx.value()];
+            }
+        }
+
+        if (needsVertexArgBuffer) {
+            [render setVertexBuffer:group->GetVertexArgumentBuffer()
+                             offset:0
+                            atIndex:argumentBufferIdx];
+        }
+        if (needsFragArgBuffer) {
+            [render setFragmentBuffer:group->GetFragmentArgumentBuffer()
+                               offset:0
+                              atIndex:argumentBufferIdx];
+        }
+        if (needsComputeArgBuffer) {
+            [compute setBuffer:group->GetComputeArgumentBuffer()
+                        offset:0
+                       atIndex:argumentBufferIdx];
         }
     }
 
@@ -679,6 +775,8 @@ class BindGroupTracker : public BindGroupTrackerBase<true, uint64_t> {
     // texture/sampler is bound in Metal and the Metal runtime will keep them alive.
     PerStage<absl::flat_hash_map<uint32_t, id<MTLTexture>>> mBoundTextures;
     PerStage<absl::flat_hash_map<uint32_t, id<MTLSamplerState>>> mBoundSamplers;
+
+    bool mUseArgumentBuffers = false;
 };
 
 // Keeps track of the dirty vertex buffer values so they can be lazily applied when we know
@@ -1234,12 +1332,12 @@ MaybeError CommandBuffer::FillCommands(CommandRecordingContext* commandContext) 
                                                             cmd);
 
                 } else {
-                        DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
-                        [commandContext->EnsureBlit()
-                            sampleCountersInBuffer:ToBackend(cmd->querySet.Get())
-                                                       ->GetCounterSampleBuffer()
-                                     atSampleIndex:NSUInteger(cmd->queryIndex)
-                                       withBarrier:YES];
+                    DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
+                    [commandContext->EnsureBlit()
+                        sampleCountersInBuffer:ToBackend(cmd->querySet.Get())
+                                                   ->GetCounterSampleBuffer()
+                                 atSampleIndex:NSUInteger(cmd->queryIndex)
+                                   withBarrier:YES];
                 }
 
                 break;
@@ -1310,7 +1408,8 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
                                             BeginComputePassCmd* computePassCmd) {
     ComputePipeline* lastPipeline = nullptr;
     StorageBufferLengthTracker storageBufferLengths = {};
-    BindGroupTracker bindGroups(&storageBufferLengths);
+    BindGroupTracker bindGroups(&storageBufferLengths,
+                                GetDevice()->IsToggleEnabled(Toggle::MetalUseArgumentBuffers));
 
     id<MTLComputeCommandEncoder> encoder;
     // When counter sampling is supported at stage boundary, begin a configurable compute pass
@@ -1324,17 +1423,17 @@ MaybeError CommandBuffer::EncodeComputePass(CommandRecordingContext* commandCont
     } else {
         encoder = commandContext->BeginCompute();
 
-            if (computePassCmd->timestampWrites.beginningOfPassWriteIndex !=
-                wgpu::kQuerySetIndexUndefined) {
-                DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
+        if (computePassCmd->timestampWrites.beginningOfPassWriteIndex !=
+            wgpu::kQuerySetIndexUndefined) {
+            DAWN_ASSERT(ToBackend(GetDevice())->UseCounterSamplingAtCommandBoundary());
 
-                [encoder
-                    sampleCountersInBuffer:ToBackend(computePassCmd->timestampWrites.querySet.Get())
-                                               ->GetCounterSampleBuffer()
-                             atSampleIndex:NSUInteger(computePassCmd->timestampWrites
-                                                          .beginningOfPassWriteIndex)
-                               withBarrier:YES];
-            }
+            [encoder
+                sampleCountersInBuffer:ToBackend(computePassCmd->timestampWrites.querySet.Get())
+                                           ->GetCounterSampleBuffer()
+                         atSampleIndex:NSUInteger(computePassCmd->timestampWrites
+                                                      .beginningOfPassWriteIndex)
+                           withBarrier:YES];
+        }
     }
     SetDebugName(GetDevice(), encoder, "Dawn_ComputePassEncoder", computePassCmd->label);
 
@@ -1485,7 +1584,8 @@ MaybeError CommandBuffer::EncodeRenderPass(
 
     StorageBufferLengthTracker storageBufferLengths = {};
     VertexBufferTracker vertexBuffers(&storageBufferLengths);
-    BindGroupTracker bindGroups(&storageBufferLengths);
+    BindGroupTracker bindGroups(&storageBufferLengths,
+                                GetDevice()->IsToggleEnabled(Toggle::MetalUseArgumentBuffers));
 
     // Simulate timestamp write at the beginning of render pass by
     // sampleCountersInBuffer if it does not support counter sampling at stage boundary.
