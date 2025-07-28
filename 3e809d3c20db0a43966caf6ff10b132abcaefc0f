@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fe91d6f_9b2b7cb3",
+        "filename": "src/tint/lang/core/ir/analysis/for_loop_analysis.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T21:21:45Z",
+      "side": 1,
+      "message": "I think a potentially simpler approach that also avoids the recursion in `UsageSinkAnalysis` would be to instead walk backwards from the `if`, maintaining a hashset of instructions in the sink chain.\n\nSomething like (rough sketch):\n```\nHashset\u003cInstruction*\u003e sink_chain;\nsink_chain.Add(inst);\nauto* inst \u003d if_to_remove-\u003eprev;\nwhile (inst) {\n  \u003ccheck inst has one result\u003e\n  \u003ccheck all usages of that result are in sink_chain\u003e\n  sink_chain.Add(inst);\n  inst \u003d inst-\u003eprev;\n}\n```\nSo you\u0027re making sure that every instruction that precedes the `if` is only used by other instructions that lead up to the `if`.\n\nIn fact, that `Hashset` is just the `body_removed_instructions` set that you are already building.",
+      "revId": "3e809d3c20db0a43966caf6ff10b132abcaefc0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "211186b3_42e103b0",
+        "filename": "src/tint/lang/core/ir/analysis/for_loop_analysis.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T21:21:45Z",
+      "side": 1,
+      "message": "`unordered?` (or a `Hashset`)",
+      "revId": "3e809d3c20db0a43966caf6ff10b132abcaefc0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
