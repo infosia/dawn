@@ -33,6 +33,23 @@
       "message": "PTAL, thanks!",
       "revId": "8d0e0fcb7d3f863026621e183db5f5f51105c920",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa91ad5d_9c0d6805",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T19:59:42Z",
+      "side": 1,
+      "message": "LGTM, thanks for the comprehensive proofs in the comments.",
+      "revId": "8d0e0fcb7d3f863026621e183db5f5f51105c920",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
