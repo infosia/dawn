@@ -50,6 +50,24 @@
       "message": "Hm, should this point to the Call? (Can we make it point to the call?) Maybe with a note which function triggered the recusion?",
       "revId": "5a41eaf96b56965724407e112fcae039b0ffec99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ef5011d_975fc300",
+        "filename": "src/tint/lang/core/ir/validator_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T15:44:55Z",
+      "side": 1,
+      "message": "Which call? In the case of direct recursion there\u0027s an obvious candidate, but for indirect recursion there\u0027s no single call or function that caused the recursion (it\u0027s a cycle in a call graph, so every node is responsible).\n\nWith some extra work would could definitely improve the diagnostic to show more details, including a full callstack that shows the whole call loop. I question how valuable it is to do this work though, given that I think these are pretty infrequently hit by Tint developers and probably not that hard to figure out what\u0027s going on once you\u0027ve been told that there is recursion.",
+      "parentUuid": "8d93daa9_cb40e791",
+      "revId": "5a41eaf96b56965724407e112fcae039b0ffec99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
