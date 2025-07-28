@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d24a98ca_d5caad8c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-28T12:30:33Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "8c9d1aaea0a3f8e8d0b282c7a21ce336df1c74c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e6be1e37_c0445d32",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-28T12:30:33Z",
+      "side": 1,
+      "message": "Isn\u0027t this always the case with the macOS SDK that we require (I\u0027m not 100% sure)",
+      "revId": "8c9d1aaea0a3f8e8d0b282c7a21ce336df1c74c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee7b9696_40cc61fe",
+        "filename": "src/dawn/tests/end2end/ShaderPrintTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-28T12:30:33Z",
+      "side": 1,
+      "message": "Maybe it would be worth making this an optional feature that can be exposed by the Metal backend. Duplicating the logic for when the toggle does something is a bit fragile.",
+      "revId": "8c9d1aaea0a3f8e8d0b282c7a21ce336df1c74c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
