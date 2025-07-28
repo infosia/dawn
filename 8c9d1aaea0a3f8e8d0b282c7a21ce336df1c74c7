@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b6bdfce_0097d3c4",
+        "filename": "src/dawn/native/metal/QueueMTL.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T14:05:06Z",
+      "side": 1,
+      "message": "I don\u0027t think so. I got failures on CQ because we\u0027re building with the 14.x SDK.",
+      "parentUuid": "e6be1e37_c0445d32",
+      "revId": "8c9d1aaea0a3f8e8d0b282c7a21ce336df1c74c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee7b9696_40cc61fe",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-07-28T12:30:33Z",
       "side": 1,
       "message": "Maybe it would be worth making this an optional feature that can be exposed by the Metal backend. Duplicating the logic for when the toggle does something is a bit fragile.",
+      "revId": "8c9d1aaea0a3f8e8d0b282c7a21ce336df1c74c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b968993_9e03c47a",
+        "filename": "src/dawn/tests/end2end/ShaderPrintTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T14:05:06Z",
+      "side": 1,
+      "message": "The idea was to make this very low-friction for developers. Use of `print` is typically a quick, temporary thing. The issue with an optional feature is that it has to be enabled in the API code when creating the device. This makes it annoying when you\u0027re just dealing with shaders (e.g. debugging a `compute.toys` sample), or just doing a quick print in a Dawn E2E test or a CTS test.\n\nThat said, I agree with the fragility and admit that I\u0027m abusing the concept of a WGSL language feature a bit here. I can switch to an optional feature is this feels to icky.",
+      "parentUuid": "ee7b9696_40cc61fe",
       "revId": "8c9d1aaea0a3f8e8d0b282c7a21ce336df1c74c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
