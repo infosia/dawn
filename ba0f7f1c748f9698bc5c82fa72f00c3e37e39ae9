@@ -175,6 +175,24 @@
       "parentUuid": "07f86b31_32e2e9d8",
       "revId": "ba0f7f1c748f9698bc5c82fa72f00c3e37e39ae9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d50f0a1_7d6f9608",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-28T18:49:02Z",
+      "side": 1,
+      "message": "I may do it as a followup, I can\u0027t remember why I did it this way.",
+      "parentUuid": "23eab3e8_a050afbb",
+      "revId": "ba0f7f1c748f9698bc5c82fa72f00c3e37e39ae9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
