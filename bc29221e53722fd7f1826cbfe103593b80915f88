@@ -211,6 +211,24 @@
       "parentUuid": "0411355c_744d6c59",
       "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ba55a86_c9c6da14",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000024
+      },
+      "writtenOn": "2025-07-28T19:12:35Z",
+      "side": 1,
+      "message": "I haven\u0027t looked at the spec side of things, but if this requires a new view, it\u0027s likely that it won\u0027t run on ES, only Desktop GL. Generally things that require different views of the same texture are prohibited in Compat, because GLES doesn\u0027t have texture views. Hence, the IsCompatibilityMode() early-out at the top of this function.\n\nJudging by the unit tests, you already know that. Just wanted to make sure you know that we\u0027ll only get to this check in Desktop GL.",
+      "parentUuid": "e0d491b8_84a7f67a",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
