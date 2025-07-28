@@ -122,6 +122,24 @@
       "parentUuid": "08d2c6bd_4bb141e6",
       "revId": "5a41eaf96b56965724407e112fcae039b0ffec99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f0a27724_d03ec27a",
+        "filename": "src/tint/lang/core/ir/validator_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-28T15:55:03Z",
+      "side": 1,
+      "message": "I think I would be fine with filing a bug for potentially adding more details about the callsite/stack and landing this CL.",
+      "parentUuid": "c793fbcc_1aa44ab5",
+      "revId": "5a41eaf96b56965724407e112fcae039b0ffec99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
