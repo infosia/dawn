@@ -104,6 +104,24 @@
       "parentUuid": "3ef5011d_975fc300",
       "revId": "5a41eaf96b56965724407e112fcae039b0ffec99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c793fbcc_1aa44ab5",
+        "filename": "src/tint/lang/core/ir/validator_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-28T15:53:36Z",
+      "side": 1,
+      "message": "For this test case if the log message said something like \"detected recursive call to \u0027f\u0027\"... though as I write that, I realize the log message already tells me %f is the problem, since it has a line number attached to it",
+      "parentUuid": "08d2c6bd_4bb141e6",
+      "revId": "5a41eaf96b56965724407e112fcae039b0ffec99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
