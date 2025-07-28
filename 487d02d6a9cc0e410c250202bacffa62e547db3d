@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc55669b_315b551c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3758334
+      },
+      "writtenOn": "2025-07-28T09:15:56Z",
+      "side": 1,
+      "message": "Hi, James,\nThis CL is actually hit a TINT_ASSERT here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/msl/writer/raise/packed_vec3.cc;drc\u003d6426c956fff8675e1be78ba3c70fceb7d2651f18;l\u003d236 when running dawn_end2end_tests here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/tests/end2end/ImmediateDataTests.cpp;drc\u003df286693b70bd767c2459cdc88c923c04f6fc09bb;l\u003d144\n\nI thought it was user customer struct here https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/tint/lang/core/ir/transform/prepare_immediate_data.cc;drc\u003dfa1b207a36877b8e8ab279b4b00f249181bd878e;l\u003d82 doesn\u0027t set structFlag. So I insert below code clips:\n```\n auto* store_ty \u003d ptr-\u003eStoreType();\n\n if (auto* str \u003d store_ty-\u003eAs\u003ccore::type::Struct\u003e()) {\n            if (!str-\u003eStructFlags().Contains(type::kBlock)) {\n\n               const_cast\u003ctype::Struct*\u003e(str)-\u003eSetStructFlag(type::kBlock);\n            }\n```\n\nIt turns out doesn\u0027t work. (I tried to remove all if and always do setup but still hit above assert).\n\nMy guess is that some transform might (remove the structFlags)/(missing to set structFlags) for user customer immediate but I don\u0027t search anything out. Do you have any suggestions? Thanks!",
+      "revId": "487d02d6a9cc0e410c250202bacffa62e547db3d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
