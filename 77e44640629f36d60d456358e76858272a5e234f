@@ -327,6 +327,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "57ba9a8d_6a275ed9",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T21:53:28Z",
+      "side": 1,
+      "message": "I agree and this is just defensive coding style. I will add the assert.",
+      "parentUuid": "505d3752_bc31b92c",
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4c20b379_5f4868fc",
         "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
         "patchSetId": 9
