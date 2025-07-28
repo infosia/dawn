@@ -16,6 +16,29 @@
       "message": "LGTM",
       "revId": "bea17faaea12bc45877dbb33c6e4d21841204460",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "538c1468_d078008b",
+        "filename": "src/dawn/native/webgpu/ObjectWGPU.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-28T18:58:38Z",
+      "side": 1,
+      "message": "Maybe this could have a ctor that takes the inner handle? Then we could make `mInnerHandle` private instead of protected and just access it via `GetInnerHandle()`. Also, WDYT about `GetWGPUHandle` instead for the name?\n\nAlso separate question, is the intention to do the release of the WGPU native object via this class also? (I think that would be nice?)",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 16
+      },
+      "revId": "bea17faaea12bc45877dbb33c6e4d21841204460",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
