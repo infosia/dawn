@@ -16,6 +16,24 @@
       "message": "Should I add vec\u003cf16\u003e to the end2end tests? Right now I think it\u0027s only checking the scalar types.",
       "revId": "b78d736fdd3e0a9be24fdeed3726d5af89ee8baa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b450ca4_17532b43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T14:15:29Z",
+      "side": 1,
+      "message": "Yes this would be good. You should have it run with/without your polyfill.\nWe will at least have CTS gen9 run on you change so it is not wholly untested.",
+      "parentUuid": "a809dbfb_4b832908",
+      "revId": "b78d736fdd3e0a9be24fdeed3726d5af89ee8baa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
