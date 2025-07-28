@@ -28,9 +28,13 @@
 #ifndef SRC_DAWN_NATIVE_METAL_BINDGROUPLAYOUTMTL_H_
 #define SRC_DAWN_NATIVE_METAL_BINDGROUPLAYOUTMTL_H_
 
+#include <vector>
+
 #include "dawn/common/MutexProtected.h"
 #include "dawn/common/SlabAllocator.h"
 #include "dawn/native/BindGroupLayoutInternal.h"
+
+#import <Metal/Metal.h>
 
 namespace dawn::native::metal {
 
@@ -46,11 +50,25 @@ class BindGroupLayout final : public BindGroupLayoutInternalBase {
     void DeallocateBindGroup(BindGroup* bindGroup);
     void ReduceMemoryUsage() override;
 
+    std::vector<MTLArgumentDescriptor*>& GetVertexArgumentDescriptors() {
+        return mVertexArgumentDescriptors;
+    }
+    std::vector<MTLArgumentDescriptor*>& GetFragmentArgumentDescriptors() {
+        return mFragmentArgumentDescriptors;
+    }
+    std::vector<MTLArgumentDescriptor*>& GetComputeArgumentDescriptors() {
+        return mComputeArgumentDescriptors;
+    }
+
   private:
     BindGroupLayout(DeviceBase* device, const BindGroupLayoutDescriptor* descriptor);
     ~BindGroupLayout() override;
 
     MutexProtected<SlabAllocator<BindGroup>> mBindGroupAllocator;
+
+    std::vector<MTLArgumentDescriptor*> mVertexArgumentDescriptors;
+    std::vector<MTLArgumentDescriptor*> mFragmentArgumentDescriptors;
+    std::vector<MTLArgumentDescriptor*> mComputeArgumentDescriptors;
 };
 
 }  // namespace dawn::native::metal
