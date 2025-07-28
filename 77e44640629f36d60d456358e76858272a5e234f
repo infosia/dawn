@@ -228,6 +228,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6bce7863_3744bd2d",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T21:33:24Z",
+      "side": 1,
+      "message": "But why do we handle VBs barriers differently to begin with? I assume it has something to do with it going from stage to stage (or from compute to graphics).",
+      "parentUuid": "c67e6ab6_b0f7fe8a",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "da1216f1_465f38ef",
         "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
         "patchSetId": 9
