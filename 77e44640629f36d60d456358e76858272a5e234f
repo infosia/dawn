@@ -246,6 +246,29 @@
       },
       "revId": "77e44640629f36d60d456358e76858272a5e234f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7c9abda_21197a0a",
+        "filename": "src/dawn/tests/perf_tests/ConcurrentExecutionTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T16:46:07Z",
+      "side": 1,
+      "message": "The barriers are different for the first iteration than for the next iterations. (different stages)",
+      "range": {
+        "startLine": 163,
+        "startChar": 28,
+        "endLine": 163,
+        "endChar": 29
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
