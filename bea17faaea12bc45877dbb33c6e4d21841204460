@@ -87,6 +87,30 @@
       },
       "revId": "bea17faaea12bc45877dbb33c6e4d21841204460",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5c35df6_123a1f70",
+        "filename": "src/dawn/native/webgpu/ObjectWGPU.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-07-28T20:05:55Z",
+      "side": 1,
+      "message": "\u003e async case in constructor\n\nmInnerHandle remains nullptr until it\u0027s set in the async callback. the `wgpu.adapterRequestDevice` will be called inside `native::webgpu::Device` constructor, and the WGPUDeviceDescriptor needs some assembly in the constructor body so it\u0027s still better to keep mInnerHandle exposed to be set in the constructor body.\n\n\u003e destructor\n\nThat\u0027s a good catch. I didn\u0027t realize there\u0027s a `wgpuDeviceDestory`. And yes that should be the one called in `Device::DestroyImpl`. Then we can release the `mInnerHandle` in the base `ObjectWGPU` to save us from the c handle release nightmare. Although I\u0027m not sure if that would have any potential issue with any dangling pointer in callback, but worth a try.",
+      "parentUuid": "48e48aeb_039a1926",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 16
+      },
+      "revId": "bea17faaea12bc45877dbb33c6e4d21841204460",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
