@@ -16,6 +16,57 @@
       "message": "PTAL.",
       "revId": "ba0f7f1c748f9698bc5c82fa72f00c3e37e39ae9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "50f52c29_7b666ab0",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T16:49:12Z",
+      "side": 1,
+      "message": "Do we still need to remap the group here? e.g. in WGSL you can use an arbitrary group number (I think). Do the groups need to be flattened/contiguous for Metal, or does it also allow arbitrary numbers?",
+      "revId": "ba0f7f1c748f9698bc5c82fa72f00c3e37e39ae9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f066b0d_fe23392d",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T16:49:12Z",
+      "side": 1,
+      "message": "How do you stop this clashing with the group that you are now preserving for user-specified bindings in the code above?",
+      "revId": "ba0f7f1c748f9698bc5c82fa72f00c3e37e39ae9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a19d5915_9c1eccbc",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T16:49:12Z",
+      "side": 1,
+      "message": "Why not just using `BindingPoint` now, since this struct is now the same?",
+      "revId": "ba0f7f1c748f9698bc5c82fa72f00c3e37e39ae9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
