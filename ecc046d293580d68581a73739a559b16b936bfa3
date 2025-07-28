@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3df5d78_834d6f5b",
+        "filename": "src/tint/lang/hlsl/writer/construct_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-28T17:38:39Z",
+      "side": 1,
+      "message": "Why did this one need to change?",
+      "revId": "ecc046d293580d68581a73739a559b16b936bfa3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
