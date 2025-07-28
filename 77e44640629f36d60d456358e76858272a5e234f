@@ -16,6 +16,213 @@
       "message": "I expect the naming to change a bit here and this needs to remain isolated to compute because we have no central location for command buffer submission",
       "revId": "77e44640629f36d60d456358e76858272a5e234f",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bd947eb_6a5926e5",
+        "filename": "src/dawn/native/PassResourceUsage.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T13:51:32Z",
+      "side": 1,
+      "message": "This is just code moving",
+      "range": {
+        "startLine": 53,
+        "startChar": 22,
+        "endLine": 53,
+        "endChar": 37
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f4b5dd1_e5debd41",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T13:51:32Z",
+      "side": 1,
+      "message": "This is required because of Cmd buffer zeros/init",
+      "range": {
+        "startLine": 407,
+        "startChar": 22,
+        "endLine": 407,
+        "endChar": 45
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80588f4a_7fbbc2d9",
+        "filename": "src/dawn/native/vulkan/BufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T13:51:32Z",
+      "side": 1,
+      "message": "We can do this here as we have the buffer or we could do this in the recording context (when we emit) but then we would have to track the buffers that correspond to the requested barriers. (it also might not work in aggregate because of the masking)",
+      "range": {
+        "startLine": 510,
+        "startChar": 8,
+        "endLine": 510,
+        "endChar": 24
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f59ac5c5_304d6a60",
+        "filename": "src/dawn/native/vulkan/BufferVk.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T13:51:32Z",
+      "side": 1,
+      "message": "Maybe it should be called implicit cross barrier fence",
+      "range": {
+        "startLine": 77,
+        "startChar": 9,
+        "endLine": 77,
+        "endChar": 34
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19d941a5_12613cf5",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T13:51:32Z",
+      "side": 1,
+      "message": "If a write occurred we will now only be able to implicitly barrier on future fences",
+      "range": {
+        "startLine": 314,
+        "startChar": 30,
+        "endLine": 314,
+        "endChar": 53
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f36ed90_82d0840c",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T13:51:32Z",
+      "side": 1,
+      "message": "This entire optimization is only isolated to compute passes. It does not apply between passes.",
+      "range": {
+        "startLine": 882,
+        "startChar": 34,
+        "endLine": 882,
+        "endChar": 50
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c440450b_43a1c6f3",
+        "filename": "src/dawn/native/vulkan/CommandBufferVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T13:51:32Z",
+      "side": 1,
+      "message": "Todo: It might be better to reset to the current fence instead of zeroing. This will make it more consistent with other parts of the code.",
+      "range": {
+        "startLine": 1041,
+        "startChar": 24,
+        "endLine": 1041,
+        "endChar": 49
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f978f828_128755c6",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T13:51:32Z",
+      "side": 1,
+      "message": "We can probably do vb but im not sure where these might be used.",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c20b379_5f4868fc",
+        "filename": "src/dawn/native/vulkan/PhysicalDeviceVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T13:51:32Z",
+      "side": 1,
+      "message": "Proves that this entire change passes CTS.",
+      "range": {
+        "startLine": 893,
+        "startChar": 3,
+        "endLine": 894,
+        "endChar": 77
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
