@@ -140,6 +140,24 @@
       "parentUuid": "c793fbcc_1aa44ab5",
       "revId": "5a41eaf96b56965724407e112fcae039b0ffec99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8012293_d0dc8f7b",
+        "filename": "src/tint/lang/core/ir/validator_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T16:12:23Z",
+      "side": 1,
+      "message": "Ack, I opened a bug and added a comment referencing it.",
+      "parentUuid": "f0a27724_d03ec27a",
+      "revId": "5a41eaf96b56965724407e112fcae039b0ffec99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
