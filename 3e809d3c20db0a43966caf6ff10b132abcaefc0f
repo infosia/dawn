@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "03492fab_b2cc6a73",
+        "filename": "src/tint/lang/core/ir/analysis/for_loop_analysis.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T21:37:16Z",
+      "side": 1,
+      "message": "At first I thought you were suggesting that we try to walk back the condition (which is a different approach) but here i see you are just suggesting a reverse traversal to avoid memoization and recursion.  I dont really agree with the \"inst has one result\" as the condition could have a single result that is used twice but this is probably only theoretically possible.",
+      "parentUuid": "3fe91d6f_9b2b7cb3",
+      "revId": "3e809d3c20db0a43966caf6ff10b132abcaefc0f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "211186b3_42e103b0",
         "filename": "src/tint/lang/core/ir/analysis/for_loop_analysis.h",
         "patchSetId": 20
