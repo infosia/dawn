@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dfca256_4285faea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T20:22:39Z",
+      "side": 1,
+      "message": "I\u0027m sure we already discussed this but I can\u0027t remember the answer. Why are we creating a separate buffer for the offsets instead of just putting them inside the argument buffer as scalar values?",
+      "revId": "88b1b62bce29810e7a4f76d475705565c96ffcfc",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
