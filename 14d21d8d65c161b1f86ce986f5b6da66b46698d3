@@ -191,6 +191,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ea031b81_d56b5abd",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-28T13:45:02Z",
+      "side": 1,
+      "message": "I\u0027m guessing you get a segv because `vec_ty` is a nullptr. The `As` cast can return a nullptr if the thing being casted isn\u0027t a vector. You probably want to check something like:\n\n```\nif (builtin-\u003eResult()-\u003eType()-DeepestElement()-\u003eIs\u003ccore::type::F16\u003e();\n```\n\nThat will return true for `f16`, `vecN\u003cf16\u003e`, `array\u003cf16, N\u003e`, `array\u003cf16\u003e` or `matCxR\u003cf16\u003e`.",
+      "parentUuid": "ecf08ac8_601db148",
+      "range": {
+        "startLine": 193,
+        "startChar": 35,
+        "endLine": 193,
+        "endChar": 57
+      },
+      "revId": "14d21d8d65c161b1f86ce986f5b6da66b46698d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "6efe8271_0aeae67a",
         "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
         "patchSetId": 3
