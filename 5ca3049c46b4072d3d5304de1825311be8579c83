@@ -16,6 +16,24 @@
       "message": "Hi, James,\nI\u0027m a bit lost about the bots result. I think I didn\u0027t change \"write_bench.cc\" in logic view but it seems I got a duplicated binding-point error. Do you have any thoughts about this?",
       "revId": "5ca3049c46b4072d3d5304de1825311be8579c83",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5e96d5b_94f7716b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T19:25:48Z",
+      "side": 1,
+      "message": "We do some binding remapping before invoking the MSL backend, which causes duplicates. This isn\u0027t a bug - the MSL backend just uses the `kAllowDuplicateBindings` capability on all of its transforms to ignore the validation error. But `PrepareImmediateData` does not set that capability when validating yet, which is why you now see that error. I think it\u0027s fine to just add that capability to `PrepareImmediateData` too.",
+      "parentUuid": "2a186e7c_425a4415",
+      "revId": "5ca3049c46b4072d3d5304de1825311be8579c83",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
