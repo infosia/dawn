@@ -24,6 +24,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "333862db_e48fc825",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-28T04:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18d8ceda_6b31972f",
+      "range": {
+        "startLine": 11,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "14d21d8d65c161b1f86ce986f5b6da66b46698d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7063e8e4_5096798f",
@@ -76,6 +100,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ca0592d_ee3f0dec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-28T04:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45055b44_752318b1",
+      "revId": "14d21d8d65c161b1f86ce986f5b6da66b46698d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3fdea96b_150ae790",
@@ -89,6 +131,30 @@
       "writtenOn": "2025-07-26T05:03:24Z",
       "side": 1,
       "message": "you might want to avoid adding it to the list if it is not f16 and also a vector. (see reflect above)",
+      "range": {
+        "startLine": 193,
+        "startChar": 35,
+        "endLine": 193,
+        "endChar": 57
+      },
+      "revId": "14d21d8d65c161b1f86ce986f5b6da66b46698d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21b7e3e0_188bdcb0",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-28T04:36:18Z",
+      "side": 1,
+      "message": "When I add this guard, I get a segfault. Is there a reason to check beyond the type for f16?: \n```\nif (config.subgroup_broadcast_f16) {\n                            auto* vec_ty \u003d builtin-\u003eResult()-\u003eType()-\u003eAs\u003ccore::type::Vector\u003e();\n                            if (!(vec_ty-\u003eWidth() \u003e 1) || vec_ty-\u003eType()-\u003eIs\u003ccore::type::F16\u003e()) {\n                                worklist.Push(builtin);\n                            }\n                        }\n```",
+      "parentUuid": "3fdea96b_150ae790",
       "range": {
         "startLine": 193,
         "startChar": 35,
@@ -122,6 +188,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "11d21f3f_412fb30a",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-28T04:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6efe8271_0aeae67a",
+      "range": {
+        "startLine": 1176,
+        "startChar": 68,
+        "endLine": 1176,
+        "endChar": 85
+      },
+      "revId": "14d21d8d65c161b1f86ce986f5b6da66b46698d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "50549db9_8456e75a",
@@ -145,6 +235,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8a0b4b8_a1b34fac",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-28T04:36:18Z",
+      "side": 1,
+      "message": "Done and applied the same to vec3\u003cf16\u003e",
+      "parentUuid": "50549db9_8456e75a",
+      "range": {
+        "startLine": 1212,
+        "startChar": 37,
+        "endLine": 1212,
+        "endChar": 46
+      },
+      "revId": "14d21d8d65c161b1f86ce986f5b6da66b46698d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f8c88197_51fef3cc",
@@ -158,6 +272,30 @@
       "writtenOn": "2025-07-26T05:03:24Z",
       "side": 1,
       "message": "Can you simply broadcast the vec2u? and then bitcast back?",
+      "range": {
+        "startLine": 1241,
+        "startChar": 30,
+        "endLine": 1241,
+        "endChar": 51
+      },
+      "revId": "14d21d8d65c161b1f86ce986f5b6da66b46698d3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4274477f_0d095fed",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-28T04:36:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8c88197_51fef3cc",
       "range": {
         "startLine": 1241,
         "startChar": 30,
