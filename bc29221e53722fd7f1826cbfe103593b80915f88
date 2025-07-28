@@ -193,6 +193,24 @@
       "parentUuid": "d645928f_082ff0a6",
       "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0d491b8_84a7f67a",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-28T13:48:45Z",
+      "side": 1,
+      "message": "@zhaoming.jiang@microsoft.com, does this CL look good to you now?",
+      "parentUuid": "0411355c_744d6c59",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

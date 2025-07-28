@@ -41,6 +41,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "170be875_aea7bb99",
+        "filename": "src/dawn/tests/unittests/validation/CompatValidationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 2006,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-28T13:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b307415_b71d760d",
+      "range": {
+        "startLine": 2006,
+        "startChar": 0,
+        "endLine": 2006,
+        "endChar": 0
+      },
+      "revId": "da1e49b56fb9c93cebbadd441f6953dbaf68ae27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "364410af_a27f429b",
@@ -54,6 +78,24 @@
       "writtenOn": "2025-07-18T14:30:51Z",
       "side": 1,
       "message": "Please add a comment before the test explaining what it does.",
+      "revId": "da1e49b56fb9c93cebbadd441f6953dbaf68ae27",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fc82098_fc2957c0",
+        "filename": "src/dawn/tests/unittests/validation/CompatValidationTests.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 2044,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-28T13:48:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "364410af_a27f429b",
       "revId": "da1e49b56fb9c93cebbadd441f6953dbaf68ae27",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
