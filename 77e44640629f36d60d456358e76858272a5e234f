@@ -292,6 +292,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2357bcc3_24b1961c",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-28T21:42:59Z",
+      "side": 1,
+      "message": "Ah the classic ABA problem. I this that this applies here. I will do some diagrams proving this out. Can you give the rest of the code a closer look as well.",
+      "parentUuid": "3c86ab1e_3b6e4c19",
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "505d3752_bc31b92c",
         "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
         "patchSetId": 9
