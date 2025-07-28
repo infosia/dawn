@@ -53,6 +53,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "effe8231_1c0f99bc",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T18:47:57Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "06ca5d06_c473ac88",
+      "revId": "ba0f7f1c748f9698bc5c82fa72f00c3e37e39ae9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f066b0d_fe23392d",
@@ -88,6 +106,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "113a36e3_87f87101",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T18:47:57Z",
+      "side": 1,
+      "message": "But how do you know to skip the vertex pulling buffer (w.r.t the next CL), if it has the same post-binding-remapper binding point as another user-declared buffer that does need to go in an argument buffer?\n\nI guess because `metalIndex` here gives you a binding index that doesn\u0027t clash with anything user defined. OK.",
+      "parentUuid": "c2aaef7d_71ee36fc",
+      "revId": "ba0f7f1c748f9698bc5c82fa72f00c3e37e39ae9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a19d5915_9c1eccbc",
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "The other backends don\u0027t do that, so i keep it here to match the others.",
       "parentUuid": "a19d5915_9c1eccbc",
+      "revId": "ba0f7f1c748f9698bc5c82fa72f00c3e37e39ae9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "23eab3e8_a050afbb",
+        "filename": "src/tint/lang/msl/writer/common/options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-28T18:47:57Z",
+      "side": 1,
+      "message": "I don\u0027t know why we didn\u0027t do this in the backends, but OK.",
+      "parentUuid": "07f86b31_32e2e9d8",
       "revId": "ba0f7f1c748f9698bc5c82fa72f00c3e37e39ae9",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
