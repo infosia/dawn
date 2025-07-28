@@ -68,6 +68,24 @@
       "parentUuid": "8d93daa9_cb40e791",
       "revId": "5a41eaf96b56965724407e112fcae039b0ffec99",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a7b6e4a_82ca54b6",
+        "filename": "src/tint/lang/core/ir/validator_function_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-28T15:48:17Z",
+      "side": 1,
+      "message": "I was thinking just the call that caused the recursion to start, so in this case it would be the call on 1160, in the indirect case it would be the call on 1187 since that\u0027s the recursive call. But, i guess you aren\u0027t checking at call time, it\u0027s just checking the function info.\n\nSo, fine to skip for now.",
+      "parentUuid": "3ef5011d_975fc300",
+      "revId": "5a41eaf96b56965724407e112fcae039b0ffec99",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
