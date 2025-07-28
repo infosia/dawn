@@ -63,6 +63,30 @@
       },
       "revId": "bea17faaea12bc45877dbb33c6e4d21841204460",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48e48aeb_039a1926",
+        "filename": "src/dawn/native/webgpu/ObjectWGPU.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-28T19:53:00Z",
+      "side": 1,
+      "message": "For the async case, does that imply you are returning a placeholder object that isn\u0027t actually backed? Otherwise, why can\u0027t we just create the object when the async function\u0027s callback is called?\n\nAlso, why are we releasing the inner handle on `Device::DestroyImpl`? Shouldn\u0027t we just be calling `wgpuDeviceDestroy`?",
+      "parentUuid": "32b1b6f1_5a577e24",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 16
+      },
+      "revId": "bea17faaea12bc45877dbb33c6e4d21841204460",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
