@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cfb1d2ea_188d7ed6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-28T22:59:42Z",
+      "side": 1,
+      "message": "ptal",
+      "parentUuid": "70c83c03_87256add",
+      "revId": "b78d736fdd3e0a9be24fdeed3726d5af89ee8baa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a5ee4d4b_8f210e9e",
         "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
         "patchSetId": 6
@@ -67,6 +85,24 @@
       "writtenOn": "2025-07-28T20:07:00Z",
       "side": 1,
       "message": "Nit: You can drop the `-\u003eResult()` here, and in several of the other cases below. You can directly use an `ir::Instruction*` as the argument to another instruction builder method and it\u0027ll do that for you.\n\nYou should only need it for the assignments into `result`.",
+      "revId": "b78d736fdd3e0a9be24fdeed3726d5af89ee8baa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a82c094_50f34881",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-28T22:59:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5ee4d4b_8f210e9e",
       "revId": "b78d736fdd3e0a9be24fdeed3726d5af89ee8baa",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -84,6 +120,30 @@
       "writtenOn": "2025-07-28T20:07:00Z",
       "side": 1,
       "message": "Nit: Can just `b.Swizzle(vec_ty, broadcasted_v4f16, {0u, 1u, 2u})`",
+      "range": {
+        "startLine": 1213,
+        "startChar": 0,
+        "endLine": 1216,
+        "endChar": 84
+      },
+      "revId": "b78d736fdd3e0a9be24fdeed3726d5af89ee8baa",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d50fc19_02f12a89",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-28T22:59:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "655cfa34_2cbb3386",
       "range": {
         "startLine": 1213,
         "startChar": 0,
