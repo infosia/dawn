@@ -16,6 +16,29 @@
       "message": "Can we `ASSERT(!IsError())` in all the getters? We should be doing that like in other objects as it helps catch missing validation.",
       "revId": "aee556bf90041c056d00d6e7950316c755c7ebd1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d958795_88bbf20b",
+        "filename": "third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-28T17:57:10Z",
+      "side": 1,
+      "message": "This is probably no longer necessary now that we have the `dawn` tag. I would leave this unchanged for now until we are ready to implement in Emscripten which will likely be a while off since we would need to standardize it through JS first.",
+      "range": {
+        "startLine": 358,
+        "startChar": 2,
+        "endLine": 358,
+        "endChar": 20
+      },
+      "revId": "aee556bf90041c056d00d6e7950316c755c7ebd1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
