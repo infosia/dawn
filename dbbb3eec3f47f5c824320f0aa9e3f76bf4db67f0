@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "7290e7a1_293c53ab",
+        "filename": "src/tint/lang/msl/builtin_fn.cc.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-29T18:28:18Z",
+      "side": 1,
+      "message": "Yeah, since you\u0027re not touching matter it shouldn\u0027t matter if *this* instruction is reordered. It\u0027s the load that uses it that shouldn\u0027t be reordered.",
+      "parentUuid": "da5cb44e_f668f3a9",
+      "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cb8a30bc_93938693",
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "No runtime array in uniform ....",
       "parentUuid": "08660e50_e1d65360",
+      "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1874b525_729a4406",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-29T18:28:18Z",
+      "side": 1,
+      "message": "That\u0027s a good reason to use a fixed-size array. We\u0027ll have to switch to fixed-sized arrays when we move to immediate data too.\n\nI assume we can just look at the indices that Dawn has given us to figure out how big the array should be.",
+      "parentUuid": "c04fe9ae_fcd98e34",
       "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
