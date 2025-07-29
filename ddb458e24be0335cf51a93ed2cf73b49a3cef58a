@@ -246,6 +246,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7043324d_8ab32d3a",
+        "filename": "src/dawn/native/metal/BindGroupMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T20:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e53ca07_2b20672a",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "782c4458_4aeaad84",
@@ -435,6 +453,24 @@
       "side": 1,
       "message": "Can we have a TODO to make it one buffer as well? It\u0027s weird to have one buffer per BGL. We can also have a TODO to use the immediates in the non-AB case to reduce the differences during the Finching.",
       "parentUuid": "e8cc4233_9a3e4479",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59212748_68021c10",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T20:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "961a4588_1114c48a",
       "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
