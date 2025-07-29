@@ -91,6 +91,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a7b7ca3e_eea31a77",
+        "filename": "src/dawn/native/webgpu/ObjectWGPU.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T16:21:38Z",
+      "side": 1,
+      "message": "So we are not trying to remove the unnecessary template argument? Did it end up too complex?",
+      "parentUuid": "3463cd42_c6166a3c",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "9a54eb059fa2ebc62e98423eaf70382a51eb1fdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c1301124_89be647c",
         "filename": "src/dawn/native/webgpu/ObjectWGPU.h",
         "patchSetId": 1
