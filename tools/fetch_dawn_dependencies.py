@@ -83,41 +83,49 @@ parser.add_argument('-ns',
                     dest='shallow',
                     help="Deactivate shallow cloning.")
 
-parser.add_argument('-t',
-                    '--use-test-deps',
-                    action='store_true',
-                    default=False,
+parser.add_argument('targets',
+                    nargs='*',
+                    choices=['all', 'native', 'emdawnwebgpu'],
+                    default='all',  # note: this sets it to 'all', not ['all']
                     help="""
-    Deprecated: Test dependencies are now always included.
+    One or more targets to get dependencies for. Defaults to 'all'.
     """)
 
 
 def main(args):
+    targets = None  # all targets
+    if args.targets != 'all' and 'all' not in args.targets:
+        targets = set(args.targets)
+
     # The dependencies that we need to pull from the DEPS files.
     # Dependencies of dependencies are prefixed by their ancestors.
     required_submodules = [
         'third_party/abseil-cpp',
-        'third_party/dxc',
-        'third_party/dxheaders',
-        'third_party/glfw',
-        'third_party/jinja2',
-        'third_party/khronos/EGL-Registry',
-        'third_party/khronos/OpenGL-Registry',
-        'third_party/libprotobuf-mutator/src',
-        'third_party/protobuf',
-        'third_party/markupsafe',
-        'third_party/glslang/src',
-        'third_party/google_benchmark/src',
         'third_party/googletest',
-        'third_party/spirv-headers/src',
-        'third_party/spirv-tools/src',
-        'third_party/vulkan-headers/src',
-        'third_party/vulkan-loader/src',
-        'third_party/vulkan-utility-libraries/src',
     ]
-    if args.use_test_deps:
-        log("""WARNING: --use-test-deps argument deprecated. 
-            Test dependencies are now always included.""")
+    if not targets or 'native' in targets:
+        required_submodules += [
+            'third_party/dxc',
+            'third_party/dxheaders',
+            'third_party/glfw',
+            'third_party/jinja2',
+            'third_party/khronos/EGL-Registry',
+            'third_party/khronos/OpenGL-Registry',
+            'third_party/libprotobuf-mutator/src',
+            'third_party/protobuf',
+            'third_party/markupsafe',
+            'third_party/glslang/src',
+            'third_party/google_benchmark/src',
+            'third_party/spirv-headers/src',
+            'third_party/spirv-tools/src',
+            'third_party/vulkan-headers/src',
+            'third_party/vulkan-loader/src',
+            'third_party/vulkan-utility-libraries/src',
+        ]
+    if not targets or 'emdawnwebgpu' in targets:
+        required_submodules += [
+            'third_party/emsdk',
+        ]
 
     root_dir = Path(args.directory).resolve()
 

@@ -133,6 +133,8 @@ if (DAWN_SUPPORTS_GLFW_FOR_WINDOWING)
     set(BUILD_SAMPLES ON)
 endif()
 
+option(EMDAWNWEBGPU_ONLY "Build only Emdawnwebgpu (not Dawn or Tint)" OFF)
+
 option(DAWN_ENABLE_ASAN "Enable address sanitizer" OFF)
 option(DAWN_ENABLE_INSTALL "Enable install step for Dawn libraries" OFF)
 option(DAWN_ENABLE_TSAN "Enable thread sanitizer" OFF)
@@ -458,7 +460,12 @@ set(BUILD_SHARED_LIBS_SAVED ${BUILD_SHARED_LIBS})
 set(BUILD_SHARED_LIBS 0)
 
 add_subdirectory(src/utils)
-add_subdirectory(src/tint)
+
+if (EMDAWNWEBGPU_ONLY)
+    message(STATUS "Tint build is disabled by EMDAWNWEBGPU_ONLY!")
+else()
+    add_subdirectory(src/tint)
+endif()
 
 set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_SAVED})
 

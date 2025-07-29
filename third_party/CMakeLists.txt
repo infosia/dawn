@@ -33,8 +33,8 @@ set(BUILD_TESTING OFF)
 # a parent project that does not want to use depot_tools.
 if (DAWN_FETCH_DEPENDENCIES)
     set(EXTRA_FETCH_ARGS)
-    if (NOT TARGET gmock AND (DAWN_BUILD_TESTS OR TINT_BUILD_TESTS))
-        list(APPEND EXTRA_FETCH_ARGS --use-test-deps)
+    if (EMDAWNWEBGPU_ONLY)
+        list(APPEND EXTRA_FETCH_ARGS emdawnwebgpu)
     endif()
 
     message(STATUS "Running fetch_dawn_dependencies:")

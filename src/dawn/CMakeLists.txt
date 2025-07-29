@@ -26,6 +26,19 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ###############################################################################
+# Common projects used by both Dawn and Emdawnwebgpu
+###############################################################################
+
+add_subdirectory(partition_alloc)
+add_subdirectory(common)
+add_subdirectory(utils)
+
+if (EMDAWNWEBGPU_ONLY)
+  message(STATUS "Dawn build is disabled by EMDAWNWEBGPU_ONLY!")
+  return()
+endif()
+
+###############################################################################
 # Dawn headers
 ###############################################################################
 
@@ -89,9 +102,6 @@ endif()
 # Dawn projects
 ###############################################################################
 
-add_subdirectory(partition_alloc)
-add_subdirectory(common)
-add_subdirectory(utils)
 # Only build the rest of Dawn when Emscripten is not the target environment.
 if (NOT EMSCRIPTEN)
   add_subdirectory(platform)
