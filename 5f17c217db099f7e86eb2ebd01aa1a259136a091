@@ -50,6 +50,24 @@
       "message": "nit: also mention this change in the commit message",
       "revId": "5f17c217db099f7e86eb2ebd01aa1a259136a091",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a69ae253_ef0cfc55",
+        "filename": "src/dawn/utils/TextureUtils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 4024649
+      },
+      "writtenOn": "2025-07-29T01:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c1e9d7_62918e3f",
+      "revId": "5f17c217db099f7e86eb2ebd01aa1a259136a091",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
