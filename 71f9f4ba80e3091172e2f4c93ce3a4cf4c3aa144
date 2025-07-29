@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b536760_277bf639",
+        "filename": "src/tint/lang/core/ir/analysis/for_loop_analysis.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-29T17:38:17Z",
+      "side": 1,
+      "message": "I think this check naturally falls out of the sink chain analysis below.",
+      "revId": "71f9f4ba80e3091172e2f4c93ce3a4cf4c3aa144",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbee5072_7526a63e",
+        "filename": "src/tint/lang/core/ir/analysis/for_loop_analysis.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-29T17:38:17Z",
+      "side": 1,
+      "message": "I don\u0027t think this check is necessary. This would indicate malformed IR.\n\nAlso, I don\u0027t think we really need the `local_for_condition` check either. If the if-condition is referencing something that isn\u0027t an instruction result, then it\u0027s declared before the loop (or a constant), in which case it\u0027s still fine to use in the loop condition.",
+      "revId": "71f9f4ba80e3091172e2f4c93ce3a4cf4c3aa144",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
