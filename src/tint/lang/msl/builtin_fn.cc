@@ -122,6 +122,8 @@ const char* str(BuiltinFn i) {
             return "simdgroup_multiply_accumulate";
         case BuiltinFn::kOsLog:
             return "os_log";
+        case BuiltinFn::kPointerOffset:
+            return "pointer_offset";
     }
     return "<unknown>";
 }
@@ -142,6 +144,7 @@ tint::core::ir::Instruction::Accesses GetSideEffects(BuiltinFn fn) {
         case BuiltinFn::kThreadgroupBarrier:
         case BuiltinFn::kSimdBallot:
         case BuiltinFn::kQuadShuffleXor:
+        case BuiltinFn::kPointerOffset:
             return core::ir::Instruction::Accesses{core::ir::Instruction::Access::kLoad,
                                                    core::ir::Instruction::Access::kStore};
 
