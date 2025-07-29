@@ -46,6 +46,30 @@
       },
       "revId": "cb11f56816bd3ab4f78210e67ff72bea7558051e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17de7a70_89e0e59a",
+        "filename": ".github/workflows/package-emdawnwebgpu.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-29T17:40:16Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f588164b_c6aef911",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "cb11f56816bd3ab4f78210e67ff72bea7558051e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
