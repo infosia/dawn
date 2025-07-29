@@ -86,6 +86,24 @@
       "parentUuid": "ee7b9696_40cc61fe",
       "revId": "8c9d1aaea0a3f8e8d0b282c7a21ce336df1c74c7",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9054a2f7_80d0bf75",
+        "filename": "src/dawn/tests/end2end/ShaderPrintTests.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T07:52:42Z",
+      "side": 1,
+      "message": "Mmmmh ok that makes sense and we can see if it ends up being an issue. If / when we implement it on all backends (in the frontend mostly) and advertise it more, it could be a feature (and a toggle to force it + print to console so debugging is easy?) but that\u0027s much later. Thank you for the discussion!",
+      "parentUuid": "9b968993_9e03c47a",
+      "revId": "8c9d1aaea0a3f8e8d0b282c7a21ce336df1c74c7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
