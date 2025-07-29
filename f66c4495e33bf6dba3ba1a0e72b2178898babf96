@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af23a17e_b813c0dc",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-29T15:31:37Z",
+      "side": 1,
+      "message": "Should be a StoreVectorElement",
+      "revId": "f66c4495e33bf6dba3ba1a0e72b2178898babf96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
