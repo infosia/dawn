@@ -230,6 +230,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6e53ca07_2b20672a",
+        "filename": "src/dawn/native/metal/BindGroupMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T19:31:12Z",
+      "side": 1,
+      "message": "Can we still replace it with querying the BGLInternal? There is https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/BindGroupLayoutInternal.h;drc\u003d4b75589621506dbc2c213938da3a73d5e9cb4c18;l\u003d105 and we could add a `HasDynamicBuffers` getter as well.",
+      "parentUuid": "e65e1c13_a5a0779f",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "782c4458_4aeaad84",
         "filename": "src/dawn/native/metal/BindGroupMTL.mm",
         "patchSetId": 4
@@ -399,6 +417,24 @@
       "side": 1,
       "message": "We don\u0027t have immediates yet in MSL I don\u0027t think, so can\u0027t use that at this point.",
       "parentUuid": "f5529673_eefceb89",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "961a4588_1114c48a",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T19:31:12Z",
+      "side": 1,
+      "message": "Can we have a TODO to make it one buffer as well? It\u0027s weird to have one buffer per BGL. We can also have a TODO to use the immediates in the non-AB case to reduce the differences during the Finching.",
+      "parentUuid": "e8cc4233_9a3e4479",
       "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },

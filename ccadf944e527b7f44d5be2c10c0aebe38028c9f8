@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ada2e771_f4150111",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T19:31:12Z",
+      "side": 1,
+      "message": "Any chance we can use the replacement directly? I don\u0027t see any availability annotations on it:\n\n```\ntypedef NS_ENUM(NSUInteger, MTLBindingAccess) {\n    MTLBindingAccessReadOnly   \u003d 0,\n    MTLBindingAccessReadWrite  \u003d 1,\n    MTLBindingAccessWriteOnly  \u003d 2,\n    MTLArgumentAccessReadOnly API_DEPRECATED_WITH_REPLACEMENT(\"MTLBindingAccessReadOnly\", macos(10.13, 14.0), ios(8.0, 17.0)) \u003d MTLBindingAccessReadOnly,\n    MTLArgumentAccessReadWrite API_DEPRECATED_WITH_REPLACEMENT(\"MTLBindingAccessReadWrite\", macos(10.13, 14.0), ios(8.0, 17.0)) \u003d MTLBindingAccessReadWrite,\n    MTLArgumentAccessWriteOnly API_DEPRECATED_WITH_REPLACEMENT(\"MTLBindingAccessWriteOnly\", macos(10.13, 14.0), ios(8.0, 17.0)) \u003d MTLBindingAccessWriteOnly,\n};\n```",
+      "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41a95895_56cc54c9",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T19:31:12Z",
+      "side": 1,
+      "message": "This array leaks, we should wrap it in an `NSRef`.",
+      "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b528c8f_dbcaf6ce",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T19:31:12Z",
+      "side": 1,
+      "message": "```suggestion\n    NSUInteger argumentBufferLength \u003d [*encoder encodedLength];\n```",
+      "range": {
+        "startLine": 66,
+        "startChar": 15,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8e5c2d6_9ec801dd",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T19:31:12Z",
+      "side": 1,
+      "message": "Adding things partially like this has the risk of forgetting about things in the future, like the necessity to tell samplers they must be compatible with argument buffers. Is there a place where you log all the things that need to happen? (or we just add a TODO)",
+      "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32b634a3_d8a05e7d",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T19:31:12Z",
+      "side": 1,
+      "message": "Unused leftover.",
+      "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8758a4d_0f127370",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T19:31:12Z",
+      "side": 1,
+      "message": "```suggestion\n    }\n    \n    void ApplyBindGroupWithArgumentBuffersImpl(\n        id\u003cMTLRenderCommandEncoder\u003e render,\n```",
+      "range": {
+        "startLine": 687,
+        "startChar": 0,
+        "endLine": 689,
+        "endChar": 0
+      },
+      "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc15507b_31af92b0",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T19:31:12Z",
+      "side": 1,
+      "message": "This TODO seems unrelated to AB.",
+      "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "86ce0717_c847fd28",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T19:31:12Z",
+      "side": 1,
+      "message": "This could be precomputed in the layout. But also we can only apply if we have the respective encoder. IMHO this whole function could be:\n\n```\nif (render !\u003d nulltptr) {\n  [render setVertexBuffer]\n  [render setFragmentBuffer]\n  if (has dynamic offsets) {\n    [render setVertexBytes]\n    [render setFragmentBytes]\n  }\n} else {\n  ASSERT(compute !\u003d nullptr)\n  [compute setBuffr]\n  if (has dynamic offsets) {\n    [compute setBytes]\n  }\n}\n```\n\nand we optimize later by merging with immediates, and if we really want to we can check on the layout if it is worth setting the AB at all on a stage.",
+      "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
