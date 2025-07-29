@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38cc5fa4_c0082b8a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4243302
+      },
+      "writtenOn": "2025-07-29T07:14:23Z",
+      "side": 1,
+      "message": "This CL fixes nodejs program not ending after destroying wgpu::Device. I also investigated the uncapturederror as you suggested, but it\u0027s not affected by AsyncRunner (direct event).",
+      "revId": "37ed2e9a9d34a133134eecf9996df3385e7a8bd7",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
