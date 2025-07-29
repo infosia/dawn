@@ -104,7 +104,8 @@ extern "C" int LLVMFuzzerInitialize(int* argc, char*** argv) {
 
     auto& opt_help = opts.Add<tint::cli::BoolOption>("help", "shows the usage");
     auto& opt_filter = opts.Add<tint::cli::StringOption>(
-        "filter", "runs only the fuzzers with the given substring");
+        "filter",
+        "runs only the fuzzers with the given substring, supports '*' matching all fuzzers");
     auto& opt_concurrent =
         opts.Add<tint::cli::BoolOption>("concurrent", "runs the fuzzers concurrently");
     auto& opt_verbose =
@@ -123,7 +124,12 @@ extern "C" int LLVMFuzzerInitialize(int* argc, char*** argv) {
         return 0;
     }
 
-    options.filter = opt_filter.value.value_or("");
+    auto filter = opt_filter.value.value_or("");
+    // '*' should match all fuzzers, which is equivalent to having an empty filter in the runner.
+    if (filter == "*") {
+        filter = "";
+    }
+    options.filter = filter;
     options.run_concurrently = opt_concurrent.value.value_or(false);
     options.verbose = opt_verbose.value.value_or(false);
     return 0;
