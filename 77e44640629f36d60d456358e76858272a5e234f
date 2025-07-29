@@ -252,6 +252,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ca4dd820_b0ef2ebe",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-29T03:14:19Z",
+      "side": 1,
+      "message": "Again the question is why is there a mVertexBufferBarrier and a mNonVertexBufferBarrier in the original code.",
+      "parentUuid": "6bce7863_3744bd2d",
+      "range": {
+        "startLine": 78,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 36
+      },
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "da1216f1_465f38ef",
         "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
         "patchSetId": 9
