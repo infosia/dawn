@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af5030d6_d0827554",
+        "filename": "src/emdawnwebgpu/CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-29T00:10:10Z",
+      "side": 0,
+      "message": "Oh, nice! I was worried that we couldn\u0027t do this because we were still required to support CMake 3.16 before, but I just checked https://github.com/google/oss-policies-info/blob/main/foundational-cxx-support-matrix.md and it turns out the minimum supported version was just recently bumped to 3.22 in June!",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 15
+      },
+      "revId": "d5d7b562361e68de8bf482d0fed48f7e436c32c3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
