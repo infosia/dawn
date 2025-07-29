@@ -22,6 +22,30 @@
       },
       "revId": "cb11f56816bd3ab4f78210e67ff72bea7558051e",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f588164b_c6aef911",
+        "filename": ".github/workflows/package-emdawnwebgpu.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-29T17:38:44Z",
+      "side": 1,
+      "message": "`-C\u003d.github/workflows/dawn-ci.cmake` enables it.",
+      "parentUuid": "7837b027_dff34d67",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "cb11f56816bd3ab4f78210e67ff72bea7558051e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
