@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebeae4d5_300c6803",
+        "filename": "src/tint/utils/macros/compiler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-07-29T22:33:45Z",
+      "side": 1,
+      "message": "Removed (looking closer at the stackoverflow answer, the using is just for testing the typing pass compilation. Isn\u0027t needed here)",
+      "parentUuid": "47e62104_a9f9965c",
+      "revId": "ee05532859da56aea46885ebc77fbb843eec87e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "798f7758_9c554b50",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-07-29T22:18:50Z",
       "side": 1,
       "message": "Can you split these three over lines as well?",
+      "revId": "ee05532859da56aea46885ebc77fbb843eec87e5",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "527337f6_786741cd",
+        "filename": "src/tint/utils/macros/compiler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-07-29T22:33:45Z",
+      "side": 1,
+      "message": "Done (add a clang-format off on section)",
+      "parentUuid": "798f7758_9c554b50",
       "revId": "ee05532859da56aea46885ebc77fbb843eec87e5",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
