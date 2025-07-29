@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84ce1fd5_5517899c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-29T04:44:48Z",
+      "side": 1,
+      "message": "PTAL. If we do want to add options to `fetch_dawn_dependencies.sh` to reduce the list of dependencies, we should file a bug for it. I started doing that [here](https://dawn-review.googlesource.com/c/dawn/+/255114/1/tools/fetch_dawn_dependencies.py) before deciding it was not worthwhile - fetching all the deps is very fast because use shallow cloning.",
+      "revId": "3d7bcc02538ba01edd8e3cd595444f0cd74992ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
