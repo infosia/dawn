@@ -16,6 +16,24 @@
       "message": "Should be a StoreVectorElement",
       "revId": "f66c4495e33bf6dba3ba1a0e72b2178898babf96",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44d32fcf_4eb48cd4",
+        "filename": "src/tint/lang/spirv/reader/lower/transpose_row_major_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T17:07:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af23a17e_b813c0dc",
+      "revId": "f66c4495e33bf6dba3ba1a0e72b2178898babf96",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
