@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1733183b_8a98489d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-29T18:10:27Z",
+      "side": 1,
+      "message": "As discussed the problem is that this is only for subgroupBroadcast. What about all the other subgroup functions that use f16?  David said we should side on making sure this actually works correctly given that we have clear proof that it does not. Keep in mind our usage (REDACTED) only used subgroupBroadcast and not the other functions.",
+      "parentUuid": "57bd2023_b1e2177b",
+      "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85b13b6f_923892d8",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 7
