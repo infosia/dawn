@@ -358,6 +358,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bf2ae238_eca16256",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-29T20:03:13Z",
+      "side": 1,
+      "message": "Spoke with Shahbaz. He said that if there is any ABA/Aliasing problem it would be pre-existing in dawn. He gave some suggestions on how to avoid excessive searching of barrier history from his experience in Angle.",
+      "parentUuid": "2357bcc3_24b1961c",
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "505d3752_bc31b92c",
         "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
         "patchSetId": 9
