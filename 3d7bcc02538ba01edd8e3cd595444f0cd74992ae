@@ -16,6 +16,24 @@
       "message": "PTAL. If we do want to add options to `fetch_dawn_dependencies.sh` to reduce the list of dependencies, we should file a bug for it. I started doing that [here](https://dawn-review.googlesource.com/c/dawn/+/255114/1/tools/fetch_dawn_dependencies.py) before deciding it was not worthwhile - fetching all the deps is very fast because use shallow cloning.",
       "revId": "3d7bcc02538ba01edd8e3cd595444f0cd74992ae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f38f9a8b_1d10d943",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-29T17:35:15Z",
+      "side": 1,
+      "message": "I think I\u0027d rather consider trying to make depot tools work isstead of trying to support another option like `fetch_dawn_dependencies.sh`.",
+      "parentUuid": "84ce1fd5_5517899c",
+      "revId": "3d7bcc02538ba01edd8e3cd595444f0cd74992ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
