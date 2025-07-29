@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37f191dc_6d30f22d",
+        "filename": "tools/src/cmd/fuzz/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-29T19:19:21Z",
+      "side": 1,
+      "message": "I could introduce another enum here, CmdMode, with the same functional values as TaskMode, so that you cannot accidently use a CmdMode for TaskMode, but that feels a bit overboard.",
+      "revId": "82dde59cee965e3724828a7f8199f1640e1a27c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "362cbb3b_93d148d7",
+        "filename": "tools/src/cmd/fuzz/main.go",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-29T19:19:21Z",
+      "side": 1,
+      "message": "I have intentionally made taskMode a seperate field here, since my initial version of this patch re-used the mode field from cmdConfig and I had a subtle bug in my logic that was breaking things. Following the Golang recommendation of \"Explicit over implicit\"",
+      "revId": "82dde59cee965e3724828a7f8199f1640e1a27c9",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
