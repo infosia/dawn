@@ -34,6 +34,24 @@
       "parentUuid": "99f96ed9_13ef7f30",
       "revId": "a02508d70c5bfad43b81259d07d267732ed3e065",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "66dfd47c_64510638",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000250
+      },
+      "writtenOn": "2025-07-29T16:06:08Z",
+      "side": 1,
+      "message": "I suspect I was thinking it didn\u0027t work, because for GoogleTest\u0027s --gtest_filter\u003d you cannot use an empty string, and either I was confounding the two or assumed they used the same flag parser (gflags)",
+      "parentUuid": "f72b2116_b633df86",
+      "revId": "a02508d70c5bfad43b81259d07d267732ed3e065",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ],
   "submitRequirementResults": [
