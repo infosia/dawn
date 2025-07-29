@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f0bfc2b_1d889dde",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-29T18:47:59Z",
+      "side": 1,
+      "message": "As I recall the device that had the issue (some intel gen 9) passed all the CTS tests.",
+      "parentUuid": "1733183b_8a98489d",
+      "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85b13b6f_923892d8",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 7
