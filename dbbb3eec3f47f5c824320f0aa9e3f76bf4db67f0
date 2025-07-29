@@ -195,6 +195,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e142555_7178f067",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-29T19:04:44Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "67a7cf76_cdcdff38",
+      "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01d8339b_27394c6a",
