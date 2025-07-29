@@ -18,6 +18,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "da5cb44e_f668f3a9",
+        "filename": "src/tint/lang/msl/builtin_fn.cc.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T18:14:53Z",
+      "side": 1,
+      "message": "I didn\u0027t want it to order anything before or after me, so figured making it a load/store would break any kind of inlining or movement.\n\nWould you prefer it was in the none section?",
+      "parentUuid": "2ea0125d_ccfca1b9",
+      "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "cb8a30bc_93938693",
@@ -52,6 +70,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d177c88e_7dfd4c24",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T18:14:53Z",
+      "side": 1,
+      "message": "This method is called from line 100, so before the check above.",
+      "parentUuid": "6f92d30f_510de71a",
+      "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08660e50_e1d65360",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-07-29T18:01:43Z",
       "side": 1,
       "message": "uniform?",
+      "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c04fe9ae_fcd98e34",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T18:14:53Z",
+      "side": 1,
+      "message": "No runtime array in uniform ....",
+      "parentUuid": "08660e50_e1d65360",
       "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -86,6 +140,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "263f79f4_d73bbc73",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T18:14:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01d8339b_27394c6a",
+      "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9efe19a6_ff3919ed",
@@ -103,6 +175,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ffd38714_a9f2c654",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T18:14:53Z",
+      "side": 1,
+      "message": "No, it\u0027s valid to not be in there, we just return the access itself.",
+      "parentUuid": "9efe19a6_ff3919ed",
+      "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a6ed6ff4_5591664c",
@@ -116,6 +206,24 @@
       "writtenOn": "2025-07-29T18:01:43Z",
       "side": 1,
       "message": "Nit: it\u0027s always used",
+      "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b72194b_083edfd1",
+        "filename": "src/tint/lang/msl/writer/raise/argument_buffers.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T18:14:53Z",
+      "side": 1,
+      "message": "It\u0027s always used _now_, heh.",
+      "parentUuid": "a6ed6ff4_5591664c",
       "revId": "dbbb3eec3f47f5c824320f0aa9e3f76bf4db67f0",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
