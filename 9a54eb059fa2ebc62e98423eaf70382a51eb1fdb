@@ -137,6 +137,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8693d32_11cc09c7",
+        "filename": "src/dawn/native/webgpu/ObjectWGPU.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-07-29T16:55:35Z",
+      "side": 1,
+      "message": "Follow up fix: https://dawn-review.googlesource.com/c/dawn/+/255294",
+      "parentUuid": "ee09caeb_22710a86",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "9a54eb059fa2ebc62e98423eaf70382a51eb1fdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1301124_89be647c",
