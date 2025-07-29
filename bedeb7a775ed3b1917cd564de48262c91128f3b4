@@ -33,6 +33,24 @@
       "message": "Are these two for loops deterministic? The numbers calculated here need to match in the command buffer code and I\u0027m assuming these loop in the same order? If that\u0027s not true, need to figure out a differnt way to get this info.",
       "revId": "bedeb7a775ed3b1917cd564de48262c91128f3b4",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc237ccb_d5d1c34b",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "Yes, these iterate the bitsets from low-valued bits to high-valued bits.",
+      "parentUuid": "38903df1_fe62ef6e",
+      "revId": "bedeb7a775ed3b1917cd564de48262c91128f3b4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }

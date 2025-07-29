@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5e34694_dee40e6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "Getting there for a first version. Lots of simplifications to do. Also we want to ship AB at the same time as manual memory tracking and ideally pooling of ABs per length required or per BGL.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8696658b_6cf45341",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "nit: These can be const and defined in the .cpp.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "095dc7eb_aaf3e010",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "This most likely leaks, we should use NSRef or NSPRef to hold the argument descriptors. But also why don\u0027t we create the encoders here and reuse them between bind group creations? We should be able to reset the buffer repeatedly with https://developer.apple.com/documentation/metal/mtlargumentencoder/setargumentbuffer(_:offset:)?language\u003dobjc",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64515ca3_7ac00226",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "This needs to handle more that the uniform / read-only storage buffer cases but also samplers, textures, etc.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bb12ca9_954bbd3d",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "Why do we separate the layouts for vertex/fragment/compute? We can have a single argument buffer that has a superset of all the stages and is used for all of them.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13cfcb25_723ae141",
+        "filename": "src/dawn/native/metal/BindGroupMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "Ditto these should be const and can be defined in the .cpp.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7fc3811b_f0def6a4",
+        "filename": "src/dawn/native/metal/BindGroupMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "That\u0027s information from the layout, why does it need to be duplicated in the BindGroup?",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "782c4458_4aeaad84",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "This is done with NSRef or NSPRef",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9507869e_a4c04d00",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "Can the TODO be associated with an issue and not a person?",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "47a752ff_bf11b5b2",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "We never tell the argument encoder about textures, samplers etc.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "482ad3fb_c6d6d33c",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "We can encode all the bindings and set the argument buffer once. Are you separating the buffers to let the driver better track dependencies to avoid unnecessary VS-\u003eFS dependencies? We should bundle using argument buffers with also doing manual resource tracking with `useResource` and friends to fix that.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5529673_eefceb89",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "There can be more than one dynamic buffer. Ah it\u0027s the buffer that contains the dynamic offsets? It seems that we should bundle that with the immediates. But also having one buffer for all the dynamic offsets would make more sense IMHO.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2207d62_b3c64da0",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "This function looks like it could easily be split in AB-specific code and non-AB code, it would be a lot more readable.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c603dc8_c637fd62",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "Why do we do this tracking when using argument buffers? It\u0027s way more expensive to check this than to just call `setFooBuffer` once.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "56be493c_dc9a295b",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "```suggestion\nstd::unordered_map\u003cuint32_t, tint::msl::writer::ArgumentBufferInfo\u003e GenerateArgumentBufferInfo(\n```",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "570e5469_8f3e22b8",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "Can we have a single buffer that will contain the dynamic offsets and a TODO to use immediates for that?",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e464913_11fdcf05",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "This one is non-deterministic, instead you\u0027d iterate all the bindings and use `BindingInfo::binding` to get the WGSL `BindingNumber`.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "30332da9_c11053e5",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T10:20:50Z",
+      "side": 1,
+      "message": "?",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
