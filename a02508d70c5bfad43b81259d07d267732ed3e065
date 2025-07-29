@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99f96ed9_13ef7f30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T15:05:28Z",
+      "side": 1,
+      "message": "Could you not just do `--filter\u003d\"\"`? And then fill in the `\"\"` when you want to actually filter?",
+      "revId": "a02508d70c5bfad43b81259d07d267732ed3e065",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
