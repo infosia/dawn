@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "57bd2023_b1e2177b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-29T18:07:08Z",
+      "side": 1,
+      "message": "Transform code LGTM. Will wait for the forced toggle setting to be removed before approving.\n\nDo we know if this is enough to enable subgroups for Gen9?",
+      "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85b13b6f_923892d8",
         "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
         "patchSetId": 7
@@ -20,6 +37,23 @@
         "endLine": 404,
         "endChar": 11
       },
+      "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72bfb7e1_b68a85fb",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-29T18:07:08Z",
+      "side": 1,
+      "message": "Nit: More `-\u003eResult()` calls can be removed here.",
       "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
