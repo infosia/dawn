@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7837b027_dff34d67",
+        "filename": ".github/workflows/package-emdawnwebgpu.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-29T17:36:13Z",
+      "side": 1,
+      "message": "Wait, where is this called now? Was it already called before?",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 35
+      },
+      "revId": "cb11f56816bd3ab4f78210e67ff72bea7558051e",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
