@@ -27,7 +27,9 @@
 
 #include "dawn/native/metal/BindGroupLayoutMTL.h"
 
+#include "dawn/native/Device.h"
 #include "dawn/native/metal/BindGroupMTL.h"
+#include "dawn/native/metal/DeviceMTL.h"
 
 namespace dawn::native::metal {
 
@@ -39,7 +41,30 @@ Ref<BindGroupLayout> BindGroupLayout::Create(DeviceBase* device,
 
 BindGroupLayout::BindGroupLayout(DeviceBase* device, const BindGroupLayoutDescriptor* descriptor)
     : BindGroupLayoutInternalBase(device, descriptor),
-      mBindGroupAllocator(MakeFrontendBindGroupAllocator<BindGroup>(4096)) {}
+      mBindGroupAllocator(MakeFrontendBindGroupAllocator<BindGroup>(4096)) {
+    if (!device->IsToggleEnabled(Toggle::MetalUseArgumentBuffers)) {
+        return;
+    }
+
+    std::vector<MTLArgumentDescriptor*> descriptors;
+    for (BindingIndex i{0}; i < GetBindingCount(); ++i) {
+        auto& bindingInfo = GetBindingInfo(i);
+
+        MTLArgumentDescriptor* desc = [MTLArgumentDescriptor argumentDescriptor];
+        desc.index = uint32_t(bindingInfo.binding);
+
+        // TODO(63031535): Handle more then uniform/storage.  (e.g. samplers, textures, etc.)
+        desc.dataType = MTLDataTypePointer;
+        desc.access = MTLBindingAccessReadOnly;
+
+        descriptors.push_back(desc);
+    }
+
+    if (!descriptors.empty()) {
+        NSArray* ary = [NSArray arrayWithObjects:descriptors.data() count:descriptors.size()];
+        mArgumentEncoder = [ToBackend(device)->GetMTLDevice() newArgumentEncoderWithArguments:ary];
+    }
+}
 
 BindGroupLayout::~BindGroupLayout() = default;
 
@@ -54,6 +79,10 @@ void BindGroupLayout::DeallocateBindGroup(BindGroup* bindGroup) {
 
 void BindGroupLayout::ReduceMemoryUsage() {
     mBindGroupAllocator->DeleteEmptySlabs();
+}
+
+NSPRef<id<MTLArgumentEncoder>> BindGroupLayout::GetArgumentEncoder() const {
+    return mArgumentEncoder;
 }
 
 }  // namespace dawn::native::metal
