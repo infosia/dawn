@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff5b0878_1ff3acb9",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T12:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f1fc45a_ea73dc4a",
+      "revId": "cb9eee257cb3f227dfc26454723f1c36478e99e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d43bcf3f_71c5936b",
@@ -48,6 +66,30 @@
       "writtenOn": "2025-07-29T07:57:32Z",
       "side": 1,
       "message": "note: `uint32_t(group)` also works and contrary to popular belief, it isn\u0027t a disallowed C-style cast, but a well defined call to the `uint32_t` constructor (that explicitly calls the conversion operator in the TypedInteger). It might be nicer to use that.",
+      "range": {
+        "startLine": 146,
+        "startChar": 25,
+        "endLine": 146,
+        "endChar": 46
+      },
+      "revId": "cb9eee257cb3f227dfc26454723f1c36478e99e0",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f3b20d5_1a54e397",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T12:52:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d43bcf3f_71c5936b",
       "range": {
         "startLine": 146,
         "startChar": 25,
