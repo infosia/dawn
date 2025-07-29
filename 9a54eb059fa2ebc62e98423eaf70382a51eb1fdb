@@ -65,6 +65,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3463cd42_c6166a3c",
+        "filename": "src/dawn/native/webgpu/ObjectWGPU.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-07-29T16:17:43Z",
+      "side": 1,
+      "message": "Mark as resolved and keep current implementation.",
+      "parentUuid": "e1a52238_8c0a3054",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "9a54eb059fa2ebc62e98423eaf70382a51eb1fdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c1301124_89be647c",
@@ -78,6 +102,24 @@
       "writtenOn": "2025-07-29T08:06:53Z",
       "side": 1,
       "message": "Can we make this `NonMovable` since it is now RAII?",
+      "revId": "9a54eb059fa2ebc62e98423eaf70382a51eb1fdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed12fbbf_c4d1cc13",
+        "filename": "src/dawn/native/webgpu/ObjectWGPU.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-07-29T16:17:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1301124_89be647c",
       "revId": "9a54eb059fa2ebc62e98423eaf70382a51eb1fdb",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
