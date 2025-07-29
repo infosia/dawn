@@ -343,6 +343,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ff1c98b_b0463575",
+        "filename": "src/dawn/native/vulkan/CommandRecordingContextVk.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-29T02:55:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57ba9a8d_6a275ed9",
+      "revId": "77e44640629f36d60d456358e76858272a5e234f",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4c20b379_5f4868fc",
