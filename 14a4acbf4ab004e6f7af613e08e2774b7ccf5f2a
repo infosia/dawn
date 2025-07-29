@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9de37f2_693673b3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T07:48:06Z",
+      "side": 1,
+      "message": "Instead of silently disabling the devtools we should fail with an explicit error message, like in [1].",
+      "revId": "14a4acbf4ab004e6f7af613e08e2774b7ccf5f2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4c65cac_2264ad65",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T07:48:06Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "14a4acbf4ab004e6f7af613e08e2774b7ccf5f2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8bd1698b_2297d50e",
+        "filename": "src/dawn/native/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T07:48:06Z",
+      "side": 1,
+      "message": "Why do the devtools live in dawn::native? dawn::native is code that implements webgpu.h on top of a GPU API but the devtools do something completely different. See [this comment thread](https://docs.google.com/document/d/1-YOcsCKtTRp2yyIrA7j8ZI1lJO9BtIBnlfKFK7EKksE/edit?disco\u003dAAABnfH6UC4). Please move them in `dawn/devtools` or something like that. The WebGPU backend will then depend on the recording part, while the replay may depend on the dawn::native, but all of them are decoupled because they only rely on webgpu.h and the protobuf for communication.",
+      "revId": "14a4acbf4ab004e6f7af613e08e2774b7ccf5f2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15aec64b_b37aefab",
+        "filename": "src/dawn/native/devtool/protos/cmd.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-29T07:48:06Z",
+      "side": 1,
+      "message": "Will part of this be auto-generated from dawn.json?",
+      "revId": "14a4acbf4ab004e6f7af613e08e2774b7ccf5f2a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
