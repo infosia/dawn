@@ -34,6 +34,24 @@
       "parentUuid": "84ce1fd5_5517899c",
       "revId": "3d7bcc02538ba01edd8e3cd595444f0cd74992ae",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7df8f05_40f30eae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-29T17:40:31Z",
+      "side": 1,
+      "message": "That\u0027s reasonable. I don\u0027t think using gclient is very hard - IIRC we can just `git submodule update --init --depth\u003d1 third_party/depot_tools` and then start using it.",
+      "parentUuid": "f38f9a8b_1d10d943",
+      "revId": "3d7bcc02538ba01edd8e3cd595444f0cd74992ae",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
