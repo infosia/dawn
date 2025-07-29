@@ -47,6 +47,7 @@
 #define TINT_DISABLE_WARNING_MISSING_DESTRUCTOR_OVERRIDE /* currently no-op */
 #define TINT_DISABLE_WARNING_NEWLINE_EOF                 /* currently no-op */
 #define TINT_DISABLE_WARNING_OLD_STYLE_CAST              /* currently no-op */
+#define TINT_DISABLE_WARNING_PEDANTIC                    /* currently no-op */
 #define TINT_DISABLE_WARNING_REDUNDANT_PARENS            /* currently no-op */
 #define TINT_DISABLE_WARNING_RESERVED_IDENTIFIER         /* currently no-op */
 #define TINT_DISABLE_WARNING_RESERVED_MACRO_IDENTIFIER   /* currently no-op */
@@ -110,6 +111,7 @@
         _Pragma("clang diagnostic ignored \"-Winconsistent-missing-destructor-override\"")
 #define TINT_DISABLE_WARNING_NEWLINE_EOF _Pragma("clang diagnostic ignored \"-Wnewline-eof\"")
 #define TINT_DISABLE_WARNING_OLD_STYLE_CAST _Pragma("clang diagnostic ignored \"-Wold-style-cast\"")
+#define TINT_DISABLE_WARNING_PEDANTIC /* currently no-op */
 #define TINT_DISABLE_WARNING_REDUNDANT_PARENS \
     _Pragma("clang diagnostic ignored \"-Wredundant-parens\"")
 #define TINT_DISABLE_WARNING_RESERVED_IDENTIFIER \
@@ -144,6 +146,7 @@
     TINT_DISABLE_WARNING_EXTRA_SEMICOLON                                       \
     TINT_DISABLE_WARNING_MAYBE_UNINITIALIZED                                   \
     TINT_DISABLE_WARNING_MISSING_DESTRUCTOR_OVERRIDE                           \
+    TINT_DISABLE_WARNING_PEDANTIC                                              \
     TINT_DISABLE_WARNING_REDUNDANT_PARENS                                      \
     TINT_DISABLE_WARNING_RESERVED_IDENTIFIER                                   \
     TINT_DISABLE_WARNING_RESERVED_MACRO_IDENTIFIER                             \
@@ -199,6 +202,9 @@
 #define TINT_DISABLE_WARNING_MISSING_DESTRUCTOR_OVERRIDE /* currently no-op */
 #define TINT_DISABLE_WARNING_NEWLINE_EOF                 /* currently no-op */
 #define TINT_DISABLE_WARNING_OLD_STYLE_CAST              /* currently no-op */
+#define TINT_DISABLE_WARNING_PEDANTIC \
+     _Pragma("GCC diagnostic ignored \"-Wpedantic\"") \
+     using int128 = __int128;
 #define TINT_DISABLE_WARNING_REDUNDANT_PARENS            /* currently no-op */
 #define TINT_DISABLE_WARNING_RESERVED_IDENTIFIER         /* currently no-op */
 #define TINT_DISABLE_WARNING_RESERVED_MACRO_IDENTIFIER   /* currently no-op */
@@ -227,6 +233,7 @@
     TINT_DISABLE_WARNING_MAYBE_UNINITIALIZED          \
     TINT_DISABLE_WARNING_NEWLINE_EOF                  \
     TINT_DISABLE_WARNING_OLD_STYLE_CAST               \
+    TINT_DISABLE_WARNING_PEDANTIC                     \
     TINT_DISABLE_WARNING_SIGN_CONVERSION              \
     TINT_DISABLE_WARNING_UNREACHABLE_CODE             \
     TINT_DISABLE_WARNING_WEAK_VTABLES                 \

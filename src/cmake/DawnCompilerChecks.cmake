@@ -31,3 +31,4 @@
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_EXTENSIONS False)
+#set(CMAKE_CXX_EXTENSIONS ON) # This is the key part! It's ON by default.
