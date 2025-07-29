@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85b13b6f_923892d8",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 3461520
+      },
+      "writtenOn": "2025-07-29T02:34:46Z",
+      "side": 1,
+      "message": "NIT:The extra caps is a bit ugly.\nAt best it should be \u0027Vec2F16\u0027\nWe dont have a rule in dawn that dictates all caps for enums.",
+      "range": {
+        "startLine": 404,
+        "startChar": 4,
+        "endLine": 404,
+        "endChar": 11
+      },
+      "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
