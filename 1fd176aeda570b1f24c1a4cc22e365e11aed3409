@@ -164,6 +164,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cbfbd45a_645886c5",
+        "filename": ".github/workflows/ci.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3498813
+      },
+      "writtenOn": "2025-07-29T08:23:02Z",
+      "side": 1,
+      "message": "@yulong.fs@gmail.com do you have insight on how we could consolidate the github action to pass if it passes on your internal CI? I have to assume we use different build settings (C++17 C++20?) that goes main to fail on Github but pass on your CI?",
+      "parentUuid": "7b121e47_02586888",
+      "revId": "1fd176aeda570b1f24c1a4cc22e365e11aed3409",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d83bb941_f36b7934",
         "filename": ".github/workflows/ci.yml",
         "patchSetId": 8
