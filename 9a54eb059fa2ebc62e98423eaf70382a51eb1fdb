@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e3edf50_a2167bfa",
+        "filename": "src/dawn/native/webgpu/ObjectWGPU.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-29T00:39:39Z",
+      "side": 1,
+      "message": "Ah.. at first I thought we could easily optimize this a bit more so that we pass the function pointer as a part of the template so that we wouldn\u0027t need to keep the member on every instance, but I think it would be a lot more complicated than I expected...\n\nWhat I though we could maybe do:\n```\ntemplate \u003ctypename WGPUHandle, void(*Release)(WGPUHandle)\u003e\n...\nif (mInnerHandle !\u003d nullptr) {\n    Release(mInnerHandle);\n    mInnerHandle \u003d nullptr;\n}\n```\n\nBut I think that doesn\u0027t work because we are using the function thats on the proc table in the device.\n\nThat said though, I was thinking maybe we could just have these classes hold a ptr to the `DawnProcTable` directly. (Would be the same space since both that and the function ptr would just be a ptr.) Then I think we could do something like:\n\n```\ntemplate \u003ctypename WGPUHandle, void(DawnProcTable::*Release)(WGPUHandle)\u003e\n```\n\nThat said... that\u0027s only useful if we decide later that we want/need other function pointers on this base class, i.e. `AddRef` maybe? Otherwise I\u0027m fine with the way this is.",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "9a54eb059fa2ebc62e98423eaf70382a51eb1fdb",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
