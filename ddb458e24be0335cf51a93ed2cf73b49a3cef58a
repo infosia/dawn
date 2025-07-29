@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "926b257b_9ffe67fd",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8696658b_6cf45341",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "095dc7eb_aaf3e010",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-07-29T10:20:50Z",
       "side": 1,
       "message": "This most likely leaks, we should use NSRef or NSPRef to hold the argument descriptors. But also why don\u0027t we create the encoders here and reuse them between bind group creations? We should be able to reset the buffer repeatedly with https://developer.apple.com/documentation/metal/mtlargumentencoder/setargumentbuffer(_:offset:)?language\u003dobjc",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46196475_86dcb961",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "095dc7eb_aaf3e010",
       "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -69,6 +105,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9838d860_bb2c5d1c",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Added a TODO",
+      "parentUuid": "64515ca3_7ac00226",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0bb12ca9_954bbd3d",
@@ -82,6 +136,24 @@
       "writtenOn": "2025-07-29T10:20:50Z",
       "side": 1,
       "message": "Why do we separate the layouts for vertex/fragment/compute? We can have a single argument buffer that has a superset of all the stages and is used for all of them.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35036870_8fea72ad",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bb12ca9_954bbd3d",
       "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -103,6 +175,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c0ad49c_5318efce",
+        "filename": "src/dawn/native/metal/BindGroupMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13cfcb25_723ae141",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7fc3811b_f0def6a4",
@@ -116,6 +206,24 @@
       "writtenOn": "2025-07-29T10:20:50Z",
       "side": 1,
       "message": "That\u0027s information from the layout, why does it need to be duplicated in the BindGroup?",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e65e1c13_a5a0779f",
+        "filename": "src/dawn/native/metal/BindGroupMTL.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Added a todo to remove this when we have immediates. Currently I need to know they exist in order to get the correct buffer id.",
+      "parentUuid": "7fc3811b_f0def6a4",
       "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -137,6 +245,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b66a2a37_3bcf04ce",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "782c4458_4aeaad84",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9507869e_a4c04d00",
@@ -150,6 +276,24 @@
       "writtenOn": "2025-07-29T10:20:50Z",
       "side": 1,
       "message": "Can the TODO be associated with an issue and not a person?",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a5fe08f_baf69e27",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9507869e_a4c04d00",
       "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -173,6 +317,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3fbabb3b_009324c8",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "You mean in the bind group layout? Yea, that needs to be added, but this will then be required when that is supported, no? So, I left this in as we\u0027re going to need it regardless.",
+      "parentUuid": "47a752ff_bf11b5b2",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "482ad3fb_c6d6d33c",
         "filename": "src/dawn/native/metal/BindGroupMTL.mm",
         "patchSetId": 4
@@ -184,6 +346,24 @@
       "writtenOn": "2025-07-29T10:20:50Z",
       "side": 1,
       "message": "We can encode all the bindings and set the argument buffer once. Are you separating the buffers to let the driver better track dependencies to avoid unnecessary VS-\u003eFS dependencies? We should bundle using argument buffers with also doing manual resource tracking with `useResource` and friends to fix that.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c74e6d8c_728d8635",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "482ad3fb_c6d6d33c",
       "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -207,6 +387,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e8cc4233_9a3e4479",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "We don\u0027t have immediates yet in MSL I don\u0027t think, so can\u0027t use that at this point.",
+      "parentUuid": "f5529673_eefceb89",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2207d62_b3c64da0",
         "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
         "patchSetId": 4
@@ -218,6 +416,24 @@
       "writtenOn": "2025-07-29T10:20:50Z",
       "side": 1,
       "message": "This function looks like it could easily be split in AB-specific code and non-AB code, it would be a lot more readable.",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8740aaee_bc0f3f5b",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2207d62_b3c64da0",
       "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -239,6 +455,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4bee95f0_1753a5cd",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c603dc8_c637fd62",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "56be493c_dc9a295b",
@@ -252,6 +486,24 @@
       "writtenOn": "2025-07-29T10:20:50Z",
       "side": 1,
       "message": "```suggestion\nstd::unordered_map\u003cuint32_t, tint::msl::writer::ArgumentBufferInfo\u003e GenerateArgumentBufferInfo(\n```",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7cef0247_9492df6a",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56be493c_dc9a295b",
       "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -273,6 +525,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abec842f_e3b50a70",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Added a todo, we can do the single buffer work when we move to immediates I think.",
+      "parentUuid": "570e5469_8f3e22b8",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9e464913_11fdcf05",
@@ -290,6 +560,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "48c1bb69_7654a033",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e464913_11fdcf05",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "30332da9_c11053e5",
@@ -303,6 +591,24 @@
       "writtenOn": "2025-07-29T10:20:50Z",
       "side": 1,
       "message": "?",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1be59bcb_6aa1ddb3",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-29T16:59:50Z",
+      "side": 1,
+      "message": "Missed when removing my random debugging.",
+      "parentUuid": "30332da9_c11053e5",
       "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
