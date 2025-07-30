@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2e3e4e6_00980fa1",
+        "filename": "src/dawn/devtool/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000685
+      },
+      "writtenOn": "2025-07-30T22:41:15Z",
+      "side": 1,
+      "message": "Question on the GN build config:\n\n1. After moving things dawn::native::devtool to dawn::devtool,\nalthough specifying `dawn_component(\"devtool_playback\")`, seems I\u0027m losing the build target `libdevtool_playback.so`, unless I add it as a dep to `dawn/native/BUILD.gn`.\n\nDo you know what I\u0027m missing to config `dawn/devtool:devtool_playback` like a seperate build target as say `dawn/native:native`?\n\n2. To make dawn::native uses `devtool_record` and `devtool_playback`, do I need to put devtool headers into `include/dawn/devtool/`, and config them like `include/dawn/native/DawnNative.h` as public headers?",
+      "revId": "e987a12ddfce10f113c03bd3736c60c0eda54dff",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
