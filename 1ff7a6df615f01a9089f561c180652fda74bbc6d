@@ -77,6 +77,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b916f87b_8549f789",
+        "filename": "src/dawn/tests/end2end/SubgroupsTests.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-30T21:50:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b13b6f_923892d8",
+      "range": {
+        "startLine": 404,
+        "startChar": 4,
+        "endLine": 404,
+        "endChar": 11
+      },
+      "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "72bfb7e1_b68a85fb",
@@ -90,6 +114,24 @@
       "writtenOn": "2025-07-29T18:07:08Z",
       "side": 1,
       "message": "Nit: More `-\u003eResult()` calls can be removed here.",
+      "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b2398f1_5c6b4887",
+        "filename": "src/tint/lang/core/ir/transform/builtin_polyfill.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 3961979
+      },
+      "writtenOn": "2025-07-30T21:50:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72bfb7e1_b68a85fb",
       "revId": "1ff7a6df615f01a9089f561c180652fda74bbc6d",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
