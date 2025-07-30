@@ -29,6 +29,8 @@
 # Note that builders must first be defined the the build repo in
 # https://source.chromium.org/chromium/infra/infra_superproject/+/main:build/recipes/recipe_modules/dawn/builders.py
 
+"""CI Dawn builders using GN and a standalone Dawn checkout (instead of Chromium)."""
+
 load("//constants.star", "siso")
 
 luci.recipe(
@@ -69,7 +71,7 @@ def generate_properties_for_project(project):
     }
     return properties
 
-def parent_builder(name, dimensions, **kwargs):
+def parent_builder(name, dimensions):
     """Adds a CI parent builder.
 
     Args:
