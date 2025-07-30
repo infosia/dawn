@@ -36,6 +36,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9fb184a0_890138f3",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-30T06:54:22Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "65b4bf2e_824ca642",
+      "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41a95895_56cc54c9",
@@ -149,6 +167,24 @@
       "side": 1,
       "message": "Added a TODO for the whole match, good for now?",
       "parentUuid": "f8e5c2d6_9ec801dd",
+      "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "011c91cf_935c630b",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-30T06:54:22Z",
+      "side": 1,
+      "message": "The TODO seems like it is for buffers only? For example Wwhere does the sampler TODO live? Either way (putting the info on the issue, a new TODO or reworking this one LGTM)",
+      "parentUuid": "874b142f_dc60a513",
       "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
@@ -301,6 +337,24 @@
       "side": 1,
       "message": "Better?",
       "parentUuid": "86ce0717_c847fd28",
+      "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c67210d_d519338c",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-30T06:54:22Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "34caca88_0768f026",
       "revId": "ccadf944e527b7f44d5be2c10c0aebe38028c9f8",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }

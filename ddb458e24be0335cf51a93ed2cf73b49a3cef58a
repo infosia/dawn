@@ -369,6 +369,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adf364fe_781b7062",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-30T06:54:22Z",
+      "side": 1,
+      "message": "I get confused when there is a mix of things implemented and some not.",
+      "parentUuid": "3fbabb3b_009324c8",
+      "revId": "ddb458e24be0335cf51a93ed2cf73b49a3cef58a",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "482ad3fb_c6d6d33c",

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bf9b97f_52cc04d9",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-30T06:54:22Z",
+      "side": 1,
+      "message": "Isn\u0027t `needsDynamicBuffer` the same as `layout-\u003eGetDynamicBufferCount() \u003e 0`?",
+      "revId": "2eb4750095d8a816603ee1b846e2954826b703c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "523f079b_29509802",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-30T06:54:22Z",
+      "side": 1,
+      "message": "I don\u0027t understand why we use a loop to push the dynamic data here.\n\nWhat you might not now is that the dynamicOffsets are in the order of the binding index, so we can bulk set it and it will be in the correct order. (granted we set the same order in ShaderModule)",
+      "revId": "2eb4750095d8a816603ee1b846e2954826b703c4",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
