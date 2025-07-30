@@ -16,6 +16,29 @@
       "message": "PTAL",
       "revId": "29a09d952e632bc02a8213eab86f32c801fee761",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16f326eb_81c6b3a6",
+        "filename": "infra/config/global/PACKAGE.star",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-07-30T22:41:12Z",
+      "side": 1,
+      "message": "I don\u0027t recommend copying the list from chromium\u0027s PACKAGE.star, that was just copied from the existing lint configuration in main.star. The docstring lints really shouldn\u0027t be disabled and I\u0027d like to clean it up to enable more lints. In the infra/chromium repo, I actually enable all instead of default and the only lint I disabled is unsorted-dict-items.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 24
+      },
+      "revId": "29a09d952e632bc02a8213eab86f32c801fee761",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
