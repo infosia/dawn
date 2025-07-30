@@ -16,6 +16,23 @@
       "message": "Looks good to me, thanks! @senorblanco@chromium.org please take a look, thank.",
       "revId": "ed6c8d2287d4dc1e80efa2cb46c1c384504928da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d55dffae_3cc2fe5d",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-07-30T14:15:08Z",
+      "side": 1,
+      "message": "Actually we should also reset if the next view uses the default swizzle. Can you add a test that first uses a swizzle and then uses a default swizzle?",
+      "revId": "ed6c8d2287d4dc1e80efa2cb46c1c384504928da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
