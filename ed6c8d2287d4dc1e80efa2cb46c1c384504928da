@@ -33,6 +33,24 @@
       "message": "Actually we should also reset if the next view uses the default swizzle. Can you add a test that first uses a swizzle and then uses a default swizzle?",
       "revId": "ed6c8d2287d4dc1e80efa2cb46c1c384504928da",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f950c41a_15968292",
+        "filename": "src/dawn/native/opengl/CommandBufferGL.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-30T14:35:48Z",
+      "side": 1,
+      "message": "Are you saying we should remove the `if` condition and always execute the following code?\nIf so, shall I also rework Metal backend in https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/metal/TextureMTL.mm;l\u003d841;drc\u003de095571be47008e6deca936cd0b8b45d1c937ca9 to not use `view-\u003eUsesNonDefaultSwizzle` as well?",
+      "parentUuid": "d55dffae_3cc2fe5d",
+      "revId": "ed6c8d2287d4dc1e80efa2cb46c1c384504928da",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
