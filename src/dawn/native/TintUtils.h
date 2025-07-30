@@ -29,6 +29,7 @@
 #define SRC_DAWN_NATIVE_TINTUTILS_H_
 
 #include <functional>
+#include <string>
 #include <unordered_map>
 
 #include "dawn/common/NonCopyable.h"
@@ -80,6 +81,8 @@ constexpr tint::BindingPoint ToTint(const BindingSlot& slot) {
 constexpr BindingSlot FromTint(const tint::BindingPoint& tintBindingPoint) {
     return {{BindGroupIndex(tintBindingPoint.group), BindingNumber(tintBindingPoint.binding)}};
 }
+
+void TintInternalCompilerErrorCallback(std::string err, void* userdata);
 
 }  // namespace dawn::native
 
