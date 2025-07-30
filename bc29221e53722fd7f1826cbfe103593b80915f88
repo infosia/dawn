@@ -247,6 +247,24 @@
       "parentUuid": "2ba55a86_c9c6da14",
       "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "970c44f8_2263c8d3",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-30T09:11:09Z",
+      "side": 1,
+      "message": "My understanding from `TextureComponentSwizzleTest.OnlyRedChannelPresent/OpenGLES_Mali_G78_compat` in https://luci-milo.appspot.com/ui/inv/task-chromium-swarm.appspot.com-726a4154d472f511/test-results?q\u003dTextureComponentSwizzleTest+ is that E2E tests run and pass on GLES devices. Hopefully @senorblanco@chromium.org will confirm.",
+      "parentUuid": "e77b51ac_b16c3802",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
