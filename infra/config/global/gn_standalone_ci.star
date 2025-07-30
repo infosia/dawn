@@ -69,7 +69,7 @@ def generate_properties_for_project(project):
     }
     return properties
 
-def parent_builder(name, dimensions, **kwargs):
+def parent_builder(name, dimensions):
     """Adds a CI parent builder.
 
     Args:
