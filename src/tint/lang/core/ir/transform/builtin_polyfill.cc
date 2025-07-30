@@ -29,10 +29,12 @@
 
 #include "src/tint/lang/core/binary_op.h"
 #include "src/tint/lang/core/ir/builder.h"
+#include "src/tint/lang/core/ir/core_binary.h"
 #include "src/tint/lang/core/ir/module.h"
 #include "src/tint/lang/core/ir/validator.h"
 #include "src/tint/lang/core/type/sampled_texture.h"
 #include "src/tint/lang/core/type/texture.h"
+#include "src/tint/utils/internal_limits.h"
 
 using namespace tint::core::fluent_types;     // NOLINT
 using namespace tint::core::number_suffixes;  // NOLINT
@@ -90,6 +92,11 @@ struct State {
                         break;
                     case core::BuiltinFn::kCountTrailingZeros:
                         if (config.count_trailing_zeros) {
+                            worklist.Push(builtin);
+                        }
+                        break;
+                    case core::BuiltinFn::kSubgroupShuffle:
+                        if (config.subgroup_shuffle_clamped) {
                             worklist.Push(builtin);
                         }
                         break;
@@ -209,6 +216,9 @@ struct State {
                     break;
                 case core::BuiltinFn::kCountTrailingZeros:
                     CountTrailingZeros(builtin);
+                    break;
+                case core::BuiltinFn::kSubgroupShuffle:
+                    SubgroupShuffle(builtin);
                     break;
                 case core::BuiltinFn::kDegrees:
                     Degrees(builtin);
@@ -542,6 +552,20 @@ struct State {
             result->SetResult(call->DetachResult());
         });
         call->Destroy();
+    }
+
+    /// Polyfill a `subgroupShuffle()` builtin call with one that has clamped the 'id' param
+    /// @param call the builtin call instruction
+    void SubgroupShuffle(ir::CoreBuiltinCall* call) {
+        // This can only have type u32/i32
+        auto* shuffle_id = call->Args()[1];
+        auto* mask_max_subgroup_size =
+            b.Constant(core::u32(tint::internal_limits::kMaxSubgroupSize - 1));
+        ir::CoreBinary* clamp_via_masking_and = nullptr;
+        b.InsertBefore(call, [&] {
+            clamp_via_masking_and = b.And(shuffle_id->Type(), shuffle_id, mask_max_subgroup_size);
+        });
+        call->SetArg(1, clamp_via_masking_and->Result());
     }
 
     /// Polyfill an `degrees()` builtin call.

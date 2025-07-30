@@ -62,6 +62,8 @@ struct BuiltinPolyfillConfig {
     bool count_leading_zeros = false;
     /// Should `countTrailingZeros()` be polyfilled?
     bool count_trailing_zeros = false;
+    /// Should `subgroupShuffle()` be polyfilled a clamp on id parameter?
+    bool subgroup_shuffle_clamped = false;
     /// Should `degrees()` be polyfilled?
     bool degrees = false;
     /// How should `extractBits()` be polyfilled?
@@ -98,6 +100,7 @@ struct BuiltinPolyfillConfig {
                  clamp_int,
                  count_leading_zeros,
                  count_trailing_zeros,
+                 subgroup_shuffle_clamped,
                  degrees,
                  extract_bits,
                  first_leading_bit,
