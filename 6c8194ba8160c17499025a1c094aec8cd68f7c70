@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cc49f94b_77c06400",
+        "filename": "src/dawn/tests/end2end/ShaderModuleCachingTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-30T10:08:55Z",
+      "side": 1,
+      "message": "I am thinking that explicitly test both validation enabled/disabled behavior might be good as the code paths are different, and in the future we might disable the toggle by default.",
+      "parentUuid": "c13595cc_e7939baa",
+      "range": {
+        "startLine": 157,
+        "startChar": 22,
+        "endLine": 170,
+        "endChar": 73
+      },
+      "revId": "6c8194ba8160c17499025a1c094aec8cd68f7c70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "83991b47_3920f824",
         "filename": "src/dawn/tests/unittests/native/CacheRequestTests.cpp",
         "patchSetId": 11
@@ -54,6 +78,30 @@
       "writtenOn": "2025-07-28T18:41:12Z",
       "side": 1,
       "message": "I think you can just pass the `wgpu::InstanceDescriptor` without the cast.",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 76
+      },
+      "revId": "6c8194ba8160c17499025a1c094aec8cd68f7c70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58a9d376_c47daa65",
+        "filename": "src/dawn/tests/unittests/native/CacheRequestTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-30T10:08:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83991b47_3920f824",
       "range": {
         "startLine": 64,
         "startChar": 12,
@@ -87,6 +135,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ee3ce6ab_21458c87",
+        "filename": "src/dawn/tests/unittests/native/CacheRequestTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-30T10:08:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42663f06_b2a06647",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 9
+      },
+      "revId": "6c8194ba8160c17499025a1c094aec8cd68f7c70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b388ab0a_0df4af3a",
@@ -100,6 +172,30 @@
       "writtenOn": "2025-07-28T18:41:12Z",
       "side": 1,
       "message": "Do these need to be static? IIUC, the mock function only verify their expectations on destruction so making then static might prevent that from happening in the right places.",
+      "range": {
+        "startLine": 380,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 0
+      },
+      "revId": "6c8194ba8160c17499025a1c094aec8cd68f7c70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "baad8a2b_76e47819",
+        "filename": "src/dawn/tests/unittests/native/CacheRequestTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-30T10:08:55Z",
+      "side": 1,
+      "message": "Unfortunately I think at least `cacheMissFn` have to be static, since it is used in the cache miss handler of `LoadOrRun`, which requires such handler being a free function (i.e. no capture is allowed for lambda). I think that is why tests above use `static` mock function as well.",
+      "parentUuid": "b388ab0a_0df4af3a",
       "range": {
         "startLine": 380,
         "startChar": 4,
