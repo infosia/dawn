@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2668d15e_28db819f",
+        "filename": "src/tint/utils/ice/ice_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-30T17:11:11Z",
+      "side": 1,
+      "message": "Where did the `.*` come from after 42? .... Oh, is this a regex?",
+      "revId": "75e07182f3d316bb96577670f7c779d334f8d611",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
