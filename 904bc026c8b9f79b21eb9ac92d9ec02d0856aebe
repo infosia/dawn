@@ -16,6 +16,120 @@
       "message": "LGTM",
       "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fb00714_75657f79",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-30T22:26:04Z",
+      "side": 1,
+      "message": "nit: move to the `.mm` file?",
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f88514a_56a4d726",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-30T22:26:04Z",
+      "side": 1,
+      "message": "missing the initial `3`\n\nalso nit: `crbug.com/` (personal preference so people know where to actually find the bug tracker and so it\u0027s clickable / copy-paste-able)\n```suggestion\n        // TODO(crbug.com/363031535): Handle more then uniform/storage.  (e.g. samplers, textures, etc.)\n```",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8026704e_4fdc8b5d",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-30T22:26:04Z",
+      "side": 1,
+      "message": "Can we put `DAWN_CHECK(false)` or something in paths that aren\u0027t implemented so that we crash instead of doing weird wrong things?",
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "602e7ec7_987ac5ab",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-30T22:26:04Z",
+      "side": 1,
+      "message": "I think most or all instances of `DAWN_UNREACHABLE()` should instead be `DAWN_CHECK(false)` so that we don\u0027t give wrong signals to the compiler in release builds.",
+      "range": {
+        "startLine": 101,
+        "startChar": 16,
+        "endLine": 101,
+        "endChar": 32
+      },
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd992f5c_53f71dba",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-30T22:26:04Z",
+      "side": 1,
+      "message": "[1]",
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99ba0e4f_8c370d8c",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2025-07-30T22:26:04Z",
+      "side": 1,
+      "message": "IIUC this has to match up with the counting logic in [1]. Comment accordingly (ideally it\u0027s something we can deduplicate eventually)",
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
