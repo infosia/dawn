@@ -740,21 +740,14 @@ void PhysicalDevice::SetupBackendDeviceToggles(dawn::platform::Platform* platfor
         }
     }
 
-    // This workaround is needed on Intel Gen9 GPUs with driver >= 31.0.101.2121 and Gen12LP GPUs
-    // with driver >= 31.0.101.4091. See http://crbug.com/dawn/1083 for more information.
-    bool useBlitForT2T = false;
-    if (gpu_info::IsIntelGen9(vendorId, deviceId)) {
-        const gpu_info::IntelWindowsDriverVersion kFirstBuggyDriverVersion = {31, 0, 101, 2121};
-        useBlitForT2T =
-            gpu_info::IntelWindowsDriverVersion(GetDriverVersion()) >= kFirstBuggyDriverVersion;
-    } else if (gpu_info::IsIntelGen12LP(vendorId, deviceId)) {
+    // This workaround is needed on Intel Gen12LP GPUs with driver >= 31.0.101.4091. See
+    // http://crbug.com/dawn/1083 for more information.
+    if (gpu_info::IsIntelGen12LP(vendorId, deviceId)) {
         const gpu_info::IntelWindowsDriverVersion kFirstBuggyDriverVersion = {31, 0, 101, 4091};
-        useBlitForT2T =
-            gpu_info::IntelWindowsDriverVersion(GetDriverVersion()) >= kFirstBuggyDriverVersion;
-    }
-    if (useBlitForT2T) {
-        deviceToggles->Default(Toggle::UseBlitForDepthTextureToTextureCopyToNonzeroSubresource,
-                               true);
+        if (gpu_info::IntelWindowsDriverVersion(GetDriverVersion()) >= kFirstBuggyDriverVersion) {
+            deviceToggles->Default(Toggle::UseBlitForDepthTextureToTextureCopyToNonzeroSubresource,
+                                   true);
+        }
     }
 
     // D3D driver has a bug resolving overlapping queries to a same buffer on Intel Gen12 GPUs. This
