@@ -39,7 +39,7 @@ class SpirvReader_TransposeRowMajorTest : public core::ir::transform::TransformT
     void SetUp() override { capabilities.Add(core::ir::Capability::kAllowNonCoreTypes); }
 };
 
-TEST_F(SpirvReader_TransposeRowMajorTest, DISABLED_ReadUniformMatrix) {
+TEST_F(SpirvReader_TransposeRowMajorTest, ReadUniformMatrix) {
     // struct S {
     //   @offset(16) @row_major m : mat2x3<f32>,
     // };
@@ -89,7 +89,7 @@ $B1: {  # root
 
     auto* after = R"(
 S = struct @align(24) {
-  m:mat3x2<f32> @offset(16) @size(24), @row_major
+  m:mat3x2<f32> @offset(16) @size(24)
 }
 
 $B1: {  # root

@@ -54,6 +54,12 @@ struct State {
     /// The symbol manager.
     SymbolTable& sym{ir.symbols};
 
+    // A map from a type to it's replacement (which maybe the same as the original).
+    Hashmap<const core::type::Type*, const core::type::Type*, 32> type_map{};
+
+    /// A map from rewritten structs to original structs.
+    Hashmap<const core::type::Struct*, const core::type::Struct*, 4> struct_to_original{};
+
     /// Process the module.
     void Process() {
         for (auto* type : ty) {
@@ -62,23 +68,61 @@ struct State {
                 continue;
             }
 
-            auto* replacement = RewriteStruct(strct);
+            auto* replacement = RewriteType(strct);
             if (replacement == strct) {
                 continue;
             }
         }
     }
 
-    const core::type::Struct* RewriteStruct(const core::type::Struct* src) {
+    const core::type::Type* RewriteType(const core::type::Type* type,
+                                        bool decorated_row_major = false) {
+        return type_map.GetOrAdd(type, [&] {
+            return tint::Switch(
+                type,
+                [&](const core::type::Array* arr) {
+                    return RewriteArray(arr, decorated_row_major);
+                },
+                [&](const core::type::Struct* str) { return RewriteStruct(str); },
+                [&](const core::type::Matrix* mat) {
+                    if (!decorated_row_major) {
+                        return mat;
+                    }
+                    return ty.mat(mat->Type(), mat->Rows(), mat->Columns());
+                },
+                [&](Default) { return type; });
+        });
+    }
+
+    const core::type::Type* RewriteArray(const core::type::Array* arr, bool decorated_row_major) {
+        auto* elem_ty = RewriteType(arr->ElemType(), decorated_row_major);
+        if (elem_ty == arr->ElemType()) {
+            return arr;
+        }
+
+        // The element type is the only thing that will change. That does not affect the stride of
+        // the array itself, which may either be the natural stride or an larger stride in the case
+        // of an explicitly laid out array.
+        if (arr->Is<spirv::type::ExplicitLayoutArray>()) {
+            return ty.Get<spirv::type::ExplicitLayoutArray>(elem_ty, arr->Count(), arr->Align(),
+                                                            arr->Size(), arr->Stride());
+        }
+        return ty.Get<core::type::Array>(elem_ty, arr->Count(), arr->Align(), arr->Size(),
+                                         arr->Stride(), arr->Stride());
+    }
+
+    const core::type::Type* RewriteStruct(const core::type::Struct* old_struct) {
         bool made_changes = false;
 
+        printf("REWRITE %p\n", old_struct);
+
         Vector<const core::type::StructMember*, 8> new_members;
-        new_members.Reserve(src->Members().Length());
-        for (auto* member : src->Members()) {
-            auto* new_member_type = RewriteType(member->Type());
+        new_members.Reserve(old_struct->Members().Length());
+        for (auto* member : old_struct->Members()) {
+            auto* new_member_type = RewriteType(member->Type(), member->RowMajor());
+            printf("RM %d\n", member->RowMajor());
             if (member->RowMajor() || new_member_type != member->Type()) {
-                // Recreate the struct member without the row-major attribute, and using the new
-                // type.
+                // Recreate the struct member without the row major attribute, using the new type.
                 new_members.Push(ty.Get<core::type::StructMember>(
                     member->Name(), new_member_type, member->Index(), member->Offset(),
                     member->Align(), member->Size(), member->Attributes()));
@@ -88,19 +132,15 @@ struct State {
             }
         }
         if (!made_changes) {
-            return src;
+            return old_struct;
         }
 
-        // TODO(dsinclair): record which members were re-written
-
         // Create the new struct and record the mapping to the old struct.
-        auto* new_struct = ty.Struct(sym.New(src->Name().Name()), std::move(new_members));
-        // struct_to_original.Add(new_struct, src);
-        return new_struct;
-    }
+        auto* new_struct = ty.Struct(sym.New(old_struct->Name().Name()), std::move(new_members));
+        struct_to_original.Add(new_struct, old_struct);
 
-    const core::type::Type* RewriteType([[maybe_unused]] const core::type::Type* type) {
-        return nullptr;
+        printf("NEW %p\n", new_struct);
+        return new_struct;
     }
 };
 
