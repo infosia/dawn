@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0be6d093_3df33f16",
+        "filename": "src/dawn/node/Module.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002241
+      },
+      "writtenOn": "2025-07-30T22:43:08Z",
+      "side": 0,
+      "message": "This change was needed to fix the MSVC build, since Dawn node was including Tint headers without a proper dependency in the BUILD.gn files, so it wasn\u0027t using that preprocessor flag. It doesn\u0027t actually use Tint any more so just remove the header.",
+      "revId": "81c3bf17cd46a7ed024894e4e39562287e38f781",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
