@@ -65,6 +65,30 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff88a0c6_d9f9d906",
+        "filename": "src/dawn/tests/end2end/ShaderModuleCachingTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-30T16:29:38Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "cc49f94b_77c06400",
+      "range": {
+        "startLine": 157,
+        "startChar": 22,
+        "endLine": 170,
+        "endChar": 73
+      },
+      "revId": "6c8194ba8160c17499025a1c094aec8cd68f7c70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "83991b47_3920f824",
@@ -196,6 +220,30 @@
       "side": 1,
       "message": "Unfortunately I think at least `cacheMissFn` have to be static, since it is used in the cache miss handler of `LoadOrRun`, which requires such handler being a free function (i.e. no capture is allowed for lambda). I think that is why tests above use `static` mock function as well.",
       "parentUuid": "b388ab0a_0df4af3a",
+      "range": {
+        "startLine": 380,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 0
+      },
+      "revId": "6c8194ba8160c17499025a1c094aec8cd68f7c70",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bedfdc0_74502fad",
+        "filename": "src/dawn/tests/unittests/native/CacheRequestTests.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002831
+      },
+      "writtenOn": "2025-07-30T16:29:38Z",
+      "side": 1,
+      "message": "You could have them as non-static but also non-capturing? Basically it just means that they cannot be called after the scope of the test case, but assuming the calls all happen within the test scope it should be fine?",
+      "parentUuid": "baad8a2b_76e47819",
       "range": {
         "startLine": 380,
         "startChar": 4,
