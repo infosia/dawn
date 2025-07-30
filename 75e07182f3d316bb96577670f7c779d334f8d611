@@ -34,6 +34,24 @@
       "parentUuid": "2668d15e_28db819f",
       "revId": "75e07182f3d316bb96577670f7c779d334f8d611",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "097beda5_6f959a7b",
+        "filename": "src/tint/utils/ice/ice_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-30T17:54:23Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d860c71e_c43a3658",
+      "revId": "75e07182f3d316bb96577670f7c779d334f8d611",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
