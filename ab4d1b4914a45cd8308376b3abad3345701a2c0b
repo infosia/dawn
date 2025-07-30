@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b927f0b5_753efc8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2025-07-30T23:19:55Z",
+      "side": 1,
+      "message": "+dsinclair to stamp since gbeaty isn\u0027t an owner in Dawn.",
+      "revId": "ab4d1b4914a45cd8308376b3abad3345701a2c0b",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    }
+  ]
+}
