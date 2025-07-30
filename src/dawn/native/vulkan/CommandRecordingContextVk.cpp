@@ -27,6 +27,7 @@
 
 #include "src/dawn/native/vulkan/CommandRecordingContextVk.h"
 
+#include "dawn/native/vulkan/BufferVk.h"
 #include "dawn/native/vulkan/DeviceVk.h"
 #include "vulkan/vulkan_core.h"
 
@@ -60,6 +61,42 @@ void CommandRecordingContext::AddBufferBarrier(VkAccessFlags srcAccessMask,
     barrier->bufferDstStages |= dstStages;
 }
 
+void CommandRecordingContext::BufferInterBarrierFence(Buffer* buffer) {
+    if (mEnableSkipRedundantBarriers) {
+        buffer->ResetInterBarrierFenceIdx(mBufferBarrierSyncIdx);
+    }
+}
+
+bool CommandRecordingContext::IsRedundantBarrier(VkAccessFlags srcAccessMask,
+                                                 VkAccessFlags dstAccessMask,
+                                                 VkPipelineStageFlags srcStages,
+                                                 VkPipelineStageFlags dstStages,
+                                                 size_t buffer_barrier_fence_idx) {
+    if (!mEnableSkipRedundantBarriers) {
+        return false;
+    }
+    // not bothering to track for vb
+    if (dstStages & vertexStages) {
+        return false;
+    }
+
+    for (auto& each_pair : mNonVertexBarrierMapSync) {
+        auto& curr_barrier = each_pair.first;
+        if ((curr_barrier.bufferSrcStages & srcStages) == srcStages &&
+            (curr_barrier.bufferDstStages & dstStages) == dstStages) {
+            if ((curr_barrier.bufferDstAccessMask & dstAccessMask) == dstAccessMask &&
+                (curr_barrier.bufferSrcAccessMask & srcAccessMask) == srcAccessMask) {
+                // Matching fence came after.
+                if (buffer_barrier_fence_idx < each_pair.second) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
 void CommandRecordingContext::EmitBufferBarriers(Device* device) {
     std::array<VkMemoryBarrier, 2> barriers;
     size_t idx = 0;
@@ -84,6 +121,11 @@ void CommandRecordingContext::EmitBufferBarriers(Device* device) {
     };
     CreateBarrierIfNeeded(mVertexBufferBarrier);
     CreateBarrierIfNeeded(mNonVertexBufferBarrier);
+
+    if (mEnableSkipRedundantBarriers) {
+        mBufferBarrierSyncIdx++;
+        mNonVertexBarrierMapSync[mNonVertexBufferBarrier] = mBufferBarrierSyncIdx;
+    }
 
     if (idx > 0) {
         device->fn.CmdPipelineBarrier(commandBuffer, srcStages, dstStages, 0, idx, barriers.data(),

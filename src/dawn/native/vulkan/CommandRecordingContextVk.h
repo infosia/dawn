@@ -27,6 +27,8 @@
 #ifndef SRC_DAWN_NATIVE_VULKAN_COMMANDRECORDINGCONTEXT_H_
 #define SRC_DAWN_NATIVE_VULKAN_COMMANDRECORDINGCONTEXT_H_
 
+#include <cstdint>
+#include <map>
 #include <vector>
 
 #include "absl/container/flat_hash_set.h"
@@ -38,6 +40,7 @@
 namespace dawn::native::vulkan {
 
 class Texture;
+class Buffer;
 
 // Wrapping class that currently associates a command buffer to it's corresponding pool.
 // TODO(dawn:1601) Revisit this structure since it is where the 1:1 mapping is implied.
@@ -95,16 +98,39 @@ struct CommandRecordingContext {
                           VkPipelineStageFlags dstStages);
     void EmitBufferBarriers(Device* device);
 
+    bool IsRedundantBarrier(VkAccessFlags srcAccessMask,
+                            VkAccessFlags dstAccessMask,
+                            VkPipelineStageFlags srcStages,
+                            VkPipelineStageFlags dstStages,
+                            size_t buffer_barrier_fence_idx);
+
+    void BeginComputePass(bool enabled_skip_redundant) {
+        mBufferBarrierSyncIdx = 0;
+        mEnableSkipRedundantBarriers = enabled_skip_redundant;
+        DAWN_ASSERT(mNonVertexBarrierMapSync.empty());
+    }
+    void EndComputePass() {
+        mNonVertexBarrierMapSync.clear();
+        mEnableSkipRedundantBarriers = false;
+    }
+    void BufferInterBarrierFence(Buffer* buffer);
+
   private:
     struct BufferBarrier {
         VkAccessFlags bufferSrcAccessMask = 0;
         VkAccessFlags bufferDstAccessMask = 0;
         VkPipelineStageFlags bufferSrcStages = 0;
         VkPipelineStageFlags bufferDstStages = 0;
+
+        // c++ 20
+        auto operator<=>(const BufferBarrier& other) const = default;
     };
 
     BufferBarrier mVertexBufferBarrier;
     BufferBarrier mNonVertexBufferBarrier;
+    bool mEnableSkipRedundantBarriers = false;
+    uint64_t mBufferBarrierSyncIdx = 0;
+    std::map<BufferBarrier, uint64_t> mNonVertexBarrierMapSync;
 };
 
 }  // namespace dawn::native::vulkan
