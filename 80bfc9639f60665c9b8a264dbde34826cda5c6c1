@@ -22,6 +22,30 @@
       },
       "revId": "80bfc9639f60665c9b8a264dbde34826cda5c6c1",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8905b518_a9873d40",
+        "filename": "infra/config/global/generated/cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003631
+      },
+      "writtenOn": "2025-07-30T22:36:48Z",
+      "side": 0,
+      "message": "My guess is that it\u0027s related the lucicfg version declaration. I bet if instead of adding PACKAGE.star you added\n```\nlucicfg.check_version(\"1.45.6\")\n```\nyou would see similar changes.\n\nlucicfg\u0027s behavior changes depending on the requested minimum version. That makes it so that they can evolve the behavior without having existing configurations immediately start failing presubmits when the deployed lucicfg version is updated.  Currently the config isn\u0027t requesting any version.",
+      "parentUuid": "e7fe3965_193cb7a5",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 3
+      },
+      "revId": "80bfc9639f60665c9b8a264dbde34826cda5c6c1",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
