@@ -35,6 +35,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b4da984_a1510c75",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-30T23:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fb00714_75657f79",
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0f88514a_56a4d726",
@@ -77,6 +95,48 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c59e2032_bf9ed726",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-30T23:17:35Z",
+      "side": 1,
+      "message": "Done, filled in a couple more that were obvious since I had to put the variant match in for the checks.",
+      "parentUuid": "8026704e_4fdc8b5d",
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5f78be4_c887a134",
+        "filename": "src/dawn/native/metal/BindGroupLayoutMTL.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-30T23:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f88514a_56a4d726",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "602e7ec7_987ac5ab",
         "filename": "src/dawn/native/metal/BindGroupMTL.mm",
         "patchSetId": 17
@@ -88,6 +148,30 @@
       "writtenOn": "2025-07-30T22:26:04Z",
       "side": 1,
       "message": "I think most or all instances of `DAWN_UNREACHABLE()` should instead be `DAWN_CHECK(false)` so that we don\u0027t give wrong signals to the compiler in release builds.",
+      "range": {
+        "startLine": 101,
+        "startChar": 16,
+        "endLine": 101,
+        "endChar": 32
+      },
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8af8c9ff_8b7cdf7c",
+        "filename": "src/dawn/native/metal/BindGroupMTL.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-30T23:17:35Z",
+      "side": 1,
+      "message": "Converted all the ones I added.",
+      "parentUuid": "602e7ec7_987ac5ab",
       "range": {
         "startLine": 101,
         "startChar": 16,
@@ -115,6 +199,24 @@
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d870a30_316c8d86",
+        "filename": "src/dawn/native/metal/CommandBufferMTL.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-30T23:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd992f5c_53f71dba",
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99ba0e4f_8c370d8c",
@@ -128,6 +230,24 @@
       "writtenOn": "2025-07-30T22:26:04Z",
       "side": 1,
       "message": "IIUC this has to match up with the counting logic in [1]. Comment accordingly (ideally it\u0027s something we can deduplicate eventually)",
+      "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1d696f8_20218103",
+        "filename": "src/dawn/native/metal/ShaderModuleMTL.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000257
+      },
+      "writtenOn": "2025-07-30T23:17:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99ba0e4f_8c370d8c",
       "revId": "904bc026c8b9f79b21eb9ac92d9ec02d0856aebe",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
