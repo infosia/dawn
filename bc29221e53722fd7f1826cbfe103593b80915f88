@@ -229,6 +229,24 @@
       "parentUuid": "e0d491b8_84a7f67a",
       "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e77b51ac_b16c3802",
+        "filename": "src/dawn/native/opengl/TextureGL.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 3874508
+      },
+      "writtenOn": "2025-07-30T09:03:03Z",
+      "side": 1,
+      "message": "I am not very familiar to OpenGL/ES, but I do noticed that `TextureView::Create`  [1] will not call `gl.TextureView` for GLES.\n\nHowever it seems that using the texture swizzle does not need a real GL texture view, it is done by using `TexParameteri` on each channel on the target texture (as implemented in `src/dawn/native/opengl/CommandBufferGL.cpp` in this CL), and we only need the swizzling information in `TextureViewBase`. And the E2E test is also enabled for OpenGLESBackend.\n\nCould you confirm that related E2E tests are run and passed on GLES devices?\n\n[1]: https://source.chromium.org/chromium/chromium/src/+/main:third_party/dawn/src/dawn/native/opengl/TextureGL.cpp;l\u003d628",
+      "parentUuid": "2ba55a86_c9c6da14",
+      "revId": "bc29221e53722fd7f1826cbfe103593b80915f88",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
