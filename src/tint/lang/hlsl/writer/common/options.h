@@ -236,9 +236,16 @@ struct Options {
     /// Set to `true` to scalarize max, min, and clamp builtins.
     bool scalarize_max_min_clamp = false;
 
+    /// Set to `true` to generate polyfill clamp of `id` to spec max subgroup size in
+    /// subgroupShuffle
+    bool subgroup_shuffle_clamped = false;
+
     /// Set to `true` to generate polyfill for `pack4xI8`, `pack4xU8`, `pack4xI8Clamp`,
     /// `unpack4xI8` and `unpack4xU8` builtins
     bool polyfill_pack_unpack_4x8 = false;
+
+    /// Set to `true` to generate a polyfill for the `firstTrailingBit` builtin.
+    bool polyfill_first_trailing_bit = false;
 
     /// The downstream compiler which will be used
     Compiler compiler = Compiler::kDXC;
@@ -286,7 +293,9 @@ struct Options {
                  polyfill_dot_4x8_packed,
                  disable_polyfill_integer_div_mod,
                  scalarize_max_min_clamp,
+                 subgroup_shuffle_clamped,
                  polyfill_pack_unpack_4x8,
+                 polyfill_first_trailing_bit,
                  compiler,
                  array_length_from_uniform,
                  interstage_locations,

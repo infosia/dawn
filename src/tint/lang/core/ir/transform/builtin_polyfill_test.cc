@@ -188,6 +188,138 @@ TEST_F(IR_BuiltinPolyfillTest, Saturate_Vec4F16) {
     EXPECT_EQ(expect, str());
 }
 
+TEST_F(IR_BuiltinPolyfillTest, SubgroupShuffle_NoPolyfill) {
+    Build(core::BuiltinFn::kSubgroupShuffle, ty.i32(), Vector{ty.i32(), ty.u32()});
+    auto* src = R"(
+%foo = func(%arg:i32, %arg_1:u32):i32 {  # %arg_1: 'arg'
+  $B1: {
+    %result:i32 = subgroupShuffle %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = src;
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_shuffle_clamped = false;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, SubgroupShuffle_I32) {
+    Build(core::BuiltinFn::kSubgroupShuffle, ty.i32(), Vector{ty.i32(), ty.u32()});
+    auto* src = R"(
+%foo = func(%arg:i32, %arg_1:u32):i32 {  # %arg_1: 'arg'
+  $B1: {
+    %result:i32 = subgroupShuffle %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:i32, %arg_1:u32):i32 {  # %arg_1: 'arg'
+  $B1: {
+    %4:u32 = and %arg_1, 127u
+    %result:i32 = subgroupShuffle %arg, %4
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_shuffle_clamped = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, SubgroupShuffle_U32) {
+    Build(core::BuiltinFn::kSubgroupShuffle, ty.u32(), Vector{ty.u32(), ty.u32()});
+    auto* src = R"(
+%foo = func(%arg:u32, %arg_1:u32):u32 {  # %arg_1: 'arg'
+  $B1: {
+    %result:u32 = subgroupShuffle %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:u32, %arg_1:u32):u32 {  # %arg_1: 'arg'
+  $B1: {
+    %4:u32 = and %arg_1, 127u
+    %result:u32 = subgroupShuffle %arg, %4
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_shuffle_clamped = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, SubgroupShuffle_F32) {
+    Build(core::BuiltinFn::kSubgroupShuffle, ty.f32(), Vector{ty.f32(), ty.u32()});
+    auto* src = R"(
+%foo = func(%arg:f32, %arg_1:u32):f32 {  # %arg_1: 'arg'
+  $B1: {
+    %result:f32 = subgroupShuffle %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:f32, %arg_1:u32):f32 {  # %arg_1: 'arg'
+  $B1: {
+    %4:u32 = and %arg_1, 127u
+    %result:f32 = subgroupShuffle %arg, %4
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_shuffle_clamped = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
+TEST_F(IR_BuiltinPolyfillTest, SubgroupShuffle_Vec2F32) {
+    Build(core::BuiltinFn::kSubgroupShuffle, ty.vec2<f32>(), Vector{ty.vec2<f32>(), ty.u32()});
+    auto* src = R"(
+%foo = func(%arg:vec2<f32>, %arg_1:u32):vec2<f32> {  # %arg_1: 'arg'
+  $B1: {
+    %result:vec2<f32> = subgroupShuffle %arg, %arg_1
+    ret %result
+  }
+}
+)";
+    auto* expect = R"(
+%foo = func(%arg:vec2<f32>, %arg_1:u32):vec2<f32> {  # %arg_1: 'arg'
+  $B1: {
+    %4:u32 = and %arg_1, 127u
+    %result:vec2<f32> = subgroupShuffle %arg, %4
+    ret %result
+  }
+}
+)";
+
+    EXPECT_EQ(src, str());
+
+    BuiltinPolyfillConfig config;
+    config.subgroup_shuffle_clamped = true;
+    Run(BuiltinPolyfill, config);
+    EXPECT_EQ(expect, str());
+}
+
 TEST_F(IR_BuiltinPolyfillTest, Smoothstep_F32) {
     Build(core::BuiltinFn::kSmoothstep, ty.f32(), Vector{ty.f32(), ty.f32(), ty.f32()});
     auto* src = R"(
