@@ -88,6 +88,24 @@
       "parentUuid": "5a2eea60_507aadca",
       "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
       "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "edc07d7b_e6122df1",
+        "filename": "src/dawn/native/Texture.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000480
+      },
+      "writtenOn": "2025-07-30T07:59:56Z",
+      "side": 1,
+      "message": "Kai [thinks](https://github.com/gpuweb/gpuweb/issues/5264#issuecomment-3133392811) this matches other parts of the API and WebGPU design guidelines. Moreover, Mike [approved](https://github.com/gpuweb/gpuweb/pull/5252#pullrequestreview-3035433812) spec proposal PR changes.",
+      "parentUuid": "c40f9284_11239262",
+      "revId": "90f42403662047f40475d6781ca73a5d21a853e3",
+      "serverId": "dd02978d-1a8e-36d7-bcc0-a5723e5c0abd"
     }
   ]
 }
